@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.data.master</artifactId>
-<!-- LV --><version>0.9.29-SNAPSHOT</version>
+<!-- LV --><version>0.9.29</version>
 	<packaging>pom</packaging>
 	<name>Lilith Data master pom file</name>
 	<url>http://lilith.huxhorn.de</url>
@@ -15,6 +15,17 @@
 		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-data/</url>
 	</scm>
 	
+	<distributionManagement>
+		<repository>
+			<id>lilith-repos</id>
+			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
+		</repository>
+		<snapshotRepository>
+			<id>lilith-snapshot-repos</id>
+			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<modules>
 		<module>eventsource</module>
 		<module>eventsource-xml</module>

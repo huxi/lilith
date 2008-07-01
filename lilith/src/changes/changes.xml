@@ -57,16 +57,13 @@
 
 		<release version="1.0.0" date="TBD" description="Future release">
 			<action dev="jhux" type="fix">
-				TODO: get legitimate images for splash and about.
+				TODO: get legitimate/better images for splash and about.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: add application icon(s).
 			</action>
 			<action dev="jhux" type="add">
 				TODO: add ip.ip.ip.ip:port to multiplexer receiver list.
-			</action>
-			<action dev="jhux" type="add">
-				TODO: Add remaining license infos to sources.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: launch4j
@@ -76,18 +73,41 @@
 			</action>
 		</release>
 		
-		<release version="0.9.29" date="TBD" description="Internal release">
+		<release version="0.9.30" date="TBD" description="Future release">
 			<action dev="jhux" type="update">
 				TODO: "Clean all inactive logs" in another thread with progress.
 			</action>
 			<action dev="jhux" type="update">
 				TODO: go to source on different thread.
 			</action>
+		</release>
+
+		<release version="0.9.29" date="2008-07-02" description="First public release">
+			<action dev="jhux" type="add">
+				Added SCM and distribution info to pom files. Source is now available
+				in SVN repository at sourceforge.net.
+			</action>
+			<action dev="jhux" type="fix">
+				Implemented string representation of ThrowableInfo for "Copy Throwable".
+			</action>
+			<action dev="jhux" type="update">
+				Updated license to simply show GPL3 without my additional comments :)
+			</action>
+			<action dev="jhux" type="add">
+				Added blurb about temporary repositories for sulky and lilith artifacts.
+				http://sulky.sourceforge.net/repository/ and http://lilith.sourceforge.net/repository/
+				can be used until the artifacts are deployed to the central maven repository.
+				Unfortunately, some dependencies aren't available in the central repository
+				so I'll have som more work to do...
+			</action>
+			<action dev="jhux" type="add">
+				Added remaining license infos to sources.
+			</action>
 			<action dev="jhux" type="fix">
 				Implemented string representation of ThrowableInfo for "Copy Throwable".
 			</action>
 			<action dev="jhux" type="fix">
-				Remove source name does actually work.
+				Remove source name does actually work. Reported by Alfred.
 			</action>
 		</release>
 
