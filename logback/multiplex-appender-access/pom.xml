@@ -7,8 +7,14 @@
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
 	<name>Logback Multiplex Appender Access</name>
-	<url>http://maven.apache.org</url>
+	<url>http://lilith.huxhorn.de</url>
 	
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback/multiplex-appender-access</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback/multiplex-appender-access</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/logback/multiplex-appender-access/</url>
+	</scm>
+
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>

@@ -8,6 +8,12 @@
 	<name>Lilith Data Types - Access</name>
 	<url>http://lilith.huxhorn.de</url>
 	
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data/access</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data/access</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-data/access/</url>
+	</scm>
+
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>

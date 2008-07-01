@@ -7,8 +7,14 @@
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
 	<name>java.util.logging Handler using SLF4J</name>
-	<url>http://maven.apache.org</url>
+	<url>http://lilith.huxhorn.de</url>
 	
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/jul-slf4j-handler</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/jul-slf4j-handler</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/jul-slf4j-handler/</url>
+	</scm>
+
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>

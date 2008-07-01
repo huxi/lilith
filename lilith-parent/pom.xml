@@ -8,6 +8,12 @@
 	<name>Lilith parent pom file</name>
 	<url>http://lilith.huxhorn.de</url>
 	
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-parent</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-parent</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-parent/</url>
+	</scm>
+
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
 <!-- SV --><sulkyVersion>0.9.2-SNAPSHOT</sulkyVersion>
@@ -24,6 +30,18 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
+	<distributionManagement>
+		<repository>
+			<id>lilith-repos</id>
+			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
+		</repository>
+		<snapshotRepository>
+			<id>lilith-snapshot-repos</id>
+			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<!-- 
 	define global versions for all sub-projects 
 	in case of missing explicit version 

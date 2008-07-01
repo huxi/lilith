@@ -9,6 +9,12 @@
 	<name>Lilith Data master pom file</name>
 	<url>http://lilith.huxhorn.de</url>
 
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/logback/</url>
+	</scm>
+
 	<modules>
 		<module>logging-adapter</module>
 		<module>access-adapter</module>
