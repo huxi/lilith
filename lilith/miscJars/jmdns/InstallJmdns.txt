@@ -1,0 +1,2 @@
+Execute the following line:
+mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=jmdns -DartifactId=jmdns -Dversion=2.1-SNAPSHOT -Dfile=jmdns.jar

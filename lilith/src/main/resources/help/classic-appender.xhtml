@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Using the Lilith Classic Appender</title>
+		<link href="help.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<p><a href="index.xhtml">ToC</a></p>
+
+		<h1><a name="top">Using the Lilith Classic Appender</a></h1>
+
+		<p>The Lilith Classic Appender is a replacement for <tt>ch.qos.logback.classic.net.SocketAppender</tt>.
+		While LogBACK's appender is stream-based, i.e. it streams logging events using an <tt>ObjectOutputStream</tt> the
+		Lilith appender is message based, i.e. it sends logging events one after the other as single messages.</p>
+
+		<p>A message consists of an integer that specifies the number of bytes of the following event, followed by the
+		bytes of the serialized event.</p>
+
+		<p>This has several benefits:</p>
+		<ul>
+			<li>Sending to multiple remote hosts is supported while the event is only serialized once.</li>
+			<li>Events can (and should) be compressed using GZIP.</li>
+			<li>The appender supports heartbeat and timeout.
+				<ul>
+					<li>The event receiver can find out that the event sender connection died if a heartbeat is missing.</li>
+					<li>The event sender can find out that the event receiver connection died by means of a timeout</li>
+				</ul>
+				This means that an application won't stop (at least not for very long) in case of network problems.
+			</li>
+		</ul>
+
+		<p>Add the following dependency to your applications <tt>pom.xml</tt> file:</p>
+		<pre><tt><![CDATA[<dependency>
+  <groupId>de.huxhorn.lilith</groupId>
+  <artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic</artifactId>
+  <version>${pom.version}</version>
+  <scope>runtime</scope>
+</dependency>]]></tt></pre>
+
+
+		<p>Then, add the following to your <tt>logback.xml</tt> file:</p>
+		<pre><tt><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+  <Compressing>true</Compressing> <!-- will automatically use correct default port -->
+  <ReconnectionDelay>10000</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+</appender>]]></tt></pre>
+
+
+		<p>You also have to attach the appender to some logger, e.g. the root logger...</p>
+		<pre><tt><![CDATA[<root>
+  <level value="INFO"/>
+  <appender-ref ref="multiplex"/>
+</root>]]></tt></pre>
+
+
+		<p>... or a specific logger...</p>
+		<pre><tt><![CDATA[<logger name="foo.Bar">
+  <level value="DEBUG"/>
+  <appender-ref ref="multiplex"/>
+</logger>]]></tt></pre>
+
+		<h2>Using the Lilith Classic XML Appender</h2>
+
+		<p>Alternatively, you could also use one of the Lilith Classic XML Appenders. Instead of serialized Java
+		objects those are using XML logging events. There's not much sense in using those, though, if you just
+		want to receive events in Lilith.</p>
+
+		<p>The primary use of those appenders is to enable an application to send language-independent events.</p>
+
+		<p>Lilith can understand those events so you are able to receive messages from non-Java systems, too, as
+		long as those systems support the sending of xml messages over sockets.</p>
+
+		<p>That's also the sole reason for the zero-delimited appender. Zero-delimited events can be sent using
+		ActionScript's flash.net.XMLSocket</p>
+
+		<p>The appenders were only implemented for symmetric reasons so there's both an event appender and an
+		event receiver available in the Lilith suite.</p>
+
+		<p>The schema of the logging events can be found at
+			<a href="http://lilith.sf.net/logging/10">http://lilith.sf.net/logging/10</a>.</p>
+
+		<p>Add the following dependency to your applications <tt>pom.xml</tt> file:</p>
+		<pre><tt><![CDATA[<dependency>
+  <groupId>de.huxhorn.lilith</groupId>
+  <artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic-xml</artifactId>
+  <version>${pom.version}</version>
+  <scope>runtime</scope>
+</dependency>]]></tt></pre>
+
+
+		<p>Then, add the following to your <tt>logback.xml</tt> file:</p>
+		<pre><tt><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
+  <Compressing>true</Compressing> <!-- will automatically use correct default port -->
+  <ReconnectionDelay>10000</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+</appender>]]></tt></pre>
+
+		<p>or, for zero-delimited messages instead of "size, event-bytes" messages,</p>
+
+		<pre><tt><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
+  <ReconnectionDelay>10000</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+</appender>]]></tt></pre>
+
+		<p><a href="#top">Back to top.</a></p>
+	</body>
+</html>

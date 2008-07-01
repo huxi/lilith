@@ -1,0 +1,42 @@
+body
+{
+	margin: 0;
+	padding: 0;
+/*	background: #ffff00; */
+}
+
+table
+{
+	border-spacing: 0;
+}
+
+tr.even
+{
+	background: #e9edf2;
+}
+
+tr.odd
+{
+	background: #ffffff;
+}
+
+td
+{
+	border-top: none;
+	border-right: 1px solid black;
+	border-bottom: none;
+	border-left: none;
+}
+
+th
+{
+	border-top: none;
+	border-right: 1px solid black;
+	border-bottom: none;
+	border-left: none;
+}
+
+.throwable
+{
+	background: #ffcccc;
+}

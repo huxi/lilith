@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+Lilith - a log event viewer.
+Copyright (C) 2007-2008 Joern Huxhorn
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://lilith.sf.net/schema/eventsource/10"  targetNamespace="http://lilith.sf.net/schema/eventsource/10" elementFormDefault="qualified">
+	<xs:element name="SourceIdentifier">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The source identifier of events.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:restriction base="xs:anyType">
+					<xs:attribute name="identifier" type="NonEmptyCollapsingString" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The primary identifier of the source of events, e.g. an IP address.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="secondaryIdentifier" type="NonEmptyCollapsingString" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The secondary identifier of the source of events, e.g. a timestamp.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:restriction>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EventSourceInfo">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information about a Source of events.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SourceIdentifier">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The source identifier.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="numberOfEvents" type="xs:nonNegativeInteger" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The number of events that are currently available for the source.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="oldestEventTimestamp" type="xs:dateTime" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The timestamp of the oldest available event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="active" type="xs:boolean" use="optional" default="false">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">An active source may still receive new events.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="NonEmptyCollapsingString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

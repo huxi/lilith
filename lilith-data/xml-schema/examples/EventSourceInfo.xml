@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventSourceInfo xmlns="http://lilith.sf.net/schema/eventsource/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lilith.sf.net/schema/eventsource/10 http://lilith.sf.net/schema/eventsource/10/EventSource.xsd" numberOfEvents="17" oldestEventTimestamp="2008-03-22T15:06:09.750+01:00">
+        <SourceIdentifier identifier="primary"/>
+</EventSourceInfo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.huxhorn.lilith</groupId>
+	<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic-xml</artifactId>
+	<version>${parent.version}</version>
+	<packaging>jar</packaging>
+	<name>Logback Multiplex Appender Classic - XML</name>
+	<url>http://maven.apache.org</url>
+	
+	<parent>
+		<groupId>de.huxhorn.lilith</groupId>
+		<artifactId>de.huxhorn.lilith.parent</artifactId>
+<!-- LV --><version>0.9.29-SNAPSHOT</version>
+		<relativePath>../../lilith-parent</relativePath>
+	</parent>
+	
+	<dependencies>
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.data.logging-xml-serializer</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.logback.logging-adapter</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>
