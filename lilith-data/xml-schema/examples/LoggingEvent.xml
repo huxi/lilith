@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<foo:LoggingEvent xmlns:foo="http://lilith.sf.net/schema/logging/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lilith.sf.net/schema/logging/10 http://lilith.sf.net/schema/logging/10/LoggingEvent.xsd" logger="Logger" level="INFO" threadName="Thread-Name" timeStamp="2008-03-19T11:40:24.843+01:00">
+	<foo:Message>EventMessage</foo:Message>
+	<foo:Arguments>
+		<foo:Argument>arg1</foo:Argument>
+		<foo:null/>
+		<foo:Argument>arg3</foo:Argument>
+	</foo:Arguments>
+	<foo:Throwable name="the.exception.class.Name">
+		<foo:Message>Huhu! Exception Message</foo:Message>
+		<foo:StackTrace>
+			<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="createStackTraceElements" fileName="LoggingEventIOTest.java">
+				<foo:LineNumber>159</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="createThrowableInfo" fileName="LoggingEventIOTest.java">
+				<foo:LineNumber>87</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="testFullPrefix" fileName="LoggingEventIOTest.java">
+				<foo:LineNumber>217</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+				<foo:Native/>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+				<foo:LineNumber>39</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+				<foo:LineNumber>25</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+				<foo:LineNumber>597</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestCase" methodName="runTest" fileName="TestCase.java">
+				<foo:LineNumber>164</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestCase" methodName="runBare" fileName="TestCase.java">
+				<foo:LineNumber>130</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestResult$1" methodName="protect" fileName="TestResult.java">
+				<foo:LineNumber>106</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestResult" methodName="runProtected" fileName="TestResult.java">
+				<foo:LineNumber>124</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestResult" methodName="run" fileName="TestResult.java">
+				<foo:LineNumber>109</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestCase" methodName="run" fileName="TestCase.java">
+				<foo:LineNumber>120</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestSuite" methodName="runTest" fileName="TestSuite.java">
+				<foo:LineNumber>230</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.framework.TestSuite" methodName="run" fileName="TestSuite.java">
+				<foo:LineNumber>225</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.textui.TestRunner" methodName="doRun" fileName="TestRunner.java">
+				<foo:LineNumber>121</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="com.intellij.rt.execution.junit2.IdeaJUnitAgent" methodName="doRun" fileName="IdeaJUnitAgent.java">
+				<foo:LineNumber>58</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="junit.textui.TestRunner" methodName="start" fileName="TestRunner.java">
+				<foo:LineNumber>185</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="com.intellij.rt.execution.junit.TextTestRunner2" methodName="startRunnerWithArgs" fileName="TextTestRunner2.java">
+				<foo:LineNumber>23</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="prepareStreamsAndStart" fileName="JUnitStarter.java">
+				<foo:LineNumber>98</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="main" fileName="JUnitStarter.java">
+				<foo:LineNumber>32</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+				<foo:Native/>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+				<foo:LineNumber>39</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+				<foo:LineNumber>25</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+				<foo:LineNumber>597</foo:LineNumber>
+			</foo:StackTraceElement>
+			<foo:StackTraceElement className="com.intellij.rt.execution.application.AppMain" methodName="main" fileName="AppMain.java">
+				<foo:LineNumber>90</foo:LineNumber>
+			</foo:StackTraceElement>
+		</foo:StackTrace>
+		<foo:Cause name="another.exception.class.Name">
+			<foo:Message>Huhu! Exception Message</foo:Message>
+			<foo:StackTrace>
+				<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="createStackTraceElements" fileName="LoggingEventIOTest.java">
+					<foo:LineNumber>159</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="createThrowableInfo" fileName="LoggingEventIOTest.java">
+					<foo:LineNumber>87</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="testFullPrefix" fileName="LoggingEventIOTest.java">
+					<foo:LineNumber>218</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+					<foo:Native/>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+					<foo:LineNumber>39</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+					<foo:LineNumber>25</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+					<foo:LineNumber>597</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestCase" methodName="runTest" fileName="TestCase.java">
+					<foo:LineNumber>164</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestCase" methodName="runBare" fileName="TestCase.java">
+					<foo:LineNumber>130</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestResult$1" methodName="protect" fileName="TestResult.java">
+					<foo:LineNumber>106</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestResult" methodName="runProtected" fileName="TestResult.java">
+					<foo:LineNumber>124</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestResult" methodName="run" fileName="TestResult.java">
+					<foo:LineNumber>109</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestCase" methodName="run" fileName="TestCase.java">
+					<foo:LineNumber>120</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestSuite" methodName="runTest" fileName="TestSuite.java">
+					<foo:LineNumber>230</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.framework.TestSuite" methodName="run" fileName="TestSuite.java">
+					<foo:LineNumber>225</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.textui.TestRunner" methodName="doRun" fileName="TestRunner.java">
+					<foo:LineNumber>121</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="com.intellij.rt.execution.junit2.IdeaJUnitAgent" methodName="doRun" fileName="IdeaJUnitAgent.java">
+					<foo:LineNumber>58</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="junit.textui.TestRunner" methodName="start" fileName="TestRunner.java">
+					<foo:LineNumber>185</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="com.intellij.rt.execution.junit.TextTestRunner2" methodName="startRunnerWithArgs" fileName="TextTestRunner2.java">
+					<foo:LineNumber>23</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="prepareStreamsAndStart" fileName="JUnitStarter.java">
+					<foo:LineNumber>98</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="main" fileName="JUnitStarter.java">
+					<foo:LineNumber>32</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+					<foo:Native/>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+					<foo:LineNumber>39</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+					<foo:LineNumber>25</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+					<foo:LineNumber>597</foo:LineNumber>
+				</foo:StackTraceElement>
+				<foo:StackTraceElement className="com.intellij.rt.execution.application.AppMain" methodName="main" fileName="AppMain.java">
+					<foo:LineNumber>90</foo:LineNumber>
+				</foo:StackTraceElement>
+			</foo:StackTrace>
+			<foo:Cause name="yet.another.exception.class.Name">
+				<foo:Message>Huhu! Exception Message</foo:Message>
+				<foo:StackTrace>
+					<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="createStackTraceElements" fileName="LoggingEventIOTest.java">
+						<foo:LineNumber>159</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="createThrowableInfo" fileName="LoggingEventIOTest.java">
+						<foo:LineNumber>87</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="testFullPrefix" fileName="LoggingEventIOTest.java">
+						<foo:LineNumber>219</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+						<foo:Native/>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+						<foo:LineNumber>39</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+						<foo:LineNumber>25</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+						<foo:LineNumber>597</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestCase" methodName="runTest" fileName="TestCase.java">
+						<foo:LineNumber>164</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestCase" methodName="runBare" fileName="TestCase.java">
+						<foo:LineNumber>130</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestResult$1" methodName="protect" fileName="TestResult.java">
+						<foo:LineNumber>106</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestResult" methodName="runProtected" fileName="TestResult.java">
+						<foo:LineNumber>124</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestResult" methodName="run" fileName="TestResult.java">
+						<foo:LineNumber>109</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestCase" methodName="run" fileName="TestCase.java">
+						<foo:LineNumber>120</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestSuite" methodName="runTest" fileName="TestSuite.java">
+						<foo:LineNumber>230</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.framework.TestSuite" methodName="run" fileName="TestSuite.java">
+						<foo:LineNumber>225</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.textui.TestRunner" methodName="doRun" fileName="TestRunner.java">
+						<foo:LineNumber>121</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="com.intellij.rt.execution.junit2.IdeaJUnitAgent" methodName="doRun" fileName="IdeaJUnitAgent.java">
+						<foo:LineNumber>58</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="junit.textui.TestRunner" methodName="start" fileName="TestRunner.java">
+						<foo:LineNumber>185</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="com.intellij.rt.execution.junit.TextTestRunner2" methodName="startRunnerWithArgs" fileName="TextTestRunner2.java">
+						<foo:LineNumber>23</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="prepareStreamsAndStart" fileName="JUnitStarter.java">
+						<foo:LineNumber>98</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="main" fileName="JUnitStarter.java">
+						<foo:LineNumber>32</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+						<foo:Native/>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+						<foo:LineNumber>39</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+						<foo:LineNumber>25</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+						<foo:LineNumber>597</foo:LineNumber>
+					</foo:StackTraceElement>
+					<foo:StackTraceElement className="com.intellij.rt.execution.application.AppMain" methodName="main" fileName="AppMain.java">
+						<foo:LineNumber>90</foo:LineNumber>
+					</foo:StackTraceElement>
+				</foo:StackTrace>
+			</foo:Cause>
+		</foo:Cause>
+	</foo:Throwable>
+	<foo:MDC>
+		<foo:Entry key="key3">value3</foo:Entry>
+		<foo:Entry key="key2">value2</foo:Entry>
+		<foo:Entry key="key1">value1</foo:Entry>
+	</foo:MDC>
+	<foo:Marker name="marker">
+		<foo:Marker name="marker2-1"/>
+		<foo:Marker name="marker2-2">
+			<foo:Marker name="marker3-1">
+				<foo:MarkerReference ref="marker2-1"/>
+			</foo:Marker>
+		</foo:Marker>
+	</foo:Marker>
+	<foo:CallStack>
+		<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="createStackTraceElements" fileName="LoggingEventIOTest.java">
+			<foo:LineNumber>159</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="de.huxhorn.lilith.data.logging.xml.LoggingEventIOTest" methodName="testFullPrefix" fileName="LoggingEventIOTest.java">
+			<foo:LineNumber>240</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+			<foo:Native/>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+			<foo:LineNumber>39</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+			<foo:LineNumber>25</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+			<foo:LineNumber>597</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestCase" methodName="runTest" fileName="TestCase.java">
+			<foo:LineNumber>164</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestCase" methodName="runBare" fileName="TestCase.java">
+			<foo:LineNumber>130</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestResult$1" methodName="protect" fileName="TestResult.java">
+			<foo:LineNumber>106</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestResult" methodName="runProtected" fileName="TestResult.java">
+			<foo:LineNumber>124</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestResult" methodName="run" fileName="TestResult.java">
+			<foo:LineNumber>109</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestCase" methodName="run" fileName="TestCase.java">
+			<foo:LineNumber>120</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestSuite" methodName="runTest" fileName="TestSuite.java">
+			<foo:LineNumber>230</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.framework.TestSuite" methodName="run" fileName="TestSuite.java">
+			<foo:LineNumber>225</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.textui.TestRunner" methodName="doRun" fileName="TestRunner.java">
+			<foo:LineNumber>121</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="com.intellij.rt.execution.junit2.IdeaJUnitAgent" methodName="doRun" fileName="IdeaJUnitAgent.java">
+			<foo:LineNumber>58</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="junit.textui.TestRunner" methodName="start" fileName="TestRunner.java">
+			<foo:LineNumber>185</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="com.intellij.rt.execution.junit.TextTestRunner2" methodName="startRunnerWithArgs" fileName="TextTestRunner2.java">
+			<foo:LineNumber>23</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="prepareStreamsAndStart" fileName="JUnitStarter.java">
+			<foo:LineNumber>98</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="com.intellij.rt.execution.junit2.JUnitStarter" methodName="main" fileName="JUnitStarter.java">
+			<foo:LineNumber>32</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke0" fileName="NativeMethodAccessorImpl.java">
+			<foo:Native/>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="sun.reflect.NativeMethodAccessorImpl" methodName="invoke" fileName="NativeMethodAccessorImpl.java">
+			<foo:LineNumber>39</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="sun.reflect.DelegatingMethodAccessorImpl" methodName="invoke" fileName="DelegatingMethodAccessorImpl.java">
+			<foo:LineNumber>25</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="java.lang.reflect.Method" methodName="invoke" fileName="Method.java">
+			<foo:LineNumber>597</foo:LineNumber>
+		</foo:StackTraceElement>
+		<foo:StackTraceElement className="com.intellij.rt.execution.application.AppMain" methodName="main" fileName="AppMain.java">
+			<foo:LineNumber>90</foo:LineNumber>
+		</foo:StackTraceElement>
+	</foo:CallStack>
+</foo:LoggingEvent>

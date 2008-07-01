@@ -1,0 +1,667 @@
+<document>
+	<properties>
+		<title>Lilith</title>
+		<author email="huxhorn@sourceforge.net">Joern Huxhorn</author>
+	</properties>
+	<body>
+		<release version="1.x.x" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				TODO: Preferences option to set colors of levels (and saved filters).
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Create index file from existing ljlogging/ljaccess-file.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Create logger name index file from existing ljlog-file for *sigh* tree-view *yawn*
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Drag&amp;Drop of ljlogging/ljaccess-file(s).
+			</action>
+			<action dev="jhux" type="add">
+				TODO: "Open" logs. [*command*-O]
+			</action>
+			<action dev="jhux" type="add">
+				TODO: "Save as" logs. [*command*-S] This is only possible for inactive log views.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: SVG Icons
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Preferences for Toolbar (text, icon size)
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Check behaviour of Bonjour in case of network change.
+			</action>
+			<action dev="jhux" type="fix">
+				TODO: Improve behaviour of newly created filtered views, i.e. the pause.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: UI-Change: Layout of table columns
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Mac: Bouncing icon in case of error
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Send message over Bonjour
+			</action>
+			<action dev="jhux" type="add">
+				TODO: add SSL multiplexers.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: add lilith-bridge, i.e. an app that receives events and forwards them using multiplexer.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: evaluate jxlayer
+			</action>
+		</release>
+
+		<release version="1.0.0" date="TBD" description="Future release">
+			<action dev="jhux" type="fix">
+				TODO: get legitimate images for splash and about.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: add application icon(s).
+			</action>
+			<action dev="jhux" type="add">
+				TODO: add ip.ip.ip.ip:port to multiplexer receiver list.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Add remaining license infos to sources.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: launch4j
+			</action>
+			<action dev="jhux" type="update">
+				TODO: Proper dist, i.e. bin with sh and bat, lib with jar, LICENSE, README
+			</action>
+		</release>
+		
+		<release version="0.9.29" date="TBD" description="Internal release">
+			<action dev="jhux" type="update">
+				TODO: "Clean all inactive logs" in another thread with progress.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: go to source on different thread.
+			</action>
+			<action dev="jhux" type="fix">
+				Implemented string representation of ThrowableInfo for "Copy Throwable".
+			</action>
+			<action dev="jhux" type="fix">
+				Remove source name does actually work.
+			</action>
+		</release>
+
+		<release version="0.9.28" date="2008-06-30" description="Internal release">
+			<action dev="jhux" type="update">
+				Happy Birthday to Lilith!
+			</action>
+			<action dev="jhux" type="update">
+				Added special handling of OutOfMemoryError handling to AbstractMessageBasedEventProducer. It now tries
+				to skip the amount of bytes while logging a warning about the problem. The stream isn't closed anymore
+				in that case. This might help if huge events are logged but Lilith does not have enough memory to
+				receive them.
+			</action>
+			<action dev="jhux" type="update">
+				Reduced internal event buffer from 10.000 events to 1.000 events. This was done to make Lilith less
+				memory hungry. It is still possible to run into OutOfMemoryErrors if unusually large events are received
+				very fast. 
+			</action>
+			<action dev="jhux" type="update">
+				Added option to show source identifier even in case of named source. Default is on because it's really useful, imho.
+			</action>
+			<action dev="jhux" type="add">
+				Add Preferences Toolbar-Button
+			</action>
+			<action dev="jhux" type="update">
+				Refactoring: only use a single popup menu for event-related actions. Lower memory consumption.
+			</action>
+			<action dev="jhux" type="add">
+				Refactoring: Edit menu-item containing the Copy actions.
+			</action>
+			<action dev="jhux" type="update">
+				Refactoring: Only one message formatter instance for all views. Lower memory consumption.
+			</action>
+			<action dev="jhux" type="fix">
+				Yet another XML fix. See SimpleXml.replaceNonValidXMLCharacters for details.
+			</action>
+			<action dev="jhux" type="update">
+				Refactoring: Major restructuring of appenders and event senders. There was a concurrency problem in certain VMs.
+			</action>
+			<action dev="jhux" type="update">
+				send event on different thread.
+			</action>
+			<action dev="jhux" type="update">
+				JmDNS for multiple interfaces
+			</action>
+			<action dev="jhux" type="add">
+				Check for Update...
+			</action>
+			<action dev="jhux" type="add">
+				Update available dialog (minimal).
+			</action>
+			<action dev="jhux" type="add">
+				Open URL implemented for Windoze and Mac OS X.
+			</action>
+			<action dev="jhux" type="fix">
+				Don't play sounds etc. if source is not in whitelist/blacklisted.
+				Black/whitelisting is now handled on global queue level. This is more efficient anyway.
+				Reported by Alfred.
+			</action>
+			<action dev="jhux" type="update">
+				Changed all artifactIds - again! Closed beta is something beautiful :)
+			</action>
+			<action dev="jhux" type="add">
+				Close/Minimize all (other) windows. Requested by Lothar.
+			</action>
+			<action dev="jhux" type="add">
+				Removed "Clean and remove inactive views". Just remove them and clean later with 
+			</action>
+		</release>
+
+		<release version="0.9.27" date="2008-04-30" description="Internal release">
+			<action dev="jhux" type="update">
+				Mac-like colors in table rows.
+			</action>
+			<action dev="jhux" type="update">
+				Disabled auto-resize of tables.
+			</action>
+			<action dev="jhux" type="add">
+				Implemented saving of conditions. Currently *command*-I.
+			</action>
+			<action dev="jhux" type="add">
+				Added access event datatype and changed code to use it instead of logback one.
+			</action>
+			<action dev="jhux" type="update">
+				Debug-Dialog logging is done from different threads.
+			</action>
+			<action dev="jhux" type="fix">
+				Regression: Reimplemented event senders.
+			</action>
+			<action dev="jhux" type="update">
+				Implement *some* copy-paste of events... "Copy event" does not work as intended because
+				HTML clip support in Java is broken!
+			</action>
+			<action dev="jhux" type="update">
+				global lilith version, global sulky version.
+			</action>
+			<action dev="jhux" type="update">
+				Details view is now using a groovy script for generation of details xhtml.
+			</action>
+		</release>
+
+		<release version="0.9.26.1" date="2008-04-08" description="Internal release">
+			<action dev="jhux" type="fix">
+				Some SimpleXml.escape calls were still missing...
+			</action>
+		</release>
+
+		<release version="0.9.26" date="2008-04-08" description="Internal release">
+			<action dev="jhux" type="update">
+				Extended help significantly.
+			</action>
+			<action dev="jhux" type="update">
+				Event Message and help is now proper XHTML.
+			</action>
+			<action dev="jhux" type="update">
+				Using FlyingSaucer for message view and help. This has the downside that copy-paste doesn't work right now.
+			</action>
+			<action dev="jhux" type="add">
+				Writing malformed messages to ${appDir}/errors/[timestamp]. Shouldn't happen anymore, though.
+			</action>
+			<action dev="jhux" type="add">
+				IDEA integration using Lilith IDEA Plugin. It's now possible to jump to the source of a logging event or
+				Throwable stacktrace element. Shift-Doubleclick an event as a shortcut. This has been implemented
+				quickly (i.e. just inside of the event dispatch thread) but will be enhanced later.
+				It's working, though. :)
+			</action>
+			<action dev="jhux" type="fix">
+				Fixed sillyness in ZeroDelimitedXml[..]. The zero-byte is NOT added to the string anymore.
+				Did I mention that I hate 'while' and 'do..while' loops and that 'for(;;)' is the only way to
+				go instead?
+			</action>
+			<action dev="jhux" type="update">
+				Added replacement of zero-byte by space in SimpleXml.escape. This is a simple workaround for the
+				previously mentioned ZeroDelimetedXml[..] bug (which is also fixed!) but makes sense anyway.
+			</action>
+			<action dev="jhux" type="update">
+				The stylesheet of the message view is now located in ${appDir}/messageView/messageView.css.
+				${appDir}/messageView is the document root of the message view, so you could also put other
+				files there.
+			</action>
+		</release>
+
+		<release version="0.9.25" date="2008-04-03" description="Internal release">
+			<action dev="jhux" type="add">
+				Redirecting System.err to ${appDir}/errors.log
+			</action>
+			<action dev="jhux" type="update">
+				Disabled napkin by default. *enable* using option -n.
+			</action>
+			<action dev="jhux" type="add">
+				Added support for autostart. Files contained in ${appDir}/autostart are automatically executed on startup. 
+			</action>
+			<action dev="jhux" type="fix">
+				Move (internal) frame to front and unminimize if selected from view menu.
+			</action>
+			<action dev="jhux" type="fix">
+				File -> "Clean all inactive logs" closes both logging and access views.
+			</action>
+			<action dev="jhux" type="fix">
+				Removed ex.printStackTrace from AbstractMessageBasedEventProducer. I missed that one ;)
+			</action>
+		</release>
+
+		<release version="0.9.24" date="2008-04-01" description="Internal release">
+			<action dev="jhux" type="add">
+				Implemented black- and whitelisting of sources. See Preferences -> Source Filtering.
+			</action>
+			<action dev="jhux" type="update">
+				Status-Bar of MainFrame shows Source filtering status.
+			</action>
+			<action dev="jhux" type="add">
+				Preferences: Source Filtering
+			</action>
+			<action dev="jhux" type="add">
+				Preferences: Source Lists
+			</action>
+			<action dev="jhux" type="update">
+				Using groovy 1.5.3 instead of 1.5.0.
+			</action>
+			<action dev="jhux" type="update">
+				Renamed from LOGBack Lumberjack to Lilith.
+			</action>
+			<action dev="jhux" type="add">
+				Created sulky and lilith project on sourceforge.
+			</action>
+			<action dev="jhux" type="add">
+				Disable bonjour with -b commandline option.
+			</action>
+			<action dev="jhux" type="update">
+				Using JmDNS 2.0 instead of 1.0. New version was released 3 days ago and I had serious hope
+				that it would fix the deadlock... but it just happens less often.
+			</action>
+			<action dev="jhux" type="add">
+				Added java.util.logging bridge. This was necessary to debug JmDNS. *sigh*
+			</action>
+			<action dev="jhux" type="update">
+				Patched JmDNS 2.0 to fix deadlock/livelock-problem. Patch is included in miscJars directory.
+			</action>
+			<action dev="jhux" type="add">
+				Added license infos to sources.
+			</action>
+			<action dev="jhux" type="add">
+				Added heartbeat to multiplexers and receivers
+			</action>
+			<action dev="jhux" type="add">
+				Added eventsource and logging data types and xml.
+			</action>
+			<action dev="jhux" type="update">
+				Using new logging data types for transfer.
+			</action>
+			<action dev="jhux" type="add">
+				Added XML logging appender and producers. Also implemented special version for use with ActionScript XMLSocket.
+			</action>
+			<action dev="jhux" type="update">
+				Major refactoring again...
+			</action>
+			<action dev="jhux" type="update">
+				slf4j-1.5.0 &quot; logback-0.9.9
+			</action>
+		</release>
+
+		<release version="0.9.23" date="2007-12-20" description="Internal release">
+			<action dev="jhux" type="add">
+				Napkin LAF until 1.0. Deactivate with -n.
+			</action>
+			<action dev="jhux" type="add">
+				Preferences-SourceNames: Sort table by source/name. Only available using Java 1.6.
+			</action>
+			<action dev="jhux" type="add">
+				Preferences-SourceNames: Shortcut to edit source name for source of current view (*command*-B).
+			</action>
+			<action dev="jhux" type="add">
+				Preferences-general: Added option to focus window in case of new views, disabled (!!) by default.
+			</action>
+			<action dev="jhux" type="update">
+				Using groovy 1.5 instead of 1.0.
+			</action>
+			<action dev="jhux" type="fix">
+				Fixed deadlock when closing main window... It still sometimes happens but is a JmDns problem.
+			</action>
+		</release>
+
+		<release version="0.9.22" date="2007-11-11" description="Internal release">
+			<action dev="jhux" type="add">
+				Preferences-SourceNames: "Add/Edit Source-Name"-Dialog.
+			</action>
+			<action dev="jhux" type="add">
+				Basic IM "Send event" via Bonjour
+			</action>
+		</release>
+
+		<release version="0.9.21" date="2007-11-04" description="Internal release">
+			<action dev="jhux" type="add">
+				Shortcuts for Attach and Disconnect
+			</action>
+			<action dev="jhux" type="fix">
+				Mac: Fixed glasspane
+			</action>
+			<action dev="jhux" type="fix">
+				Mac: Fixed statistics.
+			</action>
+			<action dev="jhux" type="fix">
+				Mac: Fixed internal frame icon
+			</action>
+			<action dev="jhux" type="update">
+				UI-Change: Removed menu and toolbar from internal frames, update menu/toolbar in mainframe.
+			</action>
+			<action dev="jhux" type="update">
+				UI-Change: Toolbar in frame instead of event view
+			</action>
+			<action dev="jhux" type="fix">
+				Glasspane in case of internal frames is set to visible in case of inactive frame.
+				Implemented special handling of this case.
+			</action>
+		</release>
+
+		<release version="0.9.20" date="2007-10-28" description="Internal release">
+			<action dev="jhux" type="add">
+				Added ClassicMultiplexSocketAppender-Hack to circumvent http://bugzilla.qos.ch/show_bug.cgi?id=100 .
+			</action>
+			<action dev="jhux" type="add">
+				Added alarm sound to AccessEvents with server error status-code.
+			</action>
+			<action dev="jhux" type="update">
+				UI-Change: Removed Progress and Cancel of search from search panel. Using glasspane overlay instead.
+			</action>
+			<action dev="jhux" type="add">
+				jump to event in unfiltered tab in case of double-click on filtered event.
+			</action>
+		</release>
+
+		<release version="0.9.19.1" date="2007-10-25" description="Internal release">
+			<action dev="jhux" type="fix">
+				Removed JSE6 dependency from sulky-swing.
+			</action>
+		</release>
+
+		<release version="0.9.19" date="2007-10-24" description="Internal release">
+			<action dev="jhux" type="update">
+				Major refactoring. New module lilith-engine.
+			</action>
+			<action dev="jhux" type="add">
+				Support for Access-Logs.
+			</action>
+		</release>
+
+		<release version="0.9.18" date="2007-10-18" description="Internal release">
+			<action dev="jhux" type="fix">
+				Fixed xml-escaping of exceptions in both message and tooltip.
+			</action>
+			<action dev="jhux" type="add">
+				Added simply groovy-conditions. Will be enhanced later.
+			</action>
+			<action dev="jhux" type="add">
+				Multiplexing Appender support.
+			</action>
+		</release>
+
+		<release version="0.9.17" date="2007-10-09" description="Internal release">
+			<action dev="jhux" type="fix">
+				Fixed critical bug in RrdEventConsumer.
+			</action>
+		</release>
+
+		<release version="0.9.16" date="2007-10-05" description="Internal release">
+			<action dev="jhux" type="update">
+				new memory stats.
+			</action>
+			<action dev="jhux" type="update">
+				smaller status bars.
+			</action>
+			<action dev="jhux" type="update">
+				reordered message view, added thread-name.
+			</action>
+			<action dev="jhux" type="update">
+				improved statistics.
+			</action>
+			<action dev="jhux" type="update">
+				about-panel and dialog.
+			</action>
+		</release>
+
+		<release version="0.9.15" date="2007-09-27" description="Internal release">
+			<action dev="jhux" type="fix">
+				Fixed SoftReferenceCachingBuffer.
+			</action>
+			<action dev="jhux" type="fix">
+				Removed unnecessary initialization in OpenPreviousDialog c'tor
+			</action>
+		</release>
+
+		<release version="0.9.14" date="2007-09-24" description="Internal release">
+			<action dev="jhux" type="fix">
+				NPE in MainFrame.collectInactive if there are neither logs nor log-directory (thanks, Johannes ;))
+			</action>
+			<action dev="jhux" type="fix">
+				Fixed JSE6 dependency in StatisticsDialog...
+			</action>
+			<action dev="jhux" type="update">
+				Updated logback and slf4j.
+			</action>
+		</release>
+
+		<release version="0.9.13" date="2007-09-11" description="Internal release">
+			<action dev="jhux" type="fix">
+				Check thread creation and destruction
+			</action>
+			<action dev="jhux" type="fix">
+				Some views seemed to be global...
+			</action>
+			<action dev="jhux" type="fix">
+				Fixed about 5 different memory leaks and thread problems.
+			</action>
+			<action dev="jhux" type="fix">
+				Fixed local id of connection closed "event".
+			</action>
+		</release>
+
+		<release version="0.9.12" date="2007-08-31" description="Internal release">
+			<action dev="jhux" type="add">
+				Log informations in "Open previous" dialog.
+			</action>
+			<action dev="jhux" type="update">
+				Number format in number of events of LoggingViewPanel.
+			</action>
+			<action dev="jhux" type="update">
+				Automatically remove inactive views from menu upon close.
+			</action>
+			<action dev="jhux" type="fix">
+				Further statistics improvements. Fixed a memory leak, too.
+			</action>
+			<action dev="jhux" type="add">
+				Added source selection combo to statistics dialog.
+			</action>
+		</release>
+
+		<release version="0.9.11" date="2007-08-24" description="Internal release">
+			<action dev="jhux" type="add">
+				Added "Open inactive log..." dialog and functionality.
+			</action>
+			<action dev="jhux" type="fix">
+				Most likely fixed Vlads strange "no more connections" problem...
+			</action>
+			<action dev="jhux" type="update">
+				Efficient statistics.
+			</action>
+			<action dev="jhux" type="add">
+				Replace filter (SHIFT-ENTER)
+			</action>
+			<action dev="jhux" type="update">
+				Removed -G option and always start GUI instead.
+			</action>
+			<action dev="jhux" type="add">
+				Focus-visualization for table and message-pane.
+			</action>
+		</release>
+
+		<release version="0.9.10" date="2007-08-17" description="Internal release">
+			<action dev="jhux" type="add">
+				About dialog.
+			</action>
+			<action dev="jhux" type="fix">
+				Start threads after UI is initialized.
+			</action>
+			<action dev="jhux" type="add">
+				Statistics by source (using rrd4j).
+			</action>
+			<action dev="jhux" type="update">
+				Moved Splitter- and Global-Logfiles to subdirectories in ABP.
+			</action>
+			<action dev="jhux" type="add">
+				Active splitter-files have an .active file while active - auto-closed on delete. This is needed for later feature "Open inactive".
+			</action>
+			<action dev="jhux" type="add">
+				Added previous image save path to ApplicationPreferences.
+			</action>
+			<action dev="jhux" type="add">
+				Preferences option if new connections should open their view automatically.
+			</action>
+			<action dev="jhux" type="add">
+				Preferences option if closed connections should close their view automatically.
+			</action>
+			<action dev="jhux" type="fix">
+				Fixed checkboxes in views-menu.
+			</action>
+			<action dev="jhux" type="add">
+				Added previous sound load path to ApplicationPreferences.
+			</action>
+			<action dev="jhux" type="add">
+				Preferences-Option to change Application-Base-Path (ABP). Remember startup-ABP and use that
+				throughout the runtime of the application.
+			</action>
+			<action dev="jhux" type="add">
+				Create a file ".previous.app.path" containing the absolute pervious application base
+				path (PABP). If such a file exists during startup, all files are moved from PABP to ABP.
+			</action>
+			<action dev="jhux" type="add">
+				Add Application-Base-Path (ABP) to preferences dialog in General.
+			</action>
+			<action dev="jhux" type="add">
+				On change of the application path, display a dialog
+				to inform the user that the change will take place upon next restart,
+				giving the option to Exit or Continue.
+			</action>
+			<action dev="jhux" type="add">
+				Implemented splash to show progress of the app-path-move-operation.
+			</action>
+			<action dev="jhux" type="add">
+				Added "Open inactive log..." menu item. No functionality yet. [*command*-SHIFT-O]
+			</action>
+			<action dev="jhux" type="add">
+				Added "Clean all inactive logs" menu item. [*command*-SHIFT-X]
+			</action>
+			<action dev="jhux" type="add">
+				Added "Disconnect" to LoggingViewPanel because of LOGBack-lingering-connection-problem.
+			</action>
+			<action dev="jhux" type="fix">
+				Fix sorting of views in views menu in case of source names.
+			</action>
+			<action dev="jhux" type="fix">
+				Focus traversal in LoggingViewPanel.
+			</action>
+			<action dev="jhux" type="fix">
+				Shortcuts if message-view is focused.
+			</action>
+		</release>
+
+		<release version="0.9.9" date="2007-08-08" description="Internal release">
+			<action dev="jhux" type="fix">
+				Fixed view-menu display-garbage in case of new/closed connection while opened.
+			</action>
+			<action dev="jhux" type="fix">
+				Message-Text in case of no selected event.
+			</action>
+			<action dev="jhux" type="add">
+				HelpIcon in Help-Frames.
+			</action>
+			<action dev="jhux" type="update">
+				Split project into sub-projects.
+			</action>
+			<action dev="jhux" type="add">
+				Added shortcuts for "Remove", "Clean and Remove" and global view..
+			</action>
+			<action dev="jhux" type="fix">
+				Close of unfiltered view just after creation.
+			</action>
+			<action dev="jhux" type="add">
+				Focus selection actions for message and events.
+			</action>
+			<action dev="jhux" type="add">
+				Source Names (Aliases) for primary sources, e.g. "Localhost" for "127.0.0.1", "Test-Server", "Live-Server"...
+			</action>
+			<action dev="jhux" type="update">
+				Preferences dialog can be used to set sounds and source names.
+			</action>
+			<action dev="jhux" type="add">
+				SoundLocations and SourceNames are written to application path (&lt;user.home&gt;/.lumberjack).
+			</action>
+			<action dev="jhux" type="update">
+				Nicer Prefs.
+			</action>
+		</release>
+		
+		<release version="0.9.8" date="2007-08-01" description="Internal release">
+			<action dev="jhux" type="update">
+				Centered frame after detach.
+			</action>
+			<action dev="jhux" type="fix">
+				FilteredBuffer didn't stop filtering after dispose :(
+			</action>
+			<action dev="jhux" type="fix">
+				ProgressBar-update after filtering was canceled.
+			</action>
+			<action dev="jhux" type="add">
+				ESCAPE closes find panel.
+			</action>
+			<action dev="jhux" type="add">
+				Enter in Find-Textfield creates new filtered view.
+			</action>
+			<action dev="jhux" type="add">
+				FindAction shows find view and focuses textfield.
+			</action>
+			<action dev="jhux" type="add">
+				Filter of view is changed on edit.
+			</action>
+			<action dev="jhux" type="update">
+				Close filter actions are properly initialized with tabindex.
+			</action>
+			<action dev="jhux" type="add">
+				Tango icons for LoggingViewState/Global icons of frames.
+			</action>
+			<action dev="jhux" type="add">
+				COMMAND-J selects previous, COMMAND-K the next tab.
+			</action>
+			<action dev="jhux" type="add">
+				COMMAND-G finds previous, COMMAND-SHIFT-G finds next. Shortcuts
+				of find next and find previous have been switched since find 
+				previous is far more common than find next.
+			</action>
+			<action dev="jhux" type="update">
+				Finished switch to Tango icons.
+			</action>
+			<action dev="jhux" type="add">
+				COMMAND-Q exits.
+			</action>
+			<action dev="jhux" type="fix">
+				Use default scrollToBottom for filtered views.
+			</action>
+			<action dev="jhux" type="fix">
+				Prevented icon-change in case of filtered view.
+			</action>
+			<action dev="jhux" type="add">
+				Keyboard help.
+			</action>
+		</release>
+	</body>
+</document>

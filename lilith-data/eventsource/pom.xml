@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.huxhorn.lilith</groupId>
+	<artifactId>de.huxhorn.lilith.data.eventsource</artifactId>
+	<version>${parent.version}</version>
+	<packaging>jar</packaging>
+	<name>Lilith Data Types - Event Source</name>
+	<url>http://lilith.huxhorn.de</url>
+
+	<parent>
+		<groupId>de.huxhorn.lilith</groupId>
+		<artifactId>de.huxhorn.lilith.parent</artifactId>
+<!-- LV --><version>0.9.29-SNAPSHOT</version>
+		<relativePath>../../lilith-parent</relativePath>
+	</parent>
+	
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License v3 (LGPL)</name>
+			<url>http://www.gnu.org/copyleft/lesser.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

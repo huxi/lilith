@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceIdentifier xmlns="http://lilith.sf.net/schema/eventsource/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lilith.sf.net/schema/eventsource/10 http://lilith.sf.net/schema/eventsource/10/EventSource.xsd" identifier="primary" secondaryIdentifier="secondary"/>

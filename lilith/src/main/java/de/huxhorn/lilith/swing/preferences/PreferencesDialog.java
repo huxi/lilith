@@ -1,0 +1,464 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2008 Joern Huxhorn
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package de.huxhorn.lilith.swing.preferences;
+
+import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.sulky.swing.KeyStrokes;
+import de.huxhorn.sulky.conditions.Condition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.io.IOUtils;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
+import javax.swing.JTextPane;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import groovy.ui.Console;
+
+public class PreferencesDialog
+	extends JDialog
+{
+	private final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
+
+	private ApplicationPreferences applicationPreferences;
+	private MainFrame mainFrame;
+
+	private JTabbedPane tabbedPane;
+
+	private GeneralPanel generalPanel;
+	private SoundsPanel soundsPanel;
+	private SourcesPanel sourcesPanel;
+	private SourceListsPanel sourceListsPanel;
+	private FiltersPanel filtersPanel;
+	private Map<String, String> sourceNames;
+	private Map<String, Set<String>> sourceLists;
+	private SourceFilteringPanel sourceFilteringPanel;
+	private String blackListName;
+	private String whiteListName;
+	private ApplicationPreferences.SourceFiltering sourceFiltering;
+	private Map<String, Condition> conditions;
+
+	public PreferencesDialog(MainFrame mainFrame)
+	{
+		super(mainFrame, "Preferences");
+		this.mainFrame=mainFrame;
+		this.applicationPreferences=mainFrame.getApplicationPreferences();
+		createUI();
+	}
+
+	public ApplicationPreferences getApplicationPreferences()
+	{
+		return applicationPreferences;
+	}
+
+	private void createUI()
+	{
+		generalPanel = new GeneralPanel(this);
+		soundsPanel = new SoundsPanel(this);
+		sourcesPanel = new SourcesPanel(this);
+		sourceListsPanel = new SourceListsPanel(this);
+		sourceFilteringPanel = new SourceFilteringPanel(this);
+		filtersPanel = new FiltersPanel(this);
+
+		tabbedPane=new JTabbedPane();
+		tabbedPane.setPreferredSize(new Dimension(400,300));
+
+		tabbedPane.add("General", generalPanel);
+		tabbedPane.add("Sounds", soundsPanel);
+		tabbedPane.add("Sources", sourcesPanel);
+		tabbedPane.add("Source Lists", sourceListsPanel);
+		tabbedPane.add("Source Filtering", sourceFilteringPanel);
+		tabbedPane.add("Event Filters", filtersPanel);
+		//tabbedPane.setEnabledAt(tabbedPane.getTabCount()-1, false);
+
+		// Main buttons
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+		buttonPanel.add(new JButton(new OkAction()));
+		buttonPanel.add(new JButton(new ApplyAction()));
+		buttonPanel.add(new JButton(new ResetAction()));
+		CancelAction cancelAction = new CancelAction();
+		buttonPanel.add(new JButton(cancelAction));
+
+
+		Container contentPane = getContentPane();
+		contentPane.setLayout(new BorderLayout());
+		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		contentPane.add(buttonPanel, BorderLayout.SOUTH);
+		KeyStrokes.registerCommand(tabbedPane, cancelAction, "CANCEL_ACTION");
+		KeyStrokes.registerCommand(buttonPanel, cancelAction, "CANCEL_ACTION");
+	}
+
+
+
+	private void initUI()
+	{
+		generalPanel.initUI();
+		soundsPanel.initUI();
+		sourceNames = applicationPreferences.getSourceNames();
+		if(sourceNames==null)
+		{
+			sourceNames=new HashMap<String, String>();
+		}
+		else
+		{
+			sourceNames=new HashMap<String, String>(sourceNames);
+		}
+		conditions = applicationPreferences.getConditions();
+		sourceLists = applicationPreferences.getSourceLists();
+		sourcesPanel.initUI();
+		sourceListsPanel.initUI();
+		sourceFilteringPanel.initUI();
+		filtersPanel.initUI();
+	}
+
+	public Map<String, String> getSourceNames()
+	{
+		return sourceNames;
+	}
+
+	public void setSourceNames(Map<String, String> sourceNames)
+	{
+		this.sourceNames=sourceNames;
+		sourcesPanel.initUI();
+		sourceListsPanel.initUI();
+	}
+
+	public void setSourceName(String oldIdentifier, String newIdentifier, String sourceName)
+	{
+		if(sourceNames.containsKey(oldIdentifier))
+		{
+			sourceNames.remove(oldIdentifier);
+		}
+		sourceNames.put(newIdentifier, sourceName);
+		sourcesPanel.initUI();
+		sourceListsPanel.initUI();
+	}
+
+	public void setSourceList(String oldName, String newName, List<Source> sourceList)
+	{
+		if(sourceLists.containsKey(oldName))
+		{
+			sourceLists.remove(oldName);
+		}
+		Set<String> newList=new HashSet<String>();
+		for(Source s:sourceList)
+		{
+			newList.add(s.getIdentifier());
+		}
+		sourceLists.put(newName, newList);
+		sourceListsPanel.initUI();
+		sourceFilteringPanel.initUI();
+	}
+
+	public List<Source> getSourceList(String name)
+	{
+		Set<String> srcList=sourceLists.get(name);
+		if(srcList!=null)
+		{
+			List<Source> result=new ArrayList<Source>();
+			for(String current: srcList)
+			{
+				Source s = new Source();
+				s.setIdentifier(current);
+				s.setName(getSourceName(current));
+				result.add(s);
+			}
+			Collections.sort(result);
+			return result;
+		}
+		return new ArrayList<Source>();
+	}
+
+	private String getSourceName(String identifier)
+	{
+		String result=sourceNames.get(identifier);
+		if(result==null)
+		{
+			result=identifier;
+		}
+		return result;
+	}
+
+
+
+	private void saveSettings()
+	{
+		generalPanel.saveSettings();
+		soundsPanel.saveSettings();
+		applicationPreferences.setSourceNames(sourceNames);
+		applicationPreferences.setSourceLists(sourceLists);
+		applicationPreferences.setBlackListName(blackListName);
+		applicationPreferences.setWhiteListName(whiteListName);
+		applicationPreferences.setSourceFiltering(sourceFiltering);
+		// TODO: check if previously initialized!!
+		if(conditions!=null)
+		{
+			applicationPreferences.setConditions(conditions);
+		}
+		//sourcesPanel.saveSettings();
+		//sourceListsPanel.saveSettings();
+	}
+
+	private void resetSettings()
+	{
+		applicationPreferences.reset();
+		initUI();
+	}
+
+	public void setVisible(boolean visible)
+	{
+		if(visible != isVisible())
+		{
+			if(visible)
+			{
+				initUI();
+			}
+			super.setVisible(visible);
+		}
+	}
+
+	public List<String> getSourceListNames()
+	{
+		return new ArrayList<String>(sourceLists.keySet());
+	}
+
+	public void removeSourceList(String sourceListName)
+	{
+		if(sourceLists.containsKey(sourceListName))
+		{
+			sourceLists.remove(sourceListName);
+			sourceListsPanel.initUI();
+			sourceFilteringPanel.initUI();
+		}
+	}
+
+	public String getBlackListName()
+	{
+		if(blackListName==null)
+		{
+			blackListName=applicationPreferences.getBlackListName();
+		}
+		return blackListName;
+	}
+
+	public String getWhiteListName()
+	{
+		if(whiteListName==null)
+		{
+			whiteListName=applicationPreferences.getWhiteListName();
+		}
+		return whiteListName;
+	}
+
+	public ApplicationPreferences.SourceFiltering getSourceFiltering()
+	{
+		if(sourceFiltering==null)
+		{
+			sourceFiltering=applicationPreferences.getSourceFiltering();
+		}
+		return sourceFiltering;
+	}
+
+	public void setSourceFiltering(ApplicationPreferences.SourceFiltering sourceFiltering)
+	{
+		this.sourceFiltering=sourceFiltering;
+	}
+
+	public void setBlackListName(String blackListName)
+	{
+		this.blackListName=blackListName;
+	}
+
+	public void setWhiteListName(String whiteListName)
+	{
+		this.whiteListName=whiteListName;
+	}
+
+	public Map<String, Condition> getConditions()
+	{
+		return conditions;
+	}
+
+	public void setConditions(Map<String, Condition> conditions)
+	{
+		this.conditions = conditions;
+		if(logger.isInfoEnabled()) logger.info("this.conditions={}", this.conditions);
+	}
+
+	private class OkAction
+		extends AbstractAction
+	{
+		public OkAction()
+		{
+			super("Ok");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			saveSettings();
+			setVisible(false);
+		}
+	}
+
+	private class ApplyAction
+		extends AbstractAction
+	{
+		public ApplyAction()
+		{
+			super("Apply");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			saveSettings();
+		}
+	}
+
+	private class ResetAction
+		extends AbstractAction
+	{
+		public ResetAction()
+		{
+			super("Reset");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			resetSettings();
+		}
+	}
+
+	private class CancelAction
+		extends AbstractAction
+	{
+		public CancelAction()
+		{
+			super("Cancel");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			setVisible(false);
+		}
+	}
+
+	public void editSourceName(String sourceIdentifier)
+	{
+		tabbedPane.setSelectedComponent(sourcesPanel);
+		if(!isVisible())
+		{
+			mainFrame.showPreferencesDialog();
+		}
+		sourcesPanel.editSourceName(sourceIdentifier);
+	}
+
+	public void editDetailsFormatter()
+	{
+		Console console = new Console();
+		File messageViewRoot = applicationPreferences.getDetailsViewRoot();
+		File messageViewGroovyFile = new File(messageViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
+
+		EventWrapper<LoggingEvent> eventWrapper=new EventWrapper<LoggingEvent>(new SourceIdentifier("identifier", "secondaryIdentifier"), 17, new LoggingEvent());
+		console.setVariable("eventWrapper", eventWrapper);
+
+		console.setCurrentFileChooserDir(messageViewRoot);
+		String text="";
+		if(messageViewGroovyFile.isFile())
+		{
+			// TODO: init with default if not...
+			InputStream is;
+			try
+			{
+				is = new FileInputStream(messageViewGroovyFile);
+				List lines = IOUtils.readLines(is, "UTF-8");
+				boolean isFirst=true;
+				StringBuffer textBuffer=new StringBuffer();
+				for(Object o:lines)
+				{
+					String s= (String) o;
+					if(isFirst)
+					{
+						isFirst=false;
+					}
+					else
+					{
+						textBuffer.append("\n");
+					}
+					textBuffer.append(s);
+				}
+				text=textBuffer.toString();
+			}
+			catch (IOException e)
+			{
+				if(logger.isInfoEnabled()) logger.info("Exception while reading '"+messageViewGroovyFile.getAbsolutePath()+"'.", e);
+			}
+		}
+		console.run(); // initializes everything
+
+		console.setScriptFile(messageViewGroovyFile);
+		JTextPane inputArea = console.getInputArea();
+		inputArea.setText(text);
+        console.setDirty(false);
+        inputArea.setCaretPosition(0);
+		inputArea.requestFocusInWindow();
+//		console.selectFilename();
+//		console.fileOpen();
+
+
+	}
+
+
+
+	public void editCondition(Condition condition)
+	{
+		tabbedPane.setSelectedComponent(filtersPanel);
+		if(!isVisible())
+		{
+			mainFrame.showPreferencesDialog();
+		}
+		filtersPanel.editCondition(condition);
+	}
+}

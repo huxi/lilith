@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Known Problems</title>
+		<link href="help.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<p><a href="index.xhtml">ToC</a></p>
+
+		<h1><a name="top">Known Problems</a></h1>
+
+		<ul>
+			<li>The 'Send to' functionality isn't working as expected if the network infrastructure changes.
+				It should work but doesn't. I think it's a JmDNS problem but I have to investigate further.</li>
+			<li>The 'Edit groovy!' functionality is currently broken. Just don't use it.
+				See http://jira.codehaus.org/browse/GROOVY-2790 for more information.</li>
+			<li>It's possible to save the current filter using *command* I but you can't use
+			them at the moment ;)</li>
+			<li>Copy to clipboard does not work in details view. This is a limitation of Flying Saucer that's used as XHTML renderer. Instead, you can copy parts or all of the event using the context menu.</li>
+			<li>'Copy event' was meant to copy the event as HTML but this is severely broken in Java. There's no workaround available but this will *probably* be fixed in JDK7. So for now, 'Copy event' copies the XHTML code as text...</li>
+			<li>'Clean all inactive logs' is currently executed on the EventDispatchThread. This means that it might look like the UI is frozen if there are lots of files. Just be patient for now, this will be changed in the future.</li>
+		</ul>
+		<p><a href="#top">Back to top.</a></p>
+	</body>
+</html>

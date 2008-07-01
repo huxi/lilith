@@ -1,0 +1,20 @@
+Lilith
+
+A powerful log-viewer
+for LOGBack!
+
+
+(C) 2007-2008
+by Jörn Huxhorn.
+
+Thanks
+(in alphabetical order)
+for suggestions and beta-testing to:
+
+Björn "Zusammenspieler" Brockmann
+Lothar "NIL" Cezanne
+Johannes "Joe" Harth
+Matthias "Alfred E." Neumann
+Vlad "666" Satanovski
+
+
