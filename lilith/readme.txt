@@ -7,7 +7,7 @@ It is possible, though, to use Lilith >= V0.9.24 side by side with Lumberjack V0
 so a smooth transition should be possible...
 
 Start Lilith with
-java -jar lilith.jar
+java -jar lib/lilith.jar
 
 Add -n if you want to use the napkin look and feel.
 
