@@ -7,8 +7,14 @@
 <!-- LV --><version>0.9.29-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith master pom file</name>
-	<url>http://sulky.huxhorn.de</url>
+	<url>http://lilith.huxhorn.de</url>
 	
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/</url>
+	</scm>
+
 	<modules>
 		<module>lilith-parent</module>
 		<module>jul-slf4j-handler</module>

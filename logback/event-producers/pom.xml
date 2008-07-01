@@ -9,6 +9,12 @@
 	<name>Logback Event Producers</name>
 	<url>http://lilith.huxhorn.de</url>
 	
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback/event-producers</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback/event-producers</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/logback/event-producers/</url>
+	</scm>
+
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>

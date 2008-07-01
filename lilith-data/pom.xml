@@ -7,7 +7,13 @@
 <!-- LV --><version>0.9.29-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith Data master pom file</name>
-	<url>http://sulky.huxhorn.de</url>
+	<url>http://lilith.huxhorn.de</url>
+
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-data/</url>
+	</scm>
 	
 	<modules>
 		<module>eventsource</module>
