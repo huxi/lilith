@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.master</artifactId>
-<!-- LV --><version>0.9.29</version>
+<!-- LV --><version>0.9.30-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith master pom file</name>
 	<url>http://lilith.huxhorn.de</url>
