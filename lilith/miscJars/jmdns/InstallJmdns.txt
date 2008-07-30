@@ -1,2 +1,4 @@
 Execute the following line:
-mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=jmdns -DartifactId=jmdns -Dversion=2.1-SNAPSHOT -Dfile=jmdns.jar
+mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=de.huxhorn.lilith -DartifactId=de.huxhorn.lilith.3rdparty.jmdns -Dversion=2.0-patched -Dfile=jmdns.jar
+
+mvn deploy:deploy-file -Durl=scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dfile=jmdns.jar -DpomFile=jmdns-pom.xml

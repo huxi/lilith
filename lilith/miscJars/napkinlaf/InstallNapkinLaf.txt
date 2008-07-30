@@ -1,2 +1,0 @@
-Execute the following line:
-mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=napkinlaf -DartifactId=napkinlaf -Dversion=1.0.001 -Dfile=napkinlaf.jar

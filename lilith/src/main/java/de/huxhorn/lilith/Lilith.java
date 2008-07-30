@@ -83,7 +83,7 @@ public class Lilith
 	private static final String PRINT_HELP_SHORT = "h";
 	private static final String FLUSH_PREFERENCES_SHORT = "F";
 	private static final String INDEX_SHORT = "i";
-	private static final String NAPKIN_LAF_SHORT = "n";
+	//private static final String NAPKIN_LAF_SHORT = "n";
 	private static final String DISABLE_BONJOUR_SHORT = "b";
 
 	private static final String VERBOSE = "verbose";
@@ -91,7 +91,7 @@ public class Lilith
 	private static final String PRINT_HELP = "help";
 	private static final String FLUSH_PREFERENCES = "flushPrefs";
 	private static final String INDEX = "indexFile";
-	private static final String NAPKIN_LAF = "NapkinLaf";
+	//private static final String NAPKIN_LAF = "NapkinLaf";
 	private static final String DISABLE_BONJOUR = "bonjour";
 
 	static
@@ -155,7 +155,7 @@ public class Lilith
 		});
 	}
 
-	public static void startUI(final String appTitle, boolean noNapkinLaf, boolean enableBonjour)//, final SourceManager sourceManager, final Sounds sounds)
+	public static void startUI(final String appTitle, /*boolean noNapkinLaf,*/ boolean enableBonjour)//, final SourceManager sourceManager, final Sounds sounds)
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
@@ -174,6 +174,7 @@ public class Lilith
 				// this shouldn't happen since we only run on 1.5+
 			}
 		}
+		/*
 		else if (!noNapkinLaf)
 		{
 			String defaultLaf = System.getProperty("swing.defaultlaf");
@@ -182,7 +183,7 @@ public class Lilith
 				System.setProperty("swing.defaultlaf", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
 			}
 		}
-
+        */
 
 		try
 		{
@@ -394,13 +395,13 @@ public class Lilith
 		options.addOption(VERBOSE_SHORT, VERBOSE, false, "show more info.");
 		//options.addOption(GUI_SHORT, GUI, false, "show gui.");
 		options.addOption(FLUSH_PREFERENCES_SHORT, FLUSH_PREFERENCES, false, "flush gui preferences.");
-		options.addOption(NAPKIN_LAF_SHORT, NAPKIN_LAF, false, "use NapkinLAF.");
+		//options.addOption(NAPKIN_LAF_SHORT, NAPKIN_LAF, false, "use NapkinLAF.");
 		options.addOption(DISABLE_BONJOUR_SHORT, DISABLE_BONJOUR, false, "disable Bonjor.");
 		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
 		boolean verbose = false;
 //		boolean showGui = true;
 		boolean flushPrefs = false;
-		boolean noNapkinLaf = false;
+		//boolean noNapkinLaf = false;
 		boolean enableBonjour = false;
 		boolean indexFileOpt = false;
 		boolean printHelp;
@@ -413,7 +414,7 @@ public class Lilith
 			verbose = line.hasOption(VERBOSE_SHORT);
 			printHelp = line.hasOption(PRINT_HELP_SHORT);
 			flushPrefs = line.hasOption(FLUSH_PREFERENCES_SHORT);
-			noNapkinLaf = !line.hasOption(NAPKIN_LAF_SHORT);
+			//noNapkinLaf = !line.hasOption(NAPKIN_LAF_SHORT);
 			enableBonjour = !line.hasOption(DISABLE_BONJOUR_SHORT);
 			indexFileOpt = line.hasOption(INDEX_SHORT);
 //			if(indexFileOpt)
@@ -514,7 +515,7 @@ public class Lilith
 
 //		if(showGui)
 //		{
-		startUI(appTitle, noNapkinLaf, enableBonjour);
+		startUI(appTitle, /*noNapkinLaf,*/ enableBonjour);
 //		}
 	}
 

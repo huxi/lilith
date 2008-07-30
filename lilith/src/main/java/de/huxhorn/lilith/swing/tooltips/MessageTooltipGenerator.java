@@ -24,7 +24,6 @@ import de.huxhorn.sulky.formatting.SimpleXml;
 import javax.swing.JTable;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.MessageFormatter;
 
 public class MessageTooltipGenerator
 	implements TooltipGenerator
@@ -43,8 +42,6 @@ public class MessageTooltipGenerator
 				String text=event.getMessage();
 				if(text!=null)
 				{
-					text = MessageFormatter.format(text, event.getArguments());
-
 					tooltip=text.trim(); // remove empty lines etc.
 					tooltip=SimpleXml.escape(tooltip);
 					int newlineIndex=text.indexOf("\n");

@@ -20,7 +20,6 @@ package de.huxhorn.lilith.filters;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.MessageFormatter;
 
 import java.io.ObjectInputStream;
 import java.io.IOException;
@@ -101,7 +100,6 @@ public class MessageContainsCondition
 				{
 					return false;
 				}
-				message = MessageFormatter.format(message, event.getArguments());
 
 				if(ignoringCase)
 				{

@@ -40,13 +40,19 @@ public class LoggingEvent
 	private Level level;
 	private String threadName;
 	private Date timeStamp;
+
+	/**
+	 * Must not change the name to messagePattern because of serialization.
+	 */
 	private String message;
+
 	private String[] arguments;
 	private ThrowableInfo throwable;
 	private Map<String,String> mdc;
 	private Marker marker;
 	private StackTraceElement[] callStack;
 	private String applicationIdentifier;
+	private transient String formattedMessage;
 
 	public String getLogger()
 	{
@@ -68,14 +74,25 @@ public class LoggingEvent
 		this.threadName = threadName;
 	}
 
-	public String getMessage()
+	public String getMessagePattern()
 	{
 		return message;
 	}
 
-	public void setMessage(String message)
+	public void setMessagePattern(String messagePattern)
 	{
-		this.message = message;
+		this.message = messagePattern;
+		this.formattedMessage=null;
+	}
+
+	public String getMessage()
+	{
+		if(this.formattedMessage==null)
+		{
+			// lazy init
+			this.formattedMessage=MessageFormatter.format(message, arguments);
+		}
+		return this.formattedMessage;
 	}
 
 	public String[] getArguments()
@@ -86,6 +103,7 @@ public class LoggingEvent
 	public void setArguments(String[] arguments)
 	{
 		this.arguments = arguments;
+		this.formattedMessage=null;
 	}
 
 	public Date getTimeStamp()
@@ -205,7 +223,7 @@ public class LoggingEvent
 		result.append("LoggingEvent[");
 		result.append("logger=").append(logger).append(", ");
 		result.append("level=").append(level).append(", ");
-		result.append("message=").append(message).append(", ");
+		result.append("messagePattern=").append(message).append(", ");
 		result.append("threadName=").append(threadName).append(", ");
 		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
 		result.append("timeStamp=").append(timeStamp);

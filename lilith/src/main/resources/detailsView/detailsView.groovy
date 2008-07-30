@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 //import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 //import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
-import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 //import de.huxhorn.lilith.data.logging.Marker;
 //import de.huxhorn.lilith.data.logging.ThrowableInfo;
@@ -329,7 +328,6 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 						tt
 						{
 							def message=event.message;
-							message=MessageFormatter.format(message, event.arguments);
 							mkp.yield message
 						}
 					}

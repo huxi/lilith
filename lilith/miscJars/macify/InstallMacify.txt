@@ -1,0 +1,4 @@
+Execute the following line:
+mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=de.huxhorn.lilith -DartifactId=de.huxhorn.lilith.3rdparty.macify -Dversion=1.1 -Dfile=macify-1.1.jar
+
+mvn deploy:deploy-file -Durl=scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dfile=macify-1.1.jar -DpomFile=macify-pom.xml

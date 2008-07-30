@@ -14,8 +14,12 @@
 		
 		<h1><a name="top">Using the Lilith Classic Appender</a></h1>
 
-		<p>The Lilith Classic Appender is a replacement for <tt>ch.qos.logback.classic.net.SocketAppender</tt>.
-		While LogBACK's appender is stream-based, i.e. it streams logging events using an <tt>ObjectOutputStream</tt> the
+		<p>The Lilith Classic Appender is a replacement for <tt>ch.qos.logback.classic.net.SocketAppender</tt>.<br />
+			This appender, in contrast to logbacks, supports logger.debug("{} {}", new Object[]{foo, bar, throwable), i.e.
+			if the last given parameter of a log message is a Throwable and it is not used up in the message pattern then it will
+			be used as the Throwable of the LoggingEvent, similar to logger.debug(""+foo+" "+bar, throwable).</p>
+
+		<p>While LogBACK's appender is stream-based, i.e. it streams logging events using an <tt>ObjectOutputStream</tt> the
 		Lilith appender is message based, i.e. it sends logging events one after the other as single messages.</p>
 
 		<p>A message consists of an integer that specifies the number of bytes of the following event, followed by the
