@@ -1,2 +1,0 @@
-Execute the following line:
-mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=flyingsaucer -DartifactId=core-renderer -Dversion=8Pre2 -Dfile=core-renderer.jar

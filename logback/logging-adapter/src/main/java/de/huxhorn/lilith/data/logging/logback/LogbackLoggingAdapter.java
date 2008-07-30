@@ -14,6 +14,7 @@ import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.ThrowableInformation;
 import ch.qos.logback.classic.ClassicGlobal;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.MessageFormatter;
 
 public class LogbackLoggingAdapter
 {
@@ -51,20 +52,42 @@ public class LogbackLoggingAdapter
 			return null;
 		}
 		LoggingEvent result=new LoggingEvent();
-		initArguments(event, result);
+		String messagePattern=event.getMessage();
+		result.setMessagePattern(messagePattern);
+		Object[] originalArguments = event.getArgumentArray();
+		MessageFormatter.ArgumentResult argumentResult = 
+				MessageFormatter.evaluateArguments(messagePattern, originalArguments);
+
+		boolean throwableInitialized=false;
+		if(argumentResult!=null)
+		{
+			result.setArguments(argumentResult.getArguments());
+			Throwable t=argumentResult.getThrowable();
+			if(t!=null)
+			{
+				result.setThrowable(initFromThrowableRecursive(t));
+				throwableInitialized=true;
+			}
+		}
+		if(!throwableInitialized)
+		{
+			// to catch exceptions given using special methods in logback.
+			initThrowable(event, result);
+		}
+
 		initCallStack(event, result);
 		result.setLevel(LoggingEvent.Level.valueOf(event.getLevel().toString()));
 		result.setLogger(event.getLoggerRemoteView().getName());
 		initMarker(event, result);
 		result.setMdc(event.getMDCPropertyMap());
-		result.setMessage(event.getMessage());
+
 		result.setThreadName(event.getThreadName());
-		initThrowable(event, result);
 		result.setTimeStamp(new Date(event.getTimeStamp()));
 		return result;
 	}
 
 
+	/*
 	private void initArguments(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)
 	{
 		Object[] origArgs=src.getArgumentArray();
@@ -90,6 +113,7 @@ public class LogbackLoggingAdapter
 
 		dst.setArguments(args);
 	}
+    */
 
 	private void initThrowable(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)
 	{
@@ -104,6 +128,7 @@ public class LogbackLoggingAdapter
 		}
 	}
 
+	// not private because of testcase
 	Throwable getThrowable(ThrowableInformation ti)
 	{
 		if(throwableField==null)

@@ -84,6 +84,10 @@ public class DebugDialog
 		button = new JButton(action);
 		debugToolbar.add(button);
 
+		action = new LogParamExceptionsAction();
+		button = new JButton(action);
+		debugToolbar.add(button);
+
 		action = new LogSkullAction();
 		button = new JButton(action);
 		debugToolbar.add(button);
@@ -146,6 +150,7 @@ public class DebugDialog
 				loggerEventEmitter.logStuffWithMdcAndMarker();
 				loggerEventEmitter.logException();
 				loggerEventEmitter.logException2();
+				loggerEventEmitter.logParamException();
 				loggerEventEmitter.logSkull();
 				loggerEventEmitter.logTruth();
 				loggerEventEmitter.logAnonymous();
@@ -249,6 +254,27 @@ public class DebugDialog
 			{
 				loggerEventEmitter.logException();
 				loggerEventEmitter.logException2();
+			}
+			catch (InterruptedException ex)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
+			}
+		}
+	}
+
+	private class LogParamExceptionsAction
+		extends AbstractAction
+	{
+		public LogParamExceptionsAction()
+		{
+			super("Log param exceptions");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			try
+			{
+				loggerEventEmitter.logParamException();
 			}
 			catch (InterruptedException ex)
 			{

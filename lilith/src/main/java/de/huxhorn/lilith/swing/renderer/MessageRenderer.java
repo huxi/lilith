@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.renderer;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.swing.Colors;
 import de.huxhorn.lilith.swing.ColorsProvider;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -66,7 +65,6 @@ public class MessageRenderer
 				text=event.getMessage();
 				if(text!=null)
 				{
-					text = MessageFormatter.format(text, event.getArguments());
 					int newlineIndex=text.indexOf("\n");
 					if(newlineIndex>-1)
 					{

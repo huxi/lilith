@@ -74,7 +74,7 @@ public class LoggingEventReader
 				e.printStackTrace();
 			}
 			reader.nextTag();
-			result.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
+			result.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
 			readArguments(reader, result);
 			readThrowable(reader, result);
 			result.setMdc(readMdc(reader));

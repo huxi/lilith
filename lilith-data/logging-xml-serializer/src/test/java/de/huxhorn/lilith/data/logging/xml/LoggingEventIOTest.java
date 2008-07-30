@@ -56,7 +56,7 @@ public class LoggingEventIOTest
 		event.setLogger("Logger");
 		event.setLevel(LoggingEvent.Level.INFO);
 		event.setTimeStamp(new Date());
-		event.setMessage("EventMessage");
+		event.setMessagePattern("EventMessage");
 		return event;
 	}
 

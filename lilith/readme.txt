@@ -9,8 +9,6 @@ so a smooth transition should be possible...
 Start Lilith with
 java -jar lib/lilith.jar
 
-Add -n if you want to use the napkin look and feel.
-
 Lilith opens:
 - a standard LoggingEvent server socket on port 4560 as used by LogBACK.
 - a standard AccessEvent server socket on port 4570 as used by LogBACK.

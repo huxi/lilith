@@ -2708,8 +2708,6 @@ public class ViewActions
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
 					message=loggingEvent.getMessage();
-					message = de.huxhorn.lilith.data.logging.MessageFormatter.format(message, loggingEvent.getArguments());
-
 				}
 			}
 			setMessage(message);

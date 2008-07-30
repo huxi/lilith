@@ -75,7 +75,41 @@
 		
 		<release version="0.9.30" date="TBD" description="Future release">
 			<action dev="jhux" type="update">
+				Implemented own message formatting in MessageFormatter that does not rely on slf4j anymore.
+			</action>
+			<action dev="jhux" type="add">
+				Added support for Exceptions in case of parameter array,
+				i.e. log.debug("{} {}", new Object[]{"One", "Two", new Throwable()) will both
+				evaluate the parameters in the message and the additional Throwable as the Throwable of the LoggingEvent.
+				See http://bugzilla.slf4j.org/show_bug.cgi?id=70 .
+				This was also reported as a Lilith bug by Alfred. :)
+				This feature will only work if one of the Lilith appenders is used, not with
+				the original ch.qos.logback.classic.net.SocketAppender.
+			</action>
+			<action dev="jhux" type="update">
+				LoggingEvent.getMessage() does now return a lazily initialized formatted log message.
+				There's no setMessage method anymore.
+				Instead, there are set/getMessagePattern methods.
+				All code in Lilith has been changed to not perform the message formatting manually
+				but using getMessage instead.
+				People that have not changed [user.home]/.lilith/detailsView/detailsView.groovy themselves
+				should simply delete that file and restart Lilith. While this is not strictly necessary
+				it will result in increased performance.
+			</action>
+			<action dev="jhux" type="update">
+				Updated Macify dependency to 1.1.
+			</action>
+			<action dev="jhux" type="update">
+				Cleanup of poms and dependencies for submission to central maven repository.
+			</action>
+			<action dev="jhux" type="update">
+				Removed Napkin option. Not really needed anymore and I'm too lazy to add the 3rd party dependency ;).
+			</action>
+			<action dev="jhux" type="update">
 				TODO: "Clean all inactive logs" in another thread with progress.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: "Clean logs on exit" option.
 			</action>
 			<action dev="jhux" type="update">
 				TODO: go to source on different thread.

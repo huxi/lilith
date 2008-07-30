@@ -20,7 +20,6 @@ package de.huxhorn.lilith.filters;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
@@ -126,7 +125,6 @@ public class EventContainsCondition
 					String message=event.getMessage();
 					if(message!=null)
 					{
-						message = MessageFormatter.format(message, event.getArguments());
 						if(checkString(message))
 						{
 							return true;
