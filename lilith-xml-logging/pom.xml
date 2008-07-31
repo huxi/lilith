@@ -6,7 +6,7 @@
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
 	<name>Lilith XML Logging</name>
-	<url>http://lilith.huxhorn.de</url>
+	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 
 	<scm>
 		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-xml-logging</connection>
