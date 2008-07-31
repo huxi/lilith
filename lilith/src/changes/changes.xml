@@ -77,7 +77,7 @@
 			<action dev="jhux" type="update">
 				Implemented own message formatting in MessageFormatter that does not rely on slf4j anymore.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="2034328">
 				Added support for Exceptions in case of parameter array,
 				i.e. log.debug("{} {}", new Object[]{"One", "Two", new Throwable()) will both
 				evaluate the parameters in the message and the additional Throwable as the Throwable of the LoggingEvent.
@@ -102,7 +102,7 @@
 			<action dev="jhux" type="update">
 				Cleanup of poms and dependencies for submission to central maven repository.
 			</action>
-			<action dev="jhux" type="update">
+			<action dev="jhux" type="remove">
 				Removed Napkin option. Not really needed anymore and I'm too lazy to add the 3rd party dependency ;).
 			</action>
 			<action dev="jhux" type="update">
