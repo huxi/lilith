@@ -6,6 +6,7 @@
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
 	<name>Lilith Engine</name>
+	<description>This file is part of Lilith. It contains the engine part of Lilith.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
 	<scm>
