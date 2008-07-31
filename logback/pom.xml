@@ -6,7 +6,8 @@
 	<artifactId>de.huxhorn.lilith.logback.master</artifactId>
 <!-- LV --><version>0.9.30-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Lilith Data master pom file</name>
+	<name>Lilith Logback master pom file</name>
+	<description>This file is part of Lilith. It's the master pom file that is used to build all logback modules.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 
 	<scm>

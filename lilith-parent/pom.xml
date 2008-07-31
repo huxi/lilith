@@ -6,6 +6,7 @@
 <!-- LV --><version>0.9.30-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith parent pom file</name>
+	<description>This file is part of Lilith. It's the parent pom that contains general project informations.</description>
 	<url>http://lilith.huxhorn.de/projects/</url>
 	
 	<scm>

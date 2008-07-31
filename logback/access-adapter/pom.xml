@@ -5,7 +5,8 @@
 	<artifactId>de.huxhorn.lilith.logback.access-adapter</artifactId>
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
-	<name>Logback Logging Adapter</name>
+	<name>Logback Access Adapter</name>
+	<description>This file is part of Lilith. It contains the adapter to translate from logback to lilith access events.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
 	<scm>

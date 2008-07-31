@@ -6,6 +6,7 @@
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
 	<name>Logback Multiplex Appender Classic - XML</name>
+	<description>This file is part of Lilith. It contains the multiplexing logging appender (XML).</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
 	<scm>

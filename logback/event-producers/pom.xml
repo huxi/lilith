@@ -6,6 +6,7 @@
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
 	<name>Logback Event Producers</name>
+	<description>This file is part of Lilith. It contains event producers.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
 	<scm>
