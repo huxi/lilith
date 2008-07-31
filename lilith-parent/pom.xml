@@ -6,7 +6,7 @@
 <!-- LV --><version>0.9.30-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith parent pom file</name>
-	<url>http://lilith.huxhorn.de</url>
+	<url>http://lilith.huxhorn.de/projects/</url>
 	
 	<scm>
 		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-parent</connection>
@@ -17,7 +17,9 @@
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
 <!-- SV --><sulkyVersion>0.9.3-SNAPSHOT</sulkyVersion>
+		<!--
 		<springVersion>2.0.3</springVersion>
+		-->
 		<commonsLoggingVersion>1.1</commonsLoggingVersion>
 		<slf4jVersion>1.5.0</slf4jVersion>
 		<logbackVersion>0.9.9</logbackVersion>
@@ -32,6 +34,10 @@
 	</licenses>
 
 	<distributionManagement>
+		<site>
+			<id>lilith.huxhorn.de</id>
+			<url>scp://huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/</url>
+		</site>
 		<repository>
 			<id>lilith-repos</id>
 			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
@@ -251,6 +257,7 @@
 				<version>4.4</version>
 			</dependency>
 			
+			<!--
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring</artifactId>
@@ -312,6 +319,7 @@
 				<artifactId>spring-modules-cache</artifactId>
 				<version>${springModulesVersion}</version>
 			</dependency>
+			-->
 			
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -580,11 +588,10 @@
 				</executions>
 			</plugin>
 
-			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>maven-buildnumber-plugin</artifactId>
-				<version>0.9.4</version>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.0-beta-1</version>
 				<configuration>
 					<format>{0,date,yyyy-MM-dd'T'HH:mm:ss}</format>
 					<items>
@@ -602,6 +609,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--
 			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

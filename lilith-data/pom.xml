@@ -7,7 +7,7 @@
 <!-- LV --><version>0.9.30-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith Data master pom file</name>
-	<url>http://lilith.huxhorn.de</url>
+	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 
 	<scm>
 		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data</connection>
@@ -16,6 +16,10 @@
 	</scm>
 	
 	<distributionManagement>
+		<site>
+			<id>lilith.huxhorn.de</id>
+			<url>scp://huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/${pom.artifactId}</url>
+		</site>
 		<repository>
 			<id>lilith-repos</id>
 			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
