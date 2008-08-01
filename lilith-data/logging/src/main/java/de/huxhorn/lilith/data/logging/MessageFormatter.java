@@ -41,47 +41,47 @@ public class MessageFormatter
 			return messagePattern;
 		}
 
-		StringBuilder result=new StringBuilder();
-		int escapeCounter=0;
+		StringBuilder result = new StringBuilder();
+		int escapeCounter = 0;
 		int currentArgument = 0;
-		for(int i=0;i<messagePattern.length();i++)
+		for (int i = 0; i < messagePattern.length(); i++)
 		{
-			char curChar=messagePattern.charAt(i);
-			if(curChar == ESCAPE_CHAR)
+			char curChar = messagePattern.charAt(i);
+			if (curChar == ESCAPE_CHAR)
 			{
 				escapeCounter++;
 			}
-			else if(curChar == DELIM_START)
+			else if (curChar == DELIM_START)
 			{
-				if(escapeCounter%2==1)
+				if (escapeCounter % 2 == 1)
 				{
 					// i.e. escaped
 					// write escaped escape chars
-					int escapedEscapes=escapeCounter/2;
-					for(int j=0;j<escapedEscapes;j++)
+					int escapedEscapes = escapeCounter / 2;
+					for (int j = 0; j < escapedEscapes; j++)
 					{
 						result.append(ESCAPE_CHAR);
 					}
 					result.append(DELIM_START);
-					escapeCounter=0;
+					escapeCounter = 0;
 				}
 				else
 				{
 					// unescaped start delimeter detected.
-					boolean brokenPlaceholder=false;
-					if(i<messagePattern.length()-1)
+					boolean brokenPlaceholder = false;
+					if (i < messagePattern.length() - 1)
 					{
-						if(messagePattern.charAt(i+1) == DELIM_STOP)
+						if (messagePattern.charAt(i + 1) == DELIM_STOP)
 						{
 							// write escaped escape chars
-							int escapedEscapes=escapeCounter/2;
-							for(int j=0;j<escapedEscapes;j++)
+							int escapedEscapes = escapeCounter / 2;
+							for (int j = 0; j < escapedEscapes; j++)
 							{
 								result.append(ESCAPE_CHAR);
 							}
-							escapeCounter=0;
+							escapeCounter = 0;
 
-							if(currentArgument<arguments.length)
+							if (currentArgument < arguments.length)
 							{
 								result.append(arguments[currentArgument]);
 							}
@@ -94,18 +94,18 @@ public class MessageFormatter
 						}
 						else
 						{
-							brokenPlaceholder=true;
+							brokenPlaceholder = true;
 						}
 					}
 					else
 					{
-						brokenPlaceholder=true;
+						brokenPlaceholder = true;
 					}
-					if(brokenPlaceholder)
+					if (brokenPlaceholder)
 					{
 						// broken placeholder, leave rest of string untouched.
 						// write unescaped escape chars
-						for(int j=0;j<escapeCounter;j++)
+						for (int j = 0; j < escapeCounter; j++)
 						{
 							result.append(ESCAPE_CHAR);
 						}
@@ -118,13 +118,13 @@ public class MessageFormatter
 			{
 				// any other char beside ESCAPE or DELIM_START
 				// write unescaped escape chars
-				if(escapeCounter>0)
+				if (escapeCounter > 0)
 				{
-					for(int j=0;j<escapeCounter;j++)
+					for (int j = 0; j < escapeCounter; j++)
 					{
 						result.append(ESCAPE_CHAR);
 					}
-					escapeCounter=0;
+					escapeCounter = 0;
 				}
 				result.append(curChar);
 			}
@@ -134,34 +134,34 @@ public class MessageFormatter
 
 	public static int countArgumentPlaceholders(String messagePattern)
 	{
-		if(messagePattern==null)
+		if (messagePattern == null)
 		{
 			return 0;
 		}
 
-		int delim=messagePattern.indexOf(DELIM_START);
+		int delim = messagePattern.indexOf(DELIM_START);
 
-		if(delim == -1)
+		if (delim == -1)
 		{
 			// special case, no placeholders at all.
 			return 0;
 		}
-		int result=0;
-		boolean isEscaped=false;
-		for(int i=0;i<messagePattern.length();i++)
+		int result = 0;
+		boolean isEscaped = false;
+		for (int i = 0; i < messagePattern.length(); i++)
 		{
 			char curChar = messagePattern.charAt(i);
-			if(curChar == ESCAPE_CHAR)
+			if (curChar == ESCAPE_CHAR)
 			{
-				isEscaped=!isEscaped;
+				isEscaped = !isEscaped;
 			}
-			else if(curChar == DELIM_START)
+			else if (curChar == DELIM_START)
 			{
-				if(!isEscaped)
+				if (!isEscaped)
 				{
-					if(i<messagePattern.length()-1)
+					if (i < messagePattern.length() - 1)
 					{
-						if(messagePattern.charAt(i+1) == DELIM_STOP)
+						if (messagePattern.charAt(i + 1) == DELIM_STOP)
 						{
 							result++;
 							i++;
@@ -173,11 +173,11 @@ public class MessageFormatter
 						}
 					}
 				}
-				isEscaped=false;
+				isEscaped = false;
 			}
 			else
 			{
-				isEscaped=false;
+				isEscaped = false;
 			}
 		}
 		return result;
@@ -185,40 +185,82 @@ public class MessageFormatter
 
 	public static ArgumentResult evaluateArguments(String messagePattern, Object[] arguments)
 	{
-		if(arguments==null)
+		if (arguments == null)
 		{
 			return null;
 		}
-		int argsCount=countArgumentPlaceholders(messagePattern);
-		int resultArgCount=arguments.length;
-		Throwable throwable=null;
-		if(argsCount < arguments.length)
+		int argsCount = countArgumentPlaceholders(messagePattern);
+		int resultArgCount = arguments.length;
+		Throwable throwable = null;
+		if (argsCount < arguments.length)
 		{
-			if(arguments[arguments.length-1] instanceof Throwable)
+			if (arguments[arguments.length - 1] instanceof Throwable)
 			{
-				throwable = (Throwable) arguments[arguments.length-1];
+				throwable = (Throwable) arguments[arguments.length - 1];
 				resultArgCount--;
 			}
 		}
 
-		String[] stringArgs=new String[resultArgCount];
-		for(int i=0;i<stringArgs.length;i++)
+		String[] stringArgs = new String[resultArgCount];
+		for (int i = 0; i < stringArgs.length; i++)
 		{
-			if(arguments[i]!=null)
+			Object o = arguments[i];
+			if (o != null)
 			{
-				if(arguments[i] instanceof String)
+				String argStr;
+				if (o.getClass().isArray())
 				{
-					stringArgs[i]= (String) arguments[i];
+					if (o instanceof byte[])
+					{
+						argStr = Arrays.toString((byte[]) o);
+					}
+					else if (o instanceof short[])
+					{
+						argStr = Arrays.toString((short[]) o);
+					}
+					else if (o instanceof int[])
+					{
+						argStr = Arrays.toString((int[]) o);
+					}
+					else if (o instanceof long[])
+					{
+						argStr = Arrays.toString((long[]) o);
+					}
+					else if (o instanceof float[])
+					{
+						argStr = Arrays.toString((float[]) o);
+					}
+					else if (o instanceof double[])
+					{
+						argStr = Arrays.toString((double[]) o);
+					}
+					else if (o instanceof boolean[])
+					{
+						argStr = Arrays.toString((boolean[]) o);
+					}
+					else if (o instanceof char[])
+					{
+						argStr = Arrays.toString((char[]) o);
+					}
+					else
+					{
+						argStr = Arrays.deepToString((Object[]) o);
+					}
+				}
+				else if (o instanceof String)
+				{
+					argStr = (String) o;
 				}
 				else
 				{
-					stringArgs[i]=arguments[i].toString();
+					argStr = o.toString();
 				}
+				stringArgs[i]=argStr;
 			}
 		}
 		return new ArgumentResult(stringArgs, throwable);
 	}
-	
+
 	/**
 	 * This method returns a MessageFormatter.Result which contains the formatted message as well as an optional
 	 * Throwable.
@@ -359,24 +401,24 @@ public class MessageFormatter
 		@Override
 		public String toString()
 		{
-			StringBuilder result=new StringBuilder();
+			StringBuilder result = new StringBuilder();
 			result.append("Result[throwable=").append(throwable);
 			result.append(", arguments=");
-			if(arguments!=null)
+			if (arguments != null)
 			{
 				result.append("[");
-				boolean isFirst=true;
-				for(String current:arguments)
+				boolean isFirst = true;
+				for (String current : arguments)
 				{
-					if(!isFirst)
+					if (!isFirst)
 					{
 						result.append(", ");
 					}
 					else
 					{
-						isFirst=false;
+						isFirst = false;
 					}
-					if(current!=null)
+					if (current != null)
 					{
 						result.append("'").append(current).append("'");
 					}
