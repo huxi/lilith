@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-<!-- LV --><version>0.9.30-SNAPSHOT</version>
+<!-- LV --><version>0.9.30</version>
 		<relativePath>../../lilith-parent</relativePath>
 	</parent>
 	
