@@ -85,7 +85,7 @@
 			</action>
 		</release>
 
-		<release version="0.9.30" date="TBD" description="Future release">
+		<release version="0.9.30" date="2008-08-01" description="Second public release">
 			<action dev="jhux" type="update">
 				Implemented own message formatting in MessageFormatter that does not rely on slf4j anymore.
 			</action>
