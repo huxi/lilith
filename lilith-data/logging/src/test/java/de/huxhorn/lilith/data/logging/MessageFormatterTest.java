@@ -40,6 +40,13 @@ public class MessageFormatterTest
 		//noinspection ThrowableInstanceNeverThrown
 		Throwable t=new FooThrowable("FooThrowable");
 
+		Integer[] p1 = new Integer[] { i2, i3 };
+
+		Object[] multiArray=new Object[]{null, p1};
+		Object[] multiArrayRecursive=new Object[]{null, p1};
+		multiArrayRecursive[0]=multiArrayRecursive;
+		multiArray[0]=multiArrayRecursive;
+
 		useCases=new UseCase[]
 		{
 
@@ -105,6 +112,18 @@ new UseCase("Escaping", "\\\\{}", new Object[]{i1, i2, i3, t}, 1, "\\1", t),
 new UseCase("Escaping", "\\\\\\{}",  new Object[]{i1, i2, i3, t}, 0, "\\{}", t),
 new UseCase("Escaping", "\\\\\\\\{}",  new Object[]{i1, i2, i3, t}, 1, "\\\\1", t),
 new UseCase("Escaping", "\\{}",  new Object[]{i1, i2, i3, t}, 0, "{}", t),
+new UseCase("ArrayValues", "{}{}",  new Object[]{i1, p1}, 2, i1 + Arrays.toString(p1)),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", p1}, 2, "a" + Arrays.toString(p1)),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new byte[]{1,2}}, 2, "a" + Arrays.toString(new byte[]{1,2})),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new short[]{1,2}}, 2, "a" + Arrays.toString(new short[]{1,2})),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new int[]{1,2}}, 2, "a" + Arrays.toString(new int[]{1,2})),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new long[]{1,2}}, 2, "a" + Arrays.toString(new long[]{1,2})),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new float[]{1,2}}, 2, "a" + Arrays.toString(new float[]{1,2})),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new double[]{1,2}}, 2, "a" + Arrays.toString(new double[]{1,2})),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new boolean[]{true,false}}, 2, "a" + Arrays.toString(new boolean[]{true,false})),
+new UseCase("ArrayValues", "{}{}",  new Object[]{"a", new char[]{'b','c'}}, 2, "a" + Arrays.toString(new char[]{'b','c'})),
+new UseCase("ArrayValues", "{}{}",  multiArray, 2, Arrays.deepToString(multiArrayRecursive)+Arrays.toString(p1)),
+
 				
 		};
 	}
@@ -388,26 +407,78 @@ new UseCase("Escaping", "\\{}",  new Object[]{i1, i2, i3, t}, 0, "{}", t),
 				if(throwable!=null)
 				{
 					this.argumentStrings=new String[arguments.length-1];
-					for(int i=0;i<argumentStrings.length;i++)
-					{
-						if(arguments[i]!=null)
-						{
-							argumentStrings[i]=arguments[i].toString();
-						}
-					}
 				}
 				else
 				{
 					this.argumentStrings=new String[arguments.length];
-					for(int i=0;i<argumentStrings.length;i++)
-					{
-						if(arguments[i]!=null)
-						{
-							argumentStrings[i]=arguments[i].toString();
-						}
-					}
+				}
+				for(int i=0;i<argumentStrings.length;i++)
+				{
+					argumentStrings[i]=getStringFor(arguments[i]);
 				}
 			}
+		}
+
+		/**
+		 * I can't think of a better way to test this...
+		 * 
+		 * @param o
+		 * @return
+		 */
+		private String getStringFor(Object o)
+		{
+			String argStr=null;
+			if (o != null)
+			{
+				if (o.getClass().isArray())
+				{
+					if (o instanceof byte[])
+					{
+						argStr = Arrays.toString((byte[]) o);
+					}
+					else if (o instanceof short[])
+					{
+						argStr = Arrays.toString((short[]) o);
+					}
+					else if (o instanceof int[])
+					{
+						argStr = Arrays.toString((int[]) o);
+					}
+					else if (o instanceof long[])
+					{
+						argStr = Arrays.toString((long[]) o);
+					}
+					else if (o instanceof float[])
+					{
+						argStr = Arrays.toString((float[]) o);
+					}
+					else if (o instanceof double[])
+					{
+						argStr = Arrays.toString((double[]) o);
+					}
+					else if (o instanceof boolean[])
+					{
+						argStr = Arrays.toString((boolean[]) o);
+					}
+					else if (o instanceof char[])
+					{
+						argStr = Arrays.toString((char[]) o);
+					}
+					else
+					{
+						argStr = Arrays.deepToString((Object[]) o);
+					}
+				}
+				else if (o instanceof String)
+				{
+					argStr = (String) o;
+				}
+				else
+				{
+					argStr = o.toString();
+				}
+			}
+			return  argStr;
 		}
 
 		public String getMessagePattern()
@@ -506,6 +577,30 @@ new UseCase("Escaping", "\\{}",  new Object[]{i1, i2, i3, t}, 0, "{}", t),
 				result.append("[");
 				boolean isFirst=true;
 				for(Object argument:arguments)
+				{
+					if(isFirst)
+					{
+						isFirst=false;
+					}
+					else
+					{
+						result.append(", ");
+					}
+					result.append(argument);
+				}
+				result.append("]");
+			}
+			result.append(", ");
+			result.append("argumentStrings=");
+			if(argumentStrings==null)
+			{
+				result.append("null");
+			}
+			else
+			{
+				result.append("[");
+				boolean isFirst=true;
+				for(String argument:argumentStrings)
 				{
 					if(isFirst)
 					{

@@ -42,7 +42,7 @@
 				TODO: Mac: Bouncing icon in case of error
 			</action>
 			<action dev="jhux" type="add">
-				TODO: Send message over Bonjour
+				TODO: Send message (not event) over Bonjour, i.e. a simple IM.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: add SSL multiplexers.
@@ -73,6 +73,18 @@
 			</action>
 		</release>
 		
+		<release version="0.9.31" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				TODO: "Clean all inactive logs" in another thread with progress.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: "Clean logs on exit" option.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: go to source on different thread.
+			</action>
+		</release>
+
 		<release version="0.9.30" date="TBD" description="Future release">
 			<action dev="jhux" type="update">
 				Implemented own message formatting in MessageFormatter that does not rely on slf4j anymore.
@@ -106,13 +118,8 @@
 				Removed Napkin option. Not really needed anymore and I'm too lazy to add the 3rd party dependency ;).
 			</action>
 			<action dev="jhux" type="update">
-				TODO: "Clean all inactive logs" in another thread with progress.
-			</action>
-			<action dev="jhux" type="update">
-				TODO: "Clean logs on exit" option.
-			</action>
-			<action dev="jhux" type="update">
-				TODO: go to source on different thread.
+				Incorporated latest message formatting changes from slf4j rev 1086 + fixes. Added tests. Arrays of any
+				type are now converted to a proper string representation using Arrays.toString and Arrays.deepToString.
 			</action>
 		</release>
 
