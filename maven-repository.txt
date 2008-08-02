@@ -1,0 +1,2 @@
+"de.huxhorn.sulky","mavensync@shell.sourceforge.net:/home/groups/s/su/sulky/htdocs/repository",,"rsync_ssh","Joern Huxhorn","huxhorn@sf.net",,
+"de.huxhorn.lilith","mavensync@shell.sourceforge.net:/home/groups/l/li/lilith/htdocs/repository",,"rsync_ssh","Joern Huxhorn","huxhorn@sf.net",,
