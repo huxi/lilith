@@ -3,13 +3,49 @@
 	<id>dep</id>
 	<formats>
 		<format>zip</format>
+		<format>tar.gz</format>
 	</formats>
-	<includeBaseDirectory>false</includeBaseDirectory>
+	
+	<files>
+		<file>
+			<source>COPYING</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<file>
+			<source>COPYING.LESSER</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<file>
+			<source>readme.txt</source>
+			<outputDirectory>/</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>target/lilith.jar</source>
+			<outputDirectory>/lib</outputDirectory>
+		</file>
+		<file>
+			<source>src/bin/lilith.bat</source>
+			<outputDirectory>/bin</outputDirectory>
+		</file>
+		<file>
+			<source>src/bin/lilith</source>
+			<outputDirectory>/bin</outputDirectory>
+			<lineEnding>unix</lineEnding>
+			<fileMode>0755</fileMode>
+		</file>
+	</files>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<baseDirectory>lilith-${project.version}</baseDirectory>
 	<dependencySets>
 		<dependencySet>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory>/lib</outputDirectory>
 			<unpack>false</unpack>
 			<scope>runtime</scope>
+			<excludes>
+				<!-- is added manually as lilith.jar -->
+				<exclude>de.huxhorn.lilith:de.huxhorn.lilith</exclude>
+			</excludes>
 		</dependencySet>
 	</dependencySets>
 </assembly>

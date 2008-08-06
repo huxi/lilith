@@ -38,12 +38,6 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.ILoggerFactory;
@@ -60,15 +54,10 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
-import java.io.FileFilter;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.Date;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.logging.Handler;
 import java.text.SimpleDateFormat;
 
@@ -84,7 +73,7 @@ public class Lilith
 	private static final String FLUSH_PREFERENCES_SHORT = "F";
 	private static final String INDEX_SHORT = "i";
 	//private static final String NAPKIN_LAF_SHORT = "n";
-	private static final String DISABLE_BONJOUR_SHORT = "b";
+	private static final String ENABLE_BONJOUR_SHORT = "b";
 
 	private static final String VERBOSE = "verbose";
 	//private static final String GUI = "GUI";
@@ -92,7 +81,7 @@ public class Lilith
 	private static final String FLUSH_PREFERENCES = "flushPrefs";
 	private static final String INDEX = "indexFile";
 	//private static final String NAPKIN_LAF = "NapkinLaf";
-	private static final String DISABLE_BONJOUR = "bonjour";
+	private static final String ENABLE_BONJOUR = "bonjour";
 
 	static
 	{
@@ -217,7 +206,7 @@ public class Lilith
 						ps.println("----------------------------------------");
 					}
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
-					ps.println("Started at " + format.format(new Date()));
+					ps.println("Started "+APP_NAME+" V"+APP_VERSION+" at " + format.format(new Date()));
 					System.setErr(ps);
 					if (logger.isInfoEnabled()) logger.info("Writing System.err to '{}'.", errorLog.getAbsolutePath());
 				}
@@ -396,7 +385,7 @@ public class Lilith
 		//options.addOption(GUI_SHORT, GUI, false, "show gui.");
 		options.addOption(FLUSH_PREFERENCES_SHORT, FLUSH_PREFERENCES, false, "flush gui preferences.");
 		//options.addOption(NAPKIN_LAF_SHORT, NAPKIN_LAF, false, "use NapkinLAF.");
-		options.addOption(DISABLE_BONJOUR_SHORT, DISABLE_BONJOUR, false, "disable Bonjor.");
+		options.addOption(ENABLE_BONJOUR_SHORT, ENABLE_BONJOUR, false, "disable Bonjor.");
 		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
 		boolean verbose = false;
 //		boolean showGui = true;
@@ -405,6 +394,7 @@ public class Lilith
 		boolean enableBonjour = false;
 		boolean indexFileOpt = false;
 		boolean printHelp;
+		String[] originalArgs=args;
 		int exitCode = 0;
 		try
 		{
@@ -415,7 +405,7 @@ public class Lilith
 			printHelp = line.hasOption(PRINT_HELP_SHORT);
 			flushPrefs = line.hasOption(FLUSH_PREFERENCES_SHORT);
 			//noNapkinLaf = !line.hasOption(NAPKIN_LAF_SHORT);
-			enableBonjour = !line.hasOption(DISABLE_BONJOUR_SHORT);
+			enableBonjour = line.hasOption(ENABLE_BONJOUR_SHORT);
 			indexFileOpt = line.hasOption(INDEX_SHORT);
 //			if(indexFileOpt)
 //			{
@@ -435,13 +425,26 @@ public class Lilith
 			appTitle += " - build: " + APP_TIMESTAMP;
 		}
 		System.out.println(appTitle);
-		System.out.println("Copyright (C) 2007-2008  Joern Huxhorn\n" +
-				"This program comes with ABSOLUTELY NO WARRANTY!\n" +
+		System.out.println("\nCopyright (C) 2007-2008  Joern Huxhorn\n\n" +
+				"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
 				"This is free software, and you are welcome to redistribute it\n" +
 				"under certain conditions.\n" +
 				"You should have received a copy of the GNU General Public License\n" +
 				"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
 		System.out.println("Use commandline option -h to view help.\n\n");
+
+		if(verbose)
+		{
+			for(int i=0;i<originalArgs.length;i++)
+			{
+				System.out.println("originalArgs["+i+"]: "+originalArgs[i]);
+			}
+			for(int i=0;i<args.length;i++)
+			{
+				System.out.println("args["+i+"]: "+args[i]);
+			}
+			System.out.println("\n");
+		}
 
 		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 		if (loggerFactory instanceof LoggerContext)

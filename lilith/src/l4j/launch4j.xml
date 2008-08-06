@@ -1,0 +1,26 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>P:\ProjectsOthers\Private\lilith\lilith\target\lilith.jar</jar>
+  <outfile>P:\ProjectsOthers\Private\lilith\lilith\target\lilith.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon></icon>
+  <singleInstance>
+    <mutexName>Lilith</mutexName>
+    <windowTitle>Lilith</windowTitle>
+  </singleInstance>
+  <jre>
+    <path></path>
+    <minVersion>1.5.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJdk</jdkPreference>
+  </jre>
+</launch4jConfig>
