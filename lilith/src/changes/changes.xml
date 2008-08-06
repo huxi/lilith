@@ -68,12 +68,9 @@
 			<action dev="jhux" type="add">
 				TODO: launch4j
 			</action>
-			<action dev="jhux" type="update">
-				TODO: Proper dist, i.e. bin with sh and bat, lib with jar, LICENSE, README
-			</action>
 		</release>
-		
-		<release version="0.9.31" date="TBD" description="Future release">
+
+		<release version="0.9.32" date="TBD" description="Future release">
 			<action dev="jhux" type="update">
 				TODO: "Clean all inactive logs" in another thread with progress.
 			</action>
@@ -81,7 +78,30 @@
 				TODO: "Clean logs on exit" option.
 			</action>
 			<action dev="jhux" type="update">
+				TODO: "Full call stack" option.
+			</action>
+			<action dev="jhux" type="update">
 				TODO: go to source on different thread.
+			</action>
+		</release>
+
+		<release version="0.9.31" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Removed shutdown hook from JmDNS. This fixes the shutdown deadlock but Lilith is still
+				crashing badly on Mac OS X because of JmDNS problems.
+			</action>
+			<action dev="jhux" type="update">
+				Disabled bonjour by default because it's just too unstable :(
+				Activate it using -b command line argument.
+			</action>
+			<action dev="jhux" type="add">
+				Printing command line arguments if started verbose (-v).
+			</action>
+			<action dev="jhux" type="add">
+				Added lilith.bat and lilith shell script.
+			</action>
+			<action dev="jhux" type="update">
+				Updated assembly file to a more sane behavior, i.e. bin with sh and bat, lib with jar, LICENSE, README
 			</action>
 		</release>
 
