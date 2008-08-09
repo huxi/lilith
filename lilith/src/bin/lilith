@@ -32,14 +32,6 @@
 #   LILITH_OPTS - parameters passed to the Java VM when running Lilith
 # ----------------------------------------------------------------------------
 
-QUOTED_ARGS=""
-while [ "$1" != "" ] ; do
-
-  QUOTED_ARGS="$QUOTED_ARGS \"$1\""
-  shift
-
-done
-
 # OS specific support.  $var _must_ be set to either true or false.
 cygwin=false;
 darwin=false;
@@ -148,4 +140,4 @@ exec "$JAVACMD" \
   "-Dlilith.home=${LILITH_HOME}"  \
   "-jar" \
   "${LILITH_HOME}/lib/lilith.jar" \
-  $QUOTED_ARGS
+  "$@"
