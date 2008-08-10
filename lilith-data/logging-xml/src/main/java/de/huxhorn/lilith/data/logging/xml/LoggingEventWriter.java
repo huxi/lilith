@@ -112,7 +112,7 @@ public class LoggingEventWriter
 		StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE, event.getThreadName());
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE, dateTimeFormatter.format(event.getTimeStamp()));
 
-		StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, event.getMessage());
+		StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, event.getMessagePattern());
 		writeArguments(writer, event);
 		writeThrowable(writer, event);
 		writeMdc(writer,event);

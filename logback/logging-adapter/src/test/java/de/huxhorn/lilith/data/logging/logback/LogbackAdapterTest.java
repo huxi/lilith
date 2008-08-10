@@ -107,34 +107,36 @@ public class LogbackAdapterTest
 		if(logger.isDebugEnabled())
 		{
 			StringBuffer msg=new StringBuffer();
-			msg.append("Logger     : ").append(event.getLogger());
+			msg.append("Logger         : ").append(event.getLogger());
 			msg.append("\n");
 
-			msg.append("Message    : ").append(event.getMessage());
+			msg.append("Message        : ").append(event.getMessage());
 			msg.append("\n");
 
-			msg.append("Level      : ").append(event.getLevel());
+			msg.append("Level          : ").append(event.getLevel());
 			msg.append("\n");
 
-			msg.append("Thread-Name: ").append(event.getThreadName());
+			msg.append("Thread-Name    : ").append(event.getThreadName());
 			msg.append("\n");
 
-			msg.append("TimeStamp  : ").append(event.getTimeStamp());
+			msg.append("TimeStamp      : ").append(event.getTimeStamp());
 			msg.append("\n");
 
+			msg.append("Message-Pattern: ").append(event.getMessagePattern());
+			msg.append("\n");
 			String[] args = event.getArguments();
 			if(args!=null)
 			{
 				List<String> argList=new ArrayList<String>(args.length);
 				argList.addAll(Arrays.asList(args));
-				msg.append("Arguments  : ").append(argList);
+				msg.append("Arguments      : ").append(argList);
 				msg.append("\n");
 			}
 
 			StackTraceElement[] callStack = event.getCallStack();
 			if(callStack!=null)
 			{
-				msg.append("Call-Stack : ");
+				msg.append("Call-Stack     : ");
 				msg.append("\n");
 				for(StackTraceElement ste: callStack)
 				{
@@ -146,14 +148,14 @@ public class LogbackAdapterTest
 			Marker marker = event.getMarker();
 			if(marker!=null)
 			{
-				msg.append("Marker     : ");
+				msg.append("Marker         : ");
 				msg.append(marker);
 				msg.append("\n");
 			}
 			Map<String, String> mdc = event.getMdc();
 			if(mdc!=null)
 			{
-				msg.append("MDC        : ");
+				msg.append("MDC            : ");
 				msg.append("\n");
 				for(Map.Entry<String, String> current:mdc.entrySet())
 				{
@@ -164,7 +166,7 @@ public class LogbackAdapterTest
 			ThrowableInfo ti = event.getThrowable();
 			if(ti!=null)
 			{
-				msg.append("Throwable  : ");
+				msg.append("Throwable      : ");
 				msg.append("\n");
 				ThrowableInfo current=ti;
 				StringBuffer indent=new StringBuffer("  ");

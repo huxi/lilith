@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.31" date="TBD" description="Future release">
+			<action dev="jhux" type="fix" issue="2044443">
+				XML appenders are now sending the message pattern instead of the formatted message.
+			</action>
 			<action dev="jhux" type="update">
 				Removed shutdown hook from JmDNS. This fixes the shutdown deadlock but Lilith is still
 				crashing badly on Mac OS X because of JmDNS problems.
