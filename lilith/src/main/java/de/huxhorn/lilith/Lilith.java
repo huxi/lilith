@@ -27,6 +27,7 @@ import de.huxhorn.lilith.swing.LicenseAgreementDialog;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.SplashScreen;
 import de.huxhorn.lilith.swing.callables.IndexingCallable;
+import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.ProgressingCallable;
 import de.huxhorn.sulky.swing.Windows;
@@ -85,7 +86,12 @@ public class Lilith
 
 	static
 	{
+		// I access InternalLilithAppender *before* any Logger is used.
+		// Otherwise an obscure ClassNotFoundException is thrown in MainFrame.
+		InternalLilithAppender.getSourceIdentifier();
+
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
 		InputStream is = Lilith.class.getResourceAsStream("/app.properties");
 		Properties p = new Properties();
 		try

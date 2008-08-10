@@ -983,7 +983,7 @@ public class ViewActions
 			if(eventWrapperViewPanel != null)
 			{
 				String sourceIdentifier=eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
-				if(!"global".equals(sourceIdentifier))
+				if(!"global".equals(sourceIdentifier) && !"Lilith".equals(sourceIdentifier))
 				{
 					mainFrame.getPreferencesDialog().editSourceName(sourceIdentifier);
 				}
@@ -1537,7 +1537,7 @@ public class ViewActions
 				if(eventWrapperViewPanel != null)
 				{
 					String sourceIdentifier=eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
-					if(!"global".equals(sourceIdentifier))
+					if(!"global".equals(sourceIdentifier) && !"Lilith".equals(sourceIdentifier))
 					{
 					    enable=true;
 					}
@@ -2099,6 +2099,17 @@ public class ViewActions
 				if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 				putValue(Action.ACCELERATOR_KEY, accelerator);
 			}
+			else
+			{
+				SourceIdentifier si = eventSource.getSourceIdentifier();
+				if(si != null && "Lilith".equals(si.getIdentifier()))
+				{
+					// internal Lilith log
+					KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" 0");
+					if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+					putValue(Action.ACCELERATOR_KEY, accelerator);
+				}
+			}
 		}
 
 		public void actionPerformed(ActionEvent evt)
@@ -2202,18 +2213,19 @@ public class ViewActions
 
 			SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews=mainFrame.getSortedAccessViews();
 
-			// global (Logging & Access)
 			first=true;
+			// Lilith logging
 			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
-				ViewContainer<LoggingEvent> value = entry.getValue();
-				if(value.resolveViewWindow()!=null)
+				SourceIdentifier si = key.getSourceIdentifier();
+				if("Lilith".equals(si.getIdentifier()))
 				{
-					viewCounter++;
-				}
-				if (key.isGlobal())
-				{
+					ViewContainer<LoggingEvent> value = entry.getValue();
+					if(value.resolveViewWindow()!=null)
+					{
+						viewCounter++;
+					}
 					if (first)
 					{
 						first = false;
@@ -2223,6 +2235,31 @@ public class ViewActions
 					windowMenu.add(menuItem);
 				}
 			}
+			// global (Logging)
+			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
+			{
+				EventSource<LoggingEvent> key = entry.getKey();
+				SourceIdentifier si = key.getSourceIdentifier();
+				if(!"Lilith".equals(si.getIdentifier()))
+				{
+					ViewContainer<LoggingEvent> value = entry.getValue();
+					if(value.resolveViewWindow()!=null)
+					{
+						viewCounter++;
+					}
+					if (key.isGlobal())
+					{
+						if (first)
+						{
+							first = false;
+							windowMenu.addSeparator();
+						}
+						JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
+						windowMenu.add(menuItem);
+					}
+				}
+			}
+			// global (Access)
 			for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> entry : sortedAccessViews.entrySet())
 			{
 				EventSource<AccessEvent> key = entry.getKey();
@@ -2248,37 +2285,45 @@ public class ViewActions
 			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
-				ViewContainer<LoggingEvent> value = entry.getValue();
-				EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();
-				if(!key.isGlobal() && (LoggingViewState.ACTIVE == panel.getState()))
+				SourceIdentifier si = key.getSourceIdentifier();
+				if(!"Lilith".equals(si.getIdentifier()))
 				{
-					if (first)
+					ViewContainer<LoggingEvent> value = entry.getValue();
+					EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();
+					if(!key.isGlobal() && (LoggingViewState.ACTIVE == panel.getState()))
 					{
-						first = false;
-						windowMenu.addSeparator();
+						if (first)
+						{
+							first = false;
+							windowMenu.addSeparator();
+						}
+						JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
+						windowMenu.add(menuItem);
+						activeCounter++;
 					}
-					JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
-					windowMenu.add(menuItem);
-					activeCounter++;
 				}
 			}
 			// Logging (inactive)
 			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
-				ViewContainer<LoggingEvent> value = entry.getValue();
-				EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();
-				if(!key.isGlobal() && (LoggingViewState.ACTIVE != panel.getState()))
+				SourceIdentifier si = key.getSourceIdentifier();
+				if(!"Lilith".equals(si.getIdentifier()))
 				{
-					if (first)
+					ViewContainer<LoggingEvent> value = entry.getValue();
+					EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();
+					if(!key.isGlobal() && (LoggingViewState.ACTIVE != panel.getState()))
 					{
-						first = false;
-						windowMenu.addSeparator();
+						if (first)
+						{
+							first = false;
+							windowMenu.addSeparator();
+						}
+						JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
+						menuItem.setFont(inactiveFont);
+						windowMenu.add(menuItem);
+						inactiveCounter++;
 					}
-					JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
-					menuItem.setFont(inactiveFont);
-					windowMenu.add(menuItem);
-					inactiveCounter++;
 				}
 			}
 
