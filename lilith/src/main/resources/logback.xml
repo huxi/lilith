@@ -7,6 +7,9 @@
 		</layout>
 	</appender>
 
+	<appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender">
+	</appender>
+
 	<appender name="MultiplexClassicCompressed" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
 		<Compressing>true</Compressing> <!-- will automatically use correct default port -->
 		<ApplicationIdentifier>Lilith-Compressed</ApplicationIdentifier>
@@ -54,13 +57,14 @@
 	</appender>
 
 	<root>
-		<level value="TRACE"/>
+		<level value="INFO"/>
 		<appender-ref ref="CONSOLE"/>
 		<!--
 		<appender-ref ref="Localhost"/>
 		<appender-ref ref="multiplex" />
-		-->
 		<appender-ref ref="MultiplexClassicCompressed" />
+		-->
+		<appender-ref ref="Lilith" />
 	</root>
 
 	<logger name="de.huxhorn.lilith.debug">

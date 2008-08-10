@@ -89,21 +89,17 @@ public class ApplicationPreferences
 	public static final String PREVIOUS_APPLICATION_PATH_FILENAME = ".previous.application.path";
 
 	private static final String LICENSED_PREFERENCES_KEY = "licensed";
-	private static final String DEFAULT_APPLICATION_PATH;
+	public static final String DEFAULT_APPLICATION_PATH;
 	private static final Map<String, String> DEFAULT_SOURCE_NAMES;
 	private static final Map<String, String> DEFAULT_SOUND_LOCATIONS;
 
 	static
 	{
-		final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
-
 		String userHome=System.getProperty("user.home");
 		File defaultAppPath=new File(userHome, ".lilith");
 		DEFAULT_APPLICATION_PATH=defaultAppPath.getAbsolutePath();
-		if(logger.isDebugEnabled()) logger.debug("default application path: {}", DEFAULT_APPLICATION_PATH);
 
 		Map<String, String> defaultSoundLocations = new HashMap<String, String>();
-		//defaultSoundLocations.put(LilithSounds.ABOUT_SOUND, "/about/AboutSound.mp3");
 		defaultSoundLocations.put(LilithSounds.SOURCE_ADDED, "/events/SourceAdded.mp3");
 		defaultSoundLocations.put(LilithSounds.SOURCE_REMOVED, "/events/SourceRemoved.mp3");
 		defaultSoundLocations.put(LilithSounds.ERROR_EVENT_ALARM, "/events/ErrorEventAlarm.mp3");

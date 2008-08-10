@@ -53,6 +53,7 @@ import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
+import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.logback.producer.LogbackAccessServerSocketEventSourceProducer;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
@@ -264,7 +265,7 @@ public class MainFrame
 		JPanel statusBar = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		statusLabel=new JLabel();
-		statusLabel.setText("Status Label");
+		statusLabel.setText("Starting...");
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
@@ -490,6 +491,11 @@ public class MainFrame
 		// add global view
 		EventSource<LoggingEvent> globalLoggingEventSource =new EventSourceImpl<LoggingEvent>(globalSourceIdentifier, loggingFileDump.getBuffer(), true);
 		lsm.addSource(globalLoggingEventSource);
+
+		// add internal lilith logging
+		EventSource<LoggingEvent> lilithLoggingEventSource =new EventSourceImpl<LoggingEvent>(InternalLilithAppender.getSourceIdentifier(), InternalLilithAppender.getBuffer(), false);
+		lsm.addSource(lilithLoggingEventSource );
+
 		setLoggingEventSourceManager(lsm);
 
 		SourceManagerImpl<AccessEvent> asm=new SourceManagerImpl<AccessEvent>(accessEventQueue);
