@@ -20,7 +20,7 @@ package de.huxhorn.lilith.data.eventsource;
 import java.io.Serializable;
 
 public class SourceIdentifier
-	implements Serializable, Comparable<SourceIdentifier>
+	implements Serializable, Comparable<SourceIdentifier>, Cloneable
 {
 	private static final long serialVersionUID = -3221347884837534650L;
 
@@ -137,5 +137,10 @@ public class SourceIdentifier
 		}
 
 		return 0;
+	}
+
+	public SourceIdentifier clone() throws CloneNotSupportedException
+	{
+		return (SourceIdentifier) super.clone();
 	}
 }
