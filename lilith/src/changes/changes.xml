@@ -85,7 +85,7 @@
 			</action>
 		</release>
 
-		<release version="0.9.31" date="TBD" description="Future release">
+		<release version="0.9.31" date="2008-08-11" description="Release">
 			<action dev="jhux" type="add">
 				Implemented internal Lilith logging.
 			</action>
