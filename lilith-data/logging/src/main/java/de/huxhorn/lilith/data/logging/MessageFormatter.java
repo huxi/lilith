@@ -51,24 +51,10 @@ public class MessageFormatter
 			{
 				escapeCounter++;
 			}
-			else if (curChar == DELIM_START)
+			else
 			{
-				if (escapeCounter % 2 == 1)
+				if (curChar == DELIM_START)
 				{
-					// i.e. escaped
-					// write escaped escape chars
-					int escapedEscapes = escapeCounter / 2;
-					for (int j = 0; j < escapedEscapes; j++)
-					{
-						result.append(ESCAPE_CHAR);
-					}
-					result.append(DELIM_START);
-					escapeCounter = 0;
-				}
-				else
-				{
-					// unescaped start delimeter detected.
-					boolean brokenPlaceholder = false;
 					if (i < messagePattern.length() - 1)
 					{
 						if (messagePattern.charAt(i + 1) == DELIM_STOP)
@@ -79,44 +65,34 @@ public class MessageFormatter
 							{
 								result.append(ESCAPE_CHAR);
 							}
-							escapeCounter = 0;
 
-							if (currentArgument < arguments.length)
+							if (escapeCounter % 2 == 1)
 							{
-								result.append(arguments[currentArgument]);
+								// i.e. escaped
+								// write escaped escape chars
+								result.append(DELIM_START);
+								result.append(DELIM_STOP);
 							}
 							else
 							{
-								result.append(DELIM_START).append(DELIM_STOP);
+								// unescaped
+								if (currentArgument < arguments.length)
+								{
+									result.append(arguments[currentArgument]);
+								}
+								else
+								{
+									result.append(DELIM_START).append(DELIM_STOP);
+								}
+								currentArgument++;
 							}
-							currentArgument++;
 							i++;
+							escapeCounter = 0;
+							continue;
 						}
-						else
-						{
-							brokenPlaceholder = true;
-						}
-					}
-					else
-					{
-						brokenPlaceholder = true;
-					}
-					if (brokenPlaceholder)
-					{
-						// broken placeholder, leave rest of string untouched.
-						// write unescaped escape chars
-						for (int j = 0; j < escapeCounter; j++)
-						{
-							result.append(ESCAPE_CHAR);
-						}
-						result.append(messagePattern.substring(i, messagePattern.length()));
-						return result.toString();
 					}
 				}
-			}
-			else
-			{
-				// any other char beside ESCAPE or DELIM_START
+				// any other char beside ESCAPE or DELIM_START/STOP-combo
 				// write unescaped escape chars
 				if (escapeCounter > 0)
 				{
@@ -166,11 +142,11 @@ public class MessageFormatter
 							result++;
 							i++;
 						}
-						else
-						{
-							// broken, unescaped DELIM_START without directly following DELIM_STOP
-							return result;
-						}
+//						else
+//						{
+//							// broken, unescaped DELIM_START without directly following DELIM_STOP
+//							return result;
+//						}
 					}
 				}
 				isEscaped = false;

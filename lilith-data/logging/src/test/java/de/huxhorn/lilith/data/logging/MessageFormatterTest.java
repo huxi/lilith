@@ -39,7 +39,6 @@ public class MessageFormatterTest
 		Integer i3 = 3;
 		//noinspection ThrowableInstanceNeverThrown
 		Throwable t=new FooThrowable("FooThrowable");
-
 		Integer[] p1 = new Integer[] { i2, i3 };
 
 		Object[] multiArray=new Object[]{null, p1};
@@ -47,9 +46,33 @@ public class MessageFormatterTest
 		multiArrayRecursive[0]=multiArrayRecursive;
 		multiArray[0]=multiArrayRecursive;
 
-		useCases=new UseCase[]
-		{
+		Integer[] ia0 = new Integer[] { i1, i2, i3 };
+		Integer[] ia1 = new Integer[] { 10, 20, 30 };
 
+		Object[][] multiOA = new Object[][] { ia0, ia1 };
+		Object[][][] _3DOA = new Object[][][] { multiOA, multiOA };
+
+		Object[] cyclicA = new Object[1];
+		cyclicA[0] = cyclicA;
+
+		Object[] cyclicB = new Object[2];
+		{
+			cyclicB[0] = i1;
+			Object[] c = new Object[] {i3, cyclicB};
+			Object[] b = new Object[] {i2, c};
+			cyclicB[1] = b;
+		}
+
+		Object[] cyclicC = new Object[3];
+		{
+			cyclicC[0] = i1;
+			Object[] c = new Object[] {i3, cyclicC};
+			Object[] b = new Object[] {i2, c};
+			cyclicC[1] = b;
+			cyclicC[2]=t;
+		}
+
+		useCases=new UseCase[] {
 
 
 
@@ -68,11 +91,12 @@ new UseCase("One param", "Value is {", new Object[]{i3}, 0, "Value is {"),
 new UseCase("One param", "{} is larger than 2.", new Object[]{i3}, 1, "3 is larger than 2."),
 new UseCase("One param", "No subst", new Object[]{i3}, 0, "No subst"),
 new UseCase("One param", "Incorrect {subst", new Object[]{i3}, 0, "Incorrect {subst"),
-new UseCase("One param", "Value is \\{bla} {}", new Object[]{i3}, 1, "Value is {bla} 3"),
+new UseCase("One param", "Value is {bla} {}", new Object[]{i3}, 1, "Value is {bla} 3"),
+new UseCase("One param", "Value is \\{bla} {}", new Object[]{i3}, 1, "Value is \\{bla} 3"),
 new UseCase("One param", "Escaped \\{} subst", new Object[]{i3}, 0, "Escaped {} subst"),
-new UseCase("One param", "\\{Escaped", new Object[]{i3}, 0, "{Escaped"),
+new UseCase("One param", "{Escaped", new Object[]{i3}, 0, "{Escaped"),
 new UseCase("One param", "\\{}Escaped", new Object[]{i3}, 0, "{}Escaped"),
-new UseCase("One param", "File name is \\{{}}.", new Object[]{"App folder.zip"}, 1, "File name is {App folder.zip}."),
+new UseCase("One param", "File name is {{}}.", new Object[]{"App folder.zip"}, 1, "File name is {App folder.zip}."),
 new UseCase("One param", "File name is C:\\\\{}.", new Object[]{"App folder.zip"}, 1, "File name is C:\\App folder.zip."),
 new UseCase("Two params", "Value {} is smaller than {}.", new Object[]{i1, i2}, 2, "Value 1 is smaller than 2."),
 new UseCase("Two params", "Value {} is smaller than {}", new Object[]{i1, i2}, 2, "Value 1 is smaller than 2"),
@@ -80,8 +104,8 @@ new UseCase("Two params", "{}{}", new Object[]{i1, i2}, 2, "12"),
 new UseCase("Two params", "Val1={}, Val2={", new Object[]{i1, i2}, 1, "Val1=1, Val2={"),
 new UseCase("Two params", "Value {} is smaller than \\{}", new Object[]{i1, i2}, 1, "Value 1 is smaller than {}"),
 new UseCase("Two params", "Value {} is smaller than \\{} tail", new Object[]{i1, i2}, 1, "Value 1 is smaller than {} tail"),
-new UseCase("Two params", "Value {} is smaller than \\{", new Object[]{i1, i2}, 1, "Value 1 is smaller than {"), // was originally "Value 1 is smaller than \\{"
-new UseCase("Two params", "Value {} is smaller than \\{tail", new Object[]{i1, i2}, 1, "Value 1 is smaller than {tail"),
+new UseCase("Two params", "Value {} is smaller than \\{", new Object[]{i1, i2}, 1, "Value 1 is smaller than \\{"),
+new UseCase("Two params", "Value {} is smaller than {tail", new Object[]{i1, i2}, 1, "Value 1 is smaller than {tail"),
 new UseCase("Two params", "Value \\{} is smaller than {}", new Object[]{i1, i2}, 1, "Value {} is smaller than 1"),
 new UseCase("Null Array", "msg0", null, 0, "msg0"),
 new UseCase("Null Array", "msg1 {}", null, 1, "msg1 {}"),
@@ -91,22 +115,36 @@ new UseCase("Array", "Value {} is smaller than {} and {}.", new Object[]{i1, i2,
 new UseCase("Array", "{}{}{}", new Object[]{i1, i2, i3}, 3, "123"),
 new UseCase("Array", "Value {} is smaller than {}.", new Object[]{i1, i2, i3}, 2, "Value 1 is smaller than 2."),
 new UseCase("Array", "Value {} is smaller than {}", new Object[]{i1, i2, i3}, 2, "Value 1 is smaller than 2"),
-new UseCase("Array", "Val={}, {, Val={}", new Object[]{i1, i2, i3}, 1, "Val=1, {, Val={}"),
-new UseCase("Array", "Val={}, \\{, Val={}", new Object[]{i1, i2, i3}, 2, "Val=1, {, Val=2"),
+new UseCase("Array", "Val={}, {, Val={}", new Object[]{i1, i2, i3}, 2, "Val=1, {, Val=2"),
+new UseCase("Array", "Val={}, \\{, Val={}", new Object[]{i1, i2, i3}, 2, "Val=1, \\{, Val=2"),
 new UseCase("Array", "Val1={}, Val2={", new Object[]{i1, i2, i3}, 1, "Val1=1, Val2={"),
 new UseCase("Array & Throwable", "Value {} is smaller than {} and {}.", new Object[]{i1, i2, i3, t}, 3, "Value 1 is smaller than 2 and 3.", t),
 new UseCase("Array & Throwable", "{}{}{}", new Object[]{i1, i2, i3, t}, 3, "123", t),
 new UseCase("Array & Throwable", "Value {} is smaller than {}.", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than 2.", t),
 new UseCase("Array & Throwable", "Value {} is smaller than {}", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than 2", t),
-new UseCase("Array & Throwable", "Val={}, {, Val={}", new Object[]{i1, i2, i3, t}, 1, "Val=1, {, Val={}", t),
-new UseCase("Array & Throwable", "Val={}, \\{, Val={}", new Object[]{i1, i2, i3, t}, 2, "Val=1, {, Val=2", t),
+new UseCase("Array & Throwable", "Val={}, {, Val={}", new Object[]{i1, i2, i3, t}, 2, "Val=1, {, Val=2", t),
 new UseCase("Array & Throwable", "Val1={}, Val2={", new Object[]{i1, i2, i3, t}, 1, "Val1=1, Val2={", t),
+new UseCase("ArrayValues", "{}{}", new Object[]{i1, new Integer[]{i2, i3}, t}, 2, "1[2, 3]", t),
+new UseCase("ArrayValues", "{}{}", new Object[]{"a", new Integer[]{i2, i3}, t}, 2, "a[2, 3]", t),
+new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}, t}, 2, "a[1, 2]", t),
+new UseCase("ArrayValues", "{}{}", new Object[]{"a", new int[]{1, 2}, t}, 2, "a[1, 2]", t),
+new UseCase("ArrayValues", "{}{}", new Object[]{"a", new float[]{1, 2}, t}, 2, "a[1.0, 2.0]", t),
+new UseCase("ArrayValues", "{}{}", new Object[]{"a", new double[]{1, 2}, t}, 2, "a[1.0, 2.0]", t), // missing short, long, boolean, char
+new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", new Integer[][]{ia0, ia1}, t}, 2, "a[[1, 2, 3], [10, 20, 30]]", t),
+new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", new int[][]{{1, 2}, {10, 20}}, t}, 2, "a[[1, 2], [10, 20]]", t),
+new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", new float[][]{{1, 2}, {10, 20}}, t}, 2, "a[[1.0, 2.0], [10.0, 20.0]]", t),
+new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", new double[][]{{1, 2}, {10, 20}}, t}, 2, "a[[1.0, 2.0], [10.0, 20.0]]", t),
+new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", multiOA, t}, 2, "a[[1, 2, 3], [10, 20, 30]]", t),
+new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", _3DOA, t}, 2, "a[[[1, 2, 3], [10, 20, 30]], [[1, 2, 3], [10, 20, 30]]]", t),
+new UseCase("CyclicArrays", "{}", new Object[]{cyclicA, t}, 1, "[[...]]", t),
+new UseCase("CyclicArrays", "{}{}", cyclicB, 2, "1[2, [3, [1, [...]]]]"),
+new UseCase("CyclicArrays", "{}{}", cyclicC, 2, "1[2, [3, [1, [...], FooThrowable]]]", t),
 new UseCase("Array & Used Throwable", "Value {} is smaller than {} and {}. Also: {}!", new Object[]{i1, i2, i3, t}, 4, "Value 1 is smaller than 2 and 3. Also: "+t.toString()+"!"),
 new UseCase("Array & Used Throwable", "{}{}{}{}", new Object[]{i1, i2, i3, t}, 4, "123"+t.toString()),
 new UseCase("Escaping", "Value {} is smaller than \\\\{}", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than \\2", t),
 new UseCase("Escaping", "Value {} is smaller than \\\\{} tail", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than \\2 tail", t),
 new UseCase("Escaping", "Value {} is smaller than \\\\{", new Object[]{i1, i2, i3, t}, 1, "Value 1 is smaller than \\\\{", t),
-new UseCase("Escaping", "Value {} is smaller than \\\\{tail", new Object[]{i1, i2, i3, t}, 1, "Value 1 is smaller than \\\\{tail", t), // was originally "Value 1 is smaller than \\{tail"
+new UseCase("Escaping", "Value {} is smaller than \\\\{tail", new Object[]{i1, i2, i3, t}, 1, "Value 1 is smaller than \\\\{tail", t),
 new UseCase("Escaping", "Value \\\\{} is smaller than {}", new Object[]{i1, i2, i3, t}, 2, "Value \\1 is smaller than 2", t),
 new UseCase("Escaping", "\\\\{}", new Object[]{i1, i2, i3, t}, 1, "\\1", t),
 new UseCase("Escaping", "\\\\\\{}",  new Object[]{i1, i2, i3, t}, 0, "\\{}", t),
@@ -141,7 +179,7 @@ new UseCase("ArrayValues", "{}{}",  multiArray, 2, Arrays.deepToString(multiArra
 	public void brokenCountPlaceholders()
 	{
 		validateCountArgumentPlaceholders("{",0);
-		validateCountArgumentPlaceholders("{} { {}",1);
+		validateCountArgumentPlaceholders("{} { {}",2);
 		validateCountArgumentPlaceholders("{} {",1);
 	}
 
