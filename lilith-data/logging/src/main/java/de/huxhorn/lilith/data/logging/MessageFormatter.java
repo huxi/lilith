@@ -19,24 +19,40 @@ package de.huxhorn.lilith.data.logging;
 
 import java.util.Arrays;
 
+/**
+ * <p>Replacement for org.slf4j.helpers.MessageFormatter.<p/>
+ * <p>
+ * In contrast to the mentioned class, the formatting of message pattern and arguments into the actual message
+ * is split into three parts:
+ * <p/>
+ * <ol>
+ * <li>Counting of placeholders in the message pattern (cheap)</li>
+ * <li>Conversion of argument array into an ArgumentResult, containing the arguments converted to String as well as
+ * an optional Throwable if available (relatively cheap)</li>
+ * <li>Replacement of placeholders in a message pattern with arguments given as String[]. (most expensive)</li>
+ * </ol>
+ * <p/>
+ * <p>
+ * That way only the first two steps have to be done during event creation while the most expensive part, i.e. the
+ * actual construction of the message, is only done on demand.
+ * <p/>
+ */
 public class MessageFormatter
 {
 	private static final char DELIM_START = '{';
 	private static final char DELIM_STOP = '}';
 	private static final char ESCAPE_CHAR = '\\';
 
-//	public static String format(String message, String[] arguments)
-//	{
-//		if (arguments == null || message == null)
-//		{
-//			return message;
-//		}
-//		return org.slf4j.helpers.MessageFormatter.arrayFormat(message, arguments);
-//	}
-
+	/**
+	 * Replace placeholders in the given messagePattern with arguments.
+	 *
+	 * @param messagePattern the message pattern containing placeholders.
+	 * @param arguments	  the arguments to be used to replace placeholders.
+	 * @return the formatted message.
+	 */
 	public static String format(String messagePattern, String[] arguments)
 	{
-		if (arguments == null || messagePattern == null)
+		if (messagePattern == null || arguments == null || arguments.length == 0)
 		{
 			return messagePattern;
 		}
@@ -108,6 +124,12 @@ public class MessageFormatter
 		return result.toString();
 	}
 
+	/**
+	 * Counts the number of unescaped placeholders in the given messagePattern.
+	 *
+	 * @param messagePattern the message pattern to be analyzed.
+	 * @return the number of unescaped placeholders.
+	 */
 	public static int countArgumentPlaceholders(String messagePattern)
 	{
 		if (messagePattern == null)
@@ -142,11 +164,6 @@ public class MessageFormatter
 							result++;
 							i++;
 						}
-//						else
-//						{
-//							// broken, unescaped DELIM_START without directly following DELIM_STOP
-//							return result;
-//						}
 					}
 				}
 				isEscaped = false;
@@ -159,6 +176,19 @@ public class MessageFormatter
 		return result;
 	}
 
+	/**
+	 * This method returns a MessageFormatter.ArgumentResult which contains the arguments converted to String
+	 * as well as an optional Throwable.
+	 * <p/>
+	 * If the last argument is a Throwable and is NOT used up by a placeholder in the message pattern it is returned
+	 * in MessageFormatter.ArgumentResult.getThrowable() and won't be contained in the created String[].
+	 * <p/>
+	 * If it is used up getThrowable will return null even if the last argument was a Throwable!
+	 *
+	 * @param messagePattern the message pattern that to be checked for placeholders.
+	 * @param arguments	  the argument array to be converted.
+	 * @return a MessageFormatter.ArgumentResult containing the converted arformatted message and optionally a Throwable.
+	 */
 	public static ArgumentResult evaluateArguments(String messagePattern, Object[] arguments)
 	{
 		if (arguments == null)
@@ -231,128 +261,20 @@ public class MessageFormatter
 				{
 					argStr = o.toString();
 				}
-				stringArgs[i]=argStr;
+				stringArgs[i] = argStr;
 			}
 		}
 		return new ArgumentResult(stringArgs, throwable);
 	}
 
 	/**
-	 * This method returns a MessageFormatter.Result which contains the formatted message as well as an optional
-	 * Throwable.
+	 * This is just a simple class containing the result of an evaluateArgument call. It's necessary because we need to
+	 * return two results, i.e. the resulting String[] and the optional Throwable.
 	 * <p/>
-	 * If the last argument is a Throwable and is NOT used by the message pattern it is returned
-	 * in MessageFormatter.Result.getThrowable(). If it is used up getThrowable will return null even
-	 * if the last argument was a Throwable!
-	 *
-	 * @return a MessageFormatter.Result containing the formatted message and optionally a Throwable.
+	 * This class is not Serializable because serializing a Throwable is generally a bad idea if the data is supposed
+	 * to leave the current VM since it may result in ClassNotFoundExceptions if the given Throwable is not
+	 * available/different in the deserializing VM.
 	 */
-/*
-	public static Result evaluateMessage(String messagePattern, Object[] argArray)
-	{
-
-		Throwable throwable = null;
-		if (argArray != null && argArray[argArray.length - 1] instanceof Throwable)
-		{
-			throwable = (Throwable) argArray[argArray.length - 1];
-		}
-
-		if (messagePattern == null)
-		{
-			return new Result(null, throwable);
-		}
-
-		if (argArray == null)
-		{
-			return new Result(messagePattern);
-		}
-
-		int i = 0;
-		int len = messagePattern.length();
-		int j;
-
-
-		StringBuffer sbuf = new StringBuffer(messagePattern.length() + 50);
-
-		for (int L = 0; L < argArray.length; L++)
-		{
-
-			boolean escaped = false;
-
-			j = messagePattern.indexOf(DELIM_START, i);
-
-			if (j == -1 || (j + 1 == len))
-			{
-				// no more variables
-				if (i == 0)
-				{ // this is a simple string
-					return new Result(messagePattern, throwable);
-				}
-				else
-				{ // add the tail string which contains no variables and return the result.
-					sbuf.append(messagePattern.substring(i, messagePattern.length()));
-					Result result;
-					if (L <= argArray.length - 1)
-					{ // there are args left, use throwable if available.
-						result = new Result(sbuf.toString(), throwable);
-					}
-					else
-					{ // all args are already used up
-						result = new Result(sbuf.toString());
-					}
-					return result;
-				}
-			}
-			else
-			{
-				char delimStop = messagePattern.charAt(j + 1);
-				if (j > 0 && messagePattern.charAt(j - 1) == ESCAPE_CHAR)
-				{
-					escaped = true;
-					if (j > 1 && messagePattern.charAt(j - 2) == ESCAPE_CHAR)
-					{
-						escaped = false;
-						sbuf.append(messagePattern.substring(i, j - 2));
-						i = j - 1;
-					}
-				}
-
-				if (escaped)
-				{
-					L--; // DELIM_START was escaped, thus should not be incremented
-					sbuf.append(messagePattern.substring(i, j - 1));
-					sbuf.append(DELIM_START);
-					i = j + 1;
-				}
-				else if ((delimStop != DELIM_STOP))
-				{
-					// invalid DELIM_START/DELIM_STOP pair
-					sbuf.append(messagePattern.substring(i, messagePattern.length()));
-					Result result;
-					if (L < argArray.length - 1)
-					{ // there are args left, use throwable if available.
-						result = new Result(sbuf.toString(), throwable);
-					}
-					else
-					{ // all args are already used up
-						result = new Result(sbuf.toString());
-					}
-					return result;
-				}
-				else
-				{
-					// normal case
-					sbuf.append(messagePattern.substring(i, j));
-					sbuf.append(argArray[L]);
-					i = j + 2;
-				}
-			}
-		}
-		// append the characters following the second {} pair.
-		sbuf.append(messagePattern.substring(i, messagePattern.length()));
-		return new Result(sbuf.toString()); // we used up all arguments
-	}
-*/
 	public static class ArgumentResult
 	{
 		private Throwable throwable;
@@ -378,7 +300,7 @@ public class MessageFormatter
 		public String toString()
 		{
 			StringBuilder result = new StringBuilder();
-			result.append("Result[throwable=").append(throwable);
+			result.append("ArgumentResult[throwable=").append(throwable);
 			result.append(", arguments=");
 			if (arguments != null)
 			{
