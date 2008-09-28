@@ -30,6 +30,7 @@ public class ThrowableInfo
 	private String name;
 	private String message;
 	private ThrowableInfo cause;
+	// TODO: use own class instead of StackTraceElement to support additional infos like version.
 	private StackTraceElement[] stackTrace;
 
 	public String getName()
