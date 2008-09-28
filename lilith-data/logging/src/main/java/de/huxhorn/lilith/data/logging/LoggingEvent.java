@@ -25,17 +25,14 @@ import java.util.Arrays;
 /**
  * <p>Replacement for ch.qos.logback.classic.spi.LoggingEvent</p>
  *
- * <p>
- * This class has been implemented for optimized serialization (size) and creation (speed).
- * </p>
- * <p>
- * Only the unformatted message pattern and the argument array are serialized. The formatted message is (re)created
- * lazily on demand.
- * </p>
- * <p>
- * Additionally, a LoggingEvent can contain an optional applicationId so it's possible to recognize the application
- * the events are originating from. This is extremely useful if more than one application is running on the same host.
- * </p>
+ * <p>This class has been implemented for optimized serialization (size) and creation (speed).</p>
+ *
+ * <p>Only the unformatted message pattern and the argument array are serialized. The formatted message is (re)created
+ * lazily on demand.</p>
+ *
+ * <p>Additionally, a LoggingEvent can contain an optional applicationId so it's possible to recognize the application
+ * the events are originating from. This is extremely useful if more than one application is running on the same
+ * host.</p>
  */
 public class LoggingEvent
 	implements Serializable
