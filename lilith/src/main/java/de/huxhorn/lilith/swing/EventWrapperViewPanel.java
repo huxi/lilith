@@ -24,6 +24,7 @@ import de.huxhorn.lilith.filters.GroovyFilter;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
 import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
@@ -119,7 +120,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
 
 	private EventSource<T> eventSource;
-	//private MessageFormatter messageFormatter;
 	private LoggingViewState state;
 	private MainFrame mainFrame;
 	private boolean showingFilters;
@@ -1137,10 +1137,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 						if(event instanceof LoggingEvent)
 						{
 							LoggingEvent loggingEvent= (LoggingEvent) event;
-							StackTraceElement[] callStack = loggingEvent.getCallStack();
+							ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
 							if(callStack!=null && callStack.length>0)
 							{
-								mainFrame.goToSource(callStack[0]);
+								mainFrame.goToSource(callStack[0].getStackTraceElement());
 							}
 						}
 					}

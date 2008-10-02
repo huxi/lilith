@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -2852,11 +2853,11 @@ public class ViewActions
 				{
 					throwableText.append("Message: ").append(message).append("\n");
 				}
-				StackTraceElement[] st = info.getStackTrace();
+				ExtendedStackTraceElement[] st = info.getStackTrace();
 				if(st!=null)
 				{
 					throwableText.append("StackTrace:\n");
-					for(StackTraceElement current:st)
+					for(ExtendedStackTraceElement current:st)
 					{
 						throwableText.append("\t").append(current).append("\n");
 					}
@@ -2930,7 +2931,7 @@ public class ViewActions
 	private class GotoSourceAction
 		extends AbstractAction
 	{
-		private StackTraceElement stackTraceElement;
+		private ExtendedStackTraceElement stackTraceElement;
 
 		public GotoSourceAction()
 		{
@@ -2949,7 +2950,7 @@ public class ViewActions
 			if(event instanceof LoggingEvent)
 			{
 				LoggingEvent loggingEvent = (LoggingEvent) event;
-				StackTraceElement[] callStack = loggingEvent.getCallStack();
+				ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
 				if(callStack!=null && callStack.length>0)
 				{
 					setStackTraceElement(callStack[0]);
@@ -2959,7 +2960,7 @@ public class ViewActions
 			setStackTraceElement(null);
 		}
 
-		public void setStackTraceElement(StackTraceElement stackTraceElement)
+		public void setStackTraceElement(ExtendedStackTraceElement stackTraceElement)
 		{
 			this.stackTraceElement=stackTraceElement;
 			setEnabled(this.stackTraceElement!=null);
@@ -2967,7 +2968,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			mainFrame.goToSource(stackTraceElement);
+			mainFrame.goToSource(stackTraceElement.getStackTraceElement());
 		}
 	}
 

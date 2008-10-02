@@ -15,6 +15,7 @@ import ch.qos.logback.classic.spi.ThrowableInformation;
 import ch.qos.logback.classic.ClassicGlobal;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 
 public class LogbackLoggingAdapter
 {
@@ -166,10 +167,25 @@ public class LogbackLoggingAdapter
 		ThrowableInfo info=new ThrowableInfo();
 		info.setName(t.getClass().getName());
 		info.setMessage(t.getMessage());
-		info.setStackTrace(t.getStackTrace());
+		info.setStackTrace(convert(t.getStackTrace()));
 		info.setCause(initFromThrowableRecursive(t.getCause()));
 
 		return info;
+	}
+
+	private ExtendedStackTraceElement[] convert(StackTraceElement[] stackTrace)
+	{
+		// TODO: add support for codeLocation, version and exact as soon as logback 0.9.10 is released.
+		if(stackTrace==null)
+		{
+			return null;
+		}
+		ExtendedStackTraceElement[] result=new ExtendedStackTraceElement[stackTrace.length];
+		for(int i=0;i<stackTrace.length;i++)
+		{
+			result[i]=new ExtendedStackTraceElement(stackTrace[i]);
+		}
+		return result;
 	}
 
 	void initFromThrowableStrRep(ThrowableInformation ti, LoggingEvent dst)
@@ -211,7 +227,7 @@ public class LogbackLoggingAdapter
 			current=throwStrRep[i];
 			if(current.startsWith(ClassicGlobal.CAUSED_BY))
 			{
-				result.setStackTrace(stackElements.toArray(new StackTraceElement[stackElements.size()]));
+				result.setStackTrace(convert(stackElements.toArray(new StackTraceElement[stackElements.size()])));
 				stackElements.clear();
 				result.setCause(initFromThrowableStrRepRecursive(throwStrRep, i));
 				break;
@@ -286,7 +302,7 @@ public class LogbackLoggingAdapter
 		{
 			if(source.equals(NATIVE_METHOD))
 			{
-				lineNumber = ThrowableInfo.MAGIC_NATIVE_LINE_NUMBER;
+				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
 			}
 			else if(!source.equals(UNKNOWN_SOURCE))
 			{
@@ -310,11 +326,11 @@ public class LogbackLoggingAdapter
 			int lineNumber=current.getLineNumber();
 			if(current.isNativeMethod())
 			{
-				lineNumber = ThrowableInfo.MAGIC_NATIVE_LINE_NUMBER;
+				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
 			}
 			callStack[i]=new StackTraceElement(current.getClassName(),current.getMethodName(), current.getFileName(), lineNumber);
 		}
-		dst.setCallStack(callStack);
+		dst.setCallStack(convert(callStack));
 	}
 
 	private void initMarker(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)

@@ -633,11 +633,13 @@ public class MainFrame
 		loggingConsumers.add(loggingEventAlarmSound);
 		loggingConsumers.add(fileSplitterLoggingEventConsumer);
 		loggingConsumers.add(loggingFileDump);
-		if(application.isMac())
-		{
-			UserNotificationLoggingEventConsumer notification = new UserNotificationLoggingEventConsumer(application);
-			loggingConsumers.add(notification);
-		}
+
+		// crashs the app using j2se 6
+		//if(application.isMac())
+		//{
+		//	UserNotificationLoggingEventConsumer notification = new UserNotificationLoggingEventConsumer(application);
+		//	loggingConsumers.add(notification);
+		//}
 		loggingEventSourceManager.setEventConsumers(loggingConsumers);
 		loggingEventSourceManager.start();
 
@@ -650,11 +652,13 @@ public class MainFrame
 		accessConsumers.add(accessEventAlarmSound);
 		accessConsumers.add(fileSplitterAccessEventConsumer);
 		accessConsumers.add(accessFileDump);
-		if(application.isMac())
-		{
-			UserNotificationAccessEventConsumer notification = new UserNotificationAccessEventConsumer(application);
-			accessConsumers.add(notification);
-		}
+
+		// crashs the app using j2se 6
+		//if(application.isMac())
+		//{
+		//	UserNotificationAccessEventConsumer notification = new UserNotificationAccessEventConsumer(application);
+		//	accessConsumers.add(notification);
+		//}
 
 		accessEventSourceManager.setEventConsumers(accessConsumers);
 		accessEventSourceManager.start();
@@ -727,7 +731,7 @@ public class MainFrame
 
 		public void handleAbout(ApplicationEvent event)
 		{
-			application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
+			//application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
 			viewActions.getAboutAction().actionPerformed(null);
 			event.setHandled(true);
 		}
@@ -1028,36 +1032,40 @@ public class MainFrame
 	public String createMessage(EventWrapper wrapper)
 	{
 		initDetailsViewScript();
-		String message="<html><body></body></html>";
-		if(wrapper!=null)
+		String message="<html><body>detailsView Script returned null!</body></html>";
+//		if(wrapper!=null)
+//		{
+		//message=messageFormatter.createMessage(wrapper, true);
+		if(detailsViewScript==null)
 		{
-			//message=messageFormatter.createMessage(wrapper, true);
-			if(detailsViewScript==null)
+			message="<html><body>detailsView Script is broken!</body></html>";
+		}
+		else
+		{
+			try
 			{
-				message="<html><body>detailsView Script is broken!</body></html>";
-			}
-			else
-			{
-				try
-				{
-					Binding binding=new Binding();
-					binding.setVariable("eventWrapper", wrapper);
-					binding.setVariable("logger", logger);
+				Binding binding=new Binding();
+				binding.setVariable("eventWrapper", wrapper);
+				binding.setVariable("logger", logger);
 
-					detailsViewScript.setBinding(binding);
-					Object result=detailsViewScript.run();
-					if(result instanceof String)
-					{
-						message= (String) result;
-					}
-				}
-				catch(Throwable t)
+				detailsViewScript.setBinding(binding);
+				Object result=detailsViewScript.run();
+				if(result instanceof String)
 				{
-					message="<html><body>Exception while executing detailsView Script!</body></html>";
-					if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
+					message = (String) result;
 				}
+				else if(result!=null)
+				{
+					message = result.toString();
+				}
+			}
+			catch(Throwable t)
+			{
+				message="<html><body>Exception while executing detailsView Script!</body></html>";
+				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
 			}
 		}
+		//}
 		if(logger.isDebugEnabled()) logger.debug("Message:\n{}", message);
 		// I'm not sure who is to blame for the following line of code...
 		// One could argue that it's a bug in the application logging the event but I think

@@ -70,7 +70,7 @@
 			</action>
 		</release>
 
-		<release version="0.9.32" date="TBD" description="Future release">
+		<release version="0.9.33" date="TBD" description="Future release">
 			<action dev="jhux" type="update">
 				TODO: "Clean all inactive logs" in another thread with progress.
 			</action>
@@ -82,6 +82,44 @@
 			</action>
 			<action dev="jhux" type="update">
 				TODO: go to source on different thread.
+			</action>
+		</release>
+
+		<release version="0.9.32" date="TBD" description="Future release">
+			<action dev="jhux" type="fix">
+				sulky: Made sure that TimeoutOutputStream-Watchdog-Thread is stopped under all
+				circumstances. Added testcases for every scenario.
+			</action>
+			<action dev="jhux" type="fix">
+				sulky: Fixed a stupid problem that could result in a deadlock in Lilith
+				internal log view.
+			</action>
+			<action dev="jhux" type="add">
+				Added documentation about "java.lang.OutOfMemoryError: PermGen space" problem
+				and implemented LogbackShutdownServletContextListener for proper shut down of
+				logback.
+			</action>
+			<action dev="jhux" type="update">
+				Implemented changed message formatting logic introduced in SLF4J 1.5.3.
+			</action>
+			<action dev="jhux" type="update">
+				Prepared for logback 0.9.10. This required changes to LoggingEvent and contained StackTraceElements.
+				Serialized LoggingEvents are not compatible to previous version.
+			</action>
+			<action dev="jhux" type="update">
+				New xml schema 1.1 to support logback 0.9.10 features, i.e. CodeLocation, Version and Exact.
+			</action>
+			<action dev="jhux" type="fix">
+				Removed mac-specific UserNotification[..]EventConsumer because it crashes the app if J2SE 6 is used.
+				It didn't work, anyway :p
+			</action>
+			<action dev="jhux" type="add">
+				Implemented StackTraceElement XML reader and writer to prepare for java-independent
+				stack traces, e.g. C#. This will later be used for IDE integration like the IDEA plugin.
+			</action>
+			<action dev="jhux" type="update">
+				detailsView.groovy does now support CodeLocation, Version and Exact as well as null eventwrappers that
+				can happen if deserialization fails.
 			</action>
 		</release>
 

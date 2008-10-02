@@ -23,15 +23,13 @@ import java.util.Arrays;
 public class ThrowableInfo
 	implements Serializable
 {
-	private static final long serialVersionUID = -593924162512700193L;
-
-	public static final int MAGIC_NATIVE_LINE_NUMBER=-2;
+	// changed in 0.9.32
+	private static final long serialVersionUID = -6986047935091857997L;
 
 	private String name;
 	private String message;
 	private ThrowableInfo cause;
-	// TODO: use own class instead of StackTraceElement to support additional infos like version.
-	private StackTraceElement[] stackTrace;
+	private ExtendedStackTraceElement[] stackTrace;
 
 	public String getName()
 	{
@@ -53,12 +51,12 @@ public class ThrowableInfo
 		this.message = message;
 	}
 
-	public StackTraceElement[] getStackTrace()
+	public ExtendedStackTraceElement[] getStackTrace()
 	{
 		return stackTrace;
 	}
 
-	public void setStackTrace(StackTraceElement[] stackTrace)
+	public void setStackTrace(ExtendedStackTraceElement[] stackTrace)
 	{
 		this.stackTrace = stackTrace;
 	}

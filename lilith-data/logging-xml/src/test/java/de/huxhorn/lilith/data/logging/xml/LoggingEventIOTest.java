@@ -20,6 +20,7 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
@@ -178,11 +179,35 @@ public class LoggingEventIOTest
 		check(event, true);
 	}
 
-	public StackTraceElement[] createStackTraceElements()
+	public ExtendedStackTraceElement[] createStackTraceElements()
 	{
 		//noinspection ThrowableInstanceNeverThrown
 		Throwable t=new Throwable();
-		return t.getStackTrace();
+		StackTraceElement[] original=t.getStackTrace();
+
+		ExtendedStackTraceElement[] result=new ExtendedStackTraceElement[original.length];
+		for(int i=0;i<original.length;i++)
+		{
+			StackTraceElement current=original[i];
+			result[i]=new ExtendedStackTraceElement(current);
+
+			if(i==0)
+			{
+				// codeLocation, version and exact
+				result[i].setCodeLocation("CodeLocation");
+				result[i].setVersion("Version");
+				result[i].setExact(true);
+			}
+			else if(i==1)
+			{
+				// codeLocation, version and exact
+				result[i].setCodeLocation("CodeLocation");
+				result[i].setVersion("Version");
+				result[i].setExact(false);
+			}
+		}
+
+		return result; 
 	}
 
 	public void testCallStack() throws XMLStreamException, UnsupportedEncodingException

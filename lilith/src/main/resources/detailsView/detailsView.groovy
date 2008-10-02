@@ -1,35 +1,34 @@
 /*
  * Lilith - a log event viewer.
  * Copyright (C) 2007-2008 Joern Huxhorn
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import java.text.SimpleDateFormat;
-//import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-//import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-//import de.huxhorn.lilith.data.logging.Marker;
-//import de.huxhorn.lilith.data.logging.ThrowableInfo;
-
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 
+//import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+//import de.huxhorn.lilith.data.eventsource.EventWrapper;
+//import de.huxhorn.lilith.data.logging.Marker;
+//import de.huxhorn.lilith.data.logging.ThrowableInfo;
+
 //def si=new SourceIdentifier('identifier', 'secondaryIdentifier')
 
-// TODO: requestContent, responseContent
 //def eventWrapper=new EventWrapper(si, 1, event);
 
 /*
@@ -156,14 +155,21 @@ writer << builder.bind {
                 else
                 {
                     it.mkp.yield 'Unsupported class.'
-                    it.br
+                    it.br()
                     it.mkp.yield event.toString()
                 }
             }
             else
             {
-                it.yield 'NULL!'
-            }
+                it.mkp.yield 'Could not load event!'
+				it.br()
+				it.mkp.yield 'If you just updated Lilith then the old event type is probably incompatible with the current one.'
+				it.br()
+				it.b()
+				{
+					it.mkp.yield 'Just clear the event view in that case.'
+				}
+			}
         }
     }
 }
@@ -467,7 +473,6 @@ def buildEventWrapperSpecific(table, eventWrapper, evenOdd)
         {
             th('Source Identifier')
             td(si);
-            // TODO: better formatting
         }
     }
 
@@ -613,8 +618,8 @@ def buildStackTraceElement(element, ste, isFirst=false)
     {
         element.br()
     }
-    def steStr=ste.toString();
-    element.a([href:'ste://'+steStr]) { it.mkp.yield steStr}
+    def steStr=ste.toString(true);
+    element.a([href:'ste://'+ste.toString()]) { it.mkp.yield steStr}
 }
 
 class EvenOddToggle

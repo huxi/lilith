@@ -83,6 +83,7 @@ public class Lilith
 	private static final String INDEX = "indexFile";
 	//private static final String NAPKIN_LAF = "NapkinLaf";
 	private static final String ENABLE_BONJOUR = "bonjour";
+	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 
 	static
 	{
@@ -522,6 +523,25 @@ public class Lilith
 			System.exit(-1);
 		}
 
+		uncaughtExceptionHandler=new Thread.UncaughtExceptionHandler()
+		{
+			public void uncaughtException(Thread t, Throwable e)
+			{
+				System.err.println("\n-----\nThread "+t.getName()+" threw an exception!");
+				e.printStackTrace(System.err);
+			}
+		};
+
+		Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
+
+		SwingUtilities.invokeLater(new Runnable()
+		{
+
+			public void run()
+			{
+				Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler);
+			}
+		});
 //		if(showGui)
 //		{
 		startUI(appTitle, /*noNapkinLaf,*/ enableBonjour);

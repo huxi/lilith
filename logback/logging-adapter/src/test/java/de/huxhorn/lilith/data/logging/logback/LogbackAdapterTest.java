@@ -3,6 +3,7 @@ package de.huxhorn.lilith.data.logging.logback;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -133,12 +134,12 @@ public class LogbackAdapterTest
 				msg.append("\n");
 			}
 
-			StackTraceElement[] callStack = event.getCallStack();
+			ExtendedStackTraceElement[] callStack = event.getCallStack();
 			if(callStack!=null)
 			{
 				msg.append("Call-Stack     : ");
 				msg.append("\n");
-				for(StackTraceElement ste: callStack)
+				for(ExtendedStackTraceElement ste: callStack)
 				{
 					msg.append("\t").append(ste).append("\n");
 				}
@@ -182,10 +183,10 @@ public class LogbackAdapterTest
 					msg.append("StackTrace: ");
 					msg.append("\n");
 					indent.append("  ");
-					StackTraceElement[] stackTrace = current.getStackTrace();
+					ExtendedStackTraceElement[] stackTrace = current.getStackTrace();
 					if(stackTrace!=null)
 					{
-						for(StackTraceElement ste:stackTrace)
+						for(ExtendedStackTraceElement ste:stackTrace)
 						{
 							msg.append(indent.toString());
 							msg.append(ste);

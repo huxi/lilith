@@ -39,6 +39,7 @@
 		<module>multiplex-appender-classic</module>
 		<module>multiplex-appender-access</module>
 		<module>multiplex-appender-classic-xml</module>
+		<module>shutdown-context-listener</module>
 	</modules>
 
 </project>
