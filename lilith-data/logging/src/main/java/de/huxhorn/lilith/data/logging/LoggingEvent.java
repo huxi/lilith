@@ -37,7 +37,8 @@ import java.util.Arrays;
 public class LoggingEvent
 	implements Serializable
 {
-	private static final long serialVersionUID = 8733590043979572340L;
+	// changed in 0.9.32
+	private static final long serialVersionUID = -2716224578048229667L;
 
 	public enum Level
 	{
@@ -53,17 +54,13 @@ public class LoggingEvent
 	private String threadName;
 	private Date timeStamp;
 
-	/**
-	 * Must not change the name to messagePattern because of serialization.
-	 */
-	private String message;
+	private String messagePattern;
 
 	private String[] arguments;
 	private ThrowableInfo throwable;
 	private Map<String,String> mdc;
 	private Marker marker;
-	// TODO: use own class instead of StackTraceElement to support additional infos like version.
-	private StackTraceElement[] callStack;
+	private ExtendedStackTraceElement[] callStack;
 	private String applicationIdentifier;
 	private transient String formattedMessage;
 
@@ -89,12 +86,12 @@ public class LoggingEvent
 
 	public String getMessagePattern()
 	{
-		return message;
+		return messagePattern;
 	}
 
 	public void setMessagePattern(String messagePattern)
 	{
-		this.message = messagePattern;
+		this.messagePattern = messagePattern;
 		this.formattedMessage=null;
 	}
 
@@ -103,7 +100,7 @@ public class LoggingEvent
 		if(this.formattedMessage==null)
 		{
 			// lazy init
-			this.formattedMessage=MessageFormatter.format(message, arguments);
+			this.formattedMessage=MessageFormatter.format(messagePattern, arguments);
 		}
 		return this.formattedMessage;
 	}
@@ -169,12 +166,12 @@ public class LoggingEvent
 		this.marker = marker;
 	}
 
-	public StackTraceElement[] getCallStack()
+	public ExtendedStackTraceElement[] getCallStack()
 	{
 		return callStack;
 	}
 
-	public void setCallStack(StackTraceElement[] callStack)
+	public void setCallStack(ExtendedStackTraceElement[] callStack)
 	{
 		this.callStack = callStack;
 	}
@@ -204,7 +201,7 @@ public class LoggingEvent
 		if (logger != null ? !logger.equals(event.logger) : event.logger != null) return false;
 		if (marker != null ? !marker.equals(event.marker) : event.marker != null) return false;
 		if (mdc != null ? !mdc.equals(event.mdc) : event.mdc != null) return false;
-		if (message != null ? !message.equals(event.message) : event.message != null) return false;
+		if (messagePattern != null ? !messagePattern.equals(event.messagePattern) : event.messagePattern != null) return false;
 		if (threadName != null ? !threadName.equals(event.threadName) : event.threadName != null) return false;
 		if (throwable != null ? !throwable.equals(event.throwable) : event.throwable != null) return false;
 		if (timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null) return false;
@@ -219,7 +216,7 @@ public class LoggingEvent
 		result = 31 * result + (level != null ? level.hashCode() : 0);
 		result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
 		result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
-		result = 31 * result + (message != null ? message.hashCode() : 0);
+		result = 31 * result + (messagePattern != null ? messagePattern.hashCode() : 0);
 		result = 31 * result + (arguments != null ? Arrays.hashCode(arguments) : 0);
 		result = 31 * result + (throwable != null ? throwable.hashCode() : 0);
 		result = 31 * result + (mdc != null ? mdc.hashCode() : 0);
@@ -236,7 +233,7 @@ public class LoggingEvent
 		result.append("LoggingEvent[");
 		result.append("logger=").append(logger).append(", ");
 		result.append("level=").append(level).append(", ");
-		result.append("messagePattern=").append(message).append(", ");
+		result.append("messagePattern=").append(messagePattern).append(", ");
 		result.append("threadName=").append(threadName).append(", ");
 		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
 		result.append("timeStamp=").append(timeStamp);

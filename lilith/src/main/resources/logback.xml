@@ -216,8 +216,7 @@
 	<logger name="de.huxhorn.lilith.services.sender">
 		<level value="WARN"/>
 	</logger>
-
-
-
-
+	<logger name="de.huxhorn.sulky.buffers.SerializingFileBuffer">
+		<level value="OFF"/>
+	</logger>
 </configuration>

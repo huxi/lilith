@@ -20,6 +20,7 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -37,11 +38,12 @@ public class LoggingEventReader
 	implements GenericStreamReader<LoggingEvent>, LoggingEventSchemaConstants
 {
 	private DateTimeFormatter dateTimeFormatter;
-
+	private StackTraceElementReader steReader;
 
 	public LoggingEventReader()
 	{
 		dateTimeFormatter=new DateTimeFormatter();
+		steReader=new StackTraceElementReader();
 	}
 
 	public LoggingEvent read(XMLStreamReader reader) throws XMLStreamException
@@ -90,59 +92,71 @@ public class LoggingEventReader
 		event.setCallStack(readStackTraceNode(reader, CALLSTACK_NODE));
 	}
 
-	private StackTraceElement[] readStackTraceNode(XMLStreamReader reader, String nodeName) throws XMLStreamException
+	private ExtendedStackTraceElement[] readStackTraceNode(XMLStreamReader reader, String nodeName) throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		ArrayList<StackTraceElement> ste=new ArrayList<StackTraceElement>();
+		ArrayList<ExtendedStackTraceElement> ste=new ArrayList<ExtendedStackTraceElement>();
 		if (XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
 		{
 			reader.nextTag();
 			for(;;)
 			{
-				StackTraceElement elem=readStackTraceElement(reader);
+				ExtendedStackTraceElement elem=steReader.read(reader);//readStackTraceElement(reader);
 				if(elem==null)
 				{
 					break;
 				}
+				reader.nextTag();
 				ste.add(elem);
 			}
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, nodeName);
 			reader.nextTag();
-			return ste.toArray(new StackTraceElement[ste.size()]);
+			return ste.toArray(new ExtendedStackTraceElement[ste.size()]);
 		}
 		return null;
 	}
 
-	private StackTraceElement readStackTraceElement(XMLStreamReader reader) throws XMLStreamException
-	{
-		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type
-				&& STACK_TRACE_ELEMENT_NODE.equals(reader.getLocalName())
-				&& NAMESPACE_URI.equals(reader.getNamespaceURI()))
-		{
-			String className=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE);
-			String methodName=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE);
-			String fileName=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE);
-			reader.nextTag();
-			int lineNumber=-1;
-			String str = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_LINE_NUMBER_NODE);
-			if(str != null)
-			{
-				lineNumber=Integer.valueOf(str);
-			}
-			type = reader.getEventType();
-			if (XMLStreamConstants.START_ELEMENT == type && ST_NATIVE_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
-			{
-				lineNumber = ThrowableInfo.MAGIC_NATIVE_LINE_NUMBER;
-				reader.nextTag(); // close native
-				reader.nextTag();
-			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
-			reader.nextTag();
-			return new StackTraceElement(className, methodName, fileName, lineNumber);
-		}
-		return null;
-	}
+//	private ExtendedStackTraceElement readStackTraceElement(XMLStreamReader reader) throws XMLStreamException
+//	{
+//		int type = reader.getEventType();
+//		if (XMLStreamConstants.START_ELEMENT == type
+//				&& STACK_TRACE_ELEMENT_NODE.equals(reader.getLocalName())
+//				&& NAMESPACE_URI.equals(reader.getNamespaceURI()))
+//		{
+//			String className=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE);
+//			String methodName=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE);
+//			String fileName=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE);
+//			reader.nextTag();
+//			int lineNumber=-1;
+//			String str = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_LINE_NUMBER_NODE);
+//			if(str != null)
+//			{
+//				lineNumber=Integer.valueOf(str);
+//			}
+//			type = reader.getEventType();
+//			if (XMLStreamConstants.START_ELEMENT == type && ST_NATIVE_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+//			{
+//				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
+//				reader.nextTag(); // close native
+//				reader.nextTag();
+//			}
+//			String codeLocation = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_CODE_LOCATION_NODE);
+//			String version = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_VERSION_NODE);
+//			type = reader.getEventType();
+//			boolean exact=false;
+//			if (XMLStreamConstants.START_ELEMENT == type && ST_EXACT_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+//			{
+//				exact=true;
+//				reader.nextTag(); // close exact
+//				reader.nextTag();
+//			}
+//
+//			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
+//			reader.nextTag();
+//			return new ExtendedStackTraceElement(className, methodName, fileName, lineNumber, codeLocation, version, exact);
+//		}
+//		return null;
+//	}
 
 	private void readMarker(XMLStreamReader reader, LoggingEvent event)
 			throws XMLStreamException

@@ -9,8 +9,6 @@
 	</head>
 	<body>
 		<p><a href="index.xhtml">ToC</a></p>
-		<p>You can use http://sulky.sourceforge.net/repository/ and http://lilith.sourceforge.net/repository/ until
-		I have time to organize deployment to the central maven repository.</p>
 		
 		<h1><a name="top">Using the Lilith Classic Appender</a></h1>
 
@@ -69,6 +67,8 @@
   <appender-ref ref="multiplex"/>
 </logger>]]></tt></pre>
 
+		<p><a href="#top">Back to top.</a></p>
+		
 		<h2>Using the Lilith Classic XML Appender</h2>
 
 		<p>Alternatively, you could also use one of the Lilith Classic XML Appenders. Instead of serialized Java
@@ -113,6 +113,44 @@
   <IncludeCallerData>true</IncludeCallerData>
   <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
 </appender>]]></tt></pre>
+
+		<p><a href="#top">Back to top.</a></p>
+
+		<h2>Cleanup</h2>
+		<p>To prevent "java.lang.OutOfMemoryError: PermGen space" you'll want to shut down the
+		logback system properly in case of un- or redeployed web-applications.</p>
+
+<p>Add the following dependency to your applications <tt>pom.xml</tt> file:</p>
+		<pre><tt><![CDATA[<dependency>
+  <groupId>de.huxhorn.lilith</groupId>
+  <artifactId>de.huxhorn.lilith.logback.servlet</artifactId>
+  <version>${pom.version}</version>
+  <scope>runtime</scope>
+</dependency>]]></tt></pre>
+
+		<p>Then add the following to your web.xml file.</p>
+
+		<pre><tt><![CDATA[<listener>
+  <listener-class>
+    de.huxhorn.lilith.logback.servlet.LogbackShutdownServletContextListener
+  </listener-class>
+</listener>]]></tt></pre>
+
+		Or use the following if you are using JNDI:
+		<pre><tt><![CDATA[<listener>
+  <listener-class>
+    ch.qos.logback.classic.selector.servlet.ContextDetachingSCL
+  </listener-class>
+</listener>]]></tt></pre>
+
+		<p>See <a href="http://logback.qos.ch/manual/contextSelector.html">Chapter 8 of the Logback Manual</a>
+		for more infos.</p>
+
+		<p>If you want more infos about the problem itself, please visit the following links:</p>
+		<ul>
+			<li><a href="http://blogs.sun.com/fkieviet/entry/classloader_leaks_the_dreaded_java">Classloader leaks: the dreaded "java.lang.OutOfMemoryError: PermGen space" exception</a></li>
+			<li><a href="http://blogs.sun.com/fkieviet/entry/how_to_fix_the_dreaded">How to fix the dreaded "java.lang.OutOfMemoryError: PermGen space" exception (classloader leaks)</a></li>
+		</ul>
 
 		<p><a href="#top">Back to top.</a></p>
 	</body>

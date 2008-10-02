@@ -27,7 +27,6 @@ public class LogbackAccessAdapter
 		result.setServerName(event.getServerName());
 		result.setStatusCode(event.getStatusCode());
 		result.setTimeStamp(new Date(event.getTimeStamp()));
-		// TODO: request/response content
 		return result;
 	}
 }

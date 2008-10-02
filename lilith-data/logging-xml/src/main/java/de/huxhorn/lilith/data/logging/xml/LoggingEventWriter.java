@@ -20,6 +20,7 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -239,41 +240,42 @@ public class LoggingEventWriter
 		}
 	}
 
-	private void writeStackTraceNode(XMLStreamWriter writer, StackTraceElement[] ste, String nodeName) throws XMLStreamException
+	private void writeStackTraceNode(XMLStreamWriter writer, ExtendedStackTraceElement[] ste, String nodeName) throws XMLStreamException
 	{
 		if(ste!=null)
 		{
 			StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, nodeName);
-			for(StackTraceElement elem:ste)
+			StackTraceElementWriter steWriter=new StackTraceElementWriter();
+			steWriter.setPreferredPrefix(prefix);
+			for(ExtendedStackTraceElement elem:ste)
 			{
-				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
-				/*
-				StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE, elem.getClassName());
-				StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE, elem.getMethodName());
-				StaxUtilities.writeSimpleTextNodeIfNotNull(writer, prefix, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE, elem.getFileName());
-				int lineNumber=elem.getLineNumber();
-				if(lineNumber == ThrowableInfo.MAGIC_NATIVE_LINE_NUMBER)
-				{
-					StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, ST_NATIVE_NODE);
-				}
-				else if(lineNumber>=0)
-				{
-					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_LINE_NUMBER_NODE, ""+lineNumber);
-				}
-				*/
-				StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE, elem.getClassName());
-				StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE, elem.getMethodName());
-				StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE, elem.getFileName());
-				int lineNumber=elem.getLineNumber();
-				if(lineNumber == ThrowableInfo.MAGIC_NATIVE_LINE_NUMBER)
-				{
-					StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, ST_NATIVE_NODE);
-				}
-				else if(lineNumber>=0)
-				{
-					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_LINE_NUMBER_NODE, ""+lineNumber);
-				}
-				writer.writeEndElement();
+				steWriter.write(writer, elem, false);
+//				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
+//				StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE, elem.getClassName());
+//				StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE, elem.getMethodName());
+//				StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE, elem.getFileName());
+//				int lineNumber=elem.getLineNumber();
+//				if(lineNumber == ExtendedStackTraceElement.NATIVE_METHOD)
+//				{
+//					StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, ST_NATIVE_NODE);
+//				}
+//				else if(lineNumber>=0)
+//				{
+//					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_LINE_NUMBER_NODE, ""+lineNumber);
+//				}
+//				if(elem.getCodeLocation()!=null)
+//				{
+//					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_CODE_LOCATION_NODE, elem.getCodeLocation());
+//				}
+//				if(elem.getVersion()!=null)
+//				{
+//					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_VERSION_NODE, elem.getVersion());
+//				}
+//				if(elem.isExact())
+//				{
+//					StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, ST_EXACT_NODE);
+//				}
+//				writer.writeEndElement();
 			}
 			writer.writeEndElement();
 		}

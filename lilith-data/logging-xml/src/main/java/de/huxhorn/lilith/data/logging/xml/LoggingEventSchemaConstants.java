@@ -19,8 +19,8 @@ package de.huxhorn.lilith.data.logging.xml;
 
 public interface LoggingEventSchemaConstants
 {
-	String NAMESPACE_URI ="http://lilith.sf.net/schema/logging/10";
-	String NAMESPACE_LOCATION ="http://lilith.sf.net/schema/logging/10/LoggingEvent.xsd";
+	String NAMESPACE_URI ="http://lilith.sf.net/schema/logging/11";
+	String NAMESPACE_LOCATION ="http://lilith.sf.net/schema/logging/11/LoggingEvent.xsd";
 
 	String DEFAULT_NAMESPACE_PREFIX="log";
 
@@ -61,4 +61,7 @@ public interface LoggingEventSchemaConstants
 	String ST_FILE_NAME_ATTRIBUTE ="fileName";
 	String ST_LINE_NUMBER_NODE="LineNumber";
 	String ST_NATIVE_NODE="Native";
+	String ST_CODE_LOCATION_NODE="CodeLocation";
+	String ST_VERSION_NODE="Version";
+	String ST_EXACT_NODE="Exact";
 }
