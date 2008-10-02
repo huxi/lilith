@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StackTraceElement xmlns="http://lilith.sf.net/schema/logging/11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://lilith.sf.net/schema/logging/11 ../schema/logging/11/LoggingEvent.xsd" className="foo.Bar" methodName="fooBar" fileName="fileName">
+	<LineNumber>17</LineNumber>
+	<CodeLocation>codeLocation</CodeLocation>
+	<Version>version</Version>
+	<Exact/>
+</StackTraceElement>
