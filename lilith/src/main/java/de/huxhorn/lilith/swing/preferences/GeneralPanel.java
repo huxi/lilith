@@ -51,6 +51,8 @@ public class GeneralPanel
 	private PreferencesDialog preferencesDialog;
 	private ApplicationPreferences applicationPreferences;
 	private JCheckBox showIdentifierCheckbox;
+	private JCheckBox showFullCallstackCheckbox;
+	private JCheckBox cleaningLogsOnExitCheckbox;
 
 	public GeneralPanel(PreferencesDialog preferencesDialog)
 	{
@@ -64,6 +66,8 @@ public class GeneralPanel
 		// General
 		internalFramesCheckbox=new JCheckBox("Use internal frames.");
 		showIdentifierCheckbox=new JCheckBox("Show identifier for named sources.");
+		showFullCallstackCheckbox=new JCheckBox("Show full Callstack.");
+		cleaningLogsOnExitCheckbox=new JCheckBox("Clean logs on exit.");
 		autoOpenCheckbox=new JCheckBox("Automatically open new views on connection.");
 		autoCloseCheckbox=new JCheckBox("Automatically close inactive views on disconnection.");
 		autoFocusCheckbox=new JCheckBox("Automatically focus window of new view.");
@@ -84,6 +88,8 @@ public class GeneralPanel
 		add(internalFramesCheckbox);
 		add(scrollingToBottomCheckbox);
 		add(showIdentifierCheckbox);
+		add(showFullCallstackCheckbox);
+		add(cleaningLogsOnExitCheckbox);
 		add(autoOpenCheckbox);
 		add(autoCloseCheckbox);
 		add(autoFocusCheckbox);
@@ -102,6 +108,8 @@ public class GeneralPanel
 		autoFocusCheckbox.setSelected(applicationPreferences.isAutoFocusingWindow());
 		checkForUpdateCheckbox.setSelected(applicationPreferences.isCheckingForUpdate());
 		showIdentifierCheckbox.setSelected(applicationPreferences.isShowingIdentifier());
+		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
+		cleaningLogsOnExitCheckbox.setSelected(applicationPreferences.isCleaningLogsOnExit());
 	}
 
 	public void saveSettings()
@@ -114,6 +122,8 @@ public class GeneralPanel
 		applicationPreferences.setCheckingForUpdate(checkForUpdateCheckbox.isSelected());
 		applicationPreferences.setApplicationPath(new File(appPathTextArea.getText()));
 		applicationPreferences.setShowingIdentifier(showIdentifierCheckbox.isSelected());
+		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
+		applicationPreferences.setCleaningLogsOnExit(cleaningLogsOnExitCheckbox.isSelected());
 	}
 
 	private class BrowseApplicationPathAction
