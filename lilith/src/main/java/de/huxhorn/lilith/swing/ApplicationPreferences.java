@@ -62,7 +62,9 @@ public class ApplicationPreferences
 
 	private static final Preferences PREFERENCES =Preferences.userNodeForPackage(ApplicationPreferences.class);
 
+	public static final String CLEANING_LOGS_ON_EXIT_PROPERTY = "cleaningLogsOnExit";
 	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
+	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
 	public static final String CHECKING_FOR_UPDATE_PROPERTY = "checkingForUpdate";
 	public static final String SOURCE_FILTERING_PROPERTY = "sourceFiltering";
 	public static final String SOUND_LOCATIONS_PROPERTY = "soundLocations";
@@ -517,9 +519,9 @@ public class ApplicationPreferences
 
 	public void setShowingIdentifier(boolean showingIdentifierWithName)
 	{
-		Object oldValue= isShowingIdentifier();
+		Object oldValue = isShowingIdentifier();
 		PREFERENCES.putBoolean(SHOWING_IDENTIFIER_PROPERTY, showingIdentifierWithName);
-		Object newValue= isShowingIdentifier();
+		Object newValue = isShowingIdentifier();
 		propertyChangeSupport.firePropertyChange(SHOWING_IDENTIFIER_PROPERTY, oldValue, newValue);
 	}
 
@@ -528,6 +530,31 @@ public class ApplicationPreferences
 		return PREFERENCES.getBoolean(SHOWING_IDENTIFIER_PROPERTY, true);
 	}
 
+	public void setShowingFullCallstack(boolean showingFullCallstack)
+	{
+		Object oldValue = isShowingFullCallstack();
+		PREFERENCES.putBoolean(SHOWING_FULL_CALLSTACK_PROPERTY, showingFullCallstack);
+		Object newValue = isShowingFullCallstack();
+		propertyChangeSupport.firePropertyChange(SHOWING_FULL_CALLSTACK_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isShowingFullCallstack()
+	{
+		return PREFERENCES.getBoolean(SHOWING_FULL_CALLSTACK_PROPERTY, false);
+	}
+
+	public void setCleaningLogsOnExit(boolean cleaningLogsOnExit)
+	{
+		Object oldValue = isCleaningLogsOnExit();
+		PREFERENCES.putBoolean(CLEANING_LOGS_ON_EXIT_PROPERTY, cleaningLogsOnExit);
+		Object newValue = isCleaningLogsOnExit();
+		propertyChangeSupport.firePropertyChange(CLEANING_LOGS_ON_EXIT_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isCleaningLogsOnExit()
+	{
+		return PREFERENCES.getBoolean(CLEANING_LOGS_ON_EXIT_PROPERTY, false);
+	}
 
 	public void setCheckingForUpdate(boolean checkingForUpdate)
 	{

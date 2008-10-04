@@ -28,8 +28,6 @@ import de.huxhorn.lilith.consumers.AlarmSoundLoggingEventConsumer;
 import de.huxhorn.lilith.consumers.FileDumpEventConsumer;
 import de.huxhorn.lilith.consumers.FileSplitterEventConsumer;
 import de.huxhorn.lilith.consumers.RrdLoggingEventConsumer;
-import de.huxhorn.lilith.consumers.UserNotificationAccessEventConsumer;
-import de.huxhorn.lilith.consumers.UserNotificationLoggingEventConsumer;
 import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
@@ -1047,6 +1045,7 @@ public class MainFrame
 				Binding binding=new Binding();
 				binding.setVariable("eventWrapper", wrapper);
 				binding.setVariable("logger", logger);
+				binding.setVariable("completeCallStack", applicationPreferences.isShowingFullCallstack());
 
 				detailsViewScript.setBinding(binding);
 				Object result=detailsViewScript.run();
@@ -1191,6 +1190,7 @@ public class MainFrame
 	{
 		loggingEventViewManager.removeInactiveViews(false);
 		accessEventViewManager.removeInactiveViews(false);
+		// TODO: execute in different thread...
 		deleteInactiveLogs(loggingFileFactory);
 		deleteInactiveLogs(accessFileFactory);
 		updateWindowMenus();
@@ -1573,6 +1573,11 @@ public class MainFrame
 //			if(logger.isInfoEnabled()) logger.info("Unregistering services...");
 //			// this can't be done in the shutdown hook...
 //			jmDns.unregisterAllServices();
+		}
+		if(applicationPreferences.isCleaningLogsOnExit())
+		{
+			deleteInactiveLogs(loggingFileFactory);
+			deleteInactiveLogs(accessFileFactory);
 		}
 		System.exit(0);
 	}
