@@ -68,15 +68,15 @@
 			<action dev="jhux" type="add">
 				TODO: launch4j
 			</action>
+			<action dev="jhux" type="update">
+				TODO: go to source on different thread, using xml StackTraceElement.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: homemade multicast discovery of other Lilith instances on LAN.
+			</action>
 		</release>
 
 		<release version="0.9.33" date="TBD" description="Future release">
-			<action dev="jhux" type="update">
-				TODO: "Clean all inactive logs" in another thread with progress.
-			</action>
-			<action dev="jhux" type="update">
-				TODO: go to source on different thread.
-			</action>
 		</release>
 
 		<release version="0.9.32" date="TBD" description="Future release">
@@ -120,6 +120,9 @@
 			</action>
 			<action dev="jhux" type="add">
 				"Clean logs on exit." option.
+			</action>
+			<action dev="jhux" type="update">
+				"Clean all inactive logs" on another thread.
 			</action>
 		</release>
 

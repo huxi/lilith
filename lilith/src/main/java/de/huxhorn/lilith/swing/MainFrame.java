@@ -62,6 +62,7 @@ import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.SwingWorkManager;
 import de.huxhorn.sulky.swing.Windows;
+import de.huxhorn.sulky.swing.AbstractProgressingCallable;
 import de.huxhorn.sulky.formatting.SimpleXml;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.httpclient.HttpClient;
@@ -1191,8 +1192,9 @@ public class MainFrame
 		loggingEventViewManager.removeInactiveViews(false);
 		accessEventViewManager.removeInactiveViews(false);
 		// TODO: execute in different thread...
-		deleteInactiveLogs(loggingFileFactory);
-		deleteInactiveLogs(accessFileFactory);
+		integerWorkManager.add(new CleanAllInactiveCallable());
+		//deleteInactiveLogs(loggingFileFactory);
+		//deleteInactiveLogs(accessFileFactory);
 		updateWindowMenus();
 	}
 
@@ -2182,4 +2184,40 @@ public class MainFrame
 		// TODO: Improve update available dialog
 
 	}
+
+	public class CleanAllInactiveCallable
+		extends AbstractProgressingCallable<Integer>
+	{
+		public Integer call() throws Exception
+		{
+			List<SourceIdentifier> inactiveAccess = collectInactiveLogs(accessFileFactory);
+			List<SourceIdentifier> inactiveLogging = collectInactiveLogs(loggingFileFactory);
+			setNumberOfSteps(inactiveAccess.size()+inactiveLogging.size());
+			int currentStep=0;
+			for(SourceIdentifier si: inactiveAccess)
+			{
+				delete(accessFileFactory, si);
+				currentStep++;
+				setCurrentStep(currentStep);
+			}
+			for(SourceIdentifier si: inactiveLogging)
+			{
+				delete(loggingFileFactory, si);
+				currentStep++;
+				setCurrentStep(currentStep);
+			}
+			return currentStep;
+		}
+
+		private void delete(LogFileFactory fileFactory, SourceIdentifier si)
+		{
+			File dataFile=fileFactory.getDataFile(si);
+			File indexFile=fileFactory.getIndexFile(si);
+			dataFile.delete();
+			if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
+			indexFile.delete();
+			if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
+		}
+	}
+
 }
