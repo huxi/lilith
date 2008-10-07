@@ -1,0 +1,43 @@
+How to build Lilith from trunk:
+
+Prerequisits:
+Java SE JDK >= 1.5 ( see http://java.sun.com )
+Maven 2.0.9 ( see http://maven.apache.org/ )
+Subversion ( see http://subversion.tigris.org/ as well as http://svnbook.red-bean.com/ )
+
+1.) Create a new directory, e.g. 'build' and cd into it.
+2.) Execute the following two commands:
+svn checkout https://lilith.svn.sourceforge.net/svnroot/lilith/trunk lilith
+svn checkout https://sulky.svn.sourceforge.net/svnroot/sulky/trunk sulky
+3.) No you have two options:
+Execute
+mvn clean install
+in the sulky and lilith subdirectories in that order
+
+or, alternatively, create a pom.xml file in the directory containing both the sulky and the lilith directory containing the following:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.huxhorn</groupId>
+	<artifactId>de.huxhorn.master</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Huxhorn master pom file</name>
+	
+	<modules>
+		<module>sulky</module>
+		<module>lilith</module>
+	</modules>
+
+</project>
+
+and execute
+mvn clean install
+once in that same directory.
+
+Either way, you'll end up with the final lilith application in
+lilith/lilith/target
+
+Hope that helps.
