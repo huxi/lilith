@@ -21,6 +21,10 @@
 			<filtered>true</filtered>
 		</file>
 		<file>
+			<source>build.txt</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<file>
 			<source>target/lilith.jar</source>
 			<outputDirectory>/lib</outputDirectory>
 		</file>
