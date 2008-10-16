@@ -117,6 +117,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 					int size=0;
 					try
 					{
+						// TODO: obtain transfer size info						
 						size = dataInput.readInt();
 						updateHeartbeatTimestamp();
 						if(size>0)
