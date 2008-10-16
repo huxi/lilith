@@ -219,4 +219,7 @@
 	<logger name="de.huxhorn.sulky.buffers.SerializingFileBuffer">
 		<level value="OFF"/>
 	</logger>
+	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer">
+		<level value="WARN"/>
+	</logger>
 </configuration>
