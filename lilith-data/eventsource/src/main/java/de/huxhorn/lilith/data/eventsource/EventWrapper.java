@@ -27,6 +27,12 @@ public class EventWrapper<T extends Serializable>
 	private SourceIdentifier sourceIdentifier;
 	private T event;
 	private long localId;
+	
+	/**
+	 * This attribute is ignored in equals and hashCode.
+	 * It's transient and won't survive serialization.
+	 */
+	private transient TransferSizeInfo transferSizeInfo;
 
 	public EventWrapper(SourceIdentifier sourceIdentifier, long localId, T event)
 	{
@@ -58,6 +64,16 @@ public class EventWrapper<T extends Serializable>
 	public void setLocalId(long localId)
 	{
 		this.localId = localId;
+	}
+
+	public TransferSizeInfo getTransferSizeInfo()
+	{
+		return transferSizeInfo;
+	}
+
+	public void setTransferSizeInfo(TransferSizeInfo transferSizeInfo)
+	{
+		this.transferSizeInfo = transferSizeInfo;
 	}
 
 	public T getEvent()

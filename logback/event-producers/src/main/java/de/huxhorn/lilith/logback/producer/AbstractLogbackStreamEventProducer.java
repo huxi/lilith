@@ -63,6 +63,7 @@ public abstract class AbstractLogbackStreamEventProducer<T extends Serializable>
 			{
 				try
 				{
+					// TODO: obtain transfer size info
 					Object object = dataInput.readObject();
 
 					T event=postprocessEvent(object);

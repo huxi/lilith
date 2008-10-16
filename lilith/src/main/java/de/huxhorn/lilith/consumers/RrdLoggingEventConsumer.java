@@ -71,6 +71,7 @@ public class RrdLoggingEventConsumer
 
 	public void consume(List<EventWrapper<LoggingEvent>> events)
 	{
+		// TODO: evaluate transfer size info if available
 		Map<String, EventCounter> eventCounters =new HashMap<String, EventCounter>();
 		EventCounter globalCounter=new EventCounter();
 		for (EventWrapper<LoggingEvent> wrapper : events)
