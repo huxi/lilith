@@ -36,6 +36,7 @@ public class MultiplexSendBytesService
 	private WriteByteStrategy writeByteStrategy;
 	private int port;
 	private int reconnectionDelay;
+	private boolean debug;
 
 	public MultiplexSendBytesService(String name, List<String> remoteHostsList, int port, WriteByteStrategy writeByteStrategy, int reconnectionDelay, int queueSize)
 	{
@@ -47,6 +48,16 @@ public class MultiplexSendBytesService
 		this.writeByteStrategy=writeByteStrategy;
 		this.port=port;
 		this.reconnectionDelay=reconnectionDelay;
+	}
+
+	public boolean isDebug()
+	{
+		return debug;
+	}
+
+	public void setDebug(boolean debug)
+	{
+		this.debug = debug;
 	}
 
 	public void startUp()
@@ -63,7 +74,7 @@ public class MultiplexSendBytesService
 						queueSize,
 						reconnectionDelay,
 						SimpleSendBytesService.DEFAULT_POLL_INTERVALL);
-				
+				service.setDebug(debug);
 				senderServices.add(service);
 				service.startUp();
 			}

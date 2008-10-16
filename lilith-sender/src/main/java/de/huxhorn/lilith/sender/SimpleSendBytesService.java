@@ -17,8 +17,6 @@
  */
 package de.huxhorn.lilith.sender;
 
-import org.apache.commons.io.IOUtils;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.List;
@@ -48,6 +46,7 @@ public class SimpleSendBytesService
 	private final int pollIntervall;
 	private ConnectionState connectionState;
 	private SendBytesThread sendBytesThread;
+	private boolean debug;
 
 	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy)
 	{
@@ -85,6 +84,16 @@ public class SimpleSendBytesService
 		this.pollIntervall=pollIntervall;
 	}
 
+	public boolean isDebug()
+	{
+		return debug;
+	}
+
+	public void setDebug(boolean debug)
+	{
+		this.debug = debug;
+	}
+
 	public ConnectionState getConnectionState()
 	{
 		return connectionState;
@@ -116,6 +125,7 @@ public class SimpleSendBytesService
 
 	public synchronized void shutDown()
 	{
+		connectionState = ConnectionState.Canceled;
 		if(sendBytesThread!=null)
 		{
 			sendBytesThread.interrupt();
@@ -135,12 +145,35 @@ public class SimpleSendBytesService
 			setDaemon(true);
 		}
 
-		public synchronized void closeConnection()
+		public void closeConnection()
 		{
-			IOUtils.closeQuietly(dataOutputStream);
-			dataOutputStream = null;
-			connectionState = ConnectionState.Offline;
-			notifyAll();
+			synchronized(SimpleSendBytesService.this)
+			{
+				if(dataOutputStream!=null)
+				{
+					//IOUtils.closeQuietly(dataOutputStream);
+					// the above call can result in a ClassNotFoundException if a
+					// webapp is already unloaded!!!
+					try
+					{
+						dataOutputStream.close();
+					}
+					catch (IOException e)
+					{
+						// ignore
+					}
+					dataOutputStream = null;
+					if(connectionState != ConnectionState.Canceled)
+					{
+						connectionState = ConnectionState.Offline;
+					}
+					if(debug)
+					{
+						System.err.println("Closed dataOutputStream.");
+					}
+				}
+				SimpleSendBytesService.this.notifyAll();
+			}
 		}
 
 		public void run()
@@ -156,17 +189,22 @@ public class SimpleSendBytesService
 					localEventBytes.drainTo(copy);
 					if(copy.size()>0)
 					{
-						if (dataOutputStream != null)
+						DataOutputStream outputStream;
+						synchronized(SimpleSendBytesService.this)
 						{
-//							System.out.println(this+" - about to write "+copy.size()+" events...");
+							outputStream=dataOutputStream;
+						}
+						if (outputStream != null)
+						{
+//								System.out.println(this+" - about to write "+copy.size()+" events...");
 							try
 							{
 								for(byte[] current:copy)
 								{
-									writeByteStrategy.writeBytes(dataOutputStream, current);
+									writeByteStrategy.writeBytes(outputStream, current);
 								}
-								dataOutputStream.flush();
-//								System.out.println(this+" wrote "+copy.size()+" events.");
+								outputStream.flush();
+//									System.out.println(this+" wrote "+copy.size()+" events.");
 							}
 							catch (IOException e)
 							{
@@ -177,17 +215,18 @@ public class SimpleSendBytesService
 								closeConnection();
 							}
 						}
+						copy.clear();
+					}
 //						else
 //						{
 //							System.out.println(this+" ignored "+copy.size()+" events because of missing connection.");
 //						}
-						copy.clear();
-					}
 					Thread.sleep(pollIntervall);
 				}
 				catch (InterruptedException e)
 				{
 					reconnectionThread.interrupt();
+					closeConnection();
 					shutDown();
 					return;
 					//e.printStackTrace();
@@ -207,24 +246,60 @@ public class SimpleSendBytesService
 			{
 				for(;;)
 				{
-					synchronized(SendBytesThread.this)
+					boolean connect=false;
+					synchronized(SimpleSendBytesService.this)
 					{
-						if(dataOutputStream==null)
+						if(dataOutputStream==null && connectionState != ConnectionState.Canceled)
 						{
-							try
+							connect=true;
+							connectionState = ConnectionState.Connecting;
+						}
+					}
+					DataOutputStream newStream=null;
+					if(connect)
+					{
+						try
+						{
+							newStream = dataOutputStreamFactory.createDataOutputStream();
+						}
+						catch (IOException e)
+						{
+							// ignore
+						}
+					}
+
+					synchronized(SimpleSendBytesService.this)
+					{
+						if(connect)
+						{
+							if(newStream!=null)
 							{
-								connectionState =ConnectionState.Connecting;
-								dataOutputStream = dataOutputStreamFactory.createDataOutputStream();
-								connectionState = ConnectionState.Connected;
+								if(connectionState == ConnectionState.Canceled)
+								{
+									// cleanup
+									try
+									{
+										newStream.close();
+									}
+									catch (IOException e)
+									{
+										// ignore
+									}
+								}
+								else
+								{
+									dataOutputStream=newStream;
+									connectionState = ConnectionState.Connected;
+								}
 							}
-							catch (IOException e)
+							else if(connectionState != ConnectionState.Canceled)
 							{
 								connectionState = ConnectionState.Offline;
 							}
 						}
 						try
 						{
-							SendBytesThread.this.wait(reconnectionDelay);
+							SimpleSendBytesService.this.wait(reconnectionDelay);
 						}
 						catch (InterruptedException e)
 						{

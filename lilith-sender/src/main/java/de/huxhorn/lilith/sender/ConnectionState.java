@@ -21,5 +21,6 @@ public enum ConnectionState
 {
 	Offline,
 	Connecting,
-	Connected
+	Connected,
+	Canceled
 }

@@ -43,6 +43,7 @@ public abstract class MultiplexSocketAppenderBase<E> extends AppenderBase<E>
 	private WriteByteStrategy writeByteStrategy;
 	private int queueSize;
 	private MultiplexSendBytesService multiplexSendBytes;
+	private boolean debug;
 
 	public MultiplexSocketAppenderBase()
 	{
@@ -58,6 +59,16 @@ public abstract class MultiplexSocketAppenderBase<E> extends AppenderBase<E>
 	{
 		this.writeByteStrategy=writeByteStrategy;
 		setQueueSize(queueSize);
+	}
+
+	public boolean isDebug()
+	{
+		return debug;
+	}
+
+	public void setDebug(boolean debug)
+	{
+		this.debug = debug;
 	}
 
 	public int getQueueSize()
@@ -134,6 +145,10 @@ public abstract class MultiplexSocketAppenderBase<E> extends AppenderBase<E>
 	 */
 	public void setRemoteHostsList(List<String> remoteHostsList)
 	{
+		if(debug)
+		{
+			System.err.println("RemoteHosts: "+remoteHostsList);
+		}
 		this.remoteHostsList = remoteHostsList;
 	}
 
@@ -175,6 +190,7 @@ public abstract class MultiplexSocketAppenderBase<E> extends AppenderBase<E>
 	private void initialize()
 	{
 		multiplexSendBytes=new MultiplexSendBytesService(name, remoteHostsList, port, writeByteStrategy, reconnectionDelay, queueSize);
+		multiplexSendBytes.setDebug(debug);
 		multiplexSendBytes.startUp();
 
 		// TODO: add support for ip.ip.ip.ip:port
