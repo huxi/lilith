@@ -70,7 +70,7 @@ public class HelpFrame
 			{
 				for(Object o: mouseTrackingList)
 				{
-					if(logger.isWarnEnabled()) logger.warn("Before MTL {}",o);
+					if(logger.isDebugEnabled()) logger.debug("Before MTL {}",o);
 					if(o instanceof LinkListener)
 					{
 						helpPane.removeMouseTrackingListener((LinkListener) o);
