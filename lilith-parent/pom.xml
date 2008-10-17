@@ -19,7 +19,7 @@
 		<lilithVersion>${pom.version}</lilithVersion>
 <!-- SV --><sulkyVersion>0.9.4-SNAPSHOT</sulkyVersion>
 		<commonsLoggingVersion>1.1</commonsLoggingVersion>
-		<slf4jVersion>1.5.0</slf4jVersion>
+		<slf4jVersion>1.5.4</slf4jVersion>
 		<logbackVersion>0.9.9</logbackVersion>
 	</properties>
 	
@@ -43,15 +43,6 @@
 		</site>
 		
 		<!--
-		<repository>
-			<id>lilith-repos</id>
-			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
-		</repository>
-		<snapshotRepository>
-			<id>lilith-snapshot-repos</id>
-            <uniqueVersion>false</uniqueVersion>
-			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
-		</snapshotRepository>
 		scp doesn't work anymore
 		-->
 		<repository>
@@ -428,6 +419,10 @@
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ssh</artifactId>
+				<!-- 
+				<version>1.0-beta-4</version>
+				http://www.mail-archive.com/issues@maven.apache.org/msg42661.html
+				-->
 				<version>1.0-beta-2</version>
 			</extension>
 		</extensions>
