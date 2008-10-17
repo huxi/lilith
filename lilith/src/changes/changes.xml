@@ -124,6 +124,18 @@
 			<action dev="jhux" type="update">
 				"Clean all inactive logs" on another thread.
 			</action>
+			<action dev="jhux" type="fix">
+				Made sure that every TimeoutOutputStream is *always* properly closed in the multiplex-appenders. This
+				should finally fix "java.lang.OutOfMemoryError: PermGen space" problems in webapps, at least those
+				caused by Lilith. :p
+				For the record: Do *NOT* use IOUtils.closeQuietly in multithreaded webapp code!!!
+			</action>
+			<action dev="jhux" type="update">
+				Updated groovy dependency to 1.5.7.
+			</action>
+			<action dev="jhux" type="add">
+				Prepared for transfer size statistics. You can't see anything, yet. Added todos to relevant places.
+			</action>
 		</release>
 
 		<release version="0.9.31" date="2008-08-11" description="Release">

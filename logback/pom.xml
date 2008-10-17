@@ -21,13 +21,18 @@
 			<id>lilith.huxhorn.de</id>
 			<url>scp://huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/${pom.artifactId}</url>
 		</site>
+
+		<!--
+		scp doesn't work anymore
+		-->
 		<repository>
 			<id>lilith-repos</id>
-			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
+			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
 		</repository>
 		<snapshotRepository>
 			<id>lilith-snapshot-repos</id>
-			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
+            <uniqueVersion>false</uniqueVersion>
+			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
 		</snapshotRepository>
 	</distributionManagement>
 
