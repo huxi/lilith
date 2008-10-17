@@ -41,13 +41,27 @@
 			<id>lilith.huxhorn.de</id>
 			<url>scp://huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/</url>
 		</site>
+		
+		<!--
 		<repository>
 			<id>lilith-repos</id>
 			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
 		</repository>
 		<snapshotRepository>
 			<id>lilith-snapshot-repos</id>
+            <uniqueVersion>false</uniqueVersion>
 			<url>scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
+		</snapshotRepository>
+		scp doesn't work anymore
+		-->
+		<repository>
+			<id>lilith-repos</id>
+			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
+		</repository>
+		<snapshotRepository>
+			<id>lilith-snapshot-repos</id>
+            <uniqueVersion>false</uniqueVersion>
+			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
 		</snapshotRepository>
 	</distributionManagement>
 	
