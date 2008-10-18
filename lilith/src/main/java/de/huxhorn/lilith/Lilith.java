@@ -46,6 +46,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -168,6 +170,37 @@ public class Lilith
 				// try the older menu bar property
 				System.setProperty("com.apple.macos.useScreenMenuBar", "true");
 				// this shouldn't happen since we only run on 1.5+
+			}
+		}
+		else
+		{
+			// use Nimbus if available
+			try
+			{
+    			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+				{
+        			if ("Nimbus".equals(info.getName()))
+					{
+            			UIManager.setLookAndFeel(info.getClassName());
+						break;
+        			}
+    			}
+			}
+			catch (UnsupportedLookAndFeelException e)
+			{
+				// ignore
+			}
+			catch (ClassNotFoundException e)
+			{
+				// ignore
+			}
+			catch (InstantiationException e)
+			{
+				// ignore
+			}
+			catch (IllegalAccessException e)
+			{
+				// ignore
 			}
 		}
 		/*
