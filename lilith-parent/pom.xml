@@ -19,7 +19,7 @@
 		<lilithVersion>${pom.version}</lilithVersion>
 <!-- SV --><sulkyVersion>0.9.4-SNAPSHOT</sulkyVersion>
 		<commonsLoggingVersion>1.1</commonsLoggingVersion>
-		<slf4jVersion>1.5.4</slf4jVersion>
+		<slf4jVersion>1.5.5</slf4jVersion>
 		<logbackVersion>0.9.9</logbackVersion>
 	</properties>
 	
@@ -273,7 +273,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>jcl104-over-slf4j</artifactId>
+				<artifactId>jcl-over-slf4j</artifactId>
 				<version>${slf4jVersion}</version>
 			</dependency>
 			<dependency>
