@@ -136,6 +136,12 @@
 			<action dev="jhux" type="add">
 				Prepared for transfer size statistics. You can't see anything, yet. Added todos to relevant places.
 			</action>
+			<action dev="jhux" type="update">
+				Updated SLF4J dependency to 1.5.5.
+			</action>
+			<action dev="jhux" type="add">
+				Using Nimbus PLAF if available (and not Mac).
+			</action>
 		</release>
 
 		<release version="0.9.31" date="2008-08-11" description="Release">
