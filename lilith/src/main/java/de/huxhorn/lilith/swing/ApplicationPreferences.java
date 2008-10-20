@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.LilithSounds;
+import de.huxhorn.lilith.Lilith;
 import de.huxhorn.sulky.conditions.Condition;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -90,13 +91,16 @@ public class ApplicationPreferences
 	public static final String SOUND_LOCATIONS_PROPERTIES_FILENAME = "SoundLocations.properties";
 	public static final String PREVIOUS_APPLICATION_PATH_FILENAME = ".previous.application.path";
 
-	private static final String LICENSED_PREFERENCES_KEY = "licensed";
+	private static final String OLD_LICENSED_PREFERENCES_KEY = "licensed";
+	private static final String LICENSED_PREFERENCES_KEY = "licensedVersion";
 	public static final String DEFAULT_APPLICATION_PATH;
 	private static final Map<String, String> DEFAULT_SOURCE_NAMES;
 	private static final Map<String, String> DEFAULT_SOUND_LOCATIONS;
 
 	static
 	{
+		PREFERENCES.remove(OLD_LICENSED_PREFERENCES_KEY); // remove garbage
+
 		String userHome=System.getProperty("user.home");
 		File defaultAppPath=new File(userHome, ".lilith");
 		DEFAULT_APPLICATION_PATH=defaultAppPath.getAbsolutePath();
@@ -646,14 +650,21 @@ public class ApplicationPreferences
 	public void setLicensed(boolean licensed)
 	{
 		Object oldValue=isLicensed();
-		PREFERENCES.putBoolean(LICENSED_PREFERENCES_KEY, licensed);
+		if(licensed)
+		{
+			PREFERENCES.put(LICENSED_PREFERENCES_KEY, Lilith.APP_VERSION);
+		}
+		else
+		{
+			PREFERENCES.remove(LICENSED_PREFERENCES_KEY);
+		}
 		Object newValue=isLicensed();
 		propertyChangeSupport.firePropertyChange(LICENSED_PREFERENCES_KEY, oldValue, newValue);
 	}
 
 	public boolean isLicensed()
 	{
-		return PREFERENCES.getBoolean(LICENSED_PREFERENCES_KEY, false);
+		return Lilith.APP_VERSION.equals(PREFERENCES.get(LICENSED_PREFERENCES_KEY, null));
 	}
 
 	public void setApplicationPath(File applicationPath)
