@@ -77,6 +77,7 @@ public class Lilith
 	private static final String INDEX_SHORT = "i";
 	//private static final String NAPKIN_LAF_SHORT = "n";
 	private static final String ENABLE_BONJOUR_SHORT = "b";
+	private static final String CREATE_MD5_SHORT = "m";
 
 	private static final String VERBOSE = "verbose";
 	//private static final String GUI = "GUI";
@@ -85,6 +86,9 @@ public class Lilith
 	private static final String INDEX = "indexFile";
 	//private static final String NAPKIN_LAF = "NapkinLaf";
 	private static final String ENABLE_BONJOUR = "bonjour";
+	private static final String CREATE_MD5 = "md5";
+
+
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 
 	static
@@ -124,6 +128,218 @@ public class Lilith
 	//
 	// TODO: - special mac support?
 
+	public static void main(String args[])
+	{
+		final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+		{
+			// initialize java.util.logging to use slf4j...
+			Handler handler = new Slf4JHandler();
+			java.util.logging.Logger rootLogger = java.util.logging.Logger.getLogger("");
+			rootLogger.addHandler(handler);
+			rootLogger.setLevel(java.util.logging.Level.WARNING);
+		}
+
+		CommandLineParser parser = new PosixParser();
+
+		Options options = new Options();
+		options.addOption(PRINT_HELP_SHORT, PRINT_HELP, false, "show this help.");
+		options.addOption(VERBOSE_SHORT, VERBOSE, false, "show more info.");
+		//options.addOption(GUI_SHORT, GUI, false, "show gui.");
+		options.addOption(FLUSH_PREFERENCES_SHORT, FLUSH_PREFERENCES, false, "flush gui preferences.");
+		//options.addOption(NAPKIN_LAF_SHORT, NAPKIN_LAF, false, "use NapkinLAF.");
+		options.addOption(ENABLE_BONJOUR_SHORT, ENABLE_BONJOUR, false, "disable Bonjor.");
+		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
+		options.addOption(CREATE_MD5_SHORT, CREATE_MD5, false, "create an MD% checksum for the given file.");
+		boolean verbose = false;
+//		boolean showGui = true;
+		boolean flushPrefs = false;
+		//boolean noNapkinLaf = false;
+		boolean enableBonjour = false;
+		boolean indexFileOpt = false;
+		boolean createMd5 = false;
+		boolean printHelp;
+		String[] originalArgs=args;
+		int exitCode = 0;
+		try
+		{
+			// parse the command line arguments
+			CommandLine line = parser.parse(options, args);
+
+			verbose = line.hasOption(VERBOSE_SHORT);
+			printHelp = line.hasOption(PRINT_HELP_SHORT);
+			flushPrefs = line.hasOption(FLUSH_PREFERENCES_SHORT);
+			//noNapkinLaf = !line.hasOption(NAPKIN_LAF_SHORT);
+			enableBonjour = line.hasOption(ENABLE_BONJOUR_SHORT);
+			indexFileOpt = line.hasOption(INDEX_SHORT);
+			createMd5 = line.hasOption(CREATE_MD5_SHORT);
+//			if(indexFileOpt)
+//			{
+//				showGui=false;
+//			}
+			args = line.getArgs(); // remaining unparsed args...
+		}
+		catch (ParseException exp)
+		{
+			exitCode = -1;
+			printHelp = true;
+		}
+
+		String appTitle = APP_NAME + " V" + APP_VERSION;
+		if (verbose)
+		{
+			appTitle += " - build: " + APP_TIMESTAMP;
+		}
+		System.out.println(appTitle);
+		System.out.println("\nCopyright (C) 2007-2008  Joern Huxhorn\n\n" +
+				"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
+				"This is free software, and you are welcome to redistribute it\n" +
+				"under certain conditions.\n" +
+				"You should have received a copy of the GNU General Public License\n" +
+				"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
+		System.out.println("Use commandline option -h to view help.\n\n");
+
+		if(createMd5)
+		{
+			File input=new File(args[0]);
+
+			if(!input.isFile())
+			{
+				if(logger.isWarnEnabled()) logger.warn("{} isn't a file!", input.getAbsolutePath());
+				return;
+			}
+			File output=new File(input.getParentFile(), input.getName()+".md5");
+
+			FileInputStream fis=null;
+			try
+			{
+
+				fis=new FileInputStream(input);
+				byte[] md5 = ApplicationPreferences.getMD5(fis);
+				if(md5==null)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Couldn't calculate checksum for {}!", input.getAbsolutePath());
+					return;
+				}
+				FileOutputStream fos=new FileOutputStream(output);
+				fos.write(md5);
+				fos.close();
+				if(logger.isInfoEnabled()) logger.info("Wrote checksum of {} to {}.", input.getAbsolutePath(), output.getAbsolutePath());
+			}
+			catch (IOException e)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Exception while creating checksum!", e);
+			}
+			return;
+		}
+
+		if(verbose)
+		{
+			for(int i=0;i<originalArgs.length;i++)
+			{
+				System.out.println("originalArgs["+i+"]: "+originalArgs[i]);
+			}
+			for(int i=0;i<args.length;i++)
+			{
+				System.out.println("args["+i+"]: "+args[i]);
+			}
+			System.out.println("\n");
+		}
+
+		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+		if (loggerFactory instanceof LoggerContext)
+		{
+			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+			if (verbose)
+			{
+				// reset previous configuration initially loaded from logback.xml
+				loggerContext.shutdownAndReset();
+				JoranConfigurator configurator = new JoranConfigurator();
+				configurator.setContext(loggerContext);
+				URL configUrl;
+				configUrl = Lilith.class.getResource("/logbackVerbose.xml");
+				try
+				{
+					configurator.doConfigure(configUrl);
+					if (logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
+					StatusPrinter.print(loggerContext);
+				}
+				catch (JoranException ex)
+				{
+					if (logger.isErrorEnabled()) logger.error("Error configuring logging framework!", ex);
+					StatusPrinter.print(loggerContext);
+				}
+			}
+		}
+
+		if (flushPrefs)
+		{
+			ApplicationPreferences prefs=new ApplicationPreferences();
+			prefs.reset();
+			prefs.setLicensed(false);
+			if (logger.isInfoEnabled()) logger.info("Flushed preferences...");
+		}
+
+		if (printHelp)
+		{
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("lilith", options);
+			System.exit(exitCode);
+		}
+
+		if (indexFileOpt)
+		{
+			if (args.length >= 2)
+			{
+				String logFileStr = args[0];
+				String indexFileStr = args[1];
+				File logFile = new File(logFileStr);
+				File indexFile = new File(indexFileStr);
+				IndexingCallable callable = new IndexingCallable(logFile, indexFile);
+				callable.addPropertyChangeListener(new IndexingChangeListener());
+				try
+				{
+					int count = callable.call();
+					if (logger.isInfoEnabled())
+						logger.info("Finished indexing {}. Number of events: {}", logFile.getAbsolutePath(), count);
+					System.exit(0);
+				}
+				catch (Exception e)
+				{
+					if (logger.isErrorEnabled())
+						logger.error("Exception while indexing '" + logFile.getAbsolutePath() + "'!", e);
+					System.exit(-1);
+				}
+
+			}
+			if (logger.isErrorEnabled()) logger.error("Missing file argument!");
+			System.exit(-1);
+		}
+
+		uncaughtExceptionHandler=new Thread.UncaughtExceptionHandler()
+		{
+			public void uncaughtException(Thread t, Throwable e)
+			{
+				System.err.println("\n-----\nThread "+t.getName()+" threw an exception!");
+				e.printStackTrace(System.err);
+			}
+		};
+
+		Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
+
+		SwingUtilities.invokeLater(new Runnable()
+		{
+
+			public void run()
+			{
+				Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler);
+			}
+		});
+//		if(showGui)
+//		{
+		startUI(appTitle, /*noNapkinLaf,*/ enableBonjour);
+//		}
+	}
 
 	private static void updateSplashStatus(final SplashScreen splashScreen, final String status) throws InvocationTargetException, InterruptedException
 	{
@@ -405,181 +621,6 @@ public class Lilith
 	}
 
 
-	public static void main(String args[])
-	{
-		final Logger logger = LoggerFactory.getLogger(Lilith.class);
-
-		{
-			// initialize java.util.logging to use slf4j...
-			Handler handler = new Slf4JHandler();
-			java.util.logging.Logger rootLogger = java.util.logging.Logger.getLogger("");
-			rootLogger.addHandler(handler);
-			rootLogger.setLevel(java.util.logging.Level.WARNING);
-		}
-
-		CommandLineParser parser = new PosixParser();
-
-		Options options = new Options();
-		options.addOption(PRINT_HELP_SHORT, PRINT_HELP, false, "show this help.");
-		options.addOption(VERBOSE_SHORT, VERBOSE, false, "show more info.");
-		//options.addOption(GUI_SHORT, GUI, false, "show gui.");
-		options.addOption(FLUSH_PREFERENCES_SHORT, FLUSH_PREFERENCES, false, "flush gui preferences.");
-		//options.addOption(NAPKIN_LAF_SHORT, NAPKIN_LAF, false, "use NapkinLAF.");
-		options.addOption(ENABLE_BONJOUR_SHORT, ENABLE_BONJOUR, false, "disable Bonjor.");
-		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
-		boolean verbose = false;
-//		boolean showGui = true;
-		boolean flushPrefs = false;
-		//boolean noNapkinLaf = false;
-		boolean enableBonjour = false;
-		boolean indexFileOpt = false;
-		boolean printHelp;
-		String[] originalArgs=args;
-		int exitCode = 0;
-		try
-		{
-			// parse the command line arguments
-			CommandLine line = parser.parse(options, args);
-
-			verbose = line.hasOption(VERBOSE_SHORT);
-			printHelp = line.hasOption(PRINT_HELP_SHORT);
-			flushPrefs = line.hasOption(FLUSH_PREFERENCES_SHORT);
-			//noNapkinLaf = !line.hasOption(NAPKIN_LAF_SHORT);
-			enableBonjour = line.hasOption(ENABLE_BONJOUR_SHORT);
-			indexFileOpt = line.hasOption(INDEX_SHORT);
-//			if(indexFileOpt)
-//			{
-//				showGui=false;
-//			}
-			args = line.getArgs(); // remaining unparsed args...
-		}
-		catch (ParseException exp)
-		{
-			exitCode = -1;
-			printHelp = true;
-		}
-
-		String appTitle = APP_NAME + " V" + APP_VERSION;
-		if (verbose)
-		{
-			appTitle += " - build: " + APP_TIMESTAMP;
-		}
-		System.out.println(appTitle);
-		System.out.println("\nCopyright (C) 2007-2008  Joern Huxhorn\n\n" +
-				"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
-				"This is free software, and you are welcome to redistribute it\n" +
-				"under certain conditions.\n" +
-				"You should have received a copy of the GNU General Public License\n" +
-				"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
-		System.out.println("Use commandline option -h to view help.\n\n");
-
-		if(verbose)
-		{
-			for(int i=0;i<originalArgs.length;i++)
-			{
-				System.out.println("originalArgs["+i+"]: "+originalArgs[i]);
-			}
-			for(int i=0;i<args.length;i++)
-			{
-				System.out.println("args["+i+"]: "+args[i]);
-			}
-			System.out.println("\n");
-		}
-
-		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-		if (loggerFactory instanceof LoggerContext)
-		{
-			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-			if (verbose)
-			{
-				// reset previous configuration initially loaded from logback.xml
-				loggerContext.shutdownAndReset();
-				JoranConfigurator configurator = new JoranConfigurator();
-				configurator.setContext(loggerContext);
-				URL configUrl;
-				configUrl = Lilith.class.getResource("/logbackVerbose.xml");
-				try
-				{
-					configurator.doConfigure(configUrl);
-					if (logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
-					StatusPrinter.print(loggerContext);
-				}
-				catch (JoranException ex)
-				{
-					if (logger.isErrorEnabled()) logger.error("Error configuring logging framework!", ex);
-					StatusPrinter.print(loggerContext);
-				}
-			}
-		}
-
-		if (flushPrefs)
-		{
-			ApplicationPreferences prefs=new ApplicationPreferences();
-			prefs.reset();
-			prefs.setLicensed(false);
-			if (logger.isInfoEnabled()) logger.info("Flushed preferences...");
-		}
-
-		if (printHelp)
-		{
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("lilith", options);
-			System.exit(exitCode);
-		}
-
-		if (indexFileOpt)
-		{
-			if (args.length >= 2)
-			{
-				String logFileStr = args[0];
-				String indexFileStr = args[1];
-				File logFile = new File(logFileStr);
-				File indexFile = new File(indexFileStr);
-				IndexingCallable callable = new IndexingCallable(logFile, indexFile);
-				callable.addPropertyChangeListener(new IndexingChangeListener());
-				try
-				{
-					int count = callable.call();
-					if (logger.isInfoEnabled())
-						logger.info("Finished indexing {}. Number of events: {}", logFile.getAbsolutePath(), count);
-					System.exit(0);
-				}
-				catch (Exception e)
-				{
-					if (logger.isErrorEnabled())
-						logger.error("Exception while indexing '" + logFile.getAbsolutePath() + "'!", e);
-					System.exit(-1);
-				}
-
-			}
-			if (logger.isErrorEnabled()) logger.error("Missing file argument!");
-			System.exit(-1);
-		}
-
-		uncaughtExceptionHandler=new Thread.UncaughtExceptionHandler()
-		{
-			public void uncaughtException(Thread t, Throwable e)
-			{
-				System.err.println("\n-----\nThread "+t.getName()+" threw an exception!");
-				e.printStackTrace(System.err);
-			}
-		};
-
-		Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
-
-		SwingUtilities.invokeLater(new Runnable()
-		{
-
-			public void run()
-			{
-				Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler);
-			}
-		});
-//		if(showGui)
-//		{
-		startUI(appTitle, /*noNapkinLaf,*/ enableBonjour);
-//		}
-	}
 
 
 	private static class IndexingChangeListener
