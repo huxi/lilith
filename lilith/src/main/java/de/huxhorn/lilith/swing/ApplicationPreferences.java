@@ -37,15 +37,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import java.net.URL;
 import java.net.MalformedURLException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.math.BigInteger;
 
 public class ApplicationPreferences
 {
@@ -239,7 +248,7 @@ public class ApplicationPreferences
 
 	private void initDetailsViewRoot()
 	{
-		detailsViewRoot =new File(startupApplicationPath, DETAILS_VIEW_ROOT_FOLDER);
+		detailsViewRoot = new File(startupApplicationPath, DETAILS_VIEW_ROOT_FOLDER);
 		detailsViewRoot.mkdirs();
 		try
 		{
@@ -252,60 +261,165 @@ public class ApplicationPreferences
 		}
 
 		{
-			File detailsViewCss=new File(detailsViewRoot, DETAILS_VIEW_CSS_FILENAME);
-			if(!detailsViewCss.isFile())
-			{
-				InputStream is=getClass().getResourceAsStream("/detailsView/"+ DETAILS_VIEW_CSS_FILENAME);
-				if(is==null)
-				{
-					if(logger.isErrorEnabled()) logger.error("Couldn't find "+DETAILS_VIEW_CSS_FILENAME+" resource!");
-					return;
-				}
-				FileOutputStream os= null;
-				try
-				{
-					os = new FileOutputStream(detailsViewCss);
-					IOUtils.copy(is, os);
-					if(logger.isInfoEnabled()) logger.info("Initialized "+DETAILS_VIEW_CSS_FILENAME+" at '{}'.", detailsViewCss.getAbsolutePath());
-				}
-				catch (IOException e)
-				{
-					if(logger.isWarnEnabled()) logger.warn("Exception while initializing "+DETAILS_VIEW_CSS_FILENAME+" in settings!", e);
-				}
-				finally
-				{
-					IOUtils.closeQuietly(is);
-					IOUtils.closeQuietly(os);
-				}
-			}
+			String resourcePath="/detailsView/"+ DETAILS_VIEW_CSS_FILENAME;
+			String historyBasePath="/detailsView/history/detailsView.css/";
+			File detailsViewCssFile=new File(detailsViewRoot, DETAILS_VIEW_CSS_FILENAME);
+
+			initIfNecessary(detailsViewCssFile, resourcePath, historyBasePath);
 		}
 
 		{
-			File detailsViewGroovy=new File(detailsViewRoot, DETAILS_VIEW_GROOVY_FILENAME);
-			if(!detailsViewGroovy.isFile())
+			String resourcePath="/detailsView/"+ DETAILS_VIEW_GROOVY_FILENAME;
+			String historyBasePath="/detailsView/history/detailsView.groovy/";
+			File detailsViewGroovyFile=new File(detailsViewRoot, DETAILS_VIEW_GROOVY_FILENAME);
+
+			initIfNecessary(detailsViewGroovyFile, resourcePath, historyBasePath);
+		}
+	}
+
+	private void initIfNecessary(File file, String resourcePath, String historyBasePath)
+	{
+		if(file.isFile())
+		{
+			byte[] available = null;
+
+			try
 			{
-				InputStream is=getClass().getResourceAsStream("/detailsView/"+ DETAILS_VIEW_GROOVY_FILENAME);
-				if(is==null)
+				FileInputStream availableFile = new FileInputStream(file);
+				available=getMD5(availableFile);
+			}
+			catch (FileNotFoundException e)
+			{
+				// ignore
+			}
+
+			byte[] current = getMD5(getClass().getResourceAsStream(resourcePath));
+			if(Arrays.equals(available, current))
+			{
+				// we are done already. The current version is the latest version.
+				if(logger.isDebugEnabled()) logger.debug("The current version of {} is also the latest version.", file.getAbsolutePath());
+				return;
+			}
+
+			boolean delete=false;
+			if(available!=null)
+			{
+				// check older versions if available
+				URL historyUrl = getClass().getResource(historyBasePath+"history.txt");
+				if(historyUrl!=null)
 				{
-					if(logger.isErrorEnabled()) logger.error("Couldn't find "+DETAILS_VIEW_GROOVY_FILENAME+" resource!");
-					return;
+					List<String> historyList=new ArrayList<String>();
+					BufferedReader reader = null;
+					try
+					{
+						reader = new BufferedReader(new InputStreamReader(historyUrl.openStream()));
+						for(;;)
+						{
+							String currentLine=reader.readLine();
+							if(currentLine==null)
+							{
+								break;
+							}
+							historyList.add(currentLine);
+						}
+					}
+					catch (IOException e)
+					{
+						if(logger.isWarnEnabled()) logger.warn("Exception while reading history data!", e);
+					}
+					finally
+					{
+						if(reader!=null)
+						{
+							try
+							{
+								reader.close();
+							}
+							catch (IOException e)
+							{
+								// ignore
+							}
+						}
+					}
+
+					for(String currentLine : historyList)
+					{
+						InputStream is=getClass().getResourceAsStream(historyBasePath+currentLine+".md5");
+						DataInputStream dis=new DataInputStream(is);
+						byte[] checksum=new byte[16];
+						try
+						{
+							dis.readFully(checksum);
+							if(Arrays.equals(available, checksum))
+							{
+								if(logger.isInfoEnabled()) logger.info("Found old version of {}: {}", file.getAbsolutePath(), currentLine);
+								delete=true;
+								break;
+							}
+						}
+						catch (IOException e)
+						{
+							if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of "+currentLine+"!", e);
+						}
+						finally
+						{
+							try
+							{
+								dis.close();
+							}
+							catch (IOException e)
+							{
+								// ignore
+							}
+						}
+					}
 				}
-				FileOutputStream os= null;
-				try
+			}
+			else
+			{
+				// we couldn't calculate the checksum. Try to delete it...
+				delete=true;
+			}
+			if(delete)
+			{
+				if(file.delete())
 				{
-					os = new FileOutputStream(detailsViewGroovy);
-					IOUtils.copy(is, os);
-					if(logger.isInfoEnabled()) logger.info("Initialized "+DETAILS_VIEW_GROOVY_FILENAME+" at '{}'.", detailsViewGroovy.getAbsolutePath());
+					if(logger.isInfoEnabled()) logger.info("Deleted {}. ", file.getAbsolutePath());
 				}
-				catch (IOException e)
+				else
 				{
-					if(logger.isWarnEnabled()) logger.warn("Exception while initializing "+DETAILS_VIEW_GROOVY_FILENAME+" in settings!", e);
+					if(logger.isWarnEnabled()) logger.warn("Tried to delete {} but couldn't!", file.getAbsolutePath());
 				}
-				finally
-				{
-					IOUtils.closeQuietly(is);
-					IOUtils.closeQuietly(os);
-				}
+			}
+			else
+			{
+				if(logger.isInfoEnabled()) logger.info("Won't update {} because it was changed manually.", file.getAbsolutePath());
+			}
+		}
+
+		if(!file.isFile())
+		{
+			InputStream is=getClass().getResourceAsStream(resourcePath);
+			if(is==null)
+			{
+				if(logger.isErrorEnabled()) logger.error("Couldn't find resource {}!", resourcePath);
+				return;
+			}
+			FileOutputStream os= null;
+			try
+			{
+				os = new FileOutputStream(file);
+				IOUtils.copy(is, os);
+				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}'.", file.getAbsolutePath());
+			}
+			catch (IOException e)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Exception while initializing "+file.getAbsolutePath()+"!", e);
+			}
+			finally
+			{
+				IOUtils.closeQuietly(is);
+				IOUtils.closeQuietly(os);
 			}
 		}
 	}
@@ -1098,4 +1212,51 @@ public class ApplicationPreferences
 		return null;
 	}
 
+	/**
+	 * Quick & dirty MD5 checksum function.
+	 * Returns null in case of error.
+	 *
+	 * @param input the input
+	 * @return the checksum
+	 */
+	public static byte[] getMD5(InputStream input)
+	{
+		if(input==null)
+		{
+			return null;
+		}
+		MessageDigest messageDigest;
+		try
+		{
+			messageDigest = MessageDigest.getInstance("MD5");
+			byte[] buffer=new byte[1024];
+			for(;;)
+			{
+				int read=input.read(buffer);
+				if(read<0)
+				{
+					break;
+				}
+				messageDigest.update(buffer,0,read);
+			}
+			return messageDigest.digest();
+		}
+		catch (Throwable t)
+		{
+			final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
+			if(logger.isWarnEnabled()) logger.warn("Exception while calculating checksum!", t);
+		}
+		finally
+		{
+			try
+			{
+				input.close();
+			}
+			catch (IOException e)
+			{
+				// ignore
+			}
+		}
+		return null;
+	}
 }

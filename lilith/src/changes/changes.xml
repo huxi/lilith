@@ -77,6 +77,9 @@
 		</release>
 
 		<release version="0.9.33" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				TODO: Add transfer size statistics.
+			</action>
 		</release>
 
 		<release version="0.9.32" date="TBD" description="Future release">
@@ -146,7 +149,8 @@
 				Accept license once for every version.
 			</action>
 			<action dev="jhux" type="add">
-				TODO: Checksum-check of existing groovy and css files. Auto-update if unchanged.
+				Checksum-check of existing groovy and css files. Auto-update if not changed manually and newer version
+				is available, e.g. detailsView.groovy in this new version of Lilith.
 			</action>
 		</release>
 
