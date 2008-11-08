@@ -153,7 +153,7 @@ public class LoggingEventWriter
 		else
 		{
 			handledMarkers.add(markerName);
-			boolean hasChildren=marker.hasChildren();
+			boolean hasChildren=marker.hasReferences();
 			if(hasChildren)
 			{
 				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, MARKER_NODE);
@@ -165,7 +165,7 @@ public class LoggingEventWriter
 			StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, MARKER_NAME_ATTRIBUTE, markerName);
 			if(hasChildren)
 			{
-				Map<String, Marker> children = marker.getChildren();
+				Map<String, Marker> children = marker.getReferences();
 				for(Map.Entry<String, Marker> current:children.entrySet())
 				{
 					writeMarkerNode(writer, current.getValue(), handledMarkers);

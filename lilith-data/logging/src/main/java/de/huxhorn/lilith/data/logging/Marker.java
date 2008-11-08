@@ -27,8 +27,10 @@ import java.util.Set;
 public class Marker
 		implements Serializable
 {
+	private static final long serialVersionUID = -4828769420328139691L;
+
 	private String name;
-	private Map<String, Marker> children;
+	private Map<String, Marker> references;
 
 	public Marker(String name)
 	{
@@ -44,43 +46,43 @@ public class Marker
 		return name;
 	}
 
-	public Map<String, Marker> getChildren()
+	public Map<String, Marker> getReferences()
 	{
-		if (children == null)
+		if (references == null)
 		{
 			return null;
 		}
-		return Collections.unmodifiableMap(children);
+		return Collections.unmodifiableMap(references);
 	}
 
 	public void remove(Marker marker)
 	{
-		if (children != null)
+		if (references != null)
 		{
-			children.remove(marker.getName());
+			references.remove(marker.getName());
 		}
 	}
 
 	public void add(Marker marker)
 	{
-		if (children == null)
+		if (references == null)
 		{
-			children = new HashMap<String, Marker>();
+			references = new HashMap<String, Marker>();
 		}
-		if (!children.containsKey(marker.getName()))
+		if (!references.containsKey(marker.getName()))
 		{
-			children.put(marker.getName(), marker);
+			references.put(marker.getName(), marker);
 		}
 	}
 
-	public void setChildren(Map<String, Marker> children)
+	public void setReferences(Map<String, Marker> references)
 	{
-		this.children = children;
+		this.references = references;
 	}
 
-	public boolean hasChildren()
+	public boolean hasReferences()
 	{
-		return children != null && children.size() != 0;
+		return references != null && references.size() != 0;
 	}
 
 	public boolean contains(Marker other)
@@ -96,9 +98,9 @@ public class Marker
 			return true;
 		}
 
-		if (hasChildren())
+		if (hasReferences())
 		{
-			Set<String> collectedMarkers = collectChildMarkerNames(this, null);
+			Set<String> collectedMarkers = collectReferencedMarkerNames(this, null);
 			return collectedMarkers.contains(other.getName());
 		}
 		return false;
@@ -116,15 +118,15 @@ public class Marker
 			return true;
 		}
 
-		if (hasChildren())
+		if (hasReferences())
 		{
-			Set<String> collectedMarkerNames = collectChildMarkerNames(this, null);
+			Set<String> collectedMarkerNames = collectReferencedMarkerNames(this, null);
 			return collectedMarkerNames.contains(name);
 		}
 		return false;
 	}
 
-	private Set<String> collectChildMarkerNames(Marker marker, Set<String> collectedMarkerNames)
+	private Set<String> collectReferencedMarkerNames(Marker marker, Set<String> collectedMarkerNames)
 	{
 		if (collectedMarkerNames == null)
 		{
@@ -133,14 +135,14 @@ public class Marker
 		if (!collectedMarkerNames.contains(marker.getName()))
 		{
 			collectedMarkerNames.add(marker.getName());
-			if (marker.hasChildren())
+			if (marker.hasReferences())
 			{
-				for(Map.Entry<String, Marker> current: marker.getChildren().entrySet())
+				for(Map.Entry<String, Marker> current: marker.getReferences().entrySet())
 				{
 					Marker child = current.getValue();
 					if (!collectedMarkerNames.contains(child.getName()))
 					{
-						collectChildMarkerNames(child, collectedMarkerNames);
+						collectReferencedMarkerNames(child, collectedMarkerNames);
 					}
 				}
 			}

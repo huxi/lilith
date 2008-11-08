@@ -357,10 +357,10 @@ public class LoggingEventIOTest
 		{
 			processedMarkers.put(marker.getName(), marker);
 			result.append("Marker[name=").append(marker.getName());
-			if(marker.hasChildren())
+			if(marker.hasReferences())
 			{
 				result.append(", children={");
-				Map<String, Marker> children = marker.getChildren();
+				Map<String, Marker> children = marker.getReferences();
 				boolean first=true;
 				for(Map.Entry<String,Marker> current : children.entrySet())
 				{
