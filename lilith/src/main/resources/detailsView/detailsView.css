@@ -40,3 +40,8 @@ th
 {
 	background: #ffcccc;
 }
+
+pre
+{
+	white-space: pre-wrap;
+}
