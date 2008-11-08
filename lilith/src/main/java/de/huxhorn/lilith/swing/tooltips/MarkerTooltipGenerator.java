@@ -82,10 +82,10 @@ public class MarkerTooltipGenerator
 			if(!processedMarkers.contains(markerName))
 			{
 				processedMarkers.add(markerName);
-				if(marker.hasChildren())
+				if(marker.hasReferences())
 				{
 					buffer.append("<ul>");
-					Map<String, Marker> children = marker.getChildren();
+					Map<String, Marker> children = marker.getReferences();
 					for(Map.Entry<String, Marker> current:children.entrySet())
 					{
 

@@ -265,9 +265,9 @@ public class EventContainsCondition
 			if(!processedMarkers.contains(marker.getName()))
 			{
 				processedMarkers.add(marker.getName());
-				if(marker.hasChildren())
+				if(marker.hasReferences())
 				{
-					Map<String, Marker> children = marker.getChildren();
+					Map<String, Marker> children = marker.getReferences();
 					for(Map.Entry<String, Marker> current:children.entrySet())
 					{
 						Marker child=current.getValue();

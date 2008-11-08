@@ -517,12 +517,12 @@ def buildMarker(element, marker, handledMarkers=[])
         return;
     }
     handledMarkers.add(marker.name);
-    if(marker.children)
+    if(marker.references)
     {
         element.ul
         {
             parent ->
-            marker.children.each
+            marker.references.each
             {
                 key, value ->
                 parent.li

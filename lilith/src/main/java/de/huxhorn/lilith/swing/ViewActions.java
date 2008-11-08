@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -57,6 +58,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.ArrayList;
 import java.io.Serializable;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -498,6 +500,8 @@ public class ViewActions
 	private CopyEventAction copyEventAction;
 	private CopyLoggingMessageAction copyLoggingMessageAction;
 	private CopyLoggingThrowableAction copyLoggingThrowableAction;
+	private CopyLoggingCallStackAction copyLoggingCallStackAction;
+	private CopyLoggingMarkerAction copyLoggingMarkerAction;
 	private CopyLoggerNameAction copyLoggerNameAction;
 	private CopyAccessUriAction copyAccessUriAction;
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
@@ -568,6 +572,8 @@ public class ViewActions
 		copyLoggingMessageAction=new CopyLoggingMessageAction();
 		copyLoggerNameAction=new CopyLoggerNameAction();
 		copyLoggingThrowableAction=new CopyLoggingThrowableAction();
+		copyLoggingCallStackAction = new CopyLoggingCallStackAction();
+		copyLoggingMarkerAction = new CopyLoggingMarkerAction();
 		copyAccessUriAction =new CopyAccessUriAction();
 
 
@@ -687,6 +693,8 @@ public class ViewActions
 		editMenu.add(copyLoggingMessageAction);
 		editMenu.add(copyLoggerNameAction);
 		editMenu.add(copyLoggingThrowableAction);
+		editMenu.add(copyLoggingCallStackAction);
+		editMenu.add(copyLoggingMarkerAction);
 		editMenu.addSeparator();
 		editMenu.add(copyAccessUriAction);
 
@@ -1211,6 +1219,8 @@ public class ViewActions
 		copyMenuItem.add(new JMenuItem(copyLoggingMessageAction));
 		copyMenuItem.add(new JMenuItem(copyLoggerNameAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingThrowableAction));
+		copyMenuItem.add(new JMenuItem(copyLoggingCallStackAction));
+		copyMenuItem.add(new JMenuItem(copyLoggingMarkerAction));
 		copyMenuItem.addSeparator();
 		copyMenuItem.add(new JMenuItem(copyAccessUriAction));
 
@@ -1230,6 +1240,8 @@ public class ViewActions
 		copyLoggingMessageAction.setEventWrapper(wrapper);
 		copyLoggerNameAction.setEventWrapper(wrapper);
 		copyLoggingThrowableAction.setEventWrapper(wrapper);
+		copyLoggingCallStackAction.setEventWrapper(wrapper);
+		copyLoggingMarkerAction.setEventWrapper(wrapper);
 		copyAccessUriAction.setEventWrapper(wrapper);
 	}
 
@@ -2870,6 +2882,133 @@ public class ViewActions
 				throwableText.append("\nCaused by:\n");
 			}
 			mainFrame.copyText(throwableText.toString());
+		}
+	}
+
+	private class CopyLoggingCallStackAction
+			extends AbstractAction
+	{
+		private ExtendedStackTraceElement[] callStack;
+
+		public CopyLoggingCallStackAction()
+		{
+			super("Copy call stack");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the call stack of the logging event to the clipboard.");
+		}
+
+		public void setEventWrapper(EventWrapper wrapper)
+		{
+			ExtendedStackTraceElement[] callStack = null;
+			if (wrapper != null && wrapper.getEvent() != null)
+			{
+				Object eventObj = wrapper.getEvent();
+				if (eventObj instanceof LoggingEvent)
+				{
+					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
+					callStack = loggingEvent.getCallStack();
+				}
+			}
+			setCallStack(callStack);
+		}
+
+		private void setCallStack(ExtendedStackTraceElement[] callStack)
+		{
+			this.callStack = callStack;
+			setEnabled(callStack != null && callStack.length > 0);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			StringBuilder text = new StringBuilder();
+			ExtendedStackTraceElement[] cs = callStack;
+			if (cs != null)
+			{
+				boolean first=true;
+				for (ExtendedStackTraceElement current : cs)
+				{
+					if(first)
+					{
+						first=false;
+					}
+					else
+					{
+						text.append("\n");
+					}
+					text.append(current);
+				}
+			}
+			mainFrame.copyText(text.toString());
+		}
+	}
+
+	private class CopyLoggingMarkerAction
+			extends AbstractAction
+	{
+		private Marker marker;
+
+		public CopyLoggingMarkerAction()
+		{
+			super("Copy Marker");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the Marker of the logging event to the clipboard.");
+		}
+
+		public void setEventWrapper(EventWrapper wrapper)
+		{
+			Marker marker = null;
+			if (wrapper != null && wrapper.getEvent() != null)
+			{
+				Object eventObj = wrapper.getEvent();
+				if (eventObj instanceof LoggingEvent)
+				{
+					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
+					marker = loggingEvent.getMarker();
+				}
+			}
+			setMarker(marker);
+		}
+
+		private void setMarker(Marker marker)
+		{
+			this.marker = marker;
+			setEnabled(marker != null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			StringBuilder text = new StringBuilder();
+			buildMarker(text, 0, marker, new ArrayList<String>());
+			mainFrame.copyText(text.toString());
+		}
+
+		private void buildMarker(StringBuilder text, int indent, Marker marker, ArrayList<String> handledMarkers)
+		{
+			if(logger.isInfoEnabled()) logger.info("Implement!");
+			if(marker != null)
+			{
+				for(int i=0;i<indent;i++)
+				{
+					text.append("  ");
+				}
+				String markerName=marker.getName();
+				text.append("- ").append(markerName);
+				if(handledMarkers.contains(markerName))
+				{
+					text.append(" [..]\n");
+				}
+				else
+				{
+					text.append("\n");
+					handledMarkers.add(markerName);
+					Map<String, Marker> references = marker.getReferences();
+					if(references!=null)
+					{
+						for(Map.Entry<String, Marker> current: references.entrySet())
+						{
+							buildMarker(text, indent+1, current.getValue(), handledMarkers);
+						}
+					}
+				}
+			}
 		}
 	}
 
