@@ -27,11 +27,13 @@ public class LogTruthRunnable
 {
 	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
 	private Marker marker;
+	private boolean formatted;
 
-	public LogTruthRunnable(int delay, Marker marker)
+	public LogTruthRunnable(int delay, Marker marker, boolean formatted)
 	{
 		super(delay);
 		this.marker=marker;
+		this.formatted=formatted;
 	}
 
 	private static final String[][] beliefs=
@@ -164,7 +166,10 @@ public class LogTruthRunnable
 	public void runIt() throws InterruptedException
 	{
 		String truth=getTruth();
-		truth= WordUtils.wrap(truth, 40);
+		if(formatted)
+		{
+			truth= WordUtils.wrap(truth, 40);
+		}
 		if(logger.isErrorEnabled()) logger.error(marker, truth);
 	}
 }
