@@ -76,6 +76,8 @@ public class LoggerEventEmitter
 		marker.add(marker2);
 		marker.add(marker3);
 		marker3.add(marker);
+		// can't really create recursive markers anymore because Ceki disabled them.
+		
 		return marker;
 	}
 
@@ -131,6 +133,7 @@ public class LoggerEventEmitter
 
 	public void logTruth()
 	{
-		execute(new LogTruthRunnable(delay, fnordMarker));
+		execute(new LogTruthRunnable(delay, fnordMarker, true));
+		execute(new LogTruthRunnable(delay, fnordMarker, false));
 	}
 }
