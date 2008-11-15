@@ -66,7 +66,7 @@
 				TODO: add ip.ip.ip.ip:port to multiplexer receiver list.
 			</action>
 			<action dev="jhux" type="add">
-				TODO: launch4j
+				TODO: launch4j, http://izpack.org/
 			</action>
 			<action dev="jhux" type="update">
 				TODO: go to source on different thread, using xml StackTraceElement.
@@ -78,11 +78,45 @@
 
 		<release version="0.9.33" date="TBD" description="Future release">
 			<action dev="jhux" type="add">
+				Added help about groovy filters.
+			</action>
+			<action dev="jhux" type="add">
+				Copy marker (Ekke)
+			</action>
+			<action dev="jhux" type="add">
+				Copy callstack (Ekke)
+			</action>
+			<action dev="jhux" type="add">
+				new pre style as suggested by Alexander Kosenkov. Thanks a lot!
+			</action>
+            <action dev="jhux" type="add">
+                Support for Map and Collection containing Arrays in MessageFormatter.
+            </action>
+            <action dev="jhux" type="fix">
+                Support for recursive Maps and Collections in MessageFormatter. This would previously throw a StackOverflowError.
+            </action>
+            <action dev="jhux" type="update">
+                Better string representation for recursive Map, Collection and Object[]. It will now print
+                [...fully.qualified.ClassName@identityHash...].
+            </action>
+            <action dev="jhux" type="add">
+                Support for Exception during toString(). It will now result in [!!!fully.qualified.ClassName=&gt;fully.qualified.Throwable:ThrowableMessage!!!].
+            </action>
+			<action dev="jhux" type="fix">
+				TODO: don't reset prefs after accepting license.
+			</action>
+			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Keep layout of table columns when opening a filtered view. (Ekke)
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Case-insensitive search (Ekke)
 			</action>
 		</release>
 
-		<release version="0.9.32" date="TBD" description="Future release">
+		<release version="0.9.32" date="2008-10-21" description="Release">
 			<action dev="jhux" type="fix">
 				sulky: Made sure that TimeoutOutputStream-Watchdog-Thread is stopped under all
 				circumstances. Added testcases for every scenario.
