@@ -14,7 +14,7 @@ This plugin opens a server socket on port 11111 and waits for connections, expec
 	</description>
 
 	<!-- plugin version -->
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 
 	<vendor url="http://lilith.huxhorn.de" email="contact@lilith.huxhorn.de">Huxhorn</vendor>
 
@@ -24,6 +24,12 @@ This plugin opens a server socket on port 11111 and waits for connections, expec
 	<change-notes>
 <![CDATA[
 <ul>
+	<li>0.0.3 - 2008-11-17
+	<ul>
+		<li>Updated to support (and require) IDEA 8.0</li>
+		<li>Only accepting connections from localhost</li>
+	</ul></li>
+
 	<li>0.0.2 - 2008-04-06
 	<ul>
 		<li>Fixed problem with anonymous classes.</li>

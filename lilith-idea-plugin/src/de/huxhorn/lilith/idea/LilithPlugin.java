@@ -23,10 +23,9 @@ import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
@@ -34,20 +33,64 @@ import com.intellij.psi.search.GlobalSearchScope;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.SwingUtilities;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.InetAddress;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.BufferedInputStream;
-import java.awt.Container;
-import java.awt.Frame;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
+/**
+ *
+ * http://www.jetbrains.net/confluence/display/IDEADEV/Diana+Plugin+Migration+Guide
+ *
+ */
 public class LilithPlugin
 	implements ApplicationComponent
 {
 	private static final int DEFAULT_PORT = 11111;
+
+	private static final Method getInstanceMethod;
+	private static final Method findClassMethod;
+
+	static
+	{
+		Class<?> clazz=null;
+		try
+		{
+			clazz = Class.forName("com.intellij.psi.JavaPsiFacade");
+		}
+		catch (ClassNotFoundException e)
+		{
+			try
+			{
+				clazz = Class.forName("com.intellij.psi.PsiManager");
+			}
+			catch (ClassNotFoundException e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+		Method instanceMethod = null;
+		Method classMethod = null;
+		if(clazz!=null)
+		{
+			try
+			{
+				instanceMethod = clazz.getMethod("getInstance", Project.class);
+				classMethod = clazz.getMethod("findClass", String.class, GlobalSearchScope.class);
+			}
+			catch (NoSuchMethodException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		getInstanceMethod = instanceMethod;
+		findClassMethod = classMethod;
+
+	}
 
 	private ServerSocket serverSocket;
 
@@ -62,7 +105,7 @@ public class LilithPlugin
 	{
 		try
 		{
-			serverSocket=new ServerSocket(DEFAULT_PORT);
+			serverSocket=new ServerSocket(DEFAULT_PORT, 50, InetAddress.getLocalHost());
 			ServerSocketRunnable r = new ServerSocketRunnable();
 			Thread t=new Thread(r, "Lilith-ServerSocket");
 			t.setDaemon(true);
@@ -70,7 +113,6 @@ public class LilithPlugin
 		}
 		catch (IOException e)
 		{
-// TODO: change body of catch statement
 			e.printStackTrace();
 		}
 	}
@@ -101,7 +143,6 @@ public class LilithPlugin
 					}
 					catch (IOException e)
 					{
-		// TODO: change body of catch statement
 						e.printStackTrace();
 						break;
 					}
@@ -148,7 +189,6 @@ public class LilithPlugin
 		}
 		catch (IOException e1)
 		{
-// TODO: change body of catch statement
 			e1.printStackTrace();
 			return;
 		}
@@ -165,13 +205,11 @@ public class LilithPlugin
 			}
 			catch (IOException e)
 			{
-// TODO: change body of catch statement
 				e.printStackTrace();
 				break;
 			}
 			catch (ClassNotFoundException e)
 			{
-// TODO: change body of catch statement
 				e.printStackTrace();
 				break;
 			}
@@ -241,7 +279,7 @@ public class LilithPlugin
 			for(Project current:openProjects)
 			{
 				GlobalSearchScope scope = GlobalSearchScope.projectScope(current);
-				PsiClass found = PsiManager.getInstance(current).findClass(className, scope);
+				PsiClass found = findClass(current, className, scope);
 				if(found!=null)
 				{
 					project=current;
@@ -257,7 +295,7 @@ public class LilithPlugin
 				if(parentClassName != null && psiClass==null && psiParentClass==null)
 				{
 					// search for parent as fallback...
-					found = PsiManager.getInstance(current).findClass(parentClassName, scope);
+					found = findClass(current, parentClassName, scope);
 					if(found!=null)
 					{
 						project=current;
@@ -276,7 +314,7 @@ public class LilithPlugin
 				for(Project current:openProjects)
 				{
 					GlobalSearchScope scope = GlobalSearchScope.allScope(current);
-					PsiClass found = PsiManager.getInstance(current).findClass(className, scope);
+					PsiClass found = findClass(current, className, scope);
 					if(found!=null)
 					{
 						project=current;
@@ -293,7 +331,7 @@ public class LilithPlugin
 					if(parentClassName != null && psiClass==null && psiParentClass==null)
 					{
 						// search for parent as fallback...
-						found = PsiManager.getInstance(current).findClass(parentClassName, scope);
+						found = findClass(current, parentClassName, scope);
 						if(found!=null)
 						{
 							project=current;
@@ -359,84 +397,119 @@ public class LilithPlugin
 							break;
 						}
 					}
-					if(theMethod!=null)
+//					if(theMethod!=null)
+//					{
+//						FileType fileType = psiFile.getFileType();
+//
+//						if(fileType.isBinary())
+//						{
+//							// we don't have source code so just go to method instead of line.
+//							fileDescriptor=new OpenFileDescriptor(theMethod);
+//							System.out.println("Using method because file is binary.");
+//						}
+//					}
+
+//					if(fileDescriptor==null)
+//					{
+					FileType fileType = psiFile.getFileType();
+
+					if(lineNumber>=0 && !fileType.isBinary())
 					{
-						FileType fileType = psiFile.getFileType();
-
-						if(fileType.isBinary())
-						{
-							// we don't have source code so just go to method instead of line.
-							fileDescriptor=new OpenFileDescriptor(theMethod);
-							System.out.println("Using method because file is binary.");
-						}
+						// go to the line.
+						lineNumber--; // I don't get it...
+						fileDescriptor=new OpenFileDescriptor(project, vfile, lineNumber, 0);
+						System.out.println("Using lineNumber!");
 					}
-
-					if(fileDescriptor==null)
+//					else if(theMethod!=null)
+//					{
+//						// go to the method
+//						fileDescriptor=new OpenFileDescriptor(theMethod);
+//						System.out.println("Using method!");
+//					}
+					else if(theMethod==null)
 					{
-						if(lineNumber>=0)
-						{
-							// go to the line.
-							lineNumber--; // I don't get it...
-							fileDescriptor=new OpenFileDescriptor(project, vfile, lineNumber, 0);
-							System.out.println("Using lineNumber!");
-						}
-						else if(theMethod!=null)
-						{
-							// go to the method
-							fileDescriptor=new OpenFileDescriptor(theMethod);
-							System.out.println("Using method!");
-						}
-						else
-						{
-							// just go to the file
-							fileDescriptor=new OpenFileDescriptor(project, vfile);
-							System.out.println("Using file!");
-						}
+						// just go to the file
+						fileDescriptor=new OpenFileDescriptor(project, vfile);
+						System.out.println("Using file!");
 					}
+//					}
 
-					FileEditorManager fileEditorManager=FileEditorManager.getInstance(project);
-					if(fileEditorManager == null)
+					if(fileDescriptor!=null)
 					{
-						System.out.println("fileEditorManager is null!");
-						return;
-					}
-
-					Editor editor = fileEditorManager.openTextEditor(fileDescriptor, true);
-					//System.out.println("editor: "+editor);
-					fileDescriptor.navigate(true);
-					if(editor!=null)
-					{
-						JComponent component = editor.getComponent();
-
-						// now I'll just do my best to focus the correct IDEA frame...
-						JFrame frame=resolveFrame(component);
-						if(frame!=null)
+						FileEditorManager fileEditorManager=FileEditorManager.getInstance(project);
+						if(fileEditorManager == null)
 						{
-							if((frame.getState() & Frame.ICONIFIED) != 0)
-							{
-								frame.setState(Frame.NORMAL);
-							}
-							frame.toFront();
+							System.out.println("fileEditorManager is null!");
+							return;
 						}
-						component.requestFocusInWindow();
+
+//						Editor editor = fileEditorManager.openTextEditor(fileDescriptor, true);
+						//System.out.println("editor: "+editor);
+						fileDescriptor.navigate(true);
+//						if(editor!=null)
+//						{
+//							JComponent component = editor.getComponent();
+//
+//							// now I'll just do my best to focus the correct IDEA frame...
+//							JFrame frame=resolveFrame(component);
+//							if(frame!=null)
+//							{
+//								if((frame.getState() & Frame.ICONIFIED) != 0)
+//								{
+//									frame.setState(Frame.NORMAL);
+//								}
+//								frame.toFront();
+//							}
+//							component.requestFocusInWindow();
+//						}
 					}
+					else
+					{
+						theMethod.navigate(true);
+					}
+					WindowManager.getInstance().suggestParentWindow(project).toFront(); 
 				}
 			}
 		}
 
-		private JFrame resolveFrame(JComponent component)
+//		private JFrame resolveFrame(JComponent component)
+//		{
+//			Container c=component.getParent();
+//			while(c!=null)
+//			{
+//				if(c instanceof JFrame)
+//				{
+//					return (JFrame) c;
+//				}
+//				c=c.getParent();
+//			}
+//			return null;
+//		}
+
+		private PsiClass findClass(Project project, String className, GlobalSearchScope scope)
 		{
-			Container c=component.getParent();
-			while(c!=null)
+			try
 			{
-				if(c instanceof JFrame)
+				Object instance = getInstanceMethod.invoke(null, project);
+				if(instance != null)
 				{
-					return (JFrame) c;
+					return (PsiClass) findClassMethod.invoke(instance, className, scope);
 				}
-				c=c.getParent();
 			}
+			catch (IllegalAccessException e)
+			{
+				e.printStackTrace();
+			}
+			catch (InvocationTargetException e)
+			{
+				e.printStackTrace();
+			}
+			//return PsiManager.getInstance(project).findClass(className, scope);
+			//return JavaPsiFacade.getInstance(project).findClass(className, scope);
+			System.err.println("Couldn't find class '"+className+"'!");
 			return null;
 		}
 	}
+
 
 }
