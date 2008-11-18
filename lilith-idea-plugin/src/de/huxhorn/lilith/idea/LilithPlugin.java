@@ -105,7 +105,7 @@ public class LilithPlugin
 	{
 		try
 		{
-			serverSocket=new ServerSocket(DEFAULT_PORT, 50, InetAddress.getLocalHost());
+			serverSocket=new ServerSocket(DEFAULT_PORT, 50, InetAddress.getByName("127.0.0.1"));
 			ServerSocketRunnable r = new ServerSocketRunnable();
 			Thread t=new Thread(r, "Lilith-ServerSocket");
 			t.setDaemon(true);
@@ -251,15 +251,6 @@ public class LilithPlugin
 			ProjectManager projectManager = ProjectManager.getInstance();
 			Project[] openProjects = projectManager.getOpenProjects();
 
-//			{
-//				StringBuffer msg=new StringBuffer();
-//				for(Project p:openProjects)
-//				{
-//					msg.append(p.getName()).append(", ");
-//				}
-//				System.out.println(msg.toString());
-//			}
-
 			String className=stackTraceElement.getClassName();
 			String parentClassName=null;
 			int dollarIndex = className.indexOf("$");
@@ -356,7 +347,7 @@ public class LilithPlugin
 			System.out.println("PsiSourceClass: "+psiSourceClass);
 			System.out.println("PsiParentClass: "+psiParentClass);
 			System.out.println("PsiParentSourceClass: "+psiParentSourceClass);
-			// ok, we found the class...
+
 			if(psiClass==null)
 			{
 				psiClass=psiParentClass;
@@ -371,15 +362,14 @@ public class LilithPlugin
 			{
 				elem=psiClass.getNavigationElement();
 			}
-			//System.out.println("PsiElem: "+elem);
+
 			if(elem instanceof PsiClass)
 			{
-				psiClass= (PsiClass) elem;
-				//System.out.println("PsiClass2: "+psiClass);
+				psiClass = (PsiClass) elem;
 			}
 			PsiFile psiFile = psiClass.getContainingFile();
-			System.out.println("PsiFile: "+psiFile);
 
+			System.out.println("PsiFile: "+psiFile);
 
 			if(psiFile!=null)
 			{
@@ -397,20 +387,7 @@ public class LilithPlugin
 							break;
 						}
 					}
-//					if(theMethod!=null)
-//					{
-//						FileType fileType = psiFile.getFileType();
-//
-//						if(fileType.isBinary())
-//						{
-//							// we don't have source code so just go to method instead of line.
-//							fileDescriptor=new OpenFileDescriptor(theMethod);
-//							System.out.println("Using method because file is binary.");
-//						}
-//					}
 
-//					if(fileDescriptor==null)
-//					{
 					FileType fileType = psiFile.getFileType();
 
 					if(lineNumber>=0 && !fileType.isBinary())
@@ -420,19 +397,12 @@ public class LilithPlugin
 						fileDescriptor=new OpenFileDescriptor(project, vfile, lineNumber, 0);
 						System.out.println("Using lineNumber!");
 					}
-//					else if(theMethod!=null)
-//					{
-//						// go to the method
-//						fileDescriptor=new OpenFileDescriptor(theMethod);
-//						System.out.println("Using method!");
-//					}
 					else if(theMethod==null)
 					{
 						// just go to the file
 						fileDescriptor=new OpenFileDescriptor(project, vfile);
 						System.out.println("Using file!");
 					}
-//					}
 
 					if(fileDescriptor!=null)
 					{
@@ -443,25 +413,7 @@ public class LilithPlugin
 							return;
 						}
 
-//						Editor editor = fileEditorManager.openTextEditor(fileDescriptor, true);
-						//System.out.println("editor: "+editor);
 						fileDescriptor.navigate(true);
-//						if(editor!=null)
-//						{
-//							JComponent component = editor.getComponent();
-//
-//							// now I'll just do my best to focus the correct IDEA frame...
-//							JFrame frame=resolveFrame(component);
-//							if(frame!=null)
-//							{
-//								if((frame.getState() & Frame.ICONIFIED) != 0)
-//								{
-//									frame.setState(Frame.NORMAL);
-//								}
-//								frame.toFront();
-//							}
-//							component.requestFocusInWindow();
-//						}
 					}
 					else
 					{
@@ -471,20 +423,6 @@ public class LilithPlugin
 				}
 			}
 		}
-
-//		private JFrame resolveFrame(JComponent component)
-//		{
-//			Container c=component.getParent();
-//			while(c!=null)
-//			{
-//				if(c instanceof JFrame)
-//				{
-//					return (JFrame) c;
-//				}
-//				c=c.getParent();
-//			}
-//			return null;
-//		}
 
 		private PsiClass findClass(Project project, String className, GlobalSearchScope scope)
 		{
@@ -504,12 +442,10 @@ public class LilithPlugin
 			{
 				e.printStackTrace();
 			}
-			//return PsiManager.getInstance(project).findClass(className, scope);
-			//return JavaPsiFacade.getInstance(project).findClass(className, scope);
+			// IDEA 7: PsiManager.getInstance(project).findClass(className, scope);
+			// IDEA 8: JavaPsiFacade.getInstance(project).findClass(className, scope);
 			System.err.println("Couldn't find class '"+className+"'!");
 			return null;
 		}
 	}
-
-
 }
