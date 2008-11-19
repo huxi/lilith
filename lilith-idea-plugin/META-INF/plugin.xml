@@ -24,6 +24,13 @@ This plugin opens a server socket on port 11111 and waits for connections, expec
 	<change-notes>
 <![CDATA[
 <ul>
+	<li>0.0.4 - 2008-11-19
+	<ul>
+		<li>Fixed critical bug that resulted in "com.intellij.ide.projectView.impl.AbstractProjectViewPSIPane$5 java.lang.IllegalStateException: @NotNull method com/intellij/psi/impl/PsiElementFactoryImpl.createRawSubstitutor must not return null"
+		in idea.log and an endless "Loading..." in Project Viewer.</li>
+		<li>Fixed the memory leak. It was caused by ste receiver threads that kept running.</li>
+	</ul></li>
+
 	<li>0.0.3 - 2008-11-17
 	<ul>
 		<li>Updated to support both IDEA 7 and IDEA 8.</li>

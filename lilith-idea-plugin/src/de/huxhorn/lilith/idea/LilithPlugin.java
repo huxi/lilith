@@ -41,6 +41,8 @@ import java.io.ObjectInputStream;
 import java.io.BufferedInputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -52,11 +54,22 @@ public class LilithPlugin
 {
 	private static final int DEFAULT_PORT = 11111;
 
-	private static final Method getInstanceMethod;
-	private static final Method findClassMethod;
+	private Method getInstanceMethod;
+	private Method findClassMethod;
 
-	static
+	private ServerSocket serverSocket;
+	private Set<Thread> receiverThreads;
+
+	@NotNull
+	public String getComponentName()
 	{
+		return "Lilith";
+	}
+
+
+	public void initComponent()
+	{
+		System.out.println("Starting initComponent...");
 		Class<?> clazz=null;
 		try
 		{
@@ -89,20 +102,7 @@ public class LilithPlugin
 		}
 		getInstanceMethod = instanceMethod;
 		findClassMethod = classMethod;
-
-	}
-
-	private ServerSocket serverSocket;
-
-	@NotNull
-	public String getComponentName()
-	{
-		return "Lilith";
-	}
-
-
-	public void initComponent()
-	{
+		receiverThreads=new HashSet<Thread>();
 		try
 		{
 			serverSocket=new ServerSocket(DEFAULT_PORT, 50, InetAddress.getByName("127.0.0.1"));
@@ -115,11 +115,19 @@ public class LilithPlugin
 		{
 			e.printStackTrace();
 		}
+		System.out.println("Finished initComponent...");
 	}
 
 	public void disposeComponent()
 	{
+		System.out.println("Starting disposeComponent...");
 		closeServerSocket();
+		HashSet<Thread> threads = new HashSet<Thread>(receiverThreads);
+		for(Thread t:threads)
+		{
+			t.interrupt();
+		}
+		System.out.println("Finished disposeComponent...");
 	}
 
 
@@ -140,6 +148,7 @@ public class LilithPlugin
 						Thread t=new Thread(new SocketRunnable(socket), "Lilith-Socket-"+socket);
 						t.setDaemon(true);
 						t.start();
+						receiverThreads.add(t);
 					}
 					catch (IOException e)
 					{
@@ -149,7 +158,7 @@ public class LilithPlugin
 				}
 				closeServerSocket();
 			}
-			System.out.println("Exiting Lilith-ServerSocket-Runnable");
+			System.out.println("Finished Lilith-ServerSocket-Runnable");
 		}
 	}
 
@@ -169,64 +178,70 @@ public class LilithPlugin
 		}
 	}
 
-	private static class SocketRunnable
+	private class SocketRunnable
 		implements Runnable
-{
-	private Socket socket;
-
-	public SocketRunnable(Socket socket)
 	{
-		this.socket=socket;
-	}
+		private Socket socket;
 
-	public void run()
-	{
-		System.out.println("Started Lilith-Socket-Runnable");
-		ObjectInputStream ois;
-		try
+		public SocketRunnable(Socket socket)
 		{
-			ois=new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-		}
-		catch (IOException e1)
-		{
-			e1.printStackTrace();
-			return;
+			this.socket=socket;
 		}
 
-		for(;;)
+		public void run()
 		{
+			System.out.println("Started Lilith-Socket-Runnable");
+			ObjectInputStream ois;
 			try
 			{
-				Object obj=ois.readObject();
-				if(obj instanceof StackTraceElement)
+				ois=new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+			}
+			catch (IOException e1)
+			{
+				e1.printStackTrace();
+				return;
+			}
+
+			for(;;)
+			{
+				try
 				{
-					showInEditor((StackTraceElement) obj);
+					Object obj=ois.readObject();
+					if(obj instanceof StackTraceElement)
+					{
+						showInEditor((StackTraceElement) obj);
+					}
+					Thread.sleep(1);
 				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+					break;
+				}
+				catch (ClassNotFoundException e)
+				{
+					e.printStackTrace();
+					break;
+				}
+				catch (InterruptedException e)
+				{
+					break;
+				}
+			}
+			try
+			{
+				ois.close();
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
-				break;
+				//ignore
 			}
-			catch (ClassNotFoundException e)
-			{
-				e.printStackTrace();
-				break;
-			}
+			receiverThreads.remove(Thread.currentThread());
+			System.out.println("Finished Lilith-Socket-Runnable");
 		}
-		try
-		{
-			ois.close();
-		}
-		catch (IOException e)
-		{
-			//ignore
-		}
-		System.out.println("Exiting Lilith-Socket-Runnable");
 	}
-}
 
-	public static void showInEditor(StackTraceElement ste)
+	public void showInEditor(StackTraceElement ste)
 	{
 		if(ste==null)
 		{
@@ -235,7 +250,7 @@ public class LilithPlugin
 		SwingUtilities.invokeLater(new EditorRunnable(ste));
 	}
 
-	public static class EditorRunnable
+	public class EditorRunnable
 		implements Runnable
 	{
 		private StackTraceElement stackTraceElement;
@@ -424,28 +439,29 @@ public class LilithPlugin
 			}
 		}
 
-		private PsiClass findClass(Project project, String className, GlobalSearchScope scope)
+	}
+
+	private PsiClass findClass(Project project, String className, GlobalSearchScope scope)
+	{
+		try
 		{
-			try
+			Object instance = getInstanceMethod.invoke(null, project);
+			if(instance != null)
 			{
-				Object instance = getInstanceMethod.invoke(null, project);
-				if(instance != null)
-				{
-					return (PsiClass) findClassMethod.invoke(instance, className, scope);
-				}
+				return (PsiClass) findClassMethod.invoke(instance, className, scope);
 			}
-			catch (IllegalAccessException e)
-			{
-				e.printStackTrace();
-			}
-			catch (InvocationTargetException e)
-			{
-				e.printStackTrace();
-			}
-			// IDEA 7: PsiManager.getInstance(project).findClass(className, scope);
-			// IDEA 8: JavaPsiFacade.getInstance(project).findClass(className, scope);
-			System.err.println("Couldn't find class '"+className+"'!");
-			return null;
 		}
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		}
+		catch (InvocationTargetException e)
+		{
+			e.printStackTrace();
+		}
+		// IDEA 7: PsiManager.getInstance(project).findClass(className, scope);
+		// IDEA 8: JavaPsiFacade.getInstance(project).findClass(className, scope);
+		System.err.println("Couldn't find class '"+className+"'!");
+		return null;
 	}
 }
