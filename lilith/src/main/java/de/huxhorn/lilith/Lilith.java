@@ -74,6 +74,7 @@ public class Lilith
 	//private static final String GUI_SHORT = "G";
 	private static final String PRINT_HELP_SHORT = "h";
 	private static final String FLUSH_PREFERENCES_SHORT = "F";
+	private static final String FLUSH_LICENSED_SHORT = "L";
 	private static final String INDEX_SHORT = "i";
 	//private static final String NAPKIN_LAF_SHORT = "n";
 	private static final String ENABLE_BONJOUR_SHORT = "b";
@@ -83,6 +84,7 @@ public class Lilith
 	//private static final String GUI = "GUI";
 	private static final String PRINT_HELP = "help";
 	private static final String FLUSH_PREFERENCES = "flushPrefs";
+	private static final String FLUSH_LICENSED = "flushLicensed";
 	private static final String INDEX = "indexFile";
 	//private static final String NAPKIN_LAF = "NapkinLaf";
 	private static final String ENABLE_BONJOUR = "bonjour";
@@ -147,6 +149,7 @@ public class Lilith
 		options.addOption(VERBOSE_SHORT, VERBOSE, false, "show more info.");
 		//options.addOption(GUI_SHORT, GUI, false, "show gui.");
 		options.addOption(FLUSH_PREFERENCES_SHORT, FLUSH_PREFERENCES, false, "flush gui preferences.");
+		options.addOption(FLUSH_LICENSED_SHORT, FLUSH_LICENSED, false, "flush licensed.");
 		//options.addOption(NAPKIN_LAF_SHORT, NAPKIN_LAF, false, "use NapkinLAF.");
 		options.addOption(ENABLE_BONJOUR_SHORT, ENABLE_BONJOUR, false, "disable Bonjor.");
 		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
@@ -154,6 +157,7 @@ public class Lilith
 		boolean verbose = false;
 //		boolean showGui = true;
 		boolean flushPrefs = false;
+		boolean flushLicensed=false;
 		//boolean noNapkinLaf = false;
 		boolean enableBonjour = false;
 		boolean indexFileOpt = false;
@@ -169,6 +173,7 @@ public class Lilith
 			verbose = line.hasOption(VERBOSE_SHORT);
 			printHelp = line.hasOption(PRINT_HELP_SHORT);
 			flushPrefs = line.hasOption(FLUSH_PREFERENCES_SHORT);
+			flushLicensed = line.hasOption(FLUSH_LICENSED_SHORT);
 			//noNapkinLaf = !line.hasOption(NAPKIN_LAF_SHORT);
 			enableBonjour = line.hasOption(ENABLE_BONJOUR_SHORT);
 			indexFileOpt = line.hasOption(INDEX_SHORT);
@@ -278,6 +283,15 @@ public class Lilith
 			prefs.reset();
 			prefs.setLicensed(false);
 			if (logger.isInfoEnabled()) logger.info("Flushed preferences...");
+			return;
+		}
+
+		if (flushLicensed)
+		{
+			ApplicationPreferences prefs=new ApplicationPreferences();
+			prefs.setLicensed(false);
+			if (logger.isInfoEnabled()) logger.info("Flushed licensed...");
+			return;
 		}
 
 		if (printHelp)
@@ -481,8 +495,7 @@ public class Lilith
 			if (!applicationPreferences.isLicensed())
 			{
 				hideSplashScreen(splashScreen);
-				// so non-primitive prefs are initialized
-				applicationPreferences.reset();
+
 				LicenseAgreementDialog licenseDialog = new LicenseAgreementDialog();
 				Windows.showWindow(licenseDialog, null, true);
 				if (licenseDialog.isLicenseAgreed())

@@ -76,6 +76,18 @@
 			</action>
 		</release>
 
+        <release version="0.9.34" date="TBD" description="Future release">
+            <action dev="jhux" type="add">
+                TODO: Add transfer size statistics.
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Keep layout of table columns when opening a filtered view. (Ekke)
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Case-insensitive search (Ekke)
+            </action>
+        </release>
+
 		<release version="0.9.33" date="TBD" description="Future release">
 			<action dev="jhux" type="add">
 				Added help about groovy filters.
@@ -103,17 +115,11 @@
                 Support for Exception during toString(). It will now result in [!!!fully.qualified.ClassName=&gt;fully.qualified.Throwable:ThrowableMessage!!!].
             </action>
 			<action dev="jhux" type="fix">
-				TODO: don't reset prefs after accepting license.
+				Don't reset prefs after accepting license. Also added -L option to flush licensed for easier debugging.
 			</action>
-			<action dev="jhux" type="add">
-				TODO: Add transfer size statistics.
-			</action>
-			<action dev="jhux" type="add">
-				TODO: Keep layout of table columns when opening a filtered view. (Ekke)
-			</action>
-			<action dev="jhux" type="add">
-				TODO: Case-insensitive search (Ekke)
-			</action>
+            <action dev="jhux" type="update">
+                TODO: Support for Logback 0.9.12(?)
+            </action>
 		</release>
 
 		<release version="0.9.32" date="2008-10-21" description="Release">
