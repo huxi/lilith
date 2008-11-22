@@ -53,8 +53,6 @@ import java.util.prefs.Preferences;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.math.BigInteger;
 
 public class ApplicationPreferences
 {
@@ -442,45 +440,6 @@ public class ApplicationPreferences
 		}
 		initDetailsViewRoot();
 		return detailsViewRootUrl;
-		/*
-		detailsViewRoot=new File(startupApplicationPath, DETAILS_VIEW_ROOT_FOLDER);
-		detailsViewRoot.mkdirs();
-		File messageViewCss=new File(detailsViewRoot, DETAILS_VIEW_CSS_FILENAME);
-		if(!messageViewCss.isFile())
-		{
-			InputStream is=getClass().getResourceAsStream("/styles/"+DETAILS_VIEW_CSS_FILENAME);
-			if(is==null)
-			{
-				if(logger.isErrorEnabled()) logger.error("Couldn't find messageView.css resource!");
-				return null;
-			}
-			FileOutputStream os= null;
-			try
-			{
-				os = new FileOutputStream(messageViewCss);
-				IOUtils.copy(is, os);
-				if(logger.isInfoEnabled()) logger.info("Initialized messageView.css at '{}'.", messageViewCss.getAbsolutePath());
-			}
-			catch (IOException e)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while initializing messageView.css in settings!", e);
-			}
-			finally
-			{
-				IOUtils.closeQuietly(is);
-				IOUtils.closeQuietly(os);
-			}
-		}
-		try
-		{
-			detailsViewRootUrl=detailsViewRoot.toURI().toURL();
-		}
-		catch (MalformedURLException e)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating detailsViewRootUrl from '{}'!", detailsViewRoot.getAbsolutePath());
-		}
-		return detailsViewRootUrl;
-		*/
 	}
 
 	public boolean isValidSource(String source)
@@ -890,14 +849,6 @@ public class ApplicationPreferences
 			}
 		}
 
-		file =new File(appPath, SOUND_LOCATIONS_PROPERTIES_FILENAME);
-		if(file.isFile())
-		{
-			if(loadSoundLocationsProperties(file))
-			{
-				return new HashMap<String, String>(soundLocations);
-			}
-		}
 		return new HashMap<String, String>(DEFAULT_SOUND_LOCATIONS);
 	}
 
@@ -954,26 +905,6 @@ public class ApplicationPreferences
 	public boolean isScrollingToBottom()
 	{
 		return PREFERENCES.getBoolean(SCROLLING_TO_BOTTOM_PROPERTY, true);
-	}
-
-
-	private boolean loadSoundLocationsProperties(File sourceNamesFile)
-	{
-		long lastModified = sourceNamesFile.lastModified();
-		if(soundLocations!=null && lastSoundLocationsModified >=lastModified)
-		{
-			if(logger.isDebugEnabled()) logger.debug("Won't reload sound locations.");
-			return true;
-		}
-
-		Map<String, String> props = loadProperties(sourceNamesFile);
-		if(props!=null)
-		{
-			lastSoundLocationsModified=lastModified;
-			soundLocations=props;
-			return true;
-		}
-		return false;
 	}
 
 	private boolean loadSoundLocationsXml(File file)
