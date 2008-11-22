@@ -21,6 +21,10 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.swing.table.AccessEventTableModel;
+import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
+import de.huxhorn.lilith.swing.table.AccessEventViewTable;
+import de.huxhorn.lilith.swing.table.EventWrapperTableModelBase;
 import de.huxhorn.sulky.buffers.Buffer;
 
 public class AccessEventViewPanel
