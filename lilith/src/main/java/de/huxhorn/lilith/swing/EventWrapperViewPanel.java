@@ -26,6 +26,8 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
+import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
+import de.huxhorn.lilith.swing.table.EventWrapperTableModelBase;
 import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FilteringBuffer;

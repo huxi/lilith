@@ -21,6 +21,10 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
+import de.huxhorn.lilith.swing.table.EventWrapperTableModelBase;
+import de.huxhorn.lilith.swing.table.LoggingEventTableModel;
+import de.huxhorn.lilith.swing.table.LoggingEventViewTable;
 import de.huxhorn.sulky.buffers.Buffer;
 
 public class LoggingEventViewPanel

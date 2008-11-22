@@ -125,7 +125,7 @@
 		<level value="WARN"/>
 	</logger>
 
-	<logger name="de.huxhorn.lilith.swing.EventWrapperViewTable">
+	<logger name="de.huxhorn.lilith.swing.table.EventWrapperViewTable">
 		<level value="INFO"/>
 	</logger>
 	<logger name="de.huxhorn.sulky.buffers.FilteringBuffer">
@@ -162,7 +162,7 @@
 	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
 		<level value="INFO"/>
 	</logger>
-	<logger name="de.huxhorn.lilith.swing.LoggingEventTableModel">
+	<logger name="de.huxhorn.lilith.swing.table.LoggingEventTableModel">
 		<level value="INFO"/>
 	</logger>
 	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
