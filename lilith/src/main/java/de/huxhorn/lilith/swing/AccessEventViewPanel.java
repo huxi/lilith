@@ -21,10 +21,9 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.swing.table.AccessEventTableModel;
+import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.AccessEventViewTable;
-import de.huxhorn.lilith.swing.table.EventWrapperTableModelBase;
 import de.huxhorn.sulky.buffers.Buffer;
 
 public class AccessEventViewPanel
@@ -40,12 +39,12 @@ public class AccessEventViewPanel
 		return getMainFrame().getAccessFileFactory().getSizeOnDisk(getEventSource().getSourceIdentifier());
 	}
 
-	protected EventWrapperTableModelBase<AccessEvent> createTableModel(Buffer<EventWrapper<AccessEvent>> buffer)
+	protected EventWrapperTableModel<AccessEvent> createTableModel(Buffer<EventWrapper<AccessEvent>> buffer)
 	{
-		return new AccessEventTableModel(buffer, getEventSource().isGlobal());
+		return new EventWrapperTableModel<AccessEvent>(buffer, getEventSource().isGlobal());
 	}
 
-	protected EventWrapperViewTable<AccessEvent> createTable(EventWrapperTableModelBase<AccessEvent> tableModel)
+	protected EventWrapperViewTable<AccessEvent> createTable(EventWrapperTableModel<AccessEvent> tableModel)
 	{
 		return new AccessEventViewTable(tableModel);
 	}

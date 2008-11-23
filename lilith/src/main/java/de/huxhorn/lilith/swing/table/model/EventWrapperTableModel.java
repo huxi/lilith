@@ -15,50 +15,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing.table;
+package de.huxhorn.lilith.swing.table.model;
 
-import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.Buffer;
 
-public class AccessEventTableModel
-		extends EventWrapperTableModelBase<AccessEvent>
-		implements AccessEventTableModelConstants
-{
-	private final String[] columns =
-			{
-					DEFAULT_COLUMN_NAME_ID,
-					DEFAULT_COLUMN_NAME_TIMESTAMP,
-					DEFAULT_COLUMN_NAME_STATUS_CODE,
-					DEFAULT_COLUMN_NAME_METHOD,
-					DEFAULT_COLUMN_NAME_REQUEST_URI,
-					DEFAULT_COLUMN_NAME_PROTOCOL,
-					DEFAULT_COLUMN_NAME_REMOTE_ADDR,
-					DEFAULT_COLUMN_NAME_APPLICATIION,
-					DEFAULT_COLUMN_NAME_SOURCE,
-			};
+import java.io.Serializable;
 
-	public AccessEventTableModel(Buffer<EventWrapper<AccessEvent>> buffer, boolean global)
+public class EventWrapperTableModel<T extends Serializable>
+		extends BufferTableModel<EventWrapper<T>>
+{
+	private boolean global;
+
+	public EventWrapperTableModel(Buffer<EventWrapper<T>> buffer, boolean global)
 	{
-		super(buffer, global);
+		super(buffer);
+		this.global=global;
+	}
+
+	public boolean isGlobal()
+	{
+		return global;
+	}
+
+	public Class<?> getColumnClass(int columnIndex)
+	{
+		return EventWrapper.class;
 	}
 
 	public int getColumnCount()
 	{
-		if(!isGlobal())
-		{
-			return columns.length-1;
-		}
-		return columns.length;
+		return 1;
 	}
 
 	public String getColumnName(int columnIndex)
 	{
-		if (columnIndex >= 0 && columnIndex < columns.length)
+		if (columnIndex == 0)
 		{
-			return columns[columnIndex];
+			return "EventWrapper";
 		}
 		return null;
 	}
-
 }

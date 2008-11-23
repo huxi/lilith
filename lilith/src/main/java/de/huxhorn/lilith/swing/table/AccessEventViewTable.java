@@ -19,72 +19,37 @@ package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.swing.table.tooltips.*;
-import de.huxhorn.lilith.swing.table.renderer.*;
+import de.huxhorn.lilith.swing.table.model.AccessEventTableColumnModel;
+import de.huxhorn.lilith.swing.table.model.AccessEventTableColumnModelConstants;
+import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableColumn;
+import java.util.HashMap;
 
 public class AccessEventViewTable
 	extends EventWrapperViewTable<AccessEvent>
 {
-	public AccessEventViewTable(EventWrapperTableModelBase<AccessEvent> model)
+	public AccessEventViewTable(EventWrapperTableModel<AccessEvent> model)
 	{
 		super(model);
 	}
 
 	protected void initTooltipGenerators()
 	{
-		tooltipGenerators=new TooltipGenerator[tableModel.getColumnCount()];
-		tooltipGenerators[AccessEventTableModelConstants.COLUMN_INDEX_TIMESTAMP]=new TimestampTooltipGenerator();
-		tooltipGenerators[AccessEventTableModelConstants.COLUMN_INDEX_REQUEST_URI]=new RequestUrlTooltipGenerator();
-		tooltipGenerators[AccessEventTableModelConstants.COLUMN_INDEX_STATUS_CODE]=new StatusCodeTooltipGenerator();
-		tooltipGenerators[AccessEventTableModelConstants.COLUMN_INDEX_APPLICATION]=new ApplicationTooltipGenerator();
-
-		if(tableModel.isGlobal())
-		{
-			tooltipGenerators[AccessEventTableModelConstants.COLUMN_INDEX_SOURCE]=new SourceTooltipGenerator();
-		}
+		tooltipGenerators=new HashMap<Object, TooltipGenerator>();
+		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_TIMESTAMP,
+				new TimestampTooltipGenerator());
+		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_REQUEST_URI,
+				new RequestUrlTooltipGenerator());
+		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_STATUS_CODE,
+				new StatusCodeTooltipGenerator());
+		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_APPLICATIION,
+				new ApplicationTooltipGenerator());
+		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_SOURCE,
+				new SourceTooltipGenerator());
 	}
 
 	protected void initColumnModel()
 	{
-		TableColumnModel columnModel = getColumnModel();
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_ID);
-			col.setCellRenderer(new IdRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_TIMESTAMP);
-			col.setCellRenderer(new TimestampRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_STATUS_CODE);
-			col.setCellRenderer(new StatusCodeRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_METHOD);
-			col.setCellRenderer(new MethodRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_PROTOCOL);
-			col.setCellRenderer(new ProtocolRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_REQUEST_URI);
-			col.setCellRenderer(new RequestUriRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_REMOTE_ADDR);
-			col.setCellRenderer(new RemoteAddrRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_APPLICATION);
-			col.setCellRenderer(new ApplicationRenderer());
-		}
-		if(tableModel.isGlobal())
-		{
-			TableColumn col = columnModel.getColumn(AccessEventTableModelConstants.COLUMN_INDEX_SOURCE);
-			col.setCellRenderer(new SourceRenderer());
-		}
+		setColumnModel(new AccessEventTableColumnModel());
 	}
 }

@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.InputMap;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import java.awt.event.KeyEvent;
@@ -33,11 +34,13 @@ import java.awt.event.FocusEvent;
 import java.awt.Point;
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.Map;
 
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ColorsProvider;
 import de.huxhorn.lilith.swing.Colors;
+import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 
 public abstract class EventWrapperViewTable<T extends Serializable>
 	extends JTable
@@ -47,16 +50,17 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	public static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
 	public static final String FILTER_CONDITION_PROPERTY = "filterCondition";
 
-	protected TooltipGenerator[] tooltipGenerators;
+	protected Map<Object, TooltipGenerator> tooltipGenerators;
 	private boolean scrollingToBottom;
 	private Condition filterCondition;
-	protected EventWrapperTableModelBase<T> tableModel;
+	protected EventWrapperTableModel<T> tableModel;
 
-	public EventWrapperViewTable(EventWrapperTableModelBase<T> model)
+	public EventWrapperViewTable(EventWrapperTableModel<T> model)
 	{
 		super();
 		this.tableModel=model;
 		this.tableModel.addTableModelListener(new ScrollToBottomListener());
+		setAutoCreateColumnsFromModel(false);
 		setModel(tableModel);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -154,22 +158,26 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	public String getToolTipText(MouseEvent event)
 	{
+		if(tooltipGenerators==null)
+		{
+			return null;
+		}
 		Point p = event.getPoint();
 		int row = rowAtPoint(p);
 		int column = columnAtPoint(p); // This is the view column!
-		if(logger.isDebugEnabled()) logger.debug("ColumnIndex before conversion: {}",column);
-		column=convertColumnIndexToModel(column);
-		if(logger.isDebugEnabled()) logger.debug("ColumnIndex after conversion: {}",column);
-		if(column>=0 && column<tooltipGenerators.length)
+		if(column > -1)
 		{
-			TooltipGenerator generator=tooltipGenerators[column];
-			if(generator!=null)
+			TableColumn tableColumn=getColumnModel().getColumn(column);
+			if(tableColumn!=null)
 			{
-				return generator.createTooltipText(this, row);
+				TooltipGenerator generator = tooltipGenerators.get(tableColumn.getIdentifier());
+				if(generator != null)
+				{
+					return generator.createTooltipText(this, row);
+				}
 			}
 		}
 		return null;
-		//return super.getToolTipText(event);
 	}
 
 	public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)

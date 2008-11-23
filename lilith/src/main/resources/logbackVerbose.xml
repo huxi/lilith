@@ -163,9 +163,6 @@
 	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
 		<level value="INFO"/>
 	</logger>
-	<logger name="de.huxhorn.lilith.swing.table.LoggingEventTableModel">
-		<level value="INFO"/>
-	</logger>
 	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
 		<level value="INFO"/>
 	</logger>
