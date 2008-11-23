@@ -22,8 +22,7 @@ import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
-import de.huxhorn.lilith.swing.table.EventWrapperTableModelBase;
-import de.huxhorn.lilith.swing.table.LoggingEventTableModel;
+import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.LoggingEventViewTable;
 import de.huxhorn.sulky.buffers.Buffer;
 
@@ -35,12 +34,12 @@ public class LoggingEventViewPanel
 		super(mainFrame, eventSource);
 	}
 
-	protected EventWrapperTableModelBase<LoggingEvent> createTableModel(Buffer<EventWrapper<LoggingEvent>> buffer)
+	protected EventWrapperTableModel<LoggingEvent> createTableModel(Buffer<EventWrapper<LoggingEvent>> buffer)
 	{
-		return new LoggingEventTableModel(buffer, getEventSource().isGlobal());
+		return new EventWrapperTableModel<LoggingEvent>(buffer, getEventSource().isGlobal());
 	}
 
-	protected EventWrapperViewTable<LoggingEvent> createTable(EventWrapperTableModelBase<LoggingEvent> tableModel)
+	protected EventWrapperViewTable<LoggingEvent> createTable(EventWrapperTableModel<LoggingEvent> tableModel)
 	{
 		return new LoggingEventViewTable(tableModel);
 	}

@@ -15,21 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing.table;
+package de.huxhorn.lilith.swing.table.model;
 
-public interface LoggingEventTableModelConstants
+public interface LoggingEventTableColumnModelConstants
 {
-	int COLUMN_INDEX_ID = 0;
-	int COLUMN_INDEX_TIMESTAMP = 1;
-	int COLUMN_INDEX_LEVEL = 2;
-	int COLUMN_INDEX_LOGGER_NAME = 3;
-	int COLUMN_INDEX_MESSAGE = 4;
-	int COLUMN_INDEX_THROWABLE = 5;
-	int COLUMN_INDEX_THREAD = 6;
-	int COLUMN_INDEX_MARKER = 7;
-	int COLUMN_INDEX_APPLICATION = 8;
-	int COLUMN_INDEX_SOURCE = 9;
-
 	String DEFAULT_COLUMN_NAME_ID = "ID";
 	String DEFAULT_COLUMN_NAME_TIMESTAMP = "Timestamp";
 	String DEFAULT_COLUMN_NAME_LEVEL = "Level";

@@ -27,7 +27,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
-import de.huxhorn.lilith.swing.table.EventWrapperTableModelBase;
+import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FilteringBuffer;
@@ -129,7 +129,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private SwingWorkManager<Integer> workManager;
 
 	private EventWrapperViewTable<T> table;
-	private EventWrapperTableModelBase<T> tableModel;
+	private EventWrapperTableModel<T> tableModel;
 
 	private FindNextAction findNextAction;
 	private FindPreviousAction findPrevAction;
@@ -323,8 +323,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 
 
-	protected abstract EventWrapperTableModelBase<T> createTableModel(Buffer<EventWrapper<T>> buffer);
-	protected abstract EventWrapperViewTable<T> createTable(EventWrapperTableModelBase<T> tableModel);
+	protected abstract EventWrapperTableModel<T> createTableModel(Buffer<EventWrapper<T>> buffer);
+	protected abstract EventWrapperViewTable<T> createTable(EventWrapperTableModel<T> tableModel);
 
 	private void initUi()
 	{
@@ -665,7 +665,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
-	public EventWrapperTableModelBase<T> getTableModel()
+	public EventWrapperTableModel<T> getTableModel()
 	{
 		return tableModel;
 	}
@@ -690,7 +690,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		File appPath = mainFrame.getApplicationPreferences().getStartupApplicationPath();
 		File errorPath = new File(appPath, "errors");
-		errorPath.mkdirs();
+		if(errorPath.mkdirs())
+		{
+			if(logger.isDebugEnabled()) logger.debug("Created errors directory '{}'.", errorPath);
+		}
 		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd'T'HHmmssSSSZ");
 		String filename=format.format(new Date());
 		File errorFile=new File(errorPath, filename);
@@ -795,22 +798,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		tableModel.clear();
 		table.requestFocusInWindow();
 	}
-
-	/*
-	private ProgressGlassPane resolveProgressGlassPane()
-	{
-		ViewContainer<T> container = resolveContainer();
-		if(container!=null)
-		{
-			Component gp = container.resolveGlassPane();
-			if(gp instanceof ProgressGlassPane)
-			{
-				return (ProgressGlassPane) gp;
-			}
-		}
-		return null;
-	}
-    */
 
 	public void findPrevious(int currentRow, Condition condition)
 	{

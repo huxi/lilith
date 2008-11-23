@@ -19,80 +19,44 @@ package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableColumn;
-
-import de.huxhorn.lilith.swing.table.renderer.*;
 import de.huxhorn.lilith.swing.table.tooltips.*;
+import de.huxhorn.lilith.swing.table.model.LoggingEventTableColumnModel;
+import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
+import de.huxhorn.lilith.swing.table.model.LoggingEventTableColumnModelConstants;
+
+import java.util.HashMap;
 
 public class LoggingEventViewTable
 	extends EventWrapperViewTable<LoggingEvent>
 {
-	public LoggingEventViewTable(EventWrapperTableModelBase<LoggingEvent> model)
+	public LoggingEventViewTable(EventWrapperTableModel<LoggingEvent> model)
 	{
 		super(model);
 	}
 
 	protected void initTooltipGenerators()
 	{
-		tooltipGenerators=new TooltipGenerator[tableModel.getColumnCount()];
-		tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_LOGGER_NAME]=new LoggerNameTooltipGenerator();
-		tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_MARKER]=new MarkerTooltipGenerator();
-		tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_MESSAGE]=new MessageTooltipGenerator();
-		tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_THREAD]=new ThreadTooltipGenerator();
-		tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_THROWABLE]=new ThrowableTooltipGenerator();
-		tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_TIMESTAMP]=new TimestampTooltipGenerator();
-		tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_APPLICATION]=new ApplicationTooltipGenerator();
-
-		if(tableModel.isGlobal())
-		{
-			tooltipGenerators[LoggingEventTableModelConstants.COLUMN_INDEX_SOURCE]=new SourceTooltipGenerator();
-		}
+		tooltipGenerators=new HashMap<Object, TooltipGenerator>();
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_LOGGER_NAME,
+				new LoggerNameTooltipGenerator());
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_MARKER,
+				new MarkerTooltipGenerator());
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_MESSAGE,
+				new MessageTooltipGenerator());
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_THREAD,
+				new ThreadTooltipGenerator());
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_THROWABLE,
+				new ThrowableTooltipGenerator());
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_TIMESTAMP,
+				new TimestampTooltipGenerator());
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_APPLICATIION,
+				new ApplicationTooltipGenerator());
+		tooltipGenerators.put(LoggingEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_SOURCE,
+				new SourceTooltipGenerator());
 	}
 
 	protected void initColumnModel()
 	{
-		TableColumnModel columnModel = getColumnModel();
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_ID);
-			col.setCellRenderer(new IdRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_TIMESTAMP);
-			col.setCellRenderer(new TimestampRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_LEVEL);
-			col.setCellRenderer(new LevelRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_LOGGER_NAME);
-			col.setCellRenderer(new LoggerNameRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_MESSAGE);
-			col.setCellRenderer(new MessageRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_THROWABLE);
-			col.setCellRenderer(new ThrowableRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_THREAD);
-			col.setCellRenderer(new ThreadRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_MARKER);
-			col.setCellRenderer(new MarkerRenderer());
-		}
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_APPLICATION);
-			col.setCellRenderer(new ApplicationRenderer());
-		}
-		if(tableModel.isGlobal())
-		{
-			TableColumn col = columnModel.getColumn(LoggingEventTableModelConstants.COLUMN_INDEX_SOURCE);
-			col.setCellRenderer(new SourceRenderer());
-		}
+		setColumnModel(new LoggingEventTableColumnModel());
 	}
 }

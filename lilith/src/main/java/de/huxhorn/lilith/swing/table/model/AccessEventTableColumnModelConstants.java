@@ -15,20 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing.table;
+package de.huxhorn.lilith.swing.table.model;
 
-public interface AccessEventTableModelConstants
+public interface AccessEventTableColumnModelConstants
 {
-	int COLUMN_INDEX_ID = 0;
-	int COLUMN_INDEX_TIMESTAMP = 1;
-	int COLUMN_INDEX_STATUS_CODE = 2;
-	int COLUMN_INDEX_METHOD = 3;
-	int COLUMN_INDEX_REQUEST_URI = 4;
-	int COLUMN_INDEX_PROTOCOL = 5;
-	int COLUMN_INDEX_REMOTE_ADDR = 6;
-	int COLUMN_INDEX_APPLICATION = 7;
-	int COLUMN_INDEX_SOURCE = 8;
-
 	String DEFAULT_COLUMN_NAME_ID = "ID";
 	String DEFAULT_COLUMN_NAME_TIMESTAMP = "Timestamp";
 	String DEFAULT_COLUMN_NAME_STATUS_CODE = "Status";
