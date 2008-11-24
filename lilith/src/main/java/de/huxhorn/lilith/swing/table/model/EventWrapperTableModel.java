@@ -25,17 +25,9 @@ import java.io.Serializable;
 public class EventWrapperTableModel<T extends Serializable>
 		extends BufferTableModel<EventWrapper<T>>
 {
-	private boolean global;
-
-	public EventWrapperTableModel(Buffer<EventWrapper<T>> buffer, boolean global)
+	public EventWrapperTableModel(Buffer<EventWrapper<T>> buffer)
 	{
 		super(buffer);
-		this.global=global;
-	}
-
-	public boolean isGlobal()
-	{
-		return global;
 	}
 
 	public Class<?> getColumnClass(int columnIndex)

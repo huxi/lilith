@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.Lilith;
+import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -90,6 +91,10 @@ public class ApplicationPreferences
 	public static final String BLACK_LIST_NAME_PROPERTY = "blackListName";
 	public static final String WHITE_LIST_NAME_PROPERTY = "whiteListName";
 
+	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
+	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
+	public static final String ACCESS_LAYOUT_GLOBAL_XML_FILENAME = "accessLayoutGlobal.xml";
+	public static final String ACCESS_LAYOUT_XML_FILENAME = "accessLayout.xml";
 
 	public static final String SOURCE_NAMES_XML_FILENAME = "SourceNames.xml";
 	public static final String SOURCE_LISTS_XML_FILENAME = "SourceLists.xml";
@@ -1141,6 +1146,123 @@ public class ApplicationPreferences
 			IOUtils.closeQuietly(is);
 		}
 		return null;
+	}
+
+	public void writeLoggingColumnLayout(boolean global, List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfos)
+	{
+		File appPath=getStartupApplicationPath();
+		File file;
+		if(global)
+		{
+			file = new File(appPath, LOGGING_LAYOUT_GLOBAL_XML_FILENAME);
+		}
+		else
+		{
+			file = new File(appPath, LOGGING_LAYOUT_XML_FILENAME);
+		}
+		writeColumnLayout(file, layoutInfos);
+	}
+
+	public void writeAccessColumnLayout(boolean global, List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfos)
+	{
+		File appPath=getStartupApplicationPath();
+		File file;
+		if(global)
+		{
+			file = new File(appPath, ACCESS_LAYOUT_GLOBAL_XML_FILENAME);
+		}
+		else
+		{
+			file = new File(appPath, ACCESS_LAYOUT_XML_FILENAME);
+		}
+		writeColumnLayout(file, layoutInfos);
+	}
+
+	public List<PersistentTableColumnModel.TableColumnLayoutInfo> readLoggingColumnLayout(boolean global)
+	{
+		File appPath=getStartupApplicationPath();
+		File file;
+		if(global)
+		{
+			file = new File(appPath, LOGGING_LAYOUT_GLOBAL_XML_FILENAME);
+		}
+		else
+		{
+			file = new File(appPath, LOGGING_LAYOUT_XML_FILENAME);
+		}
+		return readColumnLayout(file);
+	}
+
+	public List<PersistentTableColumnModel.TableColumnLayoutInfo> readAccessColumnLayout(boolean global)
+	{
+		File appPath=getStartupApplicationPath();
+		File file;
+		if(global)
+		{
+			file = new File(appPath, ACCESS_LAYOUT_GLOBAL_XML_FILENAME);
+		}
+		else
+		{
+			file = new File(appPath, ACCESS_LAYOUT_XML_FILENAME);
+		}
+		return readColumnLayout(file);
+	}
+
+	private boolean writeColumnLayout(File file, List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfos)
+	{
+		XMLEncoder e = null;
+		Throwable error=null;
+		try
+		{
+			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			e = new XMLEncoder(bos);
+			e.writeObject(layoutInfos);
+			if(logger.isInfoEnabled()) logger.info("Wrote layouts {} to file '{}'.", layoutInfos, file.getAbsolutePath());
+		}
+		catch (FileNotFoundException ex)
+		{
+			error=ex;
+		}
+		finally
+		{
+			if(e!=null)
+			{
+				e.close();
+			}
+		}
+		if(error!=null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing layouts to file '"+file.getAbsolutePath()+"'!", error);
+			return false;
+		}
+		return true;
+	}
+
+	private List<PersistentTableColumnModel.TableColumnLayoutInfo> readColumnLayout(File file)
+	{
+		XMLDecoder d = null;
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> result;
+		try
+		{
+			d = new XMLDecoder(
+							  new BufferedInputStream(
+								  new FileInputStream(file)));
+
+			result=(List<PersistentTableColumnModel.TableColumnLayoutInfo>) d.readObject();
+		}
+		catch (FileNotFoundException ex)
+		{
+			if(logger.isInfoEnabled()) logger.info("Exception while loading layouts from file '"+ file.getAbsolutePath()+"'!",ex);
+			result=null;
+		}
+		finally
+		{
+			if(d!=null)
+			{
+				d.close();
+			}
+		}
+		return result;
 	}
 
 	/**

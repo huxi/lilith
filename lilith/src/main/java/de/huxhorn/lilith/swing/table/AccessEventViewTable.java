@@ -19,37 +19,142 @@ package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.swing.table.tooltips.*;
-import de.huxhorn.lilith.swing.table.model.AccessEventTableColumnModel;
-import de.huxhorn.lilith.swing.table.model.AccessEventTableColumnModelConstants;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
+import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
+import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
+import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
+import de.huxhorn.lilith.swing.table.renderer.StatusCodeRenderer;
+import de.huxhorn.lilith.swing.table.renderer.MethodRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ProtocolRenderer;
+import de.huxhorn.lilith.swing.table.renderer.RequestUriRenderer;
+import de.huxhorn.lilith.swing.table.renderer.RemoteAddrRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
+import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
+import de.huxhorn.lilith.swing.MainFrame;
 
+import javax.swing.table.TableColumn;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class AccessEventViewTable
 	extends EventWrapperViewTable<AccessEvent>
 {
-	public AccessEventViewTable(EventWrapperTableModel<AccessEvent> model)
+	public static final String DEFAULT_COLUMN_NAME_ID = "ID";
+	public static final String DEFAULT_COLUMN_NAME_TIMESTAMP = "Timestamp";
+	public static final String DEFAULT_COLUMN_NAME_STATUS_CODE = "Status";
+	public static final String DEFAULT_COLUMN_NAME_METHOD = "Method";
+	public static final String DEFAULT_COLUMN_NAME_REQUEST_URI = "Request URI";
+	public static final String DEFAULT_COLUMN_NAME_PROTOCOL = "Protocol";
+	public static final String DEFAULT_COLUMN_NAME_REMOTE_ADDR = "Remote Address";
+	public static final String DEFAULT_COLUMN_NAME_APPLICATIION = "Application";
+	public static final String DEFAULT_COLUMN_NAME_SOURCE = "Source";
+
+	public AccessEventViewTable(MainFrame mainFrame, EventWrapperTableModel<AccessEvent> model, boolean global)
 	{
-		super(model);
+		super(mainFrame, model, global);
 	}
 
 	protected void initTooltipGenerators()
 	{
 		tooltipGenerators=new HashMap<Object, TooltipGenerator>();
-		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_TIMESTAMP,
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_TIMESTAMP,
 				new TimestampTooltipGenerator());
-		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_REQUEST_URI,
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_REQUEST_URI,
 				new RequestUrlTooltipGenerator());
-		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_STATUS_CODE,
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_STATUS_CODE,
 				new StatusCodeTooltipGenerator());
-		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_APPLICATIION,
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATIION,
 				new ApplicationTooltipGenerator());
-		tooltipGenerators.put(AccessEventTableColumnModelConstants.DEFAULT_COLUMN_NAME_SOURCE,
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_SOURCE,
 				new SourceTooltipGenerator());
 	}
 
-	protected void initColumnModel()
+	protected void initTableColumns()
 	{
-		setColumnModel(new AccessEventTableColumnModel());
+		tableColumns = new HashMap<Object, TableColumn>();
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_ID);
+			col.setCellRenderer(new IdRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_TIMESTAMP);
+			col.setCellRenderer(new TimestampRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_STATUS_CODE);
+			col.setCellRenderer(new StatusCodeRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_METHOD);
+			col.setCellRenderer(new MethodRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_PROTOCOL);
+			col.setCellRenderer(new ProtocolRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_REQUEST_URI);
+			col.setCellRenderer(new RequestUriRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_REMOTE_ADDR);
+			col.setCellRenderer(new RemoteAddrRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_APPLICATIION);
+			col.setCellRenderer(new ApplicationRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_SOURCE);
+			col.setCellRenderer(new SourceRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+	}
+
+	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout()
+	{
+		ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo> result =
+				new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
+
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_ID, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_TIMESTAMP, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_STATUS_CODE, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_METHOD, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_PROTOCOL, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REQUEST_URI, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REMOTE_ADDR, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATIION, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_SOURCE, 75, isGlobal()));
+
+		return result;
+	}
+
+	public void saveLayout()
+	{
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> infos = tableColumnModel.getColumnLayoutInfos();
+		mainFrame.getApplicationPreferences().writeAccessColumnLayout(isGlobal(), infos);
+	}
+
+	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout()
+	{
+		return mainFrame.getApplicationPreferences().readAccessColumnLayout(isGlobal());
 	}
 }
