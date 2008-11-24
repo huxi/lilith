@@ -24,6 +24,12 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.InputMap;
 import javax.swing.ListSelectionModel;
+import javax.swing.JPopupMenu;
+import javax.swing.AbstractAction;
+import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.Action;
 import javax.swing.table.TableColumn;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
@@ -31,33 +37,48 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
 import java.awt.Point;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.List;
+import java.util.Iterator;
 
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ColorsProvider;
 import de.huxhorn.lilith.swing.Colors;
+import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
+import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 
 public abstract class EventWrapperViewTable<T extends Serializable>
 	extends JTable
 	implements ColorsProvider
 {
-	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewTable.class);
 	public static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
 	public static final String FILTER_CONDITION_PROPERTY = "filterCondition";
 
+	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewTable.class);
+
+	protected EventWrapperTableModel<T> tableModel;
 	protected Map<Object, TooltipGenerator> tooltipGenerators;
+	protected Map<Object, TableColumn> tableColumns;
+	protected PersistentTableColumnModel tableColumnModel;
 	private boolean scrollingToBottom;
 	private Condition filterCondition;
-	protected EventWrapperTableModel<T> tableModel;
+	private JPopupMenu popupMenu;
+	private JMenuItem showHideMenu;
+	private boolean global;
+	protected MainFrame mainFrame;
 
-	public EventWrapperViewTable(EventWrapperTableModel<T> model)
+	public EventWrapperViewTable(MainFrame mainFrame, EventWrapperTableModel<T> model, boolean global)
 	{
 		super();
+		this.mainFrame=mainFrame;
+		this.global=global;
 		this.tableModel=model;
 		this.tableModel.addTableModelListener(new ScrollToBottomListener());
 		setAutoCreateColumnsFromModel(false);
@@ -65,16 +86,40 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		addFocusListener(new RepaintFocusListener());
-		initColumnModel();
+		initTableColumns();
+		tableColumnModel=new PersistentTableColumnModel();
+		//initColumnModel();
+		resetLayout();
 		initTooltipGenerators();
 		setShowHorizontalLines(false);
 		setAutoResizeMode(AUTO_RESIZE_OFF);
+		popupMenu=new JPopupMenu();
+		popupMenu.add(new SaveLayoutAction());
+		popupMenu.add(new ResetLayoutAction());
+		showHideMenu=new JMenu("Show/Hide");
+		popupMenu.add(showHideMenu);
+		getTableHeader().addMouseListener(new PopupListener());
+	}
+
+	public boolean isGlobal()
+	{
+		return global;
 	}
 
 	protected abstract void initTooltipGenerators();
+	protected abstract void initTableColumns();
+//	protected abstract void initColumnModel();
 
-	protected abstract void initColumnModel();
-
+	private void updatePopupMenu()
+	{
+		showHideMenu.removeAll();
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> cli = tableColumnModel.getColumnLayoutInfos();
+		for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
+		{
+			JCheckBoxMenuItem cbmi=new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), current.isVisible()));
+			showHideMenu.add(cbmi);
+		}
+	}
 
 	public Condition getFilterCondition()
 	{
@@ -180,6 +225,33 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		return null;
 	}
 
+	public abstract void saveLayout();
+	protected abstract List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout();
+	protected abstract List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout();
+	
+	public void resetLayout()
+	{
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> infos = loadLayout();
+		if(infos==null)
+		{
+			infos=getDefaultLayout();
+		}
+		PersistentTableColumnModel newModel=new PersistentTableColumnModel();
+		for(PersistentTableColumnModel.TableColumnLayoutInfo current: infos)
+		{
+			String name=current.getColumnName();
+			TableColumn col=tableColumns.get(name);
+			if(col!=null)
+			{
+				col.setPreferredWidth(current.getWidth());
+			}
+			newModel.addColumn(col);
+			newModel.setColumnVisible(col, current.isVisible());
+		}
+		setColumnModel(newModel);
+		tableColumnModel=newModel;
+	}
+
 	public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
 	{
 		if(logger.isDebugEnabled())
@@ -244,4 +316,112 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			repaint();
 		}
 	}
+
+	private class PopupListener implements MouseListener
+	{
+
+		public void mouseClicked(MouseEvent e)
+		{
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+		}
+
+		public void mousePressed(MouseEvent e)
+		{
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+		}
+
+		public void mouseReleased(MouseEvent e)
+		{
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+		}
+
+		public void mouseEntered(MouseEvent e)
+		{
+		}
+
+		public void mouseExited(MouseEvent e)
+		{
+		}
+
+		private void showPopup(Point p)
+		{
+			System.out.println("Showing popup at "+p);
+			updatePopupMenu();
+			popupMenu.show(EventWrapperViewTable.this.getTableHeader(), p.x,  p.y);
+		}
+	}
+
+	private class SaveLayoutAction
+		extends AbstractAction
+	{
+		private SaveLayoutAction()
+		{
+			super("Save layout");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			System.out.println("Save layout");
+			saveLayout();
+		}
+	}
+
+	private class ResetLayoutAction
+		extends AbstractAction
+	{
+		private ResetLayoutAction()
+		{
+			super("Reset layout");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			System.out.println("Reset layout");
+			resetLayout();
+		}
+	}
+
+	private class ShowHideAction
+		extends AbstractAction
+	{
+		private boolean visible;
+		private String columnName;
+
+		private ShowHideAction(String columnName, boolean visible)
+		{
+			super(columnName);
+			this.columnName=columnName;
+			this.visible=visible;
+			putValue(Action.SELECTED_KEY, visible);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			Iterator<TableColumn> iter = tableColumnModel.getColumns(false);
+			TableColumn found=null;
+			while(iter.hasNext())
+			{
+				TableColumn current = iter.next();
+				if(columnName.equals(current.getIdentifier()))
+				{
+					found=current;
+					break;
+				}
+			}
+			if(found!=null)
+			{
+				tableColumnModel.setColumnVisible(found, !visible);
+			}
+		}
+	}
+
 }

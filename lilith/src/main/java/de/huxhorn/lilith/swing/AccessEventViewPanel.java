@@ -41,12 +41,12 @@ public class AccessEventViewPanel
 
 	protected EventWrapperTableModel<AccessEvent> createTableModel(Buffer<EventWrapper<AccessEvent>> buffer)
 	{
-		return new EventWrapperTableModel<AccessEvent>(buffer, getEventSource().isGlobal());
+		return new EventWrapperTableModel<AccessEvent>(buffer);
 	}
 
 	protected EventWrapperViewTable<AccessEvent> createTable(EventWrapperTableModel<AccessEvent> tableModel)
 	{
-		return new AccessEventViewTable(tableModel);
+		return new AccessEventViewTable(getMainFrame(), tableModel, getEventSource().isGlobal());
 	}
 
 	protected void closeConnection(SourceIdentifier sourceIdentifier)

@@ -117,6 +117,11 @@
 			<action dev="jhux" type="fix">
 				Don't reset prefs after accepting license. Also added -L option to flush licensed for easier debugging.
 			</action>
+            <action dev="jhux" type="add">
+                Ability to save and reset layout of the tables. There are 4 table layouts: logging, loggingGlobal, access and accessGlobal.
+                the global layouts are used in the global views "global (Logging)" and "global (Access)" while the non-global ones are used in ordinary
+                views, as well as in "Lilith (Logging)". 
+            </action>
             <action dev="jhux" type="update">
                 TODO: Support for Logback 0.9.12(?)
             </action>

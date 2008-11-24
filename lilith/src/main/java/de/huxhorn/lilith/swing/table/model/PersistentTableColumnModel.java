@@ -5,8 +5,6 @@ import javax.swing.table.DefaultTableColumnModel;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.TreeSet;
-import java.util.Set;
 import java.io.Serializable;
 
 /**
@@ -243,38 +241,25 @@ public class PersistentTableColumnModel
 		throw new IllegalArgumentException("Identifier not found");
 	}
 
-	public Set<TableColumnLayoutInfo> xxx()
+	public List<TableColumnLayoutInfo> getColumnLayoutInfos()
 	{
-		final Set<TableColumnLayoutInfo> tableColumnLayoutInfos = new TreeSet<TableColumnLayoutInfo>();
+		final List<TableColumnLayoutInfo> tableColumnLayoutInfos = new ArrayList<TableColumnLayoutInfo>(allTableColumns.size());
 
-		for (int idx = 0; idx < allTableColumns.size(); idx++) {
-			TableColumn tableColumn = allTableColumns.get(idx);
-			boolean visible = tableColumns.contains(tableColumn);
+		for (TableColumn current : allTableColumns)
+		{
+			boolean visible = tableColumns.contains(current);
 			TableColumnLayoutInfo tableColumnLayoutInfo
-					= new TableColumnLayoutInfo(tableColumn.getIdentifier().toString(),
-						idx, tableColumn.getWidth(), visible);
+					= new TableColumnLayoutInfo(current.getIdentifier().toString(),
+					current.getWidth(), visible);
 			tableColumnLayoutInfos.add(tableColumnLayoutInfo);
 		}
 
 		return tableColumnLayoutInfos;
 	}
 
-	public void yyy(Set<TableColumnLayoutInfo> tableColumnLayoutInfos)
-	{
-		// TODO: implement!
-/*
-		for (TableColumnLayoutInfo tableColumnLayoutInfo : tableColumnLayoutInfos) {
-			TableColumn tableColumn = table.getColumn(tableColumnLayoutInfo.getColumnName());
-			tableColumn.setPreferredWidth(tableColumnLayoutInfo.getWidth());
-			tableColumnModel.addColumn(tableColumn);
-		}
-*/
-	}
-
 	public static class TableColumnLayoutInfo
-			implements Serializable, Comparable<TableColumnLayoutInfo>
+			implements Serializable
 	{
-		private int order;
 		private String columnName;
 		private int width;
 		private boolean visible;
@@ -283,22 +268,11 @@ public class PersistentTableColumnModel
 		{
 		}
 
-		public TableColumnLayoutInfo(String columnName, int order, int width, boolean visible)
+		public TableColumnLayoutInfo(String columnName, int width, boolean visible)
 		{
 			this.columnName = columnName;
-			this.order = order;
 			this.width = width;
 			this.visible = visible;
-		}
-
-		public int getOrder()
-		{
-			return order;
-		}
-
-		public void setOrder(int order)
-		{
-			this.order = order;
 		}
 
 		public int getWidth()
@@ -331,9 +305,10 @@ public class PersistentTableColumnModel
 			this.visible = visible;
 		}
 
-		public int compareTo(TableColumnLayoutInfo o)
+		@Override
+		public String toString()
 		{
-			return order - o.order;
+			return "TableColumnLayoutInfo[columnName="+columnName+", width="+width+", visible="+visible+"]";
 		}
 	}
 }

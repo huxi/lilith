@@ -36,12 +36,12 @@ public class LoggingEventViewPanel
 
 	protected EventWrapperTableModel<LoggingEvent> createTableModel(Buffer<EventWrapper<LoggingEvent>> buffer)
 	{
-		return new EventWrapperTableModel<LoggingEvent>(buffer, getEventSource().isGlobal());
+		return new EventWrapperTableModel<LoggingEvent>(buffer);
 	}
 
 	protected EventWrapperViewTable<LoggingEvent> createTable(EventWrapperTableModel<LoggingEvent> tableModel)
 	{
-		return new LoggingEventViewTable(tableModel);
+		return new LoggingEventViewTable(getMainFrame(), tableModel, getEventSource().isGlobal());
 	}
 
 	protected long getSizeOnDisk()
