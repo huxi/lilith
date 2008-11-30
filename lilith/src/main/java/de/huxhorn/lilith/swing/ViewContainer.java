@@ -206,7 +206,7 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	protected void fireChange()
+	public void fireChange()
 	{
 		ArrayList<ChangeListener> clone;
 		synchronized(changeListeners)

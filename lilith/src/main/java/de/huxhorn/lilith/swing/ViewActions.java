@@ -26,6 +26,8 @@ import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.services.sender.EventSender;
+import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
+import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.conditions.Condition;
 import org.simplericity.macify.eawt.Application;
@@ -49,6 +51,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JPopupMenu;
+import javax.swing.table.TableColumn;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.Container;
@@ -59,6 +62,8 @@ import java.net.URL;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
 import java.io.Serializable;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -69,6 +74,12 @@ import java.beans.PropertyChangeEvent;
 public class ViewActions
 {
 	private final Logger logger = LoggerFactory.getLogger(ViewActions.class);
+
+	/**
+	 * Taken over from Action.SELECTED_KEY for 1.5 compatibility.
+	 * Does not work with 1.5 :( I was really sure that there was some selected event...
+	 */
+	//private static final String SELECTED_KEY = "SwingSelectedKey";
 
 	private static final Icon EMPTY_16_ICON;
 
@@ -107,7 +118,7 @@ public class ViewActions
 	{
 		Icon icon;
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/otherGraphics/empty16.png");
+			URL url=ViewActions.class.getResource("/otherGraphics/empty16.png");
 			if(url!=null)
 			{
 				icon = new ImageIcon(url);
@@ -120,7 +131,7 @@ public class ViewActions
 		EMPTY_16_ICON =icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/edit-clear.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-clear.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -133,7 +144,7 @@ public class ViewActions
 		CLEAR_MENU_ICON =icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/edit-clear.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-clear.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -146,7 +157,7 @@ public class ViewActions
 		CLEAR_TOOLBAR_ICON =icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/edit-undo.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-undo.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -159,7 +170,7 @@ public class ViewActions
 		ATTACH_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/edit-redo.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-redo.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -172,7 +183,7 @@ public class ViewActions
 		DETACH_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/edit-undo.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-undo.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -185,7 +196,7 @@ public class ViewActions
 		ATTACH_TOOLBAR_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/edit-redo.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-redo.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -198,7 +209,7 @@ public class ViewActions
 		DETACH_TOOLBAR_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/media-playback-start.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/media-playback-start.png");
 			if(url!=null)
 			{
 				icon=new ImageIcon(url);
@@ -211,7 +222,7 @@ public class ViewActions
 		PAUSED_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/media-playback-pause.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/media-playback-pause.png");
 			if(url!=null)
 			{
 				icon=new ImageIcon(url);
@@ -224,7 +235,7 @@ public class ViewActions
 		UNPAUSED_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/media-playback-start.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/media-playback-start.png");
 			if(url!=null)
 			{
 				icon=new ImageIcon(url);
@@ -237,7 +248,7 @@ public class ViewActions
 		PAUSED_TOOLBAR_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/media-playback-pause.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/media-playback-pause.png");
 			if(url!=null)
 			{
 				icon=new ImageIcon(url);
@@ -250,7 +261,7 @@ public class ViewActions
 		UNPAUSED_TOOLBAR_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/edit-find.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-find.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -263,7 +274,7 @@ public class ViewActions
 		FIND_MENU_ITEM=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/edit-find.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-find.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -276,7 +287,7 @@ public class ViewActions
 		FIND_TOOLBAR_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -289,7 +300,7 @@ public class ViewActions
 		STATISTICS_MENU_ICON =icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/apps/utilities-system-monitor.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/apps/utilities-system-monitor.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -302,7 +313,7 @@ public class ViewActions
 		STATISTICS_TOOLBAR_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/media-eject.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/media-eject.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -315,7 +326,7 @@ public class ViewActions
 		DISCONNECT_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/media-eject.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/media-eject.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -328,7 +339,7 @@ public class ViewActions
 		DISCONNECT_TOOLBAR_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-down.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/go-down.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -341,7 +352,7 @@ public class ViewActions
 		FIND_NEXT_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-up.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/go-up.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -354,7 +365,7 @@ public class ViewActions
 		FIND_PREV_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-bottom.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/go-bottom.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -368,7 +379,7 @@ public class ViewActions
 		TAIL_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/actions/go-bottom.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/actions/go-bottom.png");
 			if(url!=null)
 			{
 				icon =new ImageIcon(url);
@@ -382,7 +393,7 @@ public class ViewActions
 		TAIL_TOOLBAR_ICON=icon;
 
 		{
-			URL url=MainFrame.class.getResource("/tango/16x16/apps/help-browser.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/apps/help-browser.png");
 
 			if(url!=null)
 			{
@@ -396,7 +407,7 @@ public class ViewActions
 		HELP_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/document-open.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/document-open.png");
 			if(url!=null)
 			{
 				icon = new ImageIcon(url);
@@ -409,7 +420,7 @@ public class ViewActions
 		OPEN_INACTIVE_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/system-log-out.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/actions/system-log-out.png");
 			if(url!=null)
 			{
 				icon = new ImageIcon(url);
@@ -422,7 +433,7 @@ public class ViewActions
 		EXIT_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/categories/preferences-system.png");
+			URL url=ViewActions.class.getResource("/tango/16x16/categories/preferences-system.png");
 			if(url!=null)
 			{
 				icon = new ImageIcon(url);
@@ -435,7 +446,7 @@ public class ViewActions
 		PREFERENCES_MENU_ICON=icon;
 
 		{
-			URL url=EventWrapperViewPanel.class.getResource("/tango/32x32/categories/preferences-system.png");
+			URL url=ViewActions.class.getResource("/tango/32x32/categories/preferences-system.png");
 			if(url!=null)
 			{
 				icon = new ImageIcon(url);
@@ -447,6 +458,8 @@ public class ViewActions
 		}
 		PREFERENCES_TOOLBAR_ICON=icon;
 	}
+
+	
 	private JToolBar toolbar;
 	private JMenuBar menubar;
 
@@ -464,6 +477,8 @@ public class ViewActions
 	private ResetFindAction resetFindAction;
 	private ScrollToBottomMenuAction scrollToBottomMenuAction;
 	private EditSourceNameMenuAction editSourceNameMenuAction;
+	private SaveLayoutAction saveLayoutAction;
+	private ResetLayoutAction resetLayoutAction;
 	private EditConditionMenuAction editConditionMenuAction;
 
 	private NextTabAction nextTabAction;
@@ -488,6 +503,8 @@ public class ViewActions
 	private FindMenuAction findMenuAction;
 	private JMenu searchMenu;
 	private JMenu viewMenu;
+	private JMenu layoutMenu;
+	private JMenu showHideMenu;
 	private ClearMenuAction clearMenuAction;
 	private FocusMessageAction focusMessageAction;
 	private FocusEventsAction focusEventsAction;
@@ -595,6 +612,8 @@ public class ViewActions
 
 		statisticsMenuAction = new StatisticsMenuAction();
 		editSourceNameMenuAction = new EditSourceNameMenuAction();
+		saveLayoutAction = new SaveLayoutAction();
+		resetLayoutAction = new ResetLayoutAction();
 		editConditionMenuAction = new EditConditionMenuAction();
 
 		previousTabAction = new PreviousTabAction();
@@ -721,6 +740,14 @@ public class ViewActions
 		viewMenu.add(editSourceNameMenuAction);
 		viewMenu.add(editConditionMenuAction);
 		viewMenu.addSeparator();
+		layoutMenu=new JMenu("Layout");
+		showHideMenu=new JMenu("Show/Hide");
+		layoutMenu.add(showHideMenu);
+		layoutMenu.addSeparator();
+		layoutMenu.add(saveLayoutAction);
+		layoutMenu.add(resetLayoutAction);
+		viewMenu.add(layoutMenu);
+		viewMenu.addSeparator();
 		viewMenu.add(previousTabAction);
 		viewMenu.add(nextTabAction);
 		viewMenu.addSeparator();
@@ -834,6 +861,8 @@ public class ViewActions
 		viewMenu.setEnabled(hasView);
 		scrollToBottomMenuAction.setEnabled(hasView);
 		editSourceNameMenuAction.setEnabled(hasView);
+		saveLayoutAction.setEnabled(hasView);
+		resetLayoutAction.setEnabled(hasView);
 		editConditionMenuAction.setEnabled(hasView);
 		pauseMenuAction.setEnabled(hasView);
 		clearMenuAction.setEnabled(hasView);
@@ -842,8 +871,9 @@ public class ViewActions
 		focusEventsAction.setEnabled(hasView);
 		focusMessageAction.setEnabled(hasView);
 		statisticsMenuAction.setEnabled(hasView);
-		nextTabAction.updateAction();
+		updateShowHideMenu();
 		previousTabAction.updateAction();
+		nextTabAction.updateAction();
 		closeFilterAction.setEnabled(hasView);
 		closeOtherFiltersAction.setEnabled(hasView);
 		closeAllFiltersAction.setEnabled(hasView);
@@ -878,6 +908,32 @@ public class ViewActions
 		else
 		{
 			showUnfilteredEventAction.setEnabled(false);
+		}
+	}
+
+	private void updateShowHideMenu()
+	{
+		showHideMenu.removeAll();
+		if(viewContainer!=null)
+		{
+			EventWrapperViewPanel<?> viewPanel=viewContainer.getSelectedView();
+			if(viewPanel!=null)
+			{
+				EventWrapperViewTable<?> table=viewPanel.getTable();
+				if(table!=null)
+				{
+					PersistentTableColumnModel tableColumnModel=table.getTableColumnModel();
+					List<PersistentTableColumnModel.TableColumnLayoutInfo> cli = tableColumnModel.getColumnLayoutInfos();
+					for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
+					{
+						boolean visible=current.isVisible();
+						JCheckBoxMenuItem cbmi=new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible));
+						cbmi.setSelected(visible);
+						showHideMenu.add(cbmi);
+					}
+				}
+			}
+
 		}
 	}
 
@@ -2481,6 +2537,60 @@ public class ViewActions
 		}
 	}
 
+	class SaveLayoutAction
+		extends AbstractAction
+	{
+
+		public SaveLayoutAction()
+		{
+			super("Save layout");
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			if(viewContainer!=null)
+			{
+				EventWrapperViewPanel<?> viewPanel=viewContainer.getSelectedView();
+				if(viewPanel!=null)
+				{
+					EventWrapperViewTable<?> table=viewPanel.getTable();
+					if(table!=null)
+					{
+						table.saveLayout();
+					}
+				}
+			}
+		}
+	}
+
+	class ResetLayoutAction
+		extends AbstractAction
+	{
+
+		public ResetLayoutAction()
+		{
+			super("Reset layout");
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			if(viewContainer!=null)
+			{
+				EventWrapperViewPanel<?> viewPanel=viewContainer.getSelectedView();
+				if(viewPanel!=null)
+				{
+					EventWrapperViewTable<?> table=viewPanel.getTable();
+					if(table!=null)
+					{
+						table.resetLayout();
+					}
+				}
+			}
+		}
+	}
+
 	class CheckForUpdateAction
 		extends AbstractAction
 	{
@@ -3131,6 +3241,44 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			sender.send(event);
+		}
+	}
+
+	private class ShowHideAction
+		extends AbstractAction
+	{
+		private boolean visible;
+		private String columnName;
+		private PersistentTableColumnModel tableColumnModel;
+
+		public ShowHideAction(PersistentTableColumnModel tableColumnModel, String columnName, boolean visible)
+		{
+			super(columnName);
+			this.columnName=columnName;
+			this.visible=visible;
+			this.tableColumnModel=tableColumnModel;
+			//putValue(ViewActions.SELECTED_KEY, visible);
+			// selection must be set manually
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			visible=!visible;
+			Iterator<TableColumn> iter = tableColumnModel.getColumns(false);
+			TableColumn found=null;
+			while(iter.hasNext())
+			{
+				TableColumn current = iter.next();
+				if(columnName.equals(current.getIdentifier()))
+				{
+					found=current;
+					break;
+				}
+			}
+			if(found!=null)
+			{
+				tableColumnModel.setColumnVisible(found, visible);
+			}
 		}
 	}
 }
