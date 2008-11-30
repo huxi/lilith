@@ -135,16 +135,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private FindPreviousAction findPrevAction;
 	private CloseFindAction closeFindAction;
 
-//	private ShowUnfilteredEventAction showUnfilteredEventAction;
-
 	private JButton findPrevButton;
 	private JButton findNextButton;
 
-	//private JTextPane messagePane;
 	private JToolBar findPanel;
 	private JTextField findTextField;
 	private JLabel statusLabel;
-//	private JProgressBar progressBar;
 	private JScrollBar verticalLogScrollbar;
 
 	private TableModelListener tableModelListener;
@@ -155,14 +151,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private FindResultListener findResultListener;
 	private static final String GROOVY_IDENTIFIER = "#groovy#";
 	private static final Color ERROR_COLOR = new Color(0xffaaaa);
-//	private JPopupMenu popup;
 	protected JMenu sendToMenuItem;
-//	private GotoSourceAction gotoSourceAction;
-//	private CopyEventAction copyEventAction;
-//	private CopyLoggingMessageAction copyLoggingMessageAction;
-//	private CopyLoggingThrowableAction copyLoggingThrowableAction;
-//	private CopyAccessUriAction copyAccessUriAction;
-//	private CopyLoggerNameAction copyLoggerNameAction;
 
 	private XHTMLPanel messagePane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
@@ -180,18 +169,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		this.eventSource=eventSource;
 		showingFilters=false;
 
-
-		//messageFormatter=createMessageFormatter();
-
-//		initDetailsViewScript();
-
 		tableModelListener=new StatusTableModelListener();
 		initUi();
 	}
 
-
-
-	//protected abstract MessageFormatter createMessageFormatter();
+	public EventWrapperViewTable<T> getTable()
+	{
+		return table;
+	}
 
 	public LoggingViewState getState()
 	{
@@ -214,11 +199,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		this.state = state;
 		Object newValue=this.state;
 		firePropertyChange(STATE_PROPERTY, oldValue, newValue);
-
-//		if(!EventQueue.isDispatchThread())
-//		{
-//			if(logger.isWarnEnabled()) logger.warn("!DispatchThread - setState: old="+oldValue+", new="+newValue, new Throwable());
-//		}
 	}
 
 	public boolean isShowingFilters()
@@ -328,14 +308,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private void initUi()
 	{
-//		showUnfilteredEventAction=new ShowUnfilteredEventAction();
-//		gotoSourceAction=new GotoSourceAction();
-//		copyEventAction=new CopyEventAction();
-//		copyLoggingMessageAction=new CopyLoggingMessageAction();
-//		copyLoggerNameAction=new CopyLoggerNameAction();
-//		copyLoggingThrowableAction=new CopyLoggingThrowableAction();
-//		copyAccessUriAction =new CopyAccessUriAction();
-
 		Insets borderInsets=new Insets(2,2,2,2);
 		focusedBorder=new MatteBorder(borderInsets, Color.YELLOW);
 		unfocusedBorder=new MatteBorder(borderInsets, Color.WHITE);
@@ -373,8 +345,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		messagePane.addMouseTrackingListener(new StackTraceElementLinkListener(mainFrame));
 
 		xhtmlNamespaceHandler=new XhtmlNamespaceHandler();
-		//ctx=messagePane.getRenderingContext();
-		// ctx.setLogging(true);
 		FSScrollPane messageScrollPane = new FSScrollPane(messagePane);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tableScrollPane, messageScrollPane);
@@ -406,7 +376,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		JPanel statusPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		//statusPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 		bottomPanel.add(findPanel, BorderLayout.CENTER);
 		bottomPanel.add(statusPanel, BorderLayout.SOUTH);
 
@@ -444,39 +413,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		KeyStrokes.registerCommand(this, findPrevAction, "FIND_PREV_ACTION");
 		KeyStrokes.registerCommand(this, closeFindAction, "CLOSE_FIND_ACTION");
 		KeyStrokes.registerCommand(findTextField, replaceFilterAction, "REPLACE_FILTER_ACTION");
-
-		//initPopup();
 	}
 
 
-	/*
-	private StyleSheet loadStyleSheet(URL cssUrl)
+	private void initFindPanel()
 	{
-		StyleSheet result=null;
-		if(cssUrl!=null)
-		{
-			result=new StyleSheet();
-			BufferedReader reader = null;
-			try
-			{
-				reader=new BufferedReader(new InputStreamReader(cssUrl.openStream()));
-				result.loadRules(reader, cssUrl);
-			}
-			catch (IOException e)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Error loading stylesheet!", e);
-				result=null;
-			}
-			finally
-			{
-				IOUtils.closeQuietly(reader);
-			}
-		}
-		return result;
-	}
-    */
-
-	private void initFindPanel() {
 		findPanel = new JToolBar(SwingConstants.HORIZONTAL);
 		findPanel.setFloatable(false);
 		findPanel.setFocusTraversalPolicy(focusTraversalPolicy);
@@ -506,8 +447,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		tableModel.dispose();
 		workManager.removeResultListener(findResultListener);
 	}
-
-
 
 	public boolean isDisposed()
 	{
@@ -1134,10 +1073,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 						}
 					}
 				}
-				else // if(showUnfilteredEventAction.isEnabled())
+				else
 				{
 					showUnfilteredEvent();
-					//showUnfilteredEventAction.actionPerformed(null);
 				}
 			}
 		}
@@ -1146,7 +1084,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		private void showPopup(MouseEvent evt)
 		{
 			Point p = evt.getPoint();
-			EventWrapper<T> wrapper=getEventWrapper(p); // To ensure that the vent below the mouse is selected.
+			EventWrapper<T> wrapper=getEventWrapper(p); // To ensure that the event below the mouse is selected.
 			if(logger.isDebugEnabled()) logger.debug("Show popup at {} for event {}.", p, wrapper);
 			mainFrame.showPopup(table, p);
 		}
@@ -1374,7 +1312,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class FindNextAction
 		extends AbstractAction
 	{
-		// TODO: remove
+		// TODO: Move to ViewActions
 		public FindNextAction()
 		{
 			super();
@@ -1406,7 +1344,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class FindPreviousAction
 		extends AbstractAction
 	{
-		// TODO: remove
+		// TODO: Move to ViewActions
 		public FindPreviousAction()
 		{
 			super();

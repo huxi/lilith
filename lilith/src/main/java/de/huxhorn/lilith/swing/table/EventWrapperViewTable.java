@@ -29,7 +29,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
-import javax.swing.Action;
 import javax.swing.table.TableColumn;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
@@ -41,6 +40,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.Point;
 import java.awt.Color;
+import java.awt.Container;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.List;
@@ -51,6 +51,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ColorsProvider;
 import de.huxhorn.lilith.swing.Colors;
 import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 
@@ -69,6 +70,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	protected PersistentTableColumnModel tableColumnModel;
 	private boolean scrollingToBottom;
 	private Condition filterCondition;
+
+	// TODO: Move to ViewActions
 	private JPopupMenu popupMenu;
 	private JMenuItem showHideMenu;
 	private boolean global;
@@ -94,10 +97,11 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		setShowHorizontalLines(false);
 		setAutoResizeMode(AUTO_RESIZE_OFF);
 		popupMenu=new JPopupMenu();
-		popupMenu.add(new SaveLayoutAction());
-		popupMenu.add(new ResetLayoutAction());
 		showHideMenu=new JMenu("Show/Hide");
 		popupMenu.add(showHideMenu);
+		popupMenu.addSeparator();
+		popupMenu.add(new SaveLayoutAction());
+		popupMenu.add(new ResetLayoutAction());
 		getTableHeader().addMouseListener(new PopupListener());
 	}
 
@@ -110,15 +114,23 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	protected abstract void initTableColumns();
 //	protected abstract void initColumnModel();
 
+	// TODO: Move to ViewActions
 	private void updatePopupMenu()
 	{
 		showHideMenu.removeAll();
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> cli = tableColumnModel.getColumnLayoutInfos();
 		for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
 		{
-			JCheckBoxMenuItem cbmi=new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), current.isVisible()));
+			boolean visible=current.isVisible();
+			JCheckBoxMenuItem cbmi=new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), visible));
+			cbmi.setSelected(visible);
 			showHideMenu.add(cbmi);
 		}
+	}
+
+	public PersistentTableColumnModel getTableColumnModel()
+	{
+		return tableColumnModel;
 	}
 
 	public Condition getFilterCondition()
@@ -229,6 +241,16 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	protected abstract List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout();
 	protected abstract List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout();
 	
+	protected void fireViewContainerChange()
+	{
+		ViewContainer viewContainer = resolveViewContainer();
+		if(viewContainer!=null)
+		{
+			viewContainer.fireChange();
+			if(logger.isDebugEnabled()) logger.debug("Fired change on ViewContainer!");
+		}
+	}
+
 	public void resetLayout()
 	{
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> infos = loadLayout();
@@ -250,6 +272,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 		setColumnModel(newModel);
 		tableColumnModel=newModel;
+		fireViewContainerChange();
 	}
 
 	public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
@@ -354,12 +377,14 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 		private void showPopup(Point p)
 		{
-			System.out.println("Showing popup at "+p);
+			// TODO: call ViewActions
+			if(logger.isDebugEnabled()) logger.debug("Showing popup at {}.",p);
 			updatePopupMenu();
 			popupMenu.show(EventWrapperViewTable.this.getTableHeader(), p.x,  p.y);
 		}
 	}
 
+	// TODO: Move to ViewActions
 	private class SaveLayoutAction
 		extends AbstractAction
 	{
@@ -370,11 +395,12 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 		public void actionPerformed(ActionEvent e)
 		{
-			System.out.println("Save layout");
+			if(logger.isDebugEnabled()) logger.debug("Save layout");
 			saveLayout();
 		}
 	}
 
+	// TODO: Move to ViewActions
 	private class ResetLayoutAction
 		extends AbstractAction
 	{
@@ -385,11 +411,33 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 		public void actionPerformed(ActionEvent e)
 		{
-			System.out.println("Reset layout");
+			if(logger.isDebugEnabled()) logger.debug("Reset layout");
 			resetLayout();
 		}
 	}
 
+	// TODO: Move to ViewActions
+	protected ViewContainer resolveViewContainer()
+	{
+		ViewContainer result=null;
+		Container parentContainer = getParent();
+		for(;;)
+		{
+			if(parentContainer instanceof ViewContainer)
+			{
+				result= (ViewContainer) parentContainer;
+				break;
+			}
+			if(parentContainer==null)
+			{
+				break;
+			}
+			parentContainer=parentContainer.getParent();
+		}
+		return result;
+	}
+
+	// TODO: Move to ViewActions
 	private class ShowHideAction
 		extends AbstractAction
 	{
@@ -401,11 +449,12 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			super(columnName);
 			this.columnName=columnName;
 			this.visible=visible;
-			putValue(Action.SELECTED_KEY, visible);
+			//putValue(EventWrapperViewTable.SELECTED_KEY, visible);
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
+			visible=!visible;
 			Iterator<TableColumn> iter = tableColumnModel.getColumns(false);
 			TableColumn found=null;
 			while(iter.hasNext())
@@ -419,7 +468,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			}
 			if(found!=null)
 			{
-				tableColumnModel.setColumnVisible(found, !visible);
+				tableColumnModel.setColumnVisible(found, visible);
+				fireViewContainerChange();
 			}
 		}
 	}

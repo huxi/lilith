@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 
-// TODO: ThrowableInfo? CallerData?
 public class EventContainsCondition
 	implements Condition
 {

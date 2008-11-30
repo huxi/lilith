@@ -48,11 +48,11 @@ public class FiltersPanel
 	{
 		setLayout(new BorderLayout());
 		editConditionDialog=new EditConditionDialog(preferencesDialog);
-		// TODO:
+		// TODO: implement createUI
 	}
 	public void initUI()
 	{
-		// TODO:
+		// TODO: implement initUI
 	}
 
 	public void editCondition(Condition condition)

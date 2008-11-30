@@ -120,7 +120,14 @@
             <action dev="jhux" type="add">
                 Ability to save and reset layout of the tables. There are 4 table layouts: logging, loggingGlobal, access and accessGlobal.
                 the global layouts are used in the global views "global (Logging)" and "global (Access)" while the non-global ones are used in ordinary
-                views, as well as in "Lilith (Logging)". 
+                views, as well as in "Lilith (Logging)".
+                Functionality is available in View -&gt; Layout and popup on table header. 
+            </action>
+            <action dev="jhux" type="update">
+                TODO: Cleanup of duplicated code in actions, e.g. the new layout actions as well as the find actions.
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Add ability to select PLAF in Preferences.
             </action>
             <action dev="jhux" type="update">
                 TODO: Support for Logback 0.9.12(?)

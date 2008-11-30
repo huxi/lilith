@@ -235,6 +235,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		public void mouseExited(MouseEvent e) {}
 	}
 
+	// TODO: Move to ViewActions
 	private class CloseFilterAction
 		extends AbstractAction
 	{
@@ -267,6 +268,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	}
 
+	// TODO: Move to ViewActions
 	private class CloseOtherFiltersAction
 		extends AbstractAction
 	{
@@ -299,6 +301,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		}
 	}
 
+	// TODO: Move to ViewActions
 	private class CloseAllFiltersAction
 		extends AbstractAction
 	{
