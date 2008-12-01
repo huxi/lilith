@@ -29,12 +29,17 @@ import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GeneralPanel
 	extends JPanel
@@ -47,6 +52,7 @@ public class GeneralPanel
 	private JFileChooser applicationPathFileChooser;
 	private JTextArea appPathTextArea;
 	private JCheckBox checkForUpdateCheckbox;
+	private JComboBox lookAndFeelCombo;
 
 	private PreferencesDialog preferencesDialog;
 	private ApplicationPreferences applicationPreferences;
@@ -83,6 +89,7 @@ public class GeneralPanel
 		Action browseAppPathAction=new BrowseApplicationPathAction();
 		JButton browseAppPathButton=new JButton(browseAppPathAction);
 		appPathPanel.add(browseAppPathButton);
+		lookAndFeelCombo=new JComboBox();
 
 		setLayout(new FlowLayout());
 		add(internalFramesCheckbox);
@@ -95,6 +102,7 @@ public class GeneralPanel
 		add(autoFocusCheckbox);
 		add(checkForUpdateCheckbox);
 		add(appPathPanel);
+		add(lookAndFeelCombo);
 	}
 
 	public void initUI()
@@ -110,6 +118,33 @@ public class GeneralPanel
 		showIdentifierCheckbox.setSelected(applicationPreferences.isShowingIdentifier());
 		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
 		cleaningLogsOnExitCheckbox.setSelected(applicationPreferences.isCleaningLogsOnExit());
+		ArrayList<String> lookAndFeels=new ArrayList<String>();
+		for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+		{
+			lookAndFeels.add(info.getName());
+		}
+		Collections.sort(lookAndFeels);
+		int selectedIndex=0;
+		String lookAndFeel=applicationPreferences.getLookAndFeel();
+		if(lookAndFeel==null || "".equals(lookAndFeel))
+		{
+			lookAndFeel=UIManager.getLookAndFeel().getName();
+		}
+		int idx=lookAndFeels.indexOf(lookAndFeel);
+		if(idx>-1)
+		{
+			selectedIndex=idx;
+		}
+		else
+		{
+			idx=lookAndFeels.indexOf(ApplicationPreferences.STARTUP_LOOK_AND_FEEL);
+			if(idx>-1)
+			{
+				selectedIndex=idx;
+			}
+		}
+		lookAndFeelCombo.setModel(new DefaultComboBoxModel(lookAndFeels.toArray()));
+		lookAndFeelCombo.setSelectedIndex(selectedIndex);
 	}
 
 	public void saveSettings()
@@ -124,6 +159,7 @@ public class GeneralPanel
 		applicationPreferences.setShowingIdentifier(showIdentifierCheckbox.isSelected());
 		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
 		applicationPreferences.setCleaningLogsOnExit(cleaningLogsOnExitCheckbox.isSelected());
+		applicationPreferences.setLookAndFeel((String) lookAndFeelCombo.getSelectedItem());
 	}
 
 	private class BrowseApplicationPathAction
