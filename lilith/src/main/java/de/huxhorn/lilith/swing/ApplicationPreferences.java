@@ -25,6 +25,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.UIManager;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.XMLDecoder;
@@ -71,6 +72,7 @@ public class ApplicationPreferences
 
 	private static final Preferences PREFERENCES =Preferences.userNodeForPackage(ApplicationPreferences.class);
 
+	public static final String LOOK_AND_FEEL_PROPERTY = "lookAndFeel";
 	public static final String CLEANING_LOGS_ON_EXIT_PROPERTY = "cleaningLogsOnExit";
 	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
 	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
@@ -109,6 +111,8 @@ public class ApplicationPreferences
 	private static final Map<String, String> DEFAULT_SOURCE_NAMES;
 	private static final Map<String, String> DEFAULT_SOUND_LOCATIONS;
 
+	public static final String STARTUP_LOOK_AND_FEEL;
+
 	static
 	{
 		PREFERENCES.remove(OLD_LICENSED_PREFERENCES_KEY); // remove garbage
@@ -126,6 +130,7 @@ public class ApplicationPreferences
 		Map<String, String> defaultSourceNames = new HashMap<String, String>();
 		defaultSourceNames.put("127.0.0.1", "Localhost");
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
+		STARTUP_LOOK_AND_FEEL=UIManager.getLookAndFeel().getName();
 	}
 
 	private final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
@@ -528,6 +533,20 @@ public class ApplicationPreferences
 	public String getWhiteListName()
 	{
 		return PREFERENCES.get(WHITE_LIST_NAME_PROPERTY, "");
+	}
+
+	public void setLookAndFeel(String name)
+	{
+		Object oldValue=getLookAndFeel();
+		PREFERENCES.put(LOOK_AND_FEEL_PROPERTY, name);
+		Object newValue=getLookAndFeel();
+		propertyChangeSupport.firePropertyChange(LOOK_AND_FEEL_PROPERTY, oldValue, newValue);
+		if(logger.isInfoEnabled()) logger.info("LookAndFeel set to {}.", newValue);
+	}
+
+	public String getLookAndFeel()
+	{
+		return PREFERENCES.get(LOOK_AND_FEEL_PROPERTY, STARTUP_LOOK_AND_FEEL);
 	}
 
 	private void initConditions()
@@ -1311,5 +1330,17 @@ public class ApplicationPreferences
 			}
 		}
 		return null;
+	}
+
+	public void flush()
+	{
+		try
+		{
+			PREFERENCES.flush();
+		}
+		catch (BackingStoreException e)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while flushing preferences!", e);
+		}
 	}
 }

@@ -215,11 +215,10 @@ public class Lilith
 			}
 			File output=new File(input.getParentFile(), input.getName()+".md5");
 
-			FileInputStream fis=null;
 			try
 			{
 
-				fis=new FileInputStream(input);
+				FileInputStream fis=new FileInputStream(input);
 				byte[] md5 = ApplicationPreferences.getMD5(fis);
 				if(md5==null)
 				{
@@ -388,6 +387,7 @@ public class Lilith
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
 		Application application = new DefaultApplication();
+		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
 		if (application.isMac())
 		{
 			// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
@@ -402,16 +402,20 @@ public class Lilith
 				// this shouldn't happen since we only run on 1.5+
 			}
 		}
-		else
+
+		// init look & feel
+		String lookAndFeel=applicationPreferences.getLookAndFeel();
+		if(lookAndFeel!=null)
 		{
-			// use Nimbus if available
 			try
 			{
     			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 				{
-        			if ("Nimbus".equals(info.getName()))
+        			if (lookAndFeel.equals(info.getName()))
 					{
-            			UIManager.setLookAndFeel(info.getClassName());
+						String lafClassName=info.getClassName();
+						if(logger.isInfoEnabled()) logger.info("Setting look&feel to {}.",lafClassName);
+            			UIManager.setLookAndFeel(lafClassName);
 						break;
         			}
     			}
@@ -433,16 +437,6 @@ public class Lilith
 				// ignore
 			}
 		}
-		/*
-		else if (!noNapkinLaf)
-		{
-			String defaultLaf = System.getProperty("swing.defaultlaf");
-			if (defaultLaf == null)
-			{
-				System.setProperty("swing.defaultlaf", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
-			}
-		}
-        */
 
 		try
 		{
@@ -450,9 +444,8 @@ public class Lilith
 			SwingUtilities.invokeAndWait(createRunnable);
 			SplashScreen splashScreen = createRunnable.getSplashScreen();
 			Thread.sleep(500); // so the splash gets the chance to get displayed :(
-			updateSplashStatus(splashScreen, "Initializing application preferences...");
+			updateSplashStatus(splashScreen, "Initialized application preferences...");
 
-			ApplicationPreferences applicationPreferences = new ApplicationPreferences();
 			File startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 			if (startupApplicationPath.mkdirs())
 			{

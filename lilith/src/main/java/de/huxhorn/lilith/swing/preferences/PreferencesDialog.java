@@ -101,7 +101,7 @@ public class PreferencesDialog
 		filtersPanel = new FiltersPanel(this);
 
 		tabbedPane=new JTabbedPane();
-		tabbedPane.setPreferredSize(new Dimension(400,300));
+		tabbedPane.setPreferredSize(new Dimension(600,500));
 
 		tabbedPane.add("General", generalPanel);
 		tabbedPane.add("Sounds", soundsPanel);

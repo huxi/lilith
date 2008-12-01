@@ -123,11 +123,11 @@
                 views, as well as in "Lilith (Logging)".
                 Functionality is available in View -&gt; Layout and popup on table header. 
             </action>
+            <action dev="jhux" type="add">
+                Ability to select look and feel in Preferences. Yes, the preferences dialog needs a lot of work :p
+            </action>
             <action dev="jhux" type="update">
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions as well as the find actions.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Add ability to select PLAF in Preferences.
             </action>
             <action dev="jhux" type="update">
                 TODO: Support for Logback 0.9.12(?)

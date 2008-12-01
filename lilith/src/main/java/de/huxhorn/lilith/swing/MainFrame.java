@@ -1565,6 +1565,34 @@ public class MainFrame
 		}
 	}
 
+	private void showLookAndFeelChangedDialog()
+	{
+		if(logger.isInfoEnabled()) logger.info("showLookAndFeelChangedDialog()");
+		 final Object[] options = { "Exit", "Cancel" };
+		Icon icon=null;
+		{
+			URL url=MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
+			if(url!=null)
+			{
+				icon=new ImageIcon(url);
+			}
+		}
+		int result=JOptionPane.showOptionDialog(this,
+				"You have changed the look & feel.\n" +
+				"You need to restart for this change to take effect.\n\n" +
+				"Exit now?",
+				"Exit now?",
+				JOptionPane.DEFAULT_OPTION,
+				JOptionPane.WARNING_MESSAGE,
+				icon,
+				options,
+				options[0]);
+		if(result==0)
+		{
+			exit();
+		}
+	}
+
 	public void exit()
 	{
 		if(logger.isInfoEnabled()) logger.info("Exiting...");
@@ -1581,6 +1609,7 @@ public class MainFrame
 			deleteInactiveLogs(loggingFileFactory);
 			deleteInactiveLogs(accessFileFactory);
 		}
+		applicationPreferences.flush();
 		System.exit(0);
 	}
 
@@ -1701,6 +1730,10 @@ public class MainFrame
 					}
 				}
 				showApplicationPathChangedDialog();
+			}
+			else if(ApplicationPreferences.LOOK_AND_FEEL_PROPERTY.equals(propName))
+			{
+				showLookAndFeelChangedDialog();
 			}
 		}
 
