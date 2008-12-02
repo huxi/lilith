@@ -82,7 +82,7 @@ public class SourcesPanel
 		}
 		catch (Throwable e)
 		{
-			if(logger.isInfoEnabled()) logger.info("While trying to activate autoRowSorter...", e);
+			if(logger.isInfoEnabled()) logger.info("While trying to activate autoRowSorter: {}", e.toString());
 		}
 		sourceNameTable.addMouseListener(new SourceNameTableMouseListener());
 		JScrollPane sourceNameTableScrollPane = new JScrollPane(sourceNameTable);

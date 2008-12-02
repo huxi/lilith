@@ -113,6 +113,8 @@ public class ApplicationPreferences
 
 	public static final String STARTUP_LOOK_AND_FEEL;
 
+	private ArrayList<String> installedLookAndFeels;
+
 	static
 	{
 		PREFERENCES.remove(OLD_LICENSED_PREFERENCES_KEY); // remove garbage
@@ -132,6 +134,7 @@ public class ApplicationPreferences
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
 		STARTUP_LOOK_AND_FEEL=UIManager.getLookAndFeel().getName();
 	}
+
 
 	private final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
 
@@ -166,6 +169,13 @@ public class ApplicationPreferences
 		lastConditionsModified = -1;
 		propertyChangeSupport=new PropertyChangeSupport(this);
 		startupApplicationPath=getApplicationPath();
+
+		installedLookAndFeels=new ArrayList<String>();
+		for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+		{
+			installedLookAndFeels.add(info.getName());
+		}
+		Collections.sort(installedLookAndFeels);
 	}
 
 	public void setSourceFiltering(SourceFiltering sourceFiltering)
@@ -546,7 +556,13 @@ public class ApplicationPreferences
 
 	public String getLookAndFeel()
 	{
-		return PREFERENCES.get(LOOK_AND_FEEL_PROPERTY, STARTUP_LOOK_AND_FEEL);
+		String result = PREFERENCES.get(LOOK_AND_FEEL_PROPERTY, STARTUP_LOOK_AND_FEEL);
+		if(!installedLookAndFeels.contains(result))
+		{
+			result=STARTUP_LOOK_AND_FEEL;
+			if(logger.isInfoEnabled()) logger.info("Look and Feel corrected to \"{}\".", result);
+		}
+		return result;
 	}
 
 	private void initConditions()
