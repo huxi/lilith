@@ -23,7 +23,6 @@ import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JTextArea;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
@@ -32,9 +31,12 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
@@ -44,21 +46,28 @@ import java.util.Collections;
 public class GeneralPanel
 	extends JPanel
 {
+	private PreferencesDialog preferencesDialog;
+	private ApplicationPreferences applicationPreferences;
+
+	// Windows/View
 	private JCheckBox internalFramesCheckbox;
 	private JCheckBox scrollingToBottomCheckbox;
 	private JCheckBox autoOpenCheckbox;
 	private JCheckBox autoCloseCheckbox;
 	private JCheckBox autoFocusCheckbox;
-	private JFileChooser applicationPathFileChooser;
-	private JTextArea appPathTextArea;
-	private JCheckBox checkForUpdateCheckbox;
-	private JComboBox lookAndFeelCombo;
-
-	private PreferencesDialog preferencesDialog;
-	private ApplicationPreferences applicationPreferences;
 	private JCheckBox showIdentifierCheckbox;
+
+	// Details view
 	private JCheckBox showFullCallstackCheckbox;
+
+	// Startup & Shutdown
+	private JCheckBox checkForUpdateCheckbox;
 	private JCheckBox cleaningLogsOnExitCheckbox;
+
+	// ???
+	private JFileChooser applicationPathFileChooser;
+	private JTextField appPathTextField;
+	private JComboBox lookAndFeelCombo;
 
 	public GeneralPanel(PreferencesDialog preferencesDialog)
 	{
@@ -83,33 +92,71 @@ public class GeneralPanel
 		applicationPathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		JPanel appPathPanel = new JPanel();
 		appPathPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Application Path"));
-		appPathTextArea =new JTextArea(5,20);
-		appPathTextArea.setEditable(false);
-		appPathPanel.add(appPathTextArea);
+		appPathTextField =new JTextField();
+		appPathTextField.setEditable(false);
+		appPathPanel.add(appPathTextField);
 		Action browseAppPathAction=new BrowseApplicationPathAction();
 		JButton browseAppPathButton=new JButton(browseAppPathAction);
 		appPathPanel.add(browseAppPathButton);
 		lookAndFeelCombo=new JComboBox();
 
-		setLayout(new FlowLayout());
-		add(internalFramesCheckbox);
-		add(scrollingToBottomCheckbox);
-		add(showIdentifierCheckbox);
-		add(showFullCallstackCheckbox);
-		add(cleaningLogsOnExitCheckbox);
-		add(autoOpenCheckbox);
-		add(autoCloseCheckbox);
-		add(autoFocusCheckbox);
-		add(checkForUpdateCheckbox);
-		add(appPathPanel);
-		add(lookAndFeelCombo);
+		JPanel windowPanel=new JPanel(new GridLayout(5,1));
+		windowPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Frames"));
+		windowPanel.add(internalFramesCheckbox);
+		windowPanel.add(autoOpenCheckbox);
+		windowPanel.add(autoFocusCheckbox);
+		windowPanel.add(autoCloseCheckbox);
+		windowPanel.add(showIdentifierCheckbox);
+
+		JPanel viewPanel=new JPanel(new GridLayout(1,1));
+		viewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "View"));
+		viewPanel.add(scrollingToBottomCheckbox);
+
+		JPanel detailsPanel=new JPanel(new GridLayout(1,1));
+		detailsPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Details View"));
+		detailsPanel.add(showFullCallstackCheckbox);
+
+		JPanel startupShutdownPanel=new JPanel(new GridLayout(2,1));
+		startupShutdownPanel.add(checkForUpdateCheckbox);
+		startupShutdownPanel.add(cleaningLogsOnExitCheckbox);
+		startupShutdownPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Startup & Shutdown"));
+
+		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
+
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc=new GridBagConstraints();
+
+		gbc.gridwidth=1;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+
+		gbc.gridx=0;
+		gbc.gridy=0;
+		add(windowPanel, gbc);
+
+		gbc.gridy=1;
+		add(viewPanel, gbc);
+
+		gbc.gridy=2;
+		add(detailsPanel, gbc);
+
+		gbc.gridy=3;
+		add(startupShutdownPanel,gbc);
+
+		gbc.gridy=4;
+		add(lookAndFeelCombo, gbc);
+
+		gbc.gridy=5;
+		add(appPathPanel, gbc);
 	}
 
 	public void initUI()
 	{
 		internalFramesCheckbox.setSelected(applicationPreferences.isUsingInternalFrames());
 		scrollingToBottomCheckbox.setSelected(applicationPreferences.isScrollingToBottom());
-		appPathTextArea.setText(applicationPreferences.getApplicationPath().getAbsolutePath());
+		String appPath = applicationPreferences.getApplicationPath().getAbsolutePath();
+		appPathTextField.setText(appPath);
+		appPathTextField.setToolTipText(appPath);
+
 
 		autoOpenCheckbox.setSelected(applicationPreferences.isAutoOpening());
 		autoCloseCheckbox.setSelected(applicationPreferences.isAutoClosing());
@@ -155,7 +202,7 @@ public class GeneralPanel
 		applicationPreferences.setAutoClosing(autoCloseCheckbox.isSelected());
 		applicationPreferences.setAutoFocusingWindow(autoFocusCheckbox.isSelected());
 		applicationPreferences.setCheckingForUpdate(checkForUpdateCheckbox.isSelected());
-		applicationPreferences.setApplicationPath(new File(appPathTextArea.getText()));
+		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
 		applicationPreferences.setShowingIdentifier(showIdentifierCheckbox.isSelected());
 		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
 		applicationPreferences.setCleaningLogsOnExit(cleaningLogsOnExitCheckbox.isSelected());
@@ -191,7 +238,9 @@ public class GeneralPanel
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 			{
 				File file = applicationPathFileChooser.getSelectedFile();
-				appPathTextArea.setText(file.getAbsolutePath());
+				String appPath=file.getAbsolutePath();
+				appPathTextField.setText(appPath);
+				appPathTextField.setToolTipText(appPath);
 			}
 		}
 	}

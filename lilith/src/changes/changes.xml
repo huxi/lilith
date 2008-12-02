@@ -29,14 +29,8 @@
 			<action dev="jhux" type="add">
 				TODO: Preferences for Toolbar (text, icon size)
 			</action>
-			<action dev="jhux" type="add">
-				TODO: Check behaviour of Bonjour in case of network change.
-			</action>
 			<action dev="jhux" type="fix">
 				TODO: Improve behaviour of newly created filtered views, i.e. the pause.
-			</action>
-			<action dev="jhux" type="update">
-				TODO: UI-Change: Layout of table columns
 			</action>
 			<action dev="jhux" type="add">
 				TODO: Mac: Bouncing icon in case of error
@@ -74,14 +68,14 @@
 			<action dev="jhux" type="add">
 				TODO: homemade multicast discovery of other Lilith instances on LAN.
 			</action>
+            <action dev="jhux" type="update">
+                TODO: Userfriendly and nice-looking preferences.
+            </action>
 		</release>
 
         <release version="0.9.34" date="TBD" description="Future release">
             <action dev="jhux" type="add">
                 TODO: Add transfer size statistics.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Keep layout of table columns when opening a filtered view. (Ekke)
             </action>
             <action dev="jhux" type="add">
                 TODO: Case-insensitive search (Ekke)
@@ -125,6 +119,12 @@
             </action>
             <action dev="jhux" type="add">
                 Ability to select look and feel in Preferences. Yes, the preferences dialog needs a lot of work :p
+            </action>
+            <action dev="jhux" type="add">
+                JGoodies Looks added as a look and feel alternative.
+            </action>
+            <action dev="jhux" type="update">
+                Improved general section of preferences dialog but I'm still not very happy about it.
             </action>
             <action dev="jhux" type="update">
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions as well as the find actions.

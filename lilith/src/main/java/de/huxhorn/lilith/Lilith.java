@@ -71,22 +71,18 @@ public class Lilith
 	public static final String APP_TIMESTAMP;
 
 	private static final String VERBOSE_SHORT = "v";
-	//private static final String GUI_SHORT = "G";
 	private static final String PRINT_HELP_SHORT = "h";
 	private static final String FLUSH_PREFERENCES_SHORT = "F";
 	private static final String FLUSH_LICENSED_SHORT = "L";
 	private static final String INDEX_SHORT = "i";
-	//private static final String NAPKIN_LAF_SHORT = "n";
 	private static final String ENABLE_BONJOUR_SHORT = "b";
 	private static final String CREATE_MD5_SHORT = "m";
 
 	private static final String VERBOSE = "verbose";
-	//private static final String GUI = "GUI";
 	private static final String PRINT_HELP = "help";
 	private static final String FLUSH_PREFERENCES = "flushPrefs";
 	private static final String FLUSH_LICENSED = "flushLicensed";
 	private static final String INDEX = "indexFile";
-	//private static final String NAPKIN_LAF = "NapkinLaf";
 	private static final String ENABLE_BONJOUR = "bonjour";
 	private static final String CREATE_MD5 = "md5";
 
@@ -147,18 +143,14 @@ public class Lilith
 		Options options = new Options();
 		options.addOption(PRINT_HELP_SHORT, PRINT_HELP, false, "show this help.");
 		options.addOption(VERBOSE_SHORT, VERBOSE, false, "show more info.");
-		//options.addOption(GUI_SHORT, GUI, false, "show gui.");
 		options.addOption(FLUSH_PREFERENCES_SHORT, FLUSH_PREFERENCES, false, "flush gui preferences.");
 		options.addOption(FLUSH_LICENSED_SHORT, FLUSH_LICENSED, false, "flush licensed.");
-		//options.addOption(NAPKIN_LAF_SHORT, NAPKIN_LAF, false, "use NapkinLAF.");
 		options.addOption(ENABLE_BONJOUR_SHORT, ENABLE_BONJOUR, false, "disable Bonjor.");
 		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
 		options.addOption(CREATE_MD5_SHORT, CREATE_MD5, false, "create an MD% checksum for the given file.");
 		boolean verbose = false;
-//		boolean showGui = true;
 		boolean flushPrefs = false;
 		boolean flushLicensed=false;
-		//boolean noNapkinLaf = false;
 		boolean enableBonjour = false;
 		boolean indexFileOpt = false;
 		boolean createMd5 = false;
@@ -174,14 +166,9 @@ public class Lilith
 			printHelp = line.hasOption(PRINT_HELP_SHORT);
 			flushPrefs = line.hasOption(FLUSH_PREFERENCES_SHORT);
 			flushLicensed = line.hasOption(FLUSH_LICENSED_SHORT);
-			//noNapkinLaf = !line.hasOption(NAPKIN_LAF_SHORT);
 			enableBonjour = line.hasOption(ENABLE_BONJOUR_SHORT);
 			indexFileOpt = line.hasOption(INDEX_SHORT);
 			createMd5 = line.hasOption(CREATE_MD5_SHORT);
-//			if(indexFileOpt)
-//			{
-//				showGui=false;
-//			}
 			args = line.getArgs(); // remaining unparsed args...
 		}
 		catch (ParseException exp)
@@ -348,10 +335,7 @@ public class Lilith
 				Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler);
 			}
 		});
-//		if(showGui)
-//		{
-		startUI(appTitle, /*noNapkinLaf,*/ enableBonjour);
-//		}
+		startUI(appTitle, enableBonjour);
 	}
 
 	private static void updateSplashStatus(final SplashScreen splashScreen, final String status) throws InvocationTargetException, InterruptedException
@@ -382,10 +366,14 @@ public class Lilith
 		});
 	}
 
-	public static void startUI(final String appTitle, /*boolean noNapkinLaf,*/ boolean enableBonjour)//, final SourceManager sourceManager, final Sounds sounds)
+	public static void startUI(final String appTitle, boolean enableBonjour)
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
-
+		UIManager.installLookAndFeel("JGoodies Windows", "com.jgoodies.looks.windows.WindowsLookAndFeel");
+		UIManager.installLookAndFeel("JGoodies Plastic", "com.jgoodies.looks.plastic.PlasticLookAndFeel");
+		UIManager.installLookAndFeel("JGoodies Plastic 3D", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
+		UIManager.installLookAndFeel("JGoodies Plastic XP", "com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
+		//UIManager.installLookAndFeel("Napkin", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
 		Application application = new DefaultApplication();
 		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
 		if (application.isMac())
