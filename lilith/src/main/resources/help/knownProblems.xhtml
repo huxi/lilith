@@ -14,17 +14,21 @@
 
 		<ul>
 			<li>Preferences dialog is obviously not finished right now :)</li>
-			<li>Sulky and Lilith artifacts aren't deployed to central maven repository yet, you may use
-			http://sulky.sourceforge.net/repository/ and http://lilith.sourceforge.net/repository/ for now.</li>
 			<li>The 'Send to' functionality isn't working as expected if the network infrastructure changes.
 				It should work but doesn't. I think it's a JmDNS problem but I have to investigate further.</li>
 			<li>The 'Edit groovy!' functionality is currently broken. Just don't use it.
-				See http://jira.codehaus.org/browse/GROOVY-2790 for more information.</li>
+				See <a href="http://jira.codehaus.org/browse/GROOVY-2790">GROOVY-2790</a> for more information.</li>
 			<li>It's possible to save the current filter using *command* I but you can't use
 			them at the moment ;)</li>
-			<li>Copy to clipboard does not work in details view. This is a limitation of Flying Saucer that's used as XHTML renderer. Instead, you can copy parts or all of the event using the context menu.</li>
-			<li>'Copy event' was meant to copy the event as HTML but this is severely broken in Java. There's no workaround available but this will *probably* be fixed in JDK7. So for now, 'Copy event' copies the XHTML code as text...</li>
-			<li>'Clean all inactive logs' is currently executed on the EventDispatchThread. This means that it might look like the UI is frozen if there are lots of files. Just be patient for now, this will be changed in the future.</li>
+			<li>Copy to clipboard does not work in details view.
+                This is a limitation of Flying Saucer that's used as XHTML renderer. This problem seems to be fixed in
+                the next version of Flying Saucer but it hasn't been released yet.<br/>
+                See <a href="https://xhtmlrenderer.dev.java.net/issues/show_bug.cgi?id=172">bug #172</a>.<br/>
+                In the meantime, you can copy parts or all of the event using the context menu.</li>
+			<li>'Copy event' was meant to copy the event as HTML but this is severely broken in Java.<br/>
+                There's no workaround available but this will *probably* be fixed in JDK7.
+                So for now, 'Copy event' copies the XHTML code as text...<br/>
+                See <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6392086">bug #6392086</a>.</li>
 		</ul>
 		<p><a href="#top">Back to top.</a></p>
 	</body>
