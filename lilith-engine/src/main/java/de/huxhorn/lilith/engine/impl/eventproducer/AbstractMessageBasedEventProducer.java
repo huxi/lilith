@@ -19,6 +19,7 @@ package de.huxhorn.lilith.engine.impl.eventproducer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.apache.commons.io.IOUtils;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -51,7 +52,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	public void start()
 	{
 		updateHeartbeatTimestamp();
-		Thread t=new Thread(new ReceiverRunnable(), ""+getSourceIdentifier()+"-Receiver");
+		Thread t=new Thread(new ReceiverRunnable(getSourceIdentifier()), ""+getSourceIdentifier()+"-Receiver");
 		t.setDaemon(false);
 		t.start();
 
@@ -107,8 +108,17 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	private class ReceiverRunnable
 		implements Runnable
 	{
+		private SourceIdentifier sourceIdentifier;
+		private static final String SOURCE_IDENTIFIER_MDC_KEY = "sourceIdentifier";
+
+		public ReceiverRunnable(SourceIdentifier sourceIdentifier)
+		{
+			this.sourceIdentifier=sourceIdentifier;
+		}
+
 		public void run()
 		{
+			MDC.put(SOURCE_IDENTIFIER_MDC_KEY, sourceIdentifier.toString());
 			for(;;)
 			{
 				try
@@ -170,6 +180,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 					break;
 				}
 			}
+			MDC.remove(SOURCE_IDENTIFIER_MDC_KEY); //this shouldn't be necessary but I don't care :p
 		}
 
 		public void skipBytes(long numberOfBytes, InputStream input)
