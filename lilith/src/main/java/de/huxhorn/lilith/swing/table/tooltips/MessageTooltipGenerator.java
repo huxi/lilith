@@ -43,6 +43,7 @@ public class MessageTooltipGenerator
 				if(text!=null)
 				{
 					tooltip=text.trim(); // remove empty lines etc.
+					// TODO: crop to a sane size, e.g. 80x25 characters
 					tooltip=SimpleXml.escape(tooltip);
 					int newlineIndex=text.indexOf("\n");
 					if(newlineIndex>-1)

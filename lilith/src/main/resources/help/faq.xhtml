@@ -39,6 +39,22 @@
                         applicable to the current condition implementation.</li>
                 </ul>
             </dd>
+            <dt>Why is there no tree-view of the logger names as <a href="http://logging.apache.org/chainsaw/">Chainsaw</a>
+                and <a href="http://vigilog.sourceforge.net/">Vigilog</a> have?</dt>
+            <dd>
+                One of the problems I'm facing is the (possibly) large amount of events I'm supporting.<br/>
+                This means that the logger names need to be saved upon reception separately from the events themselves.
+                Otherwise all events would need scanning if an inactive logging files was reopened and this would
+                take quite some time.<br/>
+                Something like that is in development but it doesn't have a very high priority right now for the
+                following reasons:
+                <ul>
+                    <li>I, personally, didn't use Chainsaws tree-view very much.</li>
+                    <li>You can get a similar behavior using the filters already present in Lilith.</li>
+                    <li>The tree-view itself would use valuable space on the screen. even if it could be toggled on and off.</li>
+                    <li>I'm currently not in the mood to implement it just for "me too" reasons.</li>
+                </ul>
+            </dd>
         </dl>
 
     <p><a href="#top">Back to top.</a></p>

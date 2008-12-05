@@ -127,10 +127,27 @@
                 Improved general section of preferences dialog but I'm still not very happy about it.
             </action>
             <action dev="jhux" type="update">
+                TODO: Crop the message popup to sane sizes...
+            </action>
+            <action dev="jhux" type="update">
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions as well as the find actions.
             </action>
             <action dev="jhux" type="update">
                 TODO: Support for Logback 0.9.12(?)
+            </action>
+            <action dev="jhux" type="fix">
+                TODO: Add MDC value for Receiver runnable source. Catch java.io.InvalidClassException. 
+            java.io.InvalidClassException: de.huxhorn.lilith.data.logging.LoggingEvent; local class incompatible: stream classdesc serialVersionUID = 8733590043979572340, local class serialVersionUID = -2716224578048229667
+                at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:562)
+                at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1583)
+                at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1496)
+                at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1732)
+                at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1329)
+                at java.io.ObjectInputStream.readObject(ObjectInputStream.java:351)
+                at de.huxhorn.sulky.generics.io.SerializableDeserializer.deserialize(SerializableDeserializer.java:67)
+                at de.huxhorn.sulky.generics.io.SerializableDeserializer.deserialize(SerializableDeserializer.java:27)
+                at de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer$ReceiverRunnable.run(AbstractMessageBasedEventProducer.java:129)
+                at java.lang.Thread.run(Thread.java:619)
             </action>
 		</release>
 

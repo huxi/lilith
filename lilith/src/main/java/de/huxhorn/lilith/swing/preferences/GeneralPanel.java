@@ -90,14 +90,32 @@ public class GeneralPanel
 		scrollingToBottomCheckbox = new JCheckBox("Initial 'Scrolling to Bottom' setting");
 		applicationPathFileChooser=new JFileChooser();
 		applicationPathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		JPanel appPathPanel = new JPanel();
-		appPathPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Application Path"));
+
 		appPathTextField =new JTextField();
 		appPathTextField.setEditable(false);
-		appPathPanel.add(appPathTextField);
 		Action browseAppPathAction=new BrowseApplicationPathAction();
 		JButton browseAppPathButton=new JButton(browseAppPathAction);
-		appPathPanel.add(browseAppPathButton);
+
+		JPanel appPathPanel = new JPanel();
+		appPathPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Application Path"));
+		appPathPanel.setLayout(new GridBagLayout());
+		// Application Path
+		{
+			GridBagConstraints gbc=new GridBagConstraints();
+
+			gbc.gridwidth=1;
+			gbc.weightx=1;
+			gbc.fill=GridBagConstraints.HORIZONTAL;
+
+			gbc.gridx=0;
+			gbc.gridy=0;
+			appPathPanel.add(appPathTextField, gbc);
+
+			gbc.gridx=1;
+			gbc.gridy=0;
+			gbc.weightx=0;
+			appPathPanel.add(browseAppPathButton, gbc);
+		}
 		lookAndFeelCombo=new JComboBox();
 
 		JPanel windowPanel=new JPanel(new GridLayout(5,1));
@@ -124,29 +142,33 @@ public class GeneralPanel
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 
 		setLayout(new GridBagLayout());
-		GridBagConstraints gbc=new GridBagConstraints();
 
-		gbc.gridwidth=1;
-		gbc.fill=GridBagConstraints.HORIZONTAL;
+		{
+			GridBagConstraints gbc=new GridBagConstraints();
 
-		gbc.gridx=0;
-		gbc.gridy=0;
-		add(windowPanel, gbc);
+			gbc.gridwidth=1;
+			gbc.weightx=1;
+			gbc.fill=GridBagConstraints.HORIZONTAL;
 
-		gbc.gridy=1;
-		add(viewPanel, gbc);
+			gbc.gridx=0;
+			gbc.gridy=0;
+			add(windowPanel, gbc);
 
-		gbc.gridy=2;
-		add(detailsPanel, gbc);
+			gbc.gridy=1;
+			add(viewPanel, gbc);
 
-		gbc.gridy=3;
-		add(startupShutdownPanel,gbc);
+			gbc.gridy=2;
+			add(detailsPanel, gbc);
 
-		gbc.gridy=4;
-		add(lookAndFeelCombo, gbc);
+			gbc.gridy=3;
+			add(startupShutdownPanel,gbc);
 
-		gbc.gridy=5;
-		add(appPathPanel, gbc);
+			gbc.gridy=4;
+			add(lookAndFeelCombo, gbc);
+
+			gbc.gridy=5;
+			add(appPathPanel, gbc);
+		}
 	}
 
 	public void initUI()
