@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.sulky.conditions.Condition;
+import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +61,7 @@ public class ApplicationPreferences
 	private static final String DETAILS_VIEW_ROOT_FOLDER = "detailsView";
 	public static final String DETAILS_VIEW_CSS_FILENAME = "detailsView.css";
 	public static final String DETAILS_VIEW_GROOVY_FILENAME = "detailsView.groovy";
-	private static final String CONDITIONS_XML_FILENAME = "conditions.xml";
+	private static final String CONDITIONS_XML_FILENAME = "savedConditions.xml";
 	private static final String CONDITIONS_PROPERTY = "conditions";
 	private File detailsViewRoot;
 
@@ -161,7 +161,7 @@ public class ApplicationPreferences
 
 	private Set<String> blackList;
 	private Set<String> whiteList;
-	private Map<String, Condition> conditions;
+	private List<SavedCondition> conditions;
 
 	public ApplicationPreferences()
 	{
@@ -585,13 +585,14 @@ public class ApplicationPreferences
 								  new BufferedInputStream(
 									  new FileInputStream(conditionsFile)));
 
-				conditions=(Map<String, Condition>) d.readObject();
-				lastConditionsModified =lastModified;
+				conditions=(List<SavedCondition>) d.readObject();
+				lastConditionsModified = lastModified;
+				if(logger.isDebugEnabled()) logger.debug("Loaded conditions {}.", conditions);
 			}
 			catch (FileNotFoundException ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading conditions from file '"+ conditionsFile.getAbsolutePath()+"'!",ex);
-				conditions=new HashMap<String, Condition>();
+				conditions=new ArrayList<SavedCondition>();
 			}
 			finally
 			{
@@ -603,17 +604,17 @@ public class ApplicationPreferences
 		}
 		else if(conditions==null)
 		{
-			conditions=new HashMap<String, Condition>();
+			conditions=new ArrayList<SavedCondition>();
 		}
 	}
 
-	public Map<String, Condition> getConditions()
+	public List<SavedCondition> getConditions()
 	{
 		initConditions();
-		return new HashMap<String, Condition>(conditions);
+		return new ArrayList<SavedCondition>(conditions);
 	}
 
-	public void setConditions(Map<String, Condition> conditions)
+	public void setConditions(List<SavedCondition> conditions)
 	{
 		Object oldValue=getConditions();
 		writeConditions(conditions);
@@ -1047,7 +1048,7 @@ public class ApplicationPreferences
 		return true;
 	}
 
-	private boolean writeConditions(Map<String, Condition> conditions)
+	private boolean writeConditions(List<SavedCondition> conditions)
 	{
 		File appPath=getStartupApplicationPath();
 		File file = new File(appPath, CONDITIONS_XML_FILENAME);

@@ -22,7 +22,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.Windows;
 
 import javax.swing.JPanel;
-import java.util.Map;
+import java.util.List;
 import java.awt.BorderLayout;
 
 import org.slf4j.Logger;
@@ -58,34 +58,44 @@ public class FiltersPanel
 	public void editCondition(Condition condition)
 	{
 		//TODO: finish implementation.
-		Map<String, Condition> conditions=preferencesDialog.getConditions();
-		String conditionName=null;
-		for(Map.Entry<String, Condition> current : conditions.entrySet())
+		List<SavedCondition> conditions=preferencesDialog.getConditions();
+		if(logger.isDebugEnabled()) logger.debug("Conditions from preferencesDialog: {}", conditions);
+		//String conditionName=null;
+		SavedCondition savedCondition=null;
+		for(SavedCondition current : conditions)
 		{
-			Condition value=current.getValue();
-			if(value.equals(condition))
+			if(condition.equals(current.getCondition()))
 			{
-				conditionName=current.getKey();
+				savedCondition=current;
+				if(logger.isDebugEnabled()) logger.debug("Found saved condition {}.", savedCondition);
 				break;
 			}
 		}
 		boolean adding=false;
-		if(conditionName==null)
+		if(savedCondition==null)
 		{
-			conditionName="";
 			adding = true;
+			savedCondition=new SavedCondition(condition);
 		}
 
-		editConditionDialog.setConditionName(conditionName);
+		editConditionDialog.setConditionName(savedCondition.getName());
 		editConditionDialog.setAdding(adding);
 		Windows.showWindow(editConditionDialog, preferencesDialog, true);
 		if(!editConditionDialog.isCanceled())
 		{
 			String newName = editConditionDialog.getConditionName();
+			int index=conditions.indexOf(savedCondition);
+			if(index>-1)
+			{
+				conditions.remove(index);
+				conditions.add(index, savedCondition);
+			}
+			else
+			{
+				conditions.add(savedCondition);
+			}
 			newName=newName.trim();
-			conditions.remove(conditionName);
-			// TODO: add question.
-			conditions.put(newName, condition);
+			savedCondition.setName(newName);
 			if(logger.isInfoEnabled()) logger.info("Setting conditions to {}.", conditions);
 			preferencesDialog.setConditions(conditions);
 		}
