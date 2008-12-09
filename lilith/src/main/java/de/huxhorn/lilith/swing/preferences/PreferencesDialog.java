@@ -76,7 +76,10 @@ public class PreferencesDialog
 	private String blackListName;
 	private String whiteListName;
 	private ApplicationPreferences.SourceFiltering sourceFiltering;
-	private Map<String, Condition> conditions;
+
+	// TODO: Change to List<SavedCondition> conditions;
+	//private Map<String, Condition> conditions;
+	private List<SavedCondition> conditions;
 
 	public PreferencesDialog(MainFrame mainFrame)
 	{
@@ -314,12 +317,12 @@ public class PreferencesDialog
 		this.whiteListName=whiteListName;
 	}
 
-	public Map<String, Condition> getConditions()
+	public List<SavedCondition> getConditions()
 	{
 		return conditions;
 	}
 
-	public void setConditions(Map<String, Condition> conditions)
+	public void setConditions(List<SavedCondition> conditions)
 	{
 		this.conditions = conditions;
 		if(logger.isInfoEnabled()) logger.info("this.conditions={}", this.conditions);

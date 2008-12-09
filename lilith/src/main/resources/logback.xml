@@ -143,6 +143,9 @@
 	<logger name="de.huxhorn.lilith.swing.preferences.PreferencesDialog">
 		<level value="INFO"/>
 	</logger>
+    <logger name="de.huxhorn.lilith.swing.preferences.FiltersPanel">
+        <level value="INFO"/>
+    </logger>
 	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences">
 		<level value="INFO"/>
 	</logger>

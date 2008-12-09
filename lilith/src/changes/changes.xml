@@ -18,10 +18,11 @@
 				TODO: Drag&amp;Drop of ljlogging/ljaccess-file(s).
 			</action>
 			<action dev="jhux" type="add">
-				TODO: "Open" logs. [*command*-O]
+				TODO: "Open" or "Import" logs. [*command*-O] Support native Lilith, Lilith XML, log4j XML.
 			</action>
 			<action dev="jhux" type="add">
-				TODO: "Save as" logs. [*command*-S] This is only possible for inactive log views.
+				TODO: "Save as" or "Export" logs. [*command*-S] This is only possible for inactive log views.
+                Support native Lilith, Lilith XML, log4j XML.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: SVG Icons
@@ -126,6 +127,13 @@
             <action dev="jhux" type="update">
                 Improved general section of preferences dialog but I'm still not very happy about it.
             </action>
+            <action dev="jhux" type="fix">
+                Exceptions in SerializableDeserializer are now silently ignored.
+            </action>
+            <action dev="jhux" type="update">
+                New class SaveCondition to serialize a condition together with a name, color infos and active setting. This
+                is a preparation for a proper (auto) filters.
+            </action>
             <action dev="jhux" type="update">
                 TODO: Crop the message popup to sane sizes...
             </action>
@@ -133,21 +141,7 @@
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions as well as the find actions.
             </action>
             <action dev="jhux" type="update">
-                TODO: Support for Logback 0.9.12(?)
-            </action>
-            <action dev="jhux" type="fix">
-                TODO: Add MDC value for Receiver runnable source. Catch java.io.InvalidClassException. 
-            java.io.InvalidClassException: de.huxhorn.lilith.data.logging.LoggingEvent; local class incompatible: stream classdesc serialVersionUID = 8733590043979572340, local class serialVersionUID = -2716224578048229667
-                at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:562)
-                at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1583)
-                at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1496)
-                at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1732)
-                at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1329)
-                at java.io.ObjectInputStream.readObject(ObjectInputStream.java:351)
-                at de.huxhorn.sulky.generics.io.SerializableDeserializer.deserialize(SerializableDeserializer.java:67)
-                at de.huxhorn.sulky.generics.io.SerializableDeserializer.deserialize(SerializableDeserializer.java:27)
-                at de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer$ReceiverRunnable.run(AbstractMessageBasedEventProducer.java:129)
-                at java.lang.Thread.run(Thread.java:619)
+                TODO: Support for Logback 0.9.14(?)
             </action>
 		</release>
 
