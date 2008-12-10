@@ -28,16 +28,16 @@ import java.awt.BorderLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FiltersPanel
+public class ConditionsPanel
 	extends JPanel
 {
-	private final Logger logger = LoggerFactory.getLogger(FiltersPanel.class);
+	private final Logger logger = LoggerFactory.getLogger(ConditionsPanel.class);
 
 	private PreferencesDialog preferencesDialog;
 	private ApplicationPreferences applicationPreferences;
 	private EditConditionDialog editConditionDialog;
 
-	public FiltersPanel(PreferencesDialog preferencesDialog)
+	public ConditionsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog=preferencesDialog;
 		applicationPreferences=preferencesDialog.getApplicationPreferences();

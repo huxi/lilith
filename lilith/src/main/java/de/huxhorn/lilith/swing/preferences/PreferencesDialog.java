@@ -69,7 +69,7 @@ public class PreferencesDialog
 	private SoundsPanel soundsPanel;
 	private SourcesPanel sourcesPanel;
 	private SourceListsPanel sourceListsPanel;
-	private FiltersPanel filtersPanel;
+	private ConditionsPanel conditionsPanel;
 	private Map<String, String> sourceNames;
 	private Map<String, Set<String>> sourceLists;
 	private SourceFilteringPanel sourceFilteringPanel;
@@ -101,7 +101,7 @@ public class PreferencesDialog
 		sourcesPanel = new SourcesPanel(this);
 		sourceListsPanel = new SourceListsPanel(this);
 		sourceFilteringPanel = new SourceFilteringPanel(this);
-		filtersPanel = new FiltersPanel(this);
+		conditionsPanel = new ConditionsPanel(this);
 
 		tabbedPane=new JTabbedPane();
 		tabbedPane.setPreferredSize(new Dimension(600,500));
@@ -111,7 +111,7 @@ public class PreferencesDialog
 		tabbedPane.add("Sources", sourcesPanel);
 		tabbedPane.add("Source Lists", sourceListsPanel);
 		tabbedPane.add("Source Filtering", sourceFilteringPanel);
-		tabbedPane.add("Event Filters", filtersPanel);
+		tabbedPane.add("Conditions", conditionsPanel);
 		//tabbedPane.setEnabledAt(tabbedPane.getTabCount()-1, false);
 
 		// Main buttons
@@ -151,7 +151,7 @@ public class PreferencesDialog
 		sourcesPanel.initUI();
 		sourceListsPanel.initUI();
 		sourceFilteringPanel.initUI();
-		filtersPanel.initUI();
+		conditionsPanel.initUI();
 	}
 
 	public Map<String, String> getSourceNames()
@@ -457,11 +457,11 @@ public class PreferencesDialog
 
 	public void editCondition(Condition condition)
 	{
-		tabbedPane.setSelectedComponent(filtersPanel);
+		tabbedPane.setSelectedComponent(conditionsPanel);
 		if(!isVisible())
 		{
 			mainFrame.showPreferencesDialog();
 		}
-		filtersPanel.editCondition(condition);
+		conditionsPanel.editCondition(condition);
 	}
 }

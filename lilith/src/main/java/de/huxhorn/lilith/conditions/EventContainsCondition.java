@@ -15,12 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.filters;
+package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
 import java.util.Map;
@@ -31,36 +30,25 @@ import java.io.ObjectInputStream;
 
 
 public class EventContainsCondition
-	implements Condition
+	implements LilithCondition
 {
-	private static final long serialVersionUID = 7588286329844729158L;
+	private static final long serialVersionUID = -8094852331877521764L;
 
 	private String searchString;
-	private boolean ignoringCase;
-	private transient String actualSearchString;
 
 	public EventContainsCondition()
 	{
-		this(null, false);
+		this(null);
 	}
 
-	public EventContainsCondition(String searchString, boolean ignoringCase)
+	public EventContainsCondition(String searchString)
 	{
-		setIgnoringCase(ignoringCase);
 		setSearchString(searchString);
 	}
 
 	public void setSearchString(String searchString)
 	{
 		this.searchString = searchString;
-		if(ignoringCase && searchString!=null)
-		{
-			this.actualSearchString = searchString.toLowerCase();
-		}
-		else
-		{
-			this.actualSearchString = searchString;
-		}
 	}
 
 	public String getSearchString()
@@ -68,33 +56,15 @@ public class EventContainsCondition
 		return searchString;
 	}
 
-	public void setIgnoringCase(boolean ignoringCase)
-	{
-		if(this.ignoringCase!=ignoringCase)
-		{
-			this.ignoringCase = ignoringCase;
-			setSearchString(searchString);
-		}
-	}
-
-	public boolean isIgnoringCase()
-	{
-		return ignoringCase;
-	}
-
 	private boolean checkString(String input)
 	{
-		if(actualSearchString==null)
+		if(searchString==null)
 		{
 			return false;
 		}
 		if(input != null)
 		{
-			if(ignoringCase)
-			{
-				input = input.toLowerCase();
-			}
-			if(input.contains(actualSearchString))
+			if(input.contains(searchString))
 			{
 				return true;
 			}
@@ -104,7 +74,7 @@ public class EventContainsCondition
 
 	public boolean isTrue(Object value)
 	{
-		if(actualSearchString==null)
+		if(searchString==null)
 		{
 			return false;
 		}
@@ -112,7 +82,7 @@ public class EventContainsCondition
 		{
 			EventWrapper wrapper=(EventWrapper)value;
 			Object eventObj = wrapper.getEvent();
-			if(actualSearchString.length()==0)
+			if(searchString.length()==0)
 			{
 				return true;
 			}
@@ -337,7 +307,6 @@ public class EventContainsCondition
 
 		EventContainsCondition that = (EventContainsCondition) o;
 
-		if (ignoringCase != that.ignoringCase) return false;
 		return !(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null);
 	}
 
@@ -345,7 +314,6 @@ public class EventContainsCondition
 	{
 		int result;
 		result = (searchString != null ? searchString.hashCode() : 0);
-		result = 31 * result + (ignoringCase ? 1 : 0);
 		return result;
 	}
 
@@ -356,16 +324,8 @@ public class EventContainsCondition
 
 	public String toString()
 	{
-		StringBuffer result=new StringBuffer();
-		result.append("event.");
-		if(ignoringCase)
-		{
-			result.append("containsIgnoreCase(");
-		}
-		else
-		{
-			result.append("contains(");
-		}
+		StringBuilder result=new StringBuilder();
+		result.append(getDescription()).append("(");
 		if(searchString!=null)
 		{
 			result.append("\"");
@@ -378,5 +338,10 @@ public class EventContainsCondition
 		}
 		result.append(")");
 		return result.toString();
+	}
+
+	public String getDescription()
+	{
+		return "event.contains";
 	}
 }

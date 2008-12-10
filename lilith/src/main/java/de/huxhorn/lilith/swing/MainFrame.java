@@ -160,7 +160,7 @@ public class MainFrame
 	private RrdFileFilter rrdFileFilter;
 	private StatisticsDialog statisticsDialog;
 	private SwingWorkManager<Integer> integerWorkManager;
-	private File groovyFiltersPath;
+	private File groovyConditionsPath;
 	private static final String GROOVY_SUFFIX = ".groovy";
 	private ViewActions viewActions;
 	private OpenPreviousDialog openInactiveLogsDialog;
@@ -180,7 +180,7 @@ public class MainFrame
 		{
 			input=input+GROOVY_SUFFIX;
 		}
-		File scriptFile=new File(groovyFiltersPath, input);
+		File scriptFile=new File(groovyConditionsPath, input);
 		if(scriptFile.isFile())
 		{
 			return scriptFile;
@@ -250,8 +250,8 @@ public class MainFrame
 		if(logger.isInfoEnabled()) logger.info("Before creation of statistics-dialog...");
 		statisticsDialog = new StatisticsDialog(this);
 		if(logger.isInfoEnabled()) logger.info("After creation of statistics-dialog...");
-		groovyFiltersPath = new File(startupApplicationPath, "filters");
-		groovyFiltersPath.mkdirs();
+		groovyConditionsPath = new File(startupApplicationPath, "conditions");
+		groovyConditionsPath.mkdirs();
 
 		loggingEventViewManager=new LoggingEventViewManager(this);
 		accessEventViewManager=new AccessEventViewManager(this);
