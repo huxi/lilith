@@ -15,46 +15,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.filters;
+package de.huxhorn.lilith.conditions;
 
-import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
 import java.io.ObjectInputStream;
 import java.io.IOException;
 
-public class MessageContainsCondition
-	implements Condition
+public class LoggerStartsWithCondition
+	implements LilithCondition
 {
-	private static final long serialVersionUID = 6162454733163822936L;
+	private static final long serialVersionUID = -9144937393832722541L;
 
 	private String searchString;
-	private boolean ignoringCase;
-	private transient String actualSearchString;
 
-	public MessageContainsCondition()
+	public LoggerStartsWithCondition()
 	{
-		this(null, false);
+		this(null);
 	}
 
-	public MessageContainsCondition(String searchString, boolean ignoringCase)
+	public LoggerStartsWithCondition(String searchString)
 	{
-		setIgnoringCase(ignoringCase);
 		setSearchString(searchString);
 	}
 
 	public void setSearchString(String searchString)
 	{
 		this.searchString = searchString;
-		if(ignoringCase && searchString!=null)
-		{
-			this.actualSearchString = searchString.toLowerCase();
-		}
-		else
-		{
-			this.actualSearchString = searchString;
-		}
 	}
 
 	public String getSearchString()
@@ -62,23 +50,9 @@ public class MessageContainsCondition
 		return searchString;
 	}
 
-	public void setIgnoringCase(boolean ignoringCase)
-	{
-		if(this.ignoringCase!=ignoringCase)
-		{
-			this.ignoringCase = ignoringCase;
-			setSearchString(searchString);
-		}
-	}
-
-	public boolean isIgnoringCase()
-	{
-		return ignoringCase;
-	}
-
 	public boolean isTrue(Object value)
 	{
-		if(actualSearchString==null)
+		if(searchString==null)
 		{
 			return false;
 		}
@@ -86,7 +60,7 @@ public class MessageContainsCondition
 		{
 			EventWrapper wrapper=(EventWrapper)value;
 			Object eventObj = wrapper.getEvent();
-			if(actualSearchString.length()==0)
+			if(searchString.length()==0)
 			{
 				return true;
 			}
@@ -94,18 +68,9 @@ public class MessageContainsCondition
 			{
 				LoggingEvent event=(LoggingEvent) eventObj;
 
-				String message=event.getMessage();
+				String logger=event.getLogger();
 
-				if(message==null)
-				{
-					return false;
-				}
-
-				if(ignoringCase)
-				{
-					message = message.toLowerCase();
-				}
-				return message.contains(actualSearchString);
+				return logger != null && logger.startsWith(searchString);
 			}
 		}
 		return false;
@@ -116,9 +81,8 @@ public class MessageContainsCondition
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		final MessageContainsCondition that = (MessageContainsCondition) o;
+		final LoggerStartsWithCondition that = (LoggerStartsWithCondition) o;
 
-		if (ignoringCase != that.ignoringCase) return false;
 		return !(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null);
 	}
 
@@ -126,7 +90,6 @@ public class MessageContainsCondition
 	{
 		int result;
 		result = (searchString != null ? searchString.hashCode() : 0);
-		result = 29 * result + (ignoringCase ? 1 : 0);
 		return result;
 	}
 
@@ -137,23 +100,15 @@ public class MessageContainsCondition
 		setSearchString(this.searchString);
 	}
 
-	public MessageContainsCondition clone() throws CloneNotSupportedException
+	public LoggerStartsWithCondition clone() throws CloneNotSupportedException
 	{
-		return (MessageContainsCondition) super.clone();
+		return (LoggerStartsWithCondition) super.clone();
 	}
 
 	public String toString()
 	{
-		StringBuffer result=new StringBuffer();
-		result.append("message.");
-		if(ignoringCase)
-		{
-			result.append("containsIgnoreCase(");
-		}
-		else
-		{
-			result.append("contains(");
-		}
+		StringBuilder result=new StringBuilder();
+		result.append(getDescription()).append("(");
 		if(searchString!=null)
 		{
 			result.append("\"");
@@ -166,5 +121,10 @@ public class MessageContainsCondition
 		}
 		result.append(")");
 		return result.toString();
+	}
+
+	public String getDescription()
+	{
+		return "logger.startsWith";
 	}
 }

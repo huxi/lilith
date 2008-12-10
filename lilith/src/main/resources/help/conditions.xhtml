@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Conditions</title>
+		<link href="help.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<p><a href="index.xhtml">ToC</a></p>
+
+		<h1><a name="top">Conditions</a></h1>
+        <h2>Custom Groovy conditions</h2>
+
+		<p>It is possible to create complex conditions in Groovy.
+      The scripts must be created in "[lilith.home]/conditions" and must have a ".groovy" extension.</p>
+
+		<p>By default, [lilith.home] equals [user.home]/.lilith but this can be changed
+			in preferences.</p>
+
+		<p>A condition script receives an event-wrapper as the environment variable "input" and is
+    expected to return either true or false. Additionally, the string entered in the text field of the
+        search panel is available in the variable "searchText".</p>
+
+    <p>The scripts can then be used by either entering "#groovy#&lt;filename without extension&gt;" or
+        "#groovy#&lt;filename without extension&gt;#the text to search for" into
+    the search box. After entering the "#groovy#"-prefix, the color of the textfield will indicate if
+    a script of the given name exists.</p>
+
+    <h3>Example 1: Show only odd events.</h3>
+    <pre><tt>input.localId % 2 == 1</tt></pre>
+
+    <h3>Example 2: Show events having a threadName that's starting with the given search string.</h3>
+    <pre><tt>def threadName = input?.event?.threadName;
+if(threadName)
+{
+  return threadName.startsWith(searchString);
+}
+return false;</tt></pre>
+
+    <p><a href="#top">Back to top.</a></p>
+	</body>
+</html>

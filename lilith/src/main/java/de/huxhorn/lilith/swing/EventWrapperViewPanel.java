@@ -19,8 +19,11 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
-import de.huxhorn.lilith.filters.EventContainsCondition;
-import de.huxhorn.lilith.filters.GroovyFilter;
+import de.huxhorn.lilith.conditions.EventContainsCondition;
+import de.huxhorn.lilith.conditions.GroovyCondition;
+import de.huxhorn.lilith.conditions.MessageContainsCondition;
+import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
+import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -58,6 +61,9 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.JSplitPane;
+import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.DocumentEvent;
@@ -139,6 +145,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private JButton findNextButton;
 
 	private JToolBar findPanel;
+	private JComboBox findTypeCombo;
 	private JTextField findTextField;
 	private JLabel statusLabel;
 	private JScrollBar verticalLogScrollbar;
@@ -209,6 +216,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	public void setShowingFilters(boolean showingFilters)
 	{
 		this.showingFilters = showingFilters;
+		if(showingFilters)
+		{
+			initTypeCombo();
+		}
 		findPanel.setVisible(showingFilters);
 		if(showingFilters)
 		{
@@ -428,8 +439,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.add(findViewButton);
 		findPanel.addSeparator();
 		findPanel.add(new JLabel("Find: "));
+		findTypeCombo=new JComboBox();
 		findTextField =new JTextField();
 		findTextField.setColumns(15);
+		findPanel.add(findTypeCombo);
 		findPanel.add(findTextField);
 
 		findPrevAction=new FindPreviousAction();
@@ -440,6 +453,24 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findNextButton=new JButton(findNextAction);
 		findPanel.add(findNextButton);
 		enableFindComponents(true);
+	}
+
+	private static final String EVENT_CONTAINS_CONDITION="event.contains";
+	private static final String MESSAGE_CONTAINS_CONDITION="message.contains";
+	private static final String LOGGER_STARTS_WITH_CONDITION="logger.startsWith";
+	private static final String LOGGER_EQUALS_CONDITION="logger.equals";
+
+	private void initTypeCombo()
+	{
+		// TODO: add groovy conditions
+		String[] items=new String[]{
+				EVENT_CONTAINS_CONDITION,
+				MESSAGE_CONTAINS_CONDITION,
+				LOGGER_STARTS_WITH_CONDITION,
+				LOGGER_EQUALS_CONDITION};
+
+		ComboBoxModel model=new DefaultComboBoxModel(items);
+		findTypeCombo.setModel(model);
 	}
 
 	public void dispose()
@@ -685,11 +716,26 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			if(text.startsWith(GROOVY_IDENTIFIER))
 			{
 				String scriptName=text.substring(GROOVY_IDENTIFIER.length());
+
+				int idx=scriptName.indexOf('#');
+				if(idx > -1)
+				{
+					if(idx+1<scriptName.length())
+					{
+						text=scriptName.substring(idx+1);
+					}
+					else
+					{
+						text="";
+					}
+					scriptName=scriptName.substring(0,idx);
+				}
+				if(logger.isInfoEnabled()) logger.info("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
 				File resolvedScriptFile=mainFrame.resolveScriptFile(scriptName);
 				if(resolvedScriptFile!=null)
 				{
 					// there is a file...
-					condition = new GroovyFilter(resolvedScriptFile.getAbsolutePath());
+					condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
 				}
 				else
 				{
@@ -699,7 +745,39 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 			else
 			{
-				condition=new EventContainsCondition(text, false);
+				// create condition matching the selected type
+				String selectedType= (String) findTypeCombo.getSelectedItem();
+				if(EVENT_CONTAINS_CONDITION.equals(selectedType))
+				{
+					condition=new EventContainsCondition(text);
+				}
+				else if(MESSAGE_CONTAINS_CONDITION.equals(selectedType))
+				{
+					condition=new MessageContainsCondition(text);
+				}
+				else if(LOGGER_STARTS_WITH_CONDITION.equals(selectedType))
+				{
+					condition=new LoggerStartsWithCondition(text);
+				}
+				else if(LOGGER_EQUALS_CONDITION.equals(selectedType))
+				{
+					condition=new LoggerEqualsCondition(text);
+				}
+				else
+				{
+					// we assume a groovy condition...
+					File resolvedScriptFile=mainFrame.resolveScriptFile(selectedType);
+					if(resolvedScriptFile!=null)
+					{
+						// there is a file...
+						condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
+					}
+					else
+					{
+						condition=null;
+					}
+				}
+
 			}
 		}
 		else
@@ -714,6 +792,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		else
 		{
 			findTextField.setBackground(Color.WHITE);
+		}
+		if(condition!=null)
+		{
+			// TODO: wrap in Not if not is selected.
 		}
 		if(logger.isDebugEnabled()) logger.debug("Setting condition: {}", condition);
 		setFilterCondition(condition);

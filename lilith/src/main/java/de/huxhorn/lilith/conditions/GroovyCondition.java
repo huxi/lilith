@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.filters;
+package de.huxhorn.lilith.conditions;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
@@ -28,27 +28,43 @@ import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 
-public class GroovyFilter
-	implements Condition
+public class GroovyCondition
+	implements LilithCondition
 {
-	private static final long serialVersionUID = 5218190112764981462L;
+	private static final long serialVersionUID = 907179107764473874L;
 
-	private final Logger logger = LoggerFactory.getLogger(GroovyFilter.class);
+	private final Logger logger = LoggerFactory.getLogger(GroovyCondition.class);
 
 	private String scriptFileName;
-	//private transient File scriptFile;
+	private String searchString;
 	private transient Object instance;
 	private transient String scriptName;
 
 
-	public GroovyFilter()
+	public GroovyCondition()
 	{
 		this(null);
 	}
 
-	public GroovyFilter(String scriptFileName)
+	public GroovyCondition(String scriptFileName)
 	{
 		setScriptFileName(scriptFileName);
+	}
+
+	public GroovyCondition(String scriptFileName, String searchString)
+	{
+		setScriptFileName(scriptFileName);
+		setSearchString(searchString);
+	}
+
+	public String getSearchString()
+	{
+		return searchString;
+	}
+
+	public void setSearchString(String searchString)
+	{
+		this.searchString = searchString;
 	}
 
 	public void setScriptFileName(String scriptFileName)
@@ -99,6 +115,10 @@ public class GroovyFilter
 
 				Binding binding=new Binding();
 				binding.setVariable("input", o);
+				if(searchString!=null)
+				{
+					binding.setVariable("searchString", searchString);
+				}
 				binding.setVariable("logger", logger);
 
 				script.setBinding(binding);
@@ -123,31 +143,54 @@ public class GroovyFilter
 		setScriptFileName(this.scriptFileName);
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (!(o instanceof GroovyCondition)) return false;
 
-		GroovyFilter that = (GroovyFilter) o;
+		GroovyCondition that = (GroovyCondition) o;
 
-		return !(scriptFileName != null ? !scriptFileName.equals(that.scriptFileName) : that.scriptFileName != null);
+		if (scriptFileName != null ? !scriptFileName.equals(that.scriptFileName) : that.scriptFileName != null)
+		{
+			return false;
+		}
+		if (searchString != null ? !searchString.equals(that.searchString) : that.searchString != null) return false;
+
+		return true;
 	}
 
+	@Override
 	public int hashCode()
 	{
-		return (scriptFileName != null ? scriptFileName.hashCode() : 0);
+		int result = scriptFileName != null ? scriptFileName.hashCode() : 0;
+		result = 31 * result + (searchString != null ? searchString.hashCode() : 0);
+		return result;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "groovy("+scriptName+")";
+		StringBuilder result=new StringBuilder();
+		result.append(getDescription());
+		if(searchString!=null)
+		{
+			result.append("(");
+			result.append(searchString);
+			result.append(")");
+		}
+		return result.toString();
 	}
 
-	public GroovyFilter clone() throws CloneNotSupportedException
+	public GroovyCondition clone() throws CloneNotSupportedException
 	{
-		GroovyFilter result = (GroovyFilter) super.clone();
+		GroovyCondition result = (GroovyCondition) super.clone();
 		result.setScriptFileName(result.scriptFileName);
 		return result;
+	}
+
+	public String getDescription()
+	{
+		return scriptName;
 	}
 }

@@ -6,9 +6,6 @@
 	<body>
 		<release version="1.x.x" date="TBD" description="Future release">
 			<action dev="jhux" type="add">
-				TODO: Preferences option to set colors of levels (and saved filters).
-			</action>
-			<action dev="jhux" type="add">
 				TODO: Create index file from existing ljlogging/ljaccess-file.
 			</action>
 			<action dev="jhux" type="add">
@@ -47,6 +44,15 @@
 			</action>
 			<action dev="jhux" type="add">
 				TODO: evaluate jxlayer
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Option to show full Logger name in table (Lilianne)
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Option to left-align Logger name in table (Lilianne)
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Option to left-align Thread name in table (Lilianne)
 			</action>
 		</release>
 
@@ -133,6 +139,31 @@
             <action dev="jhux" type="update">
                 New class SaveCondition to serialize a condition together with a name, color infos and active setting. This
                 is a preparation for a proper (auto) filters.
+            </action>
+            <action dev="jhux" type="update">
+                Refactored conditions.
+            </action>
+            <action dev="jhux" type="add">
+                Added message.contains, logger.startsWith and logger.equals conditions as well as the ability to select
+                them in the find panel.
+            </action>
+            <action dev="jhux" type="update">
+                GroovyCondition does now support a searchString. See help.
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Implement Conditions tab in Preferences. Make colors/activity configurable.
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Use all active conditions to find out colors of a table row. Use current colors if none is matching.
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Documentation of Sources and Source-Lists.
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Add toggle button to search panel that negates the current condition.
+            </action>
+            <action dev="jhux" type="update">
+                TODO: Add all available groovy conditions to combo box.
             </action>
             <action dev="jhux" type="update">
                 TODO: Crop the message popup to sane sizes...
