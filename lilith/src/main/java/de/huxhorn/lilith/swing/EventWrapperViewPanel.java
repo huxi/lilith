@@ -440,6 +440,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.addSeparator();
 		findPanel.add(new JLabel("Find: "));
 		findTypeCombo=new JComboBox();
+		findTypeCombo.addActionListener(new FindTypeSelectionActionListener());
 		findTextField =new JTextField();
 		findTextField.setColumns(15);
 		findPanel.add(findTypeCombo);
@@ -1611,6 +1612,16 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			if(logger.isDebugEnabled()) logger.debug("TableModelEvent: {}", e);
 			updateStatusText();
+		}
+	}
+
+	private class FindTypeSelectionActionListener
+		implements ActionListener
+	{
+
+		public void actionPerformed(ActionEvent e)
+		{
+			applyFilter();
 		}
 	}
 

@@ -150,6 +150,10 @@
             <action dev="jhux" type="update">
                 GroovyCondition does now support a searchString. See help.
             </action>
+            <action dev="jhux" type="update">
+                Updated detailsView.groovy to prevent line-break in table headers so the width of the headers stays
+                the same.
+            </action>
             <action dev="jhux" type="add">
                 TODO: Implement Conditions tab in Preferences. Make colors/activity configurable.
             </action>

@@ -193,7 +193,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Request URL')
+				th
+				{
+					it.mkp.yieldUnescaped 'Request&nbsp;URL'
+				}
                 td
                 {
                     mkp.yield event.requestURL
@@ -209,7 +212,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Status Code')
+				th
+				{
+					it.mkp.yieldUnescaped 'Status&nbsp;Code'
+				}
                 td
                 {
                     mkp.yield code
@@ -236,7 +242,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Remote Info')
+				th
+				{
+					it.mkp.yieldUnescaped 'Remote&nbsp;Info'
+				}
                 td(msg)
             }
         }
@@ -246,7 +255,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Request Parameters')
+				th
+				{
+					it.mkp.yieldUnescaped 'Request<br/>Parameters'
+				}
                 td
                 {
                     buildStringArrayMap(it, event.requestParameters)
@@ -259,7 +271,11 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Request Headers')
+				th
+				{
+					it.mkp.yieldUnescaped 'Request<br/>Headers'
+				}
+
                 td
                 {
                     buildStringMap(it, event.requestHeaders)
@@ -272,7 +288,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Response Headers')
+				th
+				{
+					it.mkp.yieldUnescaped 'Response<br/>Headers'
+				}
                 td
                 {
                     buildStringMap(it, event.responseHeaders)
@@ -285,7 +304,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Local Port')
+				th
+				{
+					it.mkp.yieldUnescaped 'Local&nbsp;Port'
+				}
                 td(event.localPort)
             }
         }
@@ -305,7 +327,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Application Identifier')
+				th
+				{
+					it.mkp.yieldUnescaped 'Application&nbsp;ID'
+				}
                 td(event.applicationIdentifier);
             }
         }
@@ -379,7 +404,10 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Thread Name')
+				th
+				{
+					it.mkp.yieldUnescaped 'Thread&nbsp;Name'
+				}
                 td(event.threadName);
             }
         }
@@ -427,7 +455,10 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
                 evenOdd.toggle()
                 it.tr([class: "${evenOdd}"])
                 {
-                    th('Call Stack')
+                    th
+					{
+						it.mkp.yieldUnescaped 'Call&nbsp;Stack'
+					}
                     td
                     {
                         buildStackTrace(it, event.callStack)
@@ -439,7 +470,10 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
                 evenOdd.toggle()
                 it.tr([class: "${evenOdd}"])
                 {
-                    th('Call Location')
+                    th
+					{
+						it.mkp.yieldUnescaped 'Call&nbsp;Location'
+					}
                     td
                     {
                         buildStackTrace(it, event.callStack, true)
@@ -453,7 +487,10 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
             evenOdd.toggle()
             it.tr([class: "${evenOdd}"])
             {
-                th('Application Identifier')
+				th
+				{
+					it.mkp.yieldUnescaped 'Application&nbsp;ID'
+				}
                 td(event.applicationIdentifier);
             }
         }
@@ -471,7 +508,10 @@ def buildEventWrapperSpecific(table, eventWrapper, evenOdd)
         evenOdd.toggle()
         table.tr([class: "${evenOdd}"])
         {
-            th('Source Identifier')
+			th
+			{
+				it.mkp.yieldUnescaped 'Source&nbsp;ID'
+			}
             td(si);
         }
     }
@@ -479,7 +519,10 @@ def buildEventWrapperSpecific(table, eventWrapper, evenOdd)
     evenOdd.toggle()
     table.tr([class: "${evenOdd}"])
     {
-        th('Local ID')
+		th
+		{
+			it.mkp.yieldUnescaped 'Local&nbsp;ID'
+		}
         td(eventWrapper.localId);
     }
 }
