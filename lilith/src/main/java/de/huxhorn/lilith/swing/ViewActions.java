@@ -531,6 +531,7 @@ public class ViewActions
 	private JMenuItem minimizeAllItem;
 	private JMenuItem closeAllOtherItem;
 	private JMenuItem minimizeAllOtherItem;
+	private JMenu editMenu;
 
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
@@ -705,7 +706,7 @@ public class ViewActions
 		}
 
 		// Edit
-		JMenu editMenu = new JMenu("Edit");
+		editMenu = new JMenu("Edit");
 		editMenu.setMnemonic('e');
 		editMenu.add(copyEventAction);
 		editMenu.addSeparator();
@@ -833,11 +834,10 @@ public class ViewActions
 
 	public void updateActions()
 	{
-		if(logger.isDebugEnabled()) //noinspection ThrowableInstanceNeverThrown
-			logger.debug("updateActions()", new Throwable());
 		boolean hasView=false;
 		boolean hasFilter=false;
 		boolean isActive=false;
+		boolean hasFilteredBuffer=false;
 		EventSource eventSource=null;
 		if(viewContainer!=null)
 		{
@@ -848,8 +848,15 @@ public class ViewActions
 				eventSource=eventWrapperViewPanel.getEventSource();
 				hasFilter=eventWrapperViewPanel.getFilterCondition()!=null;
 				isActive=eventWrapperViewPanel.getState() == LoggingViewState.ACTIVE;
+				hasFilteredBuffer=eventWrapperViewPanel.getBufferCondition()!=null;
 			}
 		}
+
+		if(logger.isInfoEnabled()) logger.info("updateActions() eventSource={}, hasFilteredBuffer={}", new Object[]{eventSource, hasFilteredBuffer});
+		// Edit
+		editMenu.setEnabled(hasView);
+
+
 		// Search
 		searchMenu.setEnabled(hasView);
 		findMenuAction.setEnabled(hasView);
@@ -865,7 +872,7 @@ public class ViewActions
 		resetLayoutAction.setEnabled(hasView);
 		editConditionMenuAction.setEnabled(hasView);
 		pauseMenuAction.setEnabled(hasView);
-		clearMenuAction.setEnabled(hasView);
+		clearMenuAction.setEnabled(hasView && !hasFilteredBuffer);
 		attachMenuAction.setEnabled(hasView);
 		disconnectMenuAction.setEnabled(isActive);
 		focusEventsAction.setEnabled(hasView);
@@ -895,7 +902,7 @@ public class ViewActions
 
 		scrollToBottomToolBarAction.setEnabled(hasView);
 		pauseToolBarAction.setEnabled(hasView);
-		clearToolBarAction.setEnabled(hasView);
+		clearToolBarAction.setEnabled(hasView && !hasFilteredBuffer);
 		findToolBarAction.setEnabled(hasView);
 		statisticsToolBarAction.setEnabled(hasView);
 		attachToolBarAction.setEnabled(hasView);
