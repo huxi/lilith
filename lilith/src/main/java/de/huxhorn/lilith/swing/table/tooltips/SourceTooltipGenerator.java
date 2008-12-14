@@ -34,7 +34,7 @@ public class SourceTooltipGenerator
 		{
 			EventWrapper wrapper=(EventWrapper)value;
 			SourceIdentifier id = wrapper.getSourceIdentifier();
-			StringBuffer msg=new StringBuffer();
+			StringBuilder msg=new StringBuilder();
 			msg.append("<html>");
 			msg.append("Primary: ").append(id.getIdentifier());
 			String secondary=id.getSecondaryIdentifier();

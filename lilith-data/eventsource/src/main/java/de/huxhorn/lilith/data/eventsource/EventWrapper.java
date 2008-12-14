@@ -112,7 +112,7 @@ public class EventWrapper<T extends Serializable>
 
 	public String toString()
 	{
-		StringBuffer result=new StringBuffer();
+		StringBuilder result=new StringBuilder();
 		result.append("eventWrapper[");
 		result.append("sourceIdentifier=").append(sourceIdentifier);
 		result.append(", ");

@@ -145,12 +145,14 @@ public class EventSourceImpl<T extends Serializable>
 
 	public String toString()
 	{
-		StringBuffer result=new StringBuffer();
+		StringBuilder result=new StringBuilder();
+		result.append("EventSource[");
 		result.append("id=").append(sourceIdentifier);
 		result.append(", ");
 		result.append("filter=").append(filter);
 		result.append(", ");
 		result.append("global=").append(global);
+		result.append("]");
 		return result.toString();
 	}
 }

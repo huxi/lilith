@@ -97,7 +97,7 @@ public class ViewContainerInternalFrame
 		if(logger.isDebugEnabled())
 		{
 			JInternalFrame[] frames = desktop.getAllFrames();
-			StringBuffer result=new StringBuffer();
+			StringBuilder result=new StringBuilder();
 			result.append("before closing:\n");
 			if(frames!=null)
 			{
@@ -121,7 +121,7 @@ public class ViewContainerInternalFrame
 		if(logger.isDebugEnabled())
 		{
 			JInternalFrame[] frames = desktop.getAllFrames();
-			StringBuffer result=new StringBuffer();
+			StringBuilder result=new StringBuilder();
 			result.append("after closing:\n");
 			if(frames!=null)
 			{
