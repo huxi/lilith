@@ -1031,7 +1031,7 @@ public class ViewActions
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
 			{
-				Condition condition=eventWrapperViewPanel.getFilterCondition();
+				Condition condition=eventWrapperViewPanel.getCombinedCondition();
 				if(condition!=null)
 				{
 					mainFrame.getPreferencesDialog().editCondition(condition);
@@ -1567,7 +1567,7 @@ public class ViewActions
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					Condition condition=eventWrapperViewPanel.getFilterCondition();
+					Condition condition=eventWrapperViewPanel.getCombinedCondition();
 					if(condition!=null)
 					{
 					    enable=true;

@@ -1684,30 +1684,39 @@ public class MainFrame
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			String propName=evt.getPropertyName();
+
 			if(ApplicationPreferences.SOUND_LOCATIONS_PROPERTY.equals(propName))
 			{
 				if(sounds!=null)
 				{
 					sounds.setSoundLocations((Map<String, String>) evt.getNewValue());
 				}
+				return;
 			}
-			else if(ApplicationPreferences.SOURCE_NAMES_PROPERTY.equals(propName)
+
+			if(ApplicationPreferences.SOURCE_NAMES_PROPERTY.equals(propName)
 					|| ApplicationPreferences.SHOWING_IDENTIFIER_PROPERTY.equals(propName))
 			{
 				updateSourceTitles();
+				return;
 			}
-			else if(ApplicationPreferences.SOURCE_FILTERING_PROPERTY.equals(propName))
+
+			if(ApplicationPreferences.SOURCE_FILTERING_PROPERTY.equals(propName))
 			{
 				updateStatus();
+				return;
 			}
-			else if(ApplicationPreferences.MUTE_PROPERTY.equals(propName))
+
+			if(ApplicationPreferences.MUTE_PROPERTY.equals(propName))
 			{
 				if(sounds!=null)
 				{
 					sounds.setMute((Boolean) evt.getNewValue());
 				}
+				return;
 			}
-			else if(ApplicationPreferences.APPLICATION_PATH_PROPERTY.equals(propName))
+
+			if(ApplicationPreferences.APPLICATION_PATH_PROPERTY.equals(propName))
 			{
 				File newPath=(File) evt.getNewValue();
 				File oldPath=applicationPreferences.getStartupApplicationPath();
@@ -1730,10 +1739,19 @@ public class MainFrame
 					}
 				}
 				showApplicationPathChangedDialog();
+				return;
 			}
-			else if(ApplicationPreferences.LOOK_AND_FEEL_PROPERTY.equals(propName))
+
+			if(ApplicationPreferences.LOOK_AND_FEEL_PROPERTY.equals(propName))
 			{
 				showLookAndFeelChangedDialog();
+				return;
+			}
+
+			if(ApplicationPreferences.CONDITIONS_PROPERTY.equals(propName))
+			{
+				updateConditions();
+				return;
 			}
 		}
 
@@ -1762,6 +1780,22 @@ public class MainFrame
 					window.setTitle(title);
 				}
 			}
+		}
+	}
+
+	private void updateConditions()
+	{
+		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+		{
+			ViewContainer<LoggingEvent> value = current.getValue();
+			value.updateViews();
+		}
+		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+		{
+			ViewContainer<AccessEvent> value = current.getValue();
+			value.updateViews();
 		}
 	}
 

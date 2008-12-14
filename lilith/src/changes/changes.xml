@@ -154,14 +154,23 @@
                 Updated detailsView.groovy to prevent line-break in table headers so the width of the headers stays
                 the same.
             </action>
+            <action dev="jhux" type="update">
+                Show condition name in filtered tab if condition is a saved condition.
+            </action>
+            <action dev="jhux" type="add">
+                Documentation of Sources and Source-Lists.
+            </action>
+            <action dev="jhux" type="update">
+                Documentation Conditions.
+            </action>
+            <action dev="jhux" type="add">
+                Ability to use saved conditions using #condition#&lt;conditionName&gt; in the text field of the search panel.
+            </action>
             <action dev="jhux" type="add">
                 TODO: Implement Conditions tab in Preferences. Make colors/activity configurable.
             </action>
             <action dev="jhux" type="add">
                 TODO: Use all active conditions to find out colors of a table row. Use current colors if none is matching.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Documentation of Sources and Source-Lists.
             </action>
             <action dev="jhux" type="add">
                 TODO: Add toggle button to search panel that negates the current condition.
@@ -173,7 +182,7 @@
                 TODO: Crop the message popup to sane sizes...
             </action>
             <action dev="jhux" type="update">
-                TODO: Cleanup of duplicated code in actions, e.g. the new layout actions as well as the find actions.
+                TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
             </action>
             <action dev="jhux" type="update">
                 TODO: Support for Logback 0.9.14(?)
