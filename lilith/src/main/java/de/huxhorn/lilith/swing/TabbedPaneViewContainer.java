@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Buffers;
@@ -90,16 +91,60 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		Condition filter = source.getFilter();
 		if(filter==null)
 		{
-			pane.addTab("Unfiltered", view);
+			pane.insertTab("Unfiltered", null, view, null, 0);
 		}
 		else
 		{
-			pane.addTab(filter.toString(), view);
+			String title;
+			String toolTip;
+			SavedCondition savedCondition = getMainFrame().getApplicationPreferences().resolveSavedCondition(filter);
+			if(savedCondition!=null)
+			{
+				title=savedCondition.getName();
+				toolTip=filter.toString();
+			}
+			else
+			{
+				String text=filter.toString();
+				title=text;
+				toolTip=text;
+			}
+			pane.insertTab(title, null, view, toolTip, pane.getTabCount());
 		}
 		pane.setSelectedComponent(view);
 		view.addPropertyChangeListener(sourceChangeListener);
 		view.requestFocusInWindow();
 		fireChange();
+	}
+
+	public void updateViews()
+	{
+		for(int i=0;i<pane.getTabCount();i++)
+		{
+			EventWrapperViewPanel<T> current = (EventWrapperViewPanel<T>) pane.getComponentAt(i);
+			EventSource source = current.getEventSource();
+			Condition condition = source.getFilter();
+			if(logger.isDebugEnabled()) logger.debug("Condition: {}", condition);
+			if(condition!=null)
+			{
+				String title;
+				String toolTip;
+				SavedCondition savedCondition = getMainFrame().getApplicationPreferences().resolveSavedCondition(condition);
+				if(savedCondition!=null)
+				{
+					title=savedCondition.getName();
+					toolTip=condition.toString();
+				}
+				else
+				{
+					String text=condition.toString();
+					title=text;
+					toolTip=text;
+				}
+				pane.setTitleAt(i, title);
+				pane.setToolTipTextAt(i, toolTip);
+			}
+		}
 	}
 
 	/**

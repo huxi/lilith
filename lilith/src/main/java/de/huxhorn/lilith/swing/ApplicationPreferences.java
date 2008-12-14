@@ -21,6 +21,7 @@ import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
+import de.huxhorn.sulky.conditions.Condition;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public class ApplicationPreferences
 	public static final String DETAILS_VIEW_CSS_FILENAME = "detailsView.css";
 	public static final String DETAILS_VIEW_GROOVY_FILENAME = "detailsView.groovy";
 	private static final String CONDITIONS_XML_FILENAME = "savedConditions.xml";
-	private static final String CONDITIONS_PROPERTY = "conditions";
+
 	private File detailsViewRoot;
 
 	public static enum SourceFiltering
@@ -92,6 +93,7 @@ public class ApplicationPreferences
 	public static final String SOURCE_LISTS_PROPERTY = "sourceLists";
 	public static final String BLACK_LIST_NAME_PROPERTY = "blackListName";
 	public static final String WHITE_LIST_NAME_PROPERTY = "whiteListName";
+	public static final String CONDITIONS_PROPERTY = "conditions";
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
 	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
@@ -592,7 +594,6 @@ public class ApplicationPreferences
 			catch (FileNotFoundException ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading conditions from file '"+ conditionsFile.getAbsolutePath()+"'!",ex);
-				conditions=new ArrayList<SavedCondition>();
 			}
 			finally
 			{
@@ -602,16 +603,82 @@ public class ApplicationPreferences
 				}
 			}
 		}
-		else if(conditions==null)
+
+		if(conditions==null)
 		{
 			conditions=new ArrayList<SavedCondition>();
 		}
 	}
 
+	public SavedCondition resolveSavedCondition(Condition condition)
+	{
+		if(condition == null)
+		{
+			return null;
+		}
+		initConditions();
+		for(SavedCondition current:conditions)
+		{
+			if(condition.equals(current.getCondition()))
+			{
+				try
+				{
+					return current.clone();
+				}
+				catch (CloneNotSupportedException e)
+				{
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+
+	public SavedCondition resolveSavedCondition(String conditionName)
+	{
+		if(conditionName==null)
+		{
+			return null;
+		}
+		initConditions();
+		for(SavedCondition current : conditions)
+		{
+			if(conditionName.equals(current.getName()))
+			{
+				try
+				{
+					return current.clone();
+				}
+				catch (CloneNotSupportedException e)
+				{
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+
+
+
 	public List<SavedCondition> getConditions()
 	{
 		initConditions();
-		return new ArrayList<SavedCondition>(conditions);
+
+		// perform deep clone... otherwise no propchange would be fired.
+		ArrayList<SavedCondition> result = new ArrayList<SavedCondition>(conditions.size());
+		for(SavedCondition current:conditions)
+		{
+			try
+			{
+				result.add(current.clone());
+			}
+			catch (CloneNotSupportedException e)
+			{
+				// ignore
+			}
+		}
+
+		return result;
 	}
 
 	public void setConditions(List<SavedCondition> conditions)

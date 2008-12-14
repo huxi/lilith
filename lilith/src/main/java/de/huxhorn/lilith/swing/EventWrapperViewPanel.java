@@ -31,6 +31,7 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
+import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FilteringBuffer;
@@ -157,6 +158,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private DecimalFormat eventCountFormat;
 	private FindResultListener findResultListener;
 	private static final String GROOVY_IDENTIFIER = "#groovy#";
+	private static final String SAVED_CONDITION_IDENTIFIER = "#condition#";
 	private static final Color ERROR_COLOR = new Color(0xffaaaa);
 	protected JMenu sendToMenuItem;
 
@@ -744,6 +746,20 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 					condition=null;
 				}
 			}
+			else if(text.startsWith(SAVED_CONDITION_IDENTIFIER))
+			{
+				String conditionName=text.substring(SAVED_CONDITION_IDENTIFIER.length());
+				SavedCondition savedCondition=mainFrame.getApplicationPreferences().resolveSavedCondition(conditionName);
+				if(savedCondition!=null)
+				{
+					condition=savedCondition.getCondition();
+				}
+				else
+				{
+					error=true;
+					condition=null;
+				}
+			}
 			else
 			{
 				// create condition matching the selected type
@@ -996,7 +1012,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			statusText.append("   Size on disk: ").append(HumanReadable.getHumanReadableSize(getSizeOnDisk(), true, false)).append("bytes");
 		}
 
-
 		statusLabel.setText(statusText.toString());
 	}
 
@@ -1005,74 +1020,105 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private EventSource<T> getFilteredSource()
 	{
 		Condition currentFilter = table.getFilterCondition();
-		if(currentFilter!=null)
+		if(currentFilter==null)
 		{
-			Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
+			return null;
+		}
+		Condition previousClone = getBufferCondition();
+		Buffer<EventWrapper<T>> buffer = getSourceBuffer();
 
-			Condition previousCondition=null;
-			Condition previousClone=null;
-			if(buffer instanceof FilteringBuffer)
+		Condition filter=getCombinedCondition();
+		if(filter != null && !filter.equals(previousClone))
+		{
+			Buffer<EventWrapper<T>> filteredBuffer=new FilteringBuffer<EventWrapper<T>>(buffer, filter);
+			return new EventSourceImpl<T>(eventSource.getSourceIdentifier(),filteredBuffer, filter, eventSource.isGlobal());
+		}
+		return null;
+	}
+
+	public Buffer<EventWrapper<T>> getSourceBuffer()
+	{
+		Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
+
+		if(buffer instanceof FilteringBuffer)
+		{
+			FilteringBuffer<EventWrapper<T>> filteringBuffer=(FilteringBuffer<EventWrapper<T>>) buffer;
+			return filteringBuffer.getSourceBuffer();
+		}
+		return buffer;
+	}
+
+	public Condition getBufferCondition()
+	{
+		Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
+
+		if(buffer instanceof FilteringBuffer)
+		{
+			FilteringBuffer<EventWrapper<T>> filteringBuffer=(FilteringBuffer<EventWrapper<T>>) buffer;
+			return filteringBuffer.getCondition();
+		}
+		return null;
+	}
+
+	/**
+	 *
+	 * @return the combination of the tables filter condition and the condition of a filtered buffer.
+	 */
+	public Condition getCombinedCondition()
+	{
+		Condition previousCondition=getBufferCondition();
+
+		Condition currentFilter = table.getFilterCondition();
+
+		if(previousCondition==null)
+		{
+			return currentFilter;
+		}
+
+		try
+		{
+			// clone the previous condition so we don't change it while active
+			Condition previousClone=previousCondition.clone();
+			if(currentFilter == null)
 			{
-				FilteringBuffer<EventWrapper<T>> filteringBuffer=(FilteringBuffer<EventWrapper<T>>) buffer;
-				buffer=filteringBuffer.getSourceBuffer();
-				previousCondition=filteringBuffer.getCondition();
-				if(logger.isDebugEnabled()) logger.debug("Previous condition: {}",previousCondition);
+				return previousClone;
 			}
-
-			Condition filter=currentFilter;
-			if(previousCondition!=null)
+			And and;
+			if(previousClone instanceof And)
 			{
-				try
-				{
-					previousCondition=previousCondition.clone(); // TODO: is this a bug? Check!
-					previousClone=previousCondition.clone();
-					And and;
-					if(previousCondition instanceof And)
-					{
-						and=(And) previousCondition;
-					}
-					else
-					{
-						and=new And();
-						ArrayList<Condition> conditions = new ArrayList<Condition>();
-						conditions.add(previousCondition);
-						and.setConditions(conditions);
-					}
-					List<Condition> conditions=and.getConditions();
-					if(conditions==null)
-					{
-						conditions=new ArrayList<Condition>();
-					}
-					if(!conditions.contains(currentFilter))
-					{
-						// don't add duplicates
-						conditions.add(currentFilter);
-					}
-					if(conditions.size()>1)
-					{
-						if(logger.isInfoEnabled()) logger.info("Setting and-conditions: {}", conditions);
-						and.setConditions(conditions);
-						filter=and;
-					}
-					else
-					{
-						filter=currentFilter;
-					}
-				}
-				catch (CloneNotSupportedException ex)
-				{
-					if(logger.isWarnEnabled()) logger.warn("Exception while cloning!",ex);
-				}
+				and=(And) previousClone;
 			}
 			else
 			{
-				filter=currentFilter;
+				and=new And();
+				ArrayList<Condition> conditions = new ArrayList<Condition>();
+				conditions.add(previousClone);
+				and.setConditions(conditions);
 			}
-			if(!filter.equals(previousClone))
+			List<Condition> conditions=and.getConditions();
+			if(conditions==null)
 			{
-				Buffer<EventWrapper<T>> filteredBuffer=new FilteringBuffer<EventWrapper<T>>(buffer, filter);
-				return new EventSourceImpl<T>(eventSource.getSourceIdentifier(),filteredBuffer, filter, eventSource.isGlobal());
+				conditions=new ArrayList<Condition>();
 			}
+			if(!conditions.contains(currentFilter))
+			{
+				// don't add duplicates
+				conditions.add(currentFilter);
+			}
+			if(conditions.size()>1)
+			{
+				if(logger.isInfoEnabled()) logger.info("Setting and-conditions: {}", conditions);
+				and.setConditions(conditions);
+				return and;
+			}
+			else
+			{
+				return currentFilter;
+			}
+		}
+		catch (CloneNotSupportedException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while cloning!",ex);
 		}
 		return null;
 	}
@@ -1391,11 +1437,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
-
+	/**
+	 * This action has different enabled logic than the one in ViewActions
+	 */
 	private class FindNextAction
 		extends AbstractAction
 	{
-		// TODO: Move to ViewActions
 		public FindNextAction()
 		{
 			super();
@@ -1424,10 +1471,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
+	/**
+	 * This action has different enabled logic than the one in ViewActions
+	 */
 	private class FindPreviousAction
 		extends AbstractAction
 	{
-		// TODO: Move to ViewActions
 		public FindPreviousAction()
 		{
 			super();

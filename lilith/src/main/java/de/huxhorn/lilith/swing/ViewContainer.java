@@ -234,4 +234,6 @@ public abstract class ViewContainer<T extends Serializable>
 	public abstract ProgressGlassPane getProgressPanel();
 
 	public abstract EventWrapper<T> getSelectedEvent();
+
+	public abstract void updateViews();
 }
