@@ -1331,7 +1331,7 @@ public class ViewActions
 			if(eventObj instanceof LoggingEvent)
 			{
 				Map<String, EventSender<LoggingEvent>> senders = mainFrame.getLoggingEventSenders();
-				if(logger.isInfoEnabled()) logger.info("Senders: {}", senders);
+				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
 				if(senders.size()==0)
 				{
 					sendToMenuItem.setEnabled(false);
@@ -1350,7 +1350,7 @@ public class ViewActions
 			else if(eventObj instanceof AccessEvent)
 			{
 				Map<String, EventSender<AccessEvent>> senders = mainFrame.getAccessEventSenders();
-				if(logger.isInfoEnabled()) logger.info("Senders: {}", senders);
+				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
 				if(senders.size()==0)
 				{
 					sendToMenuItem.setEnabled(false);
