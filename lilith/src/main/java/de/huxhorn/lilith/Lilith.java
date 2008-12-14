@@ -402,7 +402,7 @@ public class Lilith
         			if (lookAndFeel.equals(info.getName()))
 					{
 						String lafClassName=info.getClassName();
-						if(logger.isInfoEnabled()) logger.info("Setting look&feel to {}.",lafClassName);
+						if(logger.isDebugEnabled()) logger.debug("Setting look&feel to {}.",lafClassName);
             			UIManager.setLookAndFeel(lafClassName);
 						break;
         			}
@@ -494,7 +494,7 @@ public class Lilith
 			CreateMainFrameRunnable createMain = new CreateMainFrameRunnable(applicationPreferences, appTitle, enableBonjour);
 			SwingUtilities.invokeAndWait(createMain);
 			final MainFrame frame = createMain.getMainFrame();
-			if (logger.isInfoEnabled()) logger.info("After show...");
+			if(logger.isDebugEnabled()) logger.debug("After show...");
 			updateSplashStatus(splashScreen, "Initializing application...");
 			SwingUtilities.invokeAndWait(new Runnable()
 			{

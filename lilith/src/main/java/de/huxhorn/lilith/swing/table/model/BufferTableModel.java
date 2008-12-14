@@ -121,7 +121,7 @@ public abstract class BufferTableModel<T>
 		disposed=true;
 		if(buffer instanceof DisposeOperation)
 		{
-			if(logger.isInfoEnabled()) logger.info("Calling dispose on contained buffer...");
+			if(logger.isDebugEnabled()) logger.debug("Calling dispose on contained buffer...");
 			DisposeOperation disposeable = (DisposeOperation) buffer;
 			disposeable.dispose();
 		}
@@ -276,7 +276,7 @@ public abstract class BufferTableModel<T>
 			{
 				if(isDisposed())
 				{
-					if(logger.isInfoEnabled()) logger.info("Stopping TableChangeDetectionRunnable...");
+					if(logger.isDebugEnabled()) logger.debug("Stopping TableChangeDetectionRunnable...");
 					return;
 				}
 				if(!isPaused())

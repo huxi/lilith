@@ -144,7 +144,6 @@ public abstract class ViewManager<T extends Serializable>
 						//if(value.resolveInternalFrame()==null && value.resolveFrame()==null)
 						if(value.resolveViewWindow()==null)
 						{
-							if(logger.isInfoEnabled()) logger.info("Removed ");
 							result.add(value);
 							inactiveKeys.add(key);
 						}

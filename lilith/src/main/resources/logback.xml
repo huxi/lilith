@@ -131,9 +131,6 @@
 	<logger name="de.huxhorn.sulky.buffers.FilteringBuffer">
 		<level value="INFO"/>
 	</logger>
-	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
-		<level value="INFO"/>
-	</logger>
 	<logger name="de.huxhorn.sulky.swing.Windows">
 		<level value="INFO"/>
 	</logger>
@@ -161,9 +158,6 @@
 	</logger>
 	<logger name="de.huxhorn.lilith.swing.SplashScreen">
 		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
-		<level value="INFO"/>
 	</logger>
 	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
 		<level value="INFO"/>
@@ -222,4 +216,10 @@
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer">
 		<level value="WARN"/>
 	</logger>
+    <logger name="de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
+        <level value="WARN"/>
+    </logger>
 </configuration>

@@ -247,9 +247,9 @@ public class MainFrame
 
 		rrdFileFilter=new RrdFileFilter();
 
-		if(logger.isInfoEnabled()) logger.info("Before creation of statistics-dialog...");
+		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
 		statisticsDialog = new StatisticsDialog(this);
-		if(logger.isInfoEnabled()) logger.info("After creation of statistics-dialog...");
+		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
 		groovyConditionsPath = new File(startupApplicationPath, "conditions");
 		groovyConditionsPath.mkdirs();
 
@@ -296,9 +296,9 @@ public class MainFrame
 
 
 		debugDialog=new DebugDialog(this, this);
-		if(logger.isInfoEnabled()) logger.info("Before creation of preferences-dialog...");
+		if(logger.isDebugEnabled()) logger.debug("Before creation of preferences-dialog...");
 		preferencesDialog=new PreferencesDialog(this);
-		if(logger.isInfoEnabled()) logger.info("After creation of preferences-dialog...");
+		if(logger.isDebugEnabled()) logger.debug("After creation of preferences-dialog...");
 		openInactiveLogsDialog=new OpenPreviousDialog(MainFrame.this);
 		helpFrame=new HelpFrame(this);
 		helpFrame.setTitle("Help Topics");
@@ -719,7 +719,7 @@ public class MainFrame
 
 	public void showPopup(Component component, Point p)
 	{
-		if(logger.isInfoEnabled()) logger.info("Show popup at {}.",p);
+		if(logger.isDebugEnabled()) logger.debug("Show popup at {}.",p);
 		JPopupMenu popup=viewActions.getPopupMenu();
 		popup.show(component, p.x, p.y);
 	}

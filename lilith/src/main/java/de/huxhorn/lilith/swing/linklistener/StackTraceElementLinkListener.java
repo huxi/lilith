@@ -47,7 +47,7 @@ public class StackTraceElementLinkListener
 			String steStr = uri.substring(STACK_TRACE_ELEMENT_URI_PREFIX.length());
 			steStr = SimpleXml.unescape(steStr);
 			StackTraceElement ste = LogbackLoggingAdapter.parseStackTraceElement(steStr);
-			if (logger.isInfoEnabled()) logger.info("STE: {}", ste);
+			if(logger.isDebugEnabled()) logger.debug("STE: {}", ste);
 			mainFrame.goToSource(ste);
 		}
 	}
