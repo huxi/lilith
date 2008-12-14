@@ -117,14 +117,8 @@ public class Lilith
 		APP_TIMESTAMP = p.getProperty("application.timestamp");
 	}
 
-	// TODO: - Shortcut in tooltip of toolbars...
-	// TODO: [- Clear all]
-	// TODO: - Filter
-	// TODO:  - Filter construction/management dialog(s) for NamedFilters.
-	// TODO:  - Clear of filtered views... disable Clear in filtered views? Rethink...
+	// TODO: - Shortcut in tooltip of toolbars...?
 	// TODO: - check termination of every started thread
-	//
-	// TODO: - special mac support?
 
 	public static void main(String args[])
 	{

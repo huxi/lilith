@@ -166,6 +166,9 @@
             <action dev="jhux" type="add">
                 Ability to use saved conditions using #condition#&lt;conditionName&gt; in the text field of the search panel.
             </action>
+            <action dev="jhux" type="update">
+                Disabled "Clear" in case of a filtered buffer. Previous functionality was pretty useless.
+            </action>
             <action dev="jhux" type="add">
                 TODO: Implement Conditions tab in Preferences. Make colors/activity configurable.
             </action>
