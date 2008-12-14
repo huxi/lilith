@@ -137,7 +137,7 @@ public class IndexingCallable
 	{
 		if(logger.isDebugEnabled())
 		{
-			StringBuffer msg=new StringBuffer();
+			StringBuilder msg=new StringBuilder();
 			msg.append("threadNames:\n");
 			for(String name: threadNames)
 			{

@@ -418,7 +418,7 @@ public class PreferencesDialog
 				is = new FileInputStream(messageViewGroovyFile);
 				List lines = IOUtils.readLines(is, "UTF-8");
 				boolean isFirst=true;
-				StringBuffer textBuffer=new StringBuffer();
+				StringBuilder textBuffer=new StringBuilder();
 				for(Object o:lines)
 				{
 					String s= (String) o;

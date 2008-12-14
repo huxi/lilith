@@ -229,7 +229,7 @@ public class LoggingEvent
 	@Override
 	public String toString()
 	{
-		StringBuffer result=new StringBuffer();
+		StringBuilder result=new StringBuilder();
 		result.append("LoggingEvent[");
 		result.append("logger=").append(logger).append(", ");
 		result.append("level=").append(level).append(", ");

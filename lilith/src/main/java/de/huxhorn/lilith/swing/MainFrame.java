@@ -951,7 +951,7 @@ public class MainFrame
 
 	public void updateStatus()
 	{
-		StringBuffer statusText=new StringBuffer();
+		StringBuilder statusText=new StringBuilder();
 
 		ApplicationPreferences.SourceFiltering filtering = applicationPreferences.getSourceFiltering();
 		switch(filtering)

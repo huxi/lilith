@@ -994,7 +994,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private void updateStatusText()
 	{
 		int eventCount = tableModel.getRowCount();
-		StringBuffer statusText=new StringBuffer();
+		StringBuilder statusText=new StringBuilder();
 		if(eventCount<1)
 		{
 			statusText.append("No events.");

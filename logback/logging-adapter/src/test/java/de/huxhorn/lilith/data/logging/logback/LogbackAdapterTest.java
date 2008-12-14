@@ -107,7 +107,7 @@ public class LogbackAdapterTest
 	{
 		if(logger.isDebugEnabled())
 		{
-			StringBuffer msg=new StringBuffer();
+			StringBuilder msg=new StringBuilder();
 			msg.append("Logger         : ").append(event.getLogger());
 			msg.append("\n");
 
@@ -170,7 +170,7 @@ public class LogbackAdapterTest
 				msg.append("Throwable      : ");
 				msg.append("\n");
 				ThrowableInfo current=ti;
-				StringBuffer indent=new StringBuffer("  ");
+				StringBuilder indent=new StringBuilder("  ");
 				while(current!=null)
 				{
 					msg.append(indent.toString());

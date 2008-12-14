@@ -155,7 +155,7 @@ public class LogTruthRunnable
 
 	private static String getTruth()
 	{
-		StringBuffer result=new StringBuffer();
+		StringBuilder result=new StringBuilder();
 		for(String[] current: beliefs)
 		{
 			result.append(current[(int)(Math.random()*current.length)]).append(" ");

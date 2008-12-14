@@ -47,7 +47,7 @@ public class MarkerTooltipGenerator
 				Marker marker=event.getMarker();
 				if(marker!=null)
 				{
-					StringBuffer buffer=new StringBuffer();
+					StringBuilder buffer=new StringBuilder();
 					buffer.append("<html>");
 					appendMarker(marker, buffer, null, false, true);
 					buffer.append("</html>");
@@ -58,7 +58,7 @@ public class MarkerTooltipGenerator
 		return tooltip;
 	}
 
-	public static void appendMarker(Marker marker, StringBuffer buffer, List<String> processedMarkers, boolean xhtml, boolean first)
+	public static void appendMarker(Marker marker, StringBuilder buffer, List<String> processedMarkers, boolean xhtml, boolean first)
 	{
 		if(marker!=null)
 		{

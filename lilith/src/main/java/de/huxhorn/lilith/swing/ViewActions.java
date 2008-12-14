@@ -852,7 +852,7 @@ public class ViewActions
 			}
 		}
 
-		if(logger.isInfoEnabled()) logger.info("updateActions() eventSource={}, hasFilteredBuffer={}", new Object[]{eventSource, hasFilteredBuffer});
+		if(logger.isDebugEnabled()) logger.debug("updateActions() eventSource={}, hasFilteredBuffer={}", new Object[]{eventSource, hasFilteredBuffer});
 		// Edit
 		editMenu.setEnabled(hasView);
 

@@ -341,13 +341,13 @@ public class LoggingEventIOTest
 		{
 			return null;
 		}
-		StringBuffer result=new StringBuffer();
+		StringBuilder result=new StringBuilder();
 		Map<String, Marker> processedMarkers=new HashMap<String, Marker>();
 		recursiveToString(result, processedMarkers, marker);
 		return result.toString();
 	}
 
-	private void recursiveToString(StringBuffer result, Map<String, Marker> processedMarkers, Marker marker)
+	private void recursiveToString(StringBuilder result, Map<String, Marker> processedMarkers, Marker marker)
 	{
 		if(processedMarkers.containsKey(marker.getName()))
 		{

@@ -246,7 +246,7 @@ public class AccessEvent
 	@Override
 	public String toString()
 	{
-		StringBuffer result=new StringBuffer();
+		StringBuilder result=new StringBuilder();
 		result.append("AccessEvent[");
 		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
 		result.append("timeStamp=").append(timeStamp);

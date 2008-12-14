@@ -316,7 +316,7 @@ public class OpenPreviousDialog
 				return "";
 			}
 
-			StringBuffer result=new StringBuffer();
+			StringBuilder result=new StringBuilder();
 			result.append(mainFrame.getPrimarySourceTitle(selectedSource));
 			String secondary=selectedSource.getSecondaryIdentifier();
 			if(secondary!=null)
