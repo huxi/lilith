@@ -76,6 +76,8 @@ import javax.swing.event.ListSelectionEvent;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
+import java.util.Arrays;
 import java.util.concurrent.Future;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Callable;
@@ -227,6 +229,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			findTextField.requestFocusInWindow();
 			findTextField.selectAll();
+			applyFilter();
 		}
 		validate();
 	}
@@ -462,17 +465,25 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private static final String MESSAGE_CONTAINS_CONDITION="message.contains";
 	private static final String LOGGER_STARTS_WITH_CONDITION="logger.startsWith";
 	private static final String LOGGER_EQUALS_CONDITION="logger.equals";
+	private static final String[] DEFAULT_CONDITIONS=new String[]{
+			EVENT_CONTAINS_CONDITION,
+			MESSAGE_CONTAINS_CONDITION,
+			LOGGER_STARTS_WITH_CONDITION,
+			LOGGER_EQUALS_CONDITION};
 
 	private void initTypeCombo()
 	{
-		// TODO: add groovy conditions
-		String[] items=new String[]{
-				EVENT_CONTAINS_CONDITION,
-				MESSAGE_CONTAINS_CONDITION,
-				LOGGER_STARTS_WITH_CONDITION,
-				LOGGER_EQUALS_CONDITION};
+		Vector<String> itemsVector=new Vector<String>();
 
-		ComboBoxModel model=new DefaultComboBoxModel(items);
+		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
+
+		String[] groovyConditions = mainFrame.getAllConditionScriptFiles();
+		if(groovyConditions!=null)
+		{
+			itemsVector.addAll(Arrays.asList(groovyConditions));
+		}
+
+		ComboBoxModel model=new DefaultComboBoxModel(itemsVector);
 		findTypeCombo.setModel(model);
 	}
 
@@ -734,7 +745,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 					scriptName=scriptName.substring(0,idx);
 				}
 				if(logger.isInfoEnabled()) logger.info("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
-				File resolvedScriptFile=mainFrame.resolveScriptFile(scriptName);
+				File resolvedScriptFile=mainFrame.resolveConditionScriptFile(scriptName);
 				if(resolvedScriptFile!=null)
 				{
 					// there is a file...
@@ -783,7 +794,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				else
 				{
 					// we assume a groovy condition...
-					File resolvedScriptFile=mainFrame.resolveScriptFile(selectedType);
+					File resolvedScriptFile=mainFrame.resolveConditionScriptFile(selectedType);
 					if(resolvedScriptFile!=null)
 					{
 						// there is a file...
