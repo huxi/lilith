@@ -175,14 +175,17 @@
             <action dev="jhux" type="add">
                 Added "!" (Not) toggle button to search panel that negates the current condition.
             </action>
+            <action dev="jhux" type="update">
+                Cropping the message popup to a sane sizes...
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Install example groovy conditions if conditions folder is newly created.
+            </action>
             <action dev="jhux" type="add">
                 TODO: Implement Conditions tab in Preferences. Make colors/activity configurable.
             </action>
             <action dev="jhux" type="add">
                 TODO: Use all active conditions to find out colors of a table row. Use current colors if none is matching.
-            </action>
-            <action dev="jhux" type="update">
-                TODO: Crop the message popup to sane sizes...
             </action>
             <action dev="jhux" type="update">
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
