@@ -137,7 +137,7 @@ public class SavedCondition
 	@Override
 	public String toString()
 	{
-		return "SavedCondition[name="+name+", condition="+condition+", colorScheme=="+colorScheme+", active="+active+"]";
+		return "SavedCondition[name="+name+", condition="+condition+", colorScheme="+colorScheme+", active="+active+"]";
 	}
 
 	public SavedCondition clone()
