@@ -169,6 +169,9 @@
             <action dev="jhux" type="update">
                 Disabled "Clear" in case of a filtered buffer. Previous functionality was pretty useless.
             </action>
+            <action dev="jhux" type="update">
+                Adding all available groovy conditions to combo box.
+            </action>
             <action dev="jhux" type="add">
                 TODO: Implement Conditions tab in Preferences. Make colors/activity configurable.
             </action>
@@ -177,9 +180,6 @@
             </action>
             <action dev="jhux" type="add">
                 TODO: Add toggle button to search panel that negates the current condition.
-            </action>
-            <action dev="jhux" type="update">
-                TODO: Add all available groovy conditions to combo box.
             </action>
             <action dev="jhux" type="update">
                 TODO: Crop the message popup to sane sizes...

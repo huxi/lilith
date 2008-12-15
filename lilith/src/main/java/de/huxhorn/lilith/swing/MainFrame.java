@@ -47,6 +47,7 @@ import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
 import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
+import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.Lilith;
@@ -173,8 +174,32 @@ public class MainFrame
 	private boolean enableBonjour;
 	private final boolean isMac;
 	private final boolean isWindows;
+	private String[] conditionScriptFiles;
+	private long lastConditionsCheck;
+	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
 
-	public File resolveScriptFile(String input)
+	public String[] getAllConditionScriptFiles()
+	{
+		if(conditionScriptFiles == null || ((System.currentTimeMillis()-lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
+		{
+
+			File[] groovyFiles=groovyConditionsPath.listFiles(new GroovyConditionFileFilter());
+			if(groovyFiles!=null && groovyFiles.length>0)
+			{
+				conditionScriptFiles=new String[groovyFiles.length];
+				for(int i=0;i<groovyFiles.length;i++)
+				{
+					File current=groovyFiles[i];
+					conditionScriptFiles[i]=current.getName();
+				}
+				Arrays.sort(conditionScriptFiles);
+				lastConditionsCheck=System.currentTimeMillis();
+			}
+		}
+		return conditionScriptFiles;
+	}
+	
+	public File resolveConditionScriptFile(String input)
 	{
 		if(!input.endsWith(GROOVY_SUFFIX))
 		{
