@@ -187,183 +187,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		initUi();
 	}
 
-	public EventWrapperViewTable<T> getTable()
-	{
-		return table;
-	}
-
-	public LoggingViewState getState()
-	{
-		if(!EventQueue.isDispatchThread())
-		{
-			if(logger.isWarnEnabled()) //noinspection ThrowableInstanceNeverThrown
-				logger.warn("!DispatchThread - getState: state="+state, new Throwable());
-		}
-		return state;
-	}
-
-	public MainFrame getMainFrame()
-	{
-		return mainFrame;
-	}
-
-	public void setState(LoggingViewState state)
-	{
-		Object oldValue=this.state;
-		this.state = state;
-		Object newValue=this.state;
-		firePropertyChange(STATE_PROPERTY, oldValue, newValue);
-	}
-
-	public boolean isShowingFilters()
-	{
-		return showingFilters;
-	}
-
-	public void setShowingFilters(boolean showingFilters)
-	{
-		this.showingFilters = showingFilters;
-		if(showingFilters)
-		{
-			initTypeCombo();
-			// select correct type in combo
-			Condition condition=getFilterCondition();
-			boolean not=false;
-			if(condition instanceof Not)
-			{
-				Not notCondition = (Not) condition;
-				not=true;
-				condition=notCondition.getCondition();
-			}
-			if(condition!=null)
-			{
-				String conditionName=null;
-				if(condition instanceof EventContainsCondition)
-				{
-					conditionName=EVENT_CONTAINS_CONDITION;
-				}
-				else if(condition instanceof MessageContainsCondition)
-				{
-					conditionName=MESSAGE_CONTAINS_CONDITION;
-				}
-				else if(condition instanceof LoggerStartsWithCondition)
-				{
-					conditionName=LOGGER_STARTS_WITH_CONDITION;
-				}
-				else if(condition instanceof LoggerEqualsCondition)
-				{
-					conditionName=LOGGER_EQUALS_CONDITION;
-				}
-				else if(condition instanceof GroovyCondition)
-				{
-					GroovyCondition groovyCondition = (GroovyCondition) condition;
-					conditionName=groovyCondition.getScriptFileName();
-				}
-				if(conditionName!=null)
-				{
-					findTypeCombo.setSelectedItem(conditionName);
-				}
-			}
-			findNotButton.setSelected(not);
-		}
-		findPanel.setVisible(showingFilters);
-		if(showingFilters)
-		{
-			findTextField.requestFocusInWindow();
-			findTextField.selectAll();
-			applyFilter();
-		}
-		validate();
-	}
-
-	public void validate()
-	{
-		super.validate();
-		if(table.isScrollingToBottom())
-		{
-			table.scrollToBottom();
-			// since the view might have changed...
-		}
-		if(logger.isDebugEnabled()) logger.debug("Validate");
-	}
-
-	private SoftReferenceCachingBuffer<EventWrapper<T>> createCachedBuffer(Buffer<EventWrapper<T>> buffer)
-	{
-		return new SoftReferenceCachingBuffer<EventWrapper<T>>(buffer);
-	}
-
-	void setEventSource(EventSource<T> eventSource)
-	{
-		EventSource oldValue = this.eventSource;
-		this.eventSource=eventSource;
-		SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer = createCachedBuffer(eventSource.getBuffer());
-		tableModel.setBuffer(cachedBuffer);
-		EventSource newValue = this.eventSource;
-		if(logger.isDebugEnabled()) logger.debug("EventSource\nOld: {}\nNew: {}", oldValue, newValue);
-		firePropertyChange(EVENT_SOURCE_PROPERTY, oldValue, newValue);
-	}
-
-	public EventSource<T> getEventSource()
-	{
-		return eventSource;
-	}
-
-	public void setScrollingToBottom(boolean scrollingToBottom)
-	{
-		Object oldValue=table.isScrollingToBottom();
-		table.setScrollingToBottom(scrollingToBottom);
-		Object newValue=table.isScrollingToBottom();
-		firePropertyChange(SCROLLING_TO_BOTTOM_PROPERTY, oldValue, newValue);
-	}
-
-	public boolean isScrollingToBottom()
-	{
-		return table.isScrollingToBottom();
-	}
-
-	public boolean isPaused()
-	{
-		return tableModel.isPaused();
-	}
-
-	public void setPaused(boolean paused)
-	{
-		Object oldValue=tableModel.isPaused();
-		tableModel.setPaused(paused);
-		Object newValue=tableModel.isPaused();
-		firePropertyChange(PAUSED_PROPERTY, oldValue, newValue);
-	}
-
-	public ViewContainer<T> resolveContainer()
-	{
-		Container parent=getParent();
-		while(parent!= null && !(parent instanceof ViewContainer))
-		{
-			parent=parent.getParent();
-		}
-		// not 100% typesafe
-		//noinspection unchecked
-		return (ViewContainer<T>)parent;
-	}
-
-	public void addNotify()
-	{
-		super.addNotify();
-		if(logger.isDebugEnabled()) logger.debug("addNotify - parent: {}", getParent());
-		findPanel.setVisible(isShowingFilters());
-	}
-
-	public void removeNotify()
-	{
-		super.removeNotify();
-		if(logger.isDebugEnabled()) logger.debug("removeNotify");
-	}
-
-
-
-	protected abstract EventWrapperTableModel<T> createTableModel(Buffer<EventWrapper<T>> buffer);
-	protected abstract EventWrapperViewTable<T> createTable(EventWrapperTableModel<T> tableModel);
-
 	private void initUi()
 	{
 		Insets borderInsets=new Insets(2,2,2,2);
@@ -473,7 +296,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		KeyStrokes.registerCommand(findTextField, replaceFilterAction, "REPLACE_FILTER_ACTION");
 	}
 
-
 	private void initFindPanel()
 	{
 		findPanel = new JToolBar(SwingConstants.HORIZONTAL);
@@ -508,6 +330,190 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.add(findNextButton);
 		enableFindComponents(true);
 	}
+
+	public EventWrapperViewTable<T> getTable()
+	{
+		return table;
+	}
+
+	public LoggingViewState getState()
+	{
+		if(!EventQueue.isDispatchThread())
+		{
+			if(logger.isWarnEnabled()) //noinspection ThrowableInstanceNeverThrown
+				logger.warn("!DispatchThread - getState: state="+state, new Throwable());
+		}
+		return state;
+	}
+
+	public MainFrame getMainFrame()
+	{
+		return mainFrame;
+	}
+
+	public void setState(LoggingViewState state)
+	{
+		Object oldValue=this.state;
+		this.state = state;
+		Object newValue=this.state;
+		firePropertyChange(STATE_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isShowingFilters()
+	{
+		return showingFilters;
+	}
+
+	public void setShowingFilters(boolean showingFilters)
+	{
+		this.showingFilters = showingFilters;
+		if(showingFilters)
+		{
+			initTypeCombo();
+			// select correct type in combo
+			Condition condition=getFilterCondition();
+			boolean not=false;
+			if(condition instanceof Not)
+			{
+				Not notCondition = (Not) condition;
+				not=true;
+				condition=notCondition.getCondition();
+			}
+			if(condition!=null)
+			{
+				String conditionName=null;
+				if(condition instanceof EventContainsCondition)
+				{
+					conditionName=EVENT_CONTAINS_CONDITION;
+				}
+				else if(condition instanceof MessageContainsCondition)
+				{
+					conditionName=MESSAGE_CONTAINS_CONDITION;
+				}
+				else if(condition instanceof LoggerStartsWithCondition)
+				{
+					conditionName=LOGGER_STARTS_WITH_CONDITION;
+				}
+				else if(condition instanceof LoggerEqualsCondition)
+				{
+					conditionName=LOGGER_EQUALS_CONDITION;
+				}
+				else if(condition instanceof GroovyCondition)
+				{
+					GroovyCondition groovyCondition = (GroovyCondition) condition;
+					String scriptFileName=groovyCondition.getScriptFileName();
+					if(scriptFileName!=null)
+					{
+						File scriptFile=new File(scriptFileName);
+						conditionName=scriptFile.getName();
+					}
+				}
+				if(conditionName!=null)
+				{
+					findTypeCombo.setSelectedItem(conditionName);
+				}
+			}
+			findNotButton.setSelected(not);
+		}
+		findPanel.setVisible(showingFilters);
+		if(showingFilters)
+		{
+			findTextField.requestFocusInWindow();
+			findTextField.selectAll();
+			applyFilter();
+		}
+		validate();
+	}
+
+	public void validate()
+	{
+		super.validate();
+		if(table.isScrollingToBottom())
+		{
+			table.scrollToBottom();
+			// since the view might have changed...
+		}
+		if(logger.isDebugEnabled()) logger.debug("Validate");
+	}
+
+	private SoftReferenceCachingBuffer<EventWrapper<T>> createCachedBuffer(Buffer<EventWrapper<T>> buffer)
+	{
+		return new SoftReferenceCachingBuffer<EventWrapper<T>>(buffer);
+	}
+
+	void setEventSource(EventSource<T> eventSource)
+	{
+		EventSource oldValue = this.eventSource;
+		this.eventSource=eventSource;
+		SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer = createCachedBuffer(eventSource.getBuffer());
+		tableModel.setBuffer(cachedBuffer);
+		EventSource newValue = this.eventSource;
+		if(logger.isDebugEnabled()) logger.debug("EventSource\nOld: {}\nNew: {}", oldValue, newValue);
+		firePropertyChange(EVENT_SOURCE_PROPERTY, oldValue, newValue);
+	}
+
+	public EventSource<T> getEventSource()
+	{
+		return eventSource;
+	}
+
+	public void setScrollingToBottom(boolean scrollingToBottom)
+	{
+		Object oldValue=table.isScrollingToBottom();
+		table.setScrollingToBottom(scrollingToBottom);
+		Object newValue=table.isScrollingToBottom();
+		firePropertyChange(SCROLLING_TO_BOTTOM_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isScrollingToBottom()
+	{
+		return table.isScrollingToBottom();
+	}
+
+	public boolean isPaused()
+	{
+		return tableModel.isPaused();
+	}
+
+	public void setPaused(boolean paused)
+	{
+		Object oldValue=tableModel.isPaused();
+		tableModel.setPaused(paused);
+		Object newValue=tableModel.isPaused();
+		firePropertyChange(PAUSED_PROPERTY, oldValue, newValue);
+	}
+
+	public ViewContainer<T> resolveContainer()
+	{
+		Container parent=getParent();
+		while(parent!= null && !(parent instanceof ViewContainer))
+		{
+			parent=parent.getParent();
+		}
+		// not 100% typesafe
+		//noinspection unchecked
+		return (ViewContainer<T>)parent;
+	}
+
+	public void addNotify()
+	{
+		super.addNotify();
+		if(logger.isDebugEnabled()) logger.debug("addNotify - parent: {}", getParent());
+		findPanel.setVisible(isShowingFilters());
+	}
+
+	public void removeNotify()
+	{
+		super.removeNotify();
+		if(logger.isDebugEnabled()) logger.debug("removeNotify");
+	}
+
+
+
+	protected abstract EventWrapperTableModel<T> createTableModel(Buffer<EventWrapper<T>> buffer);
+	protected abstract EventWrapperViewTable<T> createTable(EventWrapperTableModel<T> tableModel);
+
+
 
 	private static final String EVENT_CONTAINS_CONDITION="event.contains";
 	private static final String MESSAGE_CONTAINS_CONDITION="message.contains";
@@ -621,7 +627,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				return table;
 			}
-
+			if(aComponent.equals(findPanel))
+			{
+				return table;
+			}
 			// I guess focus was inside table so focus component after table.
 			if(logger.isInfoEnabled()) logger.info("Moving focus forward to messagePane since it was not explicitly handled. (component={})", aComponent);
 			return messagePane;
@@ -656,6 +665,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 					return findPrevButton;
 				}
 				return findTextField;
+			}
+
+			if(aComponent.equals(findPanel))
+			{
+				return messagePane;
 			}
 
 			// table

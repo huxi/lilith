@@ -77,10 +77,6 @@ public class PreferencesDialog
 	private String whiteListName;
 	private ApplicationPreferences.SourceFiltering sourceFiltering;
 
-	// TODO: Change to List<SavedCondition> conditions;
-	//private Map<String, Condition> conditions;
-	private List<SavedCondition> conditions;
-
 	public PreferencesDialog(MainFrame mainFrame)
 	{
 		super(mainFrame, "Preferences");
@@ -146,8 +142,8 @@ public class PreferencesDialog
 		{
 			sourceNames=new HashMap<String, String>(sourceNames);
 		}
-		conditions = applicationPreferences.getConditions();
 		sourceLists = applicationPreferences.getSourceLists();
+		conditionsPanel.initUI();
 		sourcesPanel.initUI();
 		sourceListsPanel.initUI();
 		sourceFilteringPanel.initUI();
@@ -228,16 +224,12 @@ public class PreferencesDialog
 	{
 		generalPanel.saveSettings();
 		soundsPanel.saveSettings();
+		conditionsPanel.saveSettings();
 		applicationPreferences.setSourceNames(sourceNames);
 		applicationPreferences.setSourceLists(sourceLists);
 		applicationPreferences.setBlackListName(blackListName);
 		applicationPreferences.setWhiteListName(whiteListName);
 		applicationPreferences.setSourceFiltering(sourceFiltering);
-		// TODO: check if previously initialized!!
-		if(conditions!=null)
-		{
-			applicationPreferences.setConditions(conditions);
-		}
 		//sourcesPanel.saveSettings();
 		//sourceListsPanel.saveSettings();
 	}
@@ -315,17 +307,6 @@ public class PreferencesDialog
 	public void setWhiteListName(String whiteListName)
 	{
 		this.whiteListName=whiteListName;
-	}
-
-	public List<SavedCondition> getConditions()
-	{
-		return conditions;
-	}
-
-	public void setConditions(List<SavedCondition> conditions)
-	{
-		this.conditions = conditions;
-		if(logger.isInfoEnabled()) logger.info("this.conditions={}", this.conditions);
 	}
 
 	private class OkAction

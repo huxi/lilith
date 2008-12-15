@@ -36,6 +36,7 @@ public class ConditionsPanel
 	private PreferencesDialog preferencesDialog;
 	private ApplicationPreferences applicationPreferences;
 	private EditConditionDialog editConditionDialog;
+	List<SavedCondition> conditions;
 
 	public ConditionsPanel(PreferencesDialog preferencesDialog)
 	{
@@ -50,16 +51,22 @@ public class ConditionsPanel
 		editConditionDialog=new EditConditionDialog(preferencesDialog);
 		// TODO: implement createUI
 	}
+
 	public void initUI()
 	{
-		// TODO: implement initUI
+		conditions=applicationPreferences.getConditions();
+		if(logger.isDebugEnabled()) logger.debug("Conditions retrieved: {}", conditions);
+	}
+
+	public void saveSettings()
+	{
+		if(logger.isInfoEnabled()) logger.info("Setting conditions to {}.", conditions);
+		applicationPreferences.setConditions(conditions);
 	}
 
 	public void editCondition(Condition condition)
 	{
 		//TODO: finish implementation.
-		List<SavedCondition> conditions=preferencesDialog.getConditions();
-		if(logger.isDebugEnabled()) logger.debug("Conditions from preferencesDialog: {}", conditions);
 		//String conditionName=null;
 		SavedCondition savedCondition=null;
 		for(SavedCondition current : conditions)
@@ -83,6 +90,7 @@ public class ConditionsPanel
 		Windows.showWindow(editConditionDialog, preferencesDialog, true);
 		if(!editConditionDialog.isCanceled())
 		{
+			// TODO: check for duplicate name
 			String newName = editConditionDialog.getConditionName();
 			int index=conditions.indexOf(savedCondition);
 			if(index>-1)
@@ -96,8 +104,6 @@ public class ConditionsPanel
 			}
 			newName=newName.trim();
 			savedCondition.setName(newName);
-			if(logger.isInfoEnabled()) logger.info("Setting conditions to {}.", conditions);
-			preferencesDialog.setConditions(conditions);
 		}
 	}
 }

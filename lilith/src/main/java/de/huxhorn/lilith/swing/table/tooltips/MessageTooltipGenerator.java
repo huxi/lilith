@@ -25,11 +25,15 @@ import javax.swing.JTable;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
+import java.util.StringTokenizer;
+
 public class MessageTooltipGenerator
 	implements TooltipGenerator
 {
 	public String createTooltipText(JTable table, int row)
 	{
+		final int MAX_LINE_LENGTH=80;
+		final int MAX_LINES=20;
 		String tooltip=null;
 		Object value=table.getValueAt(row,0);
 		if(value instanceof EventWrapper)
@@ -42,15 +46,43 @@ public class MessageTooltipGenerator
 				String text=event.getMessage();
 				if(text!=null)
 				{
-					tooltip=text.trim(); // remove empty lines etc.
-					// TODO: crop to a sane size, e.g. 80x25 characters
-					tooltip=SimpleXml.escape(tooltip);
-					int newlineIndex=text.indexOf("\n");
-					if(newlineIndex>-1)
+					// crop to a sane size, e.g. 80x25 characters
+					StringTokenizer tok=new StringTokenizer(text, "\n", false);
+					StringBuilder string=new StringBuilder();
+					int lineCounter=0;
+					while(tok.hasMoreTokens())
 					{
-						tooltip=tooltip.replace("\n","<br>");
+						String line=tok.nextToken();
+						line=line.trim();
+						if(line.length()>0)
+						{
+							line=line.replace('\t',' ');
+							if(lineCounter<MAX_LINES)
+							{
+								if(lineCounter>0)
+								{
+									string.append("\n>");
+								}
+								if(line.length()>MAX_LINE_LENGTH)
+								{
+									string.append(line.substring(0,MAX_LINE_LENGTH-4));
+									string.append("[..]");
+								}
+								else
+								{
+									string.append(line);
+								}
+							}
+							lineCounter++;
+						}
 					}
-					tooltip=tooltip.replace("\t","&nbsp;&nbsp;&nbsp;&nbsp;");
+					if(lineCounter>=MAX_LINES)
+					{
+						int remaining=lineCounter-MAX_LINES+1;
+						string.append("\n[.. ").append(remaining).append(" more lines ..]");
+					}
+					tooltip=SimpleXml.escape(string.toString());
+					tooltip=tooltip.replace("\n","<br>");
 					tooltip="<html><tt><pre>"+tooltip+"</pre></tt></html>";
 				}
 			}

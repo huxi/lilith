@@ -1,3 +1,20 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2008 Joern Huxhorn
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.sulky.conditions.Condition;
@@ -13,9 +30,7 @@ public class SavedCondition
 	private String name;
 	private Condition condition;
 	private boolean active;
-	private Color textColor;
-	private Color backgroundColor;
-	private Color borderColor;
+	private ColorScheme colorScheme;
 
 	public SavedCondition()
 	{
@@ -25,27 +40,15 @@ public class SavedCondition
 
 	public SavedCondition(Condition condition)
 	{
-		this("", condition, Color.BLACK, Color.WHITE, Color.WHITE, false);
+		this("", condition, new ColorScheme(), false);
 	}
 
-	public SavedCondition(String name, Condition condition, Color textColor, Color backgroundColor)
-	{
-		this(name, condition, textColor, backgroundColor, backgroundColor, false);
-	}
-
-	public SavedCondition(String name, Condition condition, Color textColor, Color backgroundColor, Color borderColor)
-	{
-		this(name, condition, textColor, backgroundColor, borderColor, false);
-	}
-
-	public SavedCondition(String name, Condition condition, Color textColor, Color backgroundColor, Color borderColor, boolean active)
+	public SavedCondition(String name, Condition condition, ColorScheme colorScheme, boolean active)
 	{
 		this.name = name;
 		this.condition = condition;
 		this.active = active;
-		this.textColor = textColor;
-		this.backgroundColor = backgroundColor;
-		this.borderColor = borderColor;
+		this.colorScheme = colorScheme;
 	}
 
 	public String getName()
@@ -80,51 +83,43 @@ public class SavedCondition
 
 	public Color getTextColor()
 	{
-		return textColor;
-	}
-
-	public void setTextColor(Color textColor)
-	{
-		this.textColor = textColor;
+		if(colorScheme!=null)
+		{
+			return colorScheme.getTextColor();
+		}
+		return null;
 	}
 
 	public Color getBackgroundColor()
 	{
-		return backgroundColor;
-	}
-
-	public void setBackgroundColor(Color backgroundColor)
-	{
-		this.backgroundColor = backgroundColor;
+		if(colorScheme!=null)
+		{
+			return colorScheme.getBackgroundColor();
+		}
+		return null;
 	}
 
 	public Color getBorderColor()
 	{
-		return borderColor;
-	}
-
-	public void setBorderColor(Color borderColor)
-	{
-		this.borderColor = borderColor;
+		if(colorScheme!=null)
+		{
+			return colorScheme.getBorderColor();
+		}
+		return null;
 	}
 
 	@Override
 	public boolean equals(Object o)
 	{
 		if (this == o) return true;
-		if (!(o instanceof SavedCondition)) return false;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		SavedCondition that = (SavedCondition) o;
 
 		if (active != that.active) return false;
-		if (backgroundColor != null ? !backgroundColor.equals(that.backgroundColor) : that.backgroundColor != null)
-		{
-			return false;
-		}
-		if (borderColor != null ? !borderColor.equals(that.borderColor) : that.borderColor != null) return false;
+		if (colorScheme != null ? !colorScheme.equals(that.colorScheme) : that.colorScheme != null) return false;
 		if (condition != null ? !condition.equals(that.condition) : that.condition != null) return false;
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
-		if (textColor != null ? !textColor.equals(that.textColor) : that.textColor != null) return false;
 
 		return true;
 	}
@@ -135,16 +130,14 @@ public class SavedCondition
 		int result = name != null ? name.hashCode() : 0;
 		result = 31 * result + (condition != null ? condition.hashCode() : 0);
 		result = 31 * result + (active ? 1 : 0);
-		result = 31 * result + (textColor != null ? textColor.hashCode() : 0);
-		result = 31 * result + (backgroundColor != null ? backgroundColor.hashCode() : 0);
-		result = 31 * result + (borderColor != null ? borderColor.hashCode() : 0);
+		result = 31 * result + (colorScheme != null ? colorScheme.hashCode() : 0);
 		return result;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "SavedCondition[name="+name+", condition="+condition+", textColor="+textColor+", backgroundColor="+backgroundColor+", borderColor="+borderColor+", active="+active+"]";
+		return "SavedCondition[name="+name+", condition="+condition+", colorScheme=="+colorScheme+", active="+active+"]";
 	}
 
 	public SavedCondition clone()
@@ -155,18 +148,11 @@ public class SavedCondition
 		{
 			result.condition=condition.clone();
 		}
-		result.textColor=clone(textColor);
-		result.backgroundColor=clone(backgroundColor);
-		result.borderColor=clone(borderColor);
+		if(colorScheme!=null)
+		{
+			result.colorScheme=colorScheme.clone();
+		}
 		return result;
 	}
 
-	private static Color clone(Color c)
-	{
-		if(c!=null)
-		{
-			return new Color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
-		}
-		return null;
-	}
 }
