@@ -239,31 +239,7 @@ public class SourcesPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Add");
-//			String source="";
 			editSourceName("", true);
-//			String sourceName="";
-//			editSourceNameDialog.setSourceIdentifier(source);
-//			editSourceNameDialog.setSourceName(sourceName);
-//			editSourceNameDialog.setAdding(true);
-//			Windows.showWindow(editSourceNameDialog, preferencesDialog, true);
-//			if(!editSourceNameDialog.isCanceled())
-//			{
-//				Map<String, String> data = sourceNameTableModel.getData();
-//				source=editSourceNameDialog.getSourceIdentifier();
-//				source=source.trim();
-//				sourceName=editSourceNameDialog.getSourceName();
-//				sourceName=sourceName.trim();
-//				if("".equals(sourceName))
-//				{
-//					data.remove(source);
-//				}
-//				else
-//				{
-//					data.put(source, sourceName);
-//				}
-//				sourceNameTableModel.setData(data);
-//			}
-//			if(logger.isDebugEnabled()) logger.debug("After show...");
 		}
 	}
 
@@ -336,6 +312,7 @@ public class SourcesPanel
 			}
 		}
 	}
+
 	private class SourceNameTableMouseListener
 			implements MouseListener
 	{
@@ -357,38 +334,12 @@ public class SourcesPanel
 				if(row>=0)
 				{
 					String source=(String) sourceNameTableModel.getValueAt(row,SourceNameTableModel.SOURCE_IDENTIFIER_COLUMN);
-//					String sourceName =(String) sourceNameTableModel.getValueAt(row,SourceNameTableModel.NAME_COLUMN);
 					if(source==null)
 					{
 						source="";
 					}
-//					if(sourceName==null)
-//					{
-//						sourceName="";
-//					}
 
 					editSourceName(source, false);
-//					editSourceNameDialog.setSourceIdentifier(source);
-//					editSourceNameDialog.setSourceName(sourceName);
-//					editSourceNameDialog.setAdding(false);
-//					Windows.showWindow(editSourceNameDialog, PreferencesDialog.this, true);
-//					if(!editSourceNameDialog.isCanceled())
-//					{
-//						Map<String, String> data = sourceNameTableModel.getData();
-//						source=editSourceNameDialog.getSourceIdentifier();
-//						source=source.trim();
-//						sourceName=editSourceNameDialog.getSourceName();
-//						sourceName=sourceName.trim();
-//						if("".equals(sourceName))
-//						{
-//							data.remove(source);
-//						}
-//						else
-//						{
-//							data.put(source, sourceName);
-//						}
-//						sourceNameTableModel.setData(data);
-//					}
 					if(logger.isInfoEnabled()) logger.info("After show...");
 				}
 			}
