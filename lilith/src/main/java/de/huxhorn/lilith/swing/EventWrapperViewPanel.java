@@ -38,6 +38,7 @@ import de.huxhorn.sulky.buffers.FilteringBuffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.And;
+import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.swing.SwingWorkManager;
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -65,6 +66,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JComboBox;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JToggleButton;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.DocumentEvent;
@@ -148,6 +150,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private JButton findNextButton;
 
 	private JToolBar findPanel;
+	private JToggleButton findNotButton;
 	private JComboBox findTypeCombo;
 	private JTextField findTextField;
 	private JLabel statusLabel;
@@ -223,6 +226,45 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		if(showingFilters)
 		{
 			initTypeCombo();
+			// select correct type in combo
+			Condition condition=getFilterCondition();
+			boolean not=false;
+			if(condition instanceof Not)
+			{
+				Not notCondition = (Not) condition;
+				not=true;
+				condition=notCondition.getCondition();
+			}
+			if(condition!=null)
+			{
+				String conditionName=null;
+				if(condition instanceof EventContainsCondition)
+				{
+					conditionName=EVENT_CONTAINS_CONDITION;
+				}
+				else if(condition instanceof MessageContainsCondition)
+				{
+					conditionName=MESSAGE_CONTAINS_CONDITION;
+				}
+				else if(condition instanceof LoggerStartsWithCondition)
+				{
+					conditionName=LOGGER_STARTS_WITH_CONDITION;
+				}
+				else if(condition instanceof LoggerEqualsCondition)
+				{
+					conditionName=LOGGER_EQUALS_CONDITION;
+				}
+				else if(condition instanceof GroovyCondition)
+				{
+					GroovyCondition groovyCondition = (GroovyCondition) condition;
+					conditionName=groovyCondition.getScriptFileName();
+				}
+				if(conditionName!=null)
+				{
+					findTypeCombo.setSelectedItem(conditionName);
+				}
+			}
+			findNotButton.setSelected(not);
 		}
 		findPanel.setVisible(showingFilters);
 		if(showingFilters)
@@ -444,10 +486,16 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.add(findViewButton);
 		findPanel.addSeparator();
 		findPanel.add(new JLabel("Find: "));
+
+		ActionListener findTypeModifiedListener = new FindTypeSelectionActionListener();
 		findTypeCombo=new JComboBox();
-		findTypeCombo.addActionListener(new FindTypeSelectionActionListener());
+		findTypeCombo.addActionListener(findTypeModifiedListener);
+		findNotButton=new JToggleButton("!");
+		findNotButton.addActionListener(findTypeModifiedListener);
+		findNotButton.setToolTipText("Not - inverts condition");
 		findTextField =new JTextField();
 		findTextField.setColumns(15);
+		findPanel.add(findNotButton);
 		findPanel.add(findTypeCombo);
 		findPanel.add(findTextField);
 
@@ -537,20 +585,17 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				if(isShowingFilters())
 				{
-					if(findTextField.isEnabled())
-					{
-						return findTextField;
-					}
-					if(findPrevButton.isEnabled())
-					{
-						return findPrevButton;
-					}
-					if(findNextButton.isEnabled())
-					{
-						return findNextButton;
-					}
+					return findNotButton;
 				}
 				return table;
+			}
+			if(aComponent.equals(findNotButton))
+			{
+				return findTypeCombo;
+			}
+			if(aComponent.equals(findTypeCombo))
+			{
+				return findTextField;
 			}
 			if(aComponent.equals(findTextField))
 			{
@@ -588,17 +633,21 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				return table;
 			}
-			if(aComponent.equals(findTextField))
+			if(aComponent.equals(findNotButton))
 			{
 				return messagePane;
 			}
+			if(aComponent.equals(findTypeCombo))
+			{
+				return findNotButton;
+			}
+			if(aComponent.equals(findTextField))
+			{
+				return findTypeCombo;
+			}
 			if(aComponent.equals(findPrevButton))
 			{
-				if(findTextField.isEnabled())
-				{
-					return findTextField;
-				}
-				return messagePane;
+				return findTextField;
 			}
 			if(aComponent.equals(findNextButton))
 			{
@@ -606,13 +655,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				{
 					return findPrevButton;
 				}
-				if(findTextField.isEnabled())
-				{
-					return findTextField;
-				}
-				return messagePane;
+				return findTextField;
 			}
 
+			// table
 			if(isShowingFilters())
 			{
 				if(findNextButton.isEnabled())
@@ -623,10 +669,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				{
 					return findPrevButton;
 				}
-				if(findTextField.isEnabled())
-				{
-					return findTextField;
-				}
+				return findTextField;
 			}
 			// I guess focus was inside table so focus component before table.
 			if(logger.isInfoEnabled()) logger.info("Moving focus backward to messagePane since it was not explicitly handled. (component={})", aComponent);
@@ -823,7 +866,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		if(condition!=null)
 		{
-			// TODO: wrap in Not if not is selected.
+			// wrap in Not if not is selected.
+			if(findNotButton.isSelected())
+			{
+				condition=new Not(condition);
+			}
 		}
 		if(logger.isDebugEnabled()) logger.debug("Setting condition: {}", condition);
 		setFilterCondition(condition);
