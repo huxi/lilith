@@ -108,6 +108,16 @@ public class SavedCondition
 		return null;
 	}
 
+	public ColorScheme getColorScheme()
+	{
+		return colorScheme;
+	}
+
+	public void setColorScheme(ColorScheme colorScheme)
+	{
+		this.colorScheme = colorScheme;
+	}
+
 	@Override
 	public boolean equals(Object o)
 	{

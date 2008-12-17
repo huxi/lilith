@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
+import de.huxhorn.sulky.swing.Windows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,10 +45,12 @@ public class EditConditionDialog
 {
 	private final Logger logger = LoggerFactory.getLogger(EditSourceNameDialog.class);
 
+	private SavedCondition savedCondition;
 	private JTextField conditionName;
 	private OkAction okAction;
 	private boolean adding;
 	private boolean canceled;
+	private ColorChooserDialog colorChooserDialog;
 
 	public EditConditionDialog(Dialog owner)
 	{
@@ -58,8 +61,10 @@ public class EditConditionDialog
 
 	private void createUi()
 	{
+		colorChooserDialog=new ColorChooserDialog(this);
 		okAction=new OkAction();
 		Action cancelAction = new CancelAction();
+		Action editColorAction = new EditColorAction();
 
 		TextKeyListener listener=new TextKeyListener();
 
@@ -94,12 +99,12 @@ public class EditConditionDialog
 
 		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(okAction));
+		buttonPanel.add(new JButton(editColorAction));
 		buttonPanel.add(new JButton(cancelAction));
 		add(buttonPanel, BorderLayout.SOUTH);
 
 		KeyStrokes.registerCommand(mainPanel, cancelAction, "CANCEL_ACTION");
 		KeyStrokes.registerCommand(buttonPanel, cancelAction, "CANCEL_ACTION");
-
 	}
 
 	public void setAdding(boolean adding)
@@ -142,6 +147,16 @@ public class EditConditionDialog
 		okAction.update();
 	}
 
+	public SavedCondition getSavedCondition()
+	{
+		return savedCondition;
+	}
+
+	public void setSavedCondition(SavedCondition savedCondition)
+	{
+		this.savedCondition = savedCondition;
+	}
+
 	public boolean isAdding()
 	{
 		return adding;
@@ -152,18 +167,10 @@ public class EditConditionDialog
 		return canceled;
 	}
 
-	public void setConditionName(String conditionName)
-	{
-		this.conditionName.setText(conditionName);
-	}
-
-	public String getConditionName()
-	{
-		return conditionName.getText();
-	}
-
 	public void initUI()
 	{
+		conditionName.setText(savedCondition.getName());
+		colorChooserDialog.setColorScheme(savedCondition.getColorScheme());
 		updateActions();
 	}
 
@@ -194,8 +201,36 @@ public class EditConditionDialog
 			if(name!=null && !"".equals(name.trim()))
 			{
 				canceled=false;
-				setVisible(false);
+				savedCondition.setName(conditionName.getText());
+				if(!colorChooserDialog.isCanceled())
+				{
+					savedCondition.setColorScheme(colorChooserDialog.getColorScheme());
+				}
+				EditConditionDialog.super.setVisible(false);
 			}
+		}
+	}
+
+
+	private class EditColorAction
+		extends AbstractAction
+	{
+
+		public EditColorAction()
+		{
+			super("Edit color");
+//			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
+//			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+//			putValue(Action.ACCELERATOR_KEY, accelerator);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+//			canceled=true;
+//			setVisible(false);
+			Windows.showWindow(colorChooserDialog, EditConditionDialog.this, true);
+			//colorChooserDialog.setVisible(true);
+
 		}
 	}
 
@@ -214,7 +249,7 @@ public class EditConditionDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled=true;
-			setVisible(false);
+			EditConditionDialog.super.setVisible(false);
 		}
 	}
 
