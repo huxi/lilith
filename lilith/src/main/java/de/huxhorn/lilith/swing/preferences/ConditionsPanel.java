@@ -19,6 +19,9 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.preferences.table.ConditionIndexRenderer;
+import de.huxhorn.lilith.swing.preferences.table.ConditionNameRenderer;
+import de.huxhorn.lilith.swing.preferences.table.ConditionPreviewRenderer;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.Windows;
 
@@ -32,6 +35,11 @@ import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.Action;
+import javax.swing.JTextArea;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumn;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import java.util.List;
@@ -59,6 +67,11 @@ public class ConditionsPanel
 	private ConditionTableModel conditionTableModel;
 	private EditConditionAction editConditionAction;
 	private RemoveConditionAction removeConditionAction;
+	private static final String DEFAULT_COLUMN_NAME_INDEX = "#";
+	private static final String DEFAULT_COLUMN_NAME_NAME = "Name";
+	private static final String DEFAULT_COLUMN_NAME_PREVIEW = "Preview";
+	//private static final String DEFAULT_COLUMN_NAME_ACTIVE = "Active";
+	private JTextArea conditionTextArea;
 
 	public ConditionsPanel(PreferencesDialog preferencesDialog)
 	{
@@ -75,11 +88,52 @@ public class ConditionsPanel
 		conditionTableModel = new ConditionTableModel(null);
 		conditionTable = new JTable(conditionTableModel);
 		conditionTable.addMouseListener(new ConditionTableMouseListener());
-		// TODO: implement ConditionTableColumnModel
-		JScrollPane sourceNameTableScrollPane = new JScrollPane(conditionTable);
 
-		JPanel conditionsPanel = new JPanel(new GridLayout(1, 1));
-		conditionsPanel.add(sourceNameTableScrollPane, BorderLayout.CENTER);
+		// TODO: implement ConditionTableColumnModel
+		DefaultTableColumnModel columnModel=new DefaultTableColumnModel();
+
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_INDEX);
+			col.setCellRenderer(new ConditionIndexRenderer());
+			columnModel.addColumn(col);
+		}
+
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_NAME);
+			col.setCellRenderer(new ConditionNameRenderer());
+			columnModel.addColumn(col);
+		}
+
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_PREVIEW);
+			col.setCellRenderer(new ConditionPreviewRenderer());
+			columnModel.addColumn(col);
+		}
+
+		/*
+
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_ACTIVE);
+			col.setCellRenderer(new IdRenderer());
+			columnModel.addColumn(col);
+		}
+		*/
+
+		conditionTable.setColumnModel(columnModel);
+
+		conditionTextArea=new JTextArea();
+		conditionTextArea.setEditable(false);
+		JScrollPane tableScrollPane = new JScrollPane(conditionTable);
+		JScrollPane descriptionScrollPane = new JScrollPane(conditionTextArea);
+		descriptionScrollPane.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Details"));
+
+		JPanel conditionsPanel = new JPanel(new GridLayout(2, 1));
+		conditionsPanel.add(tableScrollPane);
+		conditionsPanel.add(descriptionScrollPane);
 		JToolBar toolBar=new JToolBar();
 		toolBar.setFloatable(false);
 
@@ -116,8 +170,19 @@ public class ConditionsPanel
 		int selectedRow = conditionTable.getSelectedRow();
 		if(logger.isDebugEnabled()) logger.debug("selectedRow={}", selectedRow);
 		// no need to call convert since we only want to know if selected or not.
-		editConditionAction.setEnabled(selectedRow!=-1);
-		removeConditionAction.setEnabled(selectedRow!=-1);
+		SavedCondition condition=null;
+		if(selectedRow>-1 && selectedRow<conditions.size())
+		{
+			condition=conditions.get(selectedRow);
+		}
+		editConditionAction.setEnabled(condition!=null);
+		removeConditionAction.setEnabled(condition!=null);
+		String description="";
+		if(condition!=null)
+		{
+			description=""+condition.getCondition();
+		}
+		conditionTextArea.setText(description);
 	}
 
 	public void saveSettings()
@@ -147,14 +212,23 @@ public class ConditionsPanel
 			savedCondition=new SavedCondition(condition);
 		}
 
-		editConditionDialog.setConditionName(savedCondition.getName());
+		editConditionDialog.setSavedCondition(savedCondition);
 		editConditionDialog.setAdding(adding);
 		Windows.showWindow(editConditionDialog, preferencesDialog, true);
 		if(!editConditionDialog.isCanceled())
 		{
 			// TODO: check for duplicate name
-			String newName = editConditionDialog.getConditionName();
-			int index=conditions.indexOf(savedCondition);
+			SavedCondition newCondition = editConditionDialog.getSavedCondition();
+			int index=-1;
+			for(int i=0;i<conditions.size();i++)
+			{
+				if(newCondition.getCondition().equals(conditions.get(i).getCondition()))
+				{
+					index=i;
+					break;
+				}
+			}
+			//int index=conditions.indexOf(savedCondition);
 			if(index>-1)
 			{
 				conditions.remove(index);
@@ -164,8 +238,8 @@ public class ConditionsPanel
 			{
 				conditions.add(savedCondition);
 			}
-			newName=newName.trim();
-			savedCondition.setName(newName);
+			conditionTableModel.setData(conditions);
+			updateConditions();
 		}
 	}
 
@@ -286,9 +360,6 @@ public class ConditionsPanel
 	private class ConditionTableMouseListener
 			implements MouseListener
 	{
-		private final Logger logger = LoggerFactory.getLogger(ConditionTableMouseListener.class);
-
-
 		public ConditionTableMouseListener()
 		{
 		}
