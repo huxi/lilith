@@ -2051,7 +2051,7 @@ public class MainFrame
 
 			public void processLine(String line)
 			{
-				if(logger.isDebugEnabled()) logger.debug("{}: {}", file.getAbsolutePath(), line);
+				if(logger.isInfoEnabled()) logger.info("{}: {}", file.getAbsolutePath(), line);
 			}
 		}
 

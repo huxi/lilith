@@ -89,6 +89,9 @@ public class ConditionsPanel
 		conditionTable = new JTable(conditionTableModel);
 		conditionTable.addMouseListener(new ConditionTableMouseListener());
 
+		// TODO: MoveUpAction
+		// TODO: MoveDownAction
+		// TODO: active
 		// TODO: implement ConditionTableColumnModel
 		DefaultTableColumnModel columnModel=new DefaultTableColumnModel();
 
