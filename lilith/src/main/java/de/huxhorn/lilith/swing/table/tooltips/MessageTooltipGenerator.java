@@ -61,7 +61,7 @@ public class MessageTooltipGenerator
 							{
 								if(lineCounter>0)
 								{
-									string.append("\n>");
+									string.append("\n");
 								}
 								if(line.length()>MAX_LINE_LENGTH)
 								{
