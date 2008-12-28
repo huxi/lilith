@@ -781,28 +781,80 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		String text=findTextField.getText();
 		Condition condition;
-		boolean error=false;
-		if(text!=null && text.length()>0)
+		//boolean error=false;
+		String errorMessage=null;
+		if(text==null)
 		{
-			if(text.startsWith(GROOVY_IDENTIFIER))
-			{
-				String scriptName=text.substring(GROOVY_IDENTIFIER.length());
+			text="";
+		}
+		if(text.startsWith(GROOVY_IDENTIFIER))
+		{
+			String scriptName=text.substring(GROOVY_IDENTIFIER.length());
 
-				int idx=scriptName.indexOf('#');
-				if(idx > -1)
+			int idx=scriptName.indexOf('#');
+			if(idx > -1)
+			{
+				if(idx+1<scriptName.length())
 				{
-					if(idx+1<scriptName.length())
-					{
-						text=scriptName.substring(idx+1);
-					}
-					else
-					{
-						text="";
-					}
-					scriptName=scriptName.substring(0,idx);
+					text=scriptName.substring(idx+1);
 				}
-				if(logger.isInfoEnabled()) logger.info("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
-				File resolvedScriptFile=mainFrame.resolveConditionScriptFile(scriptName);
+				else
+				{
+					text="";
+				}
+				scriptName=scriptName.substring(0,idx);
+			}
+			if(logger.isDebugEnabled()) logger.debug("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
+			File resolvedScriptFile=mainFrame.resolveConditionScriptFile(scriptName);
+			if(resolvedScriptFile!=null)
+			{
+				// there is a file...
+				condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
+			}
+			else
+			{
+				errorMessage="Couldn't find groovy script '"+scriptName+"'.";
+				condition=null;
+			}
+		}
+		else if(text.startsWith(SAVED_CONDITION_IDENTIFIER))
+		{
+			String conditionName=text.substring(SAVED_CONDITION_IDENTIFIER.length());
+			SavedCondition savedCondition=mainFrame.getApplicationPreferences().resolveSavedCondition(conditionName);
+			if(savedCondition!=null)
+			{
+				condition=savedCondition.getCondition();
+			}
+			else
+			{
+				errorMessage="Couldn't find saved condition '"+conditionName+"'.";
+				condition=null;
+			}
+		}
+		else
+		{
+			// create condition matching the selected type
+			String selectedType= (String) findTypeCombo.getSelectedItem();
+			if(EVENT_CONTAINS_CONDITION.equals(selectedType))
+			{
+				condition=new EventContainsCondition(text);
+			}
+			else if(MESSAGE_CONTAINS_CONDITION.equals(selectedType))
+			{
+				condition=new MessageContainsCondition(text);
+			}
+			else if(LOGGER_STARTS_WITH_CONDITION.equals(selectedType))
+			{
+				condition=new LoggerStartsWithCondition(text);
+			}
+			else if(LOGGER_EQUALS_CONDITION.equals(selectedType))
+			{
+				condition=new LoggerEqualsCondition(text);
+			}
+			else
+			{
+				// we assume a groovy condition...
+				File resolvedScriptFile=mainFrame.resolveConditionScriptFile(selectedType);
 				if(resolvedScriptFile!=null)
 				{
 					// there is a file...
@@ -810,73 +862,20 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				}
 				else
 				{
-					error=true;
 					condition=null;
 				}
 			}
-			else if(text.startsWith(SAVED_CONDITION_IDENTIFIER))
-			{
-				String conditionName=text.substring(SAVED_CONDITION_IDENTIFIER.length());
-				SavedCondition savedCondition=mainFrame.getApplicationPreferences().resolveSavedCondition(conditionName);
-				if(savedCondition!=null)
-				{
-					condition=savedCondition.getCondition();
-				}
-				else
-				{
-					error=true;
-					condition=null;
-				}
-			}
-			else
-			{
-				// create condition matching the selected type
-				String selectedType= (String) findTypeCombo.getSelectedItem();
-				if(EVENT_CONTAINS_CONDITION.equals(selectedType))
-				{
-					condition=new EventContainsCondition(text);
-				}
-				else if(MESSAGE_CONTAINS_CONDITION.equals(selectedType))
-				{
-					condition=new MessageContainsCondition(text);
-				}
-				else if(LOGGER_STARTS_WITH_CONDITION.equals(selectedType))
-				{
-					condition=new LoggerStartsWithCondition(text);
-				}
-				else if(LOGGER_EQUALS_CONDITION.equals(selectedType))
-				{
-					condition=new LoggerEqualsCondition(text);
-				}
-				else
-				{
-					// we assume a groovy condition...
-					File resolvedScriptFile=mainFrame.resolveConditionScriptFile(selectedType);
-					if(resolvedScriptFile!=null)
-					{
-						// there is a file...
-						condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
-					}
-					else
-					{
-						condition=null;
-					}
-				}
-
-			}
 		}
-		else
-		{
-			condition=null;
-		}
-		if(error)
+		if(errorMessage!=null)
 		{
 			// problem with condition
 			findTextField.setBackground(ERROR_COLOR);
+			findTextField.setToolTipText(errorMessage);
 		}
 		else
 		{
 			findTextField.setBackground(Color.WHITE);
+			findTextField.setToolTipText(null);
 		}
 		if(condition!=null)
 		{
