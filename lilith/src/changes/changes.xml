@@ -178,6 +178,13 @@
             <action dev="jhux" type="update">
                 Cropping the message popup to a sane sizes...
             </action>
+            <action dev="jhux" type="update">
+                Updated groovy dependency to 1.6-RC-1.
+            </action>
+            <action dev="jhux" type="update">
+                Supporting conditions with empty argument. This is necessary because it might make sense for
+                groovy conditions.
+            </action>
             <action dev="jhux" type="add">
                 TODO: Install example groovy conditions if conditions folder is newly created.
             </action>
