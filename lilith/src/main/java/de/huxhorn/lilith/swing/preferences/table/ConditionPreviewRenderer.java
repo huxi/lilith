@@ -17,22 +17,21 @@
  */
 package de.huxhorn.lilith.swing.preferences.table;
 
-import de.huxhorn.lilith.swing.preferences.ColorScheme;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
+import de.huxhorn.lilith.swing.table.ColorScheme;
+import de.huxhorn.lilith.swing.table.renderer.ConditionalBorder;
 
-import javax.swing.table.TableCellRenderer;
-import javax.swing.JTable;
 import javax.swing.JLabel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.CompoundBorder;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Color;
 import java.awt.Component;
 
 public class ConditionPreviewRenderer
 		implements TableCellRenderer
 
 {
+	private ConditionalBorder border;
 	private JLabel renderer;
 	private static final ColorScheme DEFAULT_SCHEME = new ColorScheme();
 
@@ -41,6 +40,8 @@ public class ConditionPreviewRenderer
 		this.renderer = new JLabel();
 		renderer.setOpaque(true);
 		renderer.setText("Example");
+		border=new ConditionalBorder(Color.WHITE, 3, 3);
+		renderer.setBorder(border);
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
@@ -58,14 +59,22 @@ public class ConditionPreviewRenderer
 			scheme=DEFAULT_SCHEME;
 		}
 		
-		CompoundBorder border=new CompoundBorder(
-				new LineBorder(scheme.getBorderColor(), 3, false),
-				new EmptyBorder(5,5,5,5));
-
+		//CompoundBorder border=new CompoundBorder(
+		//		new LineBorder(scheme.getBorderColor(), 3, false),
+		//		new EmptyBorder(5,5,5,5));
+		border.setBorderColor(scheme.getBorderColor());
 		renderer.setForeground(scheme.getTextColor());
 		renderer.setBackground(scheme.getBackgroundColor());
 		renderer.setBorder(border);
-
+		if(table!=null)
+		{
+			int rowHeight=table.getRowHeight();
+			int preferredHeight=renderer.getPreferredSize().height;
+			if(rowHeight < preferredHeight)
+			{
+				table.setRowHeight(preferredHeight);
+			}
+		}
 		return renderer;
 	}
 }

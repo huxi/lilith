@@ -17,36 +17,41 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
-import de.huxhorn.lilith.swing.ColorsProvider;
-import de.huxhorn.lilith.swing.Colors;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
-import javax.swing.table.TableCellRenderer;
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
-
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.table.ColorScheme;
+import de.huxhorn.lilith.swing.table.Colors;
+import de.huxhorn.lilith.swing.table.ColorsProvider;
+
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Color;
+import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LevelRenderer
 		implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
-	private Map<String,Color> backgroundColors;
-	private Map<String,Color> foregroundColors;
+	private static final Map<LoggingEvent.Level, ColorScheme> colors;
+
+	static
+	{
+		colors=new HashMap<LoggingEvent.Level, ColorScheme>();
+
+		colors.put(LoggingEvent.Level.TRACE, new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9)));
+		colors.put(LoggingEvent.Level.DEBUG, new ColorScheme(Color.BLACK, Color.GREEN));
+		colors.put(LoggingEvent.Level.INFO, new ColorScheme(Color.BLACK, Color.WHITE));
+		colors.put(LoggingEvent.Level.WARN, new ColorScheme(Color.BLACK, Color.YELLOW));
+		colors.put(LoggingEvent.Level.ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
+	}
 
 	public LevelRenderer()
 	{
 		super();
-		backgroundColors=new HashMap<String, Color>();
-		backgroundColors.put("TRACE", new Color(0x80, 0xBA, 0xD9));
-		backgroundColors.put("DEBUG", Color.GREEN);
-		backgroundColors.put("INFO", Color.WHITE);
-		backgroundColors.put("WARN", Color.YELLOW);
-		backgroundColors.put("ERROR", Color.RED);
-		foregroundColors=new HashMap<String, Color>();
-		foregroundColors.put("ERROR", Color.YELLOW);
-		foregroundColors.put("TRACE", new Color(0x1F, 0x44, 0x58));
+
 		renderer=new LabelCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		renderer.setToolTipText(null);
@@ -66,6 +71,7 @@ public class LevelRenderer
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
 		String text="";
+		LoggingEvent.Level level=null;
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper=(EventWrapper)value;
@@ -73,7 +79,8 @@ public class LevelRenderer
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event=(LoggingEvent) eventObj;
-				text=""+event.getLevel();
+				level=event.getLevel();
+				text=""+level;
 			}
 		}
 		renderer.setText(text);
@@ -94,26 +101,37 @@ public class LevelRenderer
 				}
 			}
 		}
-		if(!colorsInitialized)
+		if(!colorsInitialized && level != null)
 		{
 			renderer.setForeground(Color.BLACK);
-			if(backgroundColors!=null)
+			ColorScheme scheme=colors.get(level);
+			if(scheme!=null)
 			{
-				Color c=backgroundColors.get(text);
-				if(c!=null)
 				{
-					renderer.setBackground(c);
+					Color c=scheme.getBackgroundColor();
+					if(c!=null)
+					{
+						renderer.setBackground(c);
+					}
 				}
-			}
-			if(foregroundColors!=null)
-			{
-				Color c=foregroundColors.get(text);
-				if(c!=null)
+
 				{
-					renderer.setForeground(c);
+					Color c=scheme.getTextColor();
+					if(c!=null)
+					{
+						renderer.setForeground(c);
+					}
+				}
+
+				{
+					Color c=scheme.getBorderColor();
+					renderer.setBorderColor(c);
 				}
 			}
 		}
+
+		renderer.correctRowHeight(table);
+
 		return renderer;
 	}
 }

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing;
+package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 

@@ -17,41 +17,42 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
-import de.huxhorn.lilith.swing.ColorsProvider;
-import de.huxhorn.lilith.swing.Colors;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.access.HttpStatus;
-
-import javax.swing.table.TableCellRenderer;
-import javax.swing.SwingConstants;
-import javax.swing.JTable;
-import java.awt.Component;
-import java.awt.Color;
-import java.util.Map;
-import java.util.HashMap;
-
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.access.HttpStatus;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.swing.table.ColorScheme;
+import de.huxhorn.lilith.swing.table.Colors;
+import de.huxhorn.lilith.swing.table.ColorsProvider;
+
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Color;
+import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StatusCodeRenderer
 		implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
-	private Map<HttpStatus.Type,Color> backgroundColors;
-	private Map<HttpStatus.Type,Color> foregroundColors;
+	private static final Map<HttpStatus.Type, ColorScheme> colors;
 
+	static
+	{
+		colors=new HashMap<HttpStatus.Type, ColorScheme>();
+
+		colors.put(HttpStatus.Type.SUCCESSFUL, new ColorScheme(Color.BLACK, Color.GREEN));
+		colors.put(HttpStatus.Type.INFORMATIONAL, new ColorScheme(Color.BLACK, Color.WHITE));
+		colors.put(HttpStatus.Type.REDIRECTION, new ColorScheme(Color.BLACK, Color.YELLOW));
+		colors.put(HttpStatus.Type.CLIENT_ERROR, new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE));
+		colors.put(HttpStatus.Type.SERVER_ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
+	}
 
 	public StatusCodeRenderer()
 	{
 		super();
-		backgroundColors=new HashMap<HttpStatus.Type, Color>();
-		backgroundColors.put(HttpStatus.Type.SUCCESSFUL, Color.GREEN);
-		backgroundColors.put(HttpStatus.Type.INFORMATIONAL, Color.WHITE);
-		backgroundColors.put(HttpStatus.Type.REDIRECTION, Color.YELLOW);
-		backgroundColors.put(HttpStatus.Type.CLIENT_ERROR, Color.RED);
-		backgroundColors.put(HttpStatus.Type.SERVER_ERROR, Color.RED);
-		foregroundColors=new HashMap<HttpStatus.Type, Color>();
-		foregroundColors.put(HttpStatus.Type.CLIENT_ERROR, Color.GREEN);
-		foregroundColors.put(HttpStatus.Type.SERVER_ERROR, Color.YELLOW);
+
 		renderer=new LabelCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		renderer.setToolTipText(null);
@@ -117,26 +118,39 @@ public class StatusCodeRenderer
 					if(status!=null)
 					{
 						HttpStatus.Type type = status.getType();
-						if(backgroundColors!=null)
+						if(type!=null)
 						{
-							Color c=backgroundColors.get(type);
-							if(c!=null)
+							ColorScheme scheme=colors.get(type);
+							if(scheme!=null)
 							{
-								renderer.setBackground(c);
-							}
-						}
-						if(foregroundColors!=null)
-						{
-							Color c=foregroundColors.get(type);
-							if(c!=null)
-							{
-								renderer.setForeground(c);
+								{
+									Color c=scheme.getBackgroundColor();
+									if(c!=null)
+									{
+										renderer.setBackground(c);
+									}
+								}
+
+								{
+									Color c=scheme.getTextColor();
+									if(c!=null)
+									{
+										renderer.setForeground(c);
+									}
+								}
+
+								{
+									Color c=scheme.getBorderColor();
+									renderer.setBorderColor(c);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+
+		renderer.correctRowHeight(table);
 
 		return renderer;
 	}

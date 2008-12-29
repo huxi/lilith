@@ -15,14 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing;
+package de.huxhorn.lilith.swing.table;
 
 import java.awt.Color;
 
 public class Colors
 {
-	private Color foreground;
-	private Color background;
+	private ColorScheme colorScheme;
 	private boolean sticky;
 
 	/**
@@ -32,24 +31,23 @@ public class Colors
 	 */
 	public Colors(Color foreground, Color background)
 	{
-		this(foreground, background, false);
+		this(new ColorScheme(foreground, background), false);
 	}
 
 	public Colors(Color foreground, Color background, boolean sticky)
 	{
-		this.foreground = foreground;
-		this.background = background;
+		this(new ColorScheme(foreground, background), sticky);
+	}
+
+	public Colors(ColorScheme colorScheme, boolean sticky)
+	{
+		this.colorScheme = colorScheme;
 		this.sticky=sticky;
 	}
 
-	public Color getForeground()
+	public ColorScheme getColorScheme()
 	{
-		return foreground;
-	}
-
-	public Color getBackground()
-	{
-		return background;
+		return colorScheme;
 	}
 
 	public boolean isSticky()
