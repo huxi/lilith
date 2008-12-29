@@ -23,6 +23,10 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.CompoundBorder;
 import java.awt.Component;
 
 public class ConditionPreviewRenderer
@@ -53,10 +57,15 @@ public class ConditionPreviewRenderer
 		{
 			scheme=DEFAULT_SCHEME;
 		}
+		
+		CompoundBorder border=new CompoundBorder(
+				new LineBorder(scheme.getBorderColor(), 3, false),
+				new EmptyBorder(5,5,5,5));
 
 		renderer.setForeground(scheme.getTextColor());
 		renderer.setBackground(scheme.getBackgroundColor());
-		// TODO: renderer.setBorderColor(scheme.getBorderColor());
+		renderer.setBorder(border);
+
 		return renderer;
 	}
 }
