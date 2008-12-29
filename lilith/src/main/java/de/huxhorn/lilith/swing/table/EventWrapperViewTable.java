@@ -17,43 +17,40 @@
  */
 package de.huxhorn.lilith.swing.table;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.InputMap;
-import javax.swing.ListSelectionModel;
-import javax.swing.JPopupMenu;
-import javax.swing.AbstractAction;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.table.TableColumn;
-import javax.swing.event.TableModelListener;
-import javax.swing.event.TableModelEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
-import java.awt.Point;
-import java.awt.Color;
-import java.awt.Container;
-import java.io.Serializable;
-import java.util.Map;
-import java.util.List;
-import java.util.Iterator;
-
-import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.swing.ColorsProvider;
-import de.huxhorn.lilith.swing.Colors;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
+import de.huxhorn.sulky.conditions.Condition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableColumn;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public abstract class EventWrapperViewTable<T extends Serializable>
 	extends JTable

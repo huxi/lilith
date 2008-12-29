@@ -17,10 +17,10 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.swing.Colors;
-import de.huxhorn.lilith.swing.ColorsProvider;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.table.Colors;
+import de.huxhorn.lilith.swing.table.ColorsProvider;
 
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -106,6 +106,8 @@ public class MessageRenderer
 		{
 			renderer.setForeground(foreground);
 		}
+
+		renderer.correctRowHeight(table);
 
 		return renderer;
 	}

@@ -17,9 +17,10 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
+import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 
 public class ToStringRenderer
 		implements TableCellRenderer
@@ -51,6 +52,8 @@ public class ToStringRenderer
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
 		renderer.setForeground(foreground);
+
+		renderer.correctRowHeight(table);
 
 		return renderer;
 	}

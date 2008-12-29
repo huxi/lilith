@@ -17,39 +17,40 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.lilith.swing.preferences.table.ConditionPreviewRenderer;
+import de.huxhorn.lilith.swing.table.ColorScheme;
+import de.huxhorn.sulky.swing.KeyStrokes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.JColorChooser;
-import javax.swing.JTabbedPane;
-import javax.swing.JCheckBox;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Dimension;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class EditConditionDialog
 	extends JDialog
@@ -129,16 +130,16 @@ public class EditConditionDialog
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		mainPanel.add(conditionName, gbc);
 
-		gbc.gridx=0;
-		gbc.gridy=1;
-		gbc.gridwidth=2;
-		gbc.weightx = 1.0;
+		gbc.gridx=2;
+		gbc.weightx = 0.0;
+		gbc.fill = GridBagConstraints.NONE;
 		activeCheckBox=new JCheckBox("Active");
+		activeCheckBox.setToolTipText("<html>Active conditions are used to determine the rendering of the table cells.<br>Too many active conditions will slow down the application!</html>");
 		mainPanel.add(activeCheckBox, gbc);
 
 		gbc.gridx=0;
-		gbc.gridy=2;
-		gbc.gridwidth=2;
+		gbc.gridy=1;
+		gbc.gridwidth=3;
 		gbc.weightx = 1.0;
 
 		mainPanel.add(tabbedPane, gbc);
@@ -149,7 +150,7 @@ public class EditConditionDialog
 		previewPanel.add(previewComponent);
 
 		gbc.gridx=0;
-		gbc.gridy=3;
+		gbc.gridy=2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		mainPanel.add(previewPanel, gbc);
 

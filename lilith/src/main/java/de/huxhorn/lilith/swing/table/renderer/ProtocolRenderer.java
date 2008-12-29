@@ -17,17 +17,16 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
-import de.huxhorn.lilith.swing.ColorsProvider;
-import de.huxhorn.lilith.swing.Colors;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
-import javax.swing.table.TableCellRenderer;
-import javax.swing.SwingConstants;
-import javax.swing.JTable;
-import java.awt.Component;
-import java.awt.Color;
-
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.swing.table.Colors;
+import de.huxhorn.lilith.swing.table.ColorsProvider;
+
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Color;
+import java.awt.Component;
 
 public class ProtocolRenderer
 		implements TableCellRenderer
@@ -88,6 +87,8 @@ public class ProtocolRenderer
 		{
 			renderer.setForeground(foreground);
 		}
+
+		renderer.correctRowHeight(table);
 
 		return renderer;
 	}
