@@ -19,7 +19,7 @@
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
 <!-- LV --><version>0.9.33-SNAPSHOT</version>
-		<relativePath>../../lilith-parent</relativePath>
+		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
 	<licenses>
@@ -48,7 +48,6 @@
 			<artifactId>stax</artifactId>
 			<version>1.2.0</version>
 			<scope>test</scope>
-			<optional />
 		</dependency>
 		
 		<dependency>
