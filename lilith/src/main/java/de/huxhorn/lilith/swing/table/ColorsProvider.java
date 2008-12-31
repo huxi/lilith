@@ -17,9 +17,7 @@
  */
 package de.huxhorn.lilith.swing.table;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
 public interface ColorsProvider
 {
-	Colors resolveColors(EventWrapper object, int row, int column);
+	Colors resolveColors(Object object, int row, int column);
 }

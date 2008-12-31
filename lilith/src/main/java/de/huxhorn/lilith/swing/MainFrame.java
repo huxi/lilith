@@ -17,60 +17,56 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.Lilith;
+import de.huxhorn.lilith.LilithBuffer;
+import de.huxhorn.lilith.LilithSounds;
+import de.huxhorn.lilith.appender.InternalLilithAppender;
+import de.huxhorn.lilith.consumers.*;
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
-import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
-import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender;
-import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender;
-import de.huxhorn.lilith.consumers.AlarmSoundAccessEventConsumer;
-import de.huxhorn.lilith.consumers.AlarmSoundLoggingEventConsumer;
-import de.huxhorn.lilith.consumers.FileDumpEventConsumer;
-import de.huxhorn.lilith.consumers.FileSplitterEventConsumer;
-import de.huxhorn.lilith.consumers.RrdLoggingEventConsumer;
-import de.huxhorn.lilith.engine.EventConsumer;
-import de.huxhorn.lilith.engine.EventSource;
-import de.huxhorn.lilith.engine.EventSourceListener;
-import de.huxhorn.lilith.engine.FileBufferFactory;
-import de.huxhorn.lilith.engine.LogFileFactory;
-import de.huxhorn.lilith.engine.SourceManager;
-import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
-import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.*;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
 import de.huxhorn.lilith.engine.impl.sourceproducer.SerializingMessageBasedServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
+import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
+import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender;
+import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender;
+import de.huxhorn.lilith.logback.producer.LogbackAccessServerSocketEventSourceProducer;
+import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.services.gotosrc.GoToSourceService;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
-import de.huxhorn.lilith.services.gotosrc.GoToSourceService;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
+import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
 import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
-import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
-import de.huxhorn.lilith.LilithSounds;
-import de.huxhorn.lilith.Lilith;
-import de.huxhorn.lilith.LilithBuffer;
-import de.huxhorn.lilith.appender.InternalLilithAppender;
-import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceProducer;
-import de.huxhorn.lilith.logback.producer.LogbackAccessServerSocketEventSourceProducer;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.lilith.swing.table.ColorScheme;
+import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
+import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
+import de.huxhorn.sulky.swing.AbstractProgressingCallable;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.SwingWorkManager;
 import de.huxhorn.sulky.swing.Windows;
-import de.huxhorn.sulky.swing.AbstractProgressingCallable;
-import de.huxhorn.sulky.formatting.SimpleXml;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.httpclient.HttpClient;
+import groovy.lang.Binding;
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.Script;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.io.IOUtils;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.ApplicationEvent;
 import org.simplericity.macify.eawt.ApplicationListener;
@@ -78,56 +74,20 @@ import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Frame;
-import java.awt.Toolkit;
-import java.awt.Point;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.FileFilter;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.Arrays;
-
-import groovy.lang.Binding;
-import groovy.lang.GroovyClassLoader;
-import groovy.lang.Script;
 
 public class MainFrame
 		extends JFrame
@@ -276,7 +236,10 @@ public class MainFrame
 		statisticsDialog = new StatisticsDialog(this);
 		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
 		groovyConditionsPath = new File(startupApplicationPath, "conditions");
-		groovyConditionsPath.mkdirs();
+		if(groovyConditionsPath.mkdirs())
+        {
+            // TODO: groovy Conditions was generated, create examples...
+        }
 
 		loggingEventViewManager=new LoggingEventViewManager(this);
 		accessEventViewManager=new AccessEventViewManager(this);
@@ -749,7 +712,44 @@ public class MainFrame
 		popup.show(component, p.x, p.y);
 	}
 
-	public class MyApplicationListener
+    // TODO: preferences
+    private static final Map<LoggingEvent.Level, Colors> levelColors;
+
+    static
+    {
+        levelColors=new HashMap<LoggingEvent.Level, Colors>();
+
+        levelColors.put(LoggingEvent.Level.TRACE, new Colors(new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9))));
+        levelColors.put(LoggingEvent.Level.DEBUG, new Colors(new ColorScheme(Color.BLACK, Color.GREEN)));
+        levelColors.put(LoggingEvent.Level.INFO, new Colors(new ColorScheme(Color.BLACK, Color.WHITE)));
+        levelColors.put(LoggingEvent.Level.WARN, new Colors(new ColorScheme(Color.BLACK, Color.YELLOW)));
+        levelColors.put(LoggingEvent.Level.ERROR, new Colors(new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE)));
+    }
+
+    public Colors getColors(LoggingEvent.Level level)
+    {
+        return levelColors.get(level);
+    }
+
+    // TODO: preferences
+    private static final Map<de.huxhorn.lilith.data.access.HttpStatus.Type, Colors> statusColors;
+
+    static
+    {
+        statusColors=new HashMap<de.huxhorn.lilith.data.access.HttpStatus.Type, Colors>();
+
+        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.SUCCESSFUL, new Colors(new ColorScheme(Color.BLACK, Color.GREEN)));
+        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.INFORMATIONAL, new Colors(new ColorScheme(Color.BLACK, Color.WHITE)));
+        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.REDIRECTION, new Colors(new ColorScheme(Color.BLACK, Color.YELLOW)));
+        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.CLIENT_ERROR, new Colors(new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE)));
+        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.SERVER_ERROR, new Colors(new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE)));
+    }
+
+    public Colors getColors(de.huxhorn.lilith.data.access.HttpStatus.Type status) {
+        return statusColors.get(status);
+    }
+
+    public class MyApplicationListener
 			implements ApplicationListener
 	{
 
