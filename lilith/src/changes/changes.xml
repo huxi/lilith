@@ -85,7 +85,10 @@
                 TODO: Add transfer size statistics.
             </action>
             <action dev="jhux" type="add">
-                TODO: Case-insensitive search (Ekke)
+                TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
+                EventReceiver, EventHandler (?, stuff like the fart on error,
+                RRD statistics, anything that's working directly on received events), GoToSource). 
+                Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
             </action>
         </release>
 
@@ -185,6 +188,15 @@
                 Supporting conditions with empty argument. This is necessary because it might make sense for
                 groovy conditions.
             </action>
+            <action dev="jhux" type="update">
+                Added EventIdentifier that will be needed for caching of condition results.
+                Changed EventWrapper to use EventIdentifier instead of Source ID + localId.
+                Since this changes serialization anyway I took the opportunity to also add omittedElements to ThrowableInfo.
+                Updated xml IO accordingly.
+            </action>
+            <action dev="jhux" type="update">
+                TODO: Update/upload new schema. (EventWrapper, Logging)
+            </action>
             <action dev="jhux" type="add">
                 TODO: Install example groovy conditions if conditions folder is newly created.
             </action>
@@ -198,7 +210,7 @@
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
             </action>
             <action dev="jhux" type="update">
-                TODO: Support for Logback 0.9.14(?)
+                TODO: Support for Logback 0.9.15(?)
             </action>
 		</release>
 

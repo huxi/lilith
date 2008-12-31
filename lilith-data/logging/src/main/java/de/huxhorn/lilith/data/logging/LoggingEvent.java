@@ -18,9 +18,9 @@
 package de.huxhorn.lilith.data.logging;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
-import java.util.Arrays;
 
 /**
  * <p>Replacement for ch.qos.logback.classic.spi.LoggingEvent</p>
@@ -37,10 +37,9 @@ import java.util.Arrays;
 public class LoggingEvent
 	implements Serializable
 {
-	// changed in 0.9.32
-	private static final long serialVersionUID = -2716224578048229667L;
+    private static final long serialVersionUID = -2716224578048229667L;
 
-	public enum Level
+    public enum Level
 	{
 		TRACE,
 		DEBUG,

@@ -64,4 +64,6 @@ public interface LoggingEventSchemaConstants
 	String ST_CODE_LOCATION_NODE="CodeLocation";
 	String ST_VERSION_NODE="Version";
 	String ST_EXACT_NODE="Exact";
+
+    String OMITTED_ELEMENTS_ATTRIBUTE="omittedElements";
 }

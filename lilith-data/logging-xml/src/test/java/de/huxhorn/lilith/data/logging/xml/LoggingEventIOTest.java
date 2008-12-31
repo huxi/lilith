@@ -17,25 +17,17 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import javax.xml.stream.*;
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -126,6 +118,7 @@ public class LoggingEventIOTest
 		LoggingEvent event=createMinimalEvent();
 		ThrowableInfo ti=createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
 		ThrowableInfo ti2=createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
+        ti2.setOmittedElements(17);
 		ThrowableInfo ti3=createThrowableInfo("yet.another.exception.class.Name", "Huhu! Exception Message");
 		ti.setCause(ti2);
 		ti2.setCause(ti3);

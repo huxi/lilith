@@ -17,10 +17,10 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -232,6 +232,11 @@ public class LoggingEventWriter
 		{
 			StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, nodeName);
 			StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, THROWABLE_CLASS_NAME_ATTRIBUTE, throwable.getName());
+            int omitted=throwable.getOmittedElements();
+            if(omitted!=0)
+            {
+                StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, OMITTED_ELEMENTS_ATTRIBUTE, ""+throwable.getOmittedElements());
+            }
 			// TODO: can message be null?
 			StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, THROWABLE_MESSAGE_NODE, throwable.getMessage());
 			writeStackTraceNode(writer, throwable.getStackTrace(), STACK_TRACE_NODE);

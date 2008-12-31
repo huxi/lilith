@@ -17,10 +17,10 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -259,6 +259,20 @@ public class LoggingEventReader
 			ThrowableInfo throwable=new ThrowableInfo();
 			String name=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THROWABLE_CLASS_NAME_ATTRIBUTE);
 			throwable.setName(name);
+            String omittedStr=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, OMITTED_ELEMENTS_ATTRIBUTE);
+            if(omittedStr!=null)
+            {
+                try
+                {
+                    int omitted=Integer.parseInt(omittedStr);
+                    throwable.setOmittedElements(omitted);
+                }
+                catch(NumberFormatException ex)
+                {
+                    // ignore
+                }
+
+            }
 			reader.nextTag();
 
 			throwable.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_MESSAGE_NODE));
