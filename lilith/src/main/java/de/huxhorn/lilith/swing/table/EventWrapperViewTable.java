@@ -284,7 +284,13 @@ public abstract class EventWrapperViewTable<T extends Serializable>
             {
                 return NOT_MATCHING_COLORS;
             }
-            // TODO: check active conditions, if none match...
+            // check active conditions...
+            Colors colors=mainFrame.getColors((EventWrapper) object);
+            if(colors!=null)
+            {
+                return colors;
+            }
+            // if none match...
             if(row%2 == 0)
             {
                 return EVEN_ROW_COLORS;
