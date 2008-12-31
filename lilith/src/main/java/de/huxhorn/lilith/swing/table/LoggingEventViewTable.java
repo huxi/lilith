@@ -18,26 +18,16 @@
 package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
-import de.huxhorn.lilith.swing.table.tooltips.*;
+import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
-import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
-import de.huxhorn.lilith.swing.table.renderer.LevelRenderer;
-import de.huxhorn.lilith.swing.table.renderer.LoggerNameRenderer;
-import de.huxhorn.lilith.swing.table.renderer.MessageRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ThrowableRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ThreadRenderer;
-import de.huxhorn.lilith.swing.table.renderer.MarkerRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
-import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
-import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.lilith.swing.table.renderer.*;
+import de.huxhorn.lilith.swing.table.tooltips.*;
 
 import javax.swing.table.TableColumn;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 public class LoggingEventViewTable
 	extends EventWrapperViewTable<LoggingEvent>
@@ -173,4 +163,14 @@ public class LoggingEventViewTable
 	{
 		return mainFrame.getApplicationPreferences().readLoggingColumnLayout(isGlobal());
 	}
+
+    @Override
+    public Colors resolveColors(Object object, int row, int column)
+    {
+        if(object instanceof LoggingEvent.Level)
+        {
+            return mainFrame.getColors((LoggingEvent.Level)object);
+        }
+        return super.resolveColors(object, row, column);
+    }
 }

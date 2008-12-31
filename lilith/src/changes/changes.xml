@@ -198,6 +198,9 @@
                 Updated and uploaded new logging schema.
             </action>
             <action dev="jhux" type="add">
+                TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
+            </action>
+            <action dev="jhux" type="add">
                 TODO: Install example groovy conditions if conditions folder is newly created.
             </action>
             <action dev="jhux" type="add">

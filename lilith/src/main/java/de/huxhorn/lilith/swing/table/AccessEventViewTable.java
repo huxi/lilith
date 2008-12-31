@@ -18,24 +18,17 @@
 package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.swing.table.tooltips.*;
+import de.huxhorn.lilith.data.access.HttpStatus;
+import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
-import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
-import de.huxhorn.lilith.swing.table.renderer.StatusCodeRenderer;
-import de.huxhorn.lilith.swing.table.renderer.MethodRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ProtocolRenderer;
-import de.huxhorn.lilith.swing.table.renderer.RequestUriRenderer;
-import de.huxhorn.lilith.swing.table.renderer.RemoteAddrRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
-import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
-import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.lilith.swing.table.renderer.*;
+import de.huxhorn.lilith.swing.table.tooltips.*;
 
 import javax.swing.table.TableColumn;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 public class AccessEventViewTable
 	extends EventWrapperViewTable<AccessEvent>
@@ -157,4 +150,15 @@ public class AccessEventViewTable
 	{
 		return mainFrame.getApplicationPreferences().readAccessColumnLayout(isGlobal());
 	}
+
+    @Override
+    public Colors resolveColors(Object object, int row, int column)
+    {
+        if(object instanceof HttpStatus.Type)
+        {
+            return mainFrame.getColors((HttpStatus.Type)object);
+        }
+        return super.resolveColors(object, row, column);
+    }
+
 }

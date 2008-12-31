@@ -26,27 +26,12 @@ import de.huxhorn.sulky.conditions.Condition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.InputMap;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
@@ -291,17 +276,22 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private static final Colors EVEN_ROW_COLORS =new Colors(new Color(0,0,0), new Color(255,255,255));
 	private static final Colors ODD_ROW_COLORS =new Colors(new Color(0,0,0), new Color(0xE9,0xED,0xF2));
 	
-	public Colors resolveColors(EventWrapper object, int row, int column)
+	public Colors resolveColors(Object object, int row, int column)
 	{
-		if(filterCondition!=null && !filterCondition.isTrue(object))
-		{
-			return NOT_MATCHING_COLORS;
-		}
-		if(row%2 == 0)
-		{
-			return EVEN_ROW_COLORS;
-		}
-		return ODD_ROW_COLORS;
+        if(object instanceof EventWrapper)
+        {
+            if(filterCondition!=null && !filterCondition.isTrue(object))
+            {
+                return NOT_MATCHING_COLORS;
+            }
+            // TODO: check active conditions, if none match...
+            if(row%2 == 0)
+            {
+                return EVEN_ROW_COLORS;
+            }
+            return ODD_ROW_COLORS;
+        }
+        return null;
 	}
 
 

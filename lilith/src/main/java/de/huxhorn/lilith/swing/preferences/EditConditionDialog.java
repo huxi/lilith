@@ -17,36 +17,13 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.lilith.swing.preferences.table.ConditionPreviewRenderer;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.sulky.swing.KeyStrokes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -63,14 +40,10 @@ public class EditConditionDialog
 	private boolean adding;
 	private boolean canceled;
 
-	private JColorChooser textChooser;
-	private JColorChooser backgroundChooser;
-	private JColorChooser borderChooser;
-	private ColorChangeListener colorChangeListener;
-	private ConditionPreviewRenderer previewDummyRenderer;
 	private JCheckBox activeCheckBox;
+    private ColorSchemeEditorPanel colorSchemeEditorPanel;
 
-	public EditConditionDialog(Dialog owner)
+    public EditConditionDialog(Dialog owner)
 	{
 		super(owner);
 		setModal(true);
@@ -79,29 +52,6 @@ public class EditConditionDialog
 
 	private void createUi()
 	{
-		JPanel emptyPreview = new JPanel();
-		emptyPreview.setMinimumSize(new Dimension(0, 0));
-		emptyPreview.setPreferredSize(new Dimension(0, 0));
-		emptyPreview.setMaximumSize(new Dimension(0, 0));
-
-		colorChangeListener = new ColorChangeListener();
-		textChooser = new JColorChooser();
-		textChooser.setPreviewPanel(emptyPreview);
-		attachChangeListener(textChooser);
-
-		backgroundChooser = new JColorChooser();
-		backgroundChooser.setPreviewPanel(emptyPreview);
-		attachChangeListener(backgroundChooser);
-
-		borderChooser = new JColorChooser();
-		borderChooser.setPreviewPanel(emptyPreview);
-		attachChangeListener(borderChooser);
-
-		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.add("Text", textChooser);
-		tabbedPane.add("Background", backgroundChooser);
-		tabbedPane.add("Border", borderChooser);
-
 		okAction=new OkAction();
 		Action cancelAction = new CancelAction();
 
@@ -142,17 +92,9 @@ public class EditConditionDialog
 		gbc.gridwidth=3;
 		gbc.weightx = 1.0;
 
-		mainPanel.add(tabbedPane, gbc);
-		previewDummyRenderer =new ConditionPreviewRenderer();
-		Component previewComponent = previewDummyRenderer.getTableCellRendererComponent(null, null, false, false, 0, 0);
-		JPanel previewPanel=new JPanel(new GridLayout(1,1));
-		previewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Preview"));
-		previewPanel.add(previewComponent);
+        colorSchemeEditorPanel=new ColorSchemeEditorPanel();
 
-		gbc.gridx=0;
-		gbc.gridy=2;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		mainPanel.add(previewPanel, gbc);
+		mainPanel.add(colorSchemeEditorPanel, gbc);
 
 		setLayout(new BorderLayout());
 		add(mainPanel, BorderLayout.CENTER);
@@ -166,21 +108,6 @@ public class EditConditionDialog
 		KeyStrokes.registerCommand(buttonPanel, cancelAction, "CANCEL_ACTION");
 	}
 
-	private void attachChangeListener(JColorChooser chooser)
-	{
-		AbstractColorChooserPanel[] panels = chooser.getChooserPanels();
-		if(panels!=null)
-		{
-			for(AbstractColorChooserPanel current:panels)
-			{
-				current.getColorSelectionModel().addChangeListener(colorChangeListener);
-			}
-		}
-		else
-		{
-			if(logger.isWarnEnabled()) logger.warn("No chooser panels!");
-		}
-	}
 
 	public void setAdding(boolean adding)
 	{
@@ -247,14 +174,7 @@ public class EditConditionDialog
 		conditionName.setText(savedCondition.getName());
 		ColorScheme colorScheme = savedCondition.getColorScheme();
 
-		if(colorScheme==null)
-		{
-			colorScheme=new ColorScheme();
-		}
-
-		textChooser.setColor(colorScheme.getTextColor());
-		backgroundChooser.setColor(colorScheme.getBackgroundColor());
-		borderChooser.setColor(colorScheme.getBorderColor());
+        colorSchemeEditorPanel.setColorScheme(colorScheme);
 
 		activeCheckBox.setSelected(savedCondition.isActive());
 		updateActions();
@@ -288,11 +208,7 @@ public class EditConditionDialog
 			{
 				canceled=false;
 				savedCondition.setName(conditionName.getText());
-				ColorScheme colorScheme=new ColorScheme(
-						textChooser.getColor(),
-						backgroundChooser.getColor(),
-						borderChooser.getColor()
-				);
+				ColorScheme colorScheme=colorSchemeEditorPanel.getColorScheme();
 				savedCondition.setColorScheme(colorScheme);
 				savedCondition.setActive(activeCheckBox.isSelected());
 				EditConditionDialog.super.setVisible(false);
@@ -344,29 +260,6 @@ public class EditConditionDialog
 
 		public void keyReleased(KeyEvent e)
 		{
-		}
-	}
-
-	private class ColorChangeListener
-		implements ChangeListener
-	{
-		private SavedCondition dummyCondition;
-
-		private ColorChangeListener()
-		{
-			dummyCondition=new SavedCondition();
-			dummyCondition.setColorScheme(new ColorScheme());
-		}
-
-		public void stateChanged(ChangeEvent e)
-		{
-			// update preview component...
-			ColorScheme cs = dummyCondition.getColorScheme();
-			cs.setTextColor(textChooser.getColor());
-			cs.setBackgroundColor(backgroundChooser.getColor());
-			cs.setBorderColor(borderChooser.getColor());
-			if(logger.isDebugEnabled()) logger.debug("initializing to {}...", dummyCondition);
-			previewDummyRenderer.getTableCellRendererComponent(null, dummyCondition, false, false, 0, 0);
 		}
 	}
 }

@@ -23,30 +23,14 @@ import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.*;
 
 public class LevelRenderer
 		implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
-	private static final Map<LoggingEvent.Level, ColorScheme> colors;
-
-	static
-	{
-		colors=new HashMap<LoggingEvent.Level, ColorScheme>();
-
-		colors.put(LoggingEvent.Level.TRACE, new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9)));
-		colors.put(LoggingEvent.Level.DEBUG, new ColorScheme(Color.BLACK, Color.GREEN));
-		colors.put(LoggingEvent.Level.INFO, new ColorScheme(Color.BLACK, Color.WHITE));
-		colors.put(LoggingEvent.Level.WARN, new ColorScheme(Color.BLACK, Color.YELLOW));
-		colors.put(LoggingEvent.Level.ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
-	}
 
 	public LevelRenderer()
 	{
@@ -101,10 +85,15 @@ public class LevelRenderer
 				}
 			}
 		}
-		if(!colorsInitialized && level != null)
-		{
+		if(!colorsInitialized && level != null  && table instanceof ColorsProvider)
+        {
+            ColorsProvider cp=(ColorsProvider) table;
+            Colors colors=cp.resolveColors(level, rowIndex, vColIndex);
+
+            ColorScheme scheme=colors.getColorScheme();
+
 			renderer.setForeground(Color.BLACK);
-			ColorScheme scheme=colors.get(level);
+
 			if(scheme!=null)
 			{
 				{

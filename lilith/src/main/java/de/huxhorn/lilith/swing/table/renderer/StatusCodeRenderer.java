@@ -24,30 +24,14 @@ import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.*;
 
 public class StatusCodeRenderer
 		implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
-	private static final Map<HttpStatus.Type, ColorScheme> colors;
-
-	static
-	{
-		colors=new HashMap<HttpStatus.Type, ColorScheme>();
-
-		colors.put(HttpStatus.Type.SUCCESSFUL, new ColorScheme(Color.BLACK, Color.GREEN));
-		colors.put(HttpStatus.Type.INFORMATIONAL, new ColorScheme(Color.BLACK, Color.WHITE));
-		colors.put(HttpStatus.Type.REDIRECTION, new ColorScheme(Color.BLACK, Color.YELLOW));
-		colors.put(HttpStatus.Type.CLIENT_ERROR, new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE));
-		colors.put(HttpStatus.Type.SERVER_ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
-	}
 
 	public StatusCodeRenderer()
 	{
@@ -118,9 +102,12 @@ public class StatusCodeRenderer
 					if(status!=null)
 					{
 						HttpStatus.Type type = status.getType();
-						if(type!=null)
+						if(type!=null && table instanceof ColorsProvider)
 						{
-							ColorScheme scheme=colors.get(type);
+                            ColorsProvider cp=(ColorsProvider) table;
+                            Colors colors=cp.resolveColors(type, rowIndex, vColIndex);
+
+							ColorScheme scheme=colors.getColorScheme();
 							if(scheme!=null)
 							{
 								{
