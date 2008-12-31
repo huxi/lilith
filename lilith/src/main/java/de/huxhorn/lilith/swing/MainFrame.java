@@ -48,10 +48,12 @@ import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
 import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
+import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.AbstractProgressingCallable;
@@ -137,8 +139,9 @@ public class MainFrame
 	private String[] conditionScriptFiles;
 	private long lastConditionsCheck;
 	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
+    private List<SavedCondition> activeConditions;
 
-	public String[] getAllConditionScriptFiles()
+    public String[] getAllConditionScriptFiles()
 	{
 		if(conditionScriptFiles == null || ((System.currentTimeMillis()-lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
 		{
@@ -711,6 +714,24 @@ public class MainFrame
 		JPopupMenu popup=viewActions.getPopupMenu();
 		popup.show(component, p.x, p.y);
 	}
+
+    public Colors getColors(EventWrapper eventWrapper)
+    {
+        if(activeConditions != null)
+        {
+            // TODO: implement cache
+            for(SavedCondition current:activeConditions)
+            {
+                Condition condition = current.getCondition();
+                if(condition != null && condition.isTrue(eventWrapper))
+                {
+                    return new Colors(current.getColorScheme());
+                }
+            }
+        }
+        return null;
+
+    }
 
     // TODO: preferences
     private static final Map<LoggingEvent.Level, Colors> levelColors;
@@ -1810,6 +1831,21 @@ public class MainFrame
 
 	private void updateConditions()
 	{
+        List<SavedCondition> conditions = applicationPreferences.getConditions();
+        List<SavedCondition> active=new ArrayList<SavedCondition>();
+        if(conditions != null)
+        {
+            for(SavedCondition current:conditions)
+            {
+                if(current.isActive())
+                {
+                    active.add(current);
+                }
+            }
+        }
+        activeConditions=active;
+        flushCachedConditionResults();
+
 		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
 		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 		{
@@ -1824,7 +1860,12 @@ public class MainFrame
 		}
 	}
 
-	public void deleteInactiveLogs(LogFileFactory fileFactory)
+    private void flushCachedConditionResults()
+    {
+        // TODO: implement flushCachedConditionResults()
+    }
+
+    public void deleteInactiveLogs(LogFileFactory fileFactory)
 	{
 		List<SourceIdentifier> inactives = collectInactiveLogs(fileFactory);
 		for(SourceIdentifier si: inactives)
