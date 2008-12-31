@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Joern Huxhorn (Arc Worldwide GmbH) -->
 <!--
 Lilith - a log event viewer.
 Copyright (C) 2007-2008 Joern Huxhorn
@@ -183,6 +182,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xs:attribute name="name" type="NonEmptyCollapsingString" use="required">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">The class name of the Throwable.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="omittedElements" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of omitted common StackTraceElements</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
