@@ -195,7 +195,7 @@
                 Updated xml IO accordingly.
             </action>
             <action dev="jhux" type="update">
-                TODO: Update/upload new schema. (EventWrapper, Logging)
+                Updated and uploaded new logging schema.
             </action>
             <action dev="jhux" type="add">
                 TODO: Install example groovy conditions if conditions folder is newly created.
