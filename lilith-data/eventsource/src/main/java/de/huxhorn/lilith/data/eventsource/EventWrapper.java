@@ -22,51 +22,80 @@ import java.io.Serializable;
 public class EventWrapper<T extends Serializable>
 	implements Serializable
 {
-	private static final long serialVersionUID = 3808543272632091647L;
 
-	private SourceIdentifier sourceIdentifier;
+    private EventIdentifier eventIdentifier;
 	private T event;
-	private long localId;
-	
+
 	/**
 	 * This attribute is ignored in equals and hashCode.
 	 * It's transient and won't survive serialization.
 	 */
 	private transient TransferSizeInfo transferSizeInfo;
+    private static final long serialVersionUID = 6302031645772429174L;
 
-	public EventWrapper(SourceIdentifier sourceIdentifier, long localId, T event)
+    public EventWrapper()
+    {
+        this(null, -1, null);
+    }
+
+    public EventWrapper(SourceIdentifier sourceIdentifier, long localId, T event)
 	{
-		this.sourceIdentifier=sourceIdentifier;
-		this.localId=localId;
-		this.event=event;
+		this(new EventIdentifier(sourceIdentifier, localId), event);
 	}
 
-	public EventWrapper()
+    public EventWrapper(EventIdentifier eventIdentifier, T event)
 	{
-		this(null, -1, null);
+		this.eventIdentifier=eventIdentifier;
+		this.event=event;
 	}
 
 	public SourceIdentifier getSourceIdentifier()
 	{
-		return sourceIdentifier;
+        if(eventIdentifier!=null)
+        {
+		    return eventIdentifier.getSourceIdentifier();
+        }
+        return null;
 	}
 
 	public void setSourceIdentifier(SourceIdentifier sourceIdentifier)
 	{
-		this.sourceIdentifier = sourceIdentifier;
+        if(eventIdentifier==null)
+        {
+            eventIdentifier=new EventIdentifier();
+        }
+        eventIdentifier.setSourceIdentifier(sourceIdentifier);
 	}
 
 	public long getLocalId()
 	{
-		return localId;
+        if(eventIdentifier!=null)
+        {
+            return eventIdentifier.getLocalId();
+        }
+		return EventIdentifier.NO_LOCAL_ID;
 	}
 
 	public void setLocalId(long localId)
 	{
-		this.localId = localId;
+        if(eventIdentifier==null)
+        {
+            eventIdentifier=new EventIdentifier();
+        }
+		eventIdentifier.setLocalId(localId);
 	}
 
-	public TransferSizeInfo getTransferSizeInfo()
+    public EventIdentifier getEventIdentifier()
+    {
+        return eventIdentifier;
+    }
+
+    public void setEventIdentifier(EventIdentifier eventIdentifier)
+    {
+        this.eventIdentifier = eventIdentifier;
+    }
+
+    public TransferSizeInfo getTransferSizeInfo()
 	{
 		return transferSizeInfo;
 	}
@@ -86,39 +115,37 @@ public class EventWrapper<T extends Serializable>
 		this.event = event;
 	}
 
-	public boolean equals(Object o)
-	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		EventWrapper that = (EventWrapper) o;
+        EventWrapper that = (EventWrapper) o;
 
-		if (localId != that.localId) return false;
-		if (event != null ? !event.equals(that.event) : that.event != null) return false;
-		if (sourceIdentifier != null ? !sourceIdentifier.equals(that.sourceIdentifier) : that.sourceIdentifier != null)
-			return false;
+        if (eventIdentifier != null ? !eventIdentifier.equals(that.eventIdentifier) : that.eventIdentifier != null)
+            return false;
+        if (event != null ? !event.equals(that.event) : that.event != null) return false;
 
-		return true;
-	}
+        return true;
+    }
 
-	public int hashCode()
-	{
-		int result;
-		result = (sourceIdentifier != null ? sourceIdentifier.hashCode() : 0);
-		result = 31 * result + (event != null ? event.hashCode() : 0);
-		result = 31 * result + (int) (localId ^ (localId >>> 32));
-		return result;
-	}
+    @Override
+    public int hashCode()
+    {
+        if(eventIdentifier != null)
+        {
+            return eventIdentifier.hashCode();
+        }
+        return(event != null ? event.hashCode() : 0);
+    }
 
-	public String toString()
+    public String toString()
 	{
 		StringBuilder result=new StringBuilder();
 		result.append("eventWrapper[");
-		result.append("sourceIdentifier=").append(sourceIdentifier);
-		result.append(", ");
-		result.append("localId=").append(localId);
-		result.append(", ");
-		result.append("event=").append(event);
+		result.append("eventIdentifier=").append(eventIdentifier);
+		result.append(", event=").append(event);
 		result.append("]");
 		return result.toString();
 	}

@@ -205,7 +205,13 @@
 				<artifactId>de.huxhorn.sulky.io</artifactId>
 				<version>${sulkyVersion}</version>
 			</dependency>
-			
+
+            <dependency>
+                <groupId>de.huxhorn.sulky</groupId>
+                <artifactId>de.huxhorn.sulky.junit</artifactId>
+                <version>${sulkyVersion}</version>
+            </dependency>
+
 			<dependency>
 				<groupId>de.huxhorn.sulky</groupId>
 				<artifactId>de.huxhorn.sulky.logging</artifactId>

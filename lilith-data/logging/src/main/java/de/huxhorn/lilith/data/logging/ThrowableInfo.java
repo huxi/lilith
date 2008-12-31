@@ -23,15 +23,15 @@ import java.util.Arrays;
 public class ThrowableInfo
 	implements Serializable
 {
-	// changed in 0.9.32
-	private static final long serialVersionUID = -6986047935091857997L;
+    private static final long serialVersionUID = -6320441996003349426L;
 
 	private String name;
 	private String message;
 	private ThrowableInfo cause;
 	private ExtendedStackTraceElement[] stackTrace;
+    private int omittedElements;
 
-	public String getName()
+    public String getName()
 	{
 		return name;
 	}
@@ -71,13 +71,23 @@ public class ThrowableInfo
 		this.cause = cause;
 	}
 
-	public boolean equals(Object o)
+    public int getOmittedElements()
+    {
+        return omittedElements;
+    }
+
+    public void setOmittedElements(int omittedElements)
+    {
+        this.omittedElements = omittedElements;
+    }
+
+    public boolean equals(Object o)
 	{
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
 		final ThrowableInfo that = (ThrowableInfo) o;
-
+        if (omittedElements != that.omittedElements) return false;
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
 		if (message != null ? !message.equals(that.message) : that.message != null) return false;
 		if (!Arrays.equals(stackTrace, that.stackTrace)) return false;
@@ -86,8 +96,8 @@ public class ThrowableInfo
 
 	public int hashCode()
 	{
-		int result;
-		result = (name != null ? name.hashCode() : 0);
+		int result=omittedElements;
+		result = 29 * result + (name != null ? name.hashCode() : 0);
 		result = 29 * result + (message != null ? message.hashCode() : 0);
 		result = 29 * result + (cause != null ? cause.hashCode() : 0);
 		return result;
