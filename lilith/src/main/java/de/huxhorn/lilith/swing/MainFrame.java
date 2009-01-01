@@ -752,6 +752,7 @@ public class MainFrame
                     if(condition != null && condition.isTrue(eventWrapper))
                     {
                         result=new Colors(current.getColorScheme());
+                        break;
                     }
                 }
                 if(result==null)
