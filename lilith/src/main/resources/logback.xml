@@ -168,6 +168,9 @@
 	<logger name="de.huxhorn.lilith.swing.MainFrame">
 		<level value="INFO"/>
 	</logger>
+    <logger name="de.huxhorn.lilith.swing.MainFrame$ColorsCollectionRunnable">
+        <level value="INFO"/>
+    </logger>
 	<logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel">
 		<level value="INFO"/>
 	</logger>

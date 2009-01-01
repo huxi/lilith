@@ -17,32 +17,29 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
-import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Buffers;
+import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
-
-import javax.swing.*;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import java.awt.BorderLayout;
-import java.awt.Point;
-import java.awt.Component;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.concurrent.Future;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
 
 public abstract class TabbedPaneViewContainer<T extends Serializable>
 	extends ViewContainer<T>
@@ -144,6 +141,8 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 				pane.setTitleAt(i, title);
 				pane.setToolTipTextAt(i, toolTip);
 			}
+            // trigger repaint of table
+            pane.repaint();
 		}
 	}
 

@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.table;
 import java.awt.*;
 
 public class Colors
+    implements Cloneable
 {
 	private ColorScheme colorScheme;
 	private boolean sticky;
@@ -64,4 +65,16 @@ public class Colors
 	{
 		return sticky;
 	}
+
+    @Override
+    public Colors clone()
+        throws CloneNotSupportedException
+    {
+        Colors result = (Colors) super.clone();
+        if(this.colorScheme != null)
+        {
+            result.colorScheme=this.colorScheme.clone();
+        }
+        return result;
+    }
 }
