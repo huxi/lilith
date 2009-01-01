@@ -740,7 +740,7 @@ public class MainFrame
                 if(c!=null)
                 {
                     result=c;
-                    System.out.println("Retrieved from cache.");
+                    // System.out.println("Retrieved from cache.");
                 }
             }
             if(result==null)
