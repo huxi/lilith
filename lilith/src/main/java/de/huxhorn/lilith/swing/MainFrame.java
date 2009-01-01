@@ -143,8 +143,11 @@ public class MainFrame
 	private long lastConditionsCheck;
 	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
     private List<SavedCondition> activeConditions;
-    private ReferenceQueue<Colors> colorsReferenceQueue;
-    private Map<EventIdentifier, SoftColorsReference> colorsCache;
+    /**
+     * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
+     */
+    //private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
+    //private ReferenceQueue<Colors> colorsReferenceQueue;
 
     public String[] getAllConditionScriptFiles()
 	{
@@ -199,8 +202,8 @@ public class MainFrame
 	public MainFrame(ApplicationPreferences applicationPreferences, String appName, boolean enableBonjour)
 	{
 		super(appName);
-        colorsReferenceQueue=new ReferenceQueue<Colors>();
-        colorsCache=new HashMap<EventIdentifier, SoftColorsReference>();
+        //colorsReferenceQueue=new ReferenceQueue<Colors>();
+        //colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application=new DefaultApplication();
 		isMac=application.isMac();
 		if(!isMac)
@@ -426,9 +429,9 @@ public class MainFrame
 	 */
 	public void startUp()
 	{
-        Thread referenceCollection=new Thread(new ColorsCollectionRunnable());
-        referenceCollection.setDaemon(true);
-        referenceCollection.start();
+        //Thread referenceCollection=new Thread(new ColorsCollectionRunnable(), "ColorCacheCleanupThread");
+        //referenceCollection.setDaemon(true);
+        //referenceCollection.start();
 
 		// Autostart
 		{
@@ -728,11 +731,16 @@ public class MainFrame
 
     public Colors getColors(EventWrapper eventWrapper)
     {
+        if(!SwingUtilities.isEventDispatchThread())
+        {
+            if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
+        }
         if(activeConditions != null)
         {
             EventIdentifier id = eventWrapper.getEventIdentifier();
 
             Colors result=null;
+            /*
             SoftColorsReference ref = colorsCache.get(id);
             if(ref!=null)
             {
@@ -742,9 +750,15 @@ public class MainFrame
                     result=c;
                     // System.out.println("Retrieved from cache.");
                 }
+                else
+                {
+                    // stale item... should be handled by CleanupThread
+                    colorsCache.remove(id);
+                }
             }
             if(result==null)
             {
+            */
                 // no cached value found
                 for(SavedCondition current:activeConditions)
                 {
@@ -755,6 +769,7 @@ public class MainFrame
                         break;
                     }
                 }
+            /*
                 if(result==null)
                 {
                     try
@@ -772,6 +787,7 @@ public class MainFrame
             {
                 return null;
             }
+            */
             return result;
         }
         return null;
@@ -1906,7 +1922,7 @@ public class MainFrame
             }
         }
         activeConditions=active;
-        flushCachedConditionResults();
+        //flushCachedConditionResults();
 
 		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
 		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
@@ -1922,10 +1938,12 @@ public class MainFrame
 		}
 	}
 
+/*
     private void flushCachedConditionResults()
     {
         colorsCache.clear();
     }
+*/
 
     public void deleteInactiveLogs(LogFileFactory fileFactory)
 	{
@@ -2415,6 +2433,7 @@ public class MainFrame
 		}
 	}
 
+    /*
     private class ColorsCollectionRunnable
         implements Runnable
     {
@@ -2438,4 +2457,5 @@ public class MainFrame
             }
         }
     }
+    */
 }
