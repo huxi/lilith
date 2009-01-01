@@ -23,6 +23,7 @@ import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.consumers.*;
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.eventsource.EventIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -87,6 +88,8 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -140,6 +143,8 @@ public class MainFrame
 	private long lastConditionsCheck;
 	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
     private List<SavedCondition> activeConditions;
+    private ReferenceQueue<Colors> colorsReferenceQueue;
+    private Map<EventIdentifier, SoftColorsReference> colorsCache;
 
     public String[] getAllConditionScriptFiles()
 	{
@@ -194,6 +199,8 @@ public class MainFrame
 	public MainFrame(ApplicationPreferences applicationPreferences, String appName, boolean enableBonjour)
 	{
 		super(appName);
+        colorsReferenceQueue=new ReferenceQueue<Colors>();
+        colorsCache=new HashMap<EventIdentifier, SoftColorsReference>();
 		application=new DefaultApplication();
 		isMac=application.isMac();
 		if(!isMac)
@@ -419,6 +426,9 @@ public class MainFrame
 	 */
 	public void startUp()
 	{
+        Thread referenceCollection=new Thread(new ColorsCollectionRunnable());
+        referenceCollection.setDaemon(true);
+        referenceCollection.start();
 
 		// Autostart
 		{
@@ -670,6 +680,7 @@ public class MainFrame
 		{
 			checkForUpdate(false);
 		}
+        updateConditions(); // to initialize active conditions.
 	}
 
 	public void goToSource(StackTraceElement ste)
@@ -719,18 +730,68 @@ public class MainFrame
     {
         if(activeConditions != null)
         {
-            // TODO: implement cache
-            for(SavedCondition current:activeConditions)
+            EventIdentifier id = eventWrapper.getEventIdentifier();
+
+            Colors result=null;
+            SoftColorsReference ref = colorsCache.get(id);
+            if(ref!=null)
             {
-                Condition condition = current.getCondition();
-                if(condition != null && condition.isTrue(eventWrapper))
+                Colors c=ref.get();
+                if(c!=null)
                 {
-                    return new Colors(current.getColorScheme());
+                    result=c;
+                    System.out.println("Retrieved from cache.");
                 }
             }
+            if(result==null)
+            {
+                // no cached value found
+                for(SavedCondition current:activeConditions)
+                {
+                    Condition condition = current.getCondition();
+                    if(condition != null && condition.isTrue(eventWrapper))
+                    {
+                        result=new Colors(current.getColorScheme());
+                    }
+                }
+                if(result==null)
+                {
+                    try
+                    {
+                        result=NULL_COLORS.clone();
+                    }
+                    catch (CloneNotSupportedException e)
+                    {
+                        // ignore
+                    }
+                }
+                colorsCache.put(id, new SoftColorsReference(id, result, colorsReferenceQueue));
+            }
+            if(NULL_COLORS.equals(result))
+            {
+                return null;
+            }
+            return result;
         }
         return null;
+    }
 
+    private static final Colors NULL_COLORS=new Colors();
+
+    private static class SoftColorsReference extends SoftReference<Colors>
+    {
+        private EventIdentifier id;
+
+        public SoftColorsReference(EventIdentifier id, Colors o, ReferenceQueue<Colors> referenceQueue)
+        {
+            super(o, referenceQueue);
+            this.id=id;
+        }
+
+        public EventIdentifier getId()
+        {
+            return id;
+        }
     }
 
     // TODO: preferences
@@ -1862,7 +1923,7 @@ public class MainFrame
 
     private void flushCachedConditionResults()
     {
-        // TODO: implement flushCachedConditionResults()
+        colorsCache.clear();
     }
 
     public void deleteInactiveLogs(LogFileFactory fileFactory)
@@ -2353,4 +2414,27 @@ public class MainFrame
 		}
 	}
 
+    private class ColorsCollectionRunnable
+        implements Runnable
+    {
+        private final Logger logger = LoggerFactory.getLogger(ColorsCollectionRunnable.class);
+
+        public void run()
+        {
+            for(;;)
+            {
+                try
+                {
+                    SoftColorsReference ref= (SoftColorsReference) colorsReferenceQueue.remove();
+                    EventIdentifier id = ref.getId();
+                    colorsCache.remove(id);
+                    if(logger.isDebugEnabled()) logger.debug("Removed cached color for {}.", id);
+                }
+                catch (InterruptedException e)
+                {
+                    break;
+                }
+            }
+        }
+    }
 }

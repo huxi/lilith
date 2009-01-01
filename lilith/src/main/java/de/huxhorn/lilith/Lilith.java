@@ -21,22 +21,17 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
+import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.handler.Slf4JHandler;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.LicenseAgreementDialog;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.SplashScreen;
 import de.huxhorn.lilith.swing.callables.IndexingCallable;
-import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.ProgressingCallable;
 import de.huxhorn.sulky.swing.Windows;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.simplericity.macify.eawt.Application;
@@ -45,30 +40,23 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.SwingUtilities;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.UIManager;
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.util.Properties;
-import java.util.Date;
-import java.util.logging.Handler;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+import java.util.logging.Handler;
 
 public class Lilith
 {
 	public static final String APP_NAME;
 	public static final String APP_VERSION;
-	public static final String APP_TIMESTAMP;
+	public static final String APP_BUILD_NUMBER;
+    public static final long APP_TIMESTAMP;
 
 	private static final String VERBOSE_SHORT = "v";
 	private static final String PRINT_HELP_SHORT = "h";
@@ -114,7 +102,25 @@ public class Lilith
 		}
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
-		APP_TIMESTAMP = p.getProperty("application.timestamp");
+		APP_BUILD_NUMBER = p.getProperty("application.buildNumber");
+        String tsStr=p.getProperty("application.timestamp");
+        long ts=-1;
+        if(tsStr!=null)
+        {
+            try
+            {
+                ts=Long.parseLong(tsStr);
+            }
+            catch(NumberFormatException ex)
+            {
+                if(logger.isErrorEnabled()) logger.error("Exception while reading timestamp!", ex);
+            }
+        }
+        else
+        {
+            if(logger.isErrorEnabled()) logger.error("Application-timestamp not found!");
+        }
+        APP_TIMESTAMP=ts;
 	}
 
 	// TODO: - Shortcut in tooltip of toolbars...?
@@ -171,10 +177,13 @@ public class Lilith
 			printHelp = true;
 		}
 
-		String appTitle = APP_NAME + " V" + APP_VERSION;
+		String appTitle = APP_NAME + " V" + APP_VERSION+"."+APP_BUILD_NUMBER;
 		if (verbose)
 		{
-			appTitle += " - build: " + APP_TIMESTAMP;
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date d=new Date(APP_TIMESTAMP);
+
+			appTitle += "." + sdf.format(d);
 		}
 		System.out.println(appTitle);
 		System.out.println("\nCopyright (C) 2007-2008  Joern Huxhorn\n\n" +

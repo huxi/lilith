@@ -21,11 +21,9 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.renderer.ConditionalBorder;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 
 public class ConditionPreviewRenderer
 		implements TableCellRenderer
@@ -65,7 +63,8 @@ public class ConditionPreviewRenderer
 		border.setBorderColor(scheme.getBorderColor());
 		renderer.setForeground(scheme.getTextColor());
 		renderer.setBackground(scheme.getBackgroundColor());
-		renderer.setBorder(border);
+		renderer.setBorder(null); // so it actually changes...
+        renderer.setBorder(border);
 		if(table!=null)
 		{
 			int rowHeight=table.getRowHeight();
