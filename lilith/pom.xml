@@ -21,7 +21,7 @@
 <!-- LV --><version>0.9.33-SNAPSHOT</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
-	
+
 	<build>
 		<plugins>
 			<plugin>
