@@ -35,7 +35,10 @@ public class ConditionPreviewRenderer
 
 	public ConditionPreviewRenderer()
 	{
-		this.renderer = new JLabel();
+		renderer = new JLabel();
+        Font font=renderer.getFont();
+        font=font.deriveFont(Font.PLAIN);
+        renderer.setFont(font);
 		renderer.setOpaque(true);
 		renderer.setText("Example");
 		border=new ConditionalBorder(Color.WHITE, 3, 3);

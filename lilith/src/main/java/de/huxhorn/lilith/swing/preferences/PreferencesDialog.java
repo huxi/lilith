@@ -17,43 +17,27 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.MainFrame;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.sulky.swing.KeyStrokes;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.conditions.Condition;
+import de.huxhorn.sulky.swing.KeyStrokes;
+import groovy.ui.Console;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.io.IOUtils;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
-import javax.swing.JTextPane;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import groovy.ui.Console;
+import java.util.*;
+import java.util.List;
 
 public class PreferencesDialog
 	extends JDialog
@@ -236,7 +220,8 @@ public class PreferencesDialog
 
 	private void resetSettings()
 	{
-		applicationPreferences.reset();
+        // just reinit from preferences, nobody would expect anything else...
+		// applicationPreferences.reset();
 		initUI();
 	}
 
