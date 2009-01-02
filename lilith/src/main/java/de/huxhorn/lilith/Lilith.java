@@ -57,8 +57,6 @@ public class Lilith
 	public static final String APP_VERSION;
 	public static final String APP_BUILD_NUMBER;
     public static final long APP_TIMESTAMP;
-    public static final int APP_REVISION;
-    public static final String APP_REVISION_STRING="$Revision$";
 
 	private static final String VERBOSE_SHORT = "v";
 	private static final String PRINT_HELP_SHORT = "h";
@@ -124,23 +122,6 @@ public class Lilith
         }
 
         APP_TIMESTAMP=ts;
-
-
-        int rev=-1;
-        if(APP_REVISION_STRING.length()>12)
-        {
-            String revStr=APP_REVISION_STRING.substring(10, APP_REVISION_STRING.length()-2);
-            System.out.println("revStr: '"+revStr+"'");
-            try
-            {
-                rev=Integer.parseInt(revStr);
-            }
-            catch(NumberFormatException ex)
-            {
-                // ignore
-            }
-        }
-        APP_REVISION=rev;
 	}
 
 	// TODO: - Shortcut in tooltip of toolbars...?
@@ -197,7 +178,7 @@ public class Lilith
 			printHelp = true;
 		}
 
-		String appTitle = APP_NAME + " V" + APP_VERSION+"."+APP_REVISION;
+		String appTitle = APP_NAME + " V" + APP_VERSION+"."+APP_BUILD_NUMBER;
 		if (verbose)
 		{
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
