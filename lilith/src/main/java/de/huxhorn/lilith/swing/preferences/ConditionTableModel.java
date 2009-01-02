@@ -20,12 +20,12 @@ package de.huxhorn.lilith.swing.preferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.table.TableModel;
-import javax.swing.event.TableModelListener;
+import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
-import javax.swing.SwingUtilities;
-import java.util.*;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import java.util.List;
 
 public class ConditionTableModel
 	implements TableModel
@@ -46,7 +46,7 @@ public class ConditionTableModel
 	public void setData(List<SavedCondition> data)
 	{
 		this.data = data;
-		fireTableChange();
+		fireTableChange(new TableModelEvent(this));
 	}
 
 	public List<SavedCondition> getData()
@@ -74,24 +74,28 @@ public class ConditionTableModel
 		{
 			case CONDITION_COLUMN:
 				return "Condition";
-		}
+        }
 		return null;
 	}
 
 	public Class<?> getColumnClass(int columnIndex)
 	{
-		return SavedCondition.class;
+        switch(columnIndex)
+        {
+            case CONDITION_COLUMN:
+                return SavedCondition.class;
+        }
+        return null;
 	}
 
 	public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
-		/*
-		if(keys == null || rowIndex<0 || rowIndex>=keys.size())
-		{
-			return false;
-		}
-		return !(columnIndex < 0 || columnIndex > 1);
-		*/
+        switch(columnIndex)
+        {
+            case CONDITION_COLUMN:
+                return false;
+        }
+
 		return false;
 	}
 
@@ -101,25 +105,83 @@ public class ConditionTableModel
 		{
 			return null;
 		}
-		return data.get(rowIndex);
+        switch(columnIndex)
+        {
+            case CONDITION_COLUMN:
+                {
+                    return data.get(rowIndex);
+                }
+        }
+        return null;
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
-		SavedCondition newValue=(SavedCondition) aValue;
-		if(data == null || columnIndex>0 || rowIndex<0 || rowIndex>=data.size())
-		{
-			return;
-		}
-		data.set(rowIndex, newValue);
-		fireTableChange();
+        if(data == null || columnIndex>0 || rowIndex<0 || rowIndex>=data.size())
+        {
+            return;
+        }
+        switch(columnIndex)
+        {
+            case CONDITION_COLUMN:
+                {
+                    SavedCondition newValue=(SavedCondition) aValue;
+                    data.set(rowIndex, newValue);
+                    fireTableChange(new TableModelEvent(this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+                }
+        }
+
 	}
 
-	private void fireTableChange()
-	{
-		TableModelEvent event = new TableModelEvent(this);
-		fireTableChange(event);
-	}
+    public void remove(int row)
+    {
+        if(row >= 0)
+        {
+            if(row<data.size())
+            {
+                data.remove(row);
+                fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
+            }
+        }
+
+    }
+
+    public int moveUp(int row)
+    {
+        int result=-1;
+        if(row >= 0)
+        {
+            int newRow=row-1;
+            if(row<data.size() && newRow>=0 && newRow<data.size())
+            {
+                SavedCondition prev = data.set(newRow, data.get(row));
+                data.set(row, prev);
+                fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+                fireTableChange(new TableModelEvent(this, newRow, newRow, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+                result=newRow;
+            }
+        }
+        return result;
+    }
+
+    public int moveDown(int row)
+    {
+        int result=-1;
+        if(row >= 0)
+        {
+            int newRow=row+1;
+            if(row<data.size() && newRow>=0 && newRow<data.size())
+            {
+                SavedCondition prev = data.set(newRow, data.get(row));
+                data.set(row, prev);
+                fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+                fireTableChange(new TableModelEvent(this, newRow, newRow, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+                result=newRow;
+            }
+        }
+        return result;
+
+    }
 
 	private void fireTableChange(TableModelEvent evt)
 	{
@@ -134,7 +196,24 @@ public class ConditionTableModel
 		}
 	}
 
-	private class FireTableChangeRunnable
+    public void set(int row, SavedCondition savedCondition)
+    {
+        if(row>-1 && row<data.size())
+        {
+            data.set(row, savedCondition);
+            fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+        }
+    }
+
+    public int add(SavedCondition savedCondition)
+    {
+        data.add(savedCondition);
+        int row=data.size()-1;
+        fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT));
+        return row;
+    }
+
+    private class FireTableChangeRunnable
 		implements Runnable
 	{
 		private TableModelEvent event;
@@ -170,8 +249,8 @@ public class ConditionTableModel
 				}
 			}
 		}
-
 	}
+
 	public void addTableModelListener(TableModelListener l)
 	{
 		synchronized(eventListenerList)

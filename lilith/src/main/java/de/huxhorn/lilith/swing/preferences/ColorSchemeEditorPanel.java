@@ -40,6 +40,7 @@ public class ColorSchemeEditorPanel
     private JColorChooser borderChooser;
     private ColorChangeListener colorChangeListener;
     private ConditionPreviewRenderer previewDummyRenderer;
+    private ColorScheme colorScheme;
 
     public ColorSchemeEditorPanel()
     {
@@ -93,20 +94,42 @@ public class ColorSchemeEditorPanel
         add(previewPanel, gbc);
     }
 
-    public ColorScheme getColorScheme()
+    /**
+     * Saves the colors of the editors into the colorScheme property.
+     */
+    public void saveColors()
     {
-        return new ColorScheme(textChooser.getColor(), backgroundChooser.getColor(), borderChooser.getColor());
+        this.colorScheme=new ColorScheme(textChooser.getColor(), backgroundChooser.getColor(), borderChooser.getColor());
     }
 
-    public void setColorScheme(ColorScheme colorScheme)
+    /**
+     * Initializes the editors with the colorScheme values.
+     */
+    public void resetColors()
     {
-        if(colorScheme == null)
+        if(colorScheme==null)
         {
             colorScheme=new ColorScheme();
         }
         textChooser.setColor(colorScheme.getTextColor());
         backgroundChooser.setColor(colorScheme.getBackgroundColor());
         borderChooser.setColor(colorScheme.getBorderColor());
+    }
+
+    public ColorScheme getColorScheme()
+    {
+        return colorScheme;
+    }
+
+
+    public void setColorScheme(ColorScheme colorScheme)
+    {
+        if(colorScheme == null)
+        {
+            throw new IllegalArgumentException("colorScheme must not be null!");
+        }
+        this.colorScheme=colorScheme;
+        resetColors();
     }
 
     private void attachChangeListener(JColorChooser chooser)

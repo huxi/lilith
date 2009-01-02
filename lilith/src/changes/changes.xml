@@ -198,16 +198,19 @@
                 Updated and uploaded new logging schema.
             </action>
             <action dev="jhux" type="add">
+                Implemented Conditions tab in Preferences.
+            </action>
+            <action dev="jhux" type="add">
+                Use all active conditions to find out colors of a table row. Use current colors if none is matching.
+            </action>
+            <action dev="jhux" type="fix">
+                TODO: jumping to bottom in table+scrollToBottom even if table did not change.
+            </action>
+            <action dev="jhux" type="add">
                 TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
             </action>
             <action dev="jhux" type="add">
                 TODO: Install example groovy conditions if conditions folder is newly created.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Implement Conditions tab in Preferences. Make colors/activity configurable.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Use all active conditions to find out colors of a table row. Use current colors if none is matching.
             </action>
             <action dev="jhux" type="update">
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.

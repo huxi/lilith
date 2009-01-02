@@ -137,17 +137,11 @@
 	<logger name="de.huxhorn.sulky.swing.KeyStrokes">
 		<level value="INFO"/>
 	</logger>
-	<logger name="de.huxhorn.lilith.swing.preferences.PreferencesDialog">
-		<level value="INFO"/>
-	</logger>
-    <logger name="de.huxhorn.lilith.swing.preferences.ConditionsPanel">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.preferences.ColorChooserDialog">
-        <level value="DEBUG"/>
+    <logger name="de.huxhorn.lilith.swing.preferences">
+        <level value="WARN"/>
     </logger>
 	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences">
-		<level value="INFO"/>
+		<level value="WARN"/>
 	</logger>
 
 	<logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener">

@@ -19,40 +19,23 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
-import de.huxhorn.lilith.swing.preferences.table.ConditionIndexRenderer;
-import de.huxhorn.lilith.swing.preferences.table.ConditionNameRenderer;
-import de.huxhorn.lilith.swing.preferences.table.ConditionPreviewRenderer;
+import de.huxhorn.lilith.swing.preferences.table.ConditionTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.Windows;
-
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
-import javax.swing.JButton;
-import javax.swing.AbstractAction;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.Action;
-import javax.swing.JTextArea;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.TableColumn;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import java.util.List;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.net.URL;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.net.URL;
+import java.util.List;
 
 public class ConditionsPanel
 	extends JPanel
@@ -67,13 +50,11 @@ public class ConditionsPanel
 	private ConditionTableModel conditionTableModel;
 	private EditConditionAction editConditionAction;
 	private RemoveConditionAction removeConditionAction;
-	private static final String DEFAULT_COLUMN_NAME_INDEX = "#";
-	private static final String DEFAULT_COLUMN_NAME_NAME = "Name";
-	private static final String DEFAULT_COLUMN_NAME_PREVIEW = "Preview";
-	//private static final String DEFAULT_COLUMN_NAME_ACTIVE = "Active";
 	private JTextArea conditionTextArea;
+    private MoveUpAction moveUpAction;
+    private MoveDownAction moveDownAction;
 
-	public ConditionsPanel(PreferencesDialog preferencesDialog)
+    public ConditionsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog=preferencesDialog;
 		applicationPreferences=preferencesDialog.getApplicationPreferences();
@@ -89,44 +70,9 @@ public class ConditionsPanel
 		conditionTable = new JTable(conditionTableModel);
 		conditionTable.addMouseListener(new ConditionTableMouseListener());
 
-		// TODO: MoveUpAction
-		// TODO: MoveDownAction
-		// TODO: active
-		// TODO: implement ConditionTableColumnModel
-		DefaultTableColumnModel columnModel=new DefaultTableColumnModel();
+		// TODO: D&D? Probably not worth the effort...
 
-		{
-			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_INDEX);
-			col.setCellRenderer(new ConditionIndexRenderer());
-			columnModel.addColumn(col);
-		}
-
-		{
-			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_NAME);
-			col.setCellRenderer(new ConditionNameRenderer());
-			columnModel.addColumn(col);
-		}
-
-		{
-			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_PREVIEW);
-			col.setCellRenderer(new ConditionPreviewRenderer());
-			columnModel.addColumn(col);
-		}
-
-		/*
-
-		{
-			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_ACTIVE);
-			col.setCellRenderer(new IdRenderer());
-			columnModel.addColumn(col);
-		}
-		*/
-
-		conditionTable.setColumnModel(columnModel);
+		conditionTable.setColumnModel(new ConditionTableColumnModel());
 
 		conditionTextArea=new JTextArea();
 		conditionTextArea.setEditable(false);
@@ -144,17 +90,24 @@ public class ConditionsPanel
 		sourceNameRowSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		sourceNameRowSelectionModel.addListSelectionListener(new ConditionTableRowSelectionListener());
 
-		AddConditionAction addConditionAction = new AddConditionAction();
+		//AddConditionAction addConditionAction = new AddConditionAction();
 		editConditionAction = new EditConditionAction();
 		removeConditionAction = new RemoveConditionAction();
+        moveUpAction = new MoveUpAction();
+        moveDownAction = new MoveDownAction();
 
-		JButton addConditionButton = new JButton(addConditionAction);
+		//JButton addConditionButton = new JButton(addConditionAction);
 		JButton editConditionButton = new JButton(editConditionAction);
 		JButton removeConditionButton = new JButton(removeConditionAction);
+        JButton moveUpButton = new JButton(moveUpAction);
+        JButton moveDownButton = new JButton(moveDownAction);
 
-		toolBar.add(addConditionButton);
+
+		//toolBar.add(addConditionButton);
 		toolBar.add(editConditionButton);
 		toolBar.add(removeConditionButton);
+        toolBar.add(moveUpButton);
+        toolBar.add(moveDownButton);
 
 		add(toolBar, BorderLayout.NORTH);
 		add(conditionsPanel, BorderLayout.CENTER);
@@ -174,12 +127,15 @@ public class ConditionsPanel
 		if(logger.isDebugEnabled()) logger.debug("selectedRow={}", selectedRow);
 		// no need to call convert since we only want to know if selected or not.
 		SavedCondition condition=null;
-		if(selectedRow>-1 && selectedRow<conditions.size())
+        int conditionCount=conditions.size();
+        if(selectedRow>-1 && selectedRow<conditionCount)
 		{
 			condition=conditions.get(selectedRow);
 		}
 		editConditionAction.setEnabled(condition!=null);
 		removeConditionAction.setEnabled(condition!=null);
+        moveUpAction.setEnabled(selectedRow > 0);
+        moveDownAction.setEnabled(selectedRow > -1 && selectedRow<conditionCount-1);
 		String description="";
 		if(condition!=null)
 		{
@@ -231,17 +187,15 @@ public class ConditionsPanel
 					break;
 				}
 			}
-			//int index=conditions.indexOf(savedCondition);
-			if(index>-1)
-			{
-				conditions.remove(index);
-				conditions.add(index, savedCondition);
-			}
+			if(index<0)
+            {
+                index=conditionTableModel.add(savedCondition);
+            }
 			else
-			{
-				conditions.add(savedCondition);
-			}
-			conditionTableModel.setData(conditions);
+            {
+                conditionTableModel.set(index, savedCondition);
+            }
+            conditionTable.setRowSelectionInterval(index, index);
 			updateConditions();
 		}
 	}
@@ -254,6 +208,7 @@ public class ConditionsPanel
 		}
 	}
 
+    /*
 	private class AddConditionAction
 		extends AbstractAction
 	{
@@ -283,6 +238,7 @@ public class ConditionsPanel
 			// TODO: implement
 		}
 	}
+	*/
 
 	private class EditConditionAction
 		extends AbstractAction
@@ -350,15 +306,106 @@ public class ConditionsPanel
 			int row=conditionTable.getSelectedRow();
 			if(row >= 0)
 			{
-				if(row<conditions.size())
-				{
-					conditions.remove(row);
-					conditionTableModel.setData(conditions);
-					updateConditions();
-				}
+    			conditionTableModel.remove(row);
+                int rowCount=conditionTableModel.getRowCount();
+                if(row>=rowCount)
+                {
+                    if(rowCount>0)
+                    {
+                        row=rowCount-1;
+                    }
+                    else
+                    {
+                        row=-1;
+                    }
+                }
+                
+                if(row>=0)
+                {
+                    conditionTable.setRowSelectionInterval(row, row);
+                }
+				updateConditions();
 			}
 		}
 	}
+
+    private class MoveUpAction
+        extends AbstractAction
+    {
+        public MoveUpAction()
+        {
+            super("Move up");
+            Icon icon;
+            {
+                URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-up.png");
+                if(url!=null)
+                {
+                    icon =new ImageIcon(url);
+                }
+                else
+                {
+                    icon =null;
+                }
+            }
+            putValue(Action.SMALL_ICON, icon);
+            putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition up.");
+        }
+
+        public void actionPerformed(ActionEvent e)
+        {
+            if(logger.isDebugEnabled()) logger.debug("MoveUp");
+            int row=conditionTable.getSelectedRow();
+            if(row >= 0)
+            {
+                int newRow=conditionTableModel.moveUp(row);
+                if(newRow>=0)
+                {
+                    conditionTable.setRowSelectionInterval(newRow, newRow);
+                }
+
+                updateConditions();
+            }
+
+        }
+    }
+
+    private class MoveDownAction
+        extends AbstractAction
+    {
+        public MoveDownAction()
+        {
+            super("Move down");
+            Icon icon;
+            {
+                URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-down.png");
+                if(url!=null)
+                {
+                    icon =new ImageIcon(url);
+                }
+                else
+                {
+                    icon =null;
+                }
+            }
+            putValue(Action.SMALL_ICON, icon);
+            putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition down.");
+        }
+
+        public void actionPerformed(ActionEvent e)
+        {
+            if(logger.isDebugEnabled()) logger.debug("MoveDown");
+            int row=conditionTable.getSelectedRow();
+            if(row >= 0)
+            {
+                int newRow=conditionTableModel.moveDown(row);
+                if(newRow>=0)
+                {
+                    conditionTable.setRowSelectionInterval(newRow, newRow);
+                }
+                updateConditions();
+            }
+        }
+    }
 
 	private class ConditionTableMouseListener
 			implements MouseListener
@@ -369,26 +416,36 @@ public class ConditionsPanel
 
 		public void mouseClicked(MouseEvent evt)
 		{
-			if(evt.getClickCount()>=2 && evt.getButton()==MouseEvent.BUTTON1)
-			{
-				Point p = evt.getPoint();
-				int row = conditionTable.rowAtPoint(p);
-				if(row>=0 && row<conditions.size())
-				{
-					SavedCondition condition = conditions.get(row);
-					editCondition(condition.getCondition());
-				}
-			}
-			else if (evt.isPopupTrigger())
+            if (evt.isPopupTrigger())
 			{
 				showPopup(evt);
+			}
+            else if(evt.getButton()==MouseEvent.BUTTON1)
+            {
+                Point p = evt.getPoint();
+                int row = conditionTable.rowAtPoint(p);
+                int col = conditionTable.columnAtPoint(p);
+                if(row>=0 && row<conditions.size())
+                {
+                    if(col == ConditionTableColumnModel.DEFAULT_COLUMN_INDEX_ACTIVE)
+                    {
+                        SavedCondition condition = conditions.get(row);
+                        condition.setActive(!condition.isActive());
+                        conditionTableModel.set(row, condition);
+                    }
+                    else if(evt.getClickCount()>=2)
+                    {
+                        SavedCondition condition = conditions.get(row);
+                        editCondition(condition.getCondition());
+                    }
+                }
 			}
 		}
 
 
 
-		/** @noinspection UNUSED_SYMBOL*/
-		private void showPopup(MouseEvent evt)
+		@SuppressWarnings({"UnusedDeclaration"})
+        private void showPopup(MouseEvent evt)
 		{
 		}
 

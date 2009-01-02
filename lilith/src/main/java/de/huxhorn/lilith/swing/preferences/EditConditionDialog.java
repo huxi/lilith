@@ -101,6 +101,7 @@ public class EditConditionDialog
 
 		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(okAction));
+        buttonPanel.add(new JButton(new ResetAction()));
 		buttonPanel.add(new JButton(cancelAction));
 		add(buttonPanel, BorderLayout.SOUTH);
 
@@ -174,6 +175,11 @@ public class EditConditionDialog
 		conditionName.setText(savedCondition.getName());
 		ColorScheme colorScheme = savedCondition.getColorScheme();
 
+        if(colorScheme==null)
+        {
+            colorScheme = new ColorScheme();
+        }
+
         colorSchemeEditorPanel.setColorScheme(colorScheme);
 
 		activeCheckBox.setSelected(savedCondition.isActive());
@@ -208,6 +214,7 @@ public class EditConditionDialog
 			{
 				canceled=false;
 				savedCondition.setName(conditionName.getText());
+                colorSchemeEditorPanel.saveColors();
 				ColorScheme colorScheme=colorSchemeEditorPanel.getColorScheme();
 				savedCondition.setColorScheme(colorScheme);
 				savedCondition.setActive(activeCheckBox.isSelected());
@@ -215,6 +222,20 @@ public class EditConditionDialog
 			}
 		}
 	}
+
+    private class ResetAction
+        extends AbstractAction
+    {
+        public ResetAction()
+        {
+            super("Reset");
+        }
+
+        public void actionPerformed(ActionEvent e)
+        {
+            initUI();
+        }
+    }
 
 	private class CancelAction
 		extends AbstractAction
