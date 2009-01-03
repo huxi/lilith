@@ -1,12 +1,12 @@
 package de.huxhorn.lilith.logback.servlet;
 
+import ch.qos.logback.classic.LoggerContext;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletContext;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.ILoggerFactory;
-import ch.qos.logback.classic.LoggerContext;
 
 /**
  *
@@ -39,7 +39,7 @@ public class LogbackShutdownServletContextListener
         if (loggerFactory instanceof LoggerContext)
 		{
             LoggerContext loggerContext = (LoggerContext) loggerFactory;
-            loggerContext.shutdownAndReset();
+            loggerContext.stop();
 			System.err.println("Logback has been shut down.");
         }
 	}

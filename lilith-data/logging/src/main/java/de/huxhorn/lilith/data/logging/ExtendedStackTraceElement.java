@@ -170,6 +170,34 @@ public class ExtendedStackTraceElement
 		return toString(false);
 	}
 
+    public String getExtendedString()
+    {
+        if(codeLocation!=null || version!=null)
+        {
+            StringBuilder result=new StringBuilder();
+            if(exact)
+            {
+                result.append("[");
+            }
+            else
+            {
+                result.append("~[");
+            }
+            if(codeLocation!=null)
+            {
+                result.append(codeLocation);
+            }
+            result.append(":");
+            if(version!=null)
+            {
+                result.append(version);
+            }
+            result.append("]");
+            return result.toString();
+        }
+        return null;
+    }
+
 	public String toString(boolean extended)
 	{
 		StringBuilder result=new StringBuilder();
@@ -194,27 +222,11 @@ public class ExtendedStackTraceElement
 		}
 		if(extended)
 		{
+            String extendedStr = getExtendedString();
 			// same as logback
-			if(codeLocation!=null || version!=null)
+			if(extendedStr!=null)
 			{
-				if(exact)
-				{
-					result.append(" [");
-				}
-				else
-				{
-					result.append(" ~[");
-				}
-				if(codeLocation!=null)
-				{
-					result.append(codeLocation);
-				}
-				result.append(":");
-				if(version!=null)
-				{
-					result.append(version);
-				}
-				result.append("]");
+                result.append(" ").append(extendedStr);
 			}
 		}
 		return result.toString();

@@ -177,6 +177,16 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		if(logger.isDebugEnabled()) logger.debug("addNotify - parent: {}", getParent());
 	}
 
+    public void scrollToBottom()
+    {
+        EventWrapperViewPanel<T> selectedView = getSelectedView();
+        if(selectedView!=null)
+        {
+            selectedView.scrollToBottom();
+			setSelectedEvent(selectedView.getSelectedEvent());
+        }
+    }
+    
 	public void removeNotify()
 	{
 		super.removeNotify();
@@ -199,7 +209,9 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		EventWrapperViewPanel<T> selectedView = getSelectedView();
 		if(selectedView!=null)
 		{
+            selectedView.scrollToBottom();
 			setSelectedEvent(selectedView.getSelectedEvent());
+
 		}
 		else
 		{

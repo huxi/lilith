@@ -17,20 +17,21 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.sulky.buffers.DisposeOperation;
-import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.sulky.buffers.DisposeOperation;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import java.awt.Container;
-import java.util.*;
-import java.util.concurrent.Future;
-import java.net.URL;
-import java.beans.PropertyChangeListener;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
+import java.net.URL;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.Future;
 
 public abstract class ViewContainer<T extends Serializable>
 	extends JPanel
@@ -236,4 +237,5 @@ public abstract class ViewContainer<T extends Serializable>
 	public abstract EventWrapper<T> getSelectedEvent();
 
 	public abstract void updateViews();
+    public abstract void scrollToBottom();
 }

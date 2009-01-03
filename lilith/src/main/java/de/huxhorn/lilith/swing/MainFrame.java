@@ -143,7 +143,7 @@ public class MainFrame
 	private long lastConditionsCheck;
 	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
     private List<SavedCondition> activeConditions;
-    /**
+    /*
      * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
      */
     //private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
@@ -1624,6 +1624,7 @@ public class MainFrame
 		frame.setSize(800, 600);
 
 		Windows.showWindow(frame, null, false);
+        executeScrollToBottom(frame);
 	}
 
 	void showInternalFrame(ViewContainer container)
@@ -1639,7 +1640,43 @@ public class MainFrame
 		desktop.add(frame);
 
 		frame.setVisible(true);
+        executeScrollToBottom(frame);
 	}
+
+    /**
+     * Initial scroll to bottom must be executed slightly after making it visible so
+     * it's using invokeLater, now.
+     * 
+     * @param window the window that should scrollt to bottom is configured that way.
+     */
+    private void executeScrollToBottom(ViewWindow window)
+    {
+        if(window!=null)
+        {
+            ScrollToBottomRunnable runnable=new ScrollToBottomRunnable(window);
+            SwingUtilities.invokeLater(runnable);
+        }
+    }
+
+    private static class ScrollToBottomRunnable
+        implements Runnable
+    {
+        private ViewWindow window;
+
+        private ScrollToBottomRunnable(ViewWindow window)
+        {
+            this.window = window;
+        }
+
+        public void run()
+        {
+            ViewContainer viewContainer = window.getViewContainer();
+            if(viewContainer!=null)
+            {
+                viewContainer.scrollToBottom();
+            }
+        }
+    }
 
 	/**
 	 * This is only a heuristic and probably won't be correct for non-metal l&f...

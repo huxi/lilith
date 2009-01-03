@@ -17,13 +17,14 @@
  */
 package de.huxhorn.lilith.swing.linklistener;
 
-import org.xhtmlrenderer.swing.LinkListener;
-import org.xhtmlrenderer.swing.BasicPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import de.huxhorn.sulky.formatting.SimpleXml;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
 import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.sulky.formatting.SimpleXml;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.swing.BasicPanel;
+import org.xhtmlrenderer.swing.LinkListener;
 
 public class StackTraceElementLinkListener
 		extends LinkListener
@@ -46,9 +47,9 @@ public class StackTraceElementLinkListener
 		{
 			String steStr = uri.substring(STACK_TRACE_ELEMENT_URI_PREFIX.length());
 			steStr = SimpleXml.unescape(steStr);
-			StackTraceElement ste = LogbackLoggingAdapter.parseStackTraceElement(steStr);
+			ExtendedStackTraceElement ste = LogbackLoggingAdapter.parseStackTraceElement(steStr);
 			if(logger.isDebugEnabled()) logger.debug("STE: {}", ste);
-			mainFrame.goToSource(ste);
+			mainFrame.goToSource(ste.getStackTraceElement());
 		}
 	}
 }

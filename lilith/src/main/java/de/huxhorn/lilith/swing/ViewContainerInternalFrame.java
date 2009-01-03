@@ -20,12 +20,10 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JDesktopPane;
-import javax.swing.event.InternalFrameListener;
+import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
-import java.awt.BorderLayout;
-import java.awt.Component;
+import javax.swing.event.InternalFrameListener;
+import java.awt.*;
 import java.beans.PropertyVetoException;
 
 public class ViewContainerInternalFrame
@@ -63,6 +61,11 @@ public class ViewContainerInternalFrame
 		return mainFrame.getViewActions();
 	}
 
+    public ViewContainer getViewContainer()
+    {
+        return viewContainer;
+    }
+    
 	public void focusWindow()
 	{
 		try

@@ -19,7 +19,7 @@ package de.huxhorn.lilith.debug;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
+import org.slf4j.MDC;
 
 public class LogThrowableRunnable
 	extends AbstractDebugRunnable
@@ -27,7 +27,7 @@ public class LogThrowableRunnable
 	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
 	private Throwable throwable;
 
-	public LogThrowableRunnable(int delay, Throwable throwable)
+    public LogThrowableRunnable(int delay, Throwable throwable)
 	{
 		super(delay);
 		this.throwable=throwable;
@@ -35,6 +35,7 @@ public class LogThrowableRunnable
 
 	public void runIt() throws InterruptedException
 	{
+        MDC.put("type", "param");
 		if(logger.isTraceEnabled()) logger.trace("A trace message.", throwable);
 		sleep();
 		if(logger.isDebugEnabled()) logger.debug("A debug message.",throwable);
@@ -45,5 +46,6 @@ public class LogThrowableRunnable
 		sleep();
 		if(logger.isErrorEnabled()) logger.error("A error message.",throwable);
 		sleep();
+        MDC.remove("type");
 	}
 }

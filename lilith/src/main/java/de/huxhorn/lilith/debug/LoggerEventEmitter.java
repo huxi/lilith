@@ -20,8 +20,8 @@ package de.huxhorn.lilith.debug;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class LoggerEventEmitter
@@ -106,6 +106,13 @@ public class LoggerEventEmitter
 		execute(new LogThrowableRunnable(delay, ex));
 	}
 
+    public void logException2() throws InterruptedException
+    {
+        //noinspection ThrowableInstanceNeverThrown
+        Throwable ex=new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
+        execute(new LogThrowableRunnable(delay, ex));
+    }
+
 	public void logParamException() throws InterruptedException
 	{
 		//noinspection ThrowableInstanceNeverThrown
@@ -113,16 +120,16 @@ public class LoggerEventEmitter
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
 
+    public void logParamException2() throws InterruptedException
+    {
+        //noinspection ThrowableInstanceNeverThrown
+        Throwable ex=new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
+        execute(new LogParamThrowableRunnable(delay, ex));
+    }
+
 	public void logAnonymous()
 	{
 		execute(new LogAnonymousRunnable(delay));
-	}
-
-	public void logException2() throws InterruptedException
-	{
-		//noinspection ThrowableInstanceNeverThrown
-		Throwable ex=new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
-		execute(new LogThrowableRunnable(delay, ex));
 	}
 
 	public void logSkull()

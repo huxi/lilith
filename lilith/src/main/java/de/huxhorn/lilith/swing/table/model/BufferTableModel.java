@@ -17,18 +17,17 @@
  */
 package de.huxhorn.lilith.swing.table.model;
 
-import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.CircularBuffer;
+import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.buffers.ResetOperation;
-import de.huxhorn.lilith.swing.table.model.RowBasedTableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.SwingUtilities;
 
 public abstract class BufferTableModel<T>
 		implements RowBasedTableModel<T>, DisposeOperation

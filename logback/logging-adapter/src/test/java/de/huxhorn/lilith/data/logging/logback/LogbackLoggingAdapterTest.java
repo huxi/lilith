@@ -1,25 +1,25 @@
 package de.huxhorn.lilith.data.logging.logback;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-
-import ch.qos.logback.classic.spi.ThrowableInformation;
 import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ThrowableDataPoint;
+import ch.qos.logback.classic.spi.ThrowableProxy;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import junit.framework.TestCase;
 
-public class LogbackAdapterTest
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+public class LogbackLoggingAdapterTest
 	extends TestCase
 {
-	private final Logger logger = LoggerFactory.getLogger(LogbackAdapterTest.class);
+	private final Logger logger = LoggerFactory.getLogger(LogbackLoggingAdapterTest.class);
 
 	private LogbackLoggingAdapter instance;
 
@@ -33,10 +33,10 @@ public class LogbackAdapterTest
 	public void testThrowableStrRep()
 	{
 		Throwable t = produceThrowable();
-		ThrowableInformation ti=new ThrowableInformation(t);
-		String[] thrStrRep=ti.getThrowableStrRep();
-		if(logger.isInfoEnabled()) logger.info("");
-		ThrowableInfo tinfo = instance.initFromThrowableStrRepRecursive(thrStrRep, 0);
+		ThrowableProxy ti=new ThrowableProxy(t);
+		ThrowableDataPoint[] thrStrRep=ti.getThrowableDataPointArray();
+		if(logger.isInfoEnabled()) logger.info("DataPoints: {}", thrStrRep);
+		ThrowableInfo tinfo = instance.initFromThrowableDataPointsRecursive(thrStrRep, 0);
 		assertEquals("yyy", tinfo.getMessage());
 		assertEquals("java.lang.RuntimeException: foo", tinfo.getCause().getMessage());
 		assertEquals("foo", tinfo.getCause().getCause().getMessage());
@@ -74,11 +74,11 @@ public class LogbackAdapterTest
 	public void testThrowable()
 	{
 		Throwable t = produceThrowable();
-		ThrowableInformation ti=new ThrowableInformation(t);
-		String[] thrStrRep=ti.getThrowableStrRep();
-		assertEquals(t, instance.getThrowable(ti));
+		ThrowableProxy ti=new ThrowableProxy(t);
+		ThrowableDataPoint[] thrStrRep=ti.getThrowableDataPointArray();
+		//assertEquals(t, instance.getThrowable(ti));
 		
-		ThrowableInfo tinfo = instance.initFromThrowableStrRepRecursive(thrStrRep, 0);
+		ThrowableInfo tinfo = instance.initFromThrowableDataPointsRecursive(thrStrRep, 0);
 		assertEquals("yyy", tinfo.getMessage());
 		assertEquals("java.lang.RuntimeException: foo", tinfo.getCause().getMessage());
 		assertEquals("foo", tinfo.getCause().getCause().getMessage());
@@ -90,7 +90,7 @@ public class LogbackAdapterTest
 		// LoggingEvent(String fqcn, Logger logger, Level level, String message, Throwable throwable, Object[] argArray)
 		ch.qos.logback.classic.spi.LoggingEvent logbackEvent=
 				new ch.qos.logback.classic.spi.LoggingEvent(
-						"de.huxhorn.lilith.data.logging.logback.LogbackAdapterTest",
+						"de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapterTest",
 						(ch.qos.logback.classic.Logger)logger,
 						Level.INFO,
 						"Message",
@@ -189,7 +189,7 @@ public class LogbackAdapterTest
 						for(ExtendedStackTraceElement ste:stackTrace)
 						{
 							msg.append(indent.toString());
-							msg.append(ste);
+							msg.append(ste.toString(true));
 							msg.append("\n");
 						}
 					}

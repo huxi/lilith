@@ -1,29 +1,21 @@
 package de.huxhorn.lilith.data.logging.logback;
 
+import ch.qos.logback.classic.spi.*;
+import de.huxhorn.lilith.data.logging.*;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.lang.reflect.Field;
-
-import ch.qos.logback.classic.spi.CallerData;
-import ch.qos.logback.classic.spi.ThrowableInformation;
-import ch.qos.logback.classic.ClassicGlobal;
-import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.MessageFormatter;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import java.util.*;
 
 public class LogbackLoggingAdapter
 {
 	private static final String CLASSNAME_MESSAGE_SEPARATOR = ": ";
+    private static final String COMMON_FRAMES_PREFIX = "\t... ";
 	private static final String COMMON_FRAMES_OMITTED = " common frames omitted";
 	private static final String NATIVE_METHOD = "Native Method";
 	private static final String UNKNOWN_SOURCE = "Unknown Source";
+    private static final String CAUSED_BY = "Caused by: ";
 
+    /*
 	private static final Field throwableField;
 
 	static
@@ -45,6 +37,7 @@ public class LogbackLoggingAdapter
 		}
 		throwableField=field;
 	}
+    */
 
 	public LoggingEvent convert(ch.qos.logback.classic.spi.LoggingEvent event)
 	{
@@ -59,22 +52,16 @@ public class LogbackLoggingAdapter
 		MessageFormatter.ArgumentResult argumentResult = 
 				MessageFormatter.evaluateArguments(messagePattern, originalArguments);
 
-		boolean throwableInitialized=false;
 		if(argumentResult!=null)
 		{
 			result.setArguments(argumentResult.getArguments());
 			Throwable t=argumentResult.getThrowable();
-			if(t!=null)
+			if(t!=null && event.getThrowableProxy() == null)
 			{
-				result.setThrowable(initFromThrowableRecursive(t));
-				throwableInitialized=true;
+                event.setThrowableProxy(new ThrowableProxy(t));
 			}
 		}
-		if(!throwableInitialized)
-		{
-			// to catch exceptions given using special methods in logback.
-			initThrowable(event, result);
-		}
+        initThrowableFromEvent(event, result);
 
 		initCallStack(event, result);
 		result.setLevel(LoggingEvent.Level.valueOf(event.getLevel().toString()));
@@ -88,94 +75,20 @@ public class LogbackLoggingAdapter
 	}
 
 
-	/*
-	private void initArguments(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)
+	private void initThrowableFromEvent(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)
 	{
-		Object[] origArgs=src.getArgumentArray();
-		if(origArgs==null)
-		{
-			return;
-		}
-		String[] args=new String[origArgs.length];
-		for(int i=0;i<origArgs.length;i++)
-		{
-			if(origArgs[i]!=null)
-			{
-				if(origArgs[i] instanceof String)
-				{
-					args[i]=(String) origArgs[i];
-				}
-				else
-				{
-					args[i]=origArgs[i].toString();
-				}
-			}
-		}
-
-		dst.setArguments(args);
-	}
-    */
-
-	private void initThrowable(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)
-	{
-		ThrowableInformation ti = src.getThrowableInformation();
+		ThrowableProxy ti = src.getThrowableProxy();
 		if(ti==null)
 		{
 			return;
 		}
-		if(!initFromThrowable(ti, dst))
-		{
-			initFromThrowableStrRep(ti, dst);
-		}
-	}
+        ti.calculatePackagingData(); // TODO: configurable
 
-	// not private because of testcase
-	Throwable getThrowable(ThrowableInformation ti)
-	{
-		if(throwableField==null)
-		{
-			return null;
-		}
-		try
-		{
-			return (Throwable) throwableField.get(ti);
-		}
-		catch (IllegalAccessException e)
-		{
-			// ignore
-		}
-		return null;
-	}
-
-	private boolean initFromThrowable(ThrowableInformation ti, LoggingEvent dst)
-	{
-		Throwable t=getThrowable(ti);
-		if(t==null)
-		{
-			return false;
-		}
-		dst.setThrowable(initFromThrowableRecursive(t));
-		return true;
-	}
-
-	private ThrowableInfo initFromThrowableRecursive(Throwable t)
-	{
-		if(t==null)
-		{
-			return null;
-		}
-		ThrowableInfo info=new ThrowableInfo();
-		info.setName(t.getClass().getName());
-		info.setMessage(t.getMessage());
-		info.setStackTrace(convert(t.getStackTrace()));
-		info.setCause(initFromThrowableRecursive(t.getCause()));
-
-		return info;
+		initFromThrowableDataPoints(ti, dst);
 	}
 
 	private ExtendedStackTraceElement[] convert(StackTraceElement[] stackTrace)
 	{
-		// TODO: add support for codeLocation, version and exact as soon as logback 0.9.10 is released.
 		if(stackTrace==null)
 		{
 			return null;
@@ -188,26 +101,28 @@ public class LogbackLoggingAdapter
 		return result;
 	}
 
-	void initFromThrowableStrRep(ThrowableInformation ti, LoggingEvent dst)
+	void initFromThrowableDataPoints(ThrowableProxy ti, LoggingEvent dst)
 	{
-		String[] throwStrRep = ti.getThrowableStrRep();
+		ThrowableDataPoint[] throwStrRep = ti.getThrowableDataPointArray();
 		if(throwStrRep==null)
 		{
 			return;
 		}
-		dst.setThrowable(initFromThrowableStrRepRecursive(throwStrRep, 0));
+		dst.setThrowable(initFromThrowableDataPointsRecursive(throwStrRep, 0));
 	}
 
-	ThrowableInfo initFromThrowableStrRepRecursive(String[] throwStrRep, int index)
+	ThrowableInfo initFromThrowableDataPointsRecursive(ThrowableDataPoint[] throwStrRep, int index)
 	{
 		if(index >= throwStrRep.length)
 		{
 			return null;
 		}
-		String current=throwStrRep[index];
-		if(current.startsWith(ClassicGlobal.CAUSED_BY))
+		ThrowableDataPoint currentDataPoint=throwStrRep[index];
+
+        String current=currentDataPoint.toString();
+		if(current.startsWith(CAUSED_BY))
 		{
-			current=current.substring(ClassicGlobal.CAUSED_BY.length());
+			current=current.substring(CAUSED_BY.length());
 		}
 		int colonIdx=current.indexOf(CLASSNAME_MESSAGE_SEPARATOR);
 		ThrowableInfo result=new ThrowableInfo();
@@ -221,64 +136,72 @@ public class LogbackLoggingAdapter
 			result.setMessage(current.substring(colonIdx+CLASSNAME_MESSAGE_SEPARATOR.length()));
 		}
 		index++;
-		ArrayList<StackTraceElement> stackElements=new ArrayList<StackTraceElement>();
+
+		ArrayList<ExtendedStackTraceElement> stackElements= new ArrayList<ExtendedStackTraceElement>();
 		for(int i=index;i<throwStrRep.length;i++)
 		{
-			current=throwStrRep[i];
-			if(current.startsWith(ClassicGlobal.CAUSED_BY))
-			{
-				result.setStackTrace(convert(stackElements.toArray(new StackTraceElement[stackElements.size()])));
-				stackElements.clear();
-				result.setCause(initFromThrowableStrRepRecursive(throwStrRep, i));
-				break;
-			}
+            ThrowableDataPoint dataPoint = throwStrRep[i];
+            ThrowableDataPoint.ThrowableDataPointType type=dataPoint.getType();
+            if(type == ThrowableDataPoint.ThrowableDataPointType.RAW)
+            {
+                String raw=throwStrRep[i].toString();
+                if(raw.startsWith(CAUSED_BY))
+                {
+                    result.setStackTrace(stackElements.toArray(new ExtendedStackTraceElement[stackElements.size()]));
+                    stackElements.clear();
+                    result.setCause(initFromThrowableDataPointsRecursive(throwStrRep, i));
+                    break;
+                }
+                // else
+                if(raw.endsWith(COMMON_FRAMES_OMITTED))
+                {
+                    // we ignore this...
+                    String omittedElementsStr = raw.substring(COMMON_FRAMES_PREFIX.length(), raw.length() - COMMON_FRAMES_OMITTED.length());
+
+                    int omittedElements=0;
+                    try
+                    {
+                        omittedElements=Integer.parseInt(omittedElementsStr);
+                    }
+                    catch(NumberFormatException ex)
+                    {
+                        // ignore
+                    }
+                    result.setOmittedElements(omittedElements);
+                    continue;
+                }
+            }
+
 			// else
-			if(current.endsWith(COMMON_FRAMES_OMITTED))
-			{
-				// we ignore this...
-				continue;
-			}
-			// else
-			/*
-			int idx=current.lastIndexOf("(");
-			String classAndMethod=current.substring(0, idx);
-			//System.out.println("classAndMethod:"+ classAndMethod);
-			String source=current.substring(idx+1, current.length()-1);
-			//System.out.println("source:"+ source);
-			idx=classAndMethod.lastIndexOf(".");
-			String clazz=classAndMethod.substring(0, idx);
-			String method=classAndMethod.substring(idx+1, classAndMethod.length());
-			//System.out.println("clazz:"+ clazz);
-			//System.out.println("method:"+ method);
-			idx=source.lastIndexOf(":");
-			String file=null;
-			int lineNumber=-1;
-			if(idx!=-1)
-			{
-				file=source.substring(0, idx);
-				lineNumber=Integer.parseInt(source.substring(idx+1, source.length()));
-			}
-			else
-			{
-				if(source.equals(NATIVE_METHOD))
-				{
-					lineNumber = ThrowableInfo.MAGIC_NATIVE_LINE_NUMBER;
-				}
-				else if(!source.equals(UNKNOWN_SOURCE))
-				{
-					file=source;
-				}
-			}
-			StackTraceElement newSTE = new StackTraceElement(clazz, method, file, lineNumber);
-			*/
-			stackElements.add(parseStackTraceElement(current));
-			//System.out.println("Original: "+current);
-			//System.out.println("Parsed  : "+newSTE);
+			stackElements.add(parseStac(dataPoint.getStackTraceElementProxy()));
 		}
 		return result;
 	}
 
-	public static StackTraceElement parseStackTraceElement(String current)
+    public static ExtendedStackTraceElement parseStac(StackTraceElementProxy proxy)
+    {
+        if(proxy == null)
+        {
+            return null;
+        }
+        ExtendedStackTraceElement result=new ExtendedStackTraceElement();
+        StackTraceElement ste = proxy.getStackTraceElement();
+        result.setClassName(ste.getClassName());
+        result.setMethodName(ste.getMethodName());
+        result.setLineNumber(ste.getLineNumber());
+        result.setFileName(ste.getFileName());
+
+        ClassPackagingData cpd = proxy.getClassPackagingData();
+        if(cpd!=null)
+        {
+            result.setCodeLocation(cpd.getCodeLocation());
+            result.setVersion(cpd.getVersion());
+            result.setExact(cpd.isExact());
+        }
+        return result;
+    }
+
+	public static ExtendedStackTraceElement parseStackTraceElement(String current)
 	{
 		int idx=current.lastIndexOf("(");
 		String classAndMethod=current.substring(0, idx);
@@ -309,7 +232,8 @@ public class LogbackLoggingAdapter
 				file=source;
 			}
 		}
-		return new StackTraceElement(clazz, method, file, lineNumber);
+        // TODO: add support for codeLocation, version and exact as soon as logback 0.9.10 is released.
+		return new ExtendedStackTraceElement(clazz, method, file, lineNumber);
 	}
 
 	private void initCallStack(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)
@@ -357,7 +281,7 @@ public class LogbackLoggingAdapter
 		}
 		Marker newMarker=new Marker(name);
 		markers.put(name, newMarker);
-		if(origMarker.hasChildren())
+		if(origMarker.hasReferences())
 		{
 			Iterator iter = origMarker.iterator();
 			while(iter.hasNext())
