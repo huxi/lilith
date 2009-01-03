@@ -90,9 +90,18 @@
                 RRD statistics, anything that's working directly on received events), GoToSource). 
                 Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
             </action>
+            <action dev="jhux" type="add">
+                TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
+            </action>
+            <action dev="jhux" type="add">
+                TODO: Install example groovy conditions if conditions folder is newly created.
+            </action>
+            <action dev="jhux" type="update">
+                TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
+            </action>
         </release>
 
-		<release version="0.9.33" date="TBD" description="Future release">
+		<release version="0.9.33" date="TBD" description="2009-01-03">
 			<action dev="jhux" type="add">
 				Added help about groovy filters.
 			</action>
@@ -211,15 +220,6 @@
             </action>
             <action dev="jhux" type="update">
                 "Reset" in preferences does now work as expected, i.e. it resets the dialog to the previous preferences.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Install example groovy conditions if conditions folder is newly created.
-            </action>
-            <action dev="jhux" type="update">
-                TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
             </action>
 		</release>
 
