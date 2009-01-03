@@ -248,7 +248,7 @@ public class Lilith
 			if (verbose)
 			{
 				// reset previous configuration initially loaded from logback.xml
-				loggerContext.shutdownAndReset();
+				loggerContext.reset();
 				JoranConfigurator configurator = new JoranConfigurator();
 				configurator.setContext(loggerContext);
 				URL configUrl;

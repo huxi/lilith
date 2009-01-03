@@ -20,11 +20,8 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JFrame;
-import java.awt.HeadlessException;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Frame;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -55,6 +52,11 @@ public class ViewContainerFrame
 	{
 		return viewActions;
 	}
+
+    public ViewContainer getViewContainer()
+    {
+        return viewContainer;
+    }
 
 	public void focusWindow()
 	{

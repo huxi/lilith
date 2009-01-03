@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
-import java.awt.Component;
+import java.awt.*;
 
 public interface ViewWindow
 {
@@ -31,4 +31,7 @@ public interface ViewWindow
 
 	void setGlassPane(Component glassPane);
 	Component getGlassPane();
+
+
+    ViewContainer getViewContainer();
 }

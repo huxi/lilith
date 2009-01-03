@@ -18,55 +18,35 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.engine.EventSource;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.conditions.Condition;
+import de.huxhorn.sulky.swing.KeyStrokes;
 import org.simplericity.macify.eawt.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.JPopupMenu;
-import javax.swing.table.TableColumn;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.Container;
-import java.awt.Font;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.io.Serializable;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.Serializable;
+import java.net.URL;
+import java.util.*;
+import java.util.List;
 
 /**
  * This class needs cleanup...... remove duplicated logic, make ToolBar/Menu configurable...
@@ -2988,7 +2968,8 @@ public class ViewActions
 					throwableText.append("StackTrace:\n");
 					for(ExtendedStackTraceElement current:st)
 					{
-						throwableText.append("\t").append(current).append("\n");
+                        // TODO: extended optional?
+						throwableText.append("\t").append(current.toString(true)).append("\n");
 					}
 				}
 				info=info.getCause();

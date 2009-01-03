@@ -130,6 +130,9 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	public void scrollToBottom()
 	{
+        //System.out.println("Scrolling to bottom...");
+        //new Throwable().printStackTrace(System.out);
+
 		int row=getRowCount();
 		row--;
 

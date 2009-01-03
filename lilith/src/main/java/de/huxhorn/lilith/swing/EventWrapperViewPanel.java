@@ -17,107 +17,53 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.engine.EventSource;
-import de.huxhorn.lilith.engine.impl.EventSourceImpl;
-import de.huxhorn.lilith.conditions.EventContainsCondition;
-import de.huxhorn.lilith.conditions.GroovyCondition;
-import de.huxhorn.lilith.conditions.MessageContainsCondition;
-import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
-import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
+import de.huxhorn.lilith.conditions.*;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
+import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
-import de.huxhorn.lilith.swing.preferences.SavedCondition;
-import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
-import de.huxhorn.sulky.buffers.FilteringBuffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
-import de.huxhorn.sulky.conditions.Condition;
+import de.huxhorn.sulky.buffers.FilteringBuffer;
+import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.conditions.And;
+import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.sulky.formatting.HumanReadable;
-import de.huxhorn.sulky.swing.SwingWorkManager;
-import de.huxhorn.sulky.swing.KeyStrokes;
-import de.huxhorn.sulky.swing.ProgressingCallable;
-import de.huxhorn.sulky.swing.ResultListener;
-import de.huxhorn.sulky.swing.AbstractProgressingCallable;
+import de.huxhorn.sulky.swing.*;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.simple.FSScrollPane;
+import org.xhtmlrenderer.simple.XHTMLPanel;
+import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
+import org.xhtmlrenderer.swing.LinkListener;
 
+import javax.swing.*;
 import javax.swing.border.MatteBorder;
-import javax.swing.JButton;
-import javax.swing.JToolBar;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JScrollBar;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.Icon;
-import javax.swing.Action;
-import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.JSplitPane;
-import javax.swing.JComboBox;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JToggleButton;
-import javax.swing.event.TableModelListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Vector;
-import java.util.Arrays;
-import java.util.concurrent.Future;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Callable;
-import java.beans.PropertyChangeListener;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.awt.Color;
-import java.awt.FocusTraversalPolicy;
-import java.awt.EventQueue;
-import java.awt.Container;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Component;
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.KeyboardFocusManager;
-import java.awt.GridBagLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseListener;
-import java.io.Serializable;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xhtmlrenderer.simple.XHTMLPanel;
-import org.xhtmlrenderer.simple.FSScrollPane;
-import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
-import org.xhtmlrenderer.swing.LinkListener;
-import org.apache.commons.io.IOUtils;
+import java.io.Serializable;
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public abstract class EventWrapperViewPanel<T extends Serializable>
 	extends JPanel
@@ -422,17 +368,33 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			findTextField.selectAll();
 			applyFilter();
 		}
-		validate();
+		scrollToBottom();
 	}
+
+    /**
+     * scrolls to bottom if it is enabled.
+     */
+    public void scrollToBottom()
+    {
+        if(table.isScrollingToBottom())
+        {
+            SwingUtilities.invokeLater(new ScrollToBottomRunnable());
+        }
+    }
+
+    private class ScrollToBottomRunnable
+        implements Runnable
+    {
+        public void run()
+        {
+            table.scrollToBottom();
+        }
+    }
+
 
 	public void validate()
 	{
 		super.validate();
-		if(table.isScrollingToBottom())
-		{
-			table.scrollToBottom();
-			// since the view might have changed...
-		}
 		if(logger.isDebugEnabled()) logger.debug("Validate");
 	}
 
@@ -550,11 +512,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	public boolean isDisposed()
 	{
 		return tableModel.isDisposed();
-	}
-
-	public void scrollToBottom()
-	{
-		table.scrollToBottom();
 	}
 
 	public void resetFind()
@@ -1748,11 +1705,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class SplitPaneListener
 		implements PropertyChangeListener
 	{
-
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Splitpane change!");
-			validate();
+            String propertyName = evt.getPropertyName();
+            if("dividerLocation".equals(propertyName))
+            {
+                scrollToBottom();
+            }
 		}
 	}
 

@@ -22,24 +22,15 @@ import de.huxhorn.lilith.swing.MainFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.Action;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 public class DebugDialog
 	extends JDialog
@@ -151,6 +142,7 @@ public class DebugDialog
 				loggerEventEmitter.logException();
 				loggerEventEmitter.logException2();
 				loggerEventEmitter.logParamException();
+                loggerEventEmitter.logParamException2();
 				loggerEventEmitter.logSkull();
 				loggerEventEmitter.logTruth();
 				loggerEventEmitter.logAnonymous();
@@ -275,6 +267,7 @@ public class DebugDialog
 			try
 			{
 				loggerEventEmitter.logParamException();
+                loggerEventEmitter.logParamException2();
 			}
 			catch (InterruptedException ex)
 			{

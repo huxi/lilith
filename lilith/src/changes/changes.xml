@@ -204,7 +204,10 @@
                 Use all active conditions to find out colors of a table row. Use current colors if none is matching.
             </action>
             <action dev="jhux" type="fix">
-                TODO: jumping to bottom in table+scrollToBottom even if table did not change.
+                Jumping to bottom in table+scrollToBottom even if table did not change.
+            </action>
+            <action dev="jhux" type="update">
+                Support for Logback 0.9.14
             </action>
             <action dev="jhux" type="add">
                 TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
@@ -214,9 +217,6 @@
             </action>
             <action dev="jhux" type="update">
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
-            </action>
-            <action dev="jhux" type="update">
-                TODO: Support for Logback 0.9.15(?)
             </action>
 		</release>
 

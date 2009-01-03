@@ -19,7 +19,7 @@ package de.huxhorn.lilith.debug;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
+import org.slf4j.MDC;
 
 public class LogParamThrowableRunnable
 	extends AbstractDebugRunnable
@@ -35,6 +35,7 @@ public class LogParamThrowableRunnable
 
 	public void runIt() throws InterruptedException
 	{
+        MDC.put("type", "varargs");
 		Object[] params = new Object[]{"One", "Two", "Three", throwable};
 		if(logger.isTraceEnabled()) logger.trace("A trace message. param1={}, param2={}, param3={}", params);
 		sleep();
@@ -48,5 +49,6 @@ public class LogParamThrowableRunnable
 		sleep();
 		if(logger.isInfoEnabled()) logger.info("A info message. param1={}, param2={}, param3={}, exceptionString={}", params);
 		sleep();
+        MDC.remove("type");
 	}
 }
