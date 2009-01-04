@@ -80,7 +80,7 @@
             </action>
 		</release>
 
-        <release version="0.9.34" date="TBD" description="Future release">
+        <release version="0.9.35" date="TBD" description="Future release">
             <action dev="jhux" type="add">
                 TODO: Add transfer size statistics.
             </action>
@@ -101,7 +101,7 @@
             </action>
         </release>
 
-        <release version="0.9.34" date="TBD" description="Future release">
+        <release version="0.9.34" date="TBD" description="2009-01-03">
             <action dev="jhux" type="add">
                 Added unit-tests for all datatypes.
             </action>

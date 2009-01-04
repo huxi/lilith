@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.master</artifactId>
-<!-- LV --><version>0.9.34-SNAPSHOT</version>
+<!-- LV --><version>0.9.34</version>
 	<packaging>pom</packaging>
 	<name>Lilith master pom file</name>
 	<description>This file is part of Lilith. It's the master pom file that is used to build all other modules.</description>
