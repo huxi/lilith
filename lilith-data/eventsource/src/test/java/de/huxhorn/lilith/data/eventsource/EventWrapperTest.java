@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.data.eventsource;
 
-import static de.huxhorn.sulky.junit.JUnitTools.testClone;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 import org.junit.Test;
@@ -28,59 +27,51 @@ import static org.junit.Assert.assertFalse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-public class EventIdentifierTest
+public class EventWrapperTest
 {
-	private EventIdentifier fresh;
+	private EventWrapper<String> fresh;
 
 	@Before
 	public void initFresh()
 	{
-		fresh = new EventIdentifier();
+		fresh = new EventWrapper<String>();
 	}
 
     @Test
     public void constructorDefault() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
     {
-        EventIdentifier instance=new EventIdentifier();
+        EventWrapper<String> instance=new EventWrapper<String>();
         testSerialization(instance);
 		testXmlSerialization(instance);
-        testClone(instance);
     }
 
     @Test
-    public void constructorFull() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException 
+    public void constructorFull() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
     {
-        EventIdentifier instance=new EventIdentifier(new SourceIdentifier(), 17);
+        EventWrapper<String> instance=new EventWrapper<String>(new SourceIdentifier(), 17, "Foo");
         testSerialization(instance);
 		testXmlSerialization(instance);
-        testClone(instance);
 
-        instance=new EventIdentifier(null, 17);
+        instance=new EventWrapper<String>(null, 17, "Foo");
         testSerialization(instance);
 		testXmlSerialization(instance);
-        testClone(instance);
     }
 
 	@Test
 	public void sourceIdentifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		EventIdentifier instance=new EventIdentifier();
+		EventWrapper<String> instance=new EventWrapper<String>();
 
 		SourceIdentifier value=new SourceIdentifier();
 		instance.setSourceIdentifier(value);
 
 		{
-			EventIdentifier obj = testSerialization(instance);
+			EventWrapper<String> obj = testSerialization(instance);
 			assertEquals(value, obj.getSourceIdentifier());
 			assertFalse(fresh.equals(obj));
 		}
 		{
-			EventIdentifier obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getSourceIdentifier());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			EventIdentifier obj = testClone(instance);
+			EventWrapper<String> obj = testXmlSerialization(instance);
 			assertEquals(value, obj.getSourceIdentifier());
 			assertFalse(fresh.equals(obj));
 		}
@@ -89,25 +80,60 @@ public class EventIdentifierTest
 	@Test
 	public void localId() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		EventIdentifier instance=new EventIdentifier();
+		EventWrapper<String> instance=new EventWrapper<String>();
 
 		long value=17;
 		instance.setLocalId(value);
 
 		{
-			EventIdentifier obj = testSerialization(instance);
+			EventWrapper<String> obj = testSerialization(instance);
 			assertEquals(value, obj.getLocalId());
 			assertFalse(fresh.equals(obj));
 		}
 		{
-			EventIdentifier obj = testXmlSerialization(instance);
+			EventWrapper<String> obj = testXmlSerialization(instance);
 			assertEquals(value, obj.getLocalId());
 			assertFalse(fresh.equals(obj));
 		}
+	}
+
+	@Test
+	public void event() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	{
+		EventWrapper<String> instance=new EventWrapper<String>();
+
+		String value="value";
+		instance.setEvent(value);
+
 		{
-			EventIdentifier obj = testClone(instance);
-			assertEquals(value, obj.getLocalId());
+			EventWrapper<String> obj = testSerialization(instance);
+			assertEquals(value, obj.getEvent());
 			assertFalse(fresh.equals(obj));
+		}
+		{
+			EventWrapper<String> obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getEvent());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void eventIdentifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	{
+		EventWrapper<String> instance=new EventWrapper<String>();
+
+		EventIdentifier value=new EventIdentifier();
+		instance.setEventIdentifier(value);
+
+		{
+			EventWrapper<String> obj = testSerialization(instance);
+			assertEquals(value, obj.getEventIdentifier());
+			//assertFalse(fresh.equals(obj));
+		}
+		{
+			EventWrapper<String> obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getEventIdentifier());
+			//assertFalse(fresh.equals(obj));
 		}
 	}
 }

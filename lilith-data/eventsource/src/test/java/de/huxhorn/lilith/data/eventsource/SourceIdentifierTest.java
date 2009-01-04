@@ -19,20 +19,32 @@ package de.huxhorn.lilith.data.eventsource;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testClone;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
+import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class SourceIdentifierTest
 {
+	private SourceIdentifier fresh;
+
+	@Before
+	public void initFresh()
+	{
+		fresh = new SourceIdentifier();
+	}
+
     @Test
     public void constructorDefault() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
     {
         SourceIdentifier original=new SourceIdentifier();
         testSerialization(original);
+		testXmlSerialization(original);
         testClone(original);
-
     }
 
     @Test
@@ -41,16 +53,67 @@ public class SourceIdentifierTest
         SourceIdentifier original;
         original = new SourceIdentifier("primary", "secondary");
         testSerialization(original);
+		testXmlSerialization(original);
         testClone(original);
 
         original = new SourceIdentifier(null, "secondary");
         testSerialization(original);
+		testXmlSerialization(original);
         testClone(original);
 
         original = new SourceIdentifier("primary", null);
         testSerialization(original);
+		testXmlSerialization(original);
         testClone(original);
     }
 
+	@Test
+	public void identifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	{
+		SourceIdentifier instance=new SourceIdentifier();
 
+		String value="value";
+		instance.setIdentifier(value);
+
+		{
+			SourceIdentifier obj = testSerialization(instance);
+			assertEquals(value, obj.getIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			SourceIdentifier obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			SourceIdentifier obj = testClone(instance);
+			assertEquals(value, obj.getIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void secondaryIdentifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	{
+		SourceIdentifier instance=new SourceIdentifier();
+
+		String value="value";
+		instance.setSecondaryIdentifier(value);
+
+		{
+			SourceIdentifier obj = testSerialization(instance);
+			assertEquals(value, obj.getSecondaryIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			SourceIdentifier obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getSecondaryIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			SourceIdentifier obj = testClone(instance);
+			assertEquals(value, obj.getSecondaryIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 }

@@ -211,8 +211,8 @@ public class AccessEvent
 		if (remoteUser != null ? !remoteUser.equals(event.remoteUser) : event.remoteUser != null) return false;
 		if (requestHeaders != null ? !requestHeaders.equals(event.requestHeaders) : event.requestHeaders != null)
 			return false;
-		if (requestParameters != null ? !requestParameters.equals(event.requestParameters) : event.requestParameters != null)
-			return false;
+//		if (requestParameters != null ? !requestParameters.equals(event.requestParameters) : event.requestParameters != null)
+//			return false;
 		if (requestURI != null ? !requestURI.equals(event.requestURI) : event.requestURI != null) return false;
 		if (requestURL != null ? !requestURL.equals(event.requestURL) : event.requestURL != null) return false;
 		if (responseHeaders != null ? !responseHeaders.equals(event.responseHeaders) : event.responseHeaders != null)
@@ -235,9 +235,6 @@ public class AccessEvent
 		result = 31 * result + (method != null ? method.hashCode() : 0);
 		result = 31 * result + (serverName != null ? serverName.hashCode() : 0);
 		result = 31 * result + (remoteAddress != null ? remoteAddress.hashCode() : 0);
-		result = 31 * result + (requestHeaders != null ? requestHeaders.hashCode() : 0);
-		result = 31 * result + (responseHeaders != null ? responseHeaders.hashCode() : 0);
-		result = 31 * result + (requestParameters != null ? requestParameters.hashCode() : 0);
 		result = 31 * result + localPort;
 		result = 31 * result + statusCode;
 		return result;
