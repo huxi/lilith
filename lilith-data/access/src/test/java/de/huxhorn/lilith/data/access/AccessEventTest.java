@@ -1,0 +1,358 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2008 Joern Huxhorn
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package de.huxhorn.lilith.data.access;
+
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertArrayEquals;
+import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
+import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
+
+public class AccessEventTest
+{
+	private AccessEvent fresh;
+
+	@Before
+	public void initFresh()
+	{
+		fresh = new AccessEvent();
+	}
+
+	@Test
+	public void defaultConstructor() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		testSerialization(instance);
+		testXmlSerialization(instance);
+	}
+
+	@Test
+	public void applicationIdentifier() throws ClassNotFoundException, IOException
+	{
+		AccessEvent  instance=new AccessEvent ();
+
+		String value="value";
+		instance.setApplicationIdentifier(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getApplicationIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getApplicationIdentifier());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void method() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setMethod(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getMethod());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getMethod());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void protocol() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setProtocol(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getProtocol());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getProtocol());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+
+	@Test
+	public void remoteAddress() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setRemoteAddress(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRemoteAddress());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRemoteAddress());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void remoteHost() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setRemoteHost(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRemoteHost());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRemoteHost());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void remoteUser() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setRemoteUser(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRemoteUser());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRemoteUser());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void requestUri() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setRequestURI(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRequestURI());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRequestURI());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void requestUrl() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setRequestURL(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRequestURL());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRequestURL());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void serverName() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		String value="value";
+		instance.setServerName(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getServerName());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getServerName());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void requestHeaders() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		Map<String, String> value=new HashMap<String, String>();
+		value.put("foo","bar");
+		instance.setRequestHeaders(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRequestHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRequestHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void requestParameters() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		Map<String, String[]> value=new HashMap<String, String[]>();
+		String[] array=new String[]{"bar"};
+		value.put("foo", array);
+		instance.setRequestParameters(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertArrayEquals(array, obj.getRequestParameters().get("foo"));
+			//assertEquals(value, obj.getRequestParameters());
+			//assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertArrayEquals(array, obj.getRequestParameters().get("foo"));
+			//assertEquals(value, obj.getRequestParameters());
+			//assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void responseHeaders() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		Map<String, String> value=new HashMap<String, String>();
+		value.put("foo","bar");
+		instance.setResponseHeaders(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getResponseHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getResponseHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void timeStamp() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		Date value=new Date();
+		instance.setTimeStamp(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getTimeStamp());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getTimeStamp());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void localPort() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		int value=17;
+		instance.setLocalPort(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getLocalPort());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getLocalPort());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void statusCode() throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance=new AccessEvent();
+
+		int value=17;
+		instance.setStatusCode(value);
+
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getStatusCode());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getStatusCode());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+}

@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.data.logging;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,7 +31,17 @@ public class Marker
 	private String name;
 	private Map<String, Marker> references;
 
+	public Marker()
+	{
+		this("Marker");
+	}
+
 	public Marker(String name)
+	{
+		setName(name);
+	}
+
+	public void setName(String name)
 	{
 		if (name == null)
 		{
@@ -52,7 +61,7 @@ public class Marker
 		{
 			return null;
 		}
-		return Collections.unmodifiableMap(references);
+		return new HashMap<String, Marker>(references);
 	}
 
 	public void remove(Marker marker)

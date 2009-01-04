@@ -55,6 +55,12 @@
 			<scope>test</scope>
 		</dependency>
 
+        <dependency>
+            <groupId>de.huxhorn.sulky</groupId>
+            <artifactId>de.huxhorn.sulky.junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

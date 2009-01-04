@@ -563,6 +563,8 @@ new UseCase("ArrayValues", "{}{}",  multiArray, new String[]{"["+multiArrayRec+"
 	
 	private static class FooThrowable extends RuntimeException
 	{
+		private static final long serialVersionUID = 9140989200041952994L;
+
 		public FooThrowable(String s)
 		{
 			super(s);
