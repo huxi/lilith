@@ -14,32 +14,12 @@
 		<ReconnectionDelay>10000</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 	</appender>
-	<appender name="Huxi" class="ch.qos.lilith.classic.net.SocketAppender">
-		<RemoteHost>10.200.55.13</RemoteHost>
-		<LocationInfo>false</LocationInfo>
-		<Port>4445</Port>
-	</appender>
-
-	<appender name="Vlad" class="ch.qos.lilith.classic.net.SocketAppender">
-		<RemoteHost>10.200.55.29</RemoteHost>
-		<LocationInfo>false</LocationInfo>
-		<Port>4445</Port>
-	</appender>
-
-	<appender name="Localhorst" class="ch.qos.lilith.classic.net.SocketAppender">
-		<RemoteHost>localhost</RemoteHost>
-		<LocationInfo>false</LocationInfo>
-		<Port>4445</Port>
-	</appender>
 	-->
 	
 	<root>
-		<level value="DEBUG"/>
+		<level value="WARN"/>
 		<appender-ref ref="CONSOLE"/>
 		<!--
-		<appender-ref ref="Localhorst"/>
-		<appender-ref ref="Huxi"/>
-		<appender-ref ref="Vlad"/>
 		<appender-ref ref="Localhorst"/>
 		-->
 	</root>
