@@ -101,7 +101,7 @@
             </action>
         </release>
 
-        <release version="0.9.34" date="TBD" description="2009-01-03">
+        <release version="0.9.34" date="TBD" description="2009-01-04">
             <action dev="jhux" type="add">
                 Added unit-tests for all datatypes.
             </action>
