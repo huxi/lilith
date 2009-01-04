@@ -17,45 +17,27 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.Lilith;
-import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
+import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
+import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.UIManager;
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.util.*;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.security.MessageDigest;
 
 public class ApplicationPreferences
 {
@@ -340,7 +322,11 @@ public class ApplicationPreferences
 							{
 								break;
 							}
-							historyList.add(currentLine);
+                            currentLine=currentLine.trim();
+                            if(!"".equals(currentLine))
+                            {
+							    historyList.add(currentLine);
+                            }
 						}
 					}
 					catch (IOException e)
@@ -365,33 +351,36 @@ public class ApplicationPreferences
 					for(String currentLine : historyList)
 					{
 						InputStream is=getClass().getResourceAsStream(historyBasePath+currentLine+".md5");
-						DataInputStream dis=new DataInputStream(is);
-						byte[] checksum=new byte[16];
-						try
-						{
-							dis.readFully(checksum);
-							if(Arrays.equals(available, checksum))
-							{
-								if(logger.isInfoEnabled()) logger.info("Found old version of {}: {}", file.getAbsolutePath(), currentLine);
-								delete=true;
-								break;
-							}
-						}
-						catch (IOException e)
-						{
-							if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of "+currentLine+"!", e);
-						}
-						finally
-						{
-							try
-							{
-								dis.close();
-							}
-							catch (IOException e)
-							{
-								// ignore
-							}
-						}
+                        if(is!=null)
+                        {
+                            DataInputStream dis=new DataInputStream(is);
+                            byte[] checksum=new byte[16];
+                            try
+                            {
+                                dis.readFully(checksum);
+                                if(Arrays.equals(available, checksum))
+                                {
+                                    if(logger.isInfoEnabled()) logger.info("Found old version of {}: {}", file.getAbsolutePath(), currentLine);
+                                    delete=true;
+                                    break;
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of "+currentLine+"!", e);
+                            }
+                            finally
+                            {
+                                try
+                                {
+                                    dis.close();
+                                }
+                                catch (IOException e)
+                                {
+                                    // ignore
+                                }
+                            }
+                        }
 					}
 				}
 			}
