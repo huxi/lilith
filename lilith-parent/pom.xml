@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.parent</artifactId>
-<!-- LV --><version>0.9.34</version>
+<!-- LV --><version>0.9.35-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith parent pom file</name>
 	<description>This file is part of Lilith. It's the parent pom that contains general project informations.</description>
@@ -17,7 +17,7 @@
 
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
-<!-- SV --><sulkyVersion>0.9.6</sulkyVersion>
+<!-- SV --><sulkyVersion>0.9.7-SNAPSHOT</sulkyVersion>
         <slf4jVersion>1.5.6</slf4jVersion>
         <logbackVersion>0.9.14</logbackVersion>
 	</properties>
