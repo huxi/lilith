@@ -21,13 +21,23 @@ import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
-import de.huxhorn.lilith.consumers.*;
+import de.huxhorn.lilith.consumers.AlarmSoundAccessEventConsumer;
+import de.huxhorn.lilith.consumers.AlarmSoundLoggingEventConsumer;
+import de.huxhorn.lilith.consumers.FileDumpEventConsumer;
+import de.huxhorn.lilith.consumers.FileSplitterEventConsumer;
+import de.huxhorn.lilith.consumers.RrdLoggingEventConsumer;
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.engine.*;
+import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.lilith.engine.EventSourceListener;
+import de.huxhorn.lilith.engine.FileBufferFactory;
+import de.huxhorn.lilith.engine.LogFileFactory;
+import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
@@ -45,7 +55,6 @@ import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
-import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
 import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
@@ -66,7 +75,6 @@ import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.io.IOUtils;
@@ -77,9 +85,28 @@ import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -87,12 +114,25 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class MainFrame
 		extends JFrame
@@ -126,8 +166,6 @@ public class MainFrame
 	private RrdFileFilter rrdFileFilter;
 	private StatisticsDialog statisticsDialog;
 	private SwingWorkManager<Integer> integerWorkManager;
-	private File groovyConditionsPath;
-	private static final String GROOVY_SUFFIX = ".groovy";
 	private ViewActions viewActions;
 	private OpenPreviousDialog openInactiveLogsDialog;
 	private HelpFrame helpFrame;
@@ -139,49 +177,23 @@ public class MainFrame
 	private boolean enableBonjour;
 	private final boolean isMac;
 	private final boolean isWindows;
-	private String[] conditionScriptFiles;
-	private long lastConditionsCheck;
-	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
     private List<SavedCondition> activeConditions;
-    /*
-     * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
-     */
+	private Map<LoggingEvent.Level, Colors> levelColors;
+	private Map<HttpStatus.Type, Colors> statusColors;
+	/*
+		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
+		 */
     //private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
     //private ReferenceQueue<Colors> colorsReferenceQueue;
 
     public String[] getAllConditionScriptFiles()
 	{
-		if(conditionScriptFiles == null || ((System.currentTimeMillis()-lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
-		{
-
-			File[] groovyFiles=groovyConditionsPath.listFiles(new GroovyConditionFileFilter());
-			if(groovyFiles!=null && groovyFiles.length>0)
-			{
-				conditionScriptFiles=new String[groovyFiles.length];
-				for(int i=0;i<groovyFiles.length;i++)
-				{
-					File current=groovyFiles[i];
-					conditionScriptFiles[i]=current.getName();
-				}
-				Arrays.sort(conditionScriptFiles);
-				lastConditionsCheck=System.currentTimeMillis();
-			}
-		}
-		return conditionScriptFiles;
+		return applicationPreferences.getAllConditionScriptFiles();
 	}
 	
 	public File resolveConditionScriptFile(String input)
 	{
-		if(!input.endsWith(GROOVY_SUFFIX))
-		{
-			input=input+GROOVY_SUFFIX;
-		}
-		File scriptFile=new File(groovyConditionsPath, input);
-		if(scriptFile.isFile())
-		{
-			return scriptFile;
-		}
-		return null;
+		return applicationPreferences.resolveConditionScriptFile(input);
 	}
 
 	public PreferencesDialog getPreferencesDialog()
@@ -248,11 +260,6 @@ public class MainFrame
 		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
 		statisticsDialog = new StatisticsDialog(this);
 		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
-		groovyConditionsPath = new File(startupApplicationPath, "conditions");
-		if(groovyConditionsPath.mkdirs())
-        {
-            // TODO: groovy Conditions was generated, create examples...
-        }
 
 		loggingEventViewManager=new LoggingEventViewManager(this);
 		accessEventViewManager=new AccessEventViewManager(this);
@@ -737,10 +744,10 @@ public class MainFrame
         }
         if(activeConditions != null)
         {
-            EventIdentifier id = eventWrapper.getEventIdentifier();
-
             Colors result=null;
             /*
+            EventIdentifier id = eventWrapper.getEventIdentifier();
+
             SoftColorsReference ref = colorsCache.get(id);
             if(ref!=null)
             {
@@ -793,15 +800,17 @@ public class MainFrame
         return null;
     }
 
-    private static final Colors NULL_COLORS=new Colors();
-
-    private static class SoftColorsReference extends SoftReference<Colors>
+	// TODO; implement cache?
+    @SuppressWarnings({"UnusedDeclaration"})
+	private static class SoftColorsReference extends SoftReference<Colors>
     {
+		private static final Colors NULL_COLORS=new Colors();
+
         private EventIdentifier id;
 
         public SoftColorsReference(EventIdentifier id, Colors o, ReferenceQueue<Colors> referenceQueue)
         {
-            super(o, referenceQueue);
+            super(o!=null?o:new Colors(), referenceQueue);
             this.id=id;
         }
 
@@ -809,46 +818,59 @@ public class MainFrame
         {
             return id;
         }
+
+		public Colors getColors()
+		{
+			Colors result = get();
+			if(NULL_COLORS.equals(result))
+			{
+				return null;
+			}
+			return result;
+		}
     }
 
-    // TODO: preferences
-    private static final Map<LoggingEvent.Level, Colors> levelColors;
+	public Colors getColors(HttpStatus.Type status)
+	{
+		if(statusColors==null)
+		{
+			initStatusColors();
+		}
+		return statusColors.get(status);
+	}
 
-    static
-    {
-        levelColors=new HashMap<LoggingEvent.Level, Colors>();
+	private void initStatusColors()
+	{
+		Map<HttpStatus.Type, ColorScheme> prefValue = applicationPreferences.getStatusColors();
+		Map<HttpStatus.Type, Colors> colors=new HashMap<HttpStatus.Type, Colors>();
+		for(Map.Entry<HttpStatus.Type, ColorScheme> current : prefValue.entrySet())
+		{
+			colors.put(current.getKey(), new Colors(current.getValue()));
+		}
+		statusColors=colors;
+	}
 
-        levelColors.put(LoggingEvent.Level.TRACE, new Colors(new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9))));
-        levelColors.put(LoggingEvent.Level.DEBUG, new Colors(new ColorScheme(Color.BLACK, Color.GREEN)));
-        levelColors.put(LoggingEvent.Level.INFO, new Colors(new ColorScheme(Color.BLACK, Color.WHITE)));
-        levelColors.put(LoggingEvent.Level.WARN, new Colors(new ColorScheme(Color.BLACK, Color.YELLOW)));
-        levelColors.put(LoggingEvent.Level.ERROR, new Colors(new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE)));
-    }
+	public Colors getColors(LoggingEvent.Level level)
+	{
+		if(levelColors==null)
+		{
+			initLevelColors();
+		}
+		return levelColors.get(level);
+	}
 
-    public Colors getColors(LoggingEvent.Level level)
-    {
-        return levelColors.get(level);
-    }
+	private void initLevelColors()
+	{
+		Map<LoggingEvent.Level, ColorScheme> prefValue = applicationPreferences.getLevelColors();
+		Map<LoggingEvent.Level, Colors> colors=new HashMap<LoggingEvent.Level, Colors>();
+		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : prefValue.entrySet())
+		{
+			colors.put(current.getKey(), new Colors(current.getValue()));
+		}
+		levelColors=colors;
+	}
 
-    // TODO: preferences
-    private static final Map<de.huxhorn.lilith.data.access.HttpStatus.Type, Colors> statusColors;
-
-    static
-    {
-        statusColors=new HashMap<de.huxhorn.lilith.data.access.HttpStatus.Type, Colors>();
-
-        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.SUCCESSFUL, new Colors(new ColorScheme(Color.BLACK, Color.GREEN)));
-        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.INFORMATIONAL, new Colors(new ColorScheme(Color.BLACK, Color.WHITE)));
-        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.REDIRECTION, new Colors(new ColorScheme(Color.BLACK, Color.YELLOW)));
-        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.CLIENT_ERROR, new Colors(new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE)));
-        statusColors.put(de.huxhorn.lilith.data.access.HttpStatus.Type.SERVER_ERROR, new Colors(new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE)));
-    }
-
-    public Colors getColors(de.huxhorn.lilith.data.access.HttpStatus.Type status) {
-        return statusColors.get(status);
-    }
-
-    public class MyApplicationListener
+	public class MyApplicationListener
 			implements ApplicationListener
 	{
 
@@ -1914,6 +1936,20 @@ public class MainFrame
 				updateConditions();
 				return;
 			}
+
+			if(ApplicationPreferences.LEVEL_COLORS_PROPERTY.equals(propName))
+			{
+				levelColors=null;
+				updateLoggingViews();
+				return;
+			}
+
+			if(ApplicationPreferences.STATUS_COLORS_PROPERTY.equals(propName))
+			{
+				statusColors=null;
+				updateAccessViews();
+				//return;
+			}
 		}
 
 		private void updateSourceTitles()
@@ -1961,12 +1997,21 @@ public class MainFrame
         activeConditions=active;
         //flushCachedConditionResults();
 
+		updateAllViews();
+	}
+
+	private void updateLoggingViews()
+	{
 		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
 		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 		{
 			ViewContainer<LoggingEvent> value = current.getValue();
 			value.updateViews();
 		}
+	}
+
+	private void updateAccessViews()
+	{
 		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
 		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
 		{
@@ -1975,6 +2020,11 @@ public class MainFrame
 		}
 	}
 
+	private void updateAllViews()
+	{
+		updateLoggingViews();
+		updateAccessViews();
+	}
 /*
     private void flushCachedConditionResults()
     {
@@ -1989,10 +2039,14 @@ public class MainFrame
 		{
 			File dataFile=fileFactory.getDataFile(si);
 			File indexFile=fileFactory.getIndexFile(si);
-			dataFile.delete();
-			if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
-			indexFile.delete();
-			if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
+			if(dataFile.delete())
+			{
+				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
+			}
+			if(indexFile.delete())
+			{
+				if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
+			}
 		}
 	}
 
@@ -2364,7 +2418,8 @@ public class MainFrame
 				// Execute the method.
 				int statusCode = client.executeMethod(method);
 
-				if (statusCode != HttpStatus.SC_OK)
+				// lets use our HttpStatus instead...
+				if (statusCode != HttpStatus.OK.getCode())
 				{
 					System.err.println("Method failed: " + method.getStatusLine());
 				}
@@ -2463,10 +2518,14 @@ public class MainFrame
 		{
 			File dataFile=fileFactory.getDataFile(si);
 			File indexFile=fileFactory.getIndexFile(si);
-			dataFile.delete();
-			if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
-			indexFile.delete();
-			if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
+			if(dataFile.delete())
+			{
+				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
+			}
+			if(indexFile.delete())
+			{
+				if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
+			}
 		}
 	}
 
