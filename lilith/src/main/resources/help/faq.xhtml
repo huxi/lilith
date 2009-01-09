@@ -13,6 +13,7 @@
 		<h1><a name="top">Frequently Asked Questions</a></h1>
 
         <dl>
+            <!--
             <dt>Why is Lilith still only supporting Logback 0.9.9?</dt>
             <dd>
                 Logback 0.9.10 introduced new version information in the StackTraceElement string representation. This
@@ -27,6 +28,7 @@
                 Feel free to take a look at <a href="http://jira.qos.ch/browse/LBCLASSIC-46">LBCLASSIC-46</a> if you like
                 more specific informations.
             </dd>
+            -->
             <dt>Why is there no case-insensitive search?</dt>
             <dd>
                 Well, to be honest, this has two reasons:
@@ -37,6 +39,7 @@
                         This means that there is no way to do it reliably for every given unicode string.</li>
                     <li>I have simply no idea how to add that option in a way that is both userfriendly and
                         applicable to the current condition implementation.</li>
+                    <li>It's pretty easy to do it yourself - in the way expected by you - using <a href="conditions.xhtml#groovy">groovy conditions</a>.</li>
                 </ul>
             </dd>
             <dt>Why is there no tree-view of the logger names as <a href="http://logging.apache.org/chainsaw/">Chainsaw</a>

@@ -81,6 +81,13 @@
 		</release>
 
         <release version="0.9.35" date="TBD" description="Future release">
+            <action dev="jhux" type="update">
+                Known problems and FAQ in help did not reflect the latest version.
+            </action>
+            <action dev="jhux" type="fix">
+                In case of #groovy#&lt;scriptname&gt; the script received that string as search string.
+                This has been fixed, now "" is used as search string.
+            </action>
             <action dev="jhux" type="add">
                 TODO: Add transfer size statistics.
             </action>
