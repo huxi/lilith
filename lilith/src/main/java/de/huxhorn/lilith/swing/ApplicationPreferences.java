@@ -19,42 +19,72 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithSounds;
+import de.huxhorn.lilith.data.access.HttpStatus;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
+import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
+import javax.swing.UIManager;
+import java.awt.Color;
+import java.beans.Encoder;
+import java.beans.Expression;
+import java.beans.PersistenceDelegate;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 public class ApplicationPreferences
 {
-	private static final String DETAILS_VIEW_ROOT_FOLDER = "detailsView";
-	public static final String DETAILS_VIEW_CSS_FILENAME = "detailsView.css";
-	public static final String DETAILS_VIEW_GROOVY_FILENAME = "detailsView.groovy";
-	private static final String CONDITIONS_XML_FILENAME = "savedConditions.xml";
-
-	private File detailsViewRoot;
-
 	public static enum SourceFiltering
 	{
 		NONE, BLACKLIST, WHITELIST
 	}
 
-	private static final Preferences PREFERENCES =Preferences.userNodeForPackage(ApplicationPreferences.class);
+	private static final Preferences PREFERENCES =
+			Preferences.userNodeForPackage(ApplicationPreferences.class);
 
+	private static final String STATUS_COLORS_XML_FILENAME = "statusColors.xml";
+	private static final String LEVEL_COLORS_XML_FILENAME = "levelColors.xml";
+
+	private static final String DETAILS_VIEW_ROOT_FOLDER = "detailsView";
+	public static final String DETAILS_VIEW_CSS_FILENAME = "detailsView.css";
+	public static final String DETAILS_VIEW_GROOVY_FILENAME = "detailsView.groovy";
+	private static final String CONDITIONS_XML_FILENAME = "savedConditions.xml";
+
+	public static final String STATUS_COLORS_PROPERTY = "statusColors";
+	public static final String LEVEL_COLORS_PROPERTY = "levelColors";
 	public static final String LOOK_AND_FEEL_PROPERTY = "lookAndFeel";
 	public static final String CLEANING_LOGS_ON_EXIT_PROPERTY = "cleaningLogsOnExit";
 	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
@@ -94,10 +124,13 @@ public class ApplicationPreferences
 	public static final String DEFAULT_APPLICATION_PATH;
 	private static final Map<String, String> DEFAULT_SOURCE_NAMES;
 	private static final Map<String, String> DEFAULT_SOUND_LOCATIONS;
+	private static final Map<LoggingEvent.Level, ColorScheme> DEFAULT_LEVEL_COLORS;
+	private static final Map<HttpStatus.Type, ColorScheme> DEFAULT_STATUS_COLORS;
 
 	public static final String STARTUP_LOOK_AND_FEEL;
 
-	private ArrayList<String> installedLookAndFeels;
+	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
+	private static final String GROOVY_SUFFIX = ".groovy";
 
 	static
 	{
@@ -116,15 +149,41 @@ public class ApplicationPreferences
 		Map<String, String> defaultSourceNames = new HashMap<String, String>();
 		defaultSourceNames.put("127.0.0.1", "Localhost");
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
+
+		HashMap<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<LoggingEvent.Level, ColorScheme>();
+		defaultLevelColors.put(LoggingEvent.Level.TRACE, new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9)));
+		defaultLevelColors.put(LoggingEvent.Level.DEBUG, new ColorScheme(Color.BLACK, Color.GREEN));
+		defaultLevelColors.put(LoggingEvent.Level.INFO, new ColorScheme(Color.BLACK, Color.WHITE));
+		defaultLevelColors.put(LoggingEvent.Level.WARN, new ColorScheme(Color.BLACK, Color.YELLOW));
+		defaultLevelColors.put(LoggingEvent.Level.ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
+		DEFAULT_LEVEL_COLORS = Collections.unmodifiableMap(defaultLevelColors);
+
+		HashMap<HttpStatus.Type, ColorScheme> defaultStatusColors = new HashMap<HttpStatus.Type, ColorScheme>();
+		defaultStatusColors.put(HttpStatus.Type.SUCCESSFUL, new ColorScheme(Color.BLACK, Color.GREEN));
+		defaultStatusColors.put(HttpStatus.Type.INFORMATIONAL,new ColorScheme(Color.BLACK, Color.WHITE));
+		defaultStatusColors.put(HttpStatus.Type.REDIRECTION, new ColorScheme(Color.BLACK, Color.YELLOW));
+		defaultStatusColors.put(HttpStatus.Type.CLIENT_ERROR, new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE));
+		defaultStatusColors.put(HttpStatus.Type.SERVER_ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
+		DEFAULT_STATUS_COLORS = Collections.unmodifiableMap(defaultStatusColors);
+
 		STARTUP_LOOK_AND_FEEL=UIManager.getLookAndFeel().getName();
 	}
 
-
 	private final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
+
+	private PropertyChangeSupport propertyChangeSupport;
 
 	private File startupApplicationPath;
 
-	private PropertyChangeSupport propertyChangeSupport;
+	private File detailsViewRoot;
+
+	private ArrayList<String> installedLookAndFeels;
+	private String[] conditionScriptFiles;
+	private long lastConditionsCheck;
+
+	private Map<LoggingEvent.Level, ColorScheme> levelColors;
+	private Map<HttpStatus.Type, ColorScheme> statusColors;
+
 	private URL detailsViewRootUrl;
 
 	/**
@@ -147,6 +206,8 @@ public class ApplicationPreferences
 	private Set<String> whiteList;
 	private List<SavedCondition> conditions;
 
+	private File groovyConditionsPath;
+
 	public ApplicationPreferences()
 	{
 		lastSourceNamesModified = -1;
@@ -160,6 +221,292 @@ public class ApplicationPreferences
 			installedLookAndFeels.add(info.getName());
 		}
 		Collections.sort(installedLookAndFeels);
+
+		groovyConditionsPath = new File(startupApplicationPath, "conditions");
+		if(groovyConditionsPath.mkdirs())
+        {
+			// groovy Conditions was generated, create examples...
+            installExampleConditions();
+        }
+	}
+
+	public File resolveConditionScriptFile(String input)
+	{
+		if(!input.endsWith(GROOVY_SUFFIX))
+		{
+			input=input+GROOVY_SUFFIX;
+		}
+		File scriptFile=new File(groovyConditionsPath, input);
+		if(scriptFile.isFile())
+		{
+			return scriptFile;
+		}
+		return null;
+	}
+
+	public String[] getAllConditionScriptFiles()
+	{
+		if(conditionScriptFiles == null || ((System.currentTimeMillis()-lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
+		{
+
+			File[] groovyFiles=groovyConditionsPath.listFiles(new GroovyConditionFileFilter());
+			if(groovyFiles!=null && groovyFiles.length>0)
+			{
+				conditionScriptFiles=new String[groovyFiles.length];
+				for(int i=0;i<groovyFiles.length;i++)
+				{
+					File current=groovyFiles[i];
+					conditionScriptFiles[i]=current.getName();
+				}
+				Arrays.sort(conditionScriptFiles);
+				lastConditionsCheck=System.currentTimeMillis();
+			}
+		}
+		return conditionScriptFiles;
+	}
+
+	public void installExampleConditions()
+	{
+		// TODO: implement
+
+	}
+
+	private void initLevelColors()
+	{
+		if(levelColors==null)
+		{
+			File appPath=getStartupApplicationPath();
+			File levelColorsFile =new File(appPath, LEVEL_COLORS_XML_FILENAME);
+
+			if(levelColorsFile.isFile())
+			{
+				XMLDecoder d = null;
+				try
+				{
+					d = new XMLDecoder(
+									  new BufferedInputStream(
+										  new FileInputStream(levelColorsFile)));
+
+					//noinspection unchecked
+					levelColors = (Map<LoggingEvent.Level, ColorScheme>) d.readObject();
+				}
+				catch (Throwable ex)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Exception while loading level colors from sourceListsFile '"+levelColorsFile.getAbsolutePath()+"'!",ex);
+					levelColors=null;
+				}
+				finally
+				{
+					if(d!=null)
+					{
+						d.close();
+					}
+				}
+			}
+		}
+
+		if(levelColors != null && levelColors.size() != DEFAULT_LEVEL_COLORS.size())
+		{
+			if(logger.isWarnEnabled()) logger.warn("Reverting level colors to defaults.");
+			levelColors=null;
+		}
+
+		if(levelColors==null)
+		{
+			levelColors=cloneLevelColors(DEFAULT_LEVEL_COLORS);
+		}
+	}
+
+	private Map<LoggingEvent.Level, ColorScheme> cloneLevelColors(Map<LoggingEvent.Level, ColorScheme> input)
+	{
+		if(input != null && input.size() != DEFAULT_LEVEL_COLORS.size())
+		{
+			if(logger.isWarnEnabled()) logger.warn("Reverting colors to defaults.");
+			input=null;
+		}
+
+		if(input==null)
+		{
+			input=DEFAULT_LEVEL_COLORS;
+		}
+
+		Map<LoggingEvent.Level, ColorScheme> result = new HashMap<LoggingEvent.Level, ColorScheme>();
+
+		try
+		{
+			for(Map.Entry<LoggingEvent.Level, ColorScheme> current : input.entrySet())
+			{
+				result.put(current.getKey(), current.getValue().clone());
+			}
+		}
+		catch (Throwable e)
+		{
+			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", e);
+		}
+		return result;
+	}
+
+	public void setLevelColors(Map<LoggingEvent.Level, ColorScheme> colors)
+	{
+		Object oldValue=getLevelColors();
+		colors=cloneLevelColors(colors);
+		writeLevelColors(colors);
+		this.levelColors=colors;
+		Object newValue=getLevelColors();
+		propertyChangeSupport.firePropertyChange(LEVEL_COLORS_PROPERTY, oldValue, newValue);
+		if(logger.isInfoEnabled()) logger.info("LevelColors set to {}.", this.levelColors);
+	}
+
+	private void writeLevelColors(Map<LoggingEvent.Level, ColorScheme> colors)
+	{
+		File appPath=getStartupApplicationPath();
+		File file = new File(appPath, LEVEL_COLORS_XML_FILENAME);
+		Throwable error=null;
+		try
+		{
+			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			XMLEncoder e = new XMLEncoder(bos);
+			PersistenceDelegate delegate=new EnumPersistenceDelegate();
+			e.setPersistenceDelegate(LoggingEvent.Level.class, delegate);
+			e.writeObject(colors);
+			e.close();
+		}
+		catch (Throwable ex)
+		{
+			error=ex;
+		}
+		if(error!=null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", error);
+		}
+	}
+
+	public Map<LoggingEvent.Level, ColorScheme> getLevelColors()
+	{
+		if(levelColors==null)
+		{
+			initLevelColors();
+		}
+		return cloneLevelColors(levelColors);
+	}
+
+	private void initStatusColors()
+	{
+		if(statusColors==null)
+		{
+			File appPath=getStartupApplicationPath();
+			File statusColorsFile =new File(appPath, STATUS_COLORS_XML_FILENAME);
+
+			if(statusColorsFile.isFile())
+			{
+				XMLDecoder d = null;
+				try
+				{
+					d = new XMLDecoder(
+									  new BufferedInputStream(
+										  new FileInputStream(statusColorsFile)));
+
+					//noinspection unchecked
+					statusColors = (Map<HttpStatus.Type, ColorScheme>) d.readObject();
+				}
+				catch (Throwable ex)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Exception while loading status colors from sourceListsFile '"+statusColorsFile.getAbsolutePath()+"'!",ex);
+					statusColors=null;
+				}
+				finally
+				{
+					if(d!=null)
+					{
+						d.close();
+					}
+				}
+			}
+		}
+
+		if(statusColors != null && statusColors.size() != DEFAULT_STATUS_COLORS.size())
+		{
+			if(logger.isWarnEnabled()) logger.warn("Reverting status colors to defaults.");
+			statusColors=null;
+		}
+
+		if(statusColors==null)
+		{
+			statusColors=cloneStatusColors(DEFAULT_STATUS_COLORS);
+		}
+	}
+
+	private Map<HttpStatus.Type, ColorScheme> cloneStatusColors(Map<HttpStatus.Type, ColorScheme> input)
+	{
+		if(input != null && input.size() != DEFAULT_STATUS_COLORS.size())
+		{
+			if(logger.isWarnEnabled()) logger.warn("Reverting colors to defaults.");
+			input=null;
+		}
+
+		if(input==null)
+		{
+			input=DEFAULT_STATUS_COLORS;
+		}
+
+		Map<HttpStatus.Type, ColorScheme> result = new HashMap<HttpStatus.Type, ColorScheme>();
+
+		try
+		{
+			for(Map.Entry<HttpStatus.Type, ColorScheme> current : input.entrySet())
+			{
+				result.put(current.getKey(), current.getValue().clone());
+			}
+		}
+		catch (Throwable e)
+		{
+			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", e);
+		}
+		return result;
+	}
+
+	public void setStatusColors(Map<HttpStatus.Type, ColorScheme> colors)
+	{
+		Object oldValue=getStatusColors();
+		colors=cloneStatusColors(colors);
+		writeStatusColors(colors);
+		this.statusColors=colors;
+		Object newValue=getStatusColors();
+		propertyChangeSupport.firePropertyChange(STATUS_COLORS_PROPERTY, oldValue, newValue);
+		if(logger.isInfoEnabled()) logger.info("StatusColors set to {}.", this.statusColors);
+	}
+
+	private void writeStatusColors(Map<HttpStatus.Type, ColorScheme> colors)
+	{
+		File appPath=getStartupApplicationPath();
+		File file = new File(appPath, STATUS_COLORS_XML_FILENAME);
+		Throwable error=null;
+		try
+		{
+			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			XMLEncoder e = new XMLEncoder(bos);
+			PersistenceDelegate delegate=new EnumPersistenceDelegate();
+			e.setPersistenceDelegate(HttpStatus.Type.class, delegate);
+			e.writeObject(colors);
+			e.close();
+		}
+		catch (Throwable ex)
+		{
+			error=ex;
+		}
+		if(error!=null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", error);
+		}
+	}
+
+	public Map<HttpStatus.Type, ColorScheme> getStatusColors()
+	{
+		if(statusColors==null)
+		{
+			initStatusColors();
+		}
+		return cloneStatusColors(statusColors);
 	}
 
 	public void setSourceFiltering(SourceFiltering sourceFiltering)
@@ -170,7 +517,6 @@ public class ApplicationPreferences
 		propertyChangeSupport.firePropertyChange(SOURCE_FILTERING_PROPERTY, oldValue, sourceFiltering);
 		if(logger.isInfoEnabled()) logger.info("SourceFiltering set to {}.", this.sourceFiltering);
 	}
-
 
 	private void initSourceLists()
 	{
@@ -192,10 +538,11 @@ public class ApplicationPreferences
 								  new BufferedInputStream(
 									  new FileInputStream(sourceListsFile)));
 
+				//noinspection unchecked
 				sourceLists=(Map<String, Set<String>>) d.readObject();
 				lastSourceListsModified=lastModified;
 			}
-			catch (FileNotFoundException ex)
+			catch (Throwable ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading source lists from sourceListsFile '"+sourceListsFile.getAbsolutePath()+"'!",ex);
 				sourceLists=new HashMap<String, Set<String>>();
@@ -251,7 +598,10 @@ public class ApplicationPreferences
 	private void initDetailsViewRoot()
 	{
 		detailsViewRoot = new File(startupApplicationPath, DETAILS_VIEW_ROOT_FOLDER);
-		detailsViewRoot.mkdirs();
+		if(detailsViewRoot.mkdirs())
+		{
+			if(logger.isInfoEnabled()) logger.info("Created directory {}.", detailsViewRoot.getAbsolutePath());
+		}
 		try
 		{
 			detailsViewRootUrl = detailsViewRoot.toURI().toURL();
@@ -576,11 +926,12 @@ public class ApplicationPreferences
 								  new BufferedInputStream(
 									  new FileInputStream(conditionsFile)));
 
+				//noinspection unchecked
 				conditions=(List<SavedCondition>) d.readObject();
 				lastConditionsModified = lastModified;
 				if(logger.isDebugEnabled()) logger.debug("Loaded conditions {}.", conditions);
 			}
-			catch (FileNotFoundException ex)
+			catch (Throwable ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading conditions from file '"+ conditionsFile.getAbsolutePath()+"'!",ex);
 			}
@@ -839,7 +1190,10 @@ public class ApplicationPreferences
 
 	public void setApplicationPath(File applicationPath)
 	{
-		applicationPath.mkdirs();
+		if(applicationPath.mkdirs())
+		{
+			if(logger.isInfoEnabled()) logger.info("Created directory {}.", applicationPath.getAbsolutePath());
+		}
 		if(!applicationPath.isDirectory())
 		{
 			throw new IllegalArgumentException("'"+applicationPath.getAbsolutePath()+"' is not a directory!");
@@ -854,7 +1208,10 @@ public class ApplicationPreferences
 	{
 		String appPath=PREFERENCES.get(APPLICATION_PATH_PROPERTY, DEFAULT_APPLICATION_PATH);
 		File result=new File(appPath);
-		result.mkdirs();
+		if(result.mkdirs())
+		{
+			if(logger.isInfoEnabled()) logger.info("Created directory {}.", result.getAbsolutePath());
+		}
 		return result;
 	}
 
@@ -1340,9 +1697,10 @@ public class ApplicationPreferences
 							  new BufferedInputStream(
 								  new FileInputStream(file)));
 
+			//noinspection unchecked
 			result=(List<PersistentTableColumnModel.TableColumnLayoutInfo>) d.readObject();
 		}
-		catch (FileNotFoundException ex)
+		catch (Throwable ex)
 		{
 			if(logger.isInfoEnabled()) logger.info("Exception while loading layouts from file '"+ file.getAbsolutePath()+"'!",ex);
 			result=null;
@@ -1414,6 +1772,24 @@ public class ApplicationPreferences
 		catch (BackingStoreException e)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while flushing preferences!", e);
+		}
+	}
+
+	/**
+	 * As described in http://weblogs.java.net/blog/malenkov/archive/2006/08/how_to_encode_e.html
+	 */
+	static class EnumPersistenceDelegate
+		extends PersistenceDelegate
+	{
+		protected boolean mutatesTo( Object oldInstance, Object newInstance )
+		{
+			return oldInstance == newInstance;
+		}
+
+		protected Expression instantiate( Object oldInstance, Encoder out )
+		{
+			Enum e = ( Enum )oldInstance;
+			return new Expression( e, e.getClass(), "valueOf", new Object[]{e.name()} );
 		}
 	}
 }
