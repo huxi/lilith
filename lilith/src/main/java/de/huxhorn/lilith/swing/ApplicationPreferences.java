@@ -131,6 +131,8 @@ public class ApplicationPreferences
 
 	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
 	private static final String GROOVY_SUFFIX = ".groovy";
+	private static final String EXAMPLE_GROOVY_BASE="/conditions/";
+	private static final String EXAMPLE_GROOVY_LIST="conditions.txt";
 
 	static
 	{
@@ -267,8 +269,28 @@ public class ApplicationPreferences
 
 	public void installExampleConditions()
 	{
-		// TODO: implement
-
+		String path=EXAMPLE_GROOVY_BASE+EXAMPLE_GROOVY_LIST;
+		URL url=ApplicationPreferences.class.getResource(path);
+		if(url==null)
+		{
+			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at "+path+"!");
+		}
+		else
+		{
+			List<String> lines=readLines(url);
+			for(String current : lines)
+			{
+				path=EXAMPLE_GROOVY_BASE+current;
+				url=ApplicationPreferences.class.getResource(path);
+				if(url==null)
+				{
+					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at "+path+"!");
+					continue;
+				}
+				File target=new File(groovyConditionsPath, current);
+				copy(url, target, true);
+			}
+		}
 	}
 
 	private void initLevelColors()
@@ -595,7 +617,7 @@ public class ApplicationPreferences
 		return sourceFiltering;
 	}
 
-	private void initDetailsViewRoot()
+	public void initDetailsViewRoot(boolean overwriteAlways)
 	{
 		detailsViewRoot = new File(startupApplicationPath, DETAILS_VIEW_ROOT_FOLDER);
 		if(detailsViewRoot.mkdirs())
@@ -617,7 +639,7 @@ public class ApplicationPreferences
 			String historyBasePath="/detailsView/history/detailsView.css/";
 			File detailsViewCssFile=new File(detailsViewRoot, DETAILS_VIEW_CSS_FILENAME);
 
-			initIfNecessary(detailsViewCssFile, resourcePath, historyBasePath);
+			initIfNecessary(detailsViewCssFile, resourcePath, historyBasePath, overwriteAlways);
 		}
 
 		{
@@ -625,13 +647,18 @@ public class ApplicationPreferences
 			String historyBasePath="/detailsView/history/detailsView.groovy/";
 			File detailsViewGroovyFile=new File(detailsViewRoot, DETAILS_VIEW_GROOVY_FILENAME);
 
-			initIfNecessary(detailsViewGroovyFile, resourcePath, historyBasePath);
+			initIfNecessary(detailsViewGroovyFile, resourcePath, historyBasePath, overwriteAlways);
 		}
 	}
 
-	private void initIfNecessary(File file, String resourcePath, String historyBasePath)
+	private void initIfNecessary(File file, String resourcePath, String historyBasePath, boolean overwriteAlways)
 	{
-		if(file.isFile())
+		boolean delete=false;
+		if(overwriteAlways)
+		{
+			delete=true;
+		}
+		else if(file.isFile())
 		{
 			byte[] available = null;
 
@@ -653,50 +680,13 @@ public class ApplicationPreferences
 				return;
 			}
 
-			boolean delete=false;
 			if(available!=null)
 			{
 				// check older versions if available
 				URL historyUrl = getClass().getResource(historyBasePath+"history.txt");
 				if(historyUrl!=null)
 				{
-					List<String> historyList=new ArrayList<String>();
-					BufferedReader reader = null;
-					try
-					{
-						reader = new BufferedReader(new InputStreamReader(historyUrl.openStream()));
-						for(;;)
-						{
-							String currentLine=reader.readLine();
-							if(currentLine==null)
-							{
-								break;
-							}
-                            currentLine=currentLine.trim();
-                            if(!"".equals(currentLine))
-                            {
-							    historyList.add(currentLine);
-                            }
-						}
-					}
-					catch (IOException e)
-					{
-						if(logger.isWarnEnabled()) logger.warn("Exception while reading history data!", e);
-					}
-					finally
-					{
-						if(reader!=null)
-						{
-							try
-							{
-								reader.close();
-							}
-							catch (IOException e)
-							{
-								// ignore
-							}
-						}
-					}
+					List<String> historyList = readLines(historyUrl);
 
 					for(String currentLine : historyList)
 					{
@@ -739,41 +729,48 @@ public class ApplicationPreferences
 				// we couldn't calculate the checksum. Try to delete it...
 				delete=true;
 			}
-			if(delete)
+		}
+
+		URL resourceUrl=ApplicationPreferences.class.getResource(resourcePath);
+		if(resourceUrl == null)
+		{
+			if(logger.isErrorEnabled()) logger.error("Couldn't find resource {}!", resourcePath);
+			return;
+		}
+		copy(resourceUrl, file, delete);
+	}
+
+	private void copy(URL source, File target, boolean overwrite)
+	{
+		if(overwrite)
+		{
+			if(target.isFile())
 			{
-				if(file.delete())
+				if(target.delete())
 				{
-					if(logger.isInfoEnabled()) logger.info("Deleted {}. ", file.getAbsolutePath());
+					if(logger.isInfoEnabled()) logger.info("Deleted {}. ", target.getAbsolutePath());
 				}
 				else
 				{
-					if(logger.isWarnEnabled()) logger.warn("Tried to delete {} but couldn't!", file.getAbsolutePath());
+					if(logger.isWarnEnabled()) logger.warn("Tried to delete {} but couldn't!", target.getAbsolutePath());
 				}
-			}
-			else
-			{
-				if(logger.isInfoEnabled()) logger.info("Won't update {} because it was changed manually.", file.getAbsolutePath());
 			}
 		}
 
-		if(!file.isFile())
+		if(!target.isFile())
 		{
-			InputStream is=getClass().getResourceAsStream(resourcePath);
-			if(is==null)
-			{
-				if(logger.isErrorEnabled()) logger.error("Couldn't find resource {}!", resourcePath);
-				return;
-			}
+			InputStream is=null;
 			FileOutputStream os= null;
 			try
 			{
-				os = new FileOutputStream(file);
+				os = new FileOutputStream(target);
+				is = source.openStream();
 				IOUtils.copy(is, os);
-				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}'.", file.getAbsolutePath());
+				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
 			}
 			catch (IOException e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while initializing "+file.getAbsolutePath()+"!", e);
+				if(logger.isWarnEnabled()) logger.warn("Exception while initializing '"+target.getAbsolutePath()+"' with data from '"+source+"'.!", e);
 			}
 			finally
 			{
@@ -781,25 +778,78 @@ public class ApplicationPreferences
 				IOUtils.closeQuietly(os);
 			}
 		}
+		else
+		{
+			if(logger.isInfoEnabled()) logger.info("Won't overwrite '{}'.", target.getAbsolutePath());
+		}
+	}
+
+	/**
+	 * Returns a list of strings containing all non-empty, non-comment lines found in the given URL.
+	 * Commented lines start with a #.
+	 *
+	 * @param url the URL to read the lines from.
+	 * @return a List of type String containing all non-empty, non-comment lines.
+	 */
+	private List<String> readLines(URL url)
+	{
+		List<String> result=new ArrayList<String>();
+		BufferedReader reader = null;
+		try
+		{
+			reader = new BufferedReader(new InputStreamReader(url.openStream()));
+			for(;;)
+			{
+				String currentLine=reader.readLine();
+				if(currentLine==null)
+				{
+					break;
+				}
+				currentLine=currentLine.trim();
+				if(!"".equals(currentLine) && !currentLine.startsWith("#"))
+				{
+					result.add(currentLine);
+				}
+			}
+		}
+		catch (IOException e)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while reading lines from "+url+"!", e);
+		}
+		finally
+		{
+			if(reader!=null)
+			{
+				try
+				{
+					reader.close();
+				}
+				catch (IOException e)
+				{
+					// ignore
+				}
+			}
+		}
+		return result;
 	}
 
 	public File getDetailsViewRoot()
 	{
-		if(detailsViewRoot !=null)
+		if(detailsViewRoot != null)
 		{
 			return detailsViewRoot;
 		}
-		initDetailsViewRoot();
+		initDetailsViewRoot(false);
 		return detailsViewRoot;
 	}
 
 	public URL getDetailsViewRootUrl()
 	{
-		if(detailsViewRootUrl !=null)
+		if(detailsViewRootUrl != null)
 		{
 			return detailsViewRootUrl;
 		}
-		initDetailsViewRoot();
+		initDetailsViewRoot(false);
 		return detailsViewRootUrl;
 	}
 

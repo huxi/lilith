@@ -89,6 +89,9 @@
                 This has been fixed, now "" is used as search string.
             </action>
             <action dev="jhux" type="add">
+                Install example groovy conditions if conditions folder is newly created.
+            </action>
+            <action dev="jhux" type="add">
                 TODO: Add transfer size statistics.
             </action>
             <action dev="jhux" type="add">
@@ -99,9 +102,6 @@
             </action>
             <action dev="jhux" type="add">
                 TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Install example groovy conditions if conditions folder is newly created.
             </action>
             <action dev="jhux" type="update">
                 TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
