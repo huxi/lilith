@@ -1170,10 +1170,10 @@ public class MainFrame
 				if(logger.isWarnEnabled()) logger.warn("Exception while instanciating groovy condition '"+scriptFile.getAbsolutePath()+"'!",e);
 				detailsViewScript=null;
 			}
-
 		}
-
 	}
+
+
 	public String createMessage(EventWrapper wrapper)
 	{
 		initDetailsViewScript();

@@ -141,7 +141,7 @@
         <level value="WARN"/>
     </logger>
 	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences">
-		<level value="WARN"/>
+		<level value="INFO"/>
 	</logger>
 
 	<logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener">
