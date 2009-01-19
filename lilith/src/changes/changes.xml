@@ -1,7 +1,7 @@
 <document>
 	<properties>
 		<title>Lilith</title>
-		<author email="huxhorn@sourceforge.net">Joern Huxhorn</author>
+		<author email="huxhorn@users.sourceforge.net">Joern Huxhorn</author>
 	</properties>
 	<body>
 		<release version="1.x.x" date="TBD" description="Future release">
@@ -98,6 +98,7 @@
                 TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
                 EventReceiver, EventHandler (?, stuff like the fart on error,
                 RRD statistics, anything that's working directly on received events), GoToSource).
+
                 Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
             </action>
             <action dev="jhux" type="add">
