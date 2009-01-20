@@ -31,9 +31,33 @@
 	</licenses>
 
 	<issueManagement>
-		<system>sourceforge</system>
-		<url>https://sourceforge.net/tracker/?group_id=219536</url>
+		<system>trac</system>
+		<url>http://apps.sourceforge.net/trac/lilith/</url>
 	</issueManagement>
+
+	<mailingLists>
+		<mailingList>
+			<name>Announce List</name>
+			<subscribe>lilith-announce-join@lists.sourceforge.net</subscribe>
+			<unsubscribe>lilith-announce-leave@lists.sourceforge.net</unsubscribe>
+			<post>lilith-announce@lists.sourceforge.net</post>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum_name=lilith-announce</archive>
+		</mailingList>
+		<mailingList>
+			<name>User List</name>
+			<subscribe>lilith-user-join@lists.sourceforge.net</subscribe>
+			<unsubscribe>lilith-user-leave@lists.sourceforge.net</unsubscribe>
+			<post>lilith-user@lists.sourceforge.net</post>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum_name=lilith-user</archive>
+		</mailingList>
+		<mailingList>
+			<name>Developer List</name>
+			<subscribe>lilith-devel-join@lists.sourceforge.net</subscribe>
+			<unsubscribe>lilith-devel-leave@lists.sourceforge.net</unsubscribe>
+			<post>lilith-devel@lists.sourceforge.net</post>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum_name=lilith-devel</archive>
+		</mailingList>
+	</mailingLists>
 
 	<distributionManagement>
 		<site>
@@ -412,7 +436,7 @@
 					</reportSet>
 				</reportSets>
 				<configuration>
-					<issueLinkTemplate>http://sourceforge.net/support/tracker.php?aid=%ISSUE%</issueLinkTemplate>
+					<issueLinkTemplate>http://apps.sourceforge.net/trac/lilith/ticket/%ISSUE%</issueLinkTemplate>
 				</configuration>
 			</plugin>
 			<plugin>
