@@ -22,6 +22,14 @@
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License v3 (LGPL)</name>
+			<url>http://www.gnu.org/copyleft/lesser.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 	<dependencies>
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
