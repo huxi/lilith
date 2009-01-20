@@ -81,14 +81,14 @@
 		</release>
 
         <release version="0.9.35" date="TBD" description="Future release">
-            <action dev="jhux" type="update">
+            <action dev="jhux" type="update" issue="8">
                 Known problems and FAQ in help did not reflect the latest version.
             </action>
-            <action dev="jhux" type="fix">
+            <action dev="jhux" type="fix" issue="7">
                 In case of #groovy#&lt;scriptname&gt; the script received that string as search string.
                 This has been fixed, now "" is used as search string.
             </action>
-            <action dev="jhux" type="add">
+            <action dev="jhux" type="add" issue="1">
                 Install example groovy conditions if conditions folder is newly created.
             </action>
             <action dev="jhux" type="add">
@@ -109,7 +109,7 @@
             </action>
         </release>
 
-        <release version="0.9.34" date="TBD" description="2009-01-04">
+        <release version="0.9.34" date="2009-01-04" description="Release">
             <action dev="jhux" type="add">
                 Added unit-tests for all datatypes.
             </action>
@@ -118,7 +118,7 @@
             </action>
         </release>
 
-		<release version="0.9.33" date="TBD" description="2009-01-03">
+		<release version="0.9.33" date="2009-01-03" description="Release">
 			<action dev="jhux" type="add">
 				Added help about groovy filters.
 			</action>
@@ -320,7 +320,7 @@
 				Removed some debug logs from SerializingFileBuffer so basic initialization is guaranteed to *not* emit
 				any logging events.
 			</action>
-			<action dev="jhux" type="fix" issue="2044443">
+			<action dev="jhux" type="fix">
 				XML appenders are now sending the message pattern instead of the formatted message.
 			</action>
 			<action dev="jhux" type="update">
