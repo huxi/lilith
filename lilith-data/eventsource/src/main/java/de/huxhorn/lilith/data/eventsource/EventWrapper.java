@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +23,7 @@ public class EventWrapper<T extends Serializable>
 	implements Serializable
 {
 
-    private EventIdentifier eventIdentifier;
+	private EventIdentifier eventIdentifier;
 	private T event;
 
 	/**
@@ -31,71 +31,71 @@ public class EventWrapper<T extends Serializable>
 	 * It's transient and won't survive serialization.
 	 */
 	private transient TransferSizeInfo transferSizeInfo;
-    private static final long serialVersionUID = 6302031645772429174L;
+	private static final long serialVersionUID = 6302031645772429174L;
 
-    public EventWrapper()
-    {
-        this(null, -1, null);
-    }
+	public EventWrapper()
+	{
+		this(null, -1, null);
+	}
 
-    public EventWrapper(SourceIdentifier sourceIdentifier, long localId, T event)
+	public EventWrapper(SourceIdentifier sourceIdentifier, long localId, T event)
 	{
 		this(new EventIdentifier(sourceIdentifier, localId), event);
 	}
 
-    public EventWrapper(EventIdentifier eventIdentifier, T event)
+	public EventWrapper(EventIdentifier eventIdentifier, T event)
 	{
-		this.eventIdentifier=eventIdentifier;
-		this.event=event;
+		this.eventIdentifier = eventIdentifier;
+		this.event = event;
 	}
 
 	public SourceIdentifier getSourceIdentifier()
 	{
-        if(eventIdentifier!=null)
-        {
-		    return eventIdentifier.getSourceIdentifier();
-        }
-        return null;
+		if(eventIdentifier != null)
+		{
+			return eventIdentifier.getSourceIdentifier();
+		}
+		return null;
 	}
 
 	public void setSourceIdentifier(SourceIdentifier sourceIdentifier)
 	{
-        if(eventIdentifier==null)
-        {
-            eventIdentifier=new EventIdentifier();
-        }
-        eventIdentifier.setSourceIdentifier(sourceIdentifier);
+		if(eventIdentifier == null)
+		{
+			eventIdentifier = new EventIdentifier();
+		}
+		eventIdentifier.setSourceIdentifier(sourceIdentifier);
 	}
 
 	public long getLocalId()
 	{
-        if(eventIdentifier!=null)
-        {
-            return eventIdentifier.getLocalId();
-        }
+		if(eventIdentifier != null)
+		{
+			return eventIdentifier.getLocalId();
+		}
 		return EventIdentifier.NO_LOCAL_ID;
 	}
 
 	public void setLocalId(long localId)
 	{
-        if(eventIdentifier==null)
-        {
-            eventIdentifier=new EventIdentifier();
-        }
+		if(eventIdentifier == null)
+		{
+			eventIdentifier = new EventIdentifier();
+		}
 		eventIdentifier.setLocalId(localId);
 	}
 
-    public EventIdentifier getEventIdentifier()
-    {
-        return eventIdentifier;
-    }
+	public EventIdentifier getEventIdentifier()
+	{
+		return eventIdentifier;
+	}
 
-    public void setEventIdentifier(EventIdentifier eventIdentifier)
-    {
-        this.eventIdentifier = eventIdentifier;
-    }
+	public void setEventIdentifier(EventIdentifier eventIdentifier)
+	{
+		this.eventIdentifier = eventIdentifier;
+	}
 
-    public TransferSizeInfo getTransferSizeInfo()
+	public TransferSizeInfo getTransferSizeInfo()
 	{
 		return transferSizeInfo;
 	}
@@ -115,34 +115,36 @@ public class EventWrapper<T extends Serializable>
 		this.event = event;
 	}
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        EventWrapper that = (EventWrapper) o;
-
-        if (eventIdentifier != null ? !eventIdentifier.equals(that.eventIdentifier) : that.eventIdentifier != null)
-            return false;
-        if (event != null ? !event.equals(that.event) : that.event != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        if(eventIdentifier != null)
-        {
-            return eventIdentifier.hashCode();
-        }
-        return(event != null ? event.hashCode() : 0);
-    }
-
-    public String toString()
+	@Override
+	public boolean equals(Object o)
 	{
-		StringBuilder result=new StringBuilder();
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+
+		EventWrapper that = (EventWrapper) o;
+
+		if(eventIdentifier != null ? !eventIdentifier.equals(that.eventIdentifier) : that.eventIdentifier != null)
+		{
+			return false;
+		}
+		if(event != null ? !event.equals(that.event) : that.event != null) return false;
+
+		return true;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		if(eventIdentifier != null)
+		{
+			return eventIdentifier.hashCode();
+		}
+		return (event != null ? event.hashCode() : 0);
+	}
+
+	public String toString()
+	{
+		StringBuilder result = new StringBuilder();
 		result.append("eventWrapper[");
 		result.append("eventIdentifier=").append(eventIdentifier);
 		result.append(", event=").append(event);

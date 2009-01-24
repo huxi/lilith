@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,11 +22,12 @@ import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.text.ParseException;
-import java.util.Date;
 
 public class SourceInfoReader
 	implements GenericStreamReader<SourceInfo>, EventSourceSchemaConstants
@@ -38,43 +39,47 @@ public class SourceInfoReader
 
 	public SourceInfoReader()
 	{
-		dateTimeFormatter=new DateTimeFormatter();
-		sourceIdentifierReader =new SourceIdentifierReader();
+		dateTimeFormatter = new DateTimeFormatter();
+		sourceIdentifierReader = new SourceIdentifierReader();
 	}
 
-	public SourceInfo read(XMLStreamReader reader) throws XMLStreamException
+	public SourceInfo read(XMLStreamReader reader)
+		throws XMLStreamException
 	{
-		SourceInfo result=null;
+		SourceInfo result = null;
 		String rootNamespace = NAMESPACE_URI;
 		int type = reader.getEventType();
 
-		if (XMLStreamConstants.START_DOCUMENT == type)
+		if(XMLStreamConstants.START_DOCUMENT == type)
 		{
 			reader.nextTag();
 			type = reader.getEventType();
 			rootNamespace = null;
 		}
-		if (XMLStreamConstants.START_ELEMENT == type && SOURCE_INFO_NODE.equals(reader.getLocalName()))
+		if(XMLStreamConstants.START_ELEMENT == type && SOURCE_INFO_NODE.equals(reader.getLocalName()))
 		{
 			result = new SourceInfo();
-			result.setNumberOfEvents(Long.parseLong(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, NUMBER_OF_EVENTS_ATTRIBUTE)));
+			result
+				.setNumberOfEvents(Long.parseLong(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, NUMBER_OF_EVENTS_ATTRIBUTE)));
 
-			String dateTime=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, OLDEST_EVENT_TIMESTAMP_ATTRIBUTE);
-			if(dateTime!=null && !"".equals(dateTime.trim()))
-			try
+			String dateTime = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, OLDEST_EVENT_TIMESTAMP_ATTRIBUTE);
+			if(dateTime != null && !"".equals(dateTime.trim()))
 			{
-				Date ts=dateTimeFormatter.parse(dateTime);
-				result.setOldestEventTimestamp(ts);
+				try
+				{
+					Date ts = dateTimeFormatter.parse(dateTime);
+					result.setOldestEventTimestamp(ts);
+				}
+				catch(ParseException e)
+				{
+					e.printStackTrace();
+				}
 			}
-			catch (ParseException e)
-			{
-				e.printStackTrace();
-			}
-			String activeStr=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ACTIVE_ATTRIBUTE);
-			boolean active=false;
+			String activeStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ACTIVE_ATTRIBUTE);
+			boolean active = false;
 			if(TRUE.equals(activeStr) || ONE.equals(activeStr))
 			{
-				active=true;
+				active = true;
 			}
 			result.setActive(active);
 			reader.nextTag();

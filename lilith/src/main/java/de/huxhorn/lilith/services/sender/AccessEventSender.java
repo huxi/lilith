@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import de.huxhorn.sulky.generics.io.SerializableSerializer;
 import javax.jmdns.JmDNS;
 
 public class AccessEventSender
-		extends AbstractEventSender<AccessEvent>
+	extends AbstractEventSender<AccessEvent>
 {
 	public static final String SERVICE_TYPE = "_access._tcp.local.";
 
@@ -37,10 +37,10 @@ public class AccessEventSender
 
 	public void send(AccessEvent event)
 	{
-		if (serializer != null)
+		if(serializer != null)
 		{
 			byte[] serialized = serializer.serialize(event);
-			if (serialized != null)
+			if(serialized != null)
 			{
 				sendBytesService.sendBytes(serialized);
 			}

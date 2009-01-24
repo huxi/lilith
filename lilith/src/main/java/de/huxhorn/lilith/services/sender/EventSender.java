@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,21 @@
  */
 package de.huxhorn.lilith.services.sender;
 
-import javax.jmdns.JmDNS;
 import java.io.Serializable;
+
+import javax.jmdns.JmDNS;
 
 public interface EventSender<T extends Serializable>
 {
 	JmDNS getJmDNS();
+
 	String getServiceName();
+
 	String getHostAddress();
+
 	void send(T event);
+
 	void discard();
-	boolean isInactive(); 
+
+	boolean isInactive();
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +20,19 @@ package de.huxhorn.lilith.swing.table;
 import java.awt.*;
 
 public class Colors
-    implements Cloneable
+	implements Cloneable
 {
 	private ColorScheme colorScheme;
 	private boolean sticky;
 
-    public Colors()
-    {
-        this(null, false);
-    }
+	public Colors()
+	{
+		this(null, false);
+	}
 
-    /**
+	/**
 	 * Not sticky.
+	 *
 	 * @param foreground foreground color
 	 * @param background background color
 	 */
@@ -45,15 +46,15 @@ public class Colors
 		this(new ColorScheme(foreground, background), sticky);
 	}
 
-    public Colors(ColorScheme colorScheme)
-    {
-        this(colorScheme, false);
-    }
+	public Colors(ColorScheme colorScheme)
+	{
+		this(colorScheme, false);
+	}
 
 	public Colors(ColorScheme colorScheme, boolean sticky)
 	{
 		this.colorScheme = colorScheme;
-		this.sticky=sticky;
+		this.sticky = sticky;
 	}
 
 	public ColorScheme getColorScheme()
@@ -66,15 +67,15 @@ public class Colors
 		return sticky;
 	}
 
-    @Override
-    public Colors clone()
-        throws CloneNotSupportedException
-    {
-        Colors result = (Colors) super.clone();
-        if(this.colorScheme != null)
-        {
-            result.colorScheme=this.colorScheme.clone();
-        }
-        return result;
-    }
+	@Override
+	public Colors clone()
+		throws CloneNotSupportedException
+	{
+		Colors result = (Colors) super.clone();
+		if(this.colorScheme != null)
+		{
+			result.colorScheme = this.colorScheme.clone();
+		}
+		return result;
+	}
 }

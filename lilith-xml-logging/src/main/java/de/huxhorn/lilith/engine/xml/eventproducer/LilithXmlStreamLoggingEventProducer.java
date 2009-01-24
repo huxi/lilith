@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,30 @@
  */
 package de.huxhorn.lilith.engine.xml.eventproducer;
 
-import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.xml.LoggingEventReader;
 import de.huxhorn.lilith.data.logging.xml.LoggingEventSchemaConstants;
+import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.*;
-import java.util.ArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.commons.io.IOUtils;
 
 public class LilithXmlStreamLoggingEventProducer
-		extends AbstractEventProducer<LoggingEvent>
+	extends AbstractEventProducer<LoggingEvent>
 	implements LoggingEventSchemaConstants
 {
 	private final Logger logger = LoggerFactory.getLogger(LilithXmlStreamLoggingEventProducer.class);
@@ -45,18 +49,19 @@ public class LilithXmlStreamLoggingEventProducer
 	private XMLInputFactory inputFactory;
 	private BufferedInputStream inputStream;
 
-	public LilithXmlStreamLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream) throws XMLStreamException, UnsupportedEncodingException
+	public LilithXmlStreamLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
+		throws XMLStreamException, UnsupportedEncodingException
 	{
 		super(sourceIdentifier, eventQueue);
-		loggingEventReader=new LoggingEventReader();
+		loggingEventReader = new LoggingEventReader();
 
 		inputFactory = XMLInputFactory.newInstance();
-		this.inputStream=new BufferedInputStream(inputStream);
+		this.inputStream = new BufferedInputStream(inputStream);
 	}
 
 	public void start()
 	{
-		Thread t=new Thread(new ReceiverRunnable(), ""+getSourceIdentifier()+"-Receiver");
+		Thread t = new Thread(new ReceiverRunnable(), "" + getSourceIdentifier() + "-Receiver");
 		t.setDaemon(true);
 		t.start();
 	}
@@ -73,39 +78,39 @@ public class LilithXmlStreamLoggingEventProducer
 		{
 			try
 			{
-				ArrayList<Byte> bytes=new ArrayList<Byte>();
-				for(;;)
+				ArrayList<Byte> bytes = new ArrayList<Byte>();
+				for(; ;)
 				{
-					for(;;)
+					for(; ;)
 					{
-						int readByte=inputStream.read();
+						int readByte = inputStream.read();
 						if(readByte == -1)
 						{
 							if(logger.isInfoEnabled()) logger.info("Read -1!!");
 							return;
 						}
 						byte current = (byte) readByte;
-						if(current==0)
+						if(current == 0)
 						{
 							break;
 						}
 						bytes.add(current);
 					}
 					// TODO: obtain transfer size info
-					
-					if(bytes.size()>0)
+
+					if(bytes.size() > 0)
 					{
 						byte[] ba = new byte[bytes.size()];
-						for(int i=0;i<bytes.size();i++)
+						for(int i = 0; i < bytes.size(); i++)
 						{
-							ba[i]=bytes.get(i);
+							ba[i] = bytes.get(i);
 						}
 						bytes.clear();
-						String str=new String(ba, "UTF-8");
-						if(logger.isDebugEnabled()) logger.debug("Read: {}",str);
-						StringReader strr=new StringReader(str);
-						XMLStreamReader reader=inputFactory.createXMLStreamReader(strr);
-						LoggingEvent event=loggingEventReader.read(reader);
+						String str = new String(ba, "UTF-8");
+						if(logger.isDebugEnabled()) logger.debug("Read: {}", str);
+						StringReader strr = new StringReader(str);
+						XMLStreamReader reader = inputFactory.createXMLStreamReader(strr);
+						LoggingEvent event = loggingEventReader.read(reader);
 						addEvent(event);
 					}
 					else
@@ -114,9 +119,14 @@ public class LilithXmlStreamLoggingEventProducer
 					}
 				}
 			}
-			catch (Throwable e)
+			catch(Throwable e)
 			{
-				if(logger.isInfoEnabled()) logger.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage());
+				if(logger.isInfoEnabled())
+				{
+					logger
+						.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e
+							.getClass().getName(), e.getMessage());
+				}
 				addEvent(null);
 			}
 			finally

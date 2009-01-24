@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,16 +20,17 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.generics.io.Deserializer;
 
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
+import org.apache.commons.io.IOUtils;
+
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.io.IOUtils;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 public class LoggingXmlDeserializer
 	implements Deserializer<LoggingEvent>
@@ -40,20 +41,20 @@ public class LoggingXmlDeserializer
 
 	public LoggingXmlDeserializer(boolean compressing)
 	{
-		this.compressing=compressing;
+		this.compressing = compressing;
 		inputFactory = XMLInputFactory.newInstance();
-		loggingEventReader=new LoggingEventReader();
+		loggingEventReader = new LoggingEventReader();
 	}
 
 	public LoggingEvent deserialize(byte[] bytes)
 	{
-		ByteArrayInputStream in=new ByteArrayInputStream(bytes);
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		XMLStreamReader reader;
 		try
 		{
 			if(compressing)
 			{
-				GZIPInputStream gis =new GZIPInputStream(in);
+				GZIPInputStream gis = new GZIPInputStream(in);
 				reader = inputFactory.createXMLStreamReader(new InputStreamReader(gis, "utf-8"));
 			}
 			else
@@ -62,17 +63,17 @@ public class LoggingXmlDeserializer
 			}
 			return loggingEventReader.read(reader);
 		}
-		catch (XMLStreamException e)
+		catch(XMLStreamException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();
 		}
-		catch (UnsupportedEncodingException e)
+		catch(UnsupportedEncodingException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();

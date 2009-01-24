@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,83 +20,86 @@ package de.huxhorn.lilith.data.eventsource;
 import java.io.Serializable;
 
 public class EventIdentifier
-    implements Serializable, Cloneable
+	implements Serializable, Cloneable
 {
-    private static final long serialVersionUID = -4019164988350212853L;
+	private static final long serialVersionUID = -4019164988350212853L;
 
-    public static final long NO_LOCAL_ID=-1;
-    
-    private SourceIdentifier sourceIdentifier;
-    private long localId;
+	public static final long NO_LOCAL_ID = -1;
 
-    public EventIdentifier()
-    {
-        this(null, NO_LOCAL_ID);
-    }
+	private SourceIdentifier sourceIdentifier;
+	private long localId;
 
-    public EventIdentifier(SourceIdentifier sourceIdentifier, long localId)
-    {
-        this.sourceIdentifier = sourceIdentifier;
-        this.localId = localId;
-    }
+	public EventIdentifier()
+	{
+		this(null, NO_LOCAL_ID);
+	}
 
-    public SourceIdentifier getSourceIdentifier()
-    {
-        return sourceIdentifier;
-    }
+	public EventIdentifier(SourceIdentifier sourceIdentifier, long localId)
+	{
+		this.sourceIdentifier = sourceIdentifier;
+		this.localId = localId;
+	}
 
-    public void setSourceIdentifier(SourceIdentifier sourceIdentifier)
-    {
-        this.sourceIdentifier = sourceIdentifier;
-    }
+	public SourceIdentifier getSourceIdentifier()
+	{
+		return sourceIdentifier;
+	}
 
-    public long getLocalId()
-    {
-        return localId;
-    }
+	public void setSourceIdentifier(SourceIdentifier sourceIdentifier)
+	{
+		this.sourceIdentifier = sourceIdentifier;
+	}
 
-    public void setLocalId(long localId)
-    {
-        this.localId = localId;
-    }
+	public long getLocalId()
+	{
+		return localId;
+	}
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public void setLocalId(long localId)
+	{
+		this.localId = localId;
+	}
 
-        EventIdentifier that = (EventIdentifier) o;
+	@Override
+	public boolean equals(Object o)
+	{
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
-        if (localId != that.localId) return false;
-        if (sourceIdentifier != null ? !sourceIdentifier.equals(that.sourceIdentifier) : that.sourceIdentifier != null)
-            return false;
+		EventIdentifier that = (EventIdentifier) o;
 
-        return true;
-    }
+		if(localId != that.localId) return false;
+		if(sourceIdentifier != null ? !sourceIdentifier.equals(that.sourceIdentifier) : that.sourceIdentifier != null)
+		{
+			return false;
+		}
 
-    @Override
-    public int hashCode()
-    {
-        int result = sourceIdentifier != null ? sourceIdentifier.hashCode() : 0;
-        result = 31 * result + (int) (localId ^ (localId >>> 32));
-        return result;
-    }
+		return true;
+	}
 
-    @Override
-    public EventIdentifier clone() throws CloneNotSupportedException
-    {
-        EventIdentifier result= (EventIdentifier) super.clone();
-        if(sourceIdentifier != null)
-        {
-            result.sourceIdentifier=sourceIdentifier.clone();
-        }
-        return result;
-    }
+	@Override
+	public int hashCode()
+	{
+		int result = sourceIdentifier != null ? sourceIdentifier.hashCode() : 0;
+		result = 31 * result + (int) (localId ^ (localId >>> 32));
+		return result;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "EventIdentifier[sourceIdentifier="+sourceIdentifier+", localId="+localId+"]";
-    }
+	@Override
+	public EventIdentifier clone()
+		throws CloneNotSupportedException
+	{
+		EventIdentifier result = (EventIdentifier) super.clone();
+		if(sourceIdentifier != null)
+		{
+			result.sourceIdentifier = sourceIdentifier.clone();
+		}
+		return result;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "EventIdentifier[sourceIdentifier=" + sourceIdentifier + ", localId=" + localId + "]";
+	}
 }

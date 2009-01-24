@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -28,33 +28,32 @@ import java.util.logging.LogRecord;
 /**
  * <p>A java.util.logging.Handler that simply forwards LogRecords to the respective
  * org.slf4j.Logger.</p>
- *
+ * <p/>
  * <p>Usage example:<br />
  * <tt><pre>
- {
-	 // initialize java.util.logging to use slf4j...
-	 Handler handler = new Slf4JHandler();
-	 java.util.logging.Logger rootLogger = java.util.logging.Logger.getLogger("");
-	 rootLogger.addHandler(handler);
-	 rootLogger.setLevel(java.util.logging.Level.ALL);
- }
-</pre></tt></p>
- *
+ * {
+ * // initialize java.util.logging to use slf4j...
+ * Handler handler = new Slf4JHandler();
+ * java.util.logging.Logger rootLogger = java.util.logging.Logger.getLogger("");
+ * rootLogger.addHandler(handler);
+ * rootLogger.setLevel(java.util.logging.Level.ALL);
+ * }
+ * </pre></tt></p>
+ * <p/>
  * <p><b>Keep in mind that the above code enables all logging, even for <tt>java.*</tt>, <tt>javax.*</tt>
  * and <tt>sun.*</tt>!</b></p>
- *
+ * <p/>
  * <p>This means that you will most likely have to set the log level of those three packages to a sane value
  * like <tt>INFO</tt> or <tt>WARN</tt>.</p>
-
+ * <p/>
  * <p>It's also possible to set those levels before the LogRecord reaches the Handler:<br/>
  * <tt><pre>
- {
-	 java.util.logging.Logger.getLogger("java").setLevel(java.util.logging.Level.WARNING);
-	 java.util.logging.Logger.getLogger("javax").setLevel(java.util.logging.Level.WARNING);
-	 java.util.logging.Logger.getLogger("sun").setLevel(java.util.logging.Level.WARNING);
- }
-</pre></tt></p>
- *
+ * {
+ * java.util.logging.Logger.getLogger("java").setLevel(java.util.logging.Level.WARNING);
+ * java.util.logging.Logger.getLogger("javax").setLevel(java.util.logging.Level.WARNING);
+ * java.util.logging.Logger.getLogger("sun").setLevel(java.util.logging.Level.WARNING);
+ * }
+ * </pre></tt></p>
  */
 public class Slf4JHandler
 	extends Handler
@@ -82,7 +81,7 @@ public class Slf4JHandler
 	 */
 	public void publish(LogRecord record)
 	{
-		if(record!=null)
+		if(record != null)
 		{
 			logRecord(record);
 		}
@@ -107,27 +106,28 @@ public class Slf4JHandler
 	 * @throws SecurityException if a security manager exists and if
 	 *                           the caller does not have <tt>LoggingPermission("control")</tt>.
 	 */
-	public void close() throws SecurityException
+	public void close()
+		throws SecurityException
 	{
 	}
 
 	private void logRecord(LogRecord record)
 	{
 		Level julLevel = record.getLevel();
-		int julLevelValue=julLevel.intValue();
-		if(julLevelValue<=TRACE_LEVEL_THRESHOLD)
+		int julLevelValue = julLevel.intValue();
+		if(julLevelValue <= TRACE_LEVEL_THRESHOLD)
 		{
 			logTrace(record);
 		}
-		else if(julLevelValue<=DEBUG_LEVEL_THRESHOLD)
+		else if(julLevelValue <= DEBUG_LEVEL_THRESHOLD)
 		{
 			logDebug(record);
 		}
-		else if(julLevelValue<=INFO_LEVEL_THRESHOLD)
+		else if(julLevelValue <= INFO_LEVEL_THRESHOLD)
 		{
 			logInfo(record);
 		}
-		else if(julLevelValue<=WARN_LEVEL_THRESHOLD)
+		else if(julLevelValue <= WARN_LEVEL_THRESHOLD)
 		{
 			logWarn(record);
 		}
@@ -144,9 +144,9 @@ public class Slf4JHandler
 		if(logger.isTraceEnabled())
 		{
 			initMDC(record);
-			String message=record.getMessage();
+			String message = record.getMessage();
 			Throwable throwable = record.getThrown();
-			if(throwable!=null)
+			if(throwable != null)
 			{
 				logger.trace(message, throwable);
 			}
@@ -165,9 +165,9 @@ public class Slf4JHandler
 		if(logger.isDebugEnabled())
 		{
 			initMDC(record);
-			String message=record.getMessage();
+			String message = record.getMessage();
 			Throwable throwable = record.getThrown();
-			if(throwable!=null)
+			if(throwable != null)
 			{
 				logger.debug(message, throwable);
 			}
@@ -186,9 +186,9 @@ public class Slf4JHandler
 		if(logger.isInfoEnabled())
 		{
 			initMDC(record);
-			String message=record.getMessage();
+			String message = record.getMessage();
 			Throwable throwable = record.getThrown();
-			if(throwable!=null)
+			if(throwable != null)
 			{
 				logger.info(message, throwable);
 			}
@@ -207,9 +207,9 @@ public class Slf4JHandler
 		if(logger.isWarnEnabled())
 		{
 			initMDC(record);
-			String message=record.getMessage();
+			String message = record.getMessage();
 			Throwable throwable = record.getThrown();
-			if(throwable!=null)
+			if(throwable != null)
 			{
 				logger.warn(message, throwable);
 			}
@@ -228,9 +228,9 @@ public class Slf4JHandler
 		if(logger.isErrorEnabled())
 		{
 			initMDC(record);
-			String message=record.getMessage();
+			String message = record.getMessage();
 			Throwable throwable = record.getThrown();
-			if(throwable!=null)
+			if(throwable != null)
 			{
 				logger.error(message, throwable);
 			}
@@ -248,12 +248,12 @@ public class Slf4JHandler
 		Level julLevel = record.getLevel();
 		MDC.put(LEVEL_MDC_KEY, julLevel.getName());
 		String sourceClassName = record.getSourceClassName();
-		if(sourceClassName!=null)
+		if(sourceClassName != null)
 		{
 			MDC.put(SOURCE_CLASS_NAME_MDC_KEY, sourceClassName);
 		}
 		String sourceMethodName = record.getSourceMethodName();
-		if(sourceMethodName!=null)
+		if(sourceMethodName != null)
 		{
 			MDC.put(SOURCE_METHOD_NAME_MDC_KEY, sourceMethodName);
 		}

@@ -17,24 +17,25 @@
  */
 package de.huxhorn.lilith.logback.producer;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class LogbackLoggingStreamEventProducer
 	extends AbstractLogbackStreamEventProducer<LoggingEvent>
 {
 	private LogbackLoggingAdapter adapter;
 
-	public LogbackLoggingStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream) throws IOException
+	public LogbackLoggingStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
+		throws IOException
 	{
 		super(sourceIdentifier, eventQueue, inputStream);
-		adapter=new LogbackLoggingAdapter();
+		adapter = new LogbackLoggingAdapter();
 	}
 
 	protected LoggingEvent postprocessEvent(Object o)
@@ -46,7 +47,8 @@ public class LogbackLoggingStreamEventProducer
 		}
 		if(logger.isInfoEnabled())
 		{
-			logger.info("Retrieved {} instead of ch.qos.logback.classic.spi.LoggingEvent.", o==null?null:o.getClass().getName());
+			logger.info("Retrieved {} instead of ch.qos.logback.classic.spi.LoggingEvent.", o == null ? null : o
+				.getClass().getName());
 		}
 		return null;
 	}

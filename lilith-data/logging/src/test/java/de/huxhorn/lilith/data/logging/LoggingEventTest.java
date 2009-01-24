@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,17 +17,19 @@
  */
 package de.huxhorn.lilith.data.logging;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertFalse;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LoggingEventTest
 {
@@ -40,20 +42,22 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void defaultConstructor() throws ClassNotFoundException, IOException
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
 	}
 
 	@Test
-	public void applicationIdentifier() throws ClassNotFoundException, IOException
+	public void applicationIdentifier()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setApplicationIdentifier(value);
 
 		{
@@ -69,11 +73,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void logger() throws ClassNotFoundException, IOException
+	public void logger()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setLogger(value);
 
 		{
@@ -90,11 +95,12 @@ public class LoggingEventTest
 
 
 	@Test
-	public void arguments() throws ClassNotFoundException, IOException
+	public void arguments()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		String value[]={"value"};
+		String value[] = {"value"};
 		instance.setArguments(value);
 
 		{
@@ -110,11 +116,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void level() throws ClassNotFoundException, IOException
+	public void level()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		LoggingEvent.Level value= LoggingEvent.Level.ERROR;
+		LoggingEvent.Level value = LoggingEvent.Level.ERROR;
 		instance.setLevel(value);
 
 		{
@@ -131,11 +138,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void messagePattern() throws ClassNotFoundException, IOException
+	public void messagePattern()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setMessagePattern(value);
 
 		{
@@ -151,11 +159,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void threadName() throws ClassNotFoundException, IOException
+	public void threadName()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setThreadName(value);
 
 		{
@@ -171,11 +180,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void throwable() throws ClassNotFoundException, IOException
+	public void throwable()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		ThrowableInfo value=new ThrowableInfo();
+		ThrowableInfo value = new ThrowableInfo();
 		instance.setThrowable(value);
 
 		{
@@ -191,11 +201,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void timeStamp() throws ClassNotFoundException, IOException
+	public void timeStamp()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		Date value=new Date();
+		Date value = new Date();
 		instance.setTimeStamp(value);
 
 		{
@@ -211,11 +222,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void callStack() throws ClassNotFoundException, IOException
+	public void callStack()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		ExtendedStackTraceElement[] value=new ExtendedStackTraceElement[]{new ExtendedStackTraceElement()};
+		ExtendedStackTraceElement[] value = new ExtendedStackTraceElement[]{new ExtendedStackTraceElement()};
 		instance.setCallStack(value);
 
 		{
@@ -231,11 +243,12 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void marker() throws ClassNotFoundException, IOException
+	public void marker()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		Marker value=new Marker();
+		Marker value = new Marker();
 		instance.setMarker(value);
 
 		{
@@ -251,13 +264,14 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void mdc() throws ClassNotFoundException, IOException
+	public void mdc()
+		throws ClassNotFoundException, IOException
 	{
-		LoggingEvent instance=new LoggingEvent();
+		LoggingEvent instance = new LoggingEvent();
 
-		Map<String, String> value=new HashMap<String, String>();
+		Map<String, String> value = new HashMap<String, String>();
 		value.put("foo", "bar");
-		
+
 		instance.setMdc(value);
 
 		{
@@ -272,25 +286,26 @@ public class LoggingEventTest
 		}
 	}
 
-    @Test
-    public void ndc() throws ClassNotFoundException, IOException
-    {
-        LoggingEvent instance=new LoggingEvent();
+	@Test
+	public void ndc()
+		throws ClassNotFoundException, IOException
+	{
+		LoggingEvent instance = new LoggingEvent();
 
-        List<Message> value=new ArrayList<Message>();
-        value.add(new Message("pattern", new String[]{"foo", "bar"}));
+		List<Message> value = new ArrayList<Message>();
+		value.add(new Message("pattern", new String[]{"foo", "bar"}));
 
-        instance.setNdc(value);
+		instance.setNdc(value);
 
-        {
-            LoggingEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getNdc());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            LoggingEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getNdc());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			LoggingEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getNdc());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggingEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getNdc());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 }

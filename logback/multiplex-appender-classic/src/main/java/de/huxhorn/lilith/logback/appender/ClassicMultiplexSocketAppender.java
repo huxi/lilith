@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,10 +17,11 @@
  */
 package de.huxhorn.lilith.logback.appender;
 
-import ch.qos.logback.classic.spi.LoggingEvent;
+import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
 import de.huxhorn.sulky.generics.io.SerializableSerializer;
 import de.huxhorn.sulky.generics.io.Serializer;
-import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
+
+import ch.qos.logback.classic.spi.LoggingEvent;
 
 public class ClassicMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>
@@ -48,21 +49,21 @@ public class ClassicMultiplexSocketAppender
 	public ClassicMultiplexSocketAppender(boolean compressing)
 	{
 		super();
-		usingDefaultPort=true;
+		usingDefaultPort = true;
 		setCompressing(compressing);
-		includeCallerData=false;
+		includeCallerData = false;
 	}
 
 	@Override
 	public void setPort(int port)
 	{
 		super.setPort(port);
-		usingDefaultPort=false;
+		usingDefaultPort = false;
 	}
 
 	/**
 	 * GZIPs the event if set to true.
-	 *
+	 * <p/>
 	 * Automatically chooses the correct default port if it was not previously set manually.
 	 *
 	 * @param compressing if events will be gzipped or not.
@@ -80,10 +81,10 @@ public class ClassicMultiplexSocketAppender
 			{
 				setPort(UNCOMRESSED_DEFAULT_PORT);
 			}
-			usingDefaultPort=true;
+			usingDefaultPort = true;
 		}
 		// setSerializer(new SerializableSerializer<LoggingEvent>(compressing));
-		lilithSerializer =new SerializableSerializer<de.huxhorn.lilith.data.logging.LoggingEvent>(compressing);
+		lilithSerializer = new SerializableSerializer<de.huxhorn.lilith.data.logging.LoggingEvent>(compressing);
 		setSerializer(new TransformingSerializer());
 	}
 
@@ -104,11 +105,11 @@ public class ClassicMultiplexSocketAppender
 
 	protected void preProcess(LoggingEvent event)
 	{
-		if(event!=null)
+		if(event != null)
 		{
-			if (includeCallerData)
+			if(includeCallerData)
 			{
-			  event.getCallerData();
+				event.getCallerData();
 			}
 		}
 //		// HACK: http://bugzilla.qos.ch/show_bug.cgi?id=100
@@ -144,7 +145,7 @@ public class ClassicMultiplexSocketAppender
 	private class TransformingSerializer
 		implements Serializer<LoggingEvent>
 	{
-		LogbackLoggingAdapter adapter=new LogbackLoggingAdapter();
+		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
 
 		public byte[] serialize(LoggingEvent logbackEvent)
 		{

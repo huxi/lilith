@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,17 @@
 
 package de.huxhorn.lilith.swing;
 
-import javax.swing.JDialog;
-import java.awt.Frame;
-import java.awt.BorderLayout;
-import java.awt.Rectangle;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.InputStream;
-import java.io.IOException;
-
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.swing.*;
 
 public class AboutDialog
 	extends JDialog
@@ -42,17 +41,17 @@ public class AboutDialog
 	public AboutDialog(Frame owner, String title, String appName)
 	{
 		super(owner, title, false);
-		wasScrolling=true;
+		wasScrolling = true;
 		setLayout(new BorderLayout());
-		InputStream is=MainFrame.class.getResourceAsStream("/about/aboutText.txt");
-		String aboutText=null;
-		if(is!=null)
+		InputStream is = MainFrame.class.getResourceAsStream("/about/aboutText.txt");
+		String aboutText = null;
+		if(is != null)
 		{
 			try
 			{
-				aboutText= IOUtils.toString(is, "UTF-8");
+				aboutText = IOUtils.toString(is, "UTF-8");
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
 				if(logger.isErrorEnabled()) logger.error("Exception while loading aboutText!! *grrr*");
 			}
@@ -63,7 +62,7 @@ public class AboutDialog
 			//aboutPanel.setDebug(true);
 			add(aboutPanel, BorderLayout.CENTER);
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
 			if(logger.isErrorEnabled()) logger.error("Exception creating about panel!!");
 		}
@@ -93,7 +92,7 @@ public class AboutDialog
 		}
 		else
 		{
-			wasScrolling=aboutPanel.isScrolling();
+			wasScrolling = aboutPanel.isScrolling();
 			aboutPanel.setScrolling(false);
 		}
 	}

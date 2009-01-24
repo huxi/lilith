@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,11 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.preferences.table.ConditionPreviewRenderer;
 import de.huxhorn.lilith.swing.table.ColorScheme;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -28,146 +31,145 @@ import javax.swing.border.TitledBorder;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
 
 public class ColorSchemeEditorPanel
-    extends JPanel
+	extends JPanel
 {
-    private final Logger logger = LoggerFactory.getLogger(ColorSchemeEditorPanel.class);
+	private final Logger logger = LoggerFactory.getLogger(ColorSchemeEditorPanel.class);
 
-    private JColorChooser textChooser;
-    private JColorChooser backgroundChooser;
-    private JColorChooser borderChooser;
-    private ColorChangeListener colorChangeListener;
-    private ConditionPreviewRenderer previewDummyRenderer;
-    private ColorScheme colorScheme;
+	private JColorChooser textChooser;
+	private JColorChooser backgroundChooser;
+	private JColorChooser borderChooser;
+	private ColorChangeListener colorChangeListener;
+	private ConditionPreviewRenderer previewDummyRenderer;
+	private ColorScheme colorScheme;
 
-    public ColorSchemeEditorPanel()
-    {
-        createUI();
-    }
+	public ColorSchemeEditorPanel()
+	{
+		createUI();
+	}
 
-    private void createUI()
-    {
-        JPanel emptyPreview = new JPanel();
-        emptyPreview.setMinimumSize(new Dimension(0, 0));
-        emptyPreview.setPreferredSize(new Dimension(0, 0));
-        emptyPreview.setMaximumSize(new Dimension(0, 0));
+	private void createUI()
+	{
+		JPanel emptyPreview = new JPanel();
+		emptyPreview.setMinimumSize(new Dimension(0, 0));
+		emptyPreview.setPreferredSize(new Dimension(0, 0));
+		emptyPreview.setMaximumSize(new Dimension(0, 0));
 
-        colorChangeListener = new ColorChangeListener();
-        textChooser = new JColorChooser();
-        textChooser.setPreviewPanel(emptyPreview);
-        attachChangeListener(textChooser);
+		colorChangeListener = new ColorChangeListener();
+		textChooser = new JColorChooser();
+		textChooser.setPreviewPanel(emptyPreview);
+		attachChangeListener(textChooser);
 
-        backgroundChooser = new JColorChooser();
-        backgroundChooser.setPreviewPanel(emptyPreview);
-        attachChangeListener(backgroundChooser);
+		backgroundChooser = new JColorChooser();
+		backgroundChooser.setPreviewPanel(emptyPreview);
+		attachChangeListener(backgroundChooser);
 
-        borderChooser = new JColorChooser();
-        borderChooser.setPreviewPanel(emptyPreview);
-        attachChangeListener(borderChooser);
+		borderChooser = new JColorChooser();
+		borderChooser.setPreviewPanel(emptyPreview);
+		attachChangeListener(borderChooser);
 
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.add("Text", textChooser);
-        tabbedPane.add("Background", backgroundChooser);
-        tabbedPane.add("Border", borderChooser);
+		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.add("Text", textChooser);
+		tabbedPane.add("Background", backgroundChooser);
+		tabbedPane.add("Border", borderChooser);
 
-        setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc=new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints();
 
-        gbc.gridx=0;
-        gbc.gridy=0;
-        gbc.gridwidth=1;
-        gbc.weightx = 1.0;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.weightx = 1.0;
 
-        add(tabbedPane, gbc);
-        previewDummyRenderer =new ConditionPreviewRenderer();
-        Component previewComponent = previewDummyRenderer.getTableCellRendererComponent(null, null, false, false, 0, 0);
-        JPanel previewPanel=new JPanel(new GridLayout(1,1));
-        previewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Preview"));
-        previewPanel.add(previewComponent);
+		add(tabbedPane, gbc);
+		previewDummyRenderer = new ConditionPreviewRenderer();
+		Component previewComponent = previewDummyRenderer.getTableCellRendererComponent(null, null, false, false, 0, 0);
+		JPanel previewPanel = new JPanel(new GridLayout(1, 1));
+		previewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Preview"));
+		previewPanel.add(previewComponent);
 
-        gbc.gridx=0;
-        gbc.gridy=1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        add(previewPanel, gbc);
-    }
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		add(previewPanel, gbc);
+	}
 
-    /**
-     * Saves the colors of the editors into the colorScheme property.
-     */
-    public void saveColors()
-    {
-        this.colorScheme=new ColorScheme(textChooser.getColor(), backgroundChooser.getColor(), borderChooser.getColor());
-    }
+	/**
+	 * Saves the colors of the editors into the colorScheme property.
+	 */
+	public void saveColors()
+	{
+		this.colorScheme = new ColorScheme(textChooser.getColor(), backgroundChooser.getColor(), borderChooser.getColor());
+	}
 
-    /**
-     * Initializes the editors with the colorScheme values.
-     */
-    public void resetColors()
-    {
-        if(colorScheme==null)
-        {
-            colorScheme=new ColorScheme();
-        }
-        textChooser.setColor(colorScheme.getTextColor());
-        backgroundChooser.setColor(colorScheme.getBackgroundColor());
-        borderChooser.setColor(colorScheme.getBorderColor());
-    }
+	/**
+	 * Initializes the editors with the colorScheme values.
+	 */
+	public void resetColors()
+	{
+		if(colorScheme == null)
+		{
+			colorScheme = new ColorScheme();
+		}
+		textChooser.setColor(colorScheme.getTextColor());
+		backgroundChooser.setColor(colorScheme.getBackgroundColor());
+		borderChooser.setColor(colorScheme.getBorderColor());
+	}
 
-    public ColorScheme getColorScheme()
-    {
-        return colorScheme;
-    }
+	public ColorScheme getColorScheme()
+	{
+		return colorScheme;
+	}
 
 
-    public void setColorScheme(ColorScheme colorScheme)
-    {
-        if(colorScheme == null)
-        {
-            throw new IllegalArgumentException("colorScheme must not be null!");
-        }
-        this.colorScheme=colorScheme;
-        resetColors();
-    }
+	public void setColorScheme(ColorScheme colorScheme)
+	{
+		if(colorScheme == null)
+		{
+			throw new IllegalArgumentException("colorScheme must not be null!");
+		}
+		this.colorScheme = colorScheme;
+		resetColors();
+	}
 
-    private void attachChangeListener(JColorChooser chooser)
-    {
-        AbstractColorChooserPanel[] panels = chooser.getChooserPanels();
-        if(panels!=null)
-        {
-            for(AbstractColorChooserPanel current:panels)
-            {
-                current.getColorSelectionModel().addChangeListener(colorChangeListener);
-            }
-        }
-        else
-        {
-            if(logger.isWarnEnabled()) logger.warn("No chooser panels!");
-        }
-    }
+	private void attachChangeListener(JColorChooser chooser)
+	{
+		AbstractColorChooserPanel[] panels = chooser.getChooserPanels();
+		if(panels != null)
+		{
+			for(AbstractColorChooserPanel current : panels)
+			{
+				current.getColorSelectionModel().addChangeListener(colorChangeListener);
+			}
+		}
+		else
+		{
+			if(logger.isWarnEnabled()) logger.warn("No chooser panels!");
+		}
+	}
 
-    private class ColorChangeListener
-        implements ChangeListener
-    {
-        private SavedCondition dummyCondition;
+	private class ColorChangeListener
+		implements ChangeListener
+	{
+		private SavedCondition dummyCondition;
 
-        private ColorChangeListener()
-        {
-            dummyCondition=new SavedCondition();
-            dummyCondition.setColorScheme(new ColorScheme());
-        }
+		private ColorChangeListener()
+		{
+			dummyCondition = new SavedCondition();
+			dummyCondition.setColorScheme(new ColorScheme());
+		}
 
-        public void stateChanged(ChangeEvent e)
-        {
-            // update preview component...
-            ColorScheme cs = dummyCondition.getColorScheme();
-            cs.setTextColor(textChooser.getColor());
-            cs.setBackgroundColor(backgroundChooser.getColor());
-            cs.setBorderColor(borderChooser.getColor());
-            if(logger.isDebugEnabled()) logger.debug("initializing to {}...", dummyCondition);
-            previewDummyRenderer.getTableCellRendererComponent(null, dummyCondition, false, false, 0, 0);
-        }
-    }
+		public void stateChanged(ChangeEvent e)
+		{
+			// update preview component...
+			ColorScheme cs = dummyCondition.getColorScheme();
+			cs.setTextColor(textChooser.getColor());
+			cs.setBackgroundColor(backgroundChooser.getColor());
+			cs.setBorderColor(borderChooser.getColor());
+			if(logger.isDebugEnabled()) logger.debug("initializing to {}...", dummyCondition);
+			previewDummyRenderer.getTableCellRendererComponent(null, dummyCondition, false, false, 0, 0);
+		}
+	}
 }

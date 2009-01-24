@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!--
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!--
 Lilith - a log event viewer.
-Copyright (C) 2007-2008 Joern Huxhorn
+Copyright (C) 2007-2009 Joern Huxhorn
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -16,8 +15,11 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://lilith.sf.net/schema/logging/11" xmlns:logging="http://lilith.sf.net/schema/logging/11" xmlns:es="http://lilith.sf.net/schema/eventsource/10" targetNamespace="http://lilith.sf.net/schema/logging/11" elementFormDefault="qualified">
-	<xs:import namespace="http://lilith.sf.net/schema/eventsource/10" schemaLocation="http://lilith.sf.net/schema/eventsource/10/EventSource.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://lilith.sf.net/schema/logging/11"
+           xmlns:logging="http://lilith.sf.net/schema/logging/11" xmlns:es="http://lilith.sf.net/schema/eventsource/10"
+           targetNamespace="http://lilith.sf.net/schema/logging/11" elementFormDefault="qualified">
+	<xs:import namespace="http://lilith.sf.net/schema/eventsource/10"
+	           schemaLocation="http://lilith.sf.net/schema/eventsource/10/EventSource.xsd"/>
 	<xs:element name="LoggingEvents">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">A list of logging events.</xs:documentation>
@@ -26,7 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:sequence>
 				<xs:element ref="es:SourceIdentifier">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">The source identifier of the contained events.</xs:documentation>
+						<xs:documentation xml:lang="en">The source identifier of the contained events.
+						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element ref="LoggingEvent" minOccurs="0" maxOccurs="unbounded">
@@ -37,7 +40,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xs:sequence>
 			<xs:attribute name="startIndex" type="xs:nonNegativeInteger" use="optional" default="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">The index of the first event contained in this list of logging events. It is only used if logging event lists are transfered partially.</xs:documentation>
+					<xs:documentation xml:lang="en">The index of the first event contained in this list of logging
+						events. It is only used if logging event lists are transfered partially.
+					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -50,7 +55,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:sequence>
 				<xs:element name="Message" type="WhitespacePreservingString">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">The (unformatted) message of the logging event.</xs:documentation>
+						<xs:documentation xml:lang="en">The (unformatted) message of the logging event.
+						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="Arguments" type="Arguments" minOccurs="0">
@@ -70,18 +76,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xs:element>
 				<xs:element name="Marker" type="Marker" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">The optional marker hierarchy of the logging event.</xs:documentation>
+						<xs:documentation xml:lang="en">The optional marker hierarchy of the logging event.
+						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="CallStack" type="StackTrace" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">The optional call stack trace of the logging event.</xs:documentation>
+						<xs:documentation xml:lang="en">The optional call stack trace of the logging event.
+						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="logger" type="NonEmptyCollapsingString" use="required">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">The name of the Logger that created this logging event.</xs:documentation>
+					<xs:documentation xml:lang="en">The name of the Logger that created this logging event.
+					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="level" type="LoggingLevel" use="required">
@@ -116,7 +125,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xs:key>
 		<xs:keyref name="MarkerReference" refer="MarkerName">
 			<xs:annotation>
-				<xs:documentation xml:lang="en">Marker references must reference Markers of the same hierarchy</xs:documentation>
+				<xs:documentation xml:lang="en">Marker references must reference Markers of the same hierarchy
+				</xs:documentation>
 			</xs:annotation>
 			<xs:selector xpath=".//logging:MarkerReference"/>
 			<xs:field xpath="@ref"/>
@@ -148,7 +158,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xs:element name="null">
 					<xs:complexType>
 						<xs:annotation>
-							<xs:documentation xml:lang="en">This element is used for null arguments. It must be empty.</xs:documentation>
+							<xs:documentation xml:lang="en">This element is used for null arguments. It must be empty.
+							</xs:documentation>
 						</xs:annotation>
 						<xs:complexContent>
 							<xs:restriction base="xs:anyType"/>
@@ -198,7 +209,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xs:sequence>
 			<xs:element name="Entry" type="Entry" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation xml:lang="en">The entries of the MDC. Entries must have unique keys.</xs:documentation>
+					<xs:documentation xml:lang="en">The entries of the MDC. Entries must have unique keys.
+					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -226,14 +238,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xs:element name="Marker" type="Marker"/>
 				<xs:element name="MarkerReference" type="MarkerReference">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">A MarkerReference references a Marker of the same hierarchy.</xs:documentation>
+						<xs:documentation xml:lang="en">A MarkerReference references a Marker of the same hierarchy.
+						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
 		</xs:sequence>
 		<xs:attribute name="name" type="WhitespacePreservingString" use="required">
 			<xs:annotation>
-				<xs:documentation xml:lang="en">The name of the Marker. Must be unique relative to it's hierarchy.</xs:documentation>
+				<xs:documentation xml:lang="en">The name of the Marker. Must be unique relative to it's hierarchy.
+				</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
@@ -245,7 +259,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:restriction base="xs:anyType">
 				<xs:attribute name="ref" type="WhitespacePreservingString" use="required">
 					<xs:annotation>
-						<xs:documentation xml:lang="en">References the name of a Marker in the same hierarchy.</xs:documentation>
+						<xs:documentation xml:lang="en">References the name of a Marker in the same hierarchy.
+						</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:restriction>
@@ -279,7 +294,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xs:element name="Native">
 					<xs:complexType>
 						<xs:annotation>
-							<xs:documentation xml:lang="en">This type is used to tag a StackTraceElement as native. This tag must be empty.</xs:documentation>
+							<xs:documentation xml:lang="en">This type is used to tag a StackTraceElement as native. This
+								tag must be empty.
+							</xs:documentation>
 						</xs:annotation>
 						<xs:complexContent>
 							<xs:restriction base="xs:anyType"/>
@@ -292,7 +309,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:element name="Exact" minOccurs="0">
 				<xs:complexType>
 					<xs:annotation>
-						<xs:documentation xml:lang="en">This type is used to tag a StackTraceElement as native. This tag must be empty.</xs:documentation>
+						<xs:documentation xml:lang="en">This type is used to tag a StackTraceElement as native. This tag
+							must be empty.
+						</xs:documentation>
 					</xs:annotation>
 					<xs:complexContent>
 						<xs:restriction base="xs:anyType"/>

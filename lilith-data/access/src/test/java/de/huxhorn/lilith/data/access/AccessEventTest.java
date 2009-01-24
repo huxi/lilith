@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,18 +17,17 @@
  */
 package de.huxhorn.lilith.data.access;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertArrayEquals;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AccessEventTest
 {
@@ -41,20 +40,22 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void defaultConstructor() throws ClassNotFoundException, IOException
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
 	}
 
 	@Test
-	public void applicationIdentifier() throws ClassNotFoundException, IOException
+	public void applicationIdentifier()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent  instance=new AccessEvent ();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setApplicationIdentifier(value);
 
 		{
@@ -70,11 +71,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void method() throws ClassNotFoundException, IOException
+	public void method()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setMethod(value);
 
 		{
@@ -90,11 +92,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void protocol() throws ClassNotFoundException, IOException
+	public void protocol()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setProtocol(value);
 
 		{
@@ -111,11 +114,12 @@ public class AccessEventTest
 
 
 	@Test
-	public void remoteAddress() throws ClassNotFoundException, IOException
+	public void remoteAddress()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setRemoteAddress(value);
 
 		{
@@ -131,11 +135,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void remoteHost() throws ClassNotFoundException, IOException
+	public void remoteHost()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setRemoteHost(value);
 
 		{
@@ -151,11 +156,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void remoteUser() throws ClassNotFoundException, IOException
+	public void remoteUser()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setRemoteUser(value);
 
 		{
@@ -171,11 +177,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void requestUri() throws ClassNotFoundException, IOException
+	public void requestUri()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setRequestURI(value);
 
 		{
@@ -191,11 +198,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void requestUrl() throws ClassNotFoundException, IOException
+	public void requestUrl()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setRequestURL(value);
 
 		{
@@ -211,11 +219,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void serverName() throws ClassNotFoundException, IOException
+	public void serverName()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		String value="value";
+		String value = "value";
 		instance.setServerName(value);
 
 		{
@@ -231,12 +240,13 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void requestHeaders() throws ClassNotFoundException, IOException
+	public void requestHeaders()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		Map<String, String> value=new HashMap<String, String>();
-		value.put("foo","bar");
+		Map<String, String> value = new HashMap<String, String>();
+		value.put("foo", "bar");
 		instance.setRequestHeaders(value);
 
 		{
@@ -252,12 +262,13 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void requestParameters() throws ClassNotFoundException, IOException
+	public void requestParameters()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		Map<String, String[]> value=new HashMap<String, String[]>();
-		String[] array=new String[]{"bar"};
+		Map<String, String[]> value = new HashMap<String, String[]>();
+		String[] array = new String[]{"bar"};
 		value.put("foo", array);
 		instance.setRequestParameters(value);
 
@@ -276,12 +287,13 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void responseHeaders() throws ClassNotFoundException, IOException
+	public void responseHeaders()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		Map<String, String> value=new HashMap<String, String>();
-		value.put("foo","bar");
+		Map<String, String> value = new HashMap<String, String>();
+		value.put("foo", "bar");
 		instance.setResponseHeaders(value);
 
 		{
@@ -297,11 +309,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void timeStamp() throws ClassNotFoundException, IOException
+	public void timeStamp()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		Date value=new Date();
+		Date value = new Date();
 		instance.setTimeStamp(value);
 
 		{
@@ -317,11 +330,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void localPort() throws ClassNotFoundException, IOException
+	public void localPort()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		int value=17;
+		int value = 17;
 		instance.setLocalPort(value);
 
 		{
@@ -337,11 +351,12 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void statusCode() throws ClassNotFoundException, IOException
+	public void statusCode()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvent instance=new AccessEvent();
+		AccessEvent instance = new AccessEvent();
 
-		int value=17;
+		int value = 17;
 		instance.setStatusCode(value);
 
 		{

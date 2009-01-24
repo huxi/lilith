@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,7 @@ import de.huxhorn.sulky.swing.AbstractProgressingCallable;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.SwingWorkManager;
 import de.huxhorn.sulky.swing.Windows;
+
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
@@ -85,28 +86,7 @@ import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EtchedBorder;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -134,8 +114,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+
 public class MainFrame
-		extends JFrame
+	extends JFrame
 {
 	private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
@@ -177,20 +160,20 @@ public class MainFrame
 	private boolean enableBonjour;
 	private final boolean isMac;
 	private final boolean isWindows;
-    private List<SavedCondition> activeConditions;
+	private List<SavedCondition> activeConditions;
 	private Map<LoggingEvent.Level, Colors> levelColors;
 	private Map<HttpStatus.Type, Colors> statusColors;
 	/*
 		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 		 */
-    //private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
-    //private ReferenceQueue<Colors> colorsReferenceQueue;
+	//private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
+	//private ReferenceQueue<Colors> colorsReferenceQueue;
 
-    public String[] getAllConditionScriptFiles()
+	public String[] getAllConditionScriptFiles()
 	{
 		return applicationPreferences.getAllConditionScriptFiles();
 	}
-	
+
 	public File resolveConditionScriptFile(String input)
 	{
 		return applicationPreferences.resolveConditionScriptFile(input);
@@ -214,28 +197,28 @@ public class MainFrame
 	public MainFrame(ApplicationPreferences applicationPreferences, String appName, boolean enableBonjour)
 	{
 		super(appName);
-        //colorsReferenceQueue=new ReferenceQueue<Colors>();
-        //colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
-		application=new DefaultApplication();
-		isMac=application.isMac();
+		//colorsReferenceQueue=new ReferenceQueue<Colors>();
+		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
+		application = new DefaultApplication();
+		isMac = application.isMac();
 		if(!isMac)
 		{
-			String osName=System.getProperty("os.name").toLowerCase();
-			isWindows=osName.startsWith("windows");
+			String osName = System.getProperty("os.name").toLowerCase();
+			isWindows = osName.startsWith("windows");
 		}
 		else
 		{
-			isWindows=false;
+			isWindows = false;
 		}
-		autostartProcesses=new ArrayList<AutostartRunnable>();
+		autostartProcesses = new ArrayList<AutostartRunnable>();
 
 		addWindowListener(new MainWindowListener());
-		Runtime runtime=Runtime.getRuntime();
-		Thread shutdownHook=new Thread(new ShutdownRunnable());
+		Runtime runtime = Runtime.getRuntime();
+		Thread shutdownHook = new Thread(new ShutdownRunnable());
 		runtime.addShutdownHook(shutdownHook);
 
-		senderService=new SenderService(this);
-		this.enableBonjour=enableBonjour;
+		senderService = new SenderService(this);
+		this.enableBonjour = enableBonjour;
 		/*
 		if(application.isMac())
 		{
@@ -247,23 +230,23 @@ public class MainFrame
 		}
         */
 
-		integerWorkManager=new SwingWorkManager<Integer>();
+		integerWorkManager = new SwingWorkManager<Integer>();
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
-		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/logs"),"ljlogging");
-		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/access"),"ljaccess");
-		loggingFileBufferFactory=new FileBufferFactory<LoggingEvent>(loggingFileFactory);
-		accessFileBufferFactory=new FileBufferFactory<AccessEvent>(accessFileFactory);
+		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/logs"), "ljlogging");
+		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/access"), "ljaccess");
+		loggingFileBufferFactory = new FileBufferFactory<LoggingEvent>(loggingFileFactory);
+		accessFileBufferFactory = new FileBufferFactory<AccessEvent>(accessFileFactory);
 
-		rrdFileFilter=new RrdFileFilter();
+		rrdFileFilter = new RrdFileFilter();
 
 		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
 		statisticsDialog = new StatisticsDialog(this);
 		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
 
-		loggingEventViewManager=new LoggingEventViewManager(this);
-		accessEventViewManager=new AccessEventViewManager(this);
-		this.applicationPreferences=applicationPreferences;
+		loggingEventViewManager = new LoggingEventViewManager(this);
+		accessEventViewManager = new AccessEventViewManager(this);
+		this.applicationPreferences = applicationPreferences;
 		applicationPreferences.addPropertyChangeListener(new PreferencesChangeListener());
 		loggingSourceListener = new LoggingEventSourceListener();
 		accessSourceListener = new AccessEventSourceListener();
@@ -271,7 +254,7 @@ public class MainFrame
 		desktop = new JDesktopPane();
 		JPanel statusBar = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		statusLabel=new JLabel();
+		statusLabel = new JLabel();
 		statusLabel.setText("Starting...");
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -279,9 +262,9 @@ public class MainFrame
 		gbc.gridy = 0;
 		gbc.weightx = 1.0;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(0,5,0,0);
+		gbc.insets = new Insets(0, 5, 0, 0);
 
-		statusBar.add(statusLabel,gbc);
+		statusBar.add(statusLabel, gbc);
 		MemoryStatus memoryStatus = new MemoryStatus();
 		memoryStatus.setBackground(Color.WHITE);
 		memoryStatus.setOpaque(true);
@@ -294,21 +277,21 @@ public class MainFrame
 		gbc.gridy = 0;
 		gbc.weightx = 0.0;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(0,0,0,0);
+		gbc.insets = new Insets(0, 0, 0, 0);
 
-		statusBar.add(memoryStatus,gbc);
+		statusBar.add(memoryStatus, gbc);
 		add(desktop, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
 
-		aboutDialog=new AboutDialog(this, "About "+appName+"...", appName);
+		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);
 
 
-		debugDialog=new DebugDialog(this, this);
+		debugDialog = new DebugDialog(this, this);
 		if(logger.isDebugEnabled()) logger.debug("Before creation of preferences-dialog...");
-		preferencesDialog=new PreferencesDialog(this);
+		preferencesDialog = new PreferencesDialog(this);
 		if(logger.isDebugEnabled()) logger.debug("After creation of preferences-dialog...");
-		openInactiveLogsDialog=new OpenPreviousDialog(MainFrame.this);
-		helpFrame=new HelpFrame(this);
+		openInactiveLogsDialog = new OpenPreviousDialog(MainFrame.this);
+		helpFrame = new HelpFrame(this);
 		helpFrame.setTitle("Help Topics");
 
 		/*
@@ -334,7 +317,7 @@ public class MainFrame
 			helpFrame.setHelpUrl(helpText);
 		}
 		*/
-		helpUrl=MainFrame.class.getResource("/help/index.xhtml");
+		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
 	}
 
 	public Application getApplication()
@@ -436,18 +419,18 @@ public class MainFrame
 	 */
 	public void startUp()
 	{
-        //Thread referenceCollection=new Thread(new ColorsCollectionRunnable(), "ColorCacheCleanupThread");
-        //referenceCollection.setDaemon(true);
-        //referenceCollection.start();
+		//Thread referenceCollection=new Thread(new ColorsCollectionRunnable(), "ColorCacheCleanupThread");
+		//referenceCollection.setDaemon(true);
+		//referenceCollection.start();
 
 		// Autostart
 		{
-			File autostartDir=new File(startupApplicationPath, "autostart");
+			File autostartDir = new File(startupApplicationPath, "autostart");
 			if(autostartDir.mkdirs())
 			{
 				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", autostartDir.getAbsolutePath());
 			}
-			File[] autoFiles=autostartDir.listFiles(new FileFilter()
+			File[] autoFiles = autostartDir.listFiles(new FileFilter()
 			{
 				public boolean accept(File file)
 				{
@@ -455,7 +438,7 @@ public class MainFrame
 				}
 			});
 
-			if(autoFiles!=null && autoFiles.length>0)
+			if(autoFiles != null && autoFiles.length > 0)
 			{
 				Arrays.sort(autoFiles, new Comparator<File>()
 				{
@@ -464,53 +447,56 @@ public class MainFrame
 						return o1.getAbsolutePath().compareTo(o2.getAbsolutePath());
 					}
 				});
-				for(File current: autoFiles)
+				for(File current : autoFiles)
 				{
-					AutostartRunnable r=new AutostartRunnable(current);
+					AutostartRunnable r = new AutostartRunnable(current);
 					autostartProcesses.add(r);
-					Thread t=new Thread(r, current.getAbsolutePath());
+					Thread t = new Thread(r, current.getAbsolutePath());
 					t.setDaemon(true);
 					t.start();
 				}
 			}
 			else
 			{
-				if(logger.isInfoEnabled()) logger.info("No autostart files defined in '{}'.", autostartDir.getAbsolutePath());
+				if(logger.isInfoEnabled())
+				{
+					logger.info("No autostart files defined in '{}'.", autostartDir.getAbsolutePath());
+				}
 			}
 		}
 
 		// go to source
 		{
-			gotoSource=new GoToSourceService();
+			gotoSource = new GoToSourceService();
 			//gotoSource.start() started when needed...
 		}
 
-		SourceIdentifier globalSourceIdentifier =new SourceIdentifier("global", null);
+		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
 		File globalLoggingDataFile = loggingFileFactory.getDataFile(globalSourceIdentifier);
 		File globalLoggingIndexFile = loggingFileFactory.getIndexFile(globalSourceIdentifier);
-		FileDumpEventConsumer<LoggingEvent> loggingFileDump =new FileDumpEventConsumer<LoggingEvent>(/*applicationPreferences, */globalLoggingDataFile, globalLoggingIndexFile);
+		FileDumpEventConsumer<LoggingEvent> loggingFileDump = new FileDumpEventConsumer<LoggingEvent>(/*applicationPreferences, */globalLoggingDataFile, globalLoggingIndexFile);
 
 		File globalAccessDataFile = accessFileFactory.getDataFile(globalSourceIdentifier);
 		File globalAccessIndexFile = accessFileFactory.getIndexFile(globalSourceIdentifier);
-		FileDumpEventConsumer<AccessEvent> accessFileDump =new FileDumpEventConsumer<AccessEvent>(/*applicationPreferences, */globalAccessDataFile, globalAccessIndexFile);
+		FileDumpEventConsumer<AccessEvent> accessFileDump = new FileDumpEventConsumer<AccessEvent>(/*applicationPreferences, */globalAccessDataFile, globalAccessIndexFile);
 
 		BlockingCircularBuffer<EventWrapper<LoggingEvent>> loggingEventQueue = new LilithBuffer<LoggingEvent>(applicationPreferences, 1000);
 		BlockingCircularBuffer<EventWrapper<AccessEvent>> accessEventQueue = new LilithBuffer<AccessEvent>(applicationPreferences, 1000);
 
-		SourceManagerImpl<LoggingEvent> lsm =new SourceManagerImpl<LoggingEvent>(loggingEventQueue);
+		SourceManagerImpl<LoggingEvent> lsm = new SourceManagerImpl<LoggingEvent>(loggingEventQueue);
 		// add global view
-		EventSource<LoggingEvent> globalLoggingEventSource =new EventSourceImpl<LoggingEvent>(globalSourceIdentifier, loggingFileDump.getBuffer(), true);
+		EventSource<LoggingEvent> globalLoggingEventSource = new EventSourceImpl<LoggingEvent>(globalSourceIdentifier, loggingFileDump.getBuffer(), true);
 		lsm.addSource(globalLoggingEventSource);
 
 		// add internal lilith logging
-		EventSource<LoggingEvent> lilithLoggingEventSource =new EventSourceImpl<LoggingEvent>(InternalLilithAppender.getSourceIdentifier(), InternalLilithAppender.getBuffer(), false);
-		lsm.addSource(lilithLoggingEventSource );
+		EventSource<LoggingEvent> lilithLoggingEventSource = new EventSourceImpl<LoggingEvent>(InternalLilithAppender.getSourceIdentifier(), InternalLilithAppender.getBuffer(), false);
+		lsm.addSource(lilithLoggingEventSource);
 
 		setLoggingEventSourceManager(lsm);
 
-		SourceManagerImpl<AccessEvent> asm=new SourceManagerImpl<AccessEvent>(accessEventQueue);
+		SourceManagerImpl<AccessEvent> asm = new SourceManagerImpl<AccessEvent>(accessEventQueue);
 		// add global view
-		EventSource<AccessEvent> globalAccessEventSource =new EventSourceImpl<AccessEvent>(globalSourceIdentifier, accessFileDump.getBuffer(), true);
+		EventSource<AccessEvent> globalAccessEventSource = new EventSourceImpl<AccessEvent>(globalSourceIdentifier, accessFileDump.getBuffer(), true);
 		asm.addSource(globalAccessEventSource);
 		setAccessEventSourceManager(asm);
 
@@ -518,7 +504,7 @@ public class MainFrame
 		{
 			loggingEventSourceManager.addEventSourceProducer(new LogbackLoggingServerSocketEventSourceProducer(4560));
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
@@ -526,13 +512,13 @@ public class MainFrame
 		try
 		{
 			SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> producer
-					= new SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>
-					(ClassicMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
+				= new SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>
+				(ClassicMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 			senderService.addLoggingProducer(producer);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
@@ -540,13 +526,13 @@ public class MainFrame
 		try
 		{
 			SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> producer
-					= new SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>
-					(ClassicMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
+				= new SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>
+				(ClassicMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 			senderService.addLoggingProducer(producer);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
@@ -555,12 +541,12 @@ public class MainFrame
 		try
 		{
 			LilithXmlMessageLoggingServerSocketEventSourceProducer producer
-					= new LilithXmlMessageLoggingServerSocketEventSourceProducer
-					(ClassicXmlMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
+				= new LilithXmlMessageLoggingServerSocketEventSourceProducer
+				(ClassicXmlMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
@@ -568,12 +554,12 @@ public class MainFrame
 		try
 		{
 			LilithXmlMessageLoggingServerSocketEventSourceProducer producer
-					= new LilithXmlMessageLoggingServerSocketEventSourceProducer
-					(ClassicXmlMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
+				= new LilithXmlMessageLoggingServerSocketEventSourceProducer
+				(ClassicXmlMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
@@ -581,12 +567,12 @@ public class MainFrame
 		try
 		{
 			LilithXmlStreamLoggingServerSocketEventSourceProducer producer
-					= new LilithXmlStreamLoggingServerSocketEventSourceProducer
-					(ZeroDelimitedClassicXmlMultiplexSocketAppender.DEFAULT_PORT);
+				= new LilithXmlStreamLoggingServerSocketEventSourceProducer
+				(ZeroDelimitedClassicXmlMultiplexSocketAppender.DEFAULT_PORT);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
@@ -595,20 +581,20 @@ public class MainFrame
 		{
 			accessEventSourceManager.addEventSourceProducer(new LogbackAccessServerSocketEventSourceProducer(4570));
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 		try
 		{
 			SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent> producer
-					= new SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>
-					(AccessMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
+				= new SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>
+				(AccessMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
 			senderService.addAccessProducer(producer);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
@@ -616,28 +602,28 @@ public class MainFrame
 		try
 		{
 			SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent> producer
-					= new SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>
-					(AccessMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
+				= new SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>
+				(AccessMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
 			senderService.addAccessProducer(producer);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
-		viewActions=new ViewActions(this, null);
+		viewActions = new ViewActions(this, null);
 		viewActions.getPopupMenu(); // initialize popup once in main frame only.
 
-		RrdLoggingEventConsumer rrdDb=new RrdLoggingEventConsumer();
+		RrdLoggingEventConsumer rrdDb = new RrdLoggingEventConsumer();
 		rrdDb.setBasePath(new File(startupApplicationPath, "statistics"));
-		AlarmSoundLoggingEventConsumer loggingEventAlarmSound =new AlarmSoundLoggingEventConsumer();
+		AlarmSoundLoggingEventConsumer loggingEventAlarmSound = new AlarmSoundLoggingEventConsumer();
 		loggingEventAlarmSound.setSounds(sounds);
 
 		FileSplitterEventConsumer<LoggingEvent> fileSplitterLoggingEventConsumer =
-				new FileSplitterEventConsumer<LoggingEvent>(/*applicationPreferences, */loggingFileBufferFactory, loggingEventSourceManager);
+			new FileSplitterEventConsumer<LoggingEvent>(/*applicationPreferences, */loggingFileBufferFactory, loggingEventSourceManager);
 
-		List<EventConsumer<LoggingEvent>> loggingConsumers =new ArrayList<EventConsumer<LoggingEvent>>();
+		List<EventConsumer<LoggingEvent>> loggingConsumers = new ArrayList<EventConsumer<LoggingEvent>>();
 
 		loggingConsumers.add(rrdDb);
 		loggingConsumers.add(loggingEventAlarmSound);
@@ -653,11 +639,11 @@ public class MainFrame
 		loggingEventSourceManager.setEventConsumers(loggingConsumers);
 		loggingEventSourceManager.start();
 
-		List<EventConsumer<AccessEvent>> accessConsumers =new ArrayList<EventConsumer<AccessEvent>>();
+		List<EventConsumer<AccessEvent>> accessConsumers = new ArrayList<EventConsumer<AccessEvent>>();
 
 		FileSplitterEventConsumer<AccessEvent> fileSplitterAccessEventConsumer =
-				new FileSplitterEventConsumer<AccessEvent>(/*applicationPreferences, */accessFileBufferFactory, accessEventSourceManager);
-		AlarmSoundAccessEventConsumer accessEventAlarmSound =new AlarmSoundAccessEventConsumer();
+			new FileSplitterEventConsumer<AccessEvent>(/*applicationPreferences, */accessFileBufferFactory, accessEventSourceManager);
+		AlarmSoundAccessEventConsumer accessEventAlarmSound = new AlarmSoundAccessEventConsumer();
 		accessEventAlarmSound.setSounds(sounds);
 		accessConsumers.add(accessEventAlarmSound);
 		accessConsumers.add(fileSplitterAccessEventConsumer);
@@ -673,7 +659,7 @@ public class MainFrame
 		accessEventSourceManager.setEventConsumers(accessConsumers);
 		accessEventSourceManager.start();
 
-		JMenuBar menuBar=viewActions.getMenuBar();
+		JMenuBar menuBar = viewActions.getMenuBar();
 		JToolBar toolbar = viewActions.getToolbar();
 		add(toolbar, BorderLayout.NORTH);
 		setJMenuBar(menuBar);
@@ -690,7 +676,7 @@ public class MainFrame
 		{
 			checkForUpdate(false);
 		}
-        updateConditions(); // to initialize active conditions.
+		updateConditions(); // to initialize active conditions.
 	}
 
 	public void goToSource(StackTraceElement ste)
@@ -704,7 +690,7 @@ public class MainFrame
 			if(logger.isWarnEnabled()) logger.warn("parentClassName: {}", parentClassName);
 		}
         */
-		if(gotoSource!=null)
+		if(gotoSource != null)
 		{
 			gotoSource.goToSource(ste);
 		}
@@ -712,7 +698,7 @@ public class MainFrame
 
 	public void setActiveConnectionsCounter(int activeCounter)
 	{
-		this.activeCounter=activeCounter;
+		this.activeCounter = activeCounter;
 		updateStatus();
 	}
 
@@ -725,99 +711,100 @@ public class MainFrame
 
 	public void checkForUpdate(boolean showAlways)
 	{
-		Thread t=new Thread(new CheckForUpdateRunnable(showAlways));
+		Thread t = new Thread(new CheckForUpdateRunnable(showAlways));
 		t.start();
 	}
 
 	public void showPopup(Component component, Point p)
 	{
-		if(logger.isDebugEnabled()) logger.debug("Show popup at {}.",p);
-		JPopupMenu popup=viewActions.getPopupMenu();
+		if(logger.isDebugEnabled()) logger.debug("Show popup at {}.", p);
+		JPopupMenu popup = viewActions.getPopupMenu();
 		popup.show(component, p.x, p.y);
 	}
 
-    public Colors getColors(EventWrapper eventWrapper)
-    {
-        if(!SwingUtilities.isEventDispatchThread())
-        {
-            if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
-        }
-        if(activeConditions != null)
-        {
-            Colors result=null;
-            /*
-            EventIdentifier id = eventWrapper.getEventIdentifier();
+	public Colors getColors(EventWrapper eventWrapper)
+	{
+		if(!SwingUtilities.isEventDispatchThread())
+		{
+			if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
+		}
+		if(activeConditions != null)
+		{
+			Colors result = null;
+			/*
+						EventIdentifier id = eventWrapper.getEventIdentifier();
 
-            SoftColorsReference ref = colorsCache.get(id);
-            if(ref!=null)
-            {
-                Colors c=ref.get();
-                if(c!=null)
-                {
-                    result=c;
-                    // System.out.println("Retrieved from cache.");
-                }
-                else
-                {
-                    // stale item... should be handled by CleanupThread
-                    colorsCache.remove(id);
-                }
-            }
-            if(result==null)
-            {
-            */
-                // no cached value found
-                for(SavedCondition current:activeConditions)
-                {
-                    Condition condition = current.getCondition();
-                    if(condition != null && condition.isTrue(eventWrapper))
-                    {
-                        result=new Colors(current.getColorScheme());
-                        break;
-                    }
-                }
-            /*
-                if(result==null)
-                {
-                    try
-                    {
-                        result=NULL_COLORS.clone();
-                    }
-                    catch (CloneNotSupportedException e)
-                    {
-                        // ignore
-                    }
-                }
-                colorsCache.put(id, new SoftColorsReference(id, result, colorsReferenceQueue));
-            }
-            if(NULL_COLORS.equals(result))
-            {
-                return null;
-            }
-            */
-            return result;
-        }
-        return null;
-    }
+						SoftColorsReference ref = colorsCache.get(id);
+						if(ref!=null)
+						{
+							Colors c=ref.get();
+							if(c!=null)
+							{
+								result=c;
+								// System.out.println("Retrieved from cache.");
+							}
+							else
+							{
+								// stale item... should be handled by CleanupThread
+								colorsCache.remove(id);
+							}
+						}
+						if(result==null)
+						{
+						*/
+			// no cached value found
+			for(SavedCondition current : activeConditions)
+			{
+				Condition condition = current.getCondition();
+				if(condition != null && condition.isTrue(eventWrapper))
+				{
+					result = new Colors(current.getColorScheme());
+					break;
+				}
+			}
+			/*
+							if(result==null)
+							{
+								try
+								{
+									result=NULL_COLORS.clone();
+								}
+								catch (CloneNotSupportedException e)
+								{
+									// ignore
+								}
+							}
+							colorsCache.put(id, new SoftColorsReference(id, result, colorsReferenceQueue));
+						}
+						if(NULL_COLORS.equals(result))
+						{
+							return null;
+						}
+						*/
+			return result;
+		}
+		return null;
+	}
 
 	// TODO; implement cache?
-    @SuppressWarnings({"UnusedDeclaration"})
-	private static class SoftColorsReference extends SoftReference<Colors>
-    {
-		private static final Colors NULL_COLORS=new Colors();
+	@SuppressWarnings({"UnusedDeclaration"})
+	private static class SoftColorsReference
+		extends SoftReference<Colors>
+	{
+		private static final Colors NULL_COLORS = new Colors();
 
-        private EventIdentifier id;
+		private EventIdentifier id;
 
-        public SoftColorsReference(EventIdentifier id, Colors o, ReferenceQueue<Colors> referenceQueue)
-        {
-            super(o!=null?o:new Colors(), referenceQueue);
-            this.id=id;
-        }
+		public SoftColorsReference(EventIdentifier id, Colors o, ReferenceQueue<Colors> referenceQueue)
+		{
+			super(o != null ? o : new Colors(), referenceQueue);
+			this.id = id;
+		}
 
-        public EventIdentifier getId()
-        {
-            return id;
-        }
+		public EventIdentifier getId()
+		{
+			return id;
+		}
 
 		public Colors getColors()
 		{
@@ -828,11 +815,11 @@ public class MainFrame
 			}
 			return result;
 		}
-    }
+	}
 
 	public Colors getColors(HttpStatus.Type status)
 	{
-		if(statusColors==null)
+		if(statusColors == null)
 		{
 			initStatusColors();
 		}
@@ -842,17 +829,17 @@ public class MainFrame
 	private void initStatusColors()
 	{
 		Map<HttpStatus.Type, ColorScheme> prefValue = applicationPreferences.getStatusColors();
-		Map<HttpStatus.Type, Colors> colors=new HashMap<HttpStatus.Type, Colors>();
+		Map<HttpStatus.Type, Colors> colors = new HashMap<HttpStatus.Type, Colors>();
 		for(Map.Entry<HttpStatus.Type, ColorScheme> current : prefValue.entrySet())
 		{
 			colors.put(current.getKey(), new Colors(current.getValue()));
 		}
-		statusColors=colors;
+		statusColors = colors;
 	}
 
 	public Colors getColors(LoggingEvent.Level level)
 	{
-		if(levelColors==null)
+		if(levelColors == null)
 		{
 			initLevelColors();
 		}
@@ -862,16 +849,16 @@ public class MainFrame
 	private void initLevelColors()
 	{
 		Map<LoggingEvent.Level, ColorScheme> prefValue = applicationPreferences.getLevelColors();
-		Map<LoggingEvent.Level, Colors> colors=new HashMap<LoggingEvent.Level, Colors>();
+		Map<LoggingEvent.Level, Colors> colors = new HashMap<LoggingEvent.Level, Colors>();
 		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : prefValue.entrySet())
 		{
 			colors.put(current.getKey(), new Colors(current.getValue()));
 		}
-		levelColors=colors;
+		levelColors = colors;
 	}
 
 	public class MyApplicationListener
-			implements ApplicationListener
+		implements ApplicationListener
 	{
 
 		public void handleAbout(ApplicationEvent event)
@@ -915,17 +902,17 @@ public class MainFrame
 
 	private void setLoggingEventSourceManager(SourceManager<LoggingEvent> loggingEventSourceManager)
 	{
-		if (this.loggingEventSourceManager != null)
+		if(this.loggingEventSourceManager != null)
 		{
 			this.loggingEventSourceManager.removeEventSourceListener(loggingSourceListener);
 		}
 		this.loggingEventSourceManager = loggingEventSourceManager;
-		if (this.loggingEventSourceManager != null)
+		if(this.loggingEventSourceManager != null)
 		{
 			this.loggingEventSourceManager.addEventSourceListener(loggingSourceListener);
 
 			List<EventSource<LoggingEvent>> sources = this.loggingEventSourceManager.getSources();
-			for (EventSource<LoggingEvent> source : sources)
+			for(EventSource<LoggingEvent> source : sources)
 			{
 				loggingEventViewManager.retrieveViewContainer(source);
 			}
@@ -939,17 +926,17 @@ public class MainFrame
 
 	private void setAccessEventSourceManager(SourceManager<AccessEvent> accessEventSourceManager)
 	{
-		if (this.accessEventSourceManager != null)
+		if(this.accessEventSourceManager != null)
 		{
 			this.accessEventSourceManager.removeEventSourceListener(accessSourceListener);
 		}
 		this.accessEventSourceManager = accessEventSourceManager;
-		if (this.accessEventSourceManager != null)
+		if(this.accessEventSourceManager != null)
 		{
 			this.accessEventSourceManager.addEventSourceListener(accessSourceListener);
 
 			List<EventSource<AccessEvent>> sources = this.accessEventSourceManager.getSources();
-			for (EventSource<AccessEvent> source : sources)
+			for(EventSource<AccessEvent> source : sources)
 			{
 				accessEventViewManager.retrieveViewContainer(source);
 			}
@@ -968,7 +955,7 @@ public class MainFrame
 
 	public void setSounds(Sounds sounds)
 	{
-		if(sounds!=null)
+		if(sounds != null)
 		{
 			sounds.setSoundLocations(applicationPreferences.getSoundLocations());
 			sounds.setMute(applicationPreferences.isMute());
@@ -1001,15 +988,15 @@ public class MainFrame
 
 	public SortedMap<String, SourceIdentifier> getAvailableStatistics()
 	{
-		File statisticsPath=new File(applicationPreferences.getStartupApplicationPath(), "statistics");
+		File statisticsPath = new File(applicationPreferences.getStartupApplicationPath(), "statistics");
 		File[] files = statisticsPath.listFiles(rrdFileFilter);
-		SortedMap<String, SourceIdentifier> sources=new TreeMap<String, SourceIdentifier>();
-		if(files!=null)
+		SortedMap<String, SourceIdentifier> sources = new TreeMap<String, SourceIdentifier>();
+		if(files != null)
 		{
-			for(File f:files)
+			for(File f : files)
 			{
-				String name=f.getName();
-				name=name.substring(0, name.length()-4); // we are sure about .rrd here...
+				String name = f.getName();
+				name = name.substring(0, name.length() - 4); // we are sure about .rrd here...
 				if(!name.equalsIgnoreCase("global"))
 				{
 					SourceIdentifier si = new SourceIdentifier(name);
@@ -1047,7 +1034,7 @@ public class MainFrame
 
 		// we need this since this method might also be called by a different thread
 		ShowLoggingViewRunnable<LoggingEvent> runnable = new ShowLoggingViewRunnable<LoggingEvent>(container);
-		if (SwingUtilities.isEventDispatchThread())
+		if(SwingUtilities.isEventDispatchThread())
 		{
 			runnable.run();
 		}
@@ -1063,7 +1050,7 @@ public class MainFrame
 
 		// we need this since this method might also be called by a different thread
 		ShowLoggingViewRunnable<AccessEvent> runnable = new ShowLoggingViewRunnable<AccessEvent>(container);
-		if (SwingUtilities.isEventDispatchThread())
+		if(SwingUtilities.isEventDispatchThread())
 		{
 			runnable.run();
 		}
@@ -1076,9 +1063,9 @@ public class MainFrame
 	public void openPreviousLogging(SourceIdentifier si)
 	{
 		FileBuffer<EventWrapper<LoggingEvent>> buffer = loggingFileBufferFactory.createBuffer(si);
-		EventSource<LoggingEvent> eventSource=new EventSourceImpl<LoggingEvent>(si,buffer,false);
+		EventSource<LoggingEvent> eventSource = new EventSourceImpl<LoggingEvent>(si, buffer, false);
 
-		ViewContainer<LoggingEvent> container=retrieveLoggingViewContainer(eventSource);
+		ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
 		EventWrapperViewPanel<LoggingEvent> panel = container.getDefaultView();
 		panel.setState(LoggingViewState.INACTIVE);
 		showLoggingView(eventSource);
@@ -1087,9 +1074,9 @@ public class MainFrame
 	public void openPreviousAccess(SourceIdentifier si)
 	{
 		FileBuffer<EventWrapper<AccessEvent>> buffer = accessFileBufferFactory.createBuffer(si);
-		EventSource<AccessEvent> eventSource=new EventSourceImpl<AccessEvent>(si,buffer,false);
+		EventSource<AccessEvent> eventSource = new EventSourceImpl<AccessEvent>(si, buffer, false);
 
-		ViewContainer<AccessEvent> container=retrieveAccessViewContainer(eventSource);
+		ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
 		EventWrapperViewPanel<AccessEvent> panel = container.getDefaultView();
 		panel.setState(LoggingViewState.INACTIVE);
 		showAccessView(eventSource);
@@ -1097,7 +1084,7 @@ public class MainFrame
 
 	public void updateStatus()
 	{
-		StringBuilder statusText=new StringBuilder();
+		StringBuilder statusText = new StringBuilder();
 
 		ApplicationPreferences.SourceFiltering filtering = applicationPreferences.getSourceFiltering();
 		switch(filtering)
@@ -1114,37 +1101,37 @@ public class MainFrame
 				break;
 		}
 
-		if(activeCounter==0)
+		if(activeCounter == 0)
 		{
 			statusText.append("No active connections.");
 		}
-		else if(activeCounter==1)
+		else if(activeCounter == 1)
 		{
 			statusText.append("One active connection.");
 		}
-		else if(activeCounter>1)
+		else if(activeCounter > 1)
 		{
 			statusText.append(activeCounter).append(" active connections.");
 		}
 		statusLabel.setText(statusText.toString());
 	}
 
-	private long lastScriptRefresh=0;
-	private long previousScriptFileTimestamp=0;
+	private long lastScriptRefresh = 0;
+	private long previousScriptFileTimestamp = 0;
 	private Script detailsViewScript;
-	private static final int SCRIPT_REFRESH_INTERVAL=5000;
+	private static final int SCRIPT_REFRESH_INTERVAL = 5000;
 
 	private void initDetailsViewScript()
 	{
 		long current = System.currentTimeMillis();
-		if(detailsViewScript != null && current-lastScriptRefresh<SCRIPT_REFRESH_INTERVAL)
+		if(detailsViewScript != null && current - lastScriptRefresh < SCRIPT_REFRESH_INTERVAL)
 		{
 			return;
 		}
 
-		lastScriptRefresh=current;
+		lastScriptRefresh = current;
 
-		File detailsViewRoot=getApplicationPreferences().getDetailsViewRoot();
+		File detailsViewRoot = getApplicationPreferences().getDetailsViewRoot();
 		File scriptFile = new File(detailsViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
 		long scriptFileTimestamp = scriptFile.lastModified();
 		if(detailsViewScript == null || previousScriptFileTimestamp != scriptFileTimestamp)
@@ -1153,7 +1140,7 @@ public class MainFrame
 			{
 				if(logger.isWarnEnabled()) logger.warn("Scriptfile '{}' is not a file!", scriptFile.getAbsolutePath());
 			}
-			GroovyClassLoader gcl=new GroovyClassLoader();
+			GroovyClassLoader gcl = new GroovyClassLoader();
 			gcl.setShouldRecompile(true);
 			try
 			{
@@ -1161,14 +1148,19 @@ public class MainFrame
 				Object instance = clazz.newInstance();
 				if(instance instanceof Script)
 				{
-					detailsViewScript=(Script)instance;
-					previousScriptFileTimestamp=scriptFileTimestamp;
+					detailsViewScript = (Script) instance;
+					previousScriptFileTimestamp = scriptFileTimestamp;
 				}
 			}
-			catch (Throwable e)
+			catch(Throwable e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while instanciating groovy condition '"+scriptFile.getAbsolutePath()+"'!",e);
-				detailsViewScript=null;
+				if(logger.isWarnEnabled())
+				{
+					logger
+						.warn("Exception while instanciating groovy condition '" + scriptFile
+							.getAbsolutePath() + "'!", e);
+				}
+				detailsViewScript = null;
 			}
 		}
 	}
@@ -1177,37 +1169,37 @@ public class MainFrame
 	public String createMessage(EventWrapper wrapper)
 	{
 		initDetailsViewScript();
-		String message="<html><body>detailsView Script returned null!</body></html>";
+		String message = "<html><body>detailsView Script returned null!</body></html>";
 //		if(wrapper!=null)
 //		{
 		//message=messageFormatter.createMessage(wrapper, true);
-		if(detailsViewScript==null)
+		if(detailsViewScript == null)
 		{
-			message="<html><body>detailsView Script is broken!</body></html>";
+			message = "<html><body>detailsView Script is broken!</body></html>";
 		}
 		else
 		{
 			try
 			{
-				Binding binding=new Binding();
+				Binding binding = new Binding();
 				binding.setVariable("eventWrapper", wrapper);
 				binding.setVariable("logger", logger);
 				binding.setVariable("completeCallStack", applicationPreferences.isShowingFullCallstack());
 
 				detailsViewScript.setBinding(binding);
-				Object result=detailsViewScript.run();
+				Object result = detailsViewScript.run();
 				if(result instanceof String)
 				{
 					message = (String) result;
 				}
-				else if(result!=null)
+				else if(result != null)
 				{
 					message = result.toString();
 				}
 			}
 			catch(Throwable t)
 			{
-				message="<html><body>Exception while executing detailsView Script!</body></html>";
+				message = "<html><body>Exception while executing detailsView Script!</body></html>";
 				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
 			}
 		}
@@ -1226,7 +1218,7 @@ public class MainFrame
 		// This is very acceptable in my special case but I'm not sure if this is a general use case...
 		//
 		// http://cse-mjmcl.cse.bris.ac.uk/blog/2007/02/14/1171465494443.html
-		message=SimpleXml.replaceNonValidXMLCharacters(message, ' ');
+		message = SimpleXml.replaceNonValidXMLCharacters(message, ' ');
 		return message;
 	}
 
@@ -1251,32 +1243,36 @@ public class MainFrame
 	public void closeAllViews(ViewContainer beside)
 	{
 		{
-			/*List<ViewContainer<LoggingEvent>> closed = */loggingEventViewManager.closeAllViews(beside);
+			/*List<ViewContainer<LoggingEvent>> closed = */
+			loggingEventViewManager.closeAllViews(beside);
 		}
 
 		{
-			/*List<ViewContainer<AccessEvent>> closed = */accessEventViewManager.closeAllViews(beside);
+			/*List<ViewContainer<AccessEvent>> closed = */
+			accessEventViewManager.closeAllViews(beside);
 		}
 	}
 
 	public void minimizeAllViews(ViewContainer beside)
 	{
 		{
-			/*List<ViewContainer<LoggingEvent>> closed = */loggingEventViewManager.minimizeAllViews(beside);
+			/*List<ViewContainer<LoggingEvent>> closed = */
+			loggingEventViewManager.minimizeAllViews(beside);
 		}
 
 		{
-			/*List<ViewContainer<AccessEvent>> closed = */accessEventViewManager.minimizeAllViews(beside);
+			/*List<ViewContainer<AccessEvent>> closed = */
+			accessEventViewManager.minimizeAllViews(beside);
 		}
 	}
-	
+
 	public void removeInactiveViews(boolean onlyClosed, boolean clean)
 	{
 		{
 			List<ViewContainer<LoggingEvent>> removed = loggingEventViewManager.removeInactiveViews(onlyClosed);
 			if(clean)
 			{
-				for(ViewContainer current:removed)
+				for(ViewContainer current : removed)
 				{
 					EventWrapperViewPanel panel = current.getDefaultView();
 					panel.clear();
@@ -1288,7 +1284,7 @@ public class MainFrame
 			List<ViewContainer<AccessEvent>> removed = accessEventViewManager.removeInactiveViews(onlyClosed);
 			if(clean)
 			{
-				for(ViewContainer current:removed)
+				for(ViewContainer current : removed)
 				{
 					EventWrapperViewPanel panel = current.getDefaultView();
 					panel.clear();
@@ -1316,7 +1312,7 @@ public class MainFrame
 
 	public void showHelp()
 	{
-		if(helpUrl!=null)
+		if(helpUrl != null)
 		{
 			helpFrame.setHelpUrl(helpUrl);
 		}
@@ -1327,7 +1323,7 @@ public class MainFrame
 	{
 		Windows.showWindow(aboutDialog, MainFrame.this, true);
 
-		if(!applicationPreferences.isMute() && sounds!=null)
+		if(!applicationPreferences.isMute() && sounds != null)
 		{
 			//sounds.play(LilithSounds.ABOUT_SOUND);
 		}
@@ -1345,7 +1341,7 @@ public class MainFrame
 	}
 
 	class LoggingEventSourceListener
-			implements EventSourceListener<LoggingEvent>
+		implements EventSourceListener<LoggingEvent>
 	{
 		public void eventSourceAdded(EventSource<LoggingEvent> eventSource)
 		{
@@ -1369,19 +1365,19 @@ public class MainFrame
 
 			public void run()
 			{
-				ViewContainer<LoggingEvent> container=retrieveLoggingViewContainer(eventSource);
+				ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
 				EventWrapperViewPanel<LoggingEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.ACTIVE);
-				if(!applicationPreferences.isMute() && sounds!=null)
+				if(!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_ADDED);
 				}
-				String primary=eventSource.getSourceIdentifier().getIdentifier();
+				String primary = eventSource.getSourceIdentifier().getIdentifier();
 				Map<String, String> sourceNames = applicationPreferences.getSourceNames();
 
 				if(!sourceNames.containsKey(primary))
 				{
-					sourceNames=new HashMap<String, String>(sourceNames);
+					sourceNames = new HashMap<String, String>(sourceNames);
 					sourceNames.put(primary, primary);
 					applicationPreferences.setSourceNames(sourceNames);
 				}
@@ -1405,10 +1401,10 @@ public class MainFrame
 
 			public void run()
 			{
-				ViewContainer<LoggingEvent> container=retrieveLoggingViewContainer(eventSource);
+				ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
 				EventWrapperViewPanel<LoggingEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.INACTIVE);
-				if(!applicationPreferences.isMute() && sounds!=null)
+				if(!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_REMOVED);
 				}
@@ -1423,7 +1419,7 @@ public class MainFrame
 	}
 
 	class AccessEventSourceListener
-			implements EventSourceListener<AccessEvent>
+		implements EventSourceListener<AccessEvent>
 	{
 		public void eventSourceAdded(EventSource<AccessEvent> eventSource)
 		{
@@ -1447,20 +1443,20 @@ public class MainFrame
 
 			public void run()
 			{
-				ViewContainer<AccessEvent> container=retrieveAccessViewContainer(eventSource);
+				ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
 				EventWrapperViewPanel<AccessEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.ACTIVE);
-				if(!applicationPreferences.isMute() && sounds!=null)
+				if(!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_ADDED);
 				}
 
-				String primary=eventSource.getSourceIdentifier().getIdentifier();
+				String primary = eventSource.getSourceIdentifier().getIdentifier();
 				Map<String, String> sourceNames = applicationPreferences.getSourceNames();
 
 				if(!sourceNames.containsKey(primary))
 				{
-					sourceNames=new HashMap<String, String>(sourceNames);
+					sourceNames = new HashMap<String, String>(sourceNames);
 					sourceNames.put(primary, primary);
 					applicationPreferences.setSourceNames(sourceNames);
 				}
@@ -1484,10 +1480,10 @@ public class MainFrame
 
 			public void run()
 			{
-				ViewContainer<AccessEvent> container=retrieveAccessViewContainer(eventSource);
+				ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
 				EventWrapperViewPanel<AccessEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.INACTIVE);
-				if(!applicationPreferences.isMute() && sounds!=null)
+				if(!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_REMOVED);
 				}
@@ -1503,17 +1499,17 @@ public class MainFrame
 
 	public String getPrimarySourceTitle(String primary)
 	{
-		if(primary==null)
+		if(primary == null)
 		{
 			return null;
 		}
 		Map<String, String> sourceNames = applicationPreferences.getSourceNames();
-		String resolvedName=sourceNames.get(primary);
-		if(resolvedName!=null && !resolvedName.equals(primary))
+		String resolvedName = sourceNames.get(primary);
+		if(resolvedName != null && !resolvedName.equals(primary))
 		{
 			if(applicationPreferences.isShowingIdentifier())
 			{
-				return resolvedName+" ["+primary+"]";
+				return resolvedName + " [" + primary + "]";
 			}
 			else
 			{
@@ -1530,23 +1526,23 @@ public class MainFrame
 
 	public String getSourceTitle(SourceIdentifier identifier)
 	{
-		String primary=getPrimarySourceTitle(identifier);
-		String secondary=identifier.getSecondaryIdentifier();
-		if(secondary==null)
+		String primary = getPrimarySourceTitle(identifier);
+		String secondary = identifier.getSecondaryIdentifier();
+		if(secondary == null)
 		{
 			return primary;
 		}
-		return primary+" - "+secondary;
+		return primary + " - " + secondary;
 	}
 
 	public String getLoggingSourceTitle(SourceIdentifier identifier)
 	{
-		return getSourceTitle(identifier)+" (Logging)";
+		return getSourceTitle(identifier) + " (Logging)";
 	}
 
 	public String getAccessSourceTitle(SourceIdentifier identifier)
 	{
-		return getSourceTitle(identifier)+" (Access)";
+		return getSourceTitle(identifier) + " (Access)";
 	}
 
 	String resolveSourceTitle(ViewContainer container)
@@ -1554,15 +1550,15 @@ public class MainFrame
 		EventSource eventSource = container.getDefaultView().getEventSource();
 		SourceIdentifier si = eventSource.getSourceIdentifier();
 
-		Class clazz=container.getWrappedClass();
+		Class clazz = container.getWrappedClass();
 		String title;
 		if(clazz == LoggingEvent.class)
 		{
-			title=getLoggingSourceTitle(si);
+			title = getLoggingSourceTitle(si);
 		}
 		else
 		{
-			title=getAccessSourceTitle(si);
+			title = getAccessSourceTitle(si);
 		}
 		return title;
 	}
@@ -1570,68 +1566,71 @@ public class MainFrame
 	public void openUrl(URL url)
 	{
 		if(logger.isInfoEnabled()) logger.info("Opening URL {}. ", url);
-		Runtime runtime=Runtime.getRuntime();
-		String[] cmdArray=getOpenUrlCommandArray(url);
-		if(cmdArray!=null)
+		Runtime runtime = Runtime.getRuntime();
+		String[] cmdArray = getOpenUrlCommandArray(url);
+		if(cmdArray != null)
 		{
 			try
 			{
 				Process process = runtime.exec(cmdArray);
-				ProcessConsumerRunnable consumer=new ProcessConsumerRunnable(process);
-				Thread t=new Thread(consumer, "Open URL: "+url);
+				ProcessConsumerRunnable consumer = new ProcessConsumerRunnable(process);
+				Thread t = new Thread(consumer, "Open URL: " + url);
 				t.setDaemon(true);
 				t.start();
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while trying to open URL "+url+"!", e);
+				if(logger.isWarnEnabled()) logger.warn("Exception while trying to open URL " + url + "!", e);
 			}
 		}
 		else
 		{
-			if(logger.isInfoEnabled()) logger.info("Can't open url {} because no command is defined for the current system.", url);
+			if(logger.isInfoEnabled())
+			{
+				logger.info("Can't open url {} because no command is defined for the current system.", url);
+			}
 		}
 	}
 
 	// Windows: cmd /C start http://www.heise.de
 	// Mac: open http://www.heise.de
 
-	private static final String[] MAC_OPEN_URL_ARRAY=
-	{
-		"open",
-		null
-	};
+	private static final String[] MAC_OPEN_URL_ARRAY =
+		{
+			"open",
+			null
+		};
 
-	private static final String[] WINDOWS_OPEN_URL_ARRAY=
-	{
-		"cmd",
-		"/C",
-		"start",
-		null
-	};
+	private static final String[] WINDOWS_OPEN_URL_ARRAY =
+		{
+			"cmd",
+			"/C",
+			"start",
+			null
+		};
 
 	private String[] getOpenUrlCommandArray(URL url)
 	{
-		String[] result=null;
+		String[] result = null;
 		if(isWindows)
 		{
-			result=new String[WINDOWS_OPEN_URL_ARRAY.length];
+			result = new String[WINDOWS_OPEN_URL_ARRAY.length];
 			System.arraycopy(WINDOWS_OPEN_URL_ARRAY, 0, result, 0, WINDOWS_OPEN_URL_ARRAY.length);
 		}
 		else if(isMac)
 		{
-			result=new String[MAC_OPEN_URL_ARRAY.length];
+			result = new String[MAC_OPEN_URL_ARRAY.length];
 			System.arraycopy(MAC_OPEN_URL_ARRAY, 0, result, 0, MAC_OPEN_URL_ARRAY.length);
 		}
 
-		if(result!=null)
+		if(result != null)
 		{
-			String urlStr=url.toString();
-			for(int i=0;i<result.length;i++)
+			String urlStr = url.toString();
+			for(int i = 0; i < result.length; i++)
 			{
-				if(result[i]==null)
+				if(result[i] == null)
 				{
-					result[i]=urlStr;
+					result[i] = urlStr;
 				}
 			}
 		}
@@ -1640,73 +1639,74 @@ public class MainFrame
 
 	void showFrame(ViewContainer container)
 	{
-		String title=resolveSourceTitle(container);
-		ViewContainerFrame frame=new ViewContainerFrame(this, container);
+		String title = resolveSourceTitle(container);
+		ViewContainerFrame frame = new ViewContainerFrame(this, container);
 		frame.setTitle(title);
 		frame.setSize(800, 600);
 
 		Windows.showWindow(frame, null, false);
-        executeScrollToBottom(frame);
+		executeScrollToBottom(frame);
 	}
 
 	void showInternalFrame(ViewContainer container)
 	{
-		String title=resolveSourceTitle(container);
-		ViewContainerInternalFrame frame=new ViewContainerInternalFrame(this, container);
+		String title = resolveSourceTitle(container);
+		ViewContainerInternalFrame frame = new ViewContainerInternalFrame(this, container);
 		frame.setTitle(title);
 
-		int count=desktop.getComponentCount();
-		final int titleBarHeight=resolveInternalTitlebarHeight(/*frame*/);
-		frame.setBounds(titleBarHeight*(count%10), titleBarHeight*(count%10), 640, 480);
+		int count = desktop.getComponentCount();
+		final int titleBarHeight = resolveInternalTitlebarHeight(/*frame*/);
+		frame.setBounds(titleBarHeight * (count % 10), titleBarHeight * (count % 10), 640, 480);
 
 		desktop.add(frame);
 
 		frame.setVisible(true);
-        executeScrollToBottom(frame);
+		executeScrollToBottom(frame);
 	}
 
-    /**
-     * Initial scroll to bottom must be executed slightly after making it visible so
-     * it's using invokeLater, now.
-     * 
-     * @param window the window that should scrollt to bottom is configured that way.
-     */
-    private void executeScrollToBottom(ViewWindow window)
-    {
-        if(window!=null)
-        {
-            ScrollToBottomRunnable runnable=new ScrollToBottomRunnable(window);
-            SwingUtilities.invokeLater(runnable);
-        }
-    }
+	/**
+	 * Initial scroll to bottom must be executed slightly after making it visible so
+	 * it's using invokeLater, now.
+	 *
+	 * @param window the window that should scrollt to bottom is configured that way.
+	 */
+	private void executeScrollToBottom(ViewWindow window)
+	{
+		if(window != null)
+		{
+			ScrollToBottomRunnable runnable = new ScrollToBottomRunnable(window);
+			SwingUtilities.invokeLater(runnable);
+		}
+	}
 
-    private static class ScrollToBottomRunnable
-        implements Runnable
-    {
-        private ViewWindow window;
+	private static class ScrollToBottomRunnable
+		implements Runnable
+	{
+		private ViewWindow window;
 
-        private ScrollToBottomRunnable(ViewWindow window)
-        {
-            this.window = window;
-        }
+		private ScrollToBottomRunnable(ViewWindow window)
+		{
+			this.window = window;
+		}
 
-        public void run()
-        {
-            ViewContainer viewContainer = window.getViewContainer();
-            if(viewContainer!=null)
-            {
-                viewContainer.scrollToBottom();
-            }
-        }
-    }
+		public void run()
+		{
+			ViewContainer viewContainer = window.getViewContainer();
+			if(viewContainer != null)
+			{
+				viewContainer.scrollToBottom();
+			}
+		}
+	}
 
 	/**
 	 * This is only a heuristic and probably won't be correct for non-metal l&f...
+	 *
 	 * @return the height of the internal frames titlebar...
 	 */
 	private int resolveInternalTitlebarHeight(/*JInternalFrame frame*/)
 	{
-		int result=24;
+		int result = 24;
 		/*
 		InternalFrameUI ui = frame.getUI();
 		if(ui instanceof BasicInternalFrameUI)
@@ -1723,26 +1723,26 @@ public class MainFrame
 	private void showApplicationPathChangedDialog()
 	{
 		if(logger.isInfoEnabled()) logger.info("showApplicationPathChangedDialog()");
-		 final Object[] options = { "Exit", "Cancel" };
-		Icon icon=null;
+		final Object[] options = {"Exit", "Cancel"};
+		Icon icon = null;
 		{
-			URL url=MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
-			if(url!=null)
+			URL url = MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
+			if(url != null)
 			{
-				icon=new ImageIcon(url);
+				icon = new ImageIcon(url);
 			}
 		}
-		int result=JOptionPane.showOptionDialog(this,
-				"You have changed the application path.\n" +
+		int result = JOptionPane.showOptionDialog(this,
+			"You have changed the application path.\n" +
 				"You need to restart for this change to take effect.\n\n" +
 				"Exit now?",
-				"Exit now?",
-				JOptionPane.DEFAULT_OPTION,
-				JOptionPane.WARNING_MESSAGE,
-				icon,
-				options,
-				options[0]);
-		if(result==0)
+			"Exit now?",
+			JOptionPane.DEFAULT_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			icon,
+			options,
+			options[0]);
+		if(result == 0)
 		{
 			exit();
 		}
@@ -1751,26 +1751,26 @@ public class MainFrame
 	private void showLookAndFeelChangedDialog()
 	{
 		if(logger.isInfoEnabled()) logger.info("showLookAndFeelChangedDialog()");
-		 final Object[] options = { "Exit", "Cancel" };
-		Icon icon=null;
+		final Object[] options = {"Exit", "Cancel"};
+		Icon icon = null;
 		{
-			URL url=MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
-			if(url!=null)
+			URL url = MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
+			if(url != null)
 			{
-				icon=new ImageIcon(url);
+				icon = new ImageIcon(url);
 			}
 		}
-		int result=JOptionPane.showOptionDialog(this,
-				"You have changed the look & feel.\n" +
+		int result = JOptionPane.showOptionDialog(this,
+			"You have changed the look & feel.\n" +
 				"You need to restart for this change to take effect.\n\n" +
 				"Exit now?",
-				"Exit now?",
-				JOptionPane.DEFAULT_OPTION,
-				JOptionPane.WARNING_MESSAGE,
-				icon,
-				options,
-				options[0]);
-		if(result==0)
+			"Exit now?",
+			JOptionPane.DEFAULT_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			icon,
+			options,
+			options[0]);
+		if(result == 0)
 		{
 			exit();
 		}
@@ -1780,7 +1780,7 @@ public class MainFrame
 	{
 		if(logger.isInfoEnabled()) logger.info("Exiting...");
 		// this probably isn't necessary since jmdns registers a shutdown hook.
-		if(senderService!=null)
+		if(senderService != null)
 		{
 			senderService.stop();
 //			if(logger.isInfoEnabled()) logger.info("Unregistering services...");
@@ -1797,7 +1797,7 @@ public class MainFrame
 	}
 
 	class ShowLoggingViewRunnable<T extends Serializable>
-			implements Runnable
+		implements Runnable
 	{
 		private ViewContainer<T> container;
 
@@ -1808,12 +1808,12 @@ public class MainFrame
 
 		public void run()
 		{
-			boolean isNew=false;
-			boolean isInternal=false;
-			if (container.getParent() == null)
+			boolean isNew = false;
+			boolean isInternal = false;
+			if(container.getParent() == null)
 			{
-				isNew=true;
-				if (!applicationPreferences.isUsingInternalFrames())
+				isNew = true;
+				if(!applicationPreferences.isUsingInternalFrames())
 				{
 					showFrame(container);
 				}
@@ -1823,10 +1823,10 @@ public class MainFrame
 				}
 			}
 			updateWindowMenus();
-			ViewWindow window=container.resolveViewWindow();
+			ViewWindow window = container.resolveViewWindow();
 			if(window instanceof ViewContainerInternalFrame)
 			{
-				isInternal=true;
+				isInternal = true;
 			}
 
 			if(isNew)
@@ -1840,7 +1840,7 @@ public class MainFrame
 						if((getState() & Frame.ICONIFIED) != 0)
 						{
 							setState(Frame.NORMAL);
-						}						
+						}
 						toFront();
 					}
 				}
@@ -1866,11 +1866,11 @@ public class MainFrame
 		@SuppressWarnings({"unchecked"})
 		public void propertyChange(PropertyChangeEvent evt)
 		{
-			String propName=evt.getPropertyName();
+			String propName = evt.getPropertyName();
 
 			if(ApplicationPreferences.SOUND_LOCATIONS_PROPERTY.equals(propName))
 			{
-				if(sounds!=null)
+				if(sounds != null)
 				{
 					sounds.setSoundLocations((Map<String, String>) evt.getNewValue());
 				}
@@ -1878,7 +1878,7 @@ public class MainFrame
 			}
 
 			if(ApplicationPreferences.SOURCE_NAMES_PROPERTY.equals(propName)
-					|| ApplicationPreferences.SHOWING_IDENTIFIER_PROPERTY.equals(propName))
+				|| ApplicationPreferences.SHOWING_IDENTIFIER_PROPERTY.equals(propName))
 			{
 				updateSourceTitles();
 				return;
@@ -1892,7 +1892,7 @@ public class MainFrame
 
 			if(ApplicationPreferences.MUTE_PROPERTY.equals(propName))
 			{
-				if(sounds!=null)
+				if(sounds != null)
 				{
 					sounds.setMute((Boolean) evt.getNewValue());
 				}
@@ -1901,20 +1901,25 @@ public class MainFrame
 
 			if(ApplicationPreferences.APPLICATION_PATH_PROPERTY.equals(propName))
 			{
-				File newPath=(File) evt.getNewValue();
-				File oldPath=applicationPreferences.getStartupApplicationPath();
-				if(oldPath!=null)
+				File newPath = (File) evt.getNewValue();
+				File oldPath = applicationPreferences.getStartupApplicationPath();
+				if(oldPath != null)
 				{
-					File previousApplicationPathFile=new File(newPath, ApplicationPreferences.PREVIOUS_APPLICATION_PATH_FILENAME);
-					FileWriter writer=null;
+					File previousApplicationPathFile = new File(newPath, ApplicationPreferences.PREVIOUS_APPLICATION_PATH_FILENAME);
+					FileWriter writer = null;
 					try
 					{
-						writer=new FileWriter(previousApplicationPathFile);
+						writer = new FileWriter(previousApplicationPathFile);
 						writer.append(oldPath.getAbsolutePath());
 					}
-					catch (IOException ex)
+					catch(IOException ex)
 					{
-						if(logger.isWarnEnabled()) logger.warn("Exception while writing previous application path to file '"+previousApplicationPathFile.getAbsolutePath()+"'!",ex);
+						if(logger.isWarnEnabled())
+						{
+							logger
+								.warn("Exception while writing previous application path to file '" + previousApplicationPathFile
+									.getAbsolutePath() + "'!", ex);
+						}
 					}
 					finally
 					{
@@ -1939,14 +1944,14 @@ public class MainFrame
 
 			if(ApplicationPreferences.LEVEL_COLORS_PROPERTY.equals(propName))
 			{
-				levelColors=null;
+				levelColors = null;
 				updateLoggingViews();
 				return;
 			}
 
 			if(ApplicationPreferences.STATUS_COLORS_PROPERTY.equals(propName))
 			{
-				statusColors=null;
+				statusColors = null;
 				updateAccessViews();
 				//return;
 			}
@@ -1955,14 +1960,15 @@ public class MainFrame
 		private void updateSourceTitles()
 		{
 			updateWindowMenus();
-			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager
+				.getViews();
 			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 			{
 				ViewContainer<LoggingEvent> value = current.getValue();
 				ViewWindow window = value.resolveViewWindow();
-				if(window!=null)
+				if(window != null)
 				{
-					String title=resolveSourceTitle(value);
+					String title = resolveSourceTitle(value);
 					window.setTitle(title);
 				}
 			}
@@ -1971,9 +1977,9 @@ public class MainFrame
 			{
 				ViewContainer<AccessEvent> value = current.getValue();
 				ViewWindow window = value.resolveViewWindow();
-				if(window!=null)
+				if(window != null)
 				{
-					String title=resolveSourceTitle(value);
+					String title = resolveSourceTitle(value);
 					window.setTitle(title);
 				}
 			}
@@ -1982,20 +1988,20 @@ public class MainFrame
 
 	private void updateConditions()
 	{
-        List<SavedCondition> conditions = applicationPreferences.getConditions();
-        List<SavedCondition> active=new ArrayList<SavedCondition>();
-        if(conditions != null)
-        {
-            for(SavedCondition current:conditions)
-            {
-                if(current.isActive())
-                {
-                    active.add(current);
-                }
-            }
-        }
-        activeConditions=active;
-        //flushCachedConditionResults();
+		List<SavedCondition> conditions = applicationPreferences.getConditions();
+		List<SavedCondition> active = new ArrayList<SavedCondition>();
+		if(conditions != null)
+		{
+			for(SavedCondition current : conditions)
+			{
+				if(current.isActive())
+				{
+					active.add(current);
+				}
+			}
+		}
+		activeConditions = active;
+		//flushCachedConditionResults();
 
 		updateAllViews();
 	}
@@ -2032,13 +2038,13 @@ public class MainFrame
     }
 */
 
-    public void deleteInactiveLogs(LogFileFactory fileFactory)
+	public void deleteInactiveLogs(LogFileFactory fileFactory)
 	{
 		List<SourceIdentifier> inactives = collectInactiveLogs(fileFactory);
-		for(SourceIdentifier si: inactives)
+		for(SourceIdentifier si : inactives)
 		{
-			File dataFile=fileFactory.getDataFile(si);
-			File indexFile=fileFactory.getIndexFile(si);
+			File dataFile = fileFactory.getDataFile(si);
+			File indexFile = fileFactory.getIndexFile(si);
 			if(dataFile.delete())
 			{
 				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
@@ -2052,12 +2058,12 @@ public class MainFrame
 
 	public List<SourceIdentifier> collectInactiveLogs(LogFileFactory fileFactory)
 	{
-		List<SourceIdentifier> result=new ArrayList<SourceIdentifier>();
-		File logsRoot=fileFactory.getBaseDir();
-		File[] sources=logsRoot.listFiles(new DirectoryFilter());
-		if(sources!=null)
+		List<SourceIdentifier> result = new ArrayList<SourceIdentifier>();
+		File logsRoot = fileFactory.getBaseDir();
+		File[] sources = logsRoot.listFiles(new DirectoryFilter());
+		if(sources != null)
 		{
-			for(File f: sources)
+			for(File f : sources)
 			{
 				collectInactiveLogs(fileFactory, f, result);
 			}
@@ -2068,19 +2074,19 @@ public class MainFrame
 
 	private void collectInactiveLogs(LogFileFactory fileFactory, File sourceDir, List<SourceIdentifier> inactiveLogs)
 	{
-		String primary=sourceDir.getName();
+		String primary = sourceDir.getName();
 
-		File[] logs=sourceDir.listFiles(new LogFileFilter(fileFactory));
-		String extension=fileFactory.getDataFileExtension();
-		for(File f:logs)
+		File[] logs = sourceDir.listFiles(new LogFileFilter(fileFactory));
+		String extension = fileFactory.getDataFileExtension();
+		for(File f : logs)
 		{
-			String abs=f.getAbsolutePath();
-			abs=abs.substring(0, abs.length()-extension.length());
-			File active=new File(abs+LogFileFactory.ACTIVE_FILE_EXTENSION);
+			String abs = f.getAbsolutePath();
+			abs = abs.substring(0, abs.length() - extension.length());
+			File active = new File(abs + LogFileFactory.ACTIVE_FILE_EXTENSION);
 			if(!active.isFile())
 			{
-				String secondary=f.getName();
-				secondary=secondary.substring(0, secondary.length()-extension.length());
+				String secondary = f.getName();
+				secondary = secondary.substring(0, secondary.length() - extension.length());
 				inactiveLogs.add(new SourceIdentifier(primary, secondary));
 			}
 		}
@@ -2098,39 +2104,39 @@ public class MainFrame
 	{
 		public int compare(EventSource<T> o1, EventSource<T> o2)
 		{
-			if(o1==o2)
+			if(o1 == o2)
 			{
 				return 0;
 			}
-			if(o1==null)
+			if(o1 == null)
 			{
 				return -1;
 			}
-			if(o2==null)
+			if(o2 == null)
 			{
 				return 1;
 			}
 			SourceIdentifier si1 = o1.getSourceIdentifier();
 			SourceIdentifier si2 = o2.getSourceIdentifier();
-			if(si1==si2)
+			if(si1 == si2)
 			{
 				return 0;
 			}
-			if(si1==null)
+			if(si1 == null)
 			{
 				return -1;
 			}
-			if(si2==null)
+			if(si2 == null)
 			{
 				return 1;
 			}
 
-			String primary1=getPrimarySourceTitle(si1);
-			String primary2=getPrimarySourceTitle(si2);
-			if(primary1!=null && primary2!=null)
+			String primary1 = getPrimarySourceTitle(si1);
+			String primary2 = getPrimarySourceTitle(si2);
+			if(primary1 != null && primary2 != null)
 			{
-				int compare=primary1.compareTo(primary2);
-				if(compare!=0)
+				int compare = primary1.compareTo(primary2);
+				if(compare != 0)
 				{
 					return compare;
 				}
@@ -2155,12 +2161,12 @@ public class MainFrame
 		public void run()
 		{
 			if(logger.isInfoEnabled()) logger.info("Executing shutdown hook...");
-			if(gotoSource!=null)
+			if(gotoSource != null)
 			{
 				gotoSource.stop();
-				gotoSource=null;
+				gotoSource = null;
 			}
-			for(AutostartRunnable current:autostartProcesses)
+			for(AutostartRunnable current : autostartProcesses)
 			{
 				current.destroyProcess();
 			}
@@ -2179,12 +2185,12 @@ public class MainFrame
 
 		public AutostartRunnable(File file)
 		{
-			this.file=file;
+			this.file = file;
 		}
 
 		public void destroyProcess()
 		{
-			if(process!=null)
+			if(process != null)
 			{
 				process.destroy();
 			}
@@ -2197,24 +2203,33 @@ public class MainFrame
 				if(logger.isInfoEnabled()) logger.info("Starting '{}'.", file.getAbsolutePath());
 				process = Runtime.getRuntime().exec(file.getAbsolutePath());
 
-				Thread errThread=new Thread(new ErrorConsumerRunnable(process.getErrorStream()));
+				Thread errThread = new Thread(new ErrorConsumerRunnable(process.getErrorStream()));
 				errThread.setDaemon(true);
 				errThread.start();
 
-				Thread outThread=new Thread(new OutConsumerRunnable(process.getInputStream()));
+				Thread outThread = new Thread(new OutConsumerRunnable(process.getInputStream()));
 				outThread.setDaemon(true);
 				outThread.start();
 
-				int exitCode=process.waitFor();
-				if(logger.isInfoEnabled()) logger.info("Execution of '{}' finished with exitCode {}.", file.getAbsolutePath(), exitCode);
+				int exitCode = process.waitFor();
+				if(logger.isInfoEnabled())
+				{
+					logger.info("Execution of '{}' finished with exitCode {}.", file.getAbsolutePath(), exitCode);
+				}
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while executing '"+file.getAbsolutePath()+"'!", e);
+				if(logger.isWarnEnabled())
+				{
+					logger.warn("Exception while executing '" + file.getAbsolutePath() + "'!", e);
+				}
 			}
-			catch (InterruptedException e)
+			catch(InterruptedException e)
 			{
-				if(logger.isDebugEnabled()) logger.debug("Execution of '"+file.getAbsolutePath()+"' was interrupted.",e);
+				if(logger.isDebugEnabled())
+				{
+					logger.debug("Execution of '" + file.getAbsolutePath() + "' was interrupted.", e);
+				}
 			}
 		}
 
@@ -2225,7 +2240,7 @@ public class MainFrame
 
 			public AbstractOutputConsumerRunnable(InputStream input)
 			{
-				inputReader=new BufferedReader(new InputStreamReader(input));
+				inputReader = new BufferedReader(new InputStreamReader(input));
 			}
 
 			public void run()
@@ -2233,10 +2248,10 @@ public class MainFrame
 				try
 				{
 
-					for(;;)
+					for(; ;)
 					{
-						String line=inputReader.readLine();
-						if(line==null)
+						String line = inputReader.readLine();
+						if(line == null)
 						{
 							break;
 						}
@@ -2244,9 +2259,12 @@ public class MainFrame
 					}
 
 				}
-				catch (IOException e)
+				catch(IOException e)
 				{
-					if(logger.isDebugEnabled()) logger.debug("Exception while reading from process '"+file.getAbsolutePath()+"'.", e);
+					if(logger.isDebugEnabled())
+					{
+						logger.debug("Exception while reading from process '" + file.getAbsolutePath() + "'.", e);
+					}
 				}
 			}
 
@@ -2277,7 +2295,7 @@ public class MainFrame
 
 			public void processLine(String line)
 			{
-				System.err.println(file.getAbsolutePath()+": "+line);
+				System.err.println(file.getAbsolutePath() + ": " + line);
 			}
 		}
 
@@ -2292,12 +2310,12 @@ public class MainFrame
 
 		public ProcessConsumerRunnable(Process process)
 		{
-			this.process=process;
+			this.process = process;
 		}
 
 		public void destroyProcess()
 		{
-			if(process!=null)
+			if(process != null)
 			{
 				process.destroy();
 			}
@@ -2307,20 +2325,20 @@ public class MainFrame
 		{
 			try
 			{
-				Thread errThread=new Thread(new ErrorConsumerRunnable(process.getErrorStream()));
+				Thread errThread = new Thread(new ErrorConsumerRunnable(process.getErrorStream()));
 				errThread.setDaemon(true);
 				errThread.start();
 
-				Thread outThread=new Thread(new OutConsumerRunnable(process.getInputStream()));
+				Thread outThread = new Thread(new OutConsumerRunnable(process.getInputStream()));
 				outThread.setDaemon(true);
 				outThread.start();
 
-				int exitCode=process.waitFor();
+				int exitCode = process.waitFor();
 				if(logger.isDebugEnabled()) logger.debug("Execution finished with exitCode {}.", exitCode);
 			}
-			catch (InterruptedException e)
+			catch(InterruptedException e)
 			{
-				if(logger.isDebugEnabled()) logger.debug("Execution of openUrl process was interrupted.",e);
+				if(logger.isDebugEnabled()) logger.debug("Execution of openUrl process was interrupted.", e);
 			}
 		}
 
@@ -2331,7 +2349,7 @@ public class MainFrame
 
 			public AbstractOutputConsumerRunnable(InputStream input)
 			{
-				inputReader=new BufferedReader(new InputStreamReader(input));
+				inputReader = new BufferedReader(new InputStreamReader(input));
 			}
 
 			public void run()
@@ -2339,10 +2357,10 @@ public class MainFrame
 				try
 				{
 
-					for(;;)
+					for(; ;)
 					{
-						String line=inputReader.readLine();
-						if(line==null)
+						String line = inputReader.readLine();
+						if(line == null)
 						{
 							break;
 						}
@@ -2350,7 +2368,7 @@ public class MainFrame
 					}
 
 				}
-				catch (IOException e)
+				catch(IOException e)
 				{
 					if(logger.isDebugEnabled()) logger.debug("Exception while reading from openUrl process.", e);
 				}
@@ -2383,7 +2401,7 @@ public class MainFrame
 
 			public void processLine(String line)
 			{
-				System.err.println("openUrl: "+line);
+				System.err.println("openUrl: " + line);
 			}
 		}
 
@@ -2396,7 +2414,7 @@ public class MainFrame
 
 		public CheckForUpdateRunnable(boolean showAlways)
 		{
-			this.showAlways=showAlways;
+			this.showAlways = showAlways;
 		}
 
 		public void run()
@@ -2410,27 +2428,27 @@ public class MainFrame
 
 			// Provide custom retry handler is necessary
 			method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-					new DefaultHttpMethodRetryHandler(3, false));
+				new DefaultHttpMethodRetryHandler(3, false));
 
-			String currentVersion=null;
+			String currentVersion = null;
 			try
 			{
 				// Execute the method.
 				int statusCode = client.executeMethod(method);
 
 				// lets use our HttpStatus instead...
-				if (statusCode != HttpStatus.OK.getCode())
+				if(statusCode != HttpStatus.OK.getCode())
 				{
 					System.err.println("Method failed: " + method.getStatusLine());
 				}
 
 				// Read the response body.
 				byte[] responseBody = method.getResponseBody();
-				String charSet=method.getResponseCharSet();
+				String charSet = method.getResponseCharSet();
 
-				currentVersion=new String(responseBody, charSet);
+				currentVersion = new String(responseBody, charSet);
 			}
-			catch (Throwable e)
+			catch(Throwable e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Exception while checking current version!", e);
 			}
@@ -2441,22 +2459,22 @@ public class MainFrame
 			}
 
 			String message;
-			boolean newVersion=false;
-			if(currentVersion==null)
+			boolean newVersion = false;
+			if(currentVersion == null)
 			{
-				message="Couldn't retrieve current version!";
+				message = "Couldn't retrieve current version!";
 			}
 			else
 			{
-				currentVersion=currentVersion.trim();
+				currentVersion = currentVersion.trim();
 				if(!currentVersion.equals(Lilith.APP_VERSION))
 				{
-					message="New version is available: "+currentVersion;
-					newVersion=true;
+					message = "New version is available: " + currentVersion;
+					newVersion = true;
 				}
 				else
 				{
-					message="Your version is up to date.";
+					message = "Your version is up to date.";
 				}
 			}
 			if(logger.isInfoEnabled()) logger.info("Message: {}, newVersion: {}", message, newVersion);
@@ -2474,7 +2492,7 @@ public class MainFrame
 
 		public ShowUpdateDialog(String message)
 		{
-			this.message=message;
+			this.message = message;
 		}
 
 		public void run()
@@ -2485,7 +2503,7 @@ public class MainFrame
 
 	private void showUpdateDialog(String message)
 	{
-		JOptionPane.showMessageDialog(this, message, "Check for update...", JOptionPane.INFORMATION_MESSAGE); 
+		JOptionPane.showMessageDialog(this, message, "Check for update...", JOptionPane.INFORMATION_MESSAGE);
 		// TODO: Improve update available dialog
 
 	}
@@ -2493,19 +2511,20 @@ public class MainFrame
 	public class CleanAllInactiveCallable
 		extends AbstractProgressingCallable<Integer>
 	{
-		public Integer call() throws Exception
+		public Integer call()
+			throws Exception
 		{
 			List<SourceIdentifier> inactiveAccess = collectInactiveLogs(accessFileFactory);
 			List<SourceIdentifier> inactiveLogging = collectInactiveLogs(loggingFileFactory);
-			setNumberOfSteps(inactiveAccess.size()+inactiveLogging.size());
-			int currentStep=0;
-			for(SourceIdentifier si: inactiveAccess)
+			setNumberOfSteps(inactiveAccess.size() + inactiveLogging.size());
+			int currentStep = 0;
+			for(SourceIdentifier si : inactiveAccess)
 			{
 				delete(accessFileFactory, si);
 				currentStep++;
 				setCurrentStep(currentStep);
 			}
-			for(SourceIdentifier si: inactiveLogging)
+			for(SourceIdentifier si : inactiveLogging)
 			{
 				delete(loggingFileFactory, si);
 				currentStep++;
@@ -2516,8 +2535,8 @@ public class MainFrame
 
 		private void delete(LogFileFactory fileFactory, SourceIdentifier si)
 		{
-			File dataFile=fileFactory.getDataFile(si);
-			File indexFile=fileFactory.getIndexFile(si);
+			File dataFile = fileFactory.getDataFile(si);
+			File indexFile = fileFactory.getIndexFile(si);
 			if(dataFile.delete())
 			{
 				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
@@ -2529,29 +2548,29 @@ public class MainFrame
 		}
 	}
 
-    /*
-    private class ColorsCollectionRunnable
-        implements Runnable
-    {
-        private final Logger logger = LoggerFactory.getLogger(ColorsCollectionRunnable.class);
+	/*
+		private class ColorsCollectionRunnable
+			implements Runnable
+		{
+			private final Logger logger = LoggerFactory.getLogger(ColorsCollectionRunnable.class);
 
-        public void run()
-        {
-            for(;;)
-            {
-                try
-                {
-                    SoftColorsReference ref= (SoftColorsReference) colorsReferenceQueue.remove();
-                    EventIdentifier id = ref.getId();
-                    colorsCache.remove(id);
-                    if(logger.isDebugEnabled()) logger.debug("Removed cached color for {}.", id);
-                }
-                catch (InterruptedException e)
-                {
-                    break;
-                }
-            }
-        }
-    }
-    */
+			public void run()
+			{
+				for(;;)
+				{
+					try
+					{
+						SoftColorsReference ref= (SoftColorsReference) colorsReferenceQueue.remove();
+						EventIdentifier id = ref.getId();
+						colorsCache.remove(id);
+						if(logger.isDebugEnabled()) logger.debug("Removed cached color for {}.", id);
+					}
+					catch (InterruptedException e)
+					{
+						break;
+					}
+				}
+			}
+		}
+		*/
 }

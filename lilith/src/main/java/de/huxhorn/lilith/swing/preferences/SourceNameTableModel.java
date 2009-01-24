@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,16 @@ package de.huxhorn.lilith.swing.preferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.table.TableModel;
-import javax.swing.event.TableModelListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
-import javax.swing.SwingUtilities;
-import java.util.*;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 public class SourceNameTableModel
 	implements TableModel
@@ -38,7 +42,7 @@ public class SourceNameTableModel
 	private List<String> keys;
 	private final EventListenerList eventListenerList;
 
-	public SourceNameTableModel(Map<String,String> data)
+	public SourceNameTableModel(Map<String, String> data)
 	{
 		eventListenerList = new EventListenerList();
 		setData(data);
@@ -47,14 +51,14 @@ public class SourceNameTableModel
 	public void setData(Map<String, String> data)
 	{
 		this.data = data;
-		if(data!=null)
+		if(data != null)
 		{
-			this.keys=new ArrayList<String>(data.keySet());
+			this.keys = new ArrayList<String>(data.keySet());
 			Collections.sort(this.keys);
 		}
 		else
 		{
-			keys=null;
+			keys = null;
 		}
 		fireTableChange();
 	}
@@ -66,7 +70,7 @@ public class SourceNameTableModel
 
 	public int getRowCount()
 	{
-		if(data==null)
+		if(data == null)
 		{
 			return 0;
 		}
@@ -109,11 +113,11 @@ public class SourceNameTableModel
 
 	public Object getValueAt(int rowIndex, int columnIndex)
 	{
-		if(keys == null || rowIndex<0 || rowIndex>=keys.size())
+		if(keys == null || rowIndex < 0 || rowIndex >= keys.size())
 		{
 			return null;
 		}
-		String key=keys.get(rowIndex);
+		String key = keys.get(rowIndex);
 		switch(columnIndex)
 		{
 			case SOURCE_IDENTIFIER_COLUMN:
@@ -126,45 +130,45 @@ public class SourceNameTableModel
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
-		String newValue=(String) aValue;
-		if(keys == null || rowIndex<0 || rowIndex>=keys.size())
+		String newValue = (String) aValue;
+		if(keys == null || rowIndex < 0 || rowIndex >= keys.size())
 		{
 			return;
 		}
 		switch(columnIndex)
 		{
 			case SOURCE_IDENTIFIER_COLUMN:
+			{
+				String key = keys.remove(rowIndex);
+				String value = data.remove(key);
+				if(newValue != null && !"".equals(newValue.trim()))
 				{
-					String key=keys.remove(rowIndex);
-					String value=data.remove(key);
-					if(newValue!=null && !"".equals(newValue.trim()))
-					{
-						data.put(newValue, value);
-						keys.add(newValue);
-						Collections.sort(keys);
-					}
-					else
-					{
-						if(logger.isDebugEnabled()) logger.debug("Removed source name for {}.", key);						
-					}
-					fireTableChange();
+					data.put(newValue, value);
+					keys.add(newValue);
+					Collections.sort(keys);
 				}
-				break;
+				else
+				{
+					if(logger.isDebugEnabled()) logger.debug("Removed source name for {}.", key);
+				}
+				fireTableChange();
+			}
+			break;
 			case NAME_COLUMN:
+			{
+				String key = keys.get(rowIndex);
+				if(newValue != null && !"".equals(newValue.trim()))
 				{
-					String key=keys.get(rowIndex);
-					if(newValue!=null && !"".equals(newValue.trim()))
-					{
-						data.put(key, newValue);
-					}
-					else
-					{
-						keys.remove(rowIndex);
-						data.remove(key);
-						if(logger.isDebugEnabled()) logger.debug("Removed source name for {}.", key);
-					}
-					fireTableChange();
+					data.put(key, newValue);
 				}
+				else
+				{
+					keys.remove(rowIndex);
+					data.remove(key);
+					if(logger.isDebugEnabled()) logger.debug("Removed source name for {}.", key);
+				}
+				fireTableChange();
+			}
 		}
 	}
 
@@ -179,10 +183,12 @@ public class SourceNameTableModel
 //		TableModelEvent event = new TableModelEvent(this, prevValue, currentValue, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
 //		fireTableChange(event);
 //	}
-//
+
+	//
+
 	private void fireTableChange(TableModelEvent evt)
 	{
-		Runnable r=new FireTableChangeRunnable(evt);
+		Runnable r = new FireTableChangeRunnable(evt);
 		if(SwingUtilities.isEventDispatchThread())
 		{
 			r.run();
@@ -212,25 +218,29 @@ public class SourceNameTableModel
 			}
 			// Process the listeners last to first, notifying
 			// those that are interested in this event
-			for (int i = listeners.length - 2; i >= 0; i -= 2)
+			for(int i = listeners.length - 2; i >= 0; i -= 2)
 			{
-				if (listeners[i] == TableModelListener.class)
+				if(listeners[i] == TableModelListener.class)
 				{
 					TableModelListener listener = ((TableModelListener) listeners[i + 1]);
-					if(logger.isDebugEnabled()) logger.debug("Firing TableChange at {}.",listener.getClass().getName());
+					if(logger.isDebugEnabled())
+					{
+						logger.debug("Firing TableChange at {}.", listener.getClass().getName());
+					}
 					try
 					{
 						listener.tableChanged(event);
 					}
 					catch(Throwable ex)
 					{
-						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!",ex);
+						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!", ex);
 					}
 				}
 			}
 		}
 
 	}
+
 	public void addTableModelListener(TableModelListener l)
 	{
 		synchronized(eventListenerList)

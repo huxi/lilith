@@ -17,10 +17,10 @@
  */
 package de.huxhorn.lilith.logback.producer;
 
-import de.huxhorn.lilith.engine.EventProducer;
-import de.huxhorn.lilith.engine.impl.sourceproducer.AbstractServerSocketEventSourceProducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.engine.EventProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.AbstractServerSocketEventSourceProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
 import java.io.IOException;
@@ -31,13 +31,13 @@ public abstract class AbstractLogbackServerSocketEventSourceProducer<T extends S
 	extends AbstractServerSocketEventSourceProducer<T>
 {
 	public AbstractLogbackServerSocketEventSourceProducer(int port)
-			throws IOException
+		throws IOException
 	{
 		super(port);
 	}
 
 
 	protected abstract EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
-			throws IOException;
+		throws IOException;
 
 }

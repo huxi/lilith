@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,19 +23,26 @@ import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public abstract class EventWrapperViewTable<T extends Serializable>
 	extends JTable
@@ -62,9 +69,9 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	public EventWrapperViewTable(MainFrame mainFrame, EventWrapperTableModel<T> model, boolean global)
 	{
 		super();
-		this.mainFrame=mainFrame;
-		this.global=global;
-		this.tableModel=model;
+		this.mainFrame = mainFrame;
+		this.global = global;
+		this.tableModel = model;
 		this.tableModel.addTableModelListener(new ScrollToBottomListener());
 		setAutoCreateColumnsFromModel(false);
 		setModel(tableModel);
@@ -72,14 +79,14 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 		addFocusListener(new RepaintFocusListener());
 		initTableColumns();
-		tableColumnModel=new PersistentTableColumnModel();
+		tableColumnModel = new PersistentTableColumnModel();
 		//initColumnModel();
 		resetLayout();
 		initTooltipGenerators();
 		setShowHorizontalLines(false);
 		setAutoResizeMode(AUTO_RESIZE_OFF);
-		popupMenu=new JPopupMenu();
-		showHideMenu=new JMenu("Show/Hide");
+		popupMenu = new JPopupMenu();
+		showHideMenu = new JMenu("Show/Hide");
 		popupMenu.add(showHideMenu);
 		popupMenu.addSeparator();
 		popupMenu.add(new SaveLayoutAction());
@@ -93,18 +100,20 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	}
 
 	protected abstract void initTooltipGenerators();
+
 	protected abstract void initTableColumns();
 //	protected abstract void initColumnModel();
 
 	// TODO: Move to ViewActions
+
 	private void updatePopupMenu()
 	{
 		showHideMenu.removeAll();
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> cli = tableColumnModel.getColumnLayoutInfos();
 		for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
 		{
-			boolean visible=current.isVisible();
-			JCheckBoxMenuItem cbmi=new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), visible));
+			boolean visible = current.isVisible();
+			JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), visible));
 			cbmi.setSelected(visible);
 			showHideMenu.add(cbmi);
 		}
@@ -122,7 +131,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	public void setFilterCondition(Condition filterCondition)
 	{
-		Object oldValue=this.filterCondition;
+		Object oldValue = this.filterCondition;
 		this.filterCondition = filterCondition;
 		repaint();
 		firePropertyChange(FILTER_CONDITION_PROPERTY, oldValue, filterCondition);
@@ -130,10 +139,10 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	public void scrollToBottom()
 	{
-        //System.out.println("Scrolling to bottom...");
-        //new Throwable().printStackTrace(System.out);
+		//System.out.println("Scrolling to bottom...");
+		//new Throwable().printStackTrace(System.out);
 
-		int row=getRowCount();
+		int row = getRowCount();
 		row--;
 
 		selectRow(row);
@@ -141,10 +150,10 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	public void selectRow(int row)
 	{
-		if(row >= 0 && row<getRowCount())
+		if(row >= 0 && row < getRowCount())
 		{
 			if(logger.isDebugEnabled()) logger.debug("Selecting row {}.", row);
-			getSelectionModel().setSelectionInterval(0,row);
+			getSelectionModel().setSelectionInterval(0, row);
 			// scrollpane adjustment
 			scrollRectToVisible(getCellRect(row, 0, true));
 		}
@@ -159,7 +168,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		if(this.scrollingToBottom != scrollingToBottom)
 		{
-			Object oldValue=this.scrollingToBottom;
+			Object oldValue = this.scrollingToBottom;
 			this.scrollingToBottom = scrollingToBottom;
 			if(scrollingToBottom)
 			{
@@ -175,16 +184,16 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		{
 			Object[] args = new Object[]{ks, e, condition, pressed};
 			logger.debug("Processing KeyBinding:\n" +
-					"\tKeyStroke: {}\n" +
-					"\nEvent    : {}\n" +
-					"\tcondition: {}\n" +
-					"\tpressed  : {}\n", args);
+				"\tKeyStroke: {}\n" +
+				"\nEvent    : {}\n" +
+				"\tcondition: {}\n" +
+				"\tpressed  : {}\n", args);
 		}
-		InputMap inputMap=getInputMap(condition);
-		Object key=inputMap.get(ks);
-		if(key!=null)
+		InputMap inputMap = getInputMap(condition);
+		Object key = inputMap.get(ks);
+		if(key != null)
 		{
-			String keyStr=""+key;
+			String keyStr = "" + key;
 			if(keyStr.startsWith("select"))
 			{
 				if(isScrollingToBottom())
@@ -200,7 +209,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	public String getToolTipText(MouseEvent event)
 	{
-		if(tooltipGenerators==null)
+		if(tooltipGenerators == null)
 		{
 			return null;
 		}
@@ -209,8 +218,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		int column = columnAtPoint(p); // This is the view column!
 		if(column > -1)
 		{
-			TableColumn tableColumn=getColumnModel().getColumn(column);
-			if(tableColumn!=null)
+			TableColumn tableColumn = getColumnModel().getColumn(column);
+			if(tableColumn != null)
 			{
 				TooltipGenerator generator = tooltipGenerators.get(tableColumn.getIdentifier());
 				if(generator != null)
@@ -223,13 +232,15 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	}
 
 	public abstract void saveLayout();
+
 	protected abstract List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout();
+
 	protected abstract List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout();
-	
+
 	protected void fireViewContainerChange()
 	{
 		ViewContainer viewContainer = resolveViewContainer();
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			viewContainer.fireChange();
 			if(logger.isDebugEnabled()) logger.debug("Fired change on ViewContainer!");
@@ -239,16 +250,16 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	public void resetLayout()
 	{
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> infos = loadLayout();
-		if(infos==null)
+		if(infos == null)
 		{
-			infos=getDefaultLayout();
+			infos = getDefaultLayout();
 		}
-		PersistentTableColumnModel newModel=new PersistentTableColumnModel();
-		for(PersistentTableColumnModel.TableColumnLayoutInfo current: infos)
+		PersistentTableColumnModel newModel = new PersistentTableColumnModel();
+		for(PersistentTableColumnModel.TableColumnLayoutInfo current : infos)
 		{
-			String name=current.getColumnName();
-			TableColumn col=tableColumns.get(name);
-			if(col!=null)
+			String name = current.getColumnName();
+			TableColumn col = tableColumns.get(name);
+			if(col != null)
 			{
 				col.setPreferredWidth(current.getWidth());
 			}
@@ -256,7 +267,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			newModel.setColumnVisible(col, current.isVisible());
 		}
 		setColumnModel(newModel);
-		tableColumnModel=newModel;
+		tableColumnModel = newModel;
 		fireViewContainerChange();
 	}
 
@@ -264,9 +275,14 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		if(logger.isDebugEnabled())
 		{
-			if(logger.isDebugEnabled()) logger.debug("changeSelection({}, {}, {}, {})", new Object[]{rowIndex, columnIndex, toggle, extend});
+			if(logger.isDebugEnabled())
+			{
+				logger.debug("changeSelection({}, {}, {}, {})", new Object[]{rowIndex, columnIndex, toggle, extend});
+			}
 			if(logger.isDebugEnabled()) //noinspection ThrowableInstanceNeverThrown
+			{
 				logger.debug("changeSelection-Stacktrace", new Throwable());
+			}
 		}
 		if(isScrollingToBottom())
 		{
@@ -275,43 +291,44 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		super.changeSelection(rowIndex, columnIndex, toggle, extend);
 	}
 
-	private static final Colors NOT_MATCHING_COLORS =new Colors(new Color(192,192,192), new Color(245,245,245), true);
-	private static final Colors EVEN_ROW_COLORS =new Colors(new Color(0,0,0), new Color(255,255,255));
-	private static final Colors ODD_ROW_COLORS =new Colors(new Color(0,0,0), new Color(0xE9,0xED,0xF2));
-	
+	private static final Colors NOT_MATCHING_COLORS = new Colors(new Color(192, 192, 192), new Color(245, 245, 245), true);
+	private static final Colors EVEN_ROW_COLORS = new Colors(new Color(0, 0, 0), new Color(255, 255, 255));
+	private static final Colors ODD_ROW_COLORS = new Colors(new Color(0, 0, 0), new Color(0xE9, 0xED, 0xF2));
+
 	public Colors resolveColors(Object object, int row, int column)
 	{
-        if(object instanceof EventWrapper)
-        {
-            if(filterCondition!=null && !filterCondition.isTrue(object))
-            {
-                return NOT_MATCHING_COLORS;
-            }
-            // check active conditions...
-            Colors colors=mainFrame.getColors((EventWrapper) object);
-            if(colors!=null)
-            {
-                return colors;
-            }
-            // if none match...
-            if(row%2 == 0)
-            {
-                return EVEN_ROW_COLORS;
-            }
-            return ODD_ROW_COLORS;
-        }
-        return null;
+		if(object instanceof EventWrapper)
+		{
+			if(filterCondition != null && !filterCondition.isTrue(object))
+			{
+				return NOT_MATCHING_COLORS;
+			}
+			// check active conditions...
+			Colors colors = mainFrame.getColors((EventWrapper) object);
+			if(colors != null)
+			{
+				return colors;
+			}
+			// if none match...
+			if(row % 2 == 0)
+			{
+				return EVEN_ROW_COLORS;
+			}
+			return ODD_ROW_COLORS;
+		}
+		return null;
 	}
 
 
 	/**
 	 * This is part one of "scroll to bottom" functionality.
-	 *
+	 * <p/>
 	 * It selects the last row of the table.
 	 * Be aware that this listener *must* be added to the table model *before* the
 	 * model is assigned to a table!
 	 */
-	private class ScrollToBottomListener implements TableModelListener
+	private class ScrollToBottomListener
+		implements TableModelListener
 	{
 		public void tableChanged(TableModelEvent e)
 		{
@@ -322,7 +339,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 	}
 
-	private class RepaintFocusListener implements FocusListener
+	private class RepaintFocusListener
+		implements FocusListener
 	{
 
 		public void focusGained(FocusEvent e)
@@ -336,7 +354,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 	}
 
-	private class PopupListener implements MouseListener
+	private class PopupListener
+		implements MouseListener
 	{
 
 		public void mouseClicked(MouseEvent e)
@@ -374,9 +393,9 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		private void showPopup(Point p)
 		{
 			// TODO: call ViewActions
-			if(logger.isDebugEnabled()) logger.debug("Showing popup at {}.",p);
+			if(logger.isDebugEnabled()) logger.debug("Showing popup at {}.", p);
 			updatePopupMenu();
-			popupMenu.show(EventWrapperViewTable.this.getTableHeader(), p.x,  p.y);
+			popupMenu.show(EventWrapperViewTable.this.getTableHeader(), p.x, p.y);
 		}
 	}
 
@@ -415,20 +434,20 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	// TODO: Move to ViewActions
 	protected ViewContainer resolveViewContainer()
 	{
-		ViewContainer result=null;
+		ViewContainer result = null;
 		Container parentContainer = getParent();
-		for(;;)
+		for(; ;)
 		{
 			if(parentContainer instanceof ViewContainer)
 			{
-				result= (ViewContainer) parentContainer;
+				result = (ViewContainer) parentContainer;
 				break;
 			}
-			if(parentContainer==null)
+			if(parentContainer == null)
 			{
 				break;
 			}
-			parentContainer=parentContainer.getParent();
+			parentContainer = parentContainer.getParent();
 		}
 		return result;
 	}
@@ -443,26 +462,26 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		private ShowHideAction(String columnName, boolean visible)
 		{
 			super(columnName);
-			this.columnName=columnName;
-			this.visible=visible;
+			this.columnName = columnName;
+			this.visible = visible;
 			//putValue(EventWrapperViewTable.SELECTED_KEY, visible);
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			visible=!visible;
+			visible = !visible;
 			Iterator<TableColumn> iter = tableColumnModel.getColumns(false);
-			TableColumn found=null;
+			TableColumn found = null;
 			while(iter.hasNext())
 			{
 				TableColumn current = iter.next();
 				if(columnName.equals(current.getIdentifier()))
 				{
-					found=current;
+					found = current;
 					break;
 				}
 			}
-			if(found!=null)
+			if(found != null)
 			{
 				tableColumnModel.setColumnVisible(found, visible);
 				fireViewContainerChange();

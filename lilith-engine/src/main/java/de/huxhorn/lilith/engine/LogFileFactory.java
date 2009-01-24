@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,11 +29,14 @@ public interface LogFileFactory
 	File getBaseDir();
 
 	File getIndexFile(SourceIdentifier sourceIdentifier);
+
 	File getDataFile(SourceIdentifier sourceIdentifier);
+
 	File getActiveFile(SourceIdentifier sourceIdentifier);
 
 	String getDataFileExtension();
 
 	long getSizeOnDisk(SourceIdentifier sourceIdentifier);
+
 	long getNumberOfEvents(SourceIdentifier sourceIdentifier);
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,14 +30,11 @@ import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
+
 import org.simplericity.macify.eawt.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,8 +42,16 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.TableColumn;
 
 /**
  * This class needs cleanup...... remove duplicated logic, make ToolBar/Menu configurable...
@@ -98,8 +103,8 @@ public class ViewActions
 	{
 		Icon icon;
 		{
-			URL url=ViewActions.class.getResource("/otherGraphics/empty16.png");
-			if(url!=null)
+			URL url = ViewActions.class.getResource("/otherGraphics/empty16.png");
+			if(url != null)
 			{
 				icon = new ImageIcon(url);
 			}
@@ -108,274 +113,11 @@ public class ViewActions
 				icon = null;
 			}
 		}
-		EMPTY_16_ICON =icon;
+		EMPTY_16_ICON = icon;
 
 		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-clear.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		CLEAR_MENU_ICON =icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-clear.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		CLEAR_TOOLBAR_ICON =icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-undo.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		ATTACH_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-redo.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		DETACH_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-undo.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		ATTACH_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-redo.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		DETACH_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/media-playback-start.png");
-			if(url!=null)
-			{
-				icon=new ImageIcon(url);
-			}
-			else
-			{
-				icon=null;
-			}
-		}
-		PAUSED_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/media-playback-pause.png");
-			if(url!=null)
-			{
-				icon=new ImageIcon(url);
-			}
-			else
-			{
-				icon=null;
-			}
-		}
-		UNPAUSED_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/media-playback-start.png");
-			if(url!=null)
-			{
-				icon=new ImageIcon(url);
-			}
-			else
-			{
-				icon=null;
-			}
-		}
-		PAUSED_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/media-playback-pause.png");
-			if(url!=null)
-			{
-				icon=new ImageIcon(url);
-			}
-			else
-			{
-				icon=null;
-			}
-		}
-		UNPAUSED_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/edit-find.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		FIND_MENU_ITEM=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/edit-find.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		FIND_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		STATISTICS_MENU_ICON =icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/apps/utilities-system-monitor.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		STATISTICS_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/media-eject.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		DISCONNECT_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/media-eject.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		DISCONNECT_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/go-down.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		FIND_NEXT_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/go-up.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-		}
-		FIND_PREV_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/go-bottom.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-
-		}
-		TAIL_MENU_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/32x32/actions/go-bottom.png");
-			if(url!=null)
-			{
-				icon =new ImageIcon(url);
-			}
-			else
-			{
-				icon =null;
-			}
-
-		}
-		TAIL_TOOLBAR_ICON=icon;
-
-		{
-			URL url=ViewActions.class.getResource("/tango/16x16/apps/help-browser.png");
-
-			if(url!=null)
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-clear.png");
+			if(url != null)
 			{
 				icon = new ImageIcon(url);
 			}
@@ -384,11 +126,11 @@ public class ViewActions
 				icon = null;
 			}
 		}
-		HELP_MENU_ICON=icon;
+		CLEAR_MENU_ICON = icon;
 
 		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/document-open.png");
-			if(url!=null)
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-clear.png");
+			if(url != null)
 			{
 				icon = new ImageIcon(url);
 			}
@@ -397,11 +139,11 @@ public class ViewActions
 				icon = null;
 			}
 		}
-		OPEN_INACTIVE_MENU_ICON=icon;
+		CLEAR_TOOLBAR_ICON = icon;
 
 		{
-			URL url=ViewActions.class.getResource("/tango/16x16/actions/system-log-out.png");
-			if(url!=null)
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-undo.png");
+			if(url != null)
 			{
 				icon = new ImageIcon(url);
 			}
@@ -410,11 +152,11 @@ public class ViewActions
 				icon = null;
 			}
 		}
-		EXIT_MENU_ICON=icon;
+		ATTACH_MENU_ICON = icon;
 
 		{
-			URL url=ViewActions.class.getResource("/tango/16x16/categories/preferences-system.png");
-			if(url!=null)
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-redo.png");
+			if(url != null)
 			{
 				icon = new ImageIcon(url);
 			}
@@ -423,11 +165,11 @@ public class ViewActions
 				icon = null;
 			}
 		}
-		PREFERENCES_MENU_ICON=icon;
+		DETACH_MENU_ICON = icon;
 
 		{
-			URL url=ViewActions.class.getResource("/tango/32x32/categories/preferences-system.png");
-			if(url!=null)
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-undo.png");
+			if(url != null)
 			{
 				icon = new ImageIcon(url);
 			}
@@ -436,10 +178,273 @@ public class ViewActions
 				icon = null;
 			}
 		}
-		PREFERENCES_TOOLBAR_ICON=icon;
+		ATTACH_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-redo.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		DETACH_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-playback-start.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		PAUSED_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-playback-pause.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		UNPAUSED_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-playback-start.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		PAUSED_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-playback-pause.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		UNPAUSED_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-find.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		FIND_MENU_ITEM = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-find.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		FIND_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		STATISTICS_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/apps/utilities-system-monitor.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		STATISTICS_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-eject.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		DISCONNECT_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-eject.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		DISCONNECT_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-down.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		FIND_NEXT_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-up.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		FIND_PREV_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-bottom.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+
+		}
+		TAIL_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/actions/go-bottom.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+
+		}
+		TAIL_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/apps/help-browser.png");
+
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		HELP_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/document-open.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		OPEN_INACTIVE_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/system-log-out.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		EXIT_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/categories/preferences-system.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		PREFERENCES_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/categories/preferences-system.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		PREFERENCES_TOOLBAR_ICON = icon;
 	}
 
-	
+
 	private JToolBar toolbar;
 	private JMenuBar menubar;
 
@@ -522,9 +527,9 @@ public class ViewActions
 
 	public ViewActions(MainFrame mainFrame)
 	{
-		this.mainFrame=mainFrame;
+		this.mainFrame = mainFrame;
 
-		containerChangeListener=new ChangeListener()
+		containerChangeListener = new ChangeListener()
 		{
 			/**
 			 * Invoked when the target of the listener has changed its state.
@@ -537,7 +542,7 @@ public class ViewActions
 			}
 		};
 
-		containerPropertyChangeListener=new PropertyChangeListener()
+		containerPropertyChangeListener = new PropertyChangeListener()
 		{
 
 			/**
@@ -564,22 +569,22 @@ public class ViewActions
 		ExitMenuAction exitMenuAction = new ExitMenuAction();
 
 		// Edit
-		showUnfilteredEventAction=new ShowUnfilteredEventAction();
-		gotoSourceAction=new GotoSourceAction();
-		copyEventAction=new CopyEventAction();
-		copyLoggingMessageAction=new CopyLoggingMessageAction();
-		copyLoggerNameAction=new CopyLoggerNameAction();
-		copyLoggingThrowableAction=new CopyLoggingThrowableAction();
+		showUnfilteredEventAction = new ShowUnfilteredEventAction();
+		gotoSourceAction = new GotoSourceAction();
+		copyEventAction = new CopyEventAction();
+		copyLoggingMessageAction = new CopyLoggingMessageAction();
+		copyLoggerNameAction = new CopyLoggerNameAction();
+		copyLoggingThrowableAction = new CopyLoggingThrowableAction();
 		copyLoggingCallStackAction = new CopyLoggingCallStackAction();
 		copyLoggingMarkerAction = new CopyLoggingMarkerAction();
-		copyAccessUriAction =new CopyAccessUriAction();
+		copyAccessUriAction = new CopyAccessUriAction();
 
 
 		// Search
 		findMenuAction = new FindMenuAction();
-		findPreviousAction=new FindPreviousAction();
-		findNextAction=new FindNextAction();
-		resetFindAction=new ResetFindAction();
+		findPreviousAction = new FindPreviousAction();
+		findNextAction = new FindNextAction();
+		resetFindAction = new ResetFindAction();
 
 		// View
 		scrollToBottomMenuAction = new ScrollToBottomMenuAction();
@@ -604,16 +609,16 @@ public class ViewActions
 		closeAllFiltersAction = new CloseAllFiltersAction();
 
 		// Window
-		closeAllAction=new CloseAllAction();
-		closeAllOtherAction=new CloseAllOtherAction();
-		minimizeAllAction=new MinimizeAllAction();
-		minimizeAllOtherAction=new MinimizeAllOtherAction();
-		removeInactiveAction=new RemoveInactiveAction();
+		closeAllAction = new CloseAllAction();
+		closeAllOtherAction = new CloseAllOtherAction();
+		minimizeAllAction = new MinimizeAllAction();
+		minimizeAllOtherAction = new MinimizeAllOtherAction();
+		removeInactiveAction = new RemoveInactiveAction();
 		//clearAndRemoveInactiveAction=new ClearAndRemoveInactiveAction();
 
 		// Help
 		KeyboardHelpAction keyboardHelpAction = new KeyboardHelpAction();
-		DebugAction debugAction=new DebugAction();
+		DebugAction debugAction = new DebugAction();
 		aboutAction = new AboutAction();
 		CheckForUpdateAction checkForUpdateAction = new CheckForUpdateAction();
 
@@ -627,18 +632,18 @@ public class ViewActions
 		PreferencesToolBarAction preferencesToolBarAction = new PreferencesToolBarAction();
 		disconnectToolBarAction = new DisconnectToolBarAction();
 
-		closeAllItem=new JMenuItem(closeAllAction);
-		closeAllOtherItem=new JMenuItem(closeAllOtherAction);
-		minimizeAllItem=new JMenuItem(minimizeAllAction);
-		minimizeAllOtherItem=new JMenuItem(minimizeAllOtherAction);
+		closeAllItem = new JMenuItem(closeAllAction);
+		closeAllOtherItem = new JMenuItem(closeAllOtherAction);
+		minimizeAllItem = new JMenuItem(minimizeAllAction);
+		minimizeAllOtherItem = new JMenuItem(minimizeAllOtherAction);
 		removeInactiveItem = new JMenuItem(removeInactiveAction);
 		//clearAndRemoveInactiveItem = new JMenuItem(clearAndRemoveInactiveAction);
 
-		toolbar=new JToolBar(SwingConstants.HORIZONTAL);
+		toolbar = new JToolBar(SwingConstants.HORIZONTAL);
 		toolbar.setFloatable(false);
 
 
-		scrollToBottomButton=new JToggleButton(scrollToBottomToolBarAction);
+		scrollToBottomButton = new JToggleButton(scrollToBottomToolBarAction);
 		toolbar.add(scrollToBottomButton);
 
 		JButton pauseButton = new JButton(pauseToolBarAction);
@@ -668,9 +673,9 @@ public class ViewActions
 		JButton preferencesButton = new JButton(preferencesToolBarAction);
 		toolbar.add(preferencesButton);
 
-		Application app=mainFrame.getApplication();
+		Application app = mainFrame.getApplication();
 
-		menubar=new JMenuBar();
+		menubar = new JMenuBar();
 
 		// File
 		JMenu fileMenu = new JMenu("File");
@@ -721,8 +726,8 @@ public class ViewActions
 		viewMenu.add(editSourceNameMenuAction);
 		viewMenu.add(editConditionMenuAction);
 		viewMenu.addSeparator();
-		layoutMenu=new JMenu("Layout");
-		showHideMenu=new JMenu("Show/Hide");
+		layoutMenu = new JMenu("Layout");
+		showHideMenu = new JMenu("Show/Hide");
 		layoutMenu.add(showHideMenu);
 		layoutMenu.addSeparator();
 		layoutMenu.add(saveLayoutAction);
@@ -783,15 +788,15 @@ public class ViewActions
 
 	public void setViewContainer(ViewContainer viewContainer)
 	{
-		if(this.viewContainer!=viewContainer)
+		if(this.viewContainer != viewContainer)
 		{
-			if(this.viewContainer!=null)
+			if(this.viewContainer != null)
 			{
 				this.viewContainer.removeChangeListener(containerChangeListener);
 				this.viewContainer.removePropertyChangeListener(containerPropertyChangeListener);
 			}
 			this.viewContainer = viewContainer;
-			if(this.viewContainer!=null)
+			if(this.viewContainer != null)
 			{
 				this.viewContainer.addChangeListener(containerChangeListener);
 				this.viewContainer.addPropertyChangeListener(containerPropertyChangeListener);
@@ -814,25 +819,29 @@ public class ViewActions
 
 	public void updateActions()
 	{
-		boolean hasView=false;
-		boolean hasFilter=false;
-		boolean isActive=false;
-		boolean hasFilteredBuffer=false;
-		EventSource eventSource=null;
-		if(viewContainer!=null)
+		boolean hasView = false;
+		boolean hasFilter = false;
+		boolean isActive = false;
+		boolean hasFilteredBuffer = false;
+		EventSource eventSource = null;
+		if(viewContainer != null)
 		{
-			hasView=true;
+			hasView = true;
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
-				eventSource=eventWrapperViewPanel.getEventSource();
-				hasFilter=eventWrapperViewPanel.getFilterCondition()!=null;
-				isActive=eventWrapperViewPanel.getState() == LoggingViewState.ACTIVE;
-				hasFilteredBuffer=eventWrapperViewPanel.getBufferCondition()!=null;
+				eventSource = eventWrapperViewPanel.getEventSource();
+				hasFilter = eventWrapperViewPanel.getFilterCondition() != null;
+				isActive = eventWrapperViewPanel.getState() == LoggingViewState.ACTIVE;
+				hasFilteredBuffer = eventWrapperViewPanel.getBufferCondition() != null;
 			}
 		}
 
-		if(logger.isDebugEnabled()) logger.debug("updateActions() eventSource={}, hasFilteredBuffer={}", new Object[]{eventSource, hasFilteredBuffer});
+		if(logger.isDebugEnabled())
+		{
+			logger
+				.debug("updateActions() eventSource={}, hasFilteredBuffer={}", new Object[]{eventSource, hasFilteredBuffer});
+		}
 		// Edit
 		editMenu.setEnabled(hasView);
 
@@ -888,9 +897,9 @@ public class ViewActions
 		attachToolBarAction.setEnabled(hasView);
 		disconnectToolBarAction.setEnabled(isActive);
 
-		if(eventSource!=null)
+		if(eventSource != null)
 		{
-			showUnfilteredEventAction.setEnabled((eventSource.getFilter()!=null));
+			showUnfilteredEventAction.setEnabled((eventSource.getFilter() != null));
 		}
 		else
 		{
@@ -901,20 +910,21 @@ public class ViewActions
 	private void updateShowHideMenu()
 	{
 		showHideMenu.removeAll();
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
-			EventWrapperViewPanel<?> viewPanel=viewContainer.getSelectedView();
-			if(viewPanel!=null)
+			EventWrapperViewPanel<?> viewPanel = viewContainer.getSelectedView();
+			if(viewPanel != null)
 			{
-				EventWrapperViewTable<?> table=viewPanel.getTable();
-				if(table!=null)
+				EventWrapperViewTable<?> table = viewPanel.getTable();
+				if(table != null)
 				{
-					PersistentTableColumnModel tableColumnModel=table.getTableColumnModel();
-					List<PersistentTableColumnModel.TableColumnLayoutInfo> cli = tableColumnModel.getColumnLayoutInfos();
+					PersistentTableColumnModel tableColumnModel = table.getTableColumnModel();
+					List<PersistentTableColumnModel.TableColumnLayoutInfo> cli = tableColumnModel
+						.getColumnLayoutInfos();
 					for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
 					{
-						boolean visible=current.isVisible();
-						JCheckBoxMenuItem cbmi=new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible));
+						boolean visible = current.isVisible();
+						JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible));
 						cbmi.setSelected(visible);
 						showHideMenu.add(cbmi);
 					}
@@ -926,7 +936,7 @@ public class ViewActions
 
 	void setShowingFilters(boolean showingFilters)
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
@@ -938,7 +948,7 @@ public class ViewActions
 
 	boolean isScrollingToBottom()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
@@ -951,7 +961,7 @@ public class ViewActions
 
 	void setScrollingToBottom(boolean scrollingToBottom)
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
@@ -964,7 +974,7 @@ public class ViewActions
 
 	boolean isPaused()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
@@ -977,7 +987,7 @@ public class ViewActions
 
 	void setPaused(boolean paused)
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
@@ -989,7 +999,7 @@ public class ViewActions
 
 	void clear()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
@@ -1001,10 +1011,10 @@ public class ViewActions
 
 	void focusTable()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
 				eventWrapperViewPanel.focusTable();
 			}
@@ -1013,13 +1023,13 @@ public class ViewActions
 
 	private void editCondition()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
 			{
-				Condition condition=eventWrapperViewPanel.getCombinedCondition();
-				if(condition!=null)
+				Condition condition = eventWrapperViewPanel.getCombinedCondition();
+				if(condition != null)
 				{
 					mainFrame.getPreferencesDialog().editCondition(condition);
 				}
@@ -1029,12 +1039,12 @@ public class ViewActions
 
 	private void editSourceName()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
 			{
-				String sourceIdentifier=eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
+				String sourceIdentifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
 				if(!"global".equals(sourceIdentifier) && !"Lilith".equals(sourceIdentifier))
 				{
 					mainFrame.getPreferencesDialog().editSourceName(sourceIdentifier);
@@ -1046,9 +1056,9 @@ public class ViewActions
 	private void attachDetach()
 	{
 		ViewContainer container = getViewContainer();
-		if(container!=null)
+		if(container != null)
 		{
-			MainFrame mainFrame=container.getMainFrame();
+			MainFrame mainFrame = container.getMainFrame();
 			ViewWindow window = container.resolveViewWindow();
 
 			if(window instanceof JFrame)
@@ -1064,10 +1074,10 @@ public class ViewActions
 		}
 		if(isScrollingToBottom())
 		{
-			if(viewContainer!=null)
+			if(viewContainer != null)
 			{
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-				if(eventWrapperViewPanel!=null)
+				if(eventWrapperViewPanel != null)
 				{
 					eventWrapperViewPanel.scrollToBottom();
 				}
@@ -1079,12 +1089,12 @@ public class ViewActions
 
 	private void showStatistics()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
-				MainFrame mainFrame=viewContainer.getMainFrame();
+				MainFrame mainFrame = viewContainer.getMainFrame();
 				mainFrame.showStatistics(eventWrapperViewPanel.getEventSource().getSourceIdentifier());
 			}
 		}
@@ -1092,10 +1102,10 @@ public class ViewActions
 
 	private void disconnect()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
 				eventWrapperViewPanel.closeConnection(eventWrapperViewPanel.getEventSource().getSourceIdentifier());
 			}
@@ -1104,10 +1114,10 @@ public class ViewActions
 
 	private void focusMessage()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
 				eventWrapperViewPanel.focusMessagePane();
 			}
@@ -1116,10 +1126,10 @@ public class ViewActions
 
 	private void focusEvents()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
 				eventWrapperViewPanel.focusTable();
 			}
@@ -1128,12 +1138,13 @@ public class ViewActions
 
 	private void findNext()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
-				eventWrapperViewPanel.findNext(eventWrapperViewPanel.getSelectedRow(), eventWrapperViewPanel.getFilterCondition());
+				eventWrapperViewPanel
+					.findNext(eventWrapperViewPanel.getSelectedRow(), eventWrapperViewPanel.getFilterCondition());
 			}
 		}
 	}
@@ -1141,12 +1152,13 @@ public class ViewActions
 
 	private void findPrevious()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
-				eventWrapperViewPanel.findPrevious(eventWrapperViewPanel.getSelectedRow(), eventWrapperViewPanel.getFilterCondition());
+				eventWrapperViewPanel
+					.findPrevious(eventWrapperViewPanel.getSelectedRow(), eventWrapperViewPanel.getFilterCondition());
 			}
 		}
 	}
@@ -1154,10 +1166,10 @@ public class ViewActions
 
 	private void resetFind()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
 				eventWrapperViewPanel.resetFind();
 			}
@@ -1166,7 +1178,7 @@ public class ViewActions
 
 	private void closeCurrentFilter()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			viewContainer.closeCurrentFilter();
 		}
@@ -1174,7 +1186,7 @@ public class ViewActions
 
 	private void closeOtherFilters()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			viewContainer.closeOtherFilters();
 		}
@@ -1182,7 +1194,7 @@ public class ViewActions
 
 	private void closeAllFilters()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			viewContainer.closeAllFilters();
 		}
@@ -1192,18 +1204,18 @@ public class ViewActions
 	private void previousTab()
 	{
 		if(logger.isDebugEnabled()) logger.debug("PreviousTab");
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
-			int viewCount=viewContainer.getViewCount();
-			int viewIndex=viewContainer.getViewIndex();
-			if(viewIndex>-1)
+			int viewCount = viewContainer.getViewCount();
+			int viewIndex = viewContainer.getViewIndex();
+			if(viewIndex > -1)
 			{
 				int newView = viewIndex - 1;
-				if(newView <0)
+				if(newView < 0)
 				{
-					newView =viewCount-1;
+					newView = viewCount - 1;
 				}
-				if(newView >=0 && newView <viewCount)
+				if(newView >= 0 && newView < viewCount)
 				{
 					viewContainer.setViewIndex(newView);
 				}
@@ -1214,18 +1226,18 @@ public class ViewActions
 	private void nextTab()
 	{
 		if(logger.isDebugEnabled()) logger.debug("NextTab");
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
-			int viewIndex=viewContainer.getViewIndex();
-			int viewCount=viewContainer.getViewCount();
-			if(viewIndex>-1)
+			int viewIndex = viewContainer.getViewIndex();
+			int viewCount = viewContainer.getViewCount();
+			if(viewIndex > -1)
 			{
 				int newView = viewIndex + 1;
-				if(newView >=viewCount)
+				if(newView >= viewCount)
 				{
-					newView =0;
+					newView = 0;
 				}
-				if(newView >=0)
+				if(newView >= 0)
 				{
 					viewContainer.setViewIndex(newView);
 				}
@@ -1235,10 +1247,10 @@ public class ViewActions
 
 	private void showUnfilteredEvent()
 	{
-		if(viewContainer!=null)
+		if(viewContainer != null)
 		{
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel!=null)
+			if(eventWrapperViewPanel != null)
 			{
 				eventWrapperViewPanel.showUnfilteredEvent();
 			}
@@ -1247,10 +1259,10 @@ public class ViewActions
 
 	private void initPopup()
 	{
-		popup=new JPopupMenu();
+		popup = new JPopupMenu();
 		JMenuItem showUnfilteredMenuItem = new JMenuItem(showUnfilteredEventAction);
-		Font f=showUnfilteredMenuItem.getFont();
-		Font boldFont=f.deriveFont(Font.BOLD);
+		Font f = showUnfilteredMenuItem.getFont();
+		Font boldFont = f.deriveFont(Font.BOLD);
 		showUnfilteredMenuItem.setFont(boldFont);
 
 		popup.add(showUnfilteredMenuItem);
@@ -1277,7 +1289,7 @@ public class ViewActions
 
 	private void setEventWrapper(EventWrapper wrapper)
 	{
-		this.eventWrapper=wrapper;
+		this.eventWrapper = wrapper;
 		gotoSourceAction.setEventWrapper(wrapper);
 		copyEventAction.setEventWrapper(wrapper);
 		copyLoggingMessageAction.setEventWrapper(wrapper);
@@ -1303,12 +1315,12 @@ public class ViewActions
 
 	public void updatePopup()
 	{
-		if(popup==null)
+		if(popup == null)
 		{
 			initPopup();
 		}
 		sendToMenuItem.removeAll();
-		if(eventWrapper==null)
+		if(eventWrapper == null)
 		{
 			sendToMenuItem.setEnabled(false);
 		}
@@ -1319,17 +1331,17 @@ public class ViewActions
 			{
 				Map<String, EventSender<LoggingEvent>> senders = mainFrame.getLoggingEventSenders();
 				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
-				if(senders.size()==0)
+				if(senders.size() == 0)
 				{
 					sendToMenuItem.setEnabled(false);
 				}
 				else
 				{
 					sendToMenuItem.setEnabled(true);
-					for(Map.Entry<String, EventSender<LoggingEvent>> current: senders.entrySet())
+					for(Map.Entry<String, EventSender<LoggingEvent>> current : senders.entrySet())
 					{
 						SendAction<LoggingEvent> action = new SendAction<LoggingEvent>(current.getKey(), current.getValue(), eventWrapper);
-						JMenuItem menuItem=new JMenuItem(action);
+						JMenuItem menuItem = new JMenuItem(action);
 						sendToMenuItem.add(menuItem);
 					}
 				}
@@ -1338,17 +1350,17 @@ public class ViewActions
 			{
 				Map<String, EventSender<AccessEvent>> senders = mainFrame.getAccessEventSenders();
 				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
-				if(senders.size()==0)
+				if(senders.size() == 0)
 				{
 					sendToMenuItem.setEnabled(false);
 				}
 				else
 				{
 					sendToMenuItem.setEnabled(true);
-					for(Map.Entry<String, EventSender<AccessEvent>> current: senders.entrySet())
+					for(Map.Entry<String, EventSender<AccessEvent>> current : senders.entrySet())
 					{
 						SendAction<AccessEvent> action = new SendAction<AccessEvent>(current.getKey(), current.getValue(), eventWrapper);
-						JMenuItem menuItem=new JMenuItem(action);
+						JMenuItem menuItem = new JMenuItem(action);
 						sendToMenuItem.add(menuItem);
 					}
 				}
@@ -1389,7 +1401,7 @@ public class ViewActions
 		}
 	}
 */
-	
+
 	private class RemoveInactiveAction
 		extends AbstractAction
 	{
@@ -1398,7 +1410,7 @@ public class ViewActions
 		{
 			super("Remove inactive");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" R");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " R");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('r'));
@@ -1494,7 +1506,7 @@ public class ViewActions
 			mainFrame.updateWindowMenus();
 		}
 	}
-	
+
 	private class ClearToolBarAction
 		extends AbstractAction
 	{
@@ -1534,7 +1546,7 @@ public class ViewActions
 		public EditConditionMenuAction()
 		{
 			super("Add condition...");
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" I");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " I");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
@@ -1548,16 +1560,16 @@ public class ViewActions
 
 		public void updateAction()
 		{
-			boolean enable=false;
-			if(viewContainer!=null)
+			boolean enable = false;
+			if(viewContainer != null)
 			{
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					Condition condition=eventWrapperViewPanel.getCombinedCondition();
-					if(condition!=null)
+					Condition condition = eventWrapperViewPanel.getCombinedCondition();
+					if(condition != null)
 					{
-					    enable=true;
+						enable = true;
 					}
 				}
 			}
@@ -1571,7 +1583,7 @@ public class ViewActions
 		public EditSourceNameMenuAction()
 		{
 			super("Edit source name...");
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" B");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " B");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
@@ -1586,16 +1598,17 @@ public class ViewActions
 
 		public void updateAction()
 		{
-			boolean enable=false;
-			if(viewContainer!=null)
+			boolean enable = false;
+			if(viewContainer != null)
 			{
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					String sourceIdentifier=eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
+					String sourceIdentifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier()
+						.getIdentifier();
 					if(!"global".equals(sourceIdentifier) && !"Lilith".equals(sourceIdentifier))
 					{
-					    enable=true;
+						enable = true;
 					}
 				}
 			}
@@ -1607,13 +1620,13 @@ public class ViewActions
 	private class AttachMenuAction
 		extends AbstractAction
 	{
-		private Icon attachIcon=ATTACH_MENU_ICON;
-		private Icon detachIcon=DETACH_MENU_ICON;
+		private Icon attachIcon = ATTACH_MENU_ICON;
+		private Icon detachIcon = DETACH_MENU_ICON;
 
 		public AttachMenuAction()
 		{
 			super();
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift A");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift A");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			updateAction();
@@ -1628,7 +1641,7 @@ public class ViewActions
 		public void updateAction()
 		{
 			ViewContainer container = getViewContainer();
-			if(container!=null)
+			if(container != null)
 			{
 				ViewWindow window = container.resolveViewWindow();
 				if(window instanceof JInternalFrame)
@@ -1650,8 +1663,8 @@ public class ViewActions
 	private class AttachToolBarAction
 		extends AbstractAction
 	{
-		private Icon attachIcon=ATTACH_TOOLBAR_ICON;
-		private Icon detachIcon=DETACH_TOOLBAR_ICON;
+		private Icon attachIcon = ATTACH_TOOLBAR_ICON;
+		private Icon detachIcon = DETACH_TOOLBAR_ICON;
 
 		public AttachToolBarAction()
 		{
@@ -1668,7 +1681,7 @@ public class ViewActions
 		public void updateAction()
 		{
 			ViewContainer container = getViewContainer();
-			if(container!=null)
+			if(container != null)
 			{
 				ViewWindow window = container.resolveViewWindow();
 				if(window instanceof JInternalFrame)
@@ -1693,14 +1706,14 @@ public class ViewActions
 	private class PauseMenuAction
 		extends AbstractAction
 	{
-		private Icon pausedIcon=PAUSED_MENU_ICON;
-		private Icon unpausedIcon=UNPAUSED_MENU_ICON;
+		private Icon pausedIcon = PAUSED_MENU_ICON;
+		private Icon unpausedIcon = UNPAUSED_MENU_ICON;
 
 		public PauseMenuAction()
 		{
 			super();
 			updateAction();
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" P");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " P");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1730,14 +1743,14 @@ public class ViewActions
 	private class PauseToolBarAction
 		extends AbstractAction
 	{
-		private Icon pausedIcon=PAUSED_TOOLBAR_ICON;
-		private Icon unpausedIcon=UNPAUSED_TOOLBAR_ICON;
+		private Icon pausedIcon = PAUSED_TOOLBAR_ICON;
+		private Icon unpausedIcon = UNPAUSED_TOOLBAR_ICON;
 
 		public PauseToolBarAction()
 		{
 			super();
 			updateAction();
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" P");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " P");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1772,7 +1785,7 @@ public class ViewActions
 			super("Find");
 			putValue(Action.SMALL_ICON, FIND_MENU_ITEM);
 			putValue(Action.SHORT_DESCRIPTION, "Opens the Find panel.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" F");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " F");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1791,7 +1804,7 @@ public class ViewActions
 			super();
 			putValue(Action.SMALL_ICON, FIND_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" F");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " F");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1840,7 +1853,7 @@ public class ViewActions
 		public DisconnectMenuAction()
 		{
 			super("Disconnect");
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift D");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift D");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, DISCONNECT_MENU_ICON);
@@ -1877,7 +1890,7 @@ public class ViewActions
 			super("Focus message");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Focus detailed message view.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" M");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " M");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1896,7 +1909,7 @@ public class ViewActions
 			super("Focus events");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Focus the table containing the events.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" E");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " E");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1915,7 +1928,7 @@ public class ViewActions
 			super("Find next");
 			putValue(Action.SMALL_ICON, FIND_NEXT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find next match of the current filter.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift G");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift G");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1935,7 +1948,7 @@ public class ViewActions
 			super("Find previous");
 			putValue(Action.SMALL_ICON, FIND_PREV_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous match of the current filter.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" G");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " G");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1953,7 +1966,7 @@ public class ViewActions
 		{
 			super("Reset find");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift F");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift F");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1967,24 +1980,24 @@ public class ViewActions
 	private class ScrollToBottomMenuAction
 		extends AbstractAction
 	{
-		private Icon selectedIcon=TAIL_MENU_ICON;
-		private Icon unselectedIcon=EMPTY_16_ICON;
+		private Icon selectedIcon = TAIL_MENU_ICON;
+		private Icon unselectedIcon = EMPTY_16_ICON;
 
 		public ScrollToBottomMenuAction()
 		{
 			super("Tail");
 			updateAction();
 			putValue(Action.SHORT_DESCRIPTION, "Tail (\"scroll to bottom\")");
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" T");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " T");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			boolean tail=!isScrollingToBottom();
+			boolean tail = !isScrollingToBottom();
 			setScrollingToBottom(tail);
-			if(logger.isDebugEnabled()) logger.debug("tail={}",tail);
+			if(logger.isDebugEnabled()) logger.debug("tail={}", tail);
 			focusTable();
 		}
 
@@ -2010,16 +2023,16 @@ public class ViewActions
 			super();
 			putValue(Action.SMALL_ICON, TAIL_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Tail (\"scroll to bottom\")");
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" T");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " T");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			boolean tail=!isScrollingToBottom();
+			boolean tail = !isScrollingToBottom();
 			setScrollingToBottom(tail);
-			if(logger.isDebugEnabled()) logger.debug("tail={}",tail);
+			if(logger.isDebugEnabled()) logger.debug("tail={}", tail);
 			focusTable();
 		}
 	}
@@ -2032,17 +2045,17 @@ public class ViewActions
 			super("Close this filter");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" W");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " W");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void updateAction()
 		{
-			if(viewContainer!=null)
+			if(viewContainer != null)
 			{
-				int viewIndex=viewContainer.getViewIndex();
-				if(viewIndex>0)
+				int viewIndex = viewContainer.getViewIndex();
+				if(viewIndex > 0)
 				{
 					setEnabled(true);
 				}
@@ -2072,18 +2085,18 @@ public class ViewActions
 			super("Close all other filters");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift W");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift W");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void updateAction()
 		{
-			if(viewContainer!=null)
+			if(viewContainer != null)
 			{
-				int viewIndex=viewContainer.getViewIndex();
-				int viewCount=viewContainer.getViewCount();
-				if(viewIndex>-1 && ((viewIndex==0 && viewCount>1) || viewCount>2))
+				int viewIndex = viewContainer.getViewIndex();
+				int viewCount = viewContainer.getViewCount();
+				if(viewIndex > -1 && ((viewIndex == 0 && viewCount > 1) || viewCount > 2))
 				{
 					setEnabled(true);
 				}
@@ -2117,12 +2130,12 @@ public class ViewActions
 
 		public void updateAction()
 		{
-			int viewCount=0;
-			if(viewContainer!=null)
+			int viewCount = 0;
+			if(viewContainer != null)
 			{
-				viewCount=viewContainer.getViewCount();
+				viewCount = viewContainer.getViewCount();
 			}
-			if(viewCount>1)
+			if(viewCount > 1)
 			{
 				setEnabled(true);
 			}
@@ -2139,7 +2152,6 @@ public class ViewActions
 	}
 
 
-
 	class ViewLoggingAction
 		extends AbstractAction
 	{
@@ -2148,10 +2160,10 @@ public class ViewActions
 		public ViewLoggingAction(EventSource<LoggingEvent> eventSource)
 		{
 			super(mainFrame.getLoggingSourceTitle(eventSource.getSourceIdentifier()));
-			this.eventSource=eventSource;
+			this.eventSource = eventSource;
 			if(eventSource.isGlobal())
 			{
-				KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" 1");
+				KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 1");
 				if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 				putValue(Action.ACCELERATOR_KEY, accelerator);
 			}
@@ -2161,7 +2173,7 @@ public class ViewActions
 				if(si != null && "Lilith".equals(si.getIdentifier()))
 				{
 					// internal Lilith log
-					KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" 0");
+					KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 0");
 					if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 					putValue(Action.ACCELERATOR_KEY, accelerator);
 				}
@@ -2183,10 +2195,10 @@ public class ViewActions
 		public ViewAccessAction(EventSource<AccessEvent> eventSource)
 		{
 			super(mainFrame.getAccessSourceTitle(eventSource.getSourceIdentifier()));
-			this.eventSource=eventSource;
+			this.eventSource = eventSource;
 			if(eventSource.isGlobal())
 			{
-				KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" 2");
+				KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 2");
 				if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 				putValue(Action.ACCELERATOR_KEY, accelerator);
 			}
@@ -2207,7 +2219,7 @@ public class ViewActions
 		public ViewStatisticsAction(String name, SourceIdentifier sourceIdentifier)
 		{
 			super(name);
-			this.sourceIentifier=sourceIdentifier;
+			this.sourceIentifier = sourceIdentifier;
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -2232,7 +2244,8 @@ public class ViewActions
 	}
 
 
-	class UpdateWindowMenuRunnable implements Runnable
+	class UpdateWindowMenuRunnable
+		implements Runnable
 	{
 		private JMenu windowMenu;
 
@@ -2248,7 +2261,7 @@ public class ViewActions
 			if(logger.isDebugEnabled()) logger.debug("Updating Views-Menu.");
 
 			windowMenu.removeAll();
-			JMenu statisticsMenu=createStatisticsMenu();
+			JMenu statisticsMenu = createStatisticsMenu();
 			windowMenu.add(statisticsMenu);
 			windowMenu.add(closeAllItem);
 			windowMenu.add(closeAllOtherItem);
@@ -2257,32 +2270,34 @@ public class ViewActions
 			windowMenu.add(removeInactiveItem);
 //			windowMenu.add(clearAndRemoveInactiveItem);
 
-			int activeCounter=0;
-			int inactiveCounter=0;
-			int viewCounter=0;
+			int activeCounter = 0;
+			int inactiveCounter = 0;
+			int viewCounter = 0;
 			Font inactiveFont = windowMenu.getFont();
-			inactiveFont =inactiveFont.deriveFont(Font.PLAIN);
+			inactiveFont = inactiveFont.deriveFont(Font.PLAIN);
 
 			boolean first;
 
-			SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> sortedLoggingViews=mainFrame.getSortedLoggingViews();
+			SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> sortedLoggingViews = mainFrame
+				.getSortedLoggingViews();
 
-			SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews=mainFrame.getSortedAccessViews();
+			SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews = mainFrame
+				.getSortedAccessViews();
 
-			first=true;
+			first = true;
 			// Lilith logging
-			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
 				if("Lilith".equals(si.getIdentifier()))
 				{
 					ViewContainer<LoggingEvent> value = entry.getValue();
-					if(value.resolveViewWindow()!=null)
+					if(value.resolveViewWindow() != null)
 					{
 						viewCounter++;
 					}
-					if (first)
+					if(first)
 					{
 						first = false;
 						windowMenu.addSeparator();
@@ -2292,20 +2307,20 @@ public class ViewActions
 				}
 			}
 			// global (Logging)
-			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
 				if(!"Lilith".equals(si.getIdentifier()))
 				{
 					ViewContainer<LoggingEvent> value = entry.getValue();
-					if(value.resolveViewWindow()!=null)
+					if(value.resolveViewWindow() != null)
 					{
 						viewCounter++;
 					}
-					if (key.isGlobal())
+					if(key.isGlobal())
 					{
-						if (first)
+						if(first)
 						{
 							first = false;
 							windowMenu.addSeparator();
@@ -2316,17 +2331,17 @@ public class ViewActions
 				}
 			}
 			// global (Access)
-			for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> entry : sortedAccessViews.entrySet())
+			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> entry : sortedAccessViews.entrySet())
 			{
 				EventSource<AccessEvent> key = entry.getKey();
 				ViewContainer<AccessEvent> value = entry.getValue();
-				if(value.resolveViewWindow()!=null)
+				if(value.resolveViewWindow() != null)
 				{
 					viewCounter++;
 				}
-				if (key.isGlobal())
+				if(key.isGlobal())
 				{
-					if (first)
+					if(first)
 					{
 						first = false;
 						windowMenu.addSeparator();
@@ -2336,9 +2351,9 @@ public class ViewActions
 				}
 			}
 
-			first=true;
+			first = true;
 			// Logging (active)
-			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
@@ -2348,7 +2363,7 @@ public class ViewActions
 					EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();
 					if(!key.isGlobal() && (LoggingViewState.ACTIVE == panel.getState()))
 					{
-						if (first)
+						if(first)
 						{
 							first = false;
 							windowMenu.addSeparator();
@@ -2360,7 +2375,7 @@ public class ViewActions
 				}
 			}
 			// Logging (inactive)
-			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> entry : sortedLoggingViews.entrySet())
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
@@ -2370,7 +2385,7 @@ public class ViewActions
 					EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();
 					if(!key.isGlobal() && (LoggingViewState.ACTIVE != panel.getState()))
 					{
-						if (first)
+						if(first)
 						{
 							first = false;
 							windowMenu.addSeparator();
@@ -2384,15 +2399,15 @@ public class ViewActions
 			}
 
 			// Access (active)
-			first=true;
-			for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> entry : sortedAccessViews.entrySet())
+			first = true;
+			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> entry : sortedAccessViews.entrySet())
 			{
 				EventSource<AccessEvent> key = entry.getKey();
 				ViewContainer<AccessEvent> value = entry.getValue();
 				EventWrapperViewPanel<AccessEvent> panel = value.getDefaultView();
 				if(!key.isGlobal() && (LoggingViewState.ACTIVE == panel.getState()))
 				{
-					if (first)
+					if(first)
 					{
 						first = false;
 						windowMenu.addSeparator();
@@ -2403,14 +2418,14 @@ public class ViewActions
 				}
 			}
 			// Access (inactive)
-			for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> entry : sortedAccessViews.entrySet())
+			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> entry : sortedAccessViews.entrySet())
 			{
 				EventSource<AccessEvent> key = entry.getKey();
 				ViewContainer<AccessEvent> value = entry.getValue();
 				EventWrapperViewPanel<AccessEvent> panel = value.getDefaultView();
 				if(!key.isGlobal() && (LoggingViewState.ACTIVE != panel.getState()))
 				{
-					if (first)
+					if(first)
 					{
 						first = false;
 						windowMenu.addSeparator();
@@ -2423,13 +2438,13 @@ public class ViewActions
 			}
 
 			// update status text
-			boolean hasInactive=(inactiveCounter!=0);
+			boolean hasInactive = (inactiveCounter != 0);
 			//clearAndRemoveInactiveAction.setEnabled(hasInactive);
 			removeInactiveAction.setEnabled(hasInactive);
-			boolean hasViews=viewCounter!=0;
+			boolean hasViews = viewCounter != 0;
 			minimizeAllAction.setEnabled(hasViews);
 			closeAllAction.setEnabled(hasViews);
-			if(viewContainer==null || viewCounter<=1)
+			if(viewContainer == null || viewCounter <= 1)
 			{
 				minimizeAllOtherAction.setEnabled(false);
 				closeAllOtherAction.setEnabled(false);
@@ -2457,7 +2472,7 @@ public class ViewActions
 			JCheckBoxMenuItem result = new JCheckBoxMenuItem(new ViewLoggingAction(key));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
-			if (compParent == null)
+			if(compParent == null)
 			{
 				result.setState(false);
 			}
@@ -2473,7 +2488,7 @@ public class ViewActions
 			JCheckBoxMenuItem result = new JCheckBoxMenuItem(new ViewAccessAction(key));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
-			if (compParent == null)
+			if(compParent == null)
 			{
 				result.setState(false);
 			}
@@ -2487,20 +2502,20 @@ public class ViewActions
 		private JMenu createStatisticsMenu()
 		{
 			JMenu result = new JMenu(new StatisticsMenuAction());
-			SortedMap<String, SourceIdentifier> sources=mainFrame.getAvailableStatistics();
+			SortedMap<String, SourceIdentifier> sources = mainFrame.getAvailableStatistics();
 
 			{
-				JMenuItem menuItem=new JMenuItem(new ViewStatisticsAction("Global", new SourceIdentifier("global")));
+				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction("Global", new SourceIdentifier("global")));
 				result.add(menuItem);
 				result.addSeparator();
 			}
 
-			for(Map.Entry<String,SourceIdentifier> current:sources.entrySet())
+			for(Map.Entry<String, SourceIdentifier> current : sources.entrySet())
 			{
-				String key=current.getKey();
+				String key = current.getKey();
 				SourceIdentifier value = current.getValue();
 
-				JMenuItem menuItem=new JMenuItem(new ViewStatisticsAction(key, value));
+				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction(key, value));
 				result.add(menuItem);
 			}
 			return result;
@@ -2536,13 +2551,13 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			if(viewContainer!=null)
+			if(viewContainer != null)
 			{
-				EventWrapperViewPanel<?> viewPanel=viewContainer.getSelectedView();
-				if(viewPanel!=null)
+				EventWrapperViewPanel<?> viewPanel = viewContainer.getSelectedView();
+				if(viewPanel != null)
 				{
-					EventWrapperViewTable<?> table=viewPanel.getTable();
-					if(table!=null)
+					EventWrapperViewTable<?> table = viewPanel.getTable();
+					if(table != null)
 					{
 						table.saveLayout();
 					}
@@ -2563,13 +2578,13 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			if(viewContainer!=null)
+			if(viewContainer != null)
 			{
-				EventWrapperViewPanel<?> viewPanel=viewContainer.getSelectedView();
-				if(viewPanel!=null)
+				EventWrapperViewPanel<?> viewPanel = viewContainer.getSelectedView();
+				if(viewPanel != null)
 				{
-					EventWrapperViewTable<?> table=viewPanel.getTable();
-					if(table!=null)
+					EventWrapperViewTable<?> table = viewPanel.getTable();
+					if(table != null)
 					{
 						table.resetLayout();
 					}
@@ -2617,7 +2632,7 @@ public class ViewActions
 		{
 			super("Preferences...");
 			putValue(Action.SMALL_ICON, PREFERENCES_MENU_ICON);
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" COMMA");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " COMMA");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('p'));
@@ -2638,7 +2653,7 @@ public class ViewActions
 			super();
 			putValue(Action.SMALL_ICON, PREFERENCES_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Preferences...");
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" COMMA");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " COMMA");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('p'));
@@ -2674,7 +2689,7 @@ public class ViewActions
 		{
 			super("Exit");
 			putValue(Action.SMALL_ICON, EXIT_MENU_ICON);
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" Q");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " Q");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('x'));
@@ -2693,7 +2708,7 @@ public class ViewActions
 		{
 			super("Open inactive log...");
 			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift O");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift O");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
@@ -2713,7 +2728,7 @@ public class ViewActions
 		{
 			super("Clean all inactive logs");
 			putValue(Action.SMALL_ICON, CLEAR_MENU_ICON);
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift X");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift X");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
@@ -2732,7 +2747,7 @@ public class ViewActions
 		public PreviousTabAction()
 		{
 			super("Previous tab");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" J");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " J");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
@@ -2740,10 +2755,10 @@ public class ViewActions
 
 		public void updateAction()
 		{
-			if(viewContainer!=null)
+			if(viewContainer != null)
 			{
-				int viewCount=viewContainer.getViewCount();
-				if(viewCount>1)
+				int viewCount = viewContainer.getViewCount();
+				if(viewCount > 1)
 				{
 					setEnabled(true);
 				}
@@ -2770,7 +2785,7 @@ public class ViewActions
 		public NextTabAction()
 		{
 			super("Next tab");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" K");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " K");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
@@ -2778,10 +2793,10 @@ public class ViewActions
 
 		public void updateAction()
 		{
-			if(viewContainer!=null)
+			if(viewContainer != null)
 			{
-				int viewCount=viewContainer.getViewCount();
-				if(viewCount>1)
+				int viewCount = viewContainer.getViewCount();
+				if(viewCount > 1)
 				{
 					setEnabled(true);
 				}
@@ -2816,8 +2831,8 @@ public class ViewActions
 
 		public void setEventWrapper(EventWrapper wrapper)
 		{
-			this.eventWrapper=wrapper;
-			if(wrapper==null)
+			this.eventWrapper = wrapper;
+			if(wrapper == null)
 			{
 				setEnabled(false);
 			}
@@ -2837,7 +2852,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			String message=mainFrame.createMessage(eventWrapper);
+			String message = mainFrame.createMessage(eventWrapper);
 			mainFrame.copyHtml(message);
 		}
 	}
@@ -2855,14 +2870,14 @@ public class ViewActions
 
 		public void setEventWrapper(EventWrapper wrapper)
 		{
-			String message=null;
-			if(wrapper!=null && wrapper.getEvent()!=null)
+			String message = null;
+			if(wrapper != null && wrapper.getEvent() != null)
 			{
-				Object eventObj=wrapper.getEvent();
+				Object eventObj = wrapper.getEvent();
 				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					message=loggingEvent.getMessage();
+					message = loggingEvent.getMessage();
 				}
 			}
 			setMessage(message);
@@ -2870,8 +2885,8 @@ public class ViewActions
 
 		private void setMessage(String message)
 		{
-			this.message=message;
-			setEnabled(message!=null);
+			this.message = message;
+			setEnabled(message != null);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -2893,14 +2908,14 @@ public class ViewActions
 
 		public void setEventWrapper(EventWrapper wrapper)
 		{
-			String loggerName=null;
-			if(wrapper!=null && wrapper.getEvent()!=null)
+			String loggerName = null;
+			if(wrapper != null && wrapper.getEvent() != null)
 			{
-				Object eventObj=wrapper.getEvent();
+				Object eventObj = wrapper.getEvent();
 				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					loggerName=loggingEvent.getLogger();
+					loggerName = loggingEvent.getLogger();
 				}
 			}
 			setLoggerName(loggerName);
@@ -2908,8 +2923,8 @@ public class ViewActions
 
 		private void setLoggerName(String loggerName)
 		{
-			this.loggerName=loggerName;
-			setEnabled(loggerName!=null);
+			this.loggerName = loggerName;
+			setEnabled(loggerName != null);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -2931,14 +2946,14 @@ public class ViewActions
 
 		public void setEventWrapper(EventWrapper wrapper)
 		{
-			ThrowableInfo info=null;
-			if(wrapper!=null && wrapper.getEvent()!=null)
+			ThrowableInfo info = null;
+			if(wrapper != null && wrapper.getEvent() != null)
 			{
-				Object eventObj=wrapper.getEvent();
+				Object eventObj = wrapper.getEvent();
 				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					info=loggingEvent.getThrowable();
+					info = loggingEvent.getThrowable();
 				}
 			}
 			setThrowableInfo(info);
@@ -2946,34 +2961,34 @@ public class ViewActions
 
 		private void setThrowableInfo(ThrowableInfo info)
 		{
-			this.throwableInfo=info;
-			setEnabled(info!=null);
+			this.throwableInfo = info;
+			setEnabled(info != null);
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			StringBuilder throwableText=new StringBuilder();
-			ThrowableInfo info=throwableInfo;
-			for(;;)
+			StringBuilder throwableText = new StringBuilder();
+			ThrowableInfo info = throwableInfo;
+			for(; ;)
 			{
 				throwableText.append("Exception: ").append(info.getName()).append("\n");
-				String message=info.getMessage();
-				if(message!=null && !message.equals(info.getName()))
+				String message = info.getMessage();
+				if(message != null && !message.equals(info.getName()))
 				{
 					throwableText.append("Message: ").append(message).append("\n");
 				}
 				ExtendedStackTraceElement[] st = info.getStackTrace();
-				if(st!=null)
+				if(st != null)
 				{
 					throwableText.append("StackTrace:\n");
-					for(ExtendedStackTraceElement current:st)
+					for(ExtendedStackTraceElement current : st)
 					{
-                        // TODO: extended optional?
+						// TODO: extended optional?
 						throwableText.append("\t").append(current.toString(true)).append("\n");
 					}
 				}
-				info=info.getCause();
-				if(info==null)
+				info = info.getCause();
+				if(info == null)
 				{
 					break;
 				}
@@ -2984,7 +2999,7 @@ public class ViewActions
 	}
 
 	private class CopyLoggingCallStackAction
-			extends AbstractAction
+		extends AbstractAction
 	{
 		private ExtendedStackTraceElement[] callStack;
 
@@ -2997,10 +3012,10 @@ public class ViewActions
 		public void setEventWrapper(EventWrapper wrapper)
 		{
 			ExtendedStackTraceElement[] callStack = null;
-			if (wrapper != null && wrapper.getEvent() != null)
+			if(wrapper != null && wrapper.getEvent() != null)
 			{
 				Object eventObj = wrapper.getEvent();
-				if (eventObj instanceof LoggingEvent)
+				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
 					callStack = loggingEvent.getCallStack();
@@ -3019,14 +3034,14 @@ public class ViewActions
 		{
 			StringBuilder text = new StringBuilder();
 			ExtendedStackTraceElement[] cs = callStack;
-			if (cs != null)
+			if(cs != null)
 			{
-				boolean first=true;
-				for (ExtendedStackTraceElement current : cs)
+				boolean first = true;
+				for(ExtendedStackTraceElement current : cs)
 				{
 					if(first)
 					{
-						first=false;
+						first = false;
 					}
 					else
 					{
@@ -3040,7 +3055,7 @@ public class ViewActions
 	}
 
 	private class CopyLoggingMarkerAction
-			extends AbstractAction
+		extends AbstractAction
 	{
 		private Marker marker;
 
@@ -3053,10 +3068,10 @@ public class ViewActions
 		public void setEventWrapper(EventWrapper wrapper)
 		{
 			Marker marker = null;
-			if (wrapper != null && wrapper.getEvent() != null)
+			if(wrapper != null && wrapper.getEvent() != null)
 			{
 				Object eventObj = wrapper.getEvent();
-				if (eventObj instanceof LoggingEvent)
+				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
 					marker = loggingEvent.getMarker();
@@ -3083,11 +3098,11 @@ public class ViewActions
 			if(logger.isInfoEnabled()) logger.info("Implement!");
 			if(marker != null)
 			{
-				for(int i=0;i<indent;i++)
+				for(int i = 0; i < indent; i++)
 				{
 					text.append("  ");
 				}
-				String markerName=marker.getName();
+				String markerName = marker.getName();
 				text.append("- ").append(markerName);
 				if(handledMarkers.contains(markerName))
 				{
@@ -3098,11 +3113,11 @@ public class ViewActions
 					text.append("\n");
 					handledMarkers.add(markerName);
 					Map<String, Marker> references = marker.getReferences();
-					if(references!=null)
+					if(references != null)
 					{
-						for(Map.Entry<String, Marker> current: references.entrySet())
+						for(Map.Entry<String, Marker> current : references.entrySet())
 						{
-							buildMarker(text, indent+1, current.getValue(), handledMarkers);
+							buildMarker(text, indent + 1, current.getValue(), handledMarkers);
 						}
 					}
 				}
@@ -3123,14 +3138,14 @@ public class ViewActions
 
 		public void setEventWrapper(EventWrapper wrapper)
 		{
-			String requestUrl=null;
-			if(wrapper!=null && wrapper.getEvent()!=null)
+			String requestUrl = null;
+			if(wrapper != null && wrapper.getEvent() != null)
 			{
-				Object eventObj=wrapper.getEvent();
+				Object eventObj = wrapper.getEvent();
 				if(eventObj instanceof AccessEvent)
 				{
 					AccessEvent accessEvent = (AccessEvent) eventObj;
-					requestUrl=accessEvent.getRequestURI();
+					requestUrl = accessEvent.getRequestURI();
 				}
 			}
 			setRequestUri(requestUrl);
@@ -3139,7 +3154,7 @@ public class ViewActions
 		private void setRequestUri(String requestUri)
 		{
 			this.requestUri = requestUri;
-			setEnabled(requestUri !=null);
+			setEnabled(requestUri != null);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3178,17 +3193,17 @@ public class ViewActions
 
 		public void setEventWrapper(EventWrapper wrapper)
 		{
-			if(wrapper==null)
+			if(wrapper == null)
 			{
 				setStackTraceElement(null);
 				return;
 			}
-			Serializable event=wrapper.getEvent();
+			Serializable event = wrapper.getEvent();
 			if(event instanceof LoggingEvent)
 			{
 				LoggingEvent loggingEvent = (LoggingEvent) event;
 				ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
-				if(callStack!=null && callStack.length>0)
+				if(callStack != null && callStack.length > 0)
 				{
 					setStackTraceElement(callStack[0]);
 					return;
@@ -3199,8 +3214,8 @@ public class ViewActions
 
 		public void setStackTraceElement(ExtendedStackTraceElement stackTraceElement)
 		{
-			this.stackTraceElement=stackTraceElement;
-			setEnabled(this.stackTraceElement!=null);
+			this.stackTraceElement = stackTraceElement;
+			setEnabled(this.stackTraceElement != null);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3220,7 +3235,7 @@ public class ViewActions
 			super(name);
 			this.sender = sender;
 			this.event = wrapper.getEvent();
-			setEnabled(event!=null);
+			setEnabled(event != null);
 		}
 
 		/**
@@ -3242,28 +3257,28 @@ public class ViewActions
 		public ShowHideAction(PersistentTableColumnModel tableColumnModel, String columnName, boolean visible)
 		{
 			super(columnName);
-			this.columnName=columnName;
-			this.visible=visible;
-			this.tableColumnModel=tableColumnModel;
+			this.columnName = columnName;
+			this.visible = visible;
+			this.tableColumnModel = tableColumnModel;
 			//putValue(ViewActions.SELECTED_KEY, visible);
 			// selection must be set manually
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			visible=!visible;
+			visible = !visible;
 			Iterator<TableColumn> iter = tableColumnModel.getColumns(false);
-			TableColumn found=null;
+			TableColumn found = null;
 			while(iter.hasNext())
 			{
 				TableColumn current = iter.next();
 				if(columnName.equals(current.getIdentifier()))
 				{
-					found=current;
+					found = current;
 					break;
 				}
 			}
-			if(found!=null)
+			if(found != null)
 			{
 				tableColumnModel.setColumnVisible(found, visible);
 			}

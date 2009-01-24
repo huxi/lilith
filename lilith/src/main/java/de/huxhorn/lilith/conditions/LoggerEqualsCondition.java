@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@ package de.huxhorn.lilith.conditions;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import java.io.ObjectInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class LoggerEqualsCondition
 	implements LilithCondition
@@ -52,19 +52,19 @@ public class LoggerEqualsCondition
 
 	public boolean isTrue(Object value)
 	{
-		if(searchString==null)
+		if(searchString == null)
 		{
 			return false;
 		}
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
+			EventWrapper wrapper = (EventWrapper) value;
 			Object eventObj = wrapper.getEvent();
 			if(eventObj instanceof LoggingEvent)
 			{
-				LoggingEvent event=(LoggingEvent) eventObj;
+				LoggingEvent event = (LoggingEvent) eventObj;
 
-				String logger=event.getLogger();
+				String logger = event.getLogger();
 
 				return logger != null && logger.equals(searchString);
 			}
@@ -74,8 +74,8 @@ public class LoggerEqualsCondition
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		final LoggerEqualsCondition that = (LoggerEqualsCondition) o;
 
@@ -96,16 +96,17 @@ public class LoggerEqualsCondition
 		setSearchString(this.searchString);
 	}
 
-	public LoggerEqualsCondition clone() throws CloneNotSupportedException
+	public LoggerEqualsCondition clone()
+		throws CloneNotSupportedException
 	{
 		return (LoggerEqualsCondition) super.clone();
 	}
 
 	public String toString()
 	{
-		StringBuilder result=new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		result.append(getDescription()).append("(");
-		if(searchString!=null)
+		if(searchString != null)
 		{
 			result.append("\"");
 			result.append(searchString);

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,17 @@
  */
 package de.huxhorn.lilith.conditions;
 
+import de.huxhorn.sulky.conditions.Condition;
+
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
-import de.huxhorn.sulky.conditions.Condition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.ObjectInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class GroovyCondition
 	implements LilithCondition
@@ -69,27 +70,32 @@ public class GroovyCondition
 
 	public void setScriptFileName(String scriptFileName)
 	{
-		this.instance=null;
-		this.scriptName=null;
-		this.scriptFileName=scriptFileName;
-		if(scriptFileName!=null)
+		this.instance = null;
+		this.scriptName = null;
+		this.scriptFileName = scriptFileName;
+		if(scriptFileName != null)
 		{
 			File scriptFile = new File(scriptFileName);
 			if(!scriptFile.isFile())
 			{
 				if(logger.isWarnEnabled()) logger.warn("Scriptfile '{}' is not a file!", scriptFile.getAbsolutePath());
 			}
-			GroovyClassLoader gcl=new GroovyClassLoader();
+			GroovyClassLoader gcl = new GroovyClassLoader();
 			gcl.setShouldRecompile(true);
 			try
 			{
 				Class clazz = gcl.parseClass(scriptFile);
-				instance=clazz.newInstance();
-				this.scriptName=scriptFile.getName();
+				instance = clazz.newInstance();
+				this.scriptName = scriptFile.getName();
 			}
-			catch (Throwable e)
+			catch(Throwable e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while instanciating groovy condition '"+scriptFile.getAbsolutePath()+"'!",e);
+				if(logger.isWarnEnabled())
+				{
+					logger
+						.warn("Exception while instanciating groovy condition '" + scriptFile
+							.getAbsolutePath() + "'!", e);
+				}
 			}
 		}
 	}
@@ -105,24 +111,24 @@ public class GroovyCondition
 		{
 			if(instance instanceof Condition)
 			{
-				Condition condition=(Condition) instance;
+				Condition condition = (Condition) instance;
 				//noinspection unchecked
 				return condition.isTrue(o);
 			}
 			else if(instance instanceof Script)
 			{
-				Script script=(Script) instance;
+				Script script = (Script) instance;
 
-				Binding binding=new Binding();
+				Binding binding = new Binding();
 				binding.setVariable("input", o);
-				if(searchString!=null)
+				if(searchString != null)
 				{
 					binding.setVariable("searchString", searchString);
 				}
 				binding.setVariable("logger", logger);
 
 				script.setBinding(binding);
-				Object result=script.run();
+				Object result = script.run();
 				return !(result == null || result.equals(Boolean.FALSE));
 			}
 			else
@@ -132,10 +138,11 @@ public class GroovyCondition
 		}
 		catch(Throwable t)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while executing '"+scriptFileName+"'!", t);
+			if(logger.isWarnEnabled()) logger.warn("Exception while executing '" + scriptFileName + "'!", t);
 			return false;
 		}
 	}
+
 	private void readObject(ObjectInputStream in)
 		throws IOException, ClassNotFoundException
 	{
@@ -146,16 +153,16 @@ public class GroovyCondition
 	@Override
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (!(o instanceof GroovyCondition)) return false;
+		if(this == o) return true;
+		if(!(o instanceof GroovyCondition)) return false;
 
 		GroovyCondition that = (GroovyCondition) o;
 
-		if (scriptFileName != null ? !scriptFileName.equals(that.scriptFileName) : that.scriptFileName != null)
+		if(scriptFileName != null ? !scriptFileName.equals(that.scriptFileName) : that.scriptFileName != null)
 		{
 			return false;
 		}
-		if (searchString != null ? !searchString.equals(that.searchString) : that.searchString != null) return false;
+		if(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null) return false;
 
 		return true;
 	}
@@ -171,9 +178,9 @@ public class GroovyCondition
 	@Override
 	public String toString()
 	{
-		StringBuilder result=new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		result.append(getDescription());
-		if(searchString!=null)
+		if(searchString != null)
 		{
 			result.append("(");
 			result.append(searchString);
@@ -182,7 +189,8 @@ public class GroovyCondition
 		return result.toString();
 	}
 
-	public GroovyCondition clone() throws CloneNotSupportedException
+	public GroovyCondition clone()
+		throws CloneNotSupportedException
 	{
 		GroovyCondition result = (GroovyCondition) super.clone();
 		result.setScriptFileName(result.scriptFileName);

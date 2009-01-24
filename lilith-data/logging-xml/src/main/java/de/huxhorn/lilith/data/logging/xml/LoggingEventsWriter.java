@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,16 +17,17 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
-import de.huxhorn.lilith.data.eventsource.xml.SourceIdentifierWriter;
 import de.huxhorn.lilith.data.eventsource.xml.EventSourceSchemaConstants;
+import de.huxhorn.lilith.data.eventsource.xml.SourceIdentifierWriter;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.LoggingEvents;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
 
+import java.util.List;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.util.List;
 
 public class LoggingEventsWriter
 	implements GenericStreamWriter<LoggingEvents>, LoggingEventSchemaConstants
@@ -39,9 +40,9 @@ public class LoggingEventsWriter
 
 	public LoggingEventsWriter()
 	{
-		sourceIdentifierWriter =new SourceIdentifierWriter();
+		sourceIdentifierWriter = new SourceIdentifierWriter();
 		sourceIdentifierWriter.setPreferredPrefix(EventSourceSchemaConstants.DEFAULT_NAMESPACE_PREFIX);
-		loggingEventWriter=new LoggingEventWriter();
+		loggingEventWriter = new LoggingEventWriter();
 	}
 
 	public boolean isWritingSchemaLocation()
@@ -76,14 +77,15 @@ public class LoggingEventsWriter
 	}
 
 	public void write(XMLStreamWriter writer, LoggingEvents events, boolean isRoot)
-			throws XMLStreamException
+		throws XMLStreamException
 	{
 		if(isRoot)
 		{
-			writer.writeStartDocument("utf-8","1.0");
+			writer.writeStartDocument("utf-8", "1.0");
 		}
-		StaxUtilities.NamespaceInfo ni = StaxUtilities.setNamespace(writer, preferredPrefix, NAMESPACE_URI, DEFAULT_NAMESPACE_PREFIX);
-		prefix=ni.getPrefix();
+		StaxUtilities.NamespaceInfo ni = StaxUtilities
+			.setNamespace(writer, preferredPrefix, NAMESPACE_URI, DEFAULT_NAMESPACE_PREFIX);
+		prefix = ni.getPrefix();
 
 		//StaxUtilities.writeStartElement(writer, null, null, LOGGING_EVENTS_NODE);
 		StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, LOGGING_EVENTS_NODE);
@@ -92,45 +94,45 @@ public class LoggingEventsWriter
 			StaxUtilities.writeNamespace(writer, prefix, NAMESPACE_URI);
 		}
 		/*
-			String eventSourcePrefix=sourceIdentifierWriter.getPrefix();
-			if(eventSourcePrefix==null)
-			{
-				writer.writeDefaultNamespace(EventSourceSchemaConstants.NAMESPACE_URI);
-			}
-			else
-			{
-				writer.writeNamespace(eventSourcePrefix, EventSourceSchemaConstants.NAMESPACE_URI);
-			}
-        */
+					String eventSourcePrefix=sourceIdentifierWriter.getPrefix();
+					if(eventSourcePrefix==null)
+					{
+						writer.writeDefaultNamespace(EventSourceSchemaConstants.NAMESPACE_URI);
+					}
+					else
+					{
+						writer.writeNamespace(eventSourcePrefix, EventSourceSchemaConstants.NAMESPACE_URI);
+					}
+				*/
 		if(isRoot && writingSchemaLocation)
 		{
 			ni = StaxUtilities.setNamespace(writer,
-					StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX,
-					StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
-					StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX);
+				StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX,
+				StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
+				StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX);
 			if(ni.isCreated())
 			{
 				writer.writeNamespace(ni.getPrefix(), StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI);
 			}
 			StaxUtilities.writeAttribute(writer,
-					true,
-					StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX,
-					StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
-					StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
-					NAMESPACE_URI+" "+NAMESPACE_LOCATION
-					+" "+ EventSourceSchemaConstants.NAMESPACE_URI+" "+EventSourceSchemaConstants.NAMESPACE_LOCATION);
+				true,
+				StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX,
+				StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
+				StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
+				NAMESPACE_URI + " " + NAMESPACE_LOCATION
+					+ " " + EventSourceSchemaConstants.NAMESPACE_URI + " " + EventSourceSchemaConstants.NAMESPACE_LOCATION);
 		}
-		long idx=events.getStartIndex();
-		if(idx>0)
+		long idx = events.getStartIndex();
+		if(idx > 0)
 		{
-			StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, START_INDEX_ATTRIBUTE, ""+idx);
+			StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, START_INDEX_ATTRIBUTE, "" + idx);
 		}
 		sourceIdentifierWriter.write(writer, events.getSource(), false);
 
 		List<LoggingEvent> eventList = events.getEvents();
-		if(eventList!=null)
+		if(eventList != null)
 		{
-			for(LoggingEvent event: eventList)
+			for(LoggingEvent event : eventList)
 			{
 				loggingEventWriter.write(writer, event, false);
 			}

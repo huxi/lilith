@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,25 @@
  */
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.sender.HeartbeatRunnable;
+import de.huxhorn.sulky.buffers.AppendOperation;
+import de.huxhorn.sulky.generics.io.Deserializer;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.apache.commons.io.IOUtils;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.generics.io.Deserializer;
-import de.huxhorn.lilith.sender.HeartbeatRunnable;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 
 public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
-	    extends AbstractEventProducer<T>
+	extends AbstractEventProducer<T>
 {
 	private final Logger logger = LoggerFactory.getLogger(AbstractMessageBasedEventProducer.class);
 
@@ -42,9 +47,9 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	public AbstractMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream, boolean compressing)
 	{
 		super(sourceIdentifier, eventQueue);
-		this.dataInput=new DataInputStream(new BufferedInputStream(inputStream));
-		this.compressing=compressing;
-		this.deserializer=createDeserializer();
+		this.dataInput = new DataInputStream(new BufferedInputStream(inputStream));
+		this.compressing = compressing;
+		this.deserializer = createDeserializer();
 	}
 
 	protected abstract Deserializer<T> createDeserializer();
@@ -52,18 +57,18 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	public void start()
 	{
 		updateHeartbeatTimestamp();
-		Thread t=new Thread(new ReceiverRunnable(getSourceIdentifier()), ""+getSourceIdentifier()+"-Receiver");
+		Thread t = new Thread(new ReceiverRunnable(getSourceIdentifier()), "" + getSourceIdentifier() + "-Receiver");
 		t.setDaemon(false);
 		t.start();
 
-		t=new Thread(new HeartbeatObserverRunnable(), ""+getSourceIdentifier()+"-HeartbeatObserver");
+		t = new Thread(new HeartbeatObserverRunnable(), "" + getSourceIdentifier() + "-HeartbeatObserver");
 		t.setDaemon(false);
 		t.start();
 	}
 
 	protected synchronized void updateHeartbeatTimestamp()
 	{
-		heartbeatTimestamp=System.currentTimeMillis();
+		heartbeatTimestamp = System.currentTimeMillis();
 	}
 
 	protected synchronized long getHeartbeatTimestamp()
@@ -81,21 +86,23 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	{
 		public void run()
 		{
-			for(;;)
+			for(; ;)
 			{
 				try
 				{
 					Thread.sleep(HeartbeatRunnable.HEARTBEAT_RATE);
-					long heartbeat=getHeartbeatTimestamp();
-					if(System.currentTimeMillis()-heartbeat>2*HeartbeatRunnable.HEARTBEAT_RATE)
+					long heartbeat = getHeartbeatTimestamp();
+					if(System.currentTimeMillis() - heartbeat > 2 * HeartbeatRunnable.HEARTBEAT_RATE)
 					{
 						if(logger.isInfoEnabled())
+						{
 							logger.info("Closing receiver because heartbeat of {} was missing.", getSourceIdentifier());
+						}
 						close();
 						return;
 					}
 				}
-				catch (InterruptedException e)
+				catch(InterruptedException e)
 				{
 					if(logger.isInfoEnabled()) logger.info("Interrupted...", e);
 					close();
@@ -113,31 +120,31 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 
 		public ReceiverRunnable(SourceIdentifier sourceIdentifier)
 		{
-			this.sourceIdentifier=sourceIdentifier;
+			this.sourceIdentifier = sourceIdentifier;
 		}
 
 		public void run()
 		{
 			MDC.put(SOURCE_IDENTIFIER_MDC_KEY, sourceIdentifier.toString());
-			for(;;)
+			for(; ;)
 			{
 				try
 				{
-					boolean allocating=true;
-					int size=0;
+					boolean allocating = true;
+					int size = 0;
 					try
 					{
 						// TODO: obtain transfer size info						
 						size = dataInput.readInt();
 						updateHeartbeatTimestamp();
-						if(size>0)
+						if(size > 0)
 						{
-							byte[] bytes=new byte[size];
-							allocating=false;
+							byte[] bytes = new byte[size];
+							allocating = false;
 							dataInput.readFully(bytes);
 
-							Object object=deserializer.deserialize(bytes);
-							if(object==null)
+							Object object = deserializer.deserialize(bytes);
+							if(object == null)
 							{
 								if(logger.isInfoEnabled()) logger.info("Retrieved null!");
 							}
@@ -146,36 +153,55 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 								try
 								{
 									//noinspection unchecked
-									T event=(T) object;
+									T event = (T) object;
 									addEvent(event);
 								}
 								catch(ClassCastException ex)
 								{
-									if(logger.isInfoEnabled()) logger.info("Ignoring object of class '"+object.getClass().getName()+"'...");
+									if(logger.isInfoEnabled())
+									{
+										logger
+											.info("Ignoring object of class '" + object.getClass().getName() + "'...");
+									}
 								}
 							}
 						}
 						else
 						{
-							if(logger.isDebugEnabled()) logger.debug("Received heartbeat from {}.", getSourceIdentifier());
+							if(logger.isDebugEnabled())
+							{
+								logger.debug("Received heartbeat from {}.", getSourceIdentifier());
+							}
 						}
 					}
 					catch(OutOfMemoryError ex)
 					{
 						if(allocating)
 						{
-							if(logger.isWarnEnabled()) logger.warn("Out of memory while trying to allocate {} bytes! Skipping them instead...", size);
+							if(logger.isWarnEnabled())
+							{
+								logger
+									.warn("Out of memory while trying to allocate {} bytes! Skipping them instead...", size);
+							}
 							skipBytes(size, dataInput);
 						}
 						else
 						{
-							if(logger.isWarnEnabled()) logger.warn("Out of memory while deserializing from {} bytes!", size);
+							if(logger.isWarnEnabled())
+							{
+								logger.warn("Out of memory while deserializing from {} bytes!", size);
+							}
 						}
 					}
 				}
-				catch (Throwable e)
+				catch(Throwable e)
 				{
-					if(logger.isInfoEnabled()) logger.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage());
+					if(logger.isInfoEnabled())
+					{
+						logger
+							.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e
+								.getClass().getName(), e.getMessage());
+					}
 					addEvent(null);
 					break;
 				}
@@ -184,24 +210,24 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		}
 
 		public void skipBytes(long numberOfBytes, InputStream input)
-				throws IOException
+			throws IOException
 		{
-			long skippedTotal=0;
-			while(skippedTotal<numberOfBytes)
+			long skippedTotal = 0;
+			while(skippedTotal < numberOfBytes)
 			{
-				long skipped = input.skip(numberOfBytes-skippedTotal);
-				if(skipped<0)
+				long skipped = input.skip(numberOfBytes - skippedTotal);
+				if(skipped < 0)
 				{
-					throw new IOException("Negative skipped bytes value while trying to skip "+numberOfBytes+" bytes!");
+					throw new IOException("Negative skipped bytes value while trying to skip " + numberOfBytes + " bytes!");
 				}
-				skippedTotal=skippedTotal+skipped;
+				skippedTotal = skippedTotal + skipped;
 			}
 		}
 	}
 
 	public void close()
 	{
-		if(logger.isInfoEnabled()) logger.info("Closing {}.",this.getClass().getName());
+		if(logger.isInfoEnabled()) logger.info("Closing {}.", this.getClass().getName());
 		IOUtils.closeQuietly(dataInput);
 	}
 }

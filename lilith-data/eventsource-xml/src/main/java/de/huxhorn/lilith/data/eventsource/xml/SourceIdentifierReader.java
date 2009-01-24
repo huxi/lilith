@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -28,23 +28,25 @@ import javax.xml.stream.XMLStreamReader;
 public class SourceIdentifierReader
 	implements GenericStreamReader<SourceIdentifier>, EventSourceSchemaConstants
 {
-	public SourceIdentifier read(XMLStreamReader reader) throws XMLStreamException
+	public SourceIdentifier read(XMLStreamReader reader)
+		throws XMLStreamException
 	{
-		SourceIdentifier result=null;
+		SourceIdentifier result = null;
 		String rootNamespace = NAMESPACE_URI;
 		int type = reader.getEventType();
 
-		if (XMLStreamConstants.START_DOCUMENT == type)
+		if(XMLStreamConstants.START_DOCUMENT == type)
 		{
 			reader.nextTag();
 			type = reader.getEventType();
 			rootNamespace = null;
 		}
-		if (XMLStreamConstants.START_ELEMENT == type && SOURCE_IDENTIFIER_NODE.equals(reader.getLocalName()))
+		if(XMLStreamConstants.START_ELEMENT == type && SOURCE_IDENTIFIER_NODE.equals(reader.getLocalName()))
 		{
 			result = new SourceIdentifier();
 			result.setIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, IDENTIFIER_ATTRIBUTE));
-			result.setSecondaryIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, SECONDARY_IDENTIFIER_ATTRIBUTE));
+			result
+				.setSecondaryIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, SECONDARY_IDENTIFIER_ATTRIBUTE));
 			reader.nextTag();
 			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, SOURCE_IDENTIFIER_NODE);
 		}

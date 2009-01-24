@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,16 @@
  */
 package de.huxhorn.lilith.engine.impl.sourcemanager;
 
-import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.sulky.buffers.CircularBuffer;
 import de.huxhorn.sulky.buffers.RemoveOperation;
 
-import java.util.List;
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class EventPoller<T extends Serializable>
 	implements Runnable
@@ -65,25 +65,25 @@ public class EventPoller<T extends Serializable>
 
 	public void run()
 	{
-		for(;;)
+		for(; ;)
 		{
-			long pollTime=System.currentTimeMillis();
-			List<EventWrapper<T>> events=queue.removeAll();
-			if(events!=null)
+			long pollTime = System.currentTimeMillis();
+			List<EventWrapper<T>> events = queue.removeAll();
+			if(events != null)
 			{
-				int eventCount=events.size();
-				if(eventCount>0)
+				int eventCount = events.size();
+				if(eventCount > 0)
 				{
 					if(logger.isInfoEnabled()) logger.info("Consuming {} events.", eventCount);
-					long time=System.currentTimeMillis();
-					if(consumers!=null)
+					long time = System.currentTimeMillis();
+					if(consumers != null)
 					{
-						for(EventConsumer<T> consumer:consumers)
+						for(EventConsumer<T> consumer : consumers)
 						{
 							try
 							{
 								consumer.consume(events);
-								if(logger.isDebugEnabled()) logger.debug("Executed consumer {}.",consumer);
+								if(logger.isDebugEnabled()) logger.debug("Executed consumer {}.", consumer);
 							}
 							catch(Throwable t)
 							{
@@ -91,27 +91,30 @@ public class EventPoller<T extends Serializable>
 							}
 						}
 					}
-					time=System.currentTimeMillis()-time;
-					time=time/1000;
-					if(time==0)
+					time = System.currentTimeMillis() - time;
+					time = time / 1000;
+					if(time == 0)
 					{
-						time=1;
+						time = 1;
 					}
-					int eventsPerSecond=(int) (eventCount/time);
-					if(logger.isInfoEnabled()) logger.info("Finished consuming {} events ({} events/sec).", eventCount, eventsPerSecond);
+					int eventsPerSecond = (int) (eventCount / time);
+					if(logger.isInfoEnabled())
+					{
+						logger.info("Finished consuming {} events ({} events/sec).", eventCount, eventsPerSecond);
+					}
 				}
 			}
 
-			pollTime=System.currentTimeMillis()-pollTime;
-			long sleepTime=pollDelay-pollTime;
-			if(sleepTime>0)
+			pollTime = System.currentTimeMillis() - pollTime;
+			long sleepTime = pollDelay - pollTime;
+			if(sleepTime > 0)
 			{
 				if(logger.isInfoEnabled()) logger.info("Sleeping {} milliseconds.", sleepTime);
 				try
 				{
 					Thread.sleep(pollDelay);
 				}
-				catch (InterruptedException e)
+				catch(InterruptedException e)
 				{
 					if(logger.isDebugEnabled()) logger.debug("Interrupted...");
 					break;

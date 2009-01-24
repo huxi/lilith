@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@ package de.huxhorn.lilith.swing.preferences.table;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 
-import javax.swing.JTable;
+import javax.swing.*;
 
 public class ConditionPreviewRenderer
-		extends ColorSchemePreviewRenderer
+	extends ColorSchemePreviewRenderer
 {
 	public ConditionPreviewRenderer()
 	{
@@ -31,11 +31,11 @@ public class ConditionPreviewRenderer
 
 	public ColorScheme resolveColorScheme(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
-		ColorScheme result=null;
+		ColorScheme result = null;
 		if(value instanceof SavedCondition)
 		{
-			SavedCondition condition= (SavedCondition) value;
-			result=condition.getColorScheme();
+			SavedCondition condition = (SavedCondition) value;
+			result = condition.getColorScheme();
 		}
 		return result;
 	}

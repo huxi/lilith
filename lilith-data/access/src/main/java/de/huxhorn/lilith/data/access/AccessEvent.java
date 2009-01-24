@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -36,9 +36,9 @@ public class AccessEvent
 	private String method;
 	private String serverName;
 	private String remoteAddress;
-	private Map<String,String> requestHeaders;
-	private Map<String,String> responseHeaders;
-	private Map<String,String[]> requestParameters;
+	private Map<String, String> requestHeaders;
+	private Map<String, String> responseHeaders;
+	private Map<String, String[]> requestParameters;
 	private int localPort;
 	private int statusCode;
 
@@ -194,30 +194,39 @@ public class AccessEvent
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		AccessEvent event = (AccessEvent) o;
 
-		if (localPort != event.localPort) return false;
-		if (statusCode != event.statusCode) return false;
-		if (applicationIdentifier != null ? !applicationIdentifier.equals(event.applicationIdentifier) : event.applicationIdentifier != null)
+		if(localPort != event.localPort) return false;
+		if(statusCode != event.statusCode) return false;
+		if(applicationIdentifier != null ? !applicationIdentifier
+			.equals(event.applicationIdentifier) : event.applicationIdentifier != null)
+		{
 			return false;
-		if (method != null ? !method.equals(event.method) : event.method != null) return false;
-		if (protocol != null ? !protocol.equals(event.protocol) : event.protocol != null) return false;
-		if (remoteAddress != null ? !remoteAddress.equals(event.remoteAddress) : event.remoteAddress != null)
+		}
+		if(method != null ? !method.equals(event.method) : event.method != null) return false;
+		if(protocol != null ? !protocol.equals(event.protocol) : event.protocol != null) return false;
+		if(remoteAddress != null ? !remoteAddress.equals(event.remoteAddress) : event.remoteAddress != null)
+		{
 			return false;
-		if (remoteHost != null ? !remoteHost.equals(event.remoteHost) : event.remoteHost != null) return false;
-		if (remoteUser != null ? !remoteUser.equals(event.remoteUser) : event.remoteUser != null) return false;
-		if (requestHeaders != null ? !requestHeaders.equals(event.requestHeaders) : event.requestHeaders != null)
+		}
+		if(remoteHost != null ? !remoteHost.equals(event.remoteHost) : event.remoteHost != null) return false;
+		if(remoteUser != null ? !remoteUser.equals(event.remoteUser) : event.remoteUser != null) return false;
+		if(requestHeaders != null ? !requestHeaders.equals(event.requestHeaders) : event.requestHeaders != null)
+		{
 			return false;
+		}
 //		if (requestParameters != null ? !requestParameters.equals(event.requestParameters) : event.requestParameters != null)
 //			return false;
-		if (requestURI != null ? !requestURI.equals(event.requestURI) : event.requestURI != null) return false;
-		if (requestURL != null ? !requestURL.equals(event.requestURL) : event.requestURL != null) return false;
-		if (responseHeaders != null ? !responseHeaders.equals(event.responseHeaders) : event.responseHeaders != null)
+		if(requestURI != null ? !requestURI.equals(event.requestURI) : event.requestURI != null) return false;
+		if(requestURL != null ? !requestURL.equals(event.requestURL) : event.requestURL != null) return false;
+		if(responseHeaders != null ? !responseHeaders.equals(event.responseHeaders) : event.responseHeaders != null)
+		{
 			return false;
-		if (serverName != null ? !serverName.equals(event.serverName) : event.serverName != null) return false;
+		}
+		if(serverName != null ? !serverName.equals(event.serverName) : event.serverName != null) return false;
 
 		return !(timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null);
 	}
@@ -243,7 +252,7 @@ public class AccessEvent
 	@Override
 	public String toString()
 	{
-		StringBuilder result=new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		result.append("AccessEvent[");
 		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
 		result.append("timeStamp=").append(timeStamp);

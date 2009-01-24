@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,31 @@
  */
 package de.huxhorn.lilith.swing.table.tooltips;
 
-import de.huxhorn.lilith.swing.table.TooltipGenerator;
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
-import javax.swing.JTable;
+import javax.swing.*;
 
 public class ApplicationTooltipGenerator
 	implements TooltipGenerator
 {
 	public String createTooltipText(JTable table, int row)
 	{
-		Object value=table.getValueAt(row,0);
+		Object value = table.getValueAt(row, 0);
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
-			Object evtObject=wrapper.getEvent();
+			EventWrapper wrapper = (EventWrapper) value;
+			Object evtObject = wrapper.getEvent();
 			if(evtObject instanceof LoggingEvent)
 			{
-				LoggingEvent event= (LoggingEvent) evtObject;
+				LoggingEvent event = (LoggingEvent) evtObject;
 				return event.getApplicationIdentifier();
 			}
 			else if(evtObject instanceof AccessEvent)
 			{
-				AccessEvent event= (AccessEvent) evtObject;
+				AccessEvent event = (AccessEvent) evtObject;
 				return event.getApplicationIdentifier();
 			}
 		}

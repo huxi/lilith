@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.table;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.Serializable;
 
 public final class ColorScheme
@@ -79,17 +79,17 @@ public final class ColorScheme
 	@Override
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		ColorScheme that = (ColorScheme) o;
 
-		if (backgroundColor != null ? !backgroundColor.equals(that.backgroundColor) : that.backgroundColor != null)
+		if(backgroundColor != null ? !backgroundColor.equals(that.backgroundColor) : that.backgroundColor != null)
 		{
 			return false;
 		}
-		if (borderColor != null ? !borderColor.equals(that.borderColor) : that.borderColor != null) return false;
-		if (textColor != null ? !textColor.equals(that.textColor) : that.textColor != null) return false;
+		if(borderColor != null ? !borderColor.equals(that.borderColor) : that.borderColor != null) return false;
+		if(textColor != null ? !textColor.equals(that.textColor) : that.textColor != null) return false;
 
 		return true;
 	}
@@ -106,24 +106,25 @@ public final class ColorScheme
 	@Override
 	public String toString()
 	{
-		return "ColorScheme[textColor="+textColor+", backgroundColor="+backgroundColor+", borderColor="+borderColor+"]";
+		return "ColorScheme[textColor=" + textColor + ", backgroundColor=" + backgroundColor + ", borderColor=" + borderColor + "]";
 	}
 
 	@Override
-	public ColorScheme clone() throws CloneNotSupportedException
+	public ColorScheme clone()
+		throws CloneNotSupportedException
 	{
-		ColorScheme result=(ColorScheme) super.clone();
+		ColorScheme result = (ColorScheme) super.clone();
 
-		result.textColor=clone(textColor);
-		result.backgroundColor=clone(backgroundColor);
-		result.borderColor=clone(borderColor);
+		result.textColor = clone(textColor);
+		result.backgroundColor = clone(backgroundColor);
+		result.borderColor = clone(borderColor);
 
 		return result;
 	}
 
 	private static Color clone(Color c)
 	{
-		if(c!=null)
+		if(c != null)
 		{
 			return new Color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
 		}

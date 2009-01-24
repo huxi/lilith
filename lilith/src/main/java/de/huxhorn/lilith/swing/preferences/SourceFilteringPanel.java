@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,18 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Collections;
 import java.util.List;
+
+import javax.swing.*;
 
 public class SourceFilteringPanel
 	extends JPanel
@@ -55,7 +50,7 @@ public class SourceFilteringPanel
 	public SourceFilteringPanel(PreferencesDialog preferencesDialog)
 	{
 		super();
-		this.preferencesDialog=preferencesDialog;
+		this.preferencesDialog = preferencesDialog;
 		createUI();
 	}
 
@@ -64,11 +59,11 @@ public class SourceFilteringPanel
 		DisabledAction disabledAction = new DisabledAction();
 		blacklistAction = new BlacklistAction();
 		whitelistAction = new WhitelistAction();
-		disabledButton=new JRadioButton(disabledAction);
-		blacklistButton =new JRadioButton(blacklistAction);
-		whitelistButton =new JRadioButton(whitelistAction);
+		disabledButton = new JRadioButton(disabledAction);
+		blacklistButton = new JRadioButton(blacklistAction);
+		whitelistButton = new JRadioButton(whitelistAction);
 
-		ButtonGroup buttonGroup=new ButtonGroup();
+		ButtonGroup buttonGroup = new ButtonGroup();
 		buttonGroup.add(disabledButton);
 		buttonGroup.add(blacklistButton);
 		buttonGroup.add(whitelistButton);
@@ -77,13 +72,13 @@ public class SourceFilteringPanel
 		whiteListNamesModel = new DefaultComboBoxModel();
 		blackListNames = new JComboBox(blackListNamesModel);
 		whiteListNames = new JComboBox(whiteListNamesModel);
-		listItemListener=new ListItemListener();
+		listItemListener = new ListItemListener();
 		blackListNames.addItemListener(listItemListener);
 		whiteListNames.addItemListener(listItemListener);
 
 		setLayout(new GridBagLayout());
 
-		GridBagConstraints gbc=new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -115,17 +110,17 @@ public class SourceFilteringPanel
 	{
 		listItemListener.setInitializing(true);
 		List<String> sourceListNames = preferencesDialog.getSourceListNames();
-		boolean hasSourceLists=false;
+		boolean hasSourceLists = false;
 		String fallbackSourceListName;
-		if(sourceListNames.size()>0)
+		if(sourceListNames.size() > 0)
 		{
 			Collections.sort(sourceListNames);
-			fallbackSourceListName =sourceListNames.get(0);
-			hasSourceLists=true;
+			fallbackSourceListName = sourceListNames.get(0);
+			hasSourceLists = true;
 		}
 		else
 		{
-			fallbackSourceListName ="";
+			fallbackSourceListName = "";
 		}
 
 		blacklistAction.setEnabled(hasSourceLists);
@@ -137,13 +132,16 @@ public class SourceFilteringPanel
 		blackListNamesModel.removeAllElements();
 		whiteListNamesModel.removeAllElements();
 
-		ApplicationPreferences.SourceFiltering filtering=preferencesDialog.getSourceFiltering();
+		ApplicationPreferences.SourceFiltering filtering = preferencesDialog.getSourceFiltering();
 		String blackListName = preferencesDialog.getBlackListName();
 		String whiteListName = preferencesDialog.getWhiteListName();
 		if(!sourceListNames.contains(blackListName))
 		{
-			if(logger.isInfoEnabled()) logger.info("Resetting blackListName '{}' to '{}'.", blackListName, fallbackSourceListName);
-			blackListName=fallbackSourceListName;
+			if(logger.isInfoEnabled())
+			{
+				logger.info("Resetting blackListName '{}' to '{}'.", blackListName, fallbackSourceListName);
+			}
+			blackListName = fallbackSourceListName;
 			preferencesDialog.setBlackListName(blackListName);
 			if(filtering == ApplicationPreferences.SourceFiltering.BLACKLIST)
 			{
@@ -154,8 +152,11 @@ public class SourceFilteringPanel
 		}
 		if(!sourceListNames.contains(whiteListName))
 		{
-			if(logger.isInfoEnabled()) logger.info("Resetting whiteListName '{}' to '{}'.", whiteListName, fallbackSourceListName);
-			whiteListName=fallbackSourceListName;
+			if(logger.isInfoEnabled())
+			{
+				logger.info("Resetting whiteListName '{}' to '{}'.", whiteListName, fallbackSourceListName);
+			}
+			whiteListName = fallbackSourceListName;
 			preferencesDialog.setWhiteListName(whiteListName);
 			if(filtering == ApplicationPreferences.SourceFiltering.WHITELIST)
 			{
@@ -253,9 +254,10 @@ public class SourceFilteringPanel
 		}
 	}
 
-	private class ListItemListener implements ItemListener
+	private class ListItemListener
+		implements ItemListener
 	{
-		private boolean initializing=false;
+		private boolean initializing = false;
 
 		public boolean isInitializing()
 		{
@@ -276,9 +278,9 @@ public class SourceFilteringPanel
 		{
 			if(!initializing)
 			{
-				if(e.getStateChange()== ItemEvent.SELECTED)
+				if(e.getStateChange() == ItemEvent.SELECTED)
 				{
-					String item=(String) e.getItem();
+					String item = (String) e.getItem();
 					if(e.getSource() == whiteListNames)
 					{
 						if(logger.isInfoEnabled()) logger.info("WhiteList Selected: {}", item);

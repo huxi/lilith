@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,12 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
+
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.UIManager;
-import java.awt.Color;
+import java.awt.*;
 import java.beans.Encoder;
 import java.beans.Expression;
 import java.beans.PersistenceDelegate;
@@ -65,6 +65,8 @@ import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import javax.swing.*;
+
 public class ApplicationPreferences
 {
 	public static enum SourceFiltering
@@ -73,7 +75,7 @@ public class ApplicationPreferences
 	}
 
 	private static final Preferences PREFERENCES =
-			Preferences.userNodeForPackage(ApplicationPreferences.class);
+		Preferences.userNodeForPackage(ApplicationPreferences.class);
 
 	private static final String STATUS_COLORS_XML_FILENAME = "statusColors.xml";
 	private static final String LEVEL_COLORS_XML_FILENAME = "levelColors.xml";
@@ -131,16 +133,16 @@ public class ApplicationPreferences
 
 	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
 	private static final String GROOVY_SUFFIX = ".groovy";
-	private static final String EXAMPLE_GROOVY_BASE="/conditions/";
-	private static final String EXAMPLE_GROOVY_LIST="conditions.txt";
+	private static final String EXAMPLE_GROOVY_BASE = "/conditions/";
+	private static final String EXAMPLE_GROOVY_LIST = "conditions.txt";
 
 	static
 	{
 		PREFERENCES.remove(OLD_LICENSED_PREFERENCES_KEY); // remove garbage
 
-		String userHome=System.getProperty("user.home");
-		File defaultAppPath=new File(userHome, ".lilith");
-		DEFAULT_APPLICATION_PATH=defaultAppPath.getAbsolutePath();
+		String userHome = System.getProperty("user.home");
+		File defaultAppPath = new File(userHome, ".lilith");
+		DEFAULT_APPLICATION_PATH = defaultAppPath.getAbsolutePath();
 
 		Map<String, String> defaultSoundLocations = new HashMap<String, String>();
 		defaultSoundLocations.put(LilithSounds.SOURCE_ADDED, "/events/SourceAdded.mp3");
@@ -153,7 +155,8 @@ public class ApplicationPreferences
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
 
 		HashMap<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<LoggingEvent.Level, ColorScheme>();
-		defaultLevelColors.put(LoggingEvent.Level.TRACE, new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9)));
+		defaultLevelColors
+			.put(LoggingEvent.Level.TRACE, new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9)));
 		defaultLevelColors.put(LoggingEvent.Level.DEBUG, new ColorScheme(Color.BLACK, Color.GREEN));
 		defaultLevelColors.put(LoggingEvent.Level.INFO, new ColorScheme(Color.BLACK, Color.WHITE));
 		defaultLevelColors.put(LoggingEvent.Level.WARN, new ColorScheme(Color.BLACK, Color.YELLOW));
@@ -162,13 +165,13 @@ public class ApplicationPreferences
 
 		HashMap<HttpStatus.Type, ColorScheme> defaultStatusColors = new HashMap<HttpStatus.Type, ColorScheme>();
 		defaultStatusColors.put(HttpStatus.Type.SUCCESSFUL, new ColorScheme(Color.BLACK, Color.GREEN));
-		defaultStatusColors.put(HttpStatus.Type.INFORMATIONAL,new ColorScheme(Color.BLACK, Color.WHITE));
+		defaultStatusColors.put(HttpStatus.Type.INFORMATIONAL, new ColorScheme(Color.BLACK, Color.WHITE));
 		defaultStatusColors.put(HttpStatus.Type.REDIRECTION, new ColorScheme(Color.BLACK, Color.YELLOW));
 		defaultStatusColors.put(HttpStatus.Type.CLIENT_ERROR, new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE));
 		defaultStatusColors.put(HttpStatus.Type.SERVER_ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
 		DEFAULT_STATUS_COLORS = Collections.unmodifiableMap(defaultStatusColors);
 
-		STARTUP_LOOK_AND_FEEL=UIManager.getLookAndFeel().getName();
+		STARTUP_LOOK_AND_FEEL = UIManager.getLookAndFeel().getName();
 	}
 
 	private final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
@@ -214,11 +217,11 @@ public class ApplicationPreferences
 	{
 		lastSourceNamesModified = -1;
 		lastConditionsModified = -1;
-		propertyChangeSupport=new PropertyChangeSupport(this);
-		startupApplicationPath=getApplicationPath();
+		propertyChangeSupport = new PropertyChangeSupport(this);
+		startupApplicationPath = getApplicationPath();
 
-		installedLookAndFeels=new ArrayList<String>();
-		for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+		installedLookAndFeels = new ArrayList<String>();
+		for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 		{
 			installedLookAndFeels.add(info.getName());
 		}
@@ -226,19 +229,19 @@ public class ApplicationPreferences
 
 		groovyConditionsPath = new File(startupApplicationPath, "conditions");
 		if(groovyConditionsPath.mkdirs())
-        {
+		{
 			// groovy Conditions was generated, create examples...
-            installExampleConditions();
-        }
+			installExampleConditions();
+		}
 	}
 
 	public File resolveConditionScriptFile(String input)
 	{
 		if(!input.endsWith(GROOVY_SUFFIX))
 		{
-			input=input+GROOVY_SUFFIX;
+			input = input + GROOVY_SUFFIX;
 		}
-		File scriptFile=new File(groovyConditionsPath, input);
+		File scriptFile = new File(groovyConditionsPath, input);
 		if(scriptFile.isFile())
 		{
 			return scriptFile;
@@ -248,20 +251,21 @@ public class ApplicationPreferences
 
 	public String[] getAllConditionScriptFiles()
 	{
-		if(conditionScriptFiles == null || ((System.currentTimeMillis()-lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
+		if(conditionScriptFiles == null || ((System
+			.currentTimeMillis() - lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
 		{
 
-			File[] groovyFiles=groovyConditionsPath.listFiles(new GroovyConditionFileFilter());
-			if(groovyFiles!=null && groovyFiles.length>0)
+			File[] groovyFiles = groovyConditionsPath.listFiles(new GroovyConditionFileFilter());
+			if(groovyFiles != null && groovyFiles.length > 0)
 			{
-				conditionScriptFiles=new String[groovyFiles.length];
-				for(int i=0;i<groovyFiles.length;i++)
+				conditionScriptFiles = new String[groovyFiles.length];
+				for(int i = 0; i < groovyFiles.length; i++)
 				{
-					File current=groovyFiles[i];
-					conditionScriptFiles[i]=current.getName();
+					File current = groovyFiles[i];
+					conditionScriptFiles[i] = current.getName();
 				}
 				Arrays.sort(conditionScriptFiles);
-				lastConditionsCheck=System.currentTimeMillis();
+				lastConditionsCheck = System.currentTimeMillis();
 			}
 		}
 		return conditionScriptFiles;
@@ -269,25 +273,25 @@ public class ApplicationPreferences
 
 	public void installExampleConditions()
 	{
-		String path=EXAMPLE_GROOVY_BASE+EXAMPLE_GROOVY_LIST;
-		URL url=ApplicationPreferences.class.getResource(path);
-		if(url==null)
+		String path = EXAMPLE_GROOVY_BASE + EXAMPLE_GROOVY_LIST;
+		URL url = ApplicationPreferences.class.getResource(path);
+		if(url == null)
 		{
-			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at "+path+"!");
+			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
 		}
 		else
 		{
-			List<String> lines=readLines(url);
+			List<String> lines = readLines(url);
 			for(String current : lines)
 			{
-				path=EXAMPLE_GROOVY_BASE+current;
-				url=ApplicationPreferences.class.getResource(path);
-				if(url==null)
+				path = EXAMPLE_GROOVY_BASE + current;
+				url = ApplicationPreferences.class.getResource(path);
+				if(url == null)
 				{
-					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at "+path+"!");
+					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
 					continue;
 				}
-				File target=new File(groovyConditionsPath, current);
+				File target = new File(groovyConditionsPath, current);
 				copy(url, target, true);
 			}
 		}
@@ -295,10 +299,10 @@ public class ApplicationPreferences
 
 	private void initLevelColors()
 	{
-		if(levelColors==null)
+		if(levelColors == null)
 		{
-			File appPath=getStartupApplicationPath();
-			File levelColorsFile =new File(appPath, LEVEL_COLORS_XML_FILENAME);
+			File appPath = getStartupApplicationPath();
+			File levelColorsFile = new File(appPath, LEVEL_COLORS_XML_FILENAME);
 
 			if(levelColorsFile.isFile())
 			{
@@ -306,20 +310,25 @@ public class ApplicationPreferences
 				try
 				{
 					d = new XMLDecoder(
-									  new BufferedInputStream(
-										  new FileInputStream(levelColorsFile)));
+						new BufferedInputStream(
+							new FileInputStream(levelColorsFile)));
 
 					//noinspection unchecked
 					levelColors = (Map<LoggingEvent.Level, ColorScheme>) d.readObject();
 				}
-				catch (Throwable ex)
+				catch(Throwable ex)
 				{
-					if(logger.isWarnEnabled()) logger.warn("Exception while loading level colors from sourceListsFile '"+levelColorsFile.getAbsolutePath()+"'!",ex);
-					levelColors=null;
+					if(logger.isWarnEnabled())
+					{
+						logger
+							.warn("Exception while loading level colors from sourceListsFile '" + levelColorsFile
+								.getAbsolutePath() + "'!", ex);
+					}
+					levelColors = null;
 				}
 				finally
 				{
-					if(d!=null)
+					if(d != null)
 					{
 						d.close();
 					}
@@ -330,12 +339,12 @@ public class ApplicationPreferences
 		if(levelColors != null && levelColors.size() != DEFAULT_LEVEL_COLORS.size())
 		{
 			if(logger.isWarnEnabled()) logger.warn("Reverting level colors to defaults.");
-			levelColors=null;
+			levelColors = null;
 		}
 
-		if(levelColors==null)
+		if(levelColors == null)
 		{
-			levelColors=cloneLevelColors(DEFAULT_LEVEL_COLORS);
+			levelColors = cloneLevelColors(DEFAULT_LEVEL_COLORS);
 		}
 	}
 
@@ -344,12 +353,12 @@ public class ApplicationPreferences
 		if(input != null && input.size() != DEFAULT_LEVEL_COLORS.size())
 		{
 			if(logger.isWarnEnabled()) logger.warn("Reverting colors to defaults.");
-			input=null;
+			input = null;
 		}
 
-		if(input==null)
+		if(input == null)
 		{
-			input=DEFAULT_LEVEL_COLORS;
+			input = DEFAULT_LEVEL_COLORS;
 		}
 
 		Map<LoggingEvent.Level, ColorScheme> result = new HashMap<LoggingEvent.Level, ColorScheme>();
@@ -361,7 +370,7 @@ public class ApplicationPreferences
 				result.put(current.getKey(), current.getValue().clone());
 			}
 		}
-		catch (Throwable e)
+		catch(Throwable e)
 		{
 			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", e);
 		}
@@ -370,34 +379,34 @@ public class ApplicationPreferences
 
 	public void setLevelColors(Map<LoggingEvent.Level, ColorScheme> colors)
 	{
-		Object oldValue=getLevelColors();
-		colors=cloneLevelColors(colors);
+		Object oldValue = getLevelColors();
+		colors = cloneLevelColors(colors);
 		writeLevelColors(colors);
-		this.levelColors=colors;
-		Object newValue=getLevelColors();
+		this.levelColors = colors;
+		Object newValue = getLevelColors();
 		propertyChangeSupport.firePropertyChange(LEVEL_COLORS_PROPERTY, oldValue, newValue);
 		if(logger.isInfoEnabled()) logger.info("LevelColors set to {}.", this.levelColors);
 	}
 
 	private void writeLevelColors(Map<LoggingEvent.Level, ColorScheme> colors)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, LEVEL_COLORS_XML_FILENAME);
-		Throwable error=null;
+		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			XMLEncoder e = new XMLEncoder(bos);
-			PersistenceDelegate delegate=new EnumPersistenceDelegate();
+			PersistenceDelegate delegate = new EnumPersistenceDelegate();
 			e.setPersistenceDelegate(LoggingEvent.Level.class, delegate);
 			e.writeObject(colors);
 			e.close();
 		}
-		catch (Throwable ex)
+		catch(Throwable ex)
 		{
-			error=ex;
+			error = ex;
 		}
-		if(error!=null)
+		if(error != null)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", error);
 		}
@@ -405,7 +414,7 @@ public class ApplicationPreferences
 
 	public Map<LoggingEvent.Level, ColorScheme> getLevelColors()
 	{
-		if(levelColors==null)
+		if(levelColors == null)
 		{
 			initLevelColors();
 		}
@@ -414,10 +423,10 @@ public class ApplicationPreferences
 
 	private void initStatusColors()
 	{
-		if(statusColors==null)
+		if(statusColors == null)
 		{
-			File appPath=getStartupApplicationPath();
-			File statusColorsFile =new File(appPath, STATUS_COLORS_XML_FILENAME);
+			File appPath = getStartupApplicationPath();
+			File statusColorsFile = new File(appPath, STATUS_COLORS_XML_FILENAME);
 
 			if(statusColorsFile.isFile())
 			{
@@ -425,20 +434,25 @@ public class ApplicationPreferences
 				try
 				{
 					d = new XMLDecoder(
-									  new BufferedInputStream(
-										  new FileInputStream(statusColorsFile)));
+						new BufferedInputStream(
+							new FileInputStream(statusColorsFile)));
 
 					//noinspection unchecked
 					statusColors = (Map<HttpStatus.Type, ColorScheme>) d.readObject();
 				}
-				catch (Throwable ex)
+				catch(Throwable ex)
 				{
-					if(logger.isWarnEnabled()) logger.warn("Exception while loading status colors from sourceListsFile '"+statusColorsFile.getAbsolutePath()+"'!",ex);
-					statusColors=null;
+					if(logger.isWarnEnabled())
+					{
+						logger
+							.warn("Exception while loading status colors from sourceListsFile '" + statusColorsFile
+								.getAbsolutePath() + "'!", ex);
+					}
+					statusColors = null;
 				}
 				finally
 				{
-					if(d!=null)
+					if(d != null)
 					{
 						d.close();
 					}
@@ -449,12 +463,12 @@ public class ApplicationPreferences
 		if(statusColors != null && statusColors.size() != DEFAULT_STATUS_COLORS.size())
 		{
 			if(logger.isWarnEnabled()) logger.warn("Reverting status colors to defaults.");
-			statusColors=null;
+			statusColors = null;
 		}
 
-		if(statusColors==null)
+		if(statusColors == null)
 		{
-			statusColors=cloneStatusColors(DEFAULT_STATUS_COLORS);
+			statusColors = cloneStatusColors(DEFAULT_STATUS_COLORS);
 		}
 	}
 
@@ -463,12 +477,12 @@ public class ApplicationPreferences
 		if(input != null && input.size() != DEFAULT_STATUS_COLORS.size())
 		{
 			if(logger.isWarnEnabled()) logger.warn("Reverting colors to defaults.");
-			input=null;
+			input = null;
 		}
 
-		if(input==null)
+		if(input == null)
 		{
-			input=DEFAULT_STATUS_COLORS;
+			input = DEFAULT_STATUS_COLORS;
 		}
 
 		Map<HttpStatus.Type, ColorScheme> result = new HashMap<HttpStatus.Type, ColorScheme>();
@@ -480,7 +494,7 @@ public class ApplicationPreferences
 				result.put(current.getKey(), current.getValue().clone());
 			}
 		}
-		catch (Throwable e)
+		catch(Throwable e)
 		{
 			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", e);
 		}
@@ -489,34 +503,34 @@ public class ApplicationPreferences
 
 	public void setStatusColors(Map<HttpStatus.Type, ColorScheme> colors)
 	{
-		Object oldValue=getStatusColors();
-		colors=cloneStatusColors(colors);
+		Object oldValue = getStatusColors();
+		colors = cloneStatusColors(colors);
 		writeStatusColors(colors);
-		this.statusColors=colors;
-		Object newValue=getStatusColors();
+		this.statusColors = colors;
+		Object newValue = getStatusColors();
 		propertyChangeSupport.firePropertyChange(STATUS_COLORS_PROPERTY, oldValue, newValue);
 		if(logger.isInfoEnabled()) logger.info("StatusColors set to {}.", this.statusColors);
 	}
 
 	private void writeStatusColors(Map<HttpStatus.Type, ColorScheme> colors)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, STATUS_COLORS_XML_FILENAME);
-		Throwable error=null;
+		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			XMLEncoder e = new XMLEncoder(bos);
-			PersistenceDelegate delegate=new EnumPersistenceDelegate();
+			PersistenceDelegate delegate = new EnumPersistenceDelegate();
 			e.setPersistenceDelegate(HttpStatus.Type.class, delegate);
 			e.writeObject(colors);
 			e.close();
 		}
-		catch (Throwable ex)
+		catch(Throwable ex)
 		{
-			error=ex;
+			error = ex;
 		}
-		if(error!=null)
+		if(error != null)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", error);
 		}
@@ -524,7 +538,7 @@ public class ApplicationPreferences
 
 	public Map<HttpStatus.Type, ColorScheme> getStatusColors()
 	{
-		if(statusColors==null)
+		if(statusColors == null)
 		{
 			initStatusColors();
 		}
@@ -533,22 +547,22 @@ public class ApplicationPreferences
 
 	public void setSourceFiltering(SourceFiltering sourceFiltering)
 	{
-		Object oldValue=getSourceFiltering();
+		Object oldValue = getSourceFiltering();
 		PREFERENCES.put(SOURCE_FILTERING_PROPERTY, sourceFiltering.toString());
-		this.sourceFiltering=sourceFiltering;
+		this.sourceFiltering = sourceFiltering;
 		propertyChangeSupport.firePropertyChange(SOURCE_FILTERING_PROPERTY, oldValue, sourceFiltering);
 		if(logger.isInfoEnabled()) logger.info("SourceFiltering set to {}.", this.sourceFiltering);
 	}
 
 	private void initSourceLists()
 	{
-		File appPath=getStartupApplicationPath();
-		File sourceListsFile =new File(appPath, SOURCE_LISTS_XML_FILENAME);
+		File appPath = getStartupApplicationPath();
+		File sourceListsFile = new File(appPath, SOURCE_LISTS_XML_FILENAME);
 
 		if(sourceListsFile.isFile())
 		{
 			long lastModified = sourceListsFile.lastModified();
-			if(sourceLists!=null && lastSourceListsModified >=lastModified)
+			if(sourceLists != null && lastSourceListsModified >= lastModified)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Won't reload source lists.");
 				return;
@@ -557,29 +571,34 @@ public class ApplicationPreferences
 			try
 			{
 				d = new XMLDecoder(
-								  new BufferedInputStream(
-									  new FileInputStream(sourceListsFile)));
+					new BufferedInputStream(
+						new FileInputStream(sourceListsFile)));
 
 				//noinspection unchecked
-				sourceLists=(Map<String, Set<String>>) d.readObject();
-				lastSourceListsModified=lastModified;
+				sourceLists = (Map<String, Set<String>>) d.readObject();
+				lastSourceListsModified = lastModified;
 			}
-			catch (Throwable ex)
+			catch(Throwable ex)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while loading source lists from sourceListsFile '"+sourceListsFile.getAbsolutePath()+"'!",ex);
-				sourceLists=new HashMap<String, Set<String>>();
+				if(logger.isWarnEnabled())
+				{
+					logger
+						.warn("Exception while loading source lists from sourceListsFile '" + sourceListsFile
+							.getAbsolutePath() + "'!", ex);
+				}
+				sourceLists = new HashMap<String, Set<String>>();
 			}
 			finally
 			{
-				if(d!=null)
+				if(d != null)
 				{
 					d.close();
 				}
 			}
 		}
-		else if(sourceLists==null)
+		else if(sourceLists == null)
 		{
-			sourceLists=new HashMap<String, Set<String>>();
+			sourceLists = new HashMap<String, Set<String>>();
 		}
 	}
 
@@ -591,26 +610,26 @@ public class ApplicationPreferences
 
 	public void setSourceLists(Map<String, Set<String>> sourceLists)
 	{
-		Object oldValue=getSourceLists();
+		Object oldValue = getSourceLists();
 		writeSourceLists(sourceLists);
-		Object newValue=getSourceLists();
-		blackList=null;
-		whiteList=null;
+		Object newValue = getSourceLists();
+		blackList = null;
+		whiteList = null;
 		propertyChangeSupport.firePropertyChange(SOURCE_LISTS_PROPERTY, oldValue, newValue);
 	}
 
 	public SourceFiltering getSourceFiltering()
 	{
-		if(sourceFiltering!=null)
+		if(sourceFiltering != null)
 		{
 			return sourceFiltering;
 		}
-		String sf=PREFERENCES.get(SOURCE_FILTERING_PROPERTY, "NONE");
+		String sf = PREFERENCES.get(SOURCE_FILTERING_PROPERTY, "NONE");
 		try
 		{
 			sourceFiltering = SourceFiltering.valueOf(sf);
 		}
-		catch (IllegalArgumentException e)
+		catch(IllegalArgumentException e)
 		{
 			sourceFiltering = SourceFiltering.NONE;
 		}
@@ -628,24 +647,27 @@ public class ApplicationPreferences
 		{
 			detailsViewRootUrl = detailsViewRoot.toURI().toURL();
 		}
-		catch (MalformedURLException e)
+		catch(MalformedURLException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating detailsViewRootUrl for '{}'!", detailsViewRoot.getAbsolutePath());
-			detailsViewRootUrl =null;
+			if(logger.isWarnEnabled())
+			{
+				logger.warn("Exception while creating detailsViewRootUrl for '{}'!", detailsViewRoot.getAbsolutePath());
+			}
+			detailsViewRootUrl = null;
 		}
 
 		{
-			String resourcePath="/detailsView/"+ DETAILS_VIEW_CSS_FILENAME;
-			String historyBasePath="/detailsView/history/detailsView.css/";
-			File detailsViewCssFile=new File(detailsViewRoot, DETAILS_VIEW_CSS_FILENAME);
+			String resourcePath = "/detailsView/" + DETAILS_VIEW_CSS_FILENAME;
+			String historyBasePath = "/detailsView/history/detailsView.css/";
+			File detailsViewCssFile = new File(detailsViewRoot, DETAILS_VIEW_CSS_FILENAME);
 
 			initIfNecessary(detailsViewCssFile, resourcePath, historyBasePath, overwriteAlways);
 		}
 
 		{
-			String resourcePath="/detailsView/"+ DETAILS_VIEW_GROOVY_FILENAME;
-			String historyBasePath="/detailsView/history/detailsView.groovy/";
-			File detailsViewGroovyFile=new File(detailsViewRoot, DETAILS_VIEW_GROOVY_FILENAME);
+			String resourcePath = "/detailsView/" + DETAILS_VIEW_GROOVY_FILENAME;
+			String historyBasePath = "/detailsView/history/detailsView.groovy/";
+			File detailsViewGroovyFile = new File(detailsViewRoot, DETAILS_VIEW_GROOVY_FILENAME);
 
 			initIfNecessary(detailsViewGroovyFile, resourcePath, historyBasePath, overwriteAlways);
 		}
@@ -653,10 +675,10 @@ public class ApplicationPreferences
 
 	private void initIfNecessary(File file, String resourcePath, String historyBasePath, boolean overwriteAlways)
 	{
-		boolean delete=false;
+		boolean delete = false;
 		if(overwriteAlways)
 		{
-			delete=true;
+			delete = true;
 		}
 		else if(file.isFile())
 		{
@@ -665,9 +687,9 @@ public class ApplicationPreferences
 			try
 			{
 				FileInputStream availableFile = new FileInputStream(file);
-				available=getMD5(availableFile);
+				available = getMD5(availableFile);
 			}
-			catch (FileNotFoundException e)
+			catch(FileNotFoundException e)
 			{
 				// ignore
 			}
@@ -676,62 +698,71 @@ public class ApplicationPreferences
 			if(Arrays.equals(available, current))
 			{
 				// we are done already. The current version is the latest version.
-				if(logger.isDebugEnabled()) logger.debug("The current version of {} is also the latest version.", file.getAbsolutePath());
+				if(logger.isDebugEnabled())
+				{
+					logger.debug("The current version of {} is also the latest version.", file.getAbsolutePath());
+				}
 				return;
 			}
 
-			if(available!=null)
+			if(available != null)
 			{
 				// check older versions if available
-				URL historyUrl = getClass().getResource(historyBasePath+"history.txt");
-				if(historyUrl!=null)
+				URL historyUrl = getClass().getResource(historyBasePath + "history.txt");
+				if(historyUrl != null)
 				{
 					List<String> historyList = readLines(historyUrl);
 
 					for(String currentLine : historyList)
 					{
-						InputStream is=getClass().getResourceAsStream(historyBasePath+currentLine+".md5");
-                        if(is!=null)
-                        {
-                            DataInputStream dis=new DataInputStream(is);
-                            byte[] checksum=new byte[16];
-                            try
-                            {
-                                dis.readFully(checksum);
-                                if(Arrays.equals(available, checksum))
-                                {
-                                    if(logger.isInfoEnabled()) logger.info("Found old version of {}: {}", file.getAbsolutePath(), currentLine);
-                                    delete=true;
-                                    break;
-                                }
-                            }
-                            catch (IOException e)
-                            {
-                                if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of "+currentLine+"!", e);
-                            }
-                            finally
-                            {
-                                try
-                                {
-                                    dis.close();
-                                }
-                                catch (IOException e)
-                                {
-                                    // ignore
-                                }
-                            }
-                        }
+						InputStream is = getClass().getResourceAsStream(historyBasePath + currentLine + ".md5");
+						if(is != null)
+						{
+							DataInputStream dis = new DataInputStream(is);
+							byte[] checksum = new byte[16];
+							try
+							{
+								dis.readFully(checksum);
+								if(Arrays.equals(available, checksum))
+								{
+									if(logger.isInfoEnabled())
+									{
+										logger.info("Found old version of {}: {}", file.getAbsolutePath(), currentLine);
+									}
+									delete = true;
+									break;
+								}
+							}
+							catch(IOException e)
+							{
+								if(logger.isWarnEnabled())
+								{
+									logger.warn("Exception while reading checksum of " + currentLine + "!", e);
+								}
+							}
+							finally
+							{
+								try
+								{
+									dis.close();
+								}
+								catch(IOException e)
+								{
+									// ignore
+								}
+							}
+						}
 					}
 				}
 			}
 			else
 			{
 				// we couldn't calculate the checksum. Try to delete it...
-				delete=true;
+				delete = true;
 			}
 		}
 
-		URL resourceUrl=ApplicationPreferences.class.getResource(resourcePath);
+		URL resourceUrl = ApplicationPreferences.class.getResource(resourcePath);
 		if(resourceUrl == null)
 		{
 			if(logger.isErrorEnabled()) logger.error("Couldn't find resource {}!", resourcePath);
@@ -752,25 +783,35 @@ public class ApplicationPreferences
 				}
 				else
 				{
-					if(logger.isWarnEnabled()) logger.warn("Tried to delete {} but couldn't!", target.getAbsolutePath());
+					if(logger.isWarnEnabled())
+					{
+						logger.warn("Tried to delete {} but couldn't!", target.getAbsolutePath());
+					}
 				}
 			}
 		}
 
 		if(!target.isFile())
 		{
-			InputStream is=null;
-			FileOutputStream os= null;
+			InputStream is = null;
+			FileOutputStream os = null;
 			try
 			{
 				os = new FileOutputStream(target);
 				is = source.openStream();
 				IOUtils.copy(is, os);
-				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
+				if(logger.isInfoEnabled())
+				{
+					logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
+				}
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while initializing '"+target.getAbsolutePath()+"' with data from '"+source+"'.!", e);
+				if(logger.isWarnEnabled())
+				{
+					logger.warn("Exception while initializing '" + target
+						.getAbsolutePath() + "' with data from '" + source + "'.!", e);
+				}
 			}
 			finally
 			{
@@ -793,38 +834,38 @@ public class ApplicationPreferences
 	 */
 	private List<String> readLines(URL url)
 	{
-		List<String> result=new ArrayList<String>();
+		List<String> result = new ArrayList<String>();
 		BufferedReader reader = null;
 		try
 		{
 			reader = new BufferedReader(new InputStreamReader(url.openStream()));
-			for(;;)
+			for(; ;)
 			{
-				String currentLine=reader.readLine();
-				if(currentLine==null)
+				String currentLine = reader.readLine();
+				if(currentLine == null)
 				{
 					break;
 				}
-				currentLine=currentLine.trim();
+				currentLine = currentLine.trim();
 				if(!"".equals(currentLine) && !currentLine.startsWith("#"))
 				{
 					result.add(currentLine);
 				}
 			}
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while reading lines from "+url+"!", e);
+			if(logger.isWarnEnabled()) logger.warn("Exception while reading lines from " + url + "!", e);
 		}
 		finally
 		{
-			if(reader!=null)
+			if(reader != null)
 			{
 				try
 				{
 					reader.close();
 				}
-				catch (IOException e)
+				catch(IOException e)
 				{
 					// ignore
 				}
@@ -855,11 +896,11 @@ public class ApplicationPreferences
 
 	public boolean isValidSource(String source)
 	{
-		if(source==null)
+		if(source == null)
 		{
 			return false;
 		}
-		SourceFiltering filtering=getSourceFiltering();
+		SourceFiltering filtering = getSourceFiltering();
 		switch(filtering)
 		{
 			case BLACKLIST:
@@ -872,12 +913,12 @@ public class ApplicationPreferences
 
 	public boolean isBlackListed(String source)
 	{
-		if(blackList==null)
+		if(blackList == null)
 		{
-			String listName=getBlackListName();
+			String listName = getBlackListName();
 			initSourceLists();
 			blackList = sourceLists.get(listName);
-			if(blackList==null)
+			if(blackList == null)
 			{
 				// meaning there was no list of the given blacklist name.
 				if(logger.isInfoEnabled()) logger.info("Couldn't find blacklist '{}'!", listName);
@@ -891,9 +932,9 @@ public class ApplicationPreferences
 
 	public void setBlackListName(String name)
 	{
-		Object oldValue=getBlackListName();
+		Object oldValue = getBlackListName();
 		PREFERENCES.put(BLACK_LIST_NAME_PROPERTY, name);
-		Object newValue=getBlackListName();
+		Object newValue = getBlackListName();
 		propertyChangeSupport.firePropertyChange(BLACK_LIST_NAME_PROPERTY, oldValue, newValue);
 		if(logger.isInfoEnabled()) logger.info("BlackListName set to {}.", newValue);
 	}
@@ -905,12 +946,12 @@ public class ApplicationPreferences
 
 	public boolean isWhiteListed(String source)
 	{
-		if(whiteList==null)
+		if(whiteList == null)
 		{
-			String listName=getWhiteListName();
+			String listName = getWhiteListName();
 			initSourceLists();
 			whiteList = sourceLists.get(listName);
-			if(whiteList==null)
+			if(whiteList == null)
 			{
 				// meaning there was no list of the given blacklist name.
 				if(logger.isInfoEnabled()) logger.info("Couldn't find whitelist '{}'!", listName);
@@ -924,9 +965,9 @@ public class ApplicationPreferences
 
 	public void setWhiteListName(String name)
 	{
-		Object oldValue=getWhiteListName();
+		Object oldValue = getWhiteListName();
 		PREFERENCES.put(WHITE_LIST_NAME_PROPERTY, name);
-		Object newValue=getWhiteListName();
+		Object newValue = getWhiteListName();
 		propertyChangeSupport.firePropertyChange(WHITE_LIST_NAME_PROPERTY, oldValue, newValue);
 		if(logger.isInfoEnabled()) logger.info("WhiteListName set to {}.", newValue);
 	}
@@ -938,9 +979,9 @@ public class ApplicationPreferences
 
 	public void setLookAndFeel(String name)
 	{
-		Object oldValue=getLookAndFeel();
+		Object oldValue = getLookAndFeel();
 		PREFERENCES.put(LOOK_AND_FEEL_PROPERTY, name);
-		Object newValue=getLookAndFeel();
+		Object newValue = getLookAndFeel();
 		propertyChangeSupport.firePropertyChange(LOOK_AND_FEEL_PROPERTY, oldValue, newValue);
 		if(logger.isInfoEnabled()) logger.info("LookAndFeel set to {}.", newValue);
 	}
@@ -950,7 +991,7 @@ public class ApplicationPreferences
 		String result = PREFERENCES.get(LOOK_AND_FEEL_PROPERTY, STARTUP_LOOK_AND_FEEL);
 		if(!installedLookAndFeels.contains(result))
 		{
-			result=STARTUP_LOOK_AND_FEEL;
+			result = STARTUP_LOOK_AND_FEEL;
 			if(logger.isInfoEnabled()) logger.info("Look and Feel corrected to \"{}\".", result);
 		}
 		return result;
@@ -958,13 +999,13 @@ public class ApplicationPreferences
 
 	private void initConditions()
 	{
-		File appPath=getStartupApplicationPath();
-		File conditionsFile =new File(appPath, CONDITIONS_XML_FILENAME);
+		File appPath = getStartupApplicationPath();
+		File conditionsFile = new File(appPath, CONDITIONS_XML_FILENAME);
 
 		if(conditionsFile.isFile())
 		{
 			long lastModified = conditionsFile.lastModified();
-			if(conditions!=null && lastConditionsModified >=lastModified)
+			if(conditions != null && lastConditionsModified >= lastModified)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Won't reload conditions.");
 				return;
@@ -973,30 +1014,34 @@ public class ApplicationPreferences
 			try
 			{
 				d = new XMLDecoder(
-								  new BufferedInputStream(
-									  new FileInputStream(conditionsFile)));
+					new BufferedInputStream(
+						new FileInputStream(conditionsFile)));
 
 				//noinspection unchecked
-				conditions=(List<SavedCondition>) d.readObject();
+				conditions = (List<SavedCondition>) d.readObject();
 				lastConditionsModified = lastModified;
 				if(logger.isDebugEnabled()) logger.debug("Loaded conditions {}.", conditions);
 			}
-			catch (Throwable ex)
+			catch(Throwable ex)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while loading conditions from file '"+ conditionsFile.getAbsolutePath()+"'!",ex);
+				if(logger.isWarnEnabled())
+				{
+					logger.warn("Exception while loading conditions from file '" + conditionsFile
+						.getAbsolutePath() + "'!", ex);
+				}
 			}
 			finally
 			{
-				if(d!=null)
+				if(d != null)
 				{
 					d.close();
 				}
 			}
 		}
 
-		if(conditions==null)
+		if(conditions == null)
 		{
-			conditions=new ArrayList<SavedCondition>();
+			conditions = new ArrayList<SavedCondition>();
 		}
 	}
 
@@ -1007,7 +1052,7 @@ public class ApplicationPreferences
 			return null;
 		}
 		initConditions();
-		for(SavedCondition current:conditions)
+		for(SavedCondition current : conditions)
 		{
 			if(condition.equals(current.getCondition()))
 			{
@@ -1015,7 +1060,7 @@ public class ApplicationPreferences
 				{
 					return current.clone();
 				}
-				catch (CloneNotSupportedException e)
+				catch(CloneNotSupportedException e)
 				{
 					return null;
 				}
@@ -1026,7 +1071,7 @@ public class ApplicationPreferences
 
 	public SavedCondition resolveSavedCondition(String conditionName)
 	{
-		if(conditionName==null)
+		if(conditionName == null)
 		{
 			return null;
 		}
@@ -1039,7 +1084,7 @@ public class ApplicationPreferences
 				{
 					return current.clone();
 				}
-				catch (CloneNotSupportedException e)
+				catch(CloneNotSupportedException e)
 				{
 					return null;
 				}
@@ -1049,20 +1094,19 @@ public class ApplicationPreferences
 	}
 
 
-
 	public List<SavedCondition> getConditions()
 	{
 		initConditions();
 
 		// perform deep clone... otherwise no propchange would be fired.
 		ArrayList<SavedCondition> result = new ArrayList<SavedCondition>(conditions.size());
-		for(SavedCondition current:conditions)
+		for(SavedCondition current : conditions)
 		{
 			try
 			{
 				result.add(current.clone());
 			}
-			catch (CloneNotSupportedException e)
+			catch(CloneNotSupportedException e)
 			{
 				// ignore
 			}
@@ -1073,17 +1117,17 @@ public class ApplicationPreferences
 
 	public void setConditions(List<SavedCondition> conditions)
 	{
-		Object oldValue=getConditions();
+		Object oldValue = getConditions();
 		writeConditions(conditions);
-		Object newValue=getConditions();
+		Object newValue = getConditions();
 		propertyChangeSupport.firePropertyChange(CONDITIONS_PROPERTY, oldValue, newValue);
 	}
 
 	public void setAutoOpening(boolean autoOpening)
 	{
-		Object oldValue=isAutoOpening();
+		Object oldValue = isAutoOpening();
 		PREFERENCES.putBoolean(AUTO_OPENING_PROPERTY, autoOpening);
-		Object newValue=isAutoOpening();
+		Object newValue = isAutoOpening();
 		propertyChangeSupport.firePropertyChange(AUTO_OPENING_PROPERTY, oldValue, newValue);
 	}
 
@@ -1133,9 +1177,9 @@ public class ApplicationPreferences
 
 	public void setCheckingForUpdate(boolean checkingForUpdate)
 	{
-		Object oldValue=isCheckingForUpdate();
+		Object oldValue = isCheckingForUpdate();
 		PREFERENCES.putBoolean(CHECKING_FOR_UPDATE_PROPERTY, checkingForUpdate);
-		Object newValue=isCheckingForUpdate();
+		Object newValue = isCheckingForUpdate();
 		propertyChangeSupport.firePropertyChange(CHECKING_FOR_UPDATE_PROPERTY, oldValue, newValue);
 	}
 
@@ -1146,9 +1190,9 @@ public class ApplicationPreferences
 
 	public void setAutoClosing(boolean autoClosing)
 	{
-		Object oldValue=isAutoClosing();
+		Object oldValue = isAutoClosing();
 		PREFERENCES.putBoolean(AUTO_CLOSING_PROPERTY, autoClosing);
-		Object newValue=isAutoClosing();
+		Object newValue = isAutoClosing();
 		propertyChangeSupport.firePropertyChange(AUTO_CLOSING_PROPERTY, oldValue, newValue);
 	}
 
@@ -1159,12 +1203,12 @@ public class ApplicationPreferences
 
 	public File getImagePath()
 	{
-		String userHome=System.getProperty("user.home");
-		String imagePath =PREFERENCES.get(IMAGE_PATH_PROPERTY, userHome);
-		File result=new File(imagePath);
+		String userHome = System.getProperty("user.home");
+		String imagePath = PREFERENCES.get(IMAGE_PATH_PROPERTY, userHome);
+		File result = new File(imagePath);
 		if(!result.isDirectory())
 		{
-			result=new File(userHome);
+			result = new File(userHome);
 		}
 		return result;
 	}
@@ -1173,22 +1217,22 @@ public class ApplicationPreferences
 	{
 		if(!imagePath.isDirectory())
 		{
-			throw new IllegalArgumentException("'"+imagePath.getAbsolutePath()+"' is not a directory!");
+			throw new IllegalArgumentException("'" + imagePath.getAbsolutePath() + "' is not a directory!");
 		}
-		Object oldValue=getImagePath();
+		Object oldValue = getImagePath();
 		PREFERENCES.put(IMAGE_PATH_PROPERTY, imagePath.getAbsolutePath());
-		Object newValue=getImagePath();
+		Object newValue = getImagePath();
 		propertyChangeSupport.firePropertyChange(IMAGE_PATH_PROPERTY, oldValue, newValue);
 	}
 
 	public File getSoundPath()
 	{
-		String userHome=System.getProperty("user.home");
-		String soundPath =PREFERENCES.get(SOUND_PATH_PROPERTY, userHome);
-		File result=new File(soundPath);
+		String userHome = System.getProperty("user.home");
+		String soundPath = PREFERENCES.get(SOUND_PATH_PROPERTY, userHome);
+		File result = new File(soundPath);
 		if(!result.isDirectory())
 		{
-			result=new File(userHome);
+			result = new File(userHome);
 		}
 		return result;
 	}
@@ -1197,19 +1241,19 @@ public class ApplicationPreferences
 	{
 		if(!soundPath.isDirectory())
 		{
-			throw new IllegalArgumentException("'"+soundPath.getAbsolutePath()+"' is not a directory!");
+			throw new IllegalArgumentException("'" + soundPath.getAbsolutePath() + "' is not a directory!");
 		}
-		Object oldValue=getSoundPath();
+		Object oldValue = getSoundPath();
 		PREFERENCES.put(SOUND_PATH_PROPERTY, soundPath.getAbsolutePath());
-		Object newValue=getSoundPath();
+		Object newValue = getSoundPath();
 		propertyChangeSupport.firePropertyChange(SOUND_PATH_PROPERTY, oldValue, newValue);
 	}
 
 	public void setMute(boolean mute)
 	{
-		Object oldValue=isMute();
+		Object oldValue = isMute();
 		PREFERENCES.putBoolean(MUTE_PROPERTY, mute);
-		Object newValue=isMute();
+		Object newValue = isMute();
 		propertyChangeSupport.firePropertyChange(MUTE_PROPERTY, oldValue, newValue);
 	}
 
@@ -1220,7 +1264,7 @@ public class ApplicationPreferences
 
 	public void setLicensed(boolean licensed)
 	{
-		Object oldValue=isLicensed();
+		Object oldValue = isLicensed();
 		if(licensed)
 		{
 			PREFERENCES.put(LICENSED_PREFERENCES_KEY, Lilith.APP_VERSION);
@@ -1229,7 +1273,7 @@ public class ApplicationPreferences
 		{
 			PREFERENCES.remove(LICENSED_PREFERENCES_KEY);
 		}
-		Object newValue=isLicensed();
+		Object newValue = isLicensed();
 		propertyChangeSupport.firePropertyChange(LICENSED_PREFERENCES_KEY, oldValue, newValue);
 	}
 
@@ -1246,18 +1290,18 @@ public class ApplicationPreferences
 		}
 		if(!applicationPath.isDirectory())
 		{
-			throw new IllegalArgumentException("'"+applicationPath.getAbsolutePath()+"' is not a directory!");
+			throw new IllegalArgumentException("'" + applicationPath.getAbsolutePath() + "' is not a directory!");
 		}
-		Object oldValue=getStartupApplicationPath(); // !!!
+		Object oldValue = getStartupApplicationPath(); // !!!
 		PREFERENCES.put(APPLICATION_PATH_PROPERTY, applicationPath.getAbsolutePath());
-		Object newValue=getApplicationPath();
+		Object newValue = getApplicationPath();
 		propertyChangeSupport.firePropertyChange(APPLICATION_PATH_PROPERTY, oldValue, newValue);
 	}
 
 	public File getApplicationPath()
 	{
-		String appPath=PREFERENCES.get(APPLICATION_PATH_PROPERTY, DEFAULT_APPLICATION_PATH);
-		File result=new File(appPath);
+		String appPath = PREFERENCES.get(APPLICATION_PATH_PROPERTY, DEFAULT_APPLICATION_PATH);
+		File result = new File(appPath);
 		if(result.mkdirs())
 		{
 			if(logger.isInfoEnabled()) logger.info("Created directory {}.", result.getAbsolutePath());
@@ -1270,7 +1314,7 @@ public class ApplicationPreferences
 	 * If a part of the application needs the application path it should *always* use this method instead of
 	 * getApplicationPath() since the application path might change while this one will always stay
 	 * the same.
-	 *
+	 * <p/>
 	 * A switch of the application path while the application is running isn't safe so it's changed for real
 	 * upon next restart.
 	 *
@@ -1283,9 +1327,9 @@ public class ApplicationPreferences
 
 	public void setUsingInternalFrames(boolean usingInternalFrames)
 	{
-		Object oldValue=isUsingInternalFrames();
+		Object oldValue = isUsingInternalFrames();
 		PREFERENCES.putBoolean(USING_INTERNAL_FRAMES_PROPERTY, usingInternalFrames);
-		Object newValue=isUsingInternalFrames();
+		Object newValue = isUsingInternalFrames();
 		propertyChangeSupport.firePropertyChange(USING_INTERNAL_FRAMES_PROPERTY, oldValue, newValue);
 	}
 
@@ -1296,9 +1340,9 @@ public class ApplicationPreferences
 
 	public void setAutoFocusingWindow(boolean autoFocusingWindow)
 	{
-		Object oldValue=isAutoFocusingWindow();
+		Object oldValue = isAutoFocusingWindow();
 		PREFERENCES.putBoolean(AUTO_FOCUSING_WINDOW_PROPERTY, autoFocusingWindow);
-		Object newValue=isAutoFocusingWindow();
+		Object newValue = isAutoFocusingWindow();
 		propertyChangeSupport.firePropertyChange(AUTO_FOCUSING_WINDOW_PROPERTY, oldValue, newValue);
 	}
 
@@ -1309,16 +1353,16 @@ public class ApplicationPreferences
 
 	public void setSourceNames(Map<String, String> sourceNames)
 	{
-		Object oldValue=getSourceNames();
+		Object oldValue = getSourceNames();
 		writeSourceNames(sourceNames);
-		Object newValue=getSourceNames();
+		Object newValue = getSourceNames();
 		propertyChangeSupport.firePropertyChange(SOURCE_NAMES_PROPERTY, oldValue, newValue);
 	}
 
-	public Map<String,String> getSourceNames()
+	public Map<String, String> getSourceNames()
 	{
-		File appPath=getStartupApplicationPath();
-		File sourceNamesFile=new File(appPath, SOURCE_NAMES_XML_FILENAME);
+		File appPath = getStartupApplicationPath();
+		File sourceNamesFile = new File(appPath, SOURCE_NAMES_XML_FILENAME);
 
 		if(sourceNamesFile.isFile())
 		{
@@ -1328,7 +1372,7 @@ public class ApplicationPreferences
 			}
 		}
 
-		sourceNamesFile=new File(appPath, SOURCE_NAMES_PROPERTIES_FILENAME);
+		sourceNamesFile = new File(appPath, SOURCE_NAMES_PROPERTIES_FILENAME);
 		if(sourceNamesFile.isFile())
 		{
 			if(loadSourceNamesProperties(sourceNamesFile))
@@ -1340,10 +1384,10 @@ public class ApplicationPreferences
 	}
 
 
-	public Map<String,String> getSoundLocations()
+	public Map<String, String> getSoundLocations()
 	{
-		File appPath=getStartupApplicationPath();
-		File file =new File(appPath, SOUND_LOCATIONS_XML_FILENAME);
+		File appPath = getStartupApplicationPath();
+		File file = new File(appPath, SOUND_LOCATIONS_XML_FILENAME);
 
 		if(file.isFile())
 		{
@@ -1358,9 +1402,9 @@ public class ApplicationPreferences
 
 	public void setSoundLocations(Map<String, String> soundLocations)
 	{
-		Object oldValue=getSoundLocations();
+		Object oldValue = getSoundLocations();
 		writeSoundLocations(soundLocations);
-		Object newValue=getSoundLocations();
+		Object newValue = getSoundLocations();
 		propertyChangeSupport.firePropertyChange(SOUND_LOCATIONS_PROPERTY, oldValue, newValue);
 	}
 
@@ -1383,7 +1427,7 @@ public class ApplicationPreferences
 	public void reset()
 	{
 		final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
-		boolean licensed=isLicensed();
+		boolean licensed = isLicensed();
 		try
 		{
 			PREFERENCES.clear();
@@ -1391,7 +1435,7 @@ public class ApplicationPreferences
 			setLicensed(licensed);
 			setApplicationPath(new File(DEFAULT_APPLICATION_PATH));
 		}
-		catch (BackingStoreException e)
+		catch(BackingStoreException e)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while clearing preferences!");
 		}
@@ -1400,9 +1444,9 @@ public class ApplicationPreferences
 
 	public void setScrollingToBottom(boolean scrollingToBottom)
 	{
-		Object oldValue=isScrollingToBottom();
+		Object oldValue = isScrollingToBottom();
 		PREFERENCES.putBoolean(SCROLLING_TO_BOTTOM_PROPERTY, scrollingToBottom);
-		Object newValue=isScrollingToBottom();
+		Object newValue = isScrollingToBottom();
 		propertyChangeSupport.firePropertyChange(SCROLLING_TO_BOTTOM_PROPERTY, oldValue, newValue);
 	}
 
@@ -1414,16 +1458,16 @@ public class ApplicationPreferences
 	private boolean loadSoundLocationsXml(File file)
 	{
 		long lastModified = file.lastModified();
-		if(soundLocations!=null && lastSoundLocationsModified >=lastModified)
+		if(soundLocations != null && lastSoundLocationsModified >= lastModified)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Won't reload sound locations.");
 			return true;
 		}
 		Map<String, String> props = loadPropertiesXml(file);
-		if(props!=null)
+		if(props != null)
 		{
-			lastSoundLocationsModified=lastModified;
-			soundLocations=props;
+			lastSoundLocationsModified = lastModified;
+			soundLocations = props;
 			return true;
 		}
 		return false;
@@ -1431,7 +1475,7 @@ public class ApplicationPreferences
 
 	private boolean writeSoundLocations(Map<String, String> sourceNames)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, SOUND_LOCATIONS_XML_FILENAME);
 		return writePropertiesXml(file, sourceNames, "Sound locations");
 	}
@@ -1439,16 +1483,16 @@ public class ApplicationPreferences
 	private boolean loadSourceNamesXml(File file)
 	{
 		long lastModified = file.lastModified();
-		if(sourceNames!=null && lastSourceNamesModified >=lastModified)
+		if(sourceNames != null && lastSourceNamesModified >= lastModified)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Won't reload source names.");
 			return true;
 		}
 		Map<String, String> props = loadPropertiesXml(file);
-		if(props!=null)
+		if(props != null)
 		{
-			lastSourceNamesModified=lastModified;
-			sourceNames=props;
+			lastSourceNamesModified = lastModified;
+			sourceNames = props;
 			return true;
 		}
 		return false;
@@ -1457,17 +1501,17 @@ public class ApplicationPreferences
 	private boolean loadSourceNamesProperties(File sourceNamesFile)
 	{
 		long lastModified = sourceNamesFile.lastModified();
-		if(sourceNames!=null && lastSourceNamesModified >=lastModified)
+		if(sourceNames != null && lastSourceNamesModified >= lastModified)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Won't reload source names.");
 			return true;
 		}
 
 		Map<String, String> props = loadProperties(sourceNamesFile);
-		if(props!=null)
+		if(props != null)
 		{
-			lastSourceNamesModified=lastModified;
-			sourceNames=props;
+			lastSourceNamesModified = lastModified;
+			sourceNames = props;
 			return true;
 		}
 		return false;
@@ -1475,35 +1519,35 @@ public class ApplicationPreferences
 
 	private boolean writeSourceNames(Map<String, String> sourceNames)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, SOURCE_NAMES_XML_FILENAME);
 		return writePropertiesXml(file, sourceNames, "Source names");
 	}
 
 	private boolean writeSourceLists(Map<String, Set<String>> sourceLists)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, SOURCE_LISTS_XML_FILENAME);
 		XMLEncoder e = null;
-		Throwable error=null;
+		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			e = new XMLEncoder(bos);
 			e.writeObject(sourceLists);
 		}
-		catch (FileNotFoundException ex)
+		catch(FileNotFoundException ex)
 		{
-			error=ex;
+			error = ex;
 		}
 		finally
 		{
-			if(e!=null)
+			if(e != null)
 			{
 				e.close();
 			}
 		}
-		if(error!=null)
+		if(error != null)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while writing source lists!", error);
 			return false;
@@ -1513,29 +1557,29 @@ public class ApplicationPreferences
 
 	private boolean writeConditions(List<SavedCondition> conditions)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, CONDITIONS_XML_FILENAME);
 		XMLEncoder e = null;
-		Throwable error=null;
+		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			e = new XMLEncoder(bos);
 			e.writeObject(conditions);
 			if(logger.isInfoEnabled()) logger.info("Wrote conditions {}.", conditions);
 		}
-		catch (FileNotFoundException ex)
+		catch(FileNotFoundException ex)
 		{
-			error=ex;
+			error = ex;
 		}
 		finally
 		{
-			if(e!=null)
+			if(e != null)
 			{
 				e.close();
 			}
 		}
-		if(error!=null)
+		if(error != null)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while writing source lists!", error);
 			return false;
@@ -1543,30 +1587,35 @@ public class ApplicationPreferences
 		return true;
 	}
 
-	/** @noinspection MismatchedQueryAndUpdateOfCollection*/
-	private Map<String,String> loadPropertiesXml(File file)
+	/**
+	 * @noinspection MismatchedQueryAndUpdateOfCollection
+	 */
+	private Map<String, String> loadPropertiesXml(File file)
 	{
-		InputStream is=null;
+		InputStream is = null;
 		try
 		{
-			is=new BufferedInputStream(new FileInputStream(file));
-			Properties props=new Properties();
+			is = new BufferedInputStream(new FileInputStream(file));
+			Properties props = new Properties();
 			props.loadFromXML(is);
-			Map<String,String> result=new HashMap<String, String>();
-			for(Object keyObj:props.keySet())
+			Map<String, String> result = new HashMap<String, String>();
+			for(Object keyObj : props.keySet())
 			{
-				String key=(String) keyObj;
-				String value=(String) props.get(key);
-				if(value!=null)
+				String key = (String) keyObj;
+				String value = (String) props.get(key);
+				if(value != null)
 				{
-					result.put(key,value);
+					result.put(key, value);
 				}
 			}
 			return result;
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '"+file.getAbsolutePath()+"'!", e);
+			if(logger.isWarnEnabled())
+			{
+				logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
+			}
 		}
 		finally
 		{
@@ -1575,39 +1624,41 @@ public class ApplicationPreferences
 		return null;
 	}
 
-	/** @noinspection MismatchedQueryAndUpdateOfCollection*/
+	/**
+	 * @noinspection MismatchedQueryAndUpdateOfCollection
+	 */
 	private boolean writePropertiesXml(File file, Map<String, String> sourceNames, String comment)
 	{
-		Properties output=new Properties();
-		for(Map.Entry<String, String> entry:sourceNames.entrySet())
+		Properties output = new Properties();
+		for(Map.Entry<String, String> entry : sourceNames.entrySet())
 		{
-			String key=entry.getKey();
-			String value=entry.getValue();
-			if(value!=null)
+			String key = entry.getKey();
+			String value = entry.getValue();
+			if(value != null)
 			{
 				output.put(key, value);
 			}
 		}
-		OutputStream os=null;
-		Throwable error=null;
+		OutputStream os = null;
+		Throwable error = null;
 		try
 		{
-			os=new BufferedOutputStream(new FileOutputStream(file));
+			os = new BufferedOutputStream(new FileOutputStream(file));
 			output.storeToXML(os, comment, "UTF-8");
 		}
-		catch (FileNotFoundException e)
+		catch(FileNotFoundException e)
 		{
-			error=e;
+			error = e;
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
-			error=e;
+			error = e;
 		}
 		finally
 		{
 			IOUtils.closeQuietly(os);
 		}
-		if(error!=null)
+		if(error != null)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while writing source names!", error);
 			return false;
@@ -1616,29 +1667,32 @@ public class ApplicationPreferences
 	}
 
 
-	private Map<String,String> loadProperties(File file)
+	private Map<String, String> loadProperties(File file)
 	{
-		InputStream is=null;
+		InputStream is = null;
 		try
 		{
-			is=new BufferedInputStream(new FileInputStream(file));
-			Properties props=new Properties();
+			is = new BufferedInputStream(new FileInputStream(file));
+			Properties props = new Properties();
 			props.load(is);
-			Map<String,String> result=new HashMap<String, String>();
-			for(Object keyObj:props.keySet())
+			Map<String, String> result = new HashMap<String, String>();
+			for(Object keyObj : props.keySet())
 			{
-				String key=(String) keyObj;
-				String value=(String) props.get(key);
-				if(value!=null)
+				String key = (String) keyObj;
+				String value = (String) props.get(key);
+				if(value != null)
 				{
-					result.put(key,value);
+					result.put(key, value);
 				}
 			}
 			return result;
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '"+file.getAbsolutePath()+"'!", e);
+			if(logger.isWarnEnabled())
+			{
+				logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
+			}
 		}
 		finally
 		{
@@ -1649,7 +1703,7 @@ public class ApplicationPreferences
 
 	public void writeLoggingColumnLayout(boolean global, List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfos)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file;
 		if(global)
 		{
@@ -1664,7 +1718,7 @@ public class ApplicationPreferences
 
 	public void writeAccessColumnLayout(boolean global, List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfos)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file;
 		if(global)
 		{
@@ -1679,7 +1733,7 @@ public class ApplicationPreferences
 
 	public List<PersistentTableColumnModel.TableColumnLayoutInfo> readLoggingColumnLayout(boolean global)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file;
 		if(global)
 		{
@@ -1694,7 +1748,7 @@ public class ApplicationPreferences
 
 	public List<PersistentTableColumnModel.TableColumnLayoutInfo> readAccessColumnLayout(boolean global)
 	{
-		File appPath=getStartupApplicationPath();
+		File appPath = getStartupApplicationPath();
 		File file;
 		if(global)
 		{
@@ -1710,28 +1764,34 @@ public class ApplicationPreferences
 	private boolean writeColumnLayout(File file, List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfos)
 	{
 		XMLEncoder e = null;
-		Throwable error=null;
+		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			e = new XMLEncoder(bos);
 			e.writeObject(layoutInfos);
-			if(logger.isInfoEnabled()) logger.info("Wrote layouts {} to file '{}'.", layoutInfos, file.getAbsolutePath());
+			if(logger.isInfoEnabled())
+			{
+				logger.info("Wrote layouts {} to file '{}'.", layoutInfos, file.getAbsolutePath());
+			}
 		}
-		catch (FileNotFoundException ex)
+		catch(FileNotFoundException ex)
 		{
-			error=ex;
+			error = ex;
 		}
 		finally
 		{
-			if(e!=null)
+			if(e != null)
 			{
 				e.close();
 			}
 		}
-		if(error!=null)
+		if(error != null)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while writing layouts to file '"+file.getAbsolutePath()+"'!", error);
+			if(logger.isWarnEnabled())
+			{
+				logger.warn("Exception while writing layouts to file '" + file.getAbsolutePath() + "'!", error);
+			}
 			return false;
 		}
 		return true;
@@ -1744,20 +1804,23 @@ public class ApplicationPreferences
 		try
 		{
 			d = new XMLDecoder(
-							  new BufferedInputStream(
-								  new FileInputStream(file)));
+				new BufferedInputStream(
+					new FileInputStream(file)));
 
 			//noinspection unchecked
-			result=(List<PersistentTableColumnModel.TableColumnLayoutInfo>) d.readObject();
+			result = (List<PersistentTableColumnModel.TableColumnLayoutInfo>) d.readObject();
 		}
-		catch (Throwable ex)
+		catch(Throwable ex)
 		{
-			if(logger.isInfoEnabled()) logger.info("Exception while loading layouts from file '"+ file.getAbsolutePath()+"'!",ex);
-			result=null;
+			if(logger.isInfoEnabled())
+			{
+				logger.info("Exception while loading layouts from file '" + file.getAbsolutePath() + "'!", ex);
+			}
+			result = null;
 		}
 		finally
 		{
-			if(d!=null)
+			if(d != null)
 			{
 				d.close();
 			}
@@ -1774,7 +1837,7 @@ public class ApplicationPreferences
 	 */
 	public static byte[] getMD5(InputStream input)
 	{
-		if(input==null)
+		if(input == null)
 		{
 			return null;
 		}
@@ -1782,19 +1845,19 @@ public class ApplicationPreferences
 		try
 		{
 			messageDigest = MessageDigest.getInstance("MD5");
-			byte[] buffer=new byte[1024];
-			for(;;)
+			byte[] buffer = new byte[1024];
+			for(; ;)
 			{
-				int read=input.read(buffer);
-				if(read<0)
+				int read = input.read(buffer);
+				if(read < 0)
 				{
 					break;
 				}
-				messageDigest.update(buffer,0,read);
+				messageDigest.update(buffer, 0, read);
 			}
 			return messageDigest.digest();
 		}
-		catch (Throwable t)
+		catch(Throwable t)
 		{
 			final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
 			if(logger.isWarnEnabled()) logger.warn("Exception while calculating checksum!", t);
@@ -1805,7 +1868,7 @@ public class ApplicationPreferences
 			{
 				input.close();
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
 				// ignore
 			}
@@ -1819,7 +1882,7 @@ public class ApplicationPreferences
 		{
 			PREFERENCES.flush();
 		}
-		catch (BackingStoreException e)
+		catch(BackingStoreException e)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while flushing preferences!", e);
 		}
@@ -1831,15 +1894,15 @@ public class ApplicationPreferences
 	static class EnumPersistenceDelegate
 		extends PersistenceDelegate
 	{
-		protected boolean mutatesTo( Object oldInstance, Object newInstance )
+		protected boolean mutatesTo(Object oldInstance, Object newInstance)
 		{
 			return oldInstance == newInstance;
 		}
 
-		protected Expression instantiate( Object oldInstance, Encoder out )
+		protected Expression instantiate(Object oldInstance, Encoder out)
 		{
-			Enum e = ( Enum )oldInstance;
-			return new Expression( e, e.getClass(), "valueOf", new Object[]{e.name()} );
+			Enum e = (Enum) oldInstance;
+			return new Expression(e, e.getClass(), "valueOf", new Object[]{e.name()});
 		}
 	}
 }

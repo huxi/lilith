@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,9 @@
  */
 package de.huxhorn.lilith.swing;
 
-import javax.swing.Icon;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
+
+import javax.swing.*;
 
 public class ColorIcon
 	implements Icon
@@ -31,7 +29,7 @@ public class ColorIcon
 
 	public ColorIcon(Color color)
 	{
-		this(color, new Dimension(16,16));
+		this(color, new Dimension(16, 16));
 	}
 
 	public ColorIcon(Color color, Dimension size)
@@ -43,7 +41,7 @@ public class ColorIcon
 	public void paintIcon(Component c, Graphics g, int x, int y)
 	{
 		g.setColor(color);
-		g.fillRect(x,y,size.width,size.height);
+		g.fillRect(x, y, size.width, size.height);
 	}
 
 	public int getIconWidth()

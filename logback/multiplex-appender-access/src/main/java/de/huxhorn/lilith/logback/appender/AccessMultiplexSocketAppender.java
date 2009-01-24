@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,9 +17,10 @@
  */
 package de.huxhorn.lilith.logback.appender;
 
+import de.huxhorn.lilith.data.access.logback.LogbackAccessAdapter;
 import de.huxhorn.sulky.generics.io.SerializableSerializer;
 import de.huxhorn.sulky.generics.io.Serializer;
-import de.huxhorn.lilith.data.access.logback.LogbackAccessAdapter;
+
 import ch.qos.logback.access.spi.AccessEvent;
 
 public class AccessMultiplexSocketAppender
@@ -47,7 +48,7 @@ public class AccessMultiplexSocketAppender
 	public AccessMultiplexSocketAppender(boolean compressing)
 	{
 		super();
-		usingDefaultPort=true;
+		usingDefaultPort = true;
 		setCompressing(compressing);
 	}
 
@@ -55,25 +56,25 @@ public class AccessMultiplexSocketAppender
 	public void setPort(int port)
 	{
 		super.setPort(port);
-		usingDefaultPort=false;
+		usingDefaultPort = false;
 	}
 
 	public void sendLilithEvent(de.huxhorn.lilith.data.access.AccessEvent e)
 	{
-		if (lilithSerializer != null)
+		if(lilithSerializer != null)
 		{
 			byte[] serialized = lilithSerializer.serialize(e);
-			if (serialized != null)
+			if(serialized != null)
 			{
 				sendBytes(serialized);
 			}
 		}
 	}
-	
+
 
 	/**
 	 * GZIPs the event if set to true.
-	 *
+	 * <p/>
 	 * Automatically chooses the correct default port if it was not previously set manually.
 	 *
 	 * @param compressing if events will be gzipped or not.
@@ -91,10 +92,10 @@ public class AccessMultiplexSocketAppender
 			{
 				setPort(UNCOMPRESSED_DEFAULT_PORT);
 			}
-			usingDefaultPort=true;
+			usingDefaultPort = true;
 		}
 		//setSerializer(new SerializableSerializer<AccessEvent>(compressing));
-		lilithSerializer=new SerializableSerializer<de.huxhorn.lilith.data.access.AccessEvent>(compressing);
+		lilithSerializer = new SerializableSerializer<de.huxhorn.lilith.data.access.AccessEvent>(compressing);
 		setSerializer(new TransformingSerializer());
 	}
 
@@ -105,7 +106,7 @@ public class AccessMultiplexSocketAppender
 
 	protected void preProcess(AccessEvent e)
 	{
-		if(e!=null)
+		if(e != null)
 		{
 			e.prepareForDeferredProcessing();
 		}
@@ -114,7 +115,7 @@ public class AccessMultiplexSocketAppender
 	private class TransformingSerializer
 		implements Serializer<AccessEvent>
 	{
-		LogbackAccessAdapter adapter=new LogbackAccessAdapter();
+		LogbackAccessAdapter adapter = new LogbackAccessAdapter();
 
 		public byte[] serialize(AccessEvent logbackEvent)
 		{

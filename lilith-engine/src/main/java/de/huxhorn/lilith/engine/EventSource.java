@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
  */
 package de.huxhorn.lilith.engine;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.conditions.Condition;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
 import java.io.Serializable;
 
@@ -28,7 +28,10 @@ public interface EventSource<T extends Serializable>
 	extends Comparable<EventSource<T>>
 {
 	SourceIdentifier getSourceIdentifier();
+
 	Buffer<EventWrapper<T>> getBuffer();
+
 	Condition getFilter();
+
 	boolean isGlobal();
 }

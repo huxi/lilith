@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,13 +17,12 @@
  */
 package de.huxhorn.lilith.data.eventsource;
 
-import static de.huxhorn.sulky.junit.JUnitTools.testClone;
-import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
-import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-import org.junit.Test;
-import org.junit.Before;
+import static de.huxhorn.sulky.junit.JUnitTools.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -38,41 +37,44 @@ public class SourceIdentifierTest
 		fresh = new SourceIdentifier();
 	}
 
-    @Test
-    public void constructorDefault() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        SourceIdentifier original=new SourceIdentifier();
-        testSerialization(original);
+	@Test
+	public void constructorDefault()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		SourceIdentifier original = new SourceIdentifier();
+		testSerialization(original);
 		testXmlSerialization(original);
-        testClone(original);
-    }
-
-    @Test
-    public void constructorFull() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        SourceIdentifier original;
-        original = new SourceIdentifier("primary", "secondary");
-        testSerialization(original);
-		testXmlSerialization(original);
-        testClone(original);
-
-        original = new SourceIdentifier(null, "secondary");
-        testSerialization(original);
-		testXmlSerialization(original);
-        testClone(original);
-
-        original = new SourceIdentifier("primary", null);
-        testSerialization(original);
-		testXmlSerialization(original);
-        testClone(original);
-    }
+		testClone(original);
+	}
 
 	@Test
-	public void identifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void constructorFull()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-		SourceIdentifier instance=new SourceIdentifier();
+		SourceIdentifier original;
+		original = new SourceIdentifier("primary", "secondary");
+		testSerialization(original);
+		testXmlSerialization(original);
+		testClone(original);
 
-		String value="value";
+		original = new SourceIdentifier(null, "secondary");
+		testSerialization(original);
+		testXmlSerialization(original);
+		testClone(original);
+
+		original = new SourceIdentifier("primary", null);
+		testSerialization(original);
+		testXmlSerialization(original);
+		testClone(original);
+	}
+
+	@Test
+	public void identifier()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	{
+		SourceIdentifier instance = new SourceIdentifier();
+
+		String value = "value";
 		instance.setIdentifier(value);
 
 		{
@@ -93,11 +95,12 @@ public class SourceIdentifierTest
 	}
 
 	@Test
-	public void secondaryIdentifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void secondaryIdentifier()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		SourceIdentifier instance=new SourceIdentifier();
+		SourceIdentifier instance = new SourceIdentifier();
 
-		String value="value";
+		String value = "value";
 		instance.setSecondaryIdentifier(value);
 
 		{

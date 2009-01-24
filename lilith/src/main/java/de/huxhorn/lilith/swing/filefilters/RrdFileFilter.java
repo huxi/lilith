@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  */
 package de.huxhorn.lilith.swing.filefilters;
 
-import java.io.FileFilter;
 import java.io.File;
+import java.io.FileFilter;
 
 public class RrdFileFilter
 	implements FileFilter
@@ -29,7 +29,7 @@ public class RrdFileFilter
 		{
 			return false;
 		}
-		String absPath=file.getAbsolutePath();
+		String absPath = file.getAbsolutePath();
 		return absPath.toLowerCase().endsWith(".rrd");
 	}
 }

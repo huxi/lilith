@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,10 @@ public class LogStuffWithMdcRunnable
 		super(delay, marker);
 	}
 
-	public void runIt() throws InterruptedException
+	public void runIt()
+		throws InterruptedException
 	{
-		MDC.put("foo","bar");
+		MDC.put("foo", "bar");
 		super.runIt();
 		MDC.remove("foo");
 	}

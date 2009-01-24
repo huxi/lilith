@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +30,11 @@ public class LogStuffRunnable
 	public LogStuffRunnable(int delay, Marker marker)
 	{
 		super(delay);
-		this.marker=marker;
+		this.marker = marker;
 	}
 
-	public void runIt() throws InterruptedException
+	public void runIt()
+		throws InterruptedException
 	{
 		if(logger.isTraceEnabled()) logger.trace(marker, "A trace message.");
 		sleep();

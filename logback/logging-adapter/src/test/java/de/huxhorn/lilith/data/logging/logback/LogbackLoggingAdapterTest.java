@@ -17,13 +17,14 @@
  */
 package de.huxhorn.lilith.data.logging.logback;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ThrowableDataPoint;
-import ch.qos.logback.classic.spi.ThrowableProxy;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ThrowableDataPoint;
+import ch.qos.logback.classic.spi.ThrowableProxy;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,17 +42,18 @@ public class LogbackLoggingAdapterTest
 	private LogbackLoggingAdapter instance;
 
 	@Override
-	protected void setUp() throws Exception
+	protected void setUp()
+		throws Exception
 	{
 		super.setUp();
-		instance=new LogbackLoggingAdapter();
+		instance = new LogbackLoggingAdapter();
 	}
 
 	public void testThrowableStrRep()
 	{
 		Throwable t = produceThrowable();
-		ThrowableProxy ti=new ThrowableProxy(t);
-		ThrowableDataPoint[] thrStrRep=ti.getThrowableDataPointArray();
+		ThrowableProxy ti = new ThrowableProxy(t);
+		ThrowableDataPoint[] thrStrRep = ti.getThrowableDataPointArray();
 		if(logger.isInfoEnabled()) logger.info("DataPoints: {}", thrStrRep);
 		ThrowableInfo tinfo = instance.initFromThrowableDataPointsRecursive(thrStrRep, 0);
 		assertEquals("yyy", tinfo.getMessage());
@@ -69,7 +71,7 @@ public class LogbackLoggingAdapterTest
 			{
 				try
 				{
-			        throw new RuntimeException("foo");
+					throw new RuntimeException("foo");
 				}
 				catch(Throwable x)
 				{
@@ -78,12 +80,12 @@ public class LogbackLoggingAdapterTest
 			}
 			catch(Throwable x)
 			{
-				throw new RuntimeException("yyy",x);
+				throw new RuntimeException("yyy", x);
 			}
 		}
 		catch(Throwable x)
 		{
-			t=x;
+			t = x;
 		}
 		return t;
 	}
@@ -91,10 +93,10 @@ public class LogbackLoggingAdapterTest
 	public void testThrowable()
 	{
 		Throwable t = produceThrowable();
-		ThrowableProxy ti=new ThrowableProxy(t);
-		ThrowableDataPoint[] thrStrRep=ti.getThrowableDataPointArray();
+		ThrowableProxy ti = new ThrowableProxy(t);
+		ThrowableDataPoint[] thrStrRep = ti.getThrowableDataPointArray();
 		//assertEquals(t, instance.getThrowable(ti));
-		
+
 		ThrowableInfo tinfo = instance.initFromThrowableDataPointsRecursive(thrStrRep, 0);
 		assertEquals("yyy", tinfo.getMessage());
 		assertEquals("java.lang.RuntimeException: foo", tinfo.getCause().getMessage());
@@ -105,16 +107,16 @@ public class LogbackLoggingAdapterTest
 	public void testConvertEvent()
 	{
 		// LoggingEvent(String fqcn, Logger logger, Level level, String message, Throwable throwable, Object[] argArray)
-		ch.qos.logback.classic.spi.LoggingEvent logbackEvent=
-				new ch.qos.logback.classic.spi.LoggingEvent(
-						"de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapterTest",
-						(ch.qos.logback.classic.Logger)logger,
-						Level.INFO,
-						"Message",
-						produceThrowable(),
-						new String[]{"First", null, "Third"}
+		ch.qos.logback.classic.spi.LoggingEvent logbackEvent =
+			new ch.qos.logback.classic.spi.LoggingEvent(
+				"de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapterTest",
+				(ch.qos.logback.classic.Logger) logger,
+				Level.INFO,
+				"Message",
+				produceThrowable(),
+				new String[]{"First", null, "Third"}
 
-						);
+			);
 		LoggingEvent lilithEvent = instance.convert(logbackEvent);
 		if(logger.isInfoEnabled()) logger.info("lilithEvent: {}", lilithEvent);
 		prettyPrint(lilithEvent);
@@ -124,7 +126,7 @@ public class LogbackLoggingAdapterTest
 	{
 		if(logger.isDebugEnabled())
 		{
-			StringBuilder msg=new StringBuilder();
+			StringBuilder msg = new StringBuilder();
 			msg.append("Logger         : ").append(event.getLogger());
 			msg.append("\n");
 
@@ -143,20 +145,20 @@ public class LogbackLoggingAdapterTest
 			msg.append("Message-Pattern: ").append(event.getMessagePattern());
 			msg.append("\n");
 			String[] args = event.getArguments();
-			if(args!=null)
+			if(args != null)
 			{
-				List<String> argList=new ArrayList<String>(args.length);
+				List<String> argList = new ArrayList<String>(args.length);
 				argList.addAll(Arrays.asList(args));
 				msg.append("Arguments      : ").append(argList);
 				msg.append("\n");
 			}
 
 			ExtendedStackTraceElement[] callStack = event.getCallStack();
-			if(callStack!=null)
+			if(callStack != null)
 			{
 				msg.append("Call-Stack     : ");
 				msg.append("\n");
-				for(ExtendedStackTraceElement ste: callStack)
+				for(ExtendedStackTraceElement ste : callStack)
 				{
 					msg.append("\t").append(ste).append("\n");
 				}
@@ -164,31 +166,31 @@ public class LogbackLoggingAdapterTest
 			}
 
 			Marker marker = event.getMarker();
-			if(marker!=null)
+			if(marker != null)
 			{
 				msg.append("Marker         : ");
 				msg.append(marker);
 				msg.append("\n");
 			}
 			Map<String, String> mdc = event.getMdc();
-			if(mdc!=null)
+			if(mdc != null)
 			{
 				msg.append("MDC            : ");
 				msg.append("\n");
-				for(Map.Entry<String, String> current:mdc.entrySet())
+				for(Map.Entry<String, String> current : mdc.entrySet())
 				{
 					msg.append("\t").append(current.getKey()).append(": ").append(current.getValue());
 					msg.append("\n");
 				}
 			}
 			ThrowableInfo ti = event.getThrowable();
-			if(ti!=null)
+			if(ti != null)
 			{
 				msg.append("Throwable      : ");
 				msg.append("\n");
-				ThrowableInfo current=ti;
-				StringBuilder indent=new StringBuilder("  ");
-				while(current!=null)
+				ThrowableInfo current = ti;
+				StringBuilder indent = new StringBuilder("  ");
+				while(current != null)
 				{
 					msg.append(indent.toString());
 					msg.append("Name      : ").append(current.getName());
@@ -201,9 +203,9 @@ public class LogbackLoggingAdapterTest
 					msg.append("\n");
 					indent.append("  ");
 					ExtendedStackTraceElement[] stackTrace = current.getStackTrace();
-					if(stackTrace!=null)
+					if(stackTrace != null)
 					{
-						for(ExtendedStackTraceElement ste:stackTrace)
+						for(ExtendedStackTraceElement ste : stackTrace)
 						{
 							msg.append(indent.toString());
 							msg.append(ste.toString(true));
@@ -211,7 +213,7 @@ public class LogbackLoggingAdapterTest
 						}
 					}
 					indent.append("  ");
-					current=current.getCause();
+					current = current.getCause();
 				}
 			}
 			logger.debug(msg.toString());

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,10 +19,11 @@ package de.huxhorn.lilith.data.eventsource;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-import org.junit.Test;
-import org.junit.Before;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -38,20 +39,22 @@ public class SourceInfoTest
 		fresh = new SourceInfo();
 	}
 
-    @Test
-    public void constructorDefault() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        SourceInfo original=new SourceInfo();
-        testSerialization(original);
+	@Test
+	public void constructorDefault()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		SourceInfo original = new SourceInfo();
+		testSerialization(original);
 		testXmlSerialization(original);
-    }
+	}
 
 	@Test
-	public void source() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void source()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		SourceInfo instance=new SourceInfo();
+		SourceInfo instance = new SourceInfo();
 
-		SourceIdentifier value=new SourceIdentifier();
+		SourceIdentifier value = new SourceIdentifier();
 		instance.setSource(value);
 
 		{
@@ -67,11 +70,12 @@ public class SourceInfoTest
 	}
 
 	@Test
-	public void numberOfEvents() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void numberOfEvents()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		SourceInfo instance=new SourceInfo();
+		SourceInfo instance = new SourceInfo();
 
-		long value=17;
+		long value = 17;
 		instance.setNumberOfEvents(value);
 
 		{
@@ -87,11 +91,12 @@ public class SourceInfoTest
 	}
 
 	@Test
-	public void active() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void active()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		SourceInfo instance=new SourceInfo();
+		SourceInfo instance = new SourceInfo();
 
-		boolean value=true;
+		boolean value = true;
 		instance.setActive(value);
 
 		{
@@ -107,11 +112,12 @@ public class SourceInfoTest
 	}
 
 	@Test
-	public void oldestEventTimestamp() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void oldestEventTimestamp()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		SourceInfo instance=new SourceInfo();
+		SourceInfo instance = new SourceInfo();
 
-		Date value=new Date();
+		Date value = new Date();
 		instance.setOldestEventTimestamp(value);
 
 		{

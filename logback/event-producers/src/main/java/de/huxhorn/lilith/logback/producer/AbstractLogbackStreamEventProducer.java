@@ -17,10 +17,11 @@
  */
 package de.huxhorn.lilith.logback.producer;
 
-import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
+
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,15 +39,16 @@ public abstract class AbstractLogbackStreamEventProducer<T extends Serializable>
 
 	private ObjectInputStream dataInput;
 
-	public AbstractLogbackStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream) throws IOException
+	public AbstractLogbackStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
+		throws IOException
 	{
 		super(sourceIdentifier, eventQueue);
-		this.dataInput=new ObjectInputStream(new BufferedInputStream(inputStream));
+		this.dataInput = new ObjectInputStream(new BufferedInputStream(inputStream));
 	}
 
 	public void start()
 	{
-		Thread t=new Thread(new ReceiverRunnable(), ""+getSourceIdentifier()+"-Receiver");
+		Thread t = new Thread(new ReceiverRunnable(), "" + getSourceIdentifier() + "-Receiver");
 		t.setDaemon(false);
 		t.start();
 	}
@@ -59,16 +61,16 @@ public abstract class AbstractLogbackStreamEventProducer<T extends Serializable>
 		public void run()
 		{
 //			long localIdCounter = 0;
-			for(;;)
+			for(; ;)
 			{
 				try
 				{
 					// TODO: obtain transfer size info
 					Object object = dataInput.readObject();
 
-					T event=postprocessEvent(object);
+					T event = postprocessEvent(object);
 
-					if(object==null)
+					if(object == null)
 					{
 						if(logger.isInfoEnabled()) logger.info("Retrieved null!");
 					}
@@ -83,9 +85,14 @@ public abstract class AbstractLogbackStreamEventProducer<T extends Serializable>
 */
 					}
 				}
-				catch (Throwable e)
+				catch(Throwable e)
 				{
-					if(logger.isInfoEnabled()) logger.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage());
+					if(logger.isInfoEnabled())
+					{
+						logger
+							.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e
+								.getClass().getName(), e.getMessage());
+					}
 					addEvent(null);
 /*
 					localIdCounter++;

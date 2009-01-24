@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import de.huxhorn.sulky.buffers.Buffer;
 import java.io.Serializable;
 
 public class EventWrapperTableModel<T extends Serializable>
-		extends BufferTableModel<EventWrapper<T>>
+	extends BufferTableModel<EventWrapper<T>>
 {
 	public EventWrapperTableModel(Buffer<EventWrapper<T>> buffer)
 	{
@@ -42,7 +42,7 @@ public class EventWrapperTableModel<T extends Serializable>
 
 	public String getColumnName(int columnIndex)
 	{
-		if (columnIndex == 0)
+		if(columnIndex == 0)
 		{
 			return "EventWrapper";
 		}

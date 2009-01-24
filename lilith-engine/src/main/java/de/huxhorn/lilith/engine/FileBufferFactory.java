@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.buffers.SerializingFileBuffer;
 
-import java.io.File;
-import java.io.Serializable;
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 
 public class FileBufferFactory<T extends Serializable>
 {
@@ -62,13 +62,13 @@ public class FileBufferFactory<T extends Serializable>
 		//String baseName=getBaseFileName(baseDirectory, si);
 		FileBuffer<EventWrapper<T>> result = createBuffer(si);
 		//File activeFile=new File(baseName+ACTIVE_FILE_EXTENSION);
-		File activeFile=logFileFactory.getActiveFile(si);
+		File activeFile = logFileFactory.getActiveFile(si);
 		try
 		{
 			activeFile.createNewFile();
 			activeFile.deleteOnExit();
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Couldn't create active-file.");
 		}
@@ -76,13 +76,12 @@ public class FileBufferFactory<T extends Serializable>
 	}
 
 
-
 	public long getSizeOnDisk(SourceIdentifier sourceIdentifier)
 	{
-		File indexFile=logFileFactory.getIndexFile(sourceIdentifier);
-		File dataFile=logFileFactory.getDataFile(sourceIdentifier);
-		long indexSize=indexFile.length();
-		long dataSize=dataFile.length();
-		return indexSize+dataSize;
+		File indexFile = logFileFactory.getIndexFile(sourceIdentifier);
+		File dataFile = logFileFactory.getDataFile(sourceIdentifier);
+		long indexSize = indexFile.length();
+		long dataSize = dataFile.length();
+		return indexSize + dataSize;
 	}
 }

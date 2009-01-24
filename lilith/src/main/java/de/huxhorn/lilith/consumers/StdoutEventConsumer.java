@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,20 @@
  */
 package de.huxhorn.lilith.consumers;
 
-import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.engine.EventConsumer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.io.Serializable;
 
 public class StdoutEventConsumer<T extends Serializable>
-		implements EventConsumer<T>, Runnable
+	implements EventConsumer<T>, Runnable
 {
 	final Logger logger = LoggerFactory.getLogger(StdoutEventConsumer.class);
 
@@ -39,9 +40,9 @@ public class StdoutEventConsumer<T extends Serializable>
 
 	public StdoutEventConsumer()
 	{
-		events=new LinkedList<EventWrapper>();
-		lock=new ReentrantLock();
-		writeInterval=2000;
+		events = new LinkedList<EventWrapper>();
+		lock = new ReentrantLock();
+		writeInterval = 2000;
 	}
 
 	public long getWriteInterval()
@@ -69,18 +70,18 @@ public class StdoutEventConsumer<T extends Serializable>
 
 	public void run()
 	{
-		for(;;)
+		for(; ;)
 		{
 			lock.lock();
-			int eventCount=0;
+			int eventCount = 0;
 			try
 			{
 
-				if(events.size()>0)
+				if(events.size() > 0)
 				{
-					EventWrapper event=events.remove(0);
-					System.out.println("Event: "+event);
-					eventCount=events.size();
+					EventWrapper event = events.remove(0);
+					System.out.println("Event: " + event);
+					eventCount = events.size();
 				}
 			}
 			finally
@@ -88,13 +89,13 @@ public class StdoutEventConsumer<T extends Serializable>
 				lock.unlock();
 			}
 
-			if(eventCount==0)
+			if(eventCount == 0)
 			{
 				try
 				{
 					Thread.sleep(writeInterval);
 				}
-				catch (InterruptedException e)
+				catch(InterruptedException e)
 				{
 					if(logger.isDebugEnabled()) logger.debug("Interrupted...");
 					break;

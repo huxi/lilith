@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -37,20 +37,20 @@ public class HeartbeatRunnable
 
 	public HeartbeatRunnable(SendBytesService sender, int heartbeatRate)
 	{
-		this.sender=sender;
-		this.heartbeatRate=heartbeatRate;
+		this.sender = sender;
+		this.heartbeatRate = heartbeatRate;
 	}
 
 	public void run()
 	{
-		for(;;)
+		for(; ;)
 		{
 			try
 			{
 				Thread.sleep(heartbeatRate);
 				sender.sendBytes(EMPTY_BYTE_ARRAY);
 			}
-			catch (InterruptedException e)
+			catch(InterruptedException e)
 			{
 				return;
 			}

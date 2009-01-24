@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,15 +17,16 @@
  */
 package de.huxhorn.lilith.logback.appender;
 
-import ch.qos.logback.classic.spi.LoggingEvent;
-import de.huxhorn.sulky.generics.io.Serializer;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlSerializer;
+import de.huxhorn.sulky.generics.io.Serializer;
+
+import ch.qos.logback.classic.spi.LoggingEvent;
 
 /**
  * This appender should not be used and is only implemented for symmetric reasons so both an appender
  * and a producer is available. It's only used to debug Lilith.
- *
+ * <p/>
  * The producer is only used for programming languages that are unable to count bytes, i.e. ActionScript... ;)
  */
 public class ZeroDelimitedClassicXmlMultiplexSocketAppender
@@ -41,7 +42,7 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	public ZeroDelimitedClassicXmlMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
-		includeCallerData=true;
+		includeCallerData = true;
 		setSerializer(new TransformingSerializer());
 		setPort(DEFAULT_PORT);
 	}
@@ -64,11 +65,11 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 
 	protected void preProcess(LoggingEvent event)
 	{
-		if(event!=null)
+		if(event != null)
 		{
-			if (includeCallerData)
+			if(includeCallerData)
 			{
-			  event.getCallerData();
+				event.getCallerData();
 			}
 		}
 	}
@@ -76,12 +77,12 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	private class TransformingSerializer
 		implements Serializer<LoggingEvent>
 	{
-		LogbackLoggingAdapter adapter=new LogbackLoggingAdapter();
+		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
 		Serializer<de.huxhorn.lilith.data.logging.LoggingEvent> internalSerializer;
 
 		private TransformingSerializer()
 		{
-			internalSerializer=new LoggingXmlSerializer(false);
+			internalSerializer = new LoggingXmlSerializer(false);
 		}
 
 		public byte[] serialize(LoggingEvent logbackEvent)

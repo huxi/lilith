@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,45 +19,46 @@ package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
+import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+
 public class ConditionActiveRenderer
-        implements TableCellRenderer
+	implements TableCellRenderer
 {
-    private JCheckBox renderer;
+	private JCheckBox renderer;
 
-    public ConditionActiveRenderer()
-    {
-        super();
-        renderer=new JCheckBox();
-        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-        renderer.setToolTipText(null);
-        renderer.setIcon(null);
-    }
+	public ConditionActiveRenderer()
+	{
+		super();
+		renderer = new JCheckBox();
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		renderer.setToolTipText(null);
+		renderer.setIcon(null);
+	}
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
-    {
-        boolean active=false;
-        if(value instanceof SavedCondition)
-        {
-            SavedCondition wrapper=(SavedCondition)value;
-            active=wrapper.isActive();
-        }
-        renderer.setSelected(active);
-        if (isSelected)
-        {
-            renderer.setBackground(table.getSelectionBackground());
-            renderer.setForeground(table.getSelectionForeground());
-        }
-        else
-        {
-            renderer.setBackground(table.getBackground());
-            renderer.setForeground(table.getForeground());
-        }
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
+	{
+		boolean active = false;
+		if(value instanceof SavedCondition)
+		{
+			SavedCondition wrapper = (SavedCondition) value;
+			active = wrapper.isActive();
+		}
+		renderer.setSelected(active);
+		if(isSelected)
+		{
+			renderer.setBackground(table.getSelectionBackground());
+			renderer.setForeground(table.getSelectionForeground());
+		}
+		else
+		{
+			renderer.setBackground(table.getBackground());
+			renderer.setForeground(table.getForeground());
+		}
 
-        return renderer;
-    }
+		return renderer;
+	}
 
 }

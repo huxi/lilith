@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Marker
-		implements Serializable
+	implements Serializable
 {
 	private static final long serialVersionUID = -4828769420328139691L;
 
@@ -43,7 +43,7 @@ public class Marker
 
 	public void setName(String name)
 	{
-		if (name == null)
+		if(name == null)
 		{
 			throw new IllegalArgumentException("Markername must not be null!");
 		}
@@ -57,7 +57,7 @@ public class Marker
 
 	public Map<String, Marker> getReferences()
 	{
-		if (references == null)
+		if(references == null)
 		{
 			return null;
 		}
@@ -66,7 +66,7 @@ public class Marker
 
 	public void remove(Marker marker)
 	{
-		if (references != null)
+		if(references != null)
 		{
 			references.remove(marker.getName());
 		}
@@ -74,11 +74,11 @@ public class Marker
 
 	public void add(Marker marker)
 	{
-		if (references == null)
+		if(references == null)
 		{
 			references = new HashMap<String, Marker>();
 		}
-		if (!references.containsKey(marker.getName()))
+		if(!references.containsKey(marker.getName()))
 		{
 			references.put(marker.getName(), marker);
 		}
@@ -96,18 +96,18 @@ public class Marker
 
 	public boolean contains(Marker other)
 	{
-		if (other == null)
+		if(other == null)
 		{
 			throw new IllegalArgumentException("Other cannot be null");
 		}
 
-		if (this.name.equals(other.name))
+		if(this.name.equals(other.name))
 		{
 			// see comment in c'tor
 			return true;
 		}
 
-		if (hasReferences())
+		if(hasReferences())
 		{
 			Set<String> collectedMarkers = collectReferencedMarkerNames(this, null);
 			return collectedMarkers.contains(other.getName());
@@ -117,17 +117,17 @@ public class Marker
 
 	public boolean contains(String name)
 	{
-		if (name == null)
+		if(name == null)
 		{
 			return false; // as documented in Marker interface.
 		}
 
-		if (this.name.equals(name))
+		if(this.name.equals(name))
 		{
 			return true;
 		}
 
-		if (hasReferences())
+		if(hasReferences())
 		{
 			Set<String> collectedMarkerNames = collectReferencedMarkerNames(this, null);
 			return collectedMarkerNames.contains(name);
@@ -137,19 +137,19 @@ public class Marker
 
 	private Set<String> collectReferencedMarkerNames(Marker marker, Set<String> collectedMarkerNames)
 	{
-		if (collectedMarkerNames == null)
+		if(collectedMarkerNames == null)
 		{
 			collectedMarkerNames = new HashSet<String>();
 		}
-		if (!collectedMarkerNames.contains(marker.getName()))
+		if(!collectedMarkerNames.contains(marker.getName()))
 		{
 			collectedMarkerNames.add(marker.getName());
-			if (marker.hasReferences())
+			if(marker.hasReferences())
 			{
-				for(Map.Entry<String, Marker> current: marker.getReferences().entrySet())
+				for(Map.Entry<String, Marker> current : marker.getReferences().entrySet())
 				{
 					Marker child = current.getValue();
-					if (!collectedMarkerNames.contains(child.getName()))
+					if(!collectedMarkerNames.contains(child.getName()))
 					{
 						collectReferencedMarkerNames(child, collectedMarkerNames);
 					}
@@ -162,8 +162,8 @@ public class Marker
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		final Marker marker = (Marker) o;
 

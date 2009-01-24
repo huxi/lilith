@@ -42,7 +42,7 @@ public class ExtendedStackTraceElement
 
 	public ExtendedStackTraceElement()
 	{
-		lineNumber=-1;
+		lineNumber = -1;
 	}
 
 	public ExtendedStackTraceElement(StackTraceElement ste)
@@ -143,18 +143,18 @@ public class ExtendedStackTraceElement
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		ExtendedStackTraceElement that = (ExtendedStackTraceElement) o;
 
-		if (exact != that.exact) return false;
-		if (lineNumber != that.lineNumber) return false;
-		if (className != null ? !className.equals(that.className) : that.className != null) return false;
-		if (codeLocation != null ? !codeLocation.equals(that.codeLocation) : that.codeLocation != null) return false;
-		if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
-		if (methodName != null ? !methodName.equals(that.methodName) : that.methodName != null) return false;
-		if (version != null ? !version.equals(that.version) : that.version != null) return false;
+		if(exact != that.exact) return false;
+		if(lineNumber != that.lineNumber) return false;
+		if(className != null ? !className.equals(that.className) : that.className != null) return false;
+		if(codeLocation != null ? !codeLocation.equals(that.codeLocation) : that.codeLocation != null) return false;
+		if(fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
+		if(methodName != null ? !methodName.equals(that.methodName) : that.methodName != null) return false;
+		if(version != null ? !version.equals(that.version) : that.version != null) return false;
 
 		return true;
 	}
@@ -177,7 +177,8 @@ public class ExtendedStackTraceElement
 		return new StackTraceElement(className, methodName, fileName, lineNumber);
 	}
 
-	public ExtendedStackTraceElement clone() throws CloneNotSupportedException
+	public ExtendedStackTraceElement clone()
+		throws CloneNotSupportedException
 	{
 		return (ExtendedStackTraceElement) super.clone();
 	}
@@ -187,44 +188,44 @@ public class ExtendedStackTraceElement
 		return toString(false);
 	}
 
-    public String getExtendedString()
-    {
-        if(codeLocation!=null || version!=null)
-        {
-            StringBuilder result=new StringBuilder();
-            if(exact)
-            {
-                result.append("[");
-            }
-            else
-            {
-                result.append("~[");
-            }
-            if(codeLocation!=null)
-            {
-                result.append(codeLocation);
-            }
-            result.append(":");
-            if(version!=null)
-            {
-                result.append(version);
-            }
-            result.append("]");
-            return result.toString();
-        }
-        return null;
-    }
+	public String getExtendedString()
+	{
+		if(codeLocation != null || version != null)
+		{
+			StringBuilder result = new StringBuilder();
+			if(exact)
+			{
+				result.append("[");
+			}
+			else
+			{
+				result.append("~[");
+			}
+			if(codeLocation != null)
+			{
+				result.append(codeLocation);
+			}
+			result.append(":");
+			if(version != null)
+			{
+				result.append(version);
+			}
+			result.append("]");
+			return result.toString();
+		}
+		return null;
+	}
 
 	public String toString(boolean extended)
 	{
-		StringBuilder result=new StringBuilder();
+		StringBuilder result = new StringBuilder();
 
 		result.append(className).append(".").append(methodName);
 		if(isNativeMethod())
 		{
 			result.append("(Native Method)");
 		}
-		if(fileName!=null)
+		if(fileName != null)
 		{
 			result.append("(").append(fileName);
 			if(lineNumber >= 0)
@@ -239,11 +240,11 @@ public class ExtendedStackTraceElement
 		}
 		if(extended)
 		{
-            String extendedStr = getExtendedString();
+			String extendedStr = getExtendedString();
 			// same as logback
-			if(extendedStr!=null)
+			if(extendedStr != null)
 			{
-                result.append(" ").append(extendedStr);
+				result.append(" ").append(extendedStr);
 			}
 		}
 		return result.toString();

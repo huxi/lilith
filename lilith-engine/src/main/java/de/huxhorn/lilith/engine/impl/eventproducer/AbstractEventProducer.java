@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,15 @@
  */
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
-import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
-import java.io.Serializable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
 
 public abstract class AbstractEventProducer<T extends Serializable>
 	implements EventProducer
@@ -38,9 +38,9 @@ public abstract class AbstractEventProducer<T extends Serializable>
 
 	protected AbstractEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue)
 	{
-		this.sourceIdentifier=sourceIdentifier;
-		this.eventQueue=eventQueue;
-		localIdCounter=0;
+		this.sourceIdentifier = sourceIdentifier;
+		this.eventQueue = eventQueue;
+		localIdCounter = 0;
 	}
 
 	public SourceIdentifier getSourceIdentifier()
@@ -50,7 +50,7 @@ public abstract class AbstractEventProducer<T extends Serializable>
 
 	protected void addEvent(T event)
 	{
-		if(event == null && localIdCounter==0)
+		if(event == null && localIdCounter == 0)
 		{
 			// ignore null event if no event has previously been produced.
 			// this is a good idea because sometimes exceptions are thrown while
@@ -61,7 +61,7 @@ public abstract class AbstractEventProducer<T extends Serializable>
 		}
 		localIdCounter++;
 		// TODO: add transfer size info if available
-		EventWrapper<T> wrapper=new EventWrapper<T>(getSourceIdentifier(), localIdCounter, event);
+		EventWrapper<T> wrapper = new EventWrapper<T>(getSourceIdentifier(), localIdCounter, event);
 		eventQueue.add(wrapper);
 		if(logger.isDebugEnabled()) logger.debug("Added event-wrapper for {}.", event);
 	}

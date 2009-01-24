@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,13 +17,12 @@
  */
 package de.huxhorn.lilith.data.logging;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -38,20 +37,22 @@ public class ThrowableInfoTest
 	}
 
 	@Test
-	public void defaultConstructor() throws ClassNotFoundException, IOException
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
 	{
-		ThrowableInfo instance=new ThrowableInfo();
+		ThrowableInfo instance = new ThrowableInfo();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
 	}
 
 	@Test
-	public void name() throws ClassNotFoundException, IOException
+	public void name()
+		throws ClassNotFoundException, IOException
 	{
-		ThrowableInfo instance=new ThrowableInfo();
+		ThrowableInfo instance = new ThrowableInfo();
 
-		String value="value";
+		String value = "value";
 		instance.setName(value);
 
 		{
@@ -67,11 +68,12 @@ public class ThrowableInfoTest
 	}
 
 	@Test
-	public void message() throws ClassNotFoundException, IOException
+	public void message()
+		throws ClassNotFoundException, IOException
 	{
-		ThrowableInfo instance=new ThrowableInfo();
+		ThrowableInfo instance = new ThrowableInfo();
 
-		String value="value";
+		String value = "value";
 		instance.setMessage(value);
 
 		{
@@ -87,11 +89,12 @@ public class ThrowableInfoTest
 	}
 
 	@Test
-	public void omittedElements() throws ClassNotFoundException, IOException
+	public void omittedElements()
+		throws ClassNotFoundException, IOException
 	{
-		ThrowableInfo instance=new ThrowableInfo();
+		ThrowableInfo instance = new ThrowableInfo();
 
-		int value=17;
+		int value = 17;
 		instance.setOmittedElements(value);
 
 		{
@@ -107,11 +110,12 @@ public class ThrowableInfoTest
 	}
 
 	@Test
-	public void cause() throws ClassNotFoundException, IOException
+	public void cause()
+		throws ClassNotFoundException, IOException
 	{
-		ThrowableInfo instance=new ThrowableInfo();
+		ThrowableInfo instance = new ThrowableInfo();
 
-		ThrowableInfo value=new ThrowableInfo();
+		ThrowableInfo value = new ThrowableInfo();
 		instance.setCause(value);
 
 		{
@@ -127,11 +131,12 @@ public class ThrowableInfoTest
 	}
 
 	@Test
-	public void stackTrace() throws ClassNotFoundException, IOException
+	public void stackTrace()
+		throws ClassNotFoundException, IOException
 	{
-		ThrowableInfo instance=new ThrowableInfo();
+		ThrowableInfo instance = new ThrowableInfo();
 
-		ExtendedStackTraceElement[] value=new ExtendedStackTraceElement[]{new ExtendedStackTraceElement()};
+		ExtendedStackTraceElement[] value = new ExtendedStackTraceElement[]{new ExtendedStackTraceElement()};
 		instance.setStackTrace(value);
 
 		{

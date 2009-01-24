@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,10 +18,11 @@
 package de.huxhorn.lilith.data.eventsource;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testClone;
-import org.junit.Test;
-import org.junit.Before;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -36,20 +37,22 @@ public class TransferSizeInfoTest
 		fresh = new TransferSizeInfo();
 	}
 
-    @Test
-    public void constructorDefault() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        TransferSizeInfo original=new TransferSizeInfo();
-        testClone(original);
-    }
+	@Test
+	public void constructorDefault()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		TransferSizeInfo original = new TransferSizeInfo();
+		testClone(original);
+	}
 
 	@Test
-	public void transferSize() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void transferSize()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		TransferSizeInfo instance=new TransferSizeInfo();
+		TransferSizeInfo instance = new TransferSizeInfo();
 
-		Long value=17L;
-		instance.transferSize=value;
+		Long value = 17L;
+		instance.transferSize = value;
 
 		{
 			TransferSizeInfo obj = testClone(instance);
@@ -59,12 +62,13 @@ public class TransferSizeInfoTest
 	}
 
 	@Test
-	public void uncompressedSize() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void uncompressedSize()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		TransferSizeInfo instance=new TransferSizeInfo();
+		TransferSizeInfo instance = new TransferSizeInfo();
 
-		Long value=17L;
-		instance.uncompressedSize=value;
+		Long value = 17L;
+		instance.uncompressedSize = value;
 
 		{
 			TransferSizeInfo obj = testClone(instance);

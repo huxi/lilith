@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,22 +23,21 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 import java.io.Serializable;
 
+import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+
 public class ApplicationRenderer
-		implements TableCellRenderer
+	implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
 
 	public ApplicationRenderer()
 	{
 		super();
-		renderer=new LabelCellRenderer();
+		renderer = new LabelCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
@@ -48,45 +47,45 @@ public class ApplicationRenderer
 	{
 		if(!isSelected)
 		{
-			isSelected=rowIndex == LabelCellRenderer.getSelectedRow(table);
+			isSelected = rowIndex == LabelCellRenderer.getSelectedRow(table);
 		}
 		if(!hasFocus && isSelected)
 		{
-			hasFocus=table.isFocusOwner();
+			hasFocus = table.isFocusOwner();
 		}
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
 
-		Color foreground=Color.BLACK;
-		String text="";
+		Color foreground = Color.BLACK;
+		String text = "";
 		//String tooltip="";
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
+			EventWrapper wrapper = (EventWrapper) value;
 			Serializable evtObject = wrapper.getEvent();
 			if(evtObject instanceof LoggingEvent)
 			{
-				LoggingEvent event= (LoggingEvent) evtObject;
-				text=event.getApplicationIdentifier();
+				LoggingEvent event = (LoggingEvent) evtObject;
+				text = event.getApplicationIdentifier();
 			}
 			else if(evtObject instanceof AccessEvent)
 			{
-				AccessEvent event= (AccessEvent) evtObject;
-				text=event.getApplicationIdentifier();
+				AccessEvent event = (AccessEvent) evtObject;
+				text = event.getApplicationIdentifier();
 			}
 		}
 		renderer.setText(text);
-		boolean colorsInitialized=false;
+		boolean colorsInitialized = false;
 		if(!hasFocus && !isSelected)
 		{
 			if(table instanceof ColorsProvider)
 			{
 				if(value instanceof EventWrapper)
 				{
-					EventWrapper wrapper=(EventWrapper)value;
-					ColorsProvider cp=(ColorsProvider) table;
-					Colors colors=cp.resolveColors(wrapper, rowIndex, vColIndex);
-					colorsInitialized=renderer.updateColors(colors);
+					EventWrapper wrapper = (EventWrapper) value;
+					ColorsProvider cp = (ColorsProvider) table;
+					Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
+					colorsInitialized = renderer.updateColors(colors);
 				}
 			}
 		}

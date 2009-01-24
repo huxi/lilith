@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -27,14 +27,14 @@ public class MessageWriteByteStrategy
 	 * Writes an int containing the length of the byte array followed by the byte array.
 	 *
 	 * @param dataOutputStream the stream the bytes will be written to.
-	 * @param bytes			the bytes that are written
+	 * @param bytes            the bytes that are written
 	 * @throws java.io.IOException if an exception is thrown while writing the bytes.
 	 */
 	public void writeBytes(DataOutputStream dataOutputStream, byte[] bytes)
-			throws IOException
+		throws IOException
 	{
 		dataOutputStream.writeInt(bytes.length);
-		if(bytes.length>0)
+		if(bytes.length > 0)
 		{
 			dataOutputStream.write(bytes);
 		}

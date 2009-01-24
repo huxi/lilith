@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.CircularBuffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.buffers.ResetOperation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 public abstract class BufferTableModel<T>
-		implements RowBasedTableModel<T>, DisposeOperation
+	implements RowBasedTableModel<T>, DisposeOperation
 {
 	private final Logger logger = LoggerFactory.getLogger(BufferTableModel.class);
 
@@ -46,13 +47,13 @@ public abstract class BufferTableModel<T>
 	public BufferTableModel(Buffer<T> buffer)
 	{
 		eventListenerList = new EventListenerList();
-		lastRowCount=0;
-		disposed=false;
+		lastRowCount = 0;
+		disposed = false;
 		setBuffer(buffer);
 
-		Thread t=new Thread(new BufferTableModel.TableChangeDetectionRunnable(), "TableChangeDetection");
+		Thread t = new Thread(new BufferTableModel.TableChangeDetectionRunnable(), "TableChangeDetection");
 		t.setDaemon(true);
-		t.setPriority(Thread.NORM_PRIORITY-1);
+		t.setPriority(Thread.NORM_PRIORITY - 1);
 		t.start();
 		setPaused(false);
 	}
@@ -66,7 +67,7 @@ public abstract class BufferTableModel<T>
 	{
 		if(paused)
 		{
-			pauseRowCount=getRowCount();
+			pauseRowCount = getRowCount();
 		}
 		this.paused = paused;
 		notifyAll();
@@ -80,7 +81,7 @@ public abstract class BufferTableModel<T>
 	public void setBuffer(Buffer<T> buffer)
 	{
 		this.buffer = buffer;
-		if (buffer instanceof CircularBuffer)
+		if(buffer instanceof CircularBuffer)
 		{
 			this.circularBuffer = (CircularBuffer<T>) buffer;
 		}
@@ -89,7 +90,7 @@ public abstract class BufferTableModel<T>
 			this.circularBuffer = null;
 		}
 		setLastRowCount(0);
-		this.pauseRowCount=0;
+		this.pauseRowCount = 0;
 	}
 
 	public boolean clear()
@@ -112,12 +113,12 @@ public abstract class BufferTableModel<T>
 
 	private synchronized void setLastRowCount(int lastRowCount)
 	{
-		this.lastRowCount=lastRowCount;
+		this.lastRowCount = lastRowCount;
 	}
 
 	public synchronized void dispose()
 	{
-		disposed=true;
+		disposed = true;
 		if(buffer instanceof DisposeOperation)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Calling dispose on contained buffer...");
@@ -138,17 +139,19 @@ public abstract class BufferTableModel<T>
 		{
 			return pauseRowCount;
 		}
-		if (circularBuffer != null)
+		if(circularBuffer != null)
 		{
 			// special circular handling
 			return circularBuffer.getAvailableElements();
 		}
 
 		long rows = buffer.getSize();
-		if (rows > Integer.MAX_VALUE)
+		if(rows > Integer.MAX_VALUE)
 		{
-			if (logger.isWarnEnabled())
+			if(logger.isWarnEnabled())
+			{
 				logger.warn("Swing can only handle " + Integer.MAX_VALUE + " rows instead of " + rows + "!");
+			}
 			rows = Integer.MAX_VALUE;
 		}
 		return (int) rows;
@@ -156,7 +159,7 @@ public abstract class BufferTableModel<T>
 
 	public T getValueAt(int row)
 	{
-		if (circularBuffer != null)
+		if(circularBuffer != null)
 		{
 			// special circular handling
 			return circularBuffer.getRelative(row);
@@ -182,7 +185,9 @@ public abstract class BufferTableModel<T>
 		return value;
 	}
 
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {}
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
+	{
+	}
 
 	private void fireTableChange()
 	{
@@ -198,7 +203,7 @@ public abstract class BufferTableModel<T>
 
 	private void fireTableChange(TableModelEvent evt)
 	{
-		Runnable r=new BufferTableModel.FireTableChangeRunnable(evt);
+		Runnable r = new BufferTableModel.FireTableChangeRunnable(evt);
 		if(SwingUtilities.isEventDispatchThread())
 		{
 			r.run();
@@ -228,19 +233,22 @@ public abstract class BufferTableModel<T>
 			}
 			// Process the listeners last to first, notifying
 			// those that are interested in this event
-			for (int i = listeners.length - 2; i >= 0; i -= 2)
+			for(int i = listeners.length - 2; i >= 0; i -= 2)
 			{
-				if (listeners[i] == TableModelListener.class)
+				if(listeners[i] == TableModelListener.class)
 				{
 					TableModelListener listener = ((TableModelListener) listeners[i + 1]);
-					if(logger.isDebugEnabled()) logger.debug("Firing TableChange at {}.",listener.getClass().getName());
+					if(logger.isDebugEnabled())
+					{
+						logger.debug("Firing TableChange at {}.", listener.getClass().getName());
+					}
 					try
 					{
 						listener.tableChanged(event);
 					}
 					catch(Throwable ex)
 					{
-						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!",ex);
+						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!", ex);
 					}
 				}
 			}
@@ -271,7 +279,7 @@ public abstract class BufferTableModel<T>
 
 		public void run()
 		{
-			for(;;)
+			for(; ;)
 			{
 				if(isDisposed())
 				{
@@ -280,18 +288,18 @@ public abstract class BufferTableModel<T>
 				}
 				if(!isPaused())
 				{
-					int currentValue=internalRowCount();
+					int currentValue = internalRowCount();
 
-					if(currentValue>-1)
+					if(currentValue > -1)
 					{
-						int prevValue=getRowCount();
-						if(prevValue!=0 && currentValue>prevValue)
+						int prevValue = getRowCount();
+						if(prevValue != 0 && currentValue > prevValue)
 						{
-							int lastRow=currentValue-1;
+							int lastRow = currentValue - 1;
 							setLastRowCount(currentValue);
 							fireTableChange(prevValue, lastRow);
 						}
-						else if(currentValue!=prevValue)
+						else if(currentValue != prevValue)
 						{
 							setLastRowCount(currentValue);
 							fireTableChange();
@@ -301,7 +309,7 @@ public abstract class BufferTableModel<T>
 					{
 						Thread.sleep(UPDATE_INTERVAL);
 					}
-					catch (InterruptedException e)
+					catch(InterruptedException e)
 					{
 						if(logger.isDebugEnabled()) logger.debug("Interrupted...", e);
 						return;
@@ -311,7 +319,7 @@ public abstract class BufferTableModel<T>
 				{
 					synchronized(BufferTableModel.this)
 					{
-						for(;;)
+						for(; ;)
 						{
 							if(!isPaused())
 							{
@@ -323,7 +331,7 @@ public abstract class BufferTableModel<T>
 								{
 									BufferTableModel.this.wait();
 								}
-								catch (InterruptedException e)
+								catch(InterruptedException e)
 								{
 									if(logger.isDebugEnabled()) logger.debug("Interrupted...", e);
 									return;

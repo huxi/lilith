@@ -3,46 +3,54 @@
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<param name="Pattern" value="%-5level - %msg%n" />
+			<param name="Pattern" value="%-5level - %msg%n"/>
 		</layout>
 	</appender>
 
-	<appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender">
-	</appender>
+	<appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"></appender>
 
-	<appender name="MultiplexClassicCompressed" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-		<Compressing>true</Compressing> <!-- will automatically use correct default port -->
+	<appender name="MultiplexClassicCompressed"
+	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<!-- will automatically use correct default port -->
 		<ApplicationIdentifier>Lilith-Compressed</ApplicationIdentifier>
 		<ReconnectionDelay>30</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
 	</appender>
 
-	<appender name="MultiplexClassicUncompressed" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-		<Compressing>false</Compressing> <!-- will automatically use correct default port -->
+	<appender name="MultiplexClassicUncompressed"
+	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+		<Compressing>false</Compressing>
+		<!-- will automatically use correct default port -->
 		<ApplicationIdentifier>Lilith-Uncompressed</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
 	</appender>
 
-	<appender name="MultiplexClassicXmlCompressed" class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
-		<Compressing>true</Compressing> <!-- will automatically use correct default port -->
+	<appender name="MultiplexClassicXmlCompressed"
+	          class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<!-- will automatically use correct default port -->
 		<ApplicationIdentifier>Lilith-XML-Compressed</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
 	</appender>
 
-	<appender name="MultiplexClassicXmlUncompressed" class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
-		<Compressing>false</Compressing> <!-- will automatically use correct default port -->
+	<appender name="MultiplexClassicXmlUncompressed"
+	          class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
+		<Compressing>false</Compressing>
+		<!-- will automatically use correct default port -->
 		<ApplicationIdentifier>Lilith-XML-Uncompressed</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
 	</appender>
 
-	<appender name="ZeroDelimitedMultiplexClassicXml" class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
+	<appender name="ZeroDelimitedMultiplexClassicXml"
+	          class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
 		<ApplicationIdentifier>Lilith-XML-ZeroDelimited</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
@@ -60,22 +68,22 @@
 		<level value="DEBUG"/>
 		<appender-ref ref="CONSOLE"/>
 		<!--
-		<appender-ref ref="Localhost"/>
-		<appender-ref ref="multiplex" />
-		<appender-ref ref="MultiplexClassicCompressed" />
-		-->
+			  <appender-ref ref="Localhost"/>
+			  <appender-ref ref="multiplex" />
+			  <appender-ref ref="MultiplexClassicCompressed" />
+			  -->
 
-		<appender-ref ref="Lilith" />
+		<appender-ref ref="Lilith"/>
 	</root>
 
 	<logger name="de.huxhorn.lilith.debug">
 		<level value="TRACE"/>
-		<appender-ref ref="MultiplexClassicCompressed" />
-		<appender-ref ref="MultiplexClassicUncompressed" />
-		<appender-ref ref="MultiplexClassicXmlCompressed" />
-		<appender-ref ref="MultiplexClassicXmlUncompressed" />
-		<appender-ref ref="ZeroDelimitedMultiplexClassicXml" />
-		<appender-ref ref="LogbackClassic" />
+		<appender-ref ref="MultiplexClassicCompressed"/>
+		<appender-ref ref="MultiplexClassicUncompressed"/>
+		<appender-ref ref="MultiplexClassicXmlCompressed"/>
+		<appender-ref ref="MultiplexClassicXmlUncompressed"/>
+		<appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
+		<appender-ref ref="LogbackClassic"/>
 	</logger>
 	<logger name="sun">
 		<level value="WARN"/>
@@ -88,7 +96,7 @@
 	</logger>
 	<logger name="javax.jmdns">
 		<level value="TRACE"/>
-		<appender-ref ref="multiplex" />
+		<appender-ref ref="multiplex"/>
 	</logger>
 	<logger name="org.springframework">
 		<level value="INFO"/>

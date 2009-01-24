@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,11 @@
  */
 package de.huxhorn.lilith.swing;
 
-import javax.swing.*;
-import java.awt.Frame;
-import java.awt.Container;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.concurrent.Future;
+
+import javax.swing.*;
 
 public class ProgressDialog
 	extends JDialog
@@ -34,17 +33,17 @@ public class ProgressDialog
 		super(owner, false);
 		JProgressBar progress = new JProgressBar();
 		progress.setIndeterminate(true);
-		Container c=getContentPane();
+		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		c.add(progress, BorderLayout.CENTER);
-		CancelAction cancelAction=new CancelAction();
+		CancelAction cancelAction = new CancelAction();
 		JButton cancelButton = new JButton(cancelAction);
 		c.add(cancelButton, BorderLayout.SOUTH);
 	}
 
 	public void setFuture(Future<Integer> future)
 	{
-		this.future=future;
+		this.future = future;
 	}
 
 

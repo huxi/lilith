@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,11 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
+import javax.swing.*;
 
 public class ViewContainerFrame
 	extends JFrame
@@ -35,11 +36,12 @@ public class ViewContainerFrame
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
 
-	public ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer) throws HeadlessException
+	public ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer)
+		throws HeadlessException
 	{
-		this.mainFrame=mainFrame;
-		this.viewContainer=viewContainer;
-		viewActions=new ViewActions(mainFrame, viewContainer);
+		this.mainFrame = mainFrame;
+		this.viewContainer = viewContainer;
+		viewActions = new ViewActions(mainFrame, viewContainer);
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		add(viewContainer, BorderLayout.CENTER);
@@ -53,10 +55,10 @@ public class ViewContainerFrame
 		return viewActions;
 	}
 
-    public ViewContainer getViewContainer()
-    {
-        return viewContainer;
-    }
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
 
 	public void focusWindow()
 	{
@@ -65,7 +67,7 @@ public class ViewContainerFrame
 			setState(Frame.NORMAL);
 		}
 		toFront();
-		
+
 	}
 
 	public void minimizeWindow()
@@ -89,7 +91,7 @@ public class ViewContainerFrame
 	}
 
 	class CleanupWindowChangeListener
-			implements WindowListener
+		implements WindowListener
 	{
 		public void windowOpened(WindowEvent e)
 		{

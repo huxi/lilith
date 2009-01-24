@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,10 +18,10 @@
 package de.huxhorn.lilith.data.logging;
 
 import java.util.Arrays;
-import java.util.Set;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * <p>Replacement for org.slf4j.helpers.MessageFormatter.</p>
@@ -48,7 +48,7 @@ public class MessageFormatter
 
 	public static final String RECURSION_PREFIX = "[...";
 	public static final String RECURSION_SUFFIX = "...]";
-	
+
 	public static final String ERROR_PREFIX = "[!!!";
 	public static final String ERROR_SEPARATOR = "=>";
 	public static final String ERROR_MSG_SEPARATOR = ":";
@@ -58,12 +58,12 @@ public class MessageFormatter
 	 * Replace placeholders in the given messagePattern with arguments.
 	 *
 	 * @param messagePattern the message pattern containing placeholders.
-	 * @param arguments	  the arguments to be used to replace placeholders.
+	 * @param arguments      the arguments to be used to replace placeholders.
 	 * @return the formatted message.
 	 */
 	public static String format(String messagePattern, String[] arguments)
 	{
-		if (messagePattern == null || arguments == null || arguments.length == 0)
+		if(messagePattern == null || arguments == null || arguments.length == 0)
 		{
 			return messagePattern;
 		}
@@ -71,29 +71,29 @@ public class MessageFormatter
 		StringBuilder result = new StringBuilder();
 		int escapeCounter = 0;
 		int currentArgument = 0;
-		for (int i = 0; i < messagePattern.length(); i++)
+		for(int i = 0; i < messagePattern.length(); i++)
 		{
 			char curChar = messagePattern.charAt(i);
-			if (curChar == ESCAPE_CHAR)
+			if(curChar == ESCAPE_CHAR)
 			{
 				escapeCounter++;
 			}
 			else
 			{
-				if (curChar == DELIM_START)
+				if(curChar == DELIM_START)
 				{
-					if (i < messagePattern.length() - 1)
+					if(i < messagePattern.length() - 1)
 					{
-						if (messagePattern.charAt(i + 1) == DELIM_STOP)
+						if(messagePattern.charAt(i + 1) == DELIM_STOP)
 						{
 							// write escaped escape chars
 							int escapedEscapes = escapeCounter / 2;
-							for (int j = 0; j < escapedEscapes; j++)
+							for(int j = 0; j < escapedEscapes; j++)
 							{
 								result.append(ESCAPE_CHAR);
 							}
 
-							if (escapeCounter % 2 == 1)
+							if(escapeCounter % 2 == 1)
 							{
 								// i.e. escaped
 								// write escaped escape chars
@@ -103,7 +103,7 @@ public class MessageFormatter
 							else
 							{
 								// unescaped
-								if (currentArgument < arguments.length)
+								if(currentArgument < arguments.length)
 								{
 									result.append(arguments[currentArgument]);
 								}
@@ -121,9 +121,9 @@ public class MessageFormatter
 				}
 				// any other char beside ESCAPE or DELIM_START/STOP-combo
 				// write unescaped escape chars
-				if (escapeCounter > 0)
+				if(escapeCounter > 0)
 				{
-					for (int j = 0; j < escapeCounter; j++)
+					for(int j = 0; j < escapeCounter; j++)
 					{
 						result.append(ESCAPE_CHAR);
 					}
@@ -143,34 +143,34 @@ public class MessageFormatter
 	 */
 	public static int countArgumentPlaceholders(String messagePattern)
 	{
-		if (messagePattern == null)
+		if(messagePattern == null)
 		{
 			return 0;
 		}
 
 		int delim = messagePattern.indexOf(DELIM_START);
 
-		if (delim == -1)
+		if(delim == -1)
 		{
 			// special case, no placeholders at all.
 			return 0;
 		}
 		int result = 0;
 		boolean isEscaped = false;
-		for (int i = 0; i < messagePattern.length(); i++)
+		for(int i = 0; i < messagePattern.length(); i++)
 		{
 			char curChar = messagePattern.charAt(i);
-			if (curChar == ESCAPE_CHAR)
+			if(curChar == ESCAPE_CHAR)
 			{
 				isEscaped = !isEscaped;
 			}
-			else if (curChar == DELIM_START)
+			else if(curChar == DELIM_START)
 			{
-				if (!isEscaped)
+				if(!isEscaped)
 				{
-					if (i < messagePattern.length() - 1)
+					if(i < messagePattern.length() - 1)
 					{
-						if (messagePattern.charAt(i + 1) == DELIM_STOP)
+						if(messagePattern.charAt(i + 1) == DELIM_STOP)
 						{
 							result++;
 							i++;
@@ -190,27 +190,27 @@ public class MessageFormatter
 	/**
 	 * <p>This method returns a MessageFormatter.ArgumentResult which contains the arguments converted to String
 	 * as well as an optional Throwable.</p>
-	 *
+	 * <p/>
 	 * <p>If the last argument is a Throwable and is NOT used up by a placeholder in the message pattern it is returned
 	 * in MessageFormatter.ArgumentResult.getThrowable() and won't be contained in the created String[].<br/>
 	 * If it is used up getThrowable will return null even if the last argument was a Throwable!</p>
 	 *
 	 * @param messagePattern the message pattern that to be checked for placeholders.
-	 * @param arguments	  the argument array to be converted.
+	 * @param arguments      the argument array to be converted.
 	 * @return a MessageFormatter.ArgumentResult containing the converted arformatted message and optionally a Throwable.
 	 */
 	public static ArgumentResult evaluateArguments(String messagePattern, Object[] arguments)
 	{
-		if (arguments == null)
+		if(arguments == null)
 		{
 			return null;
 		}
 		int argsCount = countArgumentPlaceholders(messagePattern);
 		int resultArgCount = arguments.length;
 		Throwable throwable = null;
-		if (argsCount < arguments.length)
+		if(argsCount < arguments.length)
 		{
-			if (arguments[arguments.length - 1] instanceof Throwable)
+			if(arguments[arguments.length - 1] instanceof Throwable)
 			{
 				throwable = (Throwable) arguments[arguments.length - 1];
 				resultArgCount--;
@@ -218,7 +218,7 @@ public class MessageFormatter
 		}
 
 		String[] stringArgs = new String[resultArgCount];
-		for (int i = 0; i < stringArgs.length; i++)
+		for(int i = 0; i < stringArgs.length; i++)
 		{
 			stringArgs[i] = deepToString(arguments[i]);
 		}
@@ -231,12 +231,12 @@ public class MessageFormatter
 		{
 			return null;
 		}
-		if (o instanceof String)
+		if(o instanceof String)
 		{
 			return (String) o;
 		}
-		StringBuilder str=new StringBuilder();
-		Set<String> dejaVu=new HashSet<String>(); // that's actually a neat name ;)
+		StringBuilder str = new StringBuilder();
+		Set<String> dejaVu = new HashSet<String>(); // that's actually a neat name ;)
 		recursiveDeepToString(o, str, dejaVu);
 		return str.toString();
 	}
@@ -246,19 +246,19 @@ public class MessageFormatter
 	 * Primitive arrays are converted using their respective Arrays.toString methods while
 	 * special handling is implemented for "container types", i.e. Object[], Map and Collection because those could
 	 * contain themselves.
-	 *
+	 * <p/>
 	 * dejaVu is used in case of those container types to prevent an endless recursion.
-	 *
+	 * <p/>
 	 * It should be noted that neither AbstractMap.toString() nor AbstractCollection.toString() implement such a behavior.
 	 * They only check if the container is directly contained in itself, but not if a contained container contains the
 	 * original one. Because of that, Arrays.toString(Object[]) isn't safe either.
 	 * Confusing? Just read the last paragraph again and check the respective toString() implementation.
-	 *
+	 * <p/>
 	 * This means, in effect, that logging would produce a usable output even if an ordinary System.out.println(o)
 	 * would produce a relatively hard-to-debug StackOverflowError.
 	 *
-	 * @param o the Object to convert into a String
-	 * @param str the StringBuilder that o will be appended to
+	 * @param o      the Object to convert into a String
+	 * @param str    the StringBuilder that o will be appended to
 	 * @param dejaVu a list of container identities that were already used.
 	 */
 	private static void recursiveDeepToString(Object o, StringBuilder str, Set<String> dejaVu)
@@ -268,51 +268,51 @@ public class MessageFormatter
 			str.append("null");
 			return;
 		}
-		if (o instanceof String)
+		if(o instanceof String)
 		{
 			str.append(o);
 			return;
 		}
 
-		Class oClass=o.getClass();
-		if (oClass.isArray())
+		Class oClass = o.getClass();
+		if(oClass.isArray())
 		{
-			if (oClass == byte[].class)
+			if(oClass == byte[].class)
 			{
 				str.append(Arrays.toString((byte[]) o));
 			}
-			else if (oClass == short[].class)
+			else if(oClass == short[].class)
 			{
 				str.append(Arrays.toString((short[]) o));
 			}
-			else if (oClass == int[].class)
+			else if(oClass == int[].class)
 			{
 				str.append(Arrays.toString((int[]) o));
 			}
-			else if (oClass == long[].class)
+			else if(oClass == long[].class)
 			{
 				str.append(Arrays.toString((long[]) o));
 			}
-			else if (oClass == float[].class)
+			else if(oClass == float[].class)
 			{
 				str.append(Arrays.toString((float[]) o));
 			}
-			else if (oClass == double[].class)
+			else if(oClass == double[].class)
 			{
 				str.append(Arrays.toString((double[]) o));
 			}
-			else if (oClass == boolean[].class)
+			else if(oClass == boolean[].class)
 			{
 				str.append(Arrays.toString((boolean[]) o));
 			}
-			else if (oClass == char[].class)
+			else if(oClass == char[].class)
 			{
 				str.append(Arrays.toString((char[]) o));
 			}
 			else
 			{
 				// special handling of container Object[]
-				String id=identityToString(o);
+				String id = identityToString(o);
 				if(dejaVu.contains(id))
 				{
 					str.append(RECURSION_PREFIX).append(id).append(RECURSION_SUFFIX);
@@ -322,12 +322,12 @@ public class MessageFormatter
 					dejaVu.add(id);
 					Object[] oArray = (Object[]) o;
 					str.append("[");
-					boolean first=true;
-					for(Object current:oArray)
+					boolean first = true;
+					for(Object current : oArray)
 					{
 						if(first)
 						{
-							first=false;
+							first = false;
 						}
 						else
 						{
@@ -343,7 +343,7 @@ public class MessageFormatter
 		else if(o instanceof Map)
 		{
 			// special handling of container Map
-			String id=identityToString(o);
+			String id = identityToString(o);
 			if(dejaVu.contains(id))
 			{
 				str.append(RECURSION_PREFIX).append(id).append(RECURSION_SUFFIX);
@@ -351,21 +351,21 @@ public class MessageFormatter
 			else
 			{
 				dejaVu.add(id);
-				Map<?,?> oMap = (Map<?,?>) o;
+				Map<?, ?> oMap = (Map<?, ?>) o;
 				str.append("{");
-				boolean isFirst=true;
-				for(Map.Entry<?,?> current : oMap.entrySet())
+				boolean isFirst = true;
+				for(Map.Entry<?, ?> current : oMap.entrySet())
 				{
 					if(isFirst)
 					{
-						isFirst=false;
+						isFirst = false;
 					}
 					else
 					{
 						str.append(", ");
 					}
-					Object key=current.getKey();
-					Object value=current.getValue();
+					Object key = current.getKey();
+					Object value = current.getValue();
 					recursiveDeepToString(key, str, new HashSet<String>(dejaVu));
 					str.append("=");
 					recursiveDeepToString(value, str, new HashSet<String>(dejaVu));
@@ -376,7 +376,7 @@ public class MessageFormatter
 		else if(o instanceof Collection)
 		{
 			// special handling of container Collection
-			String id=identityToString(o);
+			String id = identityToString(o);
 			if(dejaVu.contains(id))
 			{
 				str.append(RECURSION_PREFIX).append(id).append(RECURSION_SUFFIX);
@@ -384,14 +384,14 @@ public class MessageFormatter
 			else
 			{
 				dejaVu.add(id);
-				Collection<?> oCol=(Collection<?>)o;
+				Collection<?> oCol = (Collection<?>) o;
 				str.append("[");
-				boolean isFirst=true;
-				for(Object current: oCol)
+				boolean isFirst = true;
+				for(Object current : oCol)
 				{
 					if(isFirst)
 					{
-						isFirst=false;
+						isFirst = false;
 					}
 					else
 					{
@@ -414,8 +414,8 @@ public class MessageFormatter
 				str.append(ERROR_PREFIX);
 				str.append(identityToString(o));
 				str.append(ERROR_SEPARATOR);
-				String msg=t.getMessage();
-				String className=t.getClass().getName();
+				String msg = t.getMessage();
+				String className = t.getClass().getName();
 				str.append(className);
 				if(!className.equals(msg))
 				{
@@ -430,9 +430,9 @@ public class MessageFormatter
 	/**
 	 * This method returns the same as if Object.toString() would not have been
 	 * overridden in obj.
-	 * 
+	 * <p/>
 	 * Note that this isn't 100% secure as collisions can always happen with hash codes.
-	 *
+	 * <p/>
 	 * Copied from Object.hashCode():
 	 * As much as is reasonably practical, the hashCode method defined by
 	 * class <tt>Object</tt> does return distinct integers for distinct
@@ -456,7 +456,7 @@ public class MessageFormatter
 	/**
 	 * <p>This is just a simple class containing the result of an evaluateArgument call. It's necessary because we need to
 	 * return two results, i.e. the resulting String[] and the optional Throwable.</p>
-	 *
+	 * <p/>
 	 * <p>This class is not Serializable because serializing a Throwable is generally a bad idea if the data is supposed
 	 * to leave the current VM since it may result in ClassNotFoundExceptions if the given Throwable is not
 	 * available/different in the deserializing VM.</p>
@@ -488,13 +488,13 @@ public class MessageFormatter
 			StringBuilder result = new StringBuilder();
 			result.append("ArgumentResult[throwable=").append(throwable);
 			result.append(", arguments=");
-			if (arguments != null)
+			if(arguments != null)
 			{
 				result.append("[");
 				boolean isFirst = true;
-				for (String current : arguments)
+				for(String current : arguments)
 				{
-					if (!isFirst)
+					if(!isFirst)
 					{
 						result.append(", ");
 					}
@@ -502,7 +502,7 @@ public class MessageFormatter
 					{
 						isFirst = false;
 					}
-					if (current != null)
+					if(current != null)
 					{
 						result.append("'").append(current).append("'");
 					}
@@ -518,13 +518,13 @@ public class MessageFormatter
 
 		public boolean equals(Object o)
 		{
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
+			if(this == o) return true;
+			if(o == null || getClass() != o.getClass()) return false;
 
 			ArgumentResult result = (ArgumentResult) o;
 
-			if (!Arrays.equals(arguments, result.arguments)) return false;
-			if (throwable != null ? !throwable.equals(result.throwable) : result.throwable != null) return false;
+			if(!Arrays.equals(arguments, result.arguments)) return false;
+			if(throwable != null ? !throwable.equals(result.throwable) : result.throwable != null) return false;
 
 			return true;
 		}

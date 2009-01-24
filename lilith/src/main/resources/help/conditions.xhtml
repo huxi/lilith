@@ -1,82 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>Conditions</title>
-		<link href="help.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<p><a href="index.xhtml">ToC</a></p>
+<head>
+	<title>Conditions</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
 
-		<h1><a name="top">Conditions</a></h1>
-        <p>
-            Lilith supports several types of conditions:
-        </p>
-        <ul>
-            <li>event.contains<br/>
-                This is generally the most desired case. It checks if any field of the event contains the given string.
-                While being the most general, it's also the one with the poorest performance, for the same reason.<br/>
-                This condition is the default condition of the search panel.
-            </li>
-            <li>message.contains<br/>
-                Checks only if the message of the logging event contains the given string.<br/>
-                It will only return a positive result in case of logging events because access events don't have
-                a message.
-            </li>
-            <li>logger.startsWith<br/>
-                Checks only if the logger name of the logging event starts with the given string.<br/>
-                This condition is useful to select a subset of events based on the package name of the logging class.<br/>
-                It will only return a positive result in case of logging events because access events don't have
-                a logger name.
-            </li>
-            <li>logger.equals<br/>
-                Checks only if the logger name of the logging event equals the given string.<br/>
-                It will only return a positive result in case of logging events because access events don't have
-                a logger name.
-            </li>
-            <li><a href="#saved">Saved conditions</a></li>
-            <li><a href="#groovy">Custom Groovy conditions</a></li>
-        </ul>
-        <p><a href="#top">Back to top.</a></p>
+<h1><a name="top">Conditions</a></h1>
 
-        <h2><a  name="saved">Saved conditions</a></h2>
-        <p>It's possible to save conditions using "View" =&gt; "Add condition...".
-            The shortcut for this functionality is *command*-I.<br/>
-            Such saved conditions can be (re)used by entering "#condition#&lt;conditionName&gt;" into the search box.</p>
-        <p>Beside that, saved conditions also have the effect that their name is used as the title of a
-            filtered views tab instead of the (most likely much longer) string representation of the condition.</p>
-        <p><a href="#top">Back to top.</a></p>
+<p>
+	Lilith supports several types of conditions:
+</p>
+<ul>
+	<li>event.contains<br/>
+		This is generally the most desired case. It checks if any field of the event contains the given string.
+		While being the most general, it's also the one with the poorest performance, for the same reason.<br/>
+		This condition is the default condition of the search panel.
+	</li>
+	<li>message.contains<br/>
+		Checks only if the message of the logging event contains the given string.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a message.
+	</li>
+	<li>logger.startsWith<br/>
+		Checks only if the logger name of the logging event starts with the given string.<br/>
+		This condition is useful to select a subset of events based on the package name of the logging class.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a logger name.
+	</li>
+	<li>logger.equals<br/>
+		Checks only if the logger name of the logging event equals the given string.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a logger name.
+	</li>
+	<li><a href="#saved">Saved conditions</a></li>
+	<li><a href="#groovy">Custom Groovy conditions</a></li>
+</ul>
+<p><a href="#top">Back to top.</a></p>
 
-        <h2><a  name="groovy">Custom Groovy conditions</a></h2>
+<h2><a name="saved">Saved conditions</a></h2>
 
-		<p>It is possible to create complex conditions in Groovy.
-      The scripts must be created in "[lilith.home]/conditions" and must have a ".groovy" extension.</p>
+<p>It's possible to save conditions using "View" =&gt; "Add condition...".
+	The shortcut for this functionality is *command*-I.<br/>
+	Such saved conditions can be (re)used by entering "#condition#&lt;conditionName&gt;" into the search box.</p>
 
-		<p>By default, [lilith.home] equals [user.home]/.lilith but this can be changed
-			in preferences.</p>
+<p>Beside that, saved conditions also have the effect that their name is used as the title of a
+	filtered views tab instead of the (most likely much longer) string representation of the condition.</p>
 
-		<p>A condition script receives an event-wrapper as the environment variable "input" and is
-    expected to return either true or false. Additionally, the string entered in the text field of the
-        search panel is available in the variable "searchText".</p>
+<p><a href="#top">Back to top.</a></p>
 
-    <p>The scripts can then be used by either entering "#groovy#&lt;filename without extension&gt;" or
-        "#groovy#&lt;filename without extension&gt;#the text to search for" into
-    the search box. After entering the "#groovy#"-prefix, the color of the textfield will indicate if
-    a script of the given name exists.</p>
+<h2><a name="groovy">Custom Groovy conditions</a></h2>
 
-    <h3>Example 1: Show only odd events.</h3>
-    <pre><tt>input.localId % 2 == 1</tt></pre>
+<p>It is possible to create complex conditions in Groovy.
+	The scripts must be created in "[lilith.home]/conditions" and must have a ".groovy" extension.</p>
 
-    <h3>Example 2: Show events having a threadName that's starting with the given search string.</h3>
+<p>By default, [lilith.home] equals [user.home]/.lilith but this can be changed
+	in preferences.</p>
+
+<p>A condition script receives an event-wrapper as the environment variable "input" and is
+	expected to return either true or false. Additionally, the string entered in the text field of the
+	search panel is available in the variable "searchText".</p>
+
+<p>The scripts can then be used by either entering "#groovy#&lt;filename without extension&gt;" or
+	"#groovy#&lt;filename without extension&gt;#the text to search for" into
+	the search box. After entering the "#groovy#"-prefix, the color of the textfield will indicate if
+	a script of the given name exists.</p>
+
+<h3>Example 1: Show only odd events.</h3>
+<pre><tt>input.localId % 2 == 1</tt></pre>
+
+<h3>Example 2: Show events having a threadName that's starting with the given search string.</h3>
     <pre><tt>def threadName = input?.event?.threadName;
-if(threadName)
-{
-  return threadName.startsWith(searchString);
-}
-return false;</tt></pre>
+	    if(threadName)
+	    {
+	    return threadName.startsWith(searchString);
+	    }
+	    return false;</tt></pre>
 
-    <p><a href="#top">Back to top.</a></p>
-	</body>
+<p><a href="#top">Back to top.</a></p>
+</body>
 </html>

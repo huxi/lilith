@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,16 @@
  */
 package de.huxhorn.lilith.engine.impl.sourcemanager;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
 import de.huxhorn.lilith.engine.EventSourceProducer;
 import de.huxhorn.lilith.engine.SourceManager;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,23 +57,23 @@ public class SourceManagerImpl<T extends Serializable>
 
 	public SourceManagerImpl(BlockingCircularBuffer<EventWrapper<T>> queue)
 	{
-		this.queue=queue;
-		this.eventPoller=new EventPoller<T>(queue);
-		eventProducers=new HashMap<SourceIdentifier, EventProducer>();
-		eventSourceProducers=new ArrayList<EventSourceProducer<T>>();
-		listeners=new HashSet<EventSourceListener<T>>();
-		changeSupport=new PropertyChangeSupport(this);
-		sources=new ArrayList<EventSource<T>>();
+		this.queue = queue;
+		this.eventPoller = new EventPoller<T>(queue);
+		eventProducers = new HashMap<SourceIdentifier, EventProducer>();
+		eventSourceProducers = new ArrayList<EventSourceProducer<T>>();
+		listeners = new HashSet<EventSourceListener<T>>();
+		changeSupport = new PropertyChangeSupport(this);
+		sources = new ArrayList<EventSource<T>>();
 	}
 
 	public void addSource(EventSource<T> source)
 	{
 		//SourceIdentifier si=source.getSourceIdentifier();
-		int oldSize=sources.size();
+		int oldSize = sources.size();
 		if(!sources.contains(source))
 		{
 			sources.add(source);
-			int newSize=sources.size();
+			int newSize = sources.size();
 			changeSupport.firePropertyChange(NUMBER_OF_SOURCES, oldSize, newSize);
 			fireAddSource(source);
 			if(logger.isInfoEnabled()) logger.info("Added source {}.", source);
@@ -82,9 +83,9 @@ public class SourceManagerImpl<T extends Serializable>
 
 	public void removeSource(SourceIdentifier source)
 	{
-		int oldSize=sources.size();
+		int oldSize = sources.size();
 		List<EventSource<T>> removedSources = new ArrayList<EventSource<T>>();
-		for(EventSource<T> src:sources)
+		for(EventSource<T> src : sources)
 		{
 			if(source.equals(src.getSourceIdentifier()))
 			{
@@ -92,7 +93,7 @@ public class SourceManagerImpl<T extends Serializable>
 			}
 		}
 		sources.removeAll(removedSources);
-		int newSize=sources.size();
+		int newSize = sources.size();
 		changeSupport.firePropertyChange(NUMBER_OF_SOURCES, oldSize, newSize);
 		for(EventSource<T> src : removedSources)
 		{
@@ -104,7 +105,7 @@ public class SourceManagerImpl<T extends Serializable>
 
 	private void fireAddSource(EventSource<T> source)
 	{
-		for(EventSourceListener<T> listener:listeners)
+		for(EventSourceListener<T> listener : listeners)
 		{
 			listener.eventSourceAdded(source);
 		}
@@ -112,7 +113,7 @@ public class SourceManagerImpl<T extends Serializable>
 
 	private void fireRemoveSource(EventSource<T> source)
 	{
-		for(EventSourceListener<T> listener:listeners)
+		for(EventSourceListener<T> listener : listeners)
 		{
 			listener.eventSourceRemoved(source);
 		}
@@ -140,7 +141,7 @@ public class SourceManagerImpl<T extends Serializable>
 	{
 		SourceIdentifier id = producer.getSourceIdentifier();
 		EventProducer previous = eventProducers.put(id, producer);
-		if(previous!=null)
+		if(previous != null)
 		{
 			previous.close();
 		}
@@ -151,7 +152,7 @@ public class SourceManagerImpl<T extends Serializable>
 	public void removeEventProducer(SourceIdentifier id)
 	{
 		EventProducer producer = eventProducers.remove(id);
-		if(producer!=null)
+		if(producer != null)
 		{
 			producer.close();
 		}
@@ -198,32 +199,32 @@ public class SourceManagerImpl<T extends Serializable>
 	{
 		// start poller...
 		{
-			Thread t=new Thread(eventPoller, "EventPoller");
+			Thread t = new Thread(eventPoller, "EventPoller");
 			t.setDaemon(true);
 			t.start();
 		}
 
 		// start consumer if necessary...
-		for (EventConsumer<T> consumer : getEventConsumers())
+		for(EventConsumer<T> consumer : getEventConsumers())
 		{
-			if (consumer instanceof Runnable)
+			if(consumer instanceof Runnable)
 			{
 				Thread t = new Thread((Runnable) consumer, "Consumer-Thread");
 				t.setDaemon(true);
 				t.start();
-				if (logger.isInfoEnabled()) logger.info("Started {}.", t);
+				if(logger.isInfoEnabled()) logger.info("Started {}.", t);
 			}
 		}
 
 		// start event source producers if necessary...
-		for(EventSourceProducer current:eventSourceProducers)
+		for(EventSourceProducer current : eventSourceProducers)
 		{
-			if (current instanceof Runnable)
+			if(current instanceof Runnable)
 			{
-				Thread t = new Thread((Runnable) current, "Producer-Thread-"+current);
+				Thread t = new Thread((Runnable) current, "Producer-Thread-" + current);
 				t.setDaemon(true);
 				t.start();
-				if (logger.isInfoEnabled()) logger.info("Started {}.", t);
+				if(logger.isInfoEnabled()) logger.info("Started {}.", t);
 			}
 		}
 

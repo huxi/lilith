@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -26,9 +26,9 @@ public interface WriteByteStrategy
 	 * Writes the given bytes to dataOutputStream in an implementation-specific way.
 	 *
 	 * @param dataOutputStream the stream the bytes will be written to.
-	 * @param bytes the bytes that are written
+	 * @param bytes            the bytes that are written
 	 * @throws IOException if an exception is thrown while writing the bytes.
 	 */
 	void writeBytes(DataOutputStream dataOutputStream, byte[] bytes)
-			throws IOException;
+		throws IOException;
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,13 @@ import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
-import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
+import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+
 public class StatusCodeRenderer
-		implements TableCellRenderer
+	implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
 
@@ -37,7 +38,7 @@ public class StatusCodeRenderer
 	{
 		super();
 
-		renderer=new LabelCellRenderer();
+		renderer = new LabelCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
@@ -47,42 +48,42 @@ public class StatusCodeRenderer
 	{
 		if(!isSelected)
 		{
-			isSelected=rowIndex == LabelCellRenderer.getSelectedRow(table);
+			isSelected = rowIndex == LabelCellRenderer.getSelectedRow(table);
 		}
 		if(!hasFocus && isSelected)
 		{
-			hasFocus=table.isFocusOwner();
+			hasFocus = table.isFocusOwner();
 		}
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
-		Color foreground=Color.BLACK;
-		String text="";
+		Color foreground = Color.BLACK;
+		String text = "";
 		//String tooltip="";
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
+			EventWrapper wrapper = (EventWrapper) value;
 			Object eventObj = wrapper.getEvent();
 			if(eventObj instanceof AccessEvent)
 			{
-				AccessEvent event=(AccessEvent) eventObj;
-				text=""+event.getStatusCode();
+				AccessEvent event = (AccessEvent) eventObj;
+				text = "" + event.getStatusCode();
 			}
 		}
 		renderer.setText(text);
 
-		boolean colorsInitialized=false;
+		boolean colorsInitialized = false;
 		if(!hasFocus && !isSelected)
 		{
 			if(table instanceof ColorsProvider)
 			{
 				if(value instanceof EventWrapper)
 				{
-					EventWrapper wrapper=(EventWrapper)value;
-					ColorsProvider cp=(ColorsProvider) table;
-					Colors colors=cp.resolveColors(wrapper, rowIndex, vColIndex);
+					EventWrapper wrapper = (EventWrapper) value;
+					ColorsProvider cp = (ColorsProvider) table;
+					Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
 					if(colors.isSticky())
 					{
-						colorsInitialized=renderer.updateColors(colors);
+						colorsInitialized = renderer.updateColors(colors);
 					}
 				}
 			}
@@ -92,42 +93,42 @@ public class StatusCodeRenderer
 			renderer.setForeground(foreground);
 			if(value instanceof EventWrapper)
 			{
-			    EventWrapper wrapper = (EventWrapper) value;
-				Object eventObj=wrapper.getEvent();
+				EventWrapper wrapper = (EventWrapper) value;
+				Object eventObj = wrapper.getEvent();
 				if(eventObj instanceof AccessEvent)
 				{
-					AccessEvent event=(AccessEvent) eventObj;
-					int code=event.getStatusCode();
-					HttpStatus status= HttpStatus.getStatus(code);
-					if(status!=null)
+					AccessEvent event = (AccessEvent) eventObj;
+					int code = event.getStatusCode();
+					HttpStatus status = HttpStatus.getStatus(code);
+					if(status != null)
 					{
 						HttpStatus.Type type = status.getType();
-						if(type!=null && table instanceof ColorsProvider)
+						if(type != null && table instanceof ColorsProvider)
 						{
-                            ColorsProvider cp=(ColorsProvider) table;
-                            Colors colors=cp.resolveColors(type, rowIndex, vColIndex);
+							ColorsProvider cp = (ColorsProvider) table;
+							Colors colors = cp.resolveColors(type, rowIndex, vColIndex);
 
-							ColorScheme scheme=colors.getColorScheme();
-							if(scheme!=null)
+							ColorScheme scheme = colors.getColorScheme();
+							if(scheme != null)
 							{
 								{
-									Color c=scheme.getBackgroundColor();
-									if(c!=null)
+									Color c = scheme.getBackgroundColor();
+									if(c != null)
 									{
 										renderer.setBackground(c);
 									}
 								}
 
 								{
-									Color c=scheme.getTextColor();
-									if(c!=null)
+									Color c = scheme.getTextColor();
+									if(c != null)
 									{
 										renderer.setForeground(c);
 									}
 								}
 
 								{
-									Color c=scheme.getBorderColor();
+									Color c = scheme.getBorderColor();
 									renderer.setBorderColor(c);
 								}
 							}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith</artifactId>
@@ -8,7 +9,7 @@
 	<name>Lilith</name>
 	<description>Lilith is a logging and access event viewer for the Logback logging framework. It has features comparable to Chainsaw, a logging event viewer for log4j. This means that it can receive logging events from remote applications using Logback as their logging backend. It uses files to buffer the received events locally, so it is possible to keep vast amounts of logging events at your fingertip while still being able to check only the ones you are really interested in by using filtering conditions.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
-	
+
 	<scm>
 		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith</connection>
 		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith</developerConnection>
@@ -18,7 +19,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-<!-- LV --><version>0.9.35-SNAPSHOT</version>
+		<version><!-- LV -->0.9.35-SNAPSHOT</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
 
@@ -27,14 +28,14 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>osxappbundle-maven-plugin</artifactId>
-                <version>1.0-alpha-2</version>
-                <!--
-                <version>1.0-alpha-1</version>
-                -->
+				<version>1.0-alpha-2</version>
+				<!--
+								<version>1.0-alpha-1</version>
+								-->
 				<configuration>
 					<!--
-					<dictionaryFile>${basedir}/src/main/mac-resources/Info.plist</dictionaryFile>
-					-->
+								   <dictionaryFile>${basedir}/src/main/mac-resources/Info.plist</dictionaryFile>
+								   -->
 					<jvmVersion>1.5+</jvmVersion>
 					<mainClass>de.huxhorn.lilith.Lilith</mainClass>
 					<iconFile>${basedir}/src/main/mac-resources/Lilith.icns</iconFile>
@@ -51,7 +52,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -106,42 +107,42 @@
 	</build>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <scope>compile</scope>
-        </dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <scope>compile</scope>
-        </dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>compile</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-access</artifactId>
-            <scope>compile</scope>
-        </dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+			<scope>compile</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.event-producers</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
@@ -162,27 +163,27 @@
 			<artifactId>de.huxhorn.lilith.3rdparty.macify</artifactId>
 			<version>1.1</version>
 			<!--
-			<groupId>org.simplericity.macify</groupId>
-			<artifactId>macify</artifactId>
-			<version>1.0</version>
-			-->
+					 <groupId>org.simplericity.macify</groupId>
+					 <artifactId>macify</artifactId>
+					 <version>1.0</version>
+					 -->
 			<scope>compile</scope>
 		</dependency>
-        <dependency>
-            <groupId>com.jgoodies</groupId>
-            <artifactId>looks</artifactId>
-            <version>2.2.0</version>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>looks</artifactId>
+			<version>2.2.0</version>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.3rdparty.jmdns</artifactId>
 			<version>2.0-patched</version>
 			<!--
-			<groupId>jmdns</groupId>
-			<artifactId>jmdns</artifactId>
-			<version>2.1-SNAPSHOT</version>
-			-->
+					 <groupId>jmdns</groupId>
+					 <artifactId>jmdns</artifactId>
+					 <version>2.1-SNAPSHOT</version>
+					 -->
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -190,7 +191,7 @@
 			<artifactId>de.huxhorn.lilith.jul-slf4j-handler</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic</artifactId>
@@ -224,8 +225,8 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
 			<!--
-			<version>1.5.7</version>
-			-->
+					 <version>1.5.7</version>
+					 -->
 			<version>1.6-RC-1</version>
 			<scope>compile</scope>
 		</dependency>
@@ -235,7 +236,7 @@
 			<artifactId>de.huxhorn.sulky.logging</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.sounds-impl-jlayer</artifactId>
@@ -246,47 +247,47 @@
 			<artifactId>de.huxhorn.sulky.buffers</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.swing</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.io</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<!-- commons-lang dependency below is needed to override 1.0 dependency
-		from commons-cli -->
+						from commons-cli -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.3rdparty.rrd4j</artifactId>
 			<version>2.0.5</version>
 			<!--
-			<groupId>rrd4j</groupId>
-			<artifactId>rrd4j</artifactId>
-			<version>2.0.5</version>
-			-->
+					 <groupId>rrd4j</groupId>
+					 <artifactId>rrd4j</artifactId>
+					 <version>2.0.5</version>
+					 -->
 			<scope>compile</scope>
 		</dependency>
 
@@ -295,20 +296,20 @@
 			<artifactId>commons-httpclient</artifactId>
 			<scope>compile</scope>
 			<!-- This will likely move to:
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.0</version>
-			-->
+					 <groupId>org.apache.httpcomponents</groupId>
+					 <artifactId>httpclient</artifactId>
+					 <version>4.0</version>
+					 -->
 		</dependency>
 
 		<!--
-		<dependency>
-			<groupId>svg-salamander</groupId>
-			<artifactId>svg-salamander-tiny</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		-->
-		
+			  <dependency>
+				  <groupId>svg-salamander</groupId>
+				  <artifactId>svg-salamander-tiny</artifactId>
+				  <version>1.0.0</version>
+			  </dependency>
+			  -->
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.sounds</artifactId>
@@ -327,20 +328,20 @@
 			<artifactId>de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer</artifactId>
 			<version>8Pre2</version>
 			<!--
-			<groupId>flyingsaucer</groupId>
-			<artifactId>core-renderer</artifactId>
-			<version>8Pre2</version>
-			-->
+					 <groupId>flyingsaucer</groupId>
+					 <artifactId>core-renderer</artifactId>
+					 <version>8Pre2</version>
+					 -->
 			<scope>compile</scope>
 		</dependency>
 
-        <!--
-        <dependency>
-            <groupId>org.swinglabs</groupId>
-            <artifactId>swingx</artifactId>
-            <version>0.9.2</version>
-        </dependency>
-        -->
+		<!--
+				<dependency>
+					<groupId>org.swinglabs</groupId>
+					<artifactId>swingx</artifactId>
+					<version>0.9.2</version>
+				</dependency>
+				-->
 
 		<dependency>
 			<groupId>junit</groupId>

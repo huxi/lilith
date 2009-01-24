@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,15 @@
  */
 package de.huxhorn.lilith.swing.statistics;
 
-import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.consumers.RrdLoggingEventConsumer;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import org.rrd4j.graph.RrdGraphDef;
-import org.rrd4j.graph.RrdGraphConstants;
-import org.rrd4j.ConsolFun;
+import de.huxhorn.lilith.swing.MainFrame;
 
-import java.awt.Color;
+import org.rrd4j.ConsolFun;
+import org.rrd4j.graph.RrdGraphConstants;
+import org.rrd4j.graph.RrdGraphDef;
+
+import java.awt.*;
 
 public class OneYearProducer
 	extends AbstractGraphImageProducer
@@ -36,7 +37,7 @@ public class OneYearProducer
 
 	public RrdGraphDef getGraphDef(long nowInSeconds, SourceIdentifier sourceIdentifier, boolean showMax)
 	{
-		String absoluteRrdPath=getRrdFile(sourceIdentifier).getAbsolutePath();
+		String absoluteRrdPath = getRrdFile(sourceIdentifier).getAbsolutePath();
 
 		RrdGraphDef graphDef = new RrdGraphDef();
 
@@ -46,7 +47,8 @@ public class OneYearProducer
 		graphDef.setMinValue(0);
 		graphDef.setAltAutoscaleMax(true);
 		graphDef.setAltYGrid(false);
-		graphDef.setTimeAxis(RrdGraphConstants.MONTH,1,RrdGraphConstants.MONTH,1,RrdGraphConstants.MONTH,2,0,"yyyy-MM");
+		graphDef
+			.setTimeAxis(RrdGraphConstants.MONTH, 1, RrdGraphConstants.MONTH, 1, RrdGraphConstants.MONTH, 2, 0, "yyyy-MM");
 		graphDef.setFilename("-");
 		graphDef.setImageFormat("PNG");
 
@@ -55,20 +57,25 @@ public class OneYearProducer
 		if(showMax)
 		{
 			consolFun = ConsolFun.MAX;
-			description=" (max.)";
+			description = " (max.)";
 		}
 		else
 		{
 			consolFun = ConsolFun.AVERAGE;
-			description=" (avg.)";
+			description = " (avg.)";
 		}
-		graphDef.setVerticalLabel("Events/s"+description);
+		graphDef.setVerticalLabel("Events/s" + description);
 
-		graphDef.datasource(RrdLoggingEventConsumer.TRACE, absoluteRrdPath, RrdLoggingEventConsumer.TRACE_DS_NAME, consolFun);
-		graphDef.datasource(RrdLoggingEventConsumer.DEBUG, absoluteRrdPath, RrdLoggingEventConsumer.DEBUG_DS_NAME, consolFun);
-		graphDef.datasource(RrdLoggingEventConsumer.INFO, absoluteRrdPath, RrdLoggingEventConsumer.INFO_DS_NAME, consolFun);
-		graphDef.datasource(RrdLoggingEventConsumer.WARN, absoluteRrdPath, RrdLoggingEventConsumer.WARN_DS_NAME, consolFun);
-		graphDef.datasource(RrdLoggingEventConsumer.ERROR, absoluteRrdPath, RrdLoggingEventConsumer.ERROR_DS_NAME, consolFun);
+		graphDef
+			.datasource(RrdLoggingEventConsumer.TRACE, absoluteRrdPath, RrdLoggingEventConsumer.TRACE_DS_NAME, consolFun);
+		graphDef
+			.datasource(RrdLoggingEventConsumer.DEBUG, absoluteRrdPath, RrdLoggingEventConsumer.DEBUG_DS_NAME, consolFun);
+		graphDef
+			.datasource(RrdLoggingEventConsumer.INFO, absoluteRrdPath, RrdLoggingEventConsumer.INFO_DS_NAME, consolFun);
+		graphDef
+			.datasource(RrdLoggingEventConsumer.WARN, absoluteRrdPath, RrdLoggingEventConsumer.WARN_DS_NAME, consolFun);
+		graphDef
+			.datasource(RrdLoggingEventConsumer.ERROR, absoluteRrdPath, RrdLoggingEventConsumer.ERROR_DS_NAME, consolFun);
 
 		graphDef.area(RrdLoggingEventConsumer.TRACE, new Color(0x00, 0x00, 0xff), RrdLoggingEventConsumer.TRACE);
 		graphDef.stack(RrdLoggingEventConsumer.DEBUG, new Color(0x00, 0xff, 0x00), RrdLoggingEventConsumer.DEBUG);
@@ -78,7 +85,8 @@ public class OneYearProducer
 
 		if(showMax)
 		{
-			graphDef.datasource(RrdLoggingEventConsumer.TOTAL, absoluteRrdPath, RrdLoggingEventConsumer.TOTAL_DS_NAME, consolFun);
+			graphDef
+				.datasource(RrdLoggingEventConsumer.TOTAL, absoluteRrdPath, RrdLoggingEventConsumer.TOTAL_DS_NAME, consolFun);
 			graphDef.line(RrdLoggingEventConsumer.TOTAL, Color.BLACK, RrdLoggingEventConsumer.TOTAL);
 		}
 
@@ -86,9 +94,9 @@ public class OneYearProducer
 		graphDef.setLazy(false);
 
 		String sourceTitle = createGraphTitle(sourceIdentifier);
-		long before=nowInSeconds-366*24*60*60;
+		long before = nowInSeconds - 366 * 24 * 60 * 60;
 
-		graphDef.setTimeSpan(before,nowInSeconds);
+		graphDef.setTimeSpan(before, nowInSeconds);
 		graphDef.setTitle(sourceTitle);
 		graphDef.setWidth(graphSize.width);
 		graphDef.setHeight(graphSize.height);

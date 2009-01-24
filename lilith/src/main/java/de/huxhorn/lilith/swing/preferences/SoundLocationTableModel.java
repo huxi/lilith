@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,16 @@ package de.huxhorn.lilith.swing.preferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.table.TableModel;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.SwingUtilities;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import javax.swing.table.TableModel;
 
 public class SoundLocationTableModel
 	implements TableModel
@@ -41,7 +42,7 @@ public class SoundLocationTableModel
 	private List<String> keys;
 	private final EventListenerList eventListenerList;
 
-	public SoundLocationTableModel(Map<String,String> data)
+	public SoundLocationTableModel(Map<String, String> data)
 	{
 		eventListenerList = new EventListenerList();
 		setData(data);
@@ -50,14 +51,14 @@ public class SoundLocationTableModel
 	public void setData(Map<String, String> data)
 	{
 		this.data = data;
-		if(data!=null)
+		if(data != null)
 		{
-			this.keys=new ArrayList<String>(data.keySet());
+			this.keys = new ArrayList<String>(data.keySet());
 			Collections.sort(this.keys);
 		}
 		else
 		{
-			keys=null;
+			keys = null;
 		}
 		fireTableChange();
 	}
@@ -69,7 +70,7 @@ public class SoundLocationTableModel
 
 	public int getRowCount()
 	{
-		if(data==null)
+		if(data == null)
 		{
 			return 0;
 		}
@@ -100,7 +101,7 @@ public class SoundLocationTableModel
 
 	public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
-		if(keys == null || rowIndex<0 || rowIndex>=keys.size())
+		if(keys == null || rowIndex < 0 || rowIndex >= keys.size())
 		{
 			return false;
 		}
@@ -109,11 +110,11 @@ public class SoundLocationTableModel
 
 	public Object getValueAt(int rowIndex, int columnIndex)
 	{
-		if(keys == null || rowIndex<0 || rowIndex>=keys.size())
+		if(keys == null || rowIndex < 0 || rowIndex >= keys.size())
 		{
 			return null;
 		}
-		String key=keys.get(rowIndex);
+		String key = keys.get(rowIndex);
 		switch(columnIndex)
 		{
 			case SoundLocationTableModel.EVENT_NAME_COLUMN:
@@ -126,29 +127,29 @@ public class SoundLocationTableModel
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
-		String newValue=(String) aValue;
-		if(keys == null || rowIndex<0 || rowIndex>=keys.size())
+		String newValue = (String) aValue;
+		if(keys == null || rowIndex < 0 || rowIndex >= keys.size())
 		{
 			return;
 		}
 		switch(columnIndex)
 		{
 			case SoundLocationTableModel.EVENT_NAME_COLUMN:
-				{
-					String key=keys.remove(rowIndex);
-					String value=data.remove(key);
-					data.put(newValue, value);
-					keys.add(newValue);
-					Collections.sort(keys);
-					fireTableChange();
-				}
-				break;
+			{
+				String key = keys.remove(rowIndex);
+				String value = data.remove(key);
+				data.put(newValue, value);
+				keys.add(newValue);
+				Collections.sort(keys);
+				fireTableChange();
+			}
+			break;
 			case SoundLocationTableModel.SOUND_LOCATION_COLUMN:
-				{
-					String key=keys.get(rowIndex);
-					data.put(key, newValue);
-					fireTableChange();
-				}
+			{
+				String key = keys.get(rowIndex);
+				data.put(key, newValue);
+				fireTableChange();
+			}
 		}
 	}
 
@@ -160,7 +161,7 @@ public class SoundLocationTableModel
 
 	private void fireTableChange(TableModelEvent evt)
 	{
-		Runnable r=new SoundLocationTableModel.FireTableChangeRunnable(evt);
+		Runnable r = new SoundLocationTableModel.FireTableChangeRunnable(evt);
 		if(SwingUtilities.isEventDispatchThread())
 		{
 			r.run();
@@ -190,25 +191,29 @@ public class SoundLocationTableModel
 			}
 			// Process the listeners last to first, notifying
 			// those that are interested in this event
-			for (int i = listeners.length - 2; i >= 0; i -= 2)
+			for(int i = listeners.length - 2; i >= 0; i -= 2)
 			{
-				if (listeners[i] == TableModelListener.class)
+				if(listeners[i] == TableModelListener.class)
 				{
 					TableModelListener listener = ((TableModelListener) listeners[i + 1]);
-					if(logger.isDebugEnabled()) logger.debug("Firing TableChange at {}.",listener.getClass().getName());
+					if(logger.isDebugEnabled())
+					{
+						logger.debug("Firing TableChange at {}.", listener.getClass().getName());
+					}
 					try
 					{
 						listener.tableChanged(event);
 					}
 					catch(Throwable ex)
 					{
-						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!",ex);
+						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!", ex);
 					}
 				}
 			}
 		}
 
 	}
+
 	public void addTableModelListener(TableModelListener l)
 	{
 		synchronized(eventListenerList)

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,19 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
-import java.awt.Component;
+import java.awt.*;
 
-public class SourceCellRenderer extends DefaultListCellRenderer
+import javax.swing.*;
+
+public class SourceCellRenderer
+	extends DefaultListCellRenderer
 {
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
 	{
 		Source source = (Source) value;
 
-		DefaultListCellRenderer renderer=(DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		DefaultListCellRenderer renderer = (DefaultListCellRenderer) super
+			.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 		renderer.setText(source.getName());
 		renderer.setToolTipText(source.getIdentifier());

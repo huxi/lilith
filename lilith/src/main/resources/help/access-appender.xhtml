@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>Using the Lilith Access Appender</title>
-		<link href="help.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<p><a href="index.xhtml">ToC</a></p>
+<head>
+	<title>Using the Lilith Access Appender</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
 
-		<h1><a name="top">Using the Lilith Access Appender</a></h1>
+<h1><a name="top">Using the Lilith Access Appender</a></h1>
 
-		<p>The Lilith Access Appender is a replacement for <tt>ch.qos.logback.access.net.SocketAppender</tt>.
-		While LogBACK's appender is stream-based, i.e. it streams access events using an <tt>ObjectOutputStream</tt> the
-		Lilith appender is message based, i.e. it sends access events one after the other as single messages.</p>
+<p>The Lilith Access Appender is a replacement for <tt>ch.qos.logback.access.net.SocketAppender</tt>.
+	While LogBACK's appender is stream-based, i.e. it streams access events using an <tt>ObjectOutputStream</tt> the
+	Lilith appender is message based, i.e. it sends access events one after the other as single messages.</p>
 
-		<p>A message consists of an integer that specifies the number of bytes of the following event, followed by the
-		bytes of the serialized event.</p>
+<p>A message consists of an integer that specifies the number of bytes of the following event, followed by the
+	bytes of the serialized event.</p>
 
-		<p>This has several benefits:</p>
+<p>This has several benefits:</p>
+<ul>
+	<li>Sending to multiple remote hosts is supported while the event is only serialized once.</li>
+	<li>Events can (and should) be compressed using GZIP.</li>
+	<li>The appender supports heartbeat and timeout.
 		<ul>
-			<li>Sending to multiple remote hosts is supported while the event is only serialized once.</li>
-			<li>Events can (and should) be compressed using GZIP.</li>
-			<li>The appender supports heartbeat and timeout.
-				<ul>
-					<li>The event receiver can find out that the event sender connection died if a heartbeat is missing.</li>
-					<li>The event sender can find out that the event receiver connection died by means of a timeout</li>
-				</ul>
-				This means that an application won't stop (at least not for very long) in case of network problems.
-			</li>
+			<li>The event receiver can find out that the event sender connection died if a heartbeat is missing.</li>
+			<li>The event sender can find out that the event receiver connection died by means of a timeout</li>
 		</ul>
+		This means that an application won't stop (at least not for very long) in case of network problems.
+	</li>
+</ul>
 
-		<p>Add the following to your applications <tt>pom.xml</tt> file:</p>
+<p>Add the following to your applications <tt>pom.xml</tt> file:</p>
 		<pre><tt><![CDATA[<plugin>
   <groupId>org.mortbay.jetty</groupId>
   <artifactId>maven-jetty-plugin</artifactId>
@@ -126,7 +126,7 @@
 </plugin>]]></tt></pre>
 
 
-		<p>Then, put the following into <tt>src/main/jetty/logback-access.xml</tt> file:</p>
+<p>Then, put the following into <tt>src/main/jetty/logback-access.xml</tt> file:</p>
 		<pre><tt><![CDATA[<configuration>
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.access.PatternLayout">
@@ -143,6 +143,6 @@
   <appender-ref ref="multiplex" />
 </configuration>]]></tt></pre>
 
-		<p><a href="#top">Back to top.</a></p>
-	</body>
+<p><a href="#top">Back to top.</a></p>
+</body>
 </html>

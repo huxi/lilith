@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,25 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.sulky.swing.KeyStrokes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.concurrent.Future;
 
-import de.huxhorn.sulky.swing.KeyStrokes;
+import javax.swing.*;
 
 public class ProgressGlassPane
-		extends JPanel
+	extends JPanel
 {
 	private final Logger logger = LoggerFactory.getLogger(ProgressGlassPane.class);
 
@@ -44,27 +51,29 @@ public class ProgressGlassPane
 		MouseEventEater eater = new MouseEventEater();
 		setOpaque(false);
 
-		GridBagConstraints gbc=new GridBagConstraints();
-		gbc.insets=new Insets(5,5,5,5);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
 
 		JLabel searchLabel = new JLabel("Searching...");
-		gbc.gridx=0;
-		gbc.gridy=0;
-		add(searchLabel,gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		add(searchLabel, gbc);
 
 
 		progressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
 		progressBar.setStringPainted(true); // percent
 
-		gbc.gridy=1;
+		gbc.gridy = 1;
 		add(progressBar, gbc);
 
 		cancelAction = new CancelAction();
 		cancelButton = new JButton(cancelAction);
-		gbc.gridy=2;
-		add(cancelButton,gbc);
+		gbc.gridy = 2;
+		add(cancelButton, gbc);
 
-		addKeyListener(new KeyAdapter() {});
+		addKeyListener(new KeyAdapter()
+		{
+		});
 
 		addComponentListener(new ComponentAdapter()
 		{
@@ -95,12 +104,12 @@ public class ProgressGlassPane
     */
 	public JInternalFrame resolveInternalFrame()
 	{
-		Container parent=getParent();
-		while(parent!= null && !(parent instanceof JInternalFrame))
+		Container parent = getParent();
+		while(parent != null && !(parent instanceof JInternalFrame))
 		{
-			parent=parent.getParent();
+			parent = parent.getParent();
 		}
-		return (JInternalFrame)parent;
+		return (JInternalFrame) parent;
 	}
 
 	/*
@@ -151,7 +160,7 @@ public class ProgressGlassPane
 	}
 
 	public class CancelAction
-			extends AbstractAction
+		extends AbstractAction
 	{
 		private Future<Integer> future;
 
@@ -174,7 +183,7 @@ public class ProgressGlassPane
 			*/
 			putValue(Action.NAME, "Cancel");
 			putValue(Action.SHORT_DESCRIPTION, "Cancel search.");
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			setFuture(null);
@@ -194,7 +203,7 @@ public class ProgressGlassPane
 		public void cancelSearch()
 		{
 			Future future = this.future;
-			if (future != null)
+			if(future != null)
 			{
 				future.cancel(true);
 			}
@@ -211,7 +220,9 @@ public class ProgressGlassPane
 //	{
 //		super.setVisible(visible);
 //		if(logger.isInfoEnabled()) logger.info("Visible!", new Throwable());
-//	}
+
+	//	}
+
 	private static class MouseEventEater
 		implements MouseListener, MouseMotionListener
 	{

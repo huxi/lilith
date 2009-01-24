@@ -17,12 +17,11 @@
  */
 package de.huxhorn.lilith.data.logging;
 
-import org.junit.Test;
-import org.junit.Before;
+import static de.huxhorn.sulky.junit.JUnitTools.*;
+
 import static org.junit.Assert.*;
-import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
-import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-import static de.huxhorn.sulky.junit.JUnitTools.testClone;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -38,20 +37,22 @@ public class MessageTest
 	}
 
 	@Test
-	public void defaultConstructor() throws ClassNotFoundException, IOException
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
 	{
-        Message instance=new Message();
+		Message instance = new Message();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
 	}
 
 	@Test
-	public void messagePattern() throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        Message instance=new Message();
+	public void messagePattern()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		Message instance = new Message();
 
-		String value="value";
+		String value = "value";
 		instance.setMessagePattern(value);
 
 		{
@@ -64,40 +65,41 @@ public class MessageTest
 			assertEquals(value, obj.getMessagePattern());
 			assertFalse(fresh.equals(obj));
 		}
-        {
-            Message obj = testClone(instance);
-            assertEquals(value, obj.getMessagePattern());
-            assertFalse(fresh.equals(obj));
-        }
+		{
+			Message obj = testClone(instance);
+			assertEquals(value, obj.getMessagePattern());
+			assertFalse(fresh.equals(obj));
+		}
 	}
 
-    @Test
-    public void arguments() throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        Message instance=new Message();
+	@Test
+	public void arguments()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		Message instance = new Message();
 
-        String value[]=new String[]{"value1", "value2"};
-        instance.setArguments(value);
+		String value[] = new String[]{"value1", "value2"};
+		instance.setArguments(value);
 
-        {
-            Message obj = testSerialization(instance);
-            assertArrayEquals(value, obj.getArguments());
-            assertNotSame(value, obj.getArguments());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            Message obj = testXmlSerialization(instance);
-            assertArrayEquals(value, obj.getArguments());
-            assertNotSame(value, obj.getArguments());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            Message obj = testClone(instance);
-            assertArrayEquals(value, obj.getArguments());
-            assertNotSame(value, obj.getArguments());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			Message obj = testSerialization(instance);
+			assertArrayEquals(value, obj.getArguments());
+			assertNotSame(value, obj.getArguments());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			Message obj = testXmlSerialization(instance);
+			assertArrayEquals(value, obj.getArguments());
+			assertNotSame(value, obj.getArguments());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			Message obj = testClone(instance);
+			assertArrayEquals(value, obj.getArguments());
+			assertNotSame(value, obj.getArguments());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
 
 }
