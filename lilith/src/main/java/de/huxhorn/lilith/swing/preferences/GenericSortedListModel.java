@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,12 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import javax.swing.AbstractListModel;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+
+import javax.swing.*;
 
 public class GenericSortedListModel<T extends Comparable>
 	extends AbstractListModel
@@ -85,14 +86,14 @@ public class GenericSortedListModel<T extends Comparable>
 			{
 				Collections.sort(this.data);
 			}
-			int size=data.size();
+			int size = data.size();
 			fireContentsChanged(this, 0, size - 1);
 		}
 	}
 
 	public void remove(T element)
 	{
-		int index=data.indexOf(element);
+		int index = data.indexOf(element);
 		if(index >= 0)
 		{
 			data.remove(index);

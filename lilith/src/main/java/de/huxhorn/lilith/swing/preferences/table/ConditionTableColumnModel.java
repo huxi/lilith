@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,49 +21,49 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 
 public class ConditionTableColumnModel
-    extends DefaultTableColumnModel
+	extends DefaultTableColumnModel
 {
-    public static final int DEFAULT_COLUMN_INDEX_INDEX=0;
-    public static final int DEFAULT_COLUMN_INDEX_NAME=1;
-    public static final int DEFAULT_COLUMN_INDEX_PREVIEW=2;
-    public static final int DEFAULT_COLUMN_INDEX_ACTIVE=3;
+	public static final int DEFAULT_COLUMN_INDEX_INDEX = 0;
+	public static final int DEFAULT_COLUMN_INDEX_NAME = 1;
+	public static final int DEFAULT_COLUMN_INDEX_PREVIEW = 2;
+	public static final int DEFAULT_COLUMN_INDEX_ACTIVE = 3;
 
-    private static final String DEFAULT_COLUMN_NAME_INDEX = "#";
-    private static final String DEFAULT_COLUMN_NAME_NAME = "Name";
-    private static final String DEFAULT_COLUMN_NAME_PREVIEW = "Preview";
-    private static final String DEFAULT_COLUMN_NAME_ACTIVE = "Active";
+	private static final String DEFAULT_COLUMN_NAME_INDEX = "#";
+	private static final String DEFAULT_COLUMN_NAME_NAME = "Name";
+	private static final String DEFAULT_COLUMN_NAME_PREVIEW = "Preview";
+	private static final String DEFAULT_COLUMN_NAME_ACTIVE = "Active";
 
-    public ConditionTableColumnModel()
-    {
-        super();
+	public ConditionTableColumnModel()
+	{
+		super();
 
-        {
-            TableColumn col = new TableColumn(0);
-            col.setHeaderValue(DEFAULT_COLUMN_NAME_INDEX);
-            col.setCellRenderer(new ConditionIndexRenderer());
-            addColumn(col);
-        }
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_INDEX);
+			col.setCellRenderer(new ConditionIndexRenderer());
+			addColumn(col);
+		}
 
-        {
-            TableColumn col = new TableColumn(0);
-            col.setHeaderValue(DEFAULT_COLUMN_NAME_NAME);
-            col.setCellRenderer(new ConditionNameRenderer());
-            addColumn(col);
-        }
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_NAME);
+			col.setCellRenderer(new ConditionNameRenderer());
+			addColumn(col);
+		}
 
-        {
-            TableColumn col = new TableColumn(0);
-            col.setHeaderValue(DEFAULT_COLUMN_NAME_PREVIEW);
-            col.setCellRenderer(new ConditionPreviewRenderer());
-            addColumn(col);
-        }
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_PREVIEW);
+			col.setCellRenderer(new ConditionPreviewRenderer());
+			addColumn(col);
+		}
 
-        {
-            TableColumn col = new TableColumn(0);
-            col.setHeaderValue(DEFAULT_COLUMN_NAME_ACTIVE);
-            col.setCellRenderer(new ConditionActiveRenderer());
-            addColumn(col);
-        }
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_ACTIVE);
+			col.setCellRenderer(new ConditionActiveRenderer());
+			addColumn(col);
+		}
 
-    }
+	}
 }

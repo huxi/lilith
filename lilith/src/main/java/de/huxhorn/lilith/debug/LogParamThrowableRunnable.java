@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,12 +30,13 @@ public class LogParamThrowableRunnable
 	public LogParamThrowableRunnable(int delay, Throwable throwable)
 	{
 		super(delay);
-		this.throwable=throwable;
+		this.throwable = throwable;
 	}
 
-	public void runIt() throws InterruptedException
+	public void runIt()
+		throws InterruptedException
 	{
-        MDC.put("type", "varargs");
+		MDC.put("type", "varargs");
 		Object[] params = new Object[]{"One", "Two", "Three", throwable};
 		if(logger.isTraceEnabled()) logger.trace("A trace message. param1={}, param2={}, param3={}", params);
 		sleep();
@@ -47,8 +48,11 @@ public class LogParamThrowableRunnable
 		sleep();
 		if(logger.isErrorEnabled()) logger.error("A error message. param1={}, param2={}, param3={}", params);
 		sleep();
-		if(logger.isInfoEnabled()) logger.info("A info message. param1={}, param2={}, param3={}, exceptionString={}", params);
+		if(logger.isInfoEnabled())
+		{
+			logger.info("A info message. param1={}, param2={}, param3={}, exceptionString={}", params);
+		}
 		sleep();
-        MDC.remove("type");
+		MDC.remove("type");
 	}
 }

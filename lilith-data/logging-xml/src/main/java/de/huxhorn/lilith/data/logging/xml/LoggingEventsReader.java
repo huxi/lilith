@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,19 +17,20 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
-import de.huxhorn.lilith.data.eventsource.xml.SourceIdentifierReader;
-import de.huxhorn.lilith.data.eventsource.xml.EventSourceSchemaConstants;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.eventsource.xml.EventSourceSchemaConstants;
+import de.huxhorn.lilith.data.eventsource.xml.SourceIdentifierReader;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.LoggingEvents;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoggingEventsReader
 	implements GenericStreamReader<LoggingEvents>, LoggingEventSchemaConstants
@@ -39,54 +40,56 @@ public class LoggingEventsReader
 
 	public LoggingEventsReader()
 	{
-		sourceIdentifierReader =new SourceIdentifierReader();
-		loggingEventReader=new LoggingEventReader();
+		sourceIdentifierReader = new SourceIdentifierReader();
+		loggingEventReader = new LoggingEventReader();
 	}
 
-	public LoggingEvents read(XMLStreamReader reader) throws XMLStreamException
+	public LoggingEvents read(XMLStreamReader reader)
+		throws XMLStreamException
 	{
-		LoggingEvents result=null;
+		LoggingEvents result = null;
 		String rootNamespace = NAMESPACE_URI;
 		int type = reader.getEventType();
 
-		if (XMLStreamConstants.START_DOCUMENT == type)
+		if(XMLStreamConstants.START_DOCUMENT == type)
 		{
 			reader.nextTag();
 			type = reader.getEventType();
 			rootNamespace = null;
 		}
-		if (XMLStreamConstants.START_ELEMENT == type && LOGGING_EVENTS_NODE.equals(reader.getLocalName()))
+		if(XMLStreamConstants.START_ELEMENT == type && LOGGING_EVENTS_NODE.equals(reader.getLocalName()))
 		{
 			result = new LoggingEvents();
-			String idxStr=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, START_INDEX_ATTRIBUTE);
-			long idx=0;
-			if(idxStr!=null)
+			String idxStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, START_INDEX_ATTRIBUTE);
+			long idx = 0;
+			if(idxStr != null)
 			{
-				idx=Long.parseLong(idxStr);
+				idx = Long.parseLong(idxStr);
 			}
 			result.setStartIndex(idx);
 			reader.nextTag();
 			SourceIdentifier sourceId = sourceIdentifierReader.read(reader);
-			if(sourceId!=null)
+			if(sourceId != null)
 			{
 				result.setSource(sourceId);
-				reader.require(XMLStreamConstants.END_ELEMENT, EventSourceSchemaConstants.NAMESPACE_URI, EventSourceSchemaConstants.SOURCE_IDENTIFIER_NODE);
+				reader
+					.require(XMLStreamConstants.END_ELEMENT, EventSourceSchemaConstants.NAMESPACE_URI, EventSourceSchemaConstants.SOURCE_IDENTIFIER_NODE);
 				reader.nextTag();
 			}
 
-			List<LoggingEvent> events=null;
-			for(;;)
+			List<LoggingEvent> events = null;
+			for(; ;)
 			{
-				LoggingEvent event=loggingEventReader.read(reader);
-				if(event==null)
+				LoggingEvent event = loggingEventReader.read(reader);
+				if(event == null)
 				{
 					break;
 				}
 				reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOGGING_EVENT_NODE);
 				reader.nextTag();
-				if(events==null)
+				if(events == null)
 				{
-					events=new ArrayList<LoggingEvent>();
+					events = new ArrayList<LoggingEvent>();
 				}
 				events.add(event);
 			}

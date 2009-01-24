@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,16 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
+import java.awt.*;
+
 import javax.swing.border.AbstractBorder;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
 
 
 /**
  * This is basically a mutable, simplified LineBorder-EmptyBorder combination.
  */
 public class ConditionalBorder
-		extends AbstractBorder
+	extends AbstractBorder
 {
 	private static final long serialVersionUID = -2372658104457011019L;
 
@@ -57,22 +55,22 @@ public class ConditionalBorder
 	 * Paints the border for the specified component with the
 	 * specified position and size.
 	 *
-	 * @param c	  the component for which this border is being painted
-	 * @param g	  the paint graphics
-	 * @param x	  the x position of the painted border
-	 * @param y	  the y position of the painted border
+	 * @param c      the component for which this border is being painted
+	 * @param g      the paint graphics
+	 * @param x      the x position of the painted border
+	 * @param y      the y position of the painted border
 	 * @param width  the width of the painted border
 	 * @param height the height of the painted border
 	 */
 	public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
 	{
-		if(borderColor != null && thickness>0)
+		if(borderColor != null && thickness > 0)
 		{
 			Color oldColor = g.getColor();
 
 			g.setColor(borderColor);
 
-			for (int i = 0; i < thickness; i++)
+			for(int i = 0; i < thickness; i++)
 			{
 				g.drawRect(x + i, y + i, width - i - i - 1, height - i - i - 1);
 			}
@@ -88,25 +86,25 @@ public class ConditionalBorder
 	 */
 	public Insets getBorderInsets(Component c)
 	{
-		int actualThickness=thickness+innerThickness;
+		int actualThickness = thickness + innerThickness;
 		return new Insets(actualThickness, actualThickness, actualThickness, actualThickness);
 	}
 
 	/**
 	 * Reinitialize the insets parameter with this Border's current Insets.
 	 *
-	 * @param c	  the component for which this border insets value applies
+	 * @param c      the component for which this border insets value applies
 	 * @param insets the object to be reinitialized
 	 */
 	public Insets getBorderInsets(Component c, Insets insets)
 	{
-		int actualThickness=thickness+innerThickness;
+		int actualThickness = thickness + innerThickness;
 
 		insets.left = actualThickness;
 		insets.top = actualThickness;
 		insets.right = actualThickness;
 		insets.bottom = actualThickness;
-		
+
 		return insets;
 	}
 
@@ -147,7 +145,7 @@ public class ConditionalBorder
 	 */
 	public void setInnerThickness(int innerThickness)
 	{
-		if(innerThickness<0)
+		if(innerThickness < 0)
 		{
 			throw new IllegalArgumentException("innerThickness must not be negative!");
 		}
@@ -172,7 +170,7 @@ public class ConditionalBorder
 	 */
 	public void setThickness(int thickness)
 	{
-		if(thickness<0)
+		if(thickness < 0)
 		{
 			throw new IllegalArgumentException("thickness must not be negative!");
 		}
@@ -184,7 +182,7 @@ public class ConditionalBorder
 	 */
 	public boolean isBorderOpaque()
 	{
-		return innerThickness == 0 && thickness>0 && borderColor!=null;
+		return innerThickness == 0 && thickness > 0 && borderColor != null;
 	}
 
 

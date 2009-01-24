@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,20 +19,22 @@ package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
+
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 
 public class StackTraceElementIOTest
 	extends TestCase
@@ -54,64 +56,72 @@ public class StackTraceElementIOTest
 
 	public ExtendedStackTraceElement createSTE()
 	{
-		ExtendedStackTraceElement elem=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement elem = new ExtendedStackTraceElement();
 		elem.setClassName("foo.Bar");
 		elem.setMethodName("fooBar");
 		return elem;
 	}
 
-	public void testMinimal() throws XMLStreamException, UnsupportedEncodingException
+	public void testMinimal()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		check(elem, true);
 	}
 
-	public void testFileName() throws XMLStreamException, UnsupportedEncodingException
+	public void testFileName()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		elem.setFileName("fileName");
 		check(elem, true);
 	}
 
-	public void testFileNameLineNumber() throws XMLStreamException, UnsupportedEncodingException
+	public void testFileNameLineNumber()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		elem.setFileName("fileName");
 		elem.setLineNumber(17);
 		check(elem, true);
 	}
 
-	public void testNative() throws XMLStreamException, UnsupportedEncodingException
+	public void testNative()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		elem.setLineNumber(ExtendedStackTraceElement.NATIVE_METHOD);
 		check(elem, true);
 	}
 
-	public void testCodeLocation() throws XMLStreamException, UnsupportedEncodingException
+	public void testCodeLocation()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		elem.setCodeLocation("codeLocation");
 		check(elem, true);
 	}
 
-	public void testVersion() throws XMLStreamException, UnsupportedEncodingException
+	public void testVersion()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		elem.setVersion("version");
 		check(elem, true);
 	}
 
-	public void testExact() throws XMLStreamException, UnsupportedEncodingException
+	public void testExact()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		elem.setExact(true);
 		check(elem, true);
 	}
 
-	public void testFull() throws XMLStreamException, UnsupportedEncodingException
+	public void testFull()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ExtendedStackTraceElement elem=createSTE();
+		ExtendedStackTraceElement elem = createSTE();
 		elem.setFileName("fileName");
 		elem.setLineNumber(17);
 		elem.setCodeLocation("codeLocation");
@@ -120,45 +130,48 @@ public class StackTraceElementIOTest
 		check(elem, true);
 	}
 
-	public void check(ExtendedStackTraceElement event, boolean indent) throws UnsupportedEncodingException, XMLStreamException
+	public void check(ExtendedStackTraceElement event, boolean indent)
+		throws UnsupportedEncodingException, XMLStreamException
 	{
 		if(logger.isDebugEnabled()) logger.debug("Processing ExtendedStackTraceElement:\n{}", event);
 		byte[] bytes = write(event, indent);
-		String eventStr =new String(bytes, "UTF-8");
+		String eventStr = new String(bytes, "UTF-8");
 		if(logger.isDebugEnabled()) logger.debug("ExtendedStackTraceElement marshalled to:\n{}", eventStr);
 		ExtendedStackTraceElement readEvent = read(bytes);
 		if(logger.isDebugEnabled()) logger.debug("ExtendedStackTraceElement read.");
 		assertEquals(event, readEvent);
 		if(logger.isDebugEnabled()) logger.debug("ExtendedStackTraceElements were equal.");
 		bytes = write(event, indent);
-		String readEventStr=new String(bytes, "UTF-8");
+		String readEventStr = new String(bytes, "UTF-8");
 		assertEquals(eventStr, readEventStr);
 		if(logger.isDebugEnabled()) logger.debug("ExtendedStackTraceElements xml were equal.");
 	}
 
-	public byte[] write(ExtendedStackTraceElement event, boolean indent) throws XMLStreamException, UnsupportedEncodingException
+	public byte[] write(ExtendedStackTraceElement event, boolean indent)
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ByteArrayOutputStream out=new ByteArrayOutputStream();
-		XMLStreamWriter writer=outputFactory.createXMLStreamWriter(new OutputStreamWriter(out,"utf-8"));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
 		if(indent && writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
 		{
 
 			if(logger.isInfoEnabled()) logger.info("Won't indent because of http://jira.codehaus.org/browse/STAX-42");
-			indent=false;
+			indent = false;
 		}
 		if(indent)
 		{
-			writer=new IndentingXMLStreamWriter(writer);
+			writer = new IndentingXMLStreamWriter(writer);
 		}
 		steWriter.write(writer, event, true);
 		writer.flush();
 		return out.toByteArray();
 	}
 
-	public ExtendedStackTraceElement read(byte[] bytes) throws XMLStreamException, UnsupportedEncodingException
+	public ExtendedStackTraceElement read(byte[] bytes)
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ByteArrayInputStream in=new ByteArrayInputStream(bytes);
-		XMLStreamReader reader=inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
 		return steReader.read(reader);
 	}
 

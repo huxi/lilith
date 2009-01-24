@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,21 +21,20 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import java.awt.*;
+
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
 
 public class IdRenderer
-		implements TableCellRenderer
+	implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
 
 	public IdRenderer()
 	{
 		super();
-		renderer=new LabelCellRenderer();
+		renderer = new LabelCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.RIGHT);
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 	}
@@ -44,37 +43,37 @@ public class IdRenderer
 	{
 		if(!isSelected)
 		{
-			isSelected=rowIndex == LabelCellRenderer.getSelectedRow(table);
+			isSelected = rowIndex == LabelCellRenderer.getSelectedRow(table);
 		}
 		if(!hasFocus && isSelected)
 		{
-			hasFocus=table.isFocusOwner();
+			hasFocus = table.isFocusOwner();
 		}
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
 
-		Color foreground=Color.BLACK;
-		String text="";
+		Color foreground = Color.BLACK;
+		String text = "";
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
-			text=""+wrapper.getLocalId();
+			EventWrapper wrapper = (EventWrapper) value;
+			text = "" + wrapper.getLocalId();
 		}
 		renderer.setText(text);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
-		boolean colorsInitialized=false;
+		boolean colorsInitialized = false;
 
 		// special handling of id field, keep color even if selected or focus!
 		//if(!hasFocus && !isSelected)
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
+			EventWrapper wrapper = (EventWrapper) value;
 			if(table instanceof ColorsProvider)
 			{
-				ColorsProvider cp=(ColorsProvider) table;
-				Colors colors=cp.resolveColors(wrapper, rowIndex, vColIndex);
-				colorsInitialized=renderer.updateColors(colors);
+				ColorsProvider cp = (ColorsProvider) table;
+				Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
+				colorsInitialized = renderer.updateColors(colors);
 			}
 		}
 		if(!colorsInitialized)

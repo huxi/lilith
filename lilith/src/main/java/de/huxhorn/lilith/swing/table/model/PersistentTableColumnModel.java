@@ -1,17 +1,18 @@
 package de.huxhorn.lilith.swing.table.model;
 
-import javax.swing.table.TableColumn;
-import javax.swing.table.DefaultTableColumnModel;
-import java.util.List;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.io.Serializable;
+import java.util.List;
+
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumn;
 
 /**
  * This class is based on code and ideas from Stephen Kelvin (mail at StephenKelvin.de) and Thomas Darimont.
  */
 public class PersistentTableColumnModel
-		extends DefaultTableColumnModel
+	extends DefaultTableColumnModel
 {
 	protected List<TableColumn> allTableColumns = new ArrayList<TableColumn>();
 
@@ -44,7 +45,7 @@ public class PersistentTableColumnModel
 	// listeners will receive columnAdded()/columnRemoved() event
 	public void setColumnVisible(TableColumn column, boolean visible)
 	{
-		if (!visible)
+		if(!visible)
 		{
 			super.removeColumn(column);
 		}
@@ -57,21 +58,21 @@ public class PersistentTableColumnModel
 			int noInvisibleColumns = allTableColumns.size();
 			int visibleIndex = 0;
 
-			for (int invisibleIndex = 0; invisibleIndex < noInvisibleColumns; ++invisibleIndex)
+			for(int invisibleIndex = 0; invisibleIndex < noInvisibleColumns; ++invisibleIndex)
 			{
 				TableColumn visibleColumn = (visibleIndex < noVisibleColumns ? tableColumns.get(visibleIndex) : null);
 				TableColumn testColumn = allTableColumns.get(invisibleIndex);
 
-				if (testColumn == column)
+				if(testColumn == column)
 				{
-					if (visibleColumn != column)
+					if(visibleColumn != column)
 					{
 						super.addColumn(column);
 						super.moveColumn(tableColumns.size() - 1, visibleIndex);
 					}
 					return; // ####################
 				}
-				if (testColumn == visibleColumn)
+				if(testColumn == visibleColumn)
 				{
 					++visibleIndex;
 				}
@@ -86,12 +87,12 @@ public class PersistentTableColumnModel
 	{
 		int noColumns = allTableColumns.size();
 
-		for (int columnIndex = 0; columnIndex < noColumns; ++columnIndex)
+		for(int columnIndex = 0; columnIndex < noColumns; ++columnIndex)
 		{
 			TableColumn visibleColumn = (columnIndex < tableColumns.size() ? tableColumns.get(columnIndex) : null);
 			TableColumn invisibleColumn = allTableColumns.get(columnIndex);
 
-			if (visibleColumn != invisibleColumn)
+			if(visibleColumn != invisibleColumn)
 			{
 				super.addColumn(invisibleColumn);
 				super.moveColumn(tableColumns.size() - 1, columnIndex);
@@ -137,7 +138,7 @@ public class PersistentTableColumnModel
 	public void removeColumn(TableColumn column)
 	{
 		int allColumnsIndex = allTableColumns.indexOf(column);
-		if (allColumnsIndex != -1)
+		if(allColumnsIndex != -1)
 		{
 			allTableColumns.remove(allColumnsIndex);
 		}
@@ -158,8 +159,8 @@ public class PersistentTableColumnModel
 	@Override
 	public void moveColumn(int oldIndex, int newIndex)
 	{
-		if ((oldIndex < 0) || (oldIndex >= getColumnCount()) ||
-				(newIndex < 0) || (newIndex >= getColumnCount()))
+		if((oldIndex < 0) || (oldIndex >= getColumnCount()) ||
+			(newIndex < 0) || (newIndex >= getColumnCount()))
 		{
 			throw new IllegalArgumentException("moveColumn() - Index out of range");
 		}
@@ -170,7 +171,7 @@ public class PersistentTableColumnModel
 		int allColumnsOldIndex = allTableColumns.indexOf(fromColumn);
 		int allColumnsNewIndex = allTableColumns.indexOf(toColumn);
 
-		if (oldIndex != newIndex)
+		if(oldIndex != newIndex)
 		{
 			allTableColumns.remove(allColumnsOldIndex);
 			allTableColumns.add(allColumnsNewIndex, fromColumn);
@@ -219,7 +220,7 @@ public class PersistentTableColumnModel
 	 */
 	public int getColumnIndex(Object identifier, boolean onlyVisible)
 	{
-		if (identifier == null)
+		if(identifier == null)
 		{
 			throw new IllegalArgumentException("Identifier is null");
 		}
@@ -228,11 +229,11 @@ public class PersistentTableColumnModel
 		int noColumns = columns.size();
 		TableColumn column;
 
-		for (int columnIndex = 0; columnIndex < noColumns; ++columnIndex)
+		for(int columnIndex = 0; columnIndex < noColumns; ++columnIndex)
 		{
 			column = columns.get(columnIndex);
 
-			if (identifier.equals(column.getIdentifier()))
+			if(identifier.equals(column.getIdentifier()))
 			{
 				return columnIndex;
 			}
@@ -245,12 +246,12 @@ public class PersistentTableColumnModel
 	{
 		final List<TableColumnLayoutInfo> tableColumnLayoutInfos = new ArrayList<TableColumnLayoutInfo>(allTableColumns.size());
 
-		for (TableColumn current : allTableColumns)
+		for(TableColumn current : allTableColumns)
 		{
 			boolean visible = tableColumns.contains(current);
 			TableColumnLayoutInfo tableColumnLayoutInfo
-					= new TableColumnLayoutInfo(current.getIdentifier().toString(),
-					current.getWidth(), visible);
+				= new TableColumnLayoutInfo(current.getIdentifier().toString(),
+				current.getWidth(), visible);
 			tableColumnLayoutInfos.add(tableColumnLayoutInfo);
 		}
 
@@ -258,7 +259,7 @@ public class PersistentTableColumnModel
 	}
 
 	public static class TableColumnLayoutInfo
-			implements Serializable
+		implements Serializable
 	{
 		private String columnName;
 		private int width;
@@ -308,7 +309,7 @@ public class PersistentTableColumnModel
 		@Override
 		public String toString()
 		{
-			return "TableColumnLayoutInfo[columnName="+columnName+", width="+width+", visible="+visible+"]";
+			return "TableColumnLayoutInfo[columnName=" + columnName + ", width=" + width + ", visible=" + visible + "]";
 		}
 	}
 }

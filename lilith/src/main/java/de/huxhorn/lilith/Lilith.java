@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,6 @@
  */
 package de.huxhorn.lilith;
 
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.joran.JoranConfigurator;
-import ch.qos.logback.core.joran.spi.JoranException;
-import ch.qos.logback.core.util.StatusPrinter;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.handler.Slf4JHandler;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
@@ -31,7 +27,17 @@ import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.ProgressingCallable;
 import de.huxhorn.sulky.swing.Windows;
-import org.apache.commons.cli.*;
+
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.joran.JoranConfigurator;
+import ch.qos.logback.core.joran.spi.JoranException;
+import ch.qos.logback.core.util.StatusPrinter;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.simplericity.macify.eawt.Application;
@@ -40,10 +46,15 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -51,12 +62,14 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Handler;
 
+import javax.swing.*;
+
 public class Lilith
 {
 	public static final String APP_NAME;
 	public static final String APP_VERSION;
 	public static final String APP_BUILD_NUMBER;
-    public static final long APP_TIMESTAMP;
+	public static final long APP_TIMESTAMP;
 
 	private static final String VERBOSE_SHORT = "v";
 	private static final String PRINT_HELP_SHORT = "h";
@@ -91,9 +104,9 @@ public class Lilith
 		{
 			p.load(is);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
-			if (logger.isErrorEnabled()) logger.error("Couldn't find app info resource!", ex);
+			if(logger.isErrorEnabled()) logger.error("Couldn't find app info resource!", ex);
 			//ex.printStackTrace();
 		}
 		finally
@@ -103,25 +116,25 @@ public class Lilith
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
 		APP_BUILD_NUMBER = p.getProperty("application.buildNumber");
-        String tsStr=p.getProperty("application.timestamp");
-        long ts=-1;
-        if(tsStr!=null)
-        {
-            try
-            {
-                ts=Long.parseLong(tsStr);
-            }
-            catch(NumberFormatException ex)
-            {
-                if(logger.isErrorEnabled()) logger.error("Exception while reading timestamp!", ex);
-            }
-        }
-        else
-        {
-            if(logger.isErrorEnabled()) logger.error("Application-timestamp not found!");
-        }
+		String tsStr = p.getProperty("application.timestamp");
+		long ts = -1;
+		if(tsStr != null)
+		{
+			try
+			{
+				ts = Long.parseLong(tsStr);
+			}
+			catch(NumberFormatException ex)
+			{
+				if(logger.isErrorEnabled()) logger.error("Exception while reading timestamp!", ex);
+			}
+		}
+		else
+		{
+			if(logger.isErrorEnabled()) logger.error("Application-timestamp not found!");
+		}
 
-        APP_TIMESTAMP=ts;
+		APP_TIMESTAMP = ts;
 	}
 
 	// TODO: - Shortcut in tooltip of toolbars...?
@@ -151,12 +164,12 @@ public class Lilith
 		options.addOption(CREATE_MD5_SHORT, CREATE_MD5, false, "create an MD% checksum for the given file.");
 		boolean verbose = false;
 		boolean flushPrefs = false;
-		boolean flushLicensed=false;
+		boolean flushLicensed = false;
 		boolean enableBonjour = false;
 		boolean indexFileOpt = false;
 		boolean createMd5 = false;
 		boolean printHelp;
-		String[] originalArgs=args;
+		String[] originalArgs = args;
 		int exitCode = 0;
 		try
 		{
@@ -172,56 +185,62 @@ public class Lilith
 			createMd5 = line.hasOption(CREATE_MD5_SHORT);
 			args = line.getArgs(); // remaining unparsed args...
 		}
-		catch (ParseException exp)
+		catch(ParseException exp)
 		{
 			exitCode = -1;
 			printHelp = true;
 		}
 
-		String appTitle = APP_NAME + " V" + APP_VERSION+"."+APP_BUILD_NUMBER;
-		if (verbose)
+		String appTitle = APP_NAME + " V" + APP_VERSION + "." + APP_BUILD_NUMBER;
+		if(verbose)
 		{
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date d=new Date(APP_TIMESTAMP);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			Date d = new Date(APP_TIMESTAMP);
 
 			appTitle += " - " + sdf.format(d);
 		}
 		System.out.println(appTitle);
 		System.out.println("\nCopyright (C) 2007-2008  Joern Huxhorn\n\n" +
-				"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
-				"This is free software, and you are welcome to redistribute it\n" +
-				"under certain conditions.\n" +
-				"You should have received a copy of the GNU General Public License\n" +
-				"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
+			"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
+			"This is free software, and you are welcome to redistribute it\n" +
+			"under certain conditions.\n" +
+			"You should have received a copy of the GNU General Public License\n" +
+			"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
 		System.out.println("Use commandline option -h to view help.\n\n");
 
 		if(createMd5)
 		{
-			File input=new File(args[0]);
+			File input = new File(args[0]);
 
 			if(!input.isFile())
 			{
 				if(logger.isWarnEnabled()) logger.warn("{} isn't a file!", input.getAbsolutePath());
 				return;
 			}
-			File output=new File(input.getParentFile(), input.getName()+".md5");
+			File output = new File(input.getParentFile(), input.getName() + ".md5");
 
 			try
 			{
 
-				FileInputStream fis=new FileInputStream(input);
+				FileInputStream fis = new FileInputStream(input);
 				byte[] md5 = ApplicationPreferences.getMD5(fis);
-				if(md5==null)
+				if(md5 == null)
 				{
-					if(logger.isWarnEnabled()) logger.warn("Couldn't calculate checksum for {}!", input.getAbsolutePath());
+					if(logger.isWarnEnabled())
+					{
+						logger.warn("Couldn't calculate checksum for {}!", input.getAbsolutePath());
+					}
 					return;
 				}
-				FileOutputStream fos=new FileOutputStream(output);
+				FileOutputStream fos = new FileOutputStream(output);
 				fos.write(md5);
 				fos.close();
-				if(logger.isInfoEnabled()) logger.info("Wrote checksum of {} to {}.", input.getAbsolutePath(), output.getAbsolutePath());
+				if(logger.isInfoEnabled())
+				{
+					logger.info("Wrote checksum of {} to {}.", input.getAbsolutePath(), output.getAbsolutePath());
+				}
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while creating checksum!", e);
 			}
@@ -230,22 +249,22 @@ public class Lilith
 
 		if(verbose)
 		{
-			for(int i=0;i<originalArgs.length;i++)
+			for(int i = 0; i < originalArgs.length; i++)
 			{
-				System.out.println("originalArgs["+i+"]: "+originalArgs[i]);
+				System.out.println("originalArgs[" + i + "]: " + originalArgs[i]);
 			}
-			for(int i=0;i<args.length;i++)
+			for(int i = 0; i < args.length; i++)
 			{
-				System.out.println("args["+i+"]: "+args[i]);
+				System.out.println("args[" + i + "]: " + args[i]);
 			}
 			System.out.println("\n");
 		}
 
 		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-		if (loggerFactory instanceof LoggerContext)
+		if(loggerFactory instanceof LoggerContext)
 		{
 			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-			if (verbose)
+			if(verbose)
 			{
 				// reset previous configuration initially loaded from logback.xml
 				loggerContext.reset();
@@ -256,44 +275,44 @@ public class Lilith
 				try
 				{
 					configurator.doConfigure(configUrl);
-					if (logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
+					if(logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
 					StatusPrinter.print(loggerContext);
 				}
-				catch (JoranException ex)
+				catch(JoranException ex)
 				{
-					if (logger.isErrorEnabled()) logger.error("Error configuring logging framework!", ex);
+					if(logger.isErrorEnabled()) logger.error("Error configuring logging framework!", ex);
 					StatusPrinter.print(loggerContext);
 				}
 			}
 		}
 
-		if (flushPrefs)
+		if(flushPrefs)
 		{
-			ApplicationPreferences prefs=new ApplicationPreferences();
+			ApplicationPreferences prefs = new ApplicationPreferences();
 			prefs.reset();
 			prefs.setLicensed(false);
-			if (logger.isInfoEnabled()) logger.info("Flushed preferences...");
+			if(logger.isInfoEnabled()) logger.info("Flushed preferences...");
 			return;
 		}
 
-		if (flushLicensed)
+		if(flushLicensed)
 		{
-			ApplicationPreferences prefs=new ApplicationPreferences();
+			ApplicationPreferences prefs = new ApplicationPreferences();
 			prefs.setLicensed(false);
-			if (logger.isInfoEnabled()) logger.info("Flushed licensed...");
+			if(logger.isInfoEnabled()) logger.info("Flushed licensed...");
 			return;
 		}
 
-		if (printHelp)
+		if(printHelp)
 		{
 			HelpFormatter formatter = new HelpFormatter();
 			formatter.printHelp("lilith", options);
 			System.exit(exitCode);
 		}
 
-		if (indexFileOpt)
+		if(indexFileOpt)
 		{
-			if (args.length >= 2)
+			if(args.length >= 2)
 			{
 				String logFileStr = args[0];
 				String indexFileStr = args[1];
@@ -304,27 +323,31 @@ public class Lilith
 				try
 				{
 					int count = callable.call();
-					if (logger.isInfoEnabled())
+					if(logger.isInfoEnabled())
+					{
 						logger.info("Finished indexing {}. Number of events: {}", logFile.getAbsolutePath(), count);
+					}
 					System.exit(0);
 				}
-				catch (Exception e)
+				catch(Exception e)
 				{
-					if (logger.isErrorEnabled())
+					if(logger.isErrorEnabled())
+					{
 						logger.error("Exception while indexing '" + logFile.getAbsolutePath() + "'!", e);
+					}
 					System.exit(-1);
 				}
 
 			}
-			if (logger.isErrorEnabled()) logger.error("Missing file argument!");
+			if(logger.isErrorEnabled()) logger.error("Missing file argument!");
 			System.exit(-1);
 		}
 
-		uncaughtExceptionHandler=new Thread.UncaughtExceptionHandler()
+		uncaughtExceptionHandler = new Thread.UncaughtExceptionHandler()
 		{
 			public void uncaughtException(Thread t, Throwable e)
 			{
-				System.err.println("\n-----\nThread "+t.getName()+" threw an exception!");
+				System.err.println("\n-----\nThread " + t.getName() + " threw an exception!");
 				e.printStackTrace(System.err);
 			}
 		};
@@ -342,14 +365,15 @@ public class Lilith
 		startUI(appTitle, enableBonjour);
 	}
 
-	private static void updateSplashStatus(final SplashScreen splashScreen, final String status) throws InvocationTargetException, InterruptedException
+	private static void updateSplashStatus(final SplashScreen splashScreen, final String status)
+		throws InvocationTargetException, InterruptedException
 	{
 		SwingUtilities.invokeAndWait(new Runnable()
 		{
 
 			public void run()
 			{
-				if (!splashScreen.isVisible())
+				if(!splashScreen.isVisible())
 				{
 					Windows.showWindow(splashScreen, null, true);
 				}
@@ -359,7 +383,8 @@ public class Lilith
 		});
 	}
 
-	private static void hideSplashScreen(final SplashScreen splashScreen) throws InvocationTargetException, InterruptedException
+	private static void hideSplashScreen(final SplashScreen splashScreen)
+		throws InvocationTargetException, InterruptedException
 	{
 		SwingUtilities.invokeAndWait(new Runnable()
 		{
@@ -380,14 +405,14 @@ public class Lilith
 		//UIManager.installLookAndFeel("Napkin", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
 		Application application = new DefaultApplication();
 		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
-		if (application.isMac())
+		if(application.isMac())
 		{
 			// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
 			try
 			{
 				System.setProperty("apple.laf.useScreenMenuBar", "true");
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				// try the older menu bar property
 				System.setProperty("com.apple.macos.useScreenMenuBar", "true");
@@ -396,35 +421,35 @@ public class Lilith
 		}
 
 		// init look & feel
-		String lookAndFeel=applicationPreferences.getLookAndFeel();
-		if(lookAndFeel!=null)
+		String lookAndFeel = applicationPreferences.getLookAndFeel();
+		if(lookAndFeel != null)
 		{
 			try
 			{
-    			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+				for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 				{
-        			if (lookAndFeel.equals(info.getName()))
+					if(lookAndFeel.equals(info.getName()))
 					{
-						String lafClassName=info.getClassName();
-						if(logger.isDebugEnabled()) logger.debug("Setting look&feel to {}.",lafClassName);
-            			UIManager.setLookAndFeel(lafClassName);
+						String lafClassName = info.getClassName();
+						if(logger.isDebugEnabled()) logger.debug("Setting look&feel to {}.", lafClassName);
+						UIManager.setLookAndFeel(lafClassName);
 						break;
-        			}
-    			}
+					}
+				}
 			}
-			catch (UnsupportedLookAndFeelException e)
+			catch(UnsupportedLookAndFeelException e)
 			{
 				// ignore
 			}
-			catch (ClassNotFoundException e)
+			catch(ClassNotFoundException e)
 			{
 				// ignore
 			}
-			catch (InstantiationException e)
+			catch(InstantiationException e)
 			{
 				// ignore
 			}
-			catch (IllegalAccessException e)
+			catch(IllegalAccessException e)
 			{
 				// ignore
 			}
@@ -439,16 +464,16 @@ public class Lilith
 			updateSplashStatus(splashScreen, "Initialized application preferences...");
 
 			File startupApplicationPath = applicationPreferences.getStartupApplicationPath();
-			if (startupApplicationPath.mkdirs())
+			if(startupApplicationPath.mkdirs())
 			{
-				if (logger.isDebugEnabled()) logger.debug("Created '{}'.", startupApplicationPath.getAbsolutePath());
+				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", startupApplicationPath.getAbsolutePath());
 			}
 
 			// System.err redirection
 			{
 				File errorLog = new File(startupApplicationPath, "errors.log");
 				boolean freshFile = false;
-				if (!errorLog.isFile())
+				if(!errorLog.isFile())
 				{
 					freshFile = true;
 				}
@@ -456,40 +481,40 @@ public class Lilith
 				{
 					FileOutputStream fos = new FileOutputStream(errorLog, true);
 					PrintStream ps = new PrintStream(fos, true);
-					if (!freshFile)
+					if(!freshFile)
 					{
 						ps.println("----------------------------------------");
 					}
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
-					ps.println("Started "+APP_NAME+" V"+APP_VERSION+" at " + format.format(new Date()));
+					ps.println("Started " + APP_NAME + " V" + APP_VERSION + " at " + format.format(new Date()));
 					System.setErr(ps);
-					if (logger.isInfoEnabled()) logger.info("Writing System.err to '{}'.", errorLog.getAbsolutePath());
+					if(logger.isInfoEnabled()) logger.info("Writing System.err to '{}'.", errorLog.getAbsolutePath());
 				}
-				catch (FileNotFoundException e)
+				catch(FileNotFoundException e)
 				{
 					e.printStackTrace();
 				}
 			}
 
 			File prevPathFile = new File(startupApplicationPath, ApplicationPreferences.PREVIOUS_APPLICATION_PATH_FILENAME);
-			if (prevPathFile.isFile())
+			if(prevPathFile.isFile())
 			{
 				updateSplashStatus(splashScreen, "Moving application path content...");
 				moveApplicationPathContent(prevPathFile, startupApplicationPath);
 			}
-			if (!applicationPreferences.isLicensed())
+			if(!applicationPreferences.isLicensed())
 			{
 				hideSplashScreen(splashScreen);
 
 				LicenseAgreementDialog licenseDialog = new LicenseAgreementDialog();
 				Windows.showWindow(licenseDialog, null, true);
-				if (licenseDialog.isLicenseAgreed())
+				if(licenseDialog.isLicenseAgreed())
 				{
 					applicationPreferences.setLicensed(true);
 				}
 				else
 				{
-					if (logger.isWarnEnabled()) logger.warn("Didn't accept license! Exiting...");
+					if(logger.isWarnEnabled()) logger.warn("Didn't accept license! Exiting...");
 					System.exit(-1);
 				}
 			}
@@ -511,21 +536,21 @@ public class Lilith
 			hideSplashScreen(splashScreen);
 
 		}
-		catch (InterruptedException ex)
+		catch(InterruptedException ex)
 		{
-			if (logger.isInfoEnabled()) logger.info("Interrupted...", ex);
+			if(logger.isInfoEnabled()) logger.info("Interrupted...", ex);
 		}
-		catch (InvocationTargetException ex)
+		catch(InvocationTargetException ex)
 		{
-			if (logger.isWarnEnabled()) logger.warn("InvocationTargetException...", ex);
-			if (logger.isWarnEnabled()) logger.warn("Target-Exception: ", ex.getTargetException());
+			if(logger.isWarnEnabled()) logger.warn("InvocationTargetException...", ex);
+			if(logger.isWarnEnabled()) logger.warn("Target-Exception: ", ex.getTargetException());
 
 		}
 	}
 
 
 	static class CreateSplashRunnable
-			implements Runnable
+		implements Runnable
 	{
 		private SplashScreen splashScreen;
 		private String appTitle;
@@ -548,7 +573,7 @@ public class Lilith
 	}
 
 	static class CreateMainFrameRunnable
-			implements Runnable
+		implements Runnable
 	{
 		private MainFrame mainFrame;
 		private ApplicationPreferences applicationPreferences;
@@ -577,7 +602,7 @@ public class Lilith
 	}
 
 	/**
-	 * @param prevPathFile		   the file that contains (!!!) the previous application path - not the previous application path itself!
+	 * @param prevPathFile           the file that contains (!!!) the previous application path - not the previous application path itself!
 	 * @param startupApplicationPath the current application path, i.e. the destination path.
 	 */
 	private static void moveApplicationPathContent(File prevPathFile, File startupApplicationPath)
@@ -591,15 +616,15 @@ public class Lilith
 			is = new FileInputStream(prevPathFile);
 			prevPathStr = IOUtils.toString(is);
 		}
-		catch (IOException ex)
+		catch(IOException ex)
 		{
-			if (logger.isWarnEnabled()) logger.warn("Exception while reading previous application path!", ex);
+			if(logger.isWarnEnabled()) logger.warn("Exception while reading previous application path!", ex);
 		}
 		finally
 		{
 			IOUtils.closeQuietly(is);
 		}
-		if (prevPathStr != null)
+		if(prevPathStr != null)
 		{
 			File prevPath = new File(prevPathStr);
 			try
@@ -607,22 +632,26 @@ public class Lilith
 				FileUtils.copyDirectory(prevPath, startupApplicationPath);
 				FileUtils.deleteDirectory(prevPath);
 			}
-			catch (IOException ex)
+			catch(IOException ex)
 			{
-				if (logger.isWarnEnabled())
-					logger.warn("Exception while moving content of previous application path '" + prevPath.getAbsolutePath() + "' to new one '" + startupApplicationPath.getAbsolutePath() + "'!", ex);
+				if(logger.isWarnEnabled())
+				{
+					logger.warn("Exception while moving content of previous application path '" + prevPath
+						.getAbsolutePath() + "' to new one '" + startupApplicationPath.getAbsolutePath() + "'!", ex);
+				}
 			}
-			if (logger.isInfoEnabled())
-				logger.info("Moved content from previous application path '{}' to new application path '{}'.", prevPath.getAbsolutePath(), startupApplicationPath.getAbsolutePath());
+			if(logger.isInfoEnabled())
+			{
+				logger
+					.info("Moved content from previous application path '{}' to new application path '{}'.", prevPath.getAbsolutePath(), startupApplicationPath.getAbsolutePath());
+			}
 		}
 		prevPathFile.delete();
 	}
 
 
-
-
 	private static class IndexingChangeListener
-			implements PropertyChangeListener
+		implements PropertyChangeListener
 	{
 		private final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
@@ -635,9 +664,9 @@ public class Lilith
 
 		public void propertyChange(PropertyChangeEvent evt)
 		{
-			if (ProgressingCallable.PROGRESS_PROPERTY_NAME.equals(evt.getPropertyName()))
+			if(ProgressingCallable.PROGRESS_PROPERTY_NAME.equals(evt.getPropertyName()))
 			{
-				if (logger.isInfoEnabled()) logger.info("Progress: {}%", evt.getNewValue());
+				if(logger.isInfoEnabled()) logger.info("Progress: {}%", evt.getNewValue());
 			}
 		}
 	}

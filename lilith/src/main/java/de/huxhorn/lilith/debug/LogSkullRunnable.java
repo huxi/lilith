@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,34 +30,35 @@ public class LogSkullRunnable
 		super(delay);
 	}
 
-	public void runIt() throws InterruptedException
+	public void runIt()
+		throws InterruptedException
 	{
-		if (logger.isDebugEnabled())
+		if(logger.isDebugEnabled())
 		{
 			logger.debug("Skull!\n" +
-			"     _.--\"\"\"\"\"--._\n" +
-			"   .'             '.\n" +
-			"  /                 \\\n" +
-			" ;                   ;\n" +
-			" |                   |\n" +
-			" |                   |\n" +
-			" ;                   ;\n" +
-			"  \\ (`'--,    ,--'`) /\n" +
-			"   \\ \\  _ )  ( _  / /\n" +
-			"    ) )(')/  \\(')( (\n" +
-			"   (_ `\"\"` /\\ `\"\"` _)\n" +
-			"    \\`\"-, /  \\ ,-\"`/\n" +
-			"     `\\ / `\"\"` \\ /`\n" +
-			"      |/\\/\\/\\/\\/\\|\n" +
-			"      |\\        /|\n" +
-			"      ; |/\\/\\/\\| ;\n" +
-			"       \\`-`--`-`/\n" +
-			"        \\      /\n" +
-			"         ',__,'\n" +
-			"          q__p\n" +
-			"          q__p\n" +
-			"          q__p\n" +
-			"          q__p\n");
+				"     _.--\"\"\"\"\"--._\n" +
+				"   .'             '.\n" +
+				"  /                 \\\n" +
+				" ;                   ;\n" +
+				" |                   |\n" +
+				" |                   |\n" +
+				" ;                   ;\n" +
+				"  \\ (`'--,    ,--'`) /\n" +
+				"   \\ \\  _ )  ( _  / /\n" +
+				"    ) )(')/  \\(')( (\n" +
+				"   (_ `\"\"` /\\ `\"\"` _)\n" +
+				"    \\`\"-, /  \\ ,-\"`/\n" +
+				"     `\\ / `\"\"` \\ /`\n" +
+				"      |/\\/\\/\\/\\/\\|\n" +
+				"      |\\        /|\n" +
+				"      ; |/\\/\\/\\| ;\n" +
+				"       \\`-`--`-`/\n" +
+				"        \\      /\n" +
+				"         ',__,'\n" +
+				"          q__p\n" +
+				"          q__p\n" +
+				"          q__p\n" +
+				"          q__p\n");
 		}
 	}
 }

@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>Keyboard</title>
-		<link href="help.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<p><a href="index.xhtml">ToC</a></p>
+<head>
+	<title>Keyboard</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
 
-		<h1><a name="top">Event producers</a></h1>
+<h1><a name="top">Event producers</a></h1>
 
-		<p>Lilith starts the following event producers:</p>
+<p>Lilith starts the following event producers:</p>
 
-		<ul>
-			<li>a standard LoggingEvent server socket on port 4560, as used by LogBACK.</li>
-			<li>a standard AccessEvent server socket on port 4570, as used by LogBACK.</li>
-			<li>a multiplex Lilith LoggingEvent server socket on ports 10000 (compressed)
-			  and 10001 (uncompressed).</li>
-			<li>a multiplex AccessEvent server socket on ports 10010 (compressed)
-			  and 10011 (uncompressed).</li>
-			<li>a multiplex Lilith LoggingEvent XML server socket on ports 10020 (compressed)
-			  and 10021 (uncompressed).</li>
-			<li>a multiplex Lilith LoggingEvent XML server socket on ports 11000 that is using
-				zero-delimited xml-events,
-			  as required by ActionScript XMLSocket.</li>
-		</ul>
+<ul>
+	<li>a standard LoggingEvent server socket on port 4560, as used by LogBACK.</li>
+	<li>a standard AccessEvent server socket on port 4570, as used by LogBACK.</li>
+	<li>a multiplex Lilith LoggingEvent server socket on ports 10000 (compressed)
+		and 10001 (uncompressed).
+	</li>
+	<li>a multiplex AccessEvent server socket on ports 10010 (compressed)
+		and 10011 (uncompressed).
+	</li>
+	<li>a multiplex Lilith LoggingEvent XML server socket on ports 10020 (compressed)
+		and 10021 (uncompressed).
+	</li>
+	<li>a multiplex Lilith LoggingEvent XML server socket on ports 11000 that is using
+		zero-delimited xml-events,
+		as required by ActionScript XMLSocket.
+	</li>
+</ul>
 
-		<p>Logging of zero-delimited xml event producer in Lilith has deliberately been left enabled.</p>
+<p>Logging of zero-delimited xml event producer in Lilith has deliberately been left enabled.</p>
 
-		<p><a href="#top">Back to top.</a></p>
-	</body>
+<p><a href="#top">Back to top.</a></p>
+</body>
 </html>

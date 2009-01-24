@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,37 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
-import javax.swing.JTable;
+import java.awt.*;
+
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
 
 public class ToStringRenderer
-		implements TableCellRenderer
+	implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
 
 	public ToStringRenderer()
 	{
 		super();
-		renderer=new LabelCellRenderer();
+		renderer = new LabelCellRenderer();
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
 	{
 		if(!isSelected)
 		{
-			isSelected=rowIndex == LabelCellRenderer.getSelectedRow(table);
+			isSelected = rowIndex == LabelCellRenderer.getSelectedRow(table);
 		}
 		if(!hasFocus && isSelected)
 		{
-			hasFocus=table.isFocusOwner();
+			hasFocus = table.isFocusOwner();
 		}
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
 
-		Color foreground=Color.BLACK;
-		String text=""+value;
+		Color foreground = Color.BLACK;
+		String text = "" + value;
 		renderer.setText(text);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);

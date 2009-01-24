@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,14 @@
  */
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.generics.io.SerializableDeserializer;
 import de.huxhorn.sulky.generics.io.Deserializer;
+import de.huxhorn.sulky.generics.io.SerializableDeserializer;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.Serializable;
 
 public class SerializingMessageBasedEventProducer<T extends Serializable>
 	extends AbstractMessageBasedEventProducer<T>

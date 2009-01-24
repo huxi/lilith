@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
-import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.LoggingEventViewTable;
+import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
 
 public class LoggingEventViewPanel

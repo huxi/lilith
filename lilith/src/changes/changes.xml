@@ -19,7 +19,7 @@
 			</action>
 			<action dev="jhux" type="add">
 				TODO: "Save as" or "Export" logs. [*command*-S] This is only possible for inactive log views.
-                Support native Lilith, Lilith XML, log4j XML.
+				Support native Lilith, Lilith XML, log4j XML.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: SVG Icons
@@ -75,48 +75,48 @@
 			<action dev="jhux" type="add">
 				TODO: homemade multicast discovery of other Lilith instances on LAN.
 			</action>
-            <action dev="jhux" type="update">
-                TODO: Userfriendly and nice-looking preferences.
-            </action>
+			<action dev="jhux" type="update">
+				TODO: Userfriendly and nice-looking preferences.
+			</action>
 		</release>
 
-        <release version="0.9.35" date="TBD" description="Future release">
-            <action dev="jhux" type="update" issue="8">
-                Known problems and FAQ in help did not reflect the latest version.
-            </action>
-            <action dev="jhux" type="fix" issue="7">
-                In case of #groovy#&lt;scriptname&gt; the script received that string as search string.
-                This has been fixed, now "" is used as search string.
-            </action>
-            <action dev="jhux" type="add" issue="1">
-                Install example groovy conditions if conditions folder is newly created.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Add transfer size statistics.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
-                EventReceiver, EventHandler (?, stuff like the fart on error,
-                RRD statistics, anything that's working directly on received events), GoToSource).
+		<release version="0.9.35" date="TBD" description="Future release">
+			<action dev="jhux" type="update" issue="8">
+				Known problems and FAQ in help did not reflect the latest version.
+			</action>
+			<action dev="jhux" type="fix" issue="7">
+				In case of #groovy#&lt;scriptname&gt; the script received that string as search string.
+				This has been fixed, now "" is used as search string.
+			</action>
+			<action dev="jhux" type="add" issue="1">
+				Install example groovy conditions if conditions folder is newly created.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Add transfer size statistics.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
+				EventReceiver, EventHandler (?, stuff like the fart on error,
+				RRD statistics, anything that's working directly on received events), GoToSource).
 
-                Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
-            </action>
-            <action dev="jhux" type="add">
-                TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
-            </action>
-            <action dev="jhux" type="update">
-                TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
-            </action>
-        </release>
+				Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
+			</action>
+		</release>
 
-        <release version="0.9.34" date="2009-01-04" description="Release">
-            <action dev="jhux" type="add">
-                Added unit-tests for all datatypes.
-            </action>
-            <action dev="jhux" type="fix">
-                Triple-fixed problem during auto-update of detailsView in case of malformed history.txt. 
-            </action>
-        </release>
+		<release version="0.9.34" date="2009-01-04" description="Release">
+			<action dev="jhux" type="add">
+				Added unit-tests for all datatypes.
+			</action>
+			<action dev="jhux" type="fix">
+				Triple-fixed problem during auto-update of detailsView in case of malformed history.txt.
+			</action>
+		</release>
 
 		<release version="0.9.33" date="2009-01-03" description="Release">
 			<action dev="jhux" type="add">
@@ -131,113 +131,119 @@
 			<action dev="jhux" type="add">
 				new pre style as suggested by Alexander Kosenkov. Thanks a lot!
 			</action>
-            <action dev="jhux" type="add">
-                Support for Map and Collection containing Arrays in MessageFormatter.
-            </action>
-            <action dev="jhux" type="fix">
-                Support for recursive Maps and Collections in MessageFormatter. This would previously throw a StackOverflowError.
-            </action>
-            <action dev="jhux" type="update">
-                Better string representation for recursive Map, Collection and Object[]. It will now print
-                [...fully.qualified.ClassName@identityHash...].
-            </action>
-            <action dev="jhux" type="add">
-                Support for Exception during toString(). It will now result in [!!!fully.qualified.ClassName=&gt;fully.qualified.Throwable:ThrowableMessage!!!].
-            </action>
+			<action dev="jhux" type="add">
+				Support for Map and Collection containing Arrays in MessageFormatter.
+			</action>
+			<action dev="jhux" type="fix">
+				Support for recursive Maps and Collections in MessageFormatter. This would previously throw a
+				StackOverflowError.
+			</action>
+			<action dev="jhux" type="update">
+				Better string representation for recursive Map, Collection and Object[]. It will now print
+				[...fully.qualified.ClassName@identityHash...].
+			</action>
+			<action dev="jhux" type="add">
+				Support for Exception during toString(). It will now result in [!!!fully.qualified.ClassName=&gt;fully.qualified.Throwable:ThrowableMessage!!!].
+			</action>
 			<action dev="jhux" type="fix">
 				Don't reset prefs after accepting license. Also added -L option to flush licensed for easier debugging.
 			</action>
-            <action dev="jhux" type="add">
-                Ability to save and reset layout of the tables. There are 4 table layouts: logging, loggingGlobal, access and accessGlobal.
-                the global layouts are used in the global views "global (Logging)" and "global (Access)" while the non-global ones are used in ordinary
-                views, as well as in "Lilith (Logging)".
-                Functionality is available in View -&gt; Layout and popup on table header. 
-            </action>
-            <action dev="jhux" type="add">
-                Ability to select look and feel in Preferences. Yes, the preferences dialog needs a lot of work :p
-            </action>
-            <action dev="jhux" type="add">
-                JGoodies Looks added as a look and feel alternative.
-            </action>
-            <action dev="jhux" type="update">
-                Improved general section of preferences dialog but I'm still not very happy about it.
-            </action>
-            <action dev="jhux" type="fix">
-                Exceptions in SerializableDeserializer are now silently ignored.
-            </action>
-            <action dev="jhux" type="update">
-                New class SaveCondition to serialize a condition together with a name, color infos and active setting. This
-                is a preparation for a proper (auto) filters.
-            </action>
-            <action dev="jhux" type="update">
-                Refactored conditions.
-            </action>
-            <action dev="jhux" type="add">
-                Added message.contains, logger.startsWith and logger.equals conditions as well as the ability to select
-                them in the find panel.
-            </action>
-            <action dev="jhux" type="update">
-                GroovyCondition does now support a searchString. See help.
-            </action>
-            <action dev="jhux" type="update">
-                Updated detailsView.groovy to prevent line-break in table headers so the width of the headers stays
-                the same.
-            </action>
-            <action dev="jhux" type="update">
-                Show condition name in filtered tab if condition is a saved condition.
-            </action>
-            <action dev="jhux" type="add">
-                Documentation of Sources and Source-Lists.
-            </action>
-            <action dev="jhux" type="update">
-                Documentation Conditions.
-            </action>
-            <action dev="jhux" type="add">
-                Ability to use saved conditions using #condition#&lt;conditionName&gt; in the text field of the search panel.
-            </action>
-            <action dev="jhux" type="update">
-                Disabled "Clear" in case of a filtered buffer. Previous functionality was pretty useless.
-            </action>
-            <action dev="jhux" type="update">
-                Adding all available groovy conditions to combo box.
-            </action>
-            <action dev="jhux" type="add">
-                Added "!" (Not) toggle button to search panel that negates the current condition.
-            </action>
-            <action dev="jhux" type="update">
-                Cropping the message popup to a sane sizes...
-            </action>
-            <action dev="jhux" type="update">
-                Updated groovy dependency to 1.6-RC-1.
-            </action>
-            <action dev="jhux" type="update">
-                Supporting conditions with empty argument. This is necessary because it might make sense for
-                groovy conditions.
-            </action>
-            <action dev="jhux" type="update">
-                Added EventIdentifier that will be needed for caching of condition results.
-                Changed EventWrapper to use EventIdentifier instead of Source ID + localId.
-                Since this changes serialization anyway I took the opportunity to also add omittedElements to ThrowableInfo.
-                Updated xml IO accordingly.
-            </action>
-            <action dev="jhux" type="update">
-                Updated and uploaded new logging schema.
-            </action>
-            <action dev="jhux" type="add">
-                Implemented Conditions tab in Preferences.
-            </action>
-            <action dev="jhux" type="add">
-                Use all active conditions to find out colors of a table row. Use current colors if none is matching.
-            </action>
-            <action dev="jhux" type="fix">
-                Jumping to bottom in table+scrollToBottom even if table did not change.
-            </action>
-            <action dev="jhux" type="update">
-                Support for Logback 0.9.14.
-            </action>
-            <action dev="jhux" type="update">
-                "Reset" in preferences does now work as expected, i.e. it resets the dialog to the previous preferences.
-            </action>
+			<action dev="jhux" type="add">
+				Ability to save and reset layout of the tables. There are 4 table layouts: logging, loggingGlobal,
+				access and accessGlobal.
+				the global layouts are used in the global views "global (Logging)" and "global (Access)" while the
+				non-global ones are used in ordinary
+				views, as well as in "Lilith (Logging)".
+				Functionality is available in View -&gt; Layout and popup on table header.
+			</action>
+			<action dev="jhux" type="add">
+				Ability to select look and feel in Preferences. Yes, the preferences dialog needs a lot of work :p
+			</action>
+			<action dev="jhux" type="add">
+				JGoodies Looks added as a look and feel alternative.
+			</action>
+			<action dev="jhux" type="update">
+				Improved general section of preferences dialog but I'm still not very happy about it.
+			</action>
+			<action dev="jhux" type="fix">
+				Exceptions in SerializableDeserializer are now silently ignored.
+			</action>
+			<action dev="jhux" type="update">
+				New class SaveCondition to serialize a condition together with a name, color infos and active setting.
+				This
+				is a preparation for a proper (auto) filters.
+			</action>
+			<action dev="jhux" type="update">
+				Refactored conditions.
+			</action>
+			<action dev="jhux" type="add">
+				Added message.contains, logger.startsWith and logger.equals conditions as well as the ability to select
+				them in the find panel.
+			</action>
+			<action dev="jhux" type="update">
+				GroovyCondition does now support a searchString. See help.
+			</action>
+			<action dev="jhux" type="update">
+				Updated detailsView.groovy to prevent line-break in table headers so the width of the headers stays
+				the same.
+			</action>
+			<action dev="jhux" type="update">
+				Show condition name in filtered tab if condition is a saved condition.
+			</action>
+			<action dev="jhux" type="add">
+				Documentation of Sources and Source-Lists.
+			</action>
+			<action dev="jhux" type="update">
+				Documentation Conditions.
+			</action>
+			<action dev="jhux" type="add">
+				Ability to use saved conditions using #condition#&lt;conditionName&gt; in the text field of the search
+				panel.
+			</action>
+			<action dev="jhux" type="update">
+				Disabled "Clear" in case of a filtered buffer. Previous functionality was pretty useless.
+			</action>
+			<action dev="jhux" type="update">
+				Adding all available groovy conditions to combo box.
+			</action>
+			<action dev="jhux" type="add">
+				Added "!" (Not) toggle button to search panel that negates the current condition.
+			</action>
+			<action dev="jhux" type="update">
+				Cropping the message popup to a sane sizes...
+			</action>
+			<action dev="jhux" type="update">
+				Updated groovy dependency to 1.6-RC-1.
+			</action>
+			<action dev="jhux" type="update">
+				Supporting conditions with empty argument. This is necessary because it might make sense for
+				groovy conditions.
+			</action>
+			<action dev="jhux" type="update">
+				Added EventIdentifier that will be needed for caching of condition results.
+				Changed EventWrapper to use EventIdentifier instead of Source ID + localId.
+				Since this changes serialization anyway I took the opportunity to also add omittedElements to
+				ThrowableInfo.
+				Updated xml IO accordingly.
+			</action>
+			<action dev="jhux" type="update">
+				Updated and uploaded new logging schema.
+			</action>
+			<action dev="jhux" type="add">
+				Implemented Conditions tab in Preferences.
+			</action>
+			<action dev="jhux" type="add">
+				Use all active conditions to find out colors of a table row. Use current colors if none is matching.
+			</action>
+			<action dev="jhux" type="fix">
+				Jumping to bottom in table+scrollToBottom even if table did not change.
+			</action>
+			<action dev="jhux" type="update">
+				Support for Logback 0.9.14.
+			</action>
+			<action dev="jhux" type="update">
+				"Reset" in preferences does now work as expected, i.e. it resets the dialog to the previous preferences.
+			</action>
 		</release>
 
 		<release version="0.9.32" date="2008-10-21" description="Release">
@@ -349,7 +355,8 @@
 			<action dev="jhux" type="add" issue="2034328">
 				Added support for Exceptions in case of parameter array,
 				i.e. log.debug("{} {}", new Object[]{"One", "Two", new Throwable()) will both
-				evaluate the parameters in the message and the additional Throwable as the Throwable of the LoggingEvent.
+				evaluate the parameters in the message and the additional Throwable as the Throwable of the
+				LoggingEvent.
 				See http://bugzilla.slf4j.org/show_bug.cgi?id=70 .
 				This was also reported as a Lilith bug by Alfred. :)
 				This feature will only work if one of the Lilith appenders is used, not with
@@ -422,10 +429,11 @@
 			<action dev="jhux" type="update">
 				Reduced internal event buffer from 10.000 events to 1.000 events. This was done to make Lilith less
 				memory hungry. It is still possible to run into OutOfMemoryErrors if unusually large events are received
-				very fast. 
+				very fast.
 			</action>
 			<action dev="jhux" type="update">
-				Added option to show source identifier even in case of named source. Default is on because it's really useful, imho.
+				Added option to show source identifier even in case of named source. Default is on because it's really
+				useful, imho.
 			</action>
 			<action dev="jhux" type="add">
 				Add Preferences Toolbar-Button
@@ -443,7 +451,8 @@
 				Yet another XML fix. See SimpleXml.replaceNonValidXMLCharacters for details.
 			</action>
 			<action dev="jhux" type="update">
-				Refactoring: Major restructuring of appenders and event senders. There was a concurrency problem in certain VMs.
+				Refactoring: Major restructuring of appenders and event senders. There was a concurrency problem in
+				certain VMs.
 			</action>
 			<action dev="jhux" type="update">
 				send event on different thread.
@@ -472,7 +481,7 @@
 				Close/Minimize all (other) windows. Requested by Lothar.
 			</action>
 			<action dev="jhux" type="add">
-				Removed "Clean and remove inactive views". Just remove them and clean later with 
+				Removed "Clean and remove inactive views". Just remove them and clean later with
 			</action>
 		</release>
 
@@ -521,7 +530,8 @@
 				Event Message and help is now proper XHTML.
 			</action>
 			<action dev="jhux" type="update">
-				Using FlyingSaucer for message view and help. This has the downside that copy-paste doesn't work right now.
+				Using FlyingSaucer for message view and help. This has the downside that copy-paste doesn't work right
+				now.
 			</action>
 			<action dev="jhux" type="add">
 				Writing malformed messages to ${appDir}/errors/[timestamp]. Shouldn't happen anymore, though.
@@ -556,7 +566,8 @@
 				Disabled napkin by default. *enable* using option -n.
 			</action>
 			<action dev="jhux" type="add">
-				Added support for autostart. Files contained in ${appDir}/autostart are automatically executed on startup. 
+				Added support for autostart. Files contained in ${appDir}/autostart are automatically executed on
+				startup.
 			</action>
 			<action dev="jhux" type="fix">
 				Move (internal) frame to front and unminimize if selected from view menu.
@@ -617,7 +628,8 @@
 				Using new logging data types for transfer.
 			</action>
 			<action dev="jhux" type="add">
-				Added XML logging appender and producers. Also implemented special version for use with ActionScript XMLSocket.
+				Added XML logging appender and producers. Also implemented special version for use with ActionScript
+				XMLSocket.
 			</action>
 			<action dev="jhux" type="update">
 				Major refactoring again...
@@ -837,7 +849,8 @@
 				Moved Splitter- and Global-Logfiles to subdirectories in ABP.
 			</action>
 			<action dev="jhux" type="add">
-				Active splitter-files have an .active file while active - auto-closed on delete. This is needed for later feature "Open inactive".
+				Active splitter-files have an .active file while active - auto-closed on delete. This is needed for
+				later feature "Open inactive".
 			</action>
 			<action dev="jhux" type="add">
 				Added previous image save path to ApplicationPreferences.
@@ -916,7 +929,8 @@
 				Focus selection actions for message and events.
 			</action>
 			<action dev="jhux" type="add">
-				Source Names (Aliases) for primary sources, e.g. "Localhost" for "127.0.0.1", "Test-Server", "Live-Server"...
+				Source Names (Aliases) for primary sources, e.g. "Localhost" for "127.0.0.1", "Test-Server",
+				"Live-Server"...
 			</action>
 			<action dev="jhux" type="update">
 				Preferences dialog can be used to set sounds and source names.
@@ -928,7 +942,7 @@
 				Nicer Prefs.
 			</action>
 		</release>
-		
+
 		<release version="0.9.8" date="2007-08-01" description="Internal release">
 			<action dev="jhux" type="update">
 				Centered frame after detach.
@@ -962,7 +976,7 @@
 			</action>
 			<action dev="jhux" type="add">
 				COMMAND-G finds previous, COMMAND-SHIFT-G finds next. Shortcuts
-				of find next and find previous have been switched since find 
+				of find next and find previous have been switched since find
 				previous is far more common than find next.
 			</action>
 			<action dev="jhux" type="update">

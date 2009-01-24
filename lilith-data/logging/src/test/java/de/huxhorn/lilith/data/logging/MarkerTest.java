@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,16 +17,17 @@
  */
 package de.huxhorn.lilith.data.logging;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.IOException;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MarkerTest
 {
@@ -39,20 +40,22 @@ public class MarkerTest
 	}
 
 	@Test
-	public void defaultConstructor() throws ClassNotFoundException, IOException
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
 	{
-		Marker instance=new Marker();
+		Marker instance = new Marker();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
 	}
 
 	@Test
-	public void name() throws ClassNotFoundException, IOException
+	public void name()
+		throws ClassNotFoundException, IOException
 	{
-		Marker instance=new Marker();
+		Marker instance = new Marker();
 
-		String value="value";
+		String value = "value";
 		instance.setName(value);
 
 		{
@@ -68,11 +71,12 @@ public class MarkerTest
 	}
 
 	@Test
-	public void references() throws ClassNotFoundException, IOException
+	public void references()
+		throws ClassNotFoundException, IOException
 	{
-		Marker instance=new Marker();
+		Marker instance = new Marker();
 
-		Map<String, Marker> value=new HashMap<String, Marker>();
+		Map<String, Marker> value = new HashMap<String, Marker>();
 		value.put("foo", new Marker());
 		instance.setReferences(value);
 

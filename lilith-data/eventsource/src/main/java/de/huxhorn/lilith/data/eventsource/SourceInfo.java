@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,8 +17,8 @@
  */
 package de.huxhorn.lilith.data.eventsource;
 
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 public class SourceInfo
 	implements Serializable
@@ -72,15 +72,20 @@ public class SourceInfo
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		final SourceInfo that = (SourceInfo) o;
 
-		if (active != that.active) return false;
-		if (numberOfEvents != that.numberOfEvents) return false;
-		if (oldestEventTimestamp != null ? !oldestEventTimestamp.equals(that.oldestEventTimestamp) : that.oldestEventTimestamp != null) return false;
-		return !(sourceIdentifier != null ? !sourceIdentifier.equals(that.sourceIdentifier) : that.sourceIdentifier != null);
+		if(active != that.active) return false;
+		if(numberOfEvents != that.numberOfEvents) return false;
+		if(oldestEventTimestamp != null ? !oldestEventTimestamp
+			.equals(that.oldestEventTimestamp) : that.oldestEventTimestamp != null)
+		{
+			return false;
+		}
+		return !(sourceIdentifier != null ? !sourceIdentifier
+			.equals(that.sourceIdentifier) : that.sourceIdentifier != null);
 	}
 
 	public int hashCode()

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,9 +22,10 @@ import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
 
+import java.util.Date;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.util.Date;
 
 public class SourceInfoWriter
 	implements GenericStreamWriter<SourceInfo>, EventSourceSchemaConstants
@@ -37,8 +38,8 @@ public class SourceInfoWriter
 
 	public SourceInfoWriter()
 	{
-		dateTimeFormatter=new DateTimeFormatter();
-		sourceIdentifierWriter =new SourceIdentifierWriter();
+		dateTimeFormatter = new DateTimeFormatter();
+		sourceIdentifierWriter = new SourceIdentifierWriter();
 	}
 
 	public String getPreferredPrefix()
@@ -63,15 +64,16 @@ public class SourceInfoWriter
 	}
 
 	public void write(XMLStreamWriter writer, SourceInfo source, boolean isRoot)
-			throws XMLStreamException
+		throws XMLStreamException
 	{
 		if(isRoot)
 		{
-			writer.writeStartDocument("utf-8","1.0");
+			writer.writeStartDocument("utf-8", "1.0");
 		}
 
-		StaxUtilities.NamespaceInfo ni = StaxUtilities.setNamespace(writer, preferredPrefix, NAMESPACE_URI, DEFAULT_NAMESPACE_PREFIX);
-		prefix=ni.getPrefix();
+		StaxUtilities.NamespaceInfo ni = StaxUtilities
+			.setNamespace(writer, preferredPrefix, NAMESPACE_URI, DEFAULT_NAMESPACE_PREFIX);
+		prefix = ni.getPrefix();
 		StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, SOURCE_INFO_NODE);
 		if(ni.isCreated())
 		{
@@ -80,22 +82,24 @@ public class SourceInfoWriter
 
 		if(isRoot && writingSchemaLocation)
 		{
-			ni = StaxUtilities.setNamespace(writer, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX, StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX);
+			ni = StaxUtilities
+				.setNamespace(writer, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX, StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX);
 			if(ni.isCreated())
 			{
 				StaxUtilities.writeNamespace(writer, ni.getPrefix(), StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI);
 			}
 			StaxUtilities.writeAttribute(writer,
-					true,
-					ni.getPrefix(),
-					StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
-					StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
-					NAMESPACE_URI+" "+NAMESPACE_LOCATION);
+				true,
+				ni.getPrefix(),
+				StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
+				StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
+				NAMESPACE_URI + " " + NAMESPACE_LOCATION);
 		}
-		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, NUMBER_OF_EVENTS_ATTRIBUTE, ""+source.getNumberOfEvents());
+		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, NUMBER_OF_EVENTS_ATTRIBUTE, "" + source
+			.getNumberOfEvents());
 
-		Date ts=source.getOldestEventTimestamp();
-		String dateTime=dateTimeFormatter.format(ts);
+		Date ts = source.getOldestEventTimestamp();
+		String dateTime = dateTimeFormatter.format(ts);
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, OLDEST_EVENT_TIMESTAMP_ATTRIBUTE, dateTime);
 
 		if(source.isActive())

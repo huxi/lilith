@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,12 +29,13 @@ public abstract class AbstractDebugRunnable
 
 	public AbstractDebugRunnable(int delay)
 	{
-		this.delay=delay;
+		this.delay = delay;
 	}
 
-	public void sleep() throws InterruptedException
+	public void sleep()
+		throws InterruptedException
 	{
-		if(delay>0)
+		if(delay > 0)
 		{
 			Thread.sleep(delay);
 		}
@@ -46,11 +47,12 @@ public abstract class AbstractDebugRunnable
 		{
 			runIt();
 		}
-		catch (InterruptedException e)
+		catch(InterruptedException e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Execution of DebugRunnable was interrupted!");
 		}
 	}
 
-	public abstract void runIt() throws InterruptedException;
+	public abstract void runIt()
+		throws InterruptedException;
 }

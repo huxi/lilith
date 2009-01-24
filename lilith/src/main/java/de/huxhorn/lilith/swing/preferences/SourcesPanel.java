@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,24 +19,11 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import de.huxhorn.sulky.swing.Windows;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -44,6 +31,10 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class SourcesPanel
 	extends JPanel
@@ -61,7 +52,7 @@ public class SourcesPanel
 
 	public SourcesPanel(PreferencesDialog preferencesDialog)
 	{
-		this.preferencesDialog=preferencesDialog;
+		this.preferencesDialog = preferencesDialog;
 		//applicationPreferences=preferencesDialog.getApplicationPreferences();
 		createUI();
 	}
@@ -69,18 +60,18 @@ public class SourcesPanel
 	private void createUI()
 	{
 		setLayout(new BorderLayout());
-		editSourceNameDialog=new EditSourceNameDialog(preferencesDialog);
-		Map<String, String> sourceNames=new HashMap<String, String>();
+		editSourceNameDialog = new EditSourceNameDialog(preferencesDialog);
+		Map<String, String> sourceNames = new HashMap<String, String>();
 		sourceNameTableModel = new SourceNameTableModel(sourceNames);
 		sourceNameTable = new JTable(sourceNameTableModel);
-		convertMethod=null;
+		convertMethod = null;
 		try
 		{
 			Method method = JTable.class.getMethod("setAutoCreateRowSorter", boolean.class);
 			method.invoke(sourceNameTable, true);
-			convertMethod=JTable.class.getMethod("convertRowIndexToModel", int.class);
+			convertMethod = JTable.class.getMethod("convertRowIndexToModel", int.class);
 		}
-		catch (Throwable e)
+		catch(Throwable e)
 		{
 			if(logger.isInfoEnabled()) logger.info("While trying to activate autoRowSorter: {}", e.toString());
 		}
@@ -89,7 +80,7 @@ public class SourcesPanel
 
 		JPanel sourceNamesPanel = new JPanel(new GridLayout(1, 1));
 		sourceNamesPanel.add(sourceNameTableScrollPane, BorderLayout.CENTER);
-		JToolBar sourceNamesToolbar=new JToolBar();
+		JToolBar sourceNamesToolbar = new JToolBar();
 		sourceNamesToolbar.setFloatable(false);
 
 		ListSelectionModel sourceNameRowSelectionModel = sourceNameTable.getSelectionModel();
@@ -132,8 +123,8 @@ public class SourcesPanel
 		int selectedRow = sourceNameTable.getSelectedRow();
 		if(logger.isDebugEnabled()) logger.debug("selectedRow={}", selectedRow);
 		// no need to call convert since we only want to know if selected or not.
-		editSourceNameAction.setEnabled(selectedRow!=-1);
-		removeSourceNameAction.setEnabled(selectedRow!=-1);
+		editSourceNameAction.setEnabled(selectedRow != -1);
+		removeSourceNameAction.setEnabled(selectedRow != -1);
 	}
 
 	public void editSourceName(final String sourceIdentifier)
@@ -152,10 +143,10 @@ public class SourcesPanel
 	public void editSourceName(final String sourceIdentifier, boolean add)
 	{
 		Map<String, String> data = sourceNameTableModel.getData();
-		String sourceName=data.get(sourceIdentifier);
-		if(sourceName==null)
+		String sourceName = data.get(sourceIdentifier);
+		if(sourceName == null)
 		{
-			sourceName="";
+			sourceName = "";
 		}
 		editSourceNameDialog.setSourceIdentifier(sourceIdentifier);
 		editSourceNameDialog.setSourceName(sourceName);
@@ -164,9 +155,9 @@ public class SourcesPanel
 		if(!editSourceNameDialog.isCanceled())
 		{
 			String newIdentifier = editSourceNameDialog.getSourceIdentifier();
-			newIdentifier=newIdentifier.trim();
-			sourceName=editSourceNameDialog.getSourceName();
-			sourceName=sourceName.trim();
+			newIdentifier = newIdentifier.trim();
+			sourceName = editSourceNameDialog.getSourceName();
+			sourceName = sourceName.trim();
 			/*
 			if(data.containsKey(sourceIdentifier))
 			{
@@ -190,15 +181,15 @@ public class SourcesPanel
 
 	private int convertSourceNameRow(int row)
 	{
-		int result=row;
-		if(convertMethod!=null)
+		int result = row;
+		if(convertMethod != null)
 		{
 			try
 			{
-				result = (Integer)convertMethod.invoke(sourceNameTable, row);
+				result = (Integer) convertMethod.invoke(sourceNameTable, row);
 				if(logger.isInfoEnabled()) logger.info("Converted view-row {} to model-row {}.", row, result);
 			}
-			catch (Throwable e)
+			catch(Throwable e)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while converting row!!", e);
 			}
@@ -206,7 +197,8 @@ public class SourcesPanel
 		return result;
 	}
 
-	private class SourceNameTableRowSelectionListener implements ListSelectionListener
+	private class SourceNameTableRowSelectionListener
+		implements ListSelectionListener
 	{
 		public void valueChanged(ListSelectionEvent e)
 		{
@@ -222,14 +214,14 @@ public class SourcesPanel
 			super("Add");
 			Icon icon;
 			{
-				URL url= EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
@@ -251,14 +243,14 @@ public class SourcesPanel
 			super("Edit");
 			Icon icon;
 			{
-				URL url= EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
@@ -271,8 +263,9 @@ public class SourcesPanel
 			int row = sourceNameTable.getSelectedRow();
 			if(row >= 0)
 			{
-				row=convertSourceNameRow(row);
-				String sourceIdentifier =(String) sourceNameTableModel.getValueAt(row,SourceNameTableModel.SOURCE_IDENTIFIER_COLUMN);
+				row = convertSourceNameRow(row);
+				String sourceIdentifier = (String) sourceNameTableModel
+					.getValueAt(row, SourceNameTableModel.SOURCE_IDENTIFIER_COLUMN);
 				editSourceName(sourceIdentifier, false);
 			}
 		}
@@ -286,14 +279,14 @@ public class SourcesPanel
 			super("Remove");
 			Icon icon;
 			{
-				URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
@@ -303,18 +296,18 @@ public class SourcesPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Remove");
-			int row=sourceNameTable.getSelectedRow();
+			int row = sourceNameTable.getSelectedRow();
 			if(row >= 0)
 			{
 				// this removes the row...
-				row=convertSourceNameRow(row);
+				row = convertSourceNameRow(row);
 				sourceNameTableModel.setValueAt("", row, 0);
 			}
 		}
 	}
 
 	private class SourceNameTableMouseListener
-			implements MouseListener
+		implements MouseListener
 	{
 		private final Logger logger = LoggerFactory.getLogger(SourceNameTableMouseListener.class);
 
@@ -325,40 +318,42 @@ public class SourcesPanel
 
 		public void mouseClicked(MouseEvent evt)
 		{
-			if(evt.getClickCount()>=2 && evt.getButton()==MouseEvent.BUTTON1)
+			if(evt.getClickCount() >= 2 && evt.getButton() == MouseEvent.BUTTON1)
 			{
 				Point p = evt.getPoint();
 				int row = sourceNameTable.rowAtPoint(p);
-				row=convertSourceNameRow(row);
-				if(logger.isDebugEnabled()) logger.debug("Source-Name-Row: {}",row);
-				if(row>=0)
+				row = convertSourceNameRow(row);
+				if(logger.isDebugEnabled()) logger.debug("Source-Name-Row: {}", row);
+				if(row >= 0)
 				{
-					String source=(String) sourceNameTableModel.getValueAt(row,SourceNameTableModel.SOURCE_IDENTIFIER_COLUMN);
-					if(source==null)
+					String source = (String) sourceNameTableModel
+						.getValueAt(row, SourceNameTableModel.SOURCE_IDENTIFIER_COLUMN);
+					if(source == null)
 					{
-						source="";
+						source = "";
 					}
 
 					editSourceName(source, false);
 					if(logger.isInfoEnabled()) logger.info("After show...");
 				}
 			}
-			else if (evt.isPopupTrigger())
+			else if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
 		}
 
 
-
-		/** @noinspection UNUSED_SYMBOL*/
+		/**
+		 * @noinspection UNUSED_SYMBOL
+		 */
 		private void showPopup(MouseEvent evt)
 		{
 		}
 
 		public void mousePressed(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -366,7 +361,7 @@ public class SourcesPanel
 
 		public void mouseReleased(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}

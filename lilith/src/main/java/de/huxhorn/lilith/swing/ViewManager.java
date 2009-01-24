@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,16 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.engine.*;
-
-import java.io.Serializable;
-import java.util.*;
+import de.huxhorn.lilith.engine.EventSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class ViewManager<T extends Serializable>
 {
@@ -34,7 +37,7 @@ public abstract class ViewManager<T extends Serializable>
 
 	public ViewManager(MainFrame mainFrame)
 	{
-		this.mainFrame=mainFrame;
+		this.mainFrame = mainFrame;
 		this.views = new HashMap<EventSource<T>, ViewContainer<T>>();
 	}
 
@@ -46,14 +49,14 @@ public abstract class ViewManager<T extends Serializable>
 	public ViewContainer<T> retrieveViewContainer(EventSource<T> eventSource)
 	{
 		ViewContainer<T> result;
-		synchronized (views)
+		synchronized(views)
 		{
-			result=views.get(eventSource);
-			if(result==null)
+			result = views.get(eventSource);
+			if(result == null)
 			{
-				result=createViewContainer(eventSource);
+				result = createViewContainer(eventSource);
 				views.put(eventSource, result);
-				if (logger.isInfoEnabled()) logger.info("Added view for eventSource {}.", eventSource);
+				if(logger.isInfoEnabled()) logger.info("Added view for eventSource {}.", eventSource);
 			}
 			return result;
 		}
@@ -72,20 +75,20 @@ public abstract class ViewManager<T extends Serializable>
 
 	List<ViewContainer<T>> minimizeAllViews(ViewContainer beside)
 	{
-		List<ViewContainer<T>> result=new ArrayList<ViewContainer<T>>();
+		List<ViewContainer<T>> result = new ArrayList<ViewContainer<T>>();
 		synchronized(views)
 		{
 			for(Map.Entry<EventSource<T>, ViewContainer<T>> entry : views.entrySet())
 			{
-				ViewContainer<T> value=entry.getValue();
+				ViewContainer<T> value = entry.getValue();
 
-				if(value.resolveViewWindow()!=null && value!=beside)
+				if(value.resolveViewWindow() != null && value != beside)
 				{
 					result.add(value);
 				}
 			}
 		}
-		for(ViewContainer<T> current: result)
+		for(ViewContainer<T> current : result)
 		{
 			minimizeViewContainer(current);
 		}
@@ -94,31 +97,31 @@ public abstract class ViewManager<T extends Serializable>
 
 	List<ViewContainer<T>> closeAllViews(ViewContainer beside)
 	{
-		List<ViewContainer<T>> result=new ArrayList<ViewContainer<T>>();
+		List<ViewContainer<T>> result = new ArrayList<ViewContainer<T>>();
 		synchronized(views)
 		{
-			List<EventSource<T>> inactiveKeys=new ArrayList<EventSource<T>>();
+			List<EventSource<T>> inactiveKeys = new ArrayList<EventSource<T>>();
 			for(Map.Entry<EventSource<T>, ViewContainer<T>> entry : views.entrySet())
 			{
-				EventSource<T> key=entry.getKey();
-				ViewContainer<T> value=entry.getValue();
+				EventSource<T> key = entry.getKey();
+				ViewContainer<T> value = entry.getValue();
 				EventWrapperViewPanel panel = value.getDefaultView();
 
-				if(!key.isGlobal() && LoggingViewState.INACTIVE == panel.getState() && value!=beside)
+				if(!key.isGlobal() && LoggingViewState.INACTIVE == panel.getState() && value != beside)
 				{
 					inactiveKeys.add(key);
 				}
-				if(value.resolveViewWindow()!=null && value!=beside)
+				if(value.resolveViewWindow() != null && value != beside)
 				{
 					result.add(value);
 				}
 			}
-			for(EventSource<T> current:inactiveKeys)
+			for(EventSource<T> current : inactiveKeys)
 			{
 				removeView(current);
 			}
 		}
-		for(ViewContainer<T> current: result)
+		for(ViewContainer<T> current : result)
 		{
 			closeViewContainer(current);
 		}
@@ -127,14 +130,14 @@ public abstract class ViewManager<T extends Serializable>
 
 	List<ViewContainer<T>> removeInactiveViews(boolean onlyClosed)
 	{
-		List<ViewContainer<T>> result=new ArrayList<ViewContainer<T>>();
+		List<ViewContainer<T>> result = new ArrayList<ViewContainer<T>>();
 		synchronized(views)
 		{
-			List<EventSource<T>> inactiveKeys=new ArrayList<EventSource<T>>();
+			List<EventSource<T>> inactiveKeys = new ArrayList<EventSource<T>>();
 			for(Map.Entry<EventSource<T>, ViewContainer<T>> entry : views.entrySet())
 			{
-				EventSource<T> key=entry.getKey();
-				ViewContainer<T> value=entry.getValue();
+				EventSource<T> key = entry.getKey();
+				ViewContainer<T> value = entry.getValue();
 				EventWrapperViewPanel panel = value.getDefaultView();
 
 				if(!key.isGlobal() && LoggingViewState.INACTIVE == panel.getState())
@@ -142,7 +145,7 @@ public abstract class ViewManager<T extends Serializable>
 					if(onlyClosed)
 					{
 						//if(value.resolveInternalFrame()==null && value.resolveFrame()==null)
-						if(value.resolveViewWindow()==null)
+						if(value.resolveViewWindow() == null)
 						{
 							result.add(value);
 							inactiveKeys.add(key);
@@ -155,12 +158,12 @@ public abstract class ViewManager<T extends Serializable>
 					}
 				}
 			}
-			for(EventSource<T> current:inactiveKeys)
+			for(EventSource<T> current : inactiveKeys)
 			{
 				removeView(current);
 			}
 		}
-		for(ViewContainer<T> current: result)
+		for(ViewContainer<T> current : result)
 		{
 			closeViewContainer(current);
 		}
@@ -169,8 +172,8 @@ public abstract class ViewManager<T extends Serializable>
 
 	private void minimizeViewContainer(ViewContainer<T> lvc)
 	{
-		ViewWindow window=lvc.resolveViewWindow();
-		if(window!=null)
+		ViewWindow window = lvc.resolveViewWindow();
+		if(window != null)
 		{
 			window.minimizeWindow();
 		}
@@ -178,8 +181,8 @@ public abstract class ViewManager<T extends Serializable>
 
 	void closeViewContainer(ViewContainer<T> lvc)
 	{
-		ViewWindow window=lvc.resolveViewWindow();
-		if(window!=null)
+		ViewWindow window = lvc.resolveViewWindow();
+		if(window != null)
 		{
 			window.closeWindow();
 		}
@@ -219,10 +222,10 @@ public abstract class ViewManager<T extends Serializable>
 		{
 			previous = views.remove(source);
 		}
-		if(previous!=null)
+		if(previous != null)
 		{
 			previous.dispose();
-			if(logger.isDebugEnabled()) logger.debug("Removed view for {}.",source);
+			if(logger.isDebugEnabled()) logger.debug("Removed view for {}.", source);
 		}
 	}
 

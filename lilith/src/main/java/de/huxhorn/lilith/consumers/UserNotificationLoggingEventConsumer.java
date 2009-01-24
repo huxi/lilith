@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
  */
 package de.huxhorn.lilith.consumers;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventConsumer;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
-import java.util.List;
 
 import org.simplericity.macify.eawt.Application;
+
+import java.util.List;
 
 public class UserNotificationLoggingEventConsumer
 	implements EventConsumer<LoggingEvent>
@@ -37,15 +37,15 @@ public class UserNotificationLoggingEventConsumer
 
 	public void consume(List<EventWrapper<LoggingEvent>> events)
 	{
-		if(application!=null)
+		if(application != null)
 		{
-			boolean errorDetected=false;
-			for(EventWrapper<LoggingEvent> current:events)
+			boolean errorDetected = false;
+			for(EventWrapper<LoggingEvent> current : events)
 			{
 				LoggingEvent event = current.getEvent();
-				if(event !=null && LoggingEvent.Level.ERROR == event.getLevel())
+				if(event != null && LoggingEvent.Level.ERROR == event.getLevel())
 				{
-					errorDetected=true;
+					errorDetected = true;
 					break;
 				}
 			}

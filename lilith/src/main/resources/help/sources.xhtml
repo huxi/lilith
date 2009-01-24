@@ -1,49 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>Sources, Source-Names &amp; Source-Lists</title>
-		<link href="help.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<p><a href="index.xhtml">ToC</a></p>
+<head>
+	<title>Sources, Source-Names &amp; Source-Lists</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
 
-		<h1><a name="top">Sources, Source-Names  &amp; Source-Lists</a></h1>
+<h1><a name="top">Sources, Source-Names &amp; Source-Lists</a></h1>
 
-        <h2><a name="sources">Sources</a></h2>
-        <p>Sources are the origin of events that are recived by Lilith. The typical source identifier is the IP address
-            of the machine sending the event. This would be "127.0.0.1" in case of your own computer.</p>
-        <p><a href="#top">Back to top.</a></p>
+<h2><a name="sources">Sources</a></h2>
 
-        <h2><a name="sourceNames">Source-Names</a></h2>
-        <p>It's possible to give a certain source a name, e.g. the source "127.0.0.1" would likely be named "localhost",
-            using "View" =&gt; "Edit source name...".
-            The shortcut for this functionality is *command*-B.<br/>
-            Named sources are used in two places:
-            </p>
-        <ul>
-            <li>They are shown in the title of a view window so it's easier to see where the events are originating from.
-                Names better suited for this than simply ip addresses.</li>
-            <li>
-                The can be added to <a href="#sourceLists">source lists</a> which can then be used to either white- or black-list the receiving of
-                events from that sources.
-            </li>
-        </ul>
+<p>Sources are the origin of events that are recived by Lilith. The typical source identifier is the IP address
+	of the machine sending the event. This would be "127.0.0.1" in case of your own computer.</p>
 
-        <p><a href="#top">Back to top.</a></p>
+<p><a href="#top">Back to top.</a></p>
 
-        <h2><a name="sourceLists">Source-Lists</a></h2>
-        <p>Source-Lists can be used to either white- or black-list on the contained sources.<br/>
-            In case of white-listing, only events from sources <b>contained</b> in the selected source list are accepted.<br/>
-            In case of black-listing, only events from sources <b>not contained</b> in the selected source list are accepted.<br/>
-        </p>
-        <p>This functionality is mostly useful if you constantly receive events from a large amount of different applications and
-            would like to temporarily work with only a subset of these.</p>
-        <p>You could, for example, create a source list that contains only "127.0.0.1" and white-list on that source list
-            to receive only events originating from your own computer.</p>
-        <p><a href="#top">Back to top.</a></p>
+<h2><a name="sourceNames">Source-Names</a></h2>
 
-	</body>
+<p>It's possible to give a certain source a name, e.g. the source "127.0.0.1" would likely be named "localhost",
+	using "View" =&gt; "Edit source name...".
+	The shortcut for this functionality is *command*-B.<br/>
+	Named sources are used in two places:
+</p>
+<ul>
+	<li>They are shown in the title of a view window so it's easier to see where the events are originating from.
+		Names better suited for this than simply ip addresses.
+	</li>
+	<li>
+		The can be added to <a href="#sourceLists">source lists</a> which can then be used to either white- or
+		black-list the receiving of
+		events from that sources.
+	</li>
+</ul>
+
+<p><a href="#top">Back to top.</a></p>
+
+<h2><a name="sourceLists">Source-Lists</a></h2>
+
+<p>Source-Lists can be used to either white- or black-list on the contained sources.<br/>
+	In case of white-listing, only events from sources <b>contained</b> in the selected source list are accepted.<br/>
+	In case of black-listing, only events from sources <b>not contained</b> in the selected source list are
+	accepted.<br/>
+</p>
+
+<p>This functionality is mostly useful if you constantly receive events from a large amount of different applications
+	and
+	would like to temporarily work with only a subset of these.</p>
+
+<p>You could, for example, create a source list that contains only "127.0.0.1" and white-list on that source list
+	to receive only events originating from your own computer.</p>
+
+<p><a href="#top">Back to top.</a></p>
+
+</body>
 </html>

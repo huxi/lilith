@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,32 +22,22 @@ import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import de.huxhorn.lilith.swing.filefilters.Mp3FileFilter;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileFilter;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 
 public class SoundsPanel
 	extends JPanel
@@ -66,9 +56,9 @@ public class SoundsPanel
 
 	public SoundsPanel(PreferencesDialog preferencesDialog)
 	{
-		this.preferencesDialog=preferencesDialog;
-		applicationPreferences=preferencesDialog.getApplicationPreferences();
-		this.sounds=new JLayerSounds();
+		this.preferencesDialog = preferencesDialog;
+		applicationPreferences = preferencesDialog.getApplicationPreferences();
+		this.sounds = new JLayerSounds();
 		createUI();
 	}
 
@@ -76,15 +66,15 @@ public class SoundsPanel
 	{
 		setLayout(new BorderLayout());
 		// Sounds
-		muteCheckbox=new JCheckBox("Mute");
+		muteCheckbox = new JCheckBox("Mute");
 		muteCheckbox.addActionListener(new MuteActionListener());
-		soundFileChooser=new JFileChooser();
+		soundFileChooser = new JFileChooser();
 		soundFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		FileFilter mp3FileFilter=new Mp3FileFilter();
+		FileFilter mp3FileFilter = new Mp3FileFilter();
 		soundFileChooser.setFileFilter(mp3FileFilter);
 		//JPanel soundsPanel = new JPanel(new BorderLayout());
 		//soundsPanel.add(muteCheckbox, BorderLayout.NORTH);
-		Map<String, String> soundLocations=new HashMap<String, String>();
+		Map<String, String> soundLocations = new HashMap<String, String>();
 		soundLocationTableModel = new SoundLocationTableModel(soundLocations);
 		soundLocationTable = new JTable(soundLocationTableModel);
 		soundLocationTable.setRowSelectionAllowed(true);
@@ -94,14 +84,14 @@ public class SoundsPanel
 		soundRowSelectionModel.addListSelectionListener(new SoundLocationTableRowSelectionListener());
 
 		JScrollPane soundLocationTableScrollPane = new JScrollPane(soundLocationTable);
-		JPanel soundLocationsPanel=new JPanel(new GridLayout(1,1));
+		JPanel soundLocationsPanel = new JPanel(new GridLayout(1, 1));
 		soundLocationsPanel.add(soundLocationTableScrollPane);
 
 		JToolBar soundLocationsToolbar = new JToolBar();
 		soundLocationsToolbar.setFloatable(false);
 
-		playSoundAction =new PlaySoundAction();
-		browseSoundAction =new BrowseSoundAction();
+		playSoundAction = new PlaySoundAction();
+		browseSoundAction = new BrowseSoundAction();
 
 		JButton browseSoundButton = new JButton(browseSoundAction);
 		JButton playButton = new JButton(playSoundAction);
@@ -117,11 +107,11 @@ public class SoundsPanel
 
 	public void initUI()
 	{
-		boolean mute=applicationPreferences.isMute();
+		boolean mute = applicationPreferences.isMute();
 		Map<String, String> soundLocations = applicationPreferences.getSoundLocations();
-		if(soundLocations==null)
+		if(soundLocations == null)
 		{
-			soundLocations=new HashMap<String, String>();
+			soundLocations = new HashMap<String, String>();
 		}
 		soundLocationTableModel.setData(soundLocations);
 		sounds.setSoundLocations(soundLocations);
@@ -141,8 +131,8 @@ public class SoundsPanel
 		soundLocationTable.setEnabled(!mute);
 		int selectedRow = soundLocationTable.getSelectedRow();
 		if(logger.isDebugEnabled()) logger.debug("selectedRow={}", selectedRow);
-		playSoundAction.setEnabled(!mute && selectedRow!=-1);
-		browseSoundAction.setEnabled(!mute && selectedRow!=-1);
+		playSoundAction.setEnabled(!mute && selectedRow != -1);
+		browseSoundAction.setEnabled(!mute && selectedRow != -1);
 	}
 
 	private class MuteActionListener
@@ -150,16 +140,17 @@ public class SoundsPanel
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			boolean mute=muteCheckbox.isSelected();
+			boolean mute = muteCheckbox.isSelected();
 			updateSounds(mute);
 		}
 	}
 
-	private class SoundLocationTableRowSelectionListener implements ListSelectionListener
+	private class SoundLocationTableRowSelectionListener
+		implements ListSelectionListener
 	{
 		public void valueChanged(ListSelectionEvent e)
 		{
-			boolean mute=muteCheckbox.isSelected();
+			boolean mute = muteCheckbox.isSelected();
 			updateSounds(mute);
 		}
 	}
@@ -172,14 +163,14 @@ public class SoundsPanel
 			super();
 			Icon icon;
 			{
-				URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/media-playback-start.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/media-playback-start.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
@@ -189,12 +180,12 @@ public class SoundsPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Play");
-			if(sounds!=null)
+			if(sounds != null)
 			{
-				int row=soundLocationTable.getSelectedRow();
-				if(row!=-1)
+				int row = soundLocationTable.getSelectedRow();
+				if(row != -1)
 				{
-					String eventName=(String) soundLocationTable.getValueAt(row,0);
+					String eventName = (String) soundLocationTable.getValueAt(row, 0);
 					sounds.play(eventName);
 				}
 			}
@@ -209,14 +200,14 @@ public class SoundsPanel
 			super();
 			Icon icon;
 			{
-				URL url= EventWrapperViewPanel.class.getResource("/tango/16x16/actions/document-open.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/document-open.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
@@ -227,17 +218,17 @@ public class SoundsPanel
 		{
 			soundFileChooser.setCurrentDirectory(applicationPreferences.getSoundPath());
 			int returnVal = soundFileChooser.showDialog(preferencesDialog, "Select");
-			if (returnVal == JFileChooser.APPROVE_OPTION)
+			if(returnVal == JFileChooser.APPROVE_OPTION)
 			{
 				File file = soundFileChooser.getSelectedFile();
 				String selectedFile = file.getAbsolutePath();
 				int row = soundLocationTable.getSelectedRow();
-				if(row!=-1)
+				if(row != -1)
 				{
 					soundLocationTable.setValueAt(selectedFile, row, 1);
 					if(logger.isDebugEnabled()) logger.debug("Set sound to {}.", selectedFile);
 				}
-				File parent=file.getParentFile();
+				File parent = file.getParentFile();
 				applicationPreferences.setSoundPath(parent);
 			}
 		}

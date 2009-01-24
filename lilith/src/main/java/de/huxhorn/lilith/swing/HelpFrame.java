@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,20 @@
  */
 package de.huxhorn.lilith.swing;
 
-import org.xhtmlrenderer.simple.XHTMLPanel;
-import org.xhtmlrenderer.simple.FSScrollPane;
-import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
-import org.xhtmlrenderer.swing.LinkListener;
+import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.simple.FSScrollPane;
+import org.xhtmlrenderer.simple.XHTMLPanel;
+import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
+import org.xhtmlrenderer.swing.LinkListener;
 
-import javax.swing.*;
-import java.awt.HeadlessException;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.net.URL;
 import java.util.List;
 
-import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
+import javax.swing.*;
 
 public class HelpFrame
 	extends JFrame
@@ -44,10 +43,11 @@ public class HelpFrame
 	//private JTextPane helpPane;
 
 
-	public HelpFrame(MainFrame mainFrame) throws HeadlessException
+	public HelpFrame(MainFrame mainFrame)
+		throws HeadlessException
 	{
 		super();
-		this.mainFrame=mainFrame;
+		this.mainFrame = mainFrame;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		initUI();
 	}
@@ -61,20 +61,20 @@ public class HelpFrame
 		helpPane.setEditable(false);
 		JScrollPane helpScrollPane = new JScrollPane(helpPane);
 		*/
-		helpPane=new XHTMLPanel();
+		helpPane = new XHTMLPanel();
 
 		{
 			LinkListener originalLinkListener = null;
 			List mouseTrackingList = helpPane.getMouseTrackingListeners();
-			if(mouseTrackingList!=null)
+			if(mouseTrackingList != null)
 			{
-				for(Object o: mouseTrackingList)
+				for(Object o : mouseTrackingList)
 				{
-					if(logger.isDebugEnabled()) logger.debug("Before MTL {}",o);
+					if(logger.isDebugEnabled()) logger.debug("Before MTL {}", o);
 					if(o instanceof LinkListener)
 					{
 						helpPane.removeMouseTrackingListener((LinkListener) o);
-						originalLinkListener= (LinkListener) o;
+						originalLinkListener = (LinkListener) o;
 					}
 				}
 			}
@@ -82,18 +82,17 @@ public class HelpFrame
 		}
 
 
-
-		xhtmlNamespaceHandler=new XhtmlNamespaceHandler();
+		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
 
 		setContentPane(helpScrollPane);
-		GraphicsEnvironment ge=GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Rectangle maxBounds = ge.getMaximumWindowBounds();
-		setSize(maxBounds.width/2, maxBounds.height/2);
+		setSize(maxBounds.width / 2, maxBounds.height / 2);
 		{
-			URL url=HelpFrame.class.getResource("/tango/16x16/apps/help-browser.png");
+			URL url = HelpFrame.class.getResource("/tango/16x16/apps/help-browser.png");
 
-			if(url!=null)
+			if(url != null)
 			{
 				ImageIcon icon = new ImageIcon(url);
 				setIconImage(icon.getImage());

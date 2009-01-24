@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,41 +17,40 @@
  */
 package de.huxhorn.lilith.swing.table.tooltips;
 
-import de.huxhorn.lilith.swing.table.TooltipGenerator;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
-import javax.swing.JTable;
-
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.swing.table.TooltipGenerator;
 import de.huxhorn.sulky.formatting.SimpleXml;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import javax.swing.*;
 
 public class MarkerTooltipGenerator
 	implements TooltipGenerator
 {
 	public String createTooltipText(JTable table, int row)
 	{
-		String tooltip=null;
-		Object value=table.getValueAt(row,0);
+		String tooltip = null;
+		Object value = table.getValueAt(row, 0);
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
+			EventWrapper wrapper = (EventWrapper) value;
 			Object eventObj = wrapper.getEvent();
 			if(eventObj instanceof LoggingEvent)
 			{
-				LoggingEvent event=(LoggingEvent) eventObj;
-				Marker marker=event.getMarker();
-				if(marker!=null)
+				LoggingEvent event = (LoggingEvent) eventObj;
+				Marker marker = event.getMarker();
+				if(marker != null)
 				{
-					StringBuilder buffer=new StringBuilder();
+					StringBuilder buffer = new StringBuilder();
 					buffer.append("<html>");
 					appendMarker(marker, buffer, null, false, true);
 					buffer.append("</html>");
-					tooltip=buffer.toString();
+					tooltip = buffer.toString();
 				}
 			}
 		}
@@ -60,11 +59,11 @@ public class MarkerTooltipGenerator
 
 	public static void appendMarker(Marker marker, StringBuilder buffer, List<String> processedMarkers, boolean xhtml, boolean first)
 	{
-		if(marker!=null)
+		if(marker != null)
 		{
-			if(processedMarkers==null)
+			if(processedMarkers == null)
 			{
-				processedMarkers=new ArrayList<String>();
+				processedMarkers = new ArrayList<String>();
 			}
 			String markerName = marker.getName();
 			buffer.append(SimpleXml.escape(markerName));
@@ -86,10 +85,10 @@ public class MarkerTooltipGenerator
 				{
 					buffer.append("<ul>");
 					Map<String, Marker> children = marker.getReferences();
-					for(Map.Entry<String, Marker> current:children.entrySet())
+					for(Map.Entry<String, Marker> current : children.entrySet())
 					{
 
-						Marker childMarker=current.getValue();
+						Marker childMarker = current.getValue();
 						buffer.append("<li>");
 						appendMarker(childMarker, buffer, processedMarkers, xhtml, false);
 						buffer.append("</li>");

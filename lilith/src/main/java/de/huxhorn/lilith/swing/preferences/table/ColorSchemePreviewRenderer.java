@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,13 @@ package de.huxhorn.lilith.swing.preferences.table;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.renderer.ConditionalBorder;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import java.awt.*;
+
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 
 public abstract class ColorSchemePreviewRenderer
-		implements TableCellRenderer
+	implements TableCellRenderer
 
 {
 	private static final ColorScheme DEFAULT_SCHEME = new ColorScheme();
@@ -39,39 +37,40 @@ public abstract class ColorSchemePreviewRenderer
 	public ColorSchemePreviewRenderer()
 	{
 		renderer = new JLabel();
-        Font font=renderer.getFont();
-        font=font.deriveFont(Font.PLAIN);
-        renderer.setFont(font);
+		Font font = renderer.getFont();
+		font = font.deriveFont(Font.PLAIN);
+		renderer.setFont(font);
 		renderer.setOpaque(true);
 		renderer.setText("X");
-		border=new ConditionalBorder(Color.WHITE, 3, 3);
+		border = new ConditionalBorder(Color.WHITE, 3, 3);
 		renderer.setBorder(border);
 	}
 
 	public abstract ColorScheme resolveColorScheme(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column);
+
 	public abstract void updateText(JTable table, Object value, boolean selected, boolean hasFocus, int row, int column);
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
-		ColorScheme scheme=resolveColorScheme(table, value, isSelected, hasFocus, row, column);
+		ColorScheme scheme = resolveColorScheme(table, value, isSelected, hasFocus, row, column);
 
 		if(scheme == null)
 		{
-			scheme=DEFAULT_SCHEME;
+			scheme = DEFAULT_SCHEME;
 		}
 
 		border.setBorderColor(scheme.getBorderColor());
 		renderer.setForeground(scheme.getTextColor());
 		renderer.setBackground(scheme.getBackgroundColor());
 		renderer.setBorder(null); // so it actually changes...
-        renderer.setBorder(border);
+		renderer.setBorder(border);
 
 		updateText(table, value, isSelected, hasFocus, row, column);
 
-		if(table!=null)
+		if(table != null)
 		{
-			int rowHeight=table.getRowHeight();
-			int preferredHeight=renderer.getPreferredSize().height;
+			int rowHeight = table.getRowHeight();
+			int preferredHeight = renderer.getPreferredSize().height;
 			if(rowHeight < preferredHeight)
 			{
 				table.setRowHeight(preferredHeight);

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,14 @@
  */
 package de.huxhorn.lilith.consumers;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.FileBuffer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,59 +52,62 @@ public class FileSplitterEventConsumer<T extends Serializable>
 	public FileSplitterEventConsumer(/*ApplicationPreferences applicationPreferences, */FileBufferFactory<T> fileBufferFactory, SourceManager<T> sourceManager)
 	{
 //		this.applicationPreferences=applicationPreferences;
-		this.fileBufferFactory=fileBufferFactory;
-		fileBuffers=new ConcurrentHashMap<SourceIdentifier, FileBuffer<EventWrapper<T>>>();
+		this.fileBufferFactory = fileBufferFactory;
+		fileBuffers = new ConcurrentHashMap<SourceIdentifier, FileBuffer<EventWrapper<T>>>();
 		//this.baseDirectory=baseDirectory;
-		this.sourceManager=sourceManager;
+		this.sourceManager = sourceManager;
 	}
 
 	public void consume(List<EventWrapper<T>> events)
 	{
-		if(events!=null && events.size()>0)
+		if(events != null && events.size() > 0)
 		{
-			Map<SourceIdentifier, List<EventWrapper<T>>> splittedEvents=new HashMap<SourceIdentifier, List<EventWrapper<T>>>();
+			Map<SourceIdentifier, List<EventWrapper<T>>> splittedEvents = new HashMap<SourceIdentifier, List<EventWrapper<T>>>();
 			for(EventWrapper<T> wrapper : events)
 			{
-				SourceIdentifier si=wrapper.getSourceIdentifier();
+				SourceIdentifier si = wrapper.getSourceIdentifier();
 //				String id=si.getIdentifier();
 //				if(wrapper.getEvent()!= null/ && !applicationPreferences.isValidSource(id))
 //				{
 //					// we must not ignore close events!!
 //					continue;
 //				}
-				List<EventWrapper<T>> sourceList=splittedEvents.get(si);
-				if(sourceList==null)
+				List<EventWrapper<T>> sourceList = splittedEvents.get(si);
+				if(sourceList == null)
 				{
-					sourceList=new ArrayList<EventWrapper<T>>();
+					sourceList = new ArrayList<EventWrapper<T>>();
 					splittedEvents.put(si, sourceList);
 				}
 				sourceList.add(wrapper);
 			}
-			if(logger.isInfoEnabled()) logger.info("Split {} events to {} sources.", events.size(), splittedEvents.size());
+			if(logger.isInfoEnabled())
+			{
+				logger.info("Split {} events to {} sources.", events.size(), splittedEvents.size());
+			}
 			for(Map.Entry<SourceIdentifier, List<EventWrapper<T>>> entry : splittedEvents.entrySet())
 			{
 				SourceIdentifier si = entry.getKey();
 				List<EventWrapper<T>> value = entry.getValue();
-				int valueCount=value.size();
+				int valueCount = value.size();
 				// we know that valueCount is > 0 because otherwise it wouldn' exist.
-				EventWrapper<T> lastEvent=value.get(valueCount-1);
+				EventWrapper<T> lastEvent = value.get(valueCount - 1);
 //				String id=si.getIdentifier();
 //				if(applicationPreferences.isValidSource(id))
 //				{
-					// only create view/add if valid
-					FileBuffer<EventWrapper<T>> buffer=resolveBuffer(si);
-					buffer.addAll(value);
-					if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
+				// only create view/add if valid
+				FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
+				buffer.addAll(value);
+				if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
 //				}
 
-				if(lastEvent.getEvent()==null)
+				if(lastEvent.getEvent() == null)
 				{
-					if(sourceManager!=null)
+					if(sourceManager != null)
 					{
 						sourceManager.removeSource(si);
 					}
 
-					File activeFile=fileBufferFactory.getLogFileFactory().getActiveFile(si);
+					File activeFile = fileBufferFactory.getLogFileFactory().getActiveFile(si);
 					activeFile.delete();
 					fileBuffers.remove(si);
 				}
@@ -114,15 +118,15 @@ public class FileSplitterEventConsumer<T extends Serializable>
 	private FileBuffer<EventWrapper<T>> resolveBuffer(SourceIdentifier si)
 	{
 		FileBuffer<EventWrapper<T>> result = fileBuffers.get(si);
-		if(result==null)
+		if(result == null)
 		{
-			result=fileBufferFactory.createActiveBuffer(si);
+			result = fileBufferFactory.createActiveBuffer(si);
 			FileBuffer<EventWrapper<T>> contained = fileBuffers.putIfAbsent(si, result);
-			if(contained!=null)
+			if(contained != null)
 			{
-				result=contained;
+				result = contained;
 			}
-			else if(sourceManager!=null)
+			else if(sourceManager != null)
 			{
 				sourceManager.addSource(new EventSourceImpl<T>(si, result, false));
 			}

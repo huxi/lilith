@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,18 @@
  */
 package de.huxhorn.lilith.swing.linklistener;
 
-import org.xhtmlrenderer.swing.LinkListener;
-import org.xhtmlrenderer.swing.BasicPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import de.huxhorn.lilith.swing.MainFrame;
 
-import java.net.URL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.swing.BasicPanel;
+import org.xhtmlrenderer.swing.LinkListener;
+
 import java.net.MalformedURLException;
+import java.net.URL;
 
 public class OpenUrlLinkListener
-		extends LinkListener
+	extends LinkListener
 {
 	private final Logger logger = LoggerFactory.getLogger(OpenUrlLinkListener.class);
 	public static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
@@ -38,25 +39,25 @@ public class OpenUrlLinkListener
 	public OpenUrlLinkListener(MainFrame mainFrame, LinkListener originalLinkListener)
 	{
 		this.mainFrame = mainFrame;
-		this.originalLinkListener=originalLinkListener;
+		this.originalLinkListener = originalLinkListener;
 	}
 
 	@Override
 	public void linkClicked(BasicPanel basicPanel, String uri)
 	{
-		if (logger.isDebugEnabled()) logger.debug("Link clicked: {}", uri);
-		if (uri.contains("://"))
+		if(logger.isDebugEnabled()) logger.debug("Link clicked: {}", uri);
+		if(uri.contains("://"))
 		{
 			try
 			{
 				mainFrame.openUrl(new URL(uri));
 			}
-			catch (MalformedURLException e)
+			catch(MalformedURLException e)
 			{
-				if(logger.isInfoEnabled()) logger.info("Couldn't create URL for uri-string "+uri+"!", e);
+				if(logger.isInfoEnabled()) logger.info("Couldn't create URL for uri-string " + uri + "!", e);
 			}
 		}
-		else if(originalLinkListener!=null)
+		else if(originalLinkListener != null)
 		{
 			originalLinkListener.linkClicked(basicPanel, uri);
 		}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,32 @@
  */
 package de.huxhorn.lilith.swing.callables;
 
-import de.huxhorn.sulky.swing.AbstractProgressingCallable;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.sulky.swing.AbstractProgressingCallable;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.CountingInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.io.input.CountingInputStream;
-import org.apache.commons.io.IOUtils;
 
-import java.io.*;
-import java.util.zip.GZIPInputStream;
-import java.util.TreeSet;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Set;
-
-import de.huxhorn.lilith.data.logging.LoggingEvent;
+import java.util.TreeSet;
+import java.util.zip.GZIPInputStream;
 
 public class IndexingCallable
-		extends AbstractProgressingCallable<Integer>
+	extends AbstractProgressingCallable<Integer>
 
 {
 	private final Logger logger = LoggerFactory.getLogger(IndexingCallable.class);
@@ -43,10 +53,10 @@ public class IndexingCallable
 
 	public IndexingCallable(File logFile, File indexFile)
 	{
-		this.logFile=logFile;
-		this.indexFile=indexFile;
-		threadNames=new TreeSet<String>();
-		loggerNames=new TreeSet<String>();
+		this.logFile = logFile;
+		this.indexFile = indexFile;
+		threadNames = new TreeSet<String>();
+		loggerNames = new TreeSet<String>();
 	}
 
 	/**
@@ -55,54 +65,58 @@ public class IndexingCallable
 	 * @return computed result
 	 * @throws Exception if unable to compute a result
 	 */
-	public Integer call() throws Exception
+	public Integer call()
+		throws Exception
 	{
 		// ATTENTION! This method must be changed if SerializingFileBuffer implementation is changed!
 		if(!logFile.exists())
 		{
-			throw new FileNotFoundException("File '"+logFile.getAbsolutePath()+"' does not exist!");
+			throw new FileNotFoundException("File '" + logFile.getAbsolutePath() + "' does not exist!");
 		}
 		if(!logFile.isFile())
 		{
-			throw new FileNotFoundException("File '"+logFile.getAbsolutePath()+"' is not a file!");
+			throw new FileNotFoundException("File '" + logFile.getAbsolutePath() + "' is not a file!");
 		}
 
-		long fileSize=logFile.length();
+		long fileSize = logFile.length();
 		setNumberOfSteps(fileSize);
 
-		int counter=0;
-		DataOutputStream dataOutputStream=null;
-		BufferedInputStream bis=null;
+		int counter = 0;
+		DataOutputStream dataOutputStream = null;
+		BufferedInputStream bis = null;
 		try
 		{
-			FileOutputStream fos=new FileOutputStream(indexFile);
+			FileOutputStream fos = new FileOutputStream(indexFile);
 			BufferedOutputStream bos = new BufferedOutputStream(fos);
 			dataOutputStream = new DataOutputStream(bos);
 
-			FileInputStream fis=new FileInputStream(logFile);
-			bis=new BufferedInputStream(fis);
-			CountingInputStream byteCounter =new CountingInputStream(bis);
-			DataInputStream dis=new DataInputStream(byteCounter);
-			long previousByteCount=0;
-			for(;;)
+			FileInputStream fis = new FileInputStream(logFile);
+			bis = new BufferedInputStream(fis);
+			CountingInputStream byteCounter = new CountingInputStream(bis);
+			DataInputStream dis = new DataInputStream(byteCounter);
+			long previousByteCount = 0;
+			for(; ;)
 			{
-				Throwable error=null;
+				Throwable error = null;
 				try
 				{
-					int bufferSize=dis.readInt();
-					byte[] buffer=new byte[bufferSize];
+					int bufferSize = dis.readInt();
+					byte[] buffer = new byte[bufferSize];
 					dis.readFully(buffer);
 					ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
-					GZIPInputStream gis=new GZIPInputStream(bais);
-					ObjectInputStream ois=new ObjectInputStream(gis);
+					GZIPInputStream gis = new GZIPInputStream(bais);
+					ObjectInputStream ois = new ObjectInputStream(gis);
 					Object o = ois.readObject();
 					performAdditionalWork(o);
 					dataOutputStream.writeLong(previousByteCount);
-					long byteCount=byteCounter.getByteCount();
+					long byteCount = byteCounter.getByteCount();
 					counter++;
-					if(logger.isDebugEnabled()) logger.debug("counter={}, byteCounter={}, previousByteCount={}",
+					if(logger.isDebugEnabled())
+					{
+						logger.debug("counter={}, byteCounter={}, previousByteCount={}",
 							new Object[]{counter, byteCount, previousByteCount});
-					previousByteCount=byteCount;
+					}
+					previousByteCount = byteCount;
 					setCurrentStep(byteCount);
 					if(byteCount == fileSize)
 					{
@@ -110,15 +124,15 @@ public class IndexingCallable
 						break;
 					}
 				}
-				catch (IOException e)
+				catch(IOException e)
 				{
-					error=e;
+					error = e;
 				}
-				catch (ClassNotFoundException e)
+				catch(ClassNotFoundException e)
 				{
-					error=e;
+					error = e;
 				}
-				if(error!=null)
+				if(error != null)
 				{
 					if(logger.isWarnEnabled()) logger.warn("Error while indexing...", error);
 					break;
@@ -137,15 +151,15 @@ public class IndexingCallable
 	{
 		if(logger.isDebugEnabled())
 		{
-			StringBuilder msg=new StringBuilder();
+			StringBuilder msg = new StringBuilder();
 			msg.append("threadNames:\n");
-			for(String name: threadNames)
+			for(String name : threadNames)
 			{
 				msg.append("\t- ").append(name).append("\n");
 			}
 			msg.append("\n");
 			msg.append("loggerNames:\n");
-			for(String name: loggerNames)
+			for(String name : loggerNames)
 			{
 				msg.append("\t- ").append(name).append("\n");
 			}
@@ -159,17 +173,17 @@ public class IndexingCallable
 	{
 		if(o instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper) o;
+			EventWrapper wrapper = (EventWrapper) o;
 			Object eventObj = wrapper.getEvent();
-			if (eventObj instanceof LoggingEvent)
+			if(eventObj instanceof LoggingEvent)
 			{
-				LoggingEvent event=(LoggingEvent) eventObj;
-				String loggerName=event.getLogger();
+				LoggingEvent event = (LoggingEvent) eventObj;
+				String loggerName = event.getLogger();
 				if(!loggerNames.contains(loggerName))
 				{
 					loggerNames.add(loggerName);
 				}
-				String threadName=event.getThreadName();
+				String threadName = event.getThreadName();
 				if(!threadNames.contains(threadName))
 				{
 					threadNames.add(threadName);

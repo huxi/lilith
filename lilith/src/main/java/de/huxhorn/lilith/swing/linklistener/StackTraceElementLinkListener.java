@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,14 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.formatting.SimpleXml;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.swing.BasicPanel;
 import org.xhtmlrenderer.swing.LinkListener;
 
 public class StackTraceElementLinkListener
-		extends LinkListener
+	extends LinkListener
 {
 	private final Logger logger = LoggerFactory.getLogger(OpenUrlLinkListener.class);
 	public static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
@@ -42,8 +43,8 @@ public class StackTraceElementLinkListener
 	@Override
 	public void linkClicked(BasicPanel basicPanel, String uri)
 	{
-		if (logger.isDebugEnabled()) logger.debug("Link clicked: {}", uri);
-		if (uri.startsWith(STACK_TRACE_ELEMENT_URI_PREFIX))
+		if(logger.isDebugEnabled()) logger.debug("Link clicked: {}", uri);
+		if(uri.startsWith(STACK_TRACE_ELEMENT_URI_PREFIX))
 		{
 			String steStr = uri.substring(STACK_TRACE_ELEMENT_URI_PREFIX.length());
 			steStr = SimpleXml.unescape(steStr);

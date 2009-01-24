@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,12 +17,13 @@
  */
 package de.huxhorn.lilith.data.logging;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -37,20 +38,22 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
-	public void defaultConstructor() throws ClassNotFoundException, IOException
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
 	}
 
 	@Test
-	public void className() throws ClassNotFoundException, IOException
+	public void className()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		String value="value";
+		String value = "value";
 		instance.setClassName(value);
 
 		{
@@ -66,11 +69,12 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
-	public void codeLocation() throws ClassNotFoundException, IOException
+	public void codeLocation()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		String value="value";
+		String value = "value";
 		instance.setCodeLocation(value);
 
 		{
@@ -87,11 +91,12 @@ public class ExtendedStackTraceElementTest
 
 
 	@Test
-	public void fileName() throws ClassNotFoundException, IOException
+	public void fileName()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		String value="value";
+		String value = "value";
 		instance.setFileName(value);
 
 		{
@@ -107,11 +112,12 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
-	public void methodName() throws ClassNotFoundException, IOException
+	public void methodName()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		String value="value";
+		String value = "value";
 		instance.setMethodName(value);
 
 		{
@@ -127,11 +133,12 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
-	public void version() throws ClassNotFoundException, IOException
+	public void version()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		String value="value";
+		String value = "value";
 		instance.setVersion(value);
 
 		{
@@ -147,11 +154,12 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
-	public void exact() throws ClassNotFoundException, IOException
+	public void exact()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		boolean value=true;
+		boolean value = true;
 		instance.setExact(value);
 
 		{
@@ -167,11 +175,12 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
-	public void lineNumber() throws ClassNotFoundException, IOException
+	public void lineNumber()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		int value=17;
+		int value = 17;
 		instance.setLineNumber(value);
 		assertEquals(false, instance.isNativeMethod());
 
@@ -188,11 +197,12 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
-	public void lineNumberNative() throws ClassNotFoundException, IOException
+	public void lineNumberNative()
+		throws ClassNotFoundException, IOException
 	{
-		ExtendedStackTraceElement instance=new ExtendedStackTraceElement();
+		ExtendedStackTraceElement instance = new ExtendedStackTraceElement();
 
-		int value=ExtendedStackTraceElement.NATIVE_METHOD;
+		int value = ExtendedStackTraceElement.NATIVE_METHOD;
 		instance.setLineNumber(value);
 		assertEquals(true, instance.isNativeMethod());
 

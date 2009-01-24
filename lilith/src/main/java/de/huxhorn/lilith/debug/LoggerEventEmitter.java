@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 public class LoggerEventEmitter
 {
 	private static final int DEFAULT_DELAY = 50;
-	private int delay=DEFAULT_DELAY;
+	private int delay = DEFAULT_DELAY;
 	private Marker marker;
 	private Marker fnordMarker;
 	private ExecutorService executor;
@@ -49,7 +49,8 @@ public class LoggerEventEmitter
 		this.delay = delay;
 	}
 
-	public void logStuff() throws InterruptedException
+	public void logStuff()
+		throws InterruptedException
 	{
 		execute(new LogStuffRunnable(delay, null));
 	}
@@ -59,7 +60,8 @@ public class LoggerEventEmitter
 		executor.execute(runnable);
 	}
 
-	public void logStuffWithMdc() throws InterruptedException
+	public void logStuffWithMdc()
+		throws InterruptedException
 	{
 		execute(new LogStuffWithMdcRunnable(delay, null));
 	}
@@ -77,7 +79,7 @@ public class LoggerEventEmitter
 		marker.add(marker3);
 		marker3.add(marker);
 		// can't really create recursive markers anymore because Ceki disabled them.
-		
+
 		return marker;
 	}
 
@@ -89,43 +91,49 @@ public class LoggerEventEmitter
 		return eris;
 	}
 
-	public void logStuffWithMdcAndMarker() throws InterruptedException
+	public void logStuffWithMdcAndMarker()
+		throws InterruptedException
 	{
 		execute(new LogStuffWithMdcRunnable(delay, marker));
 	}
 
-	public void logStuffWithMarker() throws InterruptedException
+	public void logStuffWithMarker()
+		throws InterruptedException
 	{
 		execute(new LogStuffRunnable(delay, marker));
 	}
 
-	public void logException() throws InterruptedException
+	public void logException()
+		throws InterruptedException
 	{
 		//noinspection ThrowableInstanceNeverThrown
-		Throwable ex=new RuntimeException("Test-Exception");
+		Throwable ex = new RuntimeException("Test-Exception");
 		execute(new LogThrowableRunnable(delay, ex));
 	}
 
-    public void logException2() throws InterruptedException
-    {
-        //noinspection ThrowableInstanceNeverThrown
-        Throwable ex=new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
-        execute(new LogThrowableRunnable(delay, ex));
-    }
-
-	public void logParamException() throws InterruptedException
+	public void logException2()
+		throws InterruptedException
 	{
 		//noinspection ThrowableInstanceNeverThrown
-		Throwable ex=new RuntimeException("Test-Exception");
+		Throwable ex = new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
+		execute(new LogThrowableRunnable(delay, ex));
+	}
+
+	public void logParamException()
+		throws InterruptedException
+	{
+		//noinspection ThrowableInstanceNeverThrown
+		Throwable ex = new RuntimeException("Test-Exception");
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
 
-    public void logParamException2() throws InterruptedException
-    {
-        //noinspection ThrowableInstanceNeverThrown
-        Throwable ex=new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
-        execute(new LogParamThrowableRunnable(delay, ex));
-    }
+	public void logParamException2()
+		throws InterruptedException
+	{
+		//noinspection ThrowableInstanceNeverThrown
+		Throwable ex = new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
+		execute(new LogParamThrowableRunnable(delay, ex));
+	}
 
 	public void logAnonymous()
 	{

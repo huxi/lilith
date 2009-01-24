@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  */
 package de.huxhorn.lilith.engine.impl;
 
-import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.engine.LogFileFactory;
 
 import java.io.File;
 
@@ -34,27 +34,27 @@ public class LogFileFactoryImpl
 		this.dataFileExtension = extension;
 		if(!extension.startsWith("."))
 		{
-			this.dataFileExtension ="."+this.dataFileExtension;
+			this.dataFileExtension = "." + this.dataFileExtension;
 		}
 	}
 
 	private String getBaseFileName(SourceIdentifier si)
 	{
-		String primaryName=si.getIdentifier();
-		String secondaryName=si.getSecondaryIdentifier();
-		primaryName=prepareName(primaryName);
-		if(secondaryName!=null)
+		String primaryName = si.getIdentifier();
+		String secondaryName = si.getSecondaryIdentifier();
+		primaryName = prepareName(primaryName);
+		if(secondaryName != null)
 		{
-			secondaryName=prepareName(secondaryName);
-			File parent=new File(baseDir, primaryName);
+			secondaryName = prepareName(secondaryName);
+			File parent = new File(baseDir, primaryName);
 			parent.mkdirs();
-			File baseFile=new File(parent, secondaryName);
+			File baseFile = new File(parent, secondaryName);
 			return baseFile.getAbsolutePath();
 		}
 		else
 		{
 			baseDir.mkdirs();
-			File baseFile=new File(baseDir, primaryName);
+			File baseFile = new File(baseDir, primaryName);
 			return baseFile.getAbsolutePath();
 		}
 
@@ -62,10 +62,10 @@ public class LogFileFactoryImpl
 
 	private static String prepareName(String name)
 	{
-		name=name.replace(':','_');
-		name=name.replace('/','_');
-		name=name.replace('\\','_');
-		name=name.replace('#','_');
+		name = name.replace(':', '_');
+		name = name.replace('/', '_');
+		name = name.replace('\\', '_');
+		name = name.replace('#', '_');
 		return name;
 	}
 
@@ -76,20 +76,20 @@ public class LogFileFactoryImpl
 
 	public File getIndexFile(SourceIdentifier sourceIdentifier)
 	{
-		String baseName=getBaseFileName(sourceIdentifier);
-		return new File(baseName+INDEX_FILE_EXTENSION);
+		String baseName = getBaseFileName(sourceIdentifier);
+		return new File(baseName + INDEX_FILE_EXTENSION);
 	}
 
 	public File getDataFile(SourceIdentifier sourceIdentifier)
 	{
-		String baseName=getBaseFileName(sourceIdentifier);
-		return new File(baseName+dataFileExtension);
+		String baseName = getBaseFileName(sourceIdentifier);
+		return new File(baseName + dataFileExtension);
 	}
 
 	public File getActiveFile(SourceIdentifier sourceIdentifier)
 	{
-		String baseName=getBaseFileName(sourceIdentifier);
-		return new File(baseName+ACTIVE_FILE_EXTENSION);
+		String baseName = getBaseFileName(sourceIdentifier);
+		return new File(baseName + ACTIVE_FILE_EXTENSION);
 	}
 
 	public String getDataFileExtension()
@@ -99,17 +99,17 @@ public class LogFileFactoryImpl
 
 	public long getSizeOnDisk(SourceIdentifier sourceIdentifier)
 	{
-		File indexFile=getIndexFile(sourceIdentifier);
-		File dataFile=getDataFile(sourceIdentifier);
-		long indexSize=indexFile.length();
-		long dataSize=dataFile.length();
-		return indexSize+dataSize;
+		File indexFile = getIndexFile(sourceIdentifier);
+		File dataFile = getDataFile(sourceIdentifier);
+		long indexSize = indexFile.length();
+		long dataSize = dataFile.length();
+		return indexSize + dataSize;
 	}
 
 	public long getNumberOfEvents(SourceIdentifier sourceIdentifier)
 	{
-		File indexFile=getIndexFile(sourceIdentifier);
-		long indexSize=indexFile.length();
-		return indexSize/8;
+		File indexFile = getIndexFile(sourceIdentifier);
+		long indexSize = indexFile.length();
+		return indexSize / 8;
 	}
 }

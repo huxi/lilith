@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,10 @@ import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Buffers;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -40,6 +38,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public abstract class TabbedPaneViewContainer<T extends Serializable>
 	extends ViewContainer<T>
@@ -62,9 +64,9 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	public TabbedPaneViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		super(mainFrame, eventSource);
-		progressPanel=new ProgressGlassPane();
-		disposed=false;
-		pane=new JTabbedPane(JTabbedPane.TOP);
+		progressPanel = new ProgressGlassPane();
+		disposed = false;
+		pane = new JTabbedPane(JTabbedPane.TOP);
 		pane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		pane.addMouseListener(new PopupMouseListener());
 		setLayout(new BorderLayout());
@@ -72,12 +74,12 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		closeFilterAction = new CloseFilterAction();
 		closeOtherFiltersAction = new CloseOtherFiltersAction();
 		closeAllFiltersAction = new CloseAllFiltersAction();
-		popup=new JPopupMenu();
+		popup = new JPopupMenu();
 		popup.add(closeFilterAction);
 		popup.add(closeOtherFiltersAction);
 		popup.add(closeAllFiltersAction);
 		pane.addChangeListener(new TabChangeListener());
-		sourceChangeListener=new SourceChangeListener();
+		sourceChangeListener = new SourceChangeListener();
 		addView(getDefaultView());
 	}
 
@@ -86,7 +88,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		EventSource source = view.getEventSource();
 		if(logger.isInfoEnabled()) logger.info("Adding view for {}", source);
 		Condition filter = source.getFilter();
-		if(filter==null)
+		if(filter == null)
 		{
 			pane.insertTab("Unfiltered", null, view, null, 0);
 		}
@@ -95,16 +97,16 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 			String title;
 			String toolTip;
 			SavedCondition savedCondition = getMainFrame().getApplicationPreferences().resolveSavedCondition(filter);
-			if(savedCondition!=null)
+			if(savedCondition != null)
 			{
-				title=savedCondition.getName();
-				toolTip=filter.toString();
+				title = savedCondition.getName();
+				toolTip = filter.toString();
 			}
 			else
 			{
-				String text=filter.toString();
-				title=text;
-				toolTip=text;
+				String text = filter.toString();
+				title = text;
+				toolTip = text;
 			}
 			pane.insertTab(title, null, view, toolTip, pane.getTabCount());
 		}
@@ -116,38 +118,38 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	public void updateViews()
 	{
-		for(int i=0;i<pane.getTabCount();i++)
+		for(int i = 0; i < pane.getTabCount(); i++)
 		{
 			EventWrapperViewPanel<T> current = (EventWrapperViewPanel<T>) pane.getComponentAt(i);
 			EventSource source = current.getEventSource();
 			Condition condition = source.getFilter();
 			if(logger.isDebugEnabled()) logger.debug("Condition: {}", condition);
-			if(condition!=null)
+			if(condition != null)
 			{
 				String title;
 				String toolTip;
-				SavedCondition savedCondition = getMainFrame().getApplicationPreferences().resolveSavedCondition(condition);
-				if(savedCondition!=null)
+				SavedCondition savedCondition = getMainFrame().getApplicationPreferences()
+					.resolveSavedCondition(condition);
+				if(savedCondition != null)
 				{
-					title=savedCondition.getName();
-					toolTip=condition.toString();
+					title = savedCondition.getName();
+					toolTip = condition.toString();
 				}
 				else
 				{
-					String text=condition.toString();
-					title=text;
-					toolTip=text;
+					String text = condition.toString();
+					title = text;
+					toolTip = text;
 				}
 				pane.setTitleAt(i, title);
 				pane.setToolTipTextAt(i, toolTip);
 			}
-            // trigger repaint of table
-            pane.repaint();
+			// trigger repaint of table
+			pane.repaint();
 		}
 	}
 
 	/**
-	 *
 	 * @param view
 	 */
 	public void removeView(EventWrapperViewPanel<T> view, boolean dispose)
@@ -177,16 +179,16 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		if(logger.isDebugEnabled()) logger.debug("addNotify - parent: {}", getParent());
 	}
 
-    public void scrollToBottom()
-    {
-        EventWrapperViewPanel<T> selectedView = getSelectedView();
-        if(selectedView!=null)
-        {
-            selectedView.scrollToBottom();
+	public void scrollToBottom()
+	{
+		EventWrapperViewPanel<T> selectedView = getSelectedView();
+		if(selectedView != null)
+		{
+			selectedView.scrollToBottom();
 			setSelectedEvent(selectedView.getSelectedEvent());
-        }
-    }
-    
+		}
+	}
+
 	public void removeNotify()
 	{
 		super.removeNotify();
@@ -196,7 +198,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private void showPopup(MouseEvent evt)
 	{
 		Point p = evt.getPoint();
-		if (logger.isInfoEnabled()) logger.info("Show popup at {}.", p);
+		if(logger.isInfoEnabled()) logger.info("Show popup at {}.", p);
 		selectedViewChanged();
 		popup.show(pane, p.x, p.y);
 	}
@@ -207,9 +209,9 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		closeOtherFiltersAction.updateAction();
 		closeAllFiltersAction.updateAction();
 		EventWrapperViewPanel<T> selectedView = getSelectedView();
-		if(selectedView!=null)
+		if(selectedView != null)
 		{
-            selectedView.scrollToBottom();
+			selectedView.scrollToBottom();
 			setSelectedEvent(selectedView.getSelectedEvent());
 
 		}
@@ -222,19 +224,19 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	public void dispose()
 	{
-		disposed=true;
-		int tabCount =pane.getTabCount();
-		List<Component> removedPanes=new ArrayList<Component>(tabCount -1);
-		for(int i=0;i<tabCount;i++)
+		disposed = true;
+		int tabCount = pane.getTabCount();
+		List<Component> removedPanes = new ArrayList<Component>(tabCount - 1);
+		for(int i = 0; i < tabCount; i++)
 		{
 			removedPanes.add(pane.getComponentAt(i));
 		}
 
-		for(Component comp:removedPanes)
+		for(Component comp : removedPanes)
 		{
 			if(comp instanceof EventWrapperViewPanel)
 			{
-				EventWrapperViewPanel<T> lvp=(EventWrapperViewPanel<T>) comp;
+				EventWrapperViewPanel<T> lvp = (EventWrapperViewPanel<T>) comp;
 				removeView(lvp, true);
 			}
 		}
@@ -248,9 +250,9 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	public void setSelectedEvent(EventWrapper<T> selectedEvent)
 	{
-		Object oldValue=this.selectedEvent;
+		Object oldValue = this.selectedEvent;
 		this.selectedEvent = selectedEvent;
-		Object newValue=this.selectedEvent;
+		Object newValue = this.selectedEvent;
 		firePropertyChange(SELECTED_EVENT_PROPERTY_NAME, oldValue, newValue);
 	}
 
@@ -264,7 +266,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	{
 		public void mouseClicked(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -272,7 +274,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 		public void mousePressed(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -280,15 +282,19 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 		public void mouseReleased(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
 		}
 
-		public void mouseEntered(MouseEvent e) {}
+		public void mouseEntered(MouseEvent e)
+		{
+		}
 
-		public void mouseExited(MouseEvent e) {}
+		public void mouseExited(MouseEvent e)
+		{
+		}
 	}
 
 	// TODO: Move to ViewActions
@@ -299,15 +305,15 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		{
 			super("Close this filter");
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" W");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " W");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void updateAction()
 		{
-			int viewIndex=getViewIndex();
-			if(viewIndex>0)
+			int viewIndex = getViewIndex();
+			if(viewIndex > 0)
 			{
 				setEnabled(true);
 			}
@@ -332,16 +338,16 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		{
 			super("Close all other filters");
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift W");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift W");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void updateAction()
 		{
-			int viewIndex=getViewIndex();
-			int viewCount=getViewCount();
-			if(viewIndex>-1 && ((viewIndex==0 && viewCount>1) || viewCount>2))
+			int viewIndex = getViewIndex();
+			int viewCount = getViewCount();
+			if(viewIndex > -1 && ((viewIndex == 0 && viewCount > 1) || viewCount > 2))
 			{
 				setEnabled(true);
 			}
@@ -369,8 +375,8 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 		public void updateAction()
 		{
-			int viewCount=getViewCount();
-			if(viewCount>1)
+			int viewCount = getViewCount();
+			if(viewCount > 1)
 			{
 				setEnabled(true);
 			}
@@ -388,7 +394,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	public EventWrapperViewPanel<T> getViewAt(int index)
 	{
-		if(index>=0 && index<pane.getTabCount())
+		if(index >= 0 && index < pane.getTabCount())
 		{
 			return (EventWrapperViewPanel<T>) pane.getComponentAt(index);
 		}
@@ -418,13 +424,13 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	public void closeCurrentFilter()
 	{
-		int tabIndex=pane.getSelectedIndex();
+		int tabIndex = pane.getSelectedIndex();
 		Component comp = pane.getComponentAt(tabIndex);
-		if(comp!=null)
+		if(comp != null)
 		{
 			if(comp instanceof EventWrapperViewPanel)
 			{
-				EventWrapperViewPanel<T> lvp=(EventWrapperViewPanel<T>) comp;
+				EventWrapperViewPanel<T> lvp = (EventWrapperViewPanel<T>) comp;
 				removeView(lvp, true);
 			}
 		}
@@ -436,20 +442,20 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		int tabIndex = pane.getSelectedIndex();
 
 		int tabCount = pane.getTabCount();
-		List<Component> removedPanes=new ArrayList<Component>(tabCount -1);
-		for(int i=1;i<tabCount;i++)
+		List<Component> removedPanes = new ArrayList<Component>(tabCount - 1);
+		for(int i = 1; i < tabCount; i++)
 		{
-			if(i!=tabIndex)
+			if(i != tabIndex)
 			{
 				removedPanes.add(pane.getComponentAt(i));
 			}
 		}
 
-		for(Component comp:removedPanes)
+		for(Component comp : removedPanes)
 		{
 			if(comp instanceof EventWrapperViewPanel)
 			{
-				EventWrapperViewPanel<T> lvp=(EventWrapperViewPanel<T>) comp;
+				EventWrapperViewPanel<T> lvp = (EventWrapperViewPanel<T>) comp;
 				removeView(lvp, true);
 			}
 		}
@@ -458,18 +464,18 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	public void closeAllFilters()
 	{
-		int tabCount =pane.getTabCount();
-		List<Component> removedPanes=new ArrayList<Component>(tabCount -1);
-		for(int i=1;i<tabCount;i++)
+		int tabCount = pane.getTabCount();
+		List<Component> removedPanes = new ArrayList<Component>(tabCount - 1);
+		for(int i = 1; i < tabCount; i++)
 		{
 			removedPanes.add(pane.getComponentAt(i));
 		}
 
-		for(Component comp:removedPanes)
+		for(Component comp : removedPanes)
 		{
 			if(comp instanceof EventWrapperViewPanel)
 			{
-				EventWrapperViewPanel<T> lvp=(EventWrapperViewPanel<T>) comp;
+				EventWrapperViewPanel<T> lvp = (EventWrapperViewPanel<T>) comp;
 				removeView(lvp, true);
 			}
 		}
@@ -491,12 +497,12 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	{
 		if(searching)
 		{
-			searching=false;
+			searching = false;
 			ViewWindow window = resolveViewWindow();
-			if(window!=null && prevGlassPane!=null)
+			if(window != null && prevGlassPane != null)
 			{
 				window.setGlassPane(prevGlassPane);
-				prevGlassPane=null;
+				prevGlassPane = null;
 				fireChange();
 			}
 		}
@@ -519,16 +525,16 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
     */
 	public void showSearchPanel(Future<Integer> future)
 	{
-		if(future!=null)
+		if(future != null)
 		{
-			searching=true;
+			searching = true;
 			progressPanel.setProgress(0);
 			progressPanel.getFindCancelAction().setFuture(future);
 
 			ViewWindow window = resolveViewWindow();
-			if(window!=null)
+			if(window != null)
 			{
-				prevGlassPane=window.getGlassPane();
+				prevGlassPane = window.getGlassPane();
 				window.setGlassPane(progressPanel);
 				progressPanel.setVisible(true);
 			}
@@ -560,7 +566,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 		public void stateChanged(ChangeEvent e)
 		{
-			int selected=pane.getSelectedIndex();
+			int selected = pane.getSelectedIndex();
 			if(logger.isDebugEnabled()) logger.debug("Selected tab: {}", selected);
 			selectedViewChanged();
 			fireChange();
@@ -573,11 +579,11 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 		public void propertyChange(PropertyChangeEvent evt)
 		{
-			String propName=evt.getPropertyName();
+			String propName = evt.getPropertyName();
 			if(EventWrapperViewPanel.EVENT_SOURCE_PROPERTY.equals(propName))
 			{
 				if(logger.isDebugEnabled()) logger.debug("EventSource changed: {}", evt.getNewValue());
-				EventWrapperViewPanel<T> lvp=(EventWrapperViewPanel<T>) evt.getSource();
+				EventWrapperViewPanel<T> lvp = (EventWrapperViewPanel<T>) evt.getSource();
 				removeView(lvp, false);
 				addView(lvp);
 			}
@@ -586,7 +592,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 				if(getSelectedView() == evt.getSource())
 				{
 					if(logger.isDebugEnabled()) logger.debug("EventSource changed: {}", evt.getNewValue());
-					setSelectedEvent((EventWrapper<T>)evt.getNewValue());
+					setSelectedEvent((EventWrapper<T>) evt.getNewValue());
 				}
 			}
 			else

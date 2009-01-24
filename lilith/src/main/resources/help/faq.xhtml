@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>Frequently Asked Questions</title>
-		<link href="help.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<p><a href="index.xhtml">ToC</a></p>
+<head>
+	<title>Frequently Asked Questions</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
 
-		<h1><a name="top">Frequently Asked Questions</a></h1>
+<h1><a name="top">Frequently Asked Questions</a></h1>
 
-        <dl>
-            <!--
-            <dt>Why is Lilith still only supporting Logback 0.9.9?</dt>
-            <dd>
-                Logback 0.9.10 introduced new version information in the StackTraceElement string representation. This
-                breaks my current implementation of parsing. Since I parse the STEs both during receiving of original
-                Logback events and during creation of Lilith events in the multiplex appender, the parsing means a
-                significant performance impact. Previously, I circumvented this by using a hack and accessing the STEs
-                directly but this would now have the downside that I wouldn't be able to retrieve the formerly mentioned
-                version information.<br/>
-                Because of that, I suggested a change to the Logback codebase that would make my life quite a bit easier
-                while it wouldn't have a negative impact on the rest. It could even increase the general logging speed
-                a bit. I hope that Ceki will be able to implement it in time for Logback 0.9.12.<br/>
-                Feel free to take a look at <a href="http://jira.qos.ch/browse/LBCLASSIC-46">LBCLASSIC-46</a> if you like
-                more specific informations.
-            </dd>
-            -->
-            <dt>Why is there no case-insensitive search?</dt>
-            <dd>
-                Well, to be honest, this has two reasons:
-                <ul>
-                    <li>Case-insensitive searching has quite a performance impact because every checked String has
-                        to be either lower- or uppercased.<br />
-                        Beside that, lower- and uppercasing is Locale-dependent.
-                        This means that there is no way to do it reliably for every given unicode string.</li>
-                    <li>I have simply no idea how to add that option in a way that is both userfriendly and
-                        applicable to the current condition implementation.</li>
-                    <li>It's pretty easy to do it yourself - in the way expected by you - using <a href="conditions.xhtml#groovy">groovy conditions</a>.</li>
-                </ul>
-            </dd>
-            <dt>Why is there no tree-view of the logger names as <a href="http://logging.apache.org/chainsaw/">Chainsaw</a>
-                and <a href="http://vigilog.sourceforge.net/">Vigilog</a> have?</dt>
-            <dd>
-                One of the problems I'm facing is the (possibly) large amount of events I'm supporting.<br/>
-                This means that the logger names need to be saved upon reception separately from the events themselves.
-                Otherwise all events would need scanning if an inactive logging files was reopened and this would
-                take quite some time.<br/>
-                Something like that is in development but it doesn't have a very high priority right now for the
-                following reasons:
-                <ul>
-                    <li>I, personally, didn't use Chainsaws tree-view very much.</li>
-                    <li>You can get a similar behavior using the filters already present in Lilith.</li>
-                    <li>The tree-view itself would use valuable space on the screen. even if it could be toggled on and off.</li>
-                    <li>I'm currently not in the mood to implement it just for "me too" reasons.</li>
-                </ul>
-            </dd>
-        </dl>
+<dl>
+	<!--
+					<dt>Why is Lilith still only supporting Logback 0.9.9?</dt>
+					<dd>
+						Logback 0.9.10 introduced new version information in the StackTraceElement string representation. This
+						breaks my current implementation of parsing. Since I parse the STEs both during receiving of original
+						Logback events and during creation of Lilith events in the multiplex appender, the parsing means a
+						significant performance impact. Previously, I circumvented this by using a hack and accessing the STEs
+						directly but this would now have the downside that I wouldn't be able to retrieve the formerly mentioned
+						version information.<br/>
+						Because of that, I suggested a change to the Logback codebase that would make my life quite a bit easier
+						while it wouldn't have a negative impact on the rest. It could even increase the general logging speed
+						a bit. I hope that Ceki will be able to implement it in time for Logback 0.9.12.<br/>
+						Feel free to take a look at <a href="http://jira.qos.ch/browse/LBCLASSIC-46">LBCLASSIC-46</a> if you like
+						more specific informations.
+					</dd>
+					-->
+	<dt>Why is there no case-insensitive search?</dt>
+	<dd>
+		Well, to be honest, this has two reasons:
+		<ul>
+			<li>Case-insensitive searching has quite a performance impact because every checked String has
+				to be either lower- or uppercased.<br/>
+				Beside that, lower- and uppercasing is Locale-dependent.
+				This means that there is no way to do it reliably for every given unicode string.
+			</li>
+			<li>I have simply no idea how to add that option in a way that is both userfriendly and
+				applicable to the current condition implementation.
+			</li>
+			<li>It's pretty easy to do it yourself - in the way expected by you - using <a
+				href="conditions.xhtml#groovy">groovy conditions</a>.
+			</li>
+		</ul>
+	</dd>
+	<dt>Why is there no tree-view of the logger names as <a href="http://logging.apache.org/chainsaw/">Chainsaw</a>
+		and <a href="http://vigilog.sourceforge.net/">Vigilog</a> have?
+	</dt>
+	<dd>
+		One of the problems I'm facing is the (possibly) large amount of events I'm supporting.<br/>
+		This means that the logger names need to be saved upon reception separately from the events themselves.
+		Otherwise all events would need scanning if an inactive logging files was reopened and this would
+		take quite some time.<br/>
+		Something like that is in development but it doesn't have a very high priority right now for the
+		following reasons:
+		<ul>
+			<li>I, personally, didn't use Chainsaws tree-view very much.</li>
+			<li>You can get a similar behavior using the filters already present in Lilith.</li>
+			<li>The tree-view itself would use valuable space on the screen. even if it could be toggled on and off.
+			</li>
+			<li>I'm currently not in the mood to implement it just for "me too" reasons.</li>
+		</ul>
+	</dd>
+</dl>
 
-    <p><a href="#top">Back to top.</a></p>
-	</body>
+<p><a href="#top">Back to top.</a></p>
+</body>
 </html>

@@ -17,25 +17,26 @@
  */
 package de.huxhorn.lilith.logback.producer;
 
-import de.huxhorn.lilith.engine.EventProducer;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
-import java.io.InputStream;
 import java.io.IOException;
-
-import de.huxhorn.lilith.data.access.AccessEvent;
+import java.io.InputStream;
 
 public class LogbackAccessServerSocketEventSourceProducer
 	extends AbstractLogbackServerSocketEventSourceProducer<AccessEvent>
 {
-	public LogbackAccessServerSocketEventSourceProducer(int port) throws IOException
+	public LogbackAccessServerSocketEventSourceProducer(int port)
+		throws IOException
 	{
 		super(port);
 	}
 
-	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream) throws IOException
+	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
+		throws IOException
 	{
 		return new LogbackAccessStreamEventProducer(id, eventQueue, inputStream);
 	}
@@ -43,6 +44,6 @@ public class LogbackAccessServerSocketEventSourceProducer
 	@Override
 	public String toString()
 	{
-		return "LogbackAccessServerSocketEventSourceProducer[port="+getPort()+"]";
+		return "LogbackAccessServerSocketEventSourceProducer[port=" + getPort() + "]";
 	}
 }

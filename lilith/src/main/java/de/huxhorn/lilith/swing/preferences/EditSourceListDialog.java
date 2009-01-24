@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,32 +19,11 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import de.huxhorn.sulky.swing.KeyStrokes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.ListCellRenderer;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -55,6 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class EditSourceListDialog
 	extends JDialog
@@ -76,7 +60,7 @@ public class EditSourceListDialog
 	public EditSourceListDialog(PreferencesDialog owner)
 	{
 		super(owner);
-		preferencesDialog=owner;
+		preferencesDialog = owner;
 		setModal(true);
 		createUi();
 	}
@@ -88,10 +72,10 @@ public class EditSourceListDialog
 		sourceListName = new JTextField(25);
 		sourceListName.addKeyListener(new NameKeyListener());
 
-		ListCellRenderer sourceCellRenderer=new SourceCellRenderer();
+		ListCellRenderer sourceCellRenderer = new SourceCellRenderer();
 
-		sourcesListModel=new GenericSortedListModel<Source>();
-		listModel=new GenericSortedListModel<Source>();
+		sourcesListModel = new GenericSortedListModel<Source>();
+		listModel = new GenericSortedListModel<Source>();
 		sourceList = new JList(sourcesListModel);
 		listList = new JList(listModel);
 		sourceList.setCellRenderer(sourceCellRenderer);
@@ -111,9 +95,9 @@ public class EditSourceListDialog
 //		listPanel.setBorder(new TitledBorder("List content"));
 		listScrollPane.setBorder(new TitledBorder("List content"));
 
-		addSourceAction=new AddSourceAction();
-		removeSourceAction=new RemoveSourceAction();
-		JToolBar sourceToolbar=new JToolBar();
+		addSourceAction = new AddSourceAction();
+		removeSourceAction = new RemoveSourceAction();
+		JToolBar sourceToolbar = new JToolBar();
 		sourceToolbar.setFloatable(false);
 
 		JButton addSourceButton = new JButton(addSourceAction);
@@ -125,7 +109,7 @@ public class EditSourceListDialog
 		sourceList.addListSelectionListener(new SourceListSelectionListener());
 		listList.addListSelectionListener(new ListListSelectionListener());
 
-		JPanel listsPanel = new JPanel(new GridLayout(1,2));
+		JPanel listsPanel = new JPanel(new GridLayout(1, 2));
 		listsPanel.add(sourceListScrollPane);
 		listsPanel.add(listScrollPane);
 
@@ -162,7 +146,7 @@ public class EditSourceListDialog
 		gbc.weighty = 0.0;
 		gbc.anchor = GridBagConstraints.CENTER;
 
-		gbc.insets = new Insets(0,5,0,0);
+		gbc.insets = new Insets(0, 5, 0, 0);
 		mainPanel.add(new JLabel("Source List Name: "), gbc);
 
 		gbc.gridx = 1;
@@ -181,7 +165,7 @@ public class EditSourceListDialog
 		setLayout(new BorderLayout());
 		add(mainPanel, BorderLayout.CENTER);
 
-		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(okAction));
 		buttonPanel.add(new JButton(cancelAction));
 		add(buttonPanel, BorderLayout.SOUTH);
@@ -193,7 +177,7 @@ public class EditSourceListDialog
 
 	public void setAdding(boolean adding)
 	{
-		this.adding=adding;
+		this.adding = adding;
 		if(adding)
 		{
 			setTitle("Add a source list...");
@@ -219,10 +203,10 @@ public class EditSourceListDialog
 	private void initUI()
 	{
 		Map<String, String> sourceNames = new HashMap<String, String>(preferencesDialog.getSourceNames());
-		List<Source> sourcesList=new ArrayList<Source>();
-		for(Map.Entry<String, String> current: sourceNames.entrySet())
+		List<Source> sourcesList = new ArrayList<Source>();
+		for(Map.Entry<String, String> current : sourceNames.entrySet())
 		{
-			Source source=new Source();
+			Source source = new Source();
 			source.setIdentifier(current.getKey());
 			source.setName(current.getValue());
 			sourcesList.add(source);
@@ -279,7 +263,7 @@ public class EditSourceListDialog
 		public void update()
 		{
 			String name = sourceListName.getText();
-			if(name !=null && !"".equals(name.trim()))
+			if(name != null && !"".equals(name.trim()))
 			{
 				setEnabled(true);
 			}
@@ -292,9 +276,9 @@ public class EditSourceListDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			String name = sourceListName.getText();
-			if(name !=null && !"".equals(name.trim()))
+			if(name != null && !"".equals(name.trim()))
 			{
-				canceled=false;
+				canceled = false;
 				setVisible(false);
 			}
 		}
@@ -314,23 +298,24 @@ public class EditSourceListDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			canceled=true;
+			canceled = true;
 			setVisible(false);
 		}
 	}
 
-	private class SourcesListMouseListener extends MouseAdapter
+	private class SourcesListMouseListener
+		extends MouseAdapter
 	{
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
-			if(e.getClickCount()>1)
+			if(e.getClickCount() > 1)
 			{
-				int index=sourceList.locationToIndex(e.getPoint());
-				if(index!=-1)
+				int index = sourceList.locationToIndex(e.getPoint());
+				if(index != -1)
 				{
-					Source source=sourcesListModel.getElementAt(index);
-					if(source!=null)
+					Source source = sourcesListModel.getElementAt(index);
+					if(source != null)
 					{
 						listModel.add(source);
 					}
@@ -339,18 +324,19 @@ public class EditSourceListDialog
 		}
 	}
 
-	private class ListListMouseListener extends MouseAdapter
+	private class ListListMouseListener
+		extends MouseAdapter
 	{
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
-			if(e.getClickCount()>1)
+			if(e.getClickCount() > 1)
 			{
-				int index=listList.locationToIndex(e.getPoint());
-				if(index!=-1)
+				int index = listList.locationToIndex(e.getPoint());
+				if(index != -1)
 				{
-					Source source=listModel.getElementAt(index);
-					if(source!=null)
+					Source source = listModel.getElementAt(index);
+					if(source != null)
 					{
 						listModel.remove(source);
 					}
@@ -367,14 +353,14 @@ public class EditSourceListDialog
 			super("Add");
 			Icon icon;
 			{
-				URL url= EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
@@ -390,9 +376,9 @@ public class EditSourceListDialog
 		{
 			if(logger.isDebugEnabled()) logger.debug("Add");
 			Object[] selected = sourceList.getSelectedValues();
-			if(selected!=null && selected.length>0)
+			if(selected != null && selected.length > 0)
 			{
-				for(Object o:selected)
+				for(Object o : selected)
 				{
 					listModel.add((Source) o);
 				}
@@ -409,14 +395,14 @@ public class EditSourceListDialog
 			super("Remove");
 			Icon icon;
 			{
-				URL url= EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
@@ -432,9 +418,9 @@ public class EditSourceListDialog
 		{
 			if(logger.isDebugEnabled()) logger.debug("Remove");
 			Object[] selected = listList.getSelectedValues();
-			if(selected!=null && selected.length>0)
+			if(selected != null && selected.length > 0)
 			{
-				for(Object o:selected)
+				for(Object o : selected)
 				{
 					listModel.remove((Source) o);
 				}
@@ -443,7 +429,8 @@ public class EditSourceListDialog
 		}
 	}
 
-	private class SourceListSelectionListener implements ListSelectionListener
+	private class SourceListSelectionListener
+		implements ListSelectionListener
 	{
 		public void valueChanged(ListSelectionEvent e)
 		{
@@ -451,7 +438,8 @@ public class EditSourceListDialog
 		}
 	}
 
-	private class ListListSelectionListener implements ListSelectionListener
+	private class ListListSelectionListener
+		implements ListSelectionListener
 	{
 		public void valueChanged(ListSelectionEvent e)
 		{
@@ -459,7 +447,8 @@ public class EditSourceListDialog
 		}
 	}
 
-	private class NameKeyListener implements KeyListener
+	private class NameKeyListener
+		implements KeyListener
 	{
 		public void keyTyped(KeyEvent e)
 		{

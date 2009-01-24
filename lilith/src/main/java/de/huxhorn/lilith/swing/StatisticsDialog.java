@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,20 @@
  */
 package de.huxhorn.lilith.swing;
 
-import javax.swing.*;
-
-import de.huxhorn.lilith.swing.statistics.*;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.net.URL;
-import java.awt.Image;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
+import de.huxhorn.lilith.swing.statistics.StatisticsPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+
+import javax.swing.*;
 
 public class StatisticsDialog
 	extends JDialog
@@ -43,43 +43,43 @@ public class StatisticsDialog
 	public StatisticsDialog(MainFrame owner)
 	{
 		super(owner);
-		this.mainFrame=owner;
+		this.mainFrame = owner;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(false);
 		setResizable(false);
 		{
-			Throwable error=null;
+			Throwable error = null;
 			try
 			{
 				Method setIconMethod = StatisticsDialog.class.getMethod("setIconImage", Image.class);
 
-				URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
+				if(url != null)
 				{
 					ImageIcon icon = new ImageIcon(url);
 					setIconMethod.invoke(this, icon.getImage());
 				}
 			}
-			catch (NoSuchMethodException e)
+			catch(NoSuchMethodException e)
 			{
 				if(logger.isInfoEnabled()) logger.info("No setIconImage-method found...");
 			}
-			catch (IllegalAccessException e)
+			catch(IllegalAccessException e)
 			{
-				error=e;
+				error = e;
 			}
-			catch (InvocationTargetException e)
+			catch(InvocationTargetException e)
 			{
-				error=e;
+				error = e;
 			}
-			if(error!=null)
+			if(error != null)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while executing setIconImage-method!", error);
 			}
 
 		}
 
-		statisticsPanel=new StatisticsPanel(owner);
+		statisticsPanel = new StatisticsPanel(owner);
 		statisticsPanel.addPropertyChangeListener(new SourceChangeListener());
 		setContentPane(statisticsPanel);
 	}
@@ -109,11 +109,11 @@ public class StatisticsDialog
 		{
 			if(StatisticsPanel.SOURCE_IDENTIFIER_PROPERTY.equals(evt.getPropertyName()))
 			{
-				Object newValue=evt.getNewValue();
+				Object newValue = evt.getNewValue();
 				if(newValue instanceof SourceIdentifier)
 				{
-					SourceIdentifier sourceIdentifier=(SourceIdentifier) newValue;
-					setTitle("Statistics for '"+mainFrame.getPrimarySourceTitle(sourceIdentifier)+"'...");
+					SourceIdentifier sourceIdentifier = (SourceIdentifier) newValue;
+					setTitle("Statistics for '" + mainFrame.getPrimarySourceTitle(sourceIdentifier) + "'...");
 				}
 			}
 		}

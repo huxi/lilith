@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,17 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.sulky.swing.KeyStrokes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.*;
 
 public class EditConditionDialog
 	extends JDialog
@@ -41,9 +43,9 @@ public class EditConditionDialog
 	private boolean canceled;
 
 	private JCheckBox activeCheckBox;
-    private ColorSchemeEditorPanel colorSchemeEditorPanel;
+	private ColorSchemeEditorPanel colorSchemeEditorPanel;
 
-    public EditConditionDialog(Dialog owner)
+	public EditConditionDialog(Dialog owner)
 	{
 		super(owner);
 		setModal(true);
@@ -52,10 +54,10 @@ public class EditConditionDialog
 
 	private void createUi()
 	{
-		okAction=new OkAction();
+		okAction = new OkAction();
 		Action cancelAction = new CancelAction();
 
-		TextKeyListener listener=new TextKeyListener();
+		TextKeyListener listener = new TextKeyListener();
 
 		conditionName = new JTextField(25);
 		conditionName.addActionListener(new ConditionNameActionListener());
@@ -80,28 +82,29 @@ public class EditConditionDialog
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		mainPanel.add(conditionName, gbc);
 
-		gbc.gridx=2;
+		gbc.gridx = 2;
 		gbc.weightx = 0.0;
 		gbc.fill = GridBagConstraints.NONE;
-		activeCheckBox=new JCheckBox("Active");
-		activeCheckBox.setToolTipText("<html>Active conditions are used to determine the rendering of the table cells.<br>Too many active conditions will slow down the application!</html>");
+		activeCheckBox = new JCheckBox("Active");
+		activeCheckBox
+			.setToolTipText("<html>Active conditions are used to determine the rendering of the table cells.<br>Too many active conditions will slow down the application!</html>");
 		mainPanel.add(activeCheckBox, gbc);
 
-		gbc.gridx=0;
-		gbc.gridy=1;
-		gbc.gridwidth=3;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 3;
 		gbc.weightx = 1.0;
 
-        colorSchemeEditorPanel=new ColorSchemeEditorPanel();
+		colorSchemeEditorPanel = new ColorSchemeEditorPanel();
 
 		mainPanel.add(colorSchemeEditorPanel, gbc);
 
 		setLayout(new BorderLayout());
 		add(mainPanel, BorderLayout.CENTER);
 
-		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(okAction));
-        buttonPanel.add(new JButton(new ResetAction()));
+		buttonPanel.add(new JButton(new ResetAction()));
 		buttonPanel.add(new JButton(cancelAction));
 		add(buttonPanel, BorderLayout.SOUTH);
 
@@ -112,7 +115,7 @@ public class EditConditionDialog
 
 	public void setAdding(boolean adding)
 	{
-		this.adding=adding;
+		this.adding = adding;
 		if(adding)
 		{
 			setTitle("Add condition...");
@@ -175,12 +178,12 @@ public class EditConditionDialog
 		conditionName.setText(savedCondition.getName());
 		ColorScheme colorScheme = savedCondition.getColorScheme();
 
-        if(colorScheme==null)
-        {
-            colorScheme = new ColorScheme();
-        }
+		if(colorScheme == null)
+		{
+			colorScheme = new ColorScheme();
+		}
 
-        colorSchemeEditorPanel.setColorScheme(colorScheme);
+		colorSchemeEditorPanel.setColorScheme(colorScheme);
 
 		activeCheckBox.setSelected(savedCondition.isActive());
 		updateActions();
@@ -196,8 +199,8 @@ public class EditConditionDialog
 
 		public void update()
 		{
-			String name=conditionName.getText();
-			if(name!=null && !"".equals(name.trim()))
+			String name = conditionName.getText();
+			if(name != null && !"".equals(name.trim()))
 			{
 				setEnabled(true);
 			}
@@ -209,13 +212,13 @@ public class EditConditionDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			String name=conditionName.getText();
-			if(name!=null && !"".equals(name.trim()))
+			String name = conditionName.getText();
+			if(name != null && !"".equals(name.trim()))
 			{
-				canceled=false;
+				canceled = false;
 				savedCondition.setName(conditionName.getText());
-                colorSchemeEditorPanel.saveColors();
-				ColorScheme colorScheme=colorSchemeEditorPanel.getColorScheme();
+				colorSchemeEditorPanel.saveColors();
+				ColorScheme colorScheme = colorSchemeEditorPanel.getColorScheme();
 				savedCondition.setColorScheme(colorScheme);
 				savedCondition.setActive(activeCheckBox.isSelected());
 				EditConditionDialog.super.setVisible(false);
@@ -223,19 +226,19 @@ public class EditConditionDialog
 		}
 	}
 
-    private class ResetAction
-        extends AbstractAction
-    {
-        public ResetAction()
-        {
-            super("Reset");
-        }
+	private class ResetAction
+		extends AbstractAction
+	{
+		public ResetAction()
+		{
+			super("Reset");
+		}
 
-        public void actionPerformed(ActionEvent e)
-        {
-            initUI();
-        }
-    }
+		public void actionPerformed(ActionEvent e)
+		{
+			initUI();
+		}
+	}
 
 	private class CancelAction
 		extends AbstractAction
@@ -251,24 +254,26 @@ public class EditConditionDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			canceled=true;
+			canceled = true;
 			EditConditionDialog.super.setVisible(false);
 		}
 	}
 
-	private class ConditionNameActionListener implements ActionListener
+	private class ConditionNameActionListener
+		implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			String name=conditionName.getText();
-			if(name!=null && !"".equals(name.trim()))
+			String name = conditionName.getText();
+			if(name != null && !"".equals(name.trim()))
 			{
 				okAction.actionPerformed(e);
 			}
 		}
 	}
 
-	private class TextKeyListener implements KeyListener
+	private class TextKeyListener
+		implements KeyListener
 	{
 		public void keyTyped(KeyEvent e)
 		{

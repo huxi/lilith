@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,33 +17,34 @@
  */
 package de.huxhorn.lilith.services.sender;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.impl.sourceproducer.SerializingMessageBasedServerSocketEventSourceProducer;
+import de.huxhorn.lilith.swing.MainFrame;
 
-import javax.jmdns.ServiceListener;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceInfo;
-import javax.jmdns.JmDNS;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 public class SenderService
 {
@@ -79,28 +80,28 @@ public class SenderService
 
 	public SenderService(MainFrame mainFrame, String mDnsName)
 	{
-		this.mDnsName=mDnsName;
-		if(this.mDnsName==null)
+		this.mDnsName = mDnsName;
+		if(this.mDnsName == null)
 		{
-			this.mDnsName=System.getProperty("user.name");
+			this.mDnsName = System.getProperty("user.name");
 		}
 
-		this.mainFrame=mainFrame;
+		this.mainFrame = mainFrame;
 
-		loggingEventSenders=new HashMap<String, EventSender<LoggingEvent>>();
-		accessEventSenders=new HashMap<String, EventSender<AccessEvent>>();
+		loggingEventSenders = new HashMap<String, EventSender<LoggingEvent>>();
+		accessEventSenders = new HashMap<String, EventSender<AccessEvent>>();
 
-		registries=new HashMap<String, JmDNS>();
+		registries = new HashMap<String, JmDNS>();
 		//serviceInfos=new ArrayList<ServiceInfo>();
-		accessProducers=new HashSet<SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>>();
-		loggingProducers=new HashSet<SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>>();
+		accessProducers = new HashSet<SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>>();
+		loggingProducers = new HashSet<SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>>();
 		bonjourListener = new BonjourListener();
 	}
 
 	public void start()
 	{
-		networkWatchdogRunnable=new NetworkWatchdogRunnable();
-		Thread t=new Thread(networkWatchdogRunnable, "NetworkWatchdogRunnable");
+		networkWatchdogRunnable = new NetworkWatchdogRunnable();
+		Thread t = new Thread(networkWatchdogRunnable, "NetworkWatchdogRunnable");
 		t.setDaemon(true);
 		t.start();
 	}
@@ -109,17 +110,17 @@ public class SenderService
 	{
 		if(logger.isInfoEnabled()) logger.info("Unregistering services...");
 		// this can't be done in the shutdown hook...
-		if(networkWatchdogRunnable!=null)
+		if(networkWatchdogRunnable != null)
 		{
 			// stop watchdog thread
 			networkWatchdogRunnable.shutDown();
 		}
 		synchronized(registries)
 		{
-			for(Map.Entry<String, JmDNS> current:registries.entrySet())
+			for(Map.Entry<String, JmDNS> current : registries.entrySet())
 			{
 				String key = current.getKey();
-				JmDNS jmDns=current.getValue();
+				JmDNS jmDns = current.getValue();
 				if(logger.isDebugEnabled()) logger.debug("Unregistering services for {}...", key);
 				jmDns.unregisterAllServices();
 			}
@@ -128,9 +129,10 @@ public class SenderService
 
 	}
 
-	private JmDNS createJmDNS(InetAddress address) throws IOException
+	private JmDNS createJmDNS(InetAddress address)
+		throws IOException
 	{
-		JmDNS jmDns=JmDNS.create(address);
+		JmDNS jmDns = JmDNS.create(address);
 		jmDns.addServiceListener(LoggingEventSender.SERVICE_TYPE, bonjourListener);
 		jmDns.addServiceListener(AccessEventSender.SERVICE_TYPE, bonjourListener);
 		if(logger.isInfoEnabled()) logger.info("Created new JmDNS instance for {}.", address);
@@ -138,50 +140,49 @@ public class SenderService
 	}
 
 
-
 	private void registerServices(JmDNS jmDns, List<ServiceInfo> serviceInfos)
 	{
-		if(logger.isInfoEnabled()) logger.info("Registering services for {}.",jmDns.getHostName());
-		ServiceRegistrationRunnable r=new ServiceRegistrationRunnable(jmDns, serviceInfos);
-		Thread t=new Thread(r);
+		if(logger.isInfoEnabled()) logger.info("Registering services for {}.", jmDns.getHostName());
+		ServiceRegistrationRunnable r = new ServiceRegistrationRunnable(jmDns, serviceInfos);
+		Thread t = new Thread(r);
 		t.setDaemon(true);
 		t.start();
 	}
 
 	private void unregisterServices(JmDNS dns)
 	{
-		synchronized (loggingEventSenders)
+		synchronized(loggingEventSenders)
 		{
-			List<String> obsoleteSenders=new ArrayList<String>();
-			for(Map.Entry<String, EventSender<LoggingEvent>> current: loggingEventSenders.entrySet())
+			List<String> obsoleteSenders = new ArrayList<String>();
+			for(Map.Entry<String, EventSender<LoggingEvent>> current : loggingEventSenders.entrySet())
 			{
-				EventSender<LoggingEvent> sender=current.getValue();
-				if(sender.getJmDNS()==dns)
+				EventSender<LoggingEvent> sender = current.getValue();
+				if(sender.getJmDNS() == dns)
 				{
 					sender.discard();
 					obsoleteSenders.add(current.getKey());
 				}
 			}
-			for(String current:obsoleteSenders)
+			for(String current : obsoleteSenders)
 			{
 				loggingEventSenders.remove(current);
 				if(logger.isDebugEnabled()) logger.debug("Removed loggingEventSender for key {}.", current);
 			}
 		}
 
-		synchronized (accessEventSenders)
+		synchronized(accessEventSenders)
 		{
-			List<String> obsoleteSenders=new ArrayList<String>();
-			for(Map.Entry<String, EventSender<AccessEvent>> current: accessEventSenders.entrySet())
+			List<String> obsoleteSenders = new ArrayList<String>();
+			for(Map.Entry<String, EventSender<AccessEvent>> current : accessEventSenders.entrySet())
 			{
-				EventSender<AccessEvent> sender=current.getValue();
-				if(sender.getJmDNS()==dns)
+				EventSender<AccessEvent> sender = current.getValue();
+				if(sender.getJmDNS() == dns)
 				{
 					sender.discard();
 					obsoleteSenders.add(current.getKey());
 				}
 			}
-			for(String current:obsoleteSenders)
+			for(String current : obsoleteSenders)
 			{
 				accessEventSenders.remove(current);
 				if(logger.isDebugEnabled()) logger.debug("Removed accessEventSender for key {}.", current);
@@ -193,6 +194,7 @@ public class SenderService
 	/**
 	 * Returns a sorted map containing resolved source name mapped to sender. If there is both a compressed
 	 * and uncompressed sender the compressed one will be used.
+	 *
 	 * @param senders a map of all senders
 	 * @return a  map of senders.
 	 */
@@ -201,11 +203,11 @@ public class SenderService
 		Map<String, EventSender<T>> serviceNameSenderMapping;
 		synchronized(senders)
 		{
-			serviceNameSenderMapping =new HashMap<String, EventSender<T>>(senders);
+			serviceNameSenderMapping = new HashMap<String, EventSender<T>>(senders);
 		}
 
-		SortedMap<String, EventSender<T>> result=new TreeMap<String, EventSender<T>>();
-		for(Map.Entry<String, EventSender<T>> current: serviceNameSenderMapping.entrySet())
+		SortedMap<String, EventSender<T>> result = new TreeMap<String, EventSender<T>>();
+		for(Map.Entry<String, EventSender<T>> current : serviceNameSenderMapping.entrySet())
 		{
 			EventSender<T> value = current.getValue();
 			String hostName = value.getHostAddress();
@@ -246,18 +248,18 @@ public class SenderService
 	{
 		final Logger logger = LoggerFactory.getLogger(SenderService.class);
 
-		Set<InetAddress> inetAddresses=new HashSet<InetAddress>();
+		Set<InetAddress> inetAddresses = new HashSet<InetAddress>();
 		try
 		{
 			Enumeration<NetworkInterface> netIfcs = NetworkInterface.getNetworkInterfaces();
 
 			while(netIfcs.hasMoreElements())
 			{
-				NetworkInterface ni=netIfcs.nextElement();
+				NetworkInterface ni = netIfcs.nextElement();
 				Enumeration<InetAddress> inetAddrs = ni.getInetAddresses();
 				while(inetAddrs.hasMoreElements())
 				{
-					InetAddress iadd=inetAddrs.nextElement();
+					InetAddress iadd = inetAddrs.nextElement();
 					if(!iadd.isLoopbackAddress())
 					{
 						inetAddresses.add(iadd);
@@ -266,7 +268,7 @@ public class SenderService
 
 			}
 		}
-		catch (SocketException ex)
+		catch(SocketException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while retrieving InetAddresses!", ex);
 		}
@@ -286,43 +288,45 @@ public class SenderService
 
 	public List<ServiceInfo> createServiceInfos()
 	{
-		List<ServiceInfo> result=new ArrayList<ServiceInfo>();
-		for(SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> current:loggingProducers)
+		List<ServiceInfo> result = new ArrayList<ServiceInfo>();
+		for(SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> current : loggingProducers)
 		{
-			Hashtable<String, String> props=new Hashtable<String, String>();
-			int port=current.getPort();
+			Hashtable<String, String> props = new Hashtable<String, String>();
+			int port = current.getPort();
 
-			props.put(AbstractEventSender.COMPRESSED_MDNS_PROPERTY_NAME, ""+current.isCompressing());
-			int weight=0;
+			props.put(AbstractEventSender.COMPRESSED_MDNS_PROPERTY_NAME, "" + current.isCompressing());
+			int weight = 0;
 			int priority;
 			if(current.isCompressing())
 			{
-				priority=65535;
+				priority = 65535;
 			}
 			else
 			{
-				priority=0;
+				priority = 0;
 			}
-			ServiceInfo serviceInfo=ServiceInfo.create(LoggingEventSender.SERVICE_TYPE, mDnsName, port, weight, priority, props);
+			ServiceInfo serviceInfo = ServiceInfo
+				.create(LoggingEventSender.SERVICE_TYPE, mDnsName, port, weight, priority, props);
 			result.add(serviceInfo);
 		}
-		for(SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent> current:accessProducers)
+		for(SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent> current : accessProducers)
 		{
-			Hashtable<String, String> props=new Hashtable<String, String>();
-			int port=current.getPort();
+			Hashtable<String, String> props = new Hashtable<String, String>();
+			int port = current.getPort();
 
-			props.put(AbstractEventSender.COMPRESSED_MDNS_PROPERTY_NAME, ""+current.isCompressing());
-			int weight=0;
+			props.put(AbstractEventSender.COMPRESSED_MDNS_PROPERTY_NAME, "" + current.isCompressing());
+			int weight = 0;
 			int priority;
 			if(current.isCompressing())
 			{
-				priority=65535;
+				priority = 65535;
 			}
 			else
 			{
-				priority=0;
+				priority = 0;
 			}
-			ServiceInfo serviceInfo=ServiceInfo.create(AccessEventSender.SERVICE_TYPE, mDnsName, port, weight, priority, props);
+			ServiceInfo serviceInfo = ServiceInfo
+				.create(AccessEventSender.SERVICE_TYPE, mDnsName, port, weight, priority, props);
 			result.add(serviceInfo);
 		}
 		return result;
@@ -335,9 +339,9 @@ public class SenderService
 		public void serviceAdded(ServiceEvent serviceEvent)
 		{
 			if(logger.isInfoEnabled()) logger.info("serviceAdded!");
-			GetServiceInfoRunnable r=new GetServiceInfoRunnable(serviceEvent);
+			GetServiceInfoRunnable r = new GetServiceInfoRunnable(serviceEvent);
 			// TODO: threadpool?
-			Thread t=new Thread(r);
+			Thread t = new Thread(r);
 			t.setDaemon(true);
 			t.start();
 		}
@@ -345,18 +349,18 @@ public class SenderService
 		public void serviceRemoved(ServiceEvent serviceEvent)
 		{
 			if(logger.isInfoEnabled()) logger.info("serviceRemoved!");
-			String type=serviceEvent.getType();
-			String name=serviceEvent.getName();
-			if(name!=null)
+			String type = serviceEvent.getType();
+			String name = serviceEvent.getName();
+			if(name != null)
 			{
 				if(LoggingEventSender.SERVICE_TYPE.equals(type))
 				{
 					EventSender<LoggingEvent> sender;
 					synchronized(loggingEventSenders)
 					{
-						sender=loggingEventSenders.remove(name);
+						sender = loggingEventSenders.remove(name);
 					}
-					if(sender!=null)
+					if(sender != null)
 					{
 						sender.discard();
 						if(logger.isInfoEnabled()) logger.info("LoggingEventSender discarded.");
@@ -367,9 +371,9 @@ public class SenderService
 					EventSender<AccessEvent> sender;
 					synchronized(accessEventSenders)
 					{
-						sender=accessEventSenders.remove(name);
+						sender = accessEventSenders.remove(name);
 					}
-					if(sender!=null)
+					if(sender != null)
 					{
 						sender.discard();
 						if(logger.isInfoEnabled()) logger.info("AccessEventSender discarded.");
@@ -381,24 +385,24 @@ public class SenderService
 		public void serviceResolved(ServiceEvent serviceEvent)
 		{
 			if(logger.isInfoEnabled()) logger.info("serviceResolved!");
-			JmDNS jmDns=serviceEvent.getDNS();
+			JmDNS jmDns = serviceEvent.getDNS();
 			ServiceInfo info = serviceEvent.getInfo();
-			if(logger.isInfoEnabled()) logger.info("Info: {}",info);
-			String type=serviceEvent.getType();
-			String name=serviceEvent.getName();
-			if(name!=null && info!=null)
+			if(logger.isInfoEnabled()) logger.info("Info: {}", info);
+			String type = serviceEvent.getType();
+			String name = serviceEvent.getName();
+			if(name != null && info != null)
 			{
 				String compressedStr = info.getPropertyString(AbstractEventSender.COMPRESSED_MDNS_PROPERTY_NAME);
-				boolean compressed=Boolean.valueOf(compressedStr);
+				boolean compressed = Boolean.valueOf(compressedStr);
 				if(LoggingEventSender.SERVICE_TYPE.equals(type))
 				{
-					EventSender<LoggingEvent> sender=new LoggingEventSender(jmDns, name, info.getHostAddress(), info.getPort(), compressed);
+					EventSender<LoggingEvent> sender = new LoggingEventSender(jmDns, name, info.getHostAddress(), info.getPort(), compressed);
 					synchronized(loggingEventSenders)
 					{
-						sender=loggingEventSenders.put(name, sender);
+						sender = loggingEventSenders.put(name, sender);
 						if(logger.isInfoEnabled()) logger.info("LoggingEventSender created.");
 					}
-					if(sender!=null)
+					if(sender != null)
 					{
 						sender.discard();
 						if(logger.isInfoEnabled()) logger.info("Previous LoggingEventSender discarded.");
@@ -406,13 +410,13 @@ public class SenderService
 				}
 				else if(AccessEventSender.SERVICE_TYPE.equals(type))
 				{
-					EventSender<AccessEvent> sender=new AccessEventSender(jmDns, name, info.getHostAddress(), info.getPort(), compressed);
+					EventSender<AccessEvent> sender = new AccessEventSender(jmDns, name, info.getHostAddress(), info.getPort(), compressed);
 					synchronized(accessEventSenders)
 					{
-						sender=accessEventSenders.put(name,sender);
+						sender = accessEventSenders.put(name, sender);
 						if(logger.isInfoEnabled()) logger.info("AccessEventSender created.");
 					}
-					if(sender!=null)
+					if(sender != null)
 					{
 						sender.discard();
 						if(logger.isInfoEnabled()) logger.info("Previous AccessEventSender discarded.");
@@ -446,25 +450,25 @@ public class SenderService
 		private List<ServiceInfo> serviceInfos;
 		private JmDNS jmDns;
 
-		public ServiceRegistrationRunnable(JmDNS jmDns,List<ServiceInfo> serviceInfos)
+		public ServiceRegistrationRunnable(JmDNS jmDns, List<ServiceInfo> serviceInfos)
 		{
-			this.jmDns=jmDns;
-			this.serviceInfos=serviceInfos;
+			this.jmDns = jmDns;
+			this.serviceInfos = serviceInfos;
 
 		}
 
 		public void run()
 		{
-			if(jmDns!=null)
+			if(jmDns != null)
 			{
-				for(ServiceInfo current:serviceInfos)
+				for(ServiceInfo current : serviceInfos)
 				{
 					try
 					{
 						jmDns.registerService(current);
 						if(logger.isDebugEnabled()) logger.debug("Registered {}.", current);
 					}
-					catch (IOException e)
+					catch(IOException e)
 					{
 						if(logger.isWarnEnabled()) logger.warn("Exception while registering service!", e);
 						e.printStackTrace();
@@ -474,23 +478,24 @@ public class SenderService
 		}
 	}
 
-	private class NetworkWatchdogRunnable implements Runnable
+	private class NetworkWatchdogRunnable
+		implements Runnable
 	{
 		private boolean shutDown;
 
 		private NetworkWatchdogRunnable()
 		{
-			shutDown=false;
+			shutDown = false;
 		}
 
 		public void shutDown()
 		{
-			shutDown=true;
+			shutDown = true;
 		}
 
 		public void run()
 		{
-			for(;;)
+			for(; ;)
 			{
 				if(shutDown)
 				{
@@ -499,18 +504,18 @@ public class SenderService
 				Set<InetAddress> inetAddresses = resolveInetAddresses();
 				Set<InetAddress> newAddresses = new HashSet<InetAddress>();
 				Set<JmDNS> obsoleteDns = new HashSet<JmDNS>();
-				synchronized (registries)
+				synchronized(registries)
 				{
 					Set<String> obsoleteAddresses = new HashSet<String>();
-					for(Map.Entry<String, JmDNS> current: registries.entrySet())
+					for(Map.Entry<String, JmDNS> current : registries.entrySet())
 					{
-						String key=current.getKey();
-						boolean found=false;
-						for(InetAddress add:inetAddresses)
+						String key = current.getKey();
+						boolean found = false;
+						for(InetAddress add : inetAddresses)
 						{
 							if(add.getHostAddress().equals(key))
 							{
-								found=true;
+								found = true;
 							}
 						}
 						if(!found)
@@ -521,7 +526,7 @@ public class SenderService
 						}
 					}
 
-					for(InetAddress current:inetAddresses)
+					for(InetAddress current : inetAddresses)
 					{
 						if(!registries.containsKey(current.getHostAddress()))
 						{
@@ -530,7 +535,7 @@ public class SenderService
 						}
 					}
 
-					for(String current:obsoleteAddresses)
+					for(String current : obsoleteAddresses)
 					{
 						registries.remove(current);
 						if(logger.isDebugEnabled()) logger.debug("Removed {} from registry.", current);
@@ -538,7 +543,7 @@ public class SenderService
 //					if(logger.isDebugEnabled()) logger.debug("Registry after removing: {}", registries);
 				}
 
-				for(JmDNS current:obsoleteDns)
+				for(JmDNS current : obsoleteDns)
 				{
 					if(logger.isDebugEnabled()) logger.debug("Unregistering all services for {}.", current);
 					//current.unregisterAllServices();
@@ -547,36 +552,42 @@ public class SenderService
 				}
 
 				Set<JmDNS> newDns = new HashSet<JmDNS>();
-				for(InetAddress current:newAddresses)
+				for(InetAddress current : newAddresses)
 				{
 					try
 					{
 						JmDNS jmDns = createJmDNS(current);
 						newDns.add(jmDns);
 					}
-					catch (IOException ex)
+					catch(IOException ex)
 					{
-						if(logger.isWarnEnabled()) logger.warn("Exception while creating new JmDNS instance for address "+current+"!",ex);
+						if(logger.isWarnEnabled())
+						{
+							logger.warn("Exception while creating new JmDNS instance for address " + current + "!", ex);
+						}
 					}
 				}
-				if(newDns.size()>0)
+				if(newDns.size() > 0)
 				{
 					synchronized(registries)
 					{
-						for(JmDNS current:newDns)
+						for(JmDNS current : newDns)
 						{
 							try
 							{
 								registries.put(current.getInterface().getHostAddress(), current);
 							}
-							catch (IOException ex)
+							catch(IOException ex)
 							{
-								if(logger.isWarnEnabled()) logger.warn("Exception while resolving interface of existing JmDNS instance!", ex);
+								if(logger.isWarnEnabled())
+								{
+									logger.warn("Exception while resolving interface of existing JmDNS instance!", ex);
+								}
 							}
 						}
 						if(logger.isDebugEnabled()) logger.debug("Registry after adding: {}", registries);
 					}
-					for(JmDNS current:newDns)
+					for(JmDNS current : newDns)
 					{
 						registerServices(current, createServiceInfos());
 					}
@@ -586,9 +597,12 @@ public class SenderService
 				{
 					Thread.sleep(60000);
 				}
-				catch (InterruptedException e)
+				catch(InterruptedException e)
 				{
-					if(logger.isInfoEnabled()) logger.info("Exiting network watchdog thread because of interruption.", e);
+					if(logger.isInfoEnabled())
+					{
+						logger.info("Exiting network watchdog thread because of interruption.", e);
+					}
 					break;
 				}
 			}

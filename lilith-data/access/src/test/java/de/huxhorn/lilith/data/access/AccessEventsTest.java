@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,17 +17,18 @@
  */
 package de.huxhorn.lilith.data.access;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccessEventsTest
 {
@@ -40,20 +41,22 @@ public class AccessEventsTest
 	}
 
 	@Test
-	public void defaultConstructor() throws ClassNotFoundException, IOException
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvents instance=new AccessEvents();
+		AccessEvents instance = new AccessEvents();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
 	}
 
 	@Test
-	public void source() throws ClassNotFoundException, IOException
+	public void source()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvents instance=new AccessEvents();
+		AccessEvents instance = new AccessEvents();
 
-		SourceIdentifier value=new SourceIdentifier();
+		SourceIdentifier value = new SourceIdentifier();
 		instance.setSource(value);
 
 		{
@@ -69,11 +72,12 @@ public class AccessEventsTest
 	}
 
 	@Test
-	public void startIndex() throws ClassNotFoundException, IOException
+	public void startIndex()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvents instance=new AccessEvents();
+		AccessEvents instance = new AccessEvents();
 
-		long value=17;
+		long value = 17;
 		instance.setStartIndex(value);
 
 		{
@@ -89,12 +93,13 @@ public class AccessEventsTest
 	}
 
 	@Test
-	public void events() throws ClassNotFoundException, IOException
+	public void events()
+		throws ClassNotFoundException, IOException
 	{
-		AccessEvents instance=new AccessEvents();
+		AccessEvents instance = new AccessEvents();
 
 
-		List<AccessEvent> value=new ArrayList<AccessEvent>();
+		List<AccessEvent> value = new ArrayList<AccessEvent>();
 		value.add(new AccessEvent());
 		instance.setEvents(value);
 

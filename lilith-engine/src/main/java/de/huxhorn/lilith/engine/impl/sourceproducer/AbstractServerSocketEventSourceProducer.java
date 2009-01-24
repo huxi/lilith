@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,13 @@
  */
 package de.huxhorn.lilith.engine.impl.sourceproducer;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.EventSourceProducer;
 import de.huxhorn.lilith.engine.SourceManager;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // TODO: ServerSocket
+
 // TODO: postprocess
 public abstract class AbstractServerSocketEventSourceProducer<T extends Serializable>
 	implements EventSourceProducer<T>, Runnable
@@ -51,11 +53,11 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 	private int port;
 
 	public AbstractServerSocketEventSourceProducer(int port)
-			throws IOException
+		throws IOException
 	{
-		this.port=port;
-		serverSocket=new ServerSocket(port);
-		dateFormat=new SimpleDateFormat("yyyyMMdd'T'HHmmssSSS");
+		this.port = port;
+		serverSocket = new ServerSocket(port);
+		dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmssSSS");
 	}
 
 	public AppendOperation<EventWrapper<T>> getQueue()
@@ -85,24 +87,24 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 
 	public void run()
 	{
-		for(;;)
+		for(; ;)
 		{
 			Socket socket;
 			try
 			{
-				socket=serverSocket.accept();
+				socket = serverSocket.accept();
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Closing serverSocket because of exception.", e);
 				try
 				{
-					if(serverSocket!=null)
+					if(serverSocket != null)
 					{
 						serverSocket.close();
 					}
 				}
-				catch (IOException e1)
+				catch(IOException e1)
 				{
 					if(logger.isInfoEnabled()) logger.info("Exception while closing serverSocket.");
 				}
@@ -111,12 +113,12 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 
 			try
 			{
-				SourceIdentifier id=createSourceIdentifier(socket);
-				EventProducer producer=createProducer(id, queue, socket.getInputStream());
+				SourceIdentifier id = createSourceIdentifier(socket);
+				EventProducer producer = createProducer(id, queue, socket.getInputStream());
 				producer.start();
 				sourceManager.addEventProducer(producer);
 			}
-			catch (Throwable e)
+			catch(Throwable e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Exception while creating EventProducer.", e);
 			}
@@ -127,24 +129,24 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 	{
 		SocketAddress address = socket.getRemoteSocketAddress();
 		String primary;
-		if( address instanceof InetSocketAddress)
+		if(address instanceof InetSocketAddress)
 		{
-			InetSocketAddress inetSocketAddress=(InetSocketAddress) address;
+			InetSocketAddress inetSocketAddress = (InetSocketAddress) address;
 			InetAddress inetAddress = inetSocketAddress.getAddress();
-			primary=inetAddress.getHostAddress();
+			primary = inetAddress.getHostAddress();
 		}
 		else
 		{
-			primary=""+address;
+			primary = "" + address;
 		}
-		String secondary=dateFormat.format(new Date());
+		String secondary = dateFormat.format(new Date());
 
 
 		return new SourceIdentifier(primary, secondary);
 	}
 
 	protected abstract EventProducer createProducer(SourceIdentifier id,
-													AppendOperation<EventWrapper<T>> eventQueue,
-													InputStream inputStream)
-			throws IOException;
+	                                                AppendOperation<EventWrapper<T>> eventQueue,
+	                                                InputStream inputStream)
+		throws IOException;
 }

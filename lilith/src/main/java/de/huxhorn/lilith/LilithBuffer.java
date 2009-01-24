@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
  */
 package de.huxhorn.lilith;
 
-import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 
 public class LilithBuffer<T extends Serializable>
 	extends BlockingCircularBuffer<EventWrapper<T>>
@@ -33,20 +33,20 @@ public class LilithBuffer<T extends Serializable>
 	public LilithBuffer(ApplicationPreferences applicationPreferences, int bufferSize, int congestionDelay)
 	{
 		super(bufferSize, congestionDelay);
-		this.applicationPreferences=applicationPreferences;
+		this.applicationPreferences = applicationPreferences;
 	}
 
 	public LilithBuffer(ApplicationPreferences applicationPreferences, int bufferSize)
 	{
 		super(bufferSize);
-		this.applicationPreferences=applicationPreferences;
+		this.applicationPreferences = applicationPreferences;
 	}
 
 	@Override
 	public void add(EventWrapper<T> element)
 	{
-		T event=element.getEvent();
-		if(event==null
+		T event = element.getEvent();
+		if(event == null
 			|| applicationPreferences.getSourceFiltering() == ApplicationPreferences.SourceFiltering.NONE)
 		{
 			// we *must* add null events so a closed connection is detected!
@@ -55,7 +55,7 @@ public class LilithBuffer<T extends Serializable>
 		else
 		{
 			SourceIdentifier si = element.getSourceIdentifier();
-			if(si!=null)
+			if(si != null)
 			{
 				if(applicationPreferences.isValidSource(si.getIdentifier()))
 				{
@@ -68,7 +68,7 @@ public class LilithBuffer<T extends Serializable>
 	@Override
 	public void addAll(List<EventWrapper<T>> elements)
 	{
-		for(EventWrapper<T> current:elements)
+		for(EventWrapper<T> current : elements)
 		{
 			add(current);
 		}
@@ -77,7 +77,7 @@ public class LilithBuffer<T extends Serializable>
 	@Override
 	public void addAll(EventWrapper<T>[] elements)
 	{
-		for(EventWrapper<T> current:elements)
+		for(EventWrapper<T> current : elements)
 		{
 			add(current);
 		}

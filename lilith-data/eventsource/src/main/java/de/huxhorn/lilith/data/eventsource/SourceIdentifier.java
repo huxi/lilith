@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -64,13 +64,14 @@ public class SourceIdentifier
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		final SourceIdentifier that = (SourceIdentifier) o;
 
-		if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
-		return !(secondaryIdentifier != null ? !secondaryIdentifier.equals(that.secondaryIdentifier) : that.secondaryIdentifier != null);
+		if(identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
+		return !(secondaryIdentifier != null ? !secondaryIdentifier
+			.equals(that.secondaryIdentifier) : that.secondaryIdentifier != null);
 	}
 
 	public int hashCode()
@@ -84,9 +85,9 @@ public class SourceIdentifier
 	@Override
 	public String toString()
 	{
-		StringBuilder result=new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		result.append(identifier);
-		if(secondaryIdentifier!=null)
+		if(secondaryIdentifier != null)
 		{
 			result.append("-");
 			result.append(secondaryIdentifier);
@@ -98,19 +99,19 @@ public class SourceIdentifier
 	{
 		if(this.identifier == null)
 		{
-			if(o.identifier!=null)
+			if(o.identifier != null)
 			{
 				return -1;
 			}
 		}
-		else if(o.identifier==null)
+		else if(o.identifier == null)
 		{
 			return 1;
 		}
 		else
 		{
-			int compare=this.identifier.compareTo(o.identifier);
-			if(compare!=0)
+			int compare = this.identifier.compareTo(o.identifier);
+			if(compare != 0)
 			{
 				return compare;
 			}
@@ -118,19 +119,19 @@ public class SourceIdentifier
 
 		if(this.secondaryIdentifier == null)
 		{
-			if(o.secondaryIdentifier!=null)
+			if(o.secondaryIdentifier != null)
 			{
 				return -1;
 			}
 		}
-		else if(o.secondaryIdentifier==null)
+		else if(o.secondaryIdentifier == null)
 		{
 			return 1;
 		}
 		else
 		{
-			int compare=this.secondaryIdentifier.compareTo(o.secondaryIdentifier);
-			if(compare!=0)
+			int compare = this.secondaryIdentifier.compareTo(o.secondaryIdentifier);
+			if(compare != 0)
 			{
 				return compare;
 			}
@@ -139,7 +140,8 @@ public class SourceIdentifier
 		return 0;
 	}
 
-	public SourceIdentifier clone() throws CloneNotSupportedException
+	public SourceIdentifier clone()
+		throws CloneNotSupportedException
 	{
 		return (SourceIdentifier) super.clone();
 	}

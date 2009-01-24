@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,14 +20,15 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.generics.io.Serializer;
 
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 public class LoggingXmlSerializer
 	implements Serializer<LoggingEvent>
@@ -38,29 +39,29 @@ public class LoggingXmlSerializer
 
 	public LoggingXmlSerializer(boolean compressing)
 	{
-		this.compressing=compressing;
+		this.compressing = compressing;
 		outputFactory = XMLOutputFactory.newInstance();
-		loggingEventWriter=new LoggingEventWriter();
+		loggingEventWriter = new LoggingEventWriter();
 		loggingEventWriter.setWritingSchemaLocation(false);
 	}
 
 	public byte[] serialize(LoggingEvent event)
 	{
-		ByteArrayOutputStream out=new ByteArrayOutputStream();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		OutputStreamWriter osw;
 		try
 		{
 			XMLStreamWriter writer;
 			if(compressing)
 			{
-				GZIPOutputStream gos=new GZIPOutputStream(out);
-				osw=new OutputStreamWriter(gos,"utf-8");
-				writer=outputFactory.createXMLStreamWriter(osw);
+				GZIPOutputStream gos = new GZIPOutputStream(out);
+				osw = new OutputStreamWriter(gos, "utf-8");
+				writer = outputFactory.createXMLStreamWriter(osw);
 			}
 			else
 			{
-				osw=new OutputStreamWriter(out,"utf-8");
-				writer=outputFactory.createXMLStreamWriter(osw);
+				osw = new OutputStreamWriter(out, "utf-8");
+				writer = outputFactory.createXMLStreamWriter(osw);
 			}
 
 			loggingEventWriter.write(writer, event, true);
@@ -70,17 +71,17 @@ public class LoggingXmlSerializer
 			osw.close(); // absolutely necessary!!
 			return out.toByteArray();
 		}
-		catch (XMLStreamException e)
+		catch(XMLStreamException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();
 		}
-		catch (UnsupportedEncodingException e)
+		catch(UnsupportedEncodingException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();

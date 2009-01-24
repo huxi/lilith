@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@
 package de.huxhorn.lilith.consumers;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.engine.EventConsumer;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.access.HttpStatus;
-
-import java.util.List;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.engine.EventConsumer;
 
 import org.simplericity.macify.eawt.Application;
+
+import java.util.List;
 
 public class UserNotificationAccessEventConsumer
 	implements EventConsumer<AccessEvent>
@@ -38,18 +38,18 @@ public class UserNotificationAccessEventConsumer
 
 	public void consume(List<EventWrapper<AccessEvent>> events)
 	{
-		if(application!=null)
+		if(application != null)
 		{
-			boolean errorDetected=false;
-			for(EventWrapper<AccessEvent> current:events)
+			boolean errorDetected = false;
+			for(EventWrapper<AccessEvent> current : events)
 			{
 				AccessEvent event = current.getEvent();
-				if(event!=null)
+				if(event != null)
 				{
-					HttpStatus status=HttpStatus.getStatus(event.getStatusCode());
+					HttpStatus status = HttpStatus.getStatus(event.getStatusCode());
 					if(status.getType() == HttpStatus.Type.SERVER_ERROR)
 					{
-						errorDetected=true;
+						errorDetected = true;
 						break;
 					}
 				}

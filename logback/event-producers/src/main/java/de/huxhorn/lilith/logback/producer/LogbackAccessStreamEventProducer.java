@@ -17,19 +17,19 @@
  */
 package de.huxhorn.lilith.logback.producer;
 
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
-import java.io.InputStream;
 import java.io.IOException;
-
-import de.huxhorn.lilith.data.access.AccessEvent;
+import java.io.InputStream;
 
 public class LogbackAccessStreamEventProducer
 	extends AbstractLogbackStreamEventProducer<AccessEvent>
 {
-	public LogbackAccessStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream) throws IOException
+	public LogbackAccessStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
+		throws IOException
 	{
 		super(sourceIdentifier, eventQueue, inputStream);
 	}
@@ -42,7 +42,9 @@ public class LogbackAccessStreamEventProducer
 		}
 		if(logger.isInfoEnabled())
 		{
-			logger.info("Retrieved {} instead of ch.qos.logback.access.spi.AccessEvent.", o==null?null:o.getClass().getName());
+			logger
+				.info("Retrieved {} instead of ch.qos.logback.access.spi.AccessEvent.", o == null ? null : o.getClass()
+					.getName());
 		}
 		return null;
 	}

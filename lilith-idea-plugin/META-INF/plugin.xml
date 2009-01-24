@@ -4,7 +4,7 @@
 	<name>Lilith</name>
 	<!-- description -->
 	<description>
-<![CDATA[
+		<![CDATA[
 This plugin opens a server socket on port 11111 and waits for connections, expecting serialized StackTraceElement objects.
 
 <p>IDEA will try to open the code defined by the StackTraceElement.</p>
@@ -22,7 +22,7 @@ This plugin opens a server socket on port 11111 and waits for connections, expec
 	<idea-version since-build="7757"/>
 
 	<change-notes>
-<![CDATA[
+		<![CDATA[
 <ul>
 	<li>0.0.4 - 2008-11-19
 	<ul>

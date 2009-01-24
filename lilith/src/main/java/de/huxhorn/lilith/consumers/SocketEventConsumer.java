@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,29 @@
  */
 package de.huxhorn.lilith.consumers;
 
-import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.sulky.io.TimeoutOutputStream;
 
-import java.util.List;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.BufferedOutputStream;
-import java.io.Serializable;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.InetSocketAddress;
-
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.io.IOUtils;
+
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.util.List;
 
 public class SocketEventConsumer<T extends Serializable>
-		implements EventConsumer<T>, Runnable
+	implements EventConsumer<T>, Runnable
 {
 	final Logger logger = LoggerFactory.getLogger(SocketEventConsumer.class);
 
-	private static final int DEFAULT_RECONNECTION_DELAY = 60*1000;
+	private static final int DEFAULT_RECONNECTION_DELAY = 60 * 1000;
 	private static final int DEFAULT_CONNECTION_TIMEOUT = 10000;
 	private static final int DEFAULT_WRITE_TIMEOUT = 1500;
 
@@ -54,17 +54,17 @@ public class SocketEventConsumer<T extends Serializable>
 	public SocketEventConsumer(String host, int port)
 	{
 		this();
-		this.host=host;
-		this.port=port;
+		this.host = host;
+		this.port = port;
 	}
 
 	public SocketEventConsumer()
 	{
-		output=null;
-		failTime=0;
+		output = null;
+		failTime = 0;
 		connectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
 		reconnectionDelay = DEFAULT_RECONNECTION_DELAY;
-		writeTimeout=DEFAULT_WRITE_TIMEOUT;
+		writeTimeout = DEFAULT_WRITE_TIMEOUT;
 	}
 
 	public String getHost()
@@ -120,18 +120,18 @@ public class SocketEventConsumer<T extends Serializable>
 
 	public void consume(List<EventWrapper<T>> events)
 	{
-		if(events==null)
+		if(events == null)
 		{
 			return;
 		}
-		int eventCount=events.size();
-		if(eventCount==0)
+		int eventCount = events.size();
+		if(eventCount == 0)
 		{
 			return;
 		}
-		if(output==null)
+		if(output == null)
 		{
-			int count=events.size();
+			int count = events.size();
 			if(logger.isInfoEnabled()) logger.info("Dropping {} events.", count);
 		}
 		else
@@ -140,34 +140,37 @@ public class SocketEventConsumer<T extends Serializable>
 			{
 				for(EventWrapper eventWrapper : events)
 				{
-					Object event=eventWrapper.getEvent();
-					if(event!=null)
+					Object event = eventWrapper.getEvent();
+					if(event != null)
 					{
 						output.writeObject(eventWrapper.getEvent());
 						if(logger.isDebugEnabled()) logger.debug("Wrote event.");
 					}
 					else
 					{
-						if(logger.isInfoEnabled()) logger.info("Detected end of stream for source {}.", eventWrapper.getSourceIdentifier());
+						if(logger.isInfoEnabled())
+						{
+							logger.info("Detected end of stream for source {}.", eventWrapper.getSourceIdentifier());
+						}
 					}
 				}
 				output.flush();
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Exception while writing event.", e);
 				IOUtils.closeQuietly(output);
-				output=null;
-				failTime=System.currentTimeMillis();
+				output = null;
+				failTime = System.currentTimeMillis();
 			}
 		}
 	}
 
 	public void run()
 	{
-		for(;;)
+		for(; ;)
 		{
-			if(output==null)
+			if(output == null)
 			{
 				initObjectOutputStream();
 			}
@@ -175,9 +178,9 @@ public class SocketEventConsumer<T extends Serializable>
 			{
 				Thread.sleep(reconnectionDelay);
 			}
-			catch (InterruptedException e)
+			catch(InterruptedException e)
 			{
-				if(logger.isDebugEnabled()) logger.debug("Interrupted...",e);
+				if(logger.isDebugEnabled()) logger.debug("Interrupted...", e);
 				break;
 			}
 		}
@@ -185,28 +188,28 @@ public class SocketEventConsumer<T extends Serializable>
 
 	private void initObjectOutputStream()
 	{
-		if(output!=null)
+		if(output != null)
 		{
 			return;
 		}
-		long current=System.currentTimeMillis();
-		if(current-failTime >= reconnectionDelay)
+		long current = System.currentTimeMillis();
+		if(current - failTime >= reconnectionDelay)
 		{
-			SocketAddress address=new InetSocketAddress(host, port);
+			SocketAddress address = new InetSocketAddress(host, port);
 			try
 			{
-				Socket socket=new Socket();
+				Socket socket = new Socket();
 				socket.connect(address, connectionTimeout);
 				socket.setSoTimeout(connectionTimeout);
-				output=new ObjectOutputStream(new BufferedOutputStream(new TimeoutOutputStream(socket.getOutputStream(), writeTimeout)));
+				output = new ObjectOutputStream(new BufferedOutputStream(new TimeoutOutputStream(socket.getOutputStream(), writeTimeout)));
 				if(logger.isInfoEnabled()) logger.info("Created connection to {}.", address);
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
-				if(logger.isDebugEnabled()) logger.debug("Exception while creating connection to "+address+".", e);
+				if(logger.isDebugEnabled()) logger.debug("Exception while creating connection to " + address + ".", e);
 				IOUtils.closeQuietly(output);
-				output=null;
-				failTime=current;
+				output = null;
+				failTime = current;
 			}
 		}
 	}

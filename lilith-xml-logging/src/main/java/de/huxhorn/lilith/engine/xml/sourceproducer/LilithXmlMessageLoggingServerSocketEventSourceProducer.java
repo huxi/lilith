@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,27 @@
  */
 package de.huxhorn.lilith.engine.xml.sourceproducer;
 
-import de.huxhorn.lilith.engine.EventProducer;
-import de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlMessageLoggingEventProducer;
-import de.huxhorn.lilith.engine.impl.sourceproducer.AbstractServerSocketEventSourceProducer;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.sulky.buffers.AppendOperation;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
+import de.huxhorn.lilith.engine.EventProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.AbstractServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlMessageLoggingEventProducer;
+import de.huxhorn.sulky.buffers.AppendOperation;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public class LilithXmlMessageLoggingServerSocketEventSourceProducer
-		extends AbstractServerSocketEventSourceProducer<LoggingEvent>
+	extends AbstractServerSocketEventSourceProducer<LoggingEvent>
 {
 	private boolean compressing;
 
 	public LilithXmlMessageLoggingServerSocketEventSourceProducer(int port, boolean compressing)
-			throws IOException
+		throws IOException
 	{
 		super(port);
-		this.compressing=compressing;
+		this.compressing = compressing;
 	}
 
 	public boolean isCompressing()
@@ -46,7 +45,8 @@ public class LilithXmlMessageLoggingServerSocketEventSourceProducer
 		return compressing;
 	}
 
-	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream) throws IOException
+	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
+		throws IOException
 	{
 		return new LilithXmlMessageLoggingEventProducer(id, eventQueue, inputStream, compressing);
 	}
@@ -54,7 +54,7 @@ public class LilithXmlMessageLoggingServerSocketEventSourceProducer
 	@Override
 	public String toString()
 	{
-		return "LilithXmlMessageLoggingServerSocketEventSourceProducer[port="+getPort()+", compressing="+compressing+"]";
+		return "LilithXmlMessageLoggingServerSocketEventSourceProducer[port=" + getPort() + ", compressing=" + compressing + "]";
 	}
 
 }

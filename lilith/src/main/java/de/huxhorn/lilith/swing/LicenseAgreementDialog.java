@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,17 +21,15 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-import javax.swing.text.html.HTMLEditorKit;
-import java.awt.Frame;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import javax.swing.*;
+import javax.swing.text.html.HTMLEditorKit;
 
 public class LicenseAgreementDialog
 	extends JDialog
@@ -45,26 +43,28 @@ public class LicenseAgreementDialog
 
 	public LicenseAgreementDialog()
 	{
-		super((Frame)null, "§§§ EULA §§§", true);
+		super((Frame) null, "§§§ EULA §§§", true);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent we) {
+		addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent we)
+			{
 				decline();
 			}
 		});
-		licenseAgreed=false;
+		licenseAgreed = false;
 		initUI();
 	}
 
 	private void initUI()
 	{
-		JPanel content=new JPanel();
+		JPanel content = new JPanel();
 		content.setLayout(new BorderLayout());
-		JPanel buttonPanel=new JPanel();
+		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		JTextPane licenseTextPane = new JTextPane();
-		HTMLEditorKit htmlEditorKit=new HTMLEditorKit();
+		HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
 /*
 		StyleSheet ss=loadStyleSheet(EventWrapperViewPanel.class.getResource("/styles/messageView.css"));
 		if(ss!=null)
@@ -73,20 +73,20 @@ public class LicenseAgreementDialog
 			original.addStyleSheet(ss);
 		}
 */
-		String licenseText=null;
-		InputStream licenseStream=LicenseAgreementDialog.class.getResourceAsStream("/licenses/license.html");
-		if(licenseStream!=null)
+		String licenseText = null;
+		InputStream licenseStream = LicenseAgreementDialog.class.getResourceAsStream("/licenses/license.html");
+		if(licenseStream != null)
 		{
 			try
 			{
 				licenseText = IOUtils.toString(licenseStream);
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
 				if(logger.isErrorEnabled()) logger.error("Exception while loading license!", e);
 			}
 		}
-		if(licenseText==null)
+		if(licenseText == null)
 		{
 			if(logger.isErrorEnabled()) logger.error("Couldn't find license text! Exiting!");
 			System.exit(-1);
@@ -101,8 +101,8 @@ public class LicenseAgreementDialog
 		content.add(licenseScrollPane, BorderLayout.CENTER);
 		content.add(buttonPanel, BorderLayout.SOUTH);
 
-		acceptAction=new AcceptAction();
-		declineAction=new DeclineAction();
+		acceptAction = new AcceptAction();
+		declineAction = new DeclineAction();
 
 		JButton acceptButton = new JButton(acceptAction);
 		JButton declineButton = new JButton(declineAction);
@@ -121,7 +121,7 @@ public class LicenseAgreementDialog
 
 	public void setLicenseAgreed(boolean licenseAgreed)
 	{
-		this.licenseAgreed=licenseAgreed;
+		this.licenseAgreed = licenseAgreed;
 		if(isVisible())
 		{
 			setVisible(false);

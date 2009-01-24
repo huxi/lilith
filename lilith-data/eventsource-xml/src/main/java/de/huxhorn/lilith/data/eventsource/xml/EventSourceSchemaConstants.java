@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,10 +19,10 @@ package de.huxhorn.lilith.data.eventsource.xml;
 
 public interface EventSourceSchemaConstants
 {
-	String NAMESPACE_URI ="http://lilith.sf.net/schema/eventsource/10";
-	String NAMESPACE_LOCATION ="http://lilith.sf.net/schema/eventsource/10/EventSource.xsd";
+	String NAMESPACE_URI = "http://lilith.sf.net/schema/eventsource/10";
+	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/eventsource/10/EventSource.xsd";
 
-	String DEFAULT_NAMESPACE_PREFIX="es";
+	String DEFAULT_NAMESPACE_PREFIX = "es";
 
 	String SOURCE_IDENTIFIER_NODE = "SourceIdentifier";
 	String IDENTIFIER_ATTRIBUTE = "identifier";

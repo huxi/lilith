@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@ package de.huxhorn.lilith.debug;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 
 public class LogAnonymousRunnable
 	extends AbstractDebugRunnable
@@ -48,7 +47,7 @@ public class LogAnonymousRunnable
 			}
 		}
 
-		StuffLogger stuffLogger=new StuffLogger()
+		StuffLogger stuffLogger = new StuffLogger()
 		{
 			class AnonymousInternalClass
 				implements StuffLogger
@@ -60,7 +59,7 @@ public class LogAnonymousRunnable
 				}
 			}
 
-			StuffLogger stuffLogger=new StuffLogger()
+			StuffLogger stuffLogger = new StuffLogger()
 			{
 				public void logStuff()
 				{

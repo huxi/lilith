@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,14 +19,14 @@ package de.huxhorn.lilith.sender;
 
 import de.huxhorn.sulky.io.TimeoutOutputStream;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.BufferedOutputStream;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.InetSocketAddress;
 
 public class SocketDataOutputStreamFactory
 	implements DataOutputStreamFactory
@@ -55,7 +55,7 @@ public class SocketDataOutputStreamFactory
 	}
 
 	public DataOutputStream createDataOutputStream()
-			throws IOException
+		throws IOException
 	{
 		InetAddress address = InetAddress.getByName(hostName);
 		Socket socket = new Socket();
@@ -65,7 +65,7 @@ public class SocketDataOutputStreamFactory
 
 		OutputStream os = socket.getOutputStream();
 
-		BufferedOutputStream bos=new BufferedOutputStream(os);
+		BufferedOutputStream bos = new BufferedOutputStream(os);
 		TimeoutOutputStream tos = new TimeoutOutputStream(bos, writeTimeout);
 		return new DataOutputStream(tos);
 	}

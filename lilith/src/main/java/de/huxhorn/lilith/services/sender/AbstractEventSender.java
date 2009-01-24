@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,15 @@
  */
 package de.huxhorn.lilith.services.sender;
 
+import de.huxhorn.lilith.sender.ConnectionState;
+import de.huxhorn.lilith.sender.HeartbeatRunnable;
+import de.huxhorn.lilith.sender.MessageWriteByteStrategy;
 import de.huxhorn.lilith.sender.SimpleSendBytesService;
 import de.huxhorn.lilith.sender.SocketDataOutputStreamFactory;
-import de.huxhorn.lilith.sender.MessageWriteByteStrategy;
-import de.huxhorn.lilith.sender.HeartbeatRunnable;
-import de.huxhorn.lilith.sender.ConnectionState;
+
+import java.io.Serializable;
 
 import javax.jmdns.JmDNS;
-import java.io.Serializable;
 
 public abstract class AbstractEventSender<T extends Serializable>
 	implements EventSender<T>
@@ -41,15 +42,15 @@ public abstract class AbstractEventSender<T extends Serializable>
 
 	public AbstractEventSender(JmDNS jmDns, String serviceName, String hostName, int port, boolean compressing)
 	{
-		this.jmDns=jmDns;
-		this.serviceName=serviceName;
+		this.jmDns = jmDns;
+		this.serviceName = serviceName;
 		this.hostName = hostName;
 		this.port = port;
 		this.compressing = compressing;
 
-		sendBytesService=new SimpleSendBytesService(new SocketDataOutputStreamFactory(hostName, port), new MessageWriteByteStrategy());
+		sendBytesService = new SimpleSendBytesService(new SocketDataOutputStreamFactory(hostName, port), new MessageWriteByteStrategy());
 		sendBytesService.startUp();
-		heartbeatThread=new Thread(new HeartbeatRunnable(sendBytesService));
+		heartbeatThread = new Thread(new HeartbeatRunnable(sendBytesService));
 		heartbeatThread.setDaemon(true);
 		heartbeatThread.start();
 	}

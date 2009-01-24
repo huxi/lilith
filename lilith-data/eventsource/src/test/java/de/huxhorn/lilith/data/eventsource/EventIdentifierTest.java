@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,13 +17,12 @@
  */
 package de.huxhorn.lilith.data.eventsource;
 
-import static de.huxhorn.sulky.junit.JUnitTools.testClone;
-import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
-import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-import org.junit.Test;
-import org.junit.Before;
+import static de.huxhorn.sulky.junit.JUnitTools.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -38,35 +37,38 @@ public class EventIdentifierTest
 		fresh = new EventIdentifier();
 	}
 
-    @Test
-    public void constructorDefault() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        EventIdentifier instance=new EventIdentifier();
-        testSerialization(instance);
+	@Test
+	public void constructorDefault()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		EventIdentifier instance = new EventIdentifier();
+		testSerialization(instance);
 		testXmlSerialization(instance);
-        testClone(instance);
-    }
-
-    @Test
-    public void constructorFull() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException 
-    {
-        EventIdentifier instance=new EventIdentifier(new SourceIdentifier(), 17);
-        testSerialization(instance);
-		testXmlSerialization(instance);
-        testClone(instance);
-
-        instance=new EventIdentifier(null, 17);
-        testSerialization(instance);
-		testXmlSerialization(instance);
-        testClone(instance);
-    }
+		testClone(instance);
+	}
 
 	@Test
-	public void sourceIdentifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void constructorFull()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-		EventIdentifier instance=new EventIdentifier();
+		EventIdentifier instance = new EventIdentifier(new SourceIdentifier(), 17);
+		testSerialization(instance);
+		testXmlSerialization(instance);
+		testClone(instance);
 
-		SourceIdentifier value=new SourceIdentifier();
+		instance = new EventIdentifier(null, 17);
+		testSerialization(instance);
+		testXmlSerialization(instance);
+		testClone(instance);
+	}
+
+	@Test
+	public void sourceIdentifier()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	{
+		EventIdentifier instance = new EventIdentifier();
+
+		SourceIdentifier value = new SourceIdentifier();
 		instance.setSourceIdentifier(value);
 
 		{
@@ -87,11 +89,12 @@ public class EventIdentifierTest
 	}
 
 	@Test
-	public void localId() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void localId()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		EventIdentifier instance=new EventIdentifier();
+		EventIdentifier instance = new EventIdentifier();
 
-		long value=17;
+		long value = 17;
 		instance.setLocalId(value);
 
 		{

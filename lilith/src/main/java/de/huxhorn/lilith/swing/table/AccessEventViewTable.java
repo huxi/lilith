@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,26 @@ import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.*;
-import de.huxhorn.lilith.swing.table.tooltips.*;
+import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
+import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
+import de.huxhorn.lilith.swing.table.renderer.MethodRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ProtocolRenderer;
+import de.huxhorn.lilith.swing.table.renderer.RemoteAddrRenderer;
+import de.huxhorn.lilith.swing.table.renderer.RequestUriRenderer;
+import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
+import de.huxhorn.lilith.swing.table.renderer.StatusCodeRenderer;
+import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
+import de.huxhorn.lilith.swing.table.tooltips.ApplicationTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.RequestUrlTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.SourceTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.StatusCodeTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.TimestampTooltipGenerator;
 
-import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.swing.table.TableColumn;
 
 public class AccessEventViewTable
 	extends EventWrapperViewTable<AccessEvent>
@@ -50,17 +63,17 @@ public class AccessEventViewTable
 
 	protected void initTooltipGenerators()
 	{
-		tooltipGenerators=new HashMap<Object, TooltipGenerator>();
+		tooltipGenerators = new HashMap<Object, TooltipGenerator>();
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_TIMESTAMP,
-				new TimestampTooltipGenerator());
+			new TimestampTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_REQUEST_URI,
-				new RequestUrlTooltipGenerator());
+			new RequestUrlTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_STATUS_CODE,
-				new StatusCodeTooltipGenerator());
+			new StatusCodeTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATIION,
-				new ApplicationTooltipGenerator());
+			new ApplicationTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_SOURCE,
-				new SourceTooltipGenerator());
+			new SourceTooltipGenerator());
 	}
 
 	protected void initTableColumns()
@@ -125,7 +138,7 @@ public class AccessEventViewTable
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout()
 	{
 		ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo> result =
-				new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
+			new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
 
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_ID, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_TIMESTAMP, 75, true));
@@ -151,14 +164,14 @@ public class AccessEventViewTable
 		return mainFrame.getApplicationPreferences().readAccessColumnLayout(isGlobal());
 	}
 
-    @Override
-    public Colors resolveColors(Object object, int row, int column)
-    {
-        if(object instanceof HttpStatus.Type)
-        {
-            return mainFrame.getColors((HttpStatus.Type)object);
-        }
-        return super.resolveColors(object, row, column);
-    }
+	@Override
+	public Colors resolveColors(Object object, int row, int column)
+	{
+		if(object instanceof HttpStatus.Type)
+		{
+			return mainFrame.getColors((HttpStatus.Type) object);
+		}
+		return super.resolveColors(object, row, column);
+	}
 
 }

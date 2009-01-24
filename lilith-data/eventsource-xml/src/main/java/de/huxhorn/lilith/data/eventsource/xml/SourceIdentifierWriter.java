@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -55,13 +55,14 @@ public class SourceIdentifierWriter
 	}
 
 	public void write(XMLStreamWriter writer, SourceIdentifier sourceIdentifier, boolean isRoot)
-			throws XMLStreamException
+		throws XMLStreamException
 	{
 		if(isRoot)
 		{
-			writer.writeStartDocument("utf-8","1.0");
+			writer.writeStartDocument("utf-8", "1.0");
 		}
-		StaxUtilities.NamespaceInfo ni = StaxUtilities.setNamespace(writer, preferredPrefix, NAMESPACE_URI, DEFAULT_NAMESPACE_PREFIX);
+		StaxUtilities.NamespaceInfo ni = StaxUtilities
+			.setNamespace(writer, preferredPrefix, NAMESPACE_URI, DEFAULT_NAMESPACE_PREFIX);
 		String prefix = ni.getPrefix();
 
 		StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, SOURCE_IDENTIFIER_NODE);
@@ -71,22 +72,26 @@ public class SourceIdentifierWriter
 		}
 		if(isRoot && writingSchemaLocation)
 		{
-			writer.writeNamespace(StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX, StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI);
-			ni = StaxUtilities.setNamespace(writer, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX, StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX);
+			writer
+				.writeNamespace(StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX, StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI);
+			ni = StaxUtilities
+				.setNamespace(writer, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX, StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI, StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX);
 			if(ni.isCreated())
 			{
 				StaxUtilities.writeNamespace(writer, ni.getPrefix(), StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI);
 			}
 			StaxUtilities.writeAttribute(writer,
-					true,
-					StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX,
-					StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
-					StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
-					NAMESPACE_URI+" "+NAMESPACE_LOCATION);
+				true,
+				StaxUtilities.XML_SCHEMA_INSTANCE_PREFIX,
+				StaxUtilities.XML_SCHEMA_INSTANCE_NAMESPACE_URI,
+				StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
+				NAMESPACE_URI + " " + NAMESPACE_LOCATION);
 		}
-		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, IDENTIFIER_ATTRIBUTE, sourceIdentifier.getIdentifier());
+		StaxUtilities
+			.writeAttribute(writer, false, prefix, NAMESPACE_URI, IDENTIFIER_ATTRIBUTE, sourceIdentifier.getIdentifier());
 
-		StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, SECONDARY_IDENTIFIER_ATTRIBUTE, sourceIdentifier.getSecondaryIdentifier());
+		StaxUtilities
+			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, SECONDARY_IDENTIFIER_ATTRIBUTE, sourceIdentifier.getSecondaryIdentifier());
 		//writer.writeEndElement();
 		if(isRoot)
 		{

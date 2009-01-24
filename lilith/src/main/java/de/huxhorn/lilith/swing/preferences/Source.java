@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,12 +49,12 @@ public class Source
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		final Source source = (Source) o;
 
-		if (identifier != null ? !identifier.equals(source.identifier) : source.identifier != null) return false;
+		if(identifier != null ? !identifier.equals(source.identifier) : source.identifier != null) return false;
 		return !(name != null ? !name.equals(source.name) : source.name != null);
 	}
 
@@ -68,17 +68,17 @@ public class Source
 
 	public int compareTo(Object o)
 	{
-		Source other=(Source) o;
+		Source other = (Source) o;
 		//noinspection StringEquality
 		if(this.name == other.name)
 		{
 			return 0;
 		}
-		if(this.name==null)
+		if(this.name == null)
 		{
 			return -1;
 		}
-		if(other.name==null)
+		if(other.name == null)
 		{
 			return 1;
 		}

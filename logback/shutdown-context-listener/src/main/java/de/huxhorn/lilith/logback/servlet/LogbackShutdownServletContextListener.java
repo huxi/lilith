@@ -26,7 +26,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- *
  * See also: ch.qos.logback.classic.selector.servlet.ContextDetachingSCL
  */
 public class LogbackShutdownServletContextListener
@@ -35,29 +34,29 @@ public class LogbackShutdownServletContextListener
 	private ServletContext context;
 
 	public void contextDestroyed(ServletContextEvent sce)
-    {
+	{
 		shutdownLogback();
-		context=null;
+		context = null;
 	}
-	
+
 	public void contextInitialized(ServletContextEvent sce)
 	{
-		if(context!=null)
+		if(context != null)
 		{
 			System.err.println("There is a previous context.");
 			shutdownLogback();
 		}
-		context=sce.getServletContext();
+		context = sce.getServletContext();
 	}
 
 	private void shutdownLogback()
 	{
 		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-        if (loggerFactory instanceof LoggerContext)
+		if(loggerFactory instanceof LoggerContext)
 		{
-            LoggerContext loggerContext = (LoggerContext) loggerFactory;
-            loggerContext.stop();
+			LoggerContext loggerContext = (LoggerContext) loggerFactory;
+			loggerContext.stop();
 			System.err.println("Logback has been shut down.");
-        }
+		}
 	}
 }

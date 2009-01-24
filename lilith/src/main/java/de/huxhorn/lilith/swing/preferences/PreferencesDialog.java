@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,27 @@ import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
+
 import groovy.ui.Console;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.*;
 
 public class PreferencesDialog
 	extends JDialog
@@ -64,8 +71,8 @@ public class PreferencesDialog
 	public PreferencesDialog(MainFrame mainFrame)
 	{
 		super(mainFrame, "Preferences");
-		this.mainFrame=mainFrame;
-		this.applicationPreferences=mainFrame.getApplicationPreferences();
+		this.mainFrame = mainFrame;
+		this.applicationPreferences = mainFrame.getApplicationPreferences();
 		createUI();
 	}
 
@@ -83,8 +90,8 @@ public class PreferencesDialog
 		sourceFilteringPanel = new SourceFilteringPanel(this);
 		conditionsPanel = new ConditionsPanel(this);
 
-		tabbedPane=new JTabbedPane();
-		tabbedPane.setPreferredSize(new Dimension(600,500));
+		tabbedPane = new JTabbedPane();
+		tabbedPane.setPreferredSize(new Dimension(600, 500));
 
 		tabbedPane.add("General", generalPanel);
 		tabbedPane.add("Sounds", soundsPanel);
@@ -95,7 +102,7 @@ public class PreferencesDialog
 		//tabbedPane.setEnabledAt(tabbedPane.getTabCount()-1, false);
 
 		// Main buttons
-		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(new OkAction()));
 		buttonPanel.add(new JButton(new ApplyAction()));
 		buttonPanel.add(new JButton(new ResetAction()));
@@ -112,19 +119,18 @@ public class PreferencesDialog
 	}
 
 
-
 	private void initUI()
 	{
 		generalPanel.initUI();
 		soundsPanel.initUI();
 		sourceNames = applicationPreferences.getSourceNames();
-		if(sourceNames==null)
+		if(sourceNames == null)
 		{
-			sourceNames=new HashMap<String, String>();
+			sourceNames = new HashMap<String, String>();
 		}
 		else
 		{
-			sourceNames=new HashMap<String, String>(sourceNames);
+			sourceNames = new HashMap<String, String>(sourceNames);
 		}
 		sourceLists = applicationPreferences.getSourceLists();
 		conditionsPanel.initUI();
@@ -141,7 +147,7 @@ public class PreferencesDialog
 
 	public void setSourceNames(Map<String, String> sourceNames)
 	{
-		this.sourceNames=sourceNames;
+		this.sourceNames = sourceNames;
 		sourcesPanel.initUI();
 		sourceListsPanel.initUI();
 	}
@@ -163,8 +169,8 @@ public class PreferencesDialog
 		{
 			sourceLists.remove(oldName);
 		}
-		Set<String> newList=new HashSet<String>();
-		for(Source s:sourceList)
+		Set<String> newList = new HashSet<String>();
+		for(Source s : sourceList)
 		{
 			newList.add(s.getIdentifier());
 		}
@@ -175,11 +181,11 @@ public class PreferencesDialog
 
 	public List<Source> getSourceList(String name)
 	{
-		Set<String> srcList=sourceLists.get(name);
-		if(srcList!=null)
+		Set<String> srcList = sourceLists.get(name);
+		if(srcList != null)
 		{
-			List<Source> result=new ArrayList<Source>();
-			for(String current: srcList)
+			List<Source> result = new ArrayList<Source>();
+			for(String current : srcList)
 			{
 				Source s = new Source();
 				s.setIdentifier(current);
@@ -194,14 +200,13 @@ public class PreferencesDialog
 
 	private String getSourceName(String identifier)
 	{
-		String result=sourceNames.get(identifier);
-		if(result==null)
+		String result = sourceNames.get(identifier);
+		if(result == null)
 		{
-			result=identifier;
+			result = identifier;
 		}
 		return result;
 	}
-
 
 
 	private void saveSettings()
@@ -220,7 +225,7 @@ public class PreferencesDialog
 
 	private void resetSettings()
 	{
-        // just reinit from preferences, nobody would expect anything else...
+		// just reinit from preferences, nobody would expect anything else...
 		// applicationPreferences.reset();
 		initUI();
 	}
@@ -254,44 +259,44 @@ public class PreferencesDialog
 
 	public String getBlackListName()
 	{
-		if(blackListName==null)
+		if(blackListName == null)
 		{
-			blackListName=applicationPreferences.getBlackListName();
+			blackListName = applicationPreferences.getBlackListName();
 		}
 		return blackListName;
 	}
 
 	public String getWhiteListName()
 	{
-		if(whiteListName==null)
+		if(whiteListName == null)
 		{
-			whiteListName=applicationPreferences.getWhiteListName();
+			whiteListName = applicationPreferences.getWhiteListName();
 		}
 		return whiteListName;
 	}
 
 	public ApplicationPreferences.SourceFiltering getSourceFiltering()
 	{
-		if(sourceFiltering==null)
+		if(sourceFiltering == null)
 		{
-			sourceFiltering=applicationPreferences.getSourceFiltering();
+			sourceFiltering = applicationPreferences.getSourceFiltering();
 		}
 		return sourceFiltering;
 	}
 
 	public void setSourceFiltering(ApplicationPreferences.SourceFiltering sourceFiltering)
 	{
-		this.sourceFiltering=sourceFiltering;
+		this.sourceFiltering = sourceFiltering;
 	}
 
 	public void setBlackListName(String blackListName)
 	{
-		this.blackListName=blackListName;
+		this.blackListName = blackListName;
 	}
 
 	public void setWhiteListName(String whiteListName)
 	{
-		this.whiteListName=whiteListName;
+		this.whiteListName = whiteListName;
 	}
 
 	private class OkAction
@@ -370,11 +375,11 @@ public class PreferencesDialog
 		File messageViewRoot = applicationPreferences.getDetailsViewRoot();
 		File messageViewGroovyFile = new File(messageViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
 
-		EventWrapper<LoggingEvent> eventWrapper=new EventWrapper<LoggingEvent>(new SourceIdentifier("identifier", "secondaryIdentifier"), 17, new LoggingEvent());
+		EventWrapper<LoggingEvent> eventWrapper = new EventWrapper<LoggingEvent>(new SourceIdentifier("identifier", "secondaryIdentifier"), 17, new LoggingEvent());
 		console.setVariable("eventWrapper", eventWrapper);
 
 		console.setCurrentFileChooserDir(messageViewRoot);
-		String text="";
+		String text = "";
 		if(messageViewGroovyFile.isFile())
 		{
 			// TODO: init with default if not...
@@ -383,14 +388,14 @@ public class PreferencesDialog
 			{
 				is = new FileInputStream(messageViewGroovyFile);
 				List lines = IOUtils.readLines(is, "UTF-8");
-				boolean isFirst=true;
-				StringBuilder textBuffer=new StringBuilder();
-				for(Object o:lines)
+				boolean isFirst = true;
+				StringBuilder textBuffer = new StringBuilder();
+				for(Object o : lines)
 				{
-					String s= (String) o;
+					String s = (String) o;
 					if(isFirst)
 					{
-						isFirst=false;
+						isFirst = false;
 					}
 					else
 					{
@@ -398,11 +403,14 @@ public class PreferencesDialog
 					}
 					textBuffer.append(s);
 				}
-				text=textBuffer.toString();
+				text = textBuffer.toString();
 			}
-			catch (IOException e)
+			catch(IOException e)
 			{
-				if(logger.isInfoEnabled()) logger.info("Exception while reading '"+messageViewGroovyFile.getAbsolutePath()+"'.", e);
+				if(logger.isInfoEnabled())
+				{
+					logger.info("Exception while reading '" + messageViewGroovyFile.getAbsolutePath() + "'.", e);
+				}
 			}
 		}
 		console.run(); // initializes everything
@@ -410,15 +418,14 @@ public class PreferencesDialog
 		console.setScriptFile(messageViewGroovyFile);
 		JTextPane inputArea = console.getInputArea();
 		inputArea.setText(text);
-        console.setDirty(false);
-        inputArea.setCaretPosition(0);
+		console.setDirty(false);
+		inputArea.setCaretPosition(0);
 		inputArea.requestFocusInWindow();
 //		console.selectFilename();
 //		console.fileOpen();
 
 
 	}
-
 
 
 	public void editCondition(Condition condition)

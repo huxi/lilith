@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,30 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.*;
-import de.huxhorn.lilith.swing.table.tooltips.*;
+import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
+import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
+import de.huxhorn.lilith.swing.table.renderer.LevelRenderer;
+import de.huxhorn.lilith.swing.table.renderer.LoggerNameRenderer;
+import de.huxhorn.lilith.swing.table.renderer.MarkerRenderer;
+import de.huxhorn.lilith.swing.table.renderer.MessageRenderer;
+import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ThreadRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ThrowableRenderer;
+import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
+import de.huxhorn.lilith.swing.table.tooltips.ApplicationTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.LoggerNameTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.MarkerTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.MessageTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.SourceTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.ThreadTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.ThrowableTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.TimestampTooltipGenerator;
 
-import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.swing.table.TableColumn;
 
 public class LoggingEventViewTable
 	extends EventWrapperViewTable<LoggingEvent>
@@ -50,23 +67,23 @@ public class LoggingEventViewTable
 
 	protected void initTooltipGenerators()
 	{
-		tooltipGenerators=new HashMap<Object, TooltipGenerator>();
+		tooltipGenerators = new HashMap<Object, TooltipGenerator>();
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_LOGGER_NAME,
-				new LoggerNameTooltipGenerator());
+			new LoggerNameTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_MARKER,
-				new MarkerTooltipGenerator());
+			new MarkerTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_MESSAGE,
-				new MessageTooltipGenerator());
+			new MessageTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_THREAD,
-				new ThreadTooltipGenerator());
+			new ThreadTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_THROWABLE,
-				new ThrowableTooltipGenerator());
+			new ThrowableTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_TIMESTAMP,
-				new TimestampTooltipGenerator());
+			new TimestampTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATIION,
-				new ApplicationTooltipGenerator());
+			new ApplicationTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_SOURCE,
-				new SourceTooltipGenerator());
+			new SourceTooltipGenerator());
 	}
 
 	protected void initTableColumns()
@@ -137,7 +154,7 @@ public class LoggingEventViewTable
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout()
 	{
 		ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo> result =
-				new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
+			new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
 
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_ID, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_TIMESTAMP, 75, true));
@@ -164,13 +181,13 @@ public class LoggingEventViewTable
 		return mainFrame.getApplicationPreferences().readLoggingColumnLayout(isGlobal());
 	}
 
-    @Override
-    public Colors resolveColors(Object object, int row, int column)
-    {
-        if(object instanceof LoggingEvent.Level)
-        {
-            return mainFrame.getColors((LoggingEvent.Level)object);
-        }
-        return super.resolveColors(object, row, column);
-    }
+	@Override
+	public Colors resolveColors(Object object, int row, int column)
+	{
+		if(object instanceof LoggingEvent.Level)
+		{
+			return mainFrame.getColors((LoggingEvent.Level) object);
+		}
+		return super.resolveColors(object, row, column);
+	}
 }

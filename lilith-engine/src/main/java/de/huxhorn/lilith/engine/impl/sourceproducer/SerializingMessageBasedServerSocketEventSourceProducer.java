@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,12 @@
  */
 package de.huxhorn.lilith.engine.impl.sourceproducer;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.SerializingMessageBasedEventProducer;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.AppendOperation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,17 +31,17 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Serializable>
-		extends AbstractServerSocketEventSourceProducer<T>
+	extends AbstractServerSocketEventSourceProducer<T>
 {
 	final Logger logger = LoggerFactory.getLogger(SerializingMessageBasedServerSocketEventSourceProducer.class);
 	private boolean compressing;
 
 
 	public SerializingMessageBasedServerSocketEventSourceProducer(int port, boolean compressing)
-			throws IOException
+		throws IOException
 	{
 		super(port);
-		this.compressing=compressing;
+		this.compressing = compressing;
 	}
 
 	public boolean isCompressing()
@@ -49,7 +50,7 @@ public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Se
 	}
 
 	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
-			throws IOException
+		throws IOException
 	{
 		return new SerializingMessageBasedEventProducer<T>(id, eventQueue, inputStream, compressing);
 	}
@@ -57,6 +58,6 @@ public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Se
 	@Override
 	public String toString()
 	{
-		return "SerializingMessageBasedServerSocketEventSourceProducer[port="+getPort()+", compressing="+compressing+"]";
+		return "SerializingMessageBasedServerSocketEventSourceProducer[port=" + getPort() + ", compressing=" + compressing + "]";
 	}
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,34 +17,34 @@
  */
 package de.huxhorn.lilith.swing.table.tooltips;
 
-import de.huxhorn.lilith.swing.table.TooltipGenerator;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
-import javax.swing.JTable;
+import javax.swing.*;
 
 public class SourceTooltipGenerator
 	implements TooltipGenerator
 {
 	public String createTooltipText(JTable table, int row)
 	{
-		String tooltip=null;
-		Object value=table.getValueAt(row,0);
+		String tooltip = null;
+		Object value = table.getValueAt(row, 0);
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper=(EventWrapper)value;
+			EventWrapper wrapper = (EventWrapper) value;
 			SourceIdentifier id = wrapper.getSourceIdentifier();
-			StringBuilder msg=new StringBuilder();
+			StringBuilder msg = new StringBuilder();
 			msg.append("<html>");
 			msg.append("Primary: ").append(id.getIdentifier());
-			String secondary=id.getSecondaryIdentifier();
-			if(secondary!=null)
+			String secondary = id.getSecondaryIdentifier();
+			if(secondary != null)
 			{
 				msg.append("<br>");
 				msg.append("Secondary: ").append(secondary);
 			}
 			msg.append("</html>");
-			tooltip=msg.toString();
+			tooltip = msg.toString();
 		}
 		return tooltip;
 	}

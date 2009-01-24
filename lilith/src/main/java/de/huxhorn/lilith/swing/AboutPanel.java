@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,24 +20,29 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.sulky.swing.GraphicsUtilities;
 import de.huxhorn.sulky.swing.filters.ColorTintFilter;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.Kernel;
-import java.awt.image.ConvolveOp;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.net.URL;
-import java.util.*;
-import java.util.List;
-import java.io.IOException;
-import javax.swing.*;
-import javax.swing.Timer;
-import javax.swing.event.MouseInputAdapter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 
 // TODO: get/setMouseHandling/MouseInputMode
 // TODO: setVersionHeight(versionHeight);
@@ -51,6 +56,7 @@ import org.slf4j.LoggerFactory;
 // TODO: scroll-area defined by object-array containing icons and strings...
 // TODO: transient attributes
 // TODO: serialVersion
+
 // TODO: use ResourceSupport
 /**
  * <code>AboutPanel</code> is a component which has a background-image and a
@@ -59,43 +65,44 @@ import org.slf4j.LoggerFactory;
  * the scroll-text itself. An optional version-string may be given that will be
  * painted centered relative to the scroll-area.
  *
- * @author   Joern Huxhorn
+ * @author Joern Huxhorn
  */
-public class AboutPanel extends JComponent
+public class AboutPanel
+	extends JComponent
 {
 	private final Logger logger = LoggerFactory.getLogger(AboutPanel.class);
 
-	public static final String BACKGROUND_IMAGE_RESOURCE="background.png";
-	public static final String ABOUT_IMAGE_RESOURCE="about.png";
+	public static final String BACKGROUND_IMAGE_RESOURCE = "background.png";
+	public static final String ABOUT_IMAGE_RESOURCE = "about.png";
 
-	public static final String TEXT_RESOURCE_PREFIX="about.";
+	public static final String TEXT_RESOURCE_PREFIX = "about.";
 
-	public static final String SCROLL_TEXT_RESOURCE=
-			TEXT_RESOURCE_PREFIX+"scroll.text";
-	public static final String VERSION_TEXT_RESOURCE=
-			TEXT_RESOURCE_PREFIX+"version.text";
-	public static final String VERSION_HEIGHT_RESOURCE=
-			TEXT_RESOURCE_PREFIX+"version.height";
-	public static final String SCROLL_AREA_RESOURCE_BASE=
-			TEXT_RESOURCE_PREFIX+"scroll.area.";
-	public static final String SCROLL_AREA_X_RESOURCE=
-			SCROLL_AREA_RESOURCE_BASE+"x";
-	public static final String SCROLL_AREA_Y_RESOURCE=
-			SCROLL_AREA_RESOURCE_BASE+"y";
-	public static final String SCROLL_AREA_WIDTH_RESOURCE=
-			SCROLL_AREA_RESOURCE_BASE+"width";
-	public static final String SCROLL_AREA_HEIGHT_RESOURCE=
-			SCROLL_AREA_RESOURCE_BASE+"height";
-	public static final String SCROLL_AREA_TOOLTIP_TEXT_RESOURCE=
-			SCROLL_AREA_RESOURCE_BASE+"tooltip.text";
+	public static final String SCROLL_TEXT_RESOURCE =
+		TEXT_RESOURCE_PREFIX + "scroll.text";
+	public static final String VERSION_TEXT_RESOURCE =
+		TEXT_RESOURCE_PREFIX + "version.text";
+	public static final String VERSION_HEIGHT_RESOURCE =
+		TEXT_RESOURCE_PREFIX + "version.height";
+	public static final String SCROLL_AREA_RESOURCE_BASE =
+		TEXT_RESOURCE_PREFIX + "scroll.area.";
+	public static final String SCROLL_AREA_X_RESOURCE =
+		SCROLL_AREA_RESOURCE_BASE + "x";
+	public static final String SCROLL_AREA_Y_RESOURCE =
+		SCROLL_AREA_RESOURCE_BASE + "y";
+	public static final String SCROLL_AREA_WIDTH_RESOURCE =
+		SCROLL_AREA_RESOURCE_BASE + "width";
+	public static final String SCROLL_AREA_HEIGHT_RESOURCE =
+		SCROLL_AREA_RESOURCE_BASE + "height";
+	public static final String SCROLL_AREA_TOOLTIP_TEXT_RESOURCE =
+		SCROLL_AREA_RESOURCE_BASE + "tooltip.text";
 
 
-	public static final String TEXT_RESOURCE_BUNDLE_RESOURCE="TextResources";
+	public static final String TEXT_RESOURCE_BUNDLE_RESOURCE = "TextResources";
 
-	public static final int MOUSE_DISABLED=0;
-	public static final int MOUSE_COMPONENT=1;
-	public static final int MOUSE_SCROLLAREA=2;
-	public static final int MOUSE_BACKGROUND=3;
+	public static final int MOUSE_DISABLED = 0;
+	public static final int MOUSE_COMPONENT = 1;
+	public static final int MOUSE_SCROLLAREA = 2;
+	public static final int MOUSE_BACKGROUND = 3;
 
 	//private static final int SCROLL_SLEEP_TIME = 50;
 	private static final int SCROLL_PIXELS = 1;
@@ -132,7 +139,7 @@ public class AboutPanel extends JComponent
 	//private boolean offscreenInitialized = false;
 	//private boolean scrollInitialized = false;
 	//private boolean painted;
-	private int mouseEventHandling=MOUSE_BACKGROUND;
+	private int mouseEventHandling = MOUSE_BACKGROUND;
 	//private transient Thread scrollThread;
 	private boolean debug;
 	private Timer timer;
@@ -143,17 +150,17 @@ public class AboutPanel extends JComponent
 	/**
 	 * Creates a new <code>AboutPanel</code> initialized with the given parameters.
 	 *
-	 * @param backgroundImageUrl  The URL to the Background-Image of the
-	 *      AboutPanel. This parameter is mandatory.
-	 * @param scrollArea          The Rectangle inside the background-image where
-	 *      scrolling should take place. This parameter is optional. If it's null
-	 *      then the scroll-area is set to (0, 0, background.width,
-	 *      background.height).
+	 * @param backgroundImageUrl The URL to the Background-Image of the
+	 *                           AboutPanel. This parameter is mandatory.
+	 * @param scrollArea         The Rectangle inside the background-image where
+	 *                           scrolling should take place. This parameter is optional. If it's null
+	 *                           then the scroll-area is set to (0, 0, background.width,
+	 *                           background.height).
 	 */
-	public AboutPanel( URL backgroundImageUrl, Rectangle scrollArea, String scrollText )
-			throws IOException
+	public AboutPanel(URL backgroundImageUrl, Rectangle scrollArea, String scrollText)
+		throws IOException
 	{
-		this( backgroundImageUrl, scrollArea, scrollText, null, null, -1 );
+		this(backgroundImageUrl, scrollArea, scrollText, null, null, -1);
 	}
 
 	public boolean isDebug()
@@ -169,77 +176,77 @@ public class AboutPanel extends JComponent
 	/**
 	 * Creates a new <code>AboutPanel</code> initialized with the given parameters.
 	 *
-	 * @param backgroundImageUrl  The URL to the Background-Image of the
-	 *      AboutPanel. This parameter is mandatory.
-	 * @param scrollArea          The Rectangle inside the background-image where
-	 *      scrolling should take place. This parameter is optional. If it's null
-	 *      then the scroll-area is set to (0, 0, background.width,
-	 *      background.height).
-	 * @param versionText         The String describing the version of the program.
-	 *      It is painted centered to the scroll-rectangle at the specified height.
-	 *      This parameter is optional.
-	 * @param versionHeight       The height at which the version-string is
-	 *      supposed to be painted. This parameter is optional but should be given
-	 *      a correct value if versionText!=null..
+	 * @param backgroundImageUrl The URL to the Background-Image of the
+	 *                           AboutPanel. This parameter is mandatory.
+	 * @param scrollArea         The Rectangle inside the background-image where
+	 *                           scrolling should take place. This parameter is optional. If it's null
+	 *                           then the scroll-area is set to (0, 0, background.width,
+	 *                           background.height).
+	 * @param versionText        The String describing the version of the program.
+	 *                           It is painted centered to the scroll-rectangle at the specified height.
+	 *                           This parameter is optional.
+	 * @param versionHeight      The height at which the version-string is
+	 *                           supposed to be painted. This parameter is optional but should be given
+	 *                           a correct value if versionText!=null..
 	 */
-	public AboutPanel( URL backgroundImageUrl, Rectangle scrollArea, String scrollText, String versionText, int versionHeight )
-			throws IOException
+	public AboutPanel(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, String versionText, int versionHeight)
+		throws IOException
 	{
-		this( backgroundImageUrl, scrollArea, scrollText, null, versionText, versionHeight );
+		this(backgroundImageUrl, scrollArea, scrollText, null, versionText, versionHeight);
 	}
 
 
 	/**
 	 * Creates a new <code>AboutPanel</code> initialized with the given parameters.
 	 *
-	 * @param backgroundImageUrl  The URL to the Background-Image of the
-	 *      AboutPanel. This parameter is mandatory.
-	 * @param scrollArea          The Rectangle inside the background-image where
-	 *      scrolling should take place. This parameter is optional. If it's null
-	 *      then the scroll-area is set to (0, 0, background.width,
-	 *      background.height).
-	 * @param imageUrl            The URL to the Image that will be painted at the
-	 *      start of the scroll-area. This parameter is optional.
-	 * @param versionText         The String describing the version of the program.
-	 *      It is painted centered to the scroll-rectangle at the specified height.
-	 *      This parameter is optional.
-	 * @param versionHeight       The height at which the version-string is
-	 *      supposed to be painted. This parameter is optional but should be given
-	 *      a correct value if versionText!=null..
+	 * @param backgroundImageUrl The URL to the Background-Image of the
+	 *                           AboutPanel. This parameter is mandatory.
+	 * @param scrollArea         The Rectangle inside the background-image where
+	 *                           scrolling should take place. This parameter is optional. If it's null
+	 *                           then the scroll-area is set to (0, 0, background.width,
+	 *                           background.height).
+	 * @param imageUrl           The URL to the Image that will be painted at the
+	 *                           start of the scroll-area. This parameter is optional.
+	 * @param versionText        The String describing the version of the program.
+	 *                           It is painted centered to the scroll-rectangle at the specified height.
+	 *                           This parameter is optional.
+	 * @param versionHeight      The height at which the version-string is
+	 *                           supposed to be painted. This parameter is optional but should be given
+	 *                           a correct value if versionText!=null..
 	 */
-	public AboutPanel( URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight )
-			throws IOException
+	public AboutPanel(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight)
+		throws IOException
 	{
 		this();
-		if ( backgroundImageUrl == null )
+		if(backgroundImageUrl == null)
 		{
-			throw new NullPointerException( "backgroundImageUrl must not be null!" );
+			throw new NullPointerException("backgroundImageUrl must not be null!");
 		}
-		if ( scrollText == null )
+		if(scrollText == null)
 		{
-			throw new NullPointerException( "scrollText must not be null!" );
+			throw new NullPointerException("scrollText must not be null!");
 		}
-		init(backgroundImageUrl, scrollArea, scrollText, imageUrl, versionText, versionHeight );
+		init(backgroundImageUrl, scrollArea, scrollText, imageUrl, versionText, versionHeight);
 	}
 
 	public AboutPanel()
 	{
-		ActionListener timerListener=new TimerActionListener();
-		timer=new Timer(10, timerListener);
+		ActionListener timerListener = new TimerActionListener();
+		timer = new Timer(10, timerListener);
 		//this.resourceSupport=new ResourceSupport(this);
 		initAttributes();
 
-		addPropertyChangeListener( new AboutPropertyChangeListener() );
-		addComponentListener( new AboutComponentListener() );
+		addPropertyChangeListener(new AboutPropertyChangeListener());
+		addComponentListener(new AboutComponentListener());
 
-		setFont( null );// initializes to Label.font
+		setFont(null);// initializes to Label.font
 		AboutMouseInputListener mouseInputListener = new AboutMouseInputListener();
-		addMouseListener( mouseInputListener );
-		addMouseMotionListener( mouseInputListener );
+		addMouseListener(mouseInputListener);
+		addMouseMotionListener(mouseInputListener);
 
 		//this.scrollThread=null;
 
-		setScrolling( false );
+		setScrolling(false);
 //		initResources();
 	}
 
@@ -350,12 +357,16 @@ public class AboutPanel extends JComponent
 //		return result;
 //	}
 
-	private void init( URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight ) throws IOException
+	private void init(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight)
+		throws IOException
 	{
-		if(logger.isDebugEnabled()) logger.debug("init called with following arguments: backgroundImageUrl="+backgroundImageUrl+", " +
-				"scrollArea="+scrollArea+", scrollText="+scrollText+", imageUrl="+imageUrl+", versionText="+versionText+", versionHeight="+versionHeight);
-		setBackgroundImage( backgroundImageUrl );
-		setScrollArea( scrollArea );
+		if(logger.isDebugEnabled())
+		{
+			logger.debug("init called with following arguments: backgroundImageUrl=" + backgroundImageUrl + ", " +
+				"scrollArea=" + scrollArea + ", scrollText=" + scrollText + ", imageUrl=" + imageUrl + ", versionText=" + versionText + ", versionHeight=" + versionHeight);
+		}
+		setBackgroundImage(backgroundImageUrl);
+		setScrollArea(scrollArea);
 		setAboutImage(imageUrl);
 		this.versionText = versionText;
 		this.versionHeight = versionHeight;
@@ -385,7 +396,7 @@ public class AboutPanel extends JComponent
 		offscreenOffset = new Point();
 		backgroundImageArea = new Rectangle();
 		translatedScrollArea = new Rectangle();
-		translatedBackgroundImageArea=new Rectangle();
+		translatedBackgroundImageArea = new Rectangle();
 		scrollArea = new Rectangle();
 		paintArea = new Rectangle();
 		insets = getInsets();
@@ -394,16 +405,16 @@ public class AboutPanel extends JComponent
 
 	public void setScrollText(String ScrollText)
 	{
-		StringTokenizer st = new StringTokenizer(ScrollText,"\n",true);
+		StringTokenizer st = new StringTokenizer(ScrollText, "\n", true);
 
-		List<String> lines=new ArrayList<String>(st.countTokens()/2);
-		String prevToken=null;
+		List<String> lines = new ArrayList<String>(st.countTokens() / 2);
+		String prevToken = null;
 		while(st.hasMoreTokens())
 		{
-			String token=st.nextToken();
+			String token = st.nextToken();
 			if(token.equals("\n"))
 			{
-				if(prevToken!=null && !prevToken.equals("\n"))
+				if(prevToken != null && !prevToken.equals("\n"))
 				{
 					lines.add(prevToken);
 				}
@@ -412,26 +423,29 @@ public class AboutPanel extends JComponent
 					lines.add("");
 				}
 			}
-			prevToken=token;
+			prevToken = token;
 		}
-		if(prevToken!=null && !prevToken.equals("\n"))
+		if(prevToken != null && !prevToken.equals("\n"))
 		{
 			lines.add(prevToken);
 		}
 
-		String loScrollLines[]=new String[lines.size()];
-		loScrollLines=lines.toArray(loScrollLines);
+		String loScrollLines[] = new String[lines.size()];
+		loScrollLines = lines.toArray(loScrollLines);
 		setScrollLines(loScrollLines);
 	}
 
 	protected void setScrollLines(String[] scrollLines)
 	{
-        if(scrollLines == null)
-        {
-        	NullPointerException ex=new NullPointerException("scrollLines must not be null!");
-        	if(logger.isDebugEnabled()) logger.debug("Parameter 'scrollLines' of method 'setScrollLines' must not be null!", ex);
-        	throw ex;
-        }
+		if(scrollLines == null)
+		{
+			NullPointerException ex = new NullPointerException("scrollLines must not be null!");
+			if(logger.isDebugEnabled())
+			{
+				logger.debug("Parameter 'scrollLines' of method 'setScrollLines' must not be null!", ex);
+			}
+			throw ex;
+		}
 
 		this.scrollLines = scrollLines.clone();
 		flushScrollImage();
@@ -439,9 +453,9 @@ public class AboutPanel extends JComponent
 
 	/**
 	 * Sets the backgroundImage attribute of the <code>AboutPanel</code> object
-	 *
 	 */
-	public void setBackgroundImage( URL imageUrl ) throws IOException
+	public void setBackgroundImage(URL imageUrl)
+		throws IOException
 	{
 		setBackgroundImage(GraphicsUtilities.loadCompatibleImage(imageUrl));
 	}
@@ -450,32 +464,33 @@ public class AboutPanel extends JComponent
 	/**
 	 * Sets the backgroundImage attribute of the <code>AboutPanel</code> object
 	 *
-	 * @param BackgroundImage  The new backgroundImage value
+	 * @param BackgroundImage The new backgroundImage value
 	 */
-	public void setBackgroundImage( BufferedImage BackgroundImage )
+	public void setBackgroundImage(BufferedImage BackgroundImage)
 	{
-		if(backgroundImage!=null)
+		if(backgroundImage != null)
 		{
 			backgroundImage.flush();
-			backgroundImage=null;
+			backgroundImage = null;
 		}
 		backgroundImage = BackgroundImage;
 		updateBackgroundAttributes();
 	}
 
 
-	public void setAboutImage( URL imageUrl ) throws IOException
+	public void setAboutImage(URL imageUrl)
+		throws IOException
 	{
 		setAboutImage(GraphicsUtilities.loadCompatibleImage(imageUrl));
 	}
 
 
-	public void setAboutImage( BufferedImage AboutImage )
+	public void setAboutImage(BufferedImage AboutImage)
 	{
-		if(aboutImage!=null)
+		if(aboutImage != null)
 		{
 			aboutImage.flush();
-			aboutImage=null;
+			aboutImage = null;
 		}
 		aboutImage = AboutImage;
 		flushScrollImage();
@@ -484,13 +499,13 @@ public class AboutPanel extends JComponent
 	/**
 	 * Sets the scrollArea attribute of the <code>AboutPanel</code> object
 	 *
-	 * @param ScrollArea  The new scrollArea value
+	 * @param ScrollArea The new scrollArea value
 	 */
-	public void setScrollArea( Rectangle ScrollArea )
+	public void setScrollArea(Rectangle ScrollArea)
 	{
-		if ( ScrollArea != null )
+		if(ScrollArea != null)
 		{
-			maxScrollArea = backgroundImageArea.intersection( ScrollArea );
+			maxScrollArea = backgroundImageArea.intersection(ScrollArea);
 		}
 		else
 		{
@@ -507,13 +522,13 @@ public class AboutPanel extends JComponent
 	 */
 	private void flushScrollImage()
 	{
-		if ( scrollImage != null )
+		if(scrollImage != null)
 		{
-			if(logger.isInfoEnabled()) logger.info( "Flushing ScrollImage" );
+			if(logger.isInfoEnabled()) logger.info("Flushing ScrollImage");
 			scrollImage.flush();
 			scrollImage = null;
 		}
-		setScrollPosition( minScrollPosition );
+		setScrollPosition(minScrollPosition);
 	}
 
 
@@ -522,9 +537,9 @@ public class AboutPanel extends JComponent
 	 */
 	private void flushOffscreenImage()
 	{
-		if ( offscreenImage != null )
+		if(offscreenImage != null)
 		{
-			if(logger.isInfoEnabled()) logger.info( "Flushing OffscreenImage" );
+			if(logger.isInfoEnabled()) logger.info("Flushing OffscreenImage");
 			offscreenImage.flush();
 			offscreenImage = null;
 		}
@@ -543,9 +558,9 @@ public class AboutPanel extends JComponent
 
 		calculatePreferredSize();
 
-		if ( maxScrollArea != null )
+		if(maxScrollArea != null)
 		{
-			maxScrollArea = maxScrollArea.intersection( backgroundImageArea );
+			maxScrollArea = maxScrollArea.intersection(backgroundImageArea);
 		}
 		else
 		{
@@ -561,9 +576,9 @@ public class AboutPanel extends JComponent
 	 * Sets the ToolTipText that will appear if the user moves the mouse over the
 	 * scroll-area of this component.
 	 *
-	 * @param toolTipText  The new ScrollAreaToolTipText value
+	 * @param toolTipText The new ScrollAreaToolTipText value
 	 */
-	public void setScrollAreaToolTipText( String toolTipText )
+	public void setScrollAreaToolTipText(String toolTipText)
 	{
 		scrollAreaToolTipText = toolTipText;
 	}
@@ -573,7 +588,7 @@ public class AboutPanel extends JComponent
 	 * Gets the ScrollAreaToolTipText attribute of the <code>AboutPanel</code>
 	 * object
 	 *
-	 * @return   The ScrollAreaToolTipText value
+	 * @return The ScrollAreaToolTipText value
 	 */
 	public String getScrollAreaToolTipText()
 	{
@@ -584,15 +599,15 @@ public class AboutPanel extends JComponent
 	/**
 	 * This method returns ScrollAreaToolTipText if the point of the <code>MouseEvent</code>
 	 * is inside the scroll-area and <code>null</code> otherwise.<p />
-	 *
+	 * <p/>
 	 * It's needed by the <code>ToolTipManager</code> .
 	 *
-	 * @param evt  a <code>MouseEvent</code>.
-	 * @return     The toolTipText value for the <code>ToolTipManager</code>.
+	 * @param evt a <code>MouseEvent</code>.
+	 * @return The toolTipText value for the <code>ToolTipManager</code>.
 	 */
-	public String getToolTipText( MouseEvent evt )
+	public String getToolTipText(MouseEvent evt)
 	{
-		if ( handleMouseEvent(evt) )
+		if(handleMouseEvent(evt))
 		{
 			return scrollAreaToolTipText;
 		}
@@ -601,25 +616,25 @@ public class AboutPanel extends JComponent
 
 	protected boolean handleMouseEvent(MouseEvent evt)
 	{
-		Rectangle loArea=null;
-		if( mouseEventHandling==MOUSE_BACKGROUND )
+		Rectangle loArea = null;
+		if(mouseEventHandling == MOUSE_BACKGROUND)
 		{
-			loArea=translatedBackgroundImageArea;
+			loArea = translatedBackgroundImageArea;
 		}
-		else if ( mouseEventHandling==MOUSE_SCROLLAREA )
+		else if(mouseEventHandling == MOUSE_SCROLLAREA)
 		{
-			loArea=translatedScrollArea;
+			loArea = translatedScrollArea;
 		}
-		else if ( mouseEventHandling==MOUSE_DISABLED )
+		else if(mouseEventHandling == MOUSE_DISABLED)
 		{
 			return false;
 		}
-		Point loPoint=evt.getPoint();
-		if(loArea==null)
+		Point loPoint = evt.getPoint();
+		if(loArea == null)
 		{	// -> default: MOUSE_COMPONENT
-			return contains( loPoint );
+			return contains(loPoint);
 		}
-		if(loArea.contains( loPoint ))
+		if(loArea.contains(loPoint))
 		{	// MOUSE_BACKGROUND / MOUSE_SCROLLAREA
 			return true;
 		}
@@ -632,11 +647,11 @@ public class AboutPanel extends JComponent
 	 * scroll-thread and calls <code>setScrollPosition</code>, therefore causing a
 	 * repaint of the scroll-area..
 	 *
-	 * @see   #setScrollPosition
+	 * @see #setScrollPosition
 	 */
 	protected void increaseScrollPosition()
 	{
-		setScrollPosition( scrollPosition + SCROLL_PIXELS );
+		setScrollPosition(scrollPosition + SCROLL_PIXELS);
 	}
 
 
@@ -645,26 +660,26 @@ public class AboutPanel extends JComponent
 	 * value will be corrected according Minimum- and MaximumScrollPosition.
 	 * Changing the scroll-position will result in a repaint of the scroll-area.
 	 *
-	 * @param scrollPosition  The new scrollPosition value. This value indicates
-	 *      the height-offset of the scroll-area.
-	 * @see                   #getMinimumScrollPosition
-	 * @see                   #getMaximumScrollPosition
+	 * @param scrollPosition The new scrollPosition value. This value indicates
+	 *                       the height-offset of the scroll-area.
+	 * @see #getMinimumScrollPosition
+	 * @see #getMaximumScrollPosition
 	 */
-	public void setScrollPosition( int scrollPosition )
+	public void setScrollPosition(int scrollPosition)
 	{
-		if ( scrollPosition > maxScrollPosition )
+		if(scrollPosition > maxScrollPosition)
 		{
 			int remainder = scrollPosition % maxScrollPosition;
 
 			scrollPosition = minScrollPosition + remainder;
 		}
-		else if ( scrollPosition < minScrollPosition )
+		else if(scrollPosition < minScrollPosition)
 		{
 			int remainder = scrollPosition % minScrollPosition;
 
 			scrollPosition = maxScrollPosition + remainder;
 		}
-		if ( this.scrollPosition != scrollPosition )
+		if(this.scrollPosition != scrollPosition)
 		{
 			this.scrollPosition = scrollPosition;
 			repaintScrollArea();
@@ -675,7 +690,7 @@ public class AboutPanel extends JComponent
 	/**
 	 * Gets the ScrollPosition attribute of the <code>AboutPanel</code> object
 	 *
-	 * @return   this value indicates the height-offset of the scroll-area.
+	 * @return this value indicates the height-offset of the scroll-area.
 	 */
 	public int getScrollPosition()
 	{
@@ -687,7 +702,7 @@ public class AboutPanel extends JComponent
 	 * Gets the MinimumScrollPosition attribute of the <code>AboutPanel</code>
 	 * object. It's value is the negated value of the scroll-area-height.
 	 *
-	 * @return   The MinimumScrollPosition value
+	 * @return The MinimumScrollPosition value
 	 */
 	public int getMinimumScrollPosition()
 	{
@@ -700,7 +715,7 @@ public class AboutPanel extends JComponent
 	 * object. It's value is the height needed for all lines of text plus (if
 	 * available) the height of the image with an additional empty line.
 	 *
-	 * @return   The MaximumScrollPosition value
+	 * @return The MaximumScrollPosition value
 	 */
 	public int getMaximumScrollPosition()
 	{
@@ -716,33 +731,35 @@ public class AboutPanel extends JComponent
 	private void processOffscreenImage()
 	{
 		Graphics2D g;
-		if ( offscreenImage == null )
+		if(offscreenImage == null)
 		{
-			if(logger.isInfoEnabled()) logger.info( "Creating offscreen-image" );
+			if(logger.isInfoEnabled()) logger.info("Creating offscreen-image");
 			boolean opaque = false;
 			if(isOpaque())
 			{
-				offscreenImage = GraphicsUtilities.createOpaqueCompatibleImage(backgroundImageArea.width, backgroundImageArea.height );
+				offscreenImage = GraphicsUtilities
+					.createOpaqueCompatibleImage(backgroundImageArea.width, backgroundImageArea.height);
 				opaque = true;
 			}
 			else
 			{
-				offscreenImage = GraphicsUtilities.createTranslucentCompatibleImage(backgroundImageArea.width, backgroundImageArea.height );
+				offscreenImage = GraphicsUtilities
+					.createTranslucentCompatibleImage(backgroundImageArea.width, backgroundImageArea.height);
 			}
 			g = (Graphics2D) offscreenImage.getGraphics();
 			if(opaque)
 			{
 				g.setColor(getBackground());
-				g.fillRect( backgroundImageArea.x, backgroundImageArea.y , backgroundImageArea.width, backgroundImageArea.height );
+				g.fillRect(backgroundImageArea.x, backgroundImageArea.y, backgroundImageArea.width, backgroundImageArea.height);
 			}
-			g.drawImage( backgroundImage, 0, 0, null );
-			if ( versionText != null )
+			g.drawImage(backgroundImage, 0, 0, null);
+			if(versionText != null)
 			{
 				// draw version-text...
-				g.setColor( getForeground() );
-				g.drawString( versionText, maxScrollArea.x +
-						( maxScrollArea.width - fontMetrics.stringWidth( versionText ) ) / 2,
-						versionHeight );
+				g.setColor(getForeground());
+				g.drawString(versionText, maxScrollArea.x +
+					(maxScrollArea.width - fontMetrics.stringWidth(versionText)) / 2,
+					versionHeight);
 			}
 		}
 		else
@@ -751,9 +768,9 @@ public class AboutPanel extends JComponent
 		}
 
 
-		g.setFont( getFont() );
+		g.setFont(getFont());
 
-		drawScrollArea( g );
+		drawScrollArea(g);
 		g.dispose();
 	}
 
@@ -762,34 +779,34 @@ public class AboutPanel extends JComponent
 	 * Updates the offscreen-image to represent the current scroll-position. It
 	 * calls <code>initScrollImage()</code>.
 	 *
-	 * @param g  <code>Graphics</code>-object
+	 * @param g <code>Graphics</code>-object
 	 */
-	private void drawScrollArea( Graphics2D g )
+	private void drawScrollArea(Graphics2D g)
 	{
 		initScrollImage();
 		// only draw in the scroll-area
-		g.setClip( scrollArea.x, scrollArea.y, scrollArea.width, scrollArea.height );
+		g.setClip(scrollArea.x, scrollArea.y, scrollArea.width, scrollArea.height);
 		// clear background for transparent bg-images
 		g.setColor(getBackground());
-		g.fillRect( scrollArea.x, scrollArea.y, scrollArea.width, scrollArea.height );
+		g.fillRect(scrollArea.x, scrollArea.y, scrollArea.width, scrollArea.height);
 		// draw background-image
-		g.drawImage( backgroundImage, 0, 0, this );
+		g.drawImage(backgroundImage, 0, 0, this);
 		// redraw version-text if available.
-		if ( versionText != null )
+		if(versionText != null)
 		{
-			g.setColor( getForeground() );
+			g.setColor(getForeground());
 
-			g.drawString( versionText, maxScrollArea.x +
-					( maxScrollArea.width - fontMetrics.stringWidth( versionText ) ) / 2,
-					versionHeight );
+			g.drawString(versionText, maxScrollArea.x +
+				(maxScrollArea.width - fontMetrics.stringWidth(versionText)) / 2,
+				versionHeight);
 		}
 		// draw proper part of precalculated scroll-image.
-		g.drawImage( scrollImage, scrollArea.x,
-				scrollArea.y - scrollPosition, this );
+		g.drawImage(scrollImage, scrollArea.x,
+			scrollArea.y - scrollPosition, this);
 		if(debug)
 		{
 			g.setColor(Color.YELLOW);
-			g.drawRect( scrollArea.x, scrollArea.y, scrollArea.width-1, scrollArea.height-1 );
+			g.drawRect(scrollArea.x, scrollArea.y, scrollArea.width - 1, scrollArea.height - 1);
 		}
 	}
 
@@ -802,42 +819,42 @@ public class AboutPanel extends JComponent
 	{
 		int fontHeight = fontMetrics.getHeight();
 
-		maxScrollPosition = fontHeight * ( scrollLines.length );
+		maxScrollPosition = fontHeight * (scrollLines.length);
 
 		int additionalImageOffset = 0;
 		int imageWidth = 0;
 
-		if ( aboutImage != null )
+		if(aboutImage != null)
 		{
 			imageWidth = aboutImage.getWidth();
-			additionalImageOffset = aboutImage.getHeight() + 2*fontHeight;
+			additionalImageOffset = aboutImage.getHeight() + 2 * fontHeight;
 			maxScrollPosition = maxScrollPosition + additionalImageOffset;
 		}
 
-		if ( scrollImage != null && scrollImage.getHeight() != maxScrollPosition )
+		if(scrollImage != null && scrollImage.getHeight() != maxScrollPosition)
 		{
 			flushScrollImage();
 		}
 		if(scrollImage == null)
 		{
-			int maxWidth = imageWidth+2*fontHeight;
-			if(logger.isInfoEnabled()) logger.info("imageWidth={}, maxWidth={}",imageWidth, maxWidth);
-			for (String scrollLine : scrollLines)
+			int maxWidth = imageWidth + 2 * fontHeight;
+			if(logger.isInfoEnabled()) logger.info("imageWidth={}, maxWidth={}", imageWidth, maxWidth);
+			for(String scrollLine : scrollLines)
 			{
 				int curWidth = fontMetrics.stringWidth(scrollLine);
 
-				if (curWidth > maxWidth)
+				if(curWidth > maxWidth)
 				{
 					maxWidth = curWidth;
 				}
 			}
-			if ( maxWidth > maxScrollArea.width )
+			if(maxWidth > maxScrollArea.width)
 			{
-				if(logger.isInfoEnabled()) logger.info("maxWidth={} != maxScrollArea=",maxWidth, maxScrollArea);
+				if(logger.isInfoEnabled()) logger.info("maxWidth={} != maxScrollArea=", maxWidth, maxScrollArea);
 				maxWidth = maxScrollArea.width;
 			}
 
-			scrollArea.x = maxScrollArea.x + ( maxScrollArea.width - maxWidth ) / 2;
+			scrollArea.x = maxScrollArea.x + (maxScrollArea.width - maxWidth) / 2;
 			scrollArea.y = maxScrollArea.y;
 			scrollArea.width = maxWidth;
 			scrollArea.height = maxScrollArea.height;
@@ -847,31 +864,30 @@ public class AboutPanel extends JComponent
 			Color foreground = getForeground();
 
 
-
 			Graphics2D g;
 			g = (Graphics2D) scrollImage.getGraphics();
 
-			g.setFont( getFont() );
+			g.setFont(getFont());
 
-			if ( aboutImage != null )
+			if(aboutImage != null)
 			{
-				g.drawImage( aboutImage, ( ((scrollArea.width - imageWidth ) / 2 )), fontHeight, null);
+				g.drawImage(aboutImage, (((scrollArea.width - imageWidth) / 2)), fontHeight, null);
 			}
-			g.setColor( foreground );
+			g.setColor(foreground);
 
 			int y = fontMetrics.getAscent() + additionalImageOffset;
 
-			for (String line : scrollLines)
+			for(String line : scrollLines)
 			{
 				g.drawString(line, (scrollArea.width
-						- fontMetrics.stringWidth(line)) / 2, y);
+					- fontMetrics.stringWidth(line)) / 2, y);
 				y += fontHeight;
 			}
 			g.dispose();
 
 			BufferedImage copy = GraphicsUtilities.createCompatibleCopy(scrollImage);
 			BufferedImageOp filter;
-			final int blurSize=10;
+			final int blurSize = 10;
 			filter = getGaussianBlurFilter(blurSize, false);
 			scrollImage = filter.filter(scrollImage, null);
 
@@ -890,10 +906,10 @@ public class AboutPanel extends JComponent
 			if(debug)
 			{
 				g.setColor(Color.RED);
-				g.drawRect(0,0,scrollImage.getWidth()-1, scrollImage.getHeight()-1);
+				g.drawRect(0, 0, scrollImage.getWidth() - 1, scrollImage.getHeight() - 1);
 
 				g.setColor(Color.GREEN);
-				g.drawRect(( ((scrollArea.width - imageWidth ) / 2 )), fontHeight, aboutImage.getWidth(), aboutImage.getHeight());
+				g.drawRect((((scrollArea.width - imageWidth) / 2)), fontHeight, aboutImage.getWidth(), aboutImage.getHeight());
 			}
 
 			g.dispose();
@@ -907,7 +923,8 @@ public class AboutPanel extends JComponent
 	{
 		final Logger logger = LoggerFactory.getLogger(AboutPanel.class);
 
-		if (radius < 1) {
+		if(radius < 1)
+		{
 			throw new IllegalArgumentException("Radius must be >= 1");
 		}
 
@@ -919,23 +936,27 @@ public class AboutPanel extends JComponent
 		float sigmaRoot = (float) Math.sqrt(twoSigmaSquare * Math.PI);
 		float total = 0.0f;
 
-		for (int i = -radius; i <= radius; i++) {
+		for(int i = -radius; i <= radius; i++)
+		{
 			float distance = i * i;
 			int index = i + radius;
 			data[index] = (float) Math.exp(-distance / twoSigmaSquare) / sigmaRoot;
 			total += data[index];
 		}
 
-		for (int i = 0; i < data.length; i++)
+		for(int i = 0; i < data.length; i++)
 		{
 			data[i] /= total;
 			if(logger.isDebugEnabled()) logger.debug("data[{}]={}", i, data[i]);
 		}
 
 		Kernel kernel = null;
-		if (horizontal) {
+		if(horizontal)
+		{
 			kernel = new Kernel(size, 1, data);
-		} else {
+		}
+		else
+		{
 			kernel = new Kernel(1, size, data);
 		}
 		return new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
@@ -946,22 +967,22 @@ public class AboutPanel extends JComponent
 	 * will result in the recreation of all buffers. The font can even be safely
 	 * changed while the component is visible. It will be used for the version- and
 	 * scroll-text.<p />
-	 *
+	 * <p/>
 	 * If the parameter is <code>null</code> then <code>UIManager.getFont( "Label.font" )</code>
 	 * will be used.
 	 *
-	 * @param newFont  The new font value.
+	 * @param newFont The new font value.
 	 */
-	public void setFont( Font newFont )
+	public void setFont(Font newFont)
 	{
-		if ( newFont == null )
+		if(newFont == null)
 		{
-			newFont = UIManager.getFont( "Label.font" );
+			newFont = UIManager.getFont("Label.font");
 		}
-		if ( newFont != null && !newFont.equals( getFont() ) )
+		if(newFont != null && !newFont.equals(getFont()))
 		{
-			super.setFont( newFont );
-			fontMetrics = getFontMetrics( newFont );
+			super.setFont(newFont);
+			fontMetrics = getFontMetrics(newFont);
 			flushScrollImage();
 		}
 	}
@@ -1005,11 +1026,11 @@ public class AboutPanel extends JComponent
 	/**
 	 * Paints this component.
 	 *
-	 * @param _g  <code>Graphics</code>-object
+	 * @param _g <code>Graphics</code>-object
 	 */
-	public void paintComponent( Graphics _g )
+	public void paintComponent(Graphics _g)
 	{
-		super.paintComponent( _g );
+		super.paintComponent(_g);
 
 		processOffscreenImage();
 
@@ -1018,9 +1039,9 @@ public class AboutPanel extends JComponent
 		// propertly (not at all in this case).
 		Graphics2D g = (Graphics2D) _g.create();
 
-		g.setClip( paintArea.x, paintArea.y, paintArea.width, paintArea.height );
+		g.setClip(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
 
-		g.drawImage( offscreenImage, paintArea.x + offscreenOffset.x, paintArea.y + offscreenOffset.y, this );
+		g.drawImage(offscreenImage, paintArea.x + offscreenOffset.x, paintArea.y + offscreenOffset.y, this);
 		g.dispose();
 		//setPainted(true);
 	}
@@ -1032,21 +1053,21 @@ public class AboutPanel extends JComponent
 	 */
 	private void calculateAttributes()
 	{
-		size = getSize( size );
+		size = getSize(size);
 
 		paintArea.x = insets.left;
 		paintArea.y = insets.top;
 		paintArea.width = size.width - insets.left - insets.right;
 		paintArea.height = size.height - insets.top - insets.bottom;
 
-		int loOffscreenOffsetX = ( paintArea.width - preferredSize.width ) / 2;
-		int loOffscreenOffsetY = ( paintArea.height - preferredSize.height ) / 2;
+		int loOffscreenOffsetX = (paintArea.width - preferredSize.width) / 2;
+		int loOffscreenOffsetY = (paintArea.height - preferredSize.height) / 2;
 
-		if ( loOffscreenOffsetX < 0 )
+		if(loOffscreenOffsetX < 0)
 		{
 			loOffscreenOffsetX = 0;
 		}
-		if ( loOffscreenOffsetY < 0 )
+		if(loOffscreenOffsetY < 0)
 		{
 			loOffscreenOffsetY = 0;
 		}
@@ -1073,10 +1094,10 @@ public class AboutPanel extends JComponent
 	 */
 	protected void calculatePreferredSize()
 	{
-		insets = getInsets( insets );
+		insets = getInsets(insets);
 		preferredSize.width = insets.left + insets.right + backgroundImageArea.width;
 		preferredSize.height = insets.top + insets.bottom + backgroundImageArea.height;
-		setPreferredSize( preferredSize );
+		setPreferredSize(preferredSize);
 		invalidate();
 	}
 
@@ -1091,10 +1112,10 @@ public class AboutPanel extends JComponent
 	{
 		//setPainted(false);
 
-		repaint( scrollArea.x + offscreenOffset.x,
-				scrollArea.y + offscreenOffset.y,
-				scrollArea.width, // + 1,
-				scrollArea.height);// + 1 );
+		repaint(scrollArea.x + offscreenOffset.x,
+			scrollArea.y + offscreenOffset.y,
+			scrollArea.width, // + 1,
+			scrollArea.height);// + 1 );
 	}
 
 
@@ -1105,16 +1126,16 @@ public class AboutPanel extends JComponent
 	 * the negative height of the scroll-rectangle) and registers tbis component at
 	 * the <code>ToolTipManager</code>.
 	 *
-	 * @see   #setScrolling
-	 * @see   #setScrollPosition
-	 * @see   #getMinimumScrollPosition
+	 * @see #setScrolling
+	 * @see #setScrollPosition
+	 * @see #getMinimumScrollPosition
 	 */
 	public void addNotify()
 	{
 		super.addNotify();
 
-		setScrolling( true );
-		ToolTipManager.sharedInstance().registerComponent( this );
+		setScrolling(true);
+		ToolTipManager.sharedInstance().registerComponent(this);
 	}
 
 
@@ -1123,14 +1144,14 @@ public class AboutPanel extends JComponent
 	 * scroll-thread into a wait-state by calling <code>setScrolling(false)</code>
 	 * . It also unregisters this component from the <code>ToolTipManager</code>.
 	 *
-	 * @see   #setScrolling
+	 * @see #setScrolling
 	 */
 	public void removeNotify()
 	{
 		super.removeNotify();
 
-		setScrolling( false );
-		ToolTipManager.sharedInstance().unregisterComponent( this );
+		setScrolling(false);
+		ToolTipManager.sharedInstance().unregisterComponent(this);
 
 		// flush used buffer-images.
 		flushOffscreenImage();
@@ -1143,11 +1164,11 @@ public class AboutPanel extends JComponent
 	 * of <code>true</code> will notify the scroll-thread that it has to resume
 	 * work. A value of <code>false</code> will send it into wait-state instead.
 	 *
-	 * @param Scrolling  The new scrolling value
+	 * @param Scrolling The new scrolling value
 	 */
-	public void setScrolling( boolean Scrolling )
+	public void setScrolling(boolean Scrolling)
 	{
-		if ( scrolling != Scrolling )
+		if(scrolling != Scrolling)
 		{
 			scrolling = Scrolling;
 			if(scrolling)
@@ -1168,7 +1189,7 @@ public class AboutPanel extends JComponent
 	 * This method returns <code>true</code> if scrolling is currently active. If
 	 * it returns <code>false</code> then the scroll-thread is waiting.
 	 *
-	 * @return   The scrolling value
+	 * @return The scrolling value
 	 */
 	public boolean isScrolling()
 	{
@@ -1179,16 +1200,17 @@ public class AboutPanel extends JComponent
 	/**
 	 * Description of the Class
 	 *
-	 * @author   Joern Huxhorn
+	 * @author Joern Huxhorn
 	 */
-	class AboutComponentListener extends ComponentAdapter
+	class AboutComponentListener
+		extends ComponentAdapter
 	{
 		/**
 		 * Description of the Method
 		 *
-		 * @param e  Description of the Parameter
+		 * @param e Description of the Parameter
 		 */
-		public void componentResized( ComponentEvent e )
+		public void componentResized(ComponentEvent e)
 		{
 			AboutPanel.this.calculateAttributes();
 		}
@@ -1198,28 +1220,29 @@ public class AboutPanel extends JComponent
 	/**
 	 * Description of the Class
 	 *
-	 * @author   Joern Huxhorn
+	 * @author Joern Huxhorn
 	 */
-	class AboutPropertyChangeListener implements PropertyChangeListener
+	class AboutPropertyChangeListener
+		implements PropertyChangeListener
 	{
 		/**
 		 * Description of the Method
 		 *
-		 * @param evt  Description of the Parameter
+		 * @param evt Description of the Parameter
 		 */
-		public void propertyChange( PropertyChangeEvent evt )
+		public void propertyChange(PropertyChangeEvent evt)
 		{
 			String propertyName = evt.getPropertyName();
 
-			if ( propertyName.equals( "border" ) )
+			if(propertyName.equals("border"))
 			{
 				calculatePreferredSize();
 			}
-			else if ( propertyName.equals( "foreground" ) )
+			else if(propertyName.equals("foreground"))
 			{
 				flushScrollImage();
 			}
-			else if ( propertyName.equals( "background" ) )
+			else if(propertyName.equals("background"))
 			{
 				flushScrollImage();
 			}
@@ -1235,9 +1258,10 @@ public class AboutPanel extends JComponent
 	 * This <code>MouseInputListener</code> handles the pause/resume on click as
 	 * well as the dragging inside the scroll-area.
 	 *
-	 * @author   Joern Huxhorn
+	 * @author Joern Huxhorn
 	 */
-	class AboutMouseInputListener extends MouseInputAdapter
+	class AboutMouseInputListener
+		extends MouseInputAdapter
 	{
 		Point lastPoint = null;
 		boolean scrollingBeforePress = false;
@@ -1247,17 +1271,17 @@ public class AboutPanel extends JComponent
 		/**
 		 * Description of the Method
 		 *
-		 * @param evt  Description of the Parameter
+		 * @param evt Description of the Parameter
 		 */
-		public void mousePressed( MouseEvent evt )
+		public void mousePressed(MouseEvent evt)
 		{
-			if ( handleMouseEvent(evt) )
+			if(handleMouseEvent(evt))
 			{
 				// always stop scrolling if mouse is pressed inside
 				// the scroll-area
 				lastPoint = evt.getPoint();
 				scrollingBeforePress = isScrolling();
-				setScrolling( false );
+				setScrolling(false);
 			}
 			else
 			{
@@ -1270,15 +1294,15 @@ public class AboutPanel extends JComponent
 		/**
 		 * Description of the Method
 		 *
-		 * @param evt  Description of the Parameter
+		 * @param evt Description of the Parameter
 		 */
-		public void mouseReleased( MouseEvent evt )
+		public void mouseReleased(MouseEvent evt)
 		{
-			if ( dragged )
+			if(dragged)
 			{
 				// set scrolling-attribute to the value before the user dragged.
 				lastPoint = null;
-				setScrolling( scrollingBeforePress );
+				setScrolling(scrollingBeforePress);
 			}
 		}
 
@@ -1286,15 +1310,15 @@ public class AboutPanel extends JComponent
 		/**
 		 * Description of the Method
 		 *
-		 * @param evt  Description of the Parameter
+		 * @param evt Description of the Parameter
 		 */
-		public void mouseClicked( MouseEvent evt )
+		public void mouseClicked(MouseEvent evt)
 		{
 			// this is only called after mouseReleased if no drag occurred.
-			if ( handleMouseEvent(evt) )
+			if(handleMouseEvent(evt))
 			{
 				// toggle scrolling.
-				setScrolling( !scrollingBeforePress );
+				setScrolling(!scrollingBeforePress);
 			}
 			dragged = false;
 		}
@@ -1303,19 +1327,19 @@ public class AboutPanel extends JComponent
 		/**
 		 * Description of the Method
 		 *
-		 * @param evt  Description of the Parameter
+		 * @param evt Description of the Parameter
 		 */
-		public void mouseDragged( MouseEvent evt )
+		public void mouseDragged(MouseEvent evt)
 		{
 			// only drag if original press was inside scroll-rectangle
-			if ( lastPoint != null )
+			if(lastPoint != null)
 			{
 				dragged = true;
 
 				Point currentPoint = evt.getPoint();
 				int yOffset = lastPoint.y - currentPoint.y;
 
-				setScrollPosition( getScrollPosition() + yOffset );
+				setScrollPosition(getScrollPosition() + yOffset);
 				lastPoint = currentPoint;
 			}
 		}
@@ -1323,22 +1347,22 @@ public class AboutPanel extends JComponent
 
 
 	private class TimerActionListener
-			implements ActionListener
+		implements ActionListener
 	{
 		private final Logger logger = LoggerFactory.getLogger(AboutPanel.class);
 
 		private long lastRepaintStart;
-		private long frequency=25;
+		private long frequency = 25;
 
 		public void actionPerformed(ActionEvent e)
 		{
-			long currentTime=System.nanoTime()/1000000;
-			long meanTime=currentTime-lastRepaintStart;
-			if(meanTime>frequency)
+			long currentTime = System.nanoTime() / 1000000;
+			long meanTime = currentTime - lastRepaintStart;
+			if(meanTime > frequency)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Tick! meanTime={}", meanTime);
 				increaseScrollPosition();
-				lastRepaintStart=currentTime;
+				lastRepaintStart = currentTime;
 			}
 		}
 	}

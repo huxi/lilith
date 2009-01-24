@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,33 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.sulky.swing.KeyStrokes;
+import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.sulky.formatting.HumanReadable;
+import de.huxhorn.sulky.swing.KeyStrokes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-import java.util.*;
-import java.util.List;
-import java.text.DecimalFormat;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class OpenPreviousDialog
 	extends JDialog
@@ -52,7 +57,7 @@ public class OpenPreviousDialog
 
 		EventType(String typeName)
 		{
-			this.typeName=typeName;
+			this.typeName = typeName;
 		}
 
 		public String getTypeName()
@@ -70,8 +75,8 @@ public class OpenPreviousDialog
 
 	public OpenPreviousDialog(MainFrame owner)
 	{
-		super(owner,"Open previous log...");
-		this.mainFrame=owner;
+		super(owner, "Open previous log...");
+		this.mainFrame = owner;
 		createUI();
 	}
 
@@ -80,17 +85,17 @@ public class OpenPreviousDialog
 		openAction = new OpenAction();
 		CancelAction cancelAction = new CancelAction();
 
-		tabbedPane =new JTabbedPane();
-		loggingPanel=new OpenPreviousPanel(mainFrame.getLoggingFileFactory(), EventType.LOGGING);
-		accessPanel=new OpenPreviousPanel(mainFrame.getAccessFileFactory(), EventType.ACCESS);
+		tabbedPane = new JTabbedPane();
+		loggingPanel = new OpenPreviousPanel(mainFrame.getLoggingFileFactory(), EventType.LOGGING);
+		accessPanel = new OpenPreviousPanel(mainFrame.getAccessFileFactory(), EventType.ACCESS);
 		tabbedPane.add(loggingPanel.getPanelName(), loggingPanel);
 		tabbedPane.add(accessPanel.getPanelName(), accessPanel);
 
-		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(openAction));
 		buttonPanel.add(new JButton(cancelAction));
 
-		JPanel contentPane=new JPanel(new BorderLayout());
+		JPanel contentPane = new JPanel(new BorderLayout());
 		KeyStrokes.registerCommand(contentPane, openAction, "OPEN_ACTION");
 		KeyStrokes.registerCommand(contentPane, cancelAction, "CANCEL_ACTION");
 
@@ -118,26 +123,26 @@ public class OpenPreviousDialog
 
 	private void initOpenAction()
 	{
-		Component comp=tabbedPane.getSelectedComponent();
+		Component comp = tabbedPane.getSelectedComponent();
 		if(comp instanceof OpenPreviousPanel)
 		{
 			OpenPreviousPanel panel = (OpenPreviousPanel) comp;
 			SourceIdentifier selectedSource = panel.getSelectedSource();
-			openAction.setEnabled(selectedSource!=null);
+			openAction.setEnabled(selectedSource != null);
 		}
 	}
 
 
 	public void openSelection()
 	{
-		Component comp=tabbedPane.getSelectedComponent();
+		Component comp = tabbedPane.getSelectedComponent();
 		if(comp instanceof OpenPreviousPanel)
 		{
 			OpenPreviousPanel panel = (OpenPreviousPanel) comp;
 			SourceIdentifier selectedSource = panel.getSelectedSource();
-			if(selectedSource!=null)
+			if(selectedSource != null)
 			{
-				if(panel.getEventType()== EventType.LOGGING)
+				if(panel.getEventType() == EventType.LOGGING)
 				{
 					mainFrame.openPreviousLogging(selectedSource);
 				}
@@ -166,7 +171,7 @@ public class OpenPreviousDialog
 		public OpenAction()
 		{
 			super("Open");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke("ENTER");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ENTER");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -184,7 +189,7 @@ public class OpenPreviousDialog
 		public CancelAction()
 		{
 			super("Cancel");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -209,9 +214,9 @@ public class OpenPreviousDialog
 
 		public OpenPreviousPanel(LogFileFactory fileFactory, EventType eventType)
 		{
-			this.fileFactory=fileFactory;
-			this.eventType=eventType;
-			eventCountFormat=new DecimalFormat("#,###");
+			this.fileFactory = fileFactory;
+			this.eventType = eventType;
+			eventCountFormat = new DecimalFormat("#,###");
 			this.createUI();
 		}
 
@@ -233,15 +238,15 @@ public class OpenPreviousDialog
 		private void setSelectedSource(SourceIdentifier selected)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Selected source: {}", selected);
-			this.selectedSource=selected;
+			this.selectedSource = selected;
 			initOpenAction();
 			updateInfoArea();
 		}
 
 		private void createUI()
 		{
-			primaryList=new JList();
-			secondaryList=new JList();
+			primaryList = new JList();
+			secondaryList = new JList();
 
 			primaryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			primaryList.addListSelectionListener(new PrimaryListSelectionListener());
@@ -252,15 +257,15 @@ public class OpenPreviousDialog
 
 			JScrollPane primaryPane = new JScrollPane(primaryList);
 			primaryPane.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Primary"));
-			primaryPane.setPreferredSize(new Dimension(200,300));
+			primaryPane.setPreferredSize(new Dimension(200, 300));
 			JScrollPane secondaryPane = new JScrollPane(secondaryList);
-			secondaryPane.setPreferredSize(new Dimension(300,300));
+			secondaryPane.setPreferredSize(new Dimension(300, 300));
 			secondaryPane.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Secondary"));
-			JSplitPane filePane =new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, primaryPane, secondaryPane);
+			JSplitPane filePane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, primaryPane, secondaryPane);
 			setLayout(new BorderLayout());
 			add(filePane, BorderLayout.CENTER);
 			JPanel infoPanel = new JPanel(new GridLayout(1, 1));
-			infoArea=new JTextArea(3,40);
+			infoArea = new JTextArea(3, 40);
 			infoArea.setEditable(false);
 			infoPanel.add(infoArea);
 			infoPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Log Informations"));
@@ -270,24 +275,24 @@ public class OpenPreviousDialog
 		public void initUI()
 		{
 			List<SourceIdentifier> inactives = mainFrame.collectInactiveLogs(fileFactory);
-			SortedMap<String, List<SourceIdentifier>> inactiveMap=new TreeMap<String, List<SourceIdentifier>>();
+			SortedMap<String, List<SourceIdentifier>> inactiveMap = new TreeMap<String, List<SourceIdentifier>>();
 			for(SourceIdentifier current : inactives)
 			{
-				String primary=mainFrame.getPrimarySourceTitle(current);
+				String primary = mainFrame.getPrimarySourceTitle(current);
 				List<SourceIdentifier> sourceList = inactiveMap.get(primary);
-				if(sourceList==null)
+				if(sourceList == null)
 				{
-					sourceList=new ArrayList<SourceIdentifier>();
+					sourceList = new ArrayList<SourceIdentifier>();
 					inactiveMap.put(primary, sourceList);
 				}
 				sourceList.add(current);
 			}
 
-			int primaryCount=inactiveMap.size();
-			if(primaryCount>0)
+			int primaryCount = inactiveMap.size();
+			if(primaryCount > 0)
 			{
 				ArrayList<String> primaries = new ArrayList<String>(primaryCount);
-				secondaries=new ArrayList<List<SourceIdentifier>>(primaryCount);
+				secondaries = new ArrayList<List<SourceIdentifier>>(primaryCount);
 				for(Map.Entry<String, List<SourceIdentifier>> current : inactiveMap.entrySet())
 				{
 					primaries.add(current.getKey());
@@ -308,25 +313,27 @@ public class OpenPreviousDialog
 		}
 
 
-
 		private String getLogInfo(SourceIdentifier selectedSource)
 		{
-			if(selectedSource==null)
+			if(selectedSource == null)
 			{
 				return "";
 			}
 
-			StringBuilder result=new StringBuilder();
+			StringBuilder result = new StringBuilder();
 			result.append(mainFrame.getPrimarySourceTitle(selectedSource));
-			String secondary=selectedSource.getSecondaryIdentifier();
-			if(secondary!=null)
+			String secondary = selectedSource.getSecondaryIdentifier();
+			if(secondary != null)
 			{
 				result.append(" - ").append(selectedSource.getSecondaryIdentifier());
 			}
 			result.append("\n");
 
-			result.append("Number of events: ").append(eventCountFormat.format(fileFactory.getNumberOfEvents(selectedSource))).append("\n");
-			result.append("Size: ").append(HumanReadable.getHumanReadableSize(fileFactory.getSizeOnDisk(selectedSource), true, false)).append("bytes");
+			result.append("Number of events: ")
+				.append(eventCountFormat.format(fileFactory.getNumberOfEvents(selectedSource))).append("\n");
+			result.append("Size: ")
+				.append(HumanReadable.getHumanReadableSize(fileFactory.getSizeOnDisk(selectedSource), true, false))
+				.append("bytes");
 
 			return result.toString();
 		}
@@ -337,16 +344,17 @@ public class OpenPreviousDialog
 		}
 
 
-		private class PrimaryListSelectionListener implements ListSelectionListener
+		private class PrimaryListSelectionListener
+			implements ListSelectionListener
 		{
 
 			public void valueChanged(ListSelectionEvent e)
 			{
-				JList source=(JList) e.getSource();
+				JList source = (JList) e.getSource();
 				int selectedIndex = source.getSelectedIndex();
-				if(selectedIndex>=0 && selectedIndex<secondaries.size())
+				if(selectedIndex >= 0 && selectedIndex < secondaries.size())
 				{
-					List<SourceIdentifier> sources=secondaries.get(selectedIndex);
+					List<SourceIdentifier> sources = secondaries.get(selectedIndex);
 					secondaryList.setListData(sources.toArray());
 					secondaryList.setSelectedIndex(0);
 				}
@@ -357,17 +365,18 @@ public class OpenPreviousDialog
 			}
 		}
 
-		private class SecondaryListSelectionListener implements ListSelectionListener
+		private class SecondaryListSelectionListener
+			implements ListSelectionListener
 		{
 
 			public void valueChanged(ListSelectionEvent e)
 			{
-				SourceIdentifier selected=(SourceIdentifier) secondaryList.getSelectedValue();
-				int selectedIndex=secondaryList.getSelectedIndex();
-				if(selectedIndex!=-1)
+				SourceIdentifier selected = (SourceIdentifier) secondaryList.getSelectedValue();
+				int selectedIndex = secondaryList.getSelectedIndex();
+				if(selectedIndex != -1)
 				{
-					Rectangle selectRect=secondaryList.getCellBounds(selectedIndex, selectedIndex);
-					if(selectRect!=null)
+					Rectangle selectRect = secondaryList.getCellBounds(selectedIndex, selectedIndex);
+					if(selectRect != null)
 					{
 						secondaryList.scrollRectToVisible(selectRect);
 					}
@@ -378,15 +387,16 @@ public class OpenPreviousDialog
 
 		}
 
-		private class SecondaryMouseListener extends MouseAdapter
+		private class SecondaryMouseListener
+			extends MouseAdapter
 		{
 
 			public void mouseClicked(MouseEvent e)
 			{
-				if(e.getButton()==MouseEvent.BUTTON1 && e.getClickCount()>1)
+				if(e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() > 1)
 				{
 					Component component = secondaryList.getComponentAt(e.getPoint());
-					if(component!=null)
+					if(component != null)
 					{
 						// double-clicked on actual content... it's already selected...
 						openSelection();

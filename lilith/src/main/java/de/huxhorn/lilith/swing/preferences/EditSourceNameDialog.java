@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,17 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import java.awt.BorderLayout;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.*;
 
 public class EditSourceNameDialog
 	extends JDialog
@@ -59,10 +50,10 @@ public class EditSourceNameDialog
 
 	private void createUi()
 	{
-		okAction=new OkAction();
+		okAction = new OkAction();
 		Action cancelAction = new CancelAction();
 
-		TextKeyListener listener=new TextKeyListener();
+		TextKeyListener listener = new TextKeyListener();
 		sourceIdentifier = new JTextField(25);
 		sourceIdentifier.addActionListener(new SourceIdentifierActionListener());
 		sourceIdentifier.addKeyListener(listener);
@@ -95,7 +86,7 @@ public class EditSourceNameDialog
 		setLayout(new BorderLayout());
 		add(mainPanel, BorderLayout.CENTER);
 
-		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(okAction));
 		buttonPanel.add(new JButton(cancelAction));
 		add(buttonPanel, BorderLayout.SOUTH);
@@ -107,7 +98,7 @@ public class EditSourceNameDialog
 
 	public void setAdding(boolean adding)
 	{
-		this.adding=adding;
+		this.adding = adding;
 		if(adding)
 		{
 			setTitle("Add source name...");
@@ -188,9 +179,9 @@ public class EditSourceNameDialog
 
 		public void update()
 		{
-			String source=sourceIdentifier.getText();
-			String name=sourceName.getText();
-			if(name!=null && !"".equals(name.trim()) && source!=null && !"".equals(source.trim()))
+			String source = sourceIdentifier.getText();
+			String name = sourceName.getText();
+			if(name != null && !"".equals(name.trim()) && source != null && !"".equals(source.trim()))
 			{
 				setEnabled(true);
 			}
@@ -202,10 +193,10 @@ public class EditSourceNameDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			String source=sourceIdentifier.getText();
-			if(source!=null && !"".equals(source.trim()))
+			String source = sourceIdentifier.getText();
+			if(source != null && !"".equals(source.trim()))
 			{
-				canceled=false;
+				canceled = false;
 				setVisible(false);
 			}
 		}
@@ -225,29 +216,31 @@ public class EditSourceNameDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			canceled=true;
+			canceled = true;
 			setVisible(false);
 		}
 	}
 
-	private class SourceNameActionListener implements ActionListener
+	private class SourceNameActionListener
+		implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			String name=sourceName.getText();
-			if(name!=null && !"".equals(name.trim()))
+			String name = sourceName.getText();
+			if(name != null && !"".equals(name.trim()))
 			{
 				okAction.actionPerformed(e);
 			}
 		}
 	}
 
-	private class SourceIdentifierActionListener implements ActionListener
+	private class SourceIdentifierActionListener
+		implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			String source=sourceIdentifier.getText();
-			if(source!=null && !"".equals(source.trim()))
+			String source = sourceIdentifier.getText();
+			if(source != null && !"".equals(source.trim()))
 			{
 				sourceName.selectAll();
 				sourceName.requestFocusInWindow();
@@ -255,7 +248,8 @@ public class EditSourceNameDialog
 		}
 	}
 
-	private class TextKeyListener implements KeyListener
+	private class TextKeyListener
+		implements KeyListener
 	{
 		public void keyTyped(KeyEvent e)
 		{

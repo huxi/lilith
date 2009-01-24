@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,20 +19,22 @@ package de.huxhorn.lilith.data.eventsource.xml;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
+
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 
 public class SourceIdentifierIOTest
 	extends TestCase
@@ -47,44 +49,48 @@ public class SourceIdentifierIOTest
 	{
 		outputFactory = XMLOutputFactory.newInstance();
 		inputFactory = XMLInputFactory.newInstance();
-		sourceIdentifierWriter =new SourceIdentifierWriter();
+		sourceIdentifierWriter = new SourceIdentifierWriter();
 		sourceIdentifierWriter.setWritingSchemaLocation(true);
-		sourceIdentifierReader =new SourceIdentifierReader();
+		sourceIdentifierReader = new SourceIdentifierReader();
 	}
 
 	public SourceIdentifier createMinimalEventSource()
 	{
-		SourceIdentifier result=new SourceIdentifier();
+		SourceIdentifier result = new SourceIdentifier();
 		result.setIdentifier("primary");
 		return result;
 	}
 
-	public void testMinimal() throws XMLStreamException, UnsupportedEncodingException
+	public void testMinimal()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		SourceIdentifier identifier =createMinimalEventSource();
+		SourceIdentifier identifier = createMinimalEventSource();
 		check(identifier, true);
 	}
 
-	public void testFull() throws XMLStreamException, UnsupportedEncodingException
+	public void testFull()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		SourceIdentifier identifier =createMinimalEventSource();
+		SourceIdentifier identifier = createMinimalEventSource();
 		identifier.setSecondaryIdentifier("secondary");
 		check(identifier, true);
 	}
 
-	public void testFullPrefix() throws XMLStreamException, UnsupportedEncodingException
+	public void testFullPrefix()
+		throws XMLStreamException, UnsupportedEncodingException
 	{
 		sourceIdentifierWriter.setPreferredPrefix("foo");
-		SourceIdentifier identifier =createMinimalEventSource();
+		SourceIdentifier identifier = createMinimalEventSource();
 		identifier.setSecondaryIdentifier("secondary");
 		check(identifier, true);
 	}
 
-	public void check(SourceIdentifier original, boolean indent) throws UnsupportedEncodingException, XMLStreamException
+	public void check(SourceIdentifier original, boolean indent)
+		throws UnsupportedEncodingException, XMLStreamException
 	{
 		if(logger.isDebugEnabled()) logger.debug("Processing:\n{}", original);
 		byte[] bytes = write(original, indent);
-		if(bytes==null)
+		if(bytes == null)
 		{
 			return; // skip this test because of http://jira.codehaus.org/browse/STAX-50
 		}
@@ -100,10 +106,11 @@ public class SourceIdentifierIOTest
 		if(logger.isDebugEnabled()) logger.debug("Strings equal.");
 	}
 
-	public byte[] write(SourceIdentifier sourceIdentifier, boolean indent) throws XMLStreamException, UnsupportedEncodingException
+	public byte[] write(SourceIdentifier sourceIdentifier, boolean indent)
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ByteArrayOutputStream out=new ByteArrayOutputStream();
-		XMLStreamWriter writer=outputFactory.createXMLStreamWriter(new OutputStreamWriter(out,"utf-8"));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
 		if(writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
 		{
 			if(logger.isInfoEnabled()) logger.info("Skipping test because of http://jira.codehaus.org/browse/STAX-50");
@@ -112,17 +119,18 @@ public class SourceIdentifierIOTest
 		if(logger.isDebugEnabled()) logger.debug("XMLStreamWriter class: {}", writer.getClass().getName());
 		if(indent)
 		{
-			writer=new IndentingXMLStreamWriter(writer, "\n");
+			writer = new IndentingXMLStreamWriter(writer, "\n");
 		}
 		sourceIdentifierWriter.write(writer, sourceIdentifier, true);
 		writer.flush();
 		return out.toByteArray();
 	}
 
-	public SourceIdentifier read(byte[] bytes) throws XMLStreamException, UnsupportedEncodingException
+	public SourceIdentifier read(byte[] bytes)
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		ByteArrayInputStream in=new ByteArrayInputStream(bytes);
-		XMLStreamReader reader=inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
 		return sourceIdentifierReader.read(reader);
 	}
 }

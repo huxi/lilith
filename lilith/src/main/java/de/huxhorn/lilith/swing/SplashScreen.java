@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,13 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JWindow;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JComponent;
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class SplashScreen
 	extends JWindow
@@ -46,29 +44,29 @@ public class SplashScreen
 
 	private void initUI(String applicationTitle)
 	{
-		Container contentPane=new JPanel(true);
+		Container contentPane = new JPanel(true);
 		contentPane.setLayout(new BorderLayout());
-		URL url=SplashScreen.class.getResource("/splash/splash.jpg");
-		if(url!=null)
+		URL url = SplashScreen.class.getResource("/splash/splash.jpg");
+		if(url != null)
 		{
 			try
 			{
 				BufferedImage image = ImageIO.read(url);
-				if(image!=null)
+				if(image != null)
 				{
 					ImagePanel imagePanel = new ImagePanel(image);
 					contentPane.add(imagePanel, BorderLayout.CENTER);
 				}
 			}
-			catch (IOException ex)
+			catch(IOException ex)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while loading image!",ex);
+				if(logger.isWarnEnabled()) logger.warn("Exception while loading image!", ex);
 			}
 		}
-		statusLabel=new JLabel();
+		statusLabel = new JLabel();
 		JLabel titleLabel = new JLabel(applicationTitle);
-		contentPane.add(titleLabel,BorderLayout.NORTH);
-		contentPane.add(statusLabel,BorderLayout.SOUTH);
+		contentPane.add(titleLabel, BorderLayout.NORTH);
+		contentPane.add(statusLabel, BorderLayout.SOUTH);
 		statusLabel.setText("Initializing...");
 		setContentPane(contentPane);
 	}
@@ -85,7 +83,8 @@ public class SplashScreen
 		repaint();
 	}
 
-	private class ImagePanel extends JComponent
+	private class ImagePanel
+		extends JComponent
 	{
 		private BufferedImage image;
 
@@ -98,7 +97,7 @@ public class SplashScreen
 		public void paint(Graphics g)
 		{
 			if(logger.isInfoEnabled()) logger.info("paint");
-			g.drawImage(image, 0,0,this);
+			g.drawImage(image, 0, 0, this);
 		}
 
 		public void update(Graphics g)
@@ -116,7 +115,7 @@ public class SplashScreen
 		{
 			if(logger.isInfoEnabled()) logger.info("imageUpdate");
 			repaint();
-			return (infoflags & (ALLBITS|ABORT)) == 0;
+			return (infoflags & (ALLBITS | ABORT)) == 0;
 		}
 	}
 }

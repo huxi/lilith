@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,11 +17,11 @@
  */
 package de.huxhorn.lilith.sender;
 
-import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
+import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class MultiplexSendBytesService
 	implements SendBytesService
@@ -40,14 +40,14 @@ public class MultiplexSendBytesService
 
 	public MultiplexSendBytesService(String name, List<String> remoteHostsList, int port, WriteByteStrategy writeByteStrategy, int reconnectionDelay, int queueSize)
 	{
-		this.name=name;
-		this.queueSize=queueSize;
-		this.remoteHostsList=remoteHostsList;
+		this.name = name;
+		this.queueSize = queueSize;
+		this.remoteHostsList = remoteHostsList;
 		this.senderServices = new HashSet<SimpleSendBytesService>();
 		this.eventBytes = new ArrayBlockingQueue<byte[]>(queueSize);
-		this.writeByteStrategy=writeByteStrategy;
-		this.port=port;
-		this.reconnectionDelay=reconnectionDelay;
+		this.writeByteStrategy = writeByteStrategy;
+		this.port = port;
+		this.reconnectionDelay = reconnectionDelay;
 	}
 
 	public boolean isDebug()
@@ -62,18 +62,18 @@ public class MultiplexSendBytesService
 
 	public void startUp()
 	{
-		if(dispatcherThread==null)
+		if(dispatcherThread == null)
 		{
 			for(String hostName : remoteHostsList)
 			{
-				DataOutputStreamFactory dataOutputStreamFactory=new SocketDataOutputStreamFactory(hostName, port);
+				DataOutputStreamFactory dataOutputStreamFactory = new SocketDataOutputStreamFactory(hostName, port);
 				//SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, int reconnectionDelay, int pollIntervall)
 				SimpleSendBytesService service = new SimpleSendBytesService(
-						dataOutputStreamFactory,
-						writeByteStrategy,
-						queueSize,
-						reconnectionDelay,
-						SimpleSendBytesService.DEFAULT_POLL_INTERVALL);
+					dataOutputStreamFactory,
+					writeByteStrategy,
+					queueSize,
+					reconnectionDelay,
+					SimpleSendBytesService.DEFAULT_POLL_INTERVALL);
 				service.setDebug(debug);
 				senderServices.add(service);
 				service.startUp();
@@ -87,16 +87,16 @@ public class MultiplexSendBytesService
 
 	public void shutDown()
 	{
-		if(dispatcherThread!=null)
+		if(dispatcherThread != null)
 		{
 			dispatcherThread.interrupt();
-			for(SimpleSendBytesService current: senderServices)
+			for(SimpleSendBytesService current : senderServices)
 			{
 				current.shutDown();
 			}
 			senderServices.clear();
 			eventBytes.clear();
-			dispatcherThread=null;
+			dispatcherThread = null;
 		}
 	}
 
@@ -106,7 +106,7 @@ public class MultiplexSendBytesService
 		{
 			eventBytes.put(serialized);
 		}
-		catch (InterruptedException e)
+		catch(InterruptedException e)
 		{
 			// ignore
 		}
@@ -117,17 +117,17 @@ public class MultiplexSendBytesService
 	{
 		public void run()
 		{
-			for(;;)
+			for(; ;)
 			{
 				try
 				{
-					byte[] bytes=eventBytes.take();
-					for(SimpleSendBytesService current: senderServices)
+					byte[] bytes = eventBytes.take();
+					for(SimpleSendBytesService current : senderServices)
 					{
 						current.sendBytes(bytes);
 					}
 				}
-				catch (InterruptedException e)
+				catch(InterruptedException e)
 				{
 					return;
 				}

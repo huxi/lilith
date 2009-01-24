@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.engine.EventSource;
 
@@ -31,8 +30,8 @@ public class TabbedAccessViewContainer
 
 	protected EventWrapperViewPanel<AccessEvent> createViewPanel(EventSource<AccessEvent> eventSource)
 	{
-		MainFrame mainFrame=getMainFrame();
-		boolean scrollingToBottom=mainFrame.getApplicationPreferences().isScrollingToBottom();
+		MainFrame mainFrame = getMainFrame();
+		boolean scrollingToBottom = mainFrame.getApplicationPreferences().isScrollingToBottom();
 		EventWrapperViewPanel<AccessEvent> result = new AccessEventViewPanel(mainFrame, eventSource);
 		result.setScrollingToBottom(scrollingToBottom);
 		return result;

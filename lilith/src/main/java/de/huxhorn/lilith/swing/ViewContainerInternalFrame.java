@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,12 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
+import java.beans.PropertyVetoException;
+
 import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-import java.awt.*;
-import java.beans.PropertyVetoException;
 
 public class ViewContainerInternalFrame
 	extends JInternalFrame
@@ -37,8 +38,8 @@ public class ViewContainerInternalFrame
 	public ViewContainerInternalFrame(MainFrame mainFrame, ViewContainer viewContainer)
 	{
 		super();
-		this.mainFrame=mainFrame;
-		this.viewContainer=viewContainer;
+		this.mainFrame = mainFrame;
+		this.viewContainer = viewContainer;
 		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		add(viewContainer, BorderLayout.CENTER);
 		setClosable(true);
@@ -61,11 +62,11 @@ public class ViewContainerInternalFrame
 		return mainFrame.getViewActions();
 	}
 
-    public ViewContainer getViewContainer()
-    {
-        return viewContainer;
-    }
-    
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
 	public void focusWindow()
 	{
 		try
@@ -74,7 +75,7 @@ public class ViewContainerInternalFrame
 			toFront();
 			setSelected(true);
 		}
-		catch (PropertyVetoException ex)
+		catch(PropertyVetoException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Veto!!", ex);
 		}
@@ -86,7 +87,7 @@ public class ViewContainerInternalFrame
 		{
 			setIcon(true);
 		}
-		catch (PropertyVetoException e)
+		catch(PropertyVetoException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();
@@ -100,11 +101,11 @@ public class ViewContainerInternalFrame
 		if(logger.isDebugEnabled())
 		{
 			JInternalFrame[] frames = desktop.getAllFrames();
-			StringBuilder result=new StringBuilder();
+			StringBuilder result = new StringBuilder();
 			result.append("before closing:\n");
-			if(frames!=null)
+			if(frames != null)
 			{
-				for(JInternalFrame current:frames)
+				for(JInternalFrame current : frames)
 				{
 					result.append(current).append("\n");
 				}
@@ -117,18 +118,18 @@ public class ViewContainerInternalFrame
 		{
 			setClosed(true);
 		}
-		catch (PropertyVetoException ex)
+		catch(PropertyVetoException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Couldn't close InternalFrame!",ex);
+			if(logger.isWarnEnabled()) logger.warn("Couldn't close InternalFrame!", ex);
 		}
 		if(logger.isDebugEnabled())
 		{
 			JInternalFrame[] frames = desktop.getAllFrames();
-			StringBuilder result=new StringBuilder();
+			StringBuilder result = new StringBuilder();
 			result.append("after closing:\n");
-			if(frames!=null)
+			if(frames != null)
 			{
-				for(JInternalFrame current:frames)
+				for(JInternalFrame current : frames)
 				{
 					result.append(current).append("\n");
 				}
@@ -140,7 +141,7 @@ public class ViewContainerInternalFrame
 	}
 
 	class CleanupWindowChangeListener
-			implements InternalFrameListener
+		implements InternalFrameListener
 	{
 		public void internalFrameClosing(InternalFrameEvent e)
 		{

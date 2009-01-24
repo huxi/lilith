@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	
+
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<param name="Pattern" value="%-5level - %d{HH:mm:ss.SSS} [%thread] - %file:%line - %msg%n%ex{full}" />
+			<param name="Pattern" value="%-5level - %d{HH:mm:ss.SSS} [%thread] - %file:%line - %msg%n%ex{full}"/>
 		</layout>
 	</appender>
-	
+
 	<!--
-	<appender name="Localhorst" class="ch.qos.lilith.classic.net.SocketAppender">
-		<RemoteHost>localhost</RemoteHost>
-		<Port>4445</Port>
-		<ReconnectionDelay>10000</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-	</appender>
-	<appender name="Huxi" class="ch.qos.lilith.classic.net.SocketAppender">
-		<RemoteHost>10.200.55.13</RemoteHost>
-		<LocationInfo>false</LocationInfo>
-		<Port>4445</Port>
-	</appender>
+	   <appender name="Localhorst" class="ch.qos.lilith.classic.net.SocketAppender">
+		   <RemoteHost>localhost</RemoteHost>
+		   <Port>4445</Port>
+		   <ReconnectionDelay>10000</ReconnectionDelay>
+		   <IncludeCallerData>true</IncludeCallerData>
+	   </appender>
+	   <appender name="Huxi" class="ch.qos.lilith.classic.net.SocketAppender">
+		   <RemoteHost>10.200.55.13</RemoteHost>
+		   <LocationInfo>false</LocationInfo>
+		   <Port>4445</Port>
+	   </appender>
 
-	<appender name="Vlad" class="ch.qos.lilith.classic.net.SocketAppender">
-		<RemoteHost>10.200.55.29</RemoteHost>
-		<LocationInfo>false</LocationInfo>
-		<Port>4445</Port>
-	</appender>
+	   <appender name="Vlad" class="ch.qos.lilith.classic.net.SocketAppender">
+		   <RemoteHost>10.200.55.29</RemoteHost>
+		   <LocationInfo>false</LocationInfo>
+		   <Port>4445</Port>
+	   </appender>
 
-	<appender name="Localhorst" class="ch.qos.lilith.classic.net.SocketAppender">
-		<RemoteHost>localhost</RemoteHost>
-		<LocationInfo>false</LocationInfo>
-		<Port>4445</Port>
-	</appender>
-	-->
-	
+	   <appender name="Localhorst" class="ch.qos.lilith.classic.net.SocketAppender">
+		   <RemoteHost>localhost</RemoteHost>
+		   <LocationInfo>false</LocationInfo>
+		   <Port>4445</Port>
+	   </appender>
+	   -->
+
 	<root>
 		<level value="DEBUG"/>
 		<appender-ref ref="CONSOLE"/>
 		<!--
-		<appender-ref ref="Localhorst"/>
-		<appender-ref ref="Huxi"/>
-		<appender-ref ref="Vlad"/>
-		<appender-ref ref="Localhorst"/>
-		-->
+			  <appender-ref ref="Localhorst"/>
+			  <appender-ref ref="Huxi"/>
+			  <appender-ref ref="Vlad"/>
+			  <appender-ref ref="Localhorst"/>
+			  -->
 	</root>
-	
+
 	<logger name="class">
 		<level value="INFO"/>
 	</logger>

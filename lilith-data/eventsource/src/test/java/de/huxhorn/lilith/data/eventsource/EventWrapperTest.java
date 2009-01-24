@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,10 +19,11 @@ package de.huxhorn.lilith.data.eventsource;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-import org.junit.Test;
-import org.junit.Before;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -37,32 +38,35 @@ public class EventWrapperTest
 		fresh = new EventWrapper<String>();
 	}
 
-    @Test
-    public void constructorDefault() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        EventWrapper<String> instance=new EventWrapper<String>();
-        testSerialization(instance);
+	@Test
+	public void constructorDefault()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		EventWrapper<String> instance = new EventWrapper<String>();
+		testSerialization(instance);
 		testXmlSerialization(instance);
-    }
-
-    @Test
-    public void constructorFull() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
-    {
-        EventWrapper<String> instance=new EventWrapper<String>(new SourceIdentifier(), 17, "Foo");
-        testSerialization(instance);
-		testXmlSerialization(instance);
-
-        instance=new EventWrapper<String>(null, 17, "Foo");
-        testSerialization(instance);
-		testXmlSerialization(instance);
-    }
+	}
 
 	@Test
-	public void sourceIdentifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void constructorFull()
+		throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-		EventWrapper<String> instance=new EventWrapper<String>();
+		EventWrapper<String> instance = new EventWrapper<String>(new SourceIdentifier(), 17, "Foo");
+		testSerialization(instance);
+		testXmlSerialization(instance);
 
-		SourceIdentifier value=new SourceIdentifier();
+		instance = new EventWrapper<String>(null, 17, "Foo");
+		testSerialization(instance);
+		testXmlSerialization(instance);
+	}
+
+	@Test
+	public void sourceIdentifier()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	{
+		EventWrapper<String> instance = new EventWrapper<String>();
+
+		SourceIdentifier value = new SourceIdentifier();
 		instance.setSourceIdentifier(value);
 
 		{
@@ -78,11 +82,12 @@ public class EventWrapperTest
 	}
 
 	@Test
-	public void localId() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void localId()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		EventWrapper<String> instance=new EventWrapper<String>();
+		EventWrapper<String> instance = new EventWrapper<String>();
 
-		long value=17;
+		long value = 17;
 		instance.setLocalId(value);
 
 		{
@@ -98,11 +103,12 @@ public class EventWrapperTest
 	}
 
 	@Test
-	public void event() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void event()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		EventWrapper<String> instance=new EventWrapper<String>();
+		EventWrapper<String> instance = new EventWrapper<String>();
 
-		String value="value";
+		String value = "value";
 		instance.setEvent(value);
 
 		{
@@ -118,11 +124,12 @@ public class EventWrapperTest
 	}
 
 	@Test
-	public void eventIdentifier() throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
+	public void eventIdentifier()
+		throws ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException
 	{
-		EventWrapper<String> instance=new EventWrapper<String>();
+		EventWrapper<String> instance = new EventWrapper<String>();
 
-		EventIdentifier value=new EventIdentifier();
+		EventIdentifier value = new EventIdentifier();
 		instance.setEventIdentifier(value);
 
 		{

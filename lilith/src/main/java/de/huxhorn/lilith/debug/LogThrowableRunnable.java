@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,25 +27,26 @@ public class LogThrowableRunnable
 	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
 	private Throwable throwable;
 
-    public LogThrowableRunnable(int delay, Throwable throwable)
+	public LogThrowableRunnable(int delay, Throwable throwable)
 	{
 		super(delay);
-		this.throwable=throwable;
+		this.throwable = throwable;
 	}
 
-	public void runIt() throws InterruptedException
+	public void runIt()
+		throws InterruptedException
 	{
-        MDC.put("type", "param");
+		MDC.put("type", "param");
 		if(logger.isTraceEnabled()) logger.trace("A trace message.", throwable);
 		sleep();
-		if(logger.isDebugEnabled()) logger.debug("A debug message.",throwable);
+		if(logger.isDebugEnabled()) logger.debug("A debug message.", throwable);
 		sleep();
-		if(logger.isInfoEnabled()) logger.info("A info message.",throwable);
+		if(logger.isInfoEnabled()) logger.info("A info message.", throwable);
 		sleep();
-		if(logger.isWarnEnabled()) logger.warn("A warn message.",throwable);
+		if(logger.isWarnEnabled()) logger.warn("A warn message.", throwable);
 		sleep();
-		if(logger.isErrorEnabled()) logger.error("A error message.",throwable);
+		if(logger.isErrorEnabled()) logger.error("A error message.", throwable);
 		sleep();
-        MDC.remove("type");
+		MDC.remove("type");
 	}
 }

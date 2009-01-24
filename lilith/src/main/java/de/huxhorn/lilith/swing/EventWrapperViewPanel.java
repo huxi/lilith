@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.swing.ProgressingCallable;
 import de.huxhorn.sulky.swing.ResultListener;
 import de.huxhorn.sulky.swing.SwingWorkManager;
+
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,47 +54,7 @@ import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.EventQueue;
-import java.awt.FocusTraversalPolicy;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -118,6 +79,17 @@ import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
+import javax.swing.*;
+import javax.swing.border.MatteBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 public abstract class EventWrapperViewPanel<T extends Serializable>
 	extends JPanel
@@ -175,23 +147,23 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		super(true);
-		eventCountFormat=new DecimalFormat("#,###");
-		this.workManager=mainFrame.getIntegerWorkManager();
-		findResultListener=new FindResultListener();
+		eventCountFormat = new DecimalFormat("#,###");
+		this.workManager = mainFrame.getIntegerWorkManager();
+		findResultListener = new FindResultListener();
 		workManager.addResultListener(findResultListener);
-		this.mainFrame=mainFrame;
-		this.eventSource=eventSource;
-		showingFilters=false;
+		this.mainFrame = mainFrame;
+		this.eventSource = eventSource;
+		showingFilters = false;
 
-		tableModelListener=new StatusTableModelListener();
+		tableModelListener = new StatusTableModelListener();
 		initUi();
 	}
 
 	private void initUi()
 	{
-		Insets borderInsets=new Insets(2,2,2,2);
-		focusedBorder=new MatteBorder(borderInsets, Color.YELLOW);
-		unfocusedBorder=new MatteBorder(borderInsets, Color.WHITE);
+		Insets borderInsets = new Insets(2, 2, 2, 2);
+		focusedBorder = new MatteBorder(borderInsets, Color.YELLOW);
+		unfocusedBorder = new MatteBorder(borderInsets, Color.WHITE);
 
 		SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer = createCachedBuffer(eventSource.getBuffer());
 		tableModel = createTableModel(cachedBuffer);
@@ -201,7 +173,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		JScrollPane tableScrollPane = new JScrollPane(table);
 		verticalLogScrollbar = tableScrollPane.getVerticalScrollBar();
 
-		messagePane=new XHTMLPanel();
+		messagePane = new XHTMLPanel();
 		messagePane.addMouseListener(new EventViewMouseListener());
 
 
@@ -210,11 +182,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		{
 			List mouseTrackingList = messagePane.getMouseTrackingListeners();
-			if(mouseTrackingList!=null)
+			if(mouseTrackingList != null)
 			{
-				for(Object o: mouseTrackingList)
+				for(Object o : mouseTrackingList)
 				{
-					if(logger.isDebugEnabled()) logger.debug("Before MTL {}",o);
+					if(logger.isDebugEnabled()) logger.debug("Before MTL {}", o);
 					if(o instanceof LinkListener)
 					{
 						messagePane.removeMouseTrackingListener((LinkListener) o);
@@ -225,11 +197,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		messagePane.addMouseTrackingListener(new StackTraceElementLinkListener(mainFrame));
 
-		xhtmlNamespaceHandler=new XhtmlNamespaceHandler();
+		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane messageScrollPane = new FSScrollPane(messagePane);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tableScrollPane, messageScrollPane);
-		PropertyChangeListener splitPaneListener=new SplitPaneListener();
+		PropertyChangeListener splitPaneListener = new SplitPaneListener();
 		splitPane.addPropertyChangeListener(splitPaneListener);
 		splitPane.setResizeWeight(0.5); // divide space equally in case of resize.
 		splitPane.setOneTouchExpandable(true);
@@ -248,7 +220,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		ReplaceFilterAction replaceFilterAction = new ReplaceFilterAction();
 
-		FindTextFieldListener findTextFieldListener=new FindTextFieldListener();
+		FindTextFieldListener findTextFieldListener = new FindTextFieldListener();
 		findTextField.addActionListener(findTextFieldListener);
 		findTextField.getDocument().addDocumentListener(findTextFieldListener);
 		findTextField.setBackground(Color.WHITE);
@@ -260,14 +232,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		bottomPanel.add(findPanel, BorderLayout.CENTER);
 		bottomPanel.add(statusPanel, BorderLayout.SOUTH);
 
-		statusLabel=new JLabel();
+		statusLabel = new JLabel();
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 1.0;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(0,5,0,0);
+		gbc.insets = new Insets(0, 5, 0, 0);
 
 		statusPanel.add(statusLabel, gbc);
 
@@ -280,13 +252,18 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		setFocusTraversalPolicyProvider(true);
 
 		if(logger.isDebugEnabled()) logger.debug("table.isFocusCycleRoot()={}", table.isFocusCycleRoot());
-		if(logger.isDebugEnabled()) logger.debug("table.isFocusTraversalPolicyProvider()={}", table.isFocusTraversalPolicyProvider());
+		if(logger.isDebugEnabled())
+		{
+			logger.debug("table.isFocusTraversalPolicyProvider()={}", table.isFocusTraversalPolicyProvider());
+		}
 		table.setFocusTraversalPolicy(focusTraversalPolicy);
 		table.setFocusCycleRoot(true);
 
 		// setting table traversal back to "normal"...
-		table.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
-		table.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, getFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
+		table
+			.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+		table
+			.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, getFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
 
 		updateStatusText();
 
@@ -310,23 +287,23 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.add(new JLabel("Find: "));
 
 		ActionListener findTypeModifiedListener = new FindTypeSelectionActionListener();
-		findTypeCombo=new JComboBox();
+		findTypeCombo = new JComboBox();
 		findTypeCombo.addActionListener(findTypeModifiedListener);
-		findNotButton=new JToggleButton("!");
+		findNotButton = new JToggleButton("!");
 		findNotButton.addActionListener(findTypeModifiedListener);
 		findNotButton.setToolTipText("Not - inverts condition");
-		findTextField =new JTextField();
+		findTextField = new JTextField();
 		findTextField.setColumns(15);
 		findPanel.add(findNotButton);
 		findPanel.add(findTypeCombo);
 		findPanel.add(findTextField);
 
-		findPrevAction=new FindPreviousAction();
-		findPrevButton=new JButton(findPrevAction);
+		findPrevAction = new FindPreviousAction();
+		findPrevButton = new JButton(findPrevAction);
 		findPanel.add(findPrevButton);
 
-		findNextAction=new FindNextAction();
-		findNextButton=new JButton(findNextAction);
+		findNextAction = new FindNextAction();
+		findNextButton = new JButton(findNextAction);
 		findPanel.add(findNextButton);
 		enableFindComponents(true);
 	}
@@ -341,7 +318,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		if(!EventQueue.isDispatchThread())
 		{
 			if(logger.isWarnEnabled()) //noinspection ThrowableInstanceNeverThrown
-				logger.warn("!DispatchThread - getState: state="+state, new Throwable());
+			{
+				logger.warn("!DispatchThread - getState: state=" + state, new Throwable());
+			}
 		}
 		return state;
 	}
@@ -353,9 +332,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setState(LoggingViewState state)
 	{
-		Object oldValue=this.state;
+		Object oldValue = this.state;
 		this.state = state;
-		Object newValue=this.state;
+		Object newValue = this.state;
 		firePropertyChange(STATE_PROPERTY, oldValue, newValue);
 	}
 
@@ -371,44 +350,44 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			initTypeCombo();
 			// select correct type in combo
-			Condition condition=getFilterCondition();
-			boolean not=false;
+			Condition condition = getFilterCondition();
+			boolean not = false;
 			if(condition instanceof Not)
 			{
 				Not notCondition = (Not) condition;
-				not=true;
-				condition=notCondition.getCondition();
+				not = true;
+				condition = notCondition.getCondition();
 			}
-			if(condition!=null)
+			if(condition != null)
 			{
-				String conditionName=null;
+				String conditionName = null;
 				if(condition instanceof EventContainsCondition)
 				{
-					conditionName=EVENT_CONTAINS_CONDITION;
+					conditionName = EVENT_CONTAINS_CONDITION;
 				}
 				else if(condition instanceof MessageContainsCondition)
 				{
-					conditionName=MESSAGE_CONTAINS_CONDITION;
+					conditionName = MESSAGE_CONTAINS_CONDITION;
 				}
 				else if(condition instanceof LoggerStartsWithCondition)
 				{
-					conditionName=LOGGER_STARTS_WITH_CONDITION;
+					conditionName = LOGGER_STARTS_WITH_CONDITION;
 				}
 				else if(condition instanceof LoggerEqualsCondition)
 				{
-					conditionName=LOGGER_EQUALS_CONDITION;
+					conditionName = LOGGER_EQUALS_CONDITION;
 				}
 				else if(condition instanceof GroovyCondition)
 				{
 					GroovyCondition groovyCondition = (GroovyCondition) condition;
-					String scriptFileName=groovyCondition.getScriptFileName();
-					if(scriptFileName!=null)
+					String scriptFileName = groovyCondition.getScriptFileName();
+					if(scriptFileName != null)
 					{
-						File scriptFile=new File(scriptFileName);
-						conditionName=scriptFile.getName();
+						File scriptFile = new File(scriptFileName);
+						conditionName = scriptFile.getName();
 					}
 				}
-				if(conditionName!=null)
+				if(conditionName != null)
 				{
 					findTypeCombo.setSelectedItem(conditionName);
 				}
@@ -425,25 +404,25 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		scrollToBottom();
 	}
 
-    /**
-     * scrolls to bottom if it is enabled.
-     */
-    public void scrollToBottom()
-    {
-        if(table.isScrollingToBottom())
-        {
-            SwingUtilities.invokeLater(new ScrollToBottomRunnable());
-        }
-    }
+	/**
+	 * scrolls to bottom if it is enabled.
+	 */
+	public void scrollToBottom()
+	{
+		if(table.isScrollingToBottom())
+		{
+			SwingUtilities.invokeLater(new ScrollToBottomRunnable());
+		}
+	}
 
-    private class ScrollToBottomRunnable
-        implements Runnable
-    {
-        public void run()
-        {
-            table.scrollToBottom();
-        }
-    }
+	private class ScrollToBottomRunnable
+		implements Runnable
+	{
+		public void run()
+		{
+			table.scrollToBottom();
+		}
+	}
 
 
 	public void validate()
@@ -460,7 +439,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	void setEventSource(EventSource<T> eventSource)
 	{
 		EventSource oldValue = this.eventSource;
-		this.eventSource=eventSource;
+		this.eventSource = eventSource;
 		SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer = createCachedBuffer(eventSource.getBuffer());
 		tableModel.setBuffer(cachedBuffer);
 		EventSource newValue = this.eventSource;
@@ -475,9 +454,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setScrollingToBottom(boolean scrollingToBottom)
 	{
-		Object oldValue=table.isScrollingToBottom();
+		Object oldValue = table.isScrollingToBottom();
 		table.setScrollingToBottom(scrollingToBottom);
-		Object newValue=table.isScrollingToBottom();
+		Object newValue = table.isScrollingToBottom();
 		firePropertyChange(SCROLLING_TO_BOTTOM_PROPERTY, oldValue, newValue);
 	}
 
@@ -493,22 +472,22 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setPaused(boolean paused)
 	{
-		Object oldValue=tableModel.isPaused();
+		Object oldValue = tableModel.isPaused();
 		tableModel.setPaused(paused);
-		Object newValue=tableModel.isPaused();
+		Object newValue = tableModel.isPaused();
 		firePropertyChange(PAUSED_PROPERTY, oldValue, newValue);
 	}
 
 	public ViewContainer<T> resolveContainer()
 	{
-		Container parent=getParent();
-		while(parent!= null && !(parent instanceof ViewContainer))
+		Container parent = getParent();
+		while(parent != null && !(parent instanceof ViewContainer))
 		{
-			parent=parent.getParent();
+			parent = parent.getParent();
 		}
 		// not 100% typesafe
 		//noinspection unchecked
-		return (ViewContainer<T>)parent;
+		return (ViewContainer<T>) parent;
 	}
 
 	public void addNotify()
@@ -525,35 +504,34 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 
-
 	protected abstract EventWrapperTableModel<T> createTableModel(Buffer<EventWrapper<T>> buffer);
+
 	protected abstract EventWrapperViewTable<T> createTable(EventWrapperTableModel<T> tableModel);
 
 
-
-	private static final String EVENT_CONTAINS_CONDITION="event.contains";
-	private static final String MESSAGE_CONTAINS_CONDITION="message.contains";
-	private static final String LOGGER_STARTS_WITH_CONDITION="logger.startsWith";
-	private static final String LOGGER_EQUALS_CONDITION="logger.equals";
-	private static final String[] DEFAULT_CONDITIONS=new String[]{
-			EVENT_CONTAINS_CONDITION,
-			MESSAGE_CONTAINS_CONDITION,
-			LOGGER_STARTS_WITH_CONDITION,
-			LOGGER_EQUALS_CONDITION};
+	private static final String EVENT_CONTAINS_CONDITION = "event.contains";
+	private static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
+	private static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
+	private static final String LOGGER_EQUALS_CONDITION = "logger.equals";
+	private static final String[] DEFAULT_CONDITIONS = new String[]{
+		EVENT_CONTAINS_CONDITION,
+		MESSAGE_CONTAINS_CONDITION,
+		LOGGER_STARTS_WITH_CONDITION,
+		LOGGER_EQUALS_CONDITION};
 
 	private void initTypeCombo()
 	{
-		Vector<String> itemsVector=new Vector<String>();
+		Vector<String> itemsVector = new Vector<String>();
 
 		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
 
 		String[] groovyConditions = mainFrame.getAllConditionScriptFiles();
-		if(groovyConditions!=null)
+		if(groovyConditions != null)
 		{
 			itemsVector.addAll(Arrays.asList(groovyConditions));
 		}
 
-		ComboBoxModel model=new DefaultComboBoxModel(itemsVector);
+		ComboBoxModel model = new DefaultComboBoxModel(itemsVector);
 		findTypeCombo.setModel(model);
 	}
 
@@ -576,9 +554,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setSelectedEvent(EventWrapper<T> selectedEvent)
 	{
-		Object oldValue=this.selectedEvent;
+		Object oldValue = this.selectedEvent;
 		this.selectedEvent = selectedEvent;
-		Object newValue=this.selectedEvent;
+		Object newValue = this.selectedEvent;
 		firePropertyChange(SELECTED_EVENT_PROPERTY, oldValue, newValue);
 
 		initMessage(this.selectedEvent);
@@ -643,7 +621,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				return table;
 			}
 			// I guess focus was inside table so focus component after table.
-			if(logger.isInfoEnabled()) logger.info("Moving focus forward to messagePane since it was not explicitly handled. (component={})", aComponent);
+			if(logger.isInfoEnabled())
+			{
+				logger
+					.info("Moving focus forward to messagePane since it was not explicitly handled. (component={})", aComponent);
+			}
 			return messagePane;
 		}
 
@@ -697,7 +679,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				return findTextField;
 			}
 			// I guess focus was inside table so focus component before table.
-			if(logger.isInfoEnabled()) logger.info("Moving focus backward to messagePane since it was not explicitly handled. (component={})", aComponent);
+			if(logger.isInfoEnabled())
+			{
+				logger
+					.info("Moving focus backward to messagePane since it was not explicitly handled. (component={})", aComponent);
+			}
 			return messagePane;
 		}
 
@@ -725,7 +711,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void initMessage(EventWrapper wrapper)
 	{
-		String message=mainFrame.createMessage(wrapper);
+		String message = mainFrame.createMessage(wrapper);
 		URL messageViewRootUrl = mainFrame.getApplicationPreferences().getDetailsViewRootUrl();
 		try
 		{
@@ -746,21 +732,24 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			if(logger.isDebugEnabled()) logger.debug("Created errors directory '{}'.", errorPath);
 		}
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd'T'HHmmssSSSZ");
-		String filename=format.format(new Date());
-		File errorFile=new File(errorPath, filename);
-		FileOutputStream fos=null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmssSSSZ");
+		String filename = format.format(new Date());
+		File errorFile = new File(errorPath, filename);
+		FileOutputStream fos = null;
 		try
 		{
-			fos=new FileOutputStream(errorFile);
-			OutputStreamWriter osw=new OutputStreamWriter(fos, "UTF-8");
+			fos = new FileOutputStream(errorFile);
+			OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
 			osw.append(message);
 			osw.flush();
 			if(logger.isInfoEnabled()) logger.info("Faulty message written to '{}'.", errorFile.getAbsolutePath());
 		}
-		catch (Throwable e)
+		catch(Throwable e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while writing faulty message to '"+errorFile.getAbsolutePath()+"'!", e);
+			if(logger.isWarnEnabled())
+			{
+				logger.warn("Exception while writing faulty message to '" + errorFile.getAbsolutePath() + "'!", e);
+			}
 		}
 		finally
 		{
@@ -771,13 +760,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	/**
 	 * Does also disable scrollingToBottom and selects the clicked row, if any.
+	 *
 	 * @param p the point
 	 * @return the EventWrapper at the given point.
 	 */
 	private EventWrapper<T> getEventWrapper(Point p)
 	{
 		int row = table.rowAtPoint(p);
-		if (-1 == row)
+		if(-1 == row)
 		{
 			return null;
 		}
@@ -790,98 +780,101 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private void applyFilter()
 	{
-		String text=findTextField.getText();
+		String text = findTextField.getText();
 		Condition condition;
 		//boolean error=false;
-		String errorMessage=null;
-		if(text==null)
+		String errorMessage = null;
+		if(text == null)
 		{
-			text="";
+			text = "";
 		}
 		if(text.startsWith(GROOVY_IDENTIFIER))
 		{
-			String scriptName=text.substring(GROOVY_IDENTIFIER.length());
+			String scriptName = text.substring(GROOVY_IDENTIFIER.length());
 
-			int idx=scriptName.indexOf('#');
+			int idx = scriptName.indexOf('#');
 			if(idx > -1)
 			{
-				if(idx+1<scriptName.length())
+				if(idx + 1 < scriptName.length())
 				{
-					text=scriptName.substring(idx+1);
+					text = scriptName.substring(idx + 1);
 				}
 				else
 				{
-					text="";
+					text = "";
 				}
-				scriptName=scriptName.substring(0,idx);
+				scriptName = scriptName.substring(0, idx);
 			}
 			else
 			{
-				text="";
+				text = "";
 			}
-			if(logger.isDebugEnabled()) logger.debug("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
-			File resolvedScriptFile=mainFrame.resolveConditionScriptFile(scriptName);
-			if(resolvedScriptFile!=null)
+			if(logger.isDebugEnabled())
+			{
+				logger.debug("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
+			}
+			File resolvedScriptFile = mainFrame.resolveConditionScriptFile(scriptName);
+			if(resolvedScriptFile != null)
 			{
 				// there is a file...
 				condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
 			}
 			else
 			{
-				errorMessage="Couldn't find groovy script '"+scriptName+"'.";
-				condition=null;
+				errorMessage = "Couldn't find groovy script '" + scriptName + "'.";
+				condition = null;
 			}
 		}
 		else if(text.startsWith(SAVED_CONDITION_IDENTIFIER))
 		{
-			String conditionName=text.substring(SAVED_CONDITION_IDENTIFIER.length());
-			SavedCondition savedCondition=mainFrame.getApplicationPreferences().resolveSavedCondition(conditionName);
-			if(savedCondition!=null)
+			String conditionName = text.substring(SAVED_CONDITION_IDENTIFIER.length());
+			SavedCondition savedCondition = mainFrame.getApplicationPreferences().resolveSavedCondition(conditionName);
+			if(savedCondition != null)
 			{
-				condition=savedCondition.getCondition();
+				condition = savedCondition.getCondition();
 			}
 			else
 			{
-				errorMessage="Couldn't find saved condition '"+conditionName+"'.";
-				condition=null;
+				errorMessage = "Couldn't find saved condition '" + conditionName + "'.";
+				condition = null;
 			}
 		}
 		else
 		{
 			// create condition matching the selected type
-			String selectedType= (String) findTypeCombo.getSelectedItem();
+			String selectedType = (String) findTypeCombo.getSelectedItem();
 			if(EVENT_CONTAINS_CONDITION.equals(selectedType))
 			{
-				condition=new EventContainsCondition(text);
+				condition = new EventContainsCondition(text);
 			}
 			else if(MESSAGE_CONTAINS_CONDITION.equals(selectedType))
 			{
-				condition=new MessageContainsCondition(text);
+				condition = new MessageContainsCondition(text);
 			}
 			else if(LOGGER_STARTS_WITH_CONDITION.equals(selectedType))
 			{
-				condition=new LoggerStartsWithCondition(text);
+				condition = new LoggerStartsWithCondition(text);
 			}
 			else if(LOGGER_EQUALS_CONDITION.equals(selectedType))
 			{
-				condition=new LoggerEqualsCondition(text);
+				condition = new LoggerEqualsCondition(text);
 			}
 			else
 			{
 				// we assume a groovy condition...
-				File resolvedScriptFile=mainFrame.resolveConditionScriptFile(selectedType);
-				if(resolvedScriptFile!=null)
+				File resolvedScriptFile = mainFrame.resolveConditionScriptFile(selectedType);
+				if(resolvedScriptFile != null)
 				{
 					// there is a file...
 					condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
 				}
 				else
 				{
-					condition=null;
+					condition = null;
 				}
 			}
 		}
-		if(errorMessage!=null)
+		if(errorMessage != null)
 		{
 			// problem with condition
 			findTextField.setBackground(ERROR_COLOR);
@@ -892,12 +885,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			findTextField.setBackground(Color.WHITE);
 			findTextField.setToolTipText(null);
 		}
-		if(condition!=null)
+		if(condition != null)
 		{
 			// wrap in Not if not is selected.
 			if(findNotButton.isSelected())
 			{
-				condition=new Not(condition);
+				condition = new Not(condition);
 			}
 		}
 		if(logger.isDebugEnabled()) logger.debug("Setting condition: {}", condition);
@@ -906,8 +899,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setFilterCondition(Condition condition)
 	{
-		Object old=this.filterCondition;
-		this.filterCondition=condition;
+		Object old = this.filterCondition;
+		this.filterCondition = condition;
 		table.setFilterCondition(filterCondition);
 		firePropertyChange(FILTER_CONDITION_PROPERTY, old, condition);
 	}
@@ -925,7 +918,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void findPrevious(int currentRow, Condition condition)
 	{
-		if(condition!=null)
+		if(condition != null)
 		{
 			ProgressingCallable<Integer> callable = new FindPreviousCallable(currentRow, condition);
 			executeFind(callable);
@@ -934,7 +927,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void findNext(int currentRow, Condition condition)
 	{
-		if(condition!=null)
+		if(condition != null)
 		{
 			ProgressingCallable<Integer> callable = new FindNextCallable(currentRow, condition);
 			executeFind(callable);
@@ -951,33 +944,34 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public FindPreviousCallable(int currentRow, Condition condition)
 		{
-			super(200,1000);
+			super(200, 1000);
 			this.currentRow = currentRow;
 			this.condition = condition;
 		}
 
-		public Integer call() throws Exception
+		public Integer call()
+			throws Exception
 		{
-			int row=currentRow;
-			if(row>-1)
+			int row = currentRow;
+			if(row > -1)
 			{
 				row--;
 				if(logger.isInfoEnabled()) logger.info("Searching previous starting at {}.", row);
 				tableModel.getRowCount();
 				int maxCount = row;
-				int numberOfSteps=maxCount-1;
-				if(numberOfSteps<1)
+				int numberOfSteps = maxCount - 1;
+				if(numberOfSteps < 1)
 				{
-					numberOfSteps=1;
+					numberOfSteps = 1;
 				}
 				setNumberOfSteps(numberOfSteps);
-				for(int i=0; i<maxCount; i++)
+				for(int i = 0; i < maxCount; i++)
 				{
 					setCurrentStep(i);
-					int current=row-i;
+					int current = row - i;
 					if(logger.isDebugEnabled()) logger.debug("Processing row {}", current);
-					Object obj=tableModel.getValueAt(current,0);
-					if(obj==null)
+					Object obj = tableModel.getValueAt(current, 0);
+					if(obj == null)
 					{
 						return -1;
 					}
@@ -985,7 +979,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 					{
 						if(condition.isTrue(obj))
 						{
-							if(logger.isInfoEnabled()) logger.info("Found previous at {}.",current);
+							if(logger.isInfoEnabled()) logger.info("Found previous at {}.", current);
 							return current;
 						}
 					}
@@ -1010,33 +1004,34 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public FindNextCallable(int currentRow, Condition condition)
 		{
-			super(200,1000);
+			super(200, 1000);
 			this.currentRow = currentRow;
 			this.condition = condition;
 		}
 
-		public Integer call() throws Exception
+		public Integer call()
+			throws Exception
 		{
-			int row=currentRow;
-			if(row>-1)
+			int row = currentRow;
+			if(row > -1)
 			{
 				row++;
 				if(logger.isInfoEnabled()) logger.info("Searching next starting at {}.", row);
 
 				int maxCount = tableModel.getRowCount() - row;
-				int numberOfSteps=maxCount-1;
-				if(numberOfSteps<1)
+				int numberOfSteps = maxCount - 1;
+				if(numberOfSteps < 1)
 				{
-					numberOfSteps=1;
+					numberOfSteps = 1;
 				}
 				setNumberOfSteps(numberOfSteps);
-				for(int i=0; i<maxCount; i++)
+				for(int i = 0; i < maxCount; i++)
 				{
 					setCurrentStep(i);
-					int current=i+row;
+					int current = i + row;
 					if(logger.isDebugEnabled()) logger.debug("Processing row {}", current);
-					Object obj=tableModel.getValueAt(current,0);
-					if(obj==null)
+					Object obj = tableModel.getValueAt(current, 0);
+					if(obj == null)
 					{
 						return -1;
 					}
@@ -1044,7 +1039,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 					{
 						if(condition.isTrue(obj))
 						{
-							if(logger.isInfoEnabled()) logger.info("Found next at {}.",current);
+							if(logger.isInfoEnabled()) logger.info("Found next at {}.", current);
 							return current;
 						}
 					}
@@ -1061,7 +1056,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setSelectedRow(int row)
 	{
-		if(row>-1)
+		if(row > -1)
 		{
 			if(isScrollingToBottom())
 			{
@@ -1080,14 +1075,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private void updateStatusText()
 	{
 		int eventCount = tableModel.getRowCount();
-		StringBuilder statusText=new StringBuilder();
-		if(eventCount<1)
+		StringBuilder statusText = new StringBuilder();
+		if(eventCount < 1)
 		{
 			statusText.append("No events.");
 		}
 		else
 		{
-			if(eventCount==1)
+			if(eventCount == 1)
 			{
 				statusText.append("One event.");
 			}
@@ -1095,7 +1090,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				statusText.append(eventCountFormat.format(eventCount)).append(" events.");
 			}
-			statusText.append("   Size on disk: ").append(HumanReadable.getHumanReadableSize(getSizeOnDisk(), true, false)).append("bytes");
+			statusText.append("   Size on disk: ")
+				.append(HumanReadable.getHumanReadableSize(getSizeOnDisk(), true, false)).append("bytes");
 		}
 
 		statusLabel.setText(statusText.toString());
@@ -1106,18 +1102,18 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private EventSource<T> getFilteredSource()
 	{
 		Condition currentFilter = table.getFilterCondition();
-		if(currentFilter==null)
+		if(currentFilter == null)
 		{
 			return null;
 		}
 		Condition previousClone = getBufferCondition();
 		Buffer<EventWrapper<T>> buffer = getSourceBuffer();
 
-		Condition filter=getCombinedCondition();
+		Condition filter = getCombinedCondition();
 		if(filter != null && !filter.equals(previousClone))
 		{
-			Buffer<EventWrapper<T>> filteredBuffer=new FilteringBuffer<EventWrapper<T>>(buffer, filter);
-			return new EventSourceImpl<T>(eventSource.getSourceIdentifier(),filteredBuffer, filter, eventSource.isGlobal());
+			Buffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(buffer, filter);
+			return new EventSourceImpl<T>(eventSource.getSourceIdentifier(), filteredBuffer, filter, eventSource.isGlobal());
 		}
 		return null;
 	}
@@ -1128,7 +1124,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		if(buffer instanceof FilteringBuffer)
 		{
-			FilteringBuffer<EventWrapper<T>> filteringBuffer=(FilteringBuffer<EventWrapper<T>>) buffer;
+			FilteringBuffer<EventWrapper<T>> filteringBuffer = (FilteringBuffer<EventWrapper<T>>) buffer;
 			return filteringBuffer.getSourceBuffer();
 		}
 		return buffer;
@@ -1140,23 +1136,22 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		if(buffer instanceof FilteringBuffer)
 		{
-			FilteringBuffer<EventWrapper<T>> filteringBuffer=(FilteringBuffer<EventWrapper<T>>) buffer;
+			FilteringBuffer<EventWrapper<T>> filteringBuffer = (FilteringBuffer<EventWrapper<T>>) buffer;
 			return filteringBuffer.getCondition();
 		}
 		return null;
 	}
 
 	/**
-	 *
 	 * @return the combination of the tables filter condition and the condition of a filtered buffer.
 	 */
 	public Condition getCombinedCondition()
 	{
-		Condition previousCondition=getBufferCondition();
+		Condition previousCondition = getBufferCondition();
 
 		Condition currentFilter = table.getFilterCondition();
 
-		if(previousCondition==null)
+		if(previousCondition == null)
 		{
 			return currentFilter;
 		}
@@ -1164,7 +1159,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		try
 		{
 			// clone the previous condition so we don't change it while active
-			Condition previousClone=previousCondition.clone();
+			Condition previousClone = previousCondition.clone();
 			if(currentFilter == null)
 			{
 				return previousClone;
@@ -1172,26 +1167,26 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			And and;
 			if(previousClone instanceof And)
 			{
-				and=(And) previousClone;
+				and = (And) previousClone;
 			}
 			else
 			{
-				and=new And();
+				and = new And();
 				ArrayList<Condition> conditions = new ArrayList<Condition>();
 				conditions.add(previousClone);
 				and.setConditions(conditions);
 			}
-			List<Condition> conditions=and.getConditions();
-			if(conditions==null)
+			List<Condition> conditions = and.getConditions();
+			if(conditions == null)
 			{
-				conditions=new ArrayList<Condition>();
+				conditions = new ArrayList<Condition>();
 			}
 			if(!conditions.contains(currentFilter))
 			{
 				// don't add duplicates
 				conditions.add(currentFilter);
 			}
-			if(conditions.size()>1)
+			if(conditions.size() > 1)
 			{
 				if(logger.isInfoEnabled()) logger.info("Setting and-conditions: {}", conditions);
 				and.setConditions(conditions);
@@ -1202,9 +1197,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				return currentFilter;
 			}
 		}
-		catch (CloneNotSupportedException ex)
+		catch(CloneNotSupportedException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while cloning!",ex);
+			if(logger.isWarnEnabled()) logger.warn("Exception while cloning!", ex);
 		}
 		return null;
 	}
@@ -1213,14 +1208,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		ViewContainer<T> container = resolveContainer();
 		Condition currentFilter = table.getFilterCondition();
-		if(container!=null && currentFilter!=null)
+		if(container != null && currentFilter != null)
 		{
-			EventSource<T> newSource=getFilteredSource();
-			if(newSource!=null)
+			EventSource<T> newSource = getFilteredSource();
+			if(newSource != null)
 			{
 				EventWrapperViewPanel<T> view = container.createViewPanel(newSource);
 				container.addView(view);
-				if(logger.isInfoEnabled()) logger.info("Added source: {}",newSource);
+				if(logger.isInfoEnabled()) logger.info("Added source: {}", newSource);
 			}
 		}
 	}
@@ -1231,21 +1226,24 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	 */
 	public void showUnfilteredEvent()
 	{
-		int row=getSelectedRow();
-		if(row>=0)
+		int row = getSelectedRow();
+		if(row >= 0)
 		{
 			ViewContainer<T> container = resolveContainer();
-			if(container!=null)
+			if(container != null)
 			{
 
 				Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
 				if(buffer instanceof FilteringBuffer)
 				{
-					FilteringBuffer<EventWrapper<T>> filteringBuffer=(FilteringBuffer<EventWrapper<T>>) buffer;
-					long unfilteredRow=filteringBuffer.getSourceIndex(row);
-					if(unfilteredRow>=0)
+					FilteringBuffer<EventWrapper<T>> filteringBuffer = (FilteringBuffer<EventWrapper<T>>) buffer;
+					long unfilteredRow = filteringBuffer.getSourceIndex(row);
+					if(unfilteredRow >= 0)
 					{
-						if(logger.isInfoEnabled()) logger.info("Show unfiltered event {} for filtered event {}...", unfilteredRow, row);
+						if(logger.isInfoEnabled())
+						{
+							logger.info("Show unfiltered event {} for filtered event {}...", unfilteredRow, row);
+						}
 						EventWrapperViewPanel<T> defaultView = container.getDefaultView();
 						container.showDefaultView();
 						defaultView.setSelectedRow((int) unfilteredRow);
@@ -1256,7 +1254,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 	private class TableMouseListener
-			implements MouseListener
+		implements MouseListener
 	{
 		public TableMouseListener()
 		{
@@ -1264,24 +1262,24 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void mouseClicked(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
-			else if(evt.getClickCount()>1 && evt.getButton()==MouseEvent.BUTTON1)
+			else if(evt.getClickCount() > 1 && evt.getButton() == MouseEvent.BUTTON1)
 			{
 				if((evt.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0)
 				{
 					Point p = evt.getPoint();
-					EventWrapper<T> wrapper=getEventWrapper(p);
-					if(wrapper!=null)
+					EventWrapper<T> wrapper = getEventWrapper(p);
+					if(wrapper != null)
 					{
 						T event = wrapper.getEvent();
 						if(event instanceof LoggingEvent)
 						{
-							LoggingEvent loggingEvent= (LoggingEvent) event;
+							LoggingEvent loggingEvent = (LoggingEvent) event;
 							ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
-							if(callStack!=null && callStack.length>0)
+							if(callStack != null && callStack.length > 0)
 							{
 								mainFrame.goToSource(callStack[0].getStackTraceElement());
 							}
@@ -1299,14 +1297,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		private void showPopup(MouseEvent evt)
 		{
 			Point p = evt.getPoint();
-			EventWrapper<T> wrapper=getEventWrapper(p); // To ensure that the event below the mouse is selected.
+			EventWrapper<T> wrapper = getEventWrapper(p); // To ensure that the event below the mouse is selected.
 			if(logger.isDebugEnabled()) logger.debug("Show popup at {} for event {}.", p, wrapper);
 			mainFrame.showPopup(table, p);
 		}
 
 		public void mousePressed(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -1314,7 +1312,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void mouseReleased(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -1331,7 +1329,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 	private class EventViewMouseListener
-			implements MouseListener
+		implements MouseListener
 	{
 		public EventViewMouseListener()
 		{
@@ -1346,7 +1344,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void mouseClicked(MouseEvent evt)
 		{
 			messagePane.requestFocusInWindow();
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -1354,7 +1352,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void mousePressed(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -1362,7 +1360,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void mouseReleased(MouseEvent evt)
 		{
-			if (evt.isPopupTrigger())
+			if(evt.isPopupTrigger())
 			{
 				showPopup(evt);
 			}
@@ -1378,18 +1376,19 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	}
 
-	private class TableRowSelectionListener implements ListSelectionListener
+	private class TableRowSelectionListener
+		implements ListSelectionListener
 	{
 		private final Logger logger = LoggerFactory.getLogger(TableRowSelectionListener.class);
 
 		public void valueChanged(ListSelectionEvent e)
 		{
-			int row=getSelectedRow();
+			int row = getSelectedRow();
 			if(logger.isDebugEnabled()) logger.debug("Selected row: {}.", row);
 
-			if(row>=0)
+			if(row >= 0)
 			{
-				EventWrapper<T> event=tableModel.getValueAt(row);
+				EventWrapper<T> event = tableModel.getValueAt(row);
 				setSelectedEvent(event);
 			}
 			else
@@ -1402,7 +1401,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	/**
 	 * Disables "Scroll to Bottom" in case of adjusting, i.e. if the scrollbar is dragged.
 	 */
-	private class ScrollbarChangeListner implements ChangeListener
+	private class ScrollbarChangeListner
+		implements ChangeListener
 	{
 		private final Logger logger = LoggerFactory.getLogger(ScrollbarChangeListner.class);
 
@@ -1437,16 +1437,16 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void propertyChange(PropertyChangeEvent event)
 		{
-			String propertyName=event.getPropertyName();
+			String propertyName = event.getPropertyName();
 			if(EventWrapperViewTable.SCROLLING_TO_BOTTOM_PROPERTY.equals(propertyName))
 			{
-				Object oldValue=event.getOldValue();
-				Object newValue=event.getNewValue();
+				Object oldValue = event.getOldValue();
+				Object newValue = event.getNewValue();
 				firePropertyChange(SCROLLING_TO_BOTTOM_PROPERTY, oldValue, newValue);
 			}
 			else if(EventWrapperViewTable.FILTER_CONDITION_PROPERTY.equals(propertyName))
 			{
-				if(null==event.getNewValue())
+				if(null == event.getNewValue())
 				{
 					findPrevAction.setEnabled(false);
 					findNextAction.setEnabled(false);
@@ -1467,7 +1467,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			super();
 			putValue(Action.SHORT_DESCRIPTION, "Replace filter.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke("shift ENTER");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("shift ENTER");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1481,7 +1481,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				// replace
 				EventSource<T> filteredSource = getFilteredSource();
-				if(filteredSource!=null)
+				if(filteredSource != null)
 				{
 					if(logger.isInfoEnabled()) logger.info("Replacing filter...");
 					setEventSource(filteredSource);
@@ -1502,7 +1502,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void actionPerformed(ActionEvent e)
 		{
 			applyFilter();
-			if(logger.isDebugEnabled()) logger.debug("modifiers: "+e.getModifiers());
+			if(logger.isDebugEnabled()) logger.debug("modifiers: " + e.getModifiers());
 			findTextField.selectAll();
 			createFilteredView();
 		}
@@ -1534,19 +1534,19 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			super();
 			Icon icon;
 			{
-				URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-down.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-down.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
 			putValue(Action.SHORT_DESCRIPTION, "Find next.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift G");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift G");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1568,19 +1568,19 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			super();
 			Icon icon;
 			{
-				URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-up.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-up.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous.");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" G");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " G");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1599,19 +1599,19 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			super();
 			Icon icon;
 			{
-				URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/emblems/emblem-unreadable.png");
-				if(url!=null)
+				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/emblems/emblem-unreadable.png");
+				if(url != null)
 				{
-					icon =new ImageIcon(url);
+					icon = new ImageIcon(url);
 				}
 				else
 				{
-					icon =null;
+					icon = null;
 				}
 			}
 			putValue(Action.SMALL_ICON, icon);
 			putValue(Action.SHORT_DESCRIPTION, "Close");
-			KeyStroke accelerator=KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -1619,7 +1619,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void actionPerformed(ActionEvent e)
 		{
 			ViewContainer<T> container = resolveContainer();
-			if(container!=null)
+			if(container != null)
 			{
 				ProgressGlassPane progressPanel = container.getProgressPanel();
 				progressPanel.getFindCancelAction().cancelSearch();
@@ -1633,10 +1633,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		enableFindComponents(false);
 		findResultListener.setCallable(callable);
 		//progressPanel.setProgress(0);
-		Future<Integer> future=workManager.add(callable);
+		Future<Integer> future = workManager.add(callable);
 		//progressPanel.getFindCancelAction().setFuture(future);
 		ViewContainer<T> container = resolveContainer();
-		if(container!=null)
+		if(container != null)
 		{
 			container.showSearchPanel(future);
 		}
@@ -1649,21 +1649,27 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void executionFailed(Callable<Integer> callable, ExecutionException exception)
 		{
-			if(logger.isDebugEnabled()) logger.debug("in executionFailed:\n     callable: {}\nthis.callable: {}", callable, this.callable);
-			if(this.callable==callable)
+			if(logger.isDebugEnabled())
 			{
-				if(logger.isInfoEnabled()) logger.info("Find execution failed!",exception);
+				logger.debug("in executionFailed:\n     callable: {}\nthis.callable: {}", callable, this.callable);
+			}
+			if(this.callable == callable)
+			{
+				if(logger.isInfoEnabled()) logger.info("Find execution failed!", exception);
 				finished();
 			}
 		}
 
 		public void executionFinished(Callable<Integer> callable, Integer result)
 		{
-			if(logger.isDebugEnabled()) logger.debug("in executionFinished:\n     callable: {}\nthis.callable: {}", callable, this.callable);
-			if(this.callable==callable)
+			if(logger.isDebugEnabled())
 			{
-				if(logger.isInfoEnabled()) logger.info("Find execution finished: {}!",result);
-				if(result>=0)
+				logger.debug("in executionFinished:\n     callable: {}\nthis.callable: {}", callable, this.callable);
+			}
+			if(this.callable == callable)
+			{
+				if(logger.isInfoEnabled()) logger.info("Find execution finished: {}!", result);
+				if(result >= 0)
 				{
 					setSelectedRow(result);
 				}
@@ -1673,8 +1679,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void executionCanceled(Callable<Integer> callable)
 		{
-			if(logger.isDebugEnabled()) logger.debug("in executionCanceled:\n     callable: {}\nthis.callable: {}", callable, this.callable);
-			if(this.callable==callable)
+			if(logger.isDebugEnabled())
+			{
+				logger.debug("in executionCanceled:\n     callable: {}\nthis.callable: {}", callable, this.callable);
+			}
+			if(this.callable == callable)
 			{
 				if(logger.isInfoEnabled()) logger.info("Find execution canceled.");
 				finished();
@@ -1683,13 +1692,17 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void progressUpdated(ProgressingCallable progressingCallable, int progress)
 		{
-			if(logger.isDebugEnabled()) logger.debug("in progressUpdated:\nprogressingCallable: {}\n   this.callable: {}", progressingCallable, this.callable);
-			if(this.callable==progressingCallable)
+			if(logger.isDebugEnabled())
+			{
+				logger
+					.debug("in progressUpdated:\nprogressingCallable: {}\n   this.callable: {}", progressingCallable, this.callable);
+			}
+			if(this.callable == progressingCallable)
 			{
 				// to catch updates after cancel.
 				if(logger.isDebugEnabled()) logger.debug("Progress update: {}", progress);
 				ViewContainer<T> container = resolveContainer();
-				if(container!=null)
+				if(container != null)
 				{
 					ProgressGlassPane progressPanel = container.getProgressPanel();
 					progressPanel.setProgress(progress);
@@ -1702,7 +1715,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			if(logger.isDebugEnabled()) logger.debug("Executing FindResultListener.finished().");
 
 			ViewContainer<T> container = resolveContainer();
-			if(container!=null)
+			if(container != null)
 			{
 				ProgressGlassPane progressPanel = container.getProgressPanel();
 				progressPanel.getFindCancelAction().setFuture(null);
@@ -1716,8 +1729,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void setCallable(Callable<Integer> callable)
 		{
 			if(logger.isDebugEnabled()) //noinspection ThrowableInstanceNeverThrown
-				logger.debug("Setting callable...\n     newFuture: "+callable+"\npreviousFuture: "+this.callable, new Throwable());
-			this.callable=callable;
+			{
+				logger
+					.debug("Setting callable...\n     newFuture: " + callable + "\npreviousFuture: " + this.callable, new Throwable());
+			}
+			this.callable = callable;
 		}
 	}
 
@@ -1725,7 +1741,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		closeFindAction.setEnabled(enabled);
 		findTextField.setEnabled(enabled);
-		if(table.getFilterCondition()!=null)
+		if(table.getFilterCondition() != null)
 		{
 			findPrevAction.setEnabled(enabled);
 			findNextAction.setEnabled(enabled);
@@ -1766,11 +1782,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Splitpane change!");
-            String propertyName = evt.getPropertyName();
-            if("dividerLocation".equals(propertyName))
-            {
-                scrollToBottom();
-            }
+			String propertyName = evt.getPropertyName();
+			if("dividerLocation".equals(propertyName))
+			{
+				scrollToBottom();
+			}
 		}
 	}
 

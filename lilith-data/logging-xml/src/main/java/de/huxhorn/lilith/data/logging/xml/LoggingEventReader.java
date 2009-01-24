@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,19 +17,24 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
-import de.huxhorn.lilith.data.logging.*;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
 
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 public class LoggingEventReader
 	implements GenericStreamReader<LoggingEvent>, LoggingEventSchemaConstants
@@ -39,35 +44,38 @@ public class LoggingEventReader
 
 	public LoggingEventReader()
 	{
-		dateTimeFormatter=new DateTimeFormatter();
-		steReader=new StackTraceElementReader();
+		dateTimeFormatter = new DateTimeFormatter();
+		steReader = new StackTraceElementReader();
 	}
 
-	public LoggingEvent read(XMLStreamReader reader) throws XMLStreamException
+	public LoggingEvent read(XMLStreamReader reader)
+		throws XMLStreamException
 	{
-		LoggingEvent result=null;
+		LoggingEvent result = null;
 		String rootNamespace = NAMESPACE_URI;
 		int type = reader.getEventType();
 
-		if (XMLStreamConstants.START_DOCUMENT == type)
+		if(XMLStreamConstants.START_DOCUMENT == type)
 		{
 			reader.nextTag();
 			type = reader.getEventType();
 			rootNamespace = null;
 		}
-		if (XMLStreamConstants.START_ELEMENT == type && LOGGING_EVENT_NODE.equals(reader.getLocalName()))
+		if(XMLStreamConstants.START_ELEMENT == type && LOGGING_EVENT_NODE.equals(reader.getLocalName()))
 		{
 			result = new LoggingEvent();
 			result.setLogger(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LOGGER_ATTRIBUTE));
-			result.setApplicationIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, APPLICATION_IDENTIFIER_ATTRIBUTE));
-			result.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
+			result
+				.setApplicationIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, APPLICATION_IDENTIFIER_ATTRIBUTE));
+			result
+				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
 			result.setThreadName(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE));
-			String timeStamp=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE);
+			String timeStamp = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE);
 			try
 			{
 				result.setTimeStamp(dateTimeFormatter.parse(timeStamp));
 			}
-			catch (ParseException e)
+			catch(ParseException e)
 			{
 // TODO: change body of catch statement
 				e.printStackTrace();
@@ -77,7 +85,7 @@ public class LoggingEventReader
 			readArguments(reader, result);
 			readThrowable(reader, result);
 			result.setMdc(readMdc(reader));
-            result.setNdc(readNdc(reader));
+			result.setNdc(readNdc(reader));
 			readMarker(reader, result);
 			readCallStack(reader, result);
 			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, LOGGING_EVENT_NODE);
@@ -85,22 +93,25 @@ public class LoggingEventReader
 		return result;
 	}
 
-	private void readCallStack(XMLStreamReader reader, LoggingEvent event) throws XMLStreamException
+	private void readCallStack(XMLStreamReader reader, LoggingEvent event)
+		throws XMLStreamException
 	{
 		event.setCallStack(readStackTraceNode(reader, CALLSTACK_NODE));
 	}
 
-	private ExtendedStackTraceElement[] readStackTraceNode(XMLStreamReader reader, String nodeName) throws XMLStreamException
+	private ExtendedStackTraceElement[] readStackTraceNode(XMLStreamReader reader, String nodeName)
+		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		ArrayList<ExtendedStackTraceElement> ste=new ArrayList<ExtendedStackTraceElement>();
-		if (XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		ArrayList<ExtendedStackTraceElement> ste = new ArrayList<ExtendedStackTraceElement>();
+		if(XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
 			reader.nextTag();
-			for(;;)
+			for(; ;)
 			{
-				ExtendedStackTraceElement elem=steReader.read(reader);//readStackTraceElement(reader);
-				if(elem==null)
+				ExtendedStackTraceElement elem = steReader.read(reader);//readStackTraceElement(reader);
+				if(elem == null)
 				{
 					break;
 				}
@@ -157,31 +168,34 @@ public class LoggingEventReader
 //	}
 
 	private void readMarker(XMLStreamReader reader, LoggingEvent event)
-			throws XMLStreamException
+		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type && MARKER_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && MARKER_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
-			Map<String, Marker> markers=new HashMap<String, Marker>();
-			Marker marker=recursiveReadMarker(reader, markers);
+			Map<String, Marker> markers = new HashMap<String, Marker>();
+			Marker marker = recursiveReadMarker(reader, markers);
 			event.setMarker(marker);
 		}
 	}
 
-	private Marker recursiveReadMarker(XMLStreamReader reader, Map<String, Marker> markers) throws XMLStreamException
+	private Marker recursiveReadMarker(XMLStreamReader reader, Map<String, Marker> markers)
+		throws XMLStreamException
 	{
-		Marker marker=null;
+		Marker marker = null;
 		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type && MARKER_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && MARKER_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
-			String name=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MARKER_NAME_ATTRIBUTE);
-			marker=new Marker(name);
+			String name = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MARKER_NAME_ATTRIBUTE);
+			marker = new Marker(name);
 			markers.put(name, marker);
 			reader.nextTag();
-			for(;;)
+			for(; ;)
 			{
-				Marker child=recursiveReadMarker(reader, markers);
-				if(child!=null)
+				Marker child = recursiveReadMarker(reader, markers);
+				if(child != null)
 				{
 					markers.put(child.getName(), child);
 					marker.add(child);
@@ -194,10 +208,11 @@ public class LoggingEventReader
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MARKER_NODE);
 			reader.nextTag();
 		}
-		else if (XMLStreamConstants.START_ELEMENT == type && MARKER_REFERENCE_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		else if(XMLStreamConstants.START_ELEMENT == type && MARKER_REFERENCE_NODE
+			.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
 		{
-			String ref=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MARKER_REFERENCE_ATTRIBUTE);
-			marker=markers.get(ref);
+			String ref = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MARKER_REFERENCE_ATTRIBUTE);
+			marker = markers.get(ref);
 			reader.nextTag();
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MARKER_REFERENCE_NODE);
 			reader.nextTag();
@@ -205,17 +220,19 @@ public class LoggingEventReader
 		return marker;
 	}
 
-	private Map<String,String> readMdc(XMLStreamReader reader) throws XMLStreamException
+	private Map<String, String> readMdc(XMLStreamReader reader)
+		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type && MDC_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && MDC_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
-			Map<String,String> mdc=new HashMap<String, String>();
+			Map<String, String> mdc = new HashMap<String, String>();
 			reader.nextTag();
-			for(;;)
+			for(; ;)
 			{
-				MdcEntry entry=readMdcEntry(reader);
-				if(entry==null)
+				MdcEntry entry = readMdcEntry(reader);
+				if(entry == null)
 				{
 					break;
 				}
@@ -228,20 +245,23 @@ public class LoggingEventReader
 		return null;
 	}
 
-    private List<Message> readNdc(XMLStreamReader reader) throws XMLStreamException
-    {
-        // TODO: implement readNdc.
-        return null;
-    }
+	private List<Message> readNdc(XMLStreamReader reader)
+		throws XMLStreamException
+	{
+		// TODO: implement readNdc.
+		return null;
+	}
 
-	private MdcEntry readMdcEntry(XMLStreamReader reader) throws XMLStreamException
+	private MdcEntry readMdcEntry(XMLStreamReader reader)
+		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type && MDC_ENTRY_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && MDC_ENTRY_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
-			MdcEntry entry=new MdcEntry();
-			entry.key=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MDC_ENTRY_KEY_ATTRIBUTE);
-			entry.value=StaxUtilities.readText(reader);
+			MdcEntry entry = new MdcEntry();
+			entry.key = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MDC_ENTRY_KEY_ATTRIBUTE);
+			entry.value = StaxUtilities.readText(reader);
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MDC_ENTRY_NODE);
 			reader.nextTag();
 			return entry;
@@ -249,37 +269,40 @@ public class LoggingEventReader
 		return null;
 	}
 
-	private void readThrowable(XMLStreamReader reader, LoggingEvent event) throws XMLStreamException
+	private void readThrowable(XMLStreamReader reader, LoggingEvent event)
+		throws XMLStreamException
 	{
 		event.setThrowable(recursiveReadThrowable(reader, THROWABLE_NODE));
 	}
 
 	private ThrowableInfo recursiveReadThrowable(XMLStreamReader reader, String nodeName)
-			throws XMLStreamException
+		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
-			ThrowableInfo throwable=new ThrowableInfo();
-			String name=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THROWABLE_CLASS_NAME_ATTRIBUTE);
+			ThrowableInfo throwable = new ThrowableInfo();
+			String name = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THROWABLE_CLASS_NAME_ATTRIBUTE);
 			throwable.setName(name);
-            String omittedStr=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, OMITTED_ELEMENTS_ATTRIBUTE);
-            if(omittedStr!=null)
-            {
-                try
-                {
-                    int omitted=Integer.parseInt(omittedStr);
-                    throwable.setOmittedElements(omitted);
-                }
-                catch(NumberFormatException ex)
-                {
-                    // ignore
-                }
+			String omittedStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, OMITTED_ELEMENTS_ATTRIBUTE);
+			if(omittedStr != null)
+			{
+				try
+				{
+					int omitted = Integer.parseInt(omittedStr);
+					throwable.setOmittedElements(omitted);
+				}
+				catch(NumberFormatException ex)
+				{
+					// ignore
+				}
 
-            }
+			}
 			reader.nextTag();
 
-			throwable.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_MESSAGE_NODE));
+			throwable
+				.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_MESSAGE_NODE));
 			throwable.setStackTrace(readStackTraceNode(reader, STACK_TRACE_NODE));
 
 			throwable.setCause(recursiveReadThrowable(reader, CAUSE_NODE));
@@ -289,32 +312,38 @@ public class LoggingEventReader
 		}
 		return null;
 	}
-	private void readArguments(XMLStreamReader reader, LoggingEvent event) throws XMLStreamException
+
+	private void readArguments(XMLStreamReader reader, LoggingEvent event)
+		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type && ARGUMENTS_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && ARGUMENTS_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
 			reader.nextTag();
-			List<String> args=new ArrayList<String>();
-			for(;;)
+			List<String> args = new ArrayList<String>();
+			for(; ;)
 			{
 				type = reader.getEventType();
-				if (XMLStreamConstants.END_ELEMENT == type && ARGUMENTS_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+				if(XMLStreamConstants.END_ELEMENT == type && ARGUMENTS_NODE
+					.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
 				{
 					reader.nextTag();
 					break;
 				}
-				String arg=readArgument(reader);
+				String arg = readArgument(reader);
 				args.add(arg);
 			}
 			event.setArguments(args.toArray(new String[args.size()]));
 		}
 	}
 
-	private String readArgument(XMLStreamReader reader) throws XMLStreamException
+	private String readArgument(XMLStreamReader reader)
+		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if (XMLStreamConstants.START_ELEMENT == type && NULL_ARGUMENT_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && NULL_ARGUMENT_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
 		{
 			reader.nextTag();
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, NULL_ARGUMENT_NODE);

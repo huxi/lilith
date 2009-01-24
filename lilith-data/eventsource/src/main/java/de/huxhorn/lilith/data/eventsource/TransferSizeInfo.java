@@ -29,13 +29,13 @@ public final class TransferSizeInfo
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		TransferSizeInfo that = (TransferSizeInfo) o;
 
-		if (transferSize != null ? !transferSize.equals(that.transferSize) : that.transferSize != null) return false;
-		if (uncompressedSize != null ? !uncompressedSize.equals(that.uncompressedSize) : that.uncompressedSize != null)
+		if(transferSize != null ? !transferSize.equals(that.transferSize) : that.transferSize != null) return false;
+		if(uncompressedSize != null ? !uncompressedSize.equals(that.uncompressedSize) : that.uncompressedSize != null)
 		{
 			return false;
 		}
@@ -51,7 +51,8 @@ public final class TransferSizeInfo
 		return result;
 	}
 
-	public TransferSizeInfo clone() throws CloneNotSupportedException
+	public TransferSizeInfo clone()
+		throws CloneNotSupportedException
 	{
 		return (TransferSizeInfo) super.clone();
 	}

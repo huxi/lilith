@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,17 +21,21 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.sulky.buffers.DisposeOperation;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Future;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public abstract class ViewContainer<T extends Serializable>
 	extends JPanel
@@ -41,43 +45,44 @@ public abstract class ViewContainer<T extends Serializable>
 	//public static final String VIEW_INDEX_PROPERTY_NAME="viewIndex";
 	//public static final String VIEW_COUNT_PROPERTY_NAME="viewCount";
 	//public static final String SELECTED_VIEW_PROPERTY_NAME="selectedView";
-	public static final String SELECTED_EVENT_PROPERTY_NAME="selectedEvent";
+	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
 
 	private static final ImageIcon globalFrameImageIcon;
 	private static final Map<LoggingViewState, ImageIcon> frameIconImages;
+
 	static
 	{
-		URL url=EventWrapperViewPanel.class.getResource("/tango/16x16/categories/applications-internet.png");
-		if(url!=null)
+		URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/categories/applications-internet.png");
+		if(url != null)
 		{
-			globalFrameImageIcon=new ImageIcon(url);
+			globalFrameImageIcon = new ImageIcon(url);
 		}
 		else
 		{
-			globalFrameImageIcon=null;
+			globalFrameImageIcon = null;
 		}
-		frameIconImages=new HashMap<LoggingViewState, ImageIcon>();
-		url=EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-receive.png");
-		if(url!=null)
+		frameIconImages = new HashMap<LoggingViewState, ImageIcon>();
+		url = EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-receive.png");
+		if(url != null)
 		{
 			frameIconImages.put(LoggingViewState.ACTIVE, new ImageIcon(url));
 		}
-		url=EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-offline.png");
-		if(url!=null)
+		url = EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-offline.png");
+		if(url != null)
 		{
 			frameIconImages.put(LoggingViewState.INACTIVE, new ImageIcon(url));
 		}
 	}
 
-	private final List<ChangeListener> changeListeners=new LinkedList<ChangeListener>();
+	private final List<ChangeListener> changeListeners = new LinkedList<ChangeListener>();
 	private EventWrapperViewPanel<T> defaultView;
 	private MainFrame mainFrame;
 //	protected PropertyChangeSupport propertyChangeSuppoert;
 
 	public ViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
-		this.mainFrame=mainFrame;
-		this.defaultView=createViewPanel(eventSource);
+		this.mainFrame = mainFrame;
+		this.defaultView = createViewPanel(eventSource);
 		defaultView.addPropertyChangeListener(new PropertyChangeListener()
 		{
 			public void propertyChange(PropertyChangeEvent evt)
@@ -99,9 +104,13 @@ public abstract class ViewContainer<T extends Serializable>
 	protected abstract EventWrapperViewPanel<T> createViewPanel(EventSource<T> eventSource);
 
 	public abstract EventWrapperViewPanel<T> getViewAt(int index);
+
 	public abstract EventWrapperViewPanel<T> getSelectedView();
+
 	public abstract void addView(EventWrapperViewPanel<T> view);
+
 	public abstract void removeView(EventWrapperViewPanel<T> view, boolean dispose);
+
 	public abstract void showDefaultView();
 
 	public abstract Class getWrappedClass();
@@ -113,25 +122,25 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public ViewWindow resolveViewWindow()
 	{
-		Container parent=getParent();
-		while(parent!= null && !(parent instanceof ViewWindow))
+		Container parent = getParent();
+		while(parent != null && !(parent instanceof ViewWindow))
 		{
-			parent=parent.getParent();
+			parent = parent.getParent();
 		}
-		return (ViewWindow)parent;
+		return (ViewWindow) parent;
 	}
 
 	private void updateContainerIcon()
 	{
-		ViewWindow window=resolveViewWindow();
+		ViewWindow window = resolveViewWindow();
 		if(window instanceof JFrame)
 		{
-			JFrame frame=(JFrame) window;
+			JFrame frame = (JFrame) window;
 			updateFrameIcon(frame);
 		}
 		else if(window instanceof JInternalFrame)
 		{
-			JInternalFrame frame=(JInternalFrame) window;
+			JInternalFrame frame = (JInternalFrame) window;
 			updateInternalFrameIcon(frame);
 		}
 	}
@@ -139,7 +148,7 @@ public abstract class ViewContainer<T extends Serializable>
 	private static ImageIcon resolveIconForState(LoggingViewState state)
 	{
 		ImageIcon result = globalFrameImageIcon;
-		if(state!=null)
+		if(state != null)
 		{
 			result = frameIconImages.get(state);
 		}
@@ -150,7 +159,7 @@ public abstract class ViewContainer<T extends Serializable>
 	{
 		ImageIcon frameImageIcon = resolveIconForState(defaultView.getState());
 
-		if(frameImageIcon!=null)
+		if(frameImageIcon != null)
 		{
 			frame.setIconImage(frameImageIcon.getImage());
 		}
@@ -160,7 +169,7 @@ public abstract class ViewContainer<T extends Serializable>
 	{
 		ImageIcon frameImageIcon = resolveIconForState(defaultView.getState());
 
-		if(frameImageIcon!=null)
+		if(frameImageIcon != null)
 		{
 			iframe.setFrameIcon(frameImageIcon);
 			iframe.repaint(); // Apple L&F Bug workaround
@@ -175,13 +184,13 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public void addChangeListener(ChangeListener listener)
 	{
-		boolean changed=false;
+		boolean changed = false;
 		synchronized(changeListeners)
 		{
 			if(!changeListeners.contains(listener))
 			{
 				changeListeners.add(listener);
-				changed=true;
+				changed = true;
 			}
 		}
 		if(changed)
@@ -192,13 +201,13 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public void removeChangeListener(ChangeListener listener)
 	{
-		boolean changed=false;
+		boolean changed = false;
 		synchronized(changeListeners)
 		{
 			if(changeListeners.contains(listener))
 			{
 				changeListeners.remove(listener);
-				changed=true;
+				changed = true;
 			}
 		}
 		if(changed)
@@ -214,28 +223,38 @@ public abstract class ViewContainer<T extends Serializable>
 		{
 			clone = new ArrayList<ChangeListener>(changeListeners);
 		}
-		ChangeEvent event=new ChangeEvent(this);
-		for(ChangeListener listener:clone)
+		ChangeEvent event = new ChangeEvent(this);
+		for(ChangeListener listener : clone)
 		{
 			listener.stateChanged(event);
 		}
 	}
 
 	public abstract void closeCurrentFilter();
+
 	public abstract void closeOtherFilters();
+
 	public abstract void closeAllFilters();
 
 	public abstract int getViewCount();
+
 	public abstract void setViewIndex(int newView);
+
 	public abstract int getViewIndex();
+
 	public abstract void hideSearchPanel();
+
 	public abstract void showSearchPanel(Future<Integer> future);
+
 	public abstract boolean isSearching();
+
 	public abstract void cancelSearching();
+
 	public abstract ProgressGlassPane getProgressPanel();
 
 	public abstract EventWrapper<T> getSelectedEvent();
 
 	public abstract void updateViews();
-    public abstract void scrollToBottom();
+
+	public abstract void scrollToBottom();
 }

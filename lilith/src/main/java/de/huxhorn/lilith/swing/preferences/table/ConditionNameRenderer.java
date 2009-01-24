@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,20 +19,21 @@ package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.*;
 import java.awt.*;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+
 public class ConditionNameRenderer
-		implements TableCellRenderer
+	implements TableCellRenderer
 {
 	private DefaultTableCellRenderer renderer;
 
 	public ConditionNameRenderer()
 	{
 		super();
-		renderer=new DefaultTableCellRenderer();
+		renderer = new DefaultTableCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
@@ -40,11 +41,11 @@ public class ConditionNameRenderer
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
 	{
-		String text="";
+		String text = "";
 		if(value instanceof SavedCondition)
 		{
-			SavedCondition wrapper=(SavedCondition)value;
-			text=""+wrapper.getName();
+			SavedCondition wrapper = (SavedCondition) value;
+			text = "" + wrapper.getName();
 		}
 
 		return renderer.getTableCellRendererComponent(table, text, isSelected, false, rowIndex, vColIndex);

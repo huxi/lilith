@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@ package de.huxhorn.lilith.swing.debug;
 
 import de.huxhorn.lilith.debug.LoggerEventEmitter;
 import de.huxhorn.lilith.swing.MainFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.net.InetAddress;
@@ -31,6 +31,8 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.swing.*;
 
 public class DebugDialog
 	extends JDialog
@@ -43,7 +45,7 @@ public class DebugDialog
 	public DebugDialog(Frame owner, MainFrame mainFrame)
 	{
 		super(owner, "Debug");
-		this.mainFrame=mainFrame;
+		this.mainFrame = mainFrame;
 		initUI();
 	}
 
@@ -56,12 +58,12 @@ public class DebugDialog
 	private void initUI()
 	{
 		setModal(false);
-		loggerEventEmitter=new LoggerEventEmitter();
+		loggerEventEmitter = new LoggerEventEmitter();
 		loggerEventEmitter.setDelay(0);
-		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(new JButton(new DoneAction()));
 
-		JToolBar debugToolbar=new JToolBar();
+		JToolBar debugToolbar = new JToolBar();
 		debugToolbar.setFloatable(false);
 
 		JButton button;
@@ -95,11 +97,11 @@ public class DebugDialog
 		button = new JButton(action);
 		debugToolbar.add(button);
 
-		action=new EditGroovyAction();
+		action = new EditGroovyAction();
 		button = new JButton(action);
 		debugToolbar.add(button);
 
-		action=new NetworkAction();
+		action = new NetworkAction();
 		button = new JButton(action);
 		debugToolbar.add(button);
 
@@ -142,12 +144,12 @@ public class DebugDialog
 				loggerEventEmitter.logException();
 				loggerEventEmitter.logException2();
 				loggerEventEmitter.logParamException();
-                loggerEventEmitter.logParamException2();
+				loggerEventEmitter.logParamException2();
 				loggerEventEmitter.logSkull();
 				loggerEventEmitter.logTruth();
 				loggerEventEmitter.logAnonymous();
 			}
-			catch (InterruptedException ex)
+			catch(InterruptedException ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
 			}
@@ -180,18 +182,18 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			Set<InetAddress> inetAddresses=new HashSet<InetAddress>();
+			Set<InetAddress> inetAddresses = new HashSet<InetAddress>();
 			try
 			{
 				Enumeration<NetworkInterface> netIfcs = NetworkInterface.getNetworkInterfaces();
 
 				while(netIfcs.hasMoreElements())
 				{
-					NetworkInterface ni=netIfcs.nextElement();
+					NetworkInterface ni = netIfcs.nextElement();
 					Enumeration<InetAddress> inetAddrs = ni.getInetAddresses();
 					while(inetAddrs.hasMoreElements())
 					{
-						InetAddress iadd=inetAddrs.nextElement();
+						InetAddress iadd = inetAddrs.nextElement();
 						if(!iadd.isLoopbackAddress())
 						{
 							inetAddresses.add(iadd);
@@ -200,7 +202,7 @@ public class DebugDialog
 
 				}
 			}
-			catch (SocketException ex)
+			catch(SocketException ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while retrieving InetAddresses!", ex);
 			}
@@ -225,7 +227,7 @@ public class DebugDialog
 				loggerEventEmitter.logStuffWithMdc();
 				loggerEventEmitter.logStuffWithMdcAndMarker();
 			}
-			catch (InterruptedException ex)
+			catch(InterruptedException ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
 			}
@@ -247,7 +249,7 @@ public class DebugDialog
 				loggerEventEmitter.logException();
 				loggerEventEmitter.logException2();
 			}
-			catch (InterruptedException ex)
+			catch(InterruptedException ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
 			}
@@ -267,9 +269,9 @@ public class DebugDialog
 			try
 			{
 				loggerEventEmitter.logParamException();
-                loggerEventEmitter.logParamException2();
+				loggerEventEmitter.logParamException2();
 			}
-			catch (InterruptedException ex)
+			catch(InterruptedException ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
 			}
