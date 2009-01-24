@@ -17,10 +17,7 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.*;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -80,6 +77,7 @@ public class LoggingEventReader
 			readArguments(reader, result);
 			readThrowable(reader, result);
 			result.setMdc(readMdc(reader));
+            result.setNdc(readNdc(reader));
 			readMarker(reader, result);
 			readCallStack(reader, result);
 			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, LOGGING_EVENT_NODE);
@@ -229,6 +227,12 @@ public class LoggingEventReader
 		}
 		return null;
 	}
+
+    private List<Message> readNdc(XMLStreamReader reader) throws XMLStreamException
+    {
+        // TODO: implement readNdc.
+        return null;
+    }
 
 	private MdcEntry readMdcEntry(XMLStreamReader reader) throws XMLStreamException
 	{

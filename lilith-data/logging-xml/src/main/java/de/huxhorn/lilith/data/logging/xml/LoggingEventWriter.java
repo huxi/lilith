@@ -117,6 +117,7 @@ public class LoggingEventWriter
 		writeArguments(writer, event);
 		writeThrowable(writer, event);
 		writeMdc(writer,event);
+        writeNdc(writer,event);
 		writeMarker(writer, event);
 		writeCallStack(writer, event);
 
@@ -175,6 +176,11 @@ public class LoggingEventWriter
 		}
 
 	}
+
+    private void writeNdc(XMLStreamWriter writer, LoggingEvent event) throws XMLStreamException
+    {
+        // TODO: implement writeNdc.
+    }
 
 	private void writeMdc(XMLStreamWriter writer, LoggingEvent event) throws XMLStreamException
 	{
