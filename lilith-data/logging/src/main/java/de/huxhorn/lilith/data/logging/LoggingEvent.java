@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2008 Joern Huxhorn
+ * Copyright (C) 2007-2009 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
+import java.util.List;
 
 /**
  * <p>Replacement for ch.qos.logback.classic.spi.LoggingEvent</p>
@@ -37,7 +38,7 @@ import java.util.Map;
 public class LoggingEvent
 	implements Serializable
 {
-    private static final long serialVersionUID = -2716224578048229667L;
+    private static final long serialVersionUID = 2176672034350830417L;
 
     public enum Level
 	{
@@ -53,15 +54,18 @@ public class LoggingEvent
 	private String threadName;
 	private Date timeStamp;
 
-	private String messagePattern;
-
-	private String[] arguments;
 	private ThrowableInfo throwable;
 	private Map<String,String> mdc;
+    private List<Message> ndc;
 	private Marker marker;
 	private ExtendedStackTraceElement[] callStack;
 	private String applicationIdentifier;
-	private transient String formattedMessage;
+    private Message message;
+
+    public LoggingEvent()
+    {
+        message=new Message();
+    }
 
 	public String getLogger()
 	{
@@ -85,34 +89,27 @@ public class LoggingEvent
 
 	public String getMessagePattern()
 	{
-		return messagePattern;
+		return message.getMessagePattern();
 	}
 
 	public void setMessagePattern(String messagePattern)
 	{
-		this.messagePattern = messagePattern;
-		this.formattedMessage=null;
+        message.setMessagePattern(messagePattern);
 	}
 
 	public String getMessage()
 	{
-		if(this.formattedMessage==null)
-		{
-			// lazy init
-			this.formattedMessage=MessageFormatter.format(messagePattern, arguments);
-		}
-		return this.formattedMessage;
+        return message.getMessage();
 	}
 
 	public String[] getArguments()
 	{
-		return arguments;
+		return message.getArguments();
 	}
 
 	public void setArguments(String[] arguments)
 	{
-		this.arguments = arguments;
-		this.formattedMessage=null;
+        message.setArguments(arguments);
 	}
 
 	public Date getTimeStamp()
@@ -155,7 +152,17 @@ public class LoggingEvent
 		this.mdc = mdc;
 	}
 
-	public Marker getMarker()
+    public List<Message> getNdc()
+    {
+        return ndc;
+    }
+
+    public void setNdc(List<Message> ndc)
+    {
+        this.ndc = ndc;
+    }
+
+    public Marker getMarker()
 	{
 		return marker;
 	}
@@ -192,18 +199,18 @@ public class LoggingEvent
 
 		LoggingEvent event = (LoggingEvent) o;
 
+        if (level != event.level) return false;
+        if (timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null) return false;
+        if (logger != null ? !logger.equals(event.logger) : event.logger != null) return false;
 		if (applicationIdentifier != null ? !applicationIdentifier.equals(event.applicationIdentifier) : event.applicationIdentifier != null)
 			return false;
-		if (!Arrays.equals(arguments, event.arguments)) return false;
+        if (message != null ? !message.equals(event.message) : event.message != null) return false;
+        if (threadName != null ? !threadName.equals(event.threadName) : event.threadName != null) return false;
 		if (!Arrays.equals(callStack, event.callStack)) return false;
-		if (level != event.level) return false;
-		if (logger != null ? !logger.equals(event.logger) : event.logger != null) return false;
 		if (marker != null ? !marker.equals(event.marker) : event.marker != null) return false;
 		if (mdc != null ? !mdc.equals(event.mdc) : event.mdc != null) return false;
-		if (messagePattern != null ? !messagePattern.equals(event.messagePattern) : event.messagePattern != null) return false;
-		if (threadName != null ? !threadName.equals(event.threadName) : event.threadName != null) return false;
+        if (ndc != null ? !ndc.equals(event.ndc) : event.ndc != null) return false;
 		if (throwable != null ? !throwable.equals(event.throwable) : event.throwable != null) return false;
-		if (timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null) return false;
 
 		return true;
 	}
@@ -213,14 +220,9 @@ public class LoggingEvent
 		int result;
 		result = (logger != null ? logger.hashCode() : 0);
 		result = 31 * result + (level != null ? level.hashCode() : 0);
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
 		result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
-		result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
-		result = 31 * result + (messagePattern != null ? messagePattern.hashCode() : 0);
-		result = 31 * result + (arguments != null ? Arrays.hashCode(arguments) : 0);
-		result = 31 * result + (throwable != null ? throwable.hashCode() : 0);
-		result = 31 * result + (mdc != null ? mdc.hashCode() : 0);
-		result = 31 * result + (marker != null ? marker.hashCode() : 0);
-		result = 31 * result + (callStack != null ? Arrays.hashCode(callStack) : 0);
 		result = 31 * result + (applicationIdentifier != null ? applicationIdentifier.hashCode() : 0);
 		return result;
 	}
@@ -232,7 +234,7 @@ public class LoggingEvent
 		result.append("LoggingEvent[");
 		result.append("logger=").append(logger).append(", ");
 		result.append("level=").append(level).append(", ");
-		result.append("messagePattern=").append(messagePattern).append(", ");
+		result.append("message=").append(message).append(", ");
 		result.append("threadName=").append(threadName).append(", ");
 		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
 		result.append("timeStamp=").append(timeStamp);
