@@ -27,9 +27,7 @@ import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class LoggingEventTest
 {
@@ -273,4 +271,26 @@ public class LoggingEventTest
 			assertFalse(fresh.equals(obj));
 		}
 	}
+
+    @Test
+    public void ndc() throws ClassNotFoundException, IOException
+    {
+        LoggingEvent instance=new LoggingEvent();
+
+        List<Message> value=new ArrayList<Message>();
+        value.add(new Message("pattern", new String[]{"foo", "bar"}));
+
+        instance.setNdc(value);
+
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getNdc());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getNdc());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 }
