@@ -27,6 +27,7 @@ import de.huxhorn.lilith.swing.table.renderer.LevelRenderer;
 import de.huxhorn.lilith.swing.table.renderer.LoggerNameRenderer;
 import de.huxhorn.lilith.swing.table.renderer.MarkerRenderer;
 import de.huxhorn.lilith.swing.table.renderer.MessageRenderer;
+import de.huxhorn.lilith.swing.table.renderer.NdcRenderer;
 import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
 import de.huxhorn.lilith.swing.table.renderer.ThreadRenderer;
 import de.huxhorn.lilith.swing.table.renderer.ThrowableRenderer;
@@ -35,6 +36,7 @@ import de.huxhorn.lilith.swing.table.tooltips.ApplicationTooltipGenerator;
 import de.huxhorn.lilith.swing.table.tooltips.LoggerNameTooltipGenerator;
 import de.huxhorn.lilith.swing.table.tooltips.MarkerTooltipGenerator;
 import de.huxhorn.lilith.swing.table.tooltips.MessageTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.NdcTooltipGenerator;
 import de.huxhorn.lilith.swing.table.tooltips.SourceTooltipGenerator;
 import de.huxhorn.lilith.swing.table.tooltips.ThreadTooltipGenerator;
 import de.huxhorn.lilith.swing.table.tooltips.ThrowableTooltipGenerator;
@@ -57,6 +59,7 @@ public class LoggingEventViewTable
 	public static final String DEFAULT_COLUMN_NAME_THROWABLE = "Throwable";
 	public static final String DEFAULT_COLUMN_NAME_THREAD = "Thread";
 	public static final String DEFAULT_COLUMN_NAME_MARKER = "Marker";
+	public static final String DEFAULT_COLUMN_NAME_NDC = "NDC";
 	public static final String DEFAULT_COLUMN_NAME_APPLICATIION = "Application";
 	public static final String DEFAULT_COLUMN_NAME_SOURCE = "Source";
 
@@ -72,6 +75,8 @@ public class LoggingEventViewTable
 			new LoggerNameTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_MARKER,
 			new MarkerTooltipGenerator());
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_NDC,
+			new NdcTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_MESSAGE,
 			new MessageTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_THREAD,
@@ -139,6 +144,12 @@ public class LoggingEventViewTable
 		}
 		{
 			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_NDC);
+			col.setCellRenderer(new NdcRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_APPLICATIION);
 			col.setCellRenderer(new ApplicationRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
@@ -164,6 +175,7 @@ public class LoggingEventViewTable
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_THROWABLE, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_THREAD, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_MARKER, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_NDC, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATIION, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_SOURCE, 75, isGlobal()));
 

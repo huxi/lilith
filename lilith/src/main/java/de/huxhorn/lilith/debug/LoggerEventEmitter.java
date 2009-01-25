@@ -55,6 +55,12 @@ public class LoggerEventEmitter
 		execute(new LogStuffRunnable(delay, null));
 	}
 
+	public void logNDC()
+		throws InterruptedException
+	{
+		execute(new LogNdcRunnable(delay));
+	}
+
 	private void execute(Runnable runnable)
 	{
 		executor.execute(runnable);

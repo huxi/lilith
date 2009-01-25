@@ -35,6 +35,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -249,10 +250,58 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	public void resetLayout()
 	{
-		List<PersistentTableColumnModel.TableColumnLayoutInfo> infos = loadLayout();
-		if(infos == null)
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> loadedInfos = loadLayout();
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> defaults = getDefaultLayout();
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> infos;
+		if(loadedInfos == null)
 		{
 			infos = getDefaultLayout();
+		}
+		else
+		{
+			infos = new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
+
+			// lets make sure that all columns exist.
+			for(PersistentTableColumnModel.TableColumnLayoutInfo current : loadedInfos)
+			{
+				if(current != null)
+				{
+					String currentName = current.getColumnName();
+					if(currentName != null)
+					{
+						for(PersistentTableColumnModel.TableColumnLayoutInfo other : defaults)
+						{
+							if(currentName.equals(other.getColumnName()))
+							{
+								infos.add(current);
+								break;
+							}
+						}
+					}
+				}
+			}
+
+			// lets add missing columns
+			for(PersistentTableColumnModel.TableColumnLayoutInfo current : defaults)
+			{
+				String currentName = current.getColumnName();
+				if(currentName != null)
+				{
+					boolean found = false;
+					for(PersistentTableColumnModel.TableColumnLayoutInfo other : infos)
+					{
+						String otherName = other.getColumnName();
+						if(currentName.equals(otherName))
+						{
+							found = true;
+						}
+					}
+					if(!found)
+					{
+						infos.add(current);
+					}
+				}
+			}
 		}
 		PersistentTableColumnModel newModel = new PersistentTableColumnModel();
 		for(PersistentTableColumnModel.TableColumnLayoutInfo current : infos)
@@ -262,9 +311,9 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			if(col != null)
 			{
 				col.setPreferredWidth(current.getWidth());
+				newModel.addColumn(col);
+				newModel.setColumnVisible(col, current.isVisible());
 			}
-			newModel.addColumn(col);
-			newModel.setColumnVisible(col, current.isVisible());
 		}
 		setColumnModel(newModel);
 		tableColumnModel = newModel;
@@ -275,14 +324,9 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		if(logger.isDebugEnabled())
 		{
-			if(logger.isDebugEnabled())
-			{
-				logger.debug("changeSelection({}, {}, {}, {})", new Object[]{rowIndex, columnIndex, toggle, extend});
-			}
-			if(logger.isDebugEnabled()) //noinspection ThrowableInstanceNeverThrown
-			{
-				logger.debug("changeSelection-Stacktrace", new Throwable());
-			}
+			logger.debug("changeSelection({}, {}, {}, {})", new Object[]{rowIndex, columnIndex, toggle, extend});
+			//noinspection ThrowableInstanceNeverThrown
+			logger.debug("changeSelection-Stacktrace", new Throwable());
 		}
 		if(isScrollingToBottom())
 		{
