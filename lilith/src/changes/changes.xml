@@ -106,6 +106,9 @@
 			<action dev="jhux" type="add" issue="27">
 				Added new table row "NDC" to logging table.
 			</action>
+			<action dev="jhux" type="add" issue="27">
+				NDC support in detailsView.groovy
+			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
 			</action>

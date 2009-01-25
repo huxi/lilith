@@ -1,38 +1,46 @@
-body {
+body
+{
 	margin: 0;
 	padding: 0; /*	background: #ffff00; */
 }
 
-table {
+table
+{
 	border-spacing: 0;
 }
 
-tr.even {
+tr.even
+{
 	background: #e9edf2;
 }
 
-tr.odd {
+tr.odd
+{
 	background: #ffffff;
 }
 
-td {
+td
+{
 	border-top: none;
 	border-right: 1px solid black;
 	border-bottom: none;
 	border-left: none;
 }
 
-th {
+th
+{
 	border-top: none;
 	border-right: 1px solid black;
 	border-bottom: none;
 	border-left: none;
 }
 
-.throwable {
+.throwable
+{
 	background: #ffcccc;
 }
 
-pre {
+pre
+{
 	white-space: pre-wrap;
 }
