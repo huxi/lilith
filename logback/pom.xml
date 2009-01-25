@@ -37,6 +37,7 @@
 	</distributionManagement>
 
 	<modules>
+		<module>classic</module>
 		<module>logging-adapter</module>
 		<module>access-adapter</module>
 		<module>event-producers</module>

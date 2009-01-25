@@ -8,20 +8,20 @@
 	</appender>
 
 	<!--
-	   <appender name="Localhorst" class="ch.qos.lilith.classic.net.SocketAppender">
-		   <RemoteHost>localhost</RemoteHost>
-		   <Port>4445</Port>
-		   <ReconnectionDelay>10000</ReconnectionDelay>
-		   <IncludeCallerData>true</IncludeCallerData>
-	   </appender>
-	   -->
+	<appender name="Localhorst" class="ch.qos.lilith.classic.net.SocketAppender">
+		<RemoteHost>localhost</RemoteHost>
+		<Port>4445</Port>
+		<ReconnectionDelay>10000</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+	</appender>
+	-->
 
 	<root>
-		<level value="WARN"/>
+		<level value="ALL"/>
 		<appender-ref ref="CONSOLE"/>
 		<!--
-			  <appender-ref ref="Localhorst"/>
-			  -->
+		<appender-ref ref="Localhorst"/>
+		-->
 	</root>
 
 	<logger name="class">

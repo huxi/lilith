@@ -91,6 +91,12 @@
 			<action dev="jhux" type="add" issue="1">
 				Install example groovy conditions if conditions folder is newly created.
 			</action>
+			<action dev="jhux" type="add" issue="27">
+				Added support for NDC to LoggingEvent datatype.
+			</action>
+			<action dev="jhux" type="add" issue="27">
+				Created NDC for use with Lilith appenders. 
+			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
 			</action>
@@ -352,7 +358,7 @@
 			<action dev="jhux" type="update">
 				Implemented own message formatting in MessageFormatter that does not rely on slf4j anymore.
 			</action>
-			<action dev="jhux" type="add" issue="2034328">
+			<action dev="jhux" type="add">
 				Added support for Exceptions in case of parameter array,
 				i.e. log.debug("{} {}", new Object[]{"One", "Two", new Throwable()) will both
 				evaluate the parameters in the message and the additional Throwable as the Throwable of the
