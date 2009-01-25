@@ -95,10 +95,16 @@
 				Added support for NDC to LoggingEvent datatype.
 			</action>
 			<action dev="jhux" type="add" issue="27">
-				Created NDC for use with Lilith appenders. 
+				Created NDC for use with Lilith appenders.
 			</action>
 			<action dev="jhux" type="update" issue="27">
 				Updated LogbackLoggingAdapter to use the NDC of events.
+			</action>
+			<action dev="jhux" type="fix">
+				Better handling of malformed saved table layouts. Invalid column names are ignored, missing names added.
+			</action>
+			<action dev="jhux" type="add" issue="27">
+				Added new table row "NDC" to logging table.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
