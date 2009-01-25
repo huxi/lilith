@@ -20,8 +20,10 @@ package de.huxhorn.lilith.data.logging.logback;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.logback.classic.NDC;
 
 import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.ClassPackagingData;
@@ -30,6 +32,7 @@ import ch.qos.logback.classic.spi.ThrowableDataPoint;
 import ch.qos.logback.classic.spi.ThrowableProxy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -100,6 +103,15 @@ public class LogbackLoggingAdapter
 
 		result.setThreadName(event.getThreadName());
 		result.setTimeStamp(new Date(event.getTimeStamp()));
+
+		if(!NDC.isEmpty())
+		{
+			// TODO: configurable
+			Message[] contextStack = NDC.getContextStack();
+
+			result.setNdc(Arrays.asList(contextStack));
+		}
+
 		return result;
 	}
 

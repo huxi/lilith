@@ -141,6 +141,12 @@
 
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.logback.classic</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.logback.appender.multiplex-core</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
