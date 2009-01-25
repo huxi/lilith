@@ -1,122 +1,31 @@
 import de.huxhorn.lilith.data.access.AccessEvent
 import de.huxhorn.lilith.data.access.HttpStatus
 import de.huxhorn.lilith.data.logging.LoggingEvent
+import de.huxhorn.lilith.data.logging.Message
 import java.text.SimpleDateFormat
 
 /*
-* Lilith - a log event viewer.
-* Copyright (C) 2007-2009 Joern Huxhorn
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-//import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-//import de.huxhorn.lilith.data.eventsource.EventWrapper;
-//import de.huxhorn.lilith.data.logging.Marker;
-//import de.huxhorn.lilith.data.logging.ThrowableInfo;
-
-//def si=new SourceIdentifier('identifier', 'secondaryIdentifier')
-
-//def eventWrapper=new EventWrapper(si, 1, event);
-
-/*
-def event=eventWrapper.event;
-event=new AccessEvent();
-event.requestURI='Request URI'
-event.requestURL='Request URL'
-event.statusCode=200
-event.remoteUser='user'
-event.remoteHost='host'
-event.remoteAddress='10.0.0.1'
-event.requestParameters=[foo1: ['bar'], foo2: ['bar1', 'bar2']]
-event.requestHeaders=[requestFoo1: 'bar', requestFoo2: 'bar']
-event.responseHeaders=[responseFoo1: 'bar', responseFoo2: 'bar']
-event.localPort=8080
-event.timeStamp=new Date()
-event.applicationIdentifier='AppId'
-
-eventWrapper.event=event;
-*/
-
-/*
-if(!event)
-{
-    even=new LoggingEvent();
-}
-event.message = 'Huhu'
-event.level = LoggingEvent.Level.INFO
-event.logger = "Logger Name";
-event.threadName = "thread name";
-event.marker = new Marker('foo');
-def m1=new Marker('Hail Eris!!')
-def m2=new Marker('All Hail Discordia!!!');
-m1.add(m2);
-event.marker.add(m1);
-event.marker.add(new Marker('bar'))
-m2.add(event.marker)
-event.timeStamp = new Date()
-event.mdc = [foo: 'bar', 'Hail Eris!!':'All Hail Discordia!!!'];
-event.callStack = [
-new StackTraceElement('class', '<methodName>', 'fileName', 17),
-new StackTraceElement('class', '<methodName>', 'fileName', 18),
-new StackTraceElement('class', '<methodName>', 'fileName', 19),
-new StackTraceElement('class', '<methodName>', 'fileName', 20),
-new StackTraceElement('class', '<methodName>', 'fileName', 21)
-]
-
-
-ThrowableInfo ti=new ThrowableInfo();
-ti.name='a.exception.Class';
-ti.message='A exeception message'
-ti.stackTrace =  [
-new StackTraceElement('class', '<methodName>', 'fileName', 1),
-new StackTraceElement('class', '<methodName>', 'fileName', 2),
-new StackTraceElement('class', '<methodName>', 'fileName', 3)
-]
-
-ThrowableInfo cause=new ThrowableInfo();
-cause.name='another.exception.Class';
-cause.message='Another exeception message'
-cause.stackTrace =  [
-new StackTraceElement('class', '<methodName>', 'fileName', 1),
-new StackTraceElement('class', '<methodName>', 'fileName', 2),
-new StackTraceElement('class', '<methodName>', 'fileName', 3),
-new StackTraceElement('class', '<methodName>', 'fileName', 4),
-new StackTraceElement('class', '<methodName>', 'fileName', 5)
-]
-
-ti.cause = cause;
-
-event.throwable = ti;
-event.applicationIdentifier='AppId'
-
-eventWrapper.event=event;
-*/
-
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2009 Joern Huxhorn
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 if(!binding.variables.'completeCallStack')
 {
 	binding.setVariable('completeCallStack', false);
 }
-//def completeCallStack=binding[completeCallStack];
-//println event;
-
-//def writer = new StringWriter();
-//def builder = new groovy.xml.MarkupBuilder(writer);
-
-//def builder = new groovy.util.NodeBuilder();
-/*def node= */
 
 def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSSZ');
 def builder = new groovy.xml.StreamingMarkupBuilder();
@@ -446,6 +355,19 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 				}
 		}
 
+		if(event.ndc)
+		{
+			evenOdd.toggle()
+			it.tr([class: "${evenOdd}"])
+				{
+					th([title: 'Nested Diagnostic Context'], 'NDC')
+					td
+					{
+						buildNdc(it, event.ndc)
+					}
+				}
+		}
+
 		if(event.callStack)
 		{
 			if(completeCallStack)
@@ -571,6 +493,19 @@ def buildMarker(element, marker, handledMarkers = [])
 					buildMarker(it, value, handledMarkers)
 				}
 			}
+		}
+	}
+}
+
+def buildNdc(element, List<Message> ndc)
+{
+	element.ul
+	{
+		ulIt ->
+		ndc.each
+		{
+			message ->
+			ulIt.li(message.message)
 		}
 	}
 }
