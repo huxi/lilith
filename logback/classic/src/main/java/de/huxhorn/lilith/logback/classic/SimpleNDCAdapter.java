@@ -20,89 +20,171 @@ package de.huxhorn.lilith.logback.classic;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SimpleNDCAdapter
 	implements NDCAdapter
 {
-	private InheritableThreadLocal<List<Message>> inheritableThreadLocal = new InheritableThreadLocal<List<Message>>();
-
-	private List<Message> getStackList()
-	{
-		List<Message> result=inheritableThreadLocal.get();
-		if(result==null)
-		{
-			result=new ArrayList<Message>();
-			inheritableThreadLocal.set(result);
-		}
-		return result;
-	}
+	private CloningNdcStackThreadLocal ndcStackThreadLocal = new CloningNdcStackThreadLocal();
 
 	public void push(String message)
 	{
-		List<Message> stackList = getStackList();
-		stackList.add(new Message(message));
+		getNdcStack().push(message);
 	}
 
 	public void push(String messagePattern, Object[] arguments)
 	{
-		if(arguments==null || arguments.length==0)
-		{
-			push(messagePattern);
-			return;
-		}
-		List<Message> stackList = getStackList();
-		MessageFormatter.ArgumentResult argumentResults = MessageFormatter.evaluateArguments(messagePattern, arguments);
-		if(argumentResults==null)
-		{
-			System.out.println("messagePattern="+messagePattern+", arguments="+ Arrays.toString(arguments));
-		}
-		else
-		stackList.add(new Message(messagePattern, argumentResults.getArguments()));
+		getNdcStack().push(messagePattern, arguments);
 	}
 
 	public void pop()
 	{
-		List<Message> stackList = getStackList();
-		int size=stackList.size();
-		if(size>0)
-		{
-			stackList.remove(size-1);
-		}
+		getNdcStack().pop();
 	}
 
 	public boolean isEmpty()
 	{
-		return getStackList().isEmpty();
+		return getNdcStack().isEmpty();
 	}
 
 	public void clear()
 	{
-		getStackList().clear();
+		getNdcStack().clear();
 	}
 
 	public Message[] getContextStack()
 	{
-		List<Message> stackList = getStackList();
-		if(stackList.isEmpty())
-		{
-			return NO_MESSAGES;
-		}
+		return getNdcStack().getContextStack();
+	}
 
-		Message[] result=new Message[stackList.size()];
-		try
+	private NdcStack getNdcStack()
+	{
+		NdcStack result = ndcStackThreadLocal.get();
+		if(result==null)
 		{
-			for(int i=0;i<stackList.size();i++)
-			{
-				result[i]=stackList.get(i).clone();
-			}
-		}
-		catch(CloneNotSupportedException e)
-		{
-			// can't happen... yeah, I know... it *will* happen one day :p
+			result=new NdcStack();
+			ndcStackThreadLocal.set(result);
 		}
 		return result;
+	}
+
+	private static class CloningNdcStackThreadLocal
+		extends InheritableThreadLocal<NdcStack>
+	{
+		@Override
+		protected NdcStack childValue(NdcStack parentValue)
+		{
+			NdcStack result = null;
+			if(parentValue!=null)
+			{
+				// this method seems to get called only if parent
+				// is not null but this isn't documented so I'll make sure...
+				try
+				{
+					result = parentValue.clone();
+				}
+				catch(CloneNotSupportedException e)
+				{
+					// can't happen, see above...
+				}
+			}
+			return result;
+		}
+	}
+
+	private static class NdcStack
+		implements Cloneable
+	{
+		private List<Message> stackList;
+		private int overflowCounter;
+		// TODO: add support for MaxDepth
+
+		private NdcStack()
+		{
+			stackList=new ArrayList<Message>();
+			overflowCounter=0;
+		}
+
+		public void push(String message)
+		{
+			stackList.add(new Message(message));
+		}
+
+		public void push(String messagePattern, Object[] arguments)
+		{
+			if(arguments == null || arguments.length == 0)
+			{
+				push(messagePattern);
+				return;
+			}
+			MessageFormatter.ArgumentResult argumentResults = MessageFormatter
+				.evaluateArguments(messagePattern, arguments);
+			if(argumentResults == null)
+			{
+				System.out.println("messagePattern=" + messagePattern + ", arguments=" + Arrays.toString(arguments));
+			}
+			else
+			{
+				stackList.add(new Message(messagePattern, argumentResults.getArguments()));
+			}
+		}
+
+		public void pop()
+		{
+			int size = stackList.size();
+			if(size > 0)
+			{
+				stackList.remove(size - 1);
+			}
+		}
+
+		public boolean isEmpty()
+		{
+			return stackList.isEmpty();
+		}
+
+		public void clear()
+		{
+			stackList.clear();
+		}
+
+		public Message[] getContextStack()
+		{
+			if(stackList.isEmpty())
+			{
+				return NO_MESSAGES;
+			}
+
+			Message[] result = new Message[stackList.size()];
+			try
+			{
+				for(int i = 0; i < stackList.size(); i++)
+				{
+					result[i] = stackList.get(i).clone();
+				}
+			}
+			catch(CloneNotSupportedException e)
+			{
+				// can't happen... yeah, I know... it *will* happen one day :p
+			}
+			return result;
+		}
+
+		public NdcStack clone()
+			throws CloneNotSupportedException
+		{
+			NdcStack result = (NdcStack) super.clone();
+
+			ArrayList<Message> clonedStackList = new ArrayList<Message>(stackList.size());
+			for(Message current : stackList)
+			{
+				clonedStackList.add(current.clone());
+			}
+			result.stackList = clonedStackList;
+
+			return result;
+		}
 	}
 }
