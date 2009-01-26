@@ -497,7 +497,7 @@ def buildMarker(element, marker, handledMarkers = [])
 	}
 }
 
-def buildNdc(element, List<Message> ndc)
+def buildNdc(element, Message[] ndc)
 {
 	element.ul
 	{

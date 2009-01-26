@@ -107,6 +107,7 @@ public class LogbackLoggingAdapterTest
 	public void testConvertEvent()
 	{
 		// LoggingEvent(String fqcn, Logger logger, Level level, String message, Throwable throwable, Object[] argArray)
+		@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
 		ch.qos.logback.classic.spi.LoggingEvent logbackEvent =
 			new ch.qos.logback.classic.spi.LoggingEvent(
 				"de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapterTest",
