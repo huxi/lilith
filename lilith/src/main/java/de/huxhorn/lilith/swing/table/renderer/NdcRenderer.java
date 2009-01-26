@@ -24,7 +24,6 @@ import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
 import java.awt.*;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -64,14 +63,14 @@ public class NdcRenderer
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
-				List<Message> ndc = event.getNdc();
+				Message[] ndc = event.getNdc();
 
 				if(ndc != null)
 				{
-					int size = ndc.size();
+					int size = ndc.length;
 					if(size > 0)
 					{
-						Message message = ndc.get(size - 1);
+						Message message = ndc[size - 1];
 						if(message != null)
 						{
 							text = message.getMessage();

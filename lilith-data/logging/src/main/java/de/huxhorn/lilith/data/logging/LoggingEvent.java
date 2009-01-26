@@ -20,7 +20,6 @@ package de.huxhorn.lilith.data.logging;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,7 +55,7 @@ public class LoggingEvent
 
 	private ThrowableInfo throwable;
 	private Map<String, String> mdc;
-	private List<Message> ndc;
+	private Message[] ndc;
 	private Marker marker;
 	private ExtendedStackTraceElement[] callStack;
 	private String applicationIdentifier;
@@ -152,12 +151,12 @@ public class LoggingEvent
 		this.mdc = mdc;
 	}
 
-	public List<Message> getNdc()
+	public Message[] getNdc()
 	{
 		return ndc;
 	}
 
-	public void setNdc(List<Message> ndc)
+	public void setNdc(Message[] ndc)
 	{
 		this.ndc = ndc;
 	}
@@ -212,7 +211,7 @@ public class LoggingEvent
 		if(!Arrays.equals(callStack, event.callStack)) return false;
 		if(marker != null ? !marker.equals(event.marker) : event.marker != null) return false;
 		if(mdc != null ? !mdc.equals(event.mdc) : event.mdc != null) return false;
-		if(ndc != null ? !ndc.equals(event.ndc) : event.ndc != null) return false;
+		if(!Arrays.equals(ndc, event.ndc)) return false;
 		if(throwable != null ? !throwable.equals(event.throwable) : event.throwable != null) return false;
 
 		return true;

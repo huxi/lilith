@@ -23,8 +23,6 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 import de.huxhorn.sulky.formatting.SimpleXml;
 
-import java.util.List;
-
 import javax.swing.*;
 
 public class NdcTooltipGenerator
@@ -41,8 +39,8 @@ public class NdcTooltipGenerator
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
-				List<Message> ndc = event.getNdc();
-				if(ndc != null && ndc.size() > 0)
+				Message[] ndc = event.getNdc();
+				if(ndc != null && ndc.length > 0)
 				{
 					StringBuilder buffer = new StringBuilder();
 					buffer.append("<html>");
@@ -55,9 +53,9 @@ public class NdcTooltipGenerator
 		return tooltip;
 	}
 
-	public static void appendNdc(List<Message> ndc, StringBuilder buffer)
+	public static void appendNdc(Message[] ndc, StringBuilder buffer)
 	{
-		if(ndc != null && ndc.size() > 0)
+		if(ndc != null && ndc.length > 0)
 		{
 			buffer.append("<ul>");
 			for(Message current : ndc)

@@ -25,10 +25,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class LoggingEventTest
@@ -292,19 +290,19 @@ public class LoggingEventTest
 	{
 		LoggingEvent instance = new LoggingEvent();
 
-		List<Message> value = new ArrayList<Message>();
-		value.add(new Message("pattern", new String[]{"foo", "bar"}));
+		Message[] value = new Message[]{
+			new Message("pattern", new String[]{"foo", "bar"})};
 
 		instance.setNdc(value);
 
 		{
 			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getNdc());
+			assertArrayEquals(value, obj.getNdc());
 			assertFalse(fresh.equals(obj));
 		}
 		{
 			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getNdc());
+			assertArrayEquals(value, obj.getNdc());
 			assertFalse(fresh.equals(obj));
 		}
 	}
