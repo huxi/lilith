@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.services.sender.EventSender;
@@ -47,6 +48,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -488,7 +490,6 @@ public class ViewActions
 	private FindMenuAction findMenuAction;
 	private JMenu searchMenu;
 	private JMenu viewMenu;
-	private JMenu layoutMenu;
 	private JMenu showHideMenu;
 	private ClearMenuAction clearMenuAction;
 	private FocusMessageAction focusMessageAction;
@@ -504,6 +505,8 @@ public class ViewActions
 	private CopyLoggingThrowableAction copyLoggingThrowableAction;
 	private CopyLoggingCallStackAction copyLoggingCallStackAction;
 	private CopyLoggingMarkerAction copyLoggingMarkerAction;
+	private CopyLoggingMdcAction copyLoggingMdcAction;
+	private CopyLoggingNdcAction copyLoggingNdcAction;
 	private CopyLoggerNameAction copyLoggerNameAction;
 	private CopyAccessUriAction copyAccessUriAction;
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
@@ -577,6 +580,8 @@ public class ViewActions
 		copyLoggingThrowableAction = new CopyLoggingThrowableAction();
 		copyLoggingCallStackAction = new CopyLoggingCallStackAction();
 		copyLoggingMarkerAction = new CopyLoggingMarkerAction();
+		copyLoggingMdcAction = new CopyLoggingMdcAction();
+		copyLoggingNdcAction = new CopyLoggingNdcAction();
 		copyAccessUriAction = new CopyAccessUriAction();
 
 
@@ -700,6 +705,8 @@ public class ViewActions
 		editMenu.add(copyLoggingThrowableAction);
 		editMenu.add(copyLoggingCallStackAction);
 		editMenu.add(copyLoggingMarkerAction);
+		editMenu.add(copyLoggingMdcAction);
+		editMenu.add(copyLoggingNdcAction);
 		editMenu.addSeparator();
 		editMenu.add(copyAccessUriAction);
 
@@ -726,7 +733,7 @@ public class ViewActions
 		viewMenu.add(editSourceNameMenuAction);
 		viewMenu.add(editConditionMenuAction);
 		viewMenu.addSeparator();
-		layoutMenu = new JMenu("Layout");
+		JMenu layoutMenu = new JMenu("Layout");
 		showHideMenu = new JMenu("Show/Hide");
 		layoutMenu.add(showHideMenu);
 		layoutMenu.addSeparator();
@@ -1276,6 +1283,8 @@ public class ViewActions
 		copyMenuItem.add(new JMenuItem(copyLoggingThrowableAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingCallStackAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingMarkerAction));
+		copyMenuItem.add(new JMenuItem(copyLoggingMdcAction));
+		copyMenuItem.add(new JMenuItem(copyLoggingNdcAction));
 		copyMenuItem.addSeparator();
 		copyMenuItem.add(new JMenuItem(copyAccessUriAction));
 
@@ -1297,6 +1306,8 @@ public class ViewActions
 		copyLoggingThrowableAction.setEventWrapper(wrapper);
 		copyLoggingCallStackAction.setEventWrapper(wrapper);
 		copyLoggingMarkerAction.setEventWrapper(wrapper);
+		copyLoggingMdcAction.setEventWrapper(wrapper);
+		copyLoggingNdcAction.setEventWrapper(wrapper);
 		copyAccessUriAction.setEventWrapper(wrapper);
 	}
 
@@ -1340,6 +1351,7 @@ public class ViewActions
 					sendToMenuItem.setEnabled(true);
 					for(Map.Entry<String, EventSender<LoggingEvent>> current : senders.entrySet())
 					{
+						@SuppressWarnings({"unchecked"})
 						SendAction<LoggingEvent> action = new SendAction<LoggingEvent>(current.getKey(), current.getValue(), eventWrapper);
 						JMenuItem menuItem = new JMenuItem(action);
 						sendToMenuItem.add(menuItem);
@@ -1359,6 +1371,7 @@ public class ViewActions
 					sendToMenuItem.setEnabled(true);
 					for(Map.Entry<String, EventSender<AccessEvent>> current : senders.entrySet())
 					{
+						@SuppressWarnings({"unchecked"})
 						SendAction<AccessEvent> action = new SendAction<AccessEvent>(current.getKey(), current.getValue(), eventWrapper);
 						JMenuItem menuItem = new JMenuItem(action);
 						sendToMenuItem.add(menuItem);
@@ -1405,6 +1418,7 @@ public class ViewActions
 	private class RemoveInactiveAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6662970580652310690L;
 
 		public RemoveInactiveAction()
 		{
@@ -1426,6 +1440,7 @@ public class ViewActions
 	private class CloseAllAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -1587444647880660196L;
 
 		public CloseAllAction()
 		{
@@ -1447,6 +1462,7 @@ public class ViewActions
 	private class CloseAllOtherAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3031217070975763827L;
 
 		public CloseAllOtherAction()
 		{
@@ -1468,6 +1484,7 @@ public class ViewActions
 	private class MinimizeAllAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8828005158469519472L;
 
 		public MinimizeAllAction()
 		{
@@ -1489,6 +1506,7 @@ public class ViewActions
 	private class MinimizeAllOtherAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -2357859864329239268L;
 
 		public MinimizeAllOtherAction()
 		{
@@ -1510,6 +1528,7 @@ public class ViewActions
 	private class ClearToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -4713267797278778997L;
 
 		public ClearToolBarAction()
 		{
@@ -1527,6 +1546,8 @@ public class ViewActions
 	private class ClearMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 776175842981192877L;
+
 		public ClearMenuAction()
 		{
 			super("Clear");
@@ -1543,6 +1564,8 @@ public class ViewActions
 	private class EditConditionMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8380709624103338783L;
+
 		public EditConditionMenuAction()
 		{
 			super("Add condition...");
@@ -1580,6 +1603,8 @@ public class ViewActions
 	private class EditSourceNameMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 2807692748192366344L;
+
 		public EditSourceNameMenuAction()
 		{
 			super("Edit source name...");
@@ -1620,6 +1645,8 @@ public class ViewActions
 	private class AttachMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6686061036755515933L;
+
 		private Icon attachIcon = ATTACH_MENU_ICON;
 		private Icon detachIcon = DETACH_MENU_ICON;
 
@@ -1663,6 +1690,8 @@ public class ViewActions
 	private class AttachToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6338324258055926639L;
+
 		private Icon attachIcon = ATTACH_TOOLBAR_ICON;
 		private Icon detachIcon = DETACH_TOOLBAR_ICON;
 
@@ -1706,6 +1735,8 @@ public class ViewActions
 	private class PauseMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -5242236903640590549L;
+
 		private Icon pausedIcon = PAUSED_MENU_ICON;
 		private Icon unpausedIcon = UNPAUSED_MENU_ICON;
 
@@ -1743,6 +1774,8 @@ public class ViewActions
 	private class PauseToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -5118623805829814815L;
+
 		private Icon pausedIcon = PAUSED_TOOLBAR_ICON;
 		private Icon unpausedIcon = UNPAUSED_TOOLBAR_ICON;
 
@@ -1780,6 +1813,8 @@ public class ViewActions
 	private class FindMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 2241714830900044485L;
+
 		public FindMenuAction()
 		{
 			super("Find");
@@ -1799,6 +1834,8 @@ public class ViewActions
 	private class FindToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -4080152597948489206L;
+
 		public FindToolBarAction()
 		{
 			super();
@@ -1818,6 +1855,8 @@ public class ViewActions
 	private class StatisticsMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6336357605789928345L;
+
 		public StatisticsMenuAction()
 		{
 			super("Statistics");
@@ -1834,6 +1873,8 @@ public class ViewActions
 	private class StatisticsToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 2394035359331601001L;
+
 		public StatisticsToolBarAction()
 		{
 			super();
@@ -1850,6 +1891,8 @@ public class ViewActions
 	private class DisconnectMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 8971640305824353589L;
+
 		public DisconnectMenuAction()
 		{
 			super("Disconnect");
@@ -1869,6 +1912,8 @@ public class ViewActions
 	private class DisconnectToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8665004340745035737L;
+
 		public DisconnectToolBarAction()
 		{
 			super();
@@ -1885,6 +1930,8 @@ public class ViewActions
 	private class FocusMessageAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -421929316399318971L;
+
 		public FocusMessageAction()
 		{
 			super("Focus message");
@@ -1904,6 +1951,8 @@ public class ViewActions
 	private class FocusEventsAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 4207817900003297701L;
+
 		public FocusEventsAction()
 		{
 			super("Focus events");
@@ -1923,6 +1972,8 @@ public class ViewActions
 	private class FindNextAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 4771628062043742857L;
+
 		public FindNextAction()
 		{
 			super("Find next");
@@ -1943,6 +1994,8 @@ public class ViewActions
 	private class FindPreviousAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -284066693780808511L;
+
 		public FindPreviousAction()
 		{
 			super("Find previous");
@@ -1962,6 +2015,8 @@ public class ViewActions
 	private class ResetFindAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -1245378100755440576L;
+
 		public ResetFindAction()
 		{
 			super("Reset find");
@@ -1980,6 +2035,8 @@ public class ViewActions
 	private class ScrollToBottomMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6698886479454486019L;
+
 		private Icon selectedIcon = TAIL_MENU_ICON;
 		private Icon unselectedIcon = EMPTY_16_ICON;
 
@@ -2017,6 +2074,7 @@ public class ViewActions
 	private class ScrollToBottomToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7793074053120455264L;
 
 		public ScrollToBottomToolBarAction()
 		{
@@ -2040,6 +2098,8 @@ public class ViewActions
 	private class CloseFilterAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -842677137302613585L;
+
 		public CloseFilterAction()
 		{
 			super("Close this filter");
@@ -2080,6 +2140,8 @@ public class ViewActions
 	private class CloseOtherFiltersAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6399148183817841417L;
+
 		public CloseOtherFiltersAction()
 		{
 			super("Close all other filters");
@@ -2121,6 +2183,8 @@ public class ViewActions
 	private class CloseAllFiltersAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 1212878326080544663L;
+
 		public CloseAllFiltersAction()
 		{
 			super("Close all filters");
@@ -2155,6 +2219,8 @@ public class ViewActions
 	class ViewLoggingAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 6967472316665780683L;
+
 		private EventSource<LoggingEvent> eventSource;
 
 		public ViewLoggingAction(EventSource<LoggingEvent> eventSource)
@@ -2190,6 +2256,8 @@ public class ViewActions
 	class ViewAccessAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 8054851261518410946L;
+
 		private EventSource<AccessEvent> eventSource;
 
 		public ViewAccessAction(EventSource<AccessEvent> eventSource)
@@ -2214,6 +2282,8 @@ public class ViewActions
 	class ViewStatisticsAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 4453230971326526165L;
+
 		private SourceIdentifier sourceIentifier;
 
 		public ViewStatisticsAction(String name, SourceIdentifier sourceIdentifier)
@@ -2231,6 +2301,7 @@ public class ViewActions
 	static class StatisticsSubMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8180660223848656769L;
 
 		public StatisticsSubMenuAction()
 		{
@@ -2526,6 +2597,7 @@ public class ViewActions
 	class AboutAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -372250750198620913L;
 
 		public AboutAction()
 		{
@@ -2542,6 +2614,7 @@ public class ViewActions
 	class SaveLayoutAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 6135867758474252484L;
 
 		public SaveLayoutAction()
 		{
@@ -2569,6 +2642,7 @@ public class ViewActions
 	class ResetLayoutAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8396518428359553649L;
 
 		public ResetLayoutAction()
 		{
@@ -2596,6 +2670,7 @@ public class ViewActions
 	class CheckForUpdateAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 529742851501771901L;
 
 		public CheckForUpdateAction()
 		{
@@ -2612,6 +2687,8 @@ public class ViewActions
 	class KeyboardHelpAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 6942092383339768508L;
+
 		public KeyboardHelpAction()
 		{
 			super("Help Topics");
@@ -2627,6 +2704,7 @@ public class ViewActions
 	class PreferencesMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -196036112324455446L;
 
 		public PreferencesMenuAction()
 		{
@@ -2647,6 +2725,7 @@ public class ViewActions
 	class PreferencesToolBarAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 8353604009441967874L;
 
 		public PreferencesToolBarAction()
 		{
@@ -2668,6 +2747,7 @@ public class ViewActions
 	class DebugAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -1837786931224404611L;
 
 		public DebugAction()
 		{
@@ -2684,6 +2764,7 @@ public class ViewActions
 	class ExitMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 6693131597277483031L;
 
 		public ExitMenuAction()
 		{
@@ -2704,6 +2785,8 @@ public class ViewActions
 	class OpenInactiveLogMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 7500131416548647712L;
+
 		public OpenInactiveLogMenuAction()
 		{
 			super("Open inactive log...");
@@ -2723,6 +2806,7 @@ public class ViewActions
 	class CleanAllInactiveLogsMenuAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 626049491764655228L;
 
 		public CleanAllInactiveLogsMenuAction()
 		{
@@ -2744,6 +2828,8 @@ public class ViewActions
 	private class PreviousTabAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 3841435361964210123L;
+
 		public PreviousTabAction()
 		{
 			super("Previous tab");
@@ -2782,6 +2868,8 @@ public class ViewActions
 	private class NextTabAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 6997026628818486446L;
+
 		public NextTabAction()
 		{
 			super("Next tab");
@@ -2821,6 +2909,8 @@ public class ViewActions
 	private class CopyEventAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -551520865313383753L;
+
 		private EventWrapper eventWrapper;
 
 		public CopyEventAction()
@@ -2860,6 +2950,8 @@ public class ViewActions
 	private class CopyLoggingMessageAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -1147972057354807369L;
+
 		private String message;
 
 		public CopyLoggingMessageAction()
@@ -2898,6 +2990,8 @@ public class ViewActions
 	private class CopyLoggerNameAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 6056521432357588113L;
+
 		private String loggerName;
 
 		public CopyLoggerNameAction()
@@ -2936,6 +3030,8 @@ public class ViewActions
 	private class CopyLoggingThrowableAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -2869680200462202650L;
+
 		private ThrowableInfo throwableInfo;
 
 		public CopyLoggingThrowableAction()
@@ -3001,6 +3097,8 @@ public class ViewActions
 	private class CopyLoggingCallStackAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7271955597619779579L;
+
 		private ExtendedStackTraceElement[] callStack;
 
 		public CopyLoggingCallStackAction()
@@ -3057,6 +3155,8 @@ public class ViewActions
 	private class CopyLoggingMarkerAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3523674814363899315L;
+
 		private Marker marker;
 
 		public CopyLoggingMarkerAction()
@@ -3125,9 +3225,106 @@ public class ViewActions
 		}
 	}
 
+	private class CopyLoggingMdcAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = 2453432319268833157L;
+
+		private Map<String, String> mdc;
+
+		public CopyLoggingMdcAction()
+		{
+			super("Copy MDC");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the Mapped Diagnostic Context of the logging event to the clipboard.");
+		}
+
+		public void setEventWrapper(EventWrapper wrapper)
+		{
+			Map<String, String> mdc = null;
+			if(wrapper != null && wrapper.getEvent() != null)
+			{
+				Object eventObj = wrapper.getEvent();
+				if(eventObj instanceof LoggingEvent)
+				{
+					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
+					mdc = loggingEvent.getMdc();
+				}
+			}
+			setMdc(mdc);
+		}
+
+		private void setMdc(Map<String, String> mdc)
+		{
+			this.mdc = mdc;
+			setEnabled(mdc != null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			StringBuilder text = new StringBuilder();
+			if(mdc != null)
+			{
+				SortedMap<String, String> sorted = new TreeMap<String, String>(mdc);
+				for(Map.Entry<String, String> current : sorted.entrySet())
+				{
+					text.append(current.getKey()).append("\t").append(current.getValue()).append("\n");
+				}
+			}
+			mainFrame.copyText(text.toString());
+		}
+	}
+
+	private class CopyLoggingNdcAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -1530866703421390638L;
+		private Message[] ndc;
+
+		public CopyLoggingNdcAction()
+		{
+			super("Copy NDC");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the Nested Diagnostic Context of the logging event to the clipboard.");
+		}
+
+		public void setEventWrapper(EventWrapper wrapper)
+		{
+			Message[] ndc = null;
+			if(wrapper != null && wrapper.getEvent() != null)
+			{
+				Object eventObj = wrapper.getEvent();
+				if(eventObj instanceof LoggingEvent)
+				{
+					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
+					ndc = loggingEvent.getNdc();
+				}
+			}
+			setNdc(ndc);
+		}
+
+		private void setNdc(Message[] ndc)
+		{
+			this.ndc = ndc;
+			setEnabled(ndc != null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			StringBuilder text = new StringBuilder();
+			if(ndc != null)
+			{
+				for(Message current : ndc)
+				{
+					text.append(current.getMessage()).append("\n");
+				}
+			}
+			mainFrame.copyText(text.toString());
+		}
+	}
+
 	private class CopyAccessUriAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3535746663619981434L;
 		private String requestUri;
 
 		public CopyAccessUriAction()
@@ -3166,6 +3363,7 @@ public class ViewActions
 	private class ShowUnfilteredEventAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3282222163767568550L;
 
 		public ShowUnfilteredEventAction()
 		{
@@ -3183,6 +3381,7 @@ public class ViewActions
 	private class GotoSourceAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 4284532761807647658L;
 		private ExtendedStackTraceElement stackTraceElement;
 
 		public GotoSourceAction()
@@ -3227,6 +3426,7 @@ public class ViewActions
 	protected class SendAction<T extends Serializable>
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 6612401555757959404L;
 		private EventSender<T> sender;
 		private T event;
 
@@ -3250,6 +3450,7 @@ public class ViewActions
 	private class ShowHideAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 7775753128032553866L;
 		private boolean visible;
 		private String columnName;
 		private PersistentTableColumnModel tableColumnModel;
