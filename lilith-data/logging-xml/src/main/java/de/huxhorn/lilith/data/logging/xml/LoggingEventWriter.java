@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -120,7 +121,7 @@ public class LoggingEventWriter
 			.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE, dateTimeFormatter.format(event.getTimeStamp()));
 
 		StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, event.getMessagePattern());
-		writeArguments(writer, event);
+		writeArguments(writer, event.getArguments());
 		writeThrowable(writer, event);
 		writeMdc(writer, event);
 		writeNdc(writer, event);
@@ -186,12 +187,6 @@ public class LoggingEventWriter
 
 	}
 
-	private void writeNdc(XMLStreamWriter writer, LoggingEvent event)
-		throws XMLStreamException
-	{
-		// TODO: implement writeNdc.
-	}
-
 	private void writeMdc(XMLStreamWriter writer, LoggingEvent event)
 		throws XMLStreamException
 	{
@@ -217,10 +212,28 @@ public class LoggingEventWriter
 		}
 	}
 
-	private void writeArguments(XMLStreamWriter writer, LoggingEvent event)
+	private void writeNdc(XMLStreamWriter writer, LoggingEvent event)
 		throws XMLStreamException
 	{
-		String[] arguments = event.getArguments();
+		Message[] ndc = event.getNdc();
+		if(ndc != null)
+		{
+			StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, NDC_NODE);
+			for(Message entry : ndc)
+			{
+
+				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, NDC_ENTRY_NODE);
+				StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, entry.getMessagePattern());
+				writeArguments(writer, entry.getArguments());
+				writer.writeEndElement();
+			}
+			writer.writeEndElement();
+		}
+	}
+
+	private void writeArguments(XMLStreamWriter writer, String[] arguments)
+		throws XMLStreamException
+	{
 		if(arguments != null)
 		{
 			StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, ARGUMENTS_NODE);

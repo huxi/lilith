@@ -19,8 +19,8 @@ package de.huxhorn.lilith.data.logging.xml;
 
 public interface LoggingEventSchemaConstants
 {
-	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/11";
-	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/11/LoggingEvent.xsd";
+	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/12";
+	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/12/LoggingEvent.xsd";
 
 	String DEFAULT_NAMESPACE_PREFIX = "log";
 
@@ -48,6 +48,9 @@ public interface LoggingEventSchemaConstants
 	String MDC_NODE = "MDC";
 	String MDC_ENTRY_NODE = "Entry";
 	String MDC_ENTRY_KEY_ATTRIBUTE = "key";
+
+	String NDC_NODE = "NDC";
+	String NDC_ENTRY_NODE = "Entry";
 
 	String MARKER_NODE = "Marker";
 	String MARKER_NAME_ATTRIBUTE = "name";
