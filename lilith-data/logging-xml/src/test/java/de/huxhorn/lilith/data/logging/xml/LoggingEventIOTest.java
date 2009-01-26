@@ -36,10 +36,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.stream.XMLInputFactory;
@@ -156,9 +154,10 @@ public class LoggingEventIOTest
 		throws UnsupportedEncodingException, XMLStreamException
 	{
 		LoggingEvent event = createMinimalEvent();
-		List<Message> ndc = new ArrayList<Message>();
-		ndc.add(new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}));
-		ndc.add(new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}));
+		Message[] ndc = new Message[]{
+			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
+			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"})
+		};
 		event.setNdc(ndc);
 		check(event, true);
 	}
@@ -240,13 +239,11 @@ public class LoggingEventIOTest
 		mdc.put("key3", "value3");
 		event.setMdc(mdc);
 
-		// TODO: set Ndc
-		/*
-				List<Message> ndc=new ArrayList<Message>();
-				ndc.add(new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}));
-				ndc.add(new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}));
-				event.setNdc(ndc);
-				*/
+		Message[] ndc=new Message[]{
+			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
+			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"})
+		};
+		event.setNdc(ndc);
 
 		Marker marker = new Marker("marker");
 		Marker marker2_1 = new Marker("marker2-1");
@@ -288,13 +285,11 @@ public class LoggingEventIOTest
 		mdc.put("key3", "value3");
 		event.setMdc(mdc);
 
-		// TODO: set Ndc
-		/*
-				List<Message> ndc=new ArrayList<Message>();
-				ndc.add(new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}));
-				ndc.add(new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}));
-				event.setNdc(ndc);
-				*/
+		Message[] ndc=new Message[]{
+			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
+			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"})
+		};
+		event.setNdc(ndc);
 
 		Marker marker = new Marker("marker");
 		Marker marker2_1 = new Marker("marker2-1");

@@ -82,7 +82,13 @@ public class LoggingEventReader
 			}
 			reader.nextTag();
 			result.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
-			readArguments(reader, result);
+
+			List<String> args = readArguments(reader);
+			if(args!=null)
+			{
+				result.setArguments(args.toArray(new String[args.size()]));
+			}
+
 			readThrowable(reader, result);
 			result.setMdc(readMdc(reader));
 			result.setNdc(readNdc(reader));
@@ -245,10 +251,28 @@ public class LoggingEventReader
 		return null;
 	}
 
-	private List<Message> readNdc(XMLStreamReader reader)
+	private Message[] readNdc(XMLStreamReader reader)
 		throws XMLStreamException
 	{
-		// TODO: implement readNdc.
+		int type = reader.getEventType();
+		if(XMLStreamConstants.START_ELEMENT == type && NDC_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
+		{
+			List<Message> ndc = new ArrayList<Message>();
+			reader.nextTag();
+			for(; ;)
+			{
+				Message entry = readNdcEntry(reader);
+				if(entry == null)
+				{
+					break;
+				}
+				ndc.add(entry);
+			}
+			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, NDC_NODE);
+			reader.nextTag();
+			return ndc.toArray(new Message[ndc.size()]);
+		}
 		return null;
 	}
 
@@ -263,6 +287,31 @@ public class LoggingEventReader
 			entry.key = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MDC_ENTRY_KEY_ATTRIBUTE);
 			entry.value = StaxUtilities.readText(reader);
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MDC_ENTRY_NODE);
+			reader.nextTag();
+			return entry;
+		}
+		return null;
+	}
+
+	private Message readNdcEntry(XMLStreamReader reader)
+		throws XMLStreamException
+	{
+		int type = reader.getEventType();
+		if(XMLStreamConstants.START_ELEMENT == type && NDC_ENTRY_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
+		{
+			reader.nextTag();
+
+			Message entry = new Message();
+			entry.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
+
+			List<String> args = readArguments(reader);
+			if(args!=null)
+			{
+				entry.setArguments(args.toArray(new String[args.size()]));
+			}
+
+			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, NDC_ENTRY_NODE);
 			reader.nextTag();
 			return entry;
 		}
@@ -313,7 +362,7 @@ public class LoggingEventReader
 		return null;
 	}
 
-	private void readArguments(XMLStreamReader reader, LoggingEvent event)
+	private List<String> readArguments(XMLStreamReader reader)
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
@@ -334,8 +383,9 @@ public class LoggingEventReader
 				String arg = readArgument(reader);
 				args.add(arg);
 			}
-			event.setArguments(args.toArray(new String[args.size()]));
+			return args;
 		}
+		return null;
 	}
 
 	private String readArgument(XMLStreamReader reader)
