@@ -34,6 +34,15 @@ public class NoOpNDCAdapter
 	{
 	}
 
+	public int getDepth()
+	{
+		return 0;
+	}
+
+	public void setMaximumDepth(int maximumDepth)
+	{
+	}
+
 	public boolean isEmpty()
 	{
 		return true;

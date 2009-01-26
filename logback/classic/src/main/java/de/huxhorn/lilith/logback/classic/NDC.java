@@ -26,7 +26,7 @@ public class NDC
 	static
 	{
 		// TODO: configuration
-		ndcAdapter=new SimpleNDCAdapter();
+		ndcAdapter = new SimpleNDCAdapter();
 	}
 
 	private NDC()
@@ -34,7 +34,7 @@ public class NDC
 
 	}
 
-	
+
 	public static void push(String message)
 	{
 		ndcAdapter.push(message);
@@ -47,12 +47,22 @@ public class NDC
 
 	/**
 	 * Pops the last message from the stack.
-	 *
+	 * <p/>
 	 * This method does not return the popped message to discourage it's usage in application logic.
 	 */
 	public static void pop()
 	{
 		ndcAdapter.pop();
+	}
+
+	public static int getDepth()
+	{
+		return ndcAdapter.getDepth();
+	}
+
+	public static void setMaximumDepth(int maximumDepth)
+	{
+		ndcAdapter.setMaximumDepth(maximumDepth);
 	}
 
 	public static boolean isEmpty()
@@ -67,7 +77,7 @@ public class NDC
 
 	/**
 	 * Returns an array containing all messages of the stack.
-	 *
+	 * <p/>
 	 * The messages from the NDC stack should not be used in application logic.
 	 *
 	 * @return an array containing all messages of the stack.
@@ -76,5 +86,4 @@ public class NDC
 	{
 		return ndcAdapter.getContextStack();
 	}
-
 }
