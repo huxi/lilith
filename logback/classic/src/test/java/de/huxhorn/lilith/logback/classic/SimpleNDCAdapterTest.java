@@ -106,4 +106,6 @@ public class SimpleNDCAdapterTest
 		if(logger.isDebugEnabled()) logger.debug("Retrieved contextStack={}.", new Object[]{stack});
 		assertArrayEquals(messages, stack);
 	}
+
+	// TODO: ad tests for maxDepth and inheritance
 }

@@ -93,6 +93,10 @@ public class DebugDialog
 		button = new JButton(action);
 		debugToolbar.add(button);
 
+		action = new LogNDCAction();
+		button = new JButton(action);
+		debugToolbar.add(button);
+
 		action = new LogAllAction();
 		button = new JButton(action);
 		debugToolbar.add(button);
@@ -148,6 +152,7 @@ public class DebugDialog
 				loggerEventEmitter.logSkull();
 				loggerEventEmitter.logTruth();
 				loggerEventEmitter.logAnonymous();
+				loggerEventEmitter.logNDC();
 			}
 			catch(InterruptedException ex)
 			{
@@ -233,6 +238,28 @@ public class DebugDialog
 			}
 		}
 	}
+
+	private class LogNDCAction
+		extends AbstractAction
+	{
+		public LogNDCAction()
+		{
+			super("Log NDC");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			try
+			{
+				loggerEventEmitter.logNDC();
+			}
+			catch(InterruptedException ex)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
+			}
+		}
+	}
+
 
 	private class LogExceptionsAction
 		extends AbstractAction
