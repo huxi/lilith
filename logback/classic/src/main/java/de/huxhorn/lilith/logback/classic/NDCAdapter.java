@@ -23,14 +23,20 @@ import de.huxhorn.lilith.data.logging.Message;
 public interface NDCAdapter
 {
 	void push(String message);
+
 	void push(String messagePattern, Object[] arguments);
 
 	void pop();
 
+	int getDepth();
+
+	void setMaximumDepth(int maximumDepth);
+
 	boolean isEmpty();
+
 	void clear();
 
 	Message[] getContextStack();
 
-	Message[] NO_MESSAGES=new Message[0];
+	Message[] NO_MESSAGES = new Message[0];
 }

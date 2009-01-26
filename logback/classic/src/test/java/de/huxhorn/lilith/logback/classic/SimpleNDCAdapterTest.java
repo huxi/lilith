@@ -19,9 +19,9 @@ package de.huxhorn.lilith.logback.classic;
 
 import de.huxhorn.lilith.data.logging.Message;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ public class SimpleNDCAdapterTest
 	@Before
 	public void setUp()
 	{
-		instance=new SimpleNDCAdapter();
+		instance = new SimpleNDCAdapter();
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class SimpleNDCAdapterTest
 	@Test
 	public void getContextStackUsingPush()
 	{
-		Message[] messages=new Message[]
+		Message[] messages = new Message[]
 			{
 				new Message("message1", new String[]{"foo", "bar"}),
 				new Message("message2", new String[]{"foo", null}),
@@ -97,7 +97,7 @@ public class SimpleNDCAdapterTest
 			};
 
 
-		for(Message current:messages)
+		for(Message current : messages)
 		{
 			instance.push(current.getMessagePattern(), current.getArguments());
 		}
@@ -107,5 +107,85 @@ public class SimpleNDCAdapterTest
 		assertArrayEquals(messages, stack);
 	}
 
-	// TODO: ad tests for maxDepth and inheritance
+	@Test
+	public void inheritance()
+		throws InterruptedException
+	{
+		Thread parent = new Thread(new Level1Runnable());
+		parent.start();
+		parent.join();
+	}
+
+	@Test
+	public void depth()
+	{
+		assertEquals(0, instance.getDepth());
+		instance.push("Foo");
+		instance.push("Bar");
+		assertEquals(2, instance.getDepth());
+		instance.pop();
+		assertEquals(1, instance.getDepth());
+		instance.pop();
+		assertEquals(0, instance.getDepth());
+		instance.pop();
+		assertEquals(0, instance.getDepth());
+	}
+
+	@Test
+	public void maximumDepthChange()
+	{
+		instance.push("Foo");
+		instance.push("Bar");
+		instance.setMaximumDepth(1);
+		assertEquals(1, instance.getDepth());
+		instance.pop();
+		assertEquals(0, instance.getDepth());
+	}
+
+	@Test
+	public void maximumDepthNoChange()
+	{
+		instance.push("Foo");
+		instance.push("Bar");
+		instance.setMaximumDepth(3);
+		assertEquals(2, instance.getDepth());
+	}
+
+	public class Level1Runnable
+		implements Runnable
+	{
+
+		public void run()
+		{
+			instance.push("Foo");
+			assertFalse(instance.isEmpty());
+			Thread child = new Thread(new Level2Runnable());
+			child.start();
+			try
+			{
+				child.join();
+			}
+			catch(InterruptedException e)
+			{
+				// ignore
+			}
+			assertFalse(instance.isEmpty());
+			instance.pop();
+			assertTrue(instance.isEmpty());
+		}
+	}
+
+	public class Level2Runnable
+		implements Runnable
+	{
+
+		public void run()
+		{
+			instance.push("Bar");
+			Message[] contextStack = instance.getContextStack();
+			assertEquals(2, contextStack.length);
+			instance.pop();
+			instance.pop();
+		}
+	}
 }

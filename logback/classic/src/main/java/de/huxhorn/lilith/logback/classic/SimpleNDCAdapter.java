@@ -44,6 +44,16 @@ public class SimpleNDCAdapter
 		getNdcStack().pop();
 	}
 
+	public int getDepth()
+	{
+		return getNdcStack().getDepth();
+	}
+
+	public void setMaximumDepth(int maximumDepth)
+	{
+		getNdcStack().setMaximumDepth(maximumDepth);
+	}
+
 	public boolean isEmpty()
 	{
 		return getNdcStack().isEmpty();
@@ -62,9 +72,9 @@ public class SimpleNDCAdapter
 	private NdcStack getNdcStack()
 	{
 		NdcStack result = ndcStackThreadLocal.get();
-		if(result==null)
+		if(result == null)
 		{
-			result=new NdcStack();
+			result = new NdcStack();
 			ndcStackThreadLocal.set(result);
 		}
 		return result;
@@ -77,7 +87,7 @@ public class SimpleNDCAdapter
 		protected NdcStack childValue(NdcStack parentValue)
 		{
 			NdcStack result = null;
-			if(parentValue!=null)
+			if(parentValue != null)
 			{
 				// this method seems to get called only if parent
 				// is not null but this isn't documented so I'll make sure...
@@ -98,13 +108,24 @@ public class SimpleNDCAdapter
 		implements Cloneable
 	{
 		private List<Message> stackList;
-		private int overflowCounter;
-		// TODO: add support for MaxDepth
 
 		private NdcStack()
 		{
-			stackList=new ArrayList<Message>();
-			overflowCounter=0;
+			stackList = new ArrayList<Message>();
+		}
+
+		public int getDepth()
+		{
+			return stackList.size();
+		}
+
+		public void setMaximumDepth(int maximumDepth)
+		{
+			int overflow = stackList.size() - maximumDepth;
+			for(int i = 0; i < overflow; i++)
+			{
+				pop();
+			}
 		}
 
 		public void push(String message)
