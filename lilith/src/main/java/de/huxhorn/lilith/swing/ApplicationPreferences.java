@@ -108,6 +108,7 @@ public class ApplicationPreferences
 	public static final String BLACK_LIST_NAME_PROPERTY = "blackListName";
 	public static final String WHITE_LIST_NAME_PROPERTY = "whiteListName";
 	public static final String CONDITIONS_PROPERTY = "conditions";
+	public static final String SPLASH_SCREEN_DISABLED_PROPERTY = "splashScreenDisabled";
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
 	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
@@ -1147,6 +1148,19 @@ public class ApplicationPreferences
 	public boolean isShowingIdentifier()
 	{
 		return PREFERENCES.getBoolean(SHOWING_IDENTIFIER_PROPERTY, true);
+	}
+
+	public void setSplashScreenDisabled(boolean splashScreenDisabled)
+	{
+		Object oldValue = isSplashScreenDisabled();
+		PREFERENCES.putBoolean(SPLASH_SCREEN_DISABLED_PROPERTY, splashScreenDisabled);
+		Object newValue = isSplashScreenDisabled();
+		propertyChangeSupport.firePropertyChange(SPLASH_SCREEN_DISABLED_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isSplashScreenDisabled()
+	{
+		return PREFERENCES.getBoolean(SPLASH_SCREEN_DISABLED_PROPERTY, true);
 	}
 
 	public void setShowingFullCallstack(boolean showingFullCallstack)
