@@ -89,6 +89,7 @@ public class Lilith
 
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
+	private static boolean splashScreenDisabled;
 
 	static
 	{
@@ -368,31 +369,37 @@ public class Lilith
 	private static void updateSplashStatus(final SplashScreen splashScreen, final String status)
 		throws InvocationTargetException, InterruptedException
 	{
-		SwingUtilities.invokeAndWait(new Runnable()
+		if(splashScreen != null)
 		{
-
-			public void run()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				if(!splashScreen.isVisible())
+
+				public void run()
 				{
-					Windows.showWindow(splashScreen, null, true);
+					if(!splashScreen.isVisible())
+					{
+						Windows.showWindow(splashScreen, null, true);
+					}
+					splashScreen.toFront();
+					splashScreen.setStatusText(status);
 				}
-				splashScreen.toFront();
-				splashScreen.setStatusText(status);
-			}
-		});
+			});
+		}
 	}
 
 	private static void hideSplashScreen(final SplashScreen splashScreen)
 		throws InvocationTargetException, InterruptedException
 	{
-		SwingUtilities.invokeAndWait(new Runnable()
+		if(splashScreen != null)
 		{
-			public void run()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				splashScreen.setVisible(false);
-			}
-		});
+				public void run()
+				{
+					splashScreen.setVisible(false);
+				}
+			});
+		}
 	}
 
 	public static void startUI(final String appTitle, boolean enableBonjour)
@@ -455,13 +462,18 @@ public class Lilith
 			}
 		}
 
+		splashScreenDisabled = applicationPreferences.isSplashScreenDisabled();
 		try
 		{
-			CreateSplashRunnable createRunnable = new CreateSplashRunnable(appTitle);
-			SwingUtilities.invokeAndWait(createRunnable);
-			SplashScreen splashScreen = createRunnable.getSplashScreen();
-			Thread.sleep(500); // so the splash gets the chance to get displayed :(
-			updateSplashStatus(splashScreen, "Initialized application preferences...");
+			SplashScreen splashScreen = null;
+			if(!splashScreenDisabled)
+			{
+				CreateSplashRunnable createRunnable = new CreateSplashRunnable(appTitle);
+				SwingUtilities.invokeAndWait(createRunnable);
+				splashScreen = createRunnable.getSplashScreen();
+				Thread.sleep(500); // so the splash gets the chance to get displayed :(
+				updateSplashStatus(splashScreen, "Initialized application preferences...");
+			}
 
 			File startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 			if(startupApplicationPath.mkdirs())
