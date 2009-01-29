@@ -89,7 +89,6 @@ public class Lilith
 
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
-	private static boolean splashScreenDisabled;
 
 	static
 	{
@@ -462,7 +461,7 @@ public class Lilith
 			}
 		}
 
-		splashScreenDisabled = applicationPreferences.isSplashScreenDisabled();
+		boolean splashScreenDisabled = applicationPreferences.isSplashScreenDisabled();
 		try
 		{
 			SplashScreen splashScreen = null;
@@ -532,7 +531,7 @@ public class Lilith
 			}
 
 			updateSplashStatus(splashScreen, "Creating main window...");
-			CreateMainFrameRunnable createMain = new CreateMainFrameRunnable(applicationPreferences, appTitle, enableBonjour);
+			CreateMainFrameRunnable createMain = new CreateMainFrameRunnable(applicationPreferences, splashScreen, appTitle, enableBonjour);
 			SwingUtilities.invokeAndWait(createMain);
 			final MainFrame frame = createMain.getMainFrame();
 			if(logger.isDebugEnabled()) logger.debug("After show...");
@@ -587,13 +586,15 @@ public class Lilith
 	static class CreateMainFrameRunnable
 		implements Runnable
 	{
+		private SplashScreen splashScreen;
 		private MainFrame mainFrame;
 		private ApplicationPreferences applicationPreferences;
 		private String appTitle;
 		private boolean enableBonjour;
 
-		public CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, String appTitle, boolean enableBonjour)
+		public CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appTitle, boolean enableBonjour)
 		{
+			this.splashScreen=splashScreen;
 			this.enableBonjour = enableBonjour;
 			this.appTitle = appTitle;
 			this.applicationPreferences = applicationPreferences;
@@ -601,7 +602,7 @@ public class Lilith
 
 		public void run()
 		{
-			mainFrame = new MainFrame(applicationPreferences, appTitle, enableBonjour);
+			mainFrame = new MainFrame(applicationPreferences, splashScreen, appTitle, enableBonjour);
 			mainFrame.setSounds(new JLayerSounds());
 			mainFrame.setSize(1024, 768);
 			Windows.showWindow(mainFrame, null, false);
