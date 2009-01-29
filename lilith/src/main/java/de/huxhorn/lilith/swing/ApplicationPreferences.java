@@ -1160,7 +1160,7 @@ public class ApplicationPreferences
 
 	public boolean isSplashScreenDisabled()
 	{
-		return PREFERENCES.getBoolean(SPLASH_SCREEN_DISABLED_PROPERTY, true);
+		return PREFERENCES.getBoolean(SPLASH_SCREEN_DISABLED_PROPERTY, false);
 	}
 
 	public void setShowingFullCallstack(boolean showingFullCallstack)

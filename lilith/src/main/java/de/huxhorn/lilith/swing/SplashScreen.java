@@ -34,6 +34,7 @@ public class SplashScreen
 	private final Logger logger = LoggerFactory.getLogger(SplashScreen.class);
 
 	private JLabel statusLabel;
+	private JPanel contentPane;
 
 	public SplashScreen(String applicationTitle)
 	{
@@ -44,7 +45,7 @@ public class SplashScreen
 
 	private void initUI(String applicationTitle)
 	{
-		Container contentPane = new JPanel(true);
+		contentPane = new JPanel(true);
 		contentPane.setLayout(new BorderLayout());
 		URL url = SplashScreen.class.getResource("/splash/splash.jpg");
 		if(url != null)
@@ -64,7 +65,17 @@ public class SplashScreen
 			}
 		}
 		statusLabel = new JLabel();
+		statusLabel.setOpaque(true);
+		statusLabel.setForeground(Color.BLACK);
+		statusLabel.setBackground(Color.WHITE);
+		statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
 		JLabel titleLabel = new JLabel(applicationTitle);
+		titleLabel.setOpaque(true);
+		titleLabel.setForeground(Color.BLACK);
+		titleLabel.setBackground(Color.WHITE);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
 		contentPane.add(titleLabel, BorderLayout.NORTH);
 		contentPane.add(statusLabel, BorderLayout.SOUTH);
 		statusLabel.setText("Initializing...");
@@ -80,7 +91,11 @@ public class SplashScreen
 			setVisible(true);
 		}
 		toFront();
-		repaint();
+		Rectangle bounds = contentPane.getBounds();
+		int height=statusLabel.getHeight();
+		contentPane.paintImmediately(0,bounds.height-height,bounds.width, height);
+		//statusLabel.paintImmediately(statusLabel.getBounds());
+		//repaint();
 	}
 
 	private class ImagePanel

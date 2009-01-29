@@ -163,6 +163,7 @@ public class MainFrame
 	private List<SavedCondition> activeConditions;
 	private Map<LoggingEvent.Level, Colors> levelColors;
 	private Map<HttpStatus.Type, Colors> statusColors;
+	private SplashScreen splashScreen;
 	/*
 		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 		 */
@@ -194,9 +195,11 @@ public class MainFrame
 		return desktop;
 	}
 
-	public MainFrame(ApplicationPreferences applicationPreferences, String appName, boolean enableBonjour)
+	public MainFrame(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appName, boolean enableBonjour)
 	{
 		super(appName);
+		this.splashScreen=splashScreen;
+		setSplashStatusText("Creating main frame.");
 		//colorsReferenceQueue=new ReferenceQueue<Colors>();
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application = new DefaultApplication();
@@ -240,10 +243,6 @@ public class MainFrame
 
 		rrdFileFilter = new RrdFileFilter();
 
-		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
-		statisticsDialog = new StatisticsDialog(this);
-		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
-
 		loggingEventViewManager = new LoggingEventViewManager(this);
 		accessEventViewManager = new AccessEventViewManager(this);
 		this.applicationPreferences = applicationPreferences;
@@ -283,14 +282,26 @@ public class MainFrame
 		add(desktop, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
 
+		setSplashStatusText("Creating statistics dialog.");
+		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
+		statisticsDialog = new StatisticsDialog(this);
+		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
+
+		setSplashStatusText("Creating about dialog.");
 		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);
 
-
+		setSplashStatusText("Creating debug dialog.");
 		debugDialog = new DebugDialog(this, this);
+
+		setSplashStatusText("Creating preferences dialog.");
 		if(logger.isDebugEnabled()) logger.debug("Before creation of preferences-dialog...");
 		preferencesDialog = new PreferencesDialog(this);
 		if(logger.isDebugEnabled()) logger.debug("After creation of preferences-dialog...");
+
+		setSplashStatusText("Creating \"Open inactive\" dialog.");
 		openInactiveLogsDialog = new OpenPreviousDialog(MainFrame.this);
+
+		setSplashStatusText("Creating help frame.");
 		helpFrame = new HelpFrame(this);
 		helpFrame.setTitle("Help Topics");
 
@@ -318,6 +329,14 @@ public class MainFrame
 		}
 		*/
 		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
+	}
+
+	private void setSplashStatusText(String text)
+	{
+		if(splashScreen!=null)
+		{
+			splashScreen.setStatusText(text);
+		}
 	}
 
 	public Application getApplication()
@@ -423,6 +442,7 @@ public class MainFrame
 		//referenceCollection.setDaemon(true);
 		//referenceCollection.start();
 
+		setSplashStatusText("Executing autostart items.");
 		// Autostart
 		{
 			File autostartDir = new File(startupApplicationPath, "autostart");
@@ -471,6 +491,7 @@ public class MainFrame
 			//gotoSource.start() started when needed...
 		}
 
+		setSplashStatusText("Creating global views.");
 		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
 		File globalLoggingDataFile = loggingFileFactory.getDataFile(globalSourceIdentifier);
 		File globalLoggingIndexFile = loggingFileFactory.getIndexFile(globalSourceIdentifier);
@@ -488,6 +509,7 @@ public class MainFrame
 		EventSource<LoggingEvent> globalLoggingEventSource = new EventSourceImpl<LoggingEvent>(globalSourceIdentifier, loggingFileDump.getBuffer(), true);
 		lsm.addSource(globalLoggingEventSource);
 
+		setSplashStatusText("Creating internal view.");
 		// add internal lilith logging
 		EventSource<LoggingEvent> lilithLoggingEventSource = new EventSourceImpl<LoggingEvent>(InternalLilithAppender.getSourceIdentifier(), InternalLilithAppender.getBuffer(), false);
 		lsm.addSource(lilithLoggingEventSource);
@@ -509,6 +531,7 @@ public class MainFrame
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
+		setSplashStatusText("Starting event receivers.");
 		try
 		{
 			SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> producer
@@ -615,6 +638,8 @@ public class MainFrame
 		viewActions = new ViewActions(this, null);
 		viewActions.getPopupMenu(); // initialize popup once in main frame only.
 
+		setSplashStatusText("Setting up event consumers.");
+
 		RrdLoggingEventConsumer rrdDb = new RrdLoggingEventConsumer();
 		rrdDb.setBasePath(new File(startupApplicationPath, "statistics"));
 		AlarmSoundLoggingEventConsumer loggingEventAlarmSound = new AlarmSoundLoggingEventConsumer();
@@ -677,6 +702,7 @@ public class MainFrame
 			checkForUpdate(false);
 		}
 		updateConditions(); // to initialize active conditions.
+		setSplashStatusText("Finished.");		
 	}
 
 	public void goToSource(StackTraceElement ste)
