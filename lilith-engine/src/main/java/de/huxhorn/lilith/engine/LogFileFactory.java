@@ -23,7 +23,7 @@ import java.io.File;
 
 public interface LogFileFactory
 {
-	String INDEX_FILE_EXTENSION = ".index";
+	String INDEX_FILE_EXTENSION = ".idx";
 	String ACTIVE_FILE_EXTENSION = ".active";
 
 	File getBaseDir();

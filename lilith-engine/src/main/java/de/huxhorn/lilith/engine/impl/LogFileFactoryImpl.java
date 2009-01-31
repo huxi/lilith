@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.engine.impl;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.engine.FileConstants;
 import de.huxhorn.lilith.engine.LogFileFactory;
 
 import java.io.File;
@@ -28,11 +29,11 @@ public class LogFileFactoryImpl
 	private File baseDir;
 	private String dataFileExtension;
 
-	public LogFileFactoryImpl(File baseDir, String extension)
+	public LogFileFactoryImpl(File baseDir)
 	{
 		this.baseDir = baseDir;
-		this.dataFileExtension = extension;
-		if(!extension.startsWith("."))
+		this.dataFileExtension = FileConstants.FILE_EXTENSION;
+		if(!dataFileExtension.startsWith("."))
 		{
 			this.dataFileExtension = "." + this.dataFileExtension;
 		}

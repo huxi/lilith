@@ -18,15 +18,15 @@
 package de.huxhorn.lilith.consumers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
-import de.huxhorn.sulky.buffers.SerializingFileBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,41 +35,19 @@ public class FileDumpEventConsumer<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FileDumpEventConsumer.class);
 
-	//	private ApplicationPreferences applicationPreferences;
 	private FileBuffer<EventWrapper<T>> fileBuffer;
 
-	public FileDumpEventConsumer(/*ApplicationPreferences applicationPreferences, */File dataFile, File indexFile)
+	public FileDumpEventConsumer(SourceIdentifier sourceIdentifier, FileBufferFactory<T> fileBufferFactory)
 	{
-//		this.applicationPreferences=applicationPreferences;
-		fileBuffer = new SerializingFileBuffer<EventWrapper<T>>(dataFile, indexFile);
+		fileBuffer = fileBufferFactory.createActiveBuffer(sourceIdentifier);
 	}
 
 	public void consume(List<EventWrapper<T>> events)
 	{
-//		events=filterEvents(events);
 		fileBuffer.addAll(events);
 		if(logger.isInfoEnabled()) logger.info("Wrote {} events to file.", events.size());
 	}
 
-	/*
-	 List<EventWrapper<T>> filterEvents(List<EventWrapper<T>> events)
-	 {
-		 if(applicationPreferences.getSourceFiltering() == ApplicationPreferences.SourceFiltering.NONE)
-		 {
-			 return events;
-		 }
-		 List<EventWrapper<T>> result=new ArrayList<EventWrapper<T>>();
-		 for(EventWrapper<T> event:events)
-		 {
-			 String id=event.getSourceIdentifier().getIdentifier();
-			 if(applicationPreferences.isValidSource(id))
-			 {
-				 result.add(event);
-			 }
-		 }
-		 return result;
-	 }
- */
 	public Buffer<EventWrapper<T>> getBuffer()
 	{
 		return fileBuffer;

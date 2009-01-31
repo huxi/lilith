@@ -21,15 +21,18 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
+import de.huxhorn.lilith.engine.FileBufferFactory;
+import de.huxhorn.lilith.engine.FileConstants;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
-import de.huxhorn.sulky.buffers.SerializingFileBuffer;
 
 import ch.qos.logback.core.AppenderBase;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class will always write into <user.home>/.lilith/sources/logs/Lilith.xxx. This s done so logging events during
@@ -48,11 +51,17 @@ public class InternalLilithAppender
 	{
 		sourceIdentifier = new SourceIdentifier("Lilith");
 
-		LogFileFactoryImpl logFileFactory = new LogFileFactoryImpl(new File(ApplicationPreferences.DEFAULT_APPLICATION_PATH, "sources/logs"), "ljlogging");
-		File dataFile = logFileFactory.getDataFile(sourceIdentifier);
-		File indexFile = logFileFactory.getIndexFile(sourceIdentifier);
+		LogFileFactoryImpl logFileFactory =
+			new LogFileFactoryImpl(new File(ApplicationPreferences.DEFAULT_APPLICATION_PATH, "sources/logs"));
 
-		fileBuffer = new SerializingFileBuffer<EventWrapper<LoggingEvent>>(dataFile, indexFile);
+		Map<String, String> loggingMetaData = new HashMap<String, String>();
+		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
+		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_XML);
+		loggingMetaData.put(FileConstants.COMPRESSED_KEY, "true");
+		// TODO: configurable format and compressed
+
+		FileBufferFactory<LoggingEvent> fileBufferFactory = new FileBufferFactory<LoggingEvent>(logFileFactory, loggingMetaData);
+		fileBuffer = fileBufferFactory.createActiveBuffer(sourceIdentifier);
 	}
 
 	public static Buffer<EventWrapper<LoggingEvent>> getBuffer()

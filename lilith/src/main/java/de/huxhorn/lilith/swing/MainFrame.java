@@ -36,6 +36,7 @@ import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
 import de.huxhorn.lilith.engine.FileBufferFactory;
+import de.huxhorn.lilith.engine.FileConstants;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
@@ -198,7 +199,7 @@ public class MainFrame
 	public MainFrame(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appName, boolean enableBonjour)
 	{
 		super(appName);
-		this.splashScreen=splashScreen;
+		this.splashScreen = splashScreen;
 		setSplashStatusText("Creating main frame.");
 		//colorsReferenceQueue=new ReferenceQueue<Colors>();
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
@@ -236,10 +237,24 @@ public class MainFrame
 		integerWorkManager = new SwingWorkManager<Integer>();
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
-		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/logs"), "ljlogging");
-		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/access"), "ljaccess");
-		loggingFileBufferFactory = new FileBufferFactory<LoggingEvent>(loggingFileFactory);
-		accessFileBufferFactory = new FileBufferFactory<AccessEvent>(accessFileFactory);
+		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/logs"));
+		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/access"));
+
+		Map<String, String> loggingMetaData = new HashMap<String, String>();
+		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
+		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_XML);
+		loggingMetaData.put(FileConstants.COMPRESSED_KEY, "true");
+		// TODO: configurable format and compressed
+
+		loggingFileBufferFactory = new FileBufferFactory<LoggingEvent>(loggingFileFactory, loggingMetaData);
+
+		Map<String, String> accessMetaData = new HashMap<String, String>();
+		accessMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
+		accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_XML);
+		accessMetaData.put(FileConstants.COMPRESSED_KEY, "true");
+		// TODO: configurable format and compressed
+
+		accessFileBufferFactory = new FileBufferFactory<AccessEvent>(accessFileFactory, accessMetaData);
 
 		rrdFileFilter = new RrdFileFilter();
 
@@ -333,7 +348,7 @@ public class MainFrame
 
 	private void setSplashStatusText(String text)
 	{
-		if(splashScreen!=null)
+		if(splashScreen != null)
 		{
 			splashScreen.setStatusText(text);
 		}
@@ -493,13 +508,10 @@ public class MainFrame
 
 		setSplashStatusText("Creating global views.");
 		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
-		File globalLoggingDataFile = loggingFileFactory.getDataFile(globalSourceIdentifier);
-		File globalLoggingIndexFile = loggingFileFactory.getIndexFile(globalSourceIdentifier);
-		FileDumpEventConsumer<LoggingEvent> loggingFileDump = new FileDumpEventConsumer<LoggingEvent>(/*applicationPreferences, */globalLoggingDataFile, globalLoggingIndexFile);
 
-		File globalAccessDataFile = accessFileFactory.getDataFile(globalSourceIdentifier);
-		File globalAccessIndexFile = accessFileFactory.getIndexFile(globalSourceIdentifier);
-		FileDumpEventConsumer<AccessEvent> accessFileDump = new FileDumpEventConsumer<AccessEvent>(/*applicationPreferences, */globalAccessDataFile, globalAccessIndexFile);
+		FileDumpEventConsumer<LoggingEvent> loggingFileDump = new FileDumpEventConsumer<LoggingEvent>(globalSourceIdentifier, loggingFileBufferFactory);
+
+		FileDumpEventConsumer<AccessEvent> accessFileDump = new FileDumpEventConsumer<AccessEvent>(globalSourceIdentifier, accessFileBufferFactory);
 
 		BlockingCircularBuffer<EventWrapper<LoggingEvent>> loggingEventQueue = new LilithBuffer<LoggingEvent>(applicationPreferences, 1000);
 		BlockingCircularBuffer<EventWrapper<AccessEvent>> accessEventQueue = new LilithBuffer<AccessEvent>(applicationPreferences, 1000);
@@ -702,7 +714,7 @@ public class MainFrame
 			checkForUpdate(false);
 		}
 		updateConditions(); // to initialize active conditions.
-		setSplashStatusText("Finished.");		
+		setSplashStatusText("Finished.");
 	}
 
 	public void goToSource(StackTraceElement ste)

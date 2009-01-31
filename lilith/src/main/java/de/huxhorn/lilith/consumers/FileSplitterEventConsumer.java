@@ -42,19 +42,14 @@ public class FileSplitterEventConsumer<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FileSplitterEventConsumer.class);
 
-	//private File baseDirectory;
 	private FileBufferFactory<T> fileBufferFactory;
-	//private LogFileFactory logFileFactory;
 	private ConcurrentMap<SourceIdentifier, FileBuffer<EventWrapper<T>>> fileBuffers;
 	private SourceManager<T> sourceManager;
-//	private ApplicationPreferences applicationPreferences;
 
-	public FileSplitterEventConsumer(/*ApplicationPreferences applicationPreferences, */FileBufferFactory<T> fileBufferFactory, SourceManager<T> sourceManager)
+	public FileSplitterEventConsumer(FileBufferFactory<T> fileBufferFactory, SourceManager<T> sourceManager)
 	{
-//		this.applicationPreferences=applicationPreferences;
 		this.fileBufferFactory = fileBufferFactory;
 		fileBuffers = new ConcurrentHashMap<SourceIdentifier, FileBuffer<EventWrapper<T>>>();
-		//this.baseDirectory=baseDirectory;
 		this.sourceManager = sourceManager;
 	}
 
@@ -66,12 +61,6 @@ public class FileSplitterEventConsumer<T extends Serializable>
 			for(EventWrapper<T> wrapper : events)
 			{
 				SourceIdentifier si = wrapper.getSourceIdentifier();
-//				String id=si.getIdentifier();
-//				if(wrapper.getEvent()!= null/ && !applicationPreferences.isValidSource(id))
-//				{
-//					// we must not ignore close events!!
-//					continue;
-//				}
 				List<EventWrapper<T>> sourceList = splittedEvents.get(si);
 				if(sourceList == null)
 				{
@@ -91,14 +80,10 @@ public class FileSplitterEventConsumer<T extends Serializable>
 				int valueCount = value.size();
 				// we know that valueCount is > 0 because otherwise it wouldn' exist.
 				EventWrapper<T> lastEvent = value.get(valueCount - 1);
-//				String id=si.getIdentifier();
-//				if(applicationPreferences.isValidSource(id))
-//				{
 				// only create view/add if valid
 				FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
 				buffer.addAll(value);
 				if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
-//				}
 
 				if(lastEvent.getEvent() == null)
 				{
@@ -133,36 +118,4 @@ public class FileSplitterEventConsumer<T extends Serializable>
 		}
 		return result;
 	}
-
-	/*
-	public FileBuffer<EventWrapper<T>> createBuffer(SourceIdentifier si)
-	{
-		//String baseName=getBaseFileName(baseDirectory, si);
-		//File dataFile = new File(baseName+DATA_FILE_EXTENSION);
-		//File indexFile = new File(baseName+INDEX_FILE_EXTENSION);
-		File dataFile = logFileFactory.getDataFile(si);
-		File indexFile = logFileFactory.getIndexFile(si);
-		if(logger.isInfoEnabled()) logger.info("Creating buffer for dataFile '{}'.", dataFile.getAbsolutePath());
-
-		return new SerializingFileBuffer<EventWrapper<T>>(dataFile, indexFile);
-	}
-	private FileBuffer<EventWrapper<T>> createNewBuffer(SourceIdentifier si)
-	{
-		//String baseName=getBaseFileName(baseDirectory, si);
-		FileBuffer<EventWrapper<T>> result = createBuffer(si);
-		//File activeFile=new File(baseName+ACTIVE_FILE_EXTENSION);
-		File activeFile=logFileFactory.getActiveFile(si);
-		try
-		{
-			activeFile.createNewFile();
-			activeFile.deleteOnExit();
-		}
-		catch (IOException e)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Couldn't create active-file.");
-		}
-		return result;
-	}
-    */
-
 }

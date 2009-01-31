@@ -7,7 +7,7 @@
 		</layout>
 	</appender>
 
-	<appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"></appender>
+	<appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"/>
 
 	<appender name="MultiplexClassicCompressed"
 	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
@@ -126,10 +126,6 @@
 		<level value="WARN"/>
 	</logger>
 
-	<logger name="de.huxhorn.sulky.buffers.SerializingFileBuffer">
-		<level value="WARN"/>
-	</logger>
-
 	<logger name="de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer">
 		<level value="DEBUG"/>
 	</logger>
@@ -221,8 +217,5 @@
 	</logger>
 	<logger name="de.huxhorn.lilith.services.sender">
 		<level value="DEBUG"/>
-	</logger>
-	<logger name="de.huxhorn.sulky.buffers.SerializingFileBuffer">
-		<level value="OFF"/>
 	</logger>
 </configuration>
