@@ -19,8 +19,15 @@ package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.sulky.buffers.ExtendedSerializingFileBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
-import de.huxhorn.sulky.buffers.SerializingFileBuffer;
+import de.huxhorn.sulky.generics.io.Deserializer;
+import de.huxhorn.sulky.generics.io.SerializableDeserializer;
+import de.huxhorn.sulky.generics.io.SerializableSerializer;
+import de.huxhorn.sulky.generics.io.Serializer;
+import de.huxhorn.sulky.generics.io.XmlDeserializer;
+import de.huxhorn.sulky.generics.io.XmlSerializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +35,31 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileBufferFactory<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FileBufferFactory.class);
 
 	private LogFileFactory logFileFactory;
+	private Integer magicValue;
+	private Map<String, String> metaData;
 
-	public FileBufferFactory(LogFileFactory logFileFactory)
+	public FileBufferFactory(LogFileFactory logFileFactory, Map<String, String> metaData)
 	{
 		this.logFileFactory = logFileFactory;
+		this.magicValue = FileConstants.MAGIC_VALUE;
+		if(metaData == null)
+		{
+			metaData = new HashMap<String, String>();
+		}
+		else
+		{
+			metaData = new HashMap<String, String>(metaData);
+		}
+
+		this.metaData = metaData;
 	}
 
 	public LogFileFactory getLogFileFactory()
@@ -47,21 +69,67 @@ public class FileBufferFactory<T extends Serializable>
 
 	public FileBuffer<EventWrapper<T>> createBuffer(SourceIdentifier si)
 	{
-		//String baseName=getBaseFileName(baseDirectory, si);
-		//File dataFile = new File(baseName+DATA_FILE_EXTENSION);
-		//File indexFile = new File(baseName+INDEX_FILE_EXTENSION);
 		File dataFile = logFileFactory.getDataFile(si);
 		File indexFile = logFileFactory.getIndexFile(si);
 		if(logger.isInfoEnabled()) logger.info("Creating buffer for dataFile '{}'.", dataFile.getAbsolutePath());
 
-		return new SerializingFileBuffer<EventWrapper<T>>(dataFile, indexFile);
+		Map<String, String> usedMetaData = new HashMap<String, String>(metaData);
+		usedMetaData.put(FileConstants.IDENTIFIER_KEY, si.getIdentifier());
+		if(si.getSecondaryIdentifier() != null)
+		{
+			usedMetaData.put(FileConstants.SECONDARY_IDENTIFIER_KEY, si.getSecondaryIdentifier());
+		}
+
+
+		ExtendedSerializingFileBuffer<EventWrapper<T>> result = new ExtendedSerializingFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, null, dataFile, indexFile);
+
+		Map<String, String> actualMetaData = result.getMetaData();
+		boolean compressed = false;
+		boolean useXml = false;
+		boolean isLogging = true;
+
+		if(actualMetaData != null)
+		{
+			compressed = Boolean.getBoolean(actualMetaData.get(FileConstants.COMPRESSED_KEY));
+			String format = actualMetaData.get(FileConstants.CONTENT_FORMAT_KEY);
+			if(FileConstants.CONTENT_FORMAT_VALUE_XML.equals(format))
+			{
+				useXml = true;
+			}
+			String type = actualMetaData.get(FileConstants.CONTENT_TYPE_KEY);
+			if(FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(type))
+			{
+				isLogging = false;
+			}
+		}
+		Serializer<EventWrapper<T>> serializer;
+		Deserializer<EventWrapper<T>> deserializer;
+		if(useXml)
+		{
+			if(isLogging)
+			{
+				serializer = new XmlSerializer<EventWrapper<T>>(compressed, LoggingEvent.Level.class);
+			}
+			else
+			{
+				serializer = new XmlSerializer<EventWrapper<T>>(compressed);
+			}
+			deserializer = new XmlDeserializer<EventWrapper<T>>(compressed);
+		}
+		else
+		{
+			serializer = new SerializableSerializer<EventWrapper<T>>();
+			deserializer = new SerializableDeserializer<EventWrapper<T>>();
+		}
+		result.setSerializer(serializer);
+		result.setDeserializer(deserializer);
+
+		return result;
 	}
 
 	public FileBuffer<EventWrapper<T>> createActiveBuffer(SourceIdentifier si)
 	{
-		//String baseName=getBaseFileName(baseDirectory, si);
 		FileBuffer<EventWrapper<T>> result = createBuffer(si);
-		//File activeFile=new File(baseName+ACTIVE_FILE_EXTENSION);
 		File activeFile = logFileFactory.getActiveFile(si);
 		try
 		{
@@ -74,7 +142,6 @@ public class FileBufferFactory<T extends Serializable>
 		}
 		return result;
 	}
-
 
 	public long getSizeOnDisk(SourceIdentifier sourceIdentifier)
 	{
