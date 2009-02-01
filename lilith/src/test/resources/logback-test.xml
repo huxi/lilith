@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<param name="Pattern" value="%msg%n%ex{full}"/>
+		</layout>
+	</appender>
+
+	<root>
+		<level value="DEBUG"/>
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+	<logger name="de.huxhorn.sulky.formatting.HumanReadable">
+		<level value="WARN"/>
+	</logger>
+</configuration>
