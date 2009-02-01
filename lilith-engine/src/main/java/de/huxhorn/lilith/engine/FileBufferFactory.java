@@ -84,13 +84,14 @@ public class FileBufferFactory<T extends Serializable>
 		ExtendedSerializingFileBuffer<EventWrapper<T>> result = new ExtendedSerializingFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, null, dataFile, indexFile);
 
 		Map<String, String> actualMetaData = result.getMetaData();
+
 		boolean compressed = false;
 		boolean useXml = false;
 		boolean isLogging = true;
 
 		if(actualMetaData != null)
 		{
-			compressed = Boolean.getBoolean(actualMetaData.get(FileConstants.COMPRESSED_KEY));
+			compressed = Boolean.valueOf(actualMetaData.get(FileConstants.COMPRESSED_KEY));
 			String format = actualMetaData.get(FileConstants.CONTENT_FORMAT_KEY);
 			if(FileConstants.CONTENT_FORMAT_VALUE_XML.equals(format))
 			{
@@ -118,11 +119,13 @@ public class FileBufferFactory<T extends Serializable>
 		}
 		else
 		{
-			serializer = new SerializableSerializer<EventWrapper<T>>();
-			deserializer = new SerializableDeserializer<EventWrapper<T>>();
+			serializer = new SerializableSerializer<EventWrapper<T>>(compressed);
+			deserializer = new SerializableDeserializer<EventWrapper<T>>(compressed);
 		}
 		result.setSerializer(serializer);
 		result.setDeserializer(deserializer);
+
+		if(logger.isDebugEnabled()) logger.debug("Created file buffer: {}", result);
 
 		return result;
 	}
