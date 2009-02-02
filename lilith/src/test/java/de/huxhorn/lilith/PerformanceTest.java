@@ -22,6 +22,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,7 +126,7 @@ public class PerformanceTest
 		{
 			buffer.add(current);
 		}
-		stopTest("serializationCompression");
+		stopTest("serializationCompressionAdd");
 	}
 
 	// ###
@@ -163,11 +164,71 @@ public class PerformanceTest
 	{
 		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(false, true);
 		startTest();
-		for(EventWrapper<LoggingEvent> current : loggingEvents)
-		{
-			buffer.add(current);
-		}
+		buffer.addAll(loggingEvents);
 		stopTest("serializationCompressionAddAll");
+	}
+
+	// ###
+
+	@Test
+	public void xmlNoCompressionGet()
+	{
+		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(true, false);
+		buffer.addAll(loggingEvents);
+		long size=buffer.getSize();
+		assertEquals(loggingEvents.size(), size);
+		startTest();
+		for(long i=0;i<size;i++)
+		{
+			buffer.get(i);
+		}
+		stopTest("xmlNoCompressionGet");
+	}
+
+	@Test
+	public void xmlCompressionGet()
+	{
+		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(true, true);
+		buffer.addAll(loggingEvents);
+		long size=buffer.getSize();
+		assertEquals(loggingEvents.size(), size);
+		startTest();
+		for(long i=0;i<size;i++)
+		{
+			buffer.get(i);
+		}
+		stopTest("xmlCompressionGet");
+	}
+
+
+	@Test
+	public void serializationNoCompressionGet()
+	{
+		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(false, false);
+		buffer.addAll(loggingEvents);
+		long size=buffer.getSize();
+		assertEquals(loggingEvents.size(), size);
+		startTest();
+		for(long i=0;i<size;i++)
+		{
+			buffer.get(i);
+		}
+		stopTest("serializationNoCompressionGet");
+	}
+
+	@Test
+	public void serializationCompressionGet()
+	{
+		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(false, true);
+		buffer.addAll(loggingEvents);
+		long size=buffer.getSize();
+		assertEquals(loggingEvents.size(), size);
+		startTest();
+		for(long i=0;i<size;i++)
+		{
+			buffer.get(i);
+		}
+		stopTest("serializationCompressionGet");
 	}
 
 	private void startTest()
