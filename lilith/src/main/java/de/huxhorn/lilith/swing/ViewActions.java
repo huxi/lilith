@@ -1079,15 +1079,12 @@ public class ViewActions
 				mainFrame.showFrame(container);
 			}
 		}
-		if(isScrollingToBottom())
+		if(viewContainer != null)
 		{
-			if(viewContainer != null)
+			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+			if(eventWrapperViewPanel != null)
 			{
-				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-				if(eventWrapperViewPanel != null)
-				{
-					eventWrapperViewPanel.scrollToBottom();
-				}
+				eventWrapperViewPanel.scrollToEvent();
 			}
 		}
 		focusTable();

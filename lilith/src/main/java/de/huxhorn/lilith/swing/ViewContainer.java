@@ -256,5 +256,5 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract void updateViews();
 
-	public abstract void scrollToBottom();
+	public abstract void scrollToEvent();
 }
