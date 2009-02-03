@@ -34,19 +34,19 @@ public class LoggingXmlSerializer
 	implements Serializer<LoggingEvent>
 {
 	private LoggingEventWriter loggingEventWriter;
-	private XMLOutputFactory outputFactory;
 	private boolean compressing;
 
 	public LoggingXmlSerializer(boolean compressing)
 	{
 		this.compressing = compressing;
-		outputFactory = XMLOutputFactory.newInstance();
 		loggingEventWriter = new LoggingEventWriter();
 		loggingEventWriter.setWritingSchemaLocation(false);
 	}
 
 	public byte[] serialize(LoggingEvent event)
 	{
+		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		OutputStreamWriter osw;
 		try

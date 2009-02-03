@@ -21,9 +21,11 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.SourceInfo;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 
-import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -39,21 +41,44 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
 public class SourceInfoIOTest
-	extends TestCase
 {
 	private final Logger logger = LoggerFactory.getLogger(SourceInfoIOTest.class);
-	private XMLOutputFactory outputFactory;
 	private SourceInfoWriter sourceInfoWriter;
-	private XMLInputFactory inputFactory;
 	private SourceInfoReader sourceInfoReader;
 
+	@Before
 	public void setUp()
 	{
-		outputFactory = XMLOutputFactory.newInstance();
-		inputFactory = XMLInputFactory.newInstance();
 		sourceInfoWriter = new SourceInfoWriter();
 		sourceInfoWriter.setWritingSchemaLocation(true);
 		sourceInfoReader = new SourceInfoReader();
+	}
+
+	@Test
+	public void minimal()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		SourceInfo obj = createMinimalSourceInfo();
+		check(obj, true);
+	}
+
+	@Test
+	public void full()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		SourceInfo obj = createMinimalSourceInfo();
+		obj.setActive(true);
+		check(obj, true);
+	}
+
+	@Test
+	public void fullPrefix()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		sourceInfoWriter.setPreferredPrefix("foo");
+		SourceInfo obj = createMinimalSourceInfo();
+		obj.setActive(true);
+		check(obj, true);
 	}
 
 	public SourceInfo createMinimalSourceInfo()
@@ -70,30 +95,6 @@ public class SourceInfoIOTest
 		SourceIdentifier result = new SourceIdentifier();
 		result.setIdentifier("primary");
 		return result;
-	}
-
-	public void testMinimal()
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		SourceInfo obj = createMinimalSourceInfo();
-		check(obj, true);
-	}
-
-	public void testFull()
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		SourceInfo obj = createMinimalSourceInfo();
-		obj.setActive(true);
-		check(obj, true);
-	}
-
-	public void testFullPrefix()
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		sourceInfoWriter.setPreferredPrefix("foo");
-		SourceInfo obj = createMinimalSourceInfo();
-		obj.setActive(true);
-		check(obj, true);
 	}
 
 	public void check(SourceInfo original, boolean indent)
@@ -116,6 +117,8 @@ public class SourceInfoIOTest
 	public byte[] write(SourceInfo source, boolean indent)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
 		if(indent && writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
@@ -136,6 +139,7 @@ public class SourceInfoIOTest
 	public SourceInfo read(byte[] bytes)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
 		return sourceInfoReader.read(reader);

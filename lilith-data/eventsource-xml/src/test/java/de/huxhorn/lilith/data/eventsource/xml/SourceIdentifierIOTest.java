@@ -20,9 +20,11 @@ package de.huxhorn.lilith.data.eventsource.xml;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 
-import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,21 +39,44 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
 public class SourceIdentifierIOTest
-	extends TestCase
 {
 	private final Logger logger = LoggerFactory.getLogger(SourceIdentifierIOTest.class);
-	private XMLOutputFactory outputFactory;
 	private SourceIdentifierWriter sourceIdentifierWriter;
-	private XMLInputFactory inputFactory;
 	private SourceIdentifierReader sourceIdentifierReader;
 
+	@Before
 	public void setUp()
 	{
-		outputFactory = XMLOutputFactory.newInstance();
-		inputFactory = XMLInputFactory.newInstance();
 		sourceIdentifierWriter = new SourceIdentifierWriter();
 		sourceIdentifierWriter.setWritingSchemaLocation(true);
 		sourceIdentifierReader = new SourceIdentifierReader();
+	}
+
+	@Test
+	public void minimal()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		SourceIdentifier identifier = createMinimalEventSource();
+		check(identifier, true);
+	}
+
+	@Test
+	public void full()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		SourceIdentifier identifier = createMinimalEventSource();
+		identifier.setSecondaryIdentifier("secondary");
+		check(identifier, true);
+	}
+
+	@Test
+	public void fullPrefix()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		sourceIdentifierWriter.setPreferredPrefix("foo");
+		SourceIdentifier identifier = createMinimalEventSource();
+		identifier.setSecondaryIdentifier("secondary");
+		check(identifier, true);
 	}
 
 	public SourceIdentifier createMinimalEventSource()
@@ -59,30 +84,6 @@ public class SourceIdentifierIOTest
 		SourceIdentifier result = new SourceIdentifier();
 		result.setIdentifier("primary");
 		return result;
-	}
-
-	public void testMinimal()
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		SourceIdentifier identifier = createMinimalEventSource();
-		check(identifier, true);
-	}
-
-	public void testFull()
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		SourceIdentifier identifier = createMinimalEventSource();
-		identifier.setSecondaryIdentifier("secondary");
-		check(identifier, true);
-	}
-
-	public void testFullPrefix()
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		sourceIdentifierWriter.setPreferredPrefix("foo");
-		SourceIdentifier identifier = createMinimalEventSource();
-		identifier.setSecondaryIdentifier("secondary");
-		check(identifier, true);
 	}
 
 	public void check(SourceIdentifier original, boolean indent)
@@ -109,6 +110,8 @@ public class SourceIdentifierIOTest
 	public byte[] write(SourceIdentifier sourceIdentifier, boolean indent)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
 		if(writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
@@ -129,6 +132,8 @@ public class SourceIdentifierIOTest
 	public SourceIdentifier read(byte[] bytes)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
 		return sourceIdentifierReader.read(reader);

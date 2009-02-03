@@ -46,16 +46,12 @@ import javax.xml.stream.XMLStreamWriter;
 public class LoggingEventsIOTest
 {
 	private final Logger logger = LoggerFactory.getLogger(LoggingEventsIOTest.class);
-	private XMLOutputFactory outputFactory;
 	private LoggingEventsWriter loggingEventWriter;
-	private XMLInputFactory inputFactory;
 	private LoggingEventsReader loggingEventReader;
 
 	@Before
 	public void setUp()
 	{
-		outputFactory = XMLOutputFactory.newInstance();
-		inputFactory = XMLInputFactory.newInstance();
 		loggingEventWriter = new LoggingEventsWriter();
 		loggingEventWriter.setWritingSchemaLocation(true);
 		loggingEventReader = new LoggingEventsReader();
@@ -154,6 +150,8 @@ public class LoggingEventsIOTest
 	private byte[] write(LoggingEvents event, boolean indent)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
 		if(indent && writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
@@ -174,6 +172,8 @@ public class LoggingEventsIOTest
 	private LoggingEvents read(byte[] bytes)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
 		return loggingEventReader.read(reader);
