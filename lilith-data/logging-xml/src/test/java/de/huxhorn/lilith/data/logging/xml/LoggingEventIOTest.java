@@ -49,16 +49,12 @@ import javax.xml.stream.XMLStreamWriter;
 public class LoggingEventIOTest
 {
 	private final Logger logger = LoggerFactory.getLogger(LoggingEventIOTest.class);
-	private XMLOutputFactory outputFactory;
 	private LoggingEventWriter loggingEventWriter;
-	private XMLInputFactory inputFactory;
 	private LoggingEventReader loggingEventReader;
 
 	@Before
 	public void setUp()
 	{
-		outputFactory = XMLOutputFactory.newInstance();
-		inputFactory = XMLInputFactory.newInstance();
 		loggingEventWriter = new LoggingEventWriter();
 		loggingEventWriter.setWritingSchemaLocation(true);
 		loggingEventReader = new LoggingEventReader();
@@ -148,7 +144,6 @@ public class LoggingEventIOTest
 		check(event, true);
 	}
 
-	@Ignore("Not running because writing NDC isn't implemented yet.")
 	@Test
 	public void ndc()
 		throws UnsupportedEncodingException, XMLStreamException
@@ -377,6 +372,8 @@ public class LoggingEventIOTest
 	private byte[] write(LoggingEvent event, boolean indent)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
 		if(indent && writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
@@ -397,6 +394,8 @@ public class LoggingEventIOTest
 	private LoggingEvent read(byte[] bytes)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
+		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
 		return loggingEventReader.read(reader);

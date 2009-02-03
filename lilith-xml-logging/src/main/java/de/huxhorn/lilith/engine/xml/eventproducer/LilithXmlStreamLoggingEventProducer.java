@@ -46,7 +46,6 @@ public class LilithXmlStreamLoggingEventProducer
 	private final Logger logger = LoggerFactory.getLogger(LilithXmlStreamLoggingEventProducer.class);
 
 	private LoggingEventReader loggingEventReader;
-	private XMLInputFactory inputFactory;
 	private BufferedInputStream inputStream;
 
 	public LilithXmlStreamLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
@@ -55,7 +54,6 @@ public class LilithXmlStreamLoggingEventProducer
 		super(sourceIdentifier, eventQueue);
 		loggingEventReader = new LoggingEventReader();
 
-		inputFactory = XMLInputFactory.newInstance();
 		this.inputStream = new BufferedInputStream(inputStream);
 	}
 
@@ -76,6 +74,7 @@ public class LilithXmlStreamLoggingEventProducer
 	{
 		public void run()
 		{
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 			try
 			{
 				ArrayList<Byte> bytes = new ArrayList<Byte>();

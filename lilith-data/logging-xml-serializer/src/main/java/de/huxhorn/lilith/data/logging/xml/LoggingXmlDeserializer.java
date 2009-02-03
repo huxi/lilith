@@ -35,19 +35,18 @@ import javax.xml.stream.XMLStreamReader;
 public class LoggingXmlDeserializer
 	implements Deserializer<LoggingEvent>
 {
-	private XMLInputFactory inputFactory;
 	private LoggingEventReader loggingEventReader;
 	private boolean compressing;
 
 	public LoggingXmlDeserializer(boolean compressing)
 	{
 		this.compressing = compressing;
-		inputFactory = XMLInputFactory.newInstance();
 		loggingEventReader = new LoggingEventReader();
 	}
 
 	public LoggingEvent deserialize(byte[] bytes)
 	{
+		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		XMLStreamReader reader;
 		try
