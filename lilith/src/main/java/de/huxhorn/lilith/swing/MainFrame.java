@@ -1732,7 +1732,7 @@ public class MainFrame
 			ViewContainer viewContainer = window.getViewContainer();
 			if(viewContainer != null)
 			{
-				viewContainer.scrollToBottom();
+				viewContainer.scrollToEvent();
 			}
 		}
 	}

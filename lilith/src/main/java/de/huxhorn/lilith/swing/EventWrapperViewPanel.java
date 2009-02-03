@@ -401,17 +401,21 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			findTextField.selectAll();
 			applyFilter();
 		}
-		scrollToBottom();
+		scrollToEvent();
 	}
 
 	/**
-	 * scrolls to bottom if it is enabled.
+	 * scrolls to bottom if it is enabled. Otherwise makes sure that an event is selected if available.
 	 */
-	public void scrollToBottom()
+	public void scrollToEvent()
 	{
 		if(table.isScrollingToBottom())
 		{
 			SwingUtilities.invokeLater(new ScrollToBottomRunnable());
+		}
+		else if(table.getSelectedRow() < 0)
+		{
+			SwingUtilities.invokeLater(new SelectFirstEventRunnable());
 		}
 	}
 
@@ -424,6 +428,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
+	private class SelectFirstEventRunnable
+		implements Runnable
+	{
+		public void run()
+		{
+			table.scrollToFirst();
+		}
+	}
 
 	public void validate()
 	{
@@ -552,14 +564,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		setFilterCondition(null);
 	}
 
-	public void setSelectedEvent(EventWrapper<T> selectedEvent)
+	protected void setSelectedEvent(EventWrapper<T> selectedEvent)
 	{
 		Object oldValue = this.selectedEvent;
 		this.selectedEvent = selectedEvent;
 		Object newValue = this.selectedEvent;
 		firePropertyChange(SELECTED_EVENT_PROPERTY, oldValue, newValue);
-
-		initMessage(this.selectedEvent);
 	}
 
 	public EventWrapper<T> getSelectedEvent()
@@ -709,9 +719,24 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 
-	public void initMessage(EventWrapper wrapper)
+	protected void initMessage(EventWrapper wrapper)
 	{
 		String message = mainFrame.createMessage(wrapper);
+		URL messageViewRootUrl = mainFrame.getApplicationPreferences().getDetailsViewRootUrl();
+		try
+		{
+			messagePane.setDocumentFromString(message, messageViewRootUrl.toExternalForm(), xhtmlNamespaceHandler);
+		}
+		catch(Throwable t)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while setting message!", t);
+			writeErrorMessage(message);
+		}
+	}
+
+	protected void resetMessage()
+	{
+		String message = "<html><body>No event selected.</body></html>";
 		URL messageViewRootUrl = mainFrame.getApplicationPreferences().getDetailsViewRootUrl();
 		try
 		{
@@ -1390,10 +1415,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				EventWrapper<T> event = tableModel.getValueAt(row);
 				setSelectedEvent(event);
+				initMessage(event);
 			}
 			else
 			{
 				setSelectedEvent(null);
+				resetMessage();
 			}
 		}
 	}
@@ -1785,7 +1812,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			String propertyName = evt.getPropertyName();
 			if("dividerLocation".equals(propertyName))
 			{
-				scrollToBottom();
+				scrollToEvent();
 			}
 		}
 	}

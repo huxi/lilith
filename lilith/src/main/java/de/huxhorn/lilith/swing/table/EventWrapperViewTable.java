@@ -73,7 +73,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		this.mainFrame = mainFrame;
 		this.global = global;
 		this.tableModel = model;
-		this.tableModel.addTableModelListener(new ScrollToBottomListener());
+		this.tableModel.addTableModelListener(new ScrollToEventListener());
 		setAutoCreateColumnsFromModel(false);
 		setModel(tableModel);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -147,6 +147,14 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		row--;
 
 		selectRow(row);
+	}
+
+	public void scrollToFirst()
+	{
+		if(getRowCount() > 0)
+		{
+			selectRow(0);
+		}
 	}
 
 	public void selectRow(int row)
@@ -365,13 +373,14 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 
 	/**
-	 * This is part one of "scroll to bottom" functionality.
+	 * This is part one of "scroll to bottom" functionality and selects the first event otherwise if no event was
+	 * previously selected.
 	 * <p/>
 	 * It selects the last row of the table.
 	 * Be aware that this listener *must* be added to the table model *before* the
 	 * model is assigned to a table!
 	 */
-	private class ScrollToBottomListener
+	private class ScrollToEventListener
 		implements TableModelListener
 	{
 		public void tableChanged(TableModelEvent e)
@@ -379,6 +388,10 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			if(scrollingToBottom)
 			{
 				scrollToBottom();
+			}
+			else if(getSelectedRow() < 0)
+			{
+				scrollToFirst();
 			}
 		}
 	}

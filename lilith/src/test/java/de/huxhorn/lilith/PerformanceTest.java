@@ -19,10 +19,11 @@ import de.huxhorn.sulky.generics.io.XmlDeserializer;
 import de.huxhorn.sulky.generics.io.XmlSerializer;
 
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Ignore("Activate if you want to benchmark...")
 public class PerformanceTest
 {
 	private final Logger logger = LoggerFactory.getLogger(PerformanceTest.class);
@@ -175,10 +176,10 @@ public class PerformanceTest
 	{
 		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(true, false);
 		buffer.addAll(loggingEvents);
-		long size=buffer.getSize();
+		long size = buffer.getSize();
 		assertEquals(loggingEvents.size(), size);
 		startTest();
-		for(long i=0;i<size;i++)
+		for(long i = 0; i < size; i++)
 		{
 			buffer.get(i);
 		}
@@ -190,10 +191,10 @@ public class PerformanceTest
 	{
 		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(true, true);
 		buffer.addAll(loggingEvents);
-		long size=buffer.getSize();
+		long size = buffer.getSize();
 		assertEquals(loggingEvents.size(), size);
 		startTest();
-		for(long i=0;i<size;i++)
+		for(long i = 0; i < size; i++)
 		{
 			buffer.get(i);
 		}
@@ -206,10 +207,10 @@ public class PerformanceTest
 	{
 		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(false, false);
 		buffer.addAll(loggingEvents);
-		long size=buffer.getSize();
+		long size = buffer.getSize();
 		assertEquals(loggingEvents.size(), size);
 		startTest();
-		for(long i=0;i<size;i++)
+		for(long i = 0; i < size; i++)
 		{
 			buffer.get(i);
 		}
@@ -221,10 +222,10 @@ public class PerformanceTest
 	{
 		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(false, true);
 		buffer.addAll(loggingEvents);
-		long size=buffer.getSize();
+		long size = buffer.getSize();
 		assertEquals(loggingEvents.size(), size);
 		startTest();
-		for(long i=0;i<size;i++)
+		for(long i = 0; i < size; i++)
 		{
 			buffer.get(i);
 		}
