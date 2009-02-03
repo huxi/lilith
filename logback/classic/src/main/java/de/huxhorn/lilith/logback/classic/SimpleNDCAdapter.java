@@ -21,7 +21,6 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SimpleNDCAdapter
@@ -144,7 +143,8 @@ public class SimpleNDCAdapter
 				.evaluateArguments(messagePattern, arguments);
 			if(argumentResults == null)
 			{
-				System.out.println("messagePattern=" + messagePattern + ", arguments=" + Arrays.toString(arguments));
+				// this should not be possible but I'm paranoid...
+				stackList.add(new Message(messagePattern, null));
 			}
 			else
 			{
