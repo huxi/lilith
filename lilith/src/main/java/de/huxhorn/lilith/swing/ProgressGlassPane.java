@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
+import de.huxhorn.sulky.tasks.Task;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.concurrent.Future;
 
 import javax.swing.*;
 
@@ -162,7 +162,7 @@ public class ProgressGlassPane
 	public class CancelAction
 		extends AbstractAction
 	{
-		private Future<Integer> future;
+		private Task<Integer> task;
 
 		public CancelAction()
 		{
@@ -186,26 +186,26 @@ public class ProgressGlassPane
 			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			setFuture(null);
+			setTask(null);
 		}
 
-		public Future<Integer> getFuture()
+		public Task<Integer> getTask()
 		{
-			return future;
+			return task;
 		}
 
-		public void setFuture(Future<Integer> future)
+		public void setTask(Task<Integer> task)
 		{
-			this.future = future;
-			setEnabled((this.future != null));
+			this.task = task;
+			setEnabled((this.task!= null));
 		}
 
 		public void cancelSearch()
 		{
-			Future future = this.future;
-			if(future != null)
+			Task task = this.task;
+			if(task != null)
 			{
-				future.cancel(true);
+				task.getFuture().cancel(true);
 			}
 		}
 

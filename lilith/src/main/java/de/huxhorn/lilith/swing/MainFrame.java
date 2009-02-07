@@ -67,10 +67,10 @@ import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
-import de.huxhorn.sulky.swing.AbstractProgressingCallable;
 import de.huxhorn.sulky.swing.MemoryStatus;
-import de.huxhorn.sulky.swing.SwingWorkManager;
 import de.huxhorn.sulky.swing.Windows;
+import de.huxhorn.sulky.tasks.TaskManager;
+import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
@@ -149,7 +149,7 @@ public class MainFrame
 	private DebugDialog debugDialog;
 	private RrdFileFilter rrdFileFilter;
 	private StatisticsDialog statisticsDialog;
-	private SwingWorkManager<Integer> integerWorkManager;
+	private TaskManager<Integer> integerTaskManager;
 	private ViewActions viewActions;
 	private OpenPreviousDialog openInactiveLogsDialog;
 	private HelpFrame helpFrame;
@@ -234,7 +234,7 @@ public class MainFrame
 		}
         */
 
-		integerWorkManager = new SwingWorkManager<Integer>();
+		integerTaskManager = new TaskManager<Integer>();
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
 		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/logs"));
@@ -1051,9 +1051,9 @@ public class MainFrame
 		Windows.showWindow(statisticsDialog, MainFrame.this, true);
 	}
 
-	public SwingWorkManager<Integer> getIntegerWorkManager()
+	public TaskManager<Integer> getIntegerWorkManager()
 	{
-		return integerWorkManager;
+		return integerTaskManager;
 	}
 
 	public LogFileFactory getAccessFileFactory()
@@ -1371,10 +1371,7 @@ public class MainFrame
 	{
 		loggingEventViewManager.removeInactiveViews(false);
 		accessEventViewManager.removeInactiveViews(false);
-		// TODO: execute in different thread...
-		integerWorkManager.add(new CleanAllInactiveCallable());
-		//deleteInactiveLogs(loggingFileFactory);
-		//deleteInactiveLogs(accessFileFactory);
+		integerTaskManager.startTask(new CleanAllInactiveCallable(), "Clean all inactive...");
 		updateWindowMenus();
 	}
 

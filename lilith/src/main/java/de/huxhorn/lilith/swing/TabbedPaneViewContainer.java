@@ -24,6 +24,7 @@ import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Buffers;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
+import de.huxhorn.sulky.tasks.Task;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -523,13 +524,13 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		}
 	}
     */
-	public void showSearchPanel(Future<Integer> future)
+	public void showSearchPanel(Task<Integer> task)
 	{
-		if(future != null)
+		if(task != null)
 		{
 			searching = true;
 			progressPanel.setProgress(0);
-			progressPanel.getFindCancelAction().setFuture(future);
+			progressPanel.getFindCancelAction().setTask(task);
 
 			ViewWindow window = resolveViewWindow();
 			if(window != null)

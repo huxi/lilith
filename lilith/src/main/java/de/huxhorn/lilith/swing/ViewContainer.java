@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.tasks.Task;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -31,7 +32,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -244,7 +244,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract void hideSearchPanel();
 
-	public abstract void showSearchPanel(Future<Integer> future);
+	public abstract void showSearchPanel(Task<Integer> future);
 
 	public abstract boolean isSearching();
 
