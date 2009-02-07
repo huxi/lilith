@@ -40,11 +40,12 @@ import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.sulky.formatting.HumanReadable;
-import de.huxhorn.sulky.swing.AbstractProgressingCallable;
 import de.huxhorn.sulky.swing.KeyStrokes;
-import de.huxhorn.sulky.swing.ProgressingCallable;
-import de.huxhorn.sulky.swing.ResultListener;
-import de.huxhorn.sulky.swing.SwingWorkManager;
+import de.huxhorn.sulky.tasks.TaskManager;
+import de.huxhorn.sulky.tasks.ProgressingCallable;
+import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
+import de.huxhorn.sulky.tasks.TaskListener;
+import de.huxhorn.sulky.tasks.Task;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -78,7 +79,6 @@ import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -109,7 +109,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private MainFrame mainFrame;
 	private boolean showingFilters;
 	private Condition filterCondition;
-	private SwingWorkManager<Integer> workManager;
+	private TaskManager<Integer> taskManager;
 
 	private EventWrapperViewTable<T> table;
 	private EventWrapperTableModel<T> tableModel;
@@ -148,9 +148,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		super(true);
 		eventCountFormat = new DecimalFormat("#,###");
-		this.workManager = mainFrame.getIntegerWorkManager();
+		this.taskManager = mainFrame.getIntegerWorkManager();
 		findResultListener = new FindResultListener();
-		workManager.addResultListener(findResultListener);
+		taskManager.addTaskListener(findResultListener);
 		this.mainFrame = mainFrame;
 		this.eventSource = eventSource;
 		showingFilters = false;
@@ -550,7 +550,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	public void dispose()
 	{
 		tableModel.dispose();
-		workManager.removeResultListener(findResultListener);
+		taskManager.removeTaskListener(findResultListener);
 	}
 
 	public boolean isDisposed()
@@ -946,7 +946,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		if(condition != null)
 		{
 			ProgressingCallable<Integer> callable = new FindPreviousCallable(currentRow, condition);
-			executeFind(callable);
+			String description=null; // TODO: implement description
+			executeFind(callable, "Find previous", description);
 		}
 	}
 
@@ -955,7 +956,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		if(condition != null)
 		{
 			ProgressingCallable<Integer> callable = new FindNextCallable(currentRow, condition);
-			executeFind(callable);
+			String description=null; // TODO: implement description
+			executeFind(callable, "Find next", description);
 		}
 	}
 
@@ -1655,45 +1657,52 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
-	private void executeFind(ProgressingCallable<Integer> callable)
+	private void executeFind(Callable<Integer> callable, String name, String description)
 	{
 		enableFindComponents(false);
 		findResultListener.setCallable(callable);
 		//progressPanel.setProgress(0);
-		Future<Integer> future = workManager.add(callable);
+		Task<Integer> task = taskManager.startTask(callable, name, description);
 		//progressPanel.getFindCancelAction().setFuture(future);
 		ViewContainer<T> container = resolveContainer();
 		if(container != null)
 		{
-			container.showSearchPanel(future);
+			container.showSearchPanel(task);
 		}
 	}
 
 	class FindResultListener
-		implements ResultListener<Integer>
+		implements TaskListener<Integer>
 	{
 		private Callable<Integer> callable;
 
-		public void executionFailed(Callable<Integer> callable, ExecutionException exception)
+		public void executionFailed(Task<Integer> task, ExecutionException exception)
 		{
 			if(logger.isDebugEnabled())
 			{
-				logger.debug("in executionFailed:\n     callable: {}\nthis.callable: {}", callable, this.callable);
+				logger.debug("in executionFailed:\n     task: {}\nthis.callable: {}", task, this.callable);
 			}
-			if(this.callable == callable)
+			if(this.callable == task.getCallable())
 			{
 				if(logger.isInfoEnabled()) logger.info("Find execution failed!", exception);
 				finished();
 			}
 		}
 
-		public void executionFinished(Callable<Integer> callable, Integer result)
+		{
+			//To change body of implemented methods use File | Settings | File Templates.
+		}
+
+		{
+			//To change body of implemented methods use File | Settings | File Templates.
+		}
+		public void executionFinished(Task<Integer> task, Integer result)
 		{
 			if(logger.isDebugEnabled())
 			{
-				logger.debug("in executionFinished:\n     callable: {}\nthis.callable: {}", callable, this.callable);
+				logger.debug("in executionFinished:\n     task: {}\nthis.callable: {}", task, this.callable);
 			}
-			if(this.callable == callable)
+			if(this.callable == task.getCallable())
 			{
 				if(logger.isInfoEnabled()) logger.info("Find execution finished: {}!", result);
 				if(result >= 0)
@@ -1704,27 +1713,27 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
-		public void executionCanceled(Callable<Integer> callable)
+		public void executionCanceled(Task<Integer> task)
 		{
 			if(logger.isDebugEnabled())
 			{
-				logger.debug("in executionCanceled:\n     callable: {}\nthis.callable: {}", callable, this.callable);
+				logger.debug("in executionCanceled:\n     task: {}\nthis.callable: {}", task, this.callable);
 			}
-			if(this.callable == callable)
+			if(this.callable == task.getCallable())
 			{
 				if(logger.isInfoEnabled()) logger.info("Find execution canceled.");
 				finished();
 			}
 		}
 
-		public void progressUpdated(ProgressingCallable progressingCallable, int progress)
+		public void progressUpdated(Task<Integer> task, int progress)
 		{
 			if(logger.isDebugEnabled())
 			{
 				logger
-					.debug("in progressUpdated:\nprogressingCallable: {}\n   this.callable: {}", progressingCallable, this.callable);
+					.debug("in progressUpdated:\task: {}\n   this.callable: {}", task, this.callable);
 			}
-			if(this.callable == progressingCallable)
+			if(this.callable == task.getCallable())
 			{
 				// to catch updates after cancel.
 				if(logger.isDebugEnabled()) logger.debug("Progress update: {}", progress);
@@ -1745,7 +1754,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			if(container != null)
 			{
 				ProgressGlassPane progressPanel = container.getProgressPanel();
-				progressPanel.getFindCancelAction().setFuture(null);
+				progressPanel.getFindCancelAction().setTask(null);
 				setCallable(null);
 				container.hideSearchPanel();
 			}
@@ -1755,10 +1764,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void setCallable(Callable<Integer> callable)
 		{
-			if(logger.isDebugEnabled()) //noinspection ThrowableInstanceNeverThrown
+			if(logger.isDebugEnabled())
 			{
-				logger
-					.debug("Setting callable...\n     newFuture: " + callable + "\npreviousFuture: " + this.callable, new Throwable());
+				//noinspection ThrowableInstanceNeverThrown
+				logger.debug("Setting task...\n     newCallable: " + callable + "\npreviousCallable: " + this.callable, new Throwable());
 			}
 			this.callable = callable;
 		}

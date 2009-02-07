@@ -25,8 +25,8 @@ import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.SplashScreen;
 import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
-import de.huxhorn.sulky.swing.ProgressingCallable;
 import de.huxhorn.sulky.swing.Windows;
+import de.huxhorn.sulky.tasks.ProgressingCallable;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;

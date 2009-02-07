@@ -19,7 +19,7 @@ package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.sulky.swing.AbstractProgressingCallable;
+import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CountingInputStream;
