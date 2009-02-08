@@ -69,8 +69,8 @@ import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
-import de.huxhorn.sulky.tasks.TaskManager;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
+import de.huxhorn.sulky.tasks.TaskManager;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
@@ -235,6 +235,9 @@ public class MainFrame
         */
 
 		integerTaskManager = new TaskManager<Integer>();
+		integerTaskManager.setUsingEventQueue(true);
+		integerTaskManager.startUp();
+
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
 		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/logs"));
@@ -1828,6 +1831,7 @@ public class MainFrame
 			deleteInactiveLogs(accessFileFactory);
 		}
 		applicationPreferences.flush();
+		integerTaskManager.shutDown();
 		System.exit(0);
 	}
 
