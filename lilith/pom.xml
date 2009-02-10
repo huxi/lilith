@@ -227,7 +227,7 @@
 			<!--
 					 <version>1.5.7</version>
 					 -->
-			<version>1.6-RC-1</version>
+			<version>1.6-RC-3</version>
 			<scope>compile</scope>
 		</dependency>
 
