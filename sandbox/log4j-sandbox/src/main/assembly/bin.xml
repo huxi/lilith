@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+	<id>bin</id>
+	<formats>
+		<format>zip</format>
+		<format>tar.gz</format>
+	</formats>
+
+	<files>
+		<file>
+			<source>target/log4j-sandbox.jar</source>
+			<outputDirectory>/lib</outputDirectory>
+		</file>
+	</files>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<baseDirectory>Log4j-sandbox-${project.version}</baseDirectory>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/lib</outputDirectory>
+			<unpack>false</unpack>
+			<scope>runtime</scope>
+			<excludes>
+				<!-- is added manually -->
+				<exclude>de.huxhorn.lilith:de.huxhorn.lilith.sandbox.log4j</exclude>
+			</excludes>
+		</dependencySet>
+	</dependencySets>
+</assembly>
