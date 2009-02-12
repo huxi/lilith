@@ -9,6 +9,7 @@
 	<name>Lilith parent pom file</name>
 	<description>This file is part of Lilith. It's the parent pom that contains general project informations.</description>
 	<url>http://lilith.huxhorn.de/projects/</url>
+	<inceptionYear>2007</inceptionYear>
 
 	<scm>
 		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-parent</connection>
