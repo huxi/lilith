@@ -162,7 +162,7 @@ public class ProgressGlassPane
 	public class CancelAction
 		extends AbstractAction
 	{
-		private Task<Integer> task;
+		private Task<Long> task;
 
 		public CancelAction()
 		{
@@ -189,15 +189,15 @@ public class ProgressGlassPane
 			setTask(null);
 		}
 
-		public Task<Integer> getTask()
+		public Task<Long> getTask()
 		{
 			return task;
 		}
 
-		public void setTask(Task<Integer> task)
+		public void setTask(Task<Long> task)
 		{
 			this.task = task;
-			setEnabled((this.task!= null));
+			setEnabled((this.task != null));
 		}
 
 		public void cancelSearch()

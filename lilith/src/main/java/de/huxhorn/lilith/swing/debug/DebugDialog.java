@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.debug;
 
+import de.huxhorn.lilith.debug.DebugProgressingCallable;
 import de.huxhorn.lilith.debug.LoggerEventEmitter;
 import de.huxhorn.lilith.swing.MainFrame;
 
@@ -106,6 +107,10 @@ public class DebugDialog
 		debugToolbar.add(button);
 
 		action = new NetworkAction();
+		button = new JButton(action);
+		debugToolbar.add(button);
+
+		action = new DebugCallableAction();
 		button = new JButton(action);
 		debugToolbar.add(button);
 
@@ -344,6 +349,21 @@ public class DebugDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logAnonymous();
+		}
+	}
+
+	private class DebugCallableAction
+		extends AbstractAction
+	{
+		public DebugCallableAction()
+		{
+			super("Callable");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.getLongWorkManager()
+				.startTask(new DebugProgressingCallable(), "Test Task", "This is just a simply test task.");
 		}
 	}
 }

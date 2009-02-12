@@ -38,7 +38,6 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -524,7 +523,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		}
 	}
     */
-	public void showSearchPanel(Task<Integer> task)
+	public void showSearchPanel(Task<Long> task)
 	{
 		if(task != null)
 		{

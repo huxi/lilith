@@ -149,7 +149,7 @@ public class MainFrame
 	private DebugDialog debugDialog;
 	private RrdFileFilter rrdFileFilter;
 	private StatisticsDialog statisticsDialog;
-	private TaskManager<Integer> integerTaskManager;
+	private TaskManager<Long> longTaskManager;
 	private ViewActions viewActions;
 	private OpenPreviousDialog openInactiveLogsDialog;
 	private HelpFrame helpFrame;
@@ -234,9 +234,9 @@ public class MainFrame
 		}
         */
 
-		integerTaskManager = new TaskManager<Integer>();
-		integerTaskManager.setUsingEventQueue(true);
-		integerTaskManager.startUp();
+		longTaskManager = new TaskManager<Long>();
+		longTaskManager.setUsingEventQueue(true);
+		longTaskManager.startUp();
 
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
@@ -1054,9 +1054,9 @@ public class MainFrame
 		Windows.showWindow(statisticsDialog, MainFrame.this, true);
 	}
 
-	public TaskManager<Integer> getIntegerWorkManager()
+	public TaskManager<Long> getLongWorkManager()
 	{
-		return integerTaskManager;
+		return longTaskManager;
 	}
 
 	public LogFileFactory getAccessFileFactory()
@@ -1374,7 +1374,7 @@ public class MainFrame
 	{
 		loggingEventViewManager.removeInactiveViews(false);
 		accessEventViewManager.removeInactiveViews(false);
-		integerTaskManager.startTask(new CleanAllInactiveCallable(), "Clean all inactive...");
+		longTaskManager.startTask(new CleanAllInactiveCallable(), "Clean all inactive...");
 		updateWindowMenus();
 	}
 
@@ -1831,7 +1831,7 @@ public class MainFrame
 			deleteInactiveLogs(accessFileFactory);
 		}
 		applicationPreferences.flush();
-		integerTaskManager.shutDown();
+		longTaskManager.shutDown();
 		System.exit(0);
 	}
 
@@ -2548,15 +2548,15 @@ public class MainFrame
 	}
 
 	public class CleanAllInactiveCallable
-		extends AbstractProgressingCallable<Integer>
+		extends AbstractProgressingCallable<Long>
 	{
-		public Integer call()
+		public Long call()
 			throws Exception
 		{
 			List<SourceIdentifier> inactiveAccess = collectInactiveLogs(accessFileFactory);
 			List<SourceIdentifier> inactiveLogging = collectInactiveLogs(loggingFileFactory);
 			setNumberOfSteps(inactiveAccess.size() + inactiveLogging.size());
-			int currentStep = 0;
+			long currentStep = 0;
 			for(SourceIdentifier si : inactiveAccess)
 			{
 				delete(accessFileFactory, si);

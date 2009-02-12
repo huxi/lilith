@@ -42,7 +42,7 @@ import java.util.TreeSet;
 import java.util.zip.GZIPInputStream;
 
 public class IndexingCallable
-	extends AbstractProgressingCallable<Integer>
+	extends AbstractProgressingCallable<Long>
 
 {
 	private final Logger logger = LoggerFactory.getLogger(IndexingCallable.class);
@@ -65,10 +65,10 @@ public class IndexingCallable
 	 * @return computed result
 	 * @throws Exception if unable to compute a result
 	 */
-	public Integer call()
+	public Long call()
 		throws Exception
 	{
-		// ATTENTION! This method must be changed if SerializingFileBuffer implementation is changed!
+		// TODO: ATTENTION! This method must be changed if SerializingFileBuffer implementation is changed!
 		if(!logFile.exists())
 		{
 			throw new FileNotFoundException("File '" + logFile.getAbsolutePath() + "' does not exist!");
@@ -81,7 +81,7 @@ public class IndexingCallable
 		long fileSize = logFile.length();
 		setNumberOfSteps(fileSize);
 
-		int counter = 0;
+		long counter = 0;
 		DataOutputStream dataOutputStream = null;
 		BufferedInputStream bis = null;
 		try

@@ -244,7 +244,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract void hideSearchPanel();
 
-	public abstract void showSearchPanel(Task<Integer> future);
+	public abstract void showSearchPanel(Task<Long> future);
 
 	public abstract boolean isSearching();
 

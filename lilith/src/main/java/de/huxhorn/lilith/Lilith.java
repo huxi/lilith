@@ -322,7 +322,7 @@ public class Lilith
 				callable.addPropertyChangeListener(new IndexingChangeListener());
 				try
 				{
-					int count = callable.call();
+					long count = callable.call();
 					if(logger.isInfoEnabled())
 					{
 						logger.info("Finished indexing {}. Number of events: {}", logFile.getAbsolutePath(), count);
@@ -594,7 +594,7 @@ public class Lilith
 
 		public CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appTitle, boolean enableBonjour)
 		{
-			this.splashScreen=splashScreen;
+			this.splashScreen = splashScreen;
 			this.enableBonjour = enableBonjour;
 			this.appTitle = appTitle;
 			this.applicationPreferences = applicationPreferences;
