@@ -515,6 +515,7 @@ public class ViewActions
 	private JMenu sendToMenuItem;
 	private PropertyChangeListener containerPropertyChangeListener;
 	private EventWrapper eventWrapper;
+	private JMenuItem showTaskManagerItem;
 	private JMenuItem closeAllItem;
 	private JMenuItem minimizeAllItem;
 	private JMenuItem closeAllOtherItem;
@@ -614,6 +615,7 @@ public class ViewActions
 		closeAllFiltersAction = new CloseAllFiltersAction();
 
 		// Window
+		ShowTaskManagerAction showTaskManagerAction = new ShowTaskManagerAction();
 		closeAllAction = new CloseAllAction();
 		closeAllOtherAction = new CloseAllOtherAction();
 		minimizeAllAction = new MinimizeAllAction();
@@ -637,6 +639,7 @@ public class ViewActions
 		PreferencesToolBarAction preferencesToolBarAction = new PreferencesToolBarAction();
 		disconnectToolBarAction = new DisconnectToolBarAction();
 
+		showTaskManagerItem = new JMenuItem(showTaskManagerAction);
 		closeAllItem = new JMenuItem(closeAllAction);
 		closeAllOtherItem = new JMenuItem(closeAllOtherAction);
 		minimizeAllItem = new JMenuItem(minimizeAllAction);
@@ -1431,6 +1434,27 @@ public class ViewActions
 		{
 			mainFrame.removeInactiveViews(false, false);
 			mainFrame.updateWindowMenus();
+		}
+	}
+
+	private class ShowTaskManagerAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -8228641057263498624L;
+
+		public ShowTaskManagerAction()
+		{
+			super("Task Manager");
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			//KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" R");
+			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			//putValue(Action.ACCELERATOR_KEY, accelerator);
+			//putValue(Action.MNEMONIC_KEY, Integer.valueOf('r'));
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.showTaskManager();
 		}
 	}
 
@@ -2331,6 +2355,8 @@ public class ViewActions
 			windowMenu.removeAll();
 			JMenu statisticsMenu = createStatisticsMenu();
 			windowMenu.add(statisticsMenu);
+			windowMenu.add(showTaskManagerItem);
+			windowMenu.addSeparator();
 			windowMenu.add(closeAllItem);
 			windowMenu.add(closeAllOtherItem);
 			windowMenu.add(minimizeAllItem);
