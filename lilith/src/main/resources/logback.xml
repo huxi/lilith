@@ -223,4 +223,7 @@
 	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
 		<level value="WARN"/>
 	</logger>
+	<logger name="de.huxhorn.lilith.swing.taskmanager">
+		<level value="INFO"/>
+	</logger>
 </configuration>

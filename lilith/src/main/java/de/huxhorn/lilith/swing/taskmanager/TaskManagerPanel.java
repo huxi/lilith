@@ -5,23 +5,62 @@ import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-public class TaskManagerPanel
+public class TaskManagerPanel<T>
 	extends JPanel
 {
-	private TaskManager<Long> taskManager;
-	private TaskListener<Long> taskListener;
+	private final Logger logger = LoggerFactory.getLogger(TaskManagerPanel.class);
+	private TaskManager<T> taskManager;
+	private TaskListener<T> taskListener;
+	private boolean paused;
+	private TaskTableModel taskTableModel;
 
-	public TaskManagerPanel(TaskManager<Long> taskManager)
+	public TaskManagerPanel(TaskManager<T> taskManager)
 	{
 		taskListener = new UpdateViewTaskListener();
-		this.taskManager = taskManager;
+		paused = true;
+		taskTableModel = new TaskTableModel();
+		setTaskManager(taskManager);
+		setLayout(new GridLayout(1, 1));
+		JTable table = new JTable(taskTableModel);
+		JScrollPane tableScrollPane = new JScrollPane(table);
+		add(tableScrollPane);
+	}
+
+	public boolean isPaused()
+	{
+		return paused;
+	}
+
+	public void setPaused(boolean paused)
+	{
+		if(this.paused != paused)
+		{
+			if(!paused)
+			{
+				taskTableModel.initTasks();
+			}
+			else
+			{
+				taskTableModel.clearTasks();
+			}
+			this.paused = paused;
+		}
 
 	}
 
@@ -30,7 +69,7 @@ public class TaskManagerPanel
 		return taskManager;
 	}
 
-	public void setTaskManager(TaskManager<Long> taskManager)
+	public void setTaskManager(TaskManager<T> taskManager)
 	{
 		if(this.taskManager != null)
 		{
@@ -41,74 +80,84 @@ public class TaskManagerPanel
 		{
 			this.taskManager.addTaskListener(taskListener);
 		}
-		initTasks();
-	}
-
-	private void addTask(Task<Long> task)
-	{
-		//To change body of created methods use File | Settings | File Templates.
-	}
-
-	private void removeTask(Task<Long> task)
-	{
-		//To change body of created methods use File | Settings | File Templates.
-	}
-
-	private void updateTask(Task<Long> task)
-	{
-		//To change body of created methods use File | Settings | File Templates.
-	}
-
-	private void initTasks()
-	{
-		//To change body of created methods use File | Settings | File Templates.
+		if(!paused)
+		{
+			taskTableModel.initTasks();
+		}
+		else
+		{
+			taskTableModel.clearTasks();
+		}
 	}
 
 	private class UpdateViewTaskListener
-		implements TaskListener<Long>
+		implements TaskListener<T>
 	{
-		public void taskCreated(Task<Long> task)
+		public void taskCreated(Task<T> task)
 		{
-			addTask(task);
+			if(!paused)
+			{
+				taskTableModel.addTask(task);
+			}
 		}
 
-		public void executionFailed(Task<Long> task, ExecutionException exception)
+		public void executionFailed(Task<T> task, ExecutionException exception)
 		{
-			removeTask(task);
+			if(!paused)
+			{
+				taskTableModel.removeTask(task);
+			}
 		}
 
-		public void executionFinished(Task<Long> task, Long result)
+		public void executionFinished(Task<T> task, T result)
 		{
-			removeTask(task);
+			if(!paused)
+			{
+				taskTableModel.removeTask(task);
+			}
 		}
 
-		public void executionCanceled(Task<Long> task)
+		public void executionCanceled(Task<T> task)
 		{
-			removeTask(task);
+			if(!paused)
+			{
+				taskTableModel.removeTask(task);
+			}
 		}
 
-		public void progressUpdated(Task<Long> task, int progress)
+		public void progressUpdated(Task<T> task, int progress)
 		{
-			updateTask(task);
+			if(!paused)
+			{
+				taskTableModel.updateTask(task);
+			}
 		}
 	}
 
 	public class TaskTableModel
-		implements RowBasedTableModel<Task>
+		implements RowBasedTableModel<Task<T>>
 	{
-		private List<Task> tasks;
+		private final Logger logger = LoggerFactory.getLogger(TaskTableModel.class);
+
+		private final List<Task<T>> tasks;
 		private final EventListenerList eventListenerList;
+		private Comparator<Task<T>> taskComparator = new Comparator<Task<T>>()
+		{
+			public int compare(Task<T> task1, Task<T> task2)
+			{
+				return (int) (task1.getId() - task2.getId());
+			}
+		};
 
-
-		public TaskTableModel(List<Task> tasks)
+		public TaskTableModel()
 		{
 			eventListenerList = new EventListenerList();
-			this.tasks = tasks;
+			this.tasks = new ArrayList<Task<T>>();
 		}
 
 		public Class<?> getColumnClass(int columnIndex)
 		{
-			return Task.class;
+			return String.class; // TODO: Task.class
 		}
 
 		public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -122,7 +171,7 @@ public class TaskManagerPanel
 			{
 				return null;
 			}
-			return getValueAt(rowIndex);
+			return "" + getValueAt(rowIndex); //TODO:
 		}
 
 		public void setValueAt(Object o, int rowIndex, int columnIndex)
@@ -147,10 +196,6 @@ public class TaskManagerPanel
 
 		public int getRowCount()
 		{
-			if(tasks == null)
-			{
-				return 0;
-			}
 			return tasks.size();
 		}
 
@@ -168,13 +213,88 @@ public class TaskManagerPanel
 			return null;
 		}
 
-		public Task getValueAt(int row)
+		public Task<T> getValueAt(int row)
 		{
-			if(tasks != null && row >= 0 && row <= tasks.size())
+			logger.debug("getValueAt {}", row);
+			if(row >= 0 && row <= tasks.size())
 			{
-				return tasks.get(row);
+				Task<T> result = tasks.get(row);
+				logger.debug("getValueAt {} result={}", result);
+				return result;
 			}
 			return null;
 		}
+
+		private void fireTableChanged(TableModelEvent event)
+		{
+			Object[] listeners;
+			synchronized(eventListenerList)
+			{
+				listeners = eventListenerList.getListenerList();
+			}
+			// Process the listeners last to first, notifying
+			// those that are interested in this event
+			for(int i = listeners.length - 2; i >= 0; i -= 2)
+			{
+				if(listeners[i] == TableModelListener.class)
+				{
+					TableModelListener listener = ((TableModelListener) listeners[i + 1]);
+					if(logger.isDebugEnabled())
+					{
+						logger.debug("Firing TableChange at {}.", listener.getClass().getName());
+					}
+					try
+					{
+						listener.tableChanged(event);
+					}
+					catch(Throwable ex)
+					{
+						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!", ex);
+					}
+				}
+			}
+		}
+
+		private void initTasks()
+		{
+			Map<Long, Task<T>> taskMap = taskManager.getTasks();
+			if(logger.isDebugEnabled()) logger.debug("initTasks: {}", taskMap);
+			tasks.clear();
+			for(Map.Entry<Long, Task<T>> current : taskMap.entrySet())
+			{
+				tasks.add(current.getValue());
+				Collections.sort(tasks, taskComparator);
+			}
+			fireTableChanged(new TableModelEvent(this));
+		}
+
+		private void clearTasks()
+		{
+			if(logger.isDebugEnabled()) logger.debug("clearTasks");
+			tasks.clear();
+			fireTableChanged(new TableModelEvent(this));
+		}
+
+		private void addTask(Task<T> task)
+		{
+			tasks.add(task);
+			int index = tasks.size() - 1;
+			fireTableChanged(new TableModelEvent(this, index, index, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT));
+		}
+
+		private void removeTask(Task<T> task)
+		{
+			int index = tasks.indexOf(task);
+			tasks.remove(index);
+			fireTableChanged(new TableModelEvent(this, index, index, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
+		}
+
+		private void updateTask(Task<T> task)
+		{
+			int index = tasks.indexOf(task);
+			fireTableChanged(new TableModelEvent(this, index, index, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+		}
+
+
 	}
 }

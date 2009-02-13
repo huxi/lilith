@@ -317,8 +317,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(!EventQueue.isDispatchThread())
 		{
-			if(logger.isWarnEnabled()) //noinspection ThrowableInstanceNeverThrown
+			if(logger.isWarnEnabled())
 			{
+				//noinspection ThrowableInstanceNeverThrown
 				logger.warn("!DispatchThread - getState: state=" + state, new Throwable());
 			}
 		}

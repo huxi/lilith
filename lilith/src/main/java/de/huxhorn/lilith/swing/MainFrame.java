@@ -62,6 +62,7 @@ import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
+import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.conditions.Condition;
@@ -165,6 +166,7 @@ public class MainFrame
 	private Map<LoggingEvent.Level, Colors> levelColors;
 	private Map<HttpStatus.Type, Colors> statusColors;
 	private SplashScreen splashScreen;
+	private TaskManagerInternalFrame taskManagerFrame;
 	/*
 		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 		 */
@@ -323,6 +325,9 @@ public class MainFrame
 		helpFrame = new HelpFrame(this);
 		helpFrame.setTitle("Help Topics");
 
+		setSplashStatusText("Creating task manager frame.");
+		taskManagerFrame = new TaskManagerInternalFrame(this);
+		taskManagerFrame.setTitle("Task Manager");
 		/*
 		String helpText=null;
 		InputStream stream=MainFrame.class.getResourceAsStream("/help/keyboard.html");
@@ -1700,6 +1705,18 @@ public class MainFrame
 
 		frame.setVisible(true);
 		executeScrollToBottom(frame);
+	}
+
+	public void showTaskManager()
+	{
+		// TODO: don't add twice
+		int count = desktop.getComponentCount();
+		final int titleBarHeight = resolveInternalTitlebarHeight(/*frame*/);
+		taskManagerFrame.setBounds(titleBarHeight * (count % 10), titleBarHeight * (count % 10), 640, 480);
+
+		desktop.add(taskManagerFrame);
+
+		taskManagerFrame.setVisible(true);
 	}
 
 	/**
