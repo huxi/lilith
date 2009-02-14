@@ -63,7 +63,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	// TODO: Move to ViewActions
 	private JPopupMenu popupMenu;
-	private JMenuItem showHideMenu;
+	private JMenuItem columnsMenu;
 	private boolean global;
 	protected MainFrame mainFrame;
 
@@ -87,8 +87,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		setShowHorizontalLines(false);
 		setAutoResizeMode(AUTO_RESIZE_OFF);
 		popupMenu = new JPopupMenu();
-		showHideMenu = new JMenu("Show/Hide");
-		popupMenu.add(showHideMenu);
+		columnsMenu = new JMenu("Columns");
+		popupMenu.add(columnsMenu);
 		popupMenu.addSeparator();
 		popupMenu.add(new SaveLayoutAction());
 		popupMenu.add(new ResetLayoutAction());
@@ -109,14 +109,14 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	private void updatePopupMenu()
 	{
-		showHideMenu.removeAll();
+		columnsMenu.removeAll();
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> cli = tableColumnModel.getColumnLayoutInfos();
 		for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
 		{
 			boolean visible = current.isVisible();
 			JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), visible));
 			cbmi.setSelected(visible);
-			showHideMenu.add(cbmi);
+			columnsMenu.add(cbmi);
 		}
 	}
 
@@ -460,6 +460,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private class SaveLayoutAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 1154654992206760884L;
+
 		private SaveLayoutAction()
 		{
 			super("Save layout");
@@ -476,6 +478,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private class ResetLayoutAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 8635210294474124660L;
+
 		private ResetLayoutAction()
 		{
 			super("Reset layout");
@@ -513,6 +517,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private class ShowHideAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 2845939134245819103L;
+
 		private boolean visible;
 		private String columnName;
 
