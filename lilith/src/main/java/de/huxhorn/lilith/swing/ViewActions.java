@@ -490,7 +490,7 @@ public class ViewActions
 	private FindMenuAction findMenuAction;
 	private JMenu searchMenu;
 	private JMenu viewMenu;
-	private JMenu showHideMenu;
+	private JMenu columnsMenu;
 	private ClearMenuAction clearMenuAction;
 	private FocusMessageAction focusMessageAction;
 	private FocusEventsAction focusEventsAction;
@@ -737,8 +737,8 @@ public class ViewActions
 		viewMenu.add(editConditionMenuAction);
 		viewMenu.addSeparator();
 		JMenu layoutMenu = new JMenu("Layout");
-		showHideMenu = new JMenu("Show/Hide");
-		layoutMenu.add(showHideMenu);
+		columnsMenu = new JMenu("Columns");
+		layoutMenu.add(columnsMenu);
 		layoutMenu.addSeparator();
 		layoutMenu.add(saveLayoutAction);
 		layoutMenu.add(resetLayoutAction);
@@ -919,7 +919,7 @@ public class ViewActions
 
 	private void updateShowHideMenu()
 	{
-		showHideMenu.removeAll();
+		columnsMenu.removeAll();
 		if(viewContainer != null)
 		{
 			EventWrapperViewPanel<?> viewPanel = viewContainer.getSelectedView();
@@ -936,7 +936,7 @@ public class ViewActions
 						boolean visible = current.isVisible();
 						JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible));
 						cbmi.setSelected(visible);
-						showHideMenu.add(cbmi);
+						columnsMenu.add(cbmi);
 					}
 				}
 			}
