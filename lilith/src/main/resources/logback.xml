@@ -226,4 +226,7 @@
 	<logger name="de.huxhorn.lilith.swing.taskmanager">
 		<level value="INFO"/>
 	</logger>
+	<logger name="de.huxhorn.lilith.swing.taskmanager.table">
+		<level value="WARN"/>
+	</logger>
 </configuration>
