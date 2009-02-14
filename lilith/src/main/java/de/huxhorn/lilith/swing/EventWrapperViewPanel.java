@@ -17,6 +17,8 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.buffers.FilteringBuffer;
+import de.huxhorn.lilith.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.lilith.conditions.EventContainsCondition;
 import de.huxhorn.lilith.conditions.GroovyCondition;
 import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
@@ -34,8 +36,6 @@ import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
-import de.huxhorn.sulky.buffers.FilteringBuffer;
-import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
