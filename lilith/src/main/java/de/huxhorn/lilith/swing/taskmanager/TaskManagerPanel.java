@@ -65,6 +65,8 @@ public class TaskManagerPanel<T>
 
 	public TaskManagerPanel(TaskManager<T> taskManager)
 	{
+		// TODO: add popup menu and cancel on double-click
+		// TODO: add display of task description
 		taskTableModel = new TaskTableModel<T>(taskManager);
 		setLayout(new BorderLayout());
 		table = new JTable(taskTableModel);
