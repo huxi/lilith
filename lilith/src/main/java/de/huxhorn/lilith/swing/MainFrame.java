@@ -71,6 +71,8 @@ import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
+import de.huxhorn.sulky.tasks.Task;
+import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
 import groovy.lang.Binding;
@@ -92,10 +94,13 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -115,6 +120,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -167,6 +173,8 @@ public class MainFrame
 	private Map<HttpStatus.Type, Colors> statusColors;
 	private SplashScreen splashScreen;
 	private TaskManagerInternalFrame taskManagerFrame;
+	private JLabel taskStatusLabel;
+	private int previousNumberOfTasks;
 	/*
 		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 		 */
@@ -239,6 +247,33 @@ public class MainFrame
 		longTaskManager = new TaskManager<Long>();
 		longTaskManager.setUsingEventQueue(true);
 		longTaskManager.startUp();
+		longTaskManager.addTaskListener(new TaskListener<Long>()
+		{
+			public void taskCreated(Task<Long> longTask)
+			{
+				updateTaskStatus();
+			}
+
+			public void executionFailed(Task<Long> longTask, ExecutionException exception)
+			{
+				updateTaskStatus();
+			}
+
+			public void executionFinished(Task<Long> longTask, Long result)
+			{
+				updateTaskStatus();
+			}
+
+			public void executionCanceled(Task<Long> longTask)
+			{
+				updateTaskStatus();
+			}
+
+			public void progressUpdated(Task<Long> longTask, int progress)
+			{
+				updateTaskStatus();
+			}
+		});
 
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
@@ -279,11 +314,43 @@ public class MainFrame
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 1.0;
+		gbc.weightx = 0.0;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(0, 5, 0, 0);
 
 		statusBar.add(statusLabel, gbc);
+
+		taskStatusLabel = new JLabel();
+		taskStatusLabel.setText("");
+		taskStatusLabel.setForeground(Color.BLUE);
+		taskStatusLabel.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent mouseEvent)
+			{
+				showTaskManager();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent mouseEvent)
+			{
+				taskStatusLabel.setForeground(Color.RED);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent mouseEvent)
+			{
+				taskStatusLabel.setForeground(Color.BLUE);
+			}
+		});
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.weightx = 1.0;
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(0, 5, 0, 0);
+		statusBar.add(taskStatusLabel, gbc);
+
+
 		MemoryStatus memoryStatus = new MemoryStatus();
 		memoryStatus.setBackground(Color.WHITE);
 		memoryStatus.setOpaque(true);
@@ -292,7 +359,7 @@ public class MainFrame
 		memoryStatus.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridx = 1;
+		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.weightx = 0.0;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -328,6 +395,11 @@ public class MainFrame
 		setSplashStatusText("Creating task manager frame.");
 		taskManagerFrame = new TaskManagerInternalFrame(this);
 		taskManagerFrame.setTitle("Task Manager");
+		taskManagerFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
+		taskManagerFrame.setBounds(0, 0, 640, 480);
+
+		desktop.add(taskManagerFrame);
+		desktop.validate();
 		/*
 		String helpText=null;
 		InputStream stream=MainFrame.class.getResourceAsStream("/help/keyboard.html");
@@ -352,6 +424,26 @@ public class MainFrame
 		}
 		*/
 		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
+	}
+
+	private void updateTaskStatus()
+	{
+		int numberOfTasks = longTaskManager.getNumberOfTasks();
+		if(numberOfTasks != previousNumberOfTasks)
+		{
+			previousNumberOfTasks = numberOfTasks;
+			String text = "";
+			if(numberOfTasks == 1)
+			{
+				text = "1 active task.";
+			}
+			else if(numberOfTasks > 1)
+			{
+				text = "" + numberOfTasks + " active tasks.";
+			}
+			taskStatusLabel.setText(text);
+		}
+		//To change body of created methods use File | Settings | File Templates.
 	}
 
 	private void setSplashStatusText(String text)
@@ -1710,13 +1802,35 @@ public class MainFrame
 	public void showTaskManager()
 	{
 		// TODO: don't add twice
-		int count = desktop.getComponentCount();
-		final int titleBarHeight = resolveInternalTitlebarHeight(/*frame*/);
-		taskManagerFrame.setBounds(titleBarHeight * (count % 10), titleBarHeight * (count % 10), 640, 480);
-
-		desktop.add(taskManagerFrame);
-
-		taskManagerFrame.setVisible(true);
+		if(taskManagerFrame.isClosed())
+		{
+			desktop.add(taskManagerFrame);
+			desktop.validate();
+		}
+		if(taskManagerFrame.isIcon())
+		{
+			try
+			{
+				taskManagerFrame.setIcon(false);
+			}
+			catch(PropertyVetoException e)
+			{
+				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			}
+		}
+		if(!taskManagerFrame.isVisible())
+		{
+			taskManagerFrame.setVisible(true);
+		}
+		taskManagerFrame.moveToFront();
+		try
+		{
+			taskManagerFrame.setSelected(true);
+		}
+		catch(PropertyVetoException e)
+		{
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
 	}
 
 	/**

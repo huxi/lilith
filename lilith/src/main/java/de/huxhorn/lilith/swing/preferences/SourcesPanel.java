@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.swing.Windows;
 
 import org.slf4j.Logger;
@@ -27,7 +28,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,6 @@ public class SourcesPanel
 	private EditSourceNameAction editSourceNameAction;
 	private RemoveSourceNameAction removeSourceNameAction;
 	private EditSourceNameDialog editSourceNameDialog;
-	private Method convertMethod;
 	private PreferencesDialog preferencesDialog;
 	//private ApplicationPreferences applicationPreferences;
 
@@ -64,17 +63,7 @@ public class SourcesPanel
 		Map<String, String> sourceNames = new HashMap<String, String>();
 		sourceNameTableModel = new SourceNameTableModel(sourceNames);
 		sourceNameTable = new JTable(sourceNameTableModel);
-		convertMethod = null;
-		try
-		{
-			Method method = JTable.class.getMethod("setAutoCreateRowSorter", boolean.class);
-			method.invoke(sourceNameTable, true);
-			convertMethod = JTable.class.getMethod("convertRowIndexToModel", int.class);
-		}
-		catch(Throwable e)
-		{
-			if(logger.isInfoEnabled()) logger.info("While trying to activate autoRowSorter: {}", e.toString());
-		}
+		Tables.setAutoCreateRowSorter(sourceNameTable, true);
 		sourceNameTable.addMouseListener(new SourceNameTableMouseListener());
 		JScrollPane sourceNameTableScrollPane = new JScrollPane(sourceNameTable);
 
@@ -181,20 +170,7 @@ public class SourcesPanel
 
 	private int convertSourceNameRow(int row)
 	{
-		int result = row;
-		if(convertMethod != null)
-		{
-			try
-			{
-				result = (Integer) convertMethod.invoke(sourceNameTable, row);
-				if(logger.isInfoEnabled()) logger.info("Converted view-row {} to model-row {}.", row, result);
-			}
-			catch(Throwable e)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while converting row!!", e);
-			}
-		}
-		return result;
+		return Tables.convertRowIndexToModel(sourceNameTable, row);
 	}
 
 	private class SourceNameTableRowSelectionListener
@@ -345,7 +321,8 @@ public class SourcesPanel
 
 
 		/**
-		 * @noinspection UNUSED_SYMBOL
+		 * @param evt the mouse event
+		 * @noinspection UNUSED_SYMBOL,UnusedDeclaration
 		 */
 		private void showPopup(MouseEvent evt)
 		{
