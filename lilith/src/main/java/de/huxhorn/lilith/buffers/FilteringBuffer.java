@@ -15,6 +15,18 @@ import java.util.List;
 public class FilteringBuffer<E>
 	implements Buffer<E>, DisposeOperation
 {
+	public static <E> Buffer<E> resolveSourceBuffer(Buffer<E> buffer)
+	{
+		for(; ;)
+		{
+			if(!(buffer instanceof FilteringBuffer))
+			{
+				return buffer;
+			}
+			buffer = ((FilteringBuffer<E>) buffer).getSourceBuffer();
+		}
+	}
+
 	private Buffer<E> sourceBuffer;
 	private Condition condition;
 	private final List<Long> filteredIndices;

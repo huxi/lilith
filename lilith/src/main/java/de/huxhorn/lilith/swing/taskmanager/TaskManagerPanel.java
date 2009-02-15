@@ -17,8 +17,7 @@
  */
 package de.huxhorn.lilith.swing.taskmanager;
 
-import de.huxhorn.lilith.swing.taskmanager.table.TaskTableColumnModel;
-import de.huxhorn.lilith.swing.taskmanager.table.TaskTableModel;
+import de.huxhorn.lilith.swing.taskmanager.table.TaskTable;
 import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskManager;
@@ -59,22 +58,17 @@ public class TaskManagerPanel<T>
 
 	}
 
-	private TaskTableModel<T> taskTableModel;
 	private CancelTaskAction cancelAction;
-	private JTable table;
+	private TaskTable<T> table;
 
 	public TaskManagerPanel(TaskManager<T> taskManager)
 	{
 		// TODO: add popup menu and cancel on double-click
 		// TODO: add display of task description
-		taskTableModel = new TaskTableModel<T>(taskManager);
 		setLayout(new BorderLayout());
-		table = new JTable(taskTableModel);
-		table.setColumnModel(new TaskTableColumnModel());
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table = new TaskTable<T>(taskManager);
 		ListSelectionModel rowSM = table.getSelectionModel();
 		rowSM.addListSelectionListener(new TaskSelectionListener());
-		Tables.setAutoCreateRowSorter(table, true);
 
 		cancelAction = new CancelTaskAction();
 
@@ -88,12 +82,12 @@ public class TaskManagerPanel<T>
 
 	public void setPaused(boolean paused)
 	{
-		taskTableModel.setPaused(paused);
+		table.setPaused(paused);
 	}
 
 	public boolean isPaused()
 	{
-		return taskTableModel.isPaused();
+		return table.isPaused();
 	}
 
 	private class TaskSelectionListener
@@ -114,7 +108,7 @@ public class TaskManagerPanel<T>
 				int selectedRow = lsm.getMinSelectionIndex();
 
 				selectedRow = Tables.convertRowIndexToModel(table, selectedRow);
-				Task<T> task = taskTableModel.getValueAt(selectedRow);
+				Task<T> task = table.getTaskTableModel().getValueAt(selectedRow);
 				setSelectedTask(task);
 			}
 		}
