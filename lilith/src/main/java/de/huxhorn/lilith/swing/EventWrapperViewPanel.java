@@ -36,6 +36,7 @@ import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
@@ -75,7 +76,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -142,6 +145,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private XHTMLPanel messagePane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private EventWrapper<T> selectedEvent;
+	private static final String FIND_TASK_META_CONDITION = "Condition";
+	private static final String FIND_TASK_META_EVENT_SOURCE = "EventSource";
+	private static final String FIND_TASK_META_START_ROW = "StartRow";
+	private static final String FIND_TASK_META_DATA_FILE = "DataFile";
 
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
@@ -947,8 +954,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		if(condition != null)
 		{
 			ProgressingCallable<Long> callable = new FindPreviousCallable(currentRow, condition);
-			String description = null; // TODO: implement description
-			executeFind(callable, "Find previous", description);
+			executeFind(callable, "Find previous", currentRow, condition);
 		}
 	}
 
@@ -957,8 +963,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		if(condition != null)
 		{
 			ProgressingCallable<Long> callable = new FindNextCallable(currentRow, condition);
-			String description = null; // TODO: implement description
-			executeFind(callable, "Find next", description);
+			executeFind(callable, "Find next", currentRow, condition);
 		}
 	}
 
@@ -1493,6 +1498,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class ReplaceFilterAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 3876315232050114189L;
+
 		public ReplaceFilterAction()
 		{
 			super();
@@ -1559,6 +1566,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class FindNextAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6469494975854597398L;
+
 		public FindNextAction()
 		{
 			super();
@@ -1593,6 +1602,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class FindPreviousAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8192948220602398223L;
+
 		public FindPreviousAction()
 		{
 			super();
@@ -1624,6 +1635,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class CloseFindAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7757686292973276423L;
+
 		public CloseFindAction()
 		{
 			super();
@@ -1658,13 +1671,39 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
-	private void executeFind(Callable<Long> callable, String name, String description)
+	private void executeFind(Callable<Long> callable, String name, int currentRow, Condition condition)
 	{
+		String conditionStr = condition.toString();
+		String eventSourceStr = null;
+		Buffer<EventWrapper<T>> buffer = null;
+		if(eventSource != null)
+		{
+			eventSourceStr = eventSource.toString();
+			buffer = eventSource.getBuffer();
+		}
+
+		String description = "Executing '" + name + "' for condition " + conditionStr + " on " + eventSourceStr + " starting at row " + currentRow + ".";
+		Map<String, String> metaData = new HashMap<String, String>();
+		metaData.put(FIND_TASK_META_CONDITION, conditionStr);
+		metaData.put(FIND_TASK_META_START_ROW, "" + currentRow);
+		if(eventSourceStr != null)
+		{
+			metaData.put(FIND_TASK_META_EVENT_SOURCE, eventSourceStr);
+		}
+		Buffer<EventWrapper<T>> sourceBuffer = FilteringBuffer.resolveSourceBuffer(buffer);
+		if(sourceBuffer instanceof FileBuffer)
+		{
+			FileBuffer<EventWrapper<T>> fileBuffer = (FileBuffer<EventWrapper<T>>) sourceBuffer;
+			File file = fileBuffer.getDataFile();
+			if(file != null)
+			{
+				metaData.put(FIND_TASK_META_DATA_FILE, file.getAbsolutePath());
+			}
+		}
+
 		enableFindComponents(false);
 		findResultListener.setCallable(callable);
-		//progressPanel.setProgress(0);
-		Task<Long> task = taskManager.startTask(callable, name, description);
-		//progressPanel.getFindCancelAction().setFuture(future);
+		Task<Long> task = taskManager.startTask(callable, name, description, metaData);
 		ViewContainer<T> container = resolveContainer();
 		if(container != null)
 		{
