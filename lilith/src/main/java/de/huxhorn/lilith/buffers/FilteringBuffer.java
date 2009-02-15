@@ -1,5 +1,6 @@
 package de.huxhorn.lilith.buffers;
 
+import de.huxhorn.lilith.swing.callables.FilteringCallable;
 import de.huxhorn.sulky.buffers.BasicBufferIterator;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
@@ -11,10 +12,13 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class FilteringBuffer<E>
 	implements Buffer<E>, DisposeOperation
 {
+	private final Logger logger = LoggerFactory.getLogger(FilteringCallable.class);
+
 	public static <E> Buffer<E> resolveSourceBuffer(Buffer<E> buffer)
 	{
 		for(; ;)
@@ -29,18 +33,17 @@ public class FilteringBuffer<E>
 
 	private Buffer<E> sourceBuffer;
 	private Condition condition;
+	private ReentrantReadWriteLock indicesLock;
 	private final List<Long> filteredIndices;
 	private boolean disposed;
 
 	public FilteringBuffer(Buffer<E> sourceBuffer, Condition condition)
 	{
+		this.indicesLock = new ReentrantReadWriteLock();
 		this.sourceBuffer = sourceBuffer;
 		this.condition = condition;
 		this.filteredIndices = new ArrayList<Long>();
 		this.disposed = false;
-		Thread t = new Thread(new FilterUpdateRunnable(1000));
-		t.setDaemon(true);
-		t.start();
 	}
 
 	public E get(long index)
@@ -56,21 +59,68 @@ public class FilteringBuffer<E>
 	public long getSourceIndex(long index)
 	{
 		long realIndex = -1;
-		synchronized(filteredIndices)
+		//synchronized(filteredIndices)
+		ReentrantReadWriteLock.ReadLock lock = indicesLock.readLock();
+		lock.lock();
+		try
 		{
 			if(index >= 0 && index < filteredIndices.size())
 			{
 				realIndex = filteredIndices.get((int) index);
 			}
 		}
+		finally
+		{
+			lock.unlock();
+		}
 		return realIndex;
 	}
 
 	public long getSize()
 	{
-		synchronized(filteredIndices)
+		//synchronized(filteredIndices)
+		ReentrantReadWriteLock.ReadLock lock = indicesLock.readLock();
+		lock.lock();
+		try
 		{
 			return filteredIndices.size();
+		}
+		finally
+		{
+			lock.unlock();
+		}
+	}
+
+	public void addFilteredIndex(long index)
+	{
+		long size = sourceBuffer.getSize();
+		if(index < 0 || index >= sourceBuffer.getSize())
+		{
+			if(logger.isInfoEnabled()) logger.info("Invalid filtered index {} (size={})!", index, size);
+		}
+		ReentrantReadWriteLock.WriteLock lock = indicesLock.writeLock();
+		lock.lock();
+		try
+		{
+			filteredIndices.add(index);
+		}
+		finally
+		{
+			lock.unlock();
+		}
+	}
+
+	public void clearFilteredIndices()
+	{
+		ReentrantReadWriteLock.WriteLock lock = indicesLock.writeLock();
+		lock.lock();
+		try
+		{
+			filteredIndices.clear();
+		}
+		finally
+		{
+			lock.unlock();
 		}
 	}
 
@@ -97,76 +147,5 @@ public class FilteringBuffer<E>
 	public boolean isDisposed()
 	{
 		return disposed;
-	}
-
-	private class FilterUpdateRunnable
-		implements Runnable
-	{
-		private final Logger logger = LoggerFactory.getLogger(FilterUpdateRunnable.class);
-
-		private int filterDelay;
-		private long lastFilteredElement;
-
-		public FilterUpdateRunnable(int filterDelay)
-		{
-			this.filterDelay = filterDelay;
-		}
-
-		public void run()
-		{
-			for(; ;)
-			{
-				if(disposed)
-				{
-					break;
-				}
-				long currentSize = sourceBuffer.getSize();
-				long filterStartIndex = lastFilteredElement;
-				if(currentSize < lastFilteredElement)
-				{
-					filterStartIndex = 0;
-					synchronized(filteredIndices)
-					{
-						filteredIndices.clear();
-					}
-				}
-
-				if(currentSize != lastFilteredElement + 1)
-				{
-					//List<Long> newIndices=new ArrayList<Long>();
-					for(long i = filterStartIndex; i < currentSize; i++)
-					{
-						if(disposed)
-						{
-							break;
-						}
-						E current = sourceBuffer.get(i);
-						if(current != null)
-						{
-							if(condition != null && condition.isTrue(current))
-							{
-								synchronized(filteredIndices)
-								{
-									filteredIndices.add(i);
-									if(logger.isDebugEnabled()) logger.debug("Added index: {}", i);
-								}
-							}
-						}
-						lastFilteredElement = i;
-					}
-					//if(logger.isInfoEnabled()) logger.info("Added {} indices.", newIndices.size());
-				}
-				try
-				{
-					Thread.sleep(filterDelay);
-				}
-				catch(InterruptedException e)
-				{
-					if(logger.isDebugEnabled()) logger.debug("Interrupted...", e);
-					return;
-				}
-			}
-			if(logger.isDebugEnabled()) logger.debug("Runnable finished.");
-		}
 	}
 }
