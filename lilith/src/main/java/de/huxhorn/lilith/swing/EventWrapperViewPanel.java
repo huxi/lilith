@@ -131,7 +131,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private JLabel statusLabel;
 	private JScrollBar verticalLogScrollbar;
 
-	private TableModelListener tableModelListener;
+	private StatusTableModelListener tableModelListener;
 	private FocusTraversalPolicy focusTraversalPolicy;
 	private MatteBorder focusedBorder;
 	private MatteBorder unfocusedBorder;
