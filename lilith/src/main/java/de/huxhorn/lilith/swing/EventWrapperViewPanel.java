@@ -30,13 +30,14 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
+import de.huxhorn.lilith.swing.callables.CallableMetaData;
+import de.huxhorn.lilith.swing.callables.FilteringCallable;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
-import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
@@ -76,7 +77,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -145,10 +145,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private XHTMLPanel messagePane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private EventWrapper<T> selectedEvent;
-	private static final String FIND_TASK_META_CONDITION = "Condition";
-	private static final String FIND_TASK_META_EVENT_SOURCE = "EventSource";
-	private static final String FIND_TASK_META_START_ROW = "StartRow";
-	private static final String FIND_TASK_META_DATA_FILE = "DataFile";
 
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
@@ -1145,7 +1141,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		Condition filter = getCombinedCondition();
 		if(filter != null && !filter.equals(previousClone))
 		{
-			Buffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(buffer, filter);
+			FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(buffer, filter);
+			FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
+			// TODO: register callable somewhere
+			Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, eventSource);
+
+			taskManager.startTask(callable, "Filtering", "Filtering " + metaData
+				.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
+				+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
 			return new EventSourceImpl<T>(eventSource.getSourceIdentifier(), filteredBuffer, filter, eventSource.isGlobal());
 		}
 		return null;
@@ -1673,33 +1676,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private void executeFind(Callable<Long> callable, String name, int currentRow, Condition condition)
 	{
-		String conditionStr = condition.toString();
-		String eventSourceStr = null;
-		Buffer<EventWrapper<T>> buffer = null;
-		if(eventSource != null)
-		{
-			eventSourceStr = eventSource.toString();
-			buffer = eventSource.getBuffer();
-		}
+		Map<String, String> metaData = CallableMetaData.createFindMetaData(condition, eventSource, currentRow);
 
-		String description = "Executing '" + name + "' for condition " + conditionStr + " on " + eventSourceStr + " starting at row " + currentRow + ".";
-		Map<String, String> metaData = new HashMap<String, String>();
-		metaData.put(FIND_TASK_META_CONDITION, conditionStr);
-		metaData.put(FIND_TASK_META_START_ROW, "" + currentRow);
-		if(eventSourceStr != null)
-		{
-			metaData.put(FIND_TASK_META_EVENT_SOURCE, eventSourceStr);
-		}
-		Buffer<EventWrapper<T>> sourceBuffer = FilteringBuffer.resolveSourceBuffer(buffer);
-		if(sourceBuffer instanceof FileBuffer)
-		{
-			FileBuffer<EventWrapper<T>> fileBuffer = (FileBuffer<EventWrapper<T>>) sourceBuffer;
-			File file = fileBuffer.getDataFile();
-			if(file != null)
-			{
-				metaData.put(FIND_TASK_META_DATA_FILE, file.getAbsolutePath());
-			}
-		}
+		String description = "Executing '" + name + "' for condition " + metaData
+			.get(CallableMetaData.FIND_TASK_META_CONDITION)
+			+ " on " + metaData
+			.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER) + " starting at row " + currentRow + ".";
 
 		enableFindComponents(false);
 		findResultListener.setCallable(callable);
