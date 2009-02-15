@@ -396,7 +396,7 @@ public class MainFrame
 		taskManagerFrame = new TaskManagerInternalFrame(this);
 		taskManagerFrame.setTitle("Task Manager");
 		taskManagerFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
-		taskManagerFrame.setBounds(0, 0, 640, 480);
+		taskManagerFrame.setBounds(0, 0, 320, 240);
 
 		desktop.add(taskManagerFrame);
 		desktop.validate();
@@ -1801,7 +1801,7 @@ public class MainFrame
 
 	public void showTaskManager()
 	{
-		// TODO: don't add twice
+		// don't add twice
 		if(taskManagerFrame.isClosed())
 		{
 			desktop.add(taskManagerFrame);
@@ -1815,7 +1815,7 @@ public class MainFrame
 			}
 			catch(PropertyVetoException e)
 			{
-				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+				// ignore
 			}
 		}
 		if(!taskManagerFrame.isVisible())
@@ -1829,7 +1829,7 @@ public class MainFrame
 		}
 		catch(PropertyVetoException e)
 		{
-			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			// ignore
 		}
 	}
 

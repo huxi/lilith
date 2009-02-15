@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URL;
 
 import javax.swing.*;
@@ -60,24 +62,42 @@ public class TaskManagerPanel<T>
 
 	private CancelTaskAction cancelAction;
 	private TaskTable<T> table;
+	private JPopupMenu popup;
+	private JTextArea details;
 
 	public TaskManagerPanel(TaskManager<T> taskManager)
 	{
-		// TODO: add popup menu and cancel on double-click
-		// TODO: add display of task description
 		setLayout(new BorderLayout());
 		table = new TaskTable<T>(taskManager);
 		ListSelectionModel rowSM = table.getSelectionModel();
 		rowSM.addListSelectionListener(new TaskSelectionListener());
 
+		table.addMouseListener(new TaskTableMouseListener());
+
 		cancelAction = new CancelTaskAction();
 
 		JToolBar toolBar = new JToolBar();
 		toolBar.add(cancelAction);
+		toolBar.setFloatable(false);
+
+		details = new JTextArea();
+		details.setLineWrap(true);
+		details.setWrapStyleWord(true);
+		details.setEditable(false);
 
 		JScrollPane tableScrollPane = new JScrollPane(table);
+		JScrollPane detailsScrollPane = new JScrollPane(details, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tableScrollPane, detailsScrollPane);
+
+		splitPane.setResizeWeight(0.5); // divide space equally in case of resize.
+		splitPane.setOneTouchExpandable(true);
+
 		add(toolBar, BorderLayout.NORTH);
-		add(tableScrollPane, BorderLayout.CENTER);
+		add(splitPane, BorderLayout.CENTER);
+
+		popup = new JPopupMenu();
+		popup.add(cancelAction);
 	}
 
 	public void setPaused(boolean paused)
@@ -118,6 +138,14 @@ public class TaskManagerPanel<T>
 	{
 		if(logger.isInfoEnabled()) logger.info("Selected task {}.", task);
 		cancelAction.setTask(task);
+		if(task != null && task.getDescription() != null)
+		{
+			details.setText(task.getDescription());
+		}
+		else
+		{
+			details.setText("");
+		}
 	}
 
 	class CancelTaskAction
@@ -129,12 +157,10 @@ public class TaskManagerPanel<T>
 
 		public CancelTaskAction()
 		{
-			super("Cancel task.");
+			super("Cancel task");
 			putValue(Action.SMALL_ICON, CANCEL_TOOLBAR_ICON);
-			//KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift X");
-			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			//putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
+			putValue(Action.SHORT_DESCRIPTION, "Cancels the selected task.");
+			//putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
 			setEnabled(false);
 		}
 
@@ -159,4 +185,59 @@ public class TaskManagerPanel<T>
 		}
 	}
 
+	private class TaskTableMouseListener
+		implements MouseListener
+	{
+
+		public void mouseClicked(MouseEvent e)
+		{
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+			else if(e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() > 1)
+			{
+				cancelAction.actionPerformed(null);
+			}
+		}
+
+		public void mousePressed(MouseEvent e)
+		{
+			Point p = e.getPoint();
+			table.getTaskAt(p, true); // selects the clicked task...
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+		}
+
+		public void mouseReleased(MouseEvent e)
+		{
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+		}
+
+		public void mouseEntered(MouseEvent e)
+		{
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+		}
+
+		public void mouseExited(MouseEvent e)
+		{
+			if(e.isPopupTrigger())
+			{
+				showPopup(e.getPoint());
+			}
+		}
+
+		private void showPopup(Point p)
+		{
+			popup.show(table, p.x, p.y);
+		}
+	}
 }

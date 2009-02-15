@@ -89,8 +89,7 @@ public class ViewContainerInternalFrame
 		}
 		catch(PropertyVetoException e)
 		{
-// TODO: change body of catch statement
-			e.printStackTrace();
+			// ignore
 		}
 	}
 

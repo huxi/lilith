@@ -159,12 +159,13 @@ public class TaskTableModel<T>
 	public Task<T> getValueAt(int row)
 	{
 		logger.debug("getValueAt {}", row);
-		if(row >= 0 && row <= tasks.size())
+		if(row >= 0 && row < tasks.size())
 		{
 			Task<T> result = tasks.get(row);
 			logger.debug("getValueAt {} result={}", result);
 			return result;
 		}
+		logger.debug("getValueAt {} is null!", row);
 		return null;
 	}
 

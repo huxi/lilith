@@ -21,32 +21,54 @@ import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 public class TaskTable<T>
 	extends JTable
 {
+	private final Logger logger = LoggerFactory.getLogger(TaskTable.class);
 	private TaskTableModel<T> taskTableModel;
 
 	public TaskTable(TaskManager<T> taskManager)
 	{
 		super();
 		taskTableModel = new TaskTableModel<T>(taskManager);
+		// must be added before setting model to table
+		taskTableModel.addTableModelListener(new SelectFirstListener());
 		setModel(taskTableModel);
 		setColumnModel(new TaskTableColumnModel());
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		Tables.setAutoCreateRowSorter(this, true);
-
 
 	}
 
 	public void setPaused(boolean paused)
 	{
 		taskTableModel.setPaused(paused);
+		if(!paused)
+		{
+			selectFirstTask();
+		}
+	}
+
+	/**
+	 * Selects first task if no task was previously selected.
+	 */
+	private void selectFirstTask()
+	{
+		if(getSelectedRow() < 0 && getRowCount() > 0)
+		{
+			selectRow(0);
+		}
 	}
 
 	public boolean isPaused()
@@ -59,48 +81,80 @@ public class TaskTable<T>
 		return taskTableModel;
 	}
 
-	public String getToolTipText(MouseEvent event)
+	public Task<T> getTaskAt(Point p, boolean select)
 	{
-		Point p = event.getPoint();
 		int row = rowAtPoint(p);
 		if(row > -1)
 		{
 			row = Tables.convertRowIndexToModel(this, row);
-			Task<T> task = taskTableModel.getValueAt(row);
-			if(task != null)
+
+			Task<T> result = taskTableModel.getValueAt(row);
+			if(result != null && select)
 			{
-				StringBuilder result = new StringBuilder();
-
-				result.append("<HTML><BODY>");
-				result.append("<P>").append(task.getName()).append(" (ID=").append(task.getId()).append(")</P>");
-				String description = task.getDescription();
-				if(description != null)
-				{
-					result.append("<P>").append(description).append("</P>");
-				}
-				Map<String, String> metaData = task.getMetaData();
-				if(metaData != null && metaData.size() > 0)
-				{
-					result.append("<TABLE border=\"1\">");
-					result.append("<TR><TH>Key</TH><TH>Value</TH></TR>");
-					for(Map.Entry<String, String> current : metaData.entrySet())
-					{
-						result.append("<TR>");
-						result.append("<TD>");
-						result.append(current.getKey());
-						result.append("</TD>");
-						result.append("<TD>");
-						result.append(current.getValue());
-						result.append("</TD>");
-						result.append("</TR>");
-					}
-					result.append("</TABLE>");
-				}
-				result.append("</BODY></HTML>");
-
-				return result.toString();
+				selectRow(row);
 			}
+			return result;
 		}
 		return null;
+	}
+
+	public void selectRow(int row)
+	{
+		if(row >= 0 && row < getRowCount())
+		{
+			if(logger.isDebugEnabled()) logger.debug("Selecting row {}.", row);
+			getSelectionModel().setSelectionInterval(0, row);
+			// scrollpane adjustment
+			scrollRectToVisible(getCellRect(row, 0, true));
+		}
+	}
+
+	public String getToolTipText(MouseEvent event)
+	{
+		Task<T> task = getTaskAt(event.getPoint(), false);
+		if(task != null)
+		{
+			StringBuilder result = new StringBuilder();
+
+			result.append("<HTML><BODY>");
+			result.append("<P>").append(task.getName()).append(" (ID=").append(task.getId()).append(")</P>");
+			String description = task.getDescription();
+			if(description != null)
+			{
+				result.append("<P>").append(description).append("</P>");
+			}
+			Map<String, String> metaData = task.getMetaData();
+			if(metaData != null && metaData.size() > 0)
+			{
+				result.append("<TABLE border=\"1\">");
+				result.append("<TR><TH>Key</TH><TH>Value</TH></TR>");
+				for(Map.Entry<String, String> current : metaData.entrySet())
+				{
+					result.append("<TR>");
+					result.append("<TD>");
+					result.append(current.getKey());
+					result.append("</TD>");
+					result.append("<TD>");
+					result.append(current.getValue());
+					result.append("</TD>");
+					result.append("</TR>");
+				}
+				result.append("</TABLE>");
+			}
+			result.append("</BODY></HTML>");
+
+			return result.toString();
+		}
+		return null;
+	}
+
+	private class SelectFirstListener
+		implements TableModelListener
+	{
+
+		public void tableChanged(TableModelEvent tableModelEvent)
+		{
+			selectFirstTask();
+		}
 	}
 }

@@ -26,23 +26,13 @@ import javax.swing.*;
 public class TaskManagerInternalFrame
 	extends JInternalFrame
 {
-	private TaskManagerPanel<Long> taskManagerPanel;
 
 	public TaskManagerInternalFrame(MainFrame mainFrame)
 	{
 		super("Task Manager", true, true, true, true);
-		taskManagerPanel = new TaskManagerPanel<Long>(mainFrame.getLongWorkManager());
+		TaskManagerPanel<Long> taskManagerPanel = new TaskManagerPanel<Long>(mainFrame.getLongWorkManager());
 		setLayout(new GridLayout(1, 1));
 		add(taskManagerPanel);
-	}
-
-	@Override
-	public void setVisible(boolean visible)
-	{
-		if(taskManagerPanel != null)
-		{
-			taskManagerPanel.setPaused(!visible);
-		}
-		super.setVisible(visible);
+		taskManagerPanel.setPaused(false);
 	}
 }
