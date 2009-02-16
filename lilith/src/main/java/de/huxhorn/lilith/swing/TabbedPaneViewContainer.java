@@ -224,6 +224,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 
 	public void dispose()
 	{
+		super.dispose();
 		disposed = true;
 		int tabCount = pane.getTabCount();
 		List<Component> removedPanes = new ArrayList<Component>(tabCount - 1);
@@ -301,6 +302,8 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private class CloseFilterAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -4479133859495740687L;
+
 		public CloseFilterAction()
 		{
 			super("Close this filter");
@@ -334,6 +337,8 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private class CloseOtherFiltersAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 3059023089248619076L;
+
 		public CloseOtherFiltersAction()
 		{
 			super("Close all other filters");
@@ -367,6 +372,8 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private class CloseAllFiltersAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 3947832933965311324L;
+
 		public CloseAllFiltersAction()
 		{
 			super("Close all filters");
@@ -508,21 +515,6 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		}
 	}
 
-	/*
-	public void reinstallSearchPanel()
-	{
-		if(searching)
-		{
-			ViewWindow window = resolveViewWindow();
-			if(window != null)
-			{
-				window.setGlassPane(progressPanel);
-				progressPanel.setVisible(true);
-			}
-			fireChange();
-		}
-	}
-    */
 	public void showSearchPanel(Task<Long> task)
 	{
 		if(task != null)
@@ -538,19 +530,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 				window.setGlassPane(progressPanel);
 				progressPanel.setVisible(true);
 			}
-/*
-			if(window instanceof JInternalFrame)
-			{
-			}
-			else if(window instanceof JFrame)
-			{
-				JFrame frame=(JFrame) window;
-				iframeGlassPane=null;
-				frameGlassPane=frame.getGlassPane();
-				window.setGlassPane(progressPanel);
-				progressPanel.setVisible(true);
-			}
-			*/
+
 			fireChange();
 		}
 	}

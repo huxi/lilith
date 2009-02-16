@@ -17,10 +17,21 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.buffers.FilteringBuffer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.lilith.engine.impl.EventSourceImpl;
+import de.huxhorn.lilith.swing.callables.CallableMetaData;
+import de.huxhorn.lilith.swing.callables.FilteringCallable;
+import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.tasks.Task;
+import de.huxhorn.sulky.tasks.TaskListener;
+import de.huxhorn.sulky.tasks.TaskManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -32,6 +43,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -42,9 +55,6 @@ public abstract class ViewContainer<T extends Serializable>
 	implements DisposeOperation
 {
 	// TODO: property change instead of change?
-	//public static final String VIEW_INDEX_PROPERTY_NAME="viewIndex";
-	//public static final String VIEW_COUNT_PROPERTY_NAME="viewCount";
-	//public static final String SELECTED_VIEW_PROPERTY_NAME="selectedView";
 	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
 
 	private static final ImageIcon globalFrameImageIcon;
@@ -77,11 +87,17 @@ public abstract class ViewContainer<T extends Serializable>
 	private final List<ChangeListener> changeListeners = new LinkedList<ChangeListener>();
 	private EventWrapperViewPanel<T> defaultView;
 	private MainFrame mainFrame;
-//	protected PropertyChangeSupport propertyChangeSuppoert;
+	private TaskManager<Long> taskManager;
+	private Map<Callable<Long>, EventWrapperViewPanel<T>> filterMapping;
+	private FilterTaskListener filterTaskListener;
 
 	public ViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		this.mainFrame = mainFrame;
+		taskManager = mainFrame.getLongWorkManager();
+		filterMapping = new HashMap<Callable<Long>, EventWrapperViewPanel<T>>();
+		filterTaskListener = new FilterTaskListener();
+		taskManager.addTaskListener(filterTaskListener);
 		this.defaultView = createViewPanel(eventSource);
 		defaultView.addPropertyChangeListener(new PropertyChangeListener()
 		{
@@ -118,6 +134,40 @@ public abstract class ViewContainer<T extends Serializable>
 	public EventWrapperViewPanel<T> getDefaultView()
 	{
 		return defaultView;
+	}
+
+	public void dispose()
+	{
+		taskManager.removeTaskListener(filterTaskListener);
+	}
+
+	public void addFilteredView(EventWrapperViewPanel<T> original)
+	{
+		Condition currentFilter = original.getTable().getFilterCondition();
+		if(currentFilter == null)
+		{
+			return;
+		}
+		Condition previousClone = original.getBufferCondition();
+		Buffer<EventWrapper<T>> buffer = original.getSourceBuffer();
+
+		Condition filter = original.getCombinedCondition();
+		if(filter == null || filter.equals(previousClone))
+		{
+			return;
+		}
+		FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(buffer, filter);
+		FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
+		EventSource<T> eventSource = original.getEventSource();
+		Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, eventSource);
+
+		EventSourceImpl<T> newEventSource = new EventSourceImpl<T>(eventSource.getSourceIdentifier(), filteredBuffer, filter, eventSource.isGlobal());
+		EventWrapperViewPanel<T> newViewPanel = createViewPanel(newEventSource);
+		filterMapping.put(callable, newViewPanel);
+		addView(newViewPanel);
+		taskManager.startTask(callable, "Filtering", "Filtering " + metaData
+			.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
+			+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
 	}
 
 	public ViewWindow resolveViewWindow()
@@ -227,6 +277,58 @@ public abstract class ViewContainer<T extends Serializable>
 		for(ChangeListener listener : clone)
 		{
 			listener.stateChanged(event);
+		}
+	}
+
+	class FilterTaskListener
+		implements TaskListener<Long>
+	{
+		private final Logger logger = LoggerFactory.getLogger(FilterTaskListener.class);
+
+		public void taskCreated(Task<Long> longTask)
+		{
+
+		}
+
+		public void executionFailed(Task<Long> task, ExecutionException exception)
+		{
+			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
+			if(view != null)
+			{
+				if(logger.isInfoEnabled()) logger.info("Filter execution failed!", exception);
+				finished(view);
+			}
+		}
+
+		public void executionFinished(Task<Long> task, Long result)
+		{
+			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
+			if(view != null)
+			{
+				if(logger.isInfoEnabled()) logger.info("Filter execution finished: {}!", result);
+				finished(view);
+			}
+		}
+
+		public void executionCanceled(Task<Long> task)
+		{
+			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
+			if(view != null)
+			{
+				if(logger.isInfoEnabled()) logger.info("Filter execution canceled.");
+				finished(view);
+			}
+		}
+
+		public void progressUpdated(Task<Long> task, int progress)
+		{
+		}
+
+		private void finished(EventWrapperViewPanel<T> view)
+		{
+			if(logger.isDebugEnabled()) logger.debug("Executing FilterTaskListener.finished().");
+
+			removeView(view, true);
 		}
 	}
 

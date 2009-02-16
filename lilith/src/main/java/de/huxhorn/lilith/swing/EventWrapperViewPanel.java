@@ -29,9 +29,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
-import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.swing.callables.CallableMetaData;
-import de.huxhorn.lilith.swing.callables.FilteringCallable;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
@@ -1128,32 +1126,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	protected abstract long getSizeOnDisk();
 
-	private EventSource<T> getFilteredSource()
-	{
-		Condition currentFilter = table.getFilterCondition();
-		if(currentFilter == null)
-		{
-			return null;
-		}
-		Condition previousClone = getBufferCondition();
-		Buffer<EventWrapper<T>> buffer = getSourceBuffer();
-
-		Condition filter = getCombinedCondition();
-		if(filter != null && !filter.equals(previousClone))
-		{
-			FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(buffer, filter);
-			FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
-			// TODO: register callable somewhere
-			Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, eventSource);
-
-			taskManager.startTask(callable, "Filtering", "Filtering " + metaData
-				.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
-				+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
-			return new EventSourceImpl<T>(eventSource.getSourceIdentifier(), filteredBuffer, filter, eventSource.isGlobal());
-		}
-		return null;
-	}
-
 	public Buffer<EventWrapper<T>> getSourceBuffer()
 	{
 		Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
@@ -1243,6 +1215,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private void createFilteredView()
 	{
 		ViewContainer<T> container = resolveContainer();
+		container.addFilteredView(this);
+		/*
 		Condition currentFilter = table.getFilterCondition();
 		if(container != null && currentFilter != null)
 		{
@@ -1254,6 +1228,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				if(logger.isInfoEnabled()) logger.info("Added source: {}", newSource);
 			}
 		}
+		*/
 	}
 
 	/**
@@ -1520,12 +1495,15 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			if(buffer instanceof FilteringBuffer)
 			{
 				// replace
+				// TODO: reimplement ReplaceFilterAction!!!
+				/*
 				EventSource<T> filteredSource = getFilteredSource();
 				if(filteredSource != null)
 				{
 					if(logger.isInfoEnabled()) logger.info("Replacing filter...");
 					setEventSource(filteredSource);
 				}
+				*/
 			}
 			else
 			{
