@@ -141,33 +141,109 @@ public abstract class ViewContainer<T extends Serializable>
 		taskManager.removeTaskListener(filterTaskListener);
 	}
 
-	public void addFilteredView(EventWrapperViewPanel<T> original)
+	/**
+	 * Returns a new combined condition of the given view and its table if it differs from the current buffer condition.
+	 * Otherwise, null is returned.
+	 *
+	 * @param original the original view
+	 * @return the combined condition
+	 */
+	protected Condition resolveCombinedCondition(EventWrapperViewPanel<T> original)
 	{
 		Condition currentFilter = original.getTable().getFilterCondition();
 		if(currentFilter == null)
 		{
-			return;
+			return null;
 		}
+
 		Condition previousClone = original.getBufferCondition();
-		Buffer<EventWrapper<T>> buffer = original.getSourceBuffer();
 
 		Condition filter = original.getCombinedCondition();
 		if(filter == null || filter.equals(previousClone))
 		{
+			return null;
+		}
+		return filter;
+	}
+
+	public void addFilteredView(EventWrapperViewPanel<T> original)
+	{
+		Condition filter = resolveCombinedCondition(original);
+		if(filter == null)
+		{
 			return;
 		}
-		FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(buffer, filter);
+		Buffer<EventWrapper<T>> originalBuffer = original.getSourceBuffer();
+		FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(originalBuffer, filter);
 		FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
-		EventSource<T> eventSource = original.getEventSource();
-		Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, eventSource);
+		EventSource<T> originalEventSource = original.getEventSource();
+		Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, originalEventSource);
 
-		EventSourceImpl<T> newEventSource = new EventSourceImpl<T>(eventSource.getSourceIdentifier(), filteredBuffer, filter, eventSource.isGlobal());
+		EventSourceImpl<T> newEventSource = new EventSourceImpl<T>(originalEventSource.getSourceIdentifier(), filteredBuffer, filter, originalEventSource.isGlobal());
 		EventWrapperViewPanel<T> newViewPanel = createViewPanel(newEventSource);
 		filterMapping.put(callable, newViewPanel);
 		addView(newViewPanel);
 		taskManager.startTask(callable, "Filtering", "Filtering " + metaData
 			.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
 			+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
+	}
+
+	public void replaceFilteredView(EventWrapperViewPanel<T> original)
+	{
+		Condition filter = resolveCombinedCondition(original);
+		if(filter == null)
+		{
+			return;
+		}
+
+		EventSource<T> eventSource = original.getEventSource();
+
+		Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
+
+		if(buffer instanceof FilteringBuffer)
+		{
+			// replace
+			Callable<Long> found = null;
+			for(Map.Entry<Callable<Long>, EventWrapperViewPanel<T>> current : filterMapping.entrySet())
+			{
+				if(current.getValue() == original)
+				{
+					found = current.getKey();
+					break;
+				}
+			}
+			if(found != null)
+			{
+				// remove previous and cancel the task
+				filterMapping.remove(found);
+				Task<Long> task = taskManager.getTaskByCallable(found);
+				if(task != null)
+				{
+					task.getFuture().cancel(true);
+				}
+				// create new EventSource
+				Buffer<EventWrapper<T>> originalBuffer = original.getSourceBuffer();
+				FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(originalBuffer, filter);
+				FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
+				EventSource<T> originalEventSource = original.getEventSource();
+				Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, originalEventSource);
+
+				EventSourceImpl<T> newEventSource = new EventSourceImpl<T>(originalEventSource.getSourceIdentifier(), filteredBuffer, filter, originalEventSource.isGlobal());
+				original.setEventSource(newEventSource);
+				// restore mapping of original view, this time with the new callable
+				filterMapping.put(callable, original);
+				// start the new task.
+				taskManager.startTask(callable, "Filtering", "Filtering " + metaData
+					.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
+					+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
+			}
+		}
+		else
+		{
+			// create new
+			addFilteredView(original);
+		}
+
 	}
 
 	public ViewWindow resolveViewWindow()
