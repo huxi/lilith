@@ -1215,20 +1215,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private void createFilteredView()
 	{
 		ViewContainer<T> container = resolveContainer();
-		container.addFilteredView(this);
-		/*
-		Condition currentFilter = table.getFilterCondition();
-		if(container != null && currentFilter != null)
+		if(container != null)
 		{
-			EventSource<T> newSource = getFilteredSource();
-			if(newSource != null)
-			{
-				EventWrapperViewPanel<T> view = container.createViewPanel(newSource);
-				container.addView(view);
-				if(logger.isInfoEnabled()) logger.info("Added source: {}", newSource);
-			}
+			container.addFilteredView(this);
 		}
-		*/
 	}
 
 	/**
@@ -1490,25 +1480,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Replace filter.");
-			Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
-
-			if(buffer instanceof FilteringBuffer)
+			ViewContainer<T> container = resolveContainer();
+			if(container != null)
 			{
-				// replace
-				// TODO: reimplement ReplaceFilterAction!!!
-				/*
-				EventSource<T> filteredSource = getFilteredSource();
-				if(filteredSource != null)
-				{
-					if(logger.isInfoEnabled()) logger.info("Replacing filter...");
-					setEventSource(filteredSource);
-				}
-				*/
-			}
-			else
-			{
-				// create new
-				createFilteredView();
+				container.replaceFilteredView(EventWrapperViewPanel.this);
 			}
 		}
 	}
