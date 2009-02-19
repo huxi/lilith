@@ -31,6 +31,7 @@ public class Log4jSandbox
 		final Logger logger = Logger.getLogger(Log4jSandbox.class);
 		NDC.push("NDC1");
 		NDC.push("NDC2");
+		NDC.push("NDC with spaces...");
 		MDC.put("key1", "value1");
 		MDC.put("key2", "value2");
 		if(logger.isDebugEnabled()) logger.debug("Foobar!", new Throwable());
