@@ -30,7 +30,11 @@ public class ExtendedStackTraceElement
 {
 	private static final long serialVersionUID = 4907919529165316605L;
 
+	public static final int UNKNOWN_SOURCE = -1;
 	public static final int NATIVE_METHOD = -2;
+
+	public static final String NATIVE_METHOD_STRING = "Native Method";
+	public static final String UNKNOWN_SOURCE_STRING = "Unknown Source";
 
 	private String className;
 	private String methodName;
@@ -39,6 +43,7 @@ public class ExtendedStackTraceElement
 	private String codeLocation;
 	private String version;
 	private boolean exact;
+	private static final String AT_PREFIX = "\tat ";
 
 	public ExtendedStackTraceElement()
 	{
@@ -249,4 +254,90 @@ public class ExtendedStackTraceElement
 		}
 		return result.toString();
 	}
+
+	public static ExtendedStackTraceElement parseStackTraceElement(String ste)
+	{
+		if(ste == null)
+		{
+			return null;
+		}
+		if(ste.startsWith(AT_PREFIX))
+		{
+			ste = ste.substring(AT_PREFIX.length());
+		}
+		int idx = ste.lastIndexOf("(");
+		if(idx < 0)
+		{
+			return null; // not a ste
+		}
+		int endIdx = ste.lastIndexOf(")");
+		if(endIdx < 0)
+		{
+			return null; // not a ste
+		}
+
+		String classAndMethod = ste.substring(0, idx);
+		String source = ste.substring(idx + 1, endIdx);
+		String remainder = ste.substring(endIdx + 1);
+		idx = classAndMethod.lastIndexOf(".");
+		String clazz = classAndMethod.substring(0, idx);
+		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
+		idx = source.lastIndexOf(":");
+		String file = null;
+		int lineNumber = UNKNOWN_SOURCE;
+		if(idx != -1)
+		{
+			file = source.substring(0, idx);
+			lineNumber = Integer.parseInt(source.substring(idx + 1, source.length()));
+		}
+		else
+		{
+			if(source.equals(NATIVE_METHOD_STRING))
+			{
+				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
+			}
+			else if(!source.equals(UNKNOWN_SOURCE_STRING))
+			{
+				file = source;
+			}
+		}
+		int vEndIdx = remainder.lastIndexOf("]");
+		if(vEndIdx >= 0)
+		{
+			boolean exact = false;
+			String versionStr = null;
+			if(remainder.startsWith(" ["))
+			{
+				exact = true;
+				versionStr = remainder.substring(2, vEndIdx);
+			}
+			else if(remainder.startsWith(" ~["))
+			{
+				exact = false;
+				versionStr = remainder.substring(3, vEndIdx);
+			}
+			if(versionStr != null)
+			{
+				int colonIdx = versionStr.indexOf(":");
+				if(colonIdx > -1)
+				{
+					String codeLocation = versionStr.substring(0, colonIdx);
+					String version = versionStr.substring(colonIdx + 1);
+					if("".equals(codeLocation) || "na".equals(codeLocation))
+					{
+						codeLocation = null;
+					}
+					if("".equals(version) || "na".equals(version))
+					{
+						version = null;
+					}
+					return new ExtendedStackTraceElement(clazz, method, file, lineNumber, codeLocation, version, exact);
+				}
+			}
+		}
+
+		return new ExtendedStackTraceElement(clazz, method, file, lineNumber);
+	}
+
+
 }

@@ -224,10 +224,7 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
-			<!--
-					 <version>1.5.7</version>
-					 -->
-			<version>1.6-RC-3</version>
+			<version>1.6.0</version>
 			<scope>compile</scope>
 		</dependency>
 

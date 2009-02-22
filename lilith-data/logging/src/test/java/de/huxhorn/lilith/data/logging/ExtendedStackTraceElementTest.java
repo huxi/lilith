@@ -20,15 +20,18 @@ package de.huxhorn.lilith.data.logging;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class ExtendedStackTraceElementTest
 {
+	private final Logger logger = LoggerFactory.getLogger(ExtendedStackTraceElementTest.class);
+
 	private ExtendedStackTraceElement fresh;
 
 	@Before
@@ -216,5 +219,79 @@ public class ExtendedStackTraceElementTest
 			assertEquals(value, obj.getLineNumber());
 			assertFalse(fresh.equals(obj));
 		}
+	}
+
+	@Test
+	public void parseNative()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat java.lang.Thread.sleep(Native Method)");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("java.lang.Thread", "sleep", null, ExtendedStackTraceElement.NATIVE_METHOD);
+		assertEquals(expected, instance);
+	}
+
+	@Test
+	public void parseFull()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("java.util.concurrent.FutureTask$Sync", "innerRun", "FutureTask.java", 303);
+		assertEquals(expected, instance);
+	}
+
+	@Test
+	public void parseUnknownSource()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat java.util.concurrent.FutureTask$Sync.innerRun(Unknown Source)");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("java.util.concurrent.FutureTask$Sync", "innerRun", null, ExtendedStackTraceElement.UNKNOWN_SOURCE);
+		assertEquals(expected, instance);
+	}
+
+	@Test
+	public void parseNoStackTrace()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement.parseStackTraceElement("Just a random string.");
+		assertNull(instance);
+	}
+
+	@Test
+	public void parseNull()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement.parseStackTraceElement(null);
+		assertNull(instance);
+	}
+
+	@Test
+	public void parseFullExtended()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [lilith.jar:0.9.35-SNAPSHOT]");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("de.huxhorn.lilith.swing.MainFrame", "setAccessEventSourceManager", "MainFrame.java", 1079, "lilith.jar", "0.9.35-SNAPSHOT", true);
+		if(logger.isInfoEnabled()) logger.info("instance.getExtendedString(): {}", instance.getExtendedString());
+		if(logger.isInfoEnabled()) logger.info("expected.getExtendedString(): {}", expected.getExtendedString());
+		assertEquals(expected, instance);
+	}
+
+	@Test
+	public void parseFullExtendedNoVersion()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [:0.9.35-SNAPSHOT]");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("de.huxhorn.lilith.swing.MainFrame", "setAccessEventSourceManager", "MainFrame.java", 1079, null, "0.9.35-SNAPSHOT", true);
+		if(logger.isInfoEnabled()) logger.info("instance.getExtendedString(): {}", instance.getExtendedString());
+		if(logger.isInfoEnabled()) logger.info("expected.getExtendedString(): {}", expected.getExtendedString());
+		assertEquals(expected, instance);
+	}
+
+	@Test
+	public void parseFullExtendedNoLocation()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [lilith.jar:]");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("de.huxhorn.lilith.swing.MainFrame", "setAccessEventSourceManager", "MainFrame.java", 1079, "lilith.jar", null, true);
+		if(logger.isInfoEnabled()) logger.info("instance.getExtendedString(): {}", instance.getExtendedString());
+		if(logger.isInfoEnabled()) logger.info("expected.getExtendedString(): {}", expected.getExtendedString());
+		assertEquals(expected, instance);
 	}
 }

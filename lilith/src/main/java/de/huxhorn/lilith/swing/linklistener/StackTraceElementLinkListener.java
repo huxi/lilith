@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.linklistener;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.formatting.SimpleXml;
 
@@ -48,7 +47,7 @@ public class StackTraceElementLinkListener
 		{
 			String steStr = uri.substring(STACK_TRACE_ELEMENT_URI_PREFIX.length());
 			steStr = SimpleXml.unescape(steStr);
-			ExtendedStackTraceElement ste = LogbackLoggingAdapter.parseStackTraceElement(steStr);
+			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(steStr);
 			if(logger.isDebugEnabled()) logger.debug("STE: {}", ste);
 			mainFrame.goToSource(ste.getStackTraceElement());
 		}
