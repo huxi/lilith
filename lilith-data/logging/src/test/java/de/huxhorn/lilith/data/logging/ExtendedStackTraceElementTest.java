@@ -228,6 +228,7 @@ public class ExtendedStackTraceElementTest
 			.parseStackTraceElement("\tat java.lang.Thread.sleep(Native Method)");
 		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("java.lang.Thread", "sleep", null, ExtendedStackTraceElement.NATIVE_METHOD);
 		assertEquals(expected, instance);
+		assertNull(instance.getExtendedString());
 	}
 
 	@Test
@@ -237,6 +238,7 @@ public class ExtendedStackTraceElementTest
 			.parseStackTraceElement("\tat java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)");
 		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("java.util.concurrent.FutureTask$Sync", "innerRun", "FutureTask.java", 303);
 		assertEquals(expected, instance);
+		assertNull(instance.getExtendedString());
 	}
 
 	@Test
@@ -246,6 +248,7 @@ public class ExtendedStackTraceElementTest
 			.parseStackTraceElement("\tat java.util.concurrent.FutureTask$Sync.innerRun(Unknown Source)");
 		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("java.util.concurrent.FutureTask$Sync", "innerRun", null, ExtendedStackTraceElement.UNKNOWN_SOURCE);
 		assertEquals(expected, instance);
+		assertNull(instance.getExtendedString());
 	}
 
 	@Test
@@ -274,6 +277,17 @@ public class ExtendedStackTraceElementTest
 	}
 
 	@Test
+	public void parseFullExtendedApprox()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) ~[lilith.jar:0.9.35-SNAPSHOT]");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("de.huxhorn.lilith.swing.MainFrame", "setAccessEventSourceManager", "MainFrame.java", 1079, "lilith.jar", "0.9.35-SNAPSHOT", false);
+		if(logger.isInfoEnabled()) logger.info("instance.getExtendedString(): {}", instance.getExtendedString());
+		if(logger.isInfoEnabled()) logger.info("expected.getExtendedString(): {}", expected.getExtendedString());
+		assertEquals(expected, instance);
+	}
+
+	@Test
 	public void parseFullExtendedNoVersion()
 	{
 		ExtendedStackTraceElement instance = ExtendedStackTraceElement
@@ -293,5 +307,17 @@ public class ExtendedStackTraceElementTest
 		if(logger.isInfoEnabled()) logger.info("instance.getExtendedString(): {}", instance.getExtendedString());
 		if(logger.isInfoEnabled()) logger.info("expected.getExtendedString(): {}", expected.getExtendedString());
 		assertEquals(expected, instance);
+	}
+
+	@Test
+	public void parseFullExtendedNoLocationNoVersion()
+	{
+		ExtendedStackTraceElement instance = ExtendedStackTraceElement
+			.parseStackTraceElement("\tat de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [:]");
+		ExtendedStackTraceElement expected = new ExtendedStackTraceElement("de.huxhorn.lilith.swing.MainFrame", "setAccessEventSourceManager", "MainFrame.java", 1079, null, null, true);
+		if(logger.isInfoEnabled()) logger.info("instance.getExtendedString(): {}", instance.getExtendedString());
+		if(logger.isInfoEnabled()) logger.info("expected.getExtendedString(): {}", expected.getExtendedString());
+		assertEquals(expected, instance);
+		assertNull(instance.getExtendedString());
 	}
 }
