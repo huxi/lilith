@@ -41,8 +41,6 @@ public class LogbackLoggingAdapter
 	private static final String CLASSNAME_MESSAGE_SEPARATOR = ": ";
 	private static final String COMMON_FRAMES_PREFIX = "\t... ";
 	private static final String COMMON_FRAMES_OMITTED = " common frames omitted";
-	private static final String NATIVE_METHOD = "Native Method";
-	private static final String UNKNOWN_SOURCE = "Unknown Source";
 	private static final String CAUSED_BY = "Caused by: ";
 
 	/*
@@ -237,41 +235,6 @@ public class LogbackLoggingAdapter
 			result.setExact(cpd.isExact());
 		}
 		return result;
-	}
-
-	public static ExtendedStackTraceElement parseStackTraceElement(String current)
-	{
-		int idx = current.lastIndexOf("(");
-		String classAndMethod = current.substring(0, idx);
-		//System.out.println("classAndMethod:"+ classAndMethod);
-		String source = current.substring(idx + 1, current.length() - 1);
-		//System.out.println("source:"+ source);
-		idx = classAndMethod.lastIndexOf(".");
-		String clazz = classAndMethod.substring(0, idx);
-		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
-		//System.out.println("clazz:"+ clazz);
-		//System.out.println("method:"+ method);
-		idx = source.lastIndexOf(":");
-		String file = null;
-		int lineNumber = -1;
-		if(idx != -1)
-		{
-			file = source.substring(0, idx);
-			lineNumber = Integer.parseInt(source.substring(idx + 1, source.length()));
-		}
-		else
-		{
-			if(source.equals(NATIVE_METHOD))
-			{
-				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
-			}
-			else if(!source.equals(UNKNOWN_SOURCE))
-			{
-				file = source;
-			}
-		}
-		// TODO: add support for codeLocation, version and exact as soon as logback 0.9.10 is released.
-		return new ExtendedStackTraceElement(clazz, method, file, lineNumber);
 	}
 
 	private void initCallStack(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst)
