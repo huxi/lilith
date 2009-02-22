@@ -44,6 +44,7 @@
 		<module>lilith-engine</module>
 		<module>lilith-xml-logging</module>
 		<module>logback</module>
+		<module>log4j</module>
 		<module>lilith-sounds</module>
 		<module>lilith</module>
 	</modules>
