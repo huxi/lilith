@@ -17,7 +17,10 @@
  */
 package de.huxhorn.lilith.log4j.xml;
 
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +30,8 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -65,22 +70,76 @@ public class LoggingEventReaderTest
 			"</log4j:properties>\n" +
 			"</log4j:event>";
 		LoggingEvent readEvent = read(eventString);
-		if(logger.isInfoEnabled()) logger.info("Read event: {}", readEvent);
-		if(logger.isInfoEnabled()) logger.info("Read event NDC: {}", new Object[]{readEvent.getNdc()});
-		if(logger.isInfoEnabled()) logger.info("Read event MDC: {}", readEvent.getMdc());
+		logEvent(readEvent);
 	}
 
 	private LoggingEvent read(String eventStr)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
-		if(logger.isInfoEnabled()) logger.info("Before change: {}", eventStr);
+		if(logger.isDebugEnabled()) logger.debug("Before change: {}", eventStr);
 		if(!eventStr.contains("xmlns:log4j=\"http://jakarta.apache.org/log4j/\""))
 		{
 			eventStr = eventStr
 				.replace("<log4j:event ", "<log4j:event xmlns:log4j=\"http://jakarta.apache.org/log4j/\" ");
-			if(logger.isInfoEnabled()) logger.info("After change: {}", eventStr);
+			if(logger.isDebugEnabled()) logger.debug("After change: {}", eventStr);
 		}
 		return read((eventStr).getBytes("UTF-8"));
+	}
+
+	private void logEvent(LoggingEvent event)
+	{
+		if(logger.isInfoEnabled())
+		{
+			StringBuilder msg = new StringBuilder();
+			msg.append("loggingEvent=");
+			if(event == null)
+			{
+				msg.append((String) null);
+			}
+			else
+			{
+				msg.append("[");
+				msg.append("logger=").append(event.getLogger());
+				msg.append(", level=").append(event.getLevel());
+				msg.append(", thread=").append(event.getThreadName());
+				msg.append(", timeStamp=").append(event.getTimeStamp());
+				msg.append(", messagePattern=").append(event.getMessagePattern());
+				appendCallStack(msg, event.getCallStack());
+				appendThrowable(msg, event.getThrowable());
+				msg.append(", mdc=").append(event.getMdc());
+				appendNdc(msg, event.getNdc());
+
+				msg.append("]");
+			}
+			logger.info(msg.toString());
+		}
+	}
+
+	private void appendNdc(StringBuilder msg, Message[] ndc)
+	{
+		if(ndc != null)
+		{
+			List<Message> list = Arrays.asList(ndc);
+			msg.append(", ndc=").append(list);
+		}
+	}
+
+	private void appendCallStack(StringBuilder msg, ExtendedStackTraceElement[] callStack)
+	{
+		if(callStack != null)
+		{
+			List<ExtendedStackTraceElement> list = Arrays.asList(callStack);
+			msg.append(", callStack=").append(list);
+		}
+	}
+
+	private void appendThrowable(StringBuilder msg, ThrowableInfo throwable)
+	{
+		if(throwable != null)
+		{
+			msg.append(", throwable=");
+			msg.append(throwable);
+		}
 	}
 
 	private LoggingEvent read(byte[] bytes)
