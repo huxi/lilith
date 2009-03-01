@@ -28,6 +28,7 @@ import de.huxhorn.sulky.stax.StaxUtilities;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,21 +71,39 @@ public class LoggingEventReader
 			result
 				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
 			result.setThreadName(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE));
-			String timeStamp = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE);
-			try
+			Date timeStamp = null;
+
+			String timeStampMillis = StaxUtilities
+				.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE);
+			if(timeStampMillis != null)
 			{
-				result.setTimeStamp(dateTimeFormatter.parse(timeStamp));
+				try
+				{
+					timeStamp = new Date(Long.parseLong(timeStampMillis));
+				}
+				catch(NumberFormatException ex)
+				{
+					// ignore
+				}
 			}
-			catch(ParseException e)
+			if(timeStamp == null)
 			{
-// TODO: change body of catch statement
-				e.printStackTrace();
+				String timeStampStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE);
+				try
+				{
+					timeStamp = dateTimeFormatter.parse(timeStampStr);
+				}
+				catch(ParseException e)
+				{
+					// ignore
+				}
 			}
+			result.setTimeStamp(timeStamp);
 			reader.nextTag();
 			result.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
 
 			List<String> args = readArguments(reader);
-			if(args!=null)
+			if(args != null)
 			{
 				result.setArguments(args.toArray(new String[args.size()]));
 			}
@@ -306,7 +325,7 @@ public class LoggingEventReader
 			entry.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
 
 			List<String> args = readArguments(reader);
-			if(args!=null)
+			if(args != null)
 			{
 				entry.setArguments(args.toArray(new String[args.size()]));
 			}
