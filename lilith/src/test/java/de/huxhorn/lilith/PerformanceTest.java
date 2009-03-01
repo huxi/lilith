@@ -163,7 +163,7 @@ public class PerformanceTest
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopSerializerTest("javaUtilXmlCompressedSerializer", byteCounter);
+		stopSerializerTest("javaBeansXmlCompressedSerializer", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -173,7 +173,7 @@ public class PerformanceTest
 			LoggingEvent event = deserializer.deserialize(current);
 			dummy += event.hashCode();
 		}
-		stopSerializerTest("javaUtilXmlCompressedDeserializer", byteCounter);
+		stopSerializerTest("javaBeansXmlCompressedDeserializer", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -192,7 +192,7 @@ public class PerformanceTest
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopSerializerTest("javaUtilXmlUncompressedSerializer", byteCounter);
+		stopSerializerTest("javaBeansXmlUncompressedSerializer", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -202,7 +202,7 @@ public class PerformanceTest
 			LoggingEvent event = deserializer.deserialize(current);
 			dummy += event.hashCode();
 		}
-		stopSerializerTest("javaUtilXmlUncompressedDeserializer", byteCounter);
+		stopSerializerTest("javaBeansXmlUncompressedDeserializer", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
