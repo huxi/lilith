@@ -20,8 +20,8 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -43,10 +43,20 @@ public class LoggingEventWriter
 	private boolean sortingMdcValues;
 	private DateTimeFormatter dateTimeFormatter;
 	private boolean writingSchemaLocation;
+	private TimeStampType timeStampType;
+
+	public enum TimeStampType
+	{
+		ONLY_TIMESTAMP,
+		ONLY_MILLIS,
+		BOTH
+	}
+
 
 	public LoggingEventWriter()
 	{
 		dateTimeFormatter = new DateTimeFormatter();
+		timeStampType = TimeStampType.BOTH;
 	}
 
 	public boolean isSortingMdcValues()
@@ -117,9 +127,18 @@ public class LoggingEventWriter
 			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, APPLICATION_IDENTIFIER_ATTRIBUTE, event.getApplicationIdentifier());
 		StaxUtilities
 			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE, event.getThreadName());
-		StaxUtilities
-			.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE, dateTimeFormatter.format(event.getTimeStamp()));
 
+		if(timeStampType == TimeStampType.ONLY_TIMESTAMP || timeStampType == TimeStampType.BOTH)
+		{
+			StaxUtilities
+				.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE, dateTimeFormatter.format(event.getTimeStamp()));
+		}
+		if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
+		{
+			StaxUtilities
+				.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, "" + event
+					.getTimeStamp().getTime());
+		}
 		StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, event.getMessagePattern());
 		writeArguments(writer, event.getArguments());
 		writeThrowable(writer, event);
@@ -223,7 +242,8 @@ public class LoggingEventWriter
 			{
 
 				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, NDC_ENTRY_NODE);
-				StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, entry.getMessagePattern());
+				StaxUtilities
+					.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, entry.getMessagePattern());
 				writeArguments(writer, entry.getArguments());
 				writer.writeEndElement();
 			}
