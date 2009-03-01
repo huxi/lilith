@@ -49,5 +49,44 @@
 		<module>lilith</module>
 	</modules>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+					<javadocDir>target/site/apidocs/</javadocDir>
+					<linkJavadoc>true</linkJavadoc>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+					<links>
+						<link>
+							http://java.sun.com/j2se/1.5.0/docs/api
+						</link>
+					</links>
+					<groups>
+						<group>
+							<title>Lilith</title>
+							<packages>de.huxhorn.lilith:de.huxhorn.lilith.*</packages>
+						</group>
+						<group>
+							<title>Sulky</title>
+							<packages>de.huxhorn.sulky:de.huxhorn.sulky.*</packages>
+						</group>
+					</groups>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</reporting>
+
+
 </project>
 

@@ -56,7 +56,7 @@ public class InternalLilithAppender
 
 		Map<String, String> loggingMetaData = new HashMap<String, String>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
-		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_XML);
+		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML);
 		loggingMetaData.put(FileConstants.COMPRESSED_KEY, "true");
 		// TODO: configurable format and compressed
 

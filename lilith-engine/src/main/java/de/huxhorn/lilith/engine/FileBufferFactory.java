@@ -93,7 +93,7 @@ public class FileBufferFactory<T extends Serializable>
 		{
 			compressed = Boolean.valueOf(actualMetaData.get(FileConstants.COMPRESSED_KEY));
 			String format = actualMetaData.get(FileConstants.CONTENT_FORMAT_KEY);
-			if(FileConstants.CONTENT_FORMAT_VALUE_XML.equals(format))
+			if(FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(format))
 			{
 				useXml = true;
 			}

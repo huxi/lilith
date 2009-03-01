@@ -34,7 +34,8 @@ public interface FileConstants
 
 	String CONTENT_FORMAT_KEY = "contentFormat";
 	String CONTENT_FORMAT_VALUE_SERIALIZED = "serialized";
-	String CONTENT_FORMAT_VALUE_XML = "XML";
+	String CONTENT_FORMAT_VALUE_JAVA_BEANS_XML = "java.beans.XML";
+	String CONTENT_FORMAT_VALUE_LILITH_XML = "Lilith XML";
 
 	String COMPRESSED_KEY = "compressed";
 }
