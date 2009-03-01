@@ -73,6 +73,7 @@ public class LoggingEventReader
 			result.setThreadName(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE));
 			Date timeStamp = null;
 
+			// TODO: add support for getContextBirthTime()
 			String timeStampMillis = StaxUtilities
 				.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE);
 			if(timeStampMillis != null)

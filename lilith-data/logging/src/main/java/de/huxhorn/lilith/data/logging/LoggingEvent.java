@@ -51,6 +51,7 @@ public class LoggingEvent
 	private String logger;
 	private Level level;
 	private String threadName;
+	// TODO: add support for getContextBirthTime()
 	private Date timeStamp;
 
 	private ThrowableInfo throwable;

@@ -59,6 +59,16 @@ public class LoggingEventWriter
 		timeStampType = TimeStampType.BOTH;
 	}
 
+	public TimeStampType getTimeStampType()
+	{
+		return timeStampType;
+	}
+
+	public void setTimeStampType(TimeStampType timeStampType)
+	{
+		this.timeStampType = timeStampType;
+	}
+
 	public boolean isSortingMdcValues()
 	{
 		return sortingMdcValues;
@@ -121,6 +131,7 @@ public class LoggingEventWriter
 				StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
 				NAMESPACE_URI + " " + NAMESPACE_LOCATION);
 		}
+		// TODO: add support for getContextBirthTime()
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_ATTRIBUTE, event.getLogger());
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LEVEL_ATTRIBUTE, "" + event.getLevel());
 		StaxUtilities

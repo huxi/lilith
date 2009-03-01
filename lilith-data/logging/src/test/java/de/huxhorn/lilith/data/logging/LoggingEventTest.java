@@ -33,6 +33,8 @@ public class LoggingEventTest
 {
 	private LoggingEvent fresh;
 
+	// TODO: add support for getContextBirthTime()
+
 	@Before
 	public void initFresh()
 	{

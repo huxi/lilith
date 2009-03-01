@@ -73,6 +73,7 @@ public class LogbackLoggingAdapter
 		{
 			return null;
 		}
+		// TODO: add support for getContextBirthTime()
 		LoggingEvent result = new LoggingEvent();
 		String messagePattern = event.getMessage();
 		result.setMessagePattern(messagePattern);
