@@ -1,20 +1,20 @@
 package de.huxhorn.lilith.data.logging.protobuf;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.Message;
-import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -110,7 +110,7 @@ public class LoggingEventIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		Message[] ndc=new Message[]{
+		Message[] ndc = new Message[]{
 			new Message("message"),
 			new Message("messagePattern {}", new String[]{"foo"})
 		};
@@ -192,7 +192,7 @@ public class LoggingEventIOTest
 		mdc.put("key3", "value3");
 		event.setMdc(mdc);
 
-		Message[] ndc=new Message[]{
+		Message[] ndc = new Message[]{
 			new Message("message"),
 			new Message("messagePattern {}", new String[]{"foo"})
 		};
@@ -286,14 +286,14 @@ public class LoggingEventIOTest
 	public byte[] write(LoggingEvent event, boolean compressing)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
-		LoggingEventSerializer ser = new LoggingEventSerializer(/* TODO: compressing */);
+		LoggingEventSerializer ser = new LoggingEventSerializer(compressing);
 		return ser.serialize(event);
 	}
 
 	public LoggingEvent read(byte[] bytes, boolean compressing)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
-		LoggingEventDeserializer des = new LoggingEventDeserializer(/* TODO: compressing*/);
+		LoggingEventDeserializer des = new LoggingEventDeserializer(compressing);
 		return des.deserialize(bytes);
 	}
 

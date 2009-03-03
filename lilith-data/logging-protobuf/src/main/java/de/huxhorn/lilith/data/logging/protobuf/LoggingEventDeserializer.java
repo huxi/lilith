@@ -17,43 +17,219 @@
  */
 package de.huxhorn.lilith.data.logging.protobuf;
 
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
 import de.huxhorn.sulky.generics.io.Deserializer;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.zip.GZIPInputStream;
 
 public class LoggingEventDeserializer
 	implements Deserializer<LoggingEvent>
 {
-	public static Message convert(LoggingProto.Message parsedMessage)
+	private boolean compressing;
+
+	public LoggingEventDeserializer(boolean compressing)
 	{
-		if(parsedMessage==null)
+		this.compressing = compressing;
+	}
+
+	public LoggingEvent deserialize(byte[] bytes)
+	{
+		if(bytes == null)
 		{
 			return null;
 		}
-		Message result=new Message();
+		LoggingProto.LoggingEvent parsedEvent = null;
+		if(!compressing)
+		{
+			try
+			{
+				parsedEvent = LoggingProto.LoggingEvent.parseFrom(bytes);
+			}
+			catch(InvalidProtocolBufferException e)
+			{
+				// ignore
+			}
+		}
+		else
+		{
+			ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+			try
+			{
+				GZIPInputStream gis = new GZIPInputStream(in);
+				parsedEvent = LoggingProto.LoggingEvent.parseFrom(gis);
+				gis.close();
+			}
+			catch(IOException e)
+			{
+				// ignore
+			}
+		}
+		return convert(parsedEvent);
+	}
+
+	public static Marker convert(LoggingProto.Marker marker)
+	{
+		if(marker == null)
+		{
+			return null;
+		}
+		Map<String, Marker> markers = new HashMap<String, Marker>();
+		return convert(marker, markers);
+	}
+
+	private static Marker convert(LoggingProto.Marker marker, Map<String, Marker> markers)
+	{
+		String markerName = marker.getName();
+
+		Marker result = markers.get(markerName);
+		if(result == null)
+		{
+			// new marker
+			result = new Marker();
+			result.setName(markerName);
+			markers.put(markerName, result);
+		}
+
+		int refCount = marker.getReferenceCount();
+		if(refCount > 0)
+		{
+			List<LoggingProto.Marker> refList = marker.getReferenceList();
+			for(LoggingProto.Marker current : refList)
+			{
+				result.add(convert(current, markers));
+			}
+		}
+
+		return result;
+	}
+
+	public static ExtendedStackTraceElement convert(LoggingProto.StackTraceElement ste)
+	{
+		if(ste == null)
+		{
+			return null;
+		}
+
+		ExtendedStackTraceElement result = new ExtendedStackTraceElement();
+		if(ste.hasMethodName())
+		{
+			result.setMethodName(ste.getMethodName());
+		}
+
+		if(ste.hasClassName())
+		{
+			result.setClassName(ste.getClassName());
+		}
+
+		if(ste.hasFileName())
+		{
+			result.setFileName(ste.getFileName());
+		}
+
+		if(ste.hasLineNumber())
+		{
+			result.setLineNumber(ste.getLineNumber());
+		}
+
+		if(ste.hasCodeLocation())
+		{
+			result.setCodeLocation(ste.getCodeLocation());
+		}
+
+		if(ste.hasVersion())
+		{
+			result.setVersion(ste.getVersion());
+		}
+
+		if(ste.hasExact())
+		{
+			result.setExact(ste.getExact());
+		}
+
+		return result;
+
+	}
+
+	public static ThrowableInfo convert(LoggingProto.Throwable throwable)
+	{
+		if(throwable == null)
+		{
+			return null;
+		}
+
+		ThrowableInfo result = new ThrowableInfo();
+
+		if(throwable.hasThrowableClass())
+		{
+			result.setName(throwable.getThrowableClass());
+		}
+
+		if(throwable.hasMessage())
+		{
+			result.setMessage(throwable.getMessage());
+		}
+
+		if(throwable.hasOmittedElements())
+		{
+			result.setOmittedElements(throwable.getOmittedElements());
+		}
+
+		if(throwable.hasCause())
+		{
+			result.setCause(convert(throwable.getCause()));
+		}
+
+		{
+			int count = throwable.getStackTraceElementCount();
+			if(count > 0)
+			{
+				ExtendedStackTraceElement[] stackTrace = new ExtendedStackTraceElement[count];
+				List<LoggingProto.StackTraceElement> stackTraceElementList = throwable.getStackTraceElementList();
+				for(int i = 0; i < count; i++)
+				{
+					stackTrace[i] = convert(stackTraceElementList.get(i));
+				}
+				result.setStackTrace(stackTrace);
+			}
+		}
+		return result;
+	}
+
+	public static Message convert(LoggingProto.Message parsedMessage)
+	{
+		if(parsedMessage == null)
+		{
+			return null;
+		}
+		Message result = new Message();
 		if(parsedMessage.hasMessagePattern())
 		{
 			result.setMessagePattern(parsedMessage.getMessagePattern());
 		}
 		int argumentCount = parsedMessage.getArgumentCount();
-		if(argumentCount>0)
+		if(argumentCount > 0)
 		{
 			String[] arguments = new String[argumentCount];
 			List<LoggingProto.MessageArgument> argumentList = parsedMessage.getArgumentList();
-			for(int i=0;i<argumentCount;i++)
+			for(int i = 0; i < argumentCount; i++)
 			{
-				LoggingProto.MessageArgument current=argumentList.get(i);
+				LoggingProto.MessageArgument current = argumentList.get(i);
 				if(current.hasValue())
 				{
-					arguments[i]=current.getValue();
+					arguments[i] = current.getValue();
 				}
 			}
 			result.setArguments(arguments);
@@ -68,7 +244,7 @@ public class LoggingEventDeserializer
 			return null;
 		}
 
-		LoggingEvent result=new LoggingEvent();
+		LoggingEvent result = new LoggingEvent();
 
 		// handling loggerName
 		if(parsedEvent.hasLoggerName())
@@ -91,19 +267,19 @@ public class LoggingEventDeserializer
 			switch(level)
 			{
 				case TRACE:
-						result.setLevel(LoggingEvent.Level.TRACE);
+					result.setLevel(LoggingEvent.Level.TRACE);
 					break;
 				case DEBUG:
-						result.setLevel(LoggingEvent.Level.DEBUG);
+					result.setLevel(LoggingEvent.Level.DEBUG);
 					break;
 				case INFO:
-						result.setLevel(LoggingEvent.Level.INFO);
+					result.setLevel(LoggingEvent.Level.INFO);
 					break;
 				case WARN:
-						result.setLevel(LoggingEvent.Level.WARN);
+					result.setLevel(LoggingEvent.Level.WARN);
 					break;
 				case ERROR:
-						result.setLevel(LoggingEvent.Level.ERROR);
+					result.setLevel(LoggingEvent.Level.ERROR);
 					break;
 			}
 		}
@@ -114,9 +290,34 @@ public class LoggingEventDeserializer
 			result.setApplicationIdentifier(parsedEvent.getApplicationIdentifier());
 		}
 
-		// TODO: handle Throwable
-		// TODO: handle Marker
-		// TODO: handle CallStack
+		// handle Throwable
+		if(parsedEvent.hasThrowable())
+		{
+			result.setThrowable(convert(parsedEvent.getThrowable()));
+		}
+
+		// handle Marker
+		if(parsedEvent.hasMarker())
+		{
+			result.setMarker(convert(parsedEvent.getMarker()));
+
+		}
+
+		// handle CallStack
+		{
+			int count = parsedEvent.getCallStackElementCount();
+			if(count > 0)
+			{
+				List<LoggingProto.StackTraceElement> callStackElements = parsedEvent.getCallStackElementList();
+				ExtendedStackTraceElement[] callStack = new ExtendedStackTraceElement[count];
+				for(int i = 0; i < count; i++)
+				{
+					LoggingProto.StackTraceElement current = callStackElements.get(i);
+					callStack[i] = convert(current);
+				}
+				result.setCallStack(callStack);
+			}
+		}
 
 		// handling timestamp
 		if(parsedEvent.hasTimeStamp())
@@ -139,17 +340,17 @@ public class LoggingEventDeserializer
 		if(parsedEvent.hasMappedDiagnosticContext())
 		{
 			LoggingProto.MappedDiagnosticContext parsedMdc = parsedEvent.getMappedDiagnosticContext();
-			if(parsedMdc.getEntryCount()>0)
+			if(parsedMdc.getEntryCount() > 0)
 			{
-				Map<String, String> mdc=new HashMap<String, String>();
+				Map<String, String> mdc = new HashMap<String, String>();
 				List<LoggingProto.MapEntry> mdcList = parsedMdc.getEntryList();
-				for(LoggingProto.MapEntry current: mdcList)
+				for(LoggingProto.MapEntry current : mdcList)
 				{
-					String key=current.getKey();
-					String value=null;
+					String key = current.getKey();
+					String value = null;
 					if(current.hasValue())
 					{
-						value=current.getValue();
+						value = current.getValue();
 					}
 					mdc.put(key, value);
 				}
@@ -162,35 +363,17 @@ public class LoggingEventDeserializer
 		{
 			LoggingProto.NestedDiagnosticContext parsedNdc = parsedEvent.getNestedDiagnosticContext();
 			int entryCount = parsedNdc.getEntryCount();
-			if(entryCount>0)
+			if(entryCount > 0)
 			{
 				List<LoggingProto.Message> entryList = parsedNdc.getEntryList();
 				Message[] ndc = new Message[entryCount];
-				for(int i=0;i<entryCount;i++)
+				for(int i = 0; i < entryCount; i++)
 				{
-					ndc[i]=convert(entryList.get(i));
+					ndc[i] = convert(entryList.get(i));
 				}
 				result.setNdc(ndc);
 			}
 		}
 		return result;
-	}
-
-	public LoggingEvent deserialize(byte[] bytes)
-	{
-		if(bytes==null)
-		{
-			return null;
-		}
-		try
-		{
-			LoggingProto.LoggingEvent parsedEvent = LoggingProto.LoggingEvent.parseFrom(bytes);
-			return convert(parsedEvent);
-		}
-		catch(InvalidProtocolBufferException e)
-		{
-			// ignore
-		}
-		return null;
 	}
 }
