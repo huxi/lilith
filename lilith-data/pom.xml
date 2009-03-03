@@ -42,6 +42,7 @@
 		<module>logging</module>
 		<module>logging-xml</module>
 		<module>logging-xml-serializer</module>
+		<module>logging-protobuf</module>
 		<module>access</module>
 	</modules>
 
