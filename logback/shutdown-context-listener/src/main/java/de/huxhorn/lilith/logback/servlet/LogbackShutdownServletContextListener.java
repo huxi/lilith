@@ -21,7 +21,6 @@ import ch.qos.logback.classic.LoggerContext;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -31,22 +30,19 @@ import javax.servlet.ServletContextListener;
 public class LogbackShutdownServletContextListener
 	implements ServletContextListener
 {
-	private ServletContext context;
-
 	public void contextDestroyed(ServletContextEvent sce)
 	{
 		shutdownLogback();
-		context = null;
 	}
 
 	public void contextInitialized(ServletContextEvent sce)
 	{
-		if(context != null)
-		{
-			System.err.println("There is a previous context.");
-			shutdownLogback();
-		}
-		context = sce.getServletContext();
+//		if(context != null)
+//		{
+//			System.err.println("There is a previous context.");
+//			shutdownLogback();
+//		}
+//		context = sce.getServletContext();
 	}
 
 	private void shutdownLogback()
