@@ -32,8 +32,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -91,6 +95,38 @@ public class PerformanceTest
 		dataFile.delete();
 		indexFile.delete();
 		tempOutputPath.delete();
+	}
+
+	@Test
+	public void streamingSerialization()
+		throws IOException, ClassNotFoundException
+	{
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		startTest();
+		for(EventWrapper<LoggingEvent> current : loggingEvents)
+		{
+			oos.writeObject(current);
+		}
+		oos.flush();
+		oos.close();
+		byte[] bytes = bos.toByteArray();
+		stopSerializerTest("streamingSerializationWrite", bytes.length);
+		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", bytes.length);
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		ObjectInputStream ois = new ObjectInputStream(bis);
+		long dummy = 0;
+
+		startTest();
+		for(int i = 0; i < loggingEvents.size(); i++)
+		{
+			Object obj = ois.readObject();
+			dummy += obj.hashCode();
+		}
+		stopSerializerTest("streamingSerializationRead", bytes.length);
+		ois.close();
+		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
 	@Test
