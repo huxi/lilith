@@ -33,6 +33,7 @@ message LoggingEvent {
 	optional Throwable throwable = 2;
 	optional MappedDiagnosticContext mapped_diagnostic_context = 4;
 	optional NestedDiagnosticContext nested_diagnostic_context = 5;
+	optional string application_identifier = 10;
 }
 
 enum Level {
@@ -46,7 +47,12 @@ enum Level {
 
 message Message {
 	required string message_pattern = 1;
-	repeated string argument = 2;
+	repeated MessageArgument argument = 2;
+}
+
+// this is necessary to support null arguments
+message MessageArgument {
+	optional string value = 1;
 }
 
 message StackTraceElement {

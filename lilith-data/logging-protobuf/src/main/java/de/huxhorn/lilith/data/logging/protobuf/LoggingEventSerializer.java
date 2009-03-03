@@ -42,7 +42,12 @@ public class LoggingEventSerializer
 		{
 			for(String current:arguments)
 			{
-				messageBuilder.addArgument(current);
+				LoggingProto.MessageArgument.Builder argumentBuilder = LoggingProto.MessageArgument.newBuilder();
+				if(current!=null)
+				{
+					argumentBuilder.setValue(current);
+				}
+				messageBuilder.addArgument(argumentBuilder.build());
 			}
 		}
 		return messageBuilder.build();
@@ -96,10 +101,15 @@ public class LoggingEventSerializer
 			}
 		}
 
+		// handle ApplicationIdentifier
+		if(event.getApplicationIdentifier() != null)
+		{
+			eventBuilder.setApplicationIdentifier(event.getApplicationIdentifier());
+		}
+
 		// TODO: handle Throwable
 		// TODO: handle Marker
 		// TODO: handle CallStack
-		// TODO: handle ApplicationIdentifier
 
 		// handling timestamp
 		{
