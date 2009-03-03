@@ -199,6 +199,11 @@ public class Lilith
 
 			appTitle += " - " + sdf.format(d);
 		}
+		System.out.println(" _     _ _ _ _   _     \n" +
+			"| |   (_) (_) |_| |__  \n" +
+			"| |   | | | | __| '_ \\ \n" +
+			"| |___| | | | |_| | | |\n" +
+			"|_____|_|_|_|\\__|_| |_|");
 		System.out.println(appTitle);
 		System.out.println("\nCopyright (C) 2007-2008  Joern Huxhorn\n\n" +
 			"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +

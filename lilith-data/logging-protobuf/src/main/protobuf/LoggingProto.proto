@@ -1,0 +1,74 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2009 Joern Huxhorn
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package de.huxhorn.lilith.logging;
+
+option optimize_for = SPEED;
+
+option java_package = "de.huxhorn.lilith.data.logging.protobuf.generated";
+//option java_multiple_files = true;
+
+message LoggingEvent {
+	required string logger_name = 3;
+	optional Level level = 9;
+	optional int64 time_stamp = 6;
+	optional string thread_name = 7;
+	optional int64 thread_id = 8;
+	required Message message = 1;
+	optional Throwable throwable = 2;
+	optional MappedDiagnosticContext mapped_diagnostic_context = 4;
+	optional NestedDiagnosticContext nested_diagnostic_context = 5;
+}
+
+enum Level {
+	TRACE = 1;
+	DEBUG = 2;
+	INFO = 3;
+	WARN = 4;
+	ERROR = 5;
+}
+
+
+message Message {
+	required string message_pattern = 1;
+	repeated string argument = 2;
+}
+
+message StackTraceElement {
+	required string method = 1;
+}
+
+message Throwable {
+	required string throwable_class = 1;
+	optional string message = 2;
+	repeated StackTraceElement stack_trace = 3;
+	optional Throwable cause = 4;
+}
+
+message MappedDiagnosticContext {
+	repeated MapEntry entry = 1;
+}
+
+message NestedDiagnosticContext {
+	repeated Message entry = 1;
+}
+
+message MapEntry {
+	required string key = 1;
+	optional string value = 2;
+}

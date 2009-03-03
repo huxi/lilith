@@ -51,6 +51,8 @@ public class LoggingEvent
 	private String logger;
 	private Level level;
 	private String threadName;
+	// TODO: add threadId
+	// TODO: set/getMessage instead of messagePattern + args
 	// TODO: add support for getContextBirthTime()
 	private Date timeStamp;
 
