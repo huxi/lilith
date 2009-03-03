@@ -130,6 +130,12 @@
 
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.data.logging.protobuf</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.data.logging</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>

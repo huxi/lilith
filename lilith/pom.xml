@@ -148,6 +148,13 @@
 			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.data.logging.protobuf</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.access</artifactId>

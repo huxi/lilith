@@ -23,6 +23,21 @@ option optimize_for = SPEED;
 option java_package = "de.huxhorn.lilith.data.logging.protobuf.generated";
 //option java_multiple_files = true;
 
+message EventWrapper {
+	optional EventIdentifier event_identifier = 1;
+	optional LoggingEvent event = 2;
+}
+
+message EventIdentifier {
+	optional int64 local_id = 1;
+	optional SourceIdentifier source_identifier = 2;
+}
+
+message SourceIdentifier {
+	optional string identifier = 1;
+	optional string secondary_identifier = 2;
+}
+
 message LoggingEvent {
 	required string logger_name = 3;
 	optional Level level = 9;
@@ -34,6 +49,8 @@ message LoggingEvent {
 	optional MappedDiagnosticContext mapped_diagnostic_context = 4;
 	optional NestedDiagnosticContext nested_diagnostic_context = 5;
 	optional string application_identifier = 10;
+	repeated StackTraceElement call_stack_element = 11;
+	optional Marker marker = 12;
 }
 
 enum Level {
@@ -56,13 +73,20 @@ message MessageArgument {
 }
 
 message StackTraceElement {
-	required string method = 1;
+	optional string methodName = 1;
+	optional string className = 2;
+	optional string fileName = 3;
+	optional int32 lineNumber = 4;
+	optional string codeLocation = 5;
+	optional string version = 6;
+	optional bool exact = 7;
 }
 
 message Throwable {
 	required string throwable_class = 1;
 	optional string message = 2;
-	repeated StackTraceElement stack_trace = 3;
+	optional int32 omitted_elements = 5;
+	repeated StackTraceElement stack_trace_element = 3;
 	optional Throwable cause = 4;
 }
 
@@ -78,3 +102,9 @@ message MapEntry {
 	required string key = 1;
 	optional string value = 2;
 }
+
+message Marker {
+	required string name = 1;
+	repeated Marker reference = 2;
+}
+
