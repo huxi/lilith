@@ -46,8 +46,16 @@ public class LoggingEventDeserializer
 		int argumentCount = parsedMessage.getArgumentCount();
 		if(argumentCount>0)
 		{
-			List<String> argumentList = parsedMessage.getArgumentList();
-			String[] arguments = argumentList.toArray(new String[argumentCount]);
+			String[] arguments = new String[argumentCount];
+			List<LoggingProto.MessageArgument> argumentList = parsedMessage.getArgumentList();
+			for(int i=0;i<argumentCount;i++)
+			{
+				LoggingProto.MessageArgument current=argumentList.get(i);
+				if(current.hasValue())
+				{
+					arguments[i]=current.getValue();
+				}
+			}
 			result.setArguments(arguments);
 		}
 		return result;
@@ -100,10 +108,15 @@ public class LoggingEventDeserializer
 			}
 		}
 
+		// handle ApplicationIdentifier
+		if(parsedEvent.hasApplicationIdentifier())
+		{
+			result.setApplicationIdentifier(parsedEvent.getApplicationIdentifier());
+		}
+
 		// TODO: handle Throwable
 		// TODO: handle Marker
 		// TODO: handle CallStack
-		// TODO: handle ApplicationIdentifier
 
 		// handling timestamp
 		if(parsedEvent.hasTimeStamp())
