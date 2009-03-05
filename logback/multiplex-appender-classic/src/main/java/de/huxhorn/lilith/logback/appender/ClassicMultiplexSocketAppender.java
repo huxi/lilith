@@ -39,7 +39,7 @@ public class ClassicMultiplexSocketAppender
 	private boolean includeCallerData;
 	private boolean compressing;
 	private boolean usingDefaultPort;
-	private Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> lilithSerializer;
+	private Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> lilithEncoder;
 
 	public ClassicMultiplexSocketAppender()
 	{
@@ -83,10 +83,8 @@ public class ClassicMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		// setEncoder(new SerializableSerializer<LoggingEvent>(compressing));
-		//lilithSerializer = new SerializableSerializer<de.huxhorn.lilith.data.logging.LoggingEvent>(compressing);
-		lilithSerializer = new LoggingEventProtobufEncoder(compressing);
-		setEncoder(new TransformingSerializer());
+		lilithEncoder = new LoggingEventProtobufEncoder(compressing);
+		setEncoder(new TransformingEncoder());
 	}
 
 	public boolean isCompressing()
@@ -143,7 +141,7 @@ public class ClassicMultiplexSocketAppender
 //		}
 	}
 
-	private class TransformingSerializer
+	private class TransformingEncoder
 		implements Encoder<LoggingEvent>
 	{
 		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
@@ -152,7 +150,7 @@ public class ClassicMultiplexSocketAppender
 		{
 			de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
 			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return lilithSerializer.encode(lilithEvent);
+			return lilithEncoder.encode(lilithEvent);
 		}
 	}
 }

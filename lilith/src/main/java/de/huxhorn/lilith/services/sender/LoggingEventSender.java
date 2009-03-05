@@ -26,19 +26,19 @@ public class LoggingEventSender
 	extends AbstractEventSender<LoggingEvent>
 {
 	public static final String SERVICE_TYPE = "_logging._tcp.local.";
-	private SerializableEncoder<LoggingEvent> serializer;
+	private SerializableEncoder<LoggingEvent> encoder;
 
 	public LoggingEventSender(JmDNS jmDns, String serviceName, String hostName, int port, boolean compressing)
 	{
 		super(jmDns, serviceName, hostName, port, compressing);
-		serializer = new SerializableEncoder<LoggingEvent>(compressing);
+		encoder = new SerializableEncoder<LoggingEvent>(compressing);
 	}
 
 	public void send(LoggingEvent event)
 	{
-		if(serializer != null)
+		if(encoder != null)
 		{
-			byte[] serialized = serializer.encode(event);
+			byte[] serialized = encoder.encode(event);
 			if(serialized != null)
 			{
 				sendBytesService.sendBytes(serialized);

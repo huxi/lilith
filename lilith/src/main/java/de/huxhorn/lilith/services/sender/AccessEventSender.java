@@ -27,19 +27,19 @@ public class AccessEventSender
 {
 	public static final String SERVICE_TYPE = "_access._tcp.local.";
 
-	private SerializableEncoder<AccessEvent> serializer;
+	private SerializableEncoder<AccessEvent> encoder;
 
 	public AccessEventSender(JmDNS jmDns, String serviceName, String hostName, int port, boolean compressing)
 	{
 		super(jmDns, serviceName, hostName, port, compressing);
-		serializer = new SerializableEncoder<AccessEvent>(compressing);
+		encoder = new SerializableEncoder<AccessEvent>(compressing);
 	}
 
 	public void send(AccessEvent event)
 	{
-		if(serializer != null)
+		if(encoder != null)
 		{
-			byte[] serialized = serializer.encode(event);
+			byte[] serialized = encoder.encode(event);
 			if(serialized != null)
 			{
 				sendBytesService.sendBytes(serialized);
