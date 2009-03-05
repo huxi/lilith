@@ -43,7 +43,7 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
 		includeCallerData = true;
-		setEncoder(new TransformingSerializer());
+		setEncoder(new TransformingEncoder());
 		setPort(DEFAULT_PORT);
 	}
 
@@ -74,22 +74,22 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 		}
 	}
 
-	private class TransformingSerializer
+	private class TransformingEncoder
 		implements Encoder<LoggingEvent>
 	{
 		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
-		Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> internalSerializer;
+		Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> internalEncoder;
 
-		private TransformingSerializer()
+		private TransformingEncoder()
 		{
-			internalSerializer = new LoggingXmlEncoder(false);
+			internalEncoder = new LoggingXmlEncoder(false);
 		}
 
 		public byte[] encode(LoggingEvent logbackEvent)
 		{
 			de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
 			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return internalSerializer.encode(lilithEvent);
+			return internalEncoder.encode(lilithEvent);
 		}
 	}
 }

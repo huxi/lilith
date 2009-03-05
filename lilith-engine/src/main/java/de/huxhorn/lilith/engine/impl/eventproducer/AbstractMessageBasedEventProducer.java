@@ -40,7 +40,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	private final Logger logger = LoggerFactory.getLogger(AbstractMessageBasedEventProducer.class);
 
 	private final DataInputStream dataInput;
-	private Decoder<T> deserializer;
+	private Decoder<T> decoder;
 	private boolean compressing;
 	private long heartbeatTimestamp;
 
@@ -49,7 +49,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		super(sourceIdentifier, eventQueue);
 		this.dataInput = new DataInputStream(new BufferedInputStream(inputStream));
 		this.compressing = compressing;
-		this.deserializer = createDecoder();
+		this.decoder = createDecoder();
 	}
 
 	protected abstract Decoder<T> createDecoder();
@@ -143,7 +143,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 							allocating = false;
 							dataInput.readFully(bytes);
 
-							Object object = deserializer.decode(bytes);
+							Object object = decoder.decode(bytes);
 							if(object == null)
 							{
 								if(logger.isInfoEnabled()) logger.info("Retrieved null!");

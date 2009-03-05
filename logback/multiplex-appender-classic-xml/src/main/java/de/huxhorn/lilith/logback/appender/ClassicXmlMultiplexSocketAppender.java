@@ -82,8 +82,7 @@ public class ClassicXmlMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		// setEncoder(new SerializableSerializer<LoggingEvent>(compressing));
-		setEncoder(new TransformingSerializer(compressing));
+		setEncoder(new TransformingEncoder(compressing));
 	}
 
 	public boolean isCompressing()
@@ -112,22 +111,22 @@ public class ClassicXmlMultiplexSocketAppender
 		}
 	}
 
-	private class TransformingSerializer
+	private class TransformingEncoder
 		implements Encoder<LoggingEvent>
 	{
 		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
-		Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> internalSerializer;
+		Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> internalEncoder;
 
-		private TransformingSerializer(boolean compressing)
+		private TransformingEncoder(boolean compressing)
 		{
-			internalSerializer = new LoggingXmlEncoder(compressing);
+			internalEncoder = new LoggingXmlEncoder(compressing);
 		}
 
 		public byte[] encode(LoggingEvent logbackEvent)
 		{
 			de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
 			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return internalSerializer.encode(lilithEvent);
+			return internalEncoder.encode(lilithEvent);
 		}
 	}
 }

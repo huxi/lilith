@@ -38,7 +38,7 @@ public class AccessMultiplexSocketAppender
 
 	private boolean compressing;
 	private boolean usingDefaultPort;
-	private Encoder<de.huxhorn.lilith.data.access.AccessEvent> lilithSerializer;
+	private Encoder<de.huxhorn.lilith.data.access.AccessEvent> lilithEncoder;
 
 	public AccessMultiplexSocketAppender()
 	{
@@ -61,9 +61,9 @@ public class AccessMultiplexSocketAppender
 
 	public void sendLilithEvent(de.huxhorn.lilith.data.access.AccessEvent e)
 	{
-		if(lilithSerializer != null)
+		if(lilithEncoder != null)
 		{
-			byte[] serialized = lilithSerializer.encode(e);
+			byte[] serialized = lilithEncoder.encode(e);
 			if(serialized != null)
 			{
 				sendBytes(serialized);
@@ -94,9 +94,8 @@ public class AccessMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		//setEncoder(new SerializableSerializer<AccessEvent>(compressing));
-		lilithSerializer = new SerializableEncoder<de.huxhorn.lilith.data.access.AccessEvent>(compressing);
-		setEncoder(new TransformingSerializer());
+		lilithEncoder = new SerializableEncoder<de.huxhorn.lilith.data.access.AccessEvent>(compressing);
+		setEncoder(new TransformingEncoder());
 	}
 
 	public boolean isCompressing()
@@ -112,7 +111,7 @@ public class AccessMultiplexSocketAppender
 		}
 	}
 
-	private class TransformingSerializer
+	private class TransformingEncoder
 		implements Encoder<AccessEvent>
 	{
 		LogbackAccessAdapter adapter = new LogbackAccessAdapter();
@@ -121,7 +120,7 @@ public class AccessMultiplexSocketAppender
 		{
 			de.huxhorn.lilith.data.access.AccessEvent lilithEvent = adapter.convert(logbackEvent);
 			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return lilithSerializer.encode(lilithEvent);
+			return lilithEncoder.encode(lilithEvent);
 		}
 	}
 }

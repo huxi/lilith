@@ -19,7 +19,7 @@ package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.sulky.buffers.ExtendedSerializingFileBuffer;
+import de.huxhorn.sulky.buffers.CodecFileBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.codec.Codec;
 
@@ -77,51 +77,10 @@ public abstract class FileBufferFactory<T extends Serializable>
 		}
 
 
-		ExtendedSerializingFileBuffer<EventWrapper<T>> result = new ExtendedSerializingFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, dataFile, indexFile);
+		CodecFileBuffer<EventWrapper<T>> result = new CodecFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, dataFile, indexFile);
 
 		Map<String, String> actualMetaData = result.getMetaData();
 
-		/*
-		boolean compressed = false;
-		boolean useXml = false;
-		boolean isLogging = true;
-
-		if(actualMetaData != null)
-		{
-			compressed = Boolean.valueOf(actualMetaData.get(FileConstants.COMPRESSED_KEY));
-			String format = actualMetaData.get(FileConstants.CONTENT_FORMAT_KEY);
-			if(FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(format))
-			{
-				useXml = true;
-			}
-			String type = actualMetaData.get(FileConstants.CONTENT_TYPE_KEY);
-			if(FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(type))
-			{
-				isLogging = false;
-			}
-		}
-		Serializer<EventWrapper<T>> serializer;
-		Deserializer<EventWrapper<T>> deserializer;
-		if(useXml)
-		{
-			if(isLogging)
-			{
-				serializer = new XmlSerializer<EventWrapper<T>>(compressed, LoggingEvent.Level.class);
-			}
-			else
-			{
-				serializer = new XmlSerializer<EventWrapper<T>>(compressed);
-			}
-			deserializer = new XmlDeserializer<EventWrapper<T>>(compressed);
-		}
-		else
-		{
-			serializer = new SerializableSerializer<EventWrapper<T>>(compressed);
-			deserializer = new SerializableDeserializer<EventWrapper<T>>(compressed);
-		}
-		result.setSerializer(serializer);
-		result.setDeserializer(deserializer);
-        */
 		result.setCodec(resolveCodec(actualMetaData));
 		if(logger.isDebugEnabled()) logger.debug("Created file buffer: {}", result);
 
