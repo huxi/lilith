@@ -20,10 +20,10 @@ package de.huxhorn.lilith.engine.xml.eventproducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlDeserializer;
+import de.huxhorn.lilith.data.logging.xml.LoggingXmlDecoder;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.generics.io.Deserializer;
+import de.huxhorn.sulky.codec.Decoder;
 
 import java.io.InputStream;
 
@@ -35,8 +35,8 @@ public class LilithXmlMessageLoggingEventProducer
 		super(sourceIdentifier, eventQueue, inputStream, compressing);
 	}
 
-	protected Deserializer<LoggingEvent> createDeserializer()
+	protected Decoder<LoggingEvent> createDecoder()
 	{
-		return new LoggingXmlDeserializer(isCompressing());
+		return new LoggingXmlDecoder(isCompressing());
 	}
 }

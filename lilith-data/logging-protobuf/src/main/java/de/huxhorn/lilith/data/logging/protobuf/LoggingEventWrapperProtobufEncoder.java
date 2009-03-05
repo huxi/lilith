@@ -22,18 +22,18 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
-import de.huxhorn.sulky.generics.io.Serializer;
+import de.huxhorn.sulky.codec.Encoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
-public class LoggingEventWrapperProtobufSerializer
-	implements Serializer<EventWrapper<LoggingEvent>>
+public class LoggingEventWrapperProtobufEncoder
+	implements Encoder<EventWrapper<LoggingEvent>>
 {
 	private boolean compressing;
 
-	public LoggingEventWrapperProtobufSerializer(boolean compressing)
+	public LoggingEventWrapperProtobufEncoder(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -48,7 +48,7 @@ public class LoggingEventWrapperProtobufSerializer
 		this.compressing = compressing;
 	}
 
-	public byte[] serialize(EventWrapper<LoggingEvent> wrapper)
+	public byte[] encode(EventWrapper<LoggingEvent> wrapper)
 	{
 		LoggingProto.EventWrapper converted = convert(wrapper);
 		if(converted == null)
@@ -97,7 +97,7 @@ public class LoggingEventWrapperProtobufSerializer
 			LoggingEvent event = wrapper.getEvent();
 			if(event != null)
 			{
-				builder.setEvent(LoggingEventProtobufSerializer.convert(event));
+				builder.setEvent(LoggingEventProtobufEncoder.convert(event));
 			}
 		}
 

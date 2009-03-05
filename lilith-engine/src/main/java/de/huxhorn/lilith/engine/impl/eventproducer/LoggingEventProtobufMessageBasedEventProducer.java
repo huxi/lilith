@@ -18,11 +18,11 @@
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDeserializer;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDecoder;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.sulky.generics.io.Deserializer;
 import de.huxhorn.sulky.buffers.AppendOperation;
+import de.huxhorn.sulky.codec.Decoder;
 
 import java.io.InputStream;
 
@@ -34,8 +34,8 @@ public class LoggingEventProtobufMessageBasedEventProducer
 		super(sourceIdentifier, eventQueue, inputStream, compressing);
 	}
 
-	protected Deserializer<LoggingEvent> createDeserializer()
+	protected Decoder<LoggingEvent> createDecoder()
 	{
-		return new LoggingEventProtobufDeserializer(isCompressing());
+		return new LoggingEventProtobufDecoder(isCompressing());
 	}
 }

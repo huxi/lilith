@@ -21,7 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.ExtendedSerializingFileBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
-import de.huxhorn.sulky.generics.io.Codec;
+import de.huxhorn.sulky.codec.Codec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

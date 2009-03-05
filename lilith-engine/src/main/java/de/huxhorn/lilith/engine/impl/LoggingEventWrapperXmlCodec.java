@@ -17,37 +17,37 @@
  */
 package de.huxhorn.lilith.engine.impl;
 
-import de.huxhorn.sulky.generics.io.DelegatingCodecBase;
-import de.huxhorn.sulky.generics.io.XmlSerializer;
-import de.huxhorn.sulky.generics.io.XmlDeserializer;
-import de.huxhorn.sulky.generics.io.Serializer;
-import de.huxhorn.sulky.generics.io.Deserializer;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.sulky.codec.DelegatingCodecBase;
+import de.huxhorn.sulky.codec.XmlDecoder;
+import de.huxhorn.sulky.codec.XmlEncoder;
+import de.huxhorn.sulky.codec.Encoder;
+import de.huxhorn.sulky.codec.Decoder;
 
 public class LoggingEventWrapperXmlCodec
 	extends DelegatingCodecBase<EventWrapper<LoggingEvent>>
 {
 	public LoggingEventWrapperXmlCodec(boolean compressed)
 	{
-		super(new XmlSerializer<EventWrapper<LoggingEvent>>(compressed, LoggingEvent.Level.class), new XmlDeserializer<EventWrapper<LoggingEvent>>(compressed));
+		super(new XmlEncoder<EventWrapper<LoggingEvent>>(compressed, LoggingEvent.Level.class), new XmlDecoder<EventWrapper<LoggingEvent>>(compressed));
 	}
 
 	public void setCompressing(boolean compressing)
 	{
 		{
-			Serializer<EventWrapper<LoggingEvent>> s = getSerializer();
-			if(s instanceof XmlSerializer)
+			Encoder<EventWrapper<LoggingEvent>> s = getEncoder();
+			if(s instanceof XmlEncoder)
 			{
-				XmlSerializer ss= (XmlSerializer) s;
+				XmlEncoder ss= (XmlEncoder) s;
 				ss.setCompressing(compressing);
 			}
 		}
 		{
-			Deserializer<EventWrapper<LoggingEvent>> d = getDeserializer();
-			if(d instanceof XmlDeserializer)
+			Decoder<EventWrapper<LoggingEvent>> d = getDecoder();
+			if(d instanceof XmlDecoder)
 			{
-				XmlDeserializer sd= (XmlDeserializer) d;
+				XmlDecoder sd= (XmlDecoder) d;
 				sd.setCompressing(compressing);
 			}
 		}

@@ -267,14 +267,14 @@ public class LoggingEventIOTest
 
 	public byte[] write(LoggingEvent event, boolean compressing)
 	{
-		LoggingEventProtobufSerializer ser = new LoggingEventProtobufSerializer(compressing);
-		return ser.serialize(event);
+		LoggingEventProtobufEncoder ser = new LoggingEventProtobufEncoder(compressing);
+		return ser.encode(event);
 	}
 
 	public LoggingEvent read(byte[] bytes, boolean compressing)
 	{
-		LoggingEventProtobufDeserializer des = new LoggingEventProtobufDeserializer(compressing);
-		return des.deserialize(bytes);
+		LoggingEventProtobufDecoder des = new LoggingEventProtobufDecoder(compressing);
+		return des.decode(bytes);
 	}
 
 	String toString(Marker marker)

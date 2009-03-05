@@ -46,7 +46,7 @@
 
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.generics</artifactId>
+			<artifactId>de.huxhorn.sulky.codec</artifactId>
 			<scope>compile</scope>
 		</dependency>
 

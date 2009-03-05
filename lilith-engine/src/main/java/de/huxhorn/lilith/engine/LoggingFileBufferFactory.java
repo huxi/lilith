@@ -21,8 +21,8 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.impl.LoggingEventWrapperXmlCodec;
-import de.huxhorn.sulky.generics.io.Codec;
-import de.huxhorn.sulky.generics.io.SerializableCodec;
+import de.huxhorn.sulky.codec.Codec;
+import de.huxhorn.sulky.codec.SerializableCodec;
 
 import java.util.Map;
 
