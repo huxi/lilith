@@ -50,7 +50,7 @@ import java.util.Map;
 public class PerformanceTest
 {
 	private final Logger logger = LoggerFactory.getLogger(PerformanceTest.class);
-	private static final int AMOUNT = 2000;
+	private static final int AMOUNT = 1000;
 	private static List<EventWrapper<LoggingEvent>> loggingEvents;
 	private static Integer magicValue;
 
@@ -97,38 +97,6 @@ public class PerformanceTest
 		dataFile.delete();
 		indexFile.delete();
 		tempOutputPath.delete();
-	}
-
-	@Test
-	public void streamingSerialization()
-		throws IOException, ClassNotFoundException
-	{
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(bos);
-		startTest();
-		for(EventWrapper<LoggingEvent> current : loggingEvents)
-		{
-			oos.writeObject(current);
-		}
-		oos.flush();
-		oos.close();
-		byte[] bytes = bos.toByteArray();
-		stopTest("streamingSerialization", "Write", bytes.length);
-		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", bytes.length);
-
-		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-		ObjectInputStream ois = new ObjectInputStream(bis);
-		long dummy = 0;
-
-		startTest();
-		for(int i = 0; i < AMOUNT; i++)
-		{
-			Object obj = ois.readObject();
-			dummy += obj.hashCode();
-		}
-		stopTest("streamingSerialization", "Read", bytes.length);
-		ois.close();
-		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
 	// ###
@@ -194,35 +162,6 @@ public class PerformanceTest
 	// ###
 
 	@Test
-	public void lilithXmlCompressed()
-	{
-		boolean compressed = true;
-		Encoder<LoggingEvent> encoder = new LoggingXmlEncoder(compressed);
-		Decoder<LoggingEvent> decoder = new LoggingXmlDecoder(compressed);
-		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
-		long byteCounter = 0;
-		startTest();
-		for(EventWrapper<LoggingEvent> current : loggingEvents)
-		{
-			byte[] bytes = encoder.encode(current.getEvent());
-			byteCounter += bytes.length;
-			collectedBytes.add(bytes);
-		}
-		stopTest("lilithXmlCompressed", "Encoder", byteCounter);
-		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
-
-		long dummy = 0;
-		startTest();
-		for(byte[] current : collectedBytes)
-		{
-			LoggingEvent event = decoder.decode(current);
-			dummy += event.hashCode();
-		}
-		stopTest("lilithXmlCompressed", "Decoder", byteCounter);
-		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
-	}
-
-	@Test
 	public void lilithXmlUncompressed()
 	{
 		boolean compressed = false;
@@ -251,14 +190,12 @@ public class PerformanceTest
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
-	// ###
-
 	@Test
-	public void javaUtilXmlCompressed()
+	public void lilithXmlCompressed()
 	{
 		boolean compressed = true;
-		Encoder<LoggingEvent> encoder = new XmlEncoder<LoggingEvent>(compressed, LoggingEvent.Level.class);
-		Decoder<LoggingEvent> decoder = new XmlDecoder<LoggingEvent>(compressed);
+		Encoder<LoggingEvent> encoder = new LoggingXmlEncoder(compressed);
+		Decoder<LoggingEvent> decoder = new LoggingXmlDecoder(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
@@ -268,7 +205,7 @@ public class PerformanceTest
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("javaBeansXmlCompressed", "Encoder", byteCounter);
+		stopTest("lilithXmlCompressed", "Encoder", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -278,9 +215,11 @@ public class PerformanceTest
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("javaBeansXmlCompressed", "Decoder", byteCounter);
+		stopTest("lilithXmlCompressed", "Decoder", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
+
+	// ###
 
 	@Test
 	public void javaUtilXmlUncompressed()
@@ -311,14 +250,12 @@ public class PerformanceTest
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
-	// ###
-
 	@Test
-	public void serializationCompressed()
+	public void javaUtilXmlCompressed()
 	{
 		boolean compressed = true;
-		Encoder<LoggingEvent> encoder = new SerializableEncoder<LoggingEvent>(compressed);
-		Decoder<LoggingEvent> decoder = new SerializableDecoder<LoggingEvent>(compressed);
+		Encoder<LoggingEvent> encoder = new XmlEncoder<LoggingEvent>(compressed, LoggingEvent.Level.class);
+		Decoder<LoggingEvent> decoder = new XmlDecoder<LoggingEvent>(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
@@ -328,7 +265,7 @@ public class PerformanceTest
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("serializationCompressed", "Encoder", byteCounter);
+		stopTest("javaBeansXmlCompressed", "Encoder", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -338,9 +275,11 @@ public class PerformanceTest
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("serializationCompressed", "Decoder", byteCounter);
+		stopTest("javaBeansXmlCompressed", "Decoder", byteCounter);
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
+
+	// ###
 
 	@Test
 	public void serializationUncompressed()
@@ -371,10 +310,73 @@ public class PerformanceTest
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
+	@Test
+	public void serializationCompressed()
+	{
+		boolean compressed = true;
+		Encoder<LoggingEvent> encoder = new SerializableEncoder<LoggingEvent>(compressed);
+		Decoder<LoggingEvent> decoder = new SerializableDecoder<LoggingEvent>(compressed);
+		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
+		long byteCounter = 0;
+		startTest();
+		for(EventWrapper<LoggingEvent> current : loggingEvents)
+		{
+			byte[] bytes = encoder.encode(current.getEvent());
+			byteCounter += bytes.length;
+			collectedBytes.add(bytes);
+		}
+		stopTest("serializationCompressed", "Encoder", byteCounter);
+		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
+
+		long dummy = 0;
+		startTest();
+		for(byte[] current : collectedBytes)
+		{
+			LoggingEvent event = decoder.decode(current);
+			dummy += event.hashCode();
+		}
+		stopTest("serializationCompressed", "Decoder", byteCounter);
+		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
+	}
+
 	// ###
 
 	@Test
-	public void protobufNoCompressionAdd()
+	public void streamingSerialization()
+		throws IOException, ClassNotFoundException
+	{
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		startTest();
+		for(EventWrapper<LoggingEvent> current : loggingEvents)
+		{
+			oos.writeObject(current);
+		}
+		oos.flush();
+		oos.close();
+		byte[] bytes = bos.toByteArray();
+		stopTest("streamingSerialization", "Write", bytes.length);
+		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", bytes.length);
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		ObjectInputStream ois = new ObjectInputStream(bis);
+		long dummy = 0;
+
+		startTest();
+		for(int i = 0; i < AMOUNT; i++)
+		{
+			Object obj = ois.readObject();
+			dummy += obj.hashCode();
+		}
+		stopTest("streamingSerialization", "Read", bytes.length);
+		ois.close();
+		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
+	}
+
+	// ###
+
+	@Test
+	public void protobufUncompressedAdd()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.PROTOBUF, false);
 		startTest();
@@ -382,20 +384,20 @@ public class PerformanceTest
 		{
 			buffer.add(current);
 		}
-		stopTest("protobufNoCompression", "Add");
+		stopTest("protobufUncompressed", "add");
 	}
 
 	@Test
-	public void protobufNoCompressionAddAll()
+	public void protobufUncompressedAddAll()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.PROTOBUF, false);
 		startTest();
 		buffer.addAll(loggingEvents);
-		stopTest("protobufNoCompression", "AddAll");
+		stopTest("protobufUncompressed", "addAll");
 	}
 
 	@Test
-	public void protobufNoCompressionGet()
+	public void protobufUncompressedGet()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.PROTOBUF, false);
 		buffer.addAll(loggingEvents);
@@ -406,13 +408,13 @@ public class PerformanceTest
 		{
 			buffer.get(i);
 		}
-		stopTest("protobufNoCompression", "Get");
+		stopTest("protobufUncompressed", "get");
 	}
 
 	// ###
 
 	@Test
-	public void protobufCompressionAdd()
+	public void protobufCompressedAdd()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.PROTOBUF, true);
 		startTest();
@@ -420,20 +422,20 @@ public class PerformanceTest
 		{
 			buffer.add(current);
 		}
-		stopTest("protobufCompression", "Add");
+		stopTest("protobufCompressed", "add");
 	}
 
 	@Test
-	public void protobufCompressionAddAll()
+	public void protobufCompressedAddAll()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.PROTOBUF, true);
 		startTest();
 		buffer.addAll(loggingEvents);
-		stopTest("protobufCompression", "AddAll");
+		stopTest("protobufCompressed", "addAll");
 	}
 
 	@Test
-	public void protobufCompressionGet()
+	public void protobufCompressedGet()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.PROTOBUF, true);
 		buffer.addAll(loggingEvents);
@@ -444,13 +446,13 @@ public class PerformanceTest
 		{
 			buffer.get(i);
 		}
-		stopTest("protobufCompression", "Get");
+		stopTest("protobufCompressed", "get");
 	}
 
 	// ###
 
 	@Test
-	public void xmlNoCompressionAdd()
+	public void xmlUncompressedAdd()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.JAVA_UTIL_XML, false);
 		startTest();
@@ -458,20 +460,20 @@ public class PerformanceTest
 		{
 			buffer.add(current);
 		}
-		stopTest("xmlNoCompression", "Add");
+		stopTest("xmlUncompressed", "add");
 	}
 
 	@Test
-	public void xmlNoCompressionAddAll()
+	public void xmlUncompressedAddAll()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.JAVA_UTIL_XML, false);
 		startTest();
 		buffer.addAll(loggingEvents);
-		stopTest("xmlNoCompression", "AddAll");
+		stopTest("xmlUncompressed", "addAll");
 	}
 
 	@Test
-	public void xmlNoCompressionGet()
+	public void xmlUncompressedGet()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.JAVA_UTIL_XML, false);
 		buffer.addAll(loggingEvents);
@@ -482,13 +484,13 @@ public class PerformanceTest
 		{
 			buffer.get(i);
 		}
-		stopTest("xmlNoCompression", "Get");
+		stopTest("xmlUncompressed", "get");
 	}
 
 	// ###
 
 	@Test
-	public void xmlCompressionAdd()
+	public void xmlCompressedAdd()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.JAVA_UTIL_XML, true);
 		startTest();
@@ -496,20 +498,20 @@ public class PerformanceTest
 		{
 			buffer.add(current);
 		}
-		stopTest("xmlCompression", "Add");
+		stopTest("xmlCompressed", "add");
 	}
 
 	@Test
-	public void xmlCompressionAddAll()
+	public void xmlCompressedAddAll()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.JAVA_UTIL_XML, true);
 		startTest();
 		buffer.addAll(loggingEvents);
-		stopTest("xmlCompression", "AddAll");
+		stopTest("xmlCompressed", "addAll");
 	}
 
 	@Test
-	public void xmlCompressionGet()
+	public void xmlCompressedGet()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.JAVA_UTIL_XML, true);
 		buffer.addAll(loggingEvents);
@@ -520,13 +522,13 @@ public class PerformanceTest
 		{
 			buffer.get(i);
 		}
-		stopTest("xmlCompression", "Get");
+		stopTest("xmlCompressed", "get");
 	}
 
 	// ###
 
 	@Test
-	public void serializationNoCompressionAdd()
+	public void serializationUncompressedAdd()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.SERIALIZATION, false);
 		startTest();
@@ -534,20 +536,20 @@ public class PerformanceTest
 		{
 			buffer.add(current);
 		}
-		stopTest("serializationNoCompression", "Add");
+		stopTest("serializationUncompressed", "add");
 	}
 
 	@Test
-	public void serializationNoCompressionAddAll()
+	public void serializationUncompressedAddAll()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.SERIALIZATION, false);
 		startTest();
 		buffer.addAll(loggingEvents);
-		stopTest("serializationNoCompression", "AddAll");
+		stopTest("serializationUncompressed", "addAll");
 	}
 
 	@Test
-	public void serializationNoCompressionGet()
+	public void serializationUncompressedGet()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.SERIALIZATION, false);
 		buffer.addAll(loggingEvents);
@@ -558,13 +560,13 @@ public class PerformanceTest
 		{
 			buffer.get(i);
 		}
-		stopTest("serializationNoCompression", "Get");
+		stopTest("serializationUncompressed", "get");
 	}
 
 	// ###
 
 	@Test
-	public void serializationCompressionAdd()
+	public void serializationCompressedAdd()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.SERIALIZATION, true);
 		startTest();
@@ -572,20 +574,20 @@ public class PerformanceTest
 		{
 			buffer.add(current);
 		}
-		stopTest("serializationCompression", "Add");
+		stopTest("serializationCompressed", "add");
 	}
 
 	@Test
-	public void serializationCompressionAddAll()
+	public void serializationCompressedAddAll()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.SERIALIZATION, true);
 		startTest();
 		buffer.addAll(loggingEvents);
-		stopTest("serializationCompression", "AddAll");
+		stopTest("serializationCompressed", "addAll");
 	}
 
 	@Test
-	public void serializationCompressionGet()
+	public void serializationCompressedGet()
 	{
 		CodecFileBuffer<EventWrapper<LoggingEvent>> buffer = createFileBuffer(TestFormat.SERIALIZATION, true);
 		buffer.addAll(loggingEvents);
@@ -596,7 +598,7 @@ public class PerformanceTest
 		{
 			buffer.get(i);
 		}
-		stopTest("serializationCompression", "Get");
+		stopTest("serializationCompressed", "get");
 	}
 
 	// ###
@@ -719,7 +721,37 @@ public class PerformanceTest
 		result
 			.setNdc(new Message[]{new Message("ndcMessagePattern-" + counter + ": {} {}", new String[]{"ndcParam1-" + counter, "ndcParam2-" + counter})});
 		result.setThreadName("threadName-" + counter);
-		ExtendedStackTraceElement[] callStack = createCallStack();
+		ExtendedStackTraceElement[] originalCallStack = createCallStack();
+		ExtendedStackTraceElement[] callStack = new ExtendedStackTraceElement[originalCallStack.length * 5];
+		for(int i = 0; i < callStack.length; i++)
+		{
+			ExtendedStackTraceElement original = originalCallStack[i % originalCallStack.length];
+			ExtendedStackTraceElement actual = new ExtendedStackTraceElement();
+			if(original.getClassName() != null)
+			{
+				actual.setClassName(original.getClassName() + i);
+			}
+			if(original.getFileName() != null)
+			{
+				actual.setFileName(original.getFileName() + i);
+			}
+			if(original.getMethodName() != null)
+			{
+				actual.setMethodName(original.getMethodName() + i);
+			}
+			if(original.getCodeLocation() != null)
+			{
+				actual.setCodeLocation(original.getCodeLocation() + i);
+			}
+			if(original.getVersion() != null)
+			{
+				actual.setVersion(original.getVersion() + i);
+			}
+			actual.setLineNumber(original.getLineNumber());
+			actual.setExact(original.isExact());
+
+			callStack[i] = actual;
+		}
 		result.setCallStack(callStack);
 		ThrowableInfo throwableInfo = createThrowableInfo();
 		result.setThrowable(throwableInfo);
