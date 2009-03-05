@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
-import de.huxhorn.sulky.generics.io.SerializableSerializer;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufSerializer;
 import de.huxhorn.sulky.generics.io.Serializer;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
@@ -84,7 +84,8 @@ public class ClassicMultiplexSocketAppender
 			usingDefaultPort = true;
 		}
 		// setSerializer(new SerializableSerializer<LoggingEvent>(compressing));
-		lilithSerializer = new SerializableSerializer<de.huxhorn.lilith.data.logging.LoggingEvent>(compressing);
+		//lilithSerializer = new SerializableSerializer<de.huxhorn.lilith.data.logging.LoggingEvent>(compressing);
+		lilithSerializer = new LoggingEventProtobufSerializer(compressing);
 		setSerializer(new TransformingSerializer());
 	}
 

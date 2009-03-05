@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true">
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
@@ -13,7 +13,7 @@
 	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
 		<Compressing>true</Compressing>
 		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-Compressed</ApplicationIdentifier>
+		<ApplicationIdentifier>MultiplexClassicCompressed</ApplicationIdentifier>
 		<ReconnectionDelay>30</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
@@ -23,7 +23,7 @@
 	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
 		<Compressing>false</Compressing>
 		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-Uncompressed</ApplicationIdentifier>
+		<ApplicationIdentifier>MultiplexClassicUncompressed</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
@@ -33,7 +33,7 @@
 	          class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
 		<Compressing>true</Compressing>
 		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-XML-Compressed</ApplicationIdentifier>
+		<ApplicationIdentifier>MultiplexClassicXmlCompressed</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
@@ -43,7 +43,7 @@
 	          class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
 		<Compressing>false</Compressing>
 		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-XML-Uncompressed</ApplicationIdentifier>
+		<ApplicationIdentifier>MultiplexClassicXmlUncompressed</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>
@@ -51,7 +51,7 @@
 
 	<appender name="ZeroDelimitedMultiplexClassicXml"
 	          class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
-		<ApplicationIdentifier>Lilith-XML-ZeroDelimited</ApplicationIdentifier>
+		<ApplicationIdentifier>ZeroDelimitedMultiplexClassicXml</ApplicationIdentifier>
 		<ReconnectionDelay>290</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 		<RemoteHosts>localhost</RemoteHosts>

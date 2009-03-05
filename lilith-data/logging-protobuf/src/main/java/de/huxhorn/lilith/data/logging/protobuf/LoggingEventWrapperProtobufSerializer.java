@@ -28,12 +28,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
-public class LoggingEventWrapperSerializer
+public class LoggingEventWrapperProtobufSerializer
 	implements Serializer<EventWrapper<LoggingEvent>>
 {
 	private boolean compressing;
 
-	public LoggingEventWrapperSerializer(boolean compressing)
+	public LoggingEventWrapperProtobufSerializer(boolean compressing)
+	{
+		this.compressing = compressing;
+	}
+
+	public boolean isCompressing()
+	{
+		return compressing;
+	}
+
+	public void setCompressing(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -87,7 +97,7 @@ public class LoggingEventWrapperSerializer
 			LoggingEvent event = wrapper.getEvent();
 			if(event != null)
 			{
-				builder.setEvent(LoggingEventSerializer.convert(event));
+				builder.setEvent(LoggingEventProtobufSerializer.convert(event));
 			}
 		}
 

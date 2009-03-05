@@ -35,12 +35,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-public class LoggingEventDeserializer
+public class LoggingEventProtobufDeserializer
 	implements Deserializer<LoggingEvent>
 {
 	private boolean compressing;
 
-	public LoggingEventDeserializer(boolean compressing)
+	public LoggingEventProtobufDeserializer(boolean compressing)
+	{
+		this.compressing = compressing;
+	}
+
+	public boolean isCompressing()
+	{
+		return compressing;
+	}
+
+	public void setCompressing(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
