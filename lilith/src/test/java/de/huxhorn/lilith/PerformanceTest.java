@@ -8,30 +8,29 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDeserializer;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufSerializer;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDecoder;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlDeserializer;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlSerializer;
+import de.huxhorn.lilith.data.logging.xml.LoggingXmlDecoder;
+import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
 import de.huxhorn.lilith.engine.FileConstants;
 import de.huxhorn.lilith.engine.impl.LoggingEventWrapperXmlCodec;
 import de.huxhorn.sulky.buffers.ExtendedSerializingFileBuffer;
 import de.huxhorn.sulky.formatting.HumanReadable;
-import de.huxhorn.sulky.generics.io.Deserializer;
-import de.huxhorn.sulky.generics.io.SerializableDeserializer;
-import de.huxhorn.sulky.generics.io.SerializableSerializer;
-import de.huxhorn.sulky.generics.io.Serializer;
-import de.huxhorn.sulky.generics.io.XmlDeserializer;
-import de.huxhorn.sulky.generics.io.XmlSerializer;
-import de.huxhorn.sulky.generics.io.SerializableCodec;
-import de.huxhorn.sulky.generics.io.Codec;
+import de.huxhorn.sulky.codec.Decoder;
+import de.huxhorn.sulky.codec.Encoder;
+import de.huxhorn.sulky.codec.XmlEncoder;
+import de.huxhorn.sulky.codec.XmlDecoder;
+import de.huxhorn.sulky.codec.SerializableDecoder;
+import de.huxhorn.sulky.codec.SerializableEncoder;
+import de.huxhorn.sulky.codec.Codec;
+import de.huxhorn.sulky.codec.SerializableCodec;
 
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,14 +135,14 @@ public class PerformanceTest
 	public void protobufUncompressed()
 	{
 		boolean compressed = false;
-		Serializer<LoggingEvent> serializer = new LoggingEventProtobufSerializer(compressed);
-		Deserializer<LoggingEvent> deserializer = new LoggingEventProtobufDeserializer(compressed);
+		Encoder<LoggingEvent> serializer = new LoggingEventProtobufEncoder(compressed);
+		Decoder<LoggingEvent> deserializer = new LoggingEventProtobufDecoder(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -154,7 +153,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("protobufUncompressedDeserializer", byteCounter);
@@ -165,14 +164,14 @@ public class PerformanceTest
 	public void protobufCompressed()
 	{
 		boolean compressed = true;
-		Serializer<LoggingEvent> serializer = new LoggingEventProtobufSerializer(compressed);
-		Deserializer<LoggingEvent> deserializer = new LoggingEventProtobufDeserializer(compressed);
+		Encoder<LoggingEvent> serializer = new LoggingEventProtobufEncoder(compressed);
+		Decoder<LoggingEvent> deserializer = new LoggingEventProtobufDecoder(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -183,7 +182,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("protobufCompressedDeserializer", byteCounter);
@@ -194,14 +193,14 @@ public class PerformanceTest
 	public void lilithXmlCompressed()
 	{
 		boolean compressed = true;
-		Serializer<LoggingEvent> serializer = new LoggingXmlSerializer(compressed);
-		Deserializer<LoggingEvent> deserializer = new LoggingXmlDeserializer(compressed);
+		Encoder<LoggingEvent> serializer = new LoggingXmlEncoder(compressed);
+		Decoder<LoggingEvent> deserializer = new LoggingXmlDecoder(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -212,7 +211,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("lilithXmlCompressedDeserializer", byteCounter);
@@ -223,14 +222,14 @@ public class PerformanceTest
 	public void lilithXmlUncompressed()
 	{
 		boolean compressed = false;
-		Serializer<LoggingEvent> serializer = new LoggingXmlSerializer(compressed);
-		Deserializer<LoggingEvent> deserializer = new LoggingXmlDeserializer(compressed);
+		Encoder<LoggingEvent> serializer = new LoggingXmlEncoder(compressed);
+		Decoder<LoggingEvent> deserializer = new LoggingXmlDecoder(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -241,7 +240,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("lilithXmlUncompressedDeserializer", byteCounter);
@@ -252,14 +251,14 @@ public class PerformanceTest
 	public void javaUtilXmlCompressed()
 	{
 		boolean compressed = true;
-		Serializer<LoggingEvent> serializer = new XmlSerializer<LoggingEvent>(compressed, LoggingEvent.Level.class);
-		Deserializer<LoggingEvent> deserializer = new XmlDeserializer<LoggingEvent>(compressed);
+		Encoder<LoggingEvent> serializer = new XmlEncoder<LoggingEvent>(compressed, LoggingEvent.Level.class);
+		Decoder<LoggingEvent> deserializer = new XmlDecoder<LoggingEvent>(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -270,7 +269,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("javaBeansXmlCompressedDeserializer", byteCounter);
@@ -281,14 +280,14 @@ public class PerformanceTest
 	public void javaUtilXmlUncompressed()
 	{
 		boolean compressed = false;
-		Serializer<LoggingEvent> serializer = new XmlSerializer<LoggingEvent>(compressed, LoggingEvent.Level.class);
-		Deserializer<LoggingEvent> deserializer = new XmlDeserializer<LoggingEvent>(compressed);
+		Encoder<LoggingEvent> serializer = new XmlEncoder<LoggingEvent>(compressed, LoggingEvent.Level.class);
+		Decoder<LoggingEvent> deserializer = new XmlDecoder<LoggingEvent>(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -299,7 +298,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("javaBeansXmlUncompressedDeserializer", byteCounter);
@@ -310,14 +309,14 @@ public class PerformanceTest
 	public void serializationCompressed()
 	{
 		boolean compressed = true;
-		Serializer<LoggingEvent> serializer = new SerializableSerializer<LoggingEvent>(compressed);
-		Deserializer<LoggingEvent> deserializer = new SerializableDeserializer<LoggingEvent>(compressed);
+		Encoder<LoggingEvent> serializer = new SerializableEncoder<LoggingEvent>(compressed);
+		Decoder<LoggingEvent> deserializer = new SerializableDecoder<LoggingEvent>(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -328,7 +327,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("serializationCompressedDeserializer", byteCounter);
@@ -339,14 +338,14 @@ public class PerformanceTest
 	public void serializationUncompressed()
 	{
 		boolean compressed = false;
-		Serializer<LoggingEvent> serializer = new SerializableSerializer<LoggingEvent>(compressed);
-		Deserializer<LoggingEvent> deserializer = new SerializableDeserializer<LoggingEvent>(compressed);
+		Encoder<LoggingEvent> serializer = new SerializableEncoder<LoggingEvent>(compressed);
+		Decoder<LoggingEvent> deserializer = new SerializableDecoder<LoggingEvent>(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
-			byte[] bytes = serializer.serialize(current.getEvent());
+			byte[] bytes = serializer.encode(current.getEvent());
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
@@ -357,7 +356,7 @@ public class PerformanceTest
 		startTest();
 		for(byte[] current : collectedBytes)
 		{
-			LoggingEvent event = deserializer.deserialize(current);
+			LoggingEvent event = deserializer.decode(current);
 			dummy += event.hashCode();
 		}
 		stopSerializerTest("serializationUncompressedDeserializer", byteCounter);

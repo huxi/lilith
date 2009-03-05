@@ -18,58 +18,49 @@
 package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.sulky.generics.io.Serializer;
 
-import java.io.ByteArrayOutputStream;
+import org.apache.commons.io.IOUtils;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.zip.GZIPOutputStream;
+import java.util.zip.GZIPInputStream;
 
-import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
+import javax.xml.stream.XMLStreamReader;
+import de.huxhorn.sulky.codec.Decoder;
 
-public class LoggingXmlSerializer
-	implements Serializer<LoggingEvent>
+public class LoggingXmlDecoder
+	implements Decoder<LoggingEvent>
 {
-	private LoggingEventWriter loggingEventWriter;
+	private LoggingEventReader loggingEventReader;
 	private boolean compressing;
 
-	public LoggingXmlSerializer(boolean compressing)
+	public LoggingXmlDecoder(boolean compressing)
 	{
 		this.compressing = compressing;
-		loggingEventWriter = new LoggingEventWriter();
-		loggingEventWriter.setWritingSchemaLocation(false);
+		loggingEventReader = new LoggingEventReader();
 	}
 
-	public byte[] serialize(LoggingEvent event)
+	public LoggingEvent decode(byte[] bytes)
 	{
-		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-		
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		OutputStreamWriter osw;
+		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+		XMLStreamReader reader;
 		try
 		{
-			XMLStreamWriter writer;
 			if(compressing)
 			{
-				GZIPOutputStream gos = new GZIPOutputStream(out);
-				osw = new OutputStreamWriter(gos, "utf-8");
-				writer = outputFactory.createXMLStreamWriter(osw);
+				GZIPInputStream gis = new GZIPInputStream(in);
+				reader = inputFactory.createXMLStreamReader(new InputStreamReader(gis, "utf-8"));
 			}
 			else
 			{
-				osw = new OutputStreamWriter(out, "utf-8");
-				writer = outputFactory.createXMLStreamWriter(osw);
+				reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
 			}
-
-			loggingEventWriter.write(writer, event, true);
-			writer.flush();
-			writer.close();
-			osw.flush(); // this is
-			osw.close(); // absolutely necessary!!
-			return out.toByteArray();
+			return loggingEventReader.read(reader);
 		}
 		catch(XMLStreamException e)
 		{
@@ -85,6 +76,10 @@ public class LoggingXmlSerializer
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();
+		}
+		finally
+		{
+			IOUtils.closeQuietly(in);
 		}
 		return null;
 	}

@@ -23,20 +23,20 @@ import de.huxhorn.lilith.sender.HeartbeatRunnable;
 import de.huxhorn.lilith.sender.MessageWriteByteStrategy;
 import de.huxhorn.lilith.sender.MultiplexSendBytesService;
 import de.huxhorn.lilith.sender.WriteByteStrategy;
-import de.huxhorn.sulky.generics.io.Serializer;
 
 import ch.qos.logback.core.AppenderBase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import de.huxhorn.sulky.codec.Encoder;
 
 public abstract class MultiplexSocketAppenderBase<E>
 	extends AppenderBase<E>
 {
 	private static final int DEFAULT_QUEUE_SIZE = 1000;
 
-	private Serializer<E> serializer;
+	private Encoder<E> encoder;
 	private int port;
 	private List<String> remoteHostsList;
 	private String applicationIdentifier;
@@ -234,10 +234,10 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	protected void append(E e)
 	{
-		if(serializer != null)
+		if(encoder != null)
 		{
 			preProcess(e);
-			byte[] serialized = serializer.serialize(e);
+			byte[] serialized = encoder.encode(e);
 			if(serialized != null)
 			{
 				sendBytes(serialized);
@@ -247,13 +247,13 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	protected abstract void preProcess(E e);
 
-	protected Serializer<E> getSerializer()
+	protected Encoder<E> getEncoder()
 	{
-		return serializer;
+		return encoder;
 	}
 
-	protected void setSerializer(Serializer<E> serializer)
+	protected void setEncoder(Encoder<E> encoder)
 	{
-		this.serializer = serializer;
+		this.encoder = encoder;
 	}
 }

@@ -21,7 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.sender.HeartbeatRunnable;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.generics.io.Deserializer;
+import de.huxhorn.sulky.codec.Decoder;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	private final Logger logger = LoggerFactory.getLogger(AbstractMessageBasedEventProducer.class);
 
 	private final DataInputStream dataInput;
-	private Deserializer<T> deserializer;
+	private Decoder<T> deserializer;
 	private boolean compressing;
 	private long heartbeatTimestamp;
 
@@ -49,10 +49,10 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		super(sourceIdentifier, eventQueue);
 		this.dataInput = new DataInputStream(new BufferedInputStream(inputStream));
 		this.compressing = compressing;
-		this.deserializer = createDeserializer();
+		this.deserializer = createDecoder();
 	}
 
-	protected abstract Deserializer<T> createDeserializer();
+	protected abstract Decoder<T> createDecoder();
 
 	public void start()
 	{
@@ -143,7 +143,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 							allocating = false;
 							dataInput.readFully(bytes);
 
-							Object object = deserializer.deserialize(bytes);
+							Object object = deserializer.decode(bytes);
 							if(object == null)
 							{
 								if(logger.isInfoEnabled()) logger.info("Retrieved null!");

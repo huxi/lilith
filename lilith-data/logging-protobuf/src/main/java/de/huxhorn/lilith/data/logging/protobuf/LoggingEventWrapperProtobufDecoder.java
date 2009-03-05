@@ -22,7 +22,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
-import de.huxhorn.sulky.generics.io.Deserializer;
+import de.huxhorn.sulky.codec.Decoder;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -30,12 +30,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 
-public class LoggingEventWrapperProtobufDeserializer
-	implements Deserializer<EventWrapper<LoggingEvent>>
+public class LoggingEventWrapperProtobufDecoder
+	implements Decoder<EventWrapper<LoggingEvent>>
 {
 	private boolean compressing;
 
-	public LoggingEventWrapperProtobufDeserializer(boolean compressing)
+	public LoggingEventWrapperProtobufDecoder(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -50,7 +50,7 @@ public class LoggingEventWrapperProtobufDeserializer
 		this.compressing = compressing;
 	}
 
-	public EventWrapper<LoggingEvent> deserialize(byte[] bytes)
+	public EventWrapper<LoggingEvent> decode(byte[] bytes)
 	{
 		if(bytes == null)
 		{
@@ -99,7 +99,7 @@ public class LoggingEventWrapperProtobufDeserializer
 		}
 		if(parsedEvent.hasEvent())
 		{
-			result.setEvent(LoggingEventProtobufDeserializer.convert(parsedEvent.getEvent()));
+			result.setEvent(LoggingEventProtobufDecoder.convert(parsedEvent.getEvent()));
 		}
 
 		return result;

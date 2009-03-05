@@ -18,8 +18,8 @@
 package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.access.logback.LogbackAccessAdapter;
-import de.huxhorn.sulky.generics.io.SerializableSerializer;
-import de.huxhorn.sulky.generics.io.Serializer;
+import de.huxhorn.sulky.codec.Encoder;
+import de.huxhorn.sulky.codec.SerializableEncoder;
 
 import ch.qos.logback.access.spi.AccessEvent;
 
@@ -38,7 +38,7 @@ public class AccessMultiplexSocketAppender
 
 	private boolean compressing;
 	private boolean usingDefaultPort;
-	private Serializer<de.huxhorn.lilith.data.access.AccessEvent> lilithSerializer;
+	private Encoder<de.huxhorn.lilith.data.access.AccessEvent> lilithSerializer;
 
 	public AccessMultiplexSocketAppender()
 	{
@@ -63,7 +63,7 @@ public class AccessMultiplexSocketAppender
 	{
 		if(lilithSerializer != null)
 		{
-			byte[] serialized = lilithSerializer.serialize(e);
+			byte[] serialized = lilithSerializer.encode(e);
 			if(serialized != null)
 			{
 				sendBytes(serialized);
@@ -94,9 +94,9 @@ public class AccessMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		//setSerializer(new SerializableSerializer<AccessEvent>(compressing));
-		lilithSerializer = new SerializableSerializer<de.huxhorn.lilith.data.access.AccessEvent>(compressing);
-		setSerializer(new TransformingSerializer());
+		//setEncoder(new SerializableSerializer<AccessEvent>(compressing));
+		lilithSerializer = new SerializableEncoder<de.huxhorn.lilith.data.access.AccessEvent>(compressing);
+		setEncoder(new TransformingSerializer());
 	}
 
 	public boolean isCompressing()
@@ -113,15 +113,15 @@ public class AccessMultiplexSocketAppender
 	}
 
 	private class TransformingSerializer
-		implements Serializer<AccessEvent>
+		implements Encoder<AccessEvent>
 	{
 		LogbackAccessAdapter adapter = new LogbackAccessAdapter();
 
-		public byte[] serialize(AccessEvent logbackEvent)
+		public byte[] encode(AccessEvent logbackEvent)
 		{
 			de.huxhorn.lilith.data.access.AccessEvent lilithEvent = adapter.convert(logbackEvent);
 			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return lilithSerializer.serialize(lilithEvent);
+			return lilithSerializer.encode(lilithEvent);
 		}
 	}
 }

@@ -23,7 +23,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
-import de.huxhorn.sulky.generics.io.Deserializer;
+import de.huxhorn.sulky.codec.Decoder;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -35,12 +35,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-public class LoggingEventProtobufDeserializer
-	implements Deserializer<LoggingEvent>
+public class LoggingEventProtobufDecoder
+	implements Decoder<LoggingEvent>
 {
 	private boolean compressing;
 
-	public LoggingEventProtobufDeserializer(boolean compressing)
+	public LoggingEventProtobufDecoder(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -55,7 +55,7 @@ public class LoggingEventProtobufDeserializer
 		this.compressing = compressing;
 	}
 
-	public LoggingEvent deserialize(byte[] bytes)
+	public LoggingEvent decode(byte[] bytes)
 	{
 		if(bytes == null)
 		{

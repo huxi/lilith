@@ -18,8 +18,8 @@
 package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufSerializer;
-import de.huxhorn.sulky.generics.io.Serializer;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
+import de.huxhorn.sulky.codec.Encoder;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
@@ -39,7 +39,7 @@ public class ClassicMultiplexSocketAppender
 	private boolean includeCallerData;
 	private boolean compressing;
 	private boolean usingDefaultPort;
-	private Serializer<de.huxhorn.lilith.data.logging.LoggingEvent> lilithSerializer;
+	private Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> lilithSerializer;
 
 	public ClassicMultiplexSocketAppender()
 	{
@@ -83,10 +83,10 @@ public class ClassicMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		// setSerializer(new SerializableSerializer<LoggingEvent>(compressing));
+		// setEncoder(new SerializableSerializer<LoggingEvent>(compressing));
 		//lilithSerializer = new SerializableSerializer<de.huxhorn.lilith.data.logging.LoggingEvent>(compressing);
-		lilithSerializer = new LoggingEventProtobufSerializer(compressing);
-		setSerializer(new TransformingSerializer());
+		lilithSerializer = new LoggingEventProtobufEncoder(compressing);
+		setEncoder(new TransformingSerializer());
 	}
 
 	public boolean isCompressing()
@@ -144,15 +144,15 @@ public class ClassicMultiplexSocketAppender
 	}
 
 	private class TransformingSerializer
-		implements Serializer<LoggingEvent>
+		implements Encoder<LoggingEvent>
 	{
 		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
 
-		public byte[] serialize(LoggingEvent logbackEvent)
+		public byte[] encode(LoggingEvent logbackEvent)
 		{
 			de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
 			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return lilithSerializer.serialize(lilithEvent);
+			return lilithSerializer.encode(lilithEvent);
 		}
 	}
 }

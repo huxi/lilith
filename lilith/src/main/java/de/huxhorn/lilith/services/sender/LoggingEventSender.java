@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.services.sender;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.sulky.generics.io.SerializableSerializer;
+import de.huxhorn.sulky.codec.SerializableEncoder;
 
 import javax.jmdns.JmDNS;
 
@@ -26,19 +26,19 @@ public class LoggingEventSender
 	extends AbstractEventSender<LoggingEvent>
 {
 	public static final String SERVICE_TYPE = "_logging._tcp.local.";
-	private SerializableSerializer<LoggingEvent> serializer;
+	private SerializableEncoder<LoggingEvent> serializer;
 
 	public LoggingEventSender(JmDNS jmDns, String serviceName, String hostName, int port, boolean compressing)
 	{
 		super(jmDns, serviceName, hostName, port, compressing);
-		serializer = new SerializableSerializer<LoggingEvent>(compressing);
+		serializer = new SerializableEncoder<LoggingEvent>(compressing);
 	}
 
 	public void send(LoggingEvent event)
 	{
 		if(serializer != null)
 		{
-			byte[] serialized = serializer.serialize(event);
+			byte[] serialized = serializer.encode(event);
 			if(serialized != null)
 			{
 				sendBytesService.sendBytes(serialized);

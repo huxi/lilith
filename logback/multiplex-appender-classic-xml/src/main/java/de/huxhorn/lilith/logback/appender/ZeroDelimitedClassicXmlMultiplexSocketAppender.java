@@ -18,8 +18,8 @@
 package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlSerializer;
-import de.huxhorn.sulky.generics.io.Serializer;
+import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import de.huxhorn.sulky.codec.Encoder;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
@@ -43,7 +43,7 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
 		includeCallerData = true;
-		setSerializer(new TransformingSerializer());
+		setEncoder(new TransformingSerializer());
 		setPort(DEFAULT_PORT);
 	}
 
@@ -75,21 +75,21 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	}
 
 	private class TransformingSerializer
-		implements Serializer<LoggingEvent>
+		implements Encoder<LoggingEvent>
 	{
 		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
-		Serializer<de.huxhorn.lilith.data.logging.LoggingEvent> internalSerializer;
+		Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> internalSerializer;
 
 		private TransformingSerializer()
 		{
-			internalSerializer = new LoggingXmlSerializer(false);
+			internalSerializer = new LoggingXmlEncoder(false);
 		}
 
-		public byte[] serialize(LoggingEvent logbackEvent)
+		public byte[] encode(LoggingEvent logbackEvent)
 		{
 			de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
 			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return internalSerializer.serialize(lilithEvent);
+			return internalSerializer.encode(lilithEvent);
 		}
 	}
 }

@@ -303,15 +303,15 @@ public class LoggingEventIOTest
 	public byte[] write(LoggingEvent event, boolean compressing)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
-		LoggingXmlSerializer ser = new LoggingXmlSerializer(compressing);
-		return ser.serialize(event);
+		LoggingXmlEncoder ser = new LoggingXmlEncoder(compressing);
+		return ser.encode(event);
 	}
 
 	public LoggingEvent read(byte[] bytes, boolean compressing)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
-		LoggingXmlDeserializer des = new LoggingXmlDeserializer(compressing);
-		return des.deserialize(bytes);
+		LoggingXmlDecoder des = new LoggingXmlDecoder(compressing);
+		return des.decode(bytes);
 	}
 
 	String toString(Marker marker)

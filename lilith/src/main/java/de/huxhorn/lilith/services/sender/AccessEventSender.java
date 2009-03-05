@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.services.sender;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.sulky.generics.io.SerializableSerializer;
+import de.huxhorn.sulky.codec.SerializableEncoder;
 
 import javax.jmdns.JmDNS;
 
@@ -27,19 +27,19 @@ public class AccessEventSender
 {
 	public static final String SERVICE_TYPE = "_access._tcp.local.";
 
-	private SerializableSerializer<AccessEvent> serializer;
+	private SerializableEncoder<AccessEvent> serializer;
 
 	public AccessEventSender(JmDNS jmDns, String serviceName, String hostName, int port, boolean compressing)
 	{
 		super(jmDns, serviceName, hostName, port, compressing);
-		serializer = new SerializableSerializer<AccessEvent>(compressing);
+		serializer = new SerializableEncoder<AccessEvent>(compressing);
 	}
 
 	public void send(AccessEvent event)
 	{
 		if(serializer != null)
 		{
-			byte[] serialized = serializer.serialize(event);
+			byte[] serialized = serializer.encode(event);
 			if(serialized != null)
 			{
 				sendBytesService.sendBytes(serialized);

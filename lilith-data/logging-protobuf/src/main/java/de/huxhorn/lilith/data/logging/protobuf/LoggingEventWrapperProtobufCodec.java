@@ -2,33 +2,33 @@ package de.huxhorn.lilith.data.logging.protobuf;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.sulky.generics.io.DelegatingCodecBase;
-import de.huxhorn.sulky.generics.io.Serializer;
-import de.huxhorn.sulky.generics.io.Deserializer;
+import de.huxhorn.sulky.codec.DelegatingCodecBase;
+import de.huxhorn.sulky.codec.Decoder;
+import de.huxhorn.sulky.codec.Encoder;
 
 public class LoggingEventWrapperProtobufCodec
 	extends DelegatingCodecBase<EventWrapper<LoggingEvent>>
 {
 	public LoggingEventWrapperProtobufCodec(boolean compressed)
 	{
-		super(new LoggingEventWrapperProtobufSerializer(compressed), new LoggingEventWrapperProtobufDeserializer(compressed));
+		super(new LoggingEventWrapperProtobufEncoder(compressed), new LoggingEventWrapperProtobufDecoder(compressed));
 	}
 
 	public void setCompressing(boolean compressing)
 	{
 		{
-			Serializer<EventWrapper<LoggingEvent>> s = getSerializer();
-			if(s instanceof LoggingEventWrapperProtobufSerializer)
+			Encoder<EventWrapper<LoggingEvent>> s = getEncoder();
+			if(s instanceof LoggingEventWrapperProtobufEncoder)
 			{
-				LoggingEventWrapperProtobufSerializer ss= (LoggingEventWrapperProtobufSerializer) s;
+				LoggingEventWrapperProtobufEncoder ss= (LoggingEventWrapperProtobufEncoder) s;
 				ss.setCompressing(compressing);
 			}
 		}
 		{
-			Deserializer<EventWrapper<LoggingEvent>> d = getDeserializer();
-			if(d instanceof LoggingEventWrapperProtobufDeserializer)
+			Decoder<EventWrapper<LoggingEvent>> d = getDecoder();
+			if(d instanceof LoggingEventWrapperProtobufDecoder)
 			{
-				LoggingEventWrapperProtobufDeserializer sd= (LoggingEventWrapperProtobufDeserializer) d;
+				LoggingEventWrapperProtobufDecoder sd= (LoggingEventWrapperProtobufDecoder) d;
 				sd.setCompressing(compressing);
 			}
 		}

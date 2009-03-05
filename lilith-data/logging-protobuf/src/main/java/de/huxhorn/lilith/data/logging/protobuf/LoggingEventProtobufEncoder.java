@@ -23,7 +23,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
-import de.huxhorn.sulky.generics.io.Serializer;
+import de.huxhorn.sulky.codec.Encoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,12 +33,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 
-public class LoggingEventProtobufSerializer
-	implements Serializer<LoggingEvent>
+public class LoggingEventProtobufEncoder
+	implements Encoder<LoggingEvent>
 {
 	private boolean compressing;
 
-	public LoggingEventProtobufSerializer(boolean compressing)
+	public LoggingEventProtobufEncoder(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -53,7 +53,7 @@ public class LoggingEventProtobufSerializer
 		this.compressing = compressing;
 	}
 
-	public byte[] serialize(LoggingEvent event)
+	public byte[] encode(LoggingEvent event)
 	{
 		LoggingProto.LoggingEvent converted = convert(event);
 		if(converted == null)
@@ -65,7 +65,7 @@ public class LoggingEventProtobufSerializer
 			return converted.toByteArray();
 		}
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		GZIPOutputStream gos = null;
+		GZIPOutputStream gos;
 		try
 		{
 			gos = new GZIPOutputStream(out);

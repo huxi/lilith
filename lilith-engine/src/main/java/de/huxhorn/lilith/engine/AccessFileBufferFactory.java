@@ -20,8 +20,8 @@ package de.huxhorn.lilith.engine;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.engine.impl.AccessEventWrapperXmlCodec;
-import de.huxhorn.sulky.generics.io.Codec;
-import de.huxhorn.sulky.generics.io.SerializableCodec;
+import de.huxhorn.sulky.codec.Codec;
+import de.huxhorn.sulky.codec.SerializableCodec;
 
 import java.util.Map;
 

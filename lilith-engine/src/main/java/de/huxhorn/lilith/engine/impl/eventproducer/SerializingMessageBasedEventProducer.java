@@ -20,8 +20,8 @@ package de.huxhorn.lilith.engine.impl.eventproducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.generics.io.Deserializer;
-import de.huxhorn.sulky.generics.io.SerializableDeserializer;
+import de.huxhorn.sulky.codec.Decoder;
+import de.huxhorn.sulky.codec.SerializableDecoder;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -34,8 +34,8 @@ public class SerializingMessageBasedEventProducer<T extends Serializable>
 		super(sourceIdentifier, eventQueue, inputStream, compressing);
 	}
 
-	protected Deserializer<T> createDeserializer()
+	protected Decoder<T> createDecoder()
 	{
-		return new SerializableDeserializer<T>(isCompressing());
+		return new SerializableDecoder<T>(isCompressing());
 	}
 }
