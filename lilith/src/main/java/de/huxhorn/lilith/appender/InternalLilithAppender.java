@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.buffers.Buffer;
@@ -56,11 +57,11 @@ public class InternalLilithAppender
 
 		Map<String, String> loggingMetaData = new HashMap<String, String>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
-		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML);
+		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		loggingMetaData.put(FileConstants.COMPRESSED_KEY, "true");
 		// TODO: configurable format and compressed
 
-		FileBufferFactory<LoggingEvent> fileBufferFactory = new FileBufferFactory<LoggingEvent>(logFileFactory, loggingMetaData);
+		FileBufferFactory<LoggingEvent> fileBufferFactory = new LoggingFileBufferFactory(logFileFactory, loggingMetaData);
 		fileBuffer = fileBufferFactory.createActiveBuffer(sourceIdentifier);
 	}
 

@@ -34,6 +34,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.data.logging.protobuf</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-core</artifactId>
 			<scope>compile</scope>
 		</dependency>

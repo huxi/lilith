@@ -8,13 +8,13 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventDeserializer;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventSerializer;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperDeserializer;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperSerializer;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDeserializer;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufSerializer;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlDeserializer;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlSerializer;
 import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.engine.impl.LoggingEventWrapperXmlCodec;
 import de.huxhorn.sulky.buffers.ExtendedSerializingFileBuffer;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.generics.io.Deserializer;
@@ -23,12 +23,15 @@ import de.huxhorn.sulky.generics.io.SerializableSerializer;
 import de.huxhorn.sulky.generics.io.Serializer;
 import de.huxhorn.sulky.generics.io.XmlDeserializer;
 import de.huxhorn.sulky.generics.io.XmlSerializer;
+import de.huxhorn.sulky.generics.io.SerializableCodec;
+import de.huxhorn.sulky.generics.io.Codec;
 
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +122,7 @@ public class PerformanceTest
 		long dummy = 0;
 
 		startTest();
-		for(int i = 0; i < loggingEvents.size(); i++)
+		for(int i = 0; i < AMOUNT; i++)
 		{
 			Object obj = ois.readObject();
 			dummy += obj.hashCode();
@@ -133,8 +136,8 @@ public class PerformanceTest
 	public void protobufUncompressed()
 	{
 		boolean compressed = false;
-		Serializer<LoggingEvent> serializer = new LoggingEventSerializer(compressed);
-		Deserializer<LoggingEvent> deserializer = new LoggingEventDeserializer(compressed);
+		Serializer<LoggingEvent> serializer = new LoggingEventProtobufSerializer(compressed);
+		Deserializer<LoggingEvent> deserializer = new LoggingEventProtobufDeserializer(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
@@ -162,8 +165,8 @@ public class PerformanceTest
 	public void protobufCompressed()
 	{
 		boolean compressed = true;
-		Serializer<LoggingEvent> serializer = new LoggingEventSerializer(compressed);
-		Deserializer<LoggingEvent> deserializer = new LoggingEventDeserializer(compressed);
+		Serializer<LoggingEvent> serializer = new LoggingEventProtobufSerializer(compressed);
+		Deserializer<LoggingEvent> deserializer = new LoggingEventProtobufDeserializer(compressed);
 		List<byte[]> collectedBytes = new ArrayList<byte[]>(AMOUNT);
 		long byteCounter = 0;
 		startTest();
@@ -652,7 +655,7 @@ public class PerformanceTest
 			metaData.put(FileConstants.COMPRESSED_KEY, "false");
 		}
 
-		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> result = new ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>>(magicValue, metaData, null, null, dataFile, indexFile);
+		ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>> result = new ExtendedSerializingFileBuffer<EventWrapper<LoggingEvent>>(magicValue, metaData, null, dataFile, indexFile);
 
 		Map<String, String> actualMetaData = result.getMetaData();
 
@@ -664,25 +667,21 @@ public class PerformanceTest
 			compressed = Boolean.valueOf(actualMetaData.get(FileConstants.COMPRESSED_KEY));
 			formatStr = actualMetaData.get(FileConstants.CONTENT_FORMAT_KEY);
 		}
-		Serializer<EventWrapper<LoggingEvent>> serializer;
-		Deserializer<EventWrapper<LoggingEvent>> deserializer;
+
+		Codec<EventWrapper<LoggingEvent>> codec;
 		if(FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(formatStr))
 		{
-			serializer = new XmlSerializer<EventWrapper<LoggingEvent>>(compressed, LoggingEvent.Level.class);
-			deserializer = new XmlDeserializer<EventWrapper<LoggingEvent>>(compressed);
+			codec = new LoggingEventWrapperXmlCodec(compressed);
 		}
 		else if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(formatStr))
 		{
-			serializer = new LoggingEventWrapperSerializer(compressed);
-			deserializer = new LoggingEventWrapperDeserializer(compressed);
+			codec = new LoggingEventWrapperProtobufCodec(compressed);
 		}
 		else
 		{
-			serializer = new SerializableSerializer<EventWrapper<LoggingEvent>>(compressed);
-			deserializer = new SerializableDeserializer<EventWrapper<LoggingEvent>>(compressed);
+			codec = new SerializableCodec<EventWrapper<LoggingEvent>>(compressed);
 		}
-		result.setSerializer(serializer);
-		result.setDeserializer(deserializer);
+		result.setCodec(codec);
 
 		if(logger.isDebugEnabled()) logger.debug("Created file buffer: {}", result);
 		return result;

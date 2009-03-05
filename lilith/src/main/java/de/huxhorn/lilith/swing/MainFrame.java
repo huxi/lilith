@@ -32,17 +32,21 @@ import de.huxhorn.lilith.data.eventsource.EventIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.engine.AccessFileBufferFactory;
 import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.FileConstants;
 import de.huxhorn.lilith.engine.LogFileFactory;
+import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
+import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventProtobufMessageBasedEventProducer;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
 import de.huxhorn.lilith.engine.impl.sourceproducer.SerializingMessageBasedServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
@@ -124,6 +128,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
+
 
 public class MainFrame
 	extends JFrame
@@ -282,19 +287,20 @@ public class MainFrame
 
 		Map<String, String> loggingMetaData = new HashMap<String, String>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
-		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML);
+		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		loggingMetaData.put(FileConstants.COMPRESSED_KEY, "true");
 		// TODO: configurable format and compressed
 
-		loggingFileBufferFactory = new FileBufferFactory<LoggingEvent>(loggingFileFactory, loggingMetaData);
+		loggingFileBufferFactory = new LoggingFileBufferFactory(loggingFileFactory, loggingMetaData);
 
 		Map<String, String> accessMetaData = new HashMap<String, String>();
 		accessMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
+		// TODO: AccessEvent protobuf
 		accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML);
 		accessMetaData.put(FileConstants.COMPRESSED_KEY, "true");
 		// TODO: configurable format and compressed
 
-		accessFileBufferFactory = new FileBufferFactory<AccessEvent>(accessFileFactory, accessMetaData);
+		accessFileBufferFactory = new AccessFileBufferFactory(accessFileFactory, accessMetaData);
 
 		rrdFileFilter = new RrdFileFilter();
 
@@ -646,12 +652,12 @@ public class MainFrame
 		setSplashStatusText("Starting event receivers.");
 		try
 		{
-			SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> producer
-				= new SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>
+			LoggingEventProtobufServerSocketEventSourceProducer producer
+				= new LoggingEventProtobufServerSocketEventSourceProducer
 				(ClassicMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
-			senderService.addLoggingProducer(producer);
+			// TODO: senderService.addLoggingProducer(producer);
 		}
 		catch(IOException ex)
 		{
@@ -660,12 +666,12 @@ public class MainFrame
 
 		try
 		{
-			SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> producer
-				= new SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>
+			LoggingEventProtobufServerSocketEventSourceProducer producer
+				= new LoggingEventProtobufServerSocketEventSourceProducer
 				(ClassicMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
-			senderService.addLoggingProducer(producer);
+			// TODO: senderService.addLoggingProducer(producer);
 		}
 		catch(IOException ex)
 		{

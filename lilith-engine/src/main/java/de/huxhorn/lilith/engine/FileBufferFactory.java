@@ -19,15 +19,9 @@ package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.ExtendedSerializingFileBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
-import de.huxhorn.sulky.generics.io.Deserializer;
-import de.huxhorn.sulky.generics.io.SerializableDeserializer;
-import de.huxhorn.sulky.generics.io.SerializableSerializer;
-import de.huxhorn.sulky.generics.io.Serializer;
-import de.huxhorn.sulky.generics.io.XmlDeserializer;
-import de.huxhorn.sulky.generics.io.XmlSerializer;
+import de.huxhorn.sulky.generics.io.Codec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +32,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileBufferFactory<T extends Serializable>
+public abstract class FileBufferFactory<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FileBufferFactory.class);
 
@@ -67,6 +61,8 @@ public class FileBufferFactory<T extends Serializable>
 		return logFileFactory;
 	}
 
+	public abstract Codec<EventWrapper<T>> resolveCodec(Map<String, String> metaData);
+
 	public FileBuffer<EventWrapper<T>> createBuffer(SourceIdentifier si)
 	{
 		File dataFile = logFileFactory.getDataFile(si);
@@ -81,10 +77,11 @@ public class FileBufferFactory<T extends Serializable>
 		}
 
 
-		ExtendedSerializingFileBuffer<EventWrapper<T>> result = new ExtendedSerializingFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, null, dataFile, indexFile);
+		ExtendedSerializingFileBuffer<EventWrapper<T>> result = new ExtendedSerializingFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, dataFile, indexFile);
 
 		Map<String, String> actualMetaData = result.getMetaData();
 
+		/*
 		boolean compressed = false;
 		boolean useXml = false;
 		boolean isLogging = true;
@@ -124,7 +121,8 @@ public class FileBufferFactory<T extends Serializable>
 		}
 		result.setSerializer(serializer);
 		result.setDeserializer(deserializer);
-
+        */
+		result.setCodec(resolveCodec(actualMetaData));
 		if(logger.isDebugEnabled()) logger.debug("Created file buffer: {}", result);
 
 		return result;
