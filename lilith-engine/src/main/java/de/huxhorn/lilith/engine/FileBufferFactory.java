@@ -19,8 +19,8 @@ package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.sulky.buffers.CodecFileBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.codec.Codec;
 
 import org.slf4j.Logger;

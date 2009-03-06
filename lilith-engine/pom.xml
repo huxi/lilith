@@ -56,7 +56,7 @@
 
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.buffers</artifactId>
+			<artifactId>de.huxhorn.sulky.codec.filebuffer</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
