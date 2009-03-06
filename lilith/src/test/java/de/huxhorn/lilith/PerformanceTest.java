@@ -15,7 +15,6 @@ import de.huxhorn.lilith.data.logging.xml.LoggingXmlDecoder;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
 import de.huxhorn.lilith.engine.FileConstants;
 import de.huxhorn.lilith.engine.impl.LoggingEventWrapperXmlCodec;
-import de.huxhorn.sulky.buffers.CodecFileBuffer;
 import de.huxhorn.sulky.codec.Codec;
 import de.huxhorn.sulky.codec.Decoder;
 import de.huxhorn.sulky.codec.Encoder;
@@ -25,7 +24,7 @@ import de.huxhorn.sulky.codec.SerializableEncoder;
 import de.huxhorn.sulky.codec.XmlDecoder;
 import de.huxhorn.sulky.codec.XmlEncoder;
 import de.huxhorn.sulky.formatting.HumanReadable;
-
+import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
