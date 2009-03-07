@@ -240,6 +240,12 @@
 
 			<dependency>
 				<groupId>de.huxhorn.sulky</groupId>
+				<artifactId>de.huxhorn.sulky.formatting</artifactId>
+				<version>${sulkyVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.sulky</groupId>
 				<artifactId>de.huxhorn.sulky.io</artifactId>
 				<version>${sulkyVersion}</version>
 			</dependency>

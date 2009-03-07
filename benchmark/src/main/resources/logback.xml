@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<param name="Pattern" value="%msg%n"/>
+		</layout>
+	</appender>
+
+	<root>
+		<level value="INFO"/>
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+	<logger name="de.huxhorn.sulky">
+		<level value="INFO"/>
+	</logger>
+</configuration>
