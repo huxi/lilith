@@ -20,6 +20,7 @@ package de.huxhorn.lilith.data.logging.logback;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import ch.qos.logback.classic.Level;
@@ -29,9 +30,6 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public class LogbackLoggingAdapterTest
@@ -136,23 +134,18 @@ public class LogbackLoggingAdapterTest
 
 			msg.append("Level          : ").append(event.getLevel());
 			msg.append("\n");
-
-			msg.append("Thread-Name    : ").append(event.getThreadName());
-			msg.append("\n");
+			ThreadInfo threadInfo = event.getThreadInfo();
+			if(threadInfo != null)
+			{
+				msg.append("ThreadInfo     : ").append(threadInfo);
+				msg.append("\n");
+			}
 
 			msg.append("TimeStamp      : ").append(event.getTimeStamp());
 			msg.append("\n");
 
-			msg.append("Message-Pattern: ").append(event.getMessagePattern());
+			msg.append("Message        : ").append(event.getMessage());
 			msg.append("\n");
-			String[] args = event.getArguments();
-			if(args != null)
-			{
-				List<String> argList = new ArrayList<String>(args.length);
-				argList.addAll(Arrays.asList(args));
-				msg.append("Arguments      : ").append(argList);
-				msg.append("\n");
-			}
 
 			ExtendedStackTraceElement[] callStack = event.getCallStack();
 			if(callStack != null)

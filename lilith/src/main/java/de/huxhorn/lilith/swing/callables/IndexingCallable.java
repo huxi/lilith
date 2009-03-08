@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
 import org.apache.commons.io.IOUtils;
@@ -183,10 +184,17 @@ public class IndexingCallable
 				{
 					loggerNames.add(loggerName);
 				}
-				String threadName = event.getThreadName();
-				if(!threadNames.contains(threadName))
+				ThreadInfo threadInfo = event.getThreadInfo();
+				if(threadInfo != null)
 				{
-					threadNames.add(threadName);
+					String threadName = threadInfo.getName();
+					if(threadName != null)
+					{
+						if(!threadNames.contains(threadName))
+						{
+							threadNames.add(threadName);
+						}
+					}
 				}
 			}
 		}

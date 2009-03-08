@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.table.tooltips;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
 import javax.swing.*;
@@ -37,7 +38,28 @@ public class ThreadTooltipGenerator
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
-				tooltip = event.getThreadName();
+				ThreadInfo threadInfo = event.getThreadInfo();
+				if(threadInfo != null)
+				{
+					String name = threadInfo.getName();
+					Long id = threadInfo.getId();
+					if(name != null || id != null)
+					{
+						if(name == null)
+						{
+							tooltip = "" + id;
+						}
+						else if(id == null)
+						{
+							tooltip = name;
+						}
+						else
+						{
+							tooltip = name + " (id=" + id + ")";
+						}
+					}
+				}
+
 			}
 		}
 		return tooltip;

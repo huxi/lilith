@@ -19,6 +19,7 @@ package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -68,7 +69,12 @@ public class MessageContainsCondition
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
 
-				String message = event.getMessage();
+				String message = null;
+				Message messageObj = event.getMessage();
+				if(messageObj != null)
+				{
+					message = messageObj.getMessage();
+				}
 
 				return message != null && message.contains(searchString);
 			}

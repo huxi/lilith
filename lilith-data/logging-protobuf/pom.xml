@@ -11,9 +11,9 @@
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 
 	<scm>
-		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data/logging</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data/logging</developerConnection>
-		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-data/logging/</url>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data/logging-protobuf</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-data/logging-protobuf</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-data/logging-protobuf/</url>
 	</scm>
 
 	<parent>
@@ -37,14 +37,14 @@
 			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
 			<version>2.0.3</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.codec</artifactId>

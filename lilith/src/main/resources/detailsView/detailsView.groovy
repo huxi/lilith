@@ -2,6 +2,8 @@ import de.huxhorn.lilith.data.access.AccessEvent
 import de.huxhorn.lilith.data.access.HttpStatus
 import de.huxhorn.lilith.data.logging.LoggingEvent
 import de.huxhorn.lilith.data.logging.Message
+import de.huxhorn.lilith.data.logging.ThreadInfo
+import groovy.xml.StreamingMarkupBuilder
 import java.text.SimpleDateFormat
 
 /*
@@ -306,17 +308,38 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 				}
 		}
 
-		if(event.threadName)
+		if(event.threadInfo)
 		{
-			evenOdd.toggle()
-			it.tr([class: "${evenOdd}"])
-				{
-					th
+			ThreadInfo threadInfo = event.threadInfo;
+			String threadName = threadInfo.name;
+			Long threadId = threadInfo.id;
+			if(threadName || threadId)
+			{
+				evenOdd.toggle()
+
+				it.tr([class: "${evenOdd}"])
 					{
-						it.mkp.yieldUnescaped 'Thread&nbsp;Name'
+						th
+						{
+							it.mkp.yieldUnescaped 'Thread'
+						}
+						td
+						{
+							if(!threadName)
+							{
+								it.mkp.yield threadId
+							}
+							else if(!threadId)
+							{
+								it.mkp.yield threadName
+							}
+							else
+							{
+								it.mkp.yield threadName + ' (id=' + threadId + ")"
+							}
+						}
 					}
-					td(event.threadName);
-				}
+			}
 		}
 
 		if(event.marker)

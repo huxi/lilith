@@ -21,6 +21,8 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -91,7 +93,12 @@ public class EventContainsCondition
 				LoggingEvent event = (LoggingEvent) eventObj;
 
 				{
-					String message = event.getMessage();
+					String message = null;
+					Message messageObj = event.getMessage();
+					if(messageObj != null)
+					{
+						message = messageObj.getMessage();
+					}
 					if(message != null)
 					{
 						if(checkString(message))
@@ -129,10 +136,22 @@ public class EventContainsCondition
 				}
 
 				{
-					String threadName = event.getThreadName();
-					if(checkString(threadName))
+					ThreadInfo threadInfo = event.getThreadInfo();
+					if(threadInfo != null)
 					{
-						return true;
+						String threadName = threadInfo.getName();
+						if(checkString(threadName))
+						{
+							return true;
+						}
+						Long threadId = threadInfo.getId();
+						if(threadId != null)
+						{
+							if(checkString("" + threadId))
+							{
+								return true;
+							}
+						}
 					}
 				}
 

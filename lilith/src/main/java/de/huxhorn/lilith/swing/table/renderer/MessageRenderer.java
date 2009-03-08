@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.table.renderer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
@@ -62,7 +63,11 @@ public class MessageRenderer
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
-				text = event.getMessage();
+				Message messageObj = event.getMessage();
+				if(messageObj != null)
+				{
+					text = messageObj.getMessage();
+				}
 				if(text != null)
 				{
 					int newlineIndex = text.indexOf("\n");

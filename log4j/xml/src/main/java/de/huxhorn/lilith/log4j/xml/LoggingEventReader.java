@@ -20,6 +20,7 @@ package de.huxhorn.lilith.log4j.xml;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -64,7 +65,24 @@ public class LoggingEventReader
 			// TODO: FATAL
 			result
 				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
-			result.setThreadName(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE));
+			String threadName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE);
+			Long threadId = null;
+			try
+			{
+				String threadIdStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_ID_ATTRIBUTE);
+				if(threadIdStr != null)
+				{
+					threadId = Long.valueOf(threadIdStr);
+				}
+			}
+			catch(NumberFormatException ex)
+			{
+				// ignore
+			}
+			if(threadName != null || threadId != null)
+			{
+				result.setThreadInfo(new ThreadInfo(threadId, threadName));
+			}
 			String timeStamp = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE);
 			try
 			{
@@ -77,7 +95,11 @@ public class LoggingEventReader
 				e.printStackTrace();
 			}
 			reader.nextTag();
-			result.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
+			String messagePattern = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
+			if(messagePattern != null)
+			{
+				result.setMessage(new Message(messagePattern));
+			}
 
 			result.setNdc(readNdc(reader));
 			result.setThrowable(readThrowable(reader));
