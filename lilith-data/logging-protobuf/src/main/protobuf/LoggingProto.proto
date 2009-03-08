@@ -39,18 +39,22 @@ message SourceIdentifier {
 }
 
 message LoggingEvent {
-	required string logger_name = 3;
-	optional Level level = 9;
-	optional int64 time_stamp = 6;
-	optional string thread_name = 7;
-	optional int64 thread_id = 8;
-	required Message message = 1;
-	optional Throwable throwable = 2;
-	optional MappedDiagnosticContext mapped_diagnostic_context = 4;
-	optional NestedDiagnosticContext nested_diagnostic_context = 5;
-	optional string application_identifier = 10;
-	repeated StackTraceElement call_stack_element = 11;
-	optional Marker marker = 12;
+	optional int64 time_stamp = 1;
+	required string logger_name = 2;
+	optional Level level = 3;
+	optional Message message = 4;
+	optional ThreadInfo thread_info = 5;
+	repeated StackTraceElement call_stack_element = 6;
+	optional Throwable throwable = 7;
+	optional string application_identifier = 8;
+	optional MappedDiagnosticContext mapped_diagnostic_context = 9;
+	optional NestedDiagnosticContext nested_diagnostic_context = 10;
+	optional Marker marker = 11;
+}
+
+message ThreadInfo {
+	optional int64 id = 1;
+	optional string name = 2;
 }
 
 enum Level {
@@ -63,7 +67,7 @@ enum Level {
 
 
 message Message {
-	required string message_pattern = 1;
+	optional string message_pattern = 1;
 	repeated MessageArgument argument = 2;
 }
 
@@ -85,9 +89,9 @@ message StackTraceElement {
 message Throwable {
 	required string throwable_class = 1;
 	optional string message = 2;
-	optional int32 omitted_elements = 5;
 	repeated StackTraceElement stack_trace_element = 3;
-	optional Throwable cause = 4;
+	optional int32 omitted_elements = 4;
+	optional Throwable cause = 5;
 }
 
 message MappedDiagnosticContext {

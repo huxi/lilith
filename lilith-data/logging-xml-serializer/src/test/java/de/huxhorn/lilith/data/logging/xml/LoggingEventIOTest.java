@@ -20,13 +20,14 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -57,11 +58,12 @@ public class LoggingEventIOTest
 	}
 
 	@Test
-	public void threadName()
+	public void threadInfo()
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		event.setThreadName("Thread-Name");
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name");
+		event.setThreadInfo(threadInfo);
 		check(event);
 	}
 
@@ -71,17 +73,17 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 		String[] arguments = new String[]{"arg1", "arg2"};
-		event.setArguments(arguments);
+		event.setMessage(new Message("message", arguments));
 		check(event);
 	}
 
 	@Test
-	public void nullArguments()
+	public void nullArgument()
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
 		String[] arguments = new String[]{"arg1", null, "arg3"};
-		event.setArguments(arguments);
+		event.setMessage(new Message("message", arguments));
 		check(event);
 	}
 
@@ -127,7 +129,7 @@ public class LoggingEventIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		Message[] ndc=new Message[]{
+		Message[] ndc = new Message[]{
 			new Message("message"),
 			new Message("messagePattern {}", new String[]{"foo"})
 		};
@@ -191,10 +193,11 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 
-		event.setThreadName("Thread-Name");
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name");
+		event.setThreadInfo(threadInfo);
 
 		String[] arguments = new String[]{"arg1", null, "arg3"};
-		event.setArguments(arguments);
+		event.setMessage(new Message("message", arguments));
 
 		ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
 		ThrowableInfo ti2 = createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
@@ -209,7 +212,7 @@ public class LoggingEventIOTest
 		mdc.put("key3", "value3");
 		event.setMdc(mdc);
 
-		Message[] ndc=new Message[]{
+		Message[] ndc = new Message[]{
 			new Message("message"),
 			new Message("messagePattern {}", new String[]{"foo"})
 		};
@@ -235,7 +238,6 @@ public class LoggingEventIOTest
 		event.setLogger("Logger");
 		event.setLevel(LoggingEvent.Level.INFO);
 		event.setTimeStamp(new Date());
-		event.setMessagePattern("EventMessage");
 		return event;
 	}
 

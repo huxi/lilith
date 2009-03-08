@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
@@ -136,8 +137,22 @@ public class LoggingEventWriter
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LEVEL_ATTRIBUTE, "" + event.getLevel());
 		StaxUtilities
 			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, APPLICATION_IDENTIFIER_ATTRIBUTE, event.getApplicationIdentifier());
-		StaxUtilities
-			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE, event.getThreadName());
+		ThreadInfo threadInfo = event.getThreadInfo();
+		if(threadInfo != null)
+		{
+			Long id = threadInfo.getId();
+			String name = threadInfo.getName();
+			if(name != null)
+			{
+				StaxUtilities
+					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE, name);
+			}
+			if(id != null)
+			{
+				StaxUtilities
+					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_ID_ATTRIBUTE, "" + id);
+			}
+		}
 
 		if(timeStampType == TimeStampType.ONLY_TIMESTAMP || timeStampType == TimeStampType.BOTH)
 		{
@@ -150,8 +165,16 @@ public class LoggingEventWriter
 				.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, "" + event
 					.getTimeStamp().getTime());
 		}
-		StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, event.getMessagePattern());
-		writeArguments(writer, event.getArguments());
+		Message message = event.getMessage();
+		if(message != null)
+		{
+			String messagePattern = message.getMessagePattern();
+			if(messagePattern != null)
+			{
+				StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, MESSAGE_NODE, messagePattern);
+			}
+			writeArguments(writer, message.getArguments());
+		}
 		writeThrowable(writer, event);
 		writeMdc(writer, event);
 		writeNdc(writer, event);

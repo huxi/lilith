@@ -101,9 +101,9 @@ public class LoggingEventReaderTest
 				msg.append("[");
 				msg.append("logger=").append(event.getLogger());
 				msg.append(", level=").append(event.getLevel());
-				msg.append(", thread=").append(event.getThreadName());
+				msg.append(", threadInfo=").append(event.getThreadInfo());
 				msg.append(", timeStamp=").append(event.getTimeStamp());
-				msg.append(", messagePattern=").append(event.getMessagePattern());
+				msg.append(", message=").append(event.getMessage());
 				appendCallStack(msg, event.getCallStack());
 				appendThrowable(msg, event.getThrowable());
 				msg.append(", mdc=").append(event.getMdc());

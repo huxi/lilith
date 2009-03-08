@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
@@ -70,7 +71,26 @@ public class LoggingEventReader
 				.setApplicationIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, APPLICATION_IDENTIFIER_ATTRIBUTE));
 			result
 				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
-			result.setThreadName(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE));
+			{
+				String threadName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE);
+				String threadIdStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_ID_ATTRIBUTE);
+				Long threadId = null;
+				if(threadIdStr != null)
+				{
+					try
+					{
+						threadId = Long.valueOf(threadIdStr);
+					}
+					catch(NumberFormatException ex)
+					{
+						// ignore
+					}
+				}
+				if(threadName != null || threadId != null)
+				{
+					result.setThreadInfo(new ThreadInfo(threadId, threadName));
+				}
+			}
 			Date timeStamp = null;
 
 			// TODO: add support for getContextBirthTime()
@@ -101,13 +121,24 @@ public class LoggingEventReader
 			}
 			result.setTimeStamp(timeStamp);
 			reader.nextTag();
-			result.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
-
-			List<String> args = readArguments(reader);
-			if(args != null)
+			Message message = null;
 			{
-				result.setArguments(args.toArray(new String[args.size()]));
+				String messagePattern = StaxUtilities
+					.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
+				List<String> args = readArguments(reader);
+				if(messagePattern != null || args != null)
+				{
+					if(args != null)
+					{
+						message = new Message(messagePattern, args.toArray(new String[args.size()]));
+					}
+					else
+					{
+						message = new Message(messagePattern);
+					}
+				}
 			}
+			result.setMessage(message);
 
 			readThrowable(reader, result);
 			result.setMdc(readMdc(reader));

@@ -93,24 +93,24 @@ public class LoggingEventTest
 		}
 	}
 
-
 	@Test
-	public void arguments()
+	public void message()
 		throws ClassNotFoundException, IOException
 	{
 		LoggingEvent instance = new LoggingEvent();
 
-		String value[] = {"value"};
-		instance.setArguments(value);
+
+		Message value = new Message("pattern", new String[]{"value"});
+		instance.setMessage(value);
 
 		{
 			LoggingEvent obj = testSerialization(instance);
-			assertArrayEquals(value, obj.getArguments());
+			assertEquals(value, obj.getMessage());
 			assertFalse(fresh.equals(obj));
 		}
 		{
 			LoggingEvent obj = testXmlSerialization(instance);
-			assertArrayEquals(value, obj.getArguments());
+			assertEquals(value, obj.getMessage());
 			assertFalse(fresh.equals(obj));
 		}
 	}
@@ -138,43 +138,22 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void messagePattern()
+	public void threadInfo()
 		throws ClassNotFoundException, IOException
 	{
 		LoggingEvent instance = new LoggingEvent();
 
-		String value = "value";
-		instance.setMessagePattern(value);
+		ThreadInfo value = new ThreadInfo(17L, "Thread-Name");
+		instance.setThreadInfo(value);
 
 		{
 			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getMessagePattern());
+			assertEquals(value, obj.getThreadInfo());
 			assertFalse(fresh.equals(obj));
 		}
 		{
 			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getMessagePattern());
-			assertFalse(fresh.equals(obj));
-		}
-	}
-
-	@Test
-	public void threadName()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
-
-		String value = "value";
-		instance.setThreadName(value);
-
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getThreadName());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getThreadName());
+			assertEquals(value, obj.getThreadInfo());
 			assertFalse(fresh.equals(obj));
 		}
 	}

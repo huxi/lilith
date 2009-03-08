@@ -20,7 +20,9 @@ package de.huxhorn.lilith.data.logging.logback;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.logback.classic.NDC;
 
@@ -76,19 +78,25 @@ public class LogbackLoggingAdapter
 		// TODO: add support for getContextBirthTime()
 		LoggingEvent result = new LoggingEvent();
 		String messagePattern = event.getMessage();
-		result.setMessagePattern(messagePattern);
+
 		Object[] originalArguments = event.getArgumentArray();
 		MessageFormatter.ArgumentResult argumentResult =
 			MessageFormatter.evaluateArguments(messagePattern, originalArguments);
 
+		String[] arguments = null;
 		if(argumentResult != null)
 		{
-			result.setArguments(argumentResult.getArguments());
+			arguments = argumentResult.getArguments();
 			Throwable t = argumentResult.getThrowable();
 			if(t != null && event.getThrowableProxy() == null)
 			{
 				event.setThrowableProxy(new ThrowableProxy(t));
 			}
+		}
+		if(messagePattern != null || arguments != null)
+		{
+			Message message = new Message(messagePattern, arguments);
+			result.setMessage(message);
 		}
 		initThrowableFromEvent(event, result);
 
@@ -97,8 +105,14 @@ public class LogbackLoggingAdapter
 		result.setLogger(event.getLoggerRemoteView().getName());
 		initMarker(event, result);
 		result.setMdc(event.getMDCPropertyMap());
-
-		result.setThreadName(event.getThreadName());
+		String threadName = event.getThreadName();
+		if(threadName != null)
+		{
+			// assuming this code is executed synchronously
+			long id = Thread.currentThread().getId();
+			ThreadInfo threadInfo = new ThreadInfo(id, threadName);
+			result.setThreadInfo(threadInfo);
+		}
 		result.setTimeStamp(new Date(event.getTimeStamp()));
 
 		if(!NDC.isEmpty())

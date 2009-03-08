@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.table.tooltips;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 import de.huxhorn.sulky.formatting.SimpleXml;
 
@@ -42,7 +43,12 @@ public class MessageTooltipGenerator
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
-				String text = event.getMessage();
+				Message messageObj = event.getMessage();
+				String text = null;
+				if(messageObj != null)
+				{
+					text = messageObj.getMessage();
+				}
 				if(text != null)
 				{
 					// crop to a sane size, e.g. 80x25 characters

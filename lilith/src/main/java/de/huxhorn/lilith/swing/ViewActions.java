@@ -2992,7 +2992,11 @@ public class ViewActions
 				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					message = loggingEvent.getMessage();
+					Message messageObj = loggingEvent.getMessage();
+					if(messageObj != null)
+					{
+						message = messageObj.getMessage();
+					}
 				}
 			}
 			setMessage(message);

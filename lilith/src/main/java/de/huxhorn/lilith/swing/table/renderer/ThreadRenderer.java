@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.table.renderer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
@@ -63,7 +64,23 @@ public class ThreadRenderer
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
-				text = event.getThreadName();
+				ThreadInfo threadInfo = event.getThreadInfo();
+				if(threadInfo != null)
+				{
+					String threadName = threadInfo.getName();
+					Long threadId = threadInfo.getId();
+					if(threadName != null)
+					{
+						// use thread name if available
+						text = threadName;
+					}
+					else if(threadId != null)
+					{
+						// otherwise, use thread id if available
+						text = "" + threadId;
+					}
+				}
+
 			}
 		}
 		renderer.setText(text);

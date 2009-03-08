@@ -2,4817 +2,7012 @@
 
 package de.huxhorn.lilith.data.logging.protobuf.generated;
 
-public final class LoggingProto {
-  private LoggingProto() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
-  }
-  public static enum Level {
-    TRACE(0, 1),
-    DEBUG(1, 2),
-    INFO(2, 3),
-    WARN(3, 4),
-    ERROR(4, 5),
-    ;
-    
-    
-    public final int getNumber() { return value; }
-    
-    public static Level valueOf(int value) {
-      switch (value) {
-        case 1: return TRACE;
-        case 2: return DEBUG;
-        case 3: return INFO;
-        case 4: return WARN;
-        case 5: return ERROR;
-        default: return null;
-      }
-    }
-    
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(index);
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor().getEnumTypes().get(0);
-    }
-    
-    private static final Level[] VALUES = {
-      TRACE, DEBUG, INFO, WARN, ERROR, 
-    };
-    public static Level valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
-    private final int index;
-    private final int value;
-    private Level(int index, int value) {
-      this.index = index;
-      this.value = value;
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class EventWrapper extends
-      com.google.protobuf.GeneratedMessage {
-    // Use EventWrapper.newBuilder() to construct.
-    private EventWrapper() {}
-    
-    private static final EventWrapper defaultInstance = new EventWrapper();
-    public static EventWrapper getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public EventWrapper getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable;
-    }
-    
-    // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
-    private boolean hasEventIdentifier;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
-    public boolean hasEventIdentifier() { return hasEventIdentifier; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() { return eventIdentifier_; }
-    
-    // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
-    private boolean hasEvent;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
-    public boolean hasEvent() { return hasEvent; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() { return event_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      if (hasEvent()) {
-        if (!getEvent().isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasEventIdentifier()) {
-        output.writeMessage(1, getEventIdentifier());
-      }
-      if (hasEvent()) {
-        output.writeMessage(2, getEvent());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasEventIdentifier()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getEventIdentifier());
-      }
-      if (hasEvent()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getEvent());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper buildPartial() {
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.getDefaultInstance()) return this;
-        if (other.hasEventIdentifier()) {
-          mergeEventIdentifier(other.getEventIdentifier());
-        }
-        if (other.hasEvent()) {
-          mergeEvent(other.getEvent());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder();
-              if (hasEventIdentifier()) {
-                subBuilder.mergeFrom(getEventIdentifier());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setEventIdentifier(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder();
-              if (hasEvent()) {
-                subBuilder.mergeFrom(getEvent());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setEvent(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
-      public boolean hasEventIdentifier() {
-        return result.hasEventIdentifier();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() {
-        return result.getEventIdentifier();
-      }
-      public Builder setEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier value) {
-        result.hasEventIdentifier = true;
-        result.eventIdentifier_ = value;
-        return this;
-      }
-      public Builder setEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder builderForValue) {
-        result.hasEventIdentifier = true;
-        result.eventIdentifier_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier value) {
-        if (result.hasEventIdentifier() &&
-            result.eventIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance()) {
-          result.eventIdentifier_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder(result.eventIdentifier_).mergeFrom(value).buildPartial();
-        } else {
-          result.eventIdentifier_ = value;
-        }
-        result.hasEventIdentifier = true;
-        return this;
-      }
-      public Builder clearEventIdentifier() {
-        result.hasEventIdentifier = false;
-        result.eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
-      public boolean hasEvent() {
-        return result.hasEvent();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() {
-        return result.getEvent();
-      }
-      public Builder setEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent value) {
-        result.hasEvent = true;
-        result.event_ = value;
-        return this;
-      }
-      public Builder setEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder builderForValue) {
-        result.hasEvent = true;
-        result.event_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent value) {
-        if (result.hasEvent() &&
-            result.event_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance()) {
-          result.event_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder(result.event_).mergeFrom(value).buildPartial();
-        } else {
-          result.event_ = value;
-        }
-        result.hasEvent = true;
-        return this;
-      }
-      public Builder clearEvent() {
-        result.hasEvent = false;
-        result.event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class EventIdentifier extends
-      com.google.protobuf.GeneratedMessage {
-    // Use EventIdentifier.newBuilder() to construct.
-    private EventIdentifier() {}
-    
-    private static final EventIdentifier defaultInstance = new EventIdentifier();
-    public static EventIdentifier getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public EventIdentifier getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable;
-    }
-    
-    // optional int64 local_id = 1;
-    private boolean hasLocalId;
-    private long localId_ = 0L;
-    public boolean hasLocalId() { return hasLocalId; }
-    public long getLocalId() { return localId_; }
-    
-    // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
-    private boolean hasSourceIdentifier;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
-    public boolean hasSourceIdentifier() { return hasSourceIdentifier; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() { return sourceIdentifier_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasLocalId()) {
-        output.writeInt64(1, getLocalId());
-      }
-      if (hasSourceIdentifier()) {
-        output.writeMessage(2, getSourceIdentifier());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasLocalId()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, getLocalId());
-      }
-      if (hasSourceIdentifier()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getSourceIdentifier());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier buildPartial() {
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance()) return this;
-        if (other.hasLocalId()) {
-          setLocalId(other.getLocalId());
-        }
-        if (other.hasSourceIdentifier()) {
-          mergeSourceIdentifier(other.getSourceIdentifier());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              setLocalId(input.readInt64());
-              break;
-            }
-            case 18: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder();
-              if (hasSourceIdentifier()) {
-                subBuilder.mergeFrom(getSourceIdentifier());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setSourceIdentifier(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // optional int64 local_id = 1;
-      public boolean hasLocalId() {
-        return result.hasLocalId();
-      }
-      public long getLocalId() {
-        return result.getLocalId();
-      }
-      public Builder setLocalId(long value) {
-        result.hasLocalId = true;
-        result.localId_ = value;
-        return this;
-      }
-      public Builder clearLocalId() {
-        result.hasLocalId = false;
-        result.localId_ = 0L;
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
-      public boolean hasSourceIdentifier() {
-        return result.hasSourceIdentifier();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() {
-        return result.getSourceIdentifier();
-      }
-      public Builder setSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier value) {
-        result.hasSourceIdentifier = true;
-        result.sourceIdentifier_ = value;
-        return this;
-      }
-      public Builder setSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder builderForValue) {
-        result.hasSourceIdentifier = true;
-        result.sourceIdentifier_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier value) {
-        if (result.hasSourceIdentifier() &&
-            result.sourceIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance()) {
-          result.sourceIdentifier_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder(result.sourceIdentifier_).mergeFrom(value).buildPartial();
-        } else {
-          result.sourceIdentifier_ = value;
-        }
-        result.hasSourceIdentifier = true;
-        return this;
-      }
-      public Builder clearSourceIdentifier() {
-        result.hasSourceIdentifier = false;
-        result.sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class SourceIdentifier extends
-      com.google.protobuf.GeneratedMessage {
-    // Use SourceIdentifier.newBuilder() to construct.
-    private SourceIdentifier() {}
-    
-    private static final SourceIdentifier defaultInstance = new SourceIdentifier();
-    public static SourceIdentifier getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public SourceIdentifier getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable;
-    }
-    
-    // optional string identifier = 1;
-    private boolean hasIdentifier;
-    private java.lang.String identifier_ = "";
-    public boolean hasIdentifier() { return hasIdentifier; }
-    public java.lang.String getIdentifier() { return identifier_; }
-    
-    // optional string secondary_identifier = 2;
-    private boolean hasSecondaryIdentifier;
-    private java.lang.String secondaryIdentifier_ = "";
-    public boolean hasSecondaryIdentifier() { return hasSecondaryIdentifier; }
-    public java.lang.String getSecondaryIdentifier() { return secondaryIdentifier_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasIdentifier()) {
-        output.writeString(1, getIdentifier());
-      }
-      if (hasSecondaryIdentifier()) {
-        output.writeString(2, getSecondaryIdentifier());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasIdentifier()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getIdentifier());
-      }
-      if (hasSecondaryIdentifier()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getSecondaryIdentifier());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier buildPartial() {
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance()) return this;
-        if (other.hasIdentifier()) {
-          setIdentifier(other.getIdentifier());
-        }
-        if (other.hasSecondaryIdentifier()) {
-          setSecondaryIdentifier(other.getSecondaryIdentifier());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setIdentifier(input.readString());
-              break;
-            }
-            case 18: {
-              setSecondaryIdentifier(input.readString());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // optional string identifier = 1;
-      public boolean hasIdentifier() {
-        return result.hasIdentifier();
-      }
-      public java.lang.String getIdentifier() {
-        return result.getIdentifier();
-      }
-      public Builder setIdentifier(java.lang.String value) {
-        result.hasIdentifier = true;
-        result.identifier_ = value;
-        return this;
-      }
-      public Builder clearIdentifier() {
-        result.hasIdentifier = false;
-        result.identifier_ = "";
-        return this;
-      }
-      
-      // optional string secondary_identifier = 2;
-      public boolean hasSecondaryIdentifier() {
-        return result.hasSecondaryIdentifier();
-      }
-      public java.lang.String getSecondaryIdentifier() {
-        return result.getSecondaryIdentifier();
-      }
-      public Builder setSecondaryIdentifier(java.lang.String value) {
-        result.hasSecondaryIdentifier = true;
-        result.secondaryIdentifier_ = value;
-        return this;
-      }
-      public Builder clearSecondaryIdentifier() {
-        result.hasSecondaryIdentifier = false;
-        result.secondaryIdentifier_ = "";
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class LoggingEvent extends
-      com.google.protobuf.GeneratedMessage {
-    // Use LoggingEvent.newBuilder() to construct.
-    private LoggingEvent() {}
-    
-    private static final LoggingEvent defaultInstance = new LoggingEvent();
-    public static LoggingEvent getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public LoggingEvent getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable;
-    }
-    
-    // required string logger_name = 3;
-    private boolean hasLoggerName;
-    private java.lang.String loggerName_ = "";
-    public boolean hasLoggerName() { return hasLoggerName; }
-    public java.lang.String getLoggerName() { return loggerName_; }
-    
-    // optional .de.huxhorn.lilith.logging.Level level = 9;
-    private boolean hasLevel;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
-    public boolean hasLevel() { return hasLevel; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() { return level_; }
-    
-    // optional int64 time_stamp = 6;
-    private boolean hasTimeStamp;
-    private long timeStamp_ = 0L;
-    public boolean hasTimeStamp() { return hasTimeStamp; }
-    public long getTimeStamp() { return timeStamp_; }
-    
-    // optional string thread_name = 7;
-    private boolean hasThreadName;
-    private java.lang.String threadName_ = "";
-    public boolean hasThreadName() { return hasThreadName; }
-    public java.lang.String getThreadName() { return threadName_; }
-    
-    // optional int64 thread_id = 8;
-    private boolean hasThreadId;
-    private long threadId_ = 0L;
-    public boolean hasThreadId() { return hasThreadId; }
-    public long getThreadId() { return threadId_; }
-    
-    // required .de.huxhorn.lilith.logging.Message message = 1;
-    private boolean hasMessage;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
-    public boolean hasMessage() { return hasMessage; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() { return message_; }
-    
-    // optional .de.huxhorn.lilith.logging.Throwable throwable = 2;
-    private boolean hasThrowable;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
-    public boolean hasThrowable() { return hasThrowable; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() { return throwable_; }
-    
-    // optional .de.huxhorn.lilith.logging.MappedDiagnosticContext mapped_diagnostic_context = 4;
-    private boolean hasMappedDiagnosticContext;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.getDefaultInstance();
-    public boolean hasMappedDiagnosticContext() { return hasMappedDiagnosticContext; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext getMappedDiagnosticContext() { return mappedDiagnosticContext_; }
-    
-    // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 5;
-    private boolean hasNestedDiagnosticContext;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
-    public boolean hasNestedDiagnosticContext() { return hasNestedDiagnosticContext; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() { return nestedDiagnosticContext_; }
-    
-    // optional string application_identifier = 10;
-    private boolean hasApplicationIdentifier;
-    private java.lang.String applicationIdentifier_ = "";
-    public boolean hasApplicationIdentifier() { return hasApplicationIdentifier; }
-    public java.lang.String getApplicationIdentifier() { return applicationIdentifier_; }
-    
-    // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 11;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> callStackElement_ =
-      java.util.Collections.emptyList();
-    public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getCallStackElementList() {
-      return callStackElement_;
-    }
-    public int getCallStackElementCount() { return callStackElement_.size(); }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index) {
-      return callStackElement_.get(index);
-    }
-    
-    // optional .de.huxhorn.lilith.logging.Marker marker = 12;
-    private boolean hasMarker;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
-    public boolean hasMarker() { return hasMarker; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() { return marker_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      if (!hasLoggerName) return false;
-      if (!hasMessage) return false;
-      if (!getMessage().isInitialized()) return false;
-      if (hasThrowable()) {
-        if (!getThrowable().isInitialized()) return false;
-      }
-      if (hasMappedDiagnosticContext()) {
-        if (!getMappedDiagnosticContext().isInitialized()) return false;
-      }
-      if (hasNestedDiagnosticContext()) {
-        if (!getNestedDiagnosticContext().isInitialized()) return false;
-      }
-      if (hasMarker()) {
-        if (!getMarker().isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasMessage()) {
-        output.writeMessage(1, getMessage());
-      }
-      if (hasThrowable()) {
-        output.writeMessage(2, getThrowable());
-      }
-      if (hasLoggerName()) {
-        output.writeString(3, getLoggerName());
-      }
-      if (hasMappedDiagnosticContext()) {
-        output.writeMessage(4, getMappedDiagnosticContext());
-      }
-      if (hasNestedDiagnosticContext()) {
-        output.writeMessage(5, getNestedDiagnosticContext());
-      }
-      if (hasTimeStamp()) {
-        output.writeInt64(6, getTimeStamp());
-      }
-      if (hasThreadName()) {
-        output.writeString(7, getThreadName());
-      }
-      if (hasThreadId()) {
-        output.writeInt64(8, getThreadId());
-      }
-      if (hasLevel()) {
-        output.writeEnum(9, getLevel().getNumber());
-      }
-      if (hasApplicationIdentifier()) {
-        output.writeString(10, getApplicationIdentifier());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getCallStackElementList()) {
-        output.writeMessage(11, element);
-      }
-      if (hasMarker()) {
-        output.writeMessage(12, getMarker());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasMessage()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getMessage());
-      }
-      if (hasThrowable()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getThrowable());
-      }
-      if (hasLoggerName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getLoggerName());
-      }
-      if (hasMappedDiagnosticContext()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getMappedDiagnosticContext());
-      }
-      if (hasNestedDiagnosticContext()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getNestedDiagnosticContext());
-      }
-      if (hasTimeStamp()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(6, getTimeStamp());
-      }
-      if (hasThreadName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(7, getThreadName());
-      }
-      if (hasThreadId()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(8, getThreadId());
-      }
-      if (hasLevel()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(9, getLevel().getNumber());
-      }
-      if (hasApplicationIdentifier()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(10, getApplicationIdentifier());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getCallStackElementList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, element);
-      }
-      if (hasMarker()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, getMarker());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent buildPartial() {
-        if (result.callStackElement_ != java.util.Collections.EMPTY_LIST) {
-          result.callStackElement_ =
-            java.util.Collections.unmodifiableList(result.callStackElement_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance()) return this;
-        if (other.hasLoggerName()) {
-          setLoggerName(other.getLoggerName());
-        }
-        if (other.hasLevel()) {
-          setLevel(other.getLevel());
-        }
-        if (other.hasTimeStamp()) {
-          setTimeStamp(other.getTimeStamp());
-        }
-        if (other.hasThreadName()) {
-          setThreadName(other.getThreadName());
-        }
-        if (other.hasThreadId()) {
-          setThreadId(other.getThreadId());
-        }
-        if (other.hasMessage()) {
-          mergeMessage(other.getMessage());
-        }
-        if (other.hasThrowable()) {
-          mergeThrowable(other.getThrowable());
-        }
-        if (other.hasMappedDiagnosticContext()) {
-          mergeMappedDiagnosticContext(other.getMappedDiagnosticContext());
-        }
-        if (other.hasNestedDiagnosticContext()) {
-          mergeNestedDiagnosticContext(other.getNestedDiagnosticContext());
-        }
-        if (other.hasApplicationIdentifier()) {
-          setApplicationIdentifier(other.getApplicationIdentifier());
-        }
-        if (!other.callStackElement_.isEmpty()) {
-          if (result.callStackElement_.isEmpty()) {
-            result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-          }
-          result.callStackElement_.addAll(other.callStackElement_);
-        }
-        if (other.hasMarker()) {
-          mergeMarker(other.getMarker());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder();
-              if (hasMessage()) {
-                subBuilder.mergeFrom(getMessage());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setMessage(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder();
-              if (hasThrowable()) {
-                subBuilder.mergeFrom(getThrowable());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setThrowable(subBuilder.buildPartial());
-              break;
-            }
-            case 26: {
-              setLoggerName(input.readString());
-              break;
-            }
-            case 34: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.newBuilder();
-              if (hasMappedDiagnosticContext()) {
-                subBuilder.mergeFrom(getMappedDiagnosticContext());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setMappedDiagnosticContext(subBuilder.buildPartial());
-              break;
-            }
-            case 42: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder();
-              if (hasNestedDiagnosticContext()) {
-                subBuilder.mergeFrom(getNestedDiagnosticContext());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setNestedDiagnosticContext(subBuilder.buildPartial());
-              break;
-            }
-            case 48: {
-              setTimeStamp(input.readInt64());
-              break;
-            }
-            case 58: {
-              setThreadName(input.readString());
-              break;
-            }
-            case 64: {
-              setThreadId(input.readInt64());
-              break;
-            }
-            case 72: {
-              int rawValue = input.readEnum();
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level value = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(9, rawValue);
-              } else {
-                setLevel(value);
-              }
-              break;
-            }
-            case 82: {
-              setApplicationIdentifier(input.readString());
-              break;
-            }
-            case 90: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addCallStackElement(subBuilder.buildPartial());
-              break;
-            }
-            case 98: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder();
-              if (hasMarker()) {
-                subBuilder.mergeFrom(getMarker());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setMarker(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // required string logger_name = 3;
-      public boolean hasLoggerName() {
-        return result.hasLoggerName();
-      }
-      public java.lang.String getLoggerName() {
-        return result.getLoggerName();
-      }
-      public Builder setLoggerName(java.lang.String value) {
-        result.hasLoggerName = true;
-        result.loggerName_ = value;
-        return this;
-      }
-      public Builder clearLoggerName() {
-        result.hasLoggerName = false;
-        result.loggerName_ = "";
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.Level level = 9;
-      public boolean hasLevel() {
-        return result.hasLevel();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
-        return result.getLevel();
-      }
-      public Builder setLevel(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level value) {
-        result.hasLevel = true;
-        result.level_ = value;
-        return this;
-      }
-      public Builder clearLevel() {
-        result.hasLevel = false;
-        result.level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
-        return this;
-      }
-      
-      // optional int64 time_stamp = 6;
-      public boolean hasTimeStamp() {
-        return result.hasTimeStamp();
-      }
-      public long getTimeStamp() {
-        return result.getTimeStamp();
-      }
-      public Builder setTimeStamp(long value) {
-        result.hasTimeStamp = true;
-        result.timeStamp_ = value;
-        return this;
-      }
-      public Builder clearTimeStamp() {
-        result.hasTimeStamp = false;
-        result.timeStamp_ = 0L;
-        return this;
-      }
-      
-      // optional string thread_name = 7;
-      public boolean hasThreadName() {
-        return result.hasThreadName();
-      }
-      public java.lang.String getThreadName() {
-        return result.getThreadName();
-      }
-      public Builder setThreadName(java.lang.String value) {
-        result.hasThreadName = true;
-        result.threadName_ = value;
-        return this;
-      }
-      public Builder clearThreadName() {
-        result.hasThreadName = false;
-        result.threadName_ = "";
-        return this;
-      }
-      
-      // optional int64 thread_id = 8;
-      public boolean hasThreadId() {
-        return result.hasThreadId();
-      }
-      public long getThreadId() {
-        return result.getThreadId();
-      }
-      public Builder setThreadId(long value) {
-        result.hasThreadId = true;
-        result.threadId_ = value;
-        return this;
-      }
-      public Builder clearThreadId() {
-        result.hasThreadId = false;
-        result.threadId_ = 0L;
-        return this;
-      }
-      
-      // required .de.huxhorn.lilith.logging.Message message = 1;
-      public boolean hasMessage() {
-        return result.hasMessage();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() {
-        return result.getMessage();
-      }
-      public Builder setMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        result.hasMessage = true;
-        result.message_ = value;
-        return this;
-      }
-      public Builder setMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
-        result.hasMessage = true;
-        result.message_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        if (result.hasMessage() &&
-            result.message_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance()) {
-          result.message_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder(result.message_).mergeFrom(value).buildPartial();
-        } else {
-          result.message_ = value;
-        }
-        result.hasMessage = true;
-        return this;
-      }
-      public Builder clearMessage() {
-        result.hasMessage = false;
-        result.message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.Throwable throwable = 2;
-      public boolean hasThrowable() {
-        return result.hasThrowable();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() {
-        return result.getThrowable();
-      }
-      public Builder setThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        result.hasThrowable = true;
-        result.throwable_ = value;
-        return this;
-      }
-      public Builder setThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
-        result.hasThrowable = true;
-        result.throwable_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        if (result.hasThrowable() &&
-            result.throwable_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance()) {
-          result.throwable_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder(result.throwable_).mergeFrom(value).buildPartial();
-        } else {
-          result.throwable_ = value;
-        }
-        result.hasThrowable = true;
-        return this;
-      }
-      public Builder clearThrowable() {
-        result.hasThrowable = false;
-        result.throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.MappedDiagnosticContext mapped_diagnostic_context = 4;
-      public boolean hasMappedDiagnosticContext() {
-        return result.hasMappedDiagnosticContext();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext getMappedDiagnosticContext() {
-        return result.getMappedDiagnosticContext();
-      }
-      public Builder setMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext value) {
-        result.hasMappedDiagnosticContext = true;
-        result.mappedDiagnosticContext_ = value;
-        return this;
-      }
-      public Builder setMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.Builder builderForValue) {
-        result.hasMappedDiagnosticContext = true;
-        result.mappedDiagnosticContext_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext value) {
-        if (result.hasMappedDiagnosticContext() &&
-            result.mappedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.getDefaultInstance()) {
-          result.mappedDiagnosticContext_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.newBuilder(result.mappedDiagnosticContext_).mergeFrom(value).buildPartial();
-        } else {
-          result.mappedDiagnosticContext_ = value;
-        }
-        result.hasMappedDiagnosticContext = true;
-        return this;
-      }
-      public Builder clearMappedDiagnosticContext() {
-        result.hasMappedDiagnosticContext = false;
-        result.mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.getDefaultInstance();
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 5;
-      public boolean hasNestedDiagnosticContext() {
-        return result.hasNestedDiagnosticContext();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() {
-        return result.getNestedDiagnosticContext();
-      }
-      public Builder setNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext value) {
-        result.hasNestedDiagnosticContext = true;
-        result.nestedDiagnosticContext_ = value;
-        return this;
-      }
-      public Builder setNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder builderForValue) {
-        result.hasNestedDiagnosticContext = true;
-        result.nestedDiagnosticContext_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext value) {
-        if (result.hasNestedDiagnosticContext() &&
-            result.nestedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance()) {
-          result.nestedDiagnosticContext_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder(result.nestedDiagnosticContext_).mergeFrom(value).buildPartial();
-        } else {
-          result.nestedDiagnosticContext_ = value;
-        }
-        result.hasNestedDiagnosticContext = true;
-        return this;
-      }
-      public Builder clearNestedDiagnosticContext() {
-        result.hasNestedDiagnosticContext = false;
-        result.nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
-        return this;
-      }
-      
-      // optional string application_identifier = 10;
-      public boolean hasApplicationIdentifier() {
-        return result.hasApplicationIdentifier();
-      }
-      public java.lang.String getApplicationIdentifier() {
-        return result.getApplicationIdentifier();
-      }
-      public Builder setApplicationIdentifier(java.lang.String value) {
-        result.hasApplicationIdentifier = true;
-        result.applicationIdentifier_ = value;
-        return this;
-      }
-      public Builder clearApplicationIdentifier() {
-        result.hasApplicationIdentifier = false;
-        result.applicationIdentifier_ = "";
-        return this;
-      }
-      
-      // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 11;
-      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getCallStackElementList() {
-        return java.util.Collections.unmodifiableList(result.callStackElement_);
-      }
-      public int getCallStackElementCount() {
-        return result.getCallStackElementCount();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index) {
-        return result.getCallStackElement(index);
-      }
-      public Builder setCallStackElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        result.callStackElement_.set(index, value);
-        return this;
-      }
-      public Builder setCallStackElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        result.callStackElement_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addCallStackElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        if (result.callStackElement_.isEmpty()) {
-          result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        result.callStackElement_.add(value);
-        return this;
-      }
-      public Builder addCallStackElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        if (result.callStackElement_.isEmpty()) {
-          result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        result.callStackElement_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllCallStackElement(
-          java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values) {
-        if (result.callStackElement_.isEmpty()) {
-          result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        super.addAll(values, result.callStackElement_);
-        return this;
-      }
-      public Builder clearCallStackElement() {
-        result.callStackElement_ = java.util.Collections.emptyList();
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.Marker marker = 12;
-      public boolean hasMarker() {
-        return result.hasMarker();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() {
-        return result.getMarker();
-      }
-      public Builder setMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        result.hasMarker = true;
-        result.marker_ = value;
-        return this;
-      }
-      public Builder setMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
-        result.hasMarker = true;
-        result.marker_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        if (result.hasMarker() &&
-            result.marker_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance()) {
-          result.marker_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder(result.marker_).mergeFrom(value).buildPartial();
-        } else {
-          result.marker_ = value;
-        }
-        result.hasMarker = true;
-        return this;
-      }
-      public Builder clearMarker() {
-        result.hasMarker = false;
-        result.marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class Message extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Message.newBuilder() to construct.
-    private Message() {}
-    
-    private static final Message defaultInstance = new Message();
-    public static Message getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Message getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable;
-    }
-    
-    // required string message_pattern = 1;
-    private boolean hasMessagePattern;
-    private java.lang.String messagePattern_ = "";
-    public boolean hasMessagePattern() { return hasMessagePattern; }
-    public java.lang.String getMessagePattern() { return messagePattern_; }
-    
-    // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> argument_ =
-      java.util.Collections.emptyList();
-    public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> getArgumentList() {
-      return argument_;
-    }
-    public int getArgumentCount() { return argument_.size(); }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index) {
-      return argument_.get(index);
-    }
-    
-    @Override
-    public final boolean isInitialized() {
-      if (!hasMessagePattern) return false;
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasMessagePattern()) {
-        output.writeString(1, getMessagePattern());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument element : getArgumentList()) {
-        output.writeMessage(2, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasMessagePattern()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getMessagePattern());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument element : getArgumentList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message buildPartial() {
-        if (result.argument_ != java.util.Collections.EMPTY_LIST) {
-          result.argument_ =
-            java.util.Collections.unmodifiableList(result.argument_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance()) return this;
-        if (other.hasMessagePattern()) {
-          setMessagePattern(other.getMessagePattern());
-        }
-        if (!other.argument_.isEmpty()) {
-          if (result.argument_.isEmpty()) {
-            result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
-          }
-          result.argument_.addAll(other.argument_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setMessagePattern(input.readString());
-              break;
-            }
-            case 18: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addArgument(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // required string message_pattern = 1;
-      public boolean hasMessagePattern() {
-        return result.hasMessagePattern();
-      }
-      public java.lang.String getMessagePattern() {
-        return result.getMessagePattern();
-      }
-      public Builder setMessagePattern(java.lang.String value) {
-        result.hasMessagePattern = true;
-        result.messagePattern_ = value;
-        return this;
-      }
-      public Builder clearMessagePattern() {
-        result.hasMessagePattern = false;
-        result.messagePattern_ = "";
-        return this;
-      }
-      
-      // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
-      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> getArgumentList() {
-        return java.util.Collections.unmodifiableList(result.argument_);
-      }
-      public int getArgumentCount() {
-        return result.getArgumentCount();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index) {
-        return result.getArgument(index);
-      }
-      public Builder setArgument(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value) {
-        result.argument_.set(index, value);
-        return this;
-      }
-      public Builder setArgument(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue) {
-        result.argument_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addArgument(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value) {
-        if (result.argument_.isEmpty()) {
-          result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
-        }
-        result.argument_.add(value);
-        return this;
-      }
-      public Builder addArgument(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue) {
-        if (result.argument_.isEmpty()) {
-          result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
-        }
-        result.argument_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllArgument(
-          java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> values) {
-        if (result.argument_.isEmpty()) {
-          result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
-        }
-        super.addAll(values, result.argument_);
-        return this;
-      }
-      public Builder clearArgument() {
-        result.argument_ = java.util.Collections.emptyList();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class MessageArgument extends
-      com.google.protobuf.GeneratedMessage {
-    // Use MessageArgument.newBuilder() to construct.
-    private MessageArgument() {}
-    
-    private static final MessageArgument defaultInstance = new MessageArgument();
-    public static MessageArgument getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public MessageArgument getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable;
-    }
-    
-    // optional string value = 1;
-    private boolean hasValue;
-    private java.lang.String value_ = "";
-    public boolean hasValue() { return hasValue; }
-    public java.lang.String getValue() { return value_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasValue()) {
-        output.writeString(1, getValue());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasValue()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getValue());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument buildPartial() {
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDefaultInstance()) return this;
-        if (other.hasValue()) {
-          setValue(other.getValue());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setValue(input.readString());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // optional string value = 1;
-      public boolean hasValue() {
-        return result.hasValue();
-      }
-      public java.lang.String getValue() {
-        return result.getValue();
-      }
-      public Builder setValue(java.lang.String value) {
-        result.hasValue = true;
-        result.value_ = value;
-        return this;
-      }
-      public Builder clearValue() {
-        result.hasValue = false;
-        result.value_ = "";
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class StackTraceElement extends
-      com.google.protobuf.GeneratedMessage {
-    // Use StackTraceElement.newBuilder() to construct.
-    private StackTraceElement() {}
-    
-    private static final StackTraceElement defaultInstance = new StackTraceElement();
-    public static StackTraceElement getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public StackTraceElement getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
-    }
-    
-    // optional string methodName = 1;
-    private boolean hasMethodName;
-    private java.lang.String methodName_ = "";
-    public boolean hasMethodName() { return hasMethodName; }
-    public java.lang.String getMethodName() { return methodName_; }
-    
-    // optional string className = 2;
-    private boolean hasClassName;
-    private java.lang.String className_ = "";
-    public boolean hasClassName() { return hasClassName; }
-    public java.lang.String getClassName() { return className_; }
-    
-    // optional string fileName = 3;
-    private boolean hasFileName;
-    private java.lang.String fileName_ = "";
-    public boolean hasFileName() { return hasFileName; }
-    public java.lang.String getFileName() { return fileName_; }
-    
-    // optional int32 lineNumber = 4;
-    private boolean hasLineNumber;
-    private int lineNumber_ = 0;
-    public boolean hasLineNumber() { return hasLineNumber; }
-    public int getLineNumber() { return lineNumber_; }
-    
-    // optional string codeLocation = 5;
-    private boolean hasCodeLocation;
-    private java.lang.String codeLocation_ = "";
-    public boolean hasCodeLocation() { return hasCodeLocation; }
-    public java.lang.String getCodeLocation() { return codeLocation_; }
-    
-    // optional string version = 6;
-    private boolean hasVersion;
-    private java.lang.String version_ = "";
-    public boolean hasVersion() { return hasVersion; }
-    public java.lang.String getVersion() { return version_; }
-    
-    // optional bool exact = 7;
-    private boolean hasExact;
-    private boolean exact_ = false;
-    public boolean hasExact() { return hasExact; }
-    public boolean getExact() { return exact_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasMethodName()) {
-        output.writeString(1, getMethodName());
-      }
-      if (hasClassName()) {
-        output.writeString(2, getClassName());
-      }
-      if (hasFileName()) {
-        output.writeString(3, getFileName());
-      }
-      if (hasLineNumber()) {
-        output.writeInt32(4, getLineNumber());
-      }
-      if (hasCodeLocation()) {
-        output.writeString(5, getCodeLocation());
-      }
-      if (hasVersion()) {
-        output.writeString(6, getVersion());
-      }
-      if (hasExact()) {
-        output.writeBool(7, getExact());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasMethodName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getMethodName());
-      }
-      if (hasClassName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getClassName());
-      }
-      if (hasFileName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getFileName());
-      }
-      if (hasLineNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, getLineNumber());
-      }
-      if (hasCodeLocation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(5, getCodeLocation());
-      }
-      if (hasVersion()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(6, getVersion());
-      }
-      if (hasExact()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(7, getExact());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement buildPartial() {
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance()) return this;
-        if (other.hasMethodName()) {
-          setMethodName(other.getMethodName());
-        }
-        if (other.hasClassName()) {
-          setClassName(other.getClassName());
-        }
-        if (other.hasFileName()) {
-          setFileName(other.getFileName());
-        }
-        if (other.hasLineNumber()) {
-          setLineNumber(other.getLineNumber());
-        }
-        if (other.hasCodeLocation()) {
-          setCodeLocation(other.getCodeLocation());
-        }
-        if (other.hasVersion()) {
-          setVersion(other.getVersion());
-        }
-        if (other.hasExact()) {
-          setExact(other.getExact());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setMethodName(input.readString());
-              break;
-            }
-            case 18: {
-              setClassName(input.readString());
-              break;
-            }
-            case 26: {
-              setFileName(input.readString());
-              break;
-            }
-            case 32: {
-              setLineNumber(input.readInt32());
-              break;
-            }
-            case 42: {
-              setCodeLocation(input.readString());
-              break;
-            }
-            case 50: {
-              setVersion(input.readString());
-              break;
-            }
-            case 56: {
-              setExact(input.readBool());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // optional string methodName = 1;
-      public boolean hasMethodName() {
-        return result.hasMethodName();
-      }
-      public java.lang.String getMethodName() {
-        return result.getMethodName();
-      }
-      public Builder setMethodName(java.lang.String value) {
-        result.hasMethodName = true;
-        result.methodName_ = value;
-        return this;
-      }
-      public Builder clearMethodName() {
-        result.hasMethodName = false;
-        result.methodName_ = "";
-        return this;
-      }
-      
-      // optional string className = 2;
-      public boolean hasClassName() {
-        return result.hasClassName();
-      }
-      public java.lang.String getClassName() {
-        return result.getClassName();
-      }
-      public Builder setClassName(java.lang.String value) {
-        result.hasClassName = true;
-        result.className_ = value;
-        return this;
-      }
-      public Builder clearClassName() {
-        result.hasClassName = false;
-        result.className_ = "";
-        return this;
-      }
-      
-      // optional string fileName = 3;
-      public boolean hasFileName() {
-        return result.hasFileName();
-      }
-      public java.lang.String getFileName() {
-        return result.getFileName();
-      }
-      public Builder setFileName(java.lang.String value) {
-        result.hasFileName = true;
-        result.fileName_ = value;
-        return this;
-      }
-      public Builder clearFileName() {
-        result.hasFileName = false;
-        result.fileName_ = "";
-        return this;
-      }
-      
-      // optional int32 lineNumber = 4;
-      public boolean hasLineNumber() {
-        return result.hasLineNumber();
-      }
-      public int getLineNumber() {
-        return result.getLineNumber();
-      }
-      public Builder setLineNumber(int value) {
-        result.hasLineNumber = true;
-        result.lineNumber_ = value;
-        return this;
-      }
-      public Builder clearLineNumber() {
-        result.hasLineNumber = false;
-        result.lineNumber_ = 0;
-        return this;
-      }
-      
-      // optional string codeLocation = 5;
-      public boolean hasCodeLocation() {
-        return result.hasCodeLocation();
-      }
-      public java.lang.String getCodeLocation() {
-        return result.getCodeLocation();
-      }
-      public Builder setCodeLocation(java.lang.String value) {
-        result.hasCodeLocation = true;
-        result.codeLocation_ = value;
-        return this;
-      }
-      public Builder clearCodeLocation() {
-        result.hasCodeLocation = false;
-        result.codeLocation_ = "";
-        return this;
-      }
-      
-      // optional string version = 6;
-      public boolean hasVersion() {
-        return result.hasVersion();
-      }
-      public java.lang.String getVersion() {
-        return result.getVersion();
-      }
-      public Builder setVersion(java.lang.String value) {
-        result.hasVersion = true;
-        result.version_ = value;
-        return this;
-      }
-      public Builder clearVersion() {
-        result.hasVersion = false;
-        result.version_ = "";
-        return this;
-      }
-      
-      // optional bool exact = 7;
-      public boolean hasExact() {
-        return result.hasExact();
-      }
-      public boolean getExact() {
-        return result.getExact();
-      }
-      public Builder setExact(boolean value) {
-        result.hasExact = true;
-        result.exact_ = value;
-        return this;
-      }
-      public Builder clearExact() {
-        result.hasExact = false;
-        result.exact_ = false;
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class Throwable extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Throwable.newBuilder() to construct.
-    private Throwable() {}
-    
-    private static final Throwable defaultInstance = new Throwable();
-    public static Throwable getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Throwable getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
-    }
-    
-    // required string throwable_class = 1;
-    private boolean hasThrowableClass;
-    private java.lang.String throwableClass_ = "";
-    public boolean hasThrowableClass() { return hasThrowableClass; }
-    public java.lang.String getThrowableClass() { return throwableClass_; }
-    
-    // optional string message = 2;
-    private boolean hasMessage;
-    private java.lang.String message_ = "";
-    public boolean hasMessage() { return hasMessage; }
-    public java.lang.String getMessage() { return message_; }
-    
-    // optional int32 omitted_elements = 5;
-    private boolean hasOmittedElements;
-    private int omittedElements_ = 0;
-    public boolean hasOmittedElements() { return hasOmittedElements; }
-    public int getOmittedElements() { return omittedElements_; }
-    
-    // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> stackTraceElement_ =
-      java.util.Collections.emptyList();
-    public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getStackTraceElementList() {
-      return stackTraceElement_;
-    }
-    public int getStackTraceElementCount() { return stackTraceElement_.size(); }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index) {
-      return stackTraceElement_.get(index);
-    }
-    
-    // optional .de.huxhorn.lilith.logging.Throwable cause = 4;
-    private boolean hasCause;
-    private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
-    public boolean hasCause() { return hasCause; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() { return cause_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      if (!hasThrowableClass) return false;
-      if (hasCause()) {
-        if (!getCause().isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasThrowableClass()) {
-        output.writeString(1, getThrowableClass());
-      }
-      if (hasMessage()) {
-        output.writeString(2, getMessage());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getStackTraceElementList()) {
-        output.writeMessage(3, element);
-      }
-      if (hasCause()) {
-        output.writeMessage(4, getCause());
-      }
-      if (hasOmittedElements()) {
-        output.writeInt32(5, getOmittedElements());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasThrowableClass()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getThrowableClass());
-      }
-      if (hasMessage()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getMessage());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getStackTraceElementList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, element);
-      }
-      if (hasCause()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getCause());
-      }
-      if (hasOmittedElements()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, getOmittedElements());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable buildPartial() {
-        if (result.stackTraceElement_ != java.util.Collections.EMPTY_LIST) {
-          result.stackTraceElement_ =
-            java.util.Collections.unmodifiableList(result.stackTraceElement_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance()) return this;
-        if (other.hasThrowableClass()) {
-          setThrowableClass(other.getThrowableClass());
-        }
-        if (other.hasMessage()) {
-          setMessage(other.getMessage());
-        }
-        if (other.hasOmittedElements()) {
-          setOmittedElements(other.getOmittedElements());
-        }
-        if (!other.stackTraceElement_.isEmpty()) {
-          if (result.stackTraceElement_.isEmpty()) {
-            result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-          }
-          result.stackTraceElement_.addAll(other.stackTraceElement_);
-        }
-        if (other.hasCause()) {
-          mergeCause(other.getCause());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setThrowableClass(input.readString());
-              break;
-            }
-            case 18: {
-              setMessage(input.readString());
-              break;
-            }
-            case 26: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addStackTraceElement(subBuilder.buildPartial());
-              break;
-            }
-            case 34: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder();
-              if (hasCause()) {
-                subBuilder.mergeFrom(getCause());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setCause(subBuilder.buildPartial());
-              break;
-            }
-            case 40: {
-              setOmittedElements(input.readInt32());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // required string throwable_class = 1;
-      public boolean hasThrowableClass() {
-        return result.hasThrowableClass();
-      }
-      public java.lang.String getThrowableClass() {
-        return result.getThrowableClass();
-      }
-      public Builder setThrowableClass(java.lang.String value) {
-        result.hasThrowableClass = true;
-        result.throwableClass_ = value;
-        return this;
-      }
-      public Builder clearThrowableClass() {
-        result.hasThrowableClass = false;
-        result.throwableClass_ = "";
-        return this;
-      }
-      
-      // optional string message = 2;
-      public boolean hasMessage() {
-        return result.hasMessage();
-      }
-      public java.lang.String getMessage() {
-        return result.getMessage();
-      }
-      public Builder setMessage(java.lang.String value) {
-        result.hasMessage = true;
-        result.message_ = value;
-        return this;
-      }
-      public Builder clearMessage() {
-        result.hasMessage = false;
-        result.message_ = "";
-        return this;
-      }
-      
-      // optional int32 omitted_elements = 5;
-      public boolean hasOmittedElements() {
-        return result.hasOmittedElements();
-      }
-      public int getOmittedElements() {
-        return result.getOmittedElements();
-      }
-      public Builder setOmittedElements(int value) {
-        result.hasOmittedElements = true;
-        result.omittedElements_ = value;
-        return this;
-      }
-      public Builder clearOmittedElements() {
-        result.hasOmittedElements = false;
-        result.omittedElements_ = 0;
-        return this;
-      }
-      
-      // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
-      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getStackTraceElementList() {
-        return java.util.Collections.unmodifiableList(result.stackTraceElement_);
-      }
-      public int getStackTraceElementCount() {
-        return result.getStackTraceElementCount();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index) {
-        return result.getStackTraceElement(index);
-      }
-      public Builder setStackTraceElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        result.stackTraceElement_.set(index, value);
-        return this;
-      }
-      public Builder setStackTraceElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        result.stackTraceElement_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addStackTraceElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        if (result.stackTraceElement_.isEmpty()) {
-          result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        result.stackTraceElement_.add(value);
-        return this;
-      }
-      public Builder addStackTraceElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        if (result.stackTraceElement_.isEmpty()) {
-          result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        result.stackTraceElement_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllStackTraceElement(
-          java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values) {
-        if (result.stackTraceElement_.isEmpty()) {
-          result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        super.addAll(values, result.stackTraceElement_);
-        return this;
-      }
-      public Builder clearStackTraceElement() {
-        result.stackTraceElement_ = java.util.Collections.emptyList();
-        return this;
-      }
-      
-      // optional .de.huxhorn.lilith.logging.Throwable cause = 4;
-      public boolean hasCause() {
-        return result.hasCause();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() {
-        return result.getCause();
-      }
-      public Builder setCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        result.hasCause = true;
-        result.cause_ = value;
-        return this;
-      }
-      public Builder setCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
-        result.hasCause = true;
-        result.cause_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        if (result.hasCause() &&
-            result.cause_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance()) {
-          result.cause_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder(result.cause_).mergeFrom(value).buildPartial();
-        } else {
-          result.cause_ = value;
-        }
-        result.hasCause = true;
-        return this;
-      }
-      public Builder clearCause() {
-        result.hasCause = false;
-        result.cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class MappedDiagnosticContext extends
-      com.google.protobuf.GeneratedMessage {
-    // Use MappedDiagnosticContext.newBuilder() to construct.
-    private MappedDiagnosticContext() {}
-    
-    private static final MappedDiagnosticContext defaultInstance = new MappedDiagnosticContext();
-    public static MappedDiagnosticContext getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public MappedDiagnosticContext getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_fieldAccessorTable;
-    }
-    
-    // repeated .de.huxhorn.lilith.logging.MapEntry entry = 1;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> entry_ =
-      java.util.Collections.emptyList();
-    public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> getEntryList() {
-      return entry_;
-    }
-    public int getEntryCount() { return entry_.size(); }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry getEntry(int index) {
-      return entry_.get(index);
-    }
-    
-    @Override
-    public final boolean isInitialized() {
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry element : getEntryList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry element : getEntryList()) {
-        output.writeMessage(1, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry element : getEntryList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext buildPartial() {
-        if (result.entry_ != java.util.Collections.EMPTY_LIST) {
-          result.entry_ =
-            java.util.Collections.unmodifiableList(result.entry_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.getDefaultInstance()) return this;
-        if (!other.entry_.isEmpty()) {
-          if (result.entry_.isEmpty()) {
-            result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
-          }
-          result.entry_.addAll(other.entry_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addEntry(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // repeated .de.huxhorn.lilith.logging.MapEntry entry = 1;
-      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> getEntryList() {
-        return java.util.Collections.unmodifiableList(result.entry_);
-      }
-      public int getEntryCount() {
-        return result.getEntryCount();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry getEntry(int index) {
-        return result.getEntry(index);
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry value) {
-        result.entry_.set(index, value);
-        return this;
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder builderForValue) {
-        result.entry_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry value) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
-        }
-        result.entry_.add(value);
-        return this;
-      }
-      public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder builderForValue) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
-        }
-        result.entry_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllEntry(
-          java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> values) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
-        }
-        super.addAll(values, result.entry_);
-        return this;
-      }
-      public Builder clearEntry() {
-        result.entry_ = java.util.Collections.emptyList();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class NestedDiagnosticContext extends
-      com.google.protobuf.GeneratedMessage {
-    // Use NestedDiagnosticContext.newBuilder() to construct.
-    private NestedDiagnosticContext() {}
-    
-    private static final NestedDiagnosticContext defaultInstance = new NestedDiagnosticContext();
-    public static NestedDiagnosticContext getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public NestedDiagnosticContext getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable;
-    }
-    
-    // repeated .de.huxhorn.lilith.logging.Message entry = 1;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> entry_ =
-      java.util.Collections.emptyList();
-    public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> getEntryList() {
-      return entry_;
-    }
-    public int getEntryCount() { return entry_.size(); }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index) {
-      return entry_.get(index);
-    }
-    
-    @Override
-    public final boolean isInitialized() {
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message element : getEntryList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message element : getEntryList()) {
-        output.writeMessage(1, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message element : getEntryList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext buildPartial() {
-        if (result.entry_ != java.util.Collections.EMPTY_LIST) {
-          result.entry_ =
-            java.util.Collections.unmodifiableList(result.entry_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance()) return this;
-        if (!other.entry_.isEmpty()) {
-          if (result.entry_.isEmpty()) {
-            result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
-          }
-          result.entry_.addAll(other.entry_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addEntry(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // repeated .de.huxhorn.lilith.logging.Message entry = 1;
-      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> getEntryList() {
-        return java.util.Collections.unmodifiableList(result.entry_);
-      }
-      public int getEntryCount() {
-        return result.getEntryCount();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index) {
-        return result.getEntry(index);
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        result.entry_.set(index, value);
-        return this;
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
-        result.entry_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
-        }
-        result.entry_.add(value);
-        return this;
-      }
-      public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
-        }
-        result.entry_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllEntry(
-          java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> values) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
-        }
-        super.addAll(values, result.entry_);
-        return this;
-      }
-      public Builder clearEntry() {
-        result.entry_ = java.util.Collections.emptyList();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class MapEntry extends
-      com.google.protobuf.GeneratedMessage {
-    // Use MapEntry.newBuilder() to construct.
-    private MapEntry() {}
-    
-    private static final MapEntry defaultInstance = new MapEntry();
-    public static MapEntry getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public MapEntry getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MapEntry_fieldAccessorTable;
-    }
-    
-    // required string key = 1;
-    private boolean hasKey;
-    private java.lang.String key_ = "";
-    public boolean hasKey() { return hasKey; }
-    public java.lang.String getKey() { return key_; }
-    
-    // optional string value = 2;
-    private boolean hasValue;
-    private java.lang.String value_ = "";
-    public boolean hasValue() { return hasValue; }
-    public java.lang.String getValue() { return value_; }
-    
-    @Override
-    public final boolean isInitialized() {
-      if (!hasKey) return false;
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasKey()) {
-        output.writeString(1, getKey());
-      }
-      if (hasValue()) {
-        output.writeString(2, getValue());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasKey()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getKey());
-      }
-      if (hasValue()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getValue());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry buildPartial() {
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.getDefaultInstance()) return this;
-        if (other.hasKey()) {
-          setKey(other.getKey());
-        }
-        if (other.hasValue()) {
-          setValue(other.getValue());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setKey(input.readString());
-              break;
-            }
-            case 18: {
-              setValue(input.readString());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // required string key = 1;
-      public boolean hasKey() {
-        return result.hasKey();
-      }
-      public java.lang.String getKey() {
-        return result.getKey();
-      }
-      public Builder setKey(java.lang.String value) {
-        result.hasKey = true;
-        result.key_ = value;
-        return this;
-      }
-      public Builder clearKey() {
-        result.hasKey = false;
-        result.key_ = "";
-        return this;
-      }
-      
-      // optional string value = 2;
-      public boolean hasValue() {
-        return result.hasValue();
-      }
-      public java.lang.String getValue() {
-        return result.getValue();
-      }
-      public Builder setValue(java.lang.String value) {
-        result.hasValue = true;
-        result.value_ = value;
-        return this;
-      }
-      public Builder clearValue() {
-        result.hasValue = false;
-        result.value_ = "";
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  public static final class Marker extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Marker.newBuilder() to construct.
-    private Marker() {}
-    
-    private static final Marker defaultInstance = new Marker();
-    public static Marker getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Marker getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable;
-    }
-    
-    // required string name = 1;
-    private boolean hasName;
-    private java.lang.String name_ = "";
-    public boolean hasName() { return hasName; }
-    public java.lang.String getName() { return name_; }
-    
-    // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> reference_ =
-      java.util.Collections.emptyList();
-    public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> getReferenceList() {
-      return reference_;
-    }
-    public int getReferenceCount() { return reference_.size(); }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index) {
-      return reference_.get(index);
-    }
-    
-    @Override
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList()) {
-        output.writeMessage(2, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder()
-      private Builder() {}
-      
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker();
-      
-      @Override
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDescriptor();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getDefaultInstanceForType() {
-        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker buildPartial() {
-        if (result.reference_ != java.util.Collections.EMPTY_LIST) {
-          result.reference_ =
-            java.util.Collections.unmodifiableList(result.reference_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker) {
-          return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker other) {
-        if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (!other.reference_.isEmpty()) {
-          if (result.reference_.isEmpty()) {
-            result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
-          }
-          result.reference_.addAll(other.reference_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return mergeFrom(input,
-          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
-      }
-      
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistry extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addReference(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // required string name = 1;
-      public boolean hasName() {
-        return result.hasName();
-      }
-      public java.lang.String getName() {
-        return result.getName();
-      }
-      public Builder setName(java.lang.String value) {
-        result.hasName = true;
-        result.name_ = value;
-        return this;
-      }
-      public Builder clearName() {
-        result.hasName = false;
-        result.name_ = "";
-        return this;
-      }
-      
-      // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
-      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> getReferenceList() {
-        return java.util.Collections.unmodifiableList(result.reference_);
-      }
-      public int getReferenceCount() {
-        return result.getReferenceCount();
-      }
-      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index) {
-        return result.getReference(index);
-      }
-      public Builder setReference(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        result.reference_.set(index, value);
-        return this;
-      }
-      public Builder setReference(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
-        result.reference_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addReference(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        if (result.reference_.isEmpty()) {
-          result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
-        }
-        result.reference_.add(value);
-        return this;
-      }
-      public Builder addReference(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
-        if (result.reference_.isEmpty()) {
-          result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
-        }
-        result.reference_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllReference(
-          java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> values) {
-        if (result.reference_.isEmpty()) {
-          result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
-        }
-        super.addAll(values, result.reference_);
-        return this;
-      }
-      public Builder clearReference() {
-        result.reference_ = java.util.Collections.emptyList();
-        return this;
-      }
-    }
-    
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-  }
-  
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_Message_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_MapEntry_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable;
-  
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
-    return descriptor;
-  }
-  private static com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
-  static {
-    java.lang.String descriptorData =
-      "\n$src/main/protobuf/LoggingProto.proto\022\031" +
-      "de.huxhorn.lilith.logging\"\214\001\n\014EventWrapp" +
-      "er\022D\n\020event_identifier\030\001 \001(\0132*.de.huxhor" +
-      "n.lilith.logging.EventIdentifier\0226\n\005even" +
-      "t\030\002 \001(\0132\'.de.huxhorn.lilith.logging.Logg" +
-      "ingEvent\"k\n\017EventIdentifier\022\020\n\010local_id\030" +
-      "\001 \001(\003\022F\n\021source_identifier\030\002 \001(\0132+.de.hu" +
-      "xhorn.lilith.logging.SourceIdentifier\"D\n" +
-      "\020SourceIdentifier\022\022\n\nidentifier\030\001 \001(\t\022\034\n" +
-      "\024secondary_identifier\030\002 \001(\t\"\311\004\n\014LoggingE" +
-      "vent\022\023\n\013logger_name\030\003 \002(\t\022/\n\005level\030\t \001(\016" +
-      "2 .de.huxhorn.lilith.logging.Level\022\022\n\nti" +
-      "me_stamp\030\006 \001(\003\022\023\n\013thread_name\030\007 \001(\t\022\021\n\tt" +
-      "hread_id\030\010 \001(\003\0223\n\007message\030\001 \002(\0132\".de.hux" +
-      "horn.lilith.logging.Message\0227\n\tthrowable" +
-      "\030\002 \001(\0132$.de.huxhorn.lilith.logging.Throw" +
-      "able\022U\n\031mapped_diagnostic_context\030\004 \001(\0132" +
-      "2.de.huxhorn.lilith.logging.MappedDiagno" +
-      "sticContext\022U\n\031nested_diagnostic_context" +
-      "\030\005 \001(\01322.de.huxhorn.lilith.logging.Neste" +
-      "dDiagnosticContext\022\036\n\026application_identi" +
-      "fier\030\n \001(\t\022H\n\022call_stack_element\030\013 \003(\0132," +
-      ".de.huxhorn.lilith.logging.StackTraceEle" +
-      "ment\0221\n\006marker\030\014 \001(\0132!.de.huxhorn.lilith" +
-      ".logging.Marker\"`\n\007Message\022\027\n\017message_pa" +
-      "ttern\030\001 \002(\t\022<\n\010argument\030\002 \003(\0132*.de.huxho" +
-      "rn.lilith.logging.MessageArgument\" \n\017Mes" +
-      "sageArgument\022\r\n\005value\030\001 \001(\t\"\226\001\n\021StackTra" +
-      "ceElement\022\022\n\nmethodName\030\001 \001(\t\022\021\n\tclassNa" +
-      "me\030\002 \001(\t\022\020\n\010fileName\030\003 \001(\t\022\022\n\nlineNumber" +
-      "\030\004 \001(\005\022\024\n\014codeLocation\030\005 \001(\t\022\017\n\007version\030" +
-      "\006 \001(\t\022\r\n\005exact\030\007 \001(\010\"\317\001\n\tThrowable\022\027\n\017th" +
-      "rowable_class\030\001 \002(\t\022\017\n\007message\030\002 \001(\t\022\030\n\020" +
-      "omitted_elements\030\005 \001(\005\022I\n\023stack_trace_el" +
-      "ement\030\003 \003(\0132,.de.huxhorn.lilith.logging." +
-      "StackTraceElement\0223\n\005cause\030\004 \001(\0132$.de.hu" +
-      "xhorn.lilith.logging.Throwable\"M\n\027Mapped" +
-      "DiagnosticContext\0222\n\005entry\030\001 \003(\0132#.de.hu" +
-      "xhorn.lilith.logging.MapEntry\"L\n\027NestedD" +
-      "iagnosticContext\0221\n\005entry\030\001 \003(\0132\".de.hux" +
-      "horn.lilith.logging.Message\"&\n\010MapEntry\022" +
-      "\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"L\n\006Marker\022\014\n" +
-      "\004name\030\001 \002(\t\0224\n\treference\030\002 \003(\0132!.de.huxh" +
-      "orn.lilith.logging.Marker*<\n\005Level\022\t\n\005TR" +
-      "ACE\020\001\022\t\n\005DEBUG\020\002\022\010\n\004INFO\020\003\022\010\n\004WARN\020\004\022\t\n\005" +
-      "ERROR\020\005B5\n1de.huxhorn.lilith.data.loggin" +
-      "g.protobuf.generatedH\001";
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor,
-              new java.lang.String[] { "EventIdentifier", "Event", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor,
-              new java.lang.String[] { "LocalId", "SourceIdentifier", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor,
-              new java.lang.String[] { "Identifier", "SecondaryIdentifier", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor,
-              new java.lang.String[] { "LoggerName", "Level", "TimeStamp", "ThreadName", "ThreadId", "Message", "Throwable", "MappedDiagnosticContext", "NestedDiagnosticContext", "ApplicationIdentifier", "CallStackElement", "Marker", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_Message_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_Message_descriptor,
-              new java.lang.String[] { "MessagePattern", "Argument", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor =
-            getDescriptor().getMessageTypes().get(5);
-          internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor,
-              new java.lang.String[] { "Value", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor =
-            getDescriptor().getMessageTypes().get(6);
-          internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor,
-              new java.lang.String[] { "MethodName", "ClassName", "FileName", "LineNumber", "CodeLocation", "Version", "Exact", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_Throwable_descriptor =
-            getDescriptor().getMessageTypes().get(7);
-          internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_Throwable_descriptor,
-              new java.lang.String[] { "ThrowableClass", "Message", "OmittedElements", "StackTraceElement", "Cause", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor =
-            getDescriptor().getMessageTypes().get(8);
-          internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor,
-              new java.lang.String[] { "Entry", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor =
-            getDescriptor().getMessageTypes().get(9);
-          internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor,
-              new java.lang.String[] { "Entry", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor =
-            getDescriptor().getMessageTypes().get(10);
-          internal_static_de_huxhorn_lilith_logging_MapEntry_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor,
-              new java.lang.String[] { "Key", "Value", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder.class);
-          internal_static_de_huxhorn_lilith_logging_Marker_descriptor =
-            getDescriptor().getMessageTypes().get(11);
-          internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_Marker_descriptor,
-              new java.lang.String[] { "Name", "Reference", },
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.class,
-              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder.class);
-          return null;
-        }
-      };
-    com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
-  }
+public final class LoggingProto
+{
+	private LoggingProto()
+	{
+	}
+
+	public static void registerAllExtensions(
+		com.google.protobuf.ExtensionRegistry registry)
+	{
+	}
+
+	public static enum Level
+	{
+		TRACE(0, 1),
+		DEBUG(1, 2),
+		INFO(2, 3),
+		WARN(3, 4),
+		ERROR(4, 5),;
+
+
+		public final int getNumber()
+		{
+			return value;
+		}
+
+		public static Level valueOf(int value)
+		{
+			switch(value)
+			{
+				case 1:
+					return TRACE;
+				case 2:
+					return DEBUG;
+				case 3:
+					return INFO;
+				case 4:
+					return WARN;
+				case 5:
+					return ERROR;
+				default:
+					return null;
+			}
+		}
+
+		public final com.google.protobuf.Descriptors.EnumValueDescriptor
+		getValueDescriptor()
+		{
+			return getDescriptor().getValues().get(index);
+		}
+
+		public final com.google.protobuf.Descriptors.EnumDescriptor
+		getDescriptorForType()
+		{
+			return getDescriptor();
+		}
+
+		public static final com.google.protobuf.Descriptors.EnumDescriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor().getEnumTypes().get(0);
+		}
+
+		private static final Level[] VALUES = {
+			TRACE, DEBUG, INFO, WARN, ERROR,
+		};
+
+		public static Level valueOf(
+			com.google.protobuf.Descriptors.EnumValueDescriptor desc)
+		{
+			if(desc.getType() != getDescriptor())
+			{
+				throw new java.lang.IllegalArgumentException(
+					"EnumValueDescriptor is not for this type.");
+			}
+			return VALUES[desc.getIndex()];
+		}
+
+		private final int index;
+		private final int value;
+
+		private Level(int index, int value)
+		{
+			this.index = index;
+			this.value = value;
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class EventWrapper
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use EventWrapper.newBuilder() to construct.
+		private EventWrapper()
+		{
+		}
+
+		private static final EventWrapper defaultInstance = new EventWrapper();
+
+		public static EventWrapper getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public EventWrapper getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable;
+		}
+
+		// optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
+		private boolean hasEventIdentifier;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier eventIdentifier_ = de
+			.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
+
+		public boolean hasEventIdentifier()
+		{
+			return hasEventIdentifier;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier()
+		{
+			return eventIdentifier_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
+		private boolean hasEvent;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent event_ = de.huxhorn.lilith
+			.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
+
+		public boolean hasEvent()
+		{
+			return hasEvent;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent()
+		{
+			return event_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			if(hasEvent())
+			{
+				if(!getEvent().isInitialized()) return false;
+			}
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasEventIdentifier())
+			{
+				output.writeMessage(1, getEventIdentifier());
+			}
+			if(hasEvent())
+			{
+				output.writeMessage(2, getEvent());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasEventIdentifier())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(1, getEventIdentifier());
+			}
+			if(hasEvent())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(2, getEvent());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper buildPartial()
+			{
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasEventIdentifier())
+				{
+					mergeEventIdentifier(other.getEventIdentifier());
+				}
+				if(other.hasEvent())
+				{
+					mergeEvent(other.getEvent());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier
+								.newBuilder();
+							if(hasEventIdentifier())
+							{
+								subBuilder.mergeFrom(getEventIdentifier());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setEventIdentifier(subBuilder.buildPartial());
+							break;
+						}
+						case 18:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder();
+							if(hasEvent())
+							{
+								subBuilder.mergeFrom(getEvent());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setEvent(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
+			public boolean hasEventIdentifier()
+			{
+				return result.hasEventIdentifier();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier()
+			{
+				return result.getEventIdentifier();
+			}
+
+			public Builder setEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier value)
+			{
+				result.hasEventIdentifier = true;
+				result.eventIdentifier_ = value;
+				return this;
+			}
+
+			public Builder setEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder builderForValue)
+			{
+				result.hasEventIdentifier = true;
+				result.eventIdentifier_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier value)
+			{
+				if(result.hasEventIdentifier() &&
+					result.eventIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto
+						.EventIdentifier.getDefaultInstance())
+				{
+					result.eventIdentifier_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier
+							.newBuilder(result.eventIdentifier_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.eventIdentifier_ = value;
+				}
+				result.hasEventIdentifier = true;
+				return this;
+			}
+
+			public Builder clearEventIdentifier()
+			{
+				result.hasEventIdentifier = false;
+				result.eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier
+					.getDefaultInstance();
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
+			public boolean hasEvent()
+			{
+				return result.hasEvent();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent()
+			{
+				return result.getEvent();
+			}
+
+			public Builder setEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent value)
+			{
+				result.hasEvent = true;
+				result.event_ = value;
+				return this;
+			}
+
+			public Builder setEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder builderForValue)
+			{
+				result.hasEvent = true;
+				result.event_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent value)
+			{
+				if(result.hasEvent() &&
+					result.event_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent
+						.getDefaultInstance())
+				{
+					result.event_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent
+							.newBuilder(result.event_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.event_ = value;
+				}
+				result.hasEvent = true;
+				return this;
+			}
+
+			public Builder clearEvent()
+			{
+				result.hasEvent = false;
+				result.event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent
+					.getDefaultInstance();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class EventIdentifier
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use EventIdentifier.newBuilder() to construct.
+		private EventIdentifier()
+		{
+		}
+
+		private static final EventIdentifier defaultInstance = new EventIdentifier();
+
+		public static EventIdentifier getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public EventIdentifier getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable;
+		}
+
+		// optional int64 local_id = 1;
+		private boolean hasLocalId;
+		private long localId_ = 0L;
+
+		public boolean hasLocalId()
+		{
+			return hasLocalId;
+		}
+
+		public long getLocalId()
+		{
+			return localId_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
+		private boolean hasSourceIdentifier;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier sourceIdentifier_ = de
+			.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
+
+		public boolean hasSourceIdentifier()
+		{
+			return hasSourceIdentifier;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier()
+		{
+			return sourceIdentifier_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasLocalId())
+			{
+				output.writeInt64(1, getLocalId());
+			}
+			if(hasSourceIdentifier())
+			{
+				output.writeMessage(2, getSourceIdentifier());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasLocalId())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeInt64Size(1, getLocalId());
+			}
+			if(hasSourceIdentifier())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(2, getSourceIdentifier());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier
+					.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier buildPartial()
+			{
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasLocalId())
+				{
+					setLocalId(other.getLocalId());
+				}
+				if(other.hasSourceIdentifier())
+				{
+					mergeSourceIdentifier(other.getSourceIdentifier());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 8:
+						{
+							setLocalId(input.readInt64());
+							break;
+						}
+						case 18:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier
+								.newBuilder();
+							if(hasSourceIdentifier())
+							{
+								subBuilder.mergeFrom(getSourceIdentifier());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setSourceIdentifier(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional int64 local_id = 1;
+			public boolean hasLocalId()
+			{
+				return result.hasLocalId();
+			}
+
+			public long getLocalId()
+			{
+				return result.getLocalId();
+			}
+
+			public Builder setLocalId(long value)
+			{
+				result.hasLocalId = true;
+				result.localId_ = value;
+				return this;
+			}
+
+			public Builder clearLocalId()
+			{
+				result.hasLocalId = false;
+				result.localId_ = 0L;
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
+			public boolean hasSourceIdentifier()
+			{
+				return result.hasSourceIdentifier();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier()
+			{
+				return result.getSourceIdentifier();
+			}
+
+			public Builder setSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier value)
+			{
+				result.hasSourceIdentifier = true;
+				result.sourceIdentifier_ = value;
+				return this;
+			}
+
+			public Builder setSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder builderForValue)
+			{
+				result.hasSourceIdentifier = true;
+				result.sourceIdentifier_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier value)
+			{
+				if(result.hasSourceIdentifier() &&
+					result.sourceIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto
+						.SourceIdentifier.getDefaultInstance())
+				{
+					result.sourceIdentifier_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier
+							.newBuilder(result.sourceIdentifier_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.sourceIdentifier_ = value;
+				}
+				result.hasSourceIdentifier = true;
+				return this;
+			}
+
+			public Builder clearSourceIdentifier()
+			{
+				result.hasSourceIdentifier = false;
+				result.sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto
+					.SourceIdentifier.getDefaultInstance();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class SourceIdentifier
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use SourceIdentifier.newBuilder() to construct.
+		private SourceIdentifier()
+		{
+		}
+
+		private static final SourceIdentifier defaultInstance = new SourceIdentifier();
+
+		public static SourceIdentifier getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public SourceIdentifier getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable;
+		}
+
+		// optional string identifier = 1;
+		private boolean hasIdentifier;
+		private java.lang.String identifier_ = "";
+
+		public boolean hasIdentifier()
+		{
+			return hasIdentifier;
+		}
+
+		public java.lang.String getIdentifier()
+		{
+			return identifier_;
+		}
+
+		// optional string secondary_identifier = 2;
+		private boolean hasSecondaryIdentifier;
+		private java.lang.String secondaryIdentifier_ = "";
+
+		public boolean hasSecondaryIdentifier()
+		{
+			return hasSecondaryIdentifier;
+		}
+
+		public java.lang.String getSecondaryIdentifier()
+		{
+			return secondaryIdentifier_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasIdentifier())
+			{
+				output.writeString(1, getIdentifier());
+			}
+			if(hasSecondaryIdentifier())
+			{
+				output.writeString(2, getSecondaryIdentifier());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasIdentifier())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(1, getIdentifier());
+			}
+			if(hasSecondaryIdentifier())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(2, getSecondaryIdentifier());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier
+					.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier buildPartial()
+			{
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasIdentifier())
+				{
+					setIdentifier(other.getIdentifier());
+				}
+				if(other.hasSecondaryIdentifier())
+				{
+					setSecondaryIdentifier(other.getSecondaryIdentifier());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							setIdentifier(input.readString());
+							break;
+						}
+						case 18:
+						{
+							setSecondaryIdentifier(input.readString());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional string identifier = 1;
+			public boolean hasIdentifier()
+			{
+				return result.hasIdentifier();
+			}
+
+			public java.lang.String getIdentifier()
+			{
+				return result.getIdentifier();
+			}
+
+			public Builder setIdentifier(java.lang.String value)
+			{
+				result.hasIdentifier = true;
+				result.identifier_ = value;
+				return this;
+			}
+
+			public Builder clearIdentifier()
+			{
+				result.hasIdentifier = false;
+				result.identifier_ = "";
+				return this;
+			}
+
+			// optional string secondary_identifier = 2;
+			public boolean hasSecondaryIdentifier()
+			{
+				return result.hasSecondaryIdentifier();
+			}
+
+			public java.lang.String getSecondaryIdentifier()
+			{
+				return result.getSecondaryIdentifier();
+			}
+
+			public Builder setSecondaryIdentifier(java.lang.String value)
+			{
+				result.hasSecondaryIdentifier = true;
+				result.secondaryIdentifier_ = value;
+				return this;
+			}
+
+			public Builder clearSecondaryIdentifier()
+			{
+				result.hasSecondaryIdentifier = false;
+				result.secondaryIdentifier_ = "";
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class LoggingEvent
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use LoggingEvent.newBuilder() to construct.
+		private LoggingEvent()
+		{
+		}
+
+		private static final LoggingEvent defaultInstance = new LoggingEvent();
+
+		public static LoggingEvent getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public LoggingEvent getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable;
+		}
+
+		// optional int64 time_stamp = 1;
+		private boolean hasTimeStamp;
+		private long timeStamp_ = 0L;
+
+		public boolean hasTimeStamp()
+		{
+			return hasTimeStamp;
+		}
+
+		public long getTimeStamp()
+		{
+			return timeStamp_;
+		}
+
+		// required string logger_name = 2;
+		private boolean hasLoggerName;
+		private java.lang.String loggerName_ = "";
+
+		public boolean hasLoggerName()
+		{
+			return hasLoggerName;
+		}
+
+		public java.lang.String getLoggerName()
+		{
+			return loggerName_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.Level level = 3;
+		private boolean hasLevel;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
+
+		public boolean hasLevel()
+		{
+			return hasLevel;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel()
+		{
+			return level_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.Message message = 4;
+		private boolean hasMessage;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message message_ = de.huxhorn.lilith.data
+			.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
+
+		public boolean hasMessage()
+		{
+			return hasMessage;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage()
+		{
+			return message_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
+		private boolean hasThreadInfo;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo threadInfo_ = de.huxhorn
+			.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
+
+		public boolean hasThreadInfo()
+		{
+			return hasThreadInfo;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo()
+		{
+			return threadInfo_;
+		}
+
+		// repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
+		private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> callStackElement_ =
+			java.util.Collections.emptyList();
+
+		public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getCallStackElementList()
+		{
+			return callStackElement_;
+		}
+
+		public int getCallStackElementCount()
+		{
+			return callStackElement_.size();
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index)
+		{
+			return callStackElement_.get(index);
+		}
+
+		// optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
+		private boolean hasThrowable;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable throwable_ = de.huxhorn.lilith
+			.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+
+		public boolean hasThrowable()
+		{
+			return hasThrowable;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable()
+		{
+			return throwable_;
+		}
+
+		// optional string application_identifier = 8;
+		private boolean hasApplicationIdentifier;
+		private java.lang.String applicationIdentifier_ = "";
+
+		public boolean hasApplicationIdentifier()
+		{
+			return hasApplicationIdentifier;
+		}
+
+		public java.lang.String getApplicationIdentifier()
+		{
+			return applicationIdentifier_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.MappedDiagnosticContext mapped_diagnostic_context = 9;
+		private boolean hasMappedDiagnosticContext;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext mappedDiagnosticContext_ = de
+			.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.getDefaultInstance();
+
+		public boolean hasMappedDiagnosticContext()
+		{
+			return hasMappedDiagnosticContext;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext getMappedDiagnosticContext()
+		{
+			return mappedDiagnosticContext_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
+		private boolean hasNestedDiagnosticContext;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext nestedDiagnosticContext_ = de
+			.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
+
+		public boolean hasNestedDiagnosticContext()
+		{
+			return hasNestedDiagnosticContext;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext()
+		{
+			return nestedDiagnosticContext_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.Marker marker = 11;
+		private boolean hasMarker;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker marker_ = de.huxhorn.lilith.data
+			.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
+
+		public boolean hasMarker()
+		{
+			return hasMarker;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker()
+		{
+			return marker_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			if(!hasLoggerName) return false;
+			if(hasThrowable())
+			{
+				if(!getThrowable().isInitialized()) return false;
+			}
+			if(hasMappedDiagnosticContext())
+			{
+				if(!getMappedDiagnosticContext().isInitialized()) return false;
+			}
+			if(hasMarker())
+			{
+				if(!getMarker().isInitialized()) return false;
+			}
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasTimeStamp())
+			{
+				output.writeInt64(1, getTimeStamp());
+			}
+			if(hasLoggerName())
+			{
+				output.writeString(2, getLoggerName());
+			}
+			if(hasLevel())
+			{
+				output.writeEnum(3, getLevel().getNumber());
+			}
+			if(hasMessage())
+			{
+				output.writeMessage(4, getMessage());
+			}
+			if(hasThreadInfo())
+			{
+				output.writeMessage(5, getThreadInfo());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getCallStackElementList())
+			{
+				output.writeMessage(6, element);
+			}
+			if(hasThrowable())
+			{
+				output.writeMessage(7, getThrowable());
+			}
+			if(hasApplicationIdentifier())
+			{
+				output.writeString(8, getApplicationIdentifier());
+			}
+			if(hasMappedDiagnosticContext())
+			{
+				output.writeMessage(9, getMappedDiagnosticContext());
+			}
+			if(hasNestedDiagnosticContext())
+			{
+				output.writeMessage(10, getNestedDiagnosticContext());
+			}
+			if(hasMarker())
+			{
+				output.writeMessage(11, getMarker());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasTimeStamp())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeInt64Size(1, getTimeStamp());
+			}
+			if(hasLoggerName())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(2, getLoggerName());
+			}
+			if(hasLevel())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeEnumSize(3, getLevel().getNumber());
+			}
+			if(hasMessage())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(4, getMessage());
+			}
+			if(hasThreadInfo())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(5, getThreadInfo());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getCallStackElementList())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(6, element);
+			}
+			if(hasThrowable())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(7, getThrowable());
+			}
+			if(hasApplicationIdentifier())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(8, getApplicationIdentifier());
+			}
+			if(hasMappedDiagnosticContext())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(9, getMappedDiagnosticContext());
+			}
+			if(hasNestedDiagnosticContext())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(10, getNestedDiagnosticContext());
+			}
+			if(hasMarker())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(11, getMarker());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent buildPartial()
+			{
+				if(result.callStackElement_ != java.util.Collections.EMPTY_LIST)
+				{
+					result.callStackElement_ =
+						java.util.Collections.unmodifiableList(result.callStackElement_);
+				}
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasTimeStamp())
+				{
+					setTimeStamp(other.getTimeStamp());
+				}
+				if(other.hasLoggerName())
+				{
+					setLoggerName(other.getLoggerName());
+				}
+				if(other.hasLevel())
+				{
+					setLevel(other.getLevel());
+				}
+				if(other.hasMessage())
+				{
+					mergeMessage(other.getMessage());
+				}
+				if(other.hasThreadInfo())
+				{
+					mergeThreadInfo(other.getThreadInfo());
+				}
+				if(!other.callStackElement_.isEmpty())
+				{
+					if(result.callStackElement_.isEmpty())
+					{
+						result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+					}
+					result.callStackElement_.addAll(other.callStackElement_);
+				}
+				if(other.hasThrowable())
+				{
+					mergeThrowable(other.getThrowable());
+				}
+				if(other.hasApplicationIdentifier())
+				{
+					setApplicationIdentifier(other.getApplicationIdentifier());
+				}
+				if(other.hasMappedDiagnosticContext())
+				{
+					mergeMappedDiagnosticContext(other.getMappedDiagnosticContext());
+				}
+				if(other.hasNestedDiagnosticContext())
+				{
+					mergeNestedDiagnosticContext(other.getNestedDiagnosticContext());
+				}
+				if(other.hasMarker())
+				{
+					mergeMarker(other.getMarker());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 8:
+						{
+							setTimeStamp(input.readInt64());
+							break;
+						}
+						case 18:
+						{
+							setLoggerName(input.readString());
+							break;
+						}
+						case 24:
+						{
+							int rawValue = input.readEnum();
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level value = de.huxhorn
+								.lilith.data.logging.protobuf.generated.LoggingProto.Level.valueOf(rawValue);
+							if(value == null)
+							{
+								unknownFields.mergeVarintField(3, rawValue);
+							}
+							else
+							{
+								setLevel(value);
+							}
+							break;
+						}
+						case 34:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder();
+							if(hasMessage())
+							{
+								subBuilder.mergeFrom(getMessage());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setMessage(subBuilder.buildPartial());
+							break;
+						}
+						case 42:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.newBuilder();
+							if(hasThreadInfo())
+							{
+								subBuilder.mergeFrom(getThreadInfo());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setThreadInfo(subBuilder.buildPartial());
+							break;
+						}
+						case 50:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement
+								.newBuilder();
+							input.readMessage(subBuilder, extensionRegistry);
+							addCallStackElement(subBuilder.buildPartial());
+							break;
+						}
+						case 58:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder();
+							if(hasThrowable())
+							{
+								subBuilder.mergeFrom(getThrowable());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setThrowable(subBuilder.buildPartial());
+							break;
+						}
+						case 66:
+						{
+							setApplicationIdentifier(input.readString());
+							break;
+						}
+						case 74:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext
+								.newBuilder();
+							if(hasMappedDiagnosticContext())
+							{
+								subBuilder.mergeFrom(getMappedDiagnosticContext());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setMappedDiagnosticContext(subBuilder.buildPartial());
+							break;
+						}
+						case 82:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext
+								.newBuilder();
+							if(hasNestedDiagnosticContext())
+							{
+								subBuilder.mergeFrom(getNestedDiagnosticContext());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setNestedDiagnosticContext(subBuilder.buildPartial());
+							break;
+						}
+						case 90:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder();
+							if(hasMarker())
+							{
+								subBuilder.mergeFrom(getMarker());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setMarker(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional int64 time_stamp = 1;
+			public boolean hasTimeStamp()
+			{
+				return result.hasTimeStamp();
+			}
+
+			public long getTimeStamp()
+			{
+				return result.getTimeStamp();
+			}
+
+			public Builder setTimeStamp(long value)
+			{
+				result.hasTimeStamp = true;
+				result.timeStamp_ = value;
+				return this;
+			}
+
+			public Builder clearTimeStamp()
+			{
+				result.hasTimeStamp = false;
+				result.timeStamp_ = 0L;
+				return this;
+			}
+
+			// required string logger_name = 2;
+			public boolean hasLoggerName()
+			{
+				return result.hasLoggerName();
+			}
+
+			public java.lang.String getLoggerName()
+			{
+				return result.getLoggerName();
+			}
+
+			public Builder setLoggerName(java.lang.String value)
+			{
+				result.hasLoggerName = true;
+				result.loggerName_ = value;
+				return this;
+			}
+
+			public Builder clearLoggerName()
+			{
+				result.hasLoggerName = false;
+				result.loggerName_ = "";
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.Level level = 3;
+			public boolean hasLevel()
+			{
+				return result.hasLevel();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel()
+			{
+				return result.getLevel();
+			}
+
+			public Builder setLevel(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level value)
+			{
+				result.hasLevel = true;
+				result.level_ = value;
+				return this;
+			}
+
+			public Builder clearLevel()
+			{
+				result.hasLevel = false;
+				result.level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.Message message = 4;
+			public boolean hasMessage()
+			{
+				return result.hasMessage();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage()
+			{
+				return result.getMessage();
+			}
+
+			public Builder setMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value)
+			{
+				result.hasMessage = true;
+				result.message_ = value;
+				return this;
+			}
+
+			public Builder setMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue)
+			{
+				result.hasMessage = true;
+				result.message_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value)
+			{
+				if(result.hasMessage() &&
+					result.message_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message
+						.getDefaultInstance())
+				{
+					result.message_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message
+							.newBuilder(result.message_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.message_ = value;
+				}
+				result.hasMessage = true;
+				return this;
+			}
+
+			public Builder clearMessage()
+			{
+				result.hasMessage = false;
+				result.message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message
+					.getDefaultInstance();
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
+			public boolean hasThreadInfo()
+			{
+				return result.hasThreadInfo();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo()
+			{
+				return result.getThreadInfo();
+			}
+
+			public Builder setThreadInfo(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo value)
+			{
+				result.hasThreadInfo = true;
+				result.threadInfo_ = value;
+				return this;
+			}
+
+			public Builder setThreadInfo(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder builderForValue)
+			{
+				result.hasThreadInfo = true;
+				result.threadInfo_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeThreadInfo(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo value)
+			{
+				if(result.hasThreadInfo() &&
+					result.threadInfo_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo
+						.getDefaultInstance())
+				{
+					result.threadInfo_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo
+							.newBuilder(result.threadInfo_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.threadInfo_ = value;
+				}
+				result.hasThreadInfo = true;
+				return this;
+			}
+
+			public Builder clearThreadInfo()
+			{
+				result.hasThreadInfo = false;
+				result.threadInfo_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo
+					.getDefaultInstance();
+				return this;
+			}
+
+			// repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
+			public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getCallStackElementList()
+			{
+				return java.util.Collections.unmodifiableList(result.callStackElement_);
+			}
+
+			public int getCallStackElementCount()
+			{
+				return result.getCallStackElementCount();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index)
+			{
+				return result.getCallStackElement(index);
+			}
+
+			public Builder setCallStackElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value)
+			{
+				result.callStackElement_.set(index, value);
+				return this;
+			}
+
+			public Builder setCallStackElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue)
+			{
+				result.callStackElement_.set(index, builderForValue.build());
+				return this;
+			}
+
+			public Builder addCallStackElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value)
+			{
+				if(result.callStackElement_.isEmpty())
+				{
+					result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+				}
+				result.callStackElement_.add(value);
+				return this;
+			}
+
+			public Builder addCallStackElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue)
+			{
+				if(result.callStackElement_.isEmpty())
+				{
+					result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+				}
+				result.callStackElement_.add(builderForValue.build());
+				return this;
+			}
+
+			public Builder addAllCallStackElement(
+				java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values)
+			{
+				if(result.callStackElement_.isEmpty())
+				{
+					result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+				}
+				super.addAll(values, result.callStackElement_);
+				return this;
+			}
+
+			public Builder clearCallStackElement()
+			{
+				result.callStackElement_ = java.util.Collections.emptyList();
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
+			public boolean hasThrowable()
+			{
+				return result.hasThrowable();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable()
+			{
+				return result.getThrowable();
+			}
+
+			public Builder setThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value)
+			{
+				result.hasThrowable = true;
+				result.throwable_ = value;
+				return this;
+			}
+
+			public Builder setThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue)
+			{
+				result.hasThrowable = true;
+				result.throwable_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value)
+			{
+				if(result.hasThrowable() &&
+					result.throwable_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable
+						.getDefaultInstance())
+				{
+					result.throwable_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable
+							.newBuilder(result.throwable_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.throwable_ = value;
+				}
+				result.hasThrowable = true;
+				return this;
+			}
+
+			public Builder clearThrowable()
+			{
+				result.hasThrowable = false;
+				result.throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable
+					.getDefaultInstance();
+				return this;
+			}
+
+			// optional string application_identifier = 8;
+			public boolean hasApplicationIdentifier()
+			{
+				return result.hasApplicationIdentifier();
+			}
+
+			public java.lang.String getApplicationIdentifier()
+			{
+				return result.getApplicationIdentifier();
+			}
+
+			public Builder setApplicationIdentifier(java.lang.String value)
+			{
+				result.hasApplicationIdentifier = true;
+				result.applicationIdentifier_ = value;
+				return this;
+			}
+
+			public Builder clearApplicationIdentifier()
+			{
+				result.hasApplicationIdentifier = false;
+				result.applicationIdentifier_ = "";
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.MappedDiagnosticContext mapped_diagnostic_context = 9;
+			public boolean hasMappedDiagnosticContext()
+			{
+				return result.hasMappedDiagnosticContext();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext getMappedDiagnosticContext()
+			{
+				return result.getMappedDiagnosticContext();
+			}
+
+			public Builder setMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext value)
+			{
+				result.hasMappedDiagnosticContext = true;
+				result.mappedDiagnosticContext_ = value;
+				return this;
+			}
+
+			public Builder setMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.Builder builderForValue)
+			{
+				result.hasMappedDiagnosticContext = true;
+				result.mappedDiagnosticContext_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext value)
+			{
+				if(result.hasMappedDiagnosticContext() &&
+					result.mappedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto
+						.MappedDiagnosticContext.getDefaultInstance())
+				{
+					result.mappedDiagnosticContext_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext
+							.newBuilder(result.mappedDiagnosticContext_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.mappedDiagnosticContext_ = value;
+				}
+				result.hasMappedDiagnosticContext = true;
+				return this;
+			}
+
+			public Builder clearMappedDiagnosticContext()
+			{
+				result.hasMappedDiagnosticContext = false;
+				result.mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto
+					.MappedDiagnosticContext.getDefaultInstance();
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
+			public boolean hasNestedDiagnosticContext()
+			{
+				return result.hasNestedDiagnosticContext();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext()
+			{
+				return result.getNestedDiagnosticContext();
+			}
+
+			public Builder setNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext value)
+			{
+				result.hasNestedDiagnosticContext = true;
+				result.nestedDiagnosticContext_ = value;
+				return this;
+			}
+
+			public Builder setNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder builderForValue)
+			{
+				result.hasNestedDiagnosticContext = true;
+				result.nestedDiagnosticContext_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext value)
+			{
+				if(result.hasNestedDiagnosticContext() &&
+					result.nestedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto
+						.NestedDiagnosticContext.getDefaultInstance())
+				{
+					result.nestedDiagnosticContext_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext
+							.newBuilder(result.nestedDiagnosticContext_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.nestedDiagnosticContext_ = value;
+				}
+				result.hasNestedDiagnosticContext = true;
+				return this;
+			}
+
+			public Builder clearNestedDiagnosticContext()
+			{
+				result.hasNestedDiagnosticContext = false;
+				result.nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto
+					.NestedDiagnosticContext.getDefaultInstance();
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.Marker marker = 11;
+			public boolean hasMarker()
+			{
+				return result.hasMarker();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker()
+			{
+				return result.getMarker();
+			}
+
+			public Builder setMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value)
+			{
+				result.hasMarker = true;
+				result.marker_ = value;
+				return this;
+			}
+
+			public Builder setMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue)
+			{
+				result.hasMarker = true;
+				result.marker_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value)
+			{
+				if(result.hasMarker() &&
+					result.marker_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker
+						.getDefaultInstance())
+				{
+					result.marker_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder(result.marker_)
+							.mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.marker_ = value;
+				}
+				result.hasMarker = true;
+				return this;
+			}
+
+			public Builder clearMarker()
+			{
+				result.hasMarker = false;
+				result.marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker
+					.getDefaultInstance();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class ThreadInfo
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use ThreadInfo.newBuilder() to construct.
+		private ThreadInfo()
+		{
+		}
+
+		private static final ThreadInfo defaultInstance = new ThreadInfo();
+
+		public static ThreadInfo getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public ThreadInfo getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable;
+		}
+
+		// optional int64 id = 1;
+		private boolean hasId;
+		private long id_ = 0L;
+
+		public boolean hasId()
+		{
+			return hasId;
+		}
+
+		public long getId()
+		{
+			return id_;
+		}
+
+		// optional string name = 2;
+		private boolean hasName;
+		private java.lang.String name_ = "";
+
+		public boolean hasName()
+		{
+			return hasName;
+		}
+
+		public java.lang.String getName()
+		{
+			return name_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasId())
+			{
+				output.writeInt64(1, getId());
+			}
+			if(hasName())
+			{
+				output.writeString(2, getName());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasId())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeInt64Size(1, getId());
+			}
+			if(hasName())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(2, getName());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo buildPartial()
+			{
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasId())
+				{
+					setId(other.getId());
+				}
+				if(other.hasName())
+				{
+					setName(other.getName());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 8:
+						{
+							setId(input.readInt64());
+							break;
+						}
+						case 18:
+						{
+							setName(input.readString());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional int64 id = 1;
+			public boolean hasId()
+			{
+				return result.hasId();
+			}
+
+			public long getId()
+			{
+				return result.getId();
+			}
+
+			public Builder setId(long value)
+			{
+				result.hasId = true;
+				result.id_ = value;
+				return this;
+			}
+
+			public Builder clearId()
+			{
+				result.hasId = false;
+				result.id_ = 0L;
+				return this;
+			}
+
+			// optional string name = 2;
+			public boolean hasName()
+			{
+				return result.hasName();
+			}
+
+			public java.lang.String getName()
+			{
+				return result.getName();
+			}
+
+			public Builder setName(java.lang.String value)
+			{
+				result.hasName = true;
+				result.name_ = value;
+				return this;
+			}
+
+			public Builder clearName()
+			{
+				result.hasName = false;
+				result.name_ = "";
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class Message
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use Message.newBuilder() to construct.
+		private Message()
+		{
+		}
+
+		private static final Message defaultInstance = new Message();
+
+		public static Message getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public Message getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable;
+		}
+
+		// optional string message_pattern = 1;
+		private boolean hasMessagePattern;
+		private java.lang.String messagePattern_ = "";
+
+		public boolean hasMessagePattern()
+		{
+			return hasMessagePattern;
+		}
+
+		public java.lang.String getMessagePattern()
+		{
+			return messagePattern_;
+		}
+
+		// repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
+		private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> argument_ =
+			java.util.Collections.emptyList();
+
+		public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> getArgumentList()
+		{
+			return argument_;
+		}
+
+		public int getArgumentCount()
+		{
+			return argument_.size();
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index)
+		{
+			return argument_.get(index);
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasMessagePattern())
+			{
+				output.writeString(1, getMessagePattern());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument element : getArgumentList())
+			{
+				output.writeMessage(2, element);
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasMessagePattern())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(1, getMessagePattern());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument element : getArgumentList())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(2, element);
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message buildPartial()
+			{
+				if(result.argument_ != java.util.Collections.EMPTY_LIST)
+				{
+					result.argument_ =
+						java.util.Collections.unmodifiableList(result.argument_);
+				}
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasMessagePattern())
+				{
+					setMessagePattern(other.getMessagePattern());
+				}
+				if(!other.argument_.isEmpty())
+				{
+					if(result.argument_.isEmpty())
+					{
+						result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
+					}
+					result.argument_.addAll(other.argument_);
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							setMessagePattern(input.readString());
+							break;
+						}
+						case 18:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument
+								.newBuilder();
+							input.readMessage(subBuilder, extensionRegistry);
+							addArgument(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional string message_pattern = 1;
+			public boolean hasMessagePattern()
+			{
+				return result.hasMessagePattern();
+			}
+
+			public java.lang.String getMessagePattern()
+			{
+				return result.getMessagePattern();
+			}
+
+			public Builder setMessagePattern(java.lang.String value)
+			{
+				result.hasMessagePattern = true;
+				result.messagePattern_ = value;
+				return this;
+			}
+
+			public Builder clearMessagePattern()
+			{
+				result.hasMessagePattern = false;
+				result.messagePattern_ = "";
+				return this;
+			}
+
+			// repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
+			public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> getArgumentList()
+			{
+				return java.util.Collections.unmodifiableList(result.argument_);
+			}
+
+			public int getArgumentCount()
+			{
+				return result.getArgumentCount();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index)
+			{
+				return result.getArgument(index);
+			}
+
+			public Builder setArgument(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value)
+			{
+				result.argument_.set(index, value);
+				return this;
+			}
+
+			public Builder setArgument(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue)
+			{
+				result.argument_.set(index, builderForValue.build());
+				return this;
+			}
+
+			public Builder addArgument(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value)
+			{
+				if(result.argument_.isEmpty())
+				{
+					result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
+				}
+				result.argument_.add(value);
+				return this;
+			}
+
+			public Builder addArgument(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue)
+			{
+				if(result.argument_.isEmpty())
+				{
+					result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
+				}
+				result.argument_.add(builderForValue.build());
+				return this;
+			}
+
+			public Builder addAllArgument(
+				java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> values)
+			{
+				if(result.argument_.isEmpty())
+				{
+					result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
+				}
+				super.addAll(values, result.argument_);
+				return this;
+			}
+
+			public Builder clearArgument()
+			{
+				result.argument_ = java.util.Collections.emptyList();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class MessageArgument
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use MessageArgument.newBuilder() to construct.
+		private MessageArgument()
+		{
+		}
+
+		private static final MessageArgument defaultInstance = new MessageArgument();
+
+		public static MessageArgument getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public MessageArgument getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable;
+		}
+
+		// optional string value = 1;
+		private boolean hasValue;
+		private java.lang.String value_ = "";
+
+		public boolean hasValue()
+		{
+			return hasValue;
+		}
+
+		public java.lang.String getValue()
+		{
+			return value_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasValue())
+			{
+				output.writeString(1, getValue());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasValue())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(1, getValue());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument
+					.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument buildPartial()
+			{
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasValue())
+				{
+					setValue(other.getValue());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							setValue(input.readString());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional string value = 1;
+			public boolean hasValue()
+			{
+				return result.hasValue();
+			}
+
+			public java.lang.String getValue()
+			{
+				return result.getValue();
+			}
+
+			public Builder setValue(java.lang.String value)
+			{
+				result.hasValue = true;
+				result.value_ = value;
+				return this;
+			}
+
+			public Builder clearValue()
+			{
+				result.hasValue = false;
+				result.value_ = "";
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class StackTraceElement
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use StackTraceElement.newBuilder() to construct.
+		private StackTraceElement()
+		{
+		}
+
+		private static final StackTraceElement defaultInstance = new StackTraceElement();
+
+		public static StackTraceElement getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public StackTraceElement getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
+		}
+
+		// optional string methodName = 1;
+		private boolean hasMethodName;
+		private java.lang.String methodName_ = "";
+
+		public boolean hasMethodName()
+		{
+			return hasMethodName;
+		}
+
+		public java.lang.String getMethodName()
+		{
+			return methodName_;
+		}
+
+		// optional string className = 2;
+		private boolean hasClassName;
+		private java.lang.String className_ = "";
+
+		public boolean hasClassName()
+		{
+			return hasClassName;
+		}
+
+		public java.lang.String getClassName()
+		{
+			return className_;
+		}
+
+		// optional string fileName = 3;
+		private boolean hasFileName;
+		private java.lang.String fileName_ = "";
+
+		public boolean hasFileName()
+		{
+			return hasFileName;
+		}
+
+		public java.lang.String getFileName()
+		{
+			return fileName_;
+		}
+
+		// optional int32 lineNumber = 4;
+		private boolean hasLineNumber;
+		private int lineNumber_ = 0;
+
+		public boolean hasLineNumber()
+		{
+			return hasLineNumber;
+		}
+
+		public int getLineNumber()
+		{
+			return lineNumber_;
+		}
+
+		// optional string codeLocation = 5;
+		private boolean hasCodeLocation;
+		private java.lang.String codeLocation_ = "";
+
+		public boolean hasCodeLocation()
+		{
+			return hasCodeLocation;
+		}
+
+		public java.lang.String getCodeLocation()
+		{
+			return codeLocation_;
+		}
+
+		// optional string version = 6;
+		private boolean hasVersion;
+		private java.lang.String version_ = "";
+
+		public boolean hasVersion()
+		{
+			return hasVersion;
+		}
+
+		public java.lang.String getVersion()
+		{
+			return version_;
+		}
+
+		// optional bool exact = 7;
+		private boolean hasExact;
+		private boolean exact_ = false;
+
+		public boolean hasExact()
+		{
+			return hasExact;
+		}
+
+		public boolean getExact()
+		{
+			return exact_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasMethodName())
+			{
+				output.writeString(1, getMethodName());
+			}
+			if(hasClassName())
+			{
+				output.writeString(2, getClassName());
+			}
+			if(hasFileName())
+			{
+				output.writeString(3, getFileName());
+			}
+			if(hasLineNumber())
+			{
+				output.writeInt32(4, getLineNumber());
+			}
+			if(hasCodeLocation())
+			{
+				output.writeString(5, getCodeLocation());
+			}
+			if(hasVersion())
+			{
+				output.writeString(6, getVersion());
+			}
+			if(hasExact())
+			{
+				output.writeBool(7, getExact());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasMethodName())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(1, getMethodName());
+			}
+			if(hasClassName())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(2, getClassName());
+			}
+			if(hasFileName())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(3, getFileName());
+			}
+			if(hasLineNumber())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeInt32Size(4, getLineNumber());
+			}
+			if(hasCodeLocation())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(5, getCodeLocation());
+			}
+			if(hasVersion())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(6, getVersion());
+			}
+			if(hasExact())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeBoolSize(7, getExact());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement
+					.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement buildPartial()
+			{
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasMethodName())
+				{
+					setMethodName(other.getMethodName());
+				}
+				if(other.hasClassName())
+				{
+					setClassName(other.getClassName());
+				}
+				if(other.hasFileName())
+				{
+					setFileName(other.getFileName());
+				}
+				if(other.hasLineNumber())
+				{
+					setLineNumber(other.getLineNumber());
+				}
+				if(other.hasCodeLocation())
+				{
+					setCodeLocation(other.getCodeLocation());
+				}
+				if(other.hasVersion())
+				{
+					setVersion(other.getVersion());
+				}
+				if(other.hasExact())
+				{
+					setExact(other.getExact());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							setMethodName(input.readString());
+							break;
+						}
+						case 18:
+						{
+							setClassName(input.readString());
+							break;
+						}
+						case 26:
+						{
+							setFileName(input.readString());
+							break;
+						}
+						case 32:
+						{
+							setLineNumber(input.readInt32());
+							break;
+						}
+						case 42:
+						{
+							setCodeLocation(input.readString());
+							break;
+						}
+						case 50:
+						{
+							setVersion(input.readString());
+							break;
+						}
+						case 56:
+						{
+							setExact(input.readBool());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// optional string methodName = 1;
+			public boolean hasMethodName()
+			{
+				return result.hasMethodName();
+			}
+
+			public java.lang.String getMethodName()
+			{
+				return result.getMethodName();
+			}
+
+			public Builder setMethodName(java.lang.String value)
+			{
+				result.hasMethodName = true;
+				result.methodName_ = value;
+				return this;
+			}
+
+			public Builder clearMethodName()
+			{
+				result.hasMethodName = false;
+				result.methodName_ = "";
+				return this;
+			}
+
+			// optional string className = 2;
+			public boolean hasClassName()
+			{
+				return result.hasClassName();
+			}
+
+			public java.lang.String getClassName()
+			{
+				return result.getClassName();
+			}
+
+			public Builder setClassName(java.lang.String value)
+			{
+				result.hasClassName = true;
+				result.className_ = value;
+				return this;
+			}
+
+			public Builder clearClassName()
+			{
+				result.hasClassName = false;
+				result.className_ = "";
+				return this;
+			}
+
+			// optional string fileName = 3;
+			public boolean hasFileName()
+			{
+				return result.hasFileName();
+			}
+
+			public java.lang.String getFileName()
+			{
+				return result.getFileName();
+			}
+
+			public Builder setFileName(java.lang.String value)
+			{
+				result.hasFileName = true;
+				result.fileName_ = value;
+				return this;
+			}
+
+			public Builder clearFileName()
+			{
+				result.hasFileName = false;
+				result.fileName_ = "";
+				return this;
+			}
+
+			// optional int32 lineNumber = 4;
+			public boolean hasLineNumber()
+			{
+				return result.hasLineNumber();
+			}
+
+			public int getLineNumber()
+			{
+				return result.getLineNumber();
+			}
+
+			public Builder setLineNumber(int value)
+			{
+				result.hasLineNumber = true;
+				result.lineNumber_ = value;
+				return this;
+			}
+
+			public Builder clearLineNumber()
+			{
+				result.hasLineNumber = false;
+				result.lineNumber_ = 0;
+				return this;
+			}
+
+			// optional string codeLocation = 5;
+			public boolean hasCodeLocation()
+			{
+				return result.hasCodeLocation();
+			}
+
+			public java.lang.String getCodeLocation()
+			{
+				return result.getCodeLocation();
+			}
+
+			public Builder setCodeLocation(java.lang.String value)
+			{
+				result.hasCodeLocation = true;
+				result.codeLocation_ = value;
+				return this;
+			}
+
+			public Builder clearCodeLocation()
+			{
+				result.hasCodeLocation = false;
+				result.codeLocation_ = "";
+				return this;
+			}
+
+			// optional string version = 6;
+			public boolean hasVersion()
+			{
+				return result.hasVersion();
+			}
+
+			public java.lang.String getVersion()
+			{
+				return result.getVersion();
+			}
+
+			public Builder setVersion(java.lang.String value)
+			{
+				result.hasVersion = true;
+				result.version_ = value;
+				return this;
+			}
+
+			public Builder clearVersion()
+			{
+				result.hasVersion = false;
+				result.version_ = "";
+				return this;
+			}
+
+			// optional bool exact = 7;
+			public boolean hasExact()
+			{
+				return result.hasExact();
+			}
+
+			public boolean getExact()
+			{
+				return result.getExact();
+			}
+
+			public Builder setExact(boolean value)
+			{
+				result.hasExact = true;
+				result.exact_ = value;
+				return this;
+			}
+
+			public Builder clearExact()
+			{
+				result.hasExact = false;
+				result.exact_ = false;
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class Throwable
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use Throwable.newBuilder() to construct.
+		private Throwable()
+		{
+		}
+
+		private static final Throwable defaultInstance = new Throwable();
+
+		public static Throwable getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public Throwable getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
+		}
+
+		// required string throwable_class = 1;
+		private boolean hasThrowableClass;
+		private java.lang.String throwableClass_ = "";
+
+		public boolean hasThrowableClass()
+		{
+			return hasThrowableClass;
+		}
+
+		public java.lang.String getThrowableClass()
+		{
+			return throwableClass_;
+		}
+
+		// optional string message = 2;
+		private boolean hasMessage;
+		private java.lang.String message_ = "";
+
+		public boolean hasMessage()
+		{
+			return hasMessage;
+		}
+
+		public java.lang.String getMessage()
+		{
+			return message_;
+		}
+
+		// repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
+		private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> stackTraceElement_ =
+			java.util.Collections.emptyList();
+
+		public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getStackTraceElementList()
+		{
+			return stackTraceElement_;
+		}
+
+		public int getStackTraceElementCount()
+		{
+			return stackTraceElement_.size();
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index)
+		{
+			return stackTraceElement_.get(index);
+		}
+
+		// optional int32 omitted_elements = 4;
+		private boolean hasOmittedElements;
+		private int omittedElements_ = 0;
+
+		public boolean hasOmittedElements()
+		{
+			return hasOmittedElements;
+		}
+
+		public int getOmittedElements()
+		{
+			return omittedElements_;
+		}
+
+		// optional .de.huxhorn.lilith.logging.Throwable cause = 5;
+		private boolean hasCause;
+		private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable cause_ = de.huxhorn.lilith.data
+			.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+
+		public boolean hasCause()
+		{
+			return hasCause;
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause()
+		{
+			return cause_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			if(!hasThrowableClass) return false;
+			if(hasCause())
+			{
+				if(!getCause().isInitialized()) return false;
+			}
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasThrowableClass())
+			{
+				output.writeString(1, getThrowableClass());
+			}
+			if(hasMessage())
+			{
+				output.writeString(2, getMessage());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getStackTraceElementList())
+			{
+				output.writeMessage(3, element);
+			}
+			if(hasOmittedElements())
+			{
+				output.writeInt32(4, getOmittedElements());
+			}
+			if(hasCause())
+			{
+				output.writeMessage(5, getCause());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasThrowableClass())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(1, getThrowableClass());
+			}
+			if(hasMessage())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(2, getMessage());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getStackTraceElementList())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(3, element);
+			}
+			if(hasOmittedElements())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeInt32Size(4, getOmittedElements());
+			}
+			if(hasCause())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(5, getCause());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable buildPartial()
+			{
+				if(result.stackTraceElement_ != java.util.Collections.EMPTY_LIST)
+				{
+					result.stackTraceElement_ =
+						java.util.Collections.unmodifiableList(result.stackTraceElement_);
+				}
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasThrowableClass())
+				{
+					setThrowableClass(other.getThrowableClass());
+				}
+				if(other.hasMessage())
+				{
+					setMessage(other.getMessage());
+				}
+				if(!other.stackTraceElement_.isEmpty())
+				{
+					if(result.stackTraceElement_.isEmpty())
+					{
+						result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+					}
+					result.stackTraceElement_.addAll(other.stackTraceElement_);
+				}
+				if(other.hasOmittedElements())
+				{
+					setOmittedElements(other.getOmittedElements());
+				}
+				if(other.hasCause())
+				{
+					mergeCause(other.getCause());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							setThrowableClass(input.readString());
+							break;
+						}
+						case 18:
+						{
+							setMessage(input.readString());
+							break;
+						}
+						case 26:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement
+								.newBuilder();
+							input.readMessage(subBuilder, extensionRegistry);
+							addStackTraceElement(subBuilder.buildPartial());
+							break;
+						}
+						case 32:
+						{
+							setOmittedElements(input.readInt32());
+							break;
+						}
+						case 42:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder();
+							if(hasCause())
+							{
+								subBuilder.mergeFrom(getCause());
+							}
+							input.readMessage(subBuilder, extensionRegistry);
+							setCause(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// required string throwable_class = 1;
+			public boolean hasThrowableClass()
+			{
+				return result.hasThrowableClass();
+			}
+
+			public java.lang.String getThrowableClass()
+			{
+				return result.getThrowableClass();
+			}
+
+			public Builder setThrowableClass(java.lang.String value)
+			{
+				result.hasThrowableClass = true;
+				result.throwableClass_ = value;
+				return this;
+			}
+
+			public Builder clearThrowableClass()
+			{
+				result.hasThrowableClass = false;
+				result.throwableClass_ = "";
+				return this;
+			}
+
+			// optional string message = 2;
+			public boolean hasMessage()
+			{
+				return result.hasMessage();
+			}
+
+			public java.lang.String getMessage()
+			{
+				return result.getMessage();
+			}
+
+			public Builder setMessage(java.lang.String value)
+			{
+				result.hasMessage = true;
+				result.message_ = value;
+				return this;
+			}
+
+			public Builder clearMessage()
+			{
+				result.hasMessage = false;
+				result.message_ = "";
+				return this;
+			}
+
+			// repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
+			public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getStackTraceElementList()
+			{
+				return java.util.Collections.unmodifiableList(result.stackTraceElement_);
+			}
+
+			public int getStackTraceElementCount()
+			{
+				return result.getStackTraceElementCount();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index)
+			{
+				return result.getStackTraceElement(index);
+			}
+
+			public Builder setStackTraceElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value)
+			{
+				result.stackTraceElement_.set(index, value);
+				return this;
+			}
+
+			public Builder setStackTraceElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue)
+			{
+				result.stackTraceElement_.set(index, builderForValue.build());
+				return this;
+			}
+
+			public Builder addStackTraceElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value)
+			{
+				if(result.stackTraceElement_.isEmpty())
+				{
+					result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+				}
+				result.stackTraceElement_.add(value);
+				return this;
+			}
+
+			public Builder addStackTraceElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue)
+			{
+				if(result.stackTraceElement_.isEmpty())
+				{
+					result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+				}
+				result.stackTraceElement_.add(builderForValue.build());
+				return this;
+			}
+
+			public Builder addAllStackTraceElement(
+				java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values)
+			{
+				if(result.stackTraceElement_.isEmpty())
+				{
+					result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+				}
+				super.addAll(values, result.stackTraceElement_);
+				return this;
+			}
+
+			public Builder clearStackTraceElement()
+			{
+				result.stackTraceElement_ = java.util.Collections.emptyList();
+				return this;
+			}
+
+			// optional int32 omitted_elements = 4;
+			public boolean hasOmittedElements()
+			{
+				return result.hasOmittedElements();
+			}
+
+			public int getOmittedElements()
+			{
+				return result.getOmittedElements();
+			}
+
+			public Builder setOmittedElements(int value)
+			{
+				result.hasOmittedElements = true;
+				result.omittedElements_ = value;
+				return this;
+			}
+
+			public Builder clearOmittedElements()
+			{
+				result.hasOmittedElements = false;
+				result.omittedElements_ = 0;
+				return this;
+			}
+
+			// optional .de.huxhorn.lilith.logging.Throwable cause = 5;
+			public boolean hasCause()
+			{
+				return result.hasCause();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause()
+			{
+				return result.getCause();
+			}
+
+			public Builder setCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value)
+			{
+				result.hasCause = true;
+				result.cause_ = value;
+				return this;
+			}
+
+			public Builder setCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue)
+			{
+				result.hasCause = true;
+				result.cause_ = builderForValue.build();
+				return this;
+			}
+
+			public Builder mergeCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value)
+			{
+				if(result.hasCause() &&
+					result.cause_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable
+						.getDefaultInstance())
+				{
+					result.cause_ =
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable
+							.newBuilder(result.cause_).mergeFrom(value).buildPartial();
+				}
+				else
+				{
+					result.cause_ = value;
+				}
+				result.hasCause = true;
+				return this;
+			}
+
+			public Builder clearCause()
+			{
+				result.hasCause = false;
+				result.cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable
+					.getDefaultInstance();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class MappedDiagnosticContext
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use MappedDiagnosticContext.newBuilder() to construct.
+		private MappedDiagnosticContext()
+		{
+		}
+
+		private static final MappedDiagnosticContext defaultInstance = new MappedDiagnosticContext();
+
+		public static MappedDiagnosticContext getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public MappedDiagnosticContext getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_fieldAccessorTable;
+		}
+
+		// repeated .de.huxhorn.lilith.logging.MapEntry entry = 1;
+		private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> entry_ =
+			java.util.Collections.emptyList();
+
+		public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> getEntryList()
+		{
+			return entry_;
+		}
+
+		public int getEntryCount()
+		{
+			return entry_.size();
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry getEntry(int index)
+		{
+			return entry_.get(index);
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry element : getEntryList())
+			{
+				if(!element.isInitialized()) return false;
+			}
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry element : getEntryList())
+			{
+				output.writeMessage(1, element);
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry element : getEntryList())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(1, element);
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext
+					.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext
+					.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext buildPartial()
+			{
+				if(result.entry_ != java.util.Collections.EMPTY_LIST)
+				{
+					result.entry_ =
+						java.util.Collections.unmodifiableList(result.entry_);
+				}
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(!other.entry_.isEmpty())
+				{
+					if(result.entry_.isEmpty())
+					{
+						result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
+					}
+					result.entry_.addAll(other.entry_);
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.newBuilder();
+							input.readMessage(subBuilder, extensionRegistry);
+							addEntry(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// repeated .de.huxhorn.lilith.logging.MapEntry entry = 1;
+			public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> getEntryList()
+			{
+				return java.util.Collections.unmodifiableList(result.entry_);
+			}
+
+			public int getEntryCount()
+			{
+				return result.getEntryCount();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry getEntry(int index)
+			{
+				return result.getEntry(index);
+			}
+
+			public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry value)
+			{
+				result.entry_.set(index, value);
+				return this;
+			}
+
+			public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder builderForValue)
+			{
+				result.entry_.set(index, builderForValue.build());
+				return this;
+			}
+
+			public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry value)
+			{
+				if(result.entry_.isEmpty())
+				{
+					result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
+				}
+				result.entry_.add(value);
+				return this;
+			}
+
+			public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder builderForValue)
+			{
+				if(result.entry_.isEmpty())
+				{
+					result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
+				}
+				result.entry_.add(builderForValue.build());
+				return this;
+			}
+
+			public Builder addAllEntry(
+				java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry> values)
+			{
+				if(result.entry_.isEmpty())
+				{
+					result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry>();
+				}
+				super.addAll(values, result.entry_);
+				return this;
+			}
+
+			public Builder clearEntry()
+			{
+				result.entry_ = java.util.Collections.emptyList();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class NestedDiagnosticContext
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use NestedDiagnosticContext.newBuilder() to construct.
+		private NestedDiagnosticContext()
+		{
+		}
+
+		private static final NestedDiagnosticContext defaultInstance = new NestedDiagnosticContext();
+
+		public static NestedDiagnosticContext getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public NestedDiagnosticContext getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable;
+		}
+
+		// repeated .de.huxhorn.lilith.logging.Message entry = 1;
+		private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> entry_ =
+			java.util.Collections.emptyList();
+
+		public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> getEntryList()
+		{
+			return entry_;
+		}
+
+		public int getEntryCount()
+		{
+			return entry_.size();
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index)
+		{
+			return entry_.get(index);
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message element : getEntryList())
+			{
+				output.writeMessage(1, element);
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message element : getEntryList())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(1, element);
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext
+					.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext
+					.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext buildPartial()
+			{
+				if(result.entry_ != java.util.Collections.EMPTY_LIST)
+				{
+					result.entry_ =
+						java.util.Collections.unmodifiableList(result.entry_);
+				}
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(!other.entry_.isEmpty())
+				{
+					if(result.entry_.isEmpty())
+					{
+						result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
+					}
+					result.entry_.addAll(other.entry_);
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder();
+							input.readMessage(subBuilder, extensionRegistry);
+							addEntry(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// repeated .de.huxhorn.lilith.logging.Message entry = 1;
+			public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> getEntryList()
+			{
+				return java.util.Collections.unmodifiableList(result.entry_);
+			}
+
+			public int getEntryCount()
+			{
+				return result.getEntryCount();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index)
+			{
+				return result.getEntry(index);
+			}
+
+			public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value)
+			{
+				result.entry_.set(index, value);
+				return this;
+			}
+
+			public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue)
+			{
+				result.entry_.set(index, builderForValue.build());
+				return this;
+			}
+
+			public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value)
+			{
+				if(result.entry_.isEmpty())
+				{
+					result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
+				}
+				result.entry_.add(value);
+				return this;
+			}
+
+			public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue)
+			{
+				if(result.entry_.isEmpty())
+				{
+					result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
+				}
+				result.entry_.add(builderForValue.build());
+				return this;
+			}
+
+			public Builder addAllEntry(
+				java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> values)
+			{
+				if(result.entry_.isEmpty())
+				{
+					result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
+				}
+				super.addAll(values, result.entry_);
+				return this;
+			}
+
+			public Builder clearEntry()
+			{
+				result.entry_ = java.util.Collections.emptyList();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class MapEntry
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use MapEntry.newBuilder() to construct.
+		private MapEntry()
+		{
+		}
+
+		private static final MapEntry defaultInstance = new MapEntry();
+
+		public static MapEntry getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public MapEntry getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MapEntry_fieldAccessorTable;
+		}
+
+		// required string key = 1;
+		private boolean hasKey;
+		private java.lang.String key_ = "";
+
+		public boolean hasKey()
+		{
+			return hasKey;
+		}
+
+		public java.lang.String getKey()
+		{
+			return key_;
+		}
+
+		// optional string value = 2;
+		private boolean hasValue;
+		private java.lang.String value_ = "";
+
+		public boolean hasValue()
+		{
+			return hasValue;
+		}
+
+		public java.lang.String getValue()
+		{
+			return value_;
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			if(!hasKey) return false;
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasKey())
+			{
+				output.writeString(1, getKey());
+			}
+			if(hasValue())
+			{
+				output.writeString(2, getValue());
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasKey())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(1, getKey());
+			}
+			if(hasValue())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(2, getValue());
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry buildPartial()
+			{
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry
+					.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasKey())
+				{
+					setKey(other.getKey());
+				}
+				if(other.hasValue())
+				{
+					setValue(other.getValue());
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							setKey(input.readString());
+							break;
+						}
+						case 18:
+						{
+							setValue(input.readString());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// required string key = 1;
+			public boolean hasKey()
+			{
+				return result.hasKey();
+			}
+
+			public java.lang.String getKey()
+			{
+				return result.getKey();
+			}
+
+			public Builder setKey(java.lang.String value)
+			{
+				result.hasKey = true;
+				result.key_ = value;
+				return this;
+			}
+
+			public Builder clearKey()
+			{
+				result.hasKey = false;
+				result.key_ = "";
+				return this;
+			}
+
+			// optional string value = 2;
+			public boolean hasValue()
+			{
+				return result.hasValue();
+			}
+
+			public java.lang.String getValue()
+			{
+				return result.getValue();
+			}
+
+			public Builder setValue(java.lang.String value)
+			{
+				result.hasValue = true;
+				result.value_ = value;
+				return this;
+			}
+
+			public Builder clearValue()
+			{
+				result.hasValue = false;
+				result.value_ = "";
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	public static final class Marker
+		extends
+		com.google.protobuf.GeneratedMessage
+	{
+		// Use Marker.newBuilder() to construct.
+		private Marker()
+		{
+		}
+
+		private static final Marker defaultInstance = new Marker();
+
+		public static Marker getDefaultInstance()
+		{
+			return defaultInstance;
+		}
+
+		public Marker getDefaultInstanceForType()
+		{
+			return defaultInstance;
+		}
+
+		public static final com.google.protobuf.Descriptors.Descriptor
+		getDescriptor()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
+		}
+
+		@Override
+		protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internalGetFieldAccessorTable()
+		{
+			return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable;
+		}
+
+		// required string name = 1;
+		private boolean hasName;
+		private java.lang.String name_ = "";
+
+		public boolean hasName()
+		{
+			return hasName;
+		}
+
+		public java.lang.String getName()
+		{
+			return name_;
+		}
+
+		// repeated .de.huxhorn.lilith.logging.Marker reference = 2;
+		private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> reference_ =
+			java.util.Collections.emptyList();
+
+		public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> getReferenceList()
+		{
+			return reference_;
+		}
+
+		public int getReferenceCount()
+		{
+			return reference_.size();
+		}
+
+		public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index)
+		{
+			return reference_.get(index);
+		}
+
+		@Override
+		public final boolean isInitialized()
+		{
+			if(!hasName) return false;
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList())
+			{
+				if(!element.isInitialized()) return false;
+			}
+			return true;
+		}
+
+		@Override
+		public void writeTo(com.google.protobuf.CodedOutputStream output)
+			throws java.io.IOException
+		{
+			if(hasName())
+			{
+				output.writeString(1, getName());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList())
+			{
+				output.writeMessage(2, element);
+			}
+			getUnknownFields().writeTo(output);
+		}
+
+		private int memoizedSerializedSize = -1;
+
+		@Override
+		public int getSerializedSize()
+		{
+			int size = memoizedSerializedSize;
+			if(size != -1) return size;
+
+			size = 0;
+			if(hasName())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeStringSize(1, getName());
+			}
+			for(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList())
+			{
+				size += com.google.protobuf.CodedOutputStream
+					.computeMessageSize(2, element);
+			}
+			size += getUnknownFields().getSerializedSize();
+			memoizedSerializedSize = size;
+			return size;
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
+			com.google.protobuf.ByteString data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
+			com.google.protobuf.ByteString data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(byte[] data)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
+			byte[] data,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws com.google.protobuf.InvalidProtocolBufferException
+		{
+			return newBuilder().mergeFrom(data, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(java.io.InputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
+			java.io.InputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
+			com.google.protobuf.CodedInputStream input)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input).buildParsed();
+		}
+
+		public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
+			com.google.protobuf.CodedInputStream input,
+			com.google.protobuf.ExtensionRegistry extensionRegistry)
+			throws java.io.IOException
+		{
+			return newBuilder().mergeFrom(input, extensionRegistry)
+				.buildParsed();
+		}
+
+		public static Builder newBuilder()
+		{
+			return new Builder();
+		}
+
+		public Builder newBuilderForType()
+		{
+			return new Builder();
+		}
+
+		public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker prototype)
+		{
+			return new Builder().mergeFrom(prototype);
+		}
+
+		public static final class Builder
+			extends
+			com.google.protobuf.GeneratedMessage.Builder<Builder>
+		{
+			// Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder()
+			private Builder()
+			{
+			}
+
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker();
+
+			@Override
+			protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker internalGetResult()
+			{
+				return result;
+			}
+
+			@Override
+			public Builder clear()
+			{
+				result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker();
+				return this;
+			}
+
+			@Override
+			public Builder clone()
+			{
+				return new Builder().mergeFrom(result);
+			}
+
+			@Override
+			public com.google.protobuf.Descriptors.Descriptor
+			getDescriptorForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDescriptor();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getDefaultInstanceForType()
+			{
+				return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker build()
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result);
+				}
+				return buildPartial();
+			}
+
+			private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker buildParsed()
+				throws com.google.protobuf.InvalidProtocolBufferException
+			{
+				if(!isInitialized())
+				{
+					throw new com.google.protobuf.UninitializedMessageException(
+						result).asInvalidProtocolBufferException();
+				}
+				return buildPartial();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker buildPartial()
+			{
+				if(result.reference_ != java.util.Collections.EMPTY_LIST)
+				{
+					result.reference_ =
+						java.util.Collections.unmodifiableList(result.reference_);
+				}
+				de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker returnMe = result;
+				result = null;
+				return returnMe;
+			}
+
+			@Override
+			public Builder mergeFrom(com.google.protobuf.Message other)
+			{
+				if(other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker)
+				{
+					return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker) other);
+				}
+				else
+				{
+					super.mergeFrom(other);
+					return this;
+				}
+			}
+
+			public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker other)
+			{
+				if(other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance())
+				{
+					return this;
+				}
+				if(other.hasName())
+				{
+					setName(other.getName());
+				}
+				if(!other.reference_.isEmpty())
+				{
+					if(result.reference_.isEmpty())
+					{
+						result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
+					}
+					result.reference_.addAll(other.reference_);
+				}
+				this.mergeUnknownFields(other.getUnknownFields());
+				return this;
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input)
+				throws java.io.IOException
+			{
+				return mergeFrom(input,
+					com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+			}
+
+			@Override
+			public Builder mergeFrom(
+				com.google.protobuf.CodedInputStream input,
+				com.google.protobuf.ExtensionRegistry extensionRegistry)
+				throws java.io.IOException
+			{
+				com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+					com.google.protobuf.UnknownFieldSet.newBuilder(
+						this.getUnknownFields());
+				while(true)
+				{
+					int tag = input.readTag();
+					switch(tag)
+					{
+						case 0:
+							this.setUnknownFields(unknownFields.build());
+							return this;
+						default:
+						{
+							if(!parseUnknownField(input, unknownFields,
+								extensionRegistry, tag))
+							{
+								this.setUnknownFields(unknownFields.build());
+								return this;
+							}
+							break;
+						}
+						case 10:
+						{
+							setName(input.readString());
+							break;
+						}
+						case 18:
+						{
+							de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder subBuilder = de
+								.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder();
+							input.readMessage(subBuilder, extensionRegistry);
+							addReference(subBuilder.buildPartial());
+							break;
+						}
+					}
+				}
+			}
+
+
+			// required string name = 1;
+			public boolean hasName()
+			{
+				return result.hasName();
+			}
+
+			public java.lang.String getName()
+			{
+				return result.getName();
+			}
+
+			public Builder setName(java.lang.String value)
+			{
+				result.hasName = true;
+				result.name_ = value;
+				return this;
+			}
+
+			public Builder clearName()
+			{
+				result.hasName = false;
+				result.name_ = "";
+				return this;
+			}
+
+			// repeated .de.huxhorn.lilith.logging.Marker reference = 2;
+			public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> getReferenceList()
+			{
+				return java.util.Collections.unmodifiableList(result.reference_);
+			}
+
+			public int getReferenceCount()
+			{
+				return result.getReferenceCount();
+			}
+
+			public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index)
+			{
+				return result.getReference(index);
+			}
+
+			public Builder setReference(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value)
+			{
+				result.reference_.set(index, value);
+				return this;
+			}
+
+			public Builder setReference(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue)
+			{
+				result.reference_.set(index, builderForValue.build());
+				return this;
+			}
+
+			public Builder addReference(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value)
+			{
+				if(result.reference_.isEmpty())
+				{
+					result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
+				}
+				result.reference_.add(value);
+				return this;
+			}
+
+			public Builder addReference(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue)
+			{
+				if(result.reference_.isEmpty())
+				{
+					result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
+				}
+				result.reference_.add(builderForValue.build());
+				return this;
+			}
+
+			public Builder addAllReference(
+				java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> values)
+			{
+				if(result.reference_.isEmpty())
+				{
+					result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
+				}
+				super.addAll(values, result.reference_);
+				return this;
+			}
+
+			public Builder clearReference()
+			{
+				result.reference_ = java.util.Collections.emptyList();
+				return this;
+			}
+		}
+
+		static
+		{
+			de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
+		}
+	}
+
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_Message_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_MapEntry_fieldAccessorTable;
+	private static com.google.protobuf.Descriptors.Descriptor
+		internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
+	private static
+	com.google.protobuf.GeneratedMessage.FieldAccessorTable
+		internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable;
+
+	public static com.google.protobuf.Descriptors.FileDescriptor
+	getDescriptor()
+	{
+		return descriptor;
+	}
+
+	private static com.google.protobuf.Descriptors.FileDescriptor
+		descriptor;
+
+	static
+	{
+		java.lang.String descriptorData =
+			"\n$src/main/protobuf/LoggingProto.proto\022\031" +
+				"de.huxhorn.lilith.logging\"\214\001\n\014EventWrapp" +
+				"er\022D\n\020event_identifier\030\001 \001(\0132*.de.huxhor" +
+				"n.lilith.logging.EventIdentifier\0226\n\005even" +
+				"t\030\002 \001(\0132\'.de.huxhorn.lilith.logging.Logg" +
+				"ingEvent\"k\n\017EventIdentifier\022\020\n\010local_id\030" +
+				"\001 \001(\003\022F\n\021source_identifier\030\002 \001(\0132+.de.hu" +
+				"xhorn.lilith.logging.SourceIdentifier\"D\n" +
+				"\020SourceIdentifier\022\022\n\nidentifier\030\001 \001(\t\022\034\n" +
+				"\024secondary_identifier\030\002 \001(\t\"\335\004\n\014LoggingE" +
+				"vent\022\022\n\ntime_stamp\030\001 \001(\003\022\023\n\013logger_name\030" +
+				"\002 \002(\t\022/\n\005level\030\003 \001(\0162 .de.huxhorn.lilith" +
+				".logging.Level\0223\n\007message\030\004 \001(\0132\".de.hux" +
+				"horn.lilith.logging.Message\022:\n\013thread_in" +
+				"fo\030\005 \001(\0132%.de.huxhorn.lilith.logging.Thr" +
+				"eadInfo\022H\n\022call_stack_element\030\006 \003(\0132,.de" +
+				".huxhorn.lilith.logging.StackTraceElemen" +
+				"t\0227\n\tthrowable\030\007 \001(\0132$.de.huxhorn.lilith" +
+				".logging.Throwable\022\036\n\026application_identi" +
+				"fier\030\010 \001(\t\022U\n\031mapped_diagnostic_context\030" +
+				"\t \001(\01322.de.huxhorn.lilith.logging.Mapped" +
+				"DiagnosticContext\022U\n\031nested_diagnostic_c" +
+				"ontext\030\n \001(\01322.de.huxhorn.lilith.logging" +
+				".NestedDiagnosticContext\0221\n\006marker\030\013 \001(\013" +
+				"2!.de.huxhorn.lilith.logging.Marker\"&\n\nT" +
+				"hreadInfo\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\"`\n\007M" +
+				"essage\022\027\n\017message_pattern\030\001 \001(\t\022<\n\010argum" +
+				"ent\030\002 \003(\0132*.de.huxhorn.lilith.logging.Me" +
+				"ssageArgument\" \n\017MessageArgument\022\r\n\005valu" +
+				"e\030\001 \001(\t\"\226\001\n\021StackTraceElement\022\022\n\nmethodN" +
+				"ame\030\001 \001(\t\022\021\n\tclassName\030\002 \001(\t\022\020\n\010fileName" +
+				"\030\003 \001(\t\022\022\n\nlineNumber\030\004 \001(\005\022\024\n\014codeLocati" +
+				"on\030\005 \001(\t\022\017\n\007version\030\006 \001(\t\022\r\n\005exact\030\007 \001(\010" +
+				"\"\317\001\n\tThrowable\022\027\n\017throwable_class\030\001 \002(\t\022" +
+				"\017\n\007message\030\002 \001(\t\022I\n\023stack_trace_element\030" +
+				"\003 \003(\0132,.de.huxhorn.lilith.logging.StackT" +
+				"raceElement\022\030\n\020omitted_elements\030\004 \001(\005\0223\n" +
+				"\005cause\030\005 \001(\0132$.de.huxhorn.lilith.logging" +
+				".Throwable\"M\n\027MappedDiagnosticContext\0222\n" +
+				"\005entry\030\001 \003(\0132#.de.huxhorn.lilith.logging" +
+				".MapEntry\"L\n\027NestedDiagnosticContext\0221\n\005" +
+				"entry\030\001 \003(\0132\".de.huxhorn.lilith.logging." +
+				"Message\"&\n\010MapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005valu" +
+				"e\030\002 \001(\t\"L\n\006Marker\022\014\n\004name\030\001 \002(\t\0224\n\trefer" +
+				"ence\030\002 \003(\0132!.de.huxhorn.lilith.logging.M" +
+				"arker*<\n\005Level\022\t\n\005TRACE\020\001\022\t\n\005DEBUG\020\002\022\010\n\004" +
+				"INFO\020\003\022\010\n\004WARN\020\004\022\t\n\005ERROR\020\005B5\n1de.huxhor" +
+				"n.lilith.data.logging.protobuf.generated" +
+				"H\001";
+		com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+			new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner()
+			{
+				public com.google.protobuf.ExtensionRegistry assignDescriptors(
+					com.google.protobuf.Descriptors.FileDescriptor root)
+				{
+					descriptor = root;
+					internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor =
+						getDescriptor().getMessageTypes().get(0);
+					internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor,
+						new java.lang.String[]{"EventIdentifier", "Event",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor =
+						getDescriptor().getMessageTypes().get(1);
+					internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor,
+						new java.lang.String[]{"LocalId", "SourceIdentifier",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor =
+						getDescriptor().getMessageTypes().get(2);
+					internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor,
+						new java.lang.String[]{"Identifier", "SecondaryIdentifier",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor =
+						getDescriptor().getMessageTypes().get(3);
+					internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor,
+						new java.lang.String[]{"TimeStamp", "LoggerName", "Level", "Message", "ThreadInfo", "CallStackElement", "Throwable", "ApplicationIdentifier", "MappedDiagnosticContext", "NestedDiagnosticContext", "Marker",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor =
+						getDescriptor().getMessageTypes().get(4);
+					internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor,
+						new java.lang.String[]{"Id", "Name",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_Message_descriptor =
+						getDescriptor().getMessageTypes().get(5);
+					internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_Message_descriptor,
+						new java.lang.String[]{"MessagePattern", "Argument",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor =
+						getDescriptor().getMessageTypes().get(6);
+					internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor,
+						new java.lang.String[]{"Value",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor =
+						getDescriptor().getMessageTypes().get(7);
+					internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor,
+						new java.lang.String[]{"MethodName", "ClassName", "FileName", "LineNumber", "CodeLocation", "Version", "Exact",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_Throwable_descriptor =
+						getDescriptor().getMessageTypes().get(8);
+					internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_Throwable_descriptor,
+						new java.lang.String[]{"ThrowableClass", "Message", "StackTraceElement", "OmittedElements", "Cause",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor =
+						getDescriptor().getMessageTypes().get(9);
+					internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_MappedDiagnosticContext_descriptor,
+						new java.lang.String[]{"Entry",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MappedDiagnosticContext.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor =
+						getDescriptor().getMessageTypes().get(10);
+					internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor,
+						new java.lang.String[]{"Entry",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor =
+						getDescriptor().getMessageTypes().get(11);
+					internal_static_de_huxhorn_lilith_logging_MapEntry_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_MapEntry_descriptor,
+						new java.lang.String[]{"Key", "Value",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MapEntry.Builder.class);
+					internal_static_de_huxhorn_lilith_logging_Marker_descriptor =
+						getDescriptor().getMessageTypes().get(12);
+					internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable = new
+						com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+						internal_static_de_huxhorn_lilith_logging_Marker_descriptor,
+						new java.lang.String[]{"Name", "Reference",},
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.class,
+						de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder.class);
+					return null;
+				}
+			};
+		com.google.protobuf.Descriptors.FileDescriptor
+			.internalBuildGeneratedFileFrom(descriptorData,
+				new com.google.protobuf.Descriptors.FileDescriptor[]{
+				}, assigner);
+	}
 }

@@ -37,7 +37,7 @@ import java.util.Map;
 public class LoggingEvent
 	implements Serializable
 {
-	private static final long serialVersionUID = 2176672034350830417L;
+	private static final long serialVersionUID = 9082044782500499819L;
 
 	public enum Level
 	{
@@ -50,9 +50,7 @@ public class LoggingEvent
 
 	private String logger;
 	private Level level;
-	private String threadName;
-	// TODO: add threadId
-	// TODO: set/getMessage instead of messagePattern + args
+	private ThreadInfo threadInfo;
 	// TODO: add support for getContextBirthTime()
 	private Date timeStamp;
 
@@ -66,7 +64,6 @@ public class LoggingEvent
 
 	public LoggingEvent()
 	{
-		message = new Message();
 	}
 
 	public String getLogger()
@@ -79,39 +76,24 @@ public class LoggingEvent
 		this.logger = logger;
 	}
 
-	public String getThreadName()
+	public ThreadInfo getThreadInfo()
 	{
-		return threadName;
+		return threadInfo;
 	}
 
-	public void setThreadName(String threadName)
+	public void setThreadInfo(ThreadInfo threadInfo)
 	{
-		this.threadName = threadName;
+		this.threadInfo = threadInfo;
 	}
 
-	public String getMessagePattern()
+	public Message getMessage()
 	{
-		return message.getMessagePattern();
+		return message;
 	}
 
-	public void setMessagePattern(String messagePattern)
+	public void setMessage(Message message)
 	{
-		message.setMessagePattern(messagePattern);
-	}
-
-	public String getMessage()
-	{
-		return message.getMessage();
-	}
-
-	public String[] getArguments()
-	{
-		return message.getArguments();
-	}
-
-	public void setArguments(String[] arguments)
-	{
-		message.setArguments(arguments);
+		this.message = message;
 	}
 
 	public Date getTimeStamp()
@@ -210,7 +192,7 @@ public class LoggingEvent
 			return false;
 		}
 		if(message != null ? !message.equals(event.message) : event.message != null) return false;
-		if(threadName != null ? !threadName.equals(event.threadName) : event.threadName != null) return false;
+		if(threadInfo != null ? !threadInfo.equals(event.threadInfo) : event.threadInfo != null) return false;
 		if(!Arrays.equals(callStack, event.callStack)) return false;
 		if(marker != null ? !marker.equals(event.marker) : event.marker != null) return false;
 		if(mdc != null ? !mdc.equals(event.mdc) : event.mdc != null) return false;
@@ -227,7 +209,7 @@ public class LoggingEvent
 		result = 31 * result + (level != null ? level.hashCode() : 0);
 		result = 31 * result + (message != null ? message.hashCode() : 0);
 		result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
-		result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
+		result = 31 * result + (threadInfo != null ? threadInfo.hashCode() : 0);
 		result = 31 * result + (applicationIdentifier != null ? applicationIdentifier.hashCode() : 0);
 		return result;
 	}
@@ -240,7 +222,7 @@ public class LoggingEvent
 		result.append("logger=").append(logger).append(", ");
 		result.append("level=").append(level).append(", ");
 		result.append("message=").append(message).append(", ");
-		result.append("threadName=").append(threadName).append(", ");
+		result.append("threadInfo=").append(threadInfo).append(", ");
 		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
 		result.append("timeStamp=").append(timeStamp);
 

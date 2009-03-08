@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
 import de.huxhorn.sulky.codec.Decoder;
@@ -247,6 +248,25 @@ public class LoggingEventProtobufDecoder
 		return result;
 	}
 
+	public static ThreadInfo convert(LoggingProto.ThreadInfo parsedThreadInfo)
+	{
+		if(parsedThreadInfo == null)
+		{
+			return null;
+		}
+		Long threadId = null;
+		if(parsedThreadInfo.hasId())
+		{
+			threadId = parsedThreadInfo.getId();
+		}
+		String threadName = null;
+		if(parsedThreadInfo.hasName())
+		{
+			threadName = parsedThreadInfo.getName();
+		}
+		return new ThreadInfo(threadId, threadName);
+	}
+
 	public static LoggingEvent convert(LoggingProto.LoggingEvent parsedEvent)
 	{
 		if(parsedEvent == null)
@@ -262,13 +282,11 @@ public class LoggingEventProtobufDecoder
 			result.setLogger(parsedEvent.getLoggerName());
 		}
 
-		// handling threadName
-		if(parsedEvent.hasThreadName())
+		// handling threadInfo
+		if(parsedEvent.hasThreadInfo())
 		{
-			result.setThreadName(parsedEvent.getThreadName());
+			result.setThreadInfo(convert(parsedEvent.getThreadInfo()));
 		}
-
-		// TODO: handling threadId
 
 		// handling level
 		if(parsedEvent.hasLevel())
@@ -338,12 +356,7 @@ public class LoggingEventProtobufDecoder
 		// handling event message
 		if(parsedEvent.hasMessage())
 		{
-			Message message = convert(parsedEvent.getMessage());
-			if(message != null)
-			{
-				result.setMessagePattern(message.getMessagePattern());
-				result.setArguments(message.getArguments());
-			}
+			result.setMessage(convert(parsedEvent.getMessage()));
 		}
 
 		// handling MappedDiagnosticContext

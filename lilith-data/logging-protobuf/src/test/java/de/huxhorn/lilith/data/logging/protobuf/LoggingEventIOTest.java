@@ -4,6 +4,7 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import static org.junit.Assert.assertEquals;
@@ -35,10 +36,11 @@ public class LoggingEventIOTest
 	}
 
 	@Test
-	public void threadName()
+	public void threadInfo()
 	{
 		LoggingEvent event = createMinimalEvent();
-		event.setThreadName("Thread-Name");
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name");
+		event.setThreadInfo(threadInfo);
 		check(event);
 	}
 
@@ -47,16 +49,16 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 		String[] arguments = new String[]{"arg1", "arg2"};
-		event.setArguments(arguments);
+		event.setMessage(new Message("message", arguments));
 		check(event);
 	}
 
 	@Test
-	public void nullArguments()
+	public void nullArgument()
 	{
 		LoggingEvent event = createMinimalEvent();
 		String[] arguments = new String[]{"arg1", null, "arg3"};
-		event.setArguments(arguments);
+		event.setMessage(new Message("message", arguments));
 		check(event);
 	}
 
@@ -157,10 +159,11 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 
-		event.setThreadName("Thread-Name");
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name");
+		event.setThreadInfo(threadInfo);
 
 		String[] arguments = new String[]{"arg1", null, "arg3"};
-		event.setArguments(arguments);
+		event.setMessage(new Message("message", arguments));
 
 		ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
 		ThrowableInfo ti2 = createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
@@ -201,7 +204,6 @@ public class LoggingEventIOTest
 		event.setLogger("Logger");
 		event.setLevel(LoggingEvent.Level.INFO);
 		event.setTimeStamp(new Date());
-		event.setMessagePattern("EventMessage");
 		return event;
 	}
 
