@@ -769,10 +769,10 @@ public class Benchmark
 
 		String formattedAverage = HumanReadable.getHumanReadableSize(eventAverage, true, false) + "bytes";
 		String formattedLength = HumanReadable.getHumanReadableSize(size, true, false) + "bytes";
-		DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 		symbols.setGroupingSeparator(',');
 		symbols.setDecimalSeparator('.');
-		DecimalFormat format=new DecimalFormat("#,###.##", symbols);
+		DecimalFormat format=new DecimalFormat("#,##0.0#", symbols);
 		String formattedEvents=format.format(eventsFraction);
 		String formattedFraction=format.format(fraction);
 		if(logger.isDebugEnabled()) logger.debug("average={}/event", name, formattedAverage);
