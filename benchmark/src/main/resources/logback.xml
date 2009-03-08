@@ -15,4 +15,7 @@
 	<logger name="de.huxhorn.sulky">
 		<level value="INFO"/>
 	</logger>
+	<logger name="de.huxhorn.lilith.benchmark">
+		<level value="INFO"/>
+	</logger>
 </configuration>

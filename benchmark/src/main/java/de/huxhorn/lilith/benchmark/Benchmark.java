@@ -39,6 +39,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
+import ch.qos.logback.core.CoreConstants;
 
 public class Benchmark
 {
@@ -49,6 +53,7 @@ public class Benchmark
 	private File dataFile;
 	private File indexFile;
 	private long time;
+	private static boolean executeGcBetween=false;
 
 	public enum TestFormat
 	{
@@ -103,7 +108,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("protobufUncompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("protobufUncompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -113,7 +118,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("protobufUncompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("protobufUncompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -131,7 +136,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("protobufCompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("protobufCompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -141,7 +146,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("protobufCompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("protobufCompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -161,7 +166,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("lilithXmlUncompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("lilithXmlUncompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -171,7 +176,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("lilithXmlUncompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("lilithXmlUncompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -189,7 +194,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("lilithXmlCompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("lilithXmlCompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -199,7 +204,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("lilithXmlCompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("lilithXmlCompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -219,7 +224,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("javaBeansXmlUncompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("javaBeansXmlUncompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -229,7 +234,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("javaBeansXmlUncompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("javaBeansXmlUncompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -247,7 +252,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("javaBeansXmlCompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("javaBeansXmlCompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -257,7 +262,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("javaBeansXmlCompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("javaBeansXmlCompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -277,7 +282,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("serializationUncompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("serializationUncompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -287,7 +292,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("serializationUncompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("serializationUncompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -305,7 +310,7 @@ public class Benchmark
 			byteCounter += bytes.length;
 			collectedBytes.add(bytes);
 		}
-		stopTest("serializationCompressed", "Encoder", byteCounter, loggingEvents.size());
+		stopTest("serializationCompressed", "encode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", byteCounter);
 
 		long dummy = 0;
@@ -315,7 +320,7 @@ public class Benchmark
 			LoggingEvent event = decoder.decode(current);
 			dummy += event.hashCode();
 		}
-		stopTest("serializationCompressed", "Decoder", byteCounter, loggingEvents.size());
+		stopTest("serializationCompressed", "decode", byteCounter, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
 
@@ -327,14 +332,24 @@ public class Benchmark
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(bos);
 		startTest();
+		int counter=0;
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
 			oos.writeObject(current);
+			if (++counter >= CoreConstants.OOS_RESET_FREQUENCY)
+			{
+			  counter = 0;
+			  // Failing to reset the object output stream every now and
+			  // then creates a serious memory leak.
+			  // System.err.println("Doing oos.reset()");
+			  oos.reset();
+			}
+
 		}
 		oos.flush();
 		oos.close();
 		byte[] bytes = bos.toByteArray();
-		stopTest("streamingSerialization", "Write", bytes.length, loggingEvents.size());
+		stopTest("streamingSerialization", "write", bytes.length, loggingEvents.size());
 		if(logger.isDebugEnabled()) logger.debug("byteCounter: {}", bytes.length);
 
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
@@ -348,7 +363,7 @@ public class Benchmark
 			Object obj = ois.readObject();
 			dummy += obj.hashCode();
 		}
-		stopTest("streamingSerialization", "Read", bytes.length, loggingEvents.size());
+		stopTest("streamingSerialization", "read", bytes.length, loggingEvents.size());
 		ois.close();
 		if(logger.isDebugEnabled()) logger.debug("Dummy: {}", dummy);
 	}
@@ -567,100 +582,163 @@ public class Benchmark
 	public void runBenchmarks(List<EventWrapper<LoggingEvent>> loggingEvents)
 		throws Exception
 	{
+		betweenBenchmarks();
+
 		protobufUncompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		protobufCompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		lilithXmlUncompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		lilithXmlCompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		javaUtilXmlUncompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		javaUtilXmlCompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		serializationUncompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		serializationCompressed(loggingEvents);
+
+		betweenBenchmarks();
+
 		streamingSerialization(loggingEvents);
+
+
+		betweenBenchmarks();
 
 		setUp();
 		protobufUncompressedAdd(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		protobufUncompressedAddAll(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		protobufUncompressedGet(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		protobufCompressedAdd(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		protobufCompressedAddAll(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		protobufCompressedGet(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		xmlUncompressedAdd(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		xmlUncompressedAddAll(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		xmlUncompressedGet(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		xmlCompressedAdd(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		xmlCompressedAddAll(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		xmlCompressedGet(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		serializationUncompressedAdd(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		serializationUncompressedAddAll(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		serializationUncompressedGet(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		serializationCompressedAdd(loggingEvents);
 		tearDown();
 
 
+		betweenBenchmarks();
+
 		setUp();
 		serializationCompressedAddAll(loggingEvents);
 		tearDown();
 
+
+		betweenBenchmarks();
 
 		setUp();
 		serializationCompressedGet(loggingEvents);
@@ -676,39 +754,42 @@ public class Benchmark
 	private void stopTest(String name, String action, int amount)
 	{
 		long expired = System.nanoTime() - time;
-		double fraction = (double) expired / 1000000000;
-		if(logger.isInfoEnabled()) logger.info("{}: expired={}s", name, fraction);
 		long length = dataFile.length();
-		if(logger.isInfoEnabled()) logger.info("{}: dataFileSize={} bytes", name, length);
-		long eventAverage = length / amount;
+		logBenchmark(name, action, length, amount, expired);
+	}
+
+	private void logBenchmark(String name, String action, long size, int amount, long expiredNanos)
+	{
+		double fraction = (double) expiredNanos / 1000000000;
+		double eventsFraction = ((double)amount) / fraction;
+		if(logger.isDebugEnabled()) logger.debug("{}: expired={}s", name, fraction);
+		if(logger.isDebugEnabled()) logger.debug("{}: events/s={}", name, eventsFraction);
+		if(logger.isDebugEnabled()) logger.debug("{}: size={} bytes", name, size);
+		long eventAverage = size / amount;
 
 		String formattedAverage = HumanReadable.getHumanReadableSize(eventAverage, true, false) + "bytes";
-
-		if(logger.isInfoEnabled()) logger.info("{}: average={}b/event", name, formattedAverage);
+		String formattedLength = HumanReadable.getHumanReadableSize(size, true, false) + "bytes";
+		DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+		symbols.setGroupingSeparator(',');
+		symbols.setDecimalSeparator('.');
+		DecimalFormat format=new DecimalFormat("#,###.##", symbols);
+		String formattedEvents=format.format(eventsFraction);
+		String formattedFraction=format.format(fraction);
+		if(logger.isDebugEnabled()) logger.debug("average={}/event", name, formattedAverage);
 
 		if(logger.isInfoEnabled())
 		{
 			logger
-				.info("|| {} || {} || {} || {} || {} ||", new Object[]{name, action, fraction, length, formattedAverage});
+				.info("|| {} || {} || {} || {} ({}) || {} ({}) || {} ||", 
+					new Object[]{name, action, amount, formattedFraction ,formattedEvents, formattedLength, size, formattedAverage});
 		}
+
 	}
 
 	private void stopTest(String name, String action, long length, int amount)
 	{
 		long expired = System.nanoTime() - time;
-		double fraction = (double) expired / 1000000000;
-		if(logger.isInfoEnabled()) logger.info("{}: expired={}s", name, fraction);
-		long eventAverage = length / amount;
-
-		String formattedAverage = HumanReadable.getHumanReadableSize(eventAverage, true, false) + "bytes";
-
-		if(logger.isInfoEnabled()) logger.info("{}: average={}b/event", name, formattedAverage);
-
-		if(logger.isInfoEnabled())
-		{
-			logger
-				.info("|| {} || {} || {} || {} || {} ||", new Object[]{name, action, fraction, length, formattedAverage});
-		}
+		logBenchmark(name, action, length, amount, expired);
 	}
 
 	private CodecFileBuffer<EventWrapper<LoggingEvent>> createFileBuffer(TestFormat format, boolean compressing)
@@ -857,9 +938,25 @@ public class Benchmark
 		return result;
 	}
 
+	public static void betweenBenchmarks()
+		throws InterruptedException
+	{
+		if(executeGcBetween)
+		{
+			Runtime runtime=Runtime.getRuntime();
+			System.out.println("freeMemory before gc: "+runtime.freeMemory());
+			System.gc();
+			System.out.println("Sleeping a while...");
+			Thread.sleep(1000); // give the gc a chance to kick in.
+			System.out.println("freeMemory after gc : "+runtime.freeMemory());
+		}
+	}
+
 	public static void main(String[] args)
 		throws Exception
 	{
+		final Logger logger = LoggerFactory.getLogger(Benchmark.class);
+
 		Runtime runtime=Runtime.getRuntime();
 		long maxMemory = runtime.maxMemory();
 		long totalMemory = runtime.totalMemory();
@@ -867,12 +964,34 @@ public class Benchmark
 		{
 			System.out.println("maxMemory="+runtime.maxMemory());
 			System.out.println("totalMemory="+runtime.totalMemory());
-			System.out.println("\nmaxMemory and totalMemory differ, please restart with options '-Xms250m -Xmx250m'.");
+			System.out.println("\nmaxMemory and totalMemory differ, please restart with options '-Xms512m -Xmx512m'.");
 			System.exit(0);
 		}
-
-		List<EventWrapper<LoggingEvent>> loggingEvents = createDataSet(1000);
+		if(args!=null)
+		{
+			for(String current: args)
+			{
+				if("-gc".equals(current))
+				{
+					executeGcBetween=true;
+				}
+			}
+		}
+		System.out.print("Creating events... ");
+		System.out.flush();
+		List<EventWrapper<LoggingEvent>> loggingEvents = createDataSet(10000);
+		System.out.println("done!");
 		Benchmark benchmark=new Benchmark();
+		for(int i=0;i<3;i++)
+		{
+			// yes, JIT, please optimize...
+			benchmark.runBenchmarks(loggingEvents);
+		}
+		System.out.println("\n\n\n#######################################################################");
+		System.out.println("And now for the real thing... JIT should have had enough time by now :p");
+		System.out.println("#######################################################################\n\n\n");
+		logger
+			.info("|| Name || Action || Amount || seconds (ops/s) || total size (raw size) || size/element ||");
 		benchmark.runBenchmarks(loggingEvents);
 	}
 }
