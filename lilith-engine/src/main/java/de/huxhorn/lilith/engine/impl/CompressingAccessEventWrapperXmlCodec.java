@@ -17,18 +17,20 @@
  */
 package de.huxhorn.lilith.engine.impl;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.codec.DelegatingCodecBase;
-import de.huxhorn.sulky.codec.XmlDecoder;
 import de.huxhorn.sulky.codec.XmlEncoder;
+import de.huxhorn.sulky.codec.XmlDecoder;
+import de.huxhorn.sulky.codec.Encoder;
+import de.huxhorn.sulky.codec.Decoder;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.access.AccessEvent;
 
-public class LoggingEventWrapperXmlCodec
-	extends DelegatingCodecBase<EventWrapper<LoggingEvent>>
+public class CompressingAccessEventWrapperXmlCodec
+	extends DelegatingCodecBase<EventWrapper<AccessEvent>>
 {
-	public LoggingEventWrapperXmlCodec()
+	public CompressingAccessEventWrapperXmlCodec()
 	{
-		super(new XmlEncoder<EventWrapper<LoggingEvent>>(false, LoggingEvent.Level.class),
-			new XmlDecoder<EventWrapper<LoggingEvent>>(false));
+		super(new XmlEncoder<EventWrapper<AccessEvent>>(true),
+			new XmlDecoder<EventWrapper<AccessEvent>>(true));
 	}
 }
