@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
+import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.codec.Codec;
 
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public abstract class FileBufferFactory<T extends Serializable>
 		return logFileFactory;
 	}
 
-	public abstract Codec<EventWrapper<T>> resolveCodec(Map<String, String> metaData);
+	public abstract Codec<EventWrapper<T>> resolveCodec(MetaData metaData);
 
 	public FileBuffer<EventWrapper<T>> createBuffer(SourceIdentifier si)
 	{
@@ -79,7 +80,7 @@ public abstract class FileBufferFactory<T extends Serializable>
 
 		CodecFileBuffer<EventWrapper<T>> result = new CodecFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, dataFile, indexFile);
 
-		Map<String, String> actualMetaData = result.getMetaData();
+		MetaData actualMetaData = result.getMetaData();
 
 		result.setCodec(resolveCodec(actualMetaData));
 		if(logger.isDebugEnabled()) logger.debug("Created file buffer: {}", result);

@@ -6,11 +6,11 @@ import de.huxhorn.sulky.codec.DelegatingCodecBase;
 import de.huxhorn.sulky.codec.Decoder;
 import de.huxhorn.sulky.codec.Encoder;
 
-public class LoggingEventWrapperProtobufCodec
+public class CompressingLoggingEventWrapperProtobufCodec
 	extends DelegatingCodecBase<EventWrapper<LoggingEvent>>
 {
-	public LoggingEventWrapperProtobufCodec()
+	public CompressingLoggingEventWrapperProtobufCodec()
 	{
-		super(new LoggingEventWrapperProtobufEncoder(false), new LoggingEventWrapperProtobufDecoder(false));
+		super(new LoggingEventWrapperProtobufEncoder(true), new LoggingEventWrapperProtobufDecoder(true));
 	}
 }

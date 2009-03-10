@@ -28,29 +28,9 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 public class AccessEventWrapperXmlCodec
 	extends DelegatingCodecBase<EventWrapper<AccessEvent>>
 {
-	public AccessEventWrapperXmlCodec(boolean compressed)
+	public AccessEventWrapperXmlCodec()
 	{
-		super(new XmlEncoder<EventWrapper<AccessEvent>>(compressed), new XmlDecoder<EventWrapper<AccessEvent>>(compressed));
+		super(new XmlEncoder<EventWrapper<AccessEvent>>(false),
+			new XmlDecoder<EventWrapper<AccessEvent>>(false));
 	}
-
-	public void setCompressing(boolean compressing)
-	{
-		{
-			Encoder<EventWrapper<AccessEvent>> s = getEncoder();
-			if(s instanceof XmlEncoder)
-			{
-				XmlEncoder ss= (XmlEncoder) s;
-				ss.setCompressing(compressing);
-			}
-		}
-		{
-			Decoder<EventWrapper<AccessEvent>> d = getDecoder();
-			if(d instanceof XmlDecoder)
-			{
-				XmlDecoder sd= (XmlDecoder) d;
-				sd.setCompressing(compressing);
-			}
-		}
-	}
-
 }

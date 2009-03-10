@@ -23,12 +23,12 @@ import de.huxhorn.sulky.codec.DelegatingCodecBase;
 import de.huxhorn.sulky.codec.XmlDecoder;
 import de.huxhorn.sulky.codec.XmlEncoder;
 
-public class LoggingEventWrapperXmlCodec
+public class CompressingLoggingEventWrapperXmlCodec
 	extends DelegatingCodecBase<EventWrapper<LoggingEvent>>
 {
-	public LoggingEventWrapperXmlCodec()
+	public CompressingLoggingEventWrapperXmlCodec()
 	{
-		super(new XmlEncoder<EventWrapper<LoggingEvent>>(false, LoggingEvent.Level.class),
-			new XmlDecoder<EventWrapper<LoggingEvent>>(false));
+		super(new XmlEncoder<EventWrapper<LoggingEvent>>(true, LoggingEvent.Level.class),
+			new XmlDecoder<EventWrapper<LoggingEvent>>(true));
 	}
 }
