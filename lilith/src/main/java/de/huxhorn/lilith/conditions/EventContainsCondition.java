@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -109,12 +110,27 @@ public class EventContainsCondition
 				}
 
 				{
-					String appId = event.getApplicationIdentifier();
-					if(appId != null)
+					LoggerContext context = event.getLoggerContext();
+					if(context != null)
 					{
-						if(checkString(appId))
+						if(checkString(context.getName()))
 						{
 							return true;
+						}
+						Map<String, String> props = context.getProperties();
+						if(props!= null)
+						{
+							for(Map.Entry<String, String> current:props.entrySet())
+							{
+								if(checkString(current.getKey()))
+								{
+									return true;
+								}
+								if(checkString(current.getValue()))
+								{
+									return true;
+								}
+							}
 						}
 					}
 				}

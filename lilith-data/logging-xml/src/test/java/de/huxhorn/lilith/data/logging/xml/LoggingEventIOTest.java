@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 
 import static org.junit.Assert.assertEquals;
@@ -69,11 +70,58 @@ public class LoggingEventIOTest
 	}
 
 	@Test
-	public void applicationIdentifier()
+	public void loggerContext()
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		event.setApplicationIdentifier("App");
+		LoggerContext value=new LoggerContext();
+		value.setName("ContextName");
+		value.setBirthTime(new Date(1234567890L));
+		Map<String, String> propperties=new HashMap<String, String>();
+		propperties.put("foo", "bar");
+		value.setProperties(propperties);
+		event.setLoggerContext(value);
+		check(event, true);
+	}
+
+	@Test
+	public void loggerContextMissingName()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		LoggerContext value=new LoggerContext();
+		value.setBirthTime(new Date(1234567890L));
+		Map<String, String> propperties=new HashMap<String, String>();
+		propperties.put("foo", "bar");
+		value.setProperties(propperties);
+		event.setLoggerContext(value);
+		check(event, true);
+	}
+
+	@Test
+	public void loggerContextMissingBirthTime()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		LoggerContext value=new LoggerContext();
+		value.setName("ContextName");
+		Map<String, String> propperties=new HashMap<String, String>();
+		propperties.put("foo", "bar");
+		value.setProperties(propperties);
+		event.setLoggerContext(value);
+		check(event, true);
+	}
+
+
+	@Test
+	public void loggerContextMissingProperties()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		LoggerContext value=new LoggerContext();
+		value.setName("ContextName");
+		value.setBirthTime(new Date(1234567890L));
+		event.setLoggerContext(value);
 		check(event, true);
 	}
 

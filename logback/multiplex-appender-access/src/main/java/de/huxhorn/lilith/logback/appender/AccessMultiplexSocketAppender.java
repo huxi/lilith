@@ -45,6 +45,11 @@ public class AccessMultiplexSocketAppender
 		this(true);
 	}
 
+	protected void applicationIdentifierChanged()
+	{
+		// TODO:
+	}
+
 	public AccessMultiplexSocketAppender(boolean compressing)
 	{
 		super();

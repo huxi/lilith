@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
 import de.huxhorn.sulky.codec.Encoder;
 
@@ -279,6 +280,59 @@ public class LoggingEventProtobufEncoder
 		return builder.build();
 	}
 
+	public static LoggingProto.LoggerContext convert(LoggerContext context)
+	{
+		if(context == null)
+		{
+			return null;
+		}
+		LoggingProto.LoggerContext.Builder builder=LoggingProto.LoggerContext.newBuilder();
+		{
+			String name = context.getName();
+			if(name!=null)
+			{
+				builder.setName(name);
+			}
+		}
+		{
+			Date birthTime = context.getBirthTime();
+			if(birthTime!=null)
+			{
+				builder.setBirthTime(birthTime.getTime());
+			}
+		}
+		{
+			Map<String, String> map = context.getProperties();
+			if(map != null && map.size() > 0)
+			{
+				builder.setProperties(convert(map));
+			}
+		}
+		return builder.build();
+
+	}
+
+	public static LoggingProto.StringMap convert(Map<String, String> map)
+	{
+		if(map == null)
+		{
+			return null;
+		}
+		LoggingProto.StringMap.Builder builder = LoggingProto.StringMap.newBuilder();
+		for(Map.Entry<String, String> current : map.entrySet())
+		{
+			LoggingProto.MapEntry.Builder entryBuilder = LoggingProto.MapEntry.newBuilder()
+				.setKey(current.getKey());
+			String value = current.getValue();
+			if(value != null)
+			{
+				entryBuilder.setValue(value);
+			}
+			builder.addEntry(entryBuilder.build());
+		}
+		return builder.build();
+	}
+
 	public static LoggingProto.LoggingEvent convert(LoggingEvent event)
 	{
 		if(event == null)
@@ -331,12 +385,12 @@ public class LoggingEventProtobufEncoder
 			}
 		}
 
-		// handle ApplicationIdentifier
+		// handle LoggerContext
 		{
-			String applicationIdentifier = event.getApplicationIdentifier();
-			if(applicationIdentifier != null)
+			LoggerContext context=event.getLoggerContext();
+			if(context != null)
 			{
-				eventBuilder.setApplicationIdentifier(applicationIdentifier);
+				eventBuilder.setLoggerContext(convert(context));
 			}
 		}
 
@@ -395,19 +449,7 @@ public class LoggingEventProtobufEncoder
 		Map<String, String> mdc = event.getMdc();
 		if(mdc != null && mdc.size() > 0)
 		{
-			LoggingProto.MappedDiagnosticContext.Builder mdcBuilder = LoggingProto.MappedDiagnosticContext.newBuilder();
-			for(Map.Entry<String, String> current : mdc.entrySet())
-			{
-				LoggingProto.MapEntry.Builder entryBuilder = LoggingProto.MapEntry.newBuilder()
-					.setKey(current.getKey());
-				String value = current.getValue();
-				if(value != null)
-				{
-					entryBuilder.setValue(value);
-				}
-				mdcBuilder.addEntry(entryBuilder.build());
-			}
-			eventBuilder.setMappedDiagnosticContext(mdcBuilder.build());
+			eventBuilder.setMappedDiagnosticContext(convert(mdc));
 		}
 
 		// handling NestedDiagnosticContext

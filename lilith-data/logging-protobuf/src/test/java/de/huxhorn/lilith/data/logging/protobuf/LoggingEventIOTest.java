@@ -6,6 +6,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -28,10 +29,16 @@ public class LoggingEventIOTest
 	}
 
 	@Test
-	public void applicationId()
+	public void loggerContext()
 	{
 		LoggingEvent event = createMinimalEvent();
-		event.setApplicationIdentifier("App");
+		LoggerContext value=new LoggerContext();
+		value.setName("ContextName");
+		value.setBirthTime(new Date(1234567890L));
+		Map<String, String> propperties=new HashMap<String, String>();
+		propperties.put("foo", "bar");
+		value.setProperties(propperties);
+		event.setLoggerContext(value);
 		check(event);
 	}
 

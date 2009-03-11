@@ -19,14 +19,14 @@ package de.huxhorn.lilith.data.logging.xml;
 
 public interface LoggingEventSchemaConstants
 {
-	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/12";
-	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/12/LoggingEvent.xsd";
+	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/13";
+	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/13/LoggingEvent.xsd";
 
 	String DEFAULT_NAMESPACE_PREFIX = "log";
 
 	String LOGGING_EVENTS_NODE = "LoggingEvents";
 	String START_INDEX_ATTRIBUTE = "startIndex";
-	String APPLICATION_IDENTIFIER_ATTRIBUTE = "applicationId";
+	//String APPLICATION_IDENTIFIER_ATTRIBUTE = "applicationId";
 
 	String LOGGING_EVENT_NODE = "LoggingEvent";
 	String MESSAGE_NODE = "Message";
@@ -48,8 +48,8 @@ public interface LoggingEventSchemaConstants
 	String THROWABLE_CLASS_NAME_ATTRIBUTE = "name";
 
 	String MDC_NODE = "MDC";
-	String MDC_ENTRY_NODE = "Entry";
-	String MDC_ENTRY_KEY_ATTRIBUTE = "key";
+	String STRING_MAP_ENTRY_NODE = "Entry";
+	String STRING_MAP_ENTRY_KEY_ATTRIBUTE = "key";
 
 	String NDC_NODE = "NDC";
 	String NDC_ENTRY_NODE = "Entry";
@@ -71,4 +71,10 @@ public interface LoggingEventSchemaConstants
 	String ST_EXACT_NODE = "Exact";
 
 	String OMITTED_ELEMENTS_ATTRIBUTE = "omittedElements";
+
+	String LOGGER_CONTEXT_NODE = "LoggerContext";
+	String LOGGER_CONTEXT_NAME_ATTRIBUTE = "name";
+	String LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE = "birthTimeMillis";
+	String LOGGER_CONTEXT_BIRTH_TIME_ATTRIBUTE = "birthTime";
+	String LOGGER_CONTEXT_PROPERTIES_NODE = "Properties";
 }

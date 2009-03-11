@@ -40,16 +40,22 @@ message SourceIdentifier {
 
 message LoggingEvent {
 	optional int64 time_stamp = 1;
-	required string logger_name = 2;
+	optional string logger_name = 2;
 	optional Level level = 3;
 	optional Message message = 4;
 	optional ThreadInfo thread_info = 5;
 	repeated StackTraceElement call_stack_element = 6;
 	optional Throwable throwable = 7;
-	optional string application_identifier = 8;
-	optional MappedDiagnosticContext mapped_diagnostic_context = 9;
+	optional LoggerContext logger_context = 8;
+	optional StringMap mapped_diagnostic_context = 9;
 	optional NestedDiagnosticContext nested_diagnostic_context = 10;
 	optional Marker marker = 11;
+}
+
+message LoggerContext {
+	optional int64 birth_time = 1;
+	optional string name = 2;
+	optional StringMap properties = 3;
 }
 
 message ThreadInfo {
@@ -94,7 +100,7 @@ message Throwable {
 	optional Throwable cause = 5;
 }
 
-message MappedDiagnosticContext {
+message StringMap {
 	repeated MapEntry entry = 1;
 }
 

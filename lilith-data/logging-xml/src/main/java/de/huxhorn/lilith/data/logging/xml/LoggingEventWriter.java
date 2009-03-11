@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Date;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -132,11 +134,8 @@ public class LoggingEventWriter
 				StaxUtilities.XML_SCHEMA_INSTANCE_SCHEMA_LOCATION_ATTRIBUTE,
 				NAMESPACE_URI + " " + NAMESPACE_LOCATION);
 		}
-		// TODO: add support for getContextBirthTime()
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_ATTRIBUTE, event.getLogger());
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LEVEL_ATTRIBUTE, "" + event.getLevel());
-		StaxUtilities
-			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, APPLICATION_IDENTIFIER_ATTRIBUTE, event.getApplicationIdentifier());
 		ThreadInfo threadInfo = event.getThreadInfo();
 		if(threadInfo != null)
 		{
@@ -154,16 +153,19 @@ public class LoggingEventWriter
 			}
 		}
 
-		if(timeStampType == TimeStampType.ONLY_TIMESTAMP || timeStampType == TimeStampType.BOTH)
+		Date timeStamp=event.getTimeStamp();
+		if(timeStamp!=null)
 		{
-			StaxUtilities
-				.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE, dateTimeFormatter.format(event.getTimeStamp()));
-		}
-		if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
-		{
-			StaxUtilities
-				.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, "" + event
-					.getTimeStamp().getTime());
+			if(timeStampType == TimeStampType.ONLY_TIMESTAMP || timeStampType == TimeStampType.BOTH)
+			{
+				StaxUtilities
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE, dateTimeFormatter.format(timeStamp));
+			}
+			if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
+			{
+				StaxUtilities
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, "" + timeStamp.getTime());
+			}
 		}
 		Message message = event.getMessage();
 		if(message != null)
@@ -176,16 +178,48 @@ public class LoggingEventWriter
 			writeArguments(writer, message.getArguments());
 		}
 		writeThrowable(writer, event);
-		writeMdc(writer, event);
+		writeStringMap(writer, event.getMdc(), MDC_NODE);
 		writeNdc(writer, event);
 		writeMarker(writer, event);
 		writeCallStack(writer, event);
-
+		writeLoggerContext(writer, event);
 		writer.writeEndElement();
 		if(isRoot)
 		{
 			writer.writeEndDocument();
 		}
+	}
+
+	private void writeLoggerContext(XMLStreamWriter writer, LoggingEvent event)
+		throws XMLStreamException
+	{
+		LoggerContext context=event.getLoggerContext();
+		if(context == null)
+		{
+			return;
+		}
+		StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, LOGGER_CONTEXT_NODE);
+		String name=context.getName();
+		if(name!=null)
+		{
+			StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_NAME_ATTRIBUTE, name);
+		}
+		Date timeStamp=context.getBirthTime();
+		if(timeStamp!=null)
+		{
+			if(timeStampType == TimeStampType.ONLY_TIMESTAMP || timeStampType == TimeStampType.BOTH)
+			{
+				StaxUtilities
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_BIRTH_TIME_ATTRIBUTE, dateTimeFormatter.format(timeStamp));
+			}
+			if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
+			{
+				StaxUtilities
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, "" + timeStamp.getTime());
+			}
+		}
+		writeStringMap(writer, context.getProperties(), LOGGER_CONTEXT_PROPERTIES_NODE);
+		writer.writeEndElement();
 	}
 
 	private void writeCallStack(XMLStreamWriter writer, LoggingEvent event)
@@ -240,24 +274,23 @@ public class LoggingEventWriter
 
 	}
 
-	private void writeMdc(XMLStreamWriter writer, LoggingEvent event)
+	private void writeStringMap(XMLStreamWriter writer, Map<String, String> map, String nodeName)
 		throws XMLStreamException
 	{
-		Map<String, String> mdc = event.getMdc();
-		if(mdc != null)
+		if(map != null)
 		{
 			if(sortingMdcValues)
 			{
-				mdc = new TreeMap<String, String>(mdc);
+				map = new TreeMap<String, String>(map);
 			}
 
-			StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, MDC_NODE);
-			for(Map.Entry<String, String> entry : mdc.entrySet())
+			StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, nodeName);
+			for(Map.Entry<String, String> entry : map.entrySet())
 			{
 
-				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, MDC_ENTRY_NODE);
+				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, STRING_MAP_ENTRY_NODE);
 				StaxUtilities
-					.writeAttribute(writer, false, prefix, NAMESPACE_URI, MDC_ENTRY_KEY_ATTRIBUTE, entry.getKey(), WhiteSpaceHandling.PRESERVE_NORMALIZE_NEWLINE);
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, STRING_MAP_ENTRY_KEY_ATTRIBUTE, entry.getKey(), WhiteSpaceHandling.PRESERVE_NORMALIZE_NEWLINE);
 				StaxUtilities.writeText(writer, entry.getValue());
 				writer.writeEndElement();
 			}
@@ -348,32 +381,6 @@ public class LoggingEventWriter
 			for(ExtendedStackTraceElement elem : ste)
 			{
 				steWriter.write(writer, elem, false);
-//				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
-//				StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE, elem.getClassName());
-//				StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE, elem.getMethodName());
-//				StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE, elem.getFileName());
-//				int lineNumber=elem.getLineNumber();
-//				if(lineNumber == ExtendedStackTraceElement.NATIVE_METHOD)
-//				{
-//					StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, ST_NATIVE_NODE);
-//				}
-//				else if(lineNumber>=0)
-//				{
-//					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_LINE_NUMBER_NODE, ""+lineNumber);
-//				}
-//				if(elem.getCodeLocation()!=null)
-//				{
-//					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_CODE_LOCATION_NODE, elem.getCodeLocation());
-//				}
-//				if(elem.getVersion()!=null)
-//				{
-//					StaxUtilities.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, ST_VERSION_NODE, elem.getVersion());
-//				}
-//				if(elem.isExact())
-//				{
-//					StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, ST_EXACT_NODE);
-//				}
-//				writer.writeEndElement();
 			}
 			writer.writeEndElement();
 		}

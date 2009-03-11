@@ -20,11 +20,14 @@ package de.huxhorn.lilith.swing.table.renderer;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.LoggerContext;
+import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -66,7 +69,15 @@ public class ApplicationRenderer
 			if(evtObject instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) evtObject;
-				text = event.getApplicationIdentifier();
+				LoggerContext context = event.getLoggerContext();
+				if(context != null)
+				{
+					Map<String, String> props = context.getProperties();
+					if(props!= null)
+					{
+						text=props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+					}
+				}
 			}
 			else if(evtObject instanceof AccessEvent)
 			{

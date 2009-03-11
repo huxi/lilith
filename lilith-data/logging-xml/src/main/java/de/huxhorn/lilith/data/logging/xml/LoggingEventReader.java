@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -68,8 +69,6 @@ public class LoggingEventReader
 			result = new LoggingEvent();
 			result.setLogger(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LOGGER_ATTRIBUTE));
 			result
-				.setApplicationIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, APPLICATION_IDENTIFIER_ATTRIBUTE));
-			result
 				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
 			{
 				String threadName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE);
@@ -91,35 +90,9 @@ public class LoggingEventReader
 					result.setThreadInfo(new ThreadInfo(threadId, threadName));
 				}
 			}
-			Date timeStamp = null;
 
-			// TODO: add support for getContextBirthTime()
-			String timeStampMillis = StaxUtilities
-				.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE);
-			if(timeStampMillis != null)
-			{
-				try
-				{
-					timeStamp = new Date(Long.parseLong(timeStampMillis));
-				}
-				catch(NumberFormatException ex)
-				{
-					// ignore
-				}
-			}
-			if(timeStamp == null)
-			{
-				String timeStampStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE);
-				try
-				{
-					timeStamp = dateTimeFormatter.parse(timeStampStr);
-				}
-				catch(ParseException e)
-				{
-					// ignore
-				}
-			}
-			result.setTimeStamp(timeStamp);
+			result.setTimeStamp(readTimeStamp(reader, TIMESTAMP_MILLIS_ATTRIBUTE, TIMESTAMP_ATTRIBUTE));
+
 			reader.nextTag();
 			Message message = null;
 			{
@@ -145,9 +118,92 @@ public class LoggingEventReader
 			result.setNdc(readNdc(reader));
 			readMarker(reader, result);
 			readCallStack(reader, result);
+			result.setLoggerContext(readLoggerContext(reader));
 			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, LOGGING_EVENT_NODE);
 		}
 		return result;
+	}
+
+	private Date readTimeStamp(XMLStreamReader reader, String millisName, String formattedName)
+	{
+		Date timeStamp = null;
+
+		String timeStampMillis = StaxUtilities
+			.readAttributeValue(reader, NAMESPACE_URI, millisName);
+		if(timeStampMillis != null)
+		{
+			try
+			{
+				timeStamp = new Date(Long.parseLong(timeStampMillis));
+			}
+			catch(NumberFormatException ex)
+			{
+				// ignore
+			}
+		}
+		if(timeStamp == null)
+		{
+			String timeStampStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, formattedName);
+			if(timeStampStr!=null)
+			{
+				try
+				{
+					timeStamp = dateTimeFormatter.parse(timeStampStr);
+				}
+				catch(ParseException e)
+				{
+					// ignore
+				}
+			}
+		}
+		return timeStamp;
+	}
+
+	private LoggerContext readLoggerContext(XMLStreamReader reader)
+		throws XMLStreamException
+	{
+		LoggerContext result=null;
+		int type = reader.getEventType();
+		if(XMLStreamConstants.START_ELEMENT == type && LOGGER_CONTEXT_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
+		{
+			result=new LoggerContext();
+
+			result.setName(StaxUtilities
+				.readAttributeValue(reader, NAMESPACE_URI, LOGGER_CONTEXT_NAME_ATTRIBUTE));
+
+			result.setBirthTime(readTimeStamp(reader, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, LOGGER_CONTEXT_BIRTH_TIME_ATTRIBUTE));
+			reader.nextTag();
+			result.setProperties(readLoggerContextProperties(reader));
+			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOGGER_CONTEXT_NODE);
+			reader.nextTag();
+		}
+		return result;
+	}
+
+	private Map<String, String> readLoggerContextProperties(XMLStreamReader reader)
+		throws XMLStreamException
+	{
+		int type = reader.getEventType();
+		if(XMLStreamConstants.START_ELEMENT == type && LOGGER_CONTEXT_PROPERTIES_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+			.equals(reader.getNamespaceURI()))
+		{
+			Map<String, String> map = new HashMap<String, String>();
+			reader.nextTag();
+			for(; ;)
+			{
+				StringMapEntry entry = readStringMapEntry(reader);
+				if(entry == null)
+				{
+					break;
+				}
+				map.put(entry.key, entry.value);
+			}
+			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOGGER_CONTEXT_PROPERTIES_NODE);
+			reader.nextTag();
+			return map;
+		}
+		return null;
 	}
 
 	private void readCallStack(XMLStreamReader reader, LoggingEvent event)
@@ -181,48 +237,6 @@ public class LoggingEventReader
 		}
 		return null;
 	}
-
-//	private ExtendedStackTraceElement readStackTraceElement(XMLStreamReader reader) throws XMLStreamException
-//	{
-//		int type = reader.getEventType();
-//		if (XMLStreamConstants.START_ELEMENT == type
-//				&& STACK_TRACE_ELEMENT_NODE.equals(reader.getLocalName())
-//				&& NAMESPACE_URI.equals(reader.getNamespaceURI()))
-//		{
-//			String className=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE);
-//			String methodName=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE);
-//			String fileName=StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE);
-//			reader.nextTag();
-//			int lineNumber=-1;
-//			String str = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_LINE_NUMBER_NODE);
-//			if(str != null)
-//			{
-//				lineNumber=Integer.valueOf(str);
-//			}
-//			type = reader.getEventType();
-//			if (XMLStreamConstants.START_ELEMENT == type && ST_NATIVE_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
-//			{
-//				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
-//				reader.nextTag(); // close native
-//				reader.nextTag();
-//			}
-//			String codeLocation = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_CODE_LOCATION_NODE);
-//			String version = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_VERSION_NODE);
-//			type = reader.getEventType();
-//			boolean exact=false;
-//			if (XMLStreamConstants.START_ELEMENT == type && ST_EXACT_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
-//			{
-//				exact=true;
-//				reader.nextTag(); // close exact
-//				reader.nextTag();
-//			}
-//
-//			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
-//			reader.nextTag();
-//			return new ExtendedStackTraceElement(className, methodName, fileName, lineNumber, codeLocation, version, exact);
-//		}
-//		return null;
-//	}
 
 	private void readMarker(XMLStreamReader reader, LoggingEvent event)
 		throws XMLStreamException
@@ -288,7 +302,7 @@ public class LoggingEventReader
 			reader.nextTag();
 			for(; ;)
 			{
-				MdcEntry entry = readMdcEntry(reader);
+				StringMapEntry entry = readStringMapEntry(reader);
 				if(entry == null)
 				{
 					break;
@@ -327,17 +341,17 @@ public class LoggingEventReader
 		return null;
 	}
 
-	private MdcEntry readMdcEntry(XMLStreamReader reader)
+	private StringMapEntry readStringMapEntry(XMLStreamReader reader)
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && MDC_ENTRY_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+		if(XMLStreamConstants.START_ELEMENT == type && STRING_MAP_ENTRY_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
 			.equals(reader.getNamespaceURI()))
 		{
-			MdcEntry entry = new MdcEntry();
-			entry.key = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MDC_ENTRY_KEY_ATTRIBUTE);
+			StringMapEntry entry = new StringMapEntry();
+			entry.key = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, STRING_MAP_ENTRY_KEY_ATTRIBUTE);
 			entry.value = StaxUtilities.readText(reader);
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MDC_ENTRY_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, STRING_MAP_ENTRY_NODE);
 			reader.nextTag();
 			return entry;
 		}
@@ -457,7 +471,7 @@ public class LoggingEventReader
 		}
 	}
 
-	private static class MdcEntry
+	private static class StringMapEntry
 	{
 		public String key;
 		public String value;

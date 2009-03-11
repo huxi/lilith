@@ -51,6 +51,7 @@ public class LoggingEvent
 	private String logger;
 	private Level level;
 	private ThreadInfo threadInfo;
+	private LoggerContext loggerContext;
 	// TODO: add support for getContextBirthTime()
 	private Date timeStamp;
 
@@ -59,7 +60,6 @@ public class LoggingEvent
 	private Message[] ndc;
 	private Marker marker;
 	private ExtendedStackTraceElement[] callStack;
-	private String applicationIdentifier;
 	private Message message;
 
 	public LoggingEvent()
@@ -84,6 +84,16 @@ public class LoggingEvent
 	public void setThreadInfo(ThreadInfo threadInfo)
 	{
 		this.threadInfo = threadInfo;
+	}
+
+	public LoggerContext getLoggerContext()
+	{
+		return loggerContext;
+	}
+
+	public void setLoggerContext(LoggerContext loggerContext)
+	{
+		this.loggerContext = loggerContext;
 	}
 
 	public Message getMessage()
@@ -166,16 +176,6 @@ public class LoggingEvent
 		this.callStack = callStack;
 	}
 
-	public String getApplicationIdentifier()
-	{
-		return applicationIdentifier;
-	}
-
-	public void setApplicationIdentifier(String applicationIdentifier)
-	{
-		this.applicationIdentifier = applicationIdentifier;
-	}
-
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -186,8 +186,8 @@ public class LoggingEvent
 		if(level != event.level) return false;
 		if(timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null) return false;
 		if(logger != null ? !logger.equals(event.logger) : event.logger != null) return false;
-		if(applicationIdentifier != null ? !applicationIdentifier
-			.equals(event.applicationIdentifier) : event.applicationIdentifier != null)
+		if(loggerContext != null ? !loggerContext
+			.equals(event.loggerContext) : event.loggerContext != null)
 		{
 			return false;
 		}
@@ -210,7 +210,6 @@ public class LoggingEvent
 		result = 31 * result + (message != null ? message.hashCode() : 0);
 		result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
 		result = 31 * result + (threadInfo != null ? threadInfo.hashCode() : 0);
-		result = 31 * result + (applicationIdentifier != null ? applicationIdentifier.hashCode() : 0);
 		return result;
 	}
 
@@ -223,7 +222,7 @@ public class LoggingEvent
 		result.append("level=").append(level).append(", ");
 		result.append("message=").append(message).append(", ");
 		result.append("threadInfo=").append(threadInfo).append(", ");
-		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
+		result.append("loggerContext=").append(loggerContext).append(", ");
 		result.append("timeStamp=").append(timeStamp);
 
 		result.append("]");

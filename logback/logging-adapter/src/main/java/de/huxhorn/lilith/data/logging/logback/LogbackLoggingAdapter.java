@@ -24,6 +24,7 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.logback.classic.NDC;
 
 import ch.qos.logback.classic.spi.CallerData;
@@ -31,6 +32,8 @@ import ch.qos.logback.classic.spi.ClassPackagingData;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.classic.spi.ThrowableDataPoint;
 import ch.qos.logback.classic.spi.ThrowableProxy;
+import ch.qos.logback.classic.spi.LoggerRemoteView;
+import ch.qos.logback.classic.spi.LoggerContextRemoteView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,37 +48,12 @@ public class LogbackLoggingAdapter
 	private static final String COMMON_FRAMES_OMITTED = " common frames omitted";
 	private static final String CAUSED_BY = "Caused by: ";
 
-	/*
-		private static final Field throwableField;
-
-		static
-		{
-			Field field=null;
-			try
-			{
-				Class clazz=Class.forName("ch.qos.logback.classic.spi.ThrowableInformation");
-				field=clazz.getDeclaredField("throwable");
-				field.setAccessible(true);
-			}
-			catch (ClassNotFoundException e)
-			{
-				e.printStackTrace();
-			}
-			catch (NoSuchFieldException e)
-			{
-				e.printStackTrace();
-			}
-			throwableField=field;
-		}
-		*/
-
 	public LoggingEvent convert(ch.qos.logback.classic.spi.LoggingEvent event)
 	{
 		if(event == null)
 		{
 			return null;
 		}
-		// TODO: add support for getContextBirthTime()
 		LoggingEvent result = new LoggingEvent();
 		String messagePattern = event.getMessage();
 
@@ -102,7 +80,19 @@ public class LogbackLoggingAdapter
 
 		initCallStack(event, result);
 		result.setLevel(LoggingEvent.Level.valueOf(event.getLevel().toString()));
-		result.setLogger(event.getLoggerRemoteView().getName());
+		LoggerRemoteView lrv = event.getLoggerRemoteView();
+		LoggerContextRemoteView lcv = lrv.getLoggerContextView();
+		if(lcv != null)
+		{
+			String name=lcv.getName();
+			Map<String, String> props = lcv.getPropertyMap();
+			LoggerContext loggerContext=new LoggerContext();
+			loggerContext.setName(name);
+			loggerContext.setProperties(props);
+			result.setLoggerContext(loggerContext);
+			// TODO: add support for getContextBirthTime()
+		}
+		result.setLogger(lrv.getName());
 		initMarker(event, result);
 		result.setMdc(event.getMDCPropertyMap());
 		String threadName = event.getThreadName();
