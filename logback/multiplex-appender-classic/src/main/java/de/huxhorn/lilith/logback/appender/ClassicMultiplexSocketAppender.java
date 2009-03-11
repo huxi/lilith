@@ -17,9 +17,8 @@
  */
 package de.huxhorn.lilith.logback.appender;
 
-import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
+import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
-import de.huxhorn.sulky.codec.Encoder;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
@@ -39,17 +38,24 @@ public class ClassicMultiplexSocketAppender
 	private boolean includeCallerData;
 	private boolean compressing;
 	private boolean usingDefaultPort;
-	private Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> lilithEncoder;
+	private TransformingEncoder transformingEncoder;
 
 	public ClassicMultiplexSocketAppender()
 	{
 		this(true);
 	}
 
+	protected void applicationIdentifierChanged()
+	{
+		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
+	}
+
 	public ClassicMultiplexSocketAppender(boolean compressing)
 	{
 		super();
 		usingDefaultPort = true;
+		transformingEncoder =new TransformingEncoder();
+		setEncoder(transformingEncoder);
 		setCompressing(compressing);
 		includeCallerData = false;
 	}
@@ -83,8 +89,7 @@ public class ClassicMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		lilithEncoder = new LoggingEventProtobufEncoder(compressing);
-		setEncoder(new TransformingEncoder());
+		transformingEncoder.setLilithEncoder(new LoggingEventProtobufEncoder(compressing));
 	}
 
 	public boolean isCompressing()
@@ -139,18 +144,5 @@ public class ClassicMultiplexSocketAppender
 //		{
 //			//e.printStackTrace();
 //		}
-	}
-
-	private class TransformingEncoder
-		implements Encoder<LoggingEvent>
-	{
-		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
-
-		public byte[] encode(LoggingEvent logbackEvent)
-		{
-			de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
-			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return lilithEncoder.encode(lilithEvent);
-		}
 	}
 }

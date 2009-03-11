@@ -91,7 +91,10 @@ public abstract class MultiplexSocketAppenderBase<E>
 	public void setApplicationIdentifier(String applicationIdentifier)
 	{
 		this.applicationIdentifier = applicationIdentifier;
+		applicationIdentifierChanged();
 	}
+
+	protected abstract void applicationIdentifierChanged(); 
 
 	public int getReconnectionDelay()
 	{

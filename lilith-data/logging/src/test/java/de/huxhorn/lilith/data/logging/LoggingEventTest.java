@@ -33,8 +33,6 @@ public class LoggingEventTest
 {
 	private LoggingEvent fresh;
 
-	// TODO: add support for getContextBirthTime()
-
 	@Before
 	public void initFresh()
 	{
@@ -52,22 +50,27 @@ public class LoggingEventTest
 	}
 
 	@Test
-	public void applicationIdentifier()
+	public void loggerContext()
 		throws ClassNotFoundException, IOException
 	{
 		LoggingEvent instance = new LoggingEvent();
 
-		String value = "value";
-		instance.setApplicationIdentifier(value);
+		LoggerContext value=new LoggerContext();
+		value.setBirthTime(new Date(1234567890L));
+		value.setName("contextName");
+		Map<String, String> properties=new HashMap<String, String>();
+		properties.put("foo", "bar");
+		value.setProperties(properties);
+		instance.setLoggerContext(value);
 
 		{
 			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getApplicationIdentifier());
+			assertEquals(value, obj.getLoggerContext());
 			assertFalse(fresh.equals(obj));
 		}
 		{
 			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getApplicationIdentifier());
+			assertEquals(value, obj.getLoggerContext());
 			assertFalse(fresh.equals(obj));
 		}
 	}

@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
 import de.huxhorn.sulky.codec.Decoder;
 
@@ -267,6 +268,54 @@ public class LoggingEventProtobufDecoder
 		return new ThreadInfo(threadId, threadName);
 	}
 
+	public static LoggerContext convert(LoggingProto.LoggerContext loggerContext)
+	{
+		if(loggerContext == null)
+		{
+			return null;
+		}
+		LoggerContext result=new LoggerContext();
+		if(loggerContext.hasName())
+		{
+			result.setName(loggerContext.getName());
+		}
+		if(loggerContext.hasBirthTime())
+		{
+			result.setBirthTime(new Date(loggerContext.getBirthTime()));
+		}
+		if(loggerContext.hasProperties())
+		{
+			result.setProperties(convert(loggerContext.getProperties()));
+		}
+		return result;
+	}
+
+	public static Map<String, String> convert(LoggingProto.StringMap stringMap)
+	{
+		if(stringMap == null)
+		{
+			return null;
+		}
+		if(stringMap.getEntryCount() > 0)
+		{
+			Map<String, String> result = new HashMap<String, String>();
+			List<LoggingProto.MapEntry> mdcList = stringMap.getEntryList();
+			for(LoggingProto.MapEntry current : mdcList)
+			{
+				String key = current.getKey();
+				String value = null;
+				if(current.hasValue())
+				{
+					value = current.getValue();
+				}
+				result.put(key, value);
+			}
+			return result;
+		}
+
+		return null;
+	}
+
 	public static LoggingEvent convert(LoggingProto.LoggingEvent parsedEvent)
 	{
 		if(parsedEvent == null)
@@ -312,10 +361,10 @@ public class LoggingEventProtobufDecoder
 			}
 		}
 
-		// handle ApplicationIdentifier
-		if(parsedEvent.hasApplicationIdentifier())
+		// handle LoggerContext
+		if(parsedEvent.hasLoggerContext())
 		{
-			result.setApplicationIdentifier(parsedEvent.getApplicationIdentifier());
+			result.setLoggerContext(convert(parsedEvent.getLoggerContext()));
 		}
 
 		// handle Throwable
@@ -362,23 +411,7 @@ public class LoggingEventProtobufDecoder
 		// handling MappedDiagnosticContext
 		if(parsedEvent.hasMappedDiagnosticContext())
 		{
-			LoggingProto.MappedDiagnosticContext parsedMdc = parsedEvent.getMappedDiagnosticContext();
-			if(parsedMdc.getEntryCount() > 0)
-			{
-				Map<String, String> mdc = new HashMap<String, String>();
-				List<LoggingProto.MapEntry> mdcList = parsedMdc.getEntryList();
-				for(LoggingProto.MapEntry current : mdcList)
-				{
-					String key = current.getKey();
-					String value = null;
-					if(current.hasValue())
-					{
-						value = current.getValue();
-					}
-					mdc.put(key, value);
-				}
-				result.setMdc(mdc);
-			}
+			result.setMdc(convert(parsedEvent.getMappedDiagnosticContext()));
 		}
 
 		// handling NestedDiagnosticContext

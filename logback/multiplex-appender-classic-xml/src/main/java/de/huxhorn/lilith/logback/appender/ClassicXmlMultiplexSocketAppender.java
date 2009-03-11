@@ -17,9 +17,8 @@
  */
 package de.huxhorn.lilith.logback.appender;
 
-import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
+import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
-import de.huxhorn.sulky.codec.Encoder;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
@@ -39,6 +38,7 @@ public class ClassicXmlMultiplexSocketAppender
 	private boolean includeCallerData;
 	private boolean compressing;
 	private boolean usingDefaultPort;
+	private TransformingEncoder transformingEncoder;
 
 	public ClassicXmlMultiplexSocketAppender()
 	{
@@ -49,8 +49,15 @@ public class ClassicXmlMultiplexSocketAppender
 	{
 		super();
 		usingDefaultPort = true;
+		transformingEncoder =new TransformingEncoder();
+		setEncoder(transformingEncoder);
 		setCompressing(compressing);
 		includeCallerData = false;
+	}
+
+	protected void applicationIdentifierChanged()
+	{
+		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
 	@Override
@@ -82,7 +89,7 @@ public class ClassicXmlMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		setEncoder(new TransformingEncoder(compressing));
+		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(compressing));
 	}
 
 	public boolean isCompressing()
@@ -108,25 +115,6 @@ public class ClassicXmlMultiplexSocketAppender
 			{
 				event.getCallerData();
 			}
-		}
-	}
-
-	private class TransformingEncoder
-		implements Encoder<LoggingEvent>
-	{
-		LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
-		Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> internalEncoder;
-
-		private TransformingEncoder(boolean compressing)
-		{
-			internalEncoder = new LoggingXmlEncoder(compressing);
-		}
-
-		public byte[] encode(LoggingEvent logbackEvent)
-		{
-			de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
-			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return internalEncoder.encode(lilithEvent);
 		}
 	}
 }
