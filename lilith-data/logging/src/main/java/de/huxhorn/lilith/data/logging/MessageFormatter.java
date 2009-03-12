@@ -217,10 +217,20 @@ public class MessageFormatter
 			}
 		}
 
-		String[] stringArgs = new String[resultArgCount];
-		for(int i = 0; i < stringArgs.length; i++)
+		String[] stringArgs;
+		if(argsCount == 1 && throwable == null && arguments.length>1)
 		{
-			stringArgs[i] = deepToString(arguments[i]);
+			// special case
+			stringArgs=new String[1];
+			stringArgs[0]=deepToString(arguments);
+		}
+		else
+		{
+			stringArgs = new String[resultArgCount];
+			for(int i = 0; i < stringArgs.length; i++)
+			{
+				stringArgs[i] = deepToString(arguments[i]);
+			}
 		}
 		return new ArgumentResult(stringArgs, throwable);
 	}
