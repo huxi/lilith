@@ -321,7 +321,7 @@ public class LoggingEventProtobufEncoder
 		LoggingProto.StringMap.Builder builder = LoggingProto.StringMap.newBuilder();
 		for(Map.Entry<String, String> current : map.entrySet())
 		{
-			LoggingProto.MapEntry.Builder entryBuilder = LoggingProto.MapEntry.newBuilder()
+			LoggingProto.StringMapEntry.Builder entryBuilder = LoggingProto.StringMapEntry.newBuilder()
 				.setKey(current.getKey());
 			String value = current.getValue();
 			if(value != null)

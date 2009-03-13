@@ -1,0 +1,75 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2009 Joern Huxhorn
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package de.huxhorn.lilith.access;
+
+option optimize_for = SPEED;
+
+option java_package = "de.huxhorn.lilith.data.access.protobuf.generated";
+//option java_multiple_files = true;
+
+message EventWrapper {
+	optional EventIdentifier event_identifier = 1;
+	optional AccessEvent event = 2;
+}
+
+message EventIdentifier {
+	optional int64 local_id = 1;
+	optional SourceIdentifier source_identifier = 2;
+}
+
+message SourceIdentifier {
+	optional string identifier = 1;
+	optional string secondary_identifier = 2;
+}
+
+message AccessEvent {
+	optional string method = 1;
+	optional string protocol = 2;
+	optional string remote_address = 3;
+	optional string remote_host = 4;
+	optional string remote_user = 5;
+	optional int64 time_stamp = 6;
+	optional string request_uri = 7;
+	optional string request_url = 8;
+	optional int32 status_code = 9;
+	optional int32 local_port = 10;
+	optional string server_name = 11;
+	optional StringMap request_headers = 12;
+	optional StringArrayMap request_parameters = 13;
+	optional StringMap response_headers = 14;
+	optional string application_identifier = 32;
+}
+
+message StringMap {
+	repeated StringMapEntry entry = 1;
+}
+
+message StringMapEntry {
+	required string key = 1;
+	optional string value = 2;
+}
+
+message StringArrayMap {
+	repeated StringArrayMapEntry entry = 1;
+}
+
+message StringArrayMapEntry {
+	required string key = 1;
+	repeated string value = 2;
+}
