@@ -100,15 +100,15 @@ message Throwable {
 	optional Throwable cause = 5;
 }
 
-message StringMap {
-	repeated MapEntry entry = 1;
-}
-
 message NestedDiagnosticContext {
 	repeated Message entry = 1;
 }
 
-message MapEntry {
+message StringMap {
+	repeated StringMapEntry entry = 1;
+}
+
+message StringMapEntry {
 	required string key = 1;
 	optional string value = 2;
 }

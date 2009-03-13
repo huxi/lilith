@@ -299,8 +299,8 @@ public class LoggingEventProtobufDecoder
 		if(stringMap.getEntryCount() > 0)
 		{
 			Map<String, String> result = new HashMap<String, String>();
-			List<LoggingProto.MapEntry> mdcList = stringMap.getEntryList();
-			for(LoggingProto.MapEntry current : mdcList)
+			List<LoggingProto.StringMapEntry> mdcList = stringMap.getEntryList();
+			for(LoggingProto.StringMapEntry current : mdcList)
 			{
 				String key = current.getKey();
 				String value = null;

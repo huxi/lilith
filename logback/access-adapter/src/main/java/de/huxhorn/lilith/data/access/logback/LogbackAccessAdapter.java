@@ -30,6 +30,7 @@ public class LogbackAccessAdapter
 			return null;
 		}
 		AccessEvent result = new AccessEvent();
+
 		result.setLocalPort(event.getLocalPort());
 		result.setMethod(event.getMethod());
 		result.setProtocol(event.getProtocol());
