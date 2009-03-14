@@ -23,9 +23,9 @@ import de.huxhorn.sulky.codec.Encoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.zip.GZIPOutputStream;
 import java.util.Date;
 import java.util.Map;
+import java.util.zip.GZIPOutputStream;
 
 public class AccessEventProtobufEncoder
 	implements Encoder<AccessEvent>
@@ -260,7 +260,13 @@ public class AccessEventProtobufEncoder
 			{
 				for(String cur:value)
 				{
-					entryBuilder.addValue(cur);
+					AccessProto.StringArrayValue.Builder valBuilder=AccessProto.StringArrayValue.newBuilder();
+					if(cur!=null)
+					{
+						valBuilder.setValue(cur);
+					}
+
+					entryBuilder.addValue(valBuilder.build());
 				}
 			}
 			builder.addEntry(entryBuilder.build());

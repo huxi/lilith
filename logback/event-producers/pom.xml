@@ -64,6 +64,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.logback.access-adapter</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.buffers</artifactId>
 			<scope>compile</scope>
