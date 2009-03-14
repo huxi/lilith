@@ -1099,9 +1099,6 @@ public final class LoggingProto {
     
     @Override
     public final boolean isInitialized() {
-      if (hasThrowable()) {
-        if (!getThrowable().isInitialized()) return false;
-      }
       if (hasLoggerContext()) {
         if (!getLoggerContext().isInitialized()) return false;
       }
@@ -3089,31 +3086,31 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
     }
     
-    // optional string methodName = 1;
+    // optional string method_name = 1;
     private boolean hasMethodName;
     private java.lang.String methodName_ = "";
     public boolean hasMethodName() { return hasMethodName; }
     public java.lang.String getMethodName() { return methodName_; }
     
-    // optional string className = 2;
+    // optional string class_name = 2;
     private boolean hasClassName;
     private java.lang.String className_ = "";
     public boolean hasClassName() { return hasClassName; }
     public java.lang.String getClassName() { return className_; }
     
-    // optional string fileName = 3;
+    // optional string file_name = 3;
     private boolean hasFileName;
     private java.lang.String fileName_ = "";
     public boolean hasFileName() { return hasFileName; }
     public java.lang.String getFileName() { return fileName_; }
     
-    // optional int32 lineNumber = 4;
+    // optional int32 line_number = 4;
     private boolean hasLineNumber;
     private int lineNumber_ = 0;
     public boolean hasLineNumber() { return hasLineNumber; }
     public int getLineNumber() { return lineNumber_; }
     
-    // optional string codeLocation = 5;
+    // optional string code_location = 5;
     private boolean hasCodeLocation;
     private java.lang.String codeLocation_ = "";
     public boolean hasCodeLocation() { return hasCodeLocation; }
@@ -3412,7 +3409,7 @@ public final class LoggingProto {
       }
       
       
-      // optional string methodName = 1;
+      // optional string method_name = 1;
       public boolean hasMethodName() {
         return result.hasMethodName();
       }
@@ -3430,7 +3427,7 @@ public final class LoggingProto {
         return this;
       }
       
-      // optional string className = 2;
+      // optional string class_name = 2;
       public boolean hasClassName() {
         return result.hasClassName();
       }
@@ -3448,7 +3445,7 @@ public final class LoggingProto {
         return this;
       }
       
-      // optional string fileName = 3;
+      // optional string file_name = 3;
       public boolean hasFileName() {
         return result.hasFileName();
       }
@@ -3466,7 +3463,7 @@ public final class LoggingProto {
         return this;
       }
       
-      // optional int32 lineNumber = 4;
+      // optional int32 line_number = 4;
       public boolean hasLineNumber() {
         return result.hasLineNumber();
       }
@@ -3484,7 +3481,7 @@ public final class LoggingProto {
         return this;
       }
       
-      // optional string codeLocation = 5;
+      // optional string code_location = 5;
       public boolean hasCodeLocation() {
         return result.hasCodeLocation();
       }
@@ -3569,7 +3566,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
     }
     
-    // required string throwable_class = 1;
+    // optional string throwable_class = 1;
     private boolean hasThrowableClass;
     private java.lang.String throwableClass_ = "";
     public boolean hasThrowableClass() { return hasThrowableClass; }
@@ -3606,10 +3603,6 @@ public final class LoggingProto {
     
     @Override
     public final boolean isInitialized() {
-      if (!hasThrowableClass) return false;
-      if (hasCause()) {
-        if (!getCause().isInitialized()) return false;
-      }
       return true;
     }
     
@@ -3875,7 +3868,7 @@ public final class LoggingProto {
       }
       
       
-      // required string throwable_class = 1;
+      // optional string throwable_class = 1;
       public boolean hasThrowableClass() {
         return result.hasThrowableClass();
       }
@@ -5340,26 +5333,26 @@ public final class LoggingProto {
       " \001(\t\"`\n\007Message\022\027\n\017message_pattern\030\001 \001(\t" +
       "\022<\n\010argument\030\002 \003(\0132*.de.huxhorn.lilith.l" +
       "ogging.MessageArgument\" \n\017MessageArgumen" +
-      "t\022\r\n\005value\030\001 \001(\t\"\226\001\n\021StackTraceElement\022\022" +
-      "\n\nmethodName\030\001 \001(\t\022\021\n\tclassName\030\002 \001(\t\022\020\n" +
-      "\010fileName\030\003 \001(\t\022\022\n\nlineNumber\030\004 \001(\005\022\024\n\014c" +
-      "odeLocation\030\005 \001(\t\022\017\n\007version\030\006 \001(\t\022\r\n\005ex" +
-      "act\030\007 \001(\010\"\317\001\n\tThrowable\022\027\n\017throwable_cla" +
-      "ss\030\001 \002(\t\022\017\n\007message\030\002 \001(\t\022I\n\023stack_trace" +
-      "_element\030\003 \003(\0132,.de.huxhorn.lilith.loggi" +
-      "ng.StackTraceElement\022\030\n\020omitted_elements" +
-      "\030\004 \001(\005\0223\n\005cause\030\005 \001(\0132$.de.huxhorn.lilit" +
-      "h.logging.Throwable\"L\n\027NestedDiagnosticC" +
-      "ontext\0221\n\005entry\030\001 \003(\0132\".de.huxhorn.lilit" +
-      "h.logging.Message\"E\n\tStringMap\0228\n\005entry\030" +
-      "\001 \003(\0132).de.huxhorn.lilith.logging.String" +
-      "MapEntry\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022" +
-      "\r\n\005value\030\002 \001(\t\"L\n\006Marker\022\014\n\004name\030\001 \002(\t\0224" +
-      "\n\treference\030\002 \003(\0132!.de.huxhorn.lilith.lo" +
-      "gging.Marker*<\n\005Level\022\t\n\005TRACE\020\001\022\t\n\005DEBU" +
-      "G\020\002\022\010\n\004INFO\020\003\022\010\n\004WARN\020\004\022\t\n\005ERROR\020\005B5\n1de" +
-      ".huxhorn.lilith.data.logging.protobuf.ge" +
-      "neratedH\001";
+      "t\022\r\n\005value\030\001 \001(\t\"\233\001\n\021StackTraceElement\022\023" +
+      "\n\013method_name\030\001 \001(\t\022\022\n\nclass_name\030\002 \001(\t\022" +
+      "\021\n\tfile_name\030\003 \001(\t\022\023\n\013line_number\030\004 \001(\005\022" +
+      "\025\n\rcode_location\030\005 \001(\t\022\017\n\007version\030\006 \001(\t\022" +
+      "\r\n\005exact\030\007 \001(\010\"\317\001\n\tThrowable\022\027\n\017throwabl" +
+      "e_class\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022I\n\023stack_" +
+      "trace_element\030\003 \003(\0132,.de.huxhorn.lilith." +
+      "logging.StackTraceElement\022\030\n\020omitted_ele" +
+      "ments\030\004 \001(\005\0223\n\005cause\030\005 \001(\0132$.de.huxhorn." +
+      "lilith.logging.Throwable\"L\n\027NestedDiagno" +
+      "sticContext\0221\n\005entry\030\001 \003(\0132\".de.huxhorn." +
+      "lilith.logging.Message\"E\n\tStringMap\0228\n\005e" +
+      "ntry\030\001 \003(\0132).de.huxhorn.lilith.logging.S" +
+      "tringMapEntry\",\n\016StringMapEntry\022\013\n\003key\030\001" +
+      " \002(\t\022\r\n\005value\030\002 \001(\t\"L\n\006Marker\022\014\n\004name\030\001 " +
+      "\002(\t\0224\n\treference\030\002 \003(\0132!.de.huxhorn.lili" +
+      "th.logging.Marker*<\n\005Level\022\t\n\005TRACE\020\001\022\t\n" +
+      "\005DEBUG\020\002\022\010\n\004INFO\020\003\022\010\n\004WARN\020\004\022\t\n\005ERROR\020\005B" +
+      "5\n1de.huxhorn.lilith.data.logging.protob" +
+      "uf.generatedH\001";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(

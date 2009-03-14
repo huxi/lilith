@@ -25,12 +25,12 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.zip.GZIPInputStream;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 public class AccessEventProtobufDecoder
 	implements Decoder<AccessEvent>
@@ -236,9 +236,16 @@ public class AccessEventProtobufDecoder
 			if(count>0)
 			{
 				List<String> valueList=new ArrayList<String>(count);
-				for(String curVal:current.getValueList())
+				for(AccessProto.StringArrayValue curVal:current.getValueList())
 				{
-					valueList.add(curVal);
+					if(curVal.hasValue())
+					{
+						valueList.add(curVal.getValue());
+					}
+					else
+					{
+						valueList.add(null);
+					}
 				}
 
 				values=valueList.toArray(new String[count]);

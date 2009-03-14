@@ -25,56 +25,56 @@ option java_package = "de.huxhorn.lilith.data.logging.protobuf.generated";
 
 message EventWrapper {
 	optional EventIdentifier event_identifier = 1;
-	optional LoggingEvent event = 2;
+	optional LoggingEvent    event            = 2;
 }
 
 message EventIdentifier {
-	optional int64 local_id = 1;
+	optional int64            local_id          = 1;
 	optional SourceIdentifier source_identifier = 2;
 }
 
 message SourceIdentifier {
-	optional string identifier = 1;
+	optional string identifier           = 1;
 	optional string secondary_identifier = 2;
 }
 
 message LoggingEvent {
-	optional int64 time_stamp = 1;
-	optional string logger_name = 2;
-	optional Level level = 3;
-	optional Message message = 4;
-	optional ThreadInfo thread_info = 5;
-	repeated StackTraceElement call_stack_element = 6;
-	optional Throwable throwable = 7;
-	optional LoggerContext logger_context = 8;
-	optional StringMap mapped_diagnostic_context = 9;
+	optional int64                   time_stamp                = 1;
+	optional string                  logger_name               = 2;
+	optional Level                   level                     = 3;
+	optional Message                 message                   = 4;
+	optional ThreadInfo              thread_info               = 5;
+	repeated StackTraceElement       call_stack_element        = 6;
+	optional Throwable               throwable                 = 7;
+	optional LoggerContext           logger_context            = 8;
+	optional StringMap               mapped_diagnostic_context = 9;
 	optional NestedDiagnosticContext nested_diagnostic_context = 10;
-	optional Marker marker = 11;
+	optional Marker                  marker                    = 11;
 }
 
 message LoggerContext {
-	optional int64 birth_time = 1;
-	optional string name = 2;
+	optional int64     birth_time = 1;
+	optional string    name       = 2;
 	optional StringMap properties = 3;
 }
 
 message ThreadInfo {
-	optional int64 id = 1;
+	optional int64  id   = 1;
 	optional string name = 2;
 }
 
 enum Level {
 	TRACE = 1;
 	DEBUG = 2;
-	INFO = 3;
-	WARN = 4;
+	INFO  = 3;
+	WARN  = 4;
 	ERROR = 5;
 }
 
 
 message Message {
-	optional string message_pattern = 1;
-	repeated MessageArgument argument = 2;
+	optional string          message_pattern = 1;
+	repeated MessageArgument argument        = 2;
 }
 
 // this is necessary to support null arguments
@@ -83,21 +83,21 @@ message MessageArgument {
 }
 
 message StackTraceElement {
-	optional string methodName = 1;
-	optional string className = 2;
-	optional string fileName = 3;
-	optional int32 lineNumber = 4;
-	optional string codeLocation = 5;
-	optional string version = 6;
-	optional bool exact = 7;
+	optional string method_name   = 1;
+	optional string class_name    = 2;
+	optional string file_name     = 3;
+	optional int32  line_number   = 4;
+	optional string code_location = 5;
+	optional string version       = 6;
+	optional bool   exact         = 7;
 }
 
 message Throwable {
-	required string throwable_class = 1;
-	optional string message = 2;
+	optional string            throwable_class     = 1;
+	optional string            message             = 2;
 	repeated StackTraceElement stack_trace_element = 3;
-	optional int32 omitted_elements = 4;
-	optional Throwable cause = 5;
+	optional int32             omitted_elements    = 4;
+	optional Throwable         cause               = 5;
 }
 
 message NestedDiagnosticContext {
@@ -109,12 +109,12 @@ message StringMap {
 }
 
 message StringMapEntry {
-	required string key = 1;
+	required string key   = 1;
 	optional string value = 2;
 }
 
 message Marker {
-	required string name = 1;
+	required string name      = 1;
 	repeated Marker reference = 2;
 }
 
