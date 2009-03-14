@@ -106,6 +106,12 @@
 
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.data.access.protobuf</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.data.eventsource-xml</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
@@ -212,6 +218,11 @@
 				<version>${lilithVersion}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.logback.servlet</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
 			<!--
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>

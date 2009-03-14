@@ -43,7 +43,6 @@ import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
-import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventProtobufMessageBasedEventProducer;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
 import de.huxhorn.lilith.engine.impl.sourceproducer.SerializingMessageBasedServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
@@ -295,8 +294,7 @@ public class MainFrame
 
 		Map<String, String> accessMetaData = new HashMap<String, String>();
 		accessMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
-		// TODO: AccessEvent protobuf
-		accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML);
+		accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		accessMetaData.put(FileConstants.COMPRESSED_KEY, "true");
 		// TODO: configurable format and compressed
 

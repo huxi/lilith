@@ -2,9 +2,16 @@
  * Returns true if the logging event has a thread name that
  * starts with the given searchString.
  */
-def threadName = input?.event?.threadName;
-if(threadName)
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+
+def event = input?.event;
+
+if(event instanceof LoggingEvent)
 {
-	return threadName.startsWith(searchString);
+	def threadName = event.threadName;
+	if(threadName)
+	{
+		return threadName.startsWith(searchString);
+	}
 }
-return false; 
+return false;
