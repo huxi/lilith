@@ -19,6 +19,8 @@ package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.access.protobuf.CompressingAccessEventWrapperProtobufCodec;
+import de.huxhorn.lilith.data.access.protobuf.AccessEventWrapperProtobufCodec;
 import de.huxhorn.lilith.engine.impl.AccessEventWrapperXmlCodec;
 import de.huxhorn.lilith.engine.impl.CompressingAccessEventWrapperXmlCodec;
 import de.huxhorn.sulky.codec.Codec;
@@ -61,12 +63,17 @@ public class AccessFileBufferFactory
 				codec = new AccessEventWrapperXmlCodec();
 			}
 		}
-		/*
 		else if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(format))
 		{
-			// TODO: AccessEvent protobuf
+			if(compressed)
+			{
+				codec = new CompressingAccessEventWrapperProtobufCodec();
+			}
+			else
+			{
+				codec = new AccessEventWrapperProtobufCodec();
+			}
 		}
-		*/
 		else
 		{
 			if(compressed)
