@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
 
-    <jmxConfigurator/>
+	<jmxConfigurator/>
 
-    <appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-        <Compressing>true</Compressing>
-        <ReconnectionDelay>10</ReconnectionDelay>
-        <IncludeCallerData>true</IncludeCallerData>
+	<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<ReconnectionDelay>10</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
 		<Debug>true</Debug>
-        <RemoteHosts>
-		localhost,
-		</RemoteHosts>
-    </appender>
+		<RemoteHosts>localhost</RemoteHosts>
+		<ApplicationIdentifier>Logback Access Sandbox</ApplicationIdentifier>
+	</appender>
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<param name="Pattern" value="%-5level - %msg%n" />
 		</layout>
 	</appender>
-	
-    <root>
-        <level value="DEBUG"/>
+
+	<root>
+		<level value="DEBUG"/>
 		<appender-ref ref="multiplex"/>
-        <appender-ref ref="CONSOLE"/>
-    </root>
+		<appender-ref ref="CONSOLE"/>
+	</root>
 
 </configuration>
