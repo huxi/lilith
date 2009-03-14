@@ -1,8 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
 	<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender">
 		<Compressing>true</Compressing> <!-- will automatically use correct default port -->
 		<ReconnectionDelay>1000</ReconnectionDelay>
 		<RemoteHosts>localhost</RemoteHosts>
+		<ApplicationIdentifier>Logback Access Sandbox</ApplicationIdentifier>
 	</appender>
 
 	<appender name="LogbackAccess" class="ch.qos.logback.access.net.SocketAppender">
