@@ -49,6 +49,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.codec</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 			<scope>test</scope>

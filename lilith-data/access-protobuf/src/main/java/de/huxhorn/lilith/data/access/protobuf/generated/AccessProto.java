@@ -1052,11 +1052,11 @@ public final class AccessProto {
     public boolean hasResponseHeaders() { return hasResponseHeaders; }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders() { return responseHeaders_; }
     
-    // optional string application_identifier = 32;
-    private boolean hasApplicationIdentifier;
-    private java.lang.String applicationIdentifier_ = "";
-    public boolean hasApplicationIdentifier() { return hasApplicationIdentifier; }
-    public java.lang.String getApplicationIdentifier() { return applicationIdentifier_; }
+    // optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;
+    private boolean hasLoggerContext;
+    private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+    public boolean hasLoggerContext() { return hasLoggerContext; }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext() { return loggerContext_; }
     
     @Override
     public final boolean isInitialized() {
@@ -1068,6 +1068,9 @@ public final class AccessProto {
       }
       if (hasResponseHeaders()) {
         if (!getResponseHeaders().isInitialized()) return false;
+      }
+      if (hasLoggerContext()) {
+        if (!getLoggerContext().isInitialized()) return false;
       }
       return true;
     }
@@ -1117,8 +1120,8 @@ public final class AccessProto {
       if (hasResponseHeaders()) {
         output.writeMessage(14, getResponseHeaders());
       }
-      if (hasApplicationIdentifier()) {
-        output.writeString(32, getApplicationIdentifier());
+      if (hasLoggerContext()) {
+        output.writeMessage(15, getLoggerContext());
       }
       getUnknownFields().writeTo(output);
     }
@@ -1186,9 +1189,9 @@ public final class AccessProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(14, getResponseHeaders());
       }
-      if (hasApplicationIdentifier()) {
+      if (hasLoggerContext()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(32, getApplicationIdentifier());
+          .computeMessageSize(15, getLoggerContext());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1358,8 +1361,8 @@ public final class AccessProto {
         if (other.hasResponseHeaders()) {
           mergeResponseHeaders(other.getResponseHeaders());
         }
-        if (other.hasApplicationIdentifier()) {
-          setApplicationIdentifier(other.getApplicationIdentifier());
+        if (other.hasLoggerContext()) {
+          mergeLoggerContext(other.getLoggerContext());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1466,8 +1469,13 @@ public final class AccessProto {
               setResponseHeaders(subBuilder.buildPartial());
               break;
             }
-            case 258: {
-              setApplicationIdentifier(input.readString());
+            case 122: {
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder subBuilder = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.newBuilder();
+              if (hasLoggerContext()) {
+                subBuilder.mergeFrom(getLoggerContext());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLoggerContext(subBuilder.buildPartial());
               break;
             }
           }
@@ -1775,21 +1783,389 @@ public final class AccessProto {
         return this;
       }
       
-      // optional string application_identifier = 32;
-      public boolean hasApplicationIdentifier() {
-        return result.hasApplicationIdentifier();
+      // optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;
+      public boolean hasLoggerContext() {
+        return result.hasLoggerContext();
       }
-      public java.lang.String getApplicationIdentifier() {
-        return result.getApplicationIdentifier();
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext() {
+        return result.getLoggerContext();
       }
-      public Builder setApplicationIdentifier(java.lang.String value) {
-        result.hasApplicationIdentifier = true;
-        result.applicationIdentifier_ = value;
+      public Builder setLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext value) {
+        result.hasLoggerContext = true;
+        result.loggerContext_ = value;
         return this;
       }
-      public Builder clearApplicationIdentifier() {
-        result.hasApplicationIdentifier = false;
-        result.applicationIdentifier_ = "";
+      public Builder setLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder builderForValue) {
+        result.hasLoggerContext = true;
+        result.loggerContext_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext value) {
+        if (result.hasLoggerContext() &&
+            result.loggerContext_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance()) {
+          result.loggerContext_ =
+            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.newBuilder(result.loggerContext_).mergeFrom(value).buildPartial();
+        } else {
+          result.loggerContext_ = value;
+        }
+        result.hasLoggerContext = true;
+        return this;
+      }
+      public Builder clearLoggerContext() {
+        result.hasLoggerContext = false;
+        result.loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.getDescriptor();
+    }
+  }
+  
+  public static final class LoggerContext extends
+      com.google.protobuf.GeneratedMessage {
+    // Use LoggerContext.newBuilder() to construct.
+    private LoggerContext() {}
+    
+    private static final LoggerContext defaultInstance = new LoggerContext();
+    public static LoggerContext getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LoggerContext getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_LoggerContext_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_LoggerContext_fieldAccessorTable;
+    }
+    
+    // optional int64 birth_time = 1;
+    private boolean hasBirthTime;
+    private long birthTime_ = 0L;
+    public boolean hasBirthTime() { return hasBirthTime; }
+    public long getBirthTime() { return birthTime_; }
+    
+    // optional string name = 2;
+    private boolean hasName;
+    private java.lang.String name_ = "";
+    public boolean hasName() { return hasName; }
+    public java.lang.String getName() { return name_; }
+    
+    // optional .de.huxhorn.lilith.access.StringMap properties = 3;
+    private boolean hasProperties;
+    private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+    public boolean hasProperties() { return hasProperties; }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties() { return properties_; }
+    
+    @Override
+    public final boolean isInitialized() {
+      if (hasProperties()) {
+        if (!getProperties().isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasBirthTime()) {
+        output.writeInt64(1, getBirthTime());
+      }
+      if (hasName()) {
+        output.writeString(2, getName());
+      }
+      if (hasProperties()) {
+        output.writeMessage(3, getProperties());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasBirthTime()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, getBirthTime());
+      }
+      if (hasName()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getName());
+      }
+      if (hasProperties()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getProperties());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.newBuilder()
+      private Builder() {}
+      
+      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext();
+      
+      @Override
+      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDescriptor();
+      }
+      
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getDefaultInstanceForType() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+      }
+      
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext buildPartial() {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext) {
+          return mergeFrom((de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext other) {
+        if (other == de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance()) return this;
+        if (other.hasBirthTime()) {
+          setBirthTime(other.getBirthTime());
+        }
+        if (other.hasName()) {
+          setName(other.getName());
+        }
+        if (other.hasProperties()) {
+          mergeProperties(other.getProperties());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setBirthTime(input.readInt64());
+              break;
+            }
+            case 18: {
+              setName(input.readString());
+              break;
+            }
+            case 26: {
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder subBuilder = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder();
+              if (hasProperties()) {
+                subBuilder.mergeFrom(getProperties());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setProperties(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // optional int64 birth_time = 1;
+      public boolean hasBirthTime() {
+        return result.hasBirthTime();
+      }
+      public long getBirthTime() {
+        return result.getBirthTime();
+      }
+      public Builder setBirthTime(long value) {
+        result.hasBirthTime = true;
+        result.birthTime_ = value;
+        return this;
+      }
+      public Builder clearBirthTime() {
+        result.hasBirthTime = false;
+        result.birthTime_ = 0L;
+        return this;
+      }
+      
+      // optional string name = 2;
+      public boolean hasName() {
+        return result.hasName();
+      }
+      public java.lang.String getName() {
+        return result.getName();
+      }
+      public Builder setName(java.lang.String value) {
+        result.hasName = true;
+        result.name_ = value;
+        return this;
+      }
+      public Builder clearName() {
+        result.hasName = false;
+        result.name_ = "";
+        return this;
+      }
+      
+      // optional .de.huxhorn.lilith.access.StringMap properties = 3;
+      public boolean hasProperties() {
+        return result.hasProperties();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties() {
+        return result.getProperties();
+      }
+      public Builder setProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
+        result.hasProperties = true;
+        result.properties_ = value;
+        return this;
+      }
+      public Builder setProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder builderForValue) {
+        result.hasProperties = true;
+        result.properties_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
+        if (result.hasProperties() &&
+            result.properties_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
+          result.properties_ =
+            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder(result.properties_).mergeFrom(value).buildPartial();
+        } else {
+          result.properties_ = value;
+        }
+        result.hasProperties = true;
+        return this;
+      }
+      public Builder clearProperties() {
+        result.hasProperties = false;
+        result.properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
         return this;
       }
     }
@@ -3287,6 +3663,11 @@ public final class AccessProto {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_access_AccessEvent_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_de_huxhorn_lilith_access_LoggerContext_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_de_huxhorn_lilith_access_LoggerContext_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_access_StringMap_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -3329,7 +3710,7 @@ public final class AccessProto {
       "\022E\n\021source_identifier\030\002 \001(\0132*.de.huxhorn" +
       ".lilith.access.SourceIdentifier\"D\n\020Sourc" +
       "eIdentifier\022\022\n\nidentifier\030\001 \001(\t\022\034\n\024secon" +
-      "dary_identifier\030\002 \001(\t\"\320\003\n\013AccessEvent\022\016\n" +
+      "dary_identifier\030\002 \001(\t\"\361\003\n\013AccessEvent\022\016\n" +
       "\006method\030\001 \001(\t\022\020\n\010protocol\030\002 \001(\t\022\026\n\016remot" +
       "e_address\030\003 \001(\t\022\023\n\013remote_host\030\004 \001(\t\022\023\n\013" +
       "remote_user\030\005 \001(\t\022\022\n\ntime_stamp\030\006 \001(\003\022\023\n" +
@@ -3340,17 +3721,21 @@ public final class AccessProto {
       "Map\022D\n\022request_parameters\030\r \001(\0132(.de.hux" +
       "horn.lilith.access.StringArrayMap\022=\n\020res" +
       "ponse_headers\030\016 \001(\0132#.de.huxhorn.lilith." +
-      "access.StringMap\022\036\n\026application_identifi" +
-      "er\030  \001(\t\"D\n\tStringMap\0227\n\005entry\030\001 \003(\0132(.d" +
-      "e.huxhorn.lilith.access.StringMapEntry\"," +
-      "\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002" +
-      " \001(\t\"N\n\016StringArrayMap\022<\n\005entry\030\001 \003(\0132-." +
-      "de.huxhorn.lilith.access.StringArrayMapE" +
-      "ntry\"]\n\023StringArrayMapEntry\022\013\n\003key\030\001 \002(\t" +
-      "\0229\n\005value\030\002 \003(\0132*.de.huxhorn.lilith.acce" +
-      "ss.StringArrayValue\"!\n\020StringArrayValue\022" +
-      "\r\n\005value\030\001 \001(\tB4\n0de.huxhorn.lilith.data" +
-      ".access.protobuf.generatedH\001";
+      "access.StringMap\022?\n\016logger_context\030\017 \001(\013" +
+      "2\'.de.huxhorn.lilith.access.LoggerContex" +
+      "t\"j\n\rLoggerContext\022\022\n\nbirth_time\030\001 \001(\003\022\014" +
+      "\n\004name\030\002 \001(\t\0227\n\nproperties\030\003 \001(\0132#.de.hu" +
+      "xhorn.lilith.access.StringMap\"D\n\tStringM" +
+      "ap\0227\n\005entry\030\001 \003(\0132(.de.huxhorn.lilith.ac" +
+      "cess.StringMapEntry\",\n\016StringMapEntry\022\013\n" +
+      "\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"N\n\016StringArray" +
+      "Map\022<\n\005entry\030\001 \003(\0132-.de.huxhorn.lilith.a" +
+      "ccess.StringArrayMapEntry\"]\n\023StringArray" +
+      "MapEntry\022\013\n\003key\030\001 \002(\t\0229\n\005value\030\002 \003(\0132*.d" +
+      "e.huxhorn.lilith.access.StringArrayValue" +
+      "\"!\n\020StringArrayValue\022\r\n\005value\030\001 \001(\tB4\n0d" +
+      "e.huxhorn.lilith.data.access.protobuf.ge" +
+      "neratedH\001";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -3385,11 +3770,19 @@ public final class AccessProto {
           internal_static_de_huxhorn_lilith_access_AccessEvent_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_access_AccessEvent_descriptor,
-              new java.lang.String[] { "Method", "Protocol", "RemoteAddress", "RemoteHost", "RemoteUser", "TimeStamp", "RequestUri", "RequestUrl", "StatusCode", "LocalPort", "ServerName", "RequestHeaders", "RequestParameters", "ResponseHeaders", "ApplicationIdentifier", },
+              new java.lang.String[] { "Method", "Protocol", "RemoteAddress", "RemoteHost", "RemoteUser", "TimeStamp", "RequestUri", "RequestUrl", "StatusCode", "LocalPort", "ServerName", "RequestHeaders", "RequestParameters", "ResponseHeaders", "LoggerContext", },
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.class,
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder.class);
-          internal_static_de_huxhorn_lilith_access_StringMap_descriptor =
+          internal_static_de_huxhorn_lilith_access_LoggerContext_descriptor =
             getDescriptor().getMessageTypes().get(4);
+          internal_static_de_huxhorn_lilith_access_LoggerContext_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_de_huxhorn_lilith_access_LoggerContext_descriptor,
+              new java.lang.String[] { "BirthTime", "Name", "Properties", },
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.class,
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder.class);
+          internal_static_de_huxhorn_lilith_access_StringMap_descriptor =
+            getDescriptor().getMessageTypes().get(5);
           internal_static_de_huxhorn_lilith_access_StringMap_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_access_StringMap_descriptor,
@@ -3397,7 +3790,7 @@ public final class AccessProto {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.class,
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder.class);
           internal_static_de_huxhorn_lilith_access_StringMapEntry_descriptor =
-            getDescriptor().getMessageTypes().get(5);
+            getDescriptor().getMessageTypes().get(6);
           internal_static_de_huxhorn_lilith_access_StringMapEntry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_access_StringMapEntry_descriptor,
@@ -3405,7 +3798,7 @@ public final class AccessProto {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.class,
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder.class);
           internal_static_de_huxhorn_lilith_access_StringArrayMap_descriptor =
-            getDescriptor().getMessageTypes().get(6);
+            getDescriptor().getMessageTypes().get(7);
           internal_static_de_huxhorn_lilith_access_StringArrayMap_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_access_StringArrayMap_descriptor,
@@ -3413,7 +3806,7 @@ public final class AccessProto {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.class,
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder.class);
           internal_static_de_huxhorn_lilith_access_StringArrayMapEntry_descriptor =
-            getDescriptor().getMessageTypes().get(7);
+            getDescriptor().getMessageTypes().get(8);
           internal_static_de_huxhorn_lilith_access_StringArrayMapEntry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_access_StringArrayMapEntry_descriptor,
@@ -3421,7 +3814,7 @@ public final class AccessProto {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.class,
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder.class);
           internal_static_de_huxhorn_lilith_access_StringArrayValue_descriptor =
-            getDescriptor().getMessageTypes().get(8);
+            getDescriptor().getMessageTypes().get(9);
           internal_static_de_huxhorn_lilith_access_StringArrayValue_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_access_StringArrayValue_descriptor,

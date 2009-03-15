@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.data.access.protobuf;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.access.LoggerContext;
 import de.huxhorn.lilith.data.access.protobuf.generated.AccessProto;
 import de.huxhorn.sulky.codec.Decoder;
 
@@ -179,12 +180,34 @@ public class AccessEventProtobufDecoder
 			result.setRequestParameters(convertStringArrayMap(parsedEvent.getRequestParameters()));
 		}
 
-		// handling application id
-		if(parsedEvent.hasApplicationIdentifier())
+		// handling logger context
+		if(parsedEvent.hasLoggerContext())
 		{
-			result.setApplicationIdentifier(parsedEvent.getApplicationIdentifier());
+			result.setLoggerContext(convert(parsedEvent.getLoggerContext()));
 		}
 
+		return result;
+	}
+
+	public static LoggerContext convert(AccessProto.LoggerContext loggerContext)
+	{
+		if(loggerContext == null)
+		{
+			return null;
+		}
+		LoggerContext result=new LoggerContext();
+		if(loggerContext.hasName())
+		{
+			result.setName(loggerContext.getName());
+		}
+		if(loggerContext.hasBirthTime())
+		{
+			result.setBirthTime(new Date(loggerContext.getBirthTime()));
+		}
+		if(loggerContext.hasProperties())
+		{
+			result.setProperties(convertStringMap(loggerContext.getProperties()));
+		}
 		return result;
 	}
 

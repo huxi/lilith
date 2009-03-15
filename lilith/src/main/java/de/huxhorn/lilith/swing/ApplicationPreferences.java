@@ -1828,7 +1828,7 @@ public class ApplicationPreferences
 		{
 			if(logger.isInfoEnabled())
 			{
-				logger.info("Exception while loading layouts from file '" + file.getAbsolutePath() + "'!", ex);
+				logger.info("Exception while loading layouts from file '{}'':", file.getAbsolutePath(), ex.getMessage());
 			}
 			result = null;
 		}

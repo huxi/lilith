@@ -31,6 +31,7 @@ public class LogbackAccessAdapter
 		}
 		AccessEvent result = new AccessEvent();
 
+		// TODO: add support for LoggerContext once available
 		result.setLocalPort(event.getLocalPort());
 		result.setMethod(event.getMethod());
 		result.setProtocol(event.getProtocol());

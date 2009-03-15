@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.data.access.protobuf;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.access.LoggerContext;
 import de.huxhorn.lilith.data.access.protobuf.generated.AccessProto;
 import de.huxhorn.sulky.codec.Encoder;
 
@@ -212,15 +213,47 @@ public class AccessEventProtobufEncoder
 			}
 		}
 
-		// handling application id
+		// handling logger context
 		{
-			String id = event.getApplicationIdentifier();
-			if(id!=null)
+			LoggerContext context = event.getLoggerContext();
+			if(context!=null)
 			{
-				eventBuilder.setApplicationIdentifier(id);
+				eventBuilder.setLoggerContext(convert(context));
 			}
 		}
 		return eventBuilder.build();
+	}
+
+	public static AccessProto.LoggerContext convert(LoggerContext context)
+	{
+		if(context == null)
+		{
+			return null;
+		}
+		AccessProto.LoggerContext.Builder builder=AccessProto.LoggerContext.newBuilder();
+		{
+			String name = context.getName();
+			if(name!=null)
+			{
+				builder.setName(name);
+			}
+		}
+		{
+			Date birthTime = context.getBirthTime();
+			if(birthTime!=null)
+			{
+				builder.setBirthTime(birthTime.getTime());
+			}
+		}
+		{
+			Map<String, String> map = context.getProperties();
+			if(map != null && map.size() > 0)
+			{
+				builder.setProperties(convertStringMap(map));
+			}
+		}
+		return builder.build();
+
 	}
 
 	public static AccessProto.StringMap convertStringMap(Map<String, String> data)
