@@ -45,19 +45,19 @@ public class ClassicMultiplexSocketAppender
 		this(true);
 	}
 
-	protected void applicationIdentifierChanged()
-	{
-		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
-	}
-
 	public ClassicMultiplexSocketAppender(boolean compressing)
 	{
 		super();
 		usingDefaultPort = true;
-		transformingEncoder =new TransformingEncoder();
+		transformingEncoder = new TransformingEncoder();
 		setEncoder(transformingEncoder);
 		setCompressing(compressing);
 		includeCallerData = false;
+	}
+
+	protected void applicationIdentifierChanged()
+	{
+		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
 	@Override
@@ -116,33 +116,5 @@ public class ClassicMultiplexSocketAppender
 				event.getCallerData();
 			}
 		}
-//		// HACK: http://bugzilla.qos.ch/show_bug.cgi?id=100
-//		try
-//		{
-//			Field field=LoggingEvent.class.getDeclaredField("argumentArray");
-//			field.setAccessible(true);
-//			Object aa=field.get(event);
-//			if(aa instanceof Object[])
-//			{
-//				Object[] argumentArray=(Object[]) aa;
-//
-//				for(int i=0;i<argumentArray.length;i++)
-//				{
-//					Object current=argumentArray[i];
-//					if(current!=null && !(current instanceof String))
-//					{
-//						argumentArray[i]=""+current;
-//					}
-//				}
-//			}
-//		}
-//		catch (NoSuchFieldException e)
-//		{
-//			//e.printStackTrace();
-//		}
-//		catch (IllegalAccessException e)
-//		{
-//			//e.printStackTrace();
-//		}
 	}
 }

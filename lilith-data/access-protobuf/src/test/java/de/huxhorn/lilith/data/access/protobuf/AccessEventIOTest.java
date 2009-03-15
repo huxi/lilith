@@ -1,6 +1,7 @@
 package de.huxhorn.lilith.data.access.protobuf;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.access.LoggerContext;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -8,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AccessEventIOTest
 {
@@ -23,10 +24,16 @@ public class AccessEventIOTest
 	}
 
 	@Test
-	public void applicationId()
+	public void loggerContext()
 	{
 		AccessEvent event = createMinimalEvent();
-		event.setApplicationIdentifier("App");
+		LoggerContext value=new LoggerContext();
+		value.setName("ContextName");
+		value.setBirthTime(new Date(1234567890L));
+		Map<String, String> propperties=new HashMap<String, String>();
+		propperties.put("foo", "bar");
+		value.setProperties(propperties);
+		event.setLoggerContext(value);
 		check(event);
 	}
 
@@ -196,8 +203,7 @@ public class AccessEventIOTest
 
 	public AccessEvent createMinimalEvent()
 	{
-		AccessEvent event = new AccessEvent();
-		return event;
+		return new AccessEvent();
 	}
 
 	public void check(AccessEvent event)

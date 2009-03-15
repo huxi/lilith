@@ -17,9 +17,8 @@
  */
 package de.huxhorn.lilith.logback.appender;
 
-import de.huxhorn.lilith.data.access.logback.LogbackAccessAdapter;
+import de.huxhorn.lilith.data.access.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.access.protobuf.AccessEventProtobufEncoder;
-import de.huxhorn.sulky.codec.Encoder;
 
 import ch.qos.logback.access.spi.AccessEvent;
 
@@ -38,23 +37,25 @@ public class AccessMultiplexSocketAppender
 
 	private boolean compressing;
 	private boolean usingDefaultPort;
-	private Encoder<de.huxhorn.lilith.data.access.AccessEvent> lilithEncoder;
+	private TransformingEncoder transformingEncoder;
 
 	public AccessMultiplexSocketAppender()
 	{
 		this(true);
 	}
 
-	protected void applicationIdentifierChanged()
-	{
-		// TODO:
-	}
-
 	public AccessMultiplexSocketAppender(boolean compressing)
 	{
 		super();
 		usingDefaultPort = true;
+		transformingEncoder = new TransformingEncoder();
+		setEncoder(transformingEncoder);
 		setCompressing(compressing);
+	}
+
+	protected void applicationIdentifierChanged()
+	{
+		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
 	@Override
@@ -63,19 +64,6 @@ public class AccessMultiplexSocketAppender
 		super.setPort(port);
 		usingDefaultPort = false;
 	}
-
-	public void sendLilithEvent(de.huxhorn.lilith.data.access.AccessEvent e)
-	{
-		if(lilithEncoder != null)
-		{
-			byte[] serialized = lilithEncoder.encode(e);
-			if(serialized != null)
-			{
-				sendBytes(serialized);
-			}
-		}
-	}
-
 
 	/**
 	 * GZIPs the event if set to true.
@@ -99,8 +87,7 @@ public class AccessMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		lilithEncoder=new AccessEventProtobufEncoder(compressing);
-		setEncoder(new TransformingEncoder());
+		transformingEncoder.setLilithEncoder(new AccessEventProtobufEncoder(compressing));
 	}
 
 	public boolean isCompressing()
@@ -113,19 +100,6 @@ public class AccessMultiplexSocketAppender
 		if(e != null)
 		{
 			e.prepareForDeferredProcessing();
-		}
-	}
-
-	private class TransformingEncoder
-		implements Encoder<AccessEvent>
-	{
-		LogbackAccessAdapter adapter = new LogbackAccessAdapter();
-
-		public byte[] encode(AccessEvent logbackEvent)
-		{
-			de.huxhorn.lilith.data.access.AccessEvent lilithEvent = adapter.convert(logbackEvent);
-			lilithEvent.setApplicationIdentifier(getApplicationIdentifier());
-			return lilithEncoder.encode(lilithEvent);
 		}
 	}
 }

@@ -231,16 +231,16 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 				}
 		}
 
-		if(event.applicationIdentifier)
+		if(event.loggerContext)
 		{
 			evenOdd.toggle()
 			it.tr([class: "${evenOdd}"])
 				{
 					th
 					{
-						it.mkp.yieldUnescaped 'Application&nbsp;ID'
+						it.mkp.yieldUnescaped 'Logger&nbsp;Context'
 					}
-					td(event.applicationIdentifier);
+					td(event.loggerContext);
 				}
 		}
 

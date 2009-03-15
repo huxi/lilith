@@ -50,22 +50,27 @@ public class AccessEventTest
 	}
 
 	@Test
-	public void applicationIdentifier()
+	public void loggerContext()
 		throws ClassNotFoundException, IOException
 	{
 		AccessEvent instance = new AccessEvent();
 
-		String value = "value";
-		instance.setApplicationIdentifier(value);
+		LoggerContext value=new LoggerContext();
+		value.setBirthTime(new Date(1234567890L));
+		value.setName("contextName");
+		Map<String, String> properties=new HashMap<String, String>();
+		properties.put("foo", "bar");
+		value.setProperties(properties);
+		instance.setLoggerContext(value);
 
 		{
 			AccessEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getApplicationIdentifier());
+			assertEquals(value, obj.getLoggerContext());
 			assertFalse(fresh.equals(obj));
 		}
 		{
 			AccessEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getApplicationIdentifier());
+			assertEquals(value, obj.getLoggerContext());
 			assertFalse(fresh.equals(obj));
 		}
 	}

@@ -19,8 +19,8 @@ package de.huxhorn.lilith.swing.table.tooltips;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.LoggerContext;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
@@ -54,7 +54,15 @@ public class ApplicationTooltipGenerator
 			else if(evtObject instanceof AccessEvent)
 			{
 				AccessEvent event = (AccessEvent) evtObject;
-				return event.getApplicationIdentifier();
+				de.huxhorn.lilith.data.access.LoggerContext context = event.getLoggerContext();
+				if(context != null)
+				{
+					Map<String, String> props = context.getProperties();
+					if(props!= null)
+					{
+						return props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+					}
+				}
 			}
 		}
 		return null;

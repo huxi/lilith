@@ -24,10 +24,10 @@ import java.util.Map;
 public class AccessEvent
 	implements Serializable
 {
-	private static final long serialVersionUID = -5742591297305901642L;
+	private static final long serialVersionUID = -716078283933754505L;
 
 	private Date timeStamp;
-	private String applicationIdentifier;
+	private LoggerContext loggerContext;
 	private String requestURI;
 	private String requestURL;
 	private String remoteHost;
@@ -52,14 +52,14 @@ public class AccessEvent
 		this.timeStamp = timeStamp;
 	}
 
-	public String getApplicationIdentifier()
+	public LoggerContext getLoggerContext()
 	{
-		return applicationIdentifier;
+		return loggerContext;
 	}
 
-	public void setApplicationIdentifier(String applicationIdentifier)
+	public void setLoggerContext(LoggerContext loggerContext)
 	{
-		this.applicationIdentifier = applicationIdentifier;
+		this.loggerContext = loggerContext;
 	}
 
 	public String getRequestURI()
@@ -201,8 +201,8 @@ public class AccessEvent
 
 		if(localPort != event.localPort) return false;
 		if(statusCode != event.statusCode) return false;
-		if(applicationIdentifier != null ? !applicationIdentifier
-			.equals(event.applicationIdentifier) : event.applicationIdentifier != null)
+		if(loggerContext != null ? !loggerContext
+			.equals(event.loggerContext) : event.loggerContext!= null)
 		{
 			return false;
 		}
@@ -235,7 +235,7 @@ public class AccessEvent
 	{
 		int result;
 		result = (timeStamp != null ? timeStamp.hashCode() : 0);
-		result = 31 * result + (applicationIdentifier != null ? applicationIdentifier.hashCode() : 0);
+		result = 31 * result + (loggerContext != null ? loggerContext.hashCode() : 0);
 		result = 31 * result + (requestURI != null ? requestURI.hashCode() : 0);
 		result = 31 * result + (requestURL != null ? requestURL.hashCode() : 0);
 		result = 31 * result + (remoteHost != null ? remoteHost.hashCode() : 0);
@@ -254,7 +254,7 @@ public class AccessEvent
 	{
 		StringBuilder result = new StringBuilder();
 		result.append("AccessEvent[");
-		result.append("applicationIdentifier=").append(applicationIdentifier).append(", ");
+		result.append("loggerContext=").append(loggerContext).append(", ");
 		result.append("timeStamp=").append(timeStamp);
 
 		result.append("]");
