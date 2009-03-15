@@ -18,8 +18,8 @@
 package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.access.logback.LogbackAccessAdapter;
+import de.huxhorn.lilith.data.access.protobuf.AccessEventProtobufEncoder;
 import de.huxhorn.sulky.codec.Encoder;
-import de.huxhorn.sulky.codec.SerializableEncoder;
 
 import ch.qos.logback.access.spi.AccessEvent;
 
@@ -99,7 +99,7 @@ public class AccessMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		lilithEncoder = new SerializableEncoder<de.huxhorn.lilith.data.access.AccessEvent>(compressing);
+		lilithEncoder=new AccessEventProtobufEncoder(compressing);
 		setEncoder(new TransformingEncoder());
 	}
 

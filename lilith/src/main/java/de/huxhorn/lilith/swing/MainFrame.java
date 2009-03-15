@@ -44,7 +44,7 @@ import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
-import de.huxhorn.lilith.engine.impl.sourceproducer.SerializingMessageBasedServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.AccessEventProtobufServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
@@ -726,12 +726,12 @@ public class MainFrame
 		}
 		try
 		{
-			SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent> producer
-				= new SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>
+			AccessEventProtobufServerSocketEventSourceProducer producer
+				= new AccessEventProtobufServerSocketEventSourceProducer
 				(AccessMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
-			senderService.addAccessProducer(producer);
+			// TODO: senderService.addAccessProducer(producer);
 		}
 		catch(IOException ex)
 		{
@@ -740,12 +740,12 @@ public class MainFrame
 
 		try
 		{
-			SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent> producer
-				= new SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>
+			AccessEventProtobufServerSocketEventSourceProducer producer
+				= new AccessEventProtobufServerSocketEventSourceProducer
 				(AccessMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
-			senderService.addAccessProducer(producer);
+			// TODO: senderService.addAccessProducer(producer);
 		}
 		catch(IOException ex)
 		{
