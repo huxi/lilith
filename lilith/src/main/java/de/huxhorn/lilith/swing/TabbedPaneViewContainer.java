@@ -21,7 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.buffers.Buffer;
-import de.huxhorn.sulky.buffers.Buffers;
+import de.huxhorn.sulky.buffers.Dispose;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.tasks.Task;
@@ -161,7 +161,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		{
 			view.dispose();
 			Buffer<EventWrapper<T>> buffer = view.getEventSource().getBuffer();
-			Buffers.dispose(buffer);
+			Dispose.dispose(buffer);
 			if(logger.isDebugEnabled()) logger.debug("Disposed view {}.", view);
 		}
 		fireChange();

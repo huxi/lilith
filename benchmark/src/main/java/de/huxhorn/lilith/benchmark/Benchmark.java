@@ -589,7 +589,7 @@ public class Benchmark
 	}
 
 	// ###
-	public void runBenchmarks(List<EventWrapper<LoggingEvent>> loggingEvents)
+	public void runBenchmarks(List<EventWrapper<LoggingEvent>> loggingEvents, boolean benchmarkXml)
 		throws Exception
 	{
 		betweenBenchmarks();
@@ -600,21 +600,24 @@ public class Benchmark
 
 		protobufCompressed(loggingEvents);
 
-		betweenBenchmarks();
-
-		lilithXmlUncompressed(loggingEvents);
-
-		betweenBenchmarks();
-
-		lilithXmlCompressed(loggingEvents);
-
-		betweenBenchmarks();
-
-		javaUtilXmlUncompressed(loggingEvents);
-
-		betweenBenchmarks();
-
-		javaUtilXmlCompressed(loggingEvents);
+		if(benchmarkXml)
+		{
+			betweenBenchmarks();
+	
+			lilithXmlUncompressed(loggingEvents);
+	
+			betweenBenchmarks();
+	
+			lilithXmlCompressed(loggingEvents);
+	
+			betweenBenchmarks();
+	
+			javaUtilXmlUncompressed(loggingEvents);
+	
+			betweenBenchmarks();
+	
+			javaUtilXmlCompressed(loggingEvents);
+		}
 
 		betweenBenchmarks();
 
@@ -671,47 +674,50 @@ public class Benchmark
 		tearDown();
 
 
-		betweenBenchmarks();
+		if(benchmarkXml)
+		{
+			betweenBenchmarks();
+	
+			setUp();
+			xmlUncompressedAdd(loggingEvents);
+			tearDown();
+	
+	
+			betweenBenchmarks();
+	
+			setUp();
+			xmlUncompressedAddAll(loggingEvents);
+			tearDown();
+	
+	
+			betweenBenchmarks();
+	
+			setUp();
+			xmlUncompressedGet(loggingEvents);
+			tearDown();
+	
+	
+			betweenBenchmarks();
+	
+			setUp();
+			xmlCompressedAdd(loggingEvents);
+			tearDown();
+	
+	
+			betweenBenchmarks();
+	
+			setUp();
+			xmlCompressedAddAll(loggingEvents);
+			tearDown();
+	
+	
+			betweenBenchmarks();
+	
+			setUp();
+			xmlCompressedGet(loggingEvents);
+			tearDown();
 
-		setUp();
-		xmlUncompressedAdd(loggingEvents);
-		tearDown();
-
-
-		betweenBenchmarks();
-
-		setUp();
-		xmlUncompressedAddAll(loggingEvents);
-		tearDown();
-
-
-		betweenBenchmarks();
-
-		setUp();
-		xmlUncompressedGet(loggingEvents);
-		tearDown();
-
-
-		betweenBenchmarks();
-
-		setUp();
-		xmlCompressedAdd(loggingEvents);
-		tearDown();
-
-
-		betweenBenchmarks();
-
-		setUp();
-		xmlCompressedAddAll(loggingEvents);
-		tearDown();
-
-
-		betweenBenchmarks();
-
-		setUp();
-		xmlCompressedGet(loggingEvents);
-		tearDown();
-
+		}
 
 		betweenBenchmarks();
 
@@ -1019,6 +1025,7 @@ public class Benchmark
 			System.out.println("\nmaxMemory and totalMemory differ, please restart with options '-Xms512m -Xmx512m'.");
 			System.exit(0);
 		}
+		boolean benchmarkXml=false;
 		if(args != null)
 		{
 			for(String current : args)
@@ -1027,6 +1034,10 @@ public class Benchmark
 				{
 					executeGcBetween = true;
 				}
+				if("-xml".equals(current))
+				{
+					benchmarkXml=true;
+				}
 			}
 		}
 		System.out.print("Creating events... ");
@@ -1034,16 +1045,17 @@ public class Benchmark
 		List<EventWrapper<LoggingEvent>> loggingEvents = createDataSet(2000);
 		System.out.println("done!");
 		Benchmark benchmark = new Benchmark();
+		
 		for(int i = 0; i < 3; i++)
 		{
 			// yes, JIT, please optimize...
-			benchmark.runBenchmarks(loggingEvents);
+			benchmark.runBenchmarks(loggingEvents, benchmarkXml);
 		}
 		System.out.println("\n\n\n#######################################################################");
 		System.out.println("And now for the real thing... JIT should have had enough time by now :p");
 		System.out.println("#######################################################################\n\n\n");
 		logger
 			.info("|| Name || Action || Amount || seconds || Operations/s || total size (raw size) || size/element ||");
-		benchmark.runBenchmarks(loggingEvents);
+		benchmark.runBenchmarks(loggingEvents, benchmarkXml);
 	}
 }
