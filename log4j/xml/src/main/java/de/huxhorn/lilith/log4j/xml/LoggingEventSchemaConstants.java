@@ -50,6 +50,8 @@ Caused by: java.lang.RuntimeException: Hi.
 	String LEVEL_ATTRIBUTE = "level";
 	String THREAD_NAME_ATTRIBUTE = "thread";
 	String THREAD_ID_ATTRIBUTE = "threadId";
+	String THREAD_GROUP_NAME_ATTRIBUTE = "threadGroup";
+	String THREAD_GROUP_ID_ATTRIBUTE = "threadGroupId";
 
 	String MESSAGE_NODE = "message";
 	String NDC_NODE = "NDC";

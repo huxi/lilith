@@ -43,7 +43,7 @@ public class LogbackLoggingStreamEventProducer
 		if(o instanceof ch.qos.logback.classic.spi.LoggingEvent)
 		{
 			ch.qos.logback.classic.spi.LoggingEvent logbackEvent = (ch.qos.logback.classic.spi.LoggingEvent) o;
-			return adapter.convert(logbackEvent);
+			return adapter.convert(logbackEvent, false);
 		}
 		if(logger.isInfoEnabled())
 		{

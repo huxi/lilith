@@ -18,12 +18,12 @@
 package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
@@ -70,9 +70,12 @@ public class LoggingEventReader
 			result.setLogger(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LOGGER_ATTRIBUTE));
 			result
 				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
+
 			{
 				String threadName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE);
 				String threadIdStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_ID_ATTRIBUTE);
+				String threadGroupName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE);
+				String threadGroupIdStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE);
 				Long threadId = null;
 				if(threadIdStr != null)
 				{
@@ -85,9 +88,21 @@ public class LoggingEventReader
 						// ignore
 					}
 				}
-				if(threadName != null || threadId != null)
+				Long threadGroupId = null;
+				if(threadGroupIdStr != null)
 				{
-					result.setThreadInfo(new ThreadInfo(threadId, threadName));
+					try
+					{
+						threadGroupId = Long.valueOf(threadGroupIdStr);
+					}
+					catch(NumberFormatException ex)
+					{
+						// ignore
+					}
+				}
+				if(threadName != null || threadId != null || threadGroupName != null || threadGroupId != null)
+				{
+					result.setThreadInfo(new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName));
 				}
 			}
 

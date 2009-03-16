@@ -21,7 +21,7 @@
 		<lilithVersion>${pom.version}</lilithVersion>
 		<sulkyVersion><!-- SV -->0.9.7-SNAPSHOT</sulkyVersion>
 		<slf4jVersion>1.5.6</slf4jVersion>
-		<logbackVersion>0.9.14</logbackVersion>
+		<logbackVersion>0.9.15</logbackVersion>
 	</properties>
 
 	<licenses>

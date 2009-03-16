@@ -18,12 +18,12 @@
 package de.huxhorn.lilith.data.logging.protobuf;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
 import de.huxhorn.sulky.codec.Decoder;
 
@@ -265,7 +265,17 @@ public class LoggingEventProtobufDecoder
 		{
 			threadName = parsedThreadInfo.getName();
 		}
-		return new ThreadInfo(threadId, threadName);
+		Long threadGroupId = null;
+		if(parsedThreadInfo.hasGroupId())
+		{
+			threadGroupId = parsedThreadInfo.getGroupId();
+		}
+		String threadGroupName = null;
+		if(parsedThreadInfo.hasGroupName())
+		{
+			threadGroupName = parsedThreadInfo.getGroupName();
+		}
+		return new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName);
 	}
 
 	public static LoggerContext convert(LoggingProto.LoggerContext loggerContext)

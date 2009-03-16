@@ -146,7 +146,7 @@ public class LoggingEventTest
 	{
 		LoggingEvent instance = new LoggingEvent();
 
-		ThreadInfo value = new ThreadInfo(17L, "Thread-Name");
+		ThreadInfo value = new ThreadInfo();
 		instance.setThreadInfo(value);
 
 		{

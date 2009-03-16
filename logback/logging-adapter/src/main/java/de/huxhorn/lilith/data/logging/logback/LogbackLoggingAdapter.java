@@ -18,22 +18,22 @@
 package de.huxhorn.lilith.data.logging.logback;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.logback.classic.NDC;
 
 import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.ClassPackagingData;
+import ch.qos.logback.classic.spi.LoggerContextRemoteView;
+import ch.qos.logback.classic.spi.LoggerRemoteView;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.classic.spi.ThrowableDataPoint;
 import ch.qos.logback.classic.spi.ThrowableProxy;
-import ch.qos.logback.classic.spi.LoggerRemoteView;
-import ch.qos.logback.classic.spi.LoggerContextRemoteView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,7 +48,7 @@ public class LogbackLoggingAdapter
 	private static final String COMMON_FRAMES_OMITTED = " common frames omitted";
 	private static final String CAUSED_BY = "Caused by: ";
 
-	public LoggingEvent convert(ch.qos.logback.classic.spi.LoggingEvent event)
+	public LoggingEvent convert(ch.qos.logback.classic.spi.LoggingEvent event, boolean inSameThread)
 	{
 		if(event == null)
 		{
@@ -86,6 +86,11 @@ public class LogbackLoggingAdapter
 		{
 			String name=lcv.getName();
 			Map<String, String> props = lcv.getPropertyMap();
+			if(props != null)
+			{
+				// TODO: XXX lcv property map leak? yes, indeed.
+				props=new HashMap<String, String>(props);
+			}
 			LoggerContext loggerContext=new LoggerContext();
 			loggerContext.setName(name);
 			loggerContext.setProperties(props);
@@ -96,19 +101,38 @@ public class LogbackLoggingAdapter
 		initMarker(event, result);
 		result.setMdc(event.getMDCPropertyMap());
 		String threadName = event.getThreadName();
+
 		if(threadName != null)
 		{
-			// assuming this code is executed synchronously
-			long id = Thread.currentThread().getId();
-			ThreadInfo threadInfo = new ThreadInfo(id, threadName);
+			Long threadId=null;
+			String threadGroupName = null;
+			Long threadGroupId=null;
+
+			if(inSameThread)
+			{
+				// assuming this code is executed synchronously
+				Thread t=Thread.currentThread();
+				threadId = t.getId();
+
+				ThreadGroup tg = t.getThreadGroup();
+				if(tg != null)
+				{
+					threadGroupName=tg.getName();
+					threadGroupId=(long)System.identityHashCode(tg);
+				}
+			}
+			ThreadInfo threadInfo = new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName);
 			result.setThreadInfo(threadInfo);
 		}
 		result.setTimeStamp(new Date(event.getTimeStamp()));
 
-		if(!NDC.isEmpty())
+		if(inSameThread)
 		{
-			// TODO: configurable
-			result.setNdc(NDC.getContextStack());
+			if(!NDC.isEmpty())
+			{
+				// TODO: configurable
+				result.setNdc(NDC.getContextStack());
+			}
 		}
 
 		return result;

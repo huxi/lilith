@@ -59,8 +59,10 @@ message LoggerContext {
 }
 
 message ThreadInfo {
-	optional int64  id   = 1;
-	optional string name = 2;
+	optional int64  id         = 1;
+	optional string name       = 2;
+	optional int64  group_id   = 3;
+	optional string group_name = 4;
 }
 
 enum Level {

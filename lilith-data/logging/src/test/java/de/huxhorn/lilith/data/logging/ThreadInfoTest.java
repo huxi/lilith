@@ -39,12 +39,29 @@ public class ThreadInfoTest
 
 	@Test
 	public void defaultConstructor()
-		throws ClassNotFoundException, IOException
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
 		ThreadInfo instance = new ThreadInfo();
 
 		testSerialization(instance);
 		testXmlSerialization(instance);
+		testClone(instance);
+	}
+
+	@Test
+	public void fullConstructor()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		ThreadInfo instance = new ThreadInfo(17L, "threadName", 42L, "groupName");
+
+		assertEquals(17L, (long)instance.getId());
+		assertEquals("threadName", instance.getName());
+		assertEquals(42L, (long)instance.getGroupId());
+		assertEquals("groupName", instance.getGroupName());
+
+		testSerialization(instance);
+		testXmlSerialization(instance);
+		testClone(instance);
 	}
 
 	@Test
@@ -74,6 +91,32 @@ public class ThreadInfoTest
 	}
 
 	@Test
+	public void groupName()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		ThreadInfo instance = new ThreadInfo();
+
+		String value = "value";
+		instance.setGroupName(value);
+
+		{
+			ThreadInfo obj = testSerialization(instance);
+			assertEquals(value, obj.getGroupName());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			ThreadInfo obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getGroupName());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			ThreadInfo obj = testClone(instance);
+			assertEquals(value, obj.getGroupName());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
 	public void id()
 		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
@@ -95,6 +138,32 @@ public class ThreadInfoTest
 		{
 			ThreadInfo obj = testClone(instance);
 			assertEquals(value, obj.getId());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
+	public void groupId()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		ThreadInfo instance = new ThreadInfo();
+
+		Long value = 17L;
+		instance.setGroupId(value);
+
+		{
+			ThreadInfo obj = testSerialization(instance);
+			assertEquals(value, obj.getGroupId());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			ThreadInfo obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getGroupId());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			ThreadInfo obj = testClone(instance);
+			assertEquals(value, obj.getGroupId());
 			assertFalse(fresh.equals(obj));
 		}
 	}

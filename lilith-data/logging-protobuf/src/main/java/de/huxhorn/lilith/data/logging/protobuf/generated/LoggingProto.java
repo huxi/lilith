@@ -2225,6 +2225,18 @@ public final class LoggingProto {
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
+    // optional int64 group_id = 3;
+    private boolean hasGroupId;
+    private long groupId_ = 0L;
+    public boolean hasGroupId() { return hasGroupId; }
+    public long getGroupId() { return groupId_; }
+    
+    // optional string group_name = 4;
+    private boolean hasGroupName;
+    private java.lang.String groupName_ = "";
+    public boolean hasGroupName() { return hasGroupName; }
+    public java.lang.String getGroupName() { return groupName_; }
+    
     @Override
     public final boolean isInitialized() {
       return true;
@@ -2238,6 +2250,12 @@ public final class LoggingProto {
       }
       if (hasName()) {
         output.writeString(2, getName());
+      }
+      if (hasGroupId()) {
+        output.writeInt64(3, getGroupId());
+      }
+      if (hasGroupName()) {
+        output.writeString(4, getGroupName());
       }
       getUnknownFields().writeTo(output);
     }
@@ -2256,6 +2274,14 @@ public final class LoggingProto {
       if (hasName()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(2, getName());
+      }
+      if (hasGroupId()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, getGroupId());
+      }
+      if (hasGroupName()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(4, getGroupName());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2389,6 +2415,12 @@ public final class LoggingProto {
         if (other.hasName()) {
           setName(other.getName());
         }
+        if (other.hasGroupId()) {
+          setGroupId(other.getGroupId());
+        }
+        if (other.hasGroupName()) {
+          setGroupName(other.getGroupName());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -2431,6 +2463,14 @@ public final class LoggingProto {
               setName(input.readString());
               break;
             }
+            case 24: {
+              setGroupId(input.readInt64());
+              break;
+            }
+            case 34: {
+              setGroupName(input.readString());
+              break;
+            }
           }
         }
       }
@@ -2469,6 +2509,42 @@ public final class LoggingProto {
       public Builder clearName() {
         result.hasName = false;
         result.name_ = "";
+        return this;
+      }
+      
+      // optional int64 group_id = 3;
+      public boolean hasGroupId() {
+        return result.hasGroupId();
+      }
+      public long getGroupId() {
+        return result.getGroupId();
+      }
+      public Builder setGroupId(long value) {
+        result.hasGroupId = true;
+        result.groupId_ = value;
+        return this;
+      }
+      public Builder clearGroupId() {
+        result.hasGroupId = false;
+        result.groupId_ = 0L;
+        return this;
+      }
+      
+      // optional string group_name = 4;
+      public boolean hasGroupName() {
+        return result.hasGroupName();
+      }
+      public java.lang.String getGroupName() {
+        return result.getGroupName();
+      }
+      public Builder setGroupName(java.lang.String value) {
+        result.hasGroupName = true;
+        result.groupName_ = value;
+        return this;
+      }
+      public Builder clearGroupName() {
+        result.hasGroupName = false;
+        result.groupName_ = "";
         return this;
       }
     }
@@ -5329,30 +5405,31 @@ public final class LoggingProto {
       ".logging.Marker\"k\n\rLoggerContext\022\022\n\nbirt" +
       "h_time\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\0228\n\nproperties" +
       "\030\003 \001(\0132$.de.huxhorn.lilith.logging.Strin" +
-      "gMap\"&\n\nThreadInfo\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002" +
-      " \001(\t\"`\n\007Message\022\027\n\017message_pattern\030\001 \001(\t" +
-      "\022<\n\010argument\030\002 \003(\0132*.de.huxhorn.lilith.l" +
-      "ogging.MessageArgument\" \n\017MessageArgumen" +
-      "t\022\r\n\005value\030\001 \001(\t\"\233\001\n\021StackTraceElement\022\023" +
-      "\n\013method_name\030\001 \001(\t\022\022\n\nclass_name\030\002 \001(\t\022" +
-      "\021\n\tfile_name\030\003 \001(\t\022\023\n\013line_number\030\004 \001(\005\022" +
-      "\025\n\rcode_location\030\005 \001(\t\022\017\n\007version\030\006 \001(\t\022" +
-      "\r\n\005exact\030\007 \001(\010\"\317\001\n\tThrowable\022\027\n\017throwabl" +
-      "e_class\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022I\n\023stack_" +
-      "trace_element\030\003 \003(\0132,.de.huxhorn.lilith." +
-      "logging.StackTraceElement\022\030\n\020omitted_ele" +
-      "ments\030\004 \001(\005\0223\n\005cause\030\005 \001(\0132$.de.huxhorn." +
-      "lilith.logging.Throwable\"L\n\027NestedDiagno" +
-      "sticContext\0221\n\005entry\030\001 \003(\0132\".de.huxhorn." +
-      "lilith.logging.Message\"E\n\tStringMap\0228\n\005e" +
-      "ntry\030\001 \003(\0132).de.huxhorn.lilith.logging.S" +
-      "tringMapEntry\",\n\016StringMapEntry\022\013\n\003key\030\001" +
-      " \002(\t\022\r\n\005value\030\002 \001(\t\"L\n\006Marker\022\014\n\004name\030\001 " +
-      "\002(\t\0224\n\treference\030\002 \003(\0132!.de.huxhorn.lili" +
-      "th.logging.Marker*<\n\005Level\022\t\n\005TRACE\020\001\022\t\n" +
-      "\005DEBUG\020\002\022\010\n\004INFO\020\003\022\010\n\004WARN\020\004\022\t\n\005ERROR\020\005B" +
-      "5\n1de.huxhorn.lilith.data.logging.protob" +
-      "uf.generatedH\001";
+      "gMap\"L\n\nThreadInfo\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002" +
+      " \001(\t\022\020\n\010group_id\030\003 \001(\003\022\022\n\ngroup_name\030\004 \001" +
+      "(\t\"`\n\007Message\022\027\n\017message_pattern\030\001 \001(\t\022<" +
+      "\n\010argument\030\002 \003(\0132*.de.huxhorn.lilith.log" +
+      "ging.MessageArgument\" \n\017MessageArgument\022" +
+      "\r\n\005value\030\001 \001(\t\"\233\001\n\021StackTraceElement\022\023\n\013" +
+      "method_name\030\001 \001(\t\022\022\n\nclass_name\030\002 \001(\t\022\021\n" +
+      "\tfile_name\030\003 \001(\t\022\023\n\013line_number\030\004 \001(\005\022\025\n" +
+      "\rcode_location\030\005 \001(\t\022\017\n\007version\030\006 \001(\t\022\r\n" +
+      "\005exact\030\007 \001(\010\"\317\001\n\tThrowable\022\027\n\017throwable_" +
+      "class\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022I\n\023stack_tr" +
+      "ace_element\030\003 \003(\0132,.de.huxhorn.lilith.lo" +
+      "gging.StackTraceElement\022\030\n\020omitted_eleme" +
+      "nts\030\004 \001(\005\0223\n\005cause\030\005 \001(\0132$.de.huxhorn.li" +
+      "lith.logging.Throwable\"L\n\027NestedDiagnost" +
+      "icContext\0221\n\005entry\030\001 \003(\0132\".de.huxhorn.li" +
+      "lith.logging.Message\"E\n\tStringMap\0228\n\005ent" +
+      "ry\030\001 \003(\0132).de.huxhorn.lilith.logging.Str" +
+      "ingMapEntry\",\n\016StringMapEntry\022\013\n\003key\030\001 \002" +
+      "(\t\022\r\n\005value\030\002 \001(\t\"L\n\006Marker\022\014\n\004name\030\001 \002(" +
+      "\t\0224\n\treference\030\002 \003(\0132!.de.huxhorn.lilith" +
+      ".logging.Marker*<\n\005Level\022\t\n\005TRACE\020\001\022\t\n\005D" +
+      "EBUG\020\002\022\010\n\004INFO\020\003\022\010\n\004WARN\020\004\022\t\n\005ERROR\020\005B5\n" +
+      "1de.huxhorn.lilith.data.logging.protobuf" +
+      ".generatedH\001";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -5403,7 +5480,7 @@ public final class LoggingProto {
           internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor,
-              new java.lang.String[] { "Id", "Name", },
+              new java.lang.String[] { "Id", "Name", "GroupId", "GroupName", },
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.class,
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder.class);
           internal_static_de_huxhorn_lilith_logging_Message_descriptor =

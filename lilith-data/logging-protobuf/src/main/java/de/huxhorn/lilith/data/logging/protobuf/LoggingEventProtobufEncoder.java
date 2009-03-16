@@ -18,12 +18,12 @@
 package de.huxhorn.lilith.data.logging.protobuf;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
 import de.huxhorn.sulky.codec.Encoder;
 
@@ -275,6 +275,22 @@ public class LoggingEventProtobufEncoder
 			if(id != null)
 			{
 				builder.setId(id);
+			}
+		}
+
+		{
+			String name = threadInfo.getGroupName();
+			if(name != null)
+			{
+				builder.setGroupName(name);
+			}
+		}
+
+		{
+			Long id = threadInfo.getGroupId();
+			if(id != null)
+			{
+				builder.setGroupId(id);
 			}
 		}
 		return builder.build();

@@ -49,7 +49,7 @@ public class ClassicXmlMultiplexSocketAppender
 	{
 		super();
 		usingDefaultPort = true;
-		transformingEncoder =new TransformingEncoder();
+		transformingEncoder = new TransformingEncoder(true);
 		setEncoder(transformingEncoder);
 		setCompressing(compressing);
 		includeCallerData = false;

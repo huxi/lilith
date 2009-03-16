@@ -99,7 +99,7 @@ public class InternalLilithAppender
 		{
 			localId++;
 			event.getCallerData();
-			LoggingEvent lilithEvent = adapter.convert(event);
+			LoggingEvent lilithEvent = adapter.convert(event, true);
 			EventWrapper<LoggingEvent> wrapper = new EventWrapper<LoggingEvent>(sourceIdentifier, localId, lilithEvent);
 			fileBuffer.add(wrapper);
 		}

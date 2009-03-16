@@ -18,22 +18,22 @@
 package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.sulky.stax.DateTimeFormatter;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
 import de.huxhorn.sulky.stax.WhiteSpaceHandling;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Date;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -141,6 +141,8 @@ public class LoggingEventWriter
 		{
 			Long id = threadInfo.getId();
 			String name = threadInfo.getName();
+			Long groupId=threadInfo.getGroupId();
+			String groupName=threadInfo.getGroupName();
 			if(name != null)
 			{
 				StaxUtilities
@@ -150,6 +152,16 @@ public class LoggingEventWriter
 			{
 				StaxUtilities
 					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_ID_ATTRIBUTE, "" + id);
+			}
+			if(groupName != null)
+			{
+				StaxUtilities
+					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE, groupName);
+			}
+			if(groupId != null)
+			{
+				StaxUtilities
+					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE, "" + groupId);
 			}
 		}
 
