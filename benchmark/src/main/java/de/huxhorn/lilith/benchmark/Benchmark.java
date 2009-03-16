@@ -7,15 +7,19 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDecoder;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlDecoder;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
 import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.engine.impl.CompressingLoggingEventWrapperXmlCodec;
 import de.huxhorn.lilith.engine.impl.LoggingEventWrapperXmlCodec;
 import de.huxhorn.sulky.codec.Codec;
+import de.huxhorn.sulky.codec.CompressingSerializableCodec;
 import de.huxhorn.sulky.codec.Decoder;
 import de.huxhorn.sulky.codec.Encoder;
 import de.huxhorn.sulky.codec.SerializableCodec;
@@ -23,8 +27,12 @@ import de.huxhorn.sulky.codec.SerializableDecoder;
 import de.huxhorn.sulky.codec.SerializableEncoder;
 import de.huxhorn.sulky.codec.XmlDecoder;
 import de.huxhorn.sulky.codec.XmlEncoder;
-import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
+import de.huxhorn.sulky.codec.filebuffer.FileHeader;
+import de.huxhorn.sulky.codec.filebuffer.MetaData;
+import de.huxhorn.sulky.formatting.HumanReadable;
+
+import ch.qos.logback.core.CoreConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,15 +42,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-
-import ch.qos.logback.core.CoreConstants;
 
 public class Benchmark
 {
@@ -53,12 +59,16 @@ public class Benchmark
 	private File dataFile;
 	private File indexFile;
 	private long time;
-	private static boolean executeGcBetween=false;
+	private static boolean executeGcBetween = false;
+	private static final String CONTENT_FORMAT_VALUE_JAVA_BEANS_XML = "java.beans.XML";
+	private static final String CONTENT_FORMAT_VALUE_SERIALIZED = "java.io.Serializable";
+	//private static final String CONTENT_FORMAT_VALUE_LILITH_XML = "Lilith XML";
 
 	public enum TestFormat
 	{
 		SERIALIZATION,
 		JAVA_UTIL_XML,
+		//LILITH_XML,
 		PROTOBUF
 	}
 
@@ -332,17 +342,17 @@ public class Benchmark
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(bos);
 		startTest();
-		int counter=0;
+		int counter = 0;
 		for(EventWrapper<LoggingEvent> current : loggingEvents)
 		{
 			oos.writeObject(current);
-			if (++counter >= CoreConstants.OOS_RESET_FREQUENCY)
+			if(++counter >= CoreConstants.OOS_RESET_FREQUENCY)
 			{
-			  counter = 0;
-			  // Failing to reset the object output stream every now and
-			  // then creates a serious memory leak.
-			  // System.err.println("Doing oos.reset()");
-			  oos.reset();
+				counter = 0;
+				// Failing to reset the object output stream every now and
+				// then creates a serious memory leak.
+				// System.err.println("Doing oos.reset()");
+				oos.reset();
 			}
 
 		}
@@ -761,7 +771,7 @@ public class Benchmark
 	private void logBenchmark(String name, String action, long size, int amount, long expiredNanos)
 	{
 		double fraction = (double) expiredNanos / 1000000000;
-		double eventsFraction = ((double)amount) / fraction;
+		double eventsFraction = ((double) amount) / fraction;
 		if(logger.isDebugEnabled()) logger.debug("{}: expired={}s", name, fraction);
 		if(logger.isDebugEnabled()) logger.debug("{}: events/s={}", name, eventsFraction);
 		if(logger.isDebugEnabled()) logger.debug("{}: size={} bytes", name, size);
@@ -772,16 +782,16 @@ public class Benchmark
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 		symbols.setGroupingSeparator(',');
 		symbols.setDecimalSeparator('.');
-		DecimalFormat format=new DecimalFormat("#,##0.0#", symbols);
-		String formattedEvents=format.format(eventsFraction);
-		String formattedFraction=format.format(fraction);
+		DecimalFormat format = new DecimalFormat("#,##0.0#", symbols);
+		String formattedEvents = format.format(eventsFraction);
+		String formattedFraction = format.format(fraction);
 		if(logger.isDebugEnabled()) logger.debug("average={}/event", name, formattedAverage);
 
 		if(logger.isInfoEnabled())
 		{
 			logger
-				.info("|| {} || {} || {} || {} ({}) || {} ({}) || {} ||", 
-					new Object[]{name, action, amount, formattedFraction ,formattedEvents, formattedLength, size, formattedAverage});
+				.info("|| {} || {} || {} || {} || {} || {} ({}) || {} ||",
+					new Object[]{name, action, amount, formattedFraction, formattedEvents, formattedLength, size, formattedAverage});
 		}
 
 	}
@@ -798,15 +808,21 @@ public class Benchmark
 
 		if(format == TestFormat.JAVA_UTIL_XML)
 		{
-			metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML);
+			metaData.put(FileConstants.CONTENT_FORMAT_KEY, CONTENT_FORMAT_VALUE_JAVA_BEANS_XML);
 		}
 		else if(format == TestFormat.PROTOBUF)
 		{
 			metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		}
+		/*
+		else if(format == TestFormat.LILITH_XML)
+		{
+			metaData.put(FileConstants.CONTENT_FORMAT_KEY, CONTENT_FORMAT_VALUE_LILITH_XML);
+		}
+		*/
 		else
 		{
-			metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_SERIALIZED);
+			metaData.put(FileConstants.CONTENT_FORMAT_KEY, CONTENT_FORMAT_VALUE_SERIALIZED);
 		}
 
 		if(compressing)
@@ -820,29 +836,65 @@ public class Benchmark
 
 		CodecFileBuffer<EventWrapper<LoggingEvent>> result = new CodecFileBuffer<EventWrapper<LoggingEvent>>(magicValue, metaData, null, dataFile, indexFile);
 
-		Map<String, String> actualMetaData = result.getMetaData();
-
+		FileHeader fileHeader = result.getFileHeader();
+		MetaData actualMetaData = fileHeader.getMetaData();
+		Map<String, String> md = actualMetaData.getData();
 		boolean compressed = false;
 
 		String formatStr = null;
-		if(actualMetaData != null)
+		if(md != null)
 		{
-			compressed = Boolean.valueOf(actualMetaData.get(FileConstants.COMPRESSED_KEY));
-			formatStr = actualMetaData.get(FileConstants.CONTENT_FORMAT_KEY);
+			compressed = Boolean.valueOf(md.get(FileConstants.COMPRESSED_KEY));
+			formatStr = md.get(FileConstants.CONTENT_FORMAT_KEY);
 		}
 
 		Codec<EventWrapper<LoggingEvent>> codec;
-		if(FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(formatStr))
+		if(CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(formatStr))
 		{
-			codec = new LoggingEventWrapperXmlCodec(compressed);
+			if(compressed)
+			{
+				codec = new CompressingLoggingEventWrapperXmlCodec();
+			}
+			else
+			{
+				codec = new LoggingEventWrapperXmlCodec();
+			}
 		}
 		else if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(formatStr))
 		{
-			codec = new LoggingEventWrapperProtobufCodec(compressed);
+			if(compressed)
+			{
+				codec = new CompressingLoggingEventWrapperProtobufCodec();
+
+			}
+			else
+			{
+				codec = new LoggingEventWrapperProtobufCodec();
+			}
 		}
+		/*
+		else if(CONTENT_FORMAT_VALUE_LILITH_XML.equals(formatStr))
+		{
+			if(compressed)
+			{
+				codec = ...
+			}
+			else
+			{
+				codec = ...
+			}
+		}
+		*/
 		else
 		{
-			codec = new SerializableCodec<EventWrapper<LoggingEvent>>(compressed);
+			if(compressed)
+			{
+				codec = new CompressingSerializableCodec<EventWrapper<LoggingEvent>>();
+			}
+			else
+			{
+				codec = new SerializableCodec<EventWrapper<LoggingEvent>>();
+			}
 		}
 		result.setCodec(codec);
 
@@ -854,9 +906,8 @@ public class Benchmark
 	{
 
 		LoggingEvent result = new LoggingEvent();
-		result.setApplicationIdentifier("ApplicationIdentifier-" + counter);
-		result.setArguments(new String[]{"param1-" + counter, "param2-" + counter});
-		result.setMessagePattern("messagePattern-" + counter + ": {} {}");
+		result
+			.setMessage(new Message("messagePattern-" + counter + ": {} {}", new String[]{"param1-" + counter, "param2-" + counter}));
 		result.setLevel(LoggingEvent.Level.INFO);
 		result.setLogger("logger-" + counter);
 		result.setMarker(new Marker("marker-" + counter));
@@ -865,7 +916,8 @@ public class Benchmark
 		result.setMdc(mdc);
 		result
 			.setNdc(new Message[]{new Message("ndcMessagePattern-" + counter + ": {} {}", new String[]{"ndcParam1-" + counter, "ndcParam2-" + counter})});
-		result.setThreadName("threadName-" + counter);
+
+		result.setThreadInfo(new ThreadInfo(null, "threadName-" + counter, null, null));
 		ExtendedStackTraceElement[] originalCallStack = createCallStack();
 		ExtendedStackTraceElement[] callStack = new ExtendedStackTraceElement[originalCallStack.length * 5];
 		for(int i = 0; i < callStack.length; i++)
@@ -943,12 +995,12 @@ public class Benchmark
 	{
 		if(executeGcBetween)
 		{
-			Runtime runtime=Runtime.getRuntime();
-			System.out.println("freeMemory before gc: "+runtime.freeMemory());
+			Runtime runtime = Runtime.getRuntime();
+			System.out.println("freeMemory before gc: " + runtime.freeMemory());
 			System.gc();
 			System.out.println("Sleeping a while...");
 			Thread.sleep(1000); // give the gc a chance to kick in.
-			System.out.println("freeMemory after gc : "+runtime.freeMemory());
+			System.out.println("freeMemory after gc : " + runtime.freeMemory());
 		}
 	}
 
@@ -957,32 +1009,32 @@ public class Benchmark
 	{
 		final Logger logger = LoggerFactory.getLogger(Benchmark.class);
 
-		Runtime runtime=Runtime.getRuntime();
+		Runtime runtime = Runtime.getRuntime();
 		long maxMemory = runtime.maxMemory();
 		long totalMemory = runtime.totalMemory();
 		if(maxMemory != totalMemory)
 		{
-			System.out.println("maxMemory="+runtime.maxMemory());
-			System.out.println("totalMemory="+runtime.totalMemory());
+			System.out.println("maxMemory=" + runtime.maxMemory());
+			System.out.println("totalMemory=" + runtime.totalMemory());
 			System.out.println("\nmaxMemory and totalMemory differ, please restart with options '-Xms512m -Xmx512m'.");
 			System.exit(0);
 		}
-		if(args!=null)
+		if(args != null)
 		{
-			for(String current: args)
+			for(String current : args)
 			{
 				if("-gc".equals(current))
 				{
-					executeGcBetween=true;
+					executeGcBetween = true;
 				}
 			}
 		}
 		System.out.print("Creating events... ");
 		System.out.flush();
-		List<EventWrapper<LoggingEvent>> loggingEvents = createDataSet(10000);
+		List<EventWrapper<LoggingEvent>> loggingEvents = createDataSet(2000);
 		System.out.println("done!");
-		Benchmark benchmark=new Benchmark();
-		for(int i=0;i<3;i++)
+		Benchmark benchmark = new Benchmark();
+		for(int i = 0; i < 3; i++)
 		{
 			// yes, JIT, please optimize...
 			benchmark.runBenchmarks(loggingEvents);
@@ -991,7 +1043,7 @@ public class Benchmark
 		System.out.println("And now for the real thing... JIT should have had enough time by now :p");
 		System.out.println("#######################################################################\n\n\n");
 		logger
-			.info("|| Name || Action || Amount || seconds (ops/s) || total size (raw size) || size/element ||");
+			.info("|| Name || Action || Amount || seconds || Operations/s || total size (raw size) || size/element ||");
 		benchmark.runBenchmarks(loggingEvents);
 	}
 }
