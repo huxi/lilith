@@ -17,15 +17,11 @@
  */
 package de.huxhorn.lilith.engine;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
-import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.engine.impl.LoggingEventWrapperXmlCodec;
-import de.huxhorn.lilith.engine.impl.CompressingLoggingEventWrapperXmlCodec;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperProtobufCodec;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.sulky.codec.Codec;
-import de.huxhorn.sulky.codec.SerializableCodec;
-import de.huxhorn.sulky.codec.CompressingSerializableCodec;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 
 import java.util.Map;
@@ -52,6 +48,7 @@ public class LoggingFileBufferFactory
 
 		Codec<EventWrapper<LoggingEvent>> codec;
 
+/*
 		if(FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(format))
 		{
 			if(compressed)
@@ -63,7 +60,8 @@ public class LoggingFileBufferFactory
 				codec=new LoggingEventWrapperXmlCodec();
 			}
 		}
-		else if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(format))
+*/
+		if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(format))
 		{
 			if(compressed)
 			{
@@ -76,6 +74,11 @@ public class LoggingFileBufferFactory
 		}
 		else
 		{
+			throw new IllegalArgumentException("Unknown content format "+format+"!");
+		}
+/*
+		else
+		{
 			if(compressed)
 			{
 				codec = new CompressingSerializableCodec<EventWrapper<LoggingEvent>>();
@@ -85,6 +88,7 @@ public class LoggingFileBufferFactory
 				codec = new SerializableCodec<EventWrapper<LoggingEvent>>();
 			}
 		}
+*/
 		return codec;
 	}
 }
