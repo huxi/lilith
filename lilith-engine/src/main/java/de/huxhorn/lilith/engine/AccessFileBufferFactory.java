@@ -17,15 +17,11 @@
  */
 package de.huxhorn.lilith.engine;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.access.protobuf.CompressingAccessEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.access.protobuf.AccessEventWrapperProtobufCodec;
-import de.huxhorn.lilith.engine.impl.AccessEventWrapperXmlCodec;
-import de.huxhorn.lilith.engine.impl.CompressingAccessEventWrapperXmlCodec;
+import de.huxhorn.lilith.data.access.protobuf.CompressingAccessEventWrapperProtobufCodec;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.codec.Codec;
-import de.huxhorn.sulky.codec.SerializableCodec;
-import de.huxhorn.sulky.codec.CompressingSerializableCodec;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 
 import java.util.Map;
@@ -52,6 +48,7 @@ public class AccessFileBufferFactory
 		
 		Codec<EventWrapper<AccessEvent>> codec;
 
+		/*
 		if(FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(format))
 		{
 			if(compressed)
@@ -63,7 +60,8 @@ public class AccessFileBufferFactory
 				codec = new AccessEventWrapperXmlCodec();
 			}
 		}
-		else if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(format))
+		*/
+		if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(format))
 		{
 			if(compressed)
 			{
@@ -76,6 +74,11 @@ public class AccessFileBufferFactory
 		}
 		else
 		{
+			throw new IllegalArgumentException("Unknown content format "+format+"!");
+		}
+		/*
+		else
+		{
 			if(compressed)
 			{
 				codec = new CompressingSerializableCodec<EventWrapper<AccessEvent>>();
@@ -85,7 +88,7 @@ public class AccessFileBufferFactory
 				codec = new SerializableCodec<EventWrapper<AccessEvent>>();
 			}
 		}
-
+        */
 		return codec;
 	}
 }

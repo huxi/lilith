@@ -22,7 +22,7 @@ package de.huxhorn.lilith.engine;
  */
 public interface FileConstants
 {
-	Integer MAGIC_VALUE = 0x0b501e7e;
+	int MAGIC_VALUE = 0x0B5E55ED;
 	String FILE_EXTENSION = "lilith";
 
 	String IDENTIFIER_KEY = "primaryIdentifier";
@@ -33,8 +33,6 @@ public interface FileConstants
 	String CONTENT_TYPE_VALUE_ACCESS = "access";
 
 	String CONTENT_FORMAT_KEY = "contentFormat";
-	String CONTENT_FORMAT_VALUE_SERIALIZED = "serialized";
-	String CONTENT_FORMAT_VALUE_JAVA_BEANS_XML = "java.beans.XML";
 	String CONTENT_FORMAT_VALUE_PROTOBUF = "protobuf";
 
 	String COMPRESSED_KEY = "compressed";
