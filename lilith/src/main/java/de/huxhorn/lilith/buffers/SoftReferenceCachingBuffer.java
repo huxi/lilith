@@ -1,7 +1,9 @@
 package de.huxhorn.lilith.buffers;
 
 import de.huxhorn.sulky.buffers.Buffer;
+import de.huxhorn.sulky.buffers.Dispose;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.buffers.Reset;
 import de.huxhorn.sulky.buffers.ResetOperation;
 
 import org.slf4j.Logger;
@@ -92,11 +94,7 @@ public class SoftReferenceCachingBuffer<E>
 
 	public void reset()
 	{
-		if(buffer instanceof ResetOperation)
-		{
-			ResetOperation op = (ResetOperation) buffer;
-			op.reset();
-		}
+		Reset.reset(buffer);
 		cache.clear();
 	}
 
@@ -104,11 +102,7 @@ public class SoftReferenceCachingBuffer<E>
 	{
 		disposed = true;
 		cache.clear();
-		if(buffer instanceof DisposeOperation)
-		{
-			DisposeOperation disposeable = (DisposeOperation) buffer;
-			disposeable.dispose();
-		}
+		Dispose.dispose(buffer);
 	}
 
 	public boolean isDisposed()

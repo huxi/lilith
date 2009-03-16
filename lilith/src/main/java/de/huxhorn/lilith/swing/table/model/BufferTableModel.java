@@ -19,8 +19,9 @@ package de.huxhorn.lilith.swing.table.model;
 
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.CircularBuffer;
+import de.huxhorn.sulky.buffers.Dispose;
 import de.huxhorn.sulky.buffers.DisposeOperation;
-import de.huxhorn.sulky.buffers.ResetOperation;
+import de.huxhorn.sulky.buffers.Reset;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,10 +96,9 @@ public abstract class BufferTableModel<T>
 
 	public boolean clear()
 	{
-		if(buffer instanceof ResetOperation)
+		boolean reset = Reset.reset(buffer);
+		if(reset)
 		{
-			ResetOperation op = (ResetOperation) buffer;
-			op.reset();
 			setLastRowCount(0);
 			fireTableChange();
 			return true;
@@ -119,12 +119,7 @@ public abstract class BufferTableModel<T>
 	public synchronized void dispose()
 	{
 		disposed = true;
-		if(buffer instanceof DisposeOperation)
-		{
-			if(logger.isDebugEnabled()) logger.debug("Calling dispose on contained buffer...");
-			DisposeOperation disposeable = (DisposeOperation) buffer;
-			disposeable.dispose();
-		}
+		Dispose.dispose(buffer);
 		notifyAll();
 	}
 
