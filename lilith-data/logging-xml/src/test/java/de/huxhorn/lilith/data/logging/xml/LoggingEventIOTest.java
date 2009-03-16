@@ -18,12 +18,12 @@
 package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 
 import static org.junit.Assert.assertEquals;
@@ -130,7 +130,7 @@ public class LoggingEventIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name");
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
 		event.setThreadInfo(threadInfo);
 		check(event, true);
 	}
@@ -265,7 +265,7 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 
-		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name");
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
 		event.setThreadInfo(threadInfo);
 
 		Message value = new Message("pattern", new String[]{"arg1", null, "arg3"});
@@ -312,7 +312,7 @@ public class LoggingEventIOTest
 		loggingEventWriter.setWritingSchemaLocation(true);
 		LoggingEvent event = createMinimalEvent();
 
-		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name");
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
 		event.setThreadInfo(threadInfo);
 
 		Message value = new Message("pattern", new String[]{"arg1", null, "arg3"});

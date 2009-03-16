@@ -97,7 +97,6 @@
 	</logger>
 	<logger name="javax.jmdns">
 		<level value="TRACE"/>
-		<appender-ref ref="multiplex"/>
 	</logger>
 	<logger name="org.springframework">
 		<level value="INFO"/>

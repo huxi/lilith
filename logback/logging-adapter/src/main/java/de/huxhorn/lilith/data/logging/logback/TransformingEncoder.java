@@ -22,8 +22,8 @@ import de.huxhorn.sulky.codec.Encoder;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TransformingEncoder
 		implements Encoder<LoggingEvent>
@@ -33,6 +33,12 @@ public class TransformingEncoder
 	private LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
 	private Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> lilithEncoder;
 	private String applicationIdentifier;
+	private final boolean inSameThread;
+
+	public TransformingEncoder(boolean inSameThread)
+	{
+		this.inSameThread = inSameThread;
+	}
 
 	public Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> getLilithEncoder()
 	{
@@ -54,9 +60,14 @@ public class TransformingEncoder
 		this.applicationIdentifier = applicationIdentifier;
 	}
 
+	public boolean isInSameThread()
+	{
+		return inSameThread;
+	}
+
 	public byte[] encode(LoggingEvent logbackEvent)
 	{
-		de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent);
+		de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent, inSameThread);
 		if(applicationIdentifier !=null)
 		{
 			LoggerContext loggerContext = lilithEvent.getLoggerContext();

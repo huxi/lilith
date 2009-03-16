@@ -42,11 +42,10 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	public ZeroDelimitedClassicXmlMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
-		transforminEncoder=new TransformingEncoder();
+		transforminEncoder=new TransformingEncoder(true);
 		transforminEncoder.setLilithEncoder(new LoggingXmlEncoder(false));
 		setEncoder(transforminEncoder);
 		includeCallerData = true;
-		setEncoder(transforminEncoder);
 		setPort(DEFAULT_PORT);
 	}
 

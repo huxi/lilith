@@ -79,9 +79,26 @@ public class LoggingEventReader
 			{
 				// ignore
 			}
-			if(threadName != null || threadId != null)
+
+			String threadGroupName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE);
+			Long threadGroupId = null;
+			try
 			{
-				result.setThreadInfo(new ThreadInfo(threadId, threadName));
+				String idStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE);
+				if(idStr != null)
+				{
+					threadGroupId = Long.valueOf(idStr);
+				}
+			}
+			catch(NumberFormatException ex)
+			{
+				// ignore
+			}
+
+
+			if(threadName != null || threadId != null || threadGroupId != null ||threadGroupName != null)
+			{
+				result.setThreadInfo(new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName));
 			}
 			String timeStamp = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, TIMESTAMP_ATTRIBUTE);
 			try

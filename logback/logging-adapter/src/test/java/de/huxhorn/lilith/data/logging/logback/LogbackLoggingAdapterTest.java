@@ -116,7 +116,7 @@ public class LogbackLoggingAdapterTest
 				new String[]{"First", null, "Third"}
 
 			);
-		LoggingEvent lilithEvent = instance.convert(logbackEvent);
+		LoggingEvent lilithEvent = instance.convert(logbackEvent, false);
 		if(logger.isInfoEnabled()) logger.info("lilithEvent: {}", lilithEvent);
 		prettyPrint(lilithEvent);
 	}

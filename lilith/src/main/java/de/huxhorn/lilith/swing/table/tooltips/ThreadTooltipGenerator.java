@@ -41,23 +41,52 @@ public class ThreadTooltipGenerator
 				ThreadInfo threadInfo = event.getThreadInfo();
 				if(threadInfo != null)
 				{
-					String name = threadInfo.getName();
-					Long id = threadInfo.getId();
-					if(name != null || id != null)
+					StringBuilder builder=new StringBuilder();
 					{
-						if(name == null)
+						String name = threadInfo.getName();
+						Long id = threadInfo.getId();
+						if(name != null || id != null)
 						{
-							tooltip = "" + id;
-						}
-						else if(id == null)
-						{
-							tooltip = name;
-						}
-						else
-						{
-							tooltip = name + " (id=" + id + ")";
+							if(name == null)
+							{
+								builder.append(id);
+							}
+							else if(id == null)
+							{
+								builder.append(name);
+							}
+							else
+							{
+								builder.append(name).append(" (id=").append(id).append(")");
+							}
 						}
 					}
+
+					{
+						String name = threadInfo.getGroupName();
+						Long id = threadInfo.getGroupId();
+						if(name != null || id != null)
+						{
+							if(builder.length() > 0)
+							{
+								builder.append(", ");
+							}
+							if(name == null)
+							{
+								builder.append("groupId=").append(id);
+							}
+							else if(id == null)
+							{
+								builder.append("group=").append(name);
+							}
+							else
+							{
+								builder.append("group=").append(name).append(" (id=").append(id).append(")");
+							}
+
+						}
+					}
+					tooltip=builder.toString();
 				}
 
 			}

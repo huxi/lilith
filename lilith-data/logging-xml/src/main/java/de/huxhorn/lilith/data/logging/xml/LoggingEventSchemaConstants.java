@@ -36,6 +36,8 @@ public interface LoggingEventSchemaConstants
 	String LEVEL_ATTRIBUTE = "level";
 	String THREAD_NAME_ATTRIBUTE = "threadName";
 	String THREAD_ID_ATTRIBUTE = "threadId";
+	String THREAD_GROUP_NAME_ATTRIBUTE = "threadGroup";
+	String THREAD_GROUP_ID_ATTRIBUTE = "threadGroupId";
 	String TIMESTAMP_ATTRIBUTE = "timeStamp";
 	String TIMESTAMP_MILLIS_ATTRIBUTE = "timeStampMillis";
 

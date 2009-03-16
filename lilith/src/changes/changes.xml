@@ -6,13 +6,13 @@
 	<body>
 		<release version="1.x.x" date="TBD" description="Future release">
 			<action dev="jhux" type="add">
-				TODO: Create index file from existing ljlogging/ljaccess-file.
+				TODO: Create index file from existing lilith file.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: Create logger name index file from existing ljlog-file for *sigh* tree-view *yawn*
 			</action>
 			<action dev="jhux" type="add">
-				TODO: Drag&amp;Drop of ljlogging/ljaccess-file(s).
+				TODO: Drag&amp;Drop of lilith files.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: "Open" or "Import" logs. [*command*-O] Support native Lilith, Lilith XML, log4j XML.

@@ -26,17 +26,20 @@ public class ThreadInfo
 
 	private Long id;
 	private String name;
-	//private ThreadGroupInfo threadGroup;
+	private Long groupId;
+	private String groupName;
 
 	public ThreadInfo()
 	{
-		this(null, null);
+		this(null, null, null, null);
 	}
 
-	public ThreadInfo(Long id, String name)
+	public ThreadInfo(Long id, String name, Long groupId, String groupName)
 	{
 		this.id = id;
 		this.name = name;
+		this.groupId = groupId;
+		this.groupName = groupName;
 	}
 
 	public Long getId()
@@ -59,6 +62,26 @@ public class ThreadInfo
 		this.name = name;
 	}
 
+	public Long getGroupId()
+	{
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId)
+	{
+		this.groupId = groupId;
+	}
+
+	public String getGroupName()
+	{
+		return groupName;
+	}
+
+	public void setGroupName(String groupName)
+	{
+		this.groupName = groupName;
+	}
+
 	@Override
 	public boolean equals(Object o)
 	{
@@ -68,6 +91,8 @@ public class ThreadInfo
 		ThreadInfo that = (ThreadInfo) o;
 
 		if(id != null ? !id.equals(that.id) : that.id != null) return false;
+		if(groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) return false;
+		if(groupName != null ? !groupName.equals(that.groupName) : that.groupName != null) return false;
 		if(name != null ? !name.equals(that.name) : that.name != null) return false;
 
 		return true;
@@ -78,6 +103,8 @@ public class ThreadInfo
 	{
 		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
+		result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
 		return result;
 	}
 
@@ -91,6 +118,6 @@ public class ThreadInfo
 	@Override
 	public String toString()
 	{
-		return "ThreadInfo[id=" + id + ", name=" + name + "]";
+		return "ThreadInfo[id=" + id + ", name=" + name + ", groupId="+groupId+", groupName="+groupName+"]";
 	}
 }
