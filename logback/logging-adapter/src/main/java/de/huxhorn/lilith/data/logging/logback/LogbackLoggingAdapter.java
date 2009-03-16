@@ -88,7 +88,7 @@ public class LogbackLoggingAdapter
 			Map<String, String> props = lcv.getPropertyMap();
 			if(props != null)
 			{
-				// TODO: XXX lcv property map leak? yes, indeed.
+				// TODO: lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
 				props=new HashMap<String, String>(props);
 			}
 			LoggerContext loggerContext=new LoggerContext();
