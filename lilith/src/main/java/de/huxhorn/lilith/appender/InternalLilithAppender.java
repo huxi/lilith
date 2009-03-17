@@ -53,7 +53,7 @@ public class InternalLilithAppender
 		sourceIdentifier = new SourceIdentifier("Lilith");
 
 		LogFileFactoryImpl logFileFactory =
-			new LogFileFactoryImpl(new File(ApplicationPreferences.DEFAULT_APPLICATION_PATH, "sources/logs"));
+			new LogFileFactoryImpl(new File(ApplicationPreferences.DEFAULT_APPLICATION_PATH, "logs/logging"));
 
 		Map<String, String> loggingMetaData = new HashMap<String, String>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);

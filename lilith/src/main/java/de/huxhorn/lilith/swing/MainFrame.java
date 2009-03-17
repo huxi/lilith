@@ -58,6 +58,7 @@ import de.huxhorn.lilith.services.gotosrc.GoToSourceService;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
 import de.huxhorn.lilith.swing.callables.CleanAllInactiveCallable;
+import de.huxhorn.lilith.swing.callables.CleanObsoleteCallable;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
@@ -179,6 +180,9 @@ public class MainFrame
 	private TaskManagerInternalFrame taskManagerFrame;
 	private JLabel taskStatusLabel;
 	private int previousNumberOfTasks;
+	public static final String LOGS_SUBDIRECTORY = "logs";
+	public static final String LOGGING_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/logging";
+	public static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
 	/*
 		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 		 */
@@ -281,8 +285,8 @@ public class MainFrame
 
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
-		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/logs"));
-		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, "sources/access"));
+		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, LOGGING_FILE_SUBDIRECTORY));
+		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, ACCESS_FILE_SUBDIRECTORY));
 
 		Map<String, String> loggingMetaData = new HashMap<String, String>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
@@ -428,128 +432,6 @@ public class MainFrame
 		}
 		*/
 		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
-	}
-
-	private void updateTaskStatus()
-	{
-		int numberOfTasks = longTaskManager.getNumberOfTasks();
-		if(numberOfTasks != previousNumberOfTasks)
-		{
-			previousNumberOfTasks = numberOfTasks;
-			String text = "";
-			if(numberOfTasks == 1)
-			{
-				text = "1 active task.";
-			}
-			else if(numberOfTasks > 1)
-			{
-				text = "" + numberOfTasks + " active tasks.";
-			}
-			taskStatusLabel.setText(text);
-		}
-		//To change body of created methods use File | Settings | File Templates.
-	}
-
-	private void setSplashStatusText(String text)
-	{
-		if(splashScreen != null)
-		{
-			splashScreen.setStatusText(text);
-		}
-	}
-
-	public Application getApplication()
-	{
-		return application;
-	}
-
-//	/**
-//	 * Returns a sorted map containing resolved source name mapped to sender. If there is both a compressed
-//	 * and uncompressed sender the compressed one will be used.
-//	 * @param senders a map of all senders
-//	 * @return a  map of senders.
-//	 */
-//	private <T extends Serializable> Map<String, EventSender<T>> getEventSenders(Map<String, EventSender<T>> senders)
-//	{
-//		Map<String, EventSender<T>> serviceNameSenderMapping;
-//		synchronized(senders)
-//		{
-//			serviceNameSenderMapping =new HashMap<String, EventSender<T>>(senders);
-//		}
-//
-//		SortedMap<String, EventSender<T>> result=new TreeMap<String, EventSender<T>>();
-//		for(Map.Entry<String, EventSender<T>> current: serviceNameSenderMapping.entrySet())
-//		{
-//			EventSender<T> value = current.getValue();
-//			String hostName = value.getHostAddress();
-//			hostName = getPrimarySourceTitle(hostName);
-//			EventSender<T> prevValue = result.get(hostName);
-//			if(prevValue == null)
-//			{
-//				result.put(hostName, value);
-//			}
-//			else
-//			{
-//				if(value instanceof AbstractEventSender)
-//				{
-//					AbstractEventSender aes = (AbstractEventSender) value;
-//					if(aes.isCompressing())
-//					{
-//						result.put(hostName, value);
-//						if(logger.isDebugEnabled()) logger.debug("Replaced previous sender with compressing one.");
-//					}
-//				}
-//			}
-//		}
-//		if(logger.isDebugEnabled()) logger.debug("EventSenders: {}", result);
-//		return result;
-//	}
-
-	public Map<String, EventSender<LoggingEvent>> getLoggingEventSenders()
-	{
-		return senderService.getLoggingEventSenders();//getEventSenders(loggingEventSenders);
-	}
-
-	public Map<String, EventSender<AccessEvent>> getAccessEventSenders()
-	{
-		return senderService.getAccessEventSenders();//getEventSenders(accessEventSenders);
-	}
-
-	public void updateWindowMenus()
-	{
-		viewActions.updateWindowMenu();
-		// update other frames
-		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-		{
-			ViewContainer<LoggingEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
-			{
-				window.getViewActions().updateWindowMenu();
-			}
-		}
-		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-		{
-			ViewContainer<AccessEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
-			{
-				window.getViewActions().updateWindowMenu();
-			}
-		}
-	}
-
-
-	public void closeLoggingConnection(SourceIdentifier id)
-	{
-		loggingEventSourceManager.removeEventProducer(id);
-	}
-
-	public void closeAccessConnection(SourceIdentifier id)
-	{
-		accessEventSourceManager.removeEventProducer(id);
 	}
 
 	/**
@@ -819,6 +701,129 @@ public class MainFrame
 		}
 		updateConditions(); // to initialize active conditions.
 		setSplashStatusText("Finished.");
+		cleanObsoleteFiles();
+	}
+
+	private void updateTaskStatus()
+	{
+		int numberOfTasks = longTaskManager.getNumberOfTasks();
+		if(numberOfTasks != previousNumberOfTasks)
+		{
+			previousNumberOfTasks = numberOfTasks;
+			String text = "";
+			if(numberOfTasks == 1)
+			{
+				text = "1 active task.";
+			}
+			else if(numberOfTasks > 1)
+			{
+				text = "" + numberOfTasks + " active tasks.";
+			}
+			taskStatusLabel.setText(text);
+		}
+		//To change body of created methods use File | Settings | File Templates.
+	}
+
+	private void setSplashStatusText(String text)
+	{
+		if(splashScreen != null)
+		{
+			splashScreen.setStatusText(text);
+		}
+	}
+
+	public Application getApplication()
+	{
+		return application;
+	}
+
+//	/**
+//	 * Returns a sorted map containing resolved source name mapped to sender. If there is both a compressed
+//	 * and uncompressed sender the compressed one will be used.
+//	 * @param senders a map of all senders
+//	 * @return a  map of senders.
+//	 */
+//	private <T extends Serializable> Map<String, EventSender<T>> getEventSenders(Map<String, EventSender<T>> senders)
+//	{
+//		Map<String, EventSender<T>> serviceNameSenderMapping;
+//		synchronized(senders)
+//		{
+//			serviceNameSenderMapping =new HashMap<String, EventSender<T>>(senders);
+//		}
+//
+//		SortedMap<String, EventSender<T>> result=new TreeMap<String, EventSender<T>>();
+//		for(Map.Entry<String, EventSender<T>> current: serviceNameSenderMapping.entrySet())
+//		{
+//			EventSender<T> value = current.getValue();
+//			String hostName = value.getHostAddress();
+//			hostName = getPrimarySourceTitle(hostName);
+//			EventSender<T> prevValue = result.get(hostName);
+//			if(prevValue == null)
+//			{
+//				result.put(hostName, value);
+//			}
+//			else
+//			{
+//				if(value instanceof AbstractEventSender)
+//				{
+//					AbstractEventSender aes = (AbstractEventSender) value;
+//					if(aes.isCompressing())
+//					{
+//						result.put(hostName, value);
+//						if(logger.isDebugEnabled()) logger.debug("Replaced previous sender with compressing one.");
+//					}
+//				}
+//			}
+//		}
+//		if(logger.isDebugEnabled()) logger.debug("EventSenders: {}", result);
+//		return result;
+//	}
+
+	public Map<String, EventSender<LoggingEvent>> getLoggingEventSenders()
+	{
+		return senderService.getLoggingEventSenders();//getEventSenders(loggingEventSenders);
+	}
+
+	public Map<String, EventSender<AccessEvent>> getAccessEventSenders()
+	{
+		return senderService.getAccessEventSenders();//getEventSenders(accessEventSenders);
+	}
+
+	public void updateWindowMenus()
+	{
+		viewActions.updateWindowMenu();
+		// update other frames
+		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+		{
+			ViewContainer<LoggingEvent> value = current.getValue();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof JFrame)
+			{
+				window.getViewActions().updateWindowMenu();
+			}
+		}
+		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+		{
+			ViewContainer<AccessEvent> value = current.getValue();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof JFrame)
+			{
+				window.getViewActions().updateWindowMenu();
+			}
+		}
+	}
+
+
+	public void closeLoggingConnection(SourceIdentifier id)
+	{
+		loggingEventSourceManager.removeEventProducer(id);
+	}
+
+	public void closeAccessConnection(SourceIdentifier id)
+	{
+		accessEventSourceManager.removeEventProducer(id);
 	}
 
 	public void goToSource(StackTraceElement ste)
@@ -2205,12 +2210,23 @@ public class MainFrame
 		updateLoggingViews();
 		updateAccessViews();
 	}
-/*
-    private void flushCachedConditionResults()
-    {
-        colorsCache.clear();
-    }
-*/
+
+	/*
+	 private void flushCachedConditionResults()
+	 {
+		 colorsCache.clear();
+	 }
+ */
+	public void cleanObsoleteFiles()
+	{
+		File obsoleteDir = new File(startupApplicationPath, "sources");
+		if(obsoleteDir.isDirectory())
+		{
+			longTaskManager
+				.startTask(new CleanObsoleteCallable(obsoleteDir), "Clean obsolete files", "Deletes the directory '" + obsoleteDir
+					.getAbsolutePath() + "' recursively.");
+		}
+	}
 
 	public void deleteInactiveLogs(LogFileFactory fileFactory)
 	{
