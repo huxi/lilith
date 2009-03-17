@@ -30,6 +30,8 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.swing.callables.CallableMetaData;
+import de.huxhorn.lilith.swing.callables.FindNextCallable;
+import de.huxhorn.lilith.swing.callables.FindPreviousCallable;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
@@ -41,7 +43,6 @@ import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.swing.KeyStrokes;
-import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
@@ -947,7 +948,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(condition != null)
 		{
-			ProgressingCallable<Long> callable = new FindPreviousCallable(currentRow, condition);
+			ProgressingCallable<Long> callable = new FindPreviousCallable<T>(tableModel, currentRow, condition);
 			executeFind(callable, "Find previous", currentRow, condition);
 		}
 	}
@@ -956,128 +957,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(condition != null)
 		{
-			ProgressingCallable<Long> callable = new FindNextCallable(currentRow, condition);
+			ProgressingCallable<Long> callable = new FindNextCallable<T>(tableModel, currentRow, condition);
 			executeFind(callable, "Find next", currentRow, condition);
-		}
-	}
-
-	private class FindPreviousCallable
-		extends AbstractProgressingCallable<Long>
-	{
-		private final Logger logger = LoggerFactory.getLogger(FindPreviousCallable.class);
-
-		private int currentRow;
-		private Condition condition;
-
-		public FindPreviousCallable(int currentRow, Condition condition)
-		{
-			super(200, 1000);
-			this.currentRow = currentRow;
-			this.condition = condition;
-		}
-
-		public Long call()
-			throws Exception
-		{
-			int row = currentRow;
-			if(row > -1)
-			{
-				row--;
-				if(logger.isInfoEnabled()) logger.info("Searching previous starting at {}.", row);
-				tableModel.getRowCount();
-				int maxCount = row;
-				int numberOfSteps = maxCount - 1;
-				if(numberOfSteps < 1)
-				{
-					numberOfSteps = 1;
-				}
-				setNumberOfSteps(numberOfSteps);
-				for(int i = 0; i < maxCount; i++)
-				{
-					setCurrentStep(i);
-					int current = row - i;
-					if(logger.isDebugEnabled()) logger.debug("Processing row {}", current);
-					Object obj = tableModel.getValueAt(current, 0);
-					if(obj == null)
-					{
-						return -1L;
-					}
-					if(obj instanceof EventWrapper)
-					{
-						if(condition.isTrue(obj))
-						{
-							if(logger.isInfoEnabled()) logger.info("Found previous at {}.", current);
-							return (long) current;
-						}
-					}
-					else
-					{
-						if(logger.isWarnEnabled()) logger.warn("Unexpected class! {}", obj.getClass().getName());
-					}
-				}
-			}
-			if(logger.isInfoEnabled()) logger.info("Didn't find previous.");
-			return -1L;
-		}
-	}
-
-	private class FindNextCallable
-		extends AbstractProgressingCallable<Long>
-	{
-		private final Logger logger = LoggerFactory.getLogger(FindNextCallable.class);
-
-		private int currentRow;
-		private Condition condition;
-
-		public FindNextCallable(int currentRow, Condition condition)
-		{
-			super(200, 1000);
-			this.currentRow = currentRow;
-			this.condition = condition;
-		}
-
-		public Long call()
-			throws Exception
-		{
-			int row = currentRow;
-			if(row > -1)
-			{
-				row++;
-				if(logger.isInfoEnabled()) logger.info("Searching next starting at {}.", row);
-
-				int maxCount = tableModel.getRowCount() - row;
-				int numberOfSteps = maxCount - 1;
-				if(numberOfSteps < 1)
-				{
-					numberOfSteps = 1;
-				}
-				setNumberOfSteps(numberOfSteps);
-				for(int i = 0; i < maxCount; i++)
-				{
-					setCurrentStep(i);
-					int current = i + row;
-					if(logger.isDebugEnabled()) logger.debug("Processing row {}", current);
-					Object obj = tableModel.getValueAt(current, 0);
-					if(obj == null)
-					{
-						return -1L;
-					}
-					if(obj instanceof EventWrapper)
-					{
-						if(condition.isTrue(obj))
-						{
-							if(logger.isInfoEnabled()) logger.info("Found next at {}.", current);
-							return (long) current;
-						}
-					}
-					else
-					{
-						if(logger.isWarnEnabled()) logger.warn("Unexpected class! {}", obj.getClass().getName());
-					}
-				}
-			}
-			if(logger.isInfoEnabled()) logger.info("Didn't find next.");
-			return -1L;
 		}
 	}
 

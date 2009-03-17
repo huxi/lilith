@@ -57,6 +57,7 @@ import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceP
 import de.huxhorn.lilith.services.gotosrc.GoToSourceService;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
+import de.huxhorn.lilith.swing.callables.CleanAllInactiveCallable;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
@@ -73,7 +74,6 @@ import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
-import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
@@ -1475,7 +1475,7 @@ public class MainFrame
 	{
 		loggingEventViewManager.removeInactiveViews(false);
 		accessEventViewManager.removeInactiveViews(false);
-		longTaskManager.startTask(new CleanAllInactiveCallable(), "Clean all inactive...");
+		longTaskManager.startTask(new CleanAllInactiveCallable(this), "Clean all inactive...");
 		updateWindowMenus();
 	}
 
@@ -2680,46 +2680,6 @@ public class MainFrame
 		JOptionPane.showMessageDialog(this, message, "Check for update...", JOptionPane.INFORMATION_MESSAGE);
 		// TODO: Improve update available dialog
 
-	}
-
-	public class CleanAllInactiveCallable
-		extends AbstractProgressingCallable<Long>
-	{
-		public Long call()
-			throws Exception
-		{
-			List<SourceIdentifier> inactiveAccess = collectInactiveLogs(accessFileFactory);
-			List<SourceIdentifier> inactiveLogging = collectInactiveLogs(loggingFileFactory);
-			setNumberOfSteps(inactiveAccess.size() + inactiveLogging.size());
-			long currentStep = 0;
-			for(SourceIdentifier si : inactiveAccess)
-			{
-				delete(accessFileFactory, si);
-				currentStep++;
-				setCurrentStep(currentStep);
-			}
-			for(SourceIdentifier si : inactiveLogging)
-			{
-				delete(loggingFileFactory, si);
-				currentStep++;
-				setCurrentStep(currentStep);
-			}
-			return currentStep;
-		}
-
-		private void delete(LogFileFactory fileFactory, SourceIdentifier si)
-		{
-			File dataFile = fileFactory.getDataFile(si);
-			File indexFile = fileFactory.getIndexFile(si);
-			if(dataFile.delete())
-			{
-				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
-			}
-			if(indexFile.delete())
-			{
-				if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
-			}
-		}
 	}
 
 	/*
