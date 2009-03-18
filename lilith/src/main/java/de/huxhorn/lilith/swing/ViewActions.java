@@ -567,6 +567,7 @@ public class ViewActions
 		};
 		// ##### Menu Actions #####
 		// File
+		OpenMenuAction openMenuAction = new OpenMenuAction();
 		OpenInactiveLogMenuAction openInactiveLogMenuAction = new OpenInactiveLogMenuAction();
 		CleanAllInactiveLogsMenuAction cleanAllInactiveLogsMenuAction = new CleanAllInactiveLogsMenuAction();
 		preferencesMenuAction = new PreferencesMenuAction();
@@ -688,6 +689,7 @@ public class ViewActions
 		// File
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setMnemonic('f');
+		fileMenu.add(new JMenuItem(openMenuAction));
 		fileMenu.add(new JMenuItem(openInactiveLogMenuAction));
 		fileMenu.add(new JMenuItem(cleanAllInactiveLogsMenuAction));
 		if(!app.isMac())
@@ -2823,6 +2825,27 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.openInactiveLogs();
+		}
+	}
+
+	class OpenMenuAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = 7500131416548647712L;
+
+		public OpenMenuAction()
+		{
+			super("Open...");
+			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " O");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.open();
 		}
 	}
 
