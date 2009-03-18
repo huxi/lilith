@@ -61,6 +61,7 @@ import de.huxhorn.lilith.swing.callables.CleanAllInactiveCallable;
 import de.huxhorn.lilith.swing.callables.CleanObsoleteCallable;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
+import de.huxhorn.lilith.swing.filefilters.LilithFileFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
 import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
@@ -183,6 +184,7 @@ public class MainFrame
 	public static final String LOGS_SUBDIRECTORY = "logs";
 	public static final String LOGGING_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/logging";
 	public static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
+	private JFileChooser openFileChooser;
 	/*
 		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 		 */
@@ -399,6 +401,10 @@ public class MainFrame
 		setSplashStatusText("Creating help frame.");
 		helpFrame = new HelpFrame(this);
 		helpFrame.setTitle("Help Topics");
+
+		openFileChooser = new JFileChooser();
+		openFileChooser.setFileFilter(new LilithFileFilter());
+		openFileChooser.setFileHidingEnabled(false);
 
 		setSplashStatusText("Creating task manager frame.");
 		taskManagerFrame = new TaskManagerInternalFrame(this);
@@ -931,6 +937,23 @@ public class MainFrame
 			return result;
 		}
 		return null;
+	}
+
+	public void open()
+	{
+		//openFileDialog.setVisible(true);
+		int returnVal = openFileChooser.showOpenDialog(this);
+
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{
+			open(openFileChooser.getSelectedFile());
+		}
+	}
+
+	public void open(File file)
+	{
+		// TODO: implement open(File file)
+		if(logger.isInfoEnabled()) logger.info("Open file: {}", file.getAbsolutePath());
 	}
 
 	// TODO; implement cache?
@@ -1970,6 +1993,7 @@ public class MainFrame
 			deleteInactiveLogs(loggingFileFactory);
 			deleteInactiveLogs(accessFileFactory);
 		}
+		// TODO: persist last open location
 		applicationPreferences.flush();
 		longTaskManager.shutDown();
 		System.exit(0);
