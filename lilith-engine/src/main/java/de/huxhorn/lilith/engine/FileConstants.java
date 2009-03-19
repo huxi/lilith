@@ -23,7 +23,10 @@ package de.huxhorn.lilith.engine;
 public interface FileConstants
 {
 	int MAGIC_VALUE = 0x0B5E55ED;
-	String FILE_EXTENSION = "lilith";
+
+	String FILE_EXTENSION = ".lilith";
+	String INDEX_FILE_EXTENSION = ".idx";
+	String ACTIVE_FILE_EXTENSION = ".active";
 
 	String IDENTIFIER_KEY = "primaryIdentifier";
 	String SECONDARY_IDENTIFIER_KEY = "secondaryIdentifier";

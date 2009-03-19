@@ -17,47 +17,36 @@
  */
 package de.huxhorn.lilith.swing.callables;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
+import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
+import de.huxhorn.sulky.codec.filebuffer.FileHeader;
+import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.CountingInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.zip.GZIPInputStream;
+import java.io.RandomAccessFile;
 
+/**
+ * Should only be executed on inactive files.
+ */
 public class IndexingCallable
 	extends AbstractProgressingCallable<Long>
 
 {
 	private final Logger logger = LoggerFactory.getLogger(IndexingCallable.class);
-	private File logFile;
-	private File indexFile;
-	private Set<String> threadNames;
-	private Set<String> loggerNames;
 
-	public IndexingCallable(File logFile, File indexFile)
+	private File dataFile;
+	private File indexFile;
+
+	public IndexingCallable(File dataFile, File indexFile)
 	{
-		this.logFile = logFile;
+		this.dataFile = dataFile;
 		this.indexFile = indexFile;
-		threadNames = new TreeSet<String>();
-		loggerNames = new TreeSet<String>();
 	}
 
 	/**
@@ -69,134 +58,89 @@ public class IndexingCallable
 	public Long call()
 		throws Exception
 	{
-		// TODO: ATTENTION! This method must be changed if SerializingFileBuffer implementation is changed!
-		if(!logFile.exists())
+		if(!dataFile.exists())
 		{
-			throw new FileNotFoundException("File '" + logFile.getAbsolutePath() + "' does not exist!");
+			throw new FileNotFoundException("File '" + dataFile.getAbsolutePath() + "' does not exist!");
 		}
-		if(!logFile.isFile())
+		if(!dataFile.isFile())
 		{
-			throw new FileNotFoundException("File '" + logFile.getAbsolutePath() + "' is not a file!");
+			throw new FileNotFoundException("File '" + dataFile.getAbsolutePath() + "' is not a file!");
 		}
 
-		long fileSize = logFile.length();
+		long fileSize = dataFile.length();
 		setNumberOfSteps(fileSize);
 
-		long counter = 0;
-		DataOutputStream dataOutputStream = null;
-		BufferedInputStream bis = null;
-		try
+		FileHeaderStrategy fhs = new DefaultFileHeaderStrategy();
+		FileHeader fileHeader = fhs.readFileHeader(dataFile);
+		if(fileHeader != null)
 		{
-			FileOutputStream fos = new FileOutputStream(indexFile);
-			BufferedOutputStream bos = new BufferedOutputStream(fos);
-			dataOutputStream = new DataOutputStream(bos);
+			long offset = fileHeader.getDataOffset();
 
-			FileInputStream fis = new FileInputStream(logFile);
-			bis = new BufferedInputStream(fis);
-			CountingInputStream byteCounter = new CountingInputStream(bis);
-			DataInputStream dis = new DataInputStream(byteCounter);
-			long previousByteCount = 0;
-			for(; ;)
+			RandomAccessFile dataRAFile = null;
+			RandomAccessFile indexRAFile = null;
+			Exception ex = null;
+			long counter = 0;
+			try
 			{
-				Throwable error = null;
-				try
+				dataRAFile = new RandomAccessFile(dataFile, "r");
+				indexRAFile = new RandomAccessFile(indexFile, "rw");
+				indexRAFile.setLength(0);
+				while(offset < fileSize)
 				{
-					int bufferSize = dis.readInt();
-					byte[] buffer = new byte[bufferSize];
-					dis.readFully(buffer);
-					ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
-					GZIPInputStream gis = new GZIPInputStream(bais);
-					ObjectInputStream ois = new ObjectInputStream(gis);
-					Object o = ois.readObject();
-					performAdditionalWork(o);
-					dataOutputStream.writeLong(previousByteCount);
-					long byteCount = byteCounter.getByteCount();
+					dataRAFile.seek(offset);
+					indexRAFile.writeLong(offset);
 					counter++;
-					if(logger.isDebugEnabled())
-					{
-						logger.debug("counter={}, byteCounter={}, previousByteCount={}",
-							new Object[]{counter, byteCount, previousByteCount});
-					}
-					previousByteCount = byteCount;
-					setCurrentStep(byteCount);
-					if(byteCount == fileSize)
-					{
-						finish();
-						break;
-					}
-				}
-				catch(IOException e)
-				{
-					error = e;
-				}
-				catch(ClassNotFoundException e)
-				{
-					error = e;
-				}
-				if(error != null)
-				{
-					if(logger.isWarnEnabled()) logger.warn("Error while indexing...", error);
-					break;
+					int dataSize = dataRAFile.readInt();
+					offset = offset + dataSize + CodecFileBuffer.DATA_LENGTH_SIZE;
+					setCurrentStep(offset);
 				}
 			}
+			catch(IOException e)
+			{
+				ex = e;
+			}
+			catch(InterruptedException e)
+			{
+				ex = e;
+			}
+			finally
+			{
+				closeQuietly(dataRAFile);
+				closeQuietly(indexRAFile);
+			}
+			if(ex != null)
+			{
+				if(!indexFile.delete())
+				{
+					if(logger.isWarnEnabled())
+					{
+						logger.warn("Failed to delete index file '{}'!", indexFile.getAbsolutePath());
+					}
+				}
+				throw ex; // rethrow
+			}
+			if(logger.isInfoEnabled()) logger.info("File '{}' has {} entries.", dataFile.getAbsolutePath(), counter);
+			return counter;
 		}
-		finally
+		else
 		{
-			IOUtils.closeQuietly(dataOutputStream);
-			IOUtils.closeQuietly(bis);
+			throw new IllegalArgumentException("File '" + dataFile.getAbsolutePath() + "' is not a valid file!");
 		}
-		return counter;
 	}
 
-	private void finish()
+	private static void closeQuietly(RandomAccessFile file)
 	{
-		if(logger.isDebugEnabled())
+		if(file != null)
 		{
-			StringBuilder msg = new StringBuilder();
-			msg.append("threadNames:\n");
-			for(String name : threadNames)
+			try
 			{
-				msg.append("\t- ").append(name).append("\n");
+				file.close();
 			}
-			msg.append("\n");
-			msg.append("loggerNames:\n");
-			for(String name : loggerNames)
+			catch(IOException e)
 			{
-				msg.append("\t- ").append(name).append("\n");
-			}
-			logger.debug(msg.toString());
-		}
-
-
-	}
-
-	private void performAdditionalWork(Object o)
-	{
-		if(o instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) o;
-			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
-			{
-				LoggingEvent event = (LoggingEvent) eventObj;
-				String loggerName = event.getLogger();
-				if(!loggerNames.contains(loggerName))
-				{
-					loggerNames.add(loggerName);
-				}
-				ThreadInfo threadInfo = event.getThreadInfo();
-				if(threadInfo != null)
-				{
-					String threadName = threadInfo.getName();
-					if(threadName != null)
-					{
-						if(!threadNames.contains(threadName))
-						{
-							threadNames.add(threadName);
-						}
-					}
-				}
+				// ignore
 			}
 		}
 	}
+
 }
