@@ -16,10 +16,15 @@ public class LogbackClassicSandbox
 
 
 	public static void main(String args[])
+		throws Exception
 	{
 		final Logger logger = LoggerFactory.getLogger(LogbackClassicSandbox.class);
-		if(logger.isDebugEnabled()) logger.debug("args: {}", args);
+		for(;;)
+		{
+			if(logger.isDebugEnabled()) logger.debug("args: {}", args);
 
-		InnerClass.execute();
+			InnerClass.execute();
+			Thread.sleep(10);
+		}
 	}
 }
