@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true">
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<param name="Pattern" value="%-5level - %msg%n" />
+			<param name="Pattern" value="%-5level - %msg%n"/>
 		</layout>
 	</appender>
 
-	<appender name="MultiplexClassicCompressed" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+	<appender name="MultiplexClassicCompressed"
+	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
 		<Compressing>true</Compressing>
 		<ApplicationIdentifier>Lilith-Compressed</ApplicationIdentifier>
 		<ReconnectionDelay>30</ReconnectionDelay>
@@ -54,10 +55,10 @@
 	</appender>
 
 	<root>
-		<level value="INFO"/>
+		<level value="ALL"/>
 		<appender-ref ref="CONSOLE"/>
-		<appender-ref ref="MultiplexClassicCompressed" />
-        <appender-ref ref="LogbackClassic"/>
+		<appender-ref ref="MultiplexClassicCompressed"/>
+		<appender-ref ref="LogbackClassic"/>
 		<!--
 		<appender-ref ref="LogbackClassic"/>
 		-->
@@ -75,10 +76,7 @@
 	<logger name="de.huxhorn.lilith">
 		<level value="WARN"/>
 	</logger>
-    <logger name="de.huxhorn.lilith.logging.Sandbox">
-        <level value="ALL"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.logging.Sandbox$InnerClass">
-        <level value="ALL"/>
-    </logger>
+	<logger name="de.huxhorn.lilith.sandbox">
+		<level value="ALL"/>
+	</logger>
 </configuration>
