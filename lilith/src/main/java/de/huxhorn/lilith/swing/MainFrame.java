@@ -59,6 +59,7 @@ import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
 import de.huxhorn.lilith.swing.callables.CleanAllInactiveCallable;
 import de.huxhorn.lilith.swing.callables.CleanObsoleteCallable;
+import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LilithFileFilter;
@@ -954,6 +955,23 @@ public class MainFrame
 	{
 		// TODO: implement open(File file)
 		if(logger.isInfoEnabled()) logger.info("Open file: {}", file.getAbsolutePath());
+		String fileName = file.getAbsolutePath();
+		String indexFileName;
+		if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+		{
+			indexFileName = fileName.substring(0, fileName.length() - FileConstants.FILE_EXTENSION.length());
+		}
+		else
+		{
+			indexFileName = fileName;
+		}
+		indexFileName = indexFileName + FileConstants.INDEX_FILE_EXTENSION;
+
+		File indexFile = new File(indexFileName);
+		String name = "Indexing " + file.getName() + "...";
+		String description = "Indexing " + file.getAbsolutePath() + "...";
+		Task<Long> task = longTaskManager.startTask(new IndexingCallable(file, indexFile), name, description);
+		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 	}
 
 	// TODO; implement cache?
@@ -2296,7 +2314,7 @@ public class MainFrame
 		{
 			String abs = f.getAbsolutePath();
 			abs = abs.substring(0, abs.length() - extension.length());
-			File active = new File(abs + LogFileFactory.ACTIVE_FILE_EXTENSION);
+			File active = new File(abs + FileConstants.ACTIVE_FILE_EXTENSION);
 			if(!active.isFile())
 			{
 				String secondary = f.getName();

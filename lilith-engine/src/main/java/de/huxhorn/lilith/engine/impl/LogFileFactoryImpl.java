@@ -78,7 +78,7 @@ public class LogFileFactoryImpl
 	public File getIndexFile(SourceIdentifier sourceIdentifier)
 	{
 		String baseName = getBaseFileName(sourceIdentifier);
-		return new File(baseName + INDEX_FILE_EXTENSION);
+		return new File(baseName + FileConstants.INDEX_FILE_EXTENSION);
 	}
 
 	public File getDataFile(SourceIdentifier sourceIdentifier)
@@ -90,7 +90,7 @@ public class LogFileFactoryImpl
 	public File getActiveFile(SourceIdentifier sourceIdentifier)
 	{
 		String baseName = getBaseFileName(sourceIdentifier);
-		return new File(baseName + ACTIVE_FILE_EXTENSION);
+		return new File(baseName + FileConstants.ACTIVE_FILE_EXTENSION);
 	}
 
 	public String getDataFileExtension()
