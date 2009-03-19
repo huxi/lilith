@@ -30,8 +30,8 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>de.huxhorn.lilith.sandbox</mainClass>
-							<packageName>de.huxhorn.lilith.sandbox.LogbackClassicSandbox</packageName>
+							<mainClass>de.huxhorn.lilith.sandbox.LogbackClassicSandbox</mainClass>
+							<packageName>de.huxhorn.lilith.sandbox</packageName>
 							<addClasspath>true</addClasspath>
 						</manifest>
 						<manifestEntries>
