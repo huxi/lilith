@@ -211,8 +211,6 @@ public class LogbackLoggingAdapter
 				String raw = throwStrRep[i].toString();
 				if(raw.startsWith(CAUSED_BY))
 				{
-					result.setStackTrace(stackElements.toArray(new ExtendedStackTraceElement[stackElements.size()]));
-					stackElements.clear();
 					result.setCause(initFromThrowableDataPointsRecursive(throwStrRep, i));
 					break;
 				}
@@ -240,6 +238,9 @@ public class LogbackLoggingAdapter
 			// else
 			stackElements.add(parseStac(dataPoint.getStackTraceElementProxy()));
 		}
+		// it's advisable actually set the stackElements of result in all cases :p
+		result.setStackTrace(stackElements.toArray(new ExtendedStackTraceElement[stackElements.size()]));
+
 		return result;
 	}
 
