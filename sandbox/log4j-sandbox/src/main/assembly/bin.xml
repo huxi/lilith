@@ -13,7 +13,7 @@
 		</file>
 	</files>
 	<includeBaseDirectory>true</includeBaseDirectory>
-	<baseDirectory>Log4j-sandbox-${project.version}</baseDirectory>
+	<baseDirectory>log4j-sandbox-${project.version}</baseDirectory>
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>/lib</outputDirectory>
