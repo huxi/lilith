@@ -47,6 +47,7 @@
 		<module>log4j</module>
 		<module>lilith-sounds</module>
 		<module>lilith</module>
+		<module>slf4j</module>
 	</modules>
 
 	<reporting>
