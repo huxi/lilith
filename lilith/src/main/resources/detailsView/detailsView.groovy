@@ -3,7 +3,6 @@ import de.huxhorn.lilith.data.access.HttpStatus
 import de.huxhorn.lilith.data.logging.LoggingEvent
 import de.huxhorn.lilith.data.logging.Message
 import de.huxhorn.lilith.data.logging.ThreadInfo
-import groovy.xml.StreamingMarkupBuilder
 import java.text.SimpleDateFormat
 
 /*
@@ -474,6 +473,8 @@ def buildThrowable(element, throwable, isFirst = false)
 {
 	if(!isFirst)
 	{
+		element.br();
+		element.br();
 		element.mkp.yield 'Caused by:'
 		element.br()
 	}
@@ -482,16 +483,24 @@ def buildThrowable(element, throwable, isFirst = false)
 	{
 		element.mkp.yield " - ${throwable.message}"
 	}
-	if(throwable.stackTrace)
+	element.br();
+	element.div( [class: "exData"] )
 	{
-		element.p
+
+		built=buildStackTrace(it, throwable.stackTrace)
+		if(throwable.omittedElements > 0)
 		{
-			buildStackTrace(it, throwable.stackTrace)
+			if(built)
+			{
+				it.br();
+			}
+			it.mkp.yield("... "+throwable.omittedElements+" common elements omitted.");
 		}
-	}
-	if(throwable.cause)
-	{
-		buildThrowable(element, throwable.cause)
+
+		if(throwable.cause)
+		{
+			buildThrowable(it, throwable.cause)
+		}
 	}
 }
 
@@ -597,6 +606,10 @@ def buildStringArrayMap(element, Map<String, String[]> map)
 
 def buildStackTrace(element, callerData, onlyFirst = false)
 {
+	if(!callerData)
+	{
+		return false;
+	}
 	boolean isFirst = true;
 	callerData.each {
 		if(isFirst)
@@ -604,11 +617,18 @@ def buildStackTrace(element, callerData, onlyFirst = false)
 			buildStackTraceElement(element, it, isFirst)
 			isFirst = false;
 		}
-		else if(!onlyFirst)
+		else
 		{
 			buildStackTraceElement(element, it)
 		}
+
+
+		if(onlyFirst)
+		{
+			return true;
+		}
 	}
+	return !isFirst;
 }
 
 def buildStackTraceElement(element, ste, isFirst = false)
