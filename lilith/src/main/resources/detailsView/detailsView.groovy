@@ -494,7 +494,7 @@ def buildThrowable(element, throwable, isFirst = false)
 			{
 				it.br();
 			}
-			it.mkp.yield("... "+throwable.omittedElements+" common elements omitted.");
+			it.mkp.yield("... ${throwable.omittedElements} common elements omitted.");
 		}
 
 		if(throwable.cause)
