@@ -182,6 +182,7 @@ public class MainFrame
 	private TaskManagerInternalFrame taskManagerFrame;
 	private JLabel taskStatusLabel;
 	private int previousNumberOfTasks;
+	private ImageIcon smallProgressIcon;
 	public static final String LOGS_SUBDIRECTORY = "logs";
 	public static final String LOGGING_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/logging";
 	public static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
@@ -222,6 +223,7 @@ public class MainFrame
 		super(appName);
 		this.splashScreen = splashScreen;
 		setSplashStatusText("Creating main frame.");
+		smallProgressIcon=new ImageIcon(MainFrame.class.getResource("/otherGraphics/Progress16.gif"));
 		//colorsReferenceQueue=new ReferenceQueue<Colors>();
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application = new DefaultApplication();
@@ -718,17 +720,20 @@ public class MainFrame
 		{
 			previousNumberOfTasks = numberOfTasks;
 			String text = "";
+			Icon icon=null;
 			if(numberOfTasks == 1)
 			{
 				text = "1 active task.";
+				icon = smallProgressIcon;
 			}
 			else if(numberOfTasks > 1)
 			{
 				text = "" + numberOfTasks + " active tasks.";
+				icon = smallProgressIcon;
 			}
 			taskStatusLabel.setText(text);
+			taskStatusLabel.setIcon(icon);
 		}
-		//To change body of created methods use File | Settings | File Templates.
 	}
 
 	private void setSplashStatusText(String text)
