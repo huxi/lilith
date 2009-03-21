@@ -30,6 +30,11 @@ td,th
 	border-right: 1px solid black;
 }
 
+td.throwableContainer
+{
+	padding: 0;
+}
+
 td a
 {
 	display: block;
@@ -63,4 +68,6 @@ td a:hover
 pre
 {
 	white-space: pre-wrap;
+	font-family: monospace;
+	margin: 0;
 }

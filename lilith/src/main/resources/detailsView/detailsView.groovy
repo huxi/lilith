@@ -264,11 +264,8 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 					{
 						pre
 						{
-							tt
-							{
-								def message = event.message.message;
-								mkp.yield message
-							}
+							def message = event.message.message;
+							mkp.yield message
 						}
 					}
 				}
@@ -280,7 +277,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 			it.tr([class: "${evenOdd}"])
 				{
 					th('Throwable')
-					td()
+					td([class: "throwableContainer"])
 						{
 							buildThrowable(it, event.throwable, true)
 						}
@@ -613,15 +610,9 @@ def buildStackTrace(element, callerData, onlyFirst = false)
 			buildStackTraceElement(element, it, isFirst)
 			isFirst = false;
 		}
-		else
+		else if(!onlyFirst)
 		{
 			buildStackTraceElement(element, it)
-		}
-
-
-		if(onlyFirst)
-		{
-			return true;
 		}
 	}
 	return !isFirst;
