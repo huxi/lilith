@@ -117,11 +117,13 @@ public class LoggerEventEmitter
 		execute(new LogThrowableRunnable(delay, ex));
 	}
 
+	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logException2()
 		throws InterruptedException
 	{
-		//noinspection ThrowableInstanceNeverThrown
-		Throwable ex = new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
+		Exception causeCause=new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
+		Exception cause=new RuntimeException("Cause-Exception", causeCause);
+		Throwable ex = new RuntimeException("Another Test-Exception", cause);
 		execute(new LogThrowableRunnable(delay, ex));
 	}
 
@@ -133,11 +135,13 @@ public class LoggerEventEmitter
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
 
+	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logParamException2()
 		throws InterruptedException
 	{
-		//noinspection ThrowableInstanceNeverThrown
-		Throwable ex = new RuntimeException("Another Test-Exception", new RuntimeException("Test-Exception"));
+		Exception causeCause=new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
+		Exception cause=new RuntimeException("Cause-Exception", causeCause);
+		Throwable ex = new RuntimeException("Another Test-Exception", cause);
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
 

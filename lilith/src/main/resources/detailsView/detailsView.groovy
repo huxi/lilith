@@ -280,7 +280,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 			it.tr([class: "${evenOdd}"])
 				{
 					th('Throwable')
-					td(class: 'throwable')
+					td()
 						{
 							buildThrowable(it, event.throwable, true)
 						}
@@ -473,28 +473,24 @@ def buildThrowable(element, throwable, isFirst = false)
 {
 	if(!isFirst)
 	{
-		element.br();
-		element.br();
+		element.br()
 		element.mkp.yield 'Caused by:'
 		element.br()
 	}
-	element.mkp.yield "${throwable.name}"
-	if(throwable.message && throwable.message != throwable.name)
+	element.div( [class: "throwable"] )
 	{
-		element.mkp.yield " - ${throwable.message}"
-	}
-	element.br();
-	element.div( [class: "exData"] )
-	{
-
+		it.mkp.yield "${throwable.name}"
+		if(throwable.message && throwable.message != throwable.name)
+		{
+			it.br();
+			it.mkp.yield throwable.message;
+		}
+		it.br();
 		built=buildStackTrace(it, throwable.stackTrace)
 		if(throwable.omittedElements > 0)
 		{
-			if(built)
-			{
-				it.br();
-			}
-			it.mkp.yield("... ${throwable.omittedElements} common elements omitted.");
+			it.mkp.yield("${throwable.omittedElements} common elements omitted.");
+			it.br();
 		}
 
 		if(throwable.cause)
@@ -633,10 +629,6 @@ def buildStackTrace(element, callerData, onlyFirst = false)
 
 def buildStackTraceElement(element, ste, isFirst = false)
 {
-	if(!isFirst)
-	{
-		element.br()
-	}
 	def steStr = ste.toString();
 	def extendedStr = ste.getExtendedString();
 	element.a([href: 'ste://' + ste.toString()])

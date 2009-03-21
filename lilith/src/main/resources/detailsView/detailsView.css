@@ -1,5 +1,6 @@
 body
 {
+	font-family: sans-serif;
 	margin: 0;
 	padding: 0; /*	background: #ffff00; */
 }
@@ -7,6 +8,7 @@ body
 table
 {
 	border-spacing: 0;
+	width: 100%;
 }
 
 tr.even
@@ -19,32 +21,45 @@ tr.odd
 	background: #ffffff;
 }
 
-td
+td,th
 {
+	vertical-align: top;
+	text-align: left;
+	padding: 0.5em;
 	border-top: none;
 	border-right: 1px solid black;
 	border-bottom: none;
 	border-left: none;
 }
 
-th
+td a
 {
-	border-top: none;
-	border-right: 1px solid black;
-	border-bottom: none;
-	border-left: none;
+	display: block;
+	text-decoration: none;
+	color: #000000;
+
+}
+
+td a:link
+{
+	background: #ffffee;
+}
+
+td a:hover
+{
+	background: #ffffaa;
 }
 
 .throwable
 {
-	background: #ffcccc;
+	margin: 0;
+	border: 3px solid red;
+	padding: 0.5em;
 }
 
-.exData
+.throwable .throwable
 {
-	margin-left: 2em;
-	border: 1px solid red;
-	padding: 1em;
+	margin-left: 1.5em;
 }
 
 pre
