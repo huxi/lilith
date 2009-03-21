@@ -26,10 +26,8 @@ td,th
 	vertical-align: top;
 	text-align: left;
 	padding: 0.5em;
-	border-top: none;
+	border-style: none;
 	border-right: 1px solid black;
-	border-bottom: none;
-	border-left: none;
 }
 
 td a
