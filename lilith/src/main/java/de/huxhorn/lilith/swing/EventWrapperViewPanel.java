@@ -38,6 +38,7 @@ import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
@@ -998,14 +999,30 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				statusText.append(eventCountFormat.format(eventCount)).append(" events.");
 			}
-			statusText.append("   Size on disk: ")
-				.append(HumanReadable.getHumanReadableSize(getSizeOnDisk(), true, false)).append("bytes");
+			long size = getSizeOnDisk();
+			if(size > 0)
+			{
+				statusText.append("   Size on disk: ")
+					.append(HumanReadable.getHumanReadableSize(size, true, false)).append("bytes");
+
+				statusText.append("   Average event: ")
+					.append(HumanReadable.getHumanReadableSize(size / eventCount, true, false)).append("bytes");
+			}
 		}
 
 		statusLabel.setText(statusText.toString());
 	}
 
-	protected abstract long getSizeOnDisk();
+	protected long getSizeOnDisk()
+	{
+		Buffer buffer = getEventSource().getBuffer();
+		if(buffer instanceof CodecFileBuffer)
+		{
+			CodecFileBuffer cfb = (CodecFileBuffer) buffer;
+			return cfb.getDataFile().length();
+		}
+		return -1;
+	}
 
 	public Buffer<EventWrapper<T>> getSourceBuffer()
 	{

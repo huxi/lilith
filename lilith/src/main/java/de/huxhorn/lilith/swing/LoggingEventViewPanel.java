@@ -44,11 +44,6 @@ public class LoggingEventViewPanel
 		return new LoggingEventViewTable(getMainFrame(), tableModel, getEventSource().isGlobal());
 	}
 
-	protected long getSizeOnDisk()
-	{
-		return getMainFrame().getLoggingFileFactory().getSizeOnDisk(getEventSource().getSourceIdentifier());
-	}
-
 	protected void closeConnection(SourceIdentifier sourceIdentifier)
 	{
 		getMainFrame().closeLoggingConnection(sourceIdentifier);

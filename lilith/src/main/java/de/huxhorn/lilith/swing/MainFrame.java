@@ -72,6 +72,10 @@ import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
+import de.huxhorn.sulky.codec.filebuffer.FileHeader;
+import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
+import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
@@ -126,6 +130,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
@@ -223,7 +228,7 @@ public class MainFrame
 		super(appName);
 		this.splashScreen = splashScreen;
 		setSplashStatusText("Creating main frame.");
-		smallProgressIcon=new ImageIcon(MainFrame.class.getResource("/otherGraphics/Progress16.gif"));
+		smallProgressIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Progress16.gif"));
 		//colorsReferenceQueue=new ReferenceQueue<Colors>();
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application = new DefaultApplication();
@@ -260,33 +265,7 @@ public class MainFrame
 		longTaskManager = new TaskManager<Long>();
 		longTaskManager.setUsingEventQueue(true);
 		longTaskManager.startUp();
-		longTaskManager.addTaskListener(new TaskListener<Long>()
-		{
-			public void taskCreated(Task<Long> longTask)
-			{
-				updateTaskStatus();
-			}
-
-			public void executionFailed(Task<Long> longTask, ExecutionException exception)
-			{
-				updateTaskStatus();
-			}
-
-			public void executionFinished(Task<Long> longTask, Long result)
-			{
-				updateTaskStatus();
-			}
-
-			public void executionCanceled(Task<Long> longTask)
-			{
-				updateTaskStatus();
-			}
-
-			public void progressUpdated(Task<Long> longTask, int progress)
-			{
-				updateTaskStatus();
-			}
-		});
+		longTaskManager.addTaskListener(new MainTaskListener());
 
 		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 
@@ -720,7 +699,7 @@ public class MainFrame
 		{
 			previousNumberOfTasks = numberOfTasks;
 			String text = "";
-			Icon icon=null;
+			Icon icon = null;
 			if(numberOfTasks == 1)
 			{
 				text = "1 active task.";
@@ -956,11 +935,17 @@ public class MainFrame
 		}
 	}
 
-	public void open(File file)
+	public void open(File dataFile)
 	{
-		// TODO: implement open(File file)
-		if(logger.isInfoEnabled()) logger.info("Open file: {}", file.getAbsolutePath());
-		String fileName = file.getAbsolutePath();
+		// TODO: implement open(File dataFile)
+		if(logger.isInfoEnabled()) logger.info("Open file: {}", dataFile.getAbsolutePath());
+		if(isAlreadyOpen(dataFile))
+		{
+			String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
+			JOptionPane.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		String fileName = dataFile.getAbsolutePath();
 		String indexFileName;
 		if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
 		{
@@ -973,10 +958,106 @@ public class MainFrame
 		indexFileName = indexFileName + FileConstants.INDEX_FILE_EXTENSION;
 
 		File indexFile = new File(indexFileName);
-		String name = "Indexing " + file.getName() + "...";
-		String description = "Indexing " + file.getAbsolutePath() + "...";
-		Task<Long> task = longTaskManager.startTask(new IndexingCallable(file, indexFile), name, description);
-		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+		if(!indexFile.isFile())
+		{
+			// TODO: ask if it should be indexed.
+			String dialogTitle = "Index file?";
+			String message = "Index file does not exist!\nIndex data file right now?";
+			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if(JOptionPane.OK_OPTION != result)
+			{
+				return;
+			}
+			String name = "Indexing " + dataFile.getName() + "...";
+			String description = "Indexing " + dataFile.getAbsolutePath() + "...";
+			Task<Long> task = longTaskManager.startTask(new IndexingCallable(dataFile, indexFile), name, description);
+			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+		}
+		else
+		{
+			createViewFor(dataFile, indexFile);
+		}
+	}
+
+	private boolean isAlreadyOpen(File dataFile)
+	{
+		// TODO: check if already open.
+		return false;
+	}
+
+	private void createViewFor(File dataFile, File indexFile)
+	{
+		// create view for dataFile and indexFile.
+		if(logger.isInfoEnabled())
+		{
+			logger
+				.info("Create view for dataFile '{}' and indexFile '{}'.", dataFile.getAbsolutePath(), indexFile.getAbsolutePath());
+		}
+
+		FileHeaderStrategy fileHeaderStrategy = new DefaultFileHeaderStrategy();
+		try
+		{
+			FileHeader header = fileHeaderStrategy.readFileHeader(dataFile);
+			if(header == null)
+			{
+				if(logger.isWarnEnabled())
+				{
+					logger.warn("Couldn't read file header from '{}'!", dataFile.getAbsolutePath());
+				}
+				return;
+			}
+			if(header.getMagicValue() != FileConstants.MAGIC_VALUE)
+			{
+				if(logger.isWarnEnabled())
+				{
+					logger.warn("Invalid magic value! ", Integer.toHexString(header.getMagicValue()));
+				}
+				return;
+			}
+			MetaData metaData = header.getMetaData();
+			if(metaData == null || metaData.getData() == null)
+			{
+				if(logger.isWarnEnabled())
+				{
+					logger.warn("Couldn't read meta data from '{}'!", dataFile.getAbsolutePath());
+				}
+				return;
+			}
+			Map<String, String> data = metaData.getData();
+			String contentType = data.get(FileConstants.CONTENT_TYPE_KEY);
+			Map<String, String> usedMetaData = new HashMap<String, String>();
+			SourceIdentifier si = new SourceIdentifier(dataFile.getAbsolutePath());
+
+			if(FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
+			{
+				FileBuffer<EventWrapper<LoggingEvent>> buffer =
+					loggingFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
+				EventSource<LoggingEvent> eventSource = new EventSourceImpl<LoggingEvent>(si, buffer, false);
+				ViewContainer<LoggingEvent> viewContainer = loggingEventViewManager.retrieveViewContainer(eventSource);
+				EventWrapperViewPanel<LoggingEvent> panel = viewContainer.getDefaultView();
+				panel.setState(LoggingViewState.INACTIVE);
+				showLoggingView(eventSource);
+			}
+			else if(FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
+			{
+				FileBuffer<EventWrapper<AccessEvent>> buffer =
+					accessFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
+				EventSource<AccessEvent> eventSource = new EventSourceImpl<AccessEvent>(si, buffer, false);
+				ViewContainer<AccessEvent> viewContainer = accessEventViewManager.retrieveViewContainer(eventSource);
+				EventWrapperViewPanel<AccessEvent> panel = viewContainer.getDefaultView();
+				panel.setState(LoggingViewState.INACTIVE);
+				showAccessView(eventSource);
+			}
+			else
+			{
+				if(logger.isWarnEnabled()) logger.warn("Unexpected content type {}.", contentType);
+			}
+		}
+		catch(IOException e)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating view form file!", e);
+		}
 	}
 
 	// TODO; implement cache?
@@ -1171,13 +1252,14 @@ public class MainFrame
 		return applicationPreferences;
 	}
 
+	/*
 	public EventWrapperViewPanel<LoggingEvent> createLoggingViewPanel(EventSource<LoggingEvent> eventSource)
 	{
 		EventWrapperViewPanel<LoggingEvent> result = new LoggingEventViewPanel(this, eventSource);
 		result.setScrollingToBottom(applicationPreferences.isScrollingToBottom());
 		return result;
 	}
-
+    */
 
 	public SortedMap<String, SourceIdentifier> getAvailableStatistics()
 	{
@@ -2770,4 +2852,41 @@ public class MainFrame
 			}
 		}
 		*/
+	private class MainTaskListener
+		implements TaskListener<Long>
+	{
+		public void taskCreated(Task<Long> longTask)
+		{
+			updateTaskStatus();
+		}
+
+		public void executionFailed(Task<Long> longTask, ExecutionException exception)
+		{
+			updateTaskStatus();
+		}
+
+		public void executionFinished(Task<Long> longTask, Long result)
+		{
+			updateTaskStatus();
+			Callable<Long> callable = longTask.getCallable();
+
+			if(callable instanceof IndexingCallable)
+			{
+				IndexingCallable iCallable = (IndexingCallable) callable;
+				File dataFile = iCallable.getDataFile();
+				File indexFile = iCallable.getIndexFile();
+				createViewFor(dataFile, indexFile);
+			}
+		}
+
+		public void executionCanceled(Task<Long> longTask)
+		{
+			updateTaskStatus();
+		}
+
+		public void progressUpdated(Task<Long> longTask, int progress)
+		{
+			updateTaskStatus();
+		}
+	}
 }
