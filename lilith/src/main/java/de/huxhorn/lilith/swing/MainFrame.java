@@ -71,7 +71,9 @@ import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
+import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
@@ -937,10 +939,11 @@ public class MainFrame
 
 	public void open(File dataFile)
 	{
-		// TODO: implement open(File dataFile)
 		if(logger.isInfoEnabled()) logger.info("Open file: {}", dataFile.getAbsolutePath());
-		if(isAlreadyOpen(dataFile))
+		ViewContainer<?> viewContainer = resolveViewContainer(dataFile);
+		if(viewContainer != null)
 		{
+			showView(viewContainer);
 			String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
 			JOptionPane.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
 			return;
@@ -960,7 +963,7 @@ public class MainFrame
 		File indexFile = new File(indexFileName);
 		if(!indexFile.isFile())
 		{
-			// TODO: ask if it should be indexed.
+			// ask if it should be indexed.
 			String dialogTitle = "Index file?";
 			String message = "Index file does not exist!\nIndex data file right now?";
 			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
@@ -980,10 +983,55 @@ public class MainFrame
 		}
 	}
 
-	private boolean isAlreadyOpen(File dataFile)
+	public ViewContainer<?> resolveViewContainer(File dataFile)
 	{
-		// TODO: check if already open.
-		return false;
+		{ // logging
+			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> views = loggingEventViewManager.getViews();
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : views.entrySet())
+			{
+
+				ViewContainer<LoggingEvent> view = current.getValue();
+				EventWrapperViewPanel<LoggingEvent> defaultView = view.getDefaultView();
+				EventSource<LoggingEvent> es = defaultView.getEventSource();
+				if(es != null)
+				{
+					Buffer<EventWrapper<LoggingEvent>> buffer = es.getBuffer();
+					if(buffer instanceof CodecFileBuffer)
+					{
+						CodecFileBuffer cfb = (CodecFileBuffer) buffer;
+						if(dataFile.equals(cfb.getDataFile()))
+						{
+							return view;
+						}
+					}
+				}
+			}
+		}
+
+		{ // access
+			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> views = accessEventViewManager.getViews();
+			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : views.entrySet())
+			{
+
+				ViewContainer<AccessEvent> view = current.getValue();
+				EventWrapperViewPanel<AccessEvent> defaultView = view.getDefaultView();
+				EventSource<AccessEvent> es = defaultView.getEventSource();
+				if(es != null)
+				{
+					Buffer<EventWrapper<AccessEvent>> buffer = es.getBuffer();
+					if(buffer instanceof CodecFileBuffer)
+					{
+						CodecFileBuffer cfb = (CodecFileBuffer) buffer;
+						if(dataFile.equals(cfb.getDataFile()))
+						{
+							return view;
+						}
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private void createViewFor(File dataFile, File indexFile)
@@ -1306,25 +1354,19 @@ public class MainFrame
 	public void showLoggingView(EventSource<LoggingEvent> eventSource)
 	{
 		ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
-
-		// we need this since this method might also be called by a different thread
-		ShowLoggingViewRunnable<LoggingEvent> runnable = new ShowLoggingViewRunnable<LoggingEvent>(container);
-		if(SwingUtilities.isEventDispatchThread())
-		{
-			runnable.run();
-		}
-		else
-		{
-			SwingUtilities.invokeLater(runnable);
-		}
+		showView(container);
 	}
 
 	public void showAccessView(EventSource<AccessEvent> eventSource)
 	{
 		ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
+		showView(container);
+	}
 
+	public void showView(ViewContainer<?> container)
+	{
 		// we need this since this method might also be called by a different thread
-		ShowLoggingViewRunnable<AccessEvent> runnable = new ShowLoggingViewRunnable<AccessEvent>(container);
+		ShowViewRunnable runnable = new ShowViewRunnable(container);
 		if(SwingUtilities.isEventDispatchThread())
 		{
 			runnable.run();
@@ -2104,12 +2146,12 @@ public class MainFrame
 		System.exit(0);
 	}
 
-	class ShowLoggingViewRunnable<T extends Serializable>
+	class ShowViewRunnable
 		implements Runnable
 	{
-		private ViewContainer<T> container;
+		private ViewContainer<?> container;
 
-		public ShowLoggingViewRunnable(ViewContainer<T> container)
+		public ShowViewRunnable(ViewContainer<?> container)
 		{
 			this.container = container;
 		}
