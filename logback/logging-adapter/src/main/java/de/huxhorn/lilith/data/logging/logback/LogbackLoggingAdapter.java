@@ -84,14 +84,14 @@ public class LogbackLoggingAdapter
 		LoggerContextRemoteView lcv = lrv.getLoggerContextView();
 		if(lcv != null)
 		{
-			String name=lcv.getName();
+			String name = lcv.getName();
 			Map<String, String> props = lcv.getPropertyMap();
 			if(props != null)
 			{
 				// TODO: lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
-				props=new HashMap<String, String>(props);
+				props = new HashMap<String, String>(props);
 			}
-			LoggerContext loggerContext=new LoggerContext();
+			LoggerContext loggerContext = new LoggerContext();
 			loggerContext.setName(name);
 			loggerContext.setProperties(props);
 			result.setLoggerContext(loggerContext);
@@ -104,21 +104,21 @@ public class LogbackLoggingAdapter
 
 		if(threadName != null)
 		{
-			Long threadId=null;
+			Long threadId = null;
 			String threadGroupName = null;
-			Long threadGroupId=null;
+			Long threadGroupId = null;
 
 			if(inSameThread)
 			{
 				// assuming this code is executed synchronously
-				Thread t=Thread.currentThread();
+				Thread t = Thread.currentThread();
 				threadId = t.getId();
 
 				ThreadGroup tg = t.getThreadGroup();
 				if(tg != null)
 				{
-					threadGroupName=tg.getName();
-					threadGroupId=(long)System.identityHashCode(tg);
+					threadGroupName = tg.getName();
+					threadGroupId = (long) System.identityHashCode(tg);
 				}
 			}
 			ThreadInfo threadInfo = new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName);
@@ -130,8 +130,7 @@ public class LogbackLoggingAdapter
 		{
 			if(!NDC.isEmpty())
 			{
-				// TODO: configurable
-				result.setNdc(NDC.getContextStack());
+				result.setNdc(NDC.getContextStack()); // TODO: configurable
 			}
 		}
 
