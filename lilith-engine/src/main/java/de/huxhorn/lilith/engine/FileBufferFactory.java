@@ -69,7 +69,6 @@ public abstract class FileBufferFactory<T extends Serializable>
 	{
 		File dataFile = logFileFactory.getDataFile(si);
 		File indexFile = logFileFactory.getIndexFile(si);
-		if(logger.isInfoEnabled()) logger.info("Creating buffer for dataFile '{}'.", dataFile.getAbsolutePath());
 
 		Map<String, String> usedMetaData = new HashMap<String, String>(metaData);
 		usedMetaData.put(FileConstants.IDENTIFIER_KEY, si.getIdentifier());
@@ -78,6 +77,12 @@ public abstract class FileBufferFactory<T extends Serializable>
 			usedMetaData.put(FileConstants.SECONDARY_IDENTIFIER_KEY, si.getSecondaryIdentifier());
 		}
 
+		return createBuffer(dataFile, indexFile, usedMetaData);
+	}
+
+	public FileBuffer<EventWrapper<T>> createBuffer(File dataFile, File indexFile, Map<String, String> usedMetaData)
+	{
+		if(logger.isInfoEnabled()) logger.info("Creating buffer for dataFile '{}'.", dataFile.getAbsolutePath());
 
 		CodecFileBuffer<EventWrapper<T>> result = new CodecFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, dataFile, indexFile);
 
@@ -104,14 +109,5 @@ public abstract class FileBufferFactory<T extends Serializable>
 			if(logger.isWarnEnabled()) logger.warn("Couldn't create active-file.");
 		}
 		return result;
-	}
-
-	public long getSizeOnDisk(SourceIdentifier sourceIdentifier)
-	{
-		File indexFile = logFileFactory.getIndexFile(sourceIdentifier);
-		File dataFile = logFileFactory.getDataFile(sourceIdentifier);
-		long indexSize = indexFile.length();
-		long dataSize = dataFile.length();
-		return indexSize + dataSize;
 	}
 }

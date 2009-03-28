@@ -34,11 +34,6 @@ public class AccessEventViewPanel
 		super(mainFrame, eventSource);
 	}
 
-	protected long getSizeOnDisk()
-	{
-		return getMainFrame().getAccessFileFactory().getSizeOnDisk(getEventSource().getSourceIdentifier());
-	}
-
 	protected EventWrapperTableModel<AccessEvent> createTableModel(Buffer<EventWrapper<AccessEvent>> buffer)
 	{
 		return new EventWrapperTableModel<AccessEvent>(buffer);

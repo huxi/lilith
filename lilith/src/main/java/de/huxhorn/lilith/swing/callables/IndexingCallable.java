@@ -128,6 +128,16 @@ public class IndexingCallable
 		}
 	}
 
+	public File getDataFile()
+	{
+		return dataFile;
+	}
+
+	public File getIndexFile()
+	{
+		return indexFile;
+	}
+
 	private static void closeQuietly(RandomAccessFile file)
 	{
 		if(file != null)
