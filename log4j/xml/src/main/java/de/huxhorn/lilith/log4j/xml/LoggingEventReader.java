@@ -62,9 +62,20 @@ public class LoggingEventReader
 		{
 			result = new LoggingEvent();
 			result.setLogger(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LOGGER_ATTRIBUTE));
-			// TODO: FATAL
-			result
-				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
+
+			String levelStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE);
+			if("FATAL".equals(levelStr))
+			{
+				levelStr = "ERROR";
+			}
+			try
+			{
+				result.setLevel(LoggingEvent.Level.valueOf(levelStr));
+			}
+			catch(IllegalArgumentException ex)
+			{
+				// ignore
+			}
 			String threadName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE);
 			Long threadId = null;
 			try
@@ -80,7 +91,8 @@ public class LoggingEventReader
 				// ignore
 			}
 
-			String threadGroupName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE);
+			String threadGroupName = StaxUtilities
+				.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE);
 			Long threadGroupId = null;
 			try
 			{
@@ -96,7 +108,7 @@ public class LoggingEventReader
 			}
 
 
-			if(threadName != null || threadId != null || threadGroupId != null ||threadGroupName != null)
+			if(threadName != null || threadId != null || threadGroupId != null || threadGroupName != null)
 			{
 				result.setThreadInfo(new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName));
 			}
@@ -108,8 +120,7 @@ public class LoggingEventReader
 			}
 			catch(NumberFormatException e)
 			{
-// TODO: change body of catch statement
-				e.printStackTrace();
+				// ignore
 			}
 			reader.nextTag();
 			String messagePattern = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
