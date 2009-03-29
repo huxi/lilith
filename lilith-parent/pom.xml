@@ -68,8 +68,8 @@
 		</site>
 
 		<!--
-			  scp doesn't work anymore
-			  -->
+		scp doesn't work anymore
+		-->
 		<repository>
 			<id>lilith-repos</id>
 			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
@@ -82,9 +82,9 @@
 	</distributionManagement>
 
 	<!--
-	   define global versions for all sub-projects
-	   in case of missing explicit version
-	   -->
+	define global versions for all sub-projects
+	in case of missing explicit version
+	-->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
