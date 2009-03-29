@@ -48,6 +48,7 @@ import de.huxhorn.lilith.engine.impl.sourceproducer.AccessEventProtobufServerSoc
 import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
 import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender;
@@ -63,6 +64,7 @@ import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LilithFileFilter;
+import de.huxhorn.lilith.swing.filefilters.Log4jXmlImportFileFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
 import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
@@ -70,6 +72,7 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
+import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
@@ -194,9 +197,10 @@ public class MainFrame
 	public static final String LOGGING_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/logging";
 	public static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
 	private JFileChooser openFileChooser;
+	private JFileChooser importFileChooser;
 	/*
-		 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
-		 */
+	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
+	 */
 	//private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
 	//private ReferenceQueue<Colors> colorsReferenceQueue;
 
@@ -389,6 +393,10 @@ public class MainFrame
 		openFileChooser = new JFileChooser();
 		openFileChooser.setFileFilter(new LilithFileFilter());
 		openFileChooser.setFileHidingEnabled(false);
+
+		importFileChooser = new JFileChooser();
+		importFileChooser.setFileFilter(new Log4jXmlImportFileFilter());
+		importFileChooser.setFileHidingEnabled(false);
 
 		setSplashStatusText("Creating task manager frame.");
 		taskManagerFrame = new TaskManagerInternalFrame(this);
@@ -928,12 +936,21 @@ public class MainFrame
 
 	public void open()
 	{
-		//openFileDialog.setVisible(true);
 		int returnVal = openFileChooser.showOpenDialog(this);
 
 		if(returnVal == JFileChooser.APPROVE_OPTION)
 		{
 			open(openFileChooser.getSelectedFile());
+		}
+	}
+
+	public void importFile()
+	{
+		int returnVal = importFileChooser.showOpenDialog(this);
+
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{
+			importLog4jXmlFile(importFileChooser.getSelectedFile());
 		}
 	}
 
@@ -972,8 +989,8 @@ public class MainFrame
 			{
 				return;
 			}
-			String name = "Indexing " + dataFile.getName() + "...";
-			String description = "Indexing " + dataFile.getAbsolutePath() + "...";
+			String name = "Indexing Lilith file";
+			String description = "Indexing '" + dataFile.getAbsolutePath() + "'...";
 			Task<Long> task = longTaskManager.startTask(new IndexingCallable(dataFile, indexFile), name, description);
 			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 		}
@@ -981,6 +998,66 @@ public class MainFrame
 		{
 			createViewFor(dataFile, indexFile);
 		}
+	}
+
+	public void importLog4jXmlFile(File importFile)
+	{
+		if(logger.isInfoEnabled()) logger.info("Import file: {}", importFile.getAbsolutePath());
+
+		String name = "Importing Log4J XML file";
+		String description = "Importing Log4J XML file '" + importFile.getAbsolutePath() + "'...";
+		File parentFile = importFile.getParentFile();
+		String inputName = importFile.getName();
+
+		File dataFile = new File(parentFile, inputName + FileConstants.FILE_EXTENSION);
+		File indexFile = new File(parentFile, inputName + FileConstants.INDEX_FILE_EXTENSION);
+
+		// check if file exists and warn in that case
+		if(dataFile.isFile())
+		{
+			// check if file is already open
+			ViewContainer<?> viewContainer = resolveViewContainer(dataFile);
+			if(viewContainer != null)
+			{
+				showView(viewContainer);
+				String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
+				JOptionPane
+					.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
+				// TODO: Offer option to reimport anyway. Close view beforehand in tht case.
+				return;
+			}
+			String dialogTitle = "Reimport file?";
+			String message = "Data file does already exist!\nReimport data file right now?";
+			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if(JOptionPane.OK_OPTION != result)
+			{
+				return;
+			}
+
+			if(dataFile.delete())
+			{
+				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", dataFile.getAbsolutePath());
+			}
+		}
+		if(indexFile.isFile())
+		{
+			if(indexFile.delete())
+			{
+				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", indexFile.getAbsolutePath());
+			}
+		}
+
+		Map<String, String> metaData = new HashMap<String, String>();
+		metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
+		metaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
+		metaData.put(FileConstants.COMPRESSED_KEY, "true");
+
+		FileBuffer<EventWrapper<LoggingEvent>> buffer =
+			loggingFileBufferFactory.createBuffer(dataFile, indexFile, metaData);
+
+		Task<Long> task = longTaskManager.startTask(new Log4jImportCallable(importFile, buffer), name, description);
+		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 	}
 
 	public ViewContainer<?> resolveViewContainer(File dataFile)
@@ -1107,6 +1184,7 @@ public class MainFrame
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating view form file!", e);
 		}
 	}
+
 
 	// TODO; implement cache?
 	@SuppressWarnings({"UnusedDeclaration"})
@@ -2141,6 +2219,7 @@ public class MainFrame
 			deleteInactiveLogs(accessFileFactory);
 		}
 		// TODO: persist last open location
+		// TODO: persist last import location
 		applicationPreferences.flush();
 		longTaskManager.shutDown();
 		System.exit(0);
@@ -2918,6 +2997,20 @@ public class MainFrame
 				File dataFile = iCallable.getDataFile();
 				File indexFile = iCallable.getIndexFile();
 				createViewFor(dataFile, indexFile);
+				return;
+			}
+			if(callable instanceof Log4jImportCallable)
+			{
+				Log4jImportCallable iCallable = (Log4jImportCallable) callable;
+				AppendOperation<EventWrapper<LoggingEvent>> buffer = iCallable.getBuffer();
+				if(buffer instanceof CodecFileBuffer)
+				{
+					CodecFileBuffer cfb = (CodecFileBuffer) buffer;
+					File dataFile = cfb.getDataFile();
+					File indexFile = cfb.getIndexFile();
+					cfb.dispose();
+					createViewFor(dataFile, indexFile);
+				}
 			}
 		}
 
