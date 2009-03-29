@@ -569,6 +569,7 @@ public class ViewActions
 		// File
 		OpenMenuAction openMenuAction = new OpenMenuAction();
 		OpenInactiveLogMenuAction openInactiveLogMenuAction = new OpenInactiveLogMenuAction();
+		ImportMenuAction importMenuAction = new ImportMenuAction();
 		CleanAllInactiveLogsMenuAction cleanAllInactiveLogsMenuAction = new CleanAllInactiveLogsMenuAction();
 		preferencesMenuAction = new PreferencesMenuAction();
 		ExitMenuAction exitMenuAction = new ExitMenuAction();
@@ -692,6 +693,7 @@ public class ViewActions
 		fileMenu.add(new JMenuItem(openMenuAction));
 		fileMenu.add(new JMenuItem(openInactiveLogMenuAction));
 		fileMenu.add(new JMenuItem(cleanAllInactiveLogsMenuAction));
+		fileMenu.add(new JMenuItem(importMenuAction));
 		if(!app.isMac())
 		{
 			fileMenu.addSeparator();
@@ -2846,6 +2848,27 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.open();
+		}
+	}
+
+	class ImportMenuAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = 7500131416548647712L;
+
+		public ImportMenuAction()
+		{
+			super("Import...");
+			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " I");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, Integer.valueOf('i'));
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.importFile();
 		}
 	}
 

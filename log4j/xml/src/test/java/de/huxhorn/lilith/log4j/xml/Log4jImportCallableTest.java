@@ -1,5 +1,6 @@
 package de.huxhorn.lilith.log4j.xml;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
@@ -18,9 +19,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Log4jImporterTest
+public class Log4jImportCallableTest
 {
-	private final Logger logger = LoggerFactory.getLogger(Log4jImporterTest.class);
+	private final Logger logger = LoggerFactory.getLogger(Log4jImportCallableTest.class);
 
 	private File inputFile;
 
@@ -40,7 +41,7 @@ public class Log4jImporterTest
 	{
 		createTempFile("/testcases/example.log");
 		AppendOpStub buffer = new AppendOpStub();
-		Log4jImporter instance = new Log4jImporter(inputFile, buffer);
+		Log4jImportCallable instance = new Log4jImportCallable(inputFile, buffer);
 		long result = instance.call();
 		if(logger.isInfoEnabled()) logger.info("Call returned {}.", result);
 		if(logger.isDebugEnabled()) logger.debug("Appended events: {}", buffer.getList());
@@ -54,7 +55,7 @@ public class Log4jImporterTest
 	{
 		createTempFile("/testcases/exampleNoLF.log");
 		AppendOpStub buffer = new AppendOpStub();
-		Log4jImporter instance = new Log4jImporter(inputFile, buffer);
+		Log4jImportCallable instance = new Log4jImportCallable(inputFile, buffer);
 		long result = instance.call();
 		if(logger.isInfoEnabled()) logger.info("Call returned {}.", result);
 		if(logger.isDebugEnabled()) logger.debug("Appended events: {}", buffer.getList());
@@ -65,7 +66,7 @@ public class Log4jImporterTest
 	public void createTempFile(String resourceName)
 		throws IOException
 	{
-		InputStream input = Log4jImporterTest.class.getResourceAsStream(resourceName);
+		InputStream input = Log4jImportCallableTest.class.getResourceAsStream(resourceName);
 		if(input == null)
 		{
 			fail("Couldn't resolve resource '" + resourceName + "'!");
@@ -78,31 +79,31 @@ public class Log4jImporterTest
 	}
 
 	private static class AppendOpStub
-		implements AppendOperation<LoggingEvent>
+		implements AppendOperation<EventWrapper<LoggingEvent>>
 	{
-		private List<LoggingEvent> list;
+		private List<EventWrapper<LoggingEvent>> list;
 
 		private AppendOpStub()
 		{
-			list = new ArrayList<LoggingEvent>();
+			list = new ArrayList<EventWrapper<LoggingEvent>>();
 		}
 
-		public List<LoggingEvent> getList()
+		public List<EventWrapper<LoggingEvent>> getList()
 		{
 			return list;
 		}
 
-		public void add(LoggingEvent element)
+		public void add(EventWrapper<LoggingEvent> element)
 		{
 			list.add(element);
 		}
 
-		public void addAll(List<LoggingEvent> elements)
+		public void addAll(List<EventWrapper<LoggingEvent>> elements)
 		{
 			throw new UnsupportedOperationException();
 		}
 
-		public void addAll(LoggingEvent[] elements)
+		public void addAll(EventWrapper<LoggingEvent>[] elements)
 		{
 			throw new UnsupportedOperationException();
 		}

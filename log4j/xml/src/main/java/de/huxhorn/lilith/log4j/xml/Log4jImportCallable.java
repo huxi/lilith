@@ -1,5 +1,8 @@
 package de.huxhorn.lilith.log4j.xml;
 
+import de.huxhorn.lilith.data.eventsource.EventIdentifier;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
@@ -19,10 +22,10 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-public class Log4jImporter
+public class Log4jImportCallable
 	extends AbstractProgressingCallable<Long>
 {
-	private final Logger logger = LoggerFactory.getLogger(Log4jImporter.class);
+	private final Logger logger = LoggerFactory.getLogger(Log4jImportCallable.class);
 
 	public static final String CLOSING_LOG4J_EVENT_TAG = "</log4j:event>";
 	public static final String LOG4J_NAMESPACE = "xmlns:log4j=\"http://jakarta.apache.org/log4j/\"";
@@ -30,18 +33,18 @@ public class Log4jImporter
 	public static final String OPENING_LOG4J_EVENT_TAG_INCL_NS = OPENING_LOG4J_EVENT_TAG_EXCL_NS + LOG4J_NAMESPACE + " ";
 
 	private File inputFile;
-	private AppendOperation<LoggingEvent> buffer;
+	private AppendOperation<EventWrapper<LoggingEvent>> buffer;
 	private LoggingEventReader instance;
 	private long result;
 
-	public Log4jImporter(File inputFile, AppendOperation<LoggingEvent> buffer)
+	public Log4jImportCallable(File inputFile, AppendOperation<EventWrapper<LoggingEvent>> buffer)
 	{
 		this.buffer = buffer;
 		this.inputFile = inputFile;
 		instance = new LoggingEventReader();
 	}
 
-	public AppendOperation<LoggingEvent> getBuffer()
+	public AppendOperation<EventWrapper<LoggingEvent>> getBuffer()
 	{
 		return buffer;
 	}
@@ -109,8 +112,13 @@ public class Log4jImporter
 			LoggingEvent event = readEvent(eventStr);
 			if(event != null)
 			{
-				buffer.add(event);
 				result++;
+				EventWrapper<LoggingEvent> wrapper = new EventWrapper<LoggingEvent>();
+				wrapper.setEvent(event);
+				SourceIdentifier sourceIdentifier = new SourceIdentifier(inputFile.getAbsolutePath());
+				EventIdentifier eventId = new EventIdentifier(sourceIdentifier, result);
+				wrapper.setEventIdentifier(eventId);
+				buffer.add(wrapper);
 			}
 		}
 		catch(XMLStreamException e)
