@@ -55,10 +55,10 @@ public class LoggingEventTest
 	{
 		LoggingEvent instance = new LoggingEvent();
 
-		LoggerContext value=new LoggerContext();
-		value.setBirthTime(new Date(1234567890L));
+		LoggerContext value = new LoggerContext();
+		value.setBirthTime(new Date(1234567890000L));
 		value.setName("contextName");
-		Map<String, String> properties=new HashMap<String, String>();
+		Map<String, String> properties = new HashMap<String, String>();
 		properties.put("foo", "bar");
 		value.setProperties(properties);
 		instance.setLoggerContext(value);

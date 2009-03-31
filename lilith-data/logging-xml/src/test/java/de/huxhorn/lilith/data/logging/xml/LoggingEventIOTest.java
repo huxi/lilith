@@ -74,10 +74,10 @@ public class LoggingEventIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		LoggerContext value=new LoggerContext();
+		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(new Date(1234567890L));
-		Map<String, String> propperties=new HashMap<String, String>();
+		value.setBirthTime(new Date(1234567890000L));
+		Map<String, String> propperties = new HashMap<String, String>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
 		event.setLoggerContext(value);
@@ -89,9 +89,9 @@ public class LoggingEventIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		LoggerContext value=new LoggerContext();
-		value.setBirthTime(new Date(1234567890L));
-		Map<String, String> propperties=new HashMap<String, String>();
+		LoggerContext value = new LoggerContext();
+		value.setBirthTime(new Date(1234567890000L));
+		Map<String, String> propperties = new HashMap<String, String>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
 		event.setLoggerContext(value);
@@ -103,9 +103,9 @@ public class LoggingEventIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		LoggerContext value=new LoggerContext();
+		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		Map<String, String> propperties=new HashMap<String, String>();
+		Map<String, String> propperties = new HashMap<String, String>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
 		event.setLoggerContext(value);
@@ -118,9 +118,9 @@ public class LoggingEventIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		LoggingEvent event = createMinimalEvent();
-		LoggerContext value=new LoggerContext();
+		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(new Date(1234567890L));
+		value.setBirthTime(new Date(1234567890000L));
 		event.setLoggerContext(value);
 		check(event, true);
 	}

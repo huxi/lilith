@@ -20,6 +20,7 @@ package de.huxhorn.lilith.log4j.xml;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -57,7 +58,7 @@ public class LoggingEventReaderTest
 	public void full()
 		throws XMLStreamException, UnsupportedEncodingException
 	{
-		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass\" timestamp=\"1234567890\" level=\"DEBUG\" thread=\"main\">\n" +
+		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
 			"<log4j:message><![CDATA[Foo!]]></log4j:message>\n" +
 			"<log4j:NDC><![CDATA[NDC1 NDC2]]></log4j:NDC>\n" +
 			"<log4j:throwable><![CDATA[java.lang.RuntimeException: Hello\n" +
@@ -81,7 +82,7 @@ public class LoggingEventReaderTest
 		assertEquals("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", readEvent.getLogger());
 
 		// TimeStamp
-		assertEquals(new Date(1234567890L), readEvent.getTimeStamp());
+		assertEquals(new Date(1234567890000L), readEvent.getTimeStamp());
 
 		// Level
 		assertEquals(LoggingEvent.Level.DEBUG, readEvent.getLevel());
@@ -90,27 +91,64 @@ public class LoggingEventReaderTest
 		assertEquals(new Message("Foo!"), readEvent.getMessage());
 
 		// MDC
-		Map<String, String> expectedMdc = new HashMap<String, String>();
-		expectedMdc.put("key1", "value1");
-		expectedMdc.put("key2", "value2");
-		assertEquals(expectedMdc, readEvent.getMdc());
+		{
+			Map<String, String> expectedMdc = new HashMap<String, String>();
+			expectedMdc.put("key1", "value1");
+			expectedMdc.put("key2", "value2");
+			assertEquals(expectedMdc, readEvent.getMdc());
+		}
 
 		// NDC
-		Message[] expectedNdc = new Message[]
-			{
-				new Message("NDC1"),
-				new Message("NDC2")
-			};
-		assertArrayEquals(expectedNdc, readEvent.getNdc());
+		{
+			Message[] expectedNdc = new Message[]
+				{
+					new Message("NDC1"),
+					new Message("NDC2")
+				};
+			assertArrayEquals(expectedNdc, readEvent.getNdc());
+		}
 
 		// call stack
-		ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
-			{
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 18)
-			};
-		assertArrayEquals(expectedCallStack, readEvent.getCallStack());
+		{
+			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
+				{
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 18)
+				};
+			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
+		}
+
+		// thread info
+		{
+			ThreadInfo threadInfo = new ThreadInfo();
+			threadInfo.setName("main");
+			assertEquals(threadInfo, readEvent.getThreadInfo());
+		}
 
 		// TODO: ThrowableInfo
+		/*
+		{
+			ThrowableInfo throwableInfo=new ThrowableInfo();
+			throwableInfo.setName("java.lang.RuntimeException");
+			throwableInfo.setMessage("Hello");
+			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 18),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox","main", "Log4jSandbox.java", 38),
+			});
+
+			ThrowableInfo cause=new ThrowableInfo();
+			cause.setName("java.lang.RuntimeException");
+			cause.setMessage("Hi.");
+			cause.setStackTrace(new ExtendedStackTraceElement[]{
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","foobar", "Log4jSandbox.java", 24),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 14),
+			});
+			cause.setOmittedElements(1);
+
+			throwableInfo.setCause(cause);
+
+			assertEquals(throwableInfo, readEvent.getThrowable());
+		}
+		*/
 	}
 
 	private LoggingEvent read(String eventStr)

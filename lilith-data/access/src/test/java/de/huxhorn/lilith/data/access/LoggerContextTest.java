@@ -82,7 +82,7 @@ public class LoggerContextTest
 	{
 		LoggerContext instance = new LoggerContext();
 
-		Date value = new Date(1234567890L);
+		Date value = new Date(1234567890000L);
 		instance.setBirthTime(value);
 
 		{
@@ -108,7 +108,7 @@ public class LoggerContextTest
 	{
 		LoggerContext instance = new LoggerContext();
 
-		Map<String, String> value=new HashMap<String, String>();
+		Map<String, String> value = new HashMap<String, String>();
 		value.put("foo", "bar");
 		instance.setProperties(value);
 

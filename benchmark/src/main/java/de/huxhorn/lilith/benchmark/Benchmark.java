@@ -958,7 +958,7 @@ public class Benchmark
 		result.setCallStack(callStack);
 		ThrowableInfo throwableInfo = createThrowableInfo();
 		result.setThrowable(throwableInfo);
-		result.setTimeStamp(new Date(1234567890L));
+		result.setTimeStamp(new Date(1234567890000L));
 		return result;
 	}
 

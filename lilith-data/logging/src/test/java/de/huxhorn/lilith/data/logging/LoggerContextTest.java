@@ -17,20 +17,18 @@
  */
 package de.huxhorn.lilith.data.logging;
 
-import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
-import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-import static de.huxhorn.sulky.junit.JUnitTools.testClone;
+import static de.huxhorn.sulky.junit.JUnitTools.*;
 
-import org.junit.Before;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoggerContextTest
 {
@@ -84,7 +82,7 @@ public class LoggerContextTest
 	{
 		LoggerContext instance = new LoggerContext();
 
-		Date value = new Date(1234567890L);
+		Date value = new Date(1234567890000L);
 		instance.setBirthTime(value);
 
 		{
@@ -110,7 +108,7 @@ public class LoggerContextTest
 	{
 		LoggerContext instance = new LoggerContext();
 
-		Map<String, String> value=new HashMap<String, String>();
+		Map<String, String> value = new HashMap<String, String>();
 		value.put("foo", "bar");
 		instance.setProperties(value);
 
