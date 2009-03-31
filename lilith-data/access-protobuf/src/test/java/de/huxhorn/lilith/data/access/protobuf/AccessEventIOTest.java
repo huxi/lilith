@@ -27,10 +27,10 @@ public class AccessEventIOTest
 	public void loggerContext()
 	{
 		AccessEvent event = createMinimalEvent();
-		LoggerContext value=new LoggerContext();
+		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(new Date(1234567890L));
-		Map<String, String> propperties=new HashMap<String, String>();
+		value.setBirthTime(new Date(1234567890000L));
+		Map<String, String> propperties = new HashMap<String, String>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
 		event.setLoggerContext(value);
@@ -41,7 +41,7 @@ public class AccessEventIOTest
 	public void method()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setMethod(value);
 		check(event);
 	}
@@ -50,7 +50,7 @@ public class AccessEventIOTest
 	public void protocol()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setProtocol(value);
 		check(event);
 	}
@@ -59,7 +59,7 @@ public class AccessEventIOTest
 	public void remoteAddress()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setRemoteAddress(value);
 		check(event);
 	}
@@ -68,7 +68,7 @@ public class AccessEventIOTest
 	public void remoteHost()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setRemoteHost(value);
 		check(event);
 	}
@@ -77,7 +77,7 @@ public class AccessEventIOTest
 	public void remoteUser()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setRemoteUser(value);
 		check(event);
 	}
@@ -86,7 +86,7 @@ public class AccessEventIOTest
 	public void requestUri()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setRequestURI(value);
 		check(event);
 	}
@@ -95,7 +95,7 @@ public class AccessEventIOTest
 	public void requestUrl()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setRequestURL(value);
 		check(event);
 	}
@@ -104,7 +104,7 @@ public class AccessEventIOTest
 	public void serverName()
 	{
 		AccessEvent event = createMinimalEvent();
-		String value="value";
+		String value = "value";
 		event.setServerName(value);
 		check(event);
 	}
@@ -113,7 +113,7 @@ public class AccessEventIOTest
 	public void timeStamp()
 	{
 		AccessEvent event = createMinimalEvent();
-		Date value=new Date(1234567890L);
+		Date value = new Date(1234567890000L);
 		event.setTimeStamp(value);
 		check(event);
 	}
@@ -122,7 +122,7 @@ public class AccessEventIOTest
 	public void localPort()
 	{
 		AccessEvent event = createMinimalEvent();
-		int value=17;
+		int value = 17;
 		event.setLocalPort(value);
 		check(event);
 	}
@@ -131,7 +131,7 @@ public class AccessEventIOTest
 	public void statusCode()
 	{
 		AccessEvent event = createMinimalEvent();
-		int value=200;
+		int value = 200;
 		event.setStatusCode(value);
 		check(event);
 	}
@@ -140,7 +140,7 @@ public class AccessEventIOTest
 	public void requestHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value=new HashMap<String, String>();
+		Map<String, String> value = new HashMap<String, String>();
 		value.put("foo", "bar");
 		event.setRequestHeaders(value);
 		check(event);
@@ -150,7 +150,7 @@ public class AccessEventIOTest
 	public void emptyRequestHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value=new HashMap<String, String>();
+		Map<String, String> value = new HashMap<String, String>();
 		event.setRequestHeaders(value);
 		check(event);
 	}
@@ -159,7 +159,7 @@ public class AccessEventIOTest
 	public void responseHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value=new HashMap<String, String>();
+		Map<String, String> value = new HashMap<String, String>();
 		value.put("foo", "bar");
 		event.setResponseHeaders(value);
 		check(event);
@@ -169,7 +169,7 @@ public class AccessEventIOTest
 	public void emptyResponseHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value=new HashMap<String, String>();
+		Map<String, String> value = new HashMap<String, String>();
 		event.setResponseHeaders(value);
 		check(event);
 	}
@@ -178,7 +178,7 @@ public class AccessEventIOTest
 	public void requestParameters()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String[]> value=new HashMap<String, String[]>();
+		Map<String, String[]> value = new HashMap<String, String[]>();
 		value.put("foo", new String[]{"val1", "val2"});
 		event.setRequestParameters(value);
 		check(event);
@@ -188,7 +188,7 @@ public class AccessEventIOTest
 	public void emptyRequestParameters()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String[]> value=new HashMap<String, String[]>();
+		Map<String, String[]> value = new HashMap<String, String[]>();
 		event.setRequestParameters(value);
 		check(event);
 	}

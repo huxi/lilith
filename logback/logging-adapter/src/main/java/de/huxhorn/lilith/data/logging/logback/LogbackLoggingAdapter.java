@@ -235,7 +235,7 @@ public class LogbackLoggingAdapter
 			}
 
 			// else
-			stackElements.add(parseStac(dataPoint.getStackTraceElementProxy()));
+			stackElements.add(parseStackTraceElementProxy(dataPoint.getStackTraceElementProxy()));
 		}
 		// it's advisable actually set the stackElements of result in all cases :p
 		result.setStackTrace(stackElements.toArray(new ExtendedStackTraceElement[stackElements.size()]));
@@ -243,7 +243,7 @@ public class LogbackLoggingAdapter
 		return result;
 	}
 
-	public static ExtendedStackTraceElement parseStac(StackTraceElementProxy proxy)
+	public static ExtendedStackTraceElement parseStackTraceElementProxy(StackTraceElementProxy proxy)
 	{
 		if(proxy == null)
 		{
