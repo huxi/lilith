@@ -56,6 +56,7 @@ import org.xhtmlrenderer.simple.FSScrollPane;
 import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
+import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -145,6 +146,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private XHTMLPanel messagePane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private EventWrapper<T> selectedEvent;
+	private SelectionHighlighter messagePaneCaret;
+	private SelectionHighlighter.CopyAction copyAction;
 
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
@@ -177,6 +180,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		verticalLogScrollbar = tableScrollPane.getVerticalScrollBar();
 
 		messagePane = new XHTMLPanel();
+		messagePaneCaret = new SelectionHighlighter();
+		messagePaneCaret.install(messagePane);
+
+		copyAction = new SelectionHighlighter.CopyAction();
+		copyAction.install(messagePaneCaret);
+
+		// TODO: Copy action calling caret.copy()
 		messagePane.addMouseListener(new EventViewMouseListener());
 
 
@@ -1046,6 +1056,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			return filteringBuffer.getCondition();
 		}
 		return null;
+	}
+
+	public void copySelection()
+	{
+		copyAction.actionPerformed(null);
 	}
 
 	/**
