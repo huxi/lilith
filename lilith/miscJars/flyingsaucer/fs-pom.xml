@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer</artifactId>
-	<version>8Pre2</version>
+	<version>8RC1</version>
 	<packaging>jar</packaging>
 	<name>FlyingSaucer XHTML Renderer</name>
 	<description>This is the third-party library FlyingSaucer that isn't available in the central maven repository.</description>

@@ -355,7 +355,7 @@
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer</artifactId>
-			<version>8Pre2</version>
+			<version>8RC1</version>
 			<!--
 			<groupId>flyingsaucer</groupId>
 			<artifactId>core-renderer</artifactId>

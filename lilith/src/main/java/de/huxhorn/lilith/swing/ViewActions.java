@@ -500,6 +500,7 @@ public class ViewActions
 	private ClearToolBarAction clearToolBarAction;
 	private FindToolBarAction findToolBarAction;
 	private StatisticsToolBarAction statisticsToolBarAction;
+	private CopySelectionAction copySelectionAction;
 	private CopyEventAction copyEventAction;
 	private CopyLoggingMessageAction copyLoggingMessageAction;
 	private CopyLoggingThrowableAction copyLoggingThrowableAction;
@@ -577,6 +578,7 @@ public class ViewActions
 		// Edit
 		showUnfilteredEventAction = new ShowUnfilteredEventAction();
 		gotoSourceAction = new GotoSourceAction();
+		copySelectionAction = new CopySelectionAction();
 		copyEventAction = new CopyEventAction();
 		copyLoggingMessageAction = new CopyLoggingMessageAction();
 		copyLoggerNameAction = new CopyLoggerNameAction();
@@ -705,6 +707,8 @@ public class ViewActions
 		// Edit
 		editMenu = new JMenu("Edit");
 		editMenu.setMnemonic('e');
+		editMenu.add(copySelectionAction);
+		editMenu.addSeparator();
 		editMenu.add(copyEventAction);
 		editMenu.addSeparator();
 		editMenu.add(copyLoggingMessageAction);
@@ -815,6 +819,8 @@ public class ViewActions
 				this.viewContainer.addChangeListener(containerChangeListener);
 				this.viewContainer.addPropertyChangeListener(containerPropertyChangeListener);
 
+				EventWrapperViewPanel view = viewContainer.getSelectedView();
+
 				setEventWrapper(this.viewContainer.getSelectedEvent());
 			}
 			updateActions();
@@ -849,6 +855,7 @@ public class ViewActions
 				isActive = eventWrapperViewPanel.getState() == LoggingViewState.ACTIVE;
 				hasFilteredBuffer = eventWrapperViewPanel.getBufferCondition() != null;
 			}
+			copySelectionAction.setView(eventWrapperViewPanel);
 		}
 
 		if(logger.isDebugEnabled())
@@ -1280,6 +1287,8 @@ public class ViewActions
 
 		JMenu copyMenuItem = new JMenu("Copy...");
 		popup.add(copyMenuItem);
+		copyMenuItem.add(new JMenuItem(copySelectionAction));
+		copyMenuItem.addSeparator();
 		copyMenuItem.add(new JMenuItem(copyEventAction));
 		copyMenuItem.addSeparator();
 		copyMenuItem.add(new JMenuItem(copyLoggingMessageAction));
@@ -2974,6 +2983,36 @@ public class ViewActions
 		}
 	}
 
+
+	private class CopySelectionAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -551520865313383753L;
+
+		private EventWrapperViewPanel view;
+
+		public CopySelectionAction()
+		{
+			super("Copy selection");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " C");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			if(view != null)
+			{
+				view.copySelection();
+			}
+		}
+
+		public void setView(EventWrapperViewPanel view)
+		{
+			this.view = view;
+		}
+	}
 
 	private class CopyEventAction
 		extends AbstractAction
