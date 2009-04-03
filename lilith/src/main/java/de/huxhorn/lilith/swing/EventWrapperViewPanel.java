@@ -186,7 +186,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		copyAction = new SelectionHighlighter.CopyAction();
 		copyAction.install(messagePaneCaret);
 
-		// TODO: Copy action calling caret.copy()
 		messagePane.addMouseListener(new EventViewMouseListener());
 
 
