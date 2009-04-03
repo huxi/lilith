@@ -30,6 +30,8 @@ import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.List;
 
@@ -43,9 +45,8 @@ public class HelpFrame
 	private XHTMLPanel helpPane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private MainFrame mainFrame;
-	private SelectionHighlighter helpPaneCaret;
 	private SelectionHighlighter.CopyAction copyAction;
-	//private JTextPane helpPane;
+	private JPopupMenu popup;
 
 
 	public HelpFrame(MainFrame mainFrame)
@@ -59,13 +60,6 @@ public class HelpFrame
 
 	private void initUI()
 	{
-		/*
-		helpPane = new JTextPane();
-		HTMLEditorKit htmlEditorKit=new HTMLEditorKit();
-		helpPane.setEditorKit(htmlEditorKit);
-		helpPane.setEditable(false);
-		JScrollPane helpScrollPane = new JScrollPane(helpPane);
-		*/
 		helpPane = new XHTMLPanel();
 
 		{
@@ -86,7 +80,7 @@ public class HelpFrame
 			helpPane.addMouseTrackingListener(new OpenUrlLinkListener(mainFrame, originalLinkListener));
 		}
 
-		helpPaneCaret = new SelectionHighlighter();
+		SelectionHighlighter helpPaneCaret = new SelectionHighlighter();
 		helpPaneCaret.install(helpPane);
 
 		copyAction = new SelectionHighlighter.CopyAction();
@@ -116,6 +110,53 @@ public class HelpFrame
 		editMenu.add(copySelectionAction);
 		menuBar.add(editMenu);
 		setJMenuBar(menuBar);
+
+		popup = new JPopupMenu();
+		popup.add(copySelectionAction);
+		helpPane.addMouseListener(new PopupMouseListener());
+	}
+
+	private void showPopup(MouseEvent evt)
+	{
+		Point p = evt.getPoint();
+		if(logger.isInfoEnabled()) logger.info("Show popup at {}.", p);
+		popup.show(helpPane, p.x, p.y);
+	}
+
+	private class PopupMouseListener
+		implements MouseListener
+	{
+		public void mouseClicked(MouseEvent evt)
+		{
+			if(evt.isPopupTrigger())
+			{
+				showPopup(evt);
+			}
+		}
+
+		public void mousePressed(MouseEvent evt)
+		{
+			if(evt.isPopupTrigger())
+			{
+				showPopup(evt);
+			}
+		}
+
+		public void mouseReleased(MouseEvent evt)
+		{
+			if(evt.isPopupTrigger())
+			{
+				showPopup(evt);
+			}
+		}
+
+		public void mouseEntered(MouseEvent e)
+		{
+		}
+
+		public void mouseExited(MouseEvent e)
+		{
+		}
 	}
 
 	public void copySelection()
