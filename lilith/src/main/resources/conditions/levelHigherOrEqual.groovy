@@ -1,4 +1,5 @@
 import de.huxhorn.lilith.data.logging.LoggingEvent
+import de.huxhorn.lilith.data.logging.LoggingEvent.Level
 
 /*
  * Lilith - a log event viewer.
@@ -19,17 +20,29 @@ import de.huxhorn.lilith.data.logging.LoggingEvent
  */
 
 /**
- * Returns true if the logging event has a thread name that
- * starts with the given searchString.
+ * Returns true if the logging event has a level higher or equal to the
+ * one provided with the searchString.
  */
 def event = input?.event;
 
 if(event instanceof LoggingEvent)
 {
-	def threadName = event.threadInfo?.name;
-	if(threadName)
+	def level = event.level;
+
+	if(level)
 	{
-		return threadName.startsWith(searchString);
+		try
+		{
+			def threshold=LoggingEvent.Level.valueOf(searchString);
+			if(level >= threshold)
+			{
+				return true;
+			}
+		}
+		catch(IllegalArgumentException ex)
+		{
+			// ignore
+		}
 	}
 }
 return false;
