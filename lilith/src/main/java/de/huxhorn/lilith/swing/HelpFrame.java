@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
+import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,10 @@ import org.xhtmlrenderer.simple.FSScrollPane;
 import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
+import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
 
@@ -40,6 +43,8 @@ public class HelpFrame
 	private XHTMLPanel helpPane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private MainFrame mainFrame;
+	private SelectionHighlighter helpPaneCaret;
+	private SelectionHighlighter.CopyAction copyAction;
 	//private JTextPane helpPane;
 
 
@@ -81,6 +86,12 @@ public class HelpFrame
 			helpPane.addMouseTrackingListener(new OpenUrlLinkListener(mainFrame, originalLinkListener));
 		}
 
+		helpPaneCaret = new SelectionHighlighter();
+		helpPaneCaret.install(helpPane);
+
+		copyAction = new SelectionHighlighter.CopyAction();
+		copyAction.install(helpPaneCaret);
+
 
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
@@ -99,6 +110,17 @@ public class HelpFrame
 			}
 		}
 
+		CopySelectionAction copySelectionAction = new CopySelectionAction();
+		JMenuBar menuBar = new JMenuBar();
+		JMenu editMenu = new JMenu("Edit");
+		editMenu.add(copySelectionAction);
+		menuBar.add(editMenu);
+		setJMenuBar(menuBar);
+	}
+
+	public void copySelection()
+	{
+		copyAction.actionPerformed(null);
 	}
 
 	public void setHelpUrl(URL helpUrl)
@@ -106,5 +128,25 @@ public class HelpFrame
 		helpPane.setDocument(helpUrl.toExternalForm(), xhtmlNamespaceHandler);
 		//helpPane.setText(helpText);
 		//helpPane.setCaretPosition(0);
+	}
+
+	private class CopySelectionAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -551520865313383753L;
+
+		public CopySelectionAction()
+		{
+			super("Copy selection");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " C");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			copySelection();
+		}
 	}
 }
