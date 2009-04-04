@@ -6,7 +6,7 @@
 	<artifactId>de.huxhorn.lilith.logback.servlet</artifactId>
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
-	<name>Logback Shutdown ServlectContextListener</name>
+	<name>Logback Shutdown ServletContextListener</name>
 	<description>This file is part of Lilith. It contains a ServletContextListener that shuts down logback.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 
