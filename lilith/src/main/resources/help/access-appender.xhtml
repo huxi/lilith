@@ -12,8 +12,8 @@
 
 <h1><a name="top">Using the Lilith Access Appender</a></h1>
 
-<p>The Lilith Access Appender is a replacement for <tt>ch.qos.logback.access.net.SocketAppender</tt>.
-	While LogBACK's appender is stream-based, i.e. it streams access events using an <tt>ObjectOutputStream</tt> the
+<p>The Lilith Access Appender is a replacement for <code>ch.qos.logback.access.net.SocketAppender</code>.
+	While LogBACK's appender is stream-based, i.e. it streams access events using an <code>ObjectOutputStream</code> the
 	Lilith appender is message based, i.e. it sends access events one after the other as single messages.</p>
 
 <p>A message consists of an integer that specifies the number of bytes of the following event, followed by the
@@ -32,8 +32,8 @@
 	</li>
 </ul>
 
-<p>Add the following to your applications <tt>pom.xml</tt> file:</p>
-		<pre><tt><![CDATA[<plugin>
+<p>Add the following to your applications <code>pom.xml</code> file:</p>
+		<pre><code><![CDATA[<plugin>
   <groupId>org.mortbay.jetty</groupId>
   <artifactId>maven-jetty-plugin</artifactId>
   <configuration>
@@ -123,11 +123,13 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
-</plugin>]]></tt></pre>
+</plugin>]]></code></pre>
 
+<p>If you aren't using <a href="http://maven.apache.org">Maven</a> you can find a list of all required dependencies here:<br/>
+<a href="http://lilith.huxhorn.de/projects/de.huxhorn.lilith.logback.appender.multiplex-access/dependencies.html">http://lilith.huxhorn.de/projects/de.huxhorn.lilith.logback.appender.multiplex-access/dependencies.html</a></p>
 
-<p>Then, put the following into <tt>src/main/jetty/logback-access.xml</tt> file:</p>
-		<pre><tt><![CDATA[<configuration>
+<p>Then, put the following into <code>src/main/jetty/logback-access.xml</code> file:</p>
+		<pre><code><![CDATA[<configuration>
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.access.PatternLayout">
       <Pattern>combined</Pattern>
@@ -141,7 +143,7 @@
 
   <appender-ref ref="STDOUT" />
   <appender-ref ref="multiplex" />
-</configuration>]]></tt></pre>
+</configuration>]]></code></pre>
 
 <p><a href="#top">Back to top.</a></p>
 </body>
