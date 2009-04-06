@@ -66,22 +66,6 @@ public class ThrowableRenderer
 				ThrowableInfo ti = event.getThrowable();
 				if(ti != null)
 				{
-//					String[] throwStr = ti.getThrowableStrRep();
-//					if(throwStr!=null && throwStr.length>0)
-//					{
-//						text=throwStr[0];
-//						int cutIndex=text.indexOf(':');
-//						if(cutIndex>-1)
-//						{
-//							text=text.substring(0, cutIndex);
-//						}
-//						cutIndex=text.lastIndexOf('.');
-//						if(cutIndex>-1)
-//						{
-//							cutIndex++;
-//							text=text.substring(cutIndex);
-//						}
-//					}
 					text = ti.getName();
 					int cutIndex = text.lastIndexOf('.');
 					if(cutIndex > -1)

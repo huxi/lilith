@@ -102,4 +102,42 @@ public class ThrowableInfo
 		result = 29 * result + (cause != null ? cause.hashCode() : 0);
 		return result;
 	}
+
+	@Override
+	public String toString()
+	{
+		return toString(false);
+	}
+	public String toString(boolean verbose)
+	{
+		StringBuilder result=new StringBuilder();
+		result.append("ThrowableInfo[");
+		result.append("name=").append(name);
+		if(message != null)
+		{
+			result.append(", message=\"").append(message).append("\"");
+		}
+		if(stackTrace != null)
+		{
+			if(verbose)
+			{
+				result.append(", stackTrace=").append(Arrays.toString(stackTrace));
+			}
+			else
+			{
+				result.append(", stackTrace.length=").append(stackTrace.length);
+			}
+		}
+		if(omittedElements>0)
+		{
+			result.append(", omittedElements=").append(omittedElements);
+		}
+		if(cause!=null)
+		{
+			result.append(", cause=").append(cause.toString(verbose));
+		}
+
+		result.append("]");
+		return result.toString();
+	}
 }
