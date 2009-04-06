@@ -227,7 +227,7 @@ public class LoggingEventReader
 		String throwableString = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_NODE);
 		if(throwableString != null)
 		{
-			StringTokenizer tok= new StringTokenizer(throwableString, "\n\r", false);
+			StringTokenizer tok= new StringTokenizer(throwableString, "\n", false);
 			List<String> lines=new ArrayList<String>();
 			while(tok.hasMoreTokens())
 			{
@@ -238,22 +238,22 @@ public class LoggingEventReader
 					lines.add(current);
 				}
 			}
-			return recursiveParse(lines, 0);
+			return parseThrowableInfo(lines);
 		}
 		return null;
 	}
 
-	private ThrowableInfo recursiveParse(List<String> lines, int lineCount)
+	private ThrowableInfo parseThrowableInfo(List<String> lines)
 	{
+		System.out.println("Lines: "+lines);
 		ThrowableInfo result=null;
 		ThrowableInfo currentTI=null;
 		List<ExtendedStackTraceElement> stackTraceElements=new ArrayList<ExtendedStackTraceElement>();
-		for(int i=lineCount;i<lines.size();i++)
+		for(String current : lines)
 		{
-			String current=lines.get(i);
 			if(current.startsWith(AT_PREFIX))
 			{
-				current=current.substring(AT_PREFIX.length());
+				current = current.substring(AT_PREFIX.length());
 				ExtendedStackTraceElement este = ExtendedStackTraceElement.parseStackTraceElement(current);
 				if(este != null)
 				{
@@ -264,7 +264,8 @@ public class LoggingEventReader
 			{
 				if(current.endsWith(OMITTED_POSTFIX) && currentTI != null)
 				{
-					String countStr=current.substring(OMITTED_PREFIX.length(), current.length()-OMITTED_POSTFIX.length());
+					String countStr = current
+						.substring(OMITTED_PREFIX.length(), current.length() - OMITTED_POSTFIX.length());
 					currentTI.setOmittedElements(Integer.parseInt(countStr));
 				}
 			}
@@ -272,32 +273,34 @@ public class LoggingEventReader
 			{
 				if(current.startsWith(CAUSED_BY_PREFIX))
 				{
-					current=current.substring(CAUSED_BY_PREFIX.length());
+					current = current.substring(CAUSED_BY_PREFIX.length());
 				}
 				if(currentTI != null)
 				{
 					ThrowableInfo newTI = new ThrowableInfo();
 					currentTI.setCause(newTI);
-					if(stackTraceElements.size()>0)
+					if(stackTraceElements.size() > 0)
 					{
-						currentTI.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements.size()]));
+						currentTI
+							.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements
+								.size()]));
 						stackTraceElements.clear();
 					}
-					currentTI=newTI;
+					currentTI = newTI;
 				}
 				else
 				{
-					currentTI=new ThrowableInfo();
+					currentTI = new ThrowableInfo();
 				}
-				if(result==null)
+				if(result == null)
 				{
-					result=currentTI;
+					result = currentTI;
 				}
-				int colonIndex=current.indexOf(CLASS_MESSAGE_SEPARATOR);
+				int colonIndex = current.indexOf(CLASS_MESSAGE_SEPARATOR);
 				if(colonIndex > -1)
 				{
 					currentTI.setName(current.substring(0, colonIndex));
-					currentTI.setMessage(current.substring(colonIndex+CLASS_MESSAGE_SEPARATOR.length()));
+					currentTI.setMessage(current.substring(colonIndex + CLASS_MESSAGE_SEPARATOR.length()));
 				}
 				else
 				{
