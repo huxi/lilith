@@ -28,6 +28,7 @@ import de.huxhorn.sulky.stax.StaxUtilities;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -38,6 +39,12 @@ import javax.xml.stream.XMLStreamReader;
 public class LoggingEventReader
 	implements GenericStreamReader<LoggingEvent>, LoggingEventSchemaConstants
 {
+	private static final String CAUSED_BY_PREFIX = "Caused by: ";
+	private static final String AT_PREFIX = "at ";
+	private static final String OMITTED_PREFIX = "... ";
+	private static final String OMITTED_POSTFIX = " more";
+	private static final String CLASS_MESSAGE_SEPARATOR = ": ";
+
 	public LoggingEventReader()
 	{
 	}
@@ -218,8 +225,93 @@ public class LoggingEventReader
 		throws XMLStreamException
 	{
 		String throwableString = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_NODE);
-		// TODO: parse Throwable string...
+		if(throwableString != null)
+		{
+			StringTokenizer tok= new StringTokenizer(throwableString, "\n\r", false);
+			List<String> lines=new ArrayList<String>();
+			while(tok.hasMoreTokens())
+			{
+				String current = tok.nextToken();
+				current=current.trim();
+				if(current.length()>0)
+				{
+					lines.add(current);
+				}
+			}
+			return recursiveParse(lines, 0);
+		}
 		return null;
+	}
+
+	private ThrowableInfo recursiveParse(List<String> lines, int lineCount)
+	{
+		ThrowableInfo result=null;
+		ThrowableInfo currentTI=null;
+		List<ExtendedStackTraceElement> stackTraceElements=new ArrayList<ExtendedStackTraceElement>();
+		for(int i=lineCount;i<lines.size();i++)
+		{
+			String current=lines.get(i);
+			if(current.startsWith(AT_PREFIX))
+			{
+				current=current.substring(AT_PREFIX.length());
+				ExtendedStackTraceElement este = ExtendedStackTraceElement.parseStackTraceElement(current);
+				if(este != null)
+				{
+					stackTraceElements.add(este);
+				}
+			}
+			else if(current.startsWith(OMITTED_PREFIX))
+			{
+				if(current.endsWith(OMITTED_POSTFIX) && currentTI != null)
+				{
+					String countStr=current.substring(OMITTED_PREFIX.length(), current.length()-OMITTED_POSTFIX.length());
+					currentTI.setOmittedElements(Integer.parseInt(countStr));
+				}
+			}
+			else
+			{
+				if(current.startsWith(CAUSED_BY_PREFIX))
+				{
+					current=current.substring(CAUSED_BY_PREFIX.length());
+				}
+				if(currentTI != null)
+				{
+					ThrowableInfo newTI = new ThrowableInfo();
+					currentTI.setCause(newTI);
+					if(stackTraceElements.size()>0)
+					{
+						currentTI.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements.size()]));
+						stackTraceElements.clear();
+					}
+					currentTI=newTI;
+				}
+				else
+				{
+					currentTI=new ThrowableInfo();
+				}
+				if(result==null)
+				{
+					result=currentTI;
+				}
+				int colonIndex=current.indexOf(CLASS_MESSAGE_SEPARATOR);
+				if(colonIndex > -1)
+				{
+					currentTI.setName(current.substring(0, colonIndex));
+					currentTI.setMessage(current.substring(colonIndex+CLASS_MESSAGE_SEPARATOR.length()));
+				}
+				else
+				{
+					currentTI.setName(current);
+				}
+			}
+		}
+		if(currentTI != null && stackTraceElements.size()>0)
+		{
+			currentTI.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements.size()]));
+			stackTraceElements.clear();
+		}
+
+		return result;
 	}
 
 	private Message[] readNdc(XMLStreamReader reader)

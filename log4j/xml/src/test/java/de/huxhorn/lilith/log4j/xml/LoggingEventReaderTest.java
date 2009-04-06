@@ -124,8 +124,7 @@ public class LoggingEventReaderTest
 			assertEquals(threadInfo, readEvent.getThreadInfo());
 		}
 
-		// TODO: ThrowableInfo
-		/*
+		// ThrowableInfo
 		{
 			ThrowableInfo throwableInfo=new ThrowableInfo();
 			throwableInfo.setName("java.lang.RuntimeException");
@@ -145,10 +144,96 @@ public class LoggingEventReaderTest
 			cause.setOmittedElements(1);
 
 			throwableInfo.setCause(cause);
-
+			ThrowableInfo actual = readEvent.getThrowable();
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
 			assertEquals(throwableInfo, readEvent.getThrowable());
 		}
-		*/
+	}
+
+	@Test
+	public void singleThrowable()
+		throws UnsupportedEncodingException, XMLStreamException
+	{
+		String eventString="<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
+			"<log4j:message><![CDATA[Foobar!]]></log4j:message>\n" +
+			"<log4j:NDC><![CDATA[NDC1 NDC2 NDC with spaces...]]></log4j:NDC>\n" +
+			"<log4j:throwable><![CDATA[java.lang.Throwable\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox.main(Log4jSandbox.java:37)\n" +
+			"]]></log4j:throwable>\n" +
+			"<log4j:locationInfo class=\"de.huxhorn.lilith.sandbox.Log4jSandbox\" method=\"main\" file=\"Log4jSandbox.java\" line=\"37\"/>\n" +
+			"<log4j:properties>\n" +
+			"<log4j:data name=\"key1\" value=\"value1\"/>\n" +
+			"<log4j:data name=\"key2\" value=\"value2\"/>\n" +
+			"</log4j:properties>\n" +
+			"</log4j:event>";
+
+		LoggingEvent readEvent = read(eventString);
+		logEvent(readEvent);
+
+		// Logger
+		assertEquals("de.huxhorn.lilith.sandbox.Log4jSandbox", readEvent.getLogger());
+
+		// TimeStamp
+		assertEquals(new Date(1234567890000L), readEvent.getTimeStamp());
+
+		// Level
+		assertEquals(LoggingEvent.Level.DEBUG, readEvent.getLevel());
+
+		// Message
+		assertEquals(new Message("Foobar!"), readEvent.getMessage());
+
+		// MDC
+		{
+			Map<String, String> expectedMdc = new HashMap<String, String>();
+			expectedMdc.put("key1", "value1");
+			expectedMdc.put("key2", "value2");
+			assertEquals(expectedMdc, readEvent.getMdc());
+		}
+
+		// NDC
+		{
+			Message[] expectedNdc = new Message[]
+				{
+					new Message("NDC1"),
+					new Message("NDC2"),
+					new Message("NDC"),
+					new Message("with"),
+					new Message("spaces..."),
+				};
+			assertArrayEquals(expectedNdc, readEvent.getNdc());
+		}
+
+		// call stack
+		{
+			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
+				{
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 37)
+				};
+			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
+		}
+
+		// thread info
+		{
+			ThreadInfo threadInfo = new ThreadInfo();
+			threadInfo.setName("main");
+			assertEquals(threadInfo, readEvent.getThreadInfo());
+		}
+
+		// ThrowableInfo
+		{
+			ThrowableInfo throwableInfo=new ThrowableInfo();
+			throwableInfo.setName("java.lang.Throwable");
+			throwableInfo.setMessage(null);
+			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox","main", "Log4jSandbox.java", 37),
+			});
+
+			ThrowableInfo actual = readEvent.getThrowable();
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			assertEquals(throwableInfo, actual);
+		}
 	}
 
 	private LoggingEvent read(String eventStr)
