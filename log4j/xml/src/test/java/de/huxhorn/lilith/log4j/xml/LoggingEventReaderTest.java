@@ -236,6 +236,117 @@ public class LoggingEventReaderTest
 		}
 	}
 
+	@Test
+	public void multiLineMessage()
+		throws UnsupportedEncodingException, XMLStreamException
+	{
+		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
+			"<log4j:message><![CDATA[Foo!]]></log4j:message>\n" +
+			"<log4j:NDC><![CDATA[NDC1 NDC2 NDC with spaces...]]></log4j:NDC>\n" +
+			"<log4j:throwable><![CDATA[java.lang.RuntimeException: Multi\n" +
+			"line\n" +
+			"message\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.execute(Log4jSandbox.java:28)\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox.main(Log4jSandbox.java:51)\n" +
+			"Caused by: java.lang.RuntimeException: Hi.\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.foobar(Log4jSandbox.java:35)\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.execute(Log4jSandbox.java:24)\n" +
+			"\t... 1 more\n" +
+			"]]></log4j:throwable>\n" +
+			"<log4j:locationInfo class=\"de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass\" method=\"execute\" file=\"Log4jSandbox.java\" line=\"29\"/>\n" +
+			"<log4j:properties>\n" +
+			"<log4j:data name=\"key1\" value=\"value1\"/>\n" +
+			"<log4j:data name=\"key2\" value=\"value2\"/>\n" +
+			"</log4j:properties>\n" +
+			"</log4j:event>";
+
+		LoggingEvent readEvent = read(eventString);
+		logEvent(readEvent);
+
+		// Logger
+		assertEquals("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", readEvent.getLogger());
+
+		// TimeStamp
+		assertEquals(new Date(1234567890000L), readEvent.getTimeStamp());
+
+		// Level
+		assertEquals(LoggingEvent.Level.DEBUG, readEvent.getLevel());
+
+		// Message
+		assertEquals(new Message("Foo!"), readEvent.getMessage());
+
+		// MDC
+		{
+			Map<String, String> expectedMdc = new HashMap<String, String>();
+			expectedMdc.put("key1", "value1");
+			expectedMdc.put("key2", "value2");
+			assertEquals(expectedMdc, readEvent.getMdc());
+		}
+
+		// NDC
+		{
+			Message[] expectedNdc = new Message[]
+				{
+					new Message("NDC1"),
+					new Message("NDC2"),
+					new Message("NDC"),
+					new Message("with"),
+					new Message("spaces..."),
+				};
+			assertArrayEquals(expectedNdc, readEvent.getNdc());
+		}
+
+		// call stack
+		{
+			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
+				{
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 29)
+				};
+			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
+		}
+
+		// thread info
+		{
+			ThreadInfo threadInfo = new ThreadInfo();
+			threadInfo.setName("main");
+			assertEquals(threadInfo, readEvent.getThreadInfo());
+		}
+
+		// ThrowableInfo
+		/*
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.execute(Log4jSandbox.java:28)\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox.main(Log4jSandbox.java:51)\n" +
+			"Caused by: java.lang.RuntimeException: Hi.\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.foobar(Log4jSandbox.java:35)\n" +
+			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.execute(Log4jSandbox.java:24)\n" +
+
+		 */
+		{
+			ThrowableInfo throwableInfo=new ThrowableInfo();
+			throwableInfo.setName("java.lang.RuntimeException");
+			throwableInfo.setMessage("Multi\nline\nmessage");
+			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 28),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox","main", "Log4jSandbox.java", 51),
+			});
+
+			ThrowableInfo cause=new ThrowableInfo();
+			cause.setName("java.lang.RuntimeException");
+			cause.setMessage("Hi.");
+			cause.setStackTrace(new ExtendedStackTraceElement[]{
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","foobar", "Log4jSandbox.java", 35),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 24),
+			});
+			cause.setOmittedElements(1);
+
+			throwableInfo.setCause(cause);
+			ThrowableInfo actual = readEvent.getThrowable();
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			assertEquals(throwableInfo, readEvent.getThrowable());
+		}
+	}
+
 	private LoggingEvent read(String eventStr)
 		throws XMLStreamException, UnsupportedEncodingException
 	{

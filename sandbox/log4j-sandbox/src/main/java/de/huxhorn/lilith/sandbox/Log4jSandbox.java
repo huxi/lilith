@@ -6,6 +6,7 @@ public class Log4jSandbox
 {
 	public static class InnerClass
 	{
+		@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 		public static void execute()
 		{
 			final Logger logger = Logger.getLogger(InnerClass.class);
@@ -15,7 +16,17 @@ public class Log4jSandbox
 			}
 			catch(RuntimeException ex)
 			{
-				if(logger.isDebugEnabled()) logger.debug("Foo!",new RuntimeException("Hello", ex));
+				RuntimeException newEx = new RuntimeException("Hello", ex);
+				if(logger.isDebugEnabled()) logger.debug("Foo!",newEx);
+			}
+			try
+			{
+				foobar();
+			}
+			catch(RuntimeException ex)
+			{
+				RuntimeException newEx = new RuntimeException("Multi\nline\nmessage", ex);
+				if(logger.isDebugEnabled()) logger.debug("Foo!",newEx);
 			}
 		}
 		
@@ -26,6 +37,7 @@ public class Log4jSandbox
 	}
 
 
+	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public static void main(String args[])
 	{
 		final Logger logger = Logger.getLogger(Log4jSandbox.class);
