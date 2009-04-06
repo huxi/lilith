@@ -393,10 +393,12 @@ public class MainFrame
 		openFileChooser = new JFileChooser();
 		openFileChooser.setFileFilter(new LilithFileFilter());
 		openFileChooser.setFileHidingEnabled(false);
+		openFileChooser.setCurrentDirectory(applicationPreferences.getPreviousOpenPath());
 
 		importFileChooser = new JFileChooser();
 		importFileChooser.setFileFilter(new Log4jXmlImportFileFilter());
 		importFileChooser.setFileHidingEnabled(false);
+		importFileChooser.setCurrentDirectory(applicationPreferences.getPreviousImportPath());
 
 		setSplashStatusText("Creating task manager frame.");
 		taskManagerFrame = new TaskManagerInternalFrame(this);
@@ -406,29 +408,7 @@ public class MainFrame
 
 		desktop.add(taskManagerFrame);
 		desktop.validate();
-		/*
-		String helpText=null;
-		InputStream stream=MainFrame.class.getResourceAsStream("/help/keyboard.html");
-		if(stream!=null)
-		{
-			try
-			{
-				helpText = IOUtils.toString(stream);
-			}
-			catch (IOException e)
-			{
-				if(logger.isErrorEnabled()) logger.error("Exception while loading help text!", e);
-			}
-		}
-		if(helpText==null)
-		{
-			setEnabled(false);
-		}
-		else
-		{
-			helpFrame.setHelpUrl(helpText);
-		}
-		*/
+
 		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
 	}
 
@@ -2218,8 +2198,8 @@ public class MainFrame
 			deleteInactiveLogs(loggingFileFactory);
 			deleteInactiveLogs(accessFileFactory);
 		}
-		// TODO: persist last open location
-		// TODO: persist last import location
+		applicationPreferences.setPreviousImportPath(importFileChooser.getCurrentDirectory());
+		applicationPreferences.setPreviousOpenPath(openFileChooser.getCurrentDirectory());
 		applicationPreferences.flush();
 		longTaskManager.shutDown();
 		System.exit(0);

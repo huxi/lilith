@@ -124,11 +124,14 @@ public class ApplicationPreferences
 
 	private static final String OLD_LICENSED_PREFERENCES_KEY = "licensed";
 	private static final String LICENSED_PREFERENCES_KEY = "licensedVersion";
+	public static final String USER_HOME;
 	public static final String DEFAULT_APPLICATION_PATH;
 	private static final Map<String, String> DEFAULT_SOURCE_NAMES;
 	private static final Map<String, String> DEFAULT_SOUND_LOCATIONS;
 	private static final Map<LoggingEvent.Level, ColorScheme> DEFAULT_LEVEL_COLORS;
 	private static final Map<HttpStatus.Type, ColorScheme> DEFAULT_STATUS_COLORS;
+	private static final String PREVIOUS_OPEN_PATH_PROPERTY = "previousOpenPath";
+	private static final String PREVIOUS_IMPORT_PATH_PROPERTY = "previousImportPath";
 
 	public static final String STARTUP_LOOK_AND_FEEL;
 
@@ -141,8 +144,8 @@ public class ApplicationPreferences
 	{
 		PREFERENCES.remove(OLD_LICENSED_PREFERENCES_KEY); // remove garbage
 
-		String userHome = System.getProperty("user.home");
-		File defaultAppPath = new File(userHome, ".lilith");
+		USER_HOME = System.getProperty("user.home");
+		File defaultAppPath = new File(USER_HOME, ".lilith");
 		DEFAULT_APPLICATION_PATH = defaultAppPath.getAbsolutePath();
 
 		Map<String, String> defaultSoundLocations = new HashMap<String, String>();
@@ -1217,12 +1220,11 @@ public class ApplicationPreferences
 
 	public File getImagePath()
 	{
-		String userHome = System.getProperty("user.home");
-		String imagePath = PREFERENCES.get(IMAGE_PATH_PROPERTY, userHome);
+		String imagePath = PREFERENCES.get(IMAGE_PATH_PROPERTY, USER_HOME);
 		File result = new File(imagePath);
 		if(!result.isDirectory())
 		{
-			result = new File(userHome);
+			result = new File(USER_HOME);
 		}
 		return result;
 	}
@@ -1239,14 +1241,59 @@ public class ApplicationPreferences
 		propertyChangeSupport.firePropertyChange(IMAGE_PATH_PROPERTY, oldValue, newValue);
 	}
 
+	public File getPreviousOpenPath()
+	{
+		String imagePath = PREFERENCES.get(PREVIOUS_OPEN_PATH_PROPERTY, USER_HOME);
+		File result = new File(imagePath);
+		if(!result.isDirectory())
+		{
+			result = new File(USER_HOME);
+		}
+		return result;
+	}
+
+	public void setPreviousOpenPath(File openPath)
+	{
+		if(!openPath.isDirectory())
+		{
+			throw new IllegalArgumentException("'" + openPath.getAbsolutePath() + "' is not a directory!");
+		}
+		Object oldValue = getPreviousOpenPath();
+		PREFERENCES.put(PREVIOUS_OPEN_PATH_PROPERTY, openPath.getAbsolutePath());
+		Object newValue = getPreviousOpenPath();
+		propertyChangeSupport.firePropertyChange(PREVIOUS_OPEN_PATH_PROPERTY, oldValue, newValue);
+	}
+
+	public File getPreviousImportPath()
+	{
+		String imagePath = PREFERENCES.get(PREVIOUS_IMPORT_PATH_PROPERTY, USER_HOME);
+		File result = new File(imagePath);
+		if(!result.isDirectory())
+		{
+			result = new File(USER_HOME);
+		}
+		return result;
+	}
+
+	public void setPreviousImportPath(File importPath)
+	{
+		if(!importPath.isDirectory())
+		{
+			throw new IllegalArgumentException("'" + importPath.getAbsolutePath() + "' is not a directory!");
+		}
+		Object oldValue = getPreviousImportPath();
+		PREFERENCES.put(PREVIOUS_IMPORT_PATH_PROPERTY, importPath.getAbsolutePath());
+		Object newValue = getPreviousImportPath();
+		propertyChangeSupport.firePropertyChange(PREVIOUS_IMPORT_PATH_PROPERTY, oldValue, newValue);
+	}
+
 	public File getSoundPath()
 	{
-		String userHome = System.getProperty("user.home");
-		String soundPath = PREFERENCES.get(SOUND_PATH_PROPERTY, userHome);
+		String soundPath = PREFERENCES.get(SOUND_PATH_PROPERTY, USER_HOME);
 		File result = new File(soundPath);
 		if(!result.isDirectory())
 		{
-			result = new File(userHome);
+			result = new File(USER_HOME);
 		}
 		return result;
 	}
@@ -1828,7 +1875,8 @@ public class ApplicationPreferences
 		{
 			if(logger.isInfoEnabled())
 			{
-				logger.info("Exception while loading layouts from file '{}'':", file.getAbsolutePath(), ex.getMessage());
+				logger
+					.info("Exception while loading layouts from file '{}'':", file.getAbsolutePath(), ex.getMessage());
 			}
 			result = null;
 		}
