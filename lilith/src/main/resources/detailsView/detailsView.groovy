@@ -3,6 +3,7 @@ import de.huxhorn.lilith.data.access.HttpStatus
 import de.huxhorn.lilith.data.logging.LoggingEvent
 import de.huxhorn.lilith.data.logging.Message
 import de.huxhorn.lilith.data.logging.ThreadInfo
+import groovy.xml.StreamingMarkupBuilder
 import java.text.SimpleDateFormat
 
 /*
@@ -480,7 +481,10 @@ def buildThrowable(element, throwable, isFirst = false)
 		if(throwable.message && throwable.message != throwable.name)
 		{
 			it.br();
-			it.mkp.yield throwable.message;
+			it.pre()
+			{
+				it.mkp.yield throwable.message;
+			}
 		}
 		it.br();
 		built=buildStackTrace(it, throwable.stackTrace)

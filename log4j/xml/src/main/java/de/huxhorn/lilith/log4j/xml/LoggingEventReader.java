@@ -249,6 +249,7 @@ public class LoggingEventReader
 		ThrowableInfo result=null;
 		ThrowableInfo currentTI=null;
 		List<ExtendedStackTraceElement> stackTraceElements=new ArrayList<ExtendedStackTraceElement>();
+		boolean insideMessage=false;
 		for(String current : lines)
 		{
 			if(current.startsWith(AT_PREFIX))
@@ -259,14 +260,31 @@ public class LoggingEventReader
 				{
 					stackTraceElements.add(este);
 				}
+				insideMessage=false;
 			}
 			else if(current.startsWith(OMITTED_PREFIX))
 			{
-				if(current.endsWith(OMITTED_POSTFIX) && currentTI != null)
+				if(currentTI != null)
 				{
-					String countStr = current
-						.substring(OMITTED_PREFIX.length(), current.length() - OMITTED_POSTFIX.length());
-					currentTI.setOmittedElements(Integer.parseInt(countStr));
+					if(current.endsWith(OMITTED_POSTFIX))
+					{
+						String countStr = current
+							.substring(OMITTED_PREFIX.length(), current.length() - OMITTED_POSTFIX.length());
+						currentTI.setOmittedElements(Integer.parseInt(countStr));
+						insideMessage=false;
+					}
+					else if (insideMessage)
+					{
+						String prevMessage=currentTI.getMessage();
+						if(prevMessage == null)
+						{
+							currentTI.setMessage(current);
+						}
+						else
+						{
+							currentTI.setMessage(prevMessage+"\n"+current);
+						}
+					}
 				}
 			}
 			else
@@ -277,16 +295,19 @@ public class LoggingEventReader
 				}
 				if(currentTI != null)
 				{
-					ThrowableInfo newTI = new ThrowableInfo();
-					currentTI.setCause(newTI);
-					if(stackTraceElements.size() > 0)
+					if(!insideMessage)
 					{
-						currentTI
-							.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements
-								.size()]));
-						stackTraceElements.clear();
+						ThrowableInfo newTI = new ThrowableInfo();
+						currentTI.setCause(newTI);
+						if(stackTraceElements.size() > 0)
+						{
+							currentTI
+								.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements
+									.size()]));
+							stackTraceElements.clear();
+						}
+						currentTI = newTI;
 					}
-					currentTI = newTI;
 				}
 				else
 				{
@@ -296,15 +317,31 @@ public class LoggingEventReader
 				{
 					result = currentTI;
 				}
-				int colonIndex = current.indexOf(CLASS_MESSAGE_SEPARATOR);
-				if(colonIndex > -1)
+				if(insideMessage)
 				{
-					currentTI.setName(current.substring(0, colonIndex));
-					currentTI.setMessage(current.substring(colonIndex + CLASS_MESSAGE_SEPARATOR.length()));
+					String prevMessage=currentTI.getMessage();
+					if(prevMessage == null)
+					{
+						currentTI.setMessage(current);
+					}
+					else
+					{
+						currentTI.setMessage(prevMessage+"\n"+current);
+					}
 				}
 				else
 				{
-					currentTI.setName(current);
+					int colonIndex = current.indexOf(CLASS_MESSAGE_SEPARATOR);
+					if(colonIndex > -1)
+					{
+						currentTI.setName(current.substring(0, colonIndex));
+						currentTI.setMessage(current.substring(colonIndex + CLASS_MESSAGE_SEPARATOR.length()));
+					}
+					else
+					{
+						currentTI.setName(current);
+					}
+					insideMessage=true;
 				}
 			}
 		}
