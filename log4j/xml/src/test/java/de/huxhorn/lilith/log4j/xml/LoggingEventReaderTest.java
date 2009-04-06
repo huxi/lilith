@@ -126,20 +126,20 @@ public class LoggingEventReaderTest
 
 		// ThrowableInfo
 		{
-			ThrowableInfo throwableInfo=new ThrowableInfo();
+			ThrowableInfo throwableInfo = new ThrowableInfo();
 			throwableInfo.setName("java.lang.RuntimeException");
 			throwableInfo.setMessage("Hello");
 			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 18),
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox","main", "Log4jSandbox.java", 38),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 18),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 38),
 			});
 
-			ThrowableInfo cause=new ThrowableInfo();
+			ThrowableInfo cause = new ThrowableInfo();
 			cause.setName("java.lang.RuntimeException");
 			cause.setMessage("Hi.");
 			cause.setStackTrace(new ExtendedStackTraceElement[]{
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","foobar", "Log4jSandbox.java", 24),
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 14),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "foobar", "Log4jSandbox.java", 24),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 14),
 			});
 			cause.setOmittedElements(1);
 
@@ -155,7 +155,7 @@ public class LoggingEventReaderTest
 	public void singleThrowable()
 		throws UnsupportedEncodingException, XMLStreamException
 	{
-		String eventString="<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
+		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
 			"<log4j:message><![CDATA[Foobar!]]></log4j:message>\n" +
 			"<log4j:NDC><![CDATA[NDC1 NDC2 NDC with spaces...]]></log4j:NDC>\n" +
 			"<log4j:throwable><![CDATA[java.lang.Throwable\n" +
@@ -222,11 +222,11 @@ public class LoggingEventReaderTest
 
 		// ThrowableInfo
 		{
-			ThrowableInfo throwableInfo=new ThrowableInfo();
+			ThrowableInfo throwableInfo = new ThrowableInfo();
 			throwableInfo.setName("java.lang.Throwable");
 			throwableInfo.setMessage(null);
 			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox","main", "Log4jSandbox.java", 37),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 37),
 			});
 
 			ThrowableInfo actual = readEvent.getThrowable();
@@ -313,29 +313,21 @@ public class LoggingEventReaderTest
 		}
 
 		// ThrowableInfo
-		/*
-			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.execute(Log4jSandbox.java:28)\n" +
-			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox.main(Log4jSandbox.java:51)\n" +
-			"Caused by: java.lang.RuntimeException: Hi.\n" +
-			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.foobar(Log4jSandbox.java:35)\n" +
-			"\tat de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass.execute(Log4jSandbox.java:24)\n" +
-
-		 */
 		{
-			ThrowableInfo throwableInfo=new ThrowableInfo();
+			ThrowableInfo throwableInfo = new ThrowableInfo();
 			throwableInfo.setName("java.lang.RuntimeException");
 			throwableInfo.setMessage("Multi\nline\nmessage");
 			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 28),
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox","main", "Log4jSandbox.java", 51),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 28),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 51),
 			});
 
-			ThrowableInfo cause=new ThrowableInfo();
+			ThrowableInfo cause = new ThrowableInfo();
 			cause.setName("java.lang.RuntimeException");
 			cause.setMessage("Hi.");
 			cause.setStackTrace(new ExtendedStackTraceElement[]{
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","foobar", "Log4jSandbox.java", 35),
-				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass","execute", "Log4jSandbox.java", 24),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "foobar", "Log4jSandbox.java", 35),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 24),
 			});
 			cause.setOmittedElements(1);
 
