@@ -96,6 +96,7 @@ public class Log4jImportCallable
 				else
 				{
 					builder.append(line);
+					builder.append("\n");
 					break;
 				}
 			}
