@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<foo:LoggingEvent xmlns:foo="http://lilith.sf.net/schema/logging/12"
+<foo:LoggingEvent xmlns:foo="http://lilith.sf.net/schema/logging/13"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="http://lilith.sf.net/schema/logging/12 http://lilith.sf.net/schema/logging/12/LoggingEvent.xsd"
-                  logger="Logger" level="INFO" threadName="Thread-Name" timeStamp="2008-03-19T11:40:24.843+01:00">
+                  xsi:schemaLocation="http://lilith.sf.net/schema/logging/13 ../schema/logging/13/LoggingEvent.xsd"
+                  logger="Logger" level="INFO" threadId="17" threadName="Thread-Name" threadGroupId="42"
+                  threadGroup="Thread-Group" timeStamp="2008-03-19T11:40:24.843+01:00" timeStampMillis="1234567890000">
 	<foo:Message>EventMessage</foo:Message>
 	<foo:Arguments>
 		<foo:Argument>arg1</foo:Argument>
@@ -436,4 +437,10 @@
 			<foo:LineNumber>90</foo:LineNumber>
 		</foo:StackTraceElement>
 	</foo:CallStack>
+	<foo:LoggerContext name="default" birthTime="2008-03-19T11:40:24.843+01:00" birthTimeMillis="1234567890000">
+		<foo:Properties>
+			<foo:Entry key="foo">foo value</foo:Entry>
+			<foo:Entry key="bar">bar value</foo:Entry>
+		</foo:Properties>
+	</foo:LoggerContext>
 </foo:LoggingEvent>
