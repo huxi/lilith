@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.BindException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -56,7 +57,16 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 		throws IOException
 	{
 		this.port = port;
-		serverSocket = new ServerSocket(port);
+		try
+		{
+			serverSocket = new ServerSocket(port);
+		}
+		catch(BindException ex)
+		{
+			if(logger.isErrorEnabled()) logger.error("Couldn't start ServerSocket on port {}!", port);
+			throw ex;
+		}
+
 		dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmssSSS");
 	}
 
