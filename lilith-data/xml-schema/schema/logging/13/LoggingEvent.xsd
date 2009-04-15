@@ -25,6 +25,7 @@ Added NDC and NDCEntry.
 Changes in 1.3:
 Added timeStampMillis, threadId, threadGroupId and threadGroup attributes to LoggingEvent. Message is optional.
 Added optional LoggerContext containing name, birthTime, birthTimeStamp and Properties.
+Added optional sequence number to LoggingEvent.
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://lilith.sf.net/schema/logging/13"
            xmlns:logging="http://lilith.sf.net/schema/logging/13" xmlns:es="http://lilith.sf.net/schema/eventsource/10"
