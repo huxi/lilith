@@ -25,6 +25,9 @@ import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,71 +37,11 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-/*
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE log SYSTEM "logger.dtd">
-<log>
-<record>
-  <date>2009-03-20T14:06:45</date>
-  <millis>1237554405320</millis>
-  <sequence>0</sequence>
-  <logger>de.huxhorn.lilith.sandbox.JulSandbox</logger>
-  <level>INFO</level>
-  <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-  <method>main</method>
-  <thread>10</thread>
-  <message>Args Foobar</message>
-</record>
-<record>
-  <date>2009-03-20T14:06:45</date>
-  <millis>1237554405354</millis>
-  <sequence>1</sequence>
-  <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
-  <level>INFO</level>
-  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
-  <method>execute</method>
-  <thread>10</thread>
-  <message>Foo!</message>
-</record>
-<record>
-  <date>2009-03-20T14:06:45</date>
-  <millis>1237554405354</millis>
-  <sequence>2</sequence>
-  <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
-  <level>WARNING</level>
-  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
-  <method>execute</method>
-  <thread>10</thread>
-  <message>Foo!</message>
-  <exception>
-    <message>java.lang.RuntimeException: Exception</message>
-    <frame>
-      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-      <method>createRuntimeException</method>
-      <line>27</line>
-    </frame>
-    <frame>
-      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-      <method>access$000</method>
-      <line>6</line>
-    </frame>
-    <frame>
-      <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
-      <method>execute</method>
-      <line>14</line>
-    </frame>
-    <frame>
-      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-      <method>main</method>
-      <line>47</line>
-    </frame>
-  </exception>
-</record>
-</log>
-*/
 public class LoggingEventReader
 	implements GenericStreamReader<LoggingEvent>, LoggingEventSchemaConstants
 {
+	private final Logger logger = LoggerFactory.getLogger(LoggingEventReader.class);
+
 	private static final String MESSAGE_SEPARATOR = ": ";
 
 	public LoggingEventReader()
@@ -126,19 +69,7 @@ public class LoggingEventReader
 			reader.nextTag();
 
 			result = new LoggingEvent();
-			/*
-			<record>
-  <date>2009-03-20T14:06:45</date>
-  <millis>1237554405320</millis>
-  <sequence>0</sequence>
-  <logger>de.huxhorn.lilith.sandbox.JulSandbox</logger>
-  <level>INFO</level>
-  <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-  <method>main</method>
-  <thread>10</thread>
-  <message>Args Foobar</message>
-</record>
-			 */
+
 			String dateStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, DATE_NODE);
 			String millisStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MILLIS_NODE);
 			Date timeStamp = null;
@@ -155,7 +86,11 @@ public class LoggingEventReader
 			}
 			if(timeStamp == null && dateStr != null)
 			{
-				// TODO: parse from string
+				// parse from string
+				if(logger.isInfoEnabled())
+				{
+					logger.info("Parsing date hasn't been implemented since millis is mandatory in DTD.");
+				}
 			}
 			result.setTimeStamp(timeStamp);
 
@@ -204,7 +139,29 @@ public class LoggingEventReader
 			{
 				result.setMessage(new Message(messageStr));
 			}
-			// TODO: key?, catalog? param*
+			// key?, catalog? param*
+			{
+				String keyStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, KEY_NODE);
+				String catalogStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, CATALOG_NODE);
+				List<String> paramList = new ArrayList<String>();
+				for(; ;)
+				{
+					String paramStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, PARAM_NODE);
+					if(paramStr == null)
+					{
+						break;
+					}
+					paramList.add(paramStr);
+				}
+				if(keyStr != null || catalogStr != null || paramList.size() > 0)
+				{
+					if(logger.isInfoEnabled())
+					{
+						logger
+							.info("Ignoring the following message infos: key={}, catalog={}, params={}", new Object[]{keyStr, catalogStr, paramList});
+					}
+				}
+			}
 			result.setThrowable(readThrowableInfo(reader));
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, RECORD_NODE);
 			for(; ;)
@@ -226,31 +183,6 @@ public class LoggingEventReader
 	}
 
 
-	/*
-	<exception>
-	<message>java.lang.RuntimeException: Exception</message>
-	<frame>
-	  <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-	  <method>createRuntimeException</method>
-	  <line>27</line>
-	</frame>
-	<frame>
-	  <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-	  <method>access$000</method>
-	  <line>6</line>
-	</frame>
-	<frame>
-	  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
-	  <method>execute</method>
-	  <line>14</line>
-	</frame>
-	<frame>
-	  <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
-	  <method>main</method>
-	  <line>47</line>
-	</frame>
-	</exception>
-	 */
 	private ThrowableInfo readThrowableInfo(XMLStreamReader reader)
 		throws XMLStreamException
 	{
@@ -260,10 +192,11 @@ public class LoggingEventReader
 			reader.nextTag();
 			ThrowableInfo result = new ThrowableInfo();
 			String messageStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
+			// parse message
 			if(messageStr != null)
 			{
 				int separatorIndex = messageStr.indexOf(MESSAGE_SEPARATOR);
-				String className = null;
+				String className;
 				if(separatorIndex >= 0)
 				{
 					className = messageStr.substring(0, separatorIndex);
@@ -278,7 +211,6 @@ public class LoggingEventReader
 				result.setMessage(messageStr);
 				result.setName(className);
 			}
-			// TODO: parse message
 			List<ExtendedStackTraceElement> stackTraceList = new ArrayList<ExtendedStackTraceElement>();
 			for(; ;)
 			{

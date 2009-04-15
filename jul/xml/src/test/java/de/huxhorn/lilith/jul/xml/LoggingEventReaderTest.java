@@ -36,6 +36,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -101,6 +102,94 @@ public class LoggingEventReaderTest
 
 		// Level
 		assertEquals(LoggingEvent.Level.WARN, readEvent.getLevel());
+
+		// Message
+		assertEquals(new Message("Foo!"), readEvent.getMessage());
+
+		// call stack
+		{
+			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
+				{
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1)
+				};
+			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
+		}
+
+		// thread info
+		{
+			ThreadInfo threadInfo = new ThreadInfo();
+			threadInfo.setId(10L);
+			assertEquals(threadInfo, readEvent.getThreadInfo());
+		}
+
+		// ThrowableInfo
+		{
+			ThrowableInfo throwableInfo = new ThrowableInfo();
+			throwableInfo.setName("java.lang.RuntimeException");
+			throwableInfo.setMessage("Exception");
+			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "createRuntimeException", null, 27),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "access$000", null, 6),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, 14),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "main", null, 47),
+			});
+
+			ThrowableInfo actual = readEvent.getThrowable();
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			assertEquals(throwableInfo, readEvent.getThrowable());
+		}
+	}
+
+	@Test
+	public void fullWith3rdPartyLevel()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		String eventString = "<record>\n" +
+			"  <date>2009-03-20T14:06:45</date>\n" +
+			"  <millis>1234567890000</millis>\n" +
+			"  <sequence>2</sequence>\n" +
+			"  <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>\n" +
+			"  <level>" + (Level.WARNING.intValue() + 1) + "</level>\n" +
+			"  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>\n" +
+			"  <method>execute</method>\n" +
+			"  <thread>10</thread>\n" +
+			"  <message>Foo!</message>\n" +
+			"  <exception>\n" +
+			"    <message>java.lang.RuntimeException: Exception</message>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>\n" +
+			"      <method>createRuntimeException</method>\n" +
+			"      <line>27</line>\n" +
+			"    </frame>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>\n" +
+			"      <method>access$000</method>\n" +
+			"      <line>6</line>\n" +
+			"    </frame>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>\n" +
+			"      <method>execute</method>\n" +
+			"      <line>14</line>\n" +
+			"    </frame>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>\n" +
+			"      <method>main</method>\n" +
+			"      <line>47</line>\n" +
+			"    </frame>\n" +
+			"  </exception>\n" +
+			"</record>";
+		LoggingEvent readEvent = read(eventString);
+		logEvent(readEvent);
+
+		// Logger
+		assertEquals("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", readEvent.getLogger());
+
+		// TimeStamp
+		assertEquals(new Date(1234567890000L), readEvent.getTimeStamp());
+
+		// Level
+		assertEquals(LoggingEvent.Level.ERROR, readEvent.getLevel());
 
 		// Message
 		assertEquals(new Message("Foo!"), readEvent.getMessage());
@@ -213,6 +302,98 @@ public class LoggingEventReaderTest
 		{
 			ThrowableInfo throwableInfo = new ThrowableInfo();
 			throwableInfo.setName("java.lang.RuntimeException");
+			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "createRuntimeException", null, 27),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "access$000", null, 6),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, 14),
+				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "main", null, 47),
+			});
+
+			ThrowableInfo actual = readEvent.getThrowable();
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			assertEquals(throwableInfo, readEvent.getThrowable());
+		}
+	}
+
+	@Test
+	public void fullWithIgnoredKeyCatalogParams()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		String eventString = "<record>\n" +
+			"  <date>2009-03-20T14:06:45</date>\n" +
+			"  <millis>1234567890000</millis>\n" +
+			"  <sequence>2</sequence>\n" +
+			"  <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>\n" +
+			"  <level>WARNING</level>\n" +
+			"  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>\n" +
+			"  <method>execute</method>\n" +
+			"  <thread>10</thread>\n" +
+			"  <message>Foo!</message>\n" +
+			"  <key>Key</key>\n" +
+			"  <catalog>Catalog</catalog>\n" +
+			"  <param>Param1</param>\n" +
+			"  <param>Param2</param>\n" +
+			"  <exception>\n" +
+			"    <message>java.lang.RuntimeException: Exception</message>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>\n" +
+			"      <method>createRuntimeException</method>\n" +
+			"      <line>27</line>\n" +
+			"    </frame>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>\n" +
+			"      <method>access$000</method>\n" +
+			"      <line>6</line>\n" +
+			"    </frame>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>\n" +
+			"      <method>execute</method>\n" +
+			"      <line>14</line>\n" +
+			"    </frame>\n" +
+			"    <frame>\n" +
+			"      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>\n" +
+			"      <method>main</method>\n" +
+			"      <line>47</line>\n" +
+			"    </frame>\n" +
+			"  </exception>\n" +
+			"</record>";
+		LoggingEvent readEvent = read(eventString);
+		logEvent(readEvent);
+
+		// Logger
+		assertEquals("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", readEvent.getLogger());
+
+		// TimeStamp
+		assertEquals(new Date(1234567890000L), readEvent.getTimeStamp());
+
+		// Level
+		assertEquals(LoggingEvent.Level.WARN, readEvent.getLevel());
+
+		// Message
+		assertEquals(new Message("Foo!"), readEvent.getMessage());
+
+		// call stack
+		{
+			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
+				{
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1)
+				};
+			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
+		}
+
+		// thread info
+		{
+			ThreadInfo threadInfo = new ThreadInfo();
+			threadInfo.setId(10L);
+			assertEquals(threadInfo, readEvent.getThreadInfo());
+		}
+
+		// ThrowableInfo
+		{
+			ThrowableInfo throwableInfo = new ThrowableInfo();
+			throwableInfo.setName("java.lang.RuntimeException");
+			throwableInfo.setMessage("Exception");
 			throwableInfo.setStackTrace(new ExtendedStackTraceElement[]{
 				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "createRuntimeException", null, 27),
 				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox", "access$000", null, 6),
