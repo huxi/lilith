@@ -28,7 +28,6 @@ import de.huxhorn.lilith.consumers.FileSplitterEventConsumer;
 import de.huxhorn.lilith.consumers.RrdLoggingEventConsumer;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
-import de.huxhorn.lilith.data.eventsource.EventIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -126,8 +125,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.lang.ref.ReferenceQueue;
-import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1060,7 +1057,10 @@ public class MainFrame
 			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 			return;
 		}
-		// TODO: show warning "Unknown type"
+
+		// show warning "Unknown type"
+		String message = "Couldn't detect type of file '" + importFile.getAbsolutePath() + "'.\nFile is unsupported.";
+		JOptionPane.showMessageDialog(this, message, "Unknown file type...", JOptionPane.WARNING_MESSAGE);
 	}
 
 	private ImportType resolveType(File importFile)
@@ -1238,8 +1238,8 @@ public class MainFrame
 	}
 
 
-	// TODO; implement cache?
-	@SuppressWarnings({"UnusedDeclaration"})
+	/*
+	// implement cache?
 	private static class SoftColorsReference
 		extends SoftReference<Colors>
 	{
@@ -1268,6 +1268,7 @@ public class MainFrame
 			return result;
 		}
 	}
+    */
 
 	public Colors getColors(HttpStatus.Type status)
 	{
