@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.huxhorn.lilith</groupId>
+	<artifactId>de.huxhorn.lilith.jul.master</artifactId>
+	<version><!-- LV -->0.9.35-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Lilith jul master pom file</name>
+	<description>This file is part of Lilith. It's the master pom file that is used to build java.util.logging modules.</description>
+	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
+
+	<scm>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/jul</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lul</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk//jul/</url>
+	</scm>
+
+	<distributionManagement>
+		<site>
+			<id>lilith.huxhorn.de</id>
+			<url>scp://huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/${pom.artifactId}</url>
+		</site>
+
+		<!--
+			  scp doesn't work anymore
+			  -->
+		<repository>
+			<id>lilith-repos</id>
+			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
+		</repository>
+		<snapshotRepository>
+			<id>lilith-snapshot-repos</id>
+			<uniqueVersion>false</uniqueVersion>
+			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<modules>
+		<module>xml</module>
+	</modules>
+
+</project>
+

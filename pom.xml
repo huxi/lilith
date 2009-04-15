@@ -23,8 +23,8 @@
 		</site>
 
 		<!--
-			  scp doesn't work anymore
-			  -->
+		scp doesn't work anymore
+		-->
 		<repository>
 			<id>lilith-repos</id>
 			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
@@ -45,6 +45,7 @@
 		<module>lilith-xml-logging</module>
 		<module>logback</module>
 		<module>log4j</module>
+		<module>jul</module>
 		<module>lilith-sounds</module>
 		<module>lilith</module>
 		<module>slf4j</module>
