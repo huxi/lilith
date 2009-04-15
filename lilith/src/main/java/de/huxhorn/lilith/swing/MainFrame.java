@@ -234,6 +234,8 @@ public class MainFrame
 		this.splashScreen = splashScreen;
 		setSplashStatusText("Creating main frame.");
 		smallProgressIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Progress16.gif"));
+		ImageIcon frameIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Lilith16.jpg"));
+		setIconImage(frameIcon.getImage());
 		//colorsReferenceQueue=new ReferenceQueue<Colors>();
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application = new DefaultApplication();
