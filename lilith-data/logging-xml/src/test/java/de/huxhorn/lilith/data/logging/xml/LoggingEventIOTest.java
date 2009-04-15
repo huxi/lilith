@@ -70,6 +70,16 @@ public class LoggingEventIOTest
 	}
 
 	@Test
+	public void sequenceNumber()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		Long value = 17L;
+		event.setSequenceNumber(value);
+		check(event, true);
+	}
+
+	@Test
 	public void loggerContext()
 		throws XMLStreamException, UnsupportedEncodingException
 	{

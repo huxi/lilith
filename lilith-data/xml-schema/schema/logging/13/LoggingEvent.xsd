@@ -120,6 +120,11 @@ Added optional LoggerContext containing name, birthTime, birthTimeStamp and Prop
 					<xs:documentation xml:lang="en">The level of the logging event.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
+			<xs:attribute name="sequence" type="xs:long" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The sequence number of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 			<xs:attribute name="threadName" type="WhitespacePreservingString" use="optional">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">The thread name of the logging event.</xs:documentation>

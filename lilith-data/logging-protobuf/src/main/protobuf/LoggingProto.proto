@@ -50,6 +50,7 @@ message LoggingEvent {
 	optional StringMap               mapped_diagnostic_context = 9;
 	optional NestedDiagnosticContext nested_diagnostic_context = 10;
 	optional Marker                  marker                    = 11;
+	optional int64                   sequence_number           = 12;
 }
 
 message LoggerContext {

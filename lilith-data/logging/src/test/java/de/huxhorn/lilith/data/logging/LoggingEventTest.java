@@ -204,6 +204,27 @@ public class LoggingEventTest
 	}
 
 	@Test
+	public void sequenceNumber()
+		throws ClassNotFoundException, IOException
+	{
+		LoggingEvent instance = new LoggingEvent();
+
+		Long value = 17L;
+		instance.setSequenceNumber(value);
+
+		{
+			LoggingEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getSequenceNumber());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggingEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getSequenceNumber());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
 	public void callStack()
 		throws ClassNotFoundException, IOException
 	{

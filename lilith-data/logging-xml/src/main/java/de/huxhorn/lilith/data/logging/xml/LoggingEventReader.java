@@ -72,10 +72,27 @@ public class LoggingEventReader
 				.setLevel(LoggingEvent.Level.valueOf(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE)));
 
 			{
+				String sequence = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, SEQUENCE_ATTRIBUTE);
+				if(sequence != null)
+				{
+					try
+					{
+						result.setSequenceNumber(Long.parseLong(sequence));
+					}
+					catch(NumberFormatException ex)
+					{
+						// ignore
+					}
+				}
+			}
+
+			{
 				String threadName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_NAME_ATTRIBUTE);
 				String threadIdStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_ID_ATTRIBUTE);
-				String threadGroupName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE);
-				String threadGroupIdStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE);
+				String threadGroupName = StaxUtilities
+					.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE);
+				String threadGroupIdStr = StaxUtilities
+					.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE);
 				Long threadId = null;
 				if(threadIdStr != null)
 				{
@@ -159,7 +176,7 @@ public class LoggingEventReader
 		if(timeStamp == null)
 		{
 			String timeStampStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, formattedName);
-			if(timeStampStr!=null)
+			if(timeStampStr != null)
 			{
 				try
 				{
@@ -177,17 +194,19 @@ public class LoggingEventReader
 	private LoggerContext readLoggerContext(XMLStreamReader reader)
 		throws XMLStreamException
 	{
-		LoggerContext result=null;
+		LoggerContext result = null;
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && LOGGER_CONTEXT_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+		if(XMLStreamConstants.START_ELEMENT == type && LOGGER_CONTEXT_NODE
+			.equals(reader.getLocalName()) && NAMESPACE_URI
 			.equals(reader.getNamespaceURI()))
 		{
-			result=new LoggerContext();
+			result = new LoggerContext();
 
 			result.setName(StaxUtilities
 				.readAttributeValue(reader, NAMESPACE_URI, LOGGER_CONTEXT_NAME_ATTRIBUTE));
 
-			result.setBirthTime(readTimeStamp(reader, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, LOGGER_CONTEXT_BIRTH_TIME_ATTRIBUTE));
+			result
+				.setBirthTime(readTimeStamp(reader, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, LOGGER_CONTEXT_BIRTH_TIME_ATTRIBUTE));
 			reader.nextTag();
 			result.setProperties(readLoggerContextProperties(reader));
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOGGER_CONTEXT_NODE);
@@ -200,7 +219,8 @@ public class LoggingEventReader
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && LOGGER_CONTEXT_PROPERTIES_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+		if(XMLStreamConstants.START_ELEMENT == type && LOGGER_CONTEXT_PROPERTIES_NODE
+			.equals(reader.getLocalName()) && NAMESPACE_URI
 			.equals(reader.getNamespaceURI()))
 		{
 			Map<String, String> map = new HashMap<String, String>();
@@ -360,7 +380,8 @@ public class LoggingEventReader
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && STRING_MAP_ENTRY_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
+		if(XMLStreamConstants.START_ELEMENT == type && STRING_MAP_ENTRY_NODE
+			.equals(reader.getLocalName()) && NAMESPACE_URI
 			.equals(reader.getNamespaceURI()))
 		{
 			StringMapEntry entry = new StringMapEntry();

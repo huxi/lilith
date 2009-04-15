@@ -302,17 +302,17 @@ public class LoggingEventProtobufEncoder
 		{
 			return null;
 		}
-		LoggingProto.LoggerContext.Builder builder=LoggingProto.LoggerContext.newBuilder();
+		LoggingProto.LoggerContext.Builder builder = LoggingProto.LoggerContext.newBuilder();
 		{
 			String name = context.getName();
-			if(name!=null)
+			if(name != null)
 			{
 				builder.setName(name);
 			}
 		}
 		{
 			Date birthTime = context.getBirthTime();
-			if(birthTime!=null)
+			if(birthTime != null)
 			{
 				builder.setBirthTime(birthTime.getTime());
 			}
@@ -366,6 +366,15 @@ public class LoggingEventProtobufEncoder
 			}
 		}
 
+		// handling sequence number
+		{
+			Long sequence = event.getSequenceNumber();
+			if(sequence != null)
+			{
+				eventBuilder.setSequenceNumber(sequence);
+			}
+		}
+
 		// handling threadInfo
 		{
 			ThreadInfo threadInfo = event.getThreadInfo();
@@ -403,7 +412,7 @@ public class LoggingEventProtobufEncoder
 
 		// handle LoggerContext
 		{
-			LoggerContext context=event.getLoggerContext();
+			LoggerContext context = event.getLoggerContext();
 			if(context != null)
 			{
 				eventBuilder.setLoggerContext(convert(context));

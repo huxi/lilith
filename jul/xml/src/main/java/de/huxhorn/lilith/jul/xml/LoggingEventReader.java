@@ -160,8 +160,6 @@ public class LoggingEventReader
 			result.setTimeStamp(timeStamp);
 
 			String sequenceStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, SEQUENCE_NODE);
-			/*
-			// TODO: sequence number
 			try
 			{
 				result.setSequenceNumber(Long.parseLong(sequenceStr));
@@ -170,21 +168,12 @@ public class LoggingEventReader
 			{
 				// ignore
 			}
-            */
 
 			String loggerStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, LOGGER_NODE);
 			result.setLogger(loggerStr);
 
-			String levelStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, LEVEL_NODE);
-			try
-			{
-				Level level = Level.parse(levelStr);
-				result.setLevel(resolveLevel(level));
-			}
-			catch(IllegalArgumentException ex)
-			{
-				// ignore
-			}
+			result
+				.setLevel(resolveLevel(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, LEVEL_NODE)));
 
 			String classStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, CLASS_NODE);
 			String methodStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, METHOD_NODE);
@@ -215,7 +204,7 @@ public class LoggingEventReader
 			{
 				result.setMessage(new Message(messageStr));
 			}
-
+			// TODO: key?, catalog? param*
 			result.setThrowable(readThrowableInfo(reader));
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, RECORD_NODE);
 			for(; ;)
@@ -337,13 +326,30 @@ public class LoggingEventReader
 		return null;
 	}
 
-	private LoggingEvent.Level resolveLevel(Level level)
+	private LoggingEvent.Level resolveLevel(String levelStr)
 	{
-		if(level == null)
+		if(levelStr == null)
 		{
 			return null;
 		}
-		int levelIntValue = level.intValue();
+
+		int levelIntValue = 0;
+		try
+		{
+			levelIntValue = Integer.parseInt(levelStr);
+		}
+		catch(NumberFormatException ex)
+		{
+			try
+			{
+				Level level = Level.parse(levelStr);
+				levelIntValue = level.intValue();
+			}
+			catch(IllegalArgumentException ex2)
+			{
+				// ignore, shouldn't happen at this point
+			}
+		}
 
 		if(levelIntValue <= Level.FINEST.intValue())
 		{

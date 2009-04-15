@@ -859,26 +859,26 @@ public class MainFrame
 		{
 			Colors result = null;
 			/*
-						EventIdentifier id = eventWrapper.getEventIdentifier();
+			EventIdentifier id = eventWrapper.getEventIdentifier();
 
-						SoftColorsReference ref = colorsCache.get(id);
-						if(ref!=null)
-						{
-							Colors c=ref.get();
-							if(c!=null)
-							{
-								result=c;
-								// System.out.println("Retrieved from cache.");
-							}
-							else
-							{
-								// stale item... should be handled by CleanupThread
-								colorsCache.remove(id);
-							}
-						}
-						if(result==null)
-						{
-						*/
+			SoftColorsReference ref = colorsCache.get(id);
+			if(ref!=null)
+			{
+				Colors c=ref.get();
+				if(c!=null)
+				{
+					result=c;
+					// System.out.println("Retrieved from cache.");
+				}
+				else
+				{
+					// stale item... should be handled by CleanupThread
+					colorsCache.remove(id);
+				}
+			}
+			if(result==null)
+			{
+			*/
 			// no cached value found
 			for(SavedCondition current : activeConditions)
 			{
@@ -890,24 +890,24 @@ public class MainFrame
 				}
 			}
 			/*
-							if(result==null)
-							{
-								try
-								{
-									result=NULL_COLORS.clone();
-								}
-								catch (CloneNotSupportedException e)
-								{
-									// ignore
-								}
-							}
-							colorsCache.put(id, new SoftColorsReference(id, result, colorsReferenceQueue));
-						}
-						if(NULL_COLORS.equals(result))
-						{
-							return null;
-						}
-						*/
+				if(result==null)
+				{
+					try
+					{
+						result=NULL_COLORS.clone();
+					}
+					catch (CloneNotSupportedException e)
+					{
+						// ignore
+					}
+				}
+				colorsCache.put(id, new SoftColorsReference(id, result, colorsReferenceQueue));
+			}
+			if(NULL_COLORS.equals(result))
+			{
+				return null;
+			}
+			*/
 			return result;
 		}
 		return null;

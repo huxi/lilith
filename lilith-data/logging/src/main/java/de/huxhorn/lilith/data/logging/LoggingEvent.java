@@ -53,6 +53,7 @@ public class LoggingEvent
 	private ThreadInfo threadInfo;
 	private LoggerContext loggerContext;
 	private Date timeStamp;
+	private Long sequenceNumber;
 
 	private ThrowableInfo throwable;
 	private Map<String, String> mdc;
@@ -83,6 +84,16 @@ public class LoggingEvent
 	public void setThreadInfo(ThreadInfo threadInfo)
 	{
 		this.threadInfo = threadInfo;
+	}
+
+	public Long getSequenceNumber()
+	{
+		return sequenceNumber;
+	}
+
+	public void setSequenceNumber(Long sequenceNumber)
+	{
+		this.sequenceNumber = sequenceNumber;
 	}
 
 	public LoggerContext getLoggerContext()
@@ -183,6 +194,10 @@ public class LoggingEvent
 		LoggingEvent event = (LoggingEvent) o;
 
 		if(level != event.level) return false;
+		if(sequenceNumber != null ? !sequenceNumber.equals(event.sequenceNumber) : event.sequenceNumber != null)
+		{
+			return false;
+		}
 		if(timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null) return false;
 		if(logger != null ? !logger.equals(event.logger) : event.logger != null) return false;
 		if(loggerContext != null ? !loggerContext
@@ -205,6 +220,7 @@ public class LoggingEvent
 	{
 		int result;
 		result = (logger != null ? logger.hashCode() : 0);
+		result = 31 * result + (sequenceNumber != null ? sequenceNumber.hashCode() : 0);
 		result = 31 * result + (level != null ? level.hashCode() : 0);
 		result = 31 * result + (message != null ? message.hashCode() : 0);
 		result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
@@ -222,6 +238,7 @@ public class LoggingEvent
 		result.append("message=").append(message).append(", ");
 		result.append("threadInfo=").append(threadInfo).append(", ");
 		result.append("loggerContext=").append(loggerContext).append(", ");
+		result.append("sequenceNumber=").append(sequenceNumber).append(", ");
 		result.append("timeStamp=").append(timeStamp);
 
 		result.append("]");

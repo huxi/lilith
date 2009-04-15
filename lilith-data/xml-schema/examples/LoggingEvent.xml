@@ -3,7 +3,8 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://lilith.sf.net/schema/logging/13 ../schema/logging/13/LoggingEvent.xsd"
                   logger="Logger" level="INFO" threadId="17" threadName="Thread-Name" threadGroupId="42"
-                  threadGroup="Thread-Group" timeStamp="2008-03-19T11:40:24.843+01:00" timeStampMillis="1234567890000">
+                  threadGroup="Thread-Group" timeStamp="2008-03-19T11:40:24.843+01:00" timeStampMillis="1234567890000"
+                  sequence="17">
 	<foo:Message>EventMessage</foo:Message>
 	<foo:Arguments>
 		<foo:Argument>arg1</foo:Argument>
