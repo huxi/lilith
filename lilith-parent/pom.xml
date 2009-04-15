@@ -230,6 +230,12 @@
 				<artifactId>de.huxhorn.lilith.log4j.xml</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
 			<!--
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
