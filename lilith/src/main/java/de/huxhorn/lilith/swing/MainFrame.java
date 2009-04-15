@@ -48,6 +48,7 @@ import de.huxhorn.lilith.engine.impl.sourceproducer.AccessEventProtobufServerSoc
 import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.jul.xml.JulImportCallable;
 import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
 import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
@@ -64,9 +65,9 @@ import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.lilith.swing.debug.DebugDialog;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LilithFileFilter;
-import de.huxhorn.lilith.swing.filefilters.Log4jXmlImportFileFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
 import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
+import de.huxhorn.lilith.swing.filefilters.XmlImportFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
@@ -119,6 +120,7 @@ import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -396,7 +398,7 @@ public class MainFrame
 		openFileChooser.setCurrentDirectory(applicationPreferences.getPreviousOpenPath());
 
 		importFileChooser = new JFileChooser();
-		importFileChooser.setFileFilter(new Log4jXmlImportFileFilter());
+		importFileChooser.setFileFilter(new XmlImportFileFilter());
 		importFileChooser.setFileHidingEnabled(false);
 		importFileChooser.setCurrentDirectory(applicationPreferences.getPreviousImportPath());
 
@@ -930,7 +932,14 @@ public class MainFrame
 
 		if(returnVal == JFileChooser.APPROVE_OPTION)
 		{
-			importLog4jXmlFile(importFileChooser.getSelectedFile());
+			File importFile = importFileChooser.getSelectedFile();
+			String fileName = importFile.getAbsolutePath();
+			if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+			{
+				open(importFile);
+				return;
+			}
+			importFile(importFile);
 		}
 	}
 
@@ -980,12 +989,10 @@ public class MainFrame
 		}
 	}
 
-	public void importLog4jXmlFile(File importFile)
+	public void importFile(File importFile)
 	{
 		if(logger.isInfoEnabled()) logger.info("Import file: {}", importFile.getAbsolutePath());
 
-		String name = "Importing Log4J XML file";
-		String description = "Importing Log4J XML file '" + importFile.getAbsolutePath() + "'...";
 		File parentFile = importFile.getParentFile();
 		String inputName = importFile.getName();
 
@@ -1036,8 +1043,73 @@ public class MainFrame
 		FileBuffer<EventWrapper<LoggingEvent>> buffer =
 			loggingFileBufferFactory.createBuffer(dataFile, indexFile, metaData);
 
-		Task<Long> task = longTaskManager.startTask(new Log4jImportCallable(importFile, buffer), name, description);
-		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+		ImportType type = resolveType(importFile);
+		if(type == ImportType.LOG4J)
+		{
+			String name = "Importing Log4J XML file";
+			String description = "Importing Log4J XML file '" + importFile.getAbsolutePath() + "'...";
+			Task<Long> task = longTaskManager.startTask(new Log4jImportCallable(importFile, buffer), name, description);
+			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+			return;
+		}
+		if(type == ImportType.JUL)
+		{
+			String name = "Importing java.util.logging XML file";
+			String description = "Importing java.util.logging XML file '" + importFile.getAbsolutePath() + "'...";
+			Task<Long> task = longTaskManager.startTask(new JulImportCallable(importFile, buffer), name, description);
+			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+			return;
+		}
+		// TODO: show warning "Unknown type"
+	}
+
+	private ImportType resolveType(File importFile)
+	{
+		BufferedReader br = null;
+		try
+		{
+			br = new BufferedReader(new FileReader(importFile));
+			for(int i = 0; i < 5; i++)
+			{
+				String line = br.readLine();
+				if(line == null)
+				{
+					break;
+				}
+				if(line.contains("<log4j:"))
+				{
+					return ImportType.LOG4J;
+				}
+				if(line.contains("<log>") || line.contains("<record>"))
+				{
+					return ImportType.JUL;
+				}
+			}
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while resolving type of file!", ex);
+		}
+		finally
+		{
+			if(br != null)
+			{
+				try
+				{
+					br.close();
+				}
+				catch(IOException e)
+				{
+					// ignore
+				}
+			}
+		}
+		return null;
+	}
+
+	public enum ImportType
+	{
+		LOG4J, JUL
 	}
 
 	public ViewContainer<?> resolveViewContainer(File dataFile)
@@ -2982,6 +3054,20 @@ public class MainFrame
 			if(callable instanceof Log4jImportCallable)
 			{
 				Log4jImportCallable iCallable = (Log4jImportCallable) callable;
+				AppendOperation<EventWrapper<LoggingEvent>> buffer = iCallable.getBuffer();
+				if(buffer instanceof CodecFileBuffer)
+				{
+					CodecFileBuffer cfb = (CodecFileBuffer) buffer;
+					File dataFile = cfb.getDataFile();
+					File indexFile = cfb.getIndexFile();
+					cfb.dispose();
+					createViewFor(dataFile, indexFile);
+				}
+				return;
+			}
+			if(callable instanceof JulImportCallable)
+			{
+				JulImportCallable iCallable = (JulImportCallable) callable;
 				AppendOperation<EventWrapper<LoggingEvent>> buffer = iCallable.getBuffer();
 				if(buffer instanceof CodecFileBuffer)
 				{

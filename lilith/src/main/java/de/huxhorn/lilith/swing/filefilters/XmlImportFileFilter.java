@@ -21,7 +21,7 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-public class Log4jXmlImportFileFilter
+public class XmlImportFileFilter
 	extends FileFilter
 {
 
@@ -35,7 +35,7 @@ public class Log4jXmlImportFileFilter
 		if(file.isFile())
 		{
 			String fileName = file.getName().toLowerCase();
-			if(fileName.endsWith(".xml") || fileName.endsWith(".log"))
+			if(fileName.endsWith(".xml"))
 			{
 				return true;
 			}
@@ -45,6 +45,6 @@ public class Log4jXmlImportFileFilter
 
 	public String getDescription()
 	{
-		return "Log4J XML files";
+		return "XML files";
 	}
 }
