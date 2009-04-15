@@ -43,6 +43,15 @@ public class LoggingEventIOTest
 	}
 
 	@Test
+	public void sequenceNumber()
+	{
+		LoggingEvent event = createMinimalEvent();
+		Long value = 17L;
+		event.setSequenceNumber(value);
+		check(event);
+	}
+
+	@Test
 	public void threadInfo()
 	{
 		LoggingEvent event = createMinimalEvent();

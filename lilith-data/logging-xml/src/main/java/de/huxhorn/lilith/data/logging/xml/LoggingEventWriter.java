@@ -136,13 +136,18 @@ public class LoggingEventWriter
 		}
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_ATTRIBUTE, event.getLogger());
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LEVEL_ATTRIBUTE, "" + event.getLevel());
+		Long sequence = event.getSequenceNumber();
+		if(sequence != null)
+		{
+			StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, SEQUENCE_ATTRIBUTE, sequence.toString());
+		}
 		ThreadInfo threadInfo = event.getThreadInfo();
 		if(threadInfo != null)
 		{
 			Long id = threadInfo.getId();
 			String name = threadInfo.getName();
-			Long groupId=threadInfo.getGroupId();
-			String groupName=threadInfo.getGroupName();
+			Long groupId = threadInfo.getGroupId();
+			String groupName = threadInfo.getGroupName();
 			if(name != null)
 			{
 				StaxUtilities
@@ -165,8 +170,8 @@ public class LoggingEventWriter
 			}
 		}
 
-		Date timeStamp=event.getTimeStamp();
-		if(timeStamp!=null)
+		Date timeStamp = event.getTimeStamp();
+		if(timeStamp != null)
 		{
 			if(timeStampType == TimeStampType.ONLY_TIMESTAMP || timeStampType == TimeStampType.BOTH)
 			{
@@ -176,7 +181,8 @@ public class LoggingEventWriter
 			if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
 			{
 				StaxUtilities
-					.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, "" + timeStamp.getTime());
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, "" + timeStamp
+						.getTime());
 			}
 		}
 		Message message = event.getMessage();
@@ -205,19 +211,19 @@ public class LoggingEventWriter
 	private void writeLoggerContext(XMLStreamWriter writer, LoggingEvent event)
 		throws XMLStreamException
 	{
-		LoggerContext context=event.getLoggerContext();
+		LoggerContext context = event.getLoggerContext();
 		if(context == null)
 		{
 			return;
 		}
 		StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, LOGGER_CONTEXT_NODE);
-		String name=context.getName();
-		if(name!=null)
+		String name = context.getName();
+		if(name != null)
 		{
 			StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_NAME_ATTRIBUTE, name);
 		}
-		Date timeStamp=context.getBirthTime();
-		if(timeStamp!=null)
+		Date timeStamp = context.getBirthTime();
+		if(timeStamp != null)
 		{
 			if(timeStampType == TimeStampType.ONLY_TIMESTAMP || timeStampType == TimeStampType.BOTH)
 			{
@@ -227,7 +233,8 @@ public class LoggingEventWriter
 			if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
 			{
 				StaxUtilities
-					.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, "" + timeStamp.getTime());
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, "" + timeStamp
+						.getTime());
 			}
 		}
 		writeStringMap(writer, context.getProperties(), LOGGER_CONTEXT_PROPERTIES_NODE);

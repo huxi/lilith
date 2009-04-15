@@ -34,6 +34,7 @@ public interface LoggingEventSchemaConstants
 	String CALLSTACK_NODE = "CallStack";
 	String LOGGER_ATTRIBUTE = "logger";
 	String LEVEL_ATTRIBUTE = "level";
+	String SEQUENCE_ATTRIBUTE = "sequence";
 	String THREAD_NAME_ATTRIBUTE = "threadName";
 	String THREAD_ID_ATTRIBUTE = "threadId";
 	String THREAD_GROUP_NAME_ATTRIBUTE = "threadGroup";

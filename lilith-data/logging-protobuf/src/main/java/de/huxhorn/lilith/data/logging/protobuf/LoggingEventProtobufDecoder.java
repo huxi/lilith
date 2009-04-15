@@ -284,7 +284,7 @@ public class LoggingEventProtobufDecoder
 		{
 			return null;
 		}
-		LoggerContext result=new LoggerContext();
+		LoggerContext result = new LoggerContext();
 		if(loggerContext.hasName())
 		{
 			result.setName(loggerContext.getName());
@@ -339,6 +339,12 @@ public class LoggingEventProtobufDecoder
 		if(parsedEvent.hasLoggerName())
 		{
 			result.setLogger(parsedEvent.getLoggerName());
+		}
+
+		// handling sequence number
+		if(parsedEvent.hasSequenceNumber())
+		{
+			result.setSequenceNumber(parsedEvent.getSequenceNumber());
 		}
 
 		// handling threadInfo
