@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.data.logging;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,7 +162,8 @@ public class MessageFormatterTest
 			new UseCase("CyclicArrays", "{}{}", cyclicB, new String[]{"1", "[2, [3, [1, " + cyclicBRec + "]]]"}, 2, "1[2, [3, [1, " + cyclicBRec + "]]]", null),
 			new UseCase("CyclicArrays", "{}{}", cyclicC, new String[]{"1", "[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]"}, 2, "1[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]", t),
 			new UseCase("CyclicArrays", "{}{}{}", cyclicC, new String[]{"1", "[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]", "FooThrowable"}, 3, "1[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]FooThrowable", null),
-			new UseCase("Array & Used Throwable", "Value {} is smaller than {} and {}. Also: {}!", new Object[]{i1, i2, i3, t}, 4, "Value 1 is smaller than 2 and 3. Also: " + t.toString() + "!"),
+			new UseCase("Array & Used Throwable", "Value {} is smaller than {} and {}. Also: {}!", new Object[]{i1, i2, i3, t}, 4, "Value 1 is smaller than 2 and 3. Also: " + t
+				.toString() + "!"),
 			new UseCase("Array & Used Throwable", "{}{}{}{}", new Object[]{i1, i2, i3, t}, 4, "123" + t.toString()),
 			new UseCase("Escaping", "Value {} is smaller than \\\\{}", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than \\2", t),
 			new UseCase("Escaping", "Value {} is smaller than \\\\{} tail", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than \\2 tail", t),
@@ -173,16 +176,27 @@ public class MessageFormatterTest
 			new UseCase("Escaping", "\\{}", new Object[]{i1, i2, i3, t}, 0, "{}", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{i1, p1}, 2, i1 + Arrays.toString(p1)),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", p1}, 2, "a" + Arrays.toString(p1)),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}}, 2, "a" + Arrays.toString(new byte[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new short[]{1, 2}}, 2, "a" + Arrays.toString(new short[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new int[]{1, 2}}, 2, "a" + Arrays.toString(new int[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new long[]{1, 2}}, 2, "a" + Arrays.toString(new long[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new float[]{1, 2}}, 2, "a" + Arrays.toString(new float[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new double[]{1, 2}}, 2, "a" + Arrays.toString(new double[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new boolean[]{true, false}}, 2, "a" + Arrays.toString(new boolean[]{true, false})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new char[]{'b', 'c'}}, 2, "a" + Arrays.toString(new char[]{'b', 'c'})),
-			new UseCase("ArrayValues", "{}{}", multiArray, new String[]{"[" + multiArrayRec + ", " + Arrays.toString(p1) + "]", Arrays.toString(p1)}, 2, "[" + multiArrayRec + ", " + Arrays.toString(p1) + "]" + Arrays.toString(p1), null),
-			new UseCase("SpecialOneArgument", "Special {}", new Object[]{"One", "Two", "Three"}, new String[]{"[One, Two, Three]"}, 1, "Special "+Arrays.toString(new Object[]{"One", "Two", "Three"}), null),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}}, 2, "a" + Arrays
+				.toString(new byte[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new short[]{1, 2}}, 2, "a" + Arrays
+				.toString(new short[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new int[]{1, 2}}, 2, "a" + Arrays
+				.toString(new int[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new long[]{1, 2}}, 2, "a" + Arrays
+				.toString(new long[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new float[]{1, 2}}, 2, "a" + Arrays
+				.toString(new float[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new double[]{1, 2}}, 2, "a" + Arrays
+				.toString(new double[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new boolean[]{true, false}}, 2, "a" + Arrays
+				.toString(new boolean[]{true, false})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new char[]{'b', 'c'}}, 2, "a" + Arrays
+				.toString(new char[]{'b', 'c'})),
+			new UseCase("ArrayValues", "{}{}", multiArray, new String[]{"[" + multiArrayRec + ", " + Arrays
+				.toString(p1) + "]", Arrays.toString(p1)}, 2, "[" + multiArrayRec + ", " + Arrays
+				.toString(p1) + "]" + Arrays.toString(p1), null),
+			new UseCase("SpecialOneArgument", "Special {}", new Object[]{"One", "Two", "Three"}, new String[]{"[One, Two, Three]"}, 1, "Special " + Arrays
+				.toString(new Object[]{"One", "Two", "Three"}), null),
 		};
 	}
 
@@ -384,6 +398,23 @@ public class MessageFormatterTest
 		result = MessageFormatter.deepToString(o);
 		if(logger.isInfoEnabled()) logger.info("Result of {} is {}.", o, result);
 		assertEquals(expected, result);
+	}
+
+	@Test
+	public void date()
+	{
+		String result;
+		String expected;
+		Object o;
+
+		{
+			o = new Date(1234567890000L);
+			expected = "2009-02-14T00:31:30.000";
+		}
+		if(logger.isInfoEnabled()) logger.info("Evaluating {}...", o);
+		result = MessageFormatter.deepToString(o);
+		if(logger.isInfoEnabled()) logger.info("Result of {} is {}.", o, result);
+		assertTrue(result.startsWith(expected));
 	}
 
 	@SuppressWarnings({"unchecked"})

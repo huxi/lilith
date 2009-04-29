@@ -17,8 +17,10 @@
  */
 package de.huxhorn.lilith.data.logging;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -218,11 +220,11 @@ public class MessageFormatter
 		}
 
 		String[] stringArgs;
-		if(argsCount == 1 && throwable == null && arguments.length>1)
+		if(argsCount == 1 && throwable == null && arguments.length > 1)
 		{
 			// special case
-			stringArgs=new String[1];
-			stringArgs[0]=deepToString(arguments);
+			stringArgs = new String[1];
+			stringArgs[0] = deepToString(arguments);
 		}
 		else
 		{
@@ -411,6 +413,13 @@ public class MessageFormatter
 				}
 				str.append("]");
 			}
+		}
+		else if(o instanceof Date)
+		{
+			Date date = (Date) o;
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+			// I'll leave it like this for the moment... this could probably be optimized using ThreadLocal...
+			str.append(format.format(date));
 		}
 		else
 		{
