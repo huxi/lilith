@@ -98,6 +98,10 @@ public class DebugDialog
 		button = new JButton(action);
 		debugToolbar.add(button);
 
+		action = new LogDateAction();
+		button = new JButton(action);
+		debugToolbar.add(button);
+
 		action = new LogAllAction();
 		button = new JButton(action);
 		debugToolbar.add(button);
@@ -123,6 +127,8 @@ public class DebugDialog
 	private class DoneAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7747612911180730271L;
+
 		public DoneAction()
 		{
 			super("Done!");
@@ -137,6 +143,8 @@ public class DebugDialog
 	private class LogAllAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -5004276984975201630L;
+
 		public LogAllAction()
 		{
 			super("Log all!");
@@ -144,31 +152,27 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			try
-			{
-				loggerEventEmitter.logStuff();
-				loggerEventEmitter.logStuffWithMarker();
-				loggerEventEmitter.logStuffWithMdc();
-				loggerEventEmitter.logStuffWithMdcAndMarker();
-				loggerEventEmitter.logException();
-				loggerEventEmitter.logException2();
-				loggerEventEmitter.logParamException();
-				loggerEventEmitter.logParamException2();
-				loggerEventEmitter.logSkull();
-				loggerEventEmitter.logTruth();
-				loggerEventEmitter.logAnonymous();
-				loggerEventEmitter.logNDC();
-			}
-			catch(InterruptedException ex)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
-			}
+			loggerEventEmitter.logStuff();
+			loggerEventEmitter.logStuffWithMarker();
+			loggerEventEmitter.logStuffWithMdc();
+			loggerEventEmitter.logStuffWithMdcAndMarker();
+			loggerEventEmitter.logException();
+			loggerEventEmitter.logException2();
+			loggerEventEmitter.logParamException();
+			loggerEventEmitter.logParamException2();
+			loggerEventEmitter.logSkull();
+			loggerEventEmitter.logTruth();
+			loggerEventEmitter.logAnonymous();
+			loggerEventEmitter.logNDC();
+			loggerEventEmitter.logDate();
 		}
 	}
 
 	private class EditGroovyAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8812061542734868784L;
+
 		public EditGroovyAction()
 		{
 			super("Edit groovy!");
@@ -185,6 +189,8 @@ public class DebugDialog
 	private class NetworkAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3099597544720236257L;
+
 		public NetworkAction()
 		{
 			super("Network");
@@ -223,6 +229,8 @@ public class DebugDialog
 	private class LogStuffAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3191463140774402016L;
+
 		public LogStuffAction()
 		{
 			super("Log stuff");
@@ -230,23 +238,34 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			try
-			{
-				loggerEventEmitter.logStuff();
-				loggerEventEmitter.logStuffWithMarker();
-				loggerEventEmitter.logStuffWithMdc();
-				loggerEventEmitter.logStuffWithMdcAndMarker();
-			}
-			catch(InterruptedException ex)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
-			}
+			loggerEventEmitter.logStuff();
+			loggerEventEmitter.logStuffWithMarker();
+			loggerEventEmitter.logStuffWithMdc();
+			loggerEventEmitter.logStuffWithMdcAndMarker();
+		}
+	}
+
+	private class LogDateAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -1734237014776105342L;
+
+		public LogDateAction()
+		{
+			super("Log date");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			loggerEventEmitter.logDate();
 		}
 	}
 
 	private class LogNDCAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -518958063141973150L;
+
 		public LogNDCAction()
 		{
 			super("Log NDC");
@@ -254,14 +273,7 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			try
-			{
-				loggerEventEmitter.logNDC();
-			}
-			catch(InterruptedException ex)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
-			}
+			loggerEventEmitter.logNDC();
 		}
 	}
 
@@ -269,6 +281,8 @@ public class DebugDialog
 	private class LogExceptionsAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -2289262066339501111L;
+
 		public LogExceptionsAction()
 		{
 			super("Log exceptions");
@@ -276,21 +290,16 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			try
-			{
-				loggerEventEmitter.logException();
-				loggerEventEmitter.logException2();
-			}
-			catch(InterruptedException ex)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
-			}
+			loggerEventEmitter.logException();
+			loggerEventEmitter.logException2();
 		}
 	}
 
 	private class LogParamExceptionsAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7404752330757185806L;
+
 		public LogParamExceptionsAction()
 		{
 			super("Log param exceptions");
@@ -298,21 +307,16 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			try
-			{
-				loggerEventEmitter.logParamException();
-				loggerEventEmitter.logParamException2();
-			}
-			catch(InterruptedException ex)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Interrupted debug action...", ex);
-			}
+			loggerEventEmitter.logParamException();
+			loggerEventEmitter.logParamException2();
 		}
 	}
 
 	private class LogSkullAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3162155864945849819L;
+
 		public LogSkullAction()
 		{
 			super("Log skull");
@@ -327,6 +331,8 @@ public class DebugDialog
 	private class LogTruthAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7354728704746203904L;
+
 		public LogTruthAction()
 		{
 			super("Log truth");
@@ -341,6 +347,8 @@ public class DebugDialog
 	private class LogAnonymousAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3343304084268635261L;
+
 		public LogAnonymousAction()
 		{
 			super("Log anonymous");
@@ -355,6 +363,8 @@ public class DebugDialog
 	private class DebugCallableAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -97047951966954750L;
+
 		public DebugCallableAction()
 		{
 			super("Callable");

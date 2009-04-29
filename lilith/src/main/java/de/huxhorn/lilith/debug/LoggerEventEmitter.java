@@ -50,13 +50,11 @@ public class LoggerEventEmitter
 	}
 
 	public void logStuff()
-		throws InterruptedException
 	{
 		execute(new LogStuffRunnable(delay, null));
 	}
 
 	public void logNDC()
-		throws InterruptedException
 	{
 		execute(new LogNdcRunnable(delay));
 	}
@@ -67,7 +65,6 @@ public class LoggerEventEmitter
 	}
 
 	public void logStuffWithMdc()
-		throws InterruptedException
 	{
 		execute(new LogStuffWithMdcRunnable(delay, null));
 	}
@@ -98,19 +95,16 @@ public class LoggerEventEmitter
 	}
 
 	public void logStuffWithMdcAndMarker()
-		throws InterruptedException
 	{
 		execute(new LogStuffWithMdcRunnable(delay, marker));
 	}
 
 	public void logStuffWithMarker()
-		throws InterruptedException
 	{
 		execute(new LogStuffRunnable(delay, marker));
 	}
 
 	public void logException()
-		throws InterruptedException
 	{
 		//noinspection ThrowableInstanceNeverThrown
 		Throwable ex = new RuntimeException("Test-Exception");
@@ -119,16 +113,14 @@ public class LoggerEventEmitter
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logException2()
-		throws InterruptedException
 	{
-		Exception causeCause=new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
-		Exception cause=new RuntimeException("Cause-Exception", causeCause);
+		Exception causeCause = new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
+		Exception cause = new RuntimeException("Cause-Exception", causeCause);
 		Throwable ex = new RuntimeException("Another Test-Exception", cause);
 		execute(new LogThrowableRunnable(delay, ex));
 	}
 
 	public void logParamException()
-		throws InterruptedException
 	{
 		//noinspection ThrowableInstanceNeverThrown
 		Throwable ex = new RuntimeException("Test-Exception");
@@ -137,10 +129,9 @@ public class LoggerEventEmitter
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logParamException2()
-		throws InterruptedException
 	{
-		Exception causeCause=new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
-		Exception cause=new RuntimeException("Cause-Exception", causeCause);
+		Exception causeCause = new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
+		Exception cause = new RuntimeException("Cause-Exception", causeCause);
 		Throwable ex = new RuntimeException("Another Test-Exception", cause);
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
@@ -160,5 +151,10 @@ public class LoggerEventEmitter
 	{
 		execute(new LogTruthRunnable(delay, fnordMarker, true));
 		execute(new LogTruthRunnable(delay, fnordMarker, false));
+	}
+
+	public void logDate()
+	{
+		execute(new LogDateRunnable(delay));
 	}
 }
