@@ -38,5 +38,6 @@ public interface FileConstants
 	String CONTENT_FORMAT_KEY = "contentFormat";
 	String CONTENT_FORMAT_VALUE_PROTOBUF = "protobuf";
 
-	String COMPRESSED_KEY = "compressed";
+	String COMPRESSION_KEY = "compression";
+	String COMPRESSION_VALUE_GZIP = "GZIP";
 }

@@ -282,7 +282,7 @@ public class MainFrame
 		Map<String, String> loggingMetaData = new HashMap<String, String>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
-		loggingMetaData.put(FileConstants.COMPRESSED_KEY, "true");
+		loggingMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 		// TODO: configurable format and compressed
 
 		loggingFileBufferFactory = new LoggingFileBufferFactory(loggingFileFactory, loggingMetaData);
@@ -290,7 +290,7 @@ public class MainFrame
 		Map<String, String> accessMetaData = new HashMap<String, String>();
 		accessMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
 		accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
-		accessMetaData.put(FileConstants.COMPRESSED_KEY, "true");
+		accessMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 		// TODO: configurable format and compressed
 
 		accessFileBufferFactory = new AccessFileBufferFactory(accessFileFactory, accessMetaData);
@@ -1037,7 +1037,7 @@ public class MainFrame
 		Map<String, String> metaData = new HashMap<String, String>();
 		metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		metaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
-		metaData.put(FileConstants.COMPRESSED_KEY, "true");
+		metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 
 		FileBuffer<EventWrapper<LoggingEvent>> buffer =
 			loggingFileBufferFactory.createBuffer(dataFile, indexFile, metaData);

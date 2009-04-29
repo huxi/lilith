@@ -42,25 +42,17 @@ public class AccessFileBufferFactory
 		if(metaData != null)
 		{
 			Map<String, String> data = metaData.getData();
-			compressed = Boolean.valueOf(data.get(FileConstants.COMPRESSED_KEY));
+			String compressionStr = data.get(FileConstants.COMPRESSION_KEY);
+			if(FileConstants.COMPRESSION_VALUE_GZIP.equals(compressionStr))
+			{
+				// TODO: support/handling of other compressions, e.g. Deflate
+				compressed = true;
+			}
 			format = data.get(FileConstants.CONTENT_FORMAT_KEY);
 		}
-		
+
 		Codec<EventWrapper<AccessEvent>> codec;
 
-		/*
-		if(FileConstants.CONTENT_FORMAT_VALUE_JAVA_BEANS_XML.equals(format))
-		{
-			if(compressed)
-			{
-				codec = new CompressingAccessEventWrapperXmlCodec();
-			}
-			else
-			{
-				codec = new AccessEventWrapperXmlCodec();
-			}
-		}
-		*/
 		if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(format))
 		{
 			if(compressed)
@@ -74,21 +66,8 @@ public class AccessFileBufferFactory
 		}
 		else
 		{
-			throw new IllegalArgumentException("Unknown content format "+format+"!");
+			throw new IllegalArgumentException("Unknown content format " + format + "!");
 		}
-		/*
-		else
-		{
-			if(compressed)
-			{
-				codec = new CompressingSerializableCodec<EventWrapper<AccessEvent>>();
-			}
-			else
-			{
-				codec = new SerializableCodec<EventWrapper<AccessEvent>>();
-			}
-		}
-        */
 		return codec;
 	}
 }
