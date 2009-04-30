@@ -1,0 +1,86 @@
+Validate correctness of trunk/lilith/lilith/src/main/resources/detailsView/history
+
+#####
+
+Search for
+<!-- SV -->
+and replace with release version.
+Don't forget <sulkyVersion>!
+
+#####
+
+Search for
+<!-- LV -->
+and replace with release version.
+
+#####
+
+Commit sulky root with comment "Preparing release x.x.x"
+Tag sulky root with comment "x.x.x release".
+
+#####
+
+Change into sulky root.
+mvn clean install
+mvn site:site
+mvn deploy site:deploy
+
+#####
+
+Remember to update changes.xml.
+
+#####
+
+Commit lilith root with comment "Preparing release x.x.x"
+Tag lilith root with comment "x.x.x release".
+
+#####
+
+Change into lilith root.
+mvn clean install
+mvn site:site
+mvn deploy site:deploy
+
+#####
+
+Write release notes and changes for sf.net upload.
+
+#####
+
+Upload lilith-files to sf.net
+https://frs.sourceforge.net/webupload
+
+#####
+
+Update current-version.txt
+
+#####
+
+Search for
+<!-- SV -->
+and replace with next snapshot version.
+Don't forget <sulkyVersion>!
+
+#####
+
+Search for
+<!-- LV -->
+and replace with next snapshot version.
+
+#####
+
+Commit sulky root with comment "Starting work on x.x.x+1"
+Commit lilith root with comment "Starting work on x.x.x+1"
+
+#####
+
+Submit info to Freshmeat
+http://freshmeat.net/projects/lilith-viewer/releases
+Username: huxhorn
+
+#####
+
+Send mail to lilith-announce@lists.sourceforge.net with CC to lilith-user@lists.sourceforge.net
+Send mail to logback-user@qos.ch
+Send mail to user@slf4j.org
+Twitter about the release @Lilith

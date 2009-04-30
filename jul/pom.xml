@@ -38,6 +38,7 @@
 
 	<modules>
 		<module>xml</module>
+		<module>jul-slf4j-handler</module>
 	</modules>
 
 </project>
