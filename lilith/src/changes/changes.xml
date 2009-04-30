@@ -80,7 +80,74 @@
 			</action>
 		</release>
 
-		<release version="0.9.35" date="TBD" description="Future release">
+		<release version="0.9.36" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				TODO: Add transfer size statistics.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
+				EventReceiver, EventHandler (?, stuff like the fart on error,
+				RRD statistics, anything that's working directly on received events), GoToSource).
+
+				Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
+			</action>
+		</release>
+
+		<release version="0.9.35" date="2009-05-01" description="Release">
+			<action dev="jhux" type="fix" issue="45">
+				SEVERE: The StackTraceElements of the deepest nested Throwable were silently ignored.
+			</action>
+			<action dev="jhux" type="add" issue="29">
+				Added header to Lilith file format.
+			</action>
+			<action dev="jhux" type="add" issue="40">
+				Using protobuf for the Lilith file format and transfer. This results in big performance improvements.
+			</action>
+			<action dev="jhux" type="add" issue="37">
+				Opening *.lilith files
+			</action>
+			<action dev="jhux" type="add" issue="34">
+				Importing *.lilith files without *.index.
+			</action>
+			<action dev="jhux" type="add" issue="20">
+				Import of LOG4J XML files.
+			</action>
+			<action dev="jhux" type="add" issue="21">
+				Import of java.util.logging XML files.
+			</action>
+			<action dev="jhux" type="add" issue="38">
+				Added timeStampMillis to Lilith XML Event.
+			</action>
+			<action dev="jhux" type="update" issue="42">
+				Updated Logging XML Schema.
+			</action>
+			<action dev="jhux" type="update" issue="44">
+				Removal of obsolete *.ljlogging and *.ljaccess files.
+			</action>
+			<action dev="jhux" type="update" issue="41">
+				MessageFormatter: Special handling of array in case of a single placeholder.
+			</action>
+			<action dev="jhux" type="update" issue="54">
+				MessageFormatter: Special handling of java.util.Date. It's now converted to ISO 8601 representation.
+			</action>
+			<action dev="jhux" type="add" issue="43">
+				LoggingEvent: added ThreadInfo.
+			</action>
+			<action dev="jhux" type="add" issue="43">
+				LoggingEvent: added LoggerContext.
+			</action>
+			<action dev="jhux" type="add" issue="49">
+				Added Copy action for selected content in details view.
+			</action>
+			<action dev="jhux" type="add" issue="53">
+				Added Copy action for selected content in help.
+			</action>
 			<action dev="jhux" type="update" issue="8">
 				Known problems and FAQ in help did not reflect the latest version.
 			</action>
@@ -90,6 +157,15 @@
 			</action>
 			<action dev="jhux" type="add" issue="1">
 				Install example groovy conditions if conditions folder is newly created.
+			</action>
+			<action dev="jhux" type="fix" issue="30">
+				Detailsview displayed an error message if the file was just empty.
+			</action>
+			<action dev="jhux" type="fix" issue="31">
+				In case of a new view, select first event if scroll to bottom is not enabled.
+			</action>
+			<action dev="jhux" type="add" issue="33">
+				Implemented a task-manager for searching, filtering and importing.
 			</action>
 			<action dev="jhux" type="add" issue="27">
 				Added support for NDC to LoggingEvent datatype.
@@ -118,21 +194,36 @@
 			<action dev="jhux" type="add" issue="27">
 				Added "Copy MDC" and "Copy NDC" actions.
 			</action>
-			<action dev="jhux" type="add">
-				TODO: Add transfer size statistics.
+			<action dev="jhux" type="update">
+				Groovy 1.6.2
 			</action>
 			<action dev="jhux" type="add">
-				TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
-				EventReceiver, EventHandler (?, stuff like the fart on error,
-				RRD statistics, anything that's working directly on received events), GoToSource).
-
-				Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
+				Added icon for mainframe and Mac app.
 			</action>
 			<action dev="jhux" type="add">
-				TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
+				Added output including port number in case of BindException during startup.
 			</action>
 			<action dev="jhux" type="update">
-				TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
+				DetailsView: Looks a lot nicer, now.
+			</action>
+			<action dev="jhux" type="update">
+				DetailsView: Better support for multi-line messages of Throwables.
+			</action>
+			<action dev="jhux" type="update">
+				Better help including more links, symbols for keys.
+			</action>
+			<action dev="jhux" type="add">
+				Added progress indicator to statusbar in case of running tasks.
+			</action>
+			<action dev="jhux" type="update">
+				Renamed "Show/Hide" to "Columns" as suggested by Joe.
+			</action>
+			<action dev="jhux" type="add">
+				Dedicated sulky-tasks module. Deprecated previous implementation.
+			</action>
+			<action dev="jhux" type="fix">
+				Changed some licenses from GPLv3 to LGPLv3. Some poms didn't override the license appropriately.
+				Added some missing license infos.
 			</action>
 		</release>
 

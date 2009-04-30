@@ -11,9 +11,9 @@
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 
 	<scm>
-		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/jul-slf4j-handler</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/jul-slf4j-handler</developerConnection>
-		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/jul-slf4j-handler/</url>
+		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/jul/jul-slf4j-handler</connection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/jul/jul-slf4j-handler</developerConnection>
+		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/jul/jul-slf4j-handler/</url>
 	</scm>
 
 	<parent>
