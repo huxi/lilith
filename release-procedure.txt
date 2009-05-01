@@ -23,7 +23,8 @@ Tag sulky root with comment "x.x.x release".
 Change into sulky root.
 mvn clean install
 mvn site:site
-mvn deploy site:deploy
+mvn deploy
+mvn site:deploy
 
 #####
 
@@ -39,7 +40,8 @@ Tag lilith root with comment "x.x.x release".
 Change into lilith root.
 mvn clean install
 mvn site:site
-mvn deploy site:deploy
+mvn deploy
+mvn site:deploy
 
 #####
 
