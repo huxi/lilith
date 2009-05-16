@@ -25,6 +25,12 @@ import de.huxhorn.lilith.data.logging.LoggingEvent.Level
  */
 def event = input?.event;
 
+if(searchString == null || '' == searchString)
+{
+	// so no string doesn't filter anything
+	return true;
+}
+
 if(event instanceof LoggingEvent)
 {
 	def level = event.level;

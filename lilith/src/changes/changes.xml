@@ -81,6 +81,15 @@
 		</release>
 
 		<release version="0.9.36" date="TBD" description="Future release">
+			<action dev="jhux" type="fix">
+				Added missing contact page to help.
+			</action>
+			<action dev="jhux" type="add">
+				Added new messageRegex example groovy condition.
+			</action>
+			<action dev="jhux" type="update">
+				Groovy 1.6.3
+			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
 			</action>
