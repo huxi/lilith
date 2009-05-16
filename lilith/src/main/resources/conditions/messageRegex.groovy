@@ -9,6 +9,12 @@ import java.util.regex.PatternSyntaxException;
 
 def event = input?.event;
 
+if(searchString == null || '' == searchString)
+{
+	// so no string doesn't filter anything
+	return true;
+}
+
 if(event instanceof LoggingEvent)
 {
 	try
