@@ -22,6 +22,13 @@ import de.huxhorn.lilith.data.logging.LoggingEvent
  * Returns true if the MDC of the logging event contains a
  * "username" entry that equals the searchString.
  */
+
+if(searchString == null || '' == searchString)
+{
+	// so no string doesn't filter anything
+	return true;
+}
+
 def event = input?.event;
 
 if(event instanceof LoggingEvent)
