@@ -22,6 +22,13 @@ import de.huxhorn.lilith.data.logging.LoggingEvent
  * Returns true if the logging event has a thread name that
  * starts with the given searchString.
  */
+
+if(searchString == null || '' == searchString)
+{
+	// so no string doesn't filter anything
+	return true;
+}
+
 def event = input?.event;
 
 if(event instanceof LoggingEvent)

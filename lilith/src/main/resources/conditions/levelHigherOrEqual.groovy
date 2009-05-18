@@ -23,13 +23,14 @@ import de.huxhorn.lilith.data.logging.LoggingEvent.Level
  * Returns true if the logging event has a level higher or equal to the
  * one provided with the searchString.
  */
-def event = input?.event;
 
 if(searchString == null || '' == searchString)
 {
 	// so no string doesn't filter anything
 	return true;
 }
+
+def event = input?.event;
 
 if(event instanceof LoggingEvent)
 {
