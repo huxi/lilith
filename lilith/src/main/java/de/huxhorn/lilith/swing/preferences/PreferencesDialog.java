@@ -89,6 +89,7 @@ public class PreferencesDialog
 		sourceListsPanel = new SourceListsPanel(this);
 		sourceFilteringPanel = new SourceFilteringPanel(this);
 		conditionsPanel = new ConditionsPanel(this);
+		TroubleshootingPanel troubleshootingPanel = new TroubleshootingPanel(this);
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setPreferredSize(new Dimension(600, 500));
@@ -99,7 +100,7 @@ public class PreferencesDialog
 		tabbedPane.add("Source Lists", sourceListsPanel);
 		tabbedPane.add("Source Filtering", sourceFilteringPanel);
 		tabbedPane.add("Conditions", conditionsPanel);
-		//tabbedPane.setEnabledAt(tabbedPane.getTabCount()-1, false);
+		tabbedPane.add("Troubleshooting", troubleshootingPanel);
 
 		// Main buttons
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
