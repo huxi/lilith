@@ -33,12 +33,14 @@ public final class AccessProto {
     }
     
     // optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;
+    public static final int EVENT_IDENTIFIER_FIELD_NUMBER = 1;
     private boolean hasEventIdentifier;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier eventIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance();
     public boolean hasEventIdentifier() { return hasEventIdentifier; }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier() { return eventIdentifier_; }
     
     // optional .de.huxhorn.lilith.access.AccessEvent event = 2;
+    public static final int EVENT_FIELD_NUMBER = 2;
     private boolean hasEvent;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent event_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance();
     public boolean hasEvent() { return hasEvent; }
@@ -118,6 +120,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -136,6 +149,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -171,7 +185,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -188,6 +202,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper returnMe = result;
         result = null;
         return returnMe;
@@ -276,6 +293,9 @@ public final class AccessProto {
         return result.getEventIdentifier();
       }
       public Builder setEventIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasEventIdentifier = true;
         result.eventIdentifier_ = value;
         return this;
@@ -310,6 +330,9 @@ public final class AccessProto {
         return result.getEvent();
       }
       public Builder setEvent(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasEvent = true;
         result.event_ = value;
         return this;
@@ -368,12 +391,14 @@ public final class AccessProto {
     }
     
     // optional int64 local_id = 1;
+    public static final int LOCAL_ID_FIELD_NUMBER = 1;
     private boolean hasLocalId;
     private long localId_ = 0L;
     public boolean hasLocalId() { return hasLocalId; }
     public long getLocalId() { return localId_; }
     
     // optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;
+    public static final int SOURCE_IDENTIFIER_FIELD_NUMBER = 2;
     private boolean hasSourceIdentifier;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier sourceIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance();
     public boolean hasSourceIdentifier() { return hasSourceIdentifier; }
@@ -450,6 +475,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -468,6 +504,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -503,7 +540,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -520,6 +557,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier returnMe = result;
         result = null;
         return returnMe;
@@ -621,6 +661,9 @@ public final class AccessProto {
         return result.getSourceIdentifier();
       }
       public Builder setSourceIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasSourceIdentifier = true;
         result.sourceIdentifier_ = value;
         return this;
@@ -679,12 +722,14 @@ public final class AccessProto {
     }
     
     // optional string identifier = 1;
+    public static final int IDENTIFIER_FIELD_NUMBER = 1;
     private boolean hasIdentifier;
     private java.lang.String identifier_ = "";
     public boolean hasIdentifier() { return hasIdentifier; }
     public java.lang.String getIdentifier() { return identifier_; }
     
     // optional string secondary_identifier = 2;
+    public static final int SECONDARY_IDENTIFIER_FIELD_NUMBER = 2;
     private boolean hasSecondaryIdentifier;
     private java.lang.String secondaryIdentifier_ = "";
     public boolean hasSecondaryIdentifier() { return hasSecondaryIdentifier; }
@@ -761,6 +806,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -779,6 +835,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -814,7 +871,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -831,6 +888,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier returnMe = result;
         result = null;
         return returnMe;
@@ -909,7 +969,10 @@ public final class AccessProto {
         return result.getIdentifier();
       }
       public Builder setIdentifier(java.lang.String value) {
-        result.hasIdentifier = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasIdentifier = true;
         result.identifier_ = value;
         return this;
       }
@@ -927,7 +990,10 @@ public final class AccessProto {
         return result.getSecondaryIdentifier();
       }
       public Builder setSecondaryIdentifier(java.lang.String value) {
-        result.hasSecondaryIdentifier = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasSecondaryIdentifier = true;
         result.secondaryIdentifier_ = value;
         return this;
       }
@@ -969,90 +1035,105 @@ public final class AccessProto {
     }
     
     // optional string method = 1;
+    public static final int METHOD_FIELD_NUMBER = 1;
     private boolean hasMethod;
     private java.lang.String method_ = "";
     public boolean hasMethod() { return hasMethod; }
     public java.lang.String getMethod() { return method_; }
     
     // optional string protocol = 2;
+    public static final int PROTOCOL_FIELD_NUMBER = 2;
     private boolean hasProtocol;
     private java.lang.String protocol_ = "";
     public boolean hasProtocol() { return hasProtocol; }
     public java.lang.String getProtocol() { return protocol_; }
     
     // optional string remote_address = 3;
+    public static final int REMOTE_ADDRESS_FIELD_NUMBER = 3;
     private boolean hasRemoteAddress;
     private java.lang.String remoteAddress_ = "";
     public boolean hasRemoteAddress() { return hasRemoteAddress; }
     public java.lang.String getRemoteAddress() { return remoteAddress_; }
     
     // optional string remote_host = 4;
+    public static final int REMOTE_HOST_FIELD_NUMBER = 4;
     private boolean hasRemoteHost;
     private java.lang.String remoteHost_ = "";
     public boolean hasRemoteHost() { return hasRemoteHost; }
     public java.lang.String getRemoteHost() { return remoteHost_; }
     
     // optional string remote_user = 5;
+    public static final int REMOTE_USER_FIELD_NUMBER = 5;
     private boolean hasRemoteUser;
     private java.lang.String remoteUser_ = "";
     public boolean hasRemoteUser() { return hasRemoteUser; }
     public java.lang.String getRemoteUser() { return remoteUser_; }
     
     // optional int64 time_stamp = 6;
+    public static final int TIME_STAMP_FIELD_NUMBER = 6;
     private boolean hasTimeStamp;
     private long timeStamp_ = 0L;
     public boolean hasTimeStamp() { return hasTimeStamp; }
     public long getTimeStamp() { return timeStamp_; }
     
     // optional string request_uri = 7;
+    public static final int REQUEST_URI_FIELD_NUMBER = 7;
     private boolean hasRequestUri;
     private java.lang.String requestUri_ = "";
     public boolean hasRequestUri() { return hasRequestUri; }
     public java.lang.String getRequestUri() { return requestUri_; }
     
     // optional string request_url = 8;
+    public static final int REQUEST_URL_FIELD_NUMBER = 8;
     private boolean hasRequestUrl;
     private java.lang.String requestUrl_ = "";
     public boolean hasRequestUrl() { return hasRequestUrl; }
     public java.lang.String getRequestUrl() { return requestUrl_; }
     
     // optional int32 status_code = 9;
+    public static final int STATUS_CODE_FIELD_NUMBER = 9;
     private boolean hasStatusCode;
     private int statusCode_ = 0;
     public boolean hasStatusCode() { return hasStatusCode; }
     public int getStatusCode() { return statusCode_; }
     
     // optional int32 local_port = 10;
+    public static final int LOCAL_PORT_FIELD_NUMBER = 10;
     private boolean hasLocalPort;
     private int localPort_ = 0;
     public boolean hasLocalPort() { return hasLocalPort; }
     public int getLocalPort() { return localPort_; }
     
     // optional string server_name = 11;
+    public static final int SERVER_NAME_FIELD_NUMBER = 11;
     private boolean hasServerName;
     private java.lang.String serverName_ = "";
     public boolean hasServerName() { return hasServerName; }
     public java.lang.String getServerName() { return serverName_; }
     
     // optional .de.huxhorn.lilith.access.StringMap request_headers = 12;
+    public static final int REQUEST_HEADERS_FIELD_NUMBER = 12;
     private boolean hasRequestHeaders;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap requestHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
     public boolean hasRequestHeaders() { return hasRequestHeaders; }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders() { return requestHeaders_; }
     
     // optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;
+    public static final int REQUEST_PARAMETERS_FIELD_NUMBER = 13;
     private boolean hasRequestParameters;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap requestParameters_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
     public boolean hasRequestParameters() { return hasRequestParameters; }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters() { return requestParameters_; }
     
     // optional .de.huxhorn.lilith.access.StringMap response_headers = 14;
+    public static final int RESPONSE_HEADERS_FIELD_NUMBER = 14;
     private boolean hasResponseHeaders;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap responseHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
     public boolean hasResponseHeaders() { return hasResponseHeaders; }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders() { return responseHeaders_; }
     
     // optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;
+    public static final int LOGGER_CONTEXT_FIELD_NUMBER = 15;
     private boolean hasLoggerContext;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
     public boolean hasLoggerContext() { return hasLoggerContext; }
@@ -1232,6 +1313,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -1250,6 +1342,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -1285,7 +1378,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -1302,6 +1395,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent returnMe = result;
         result = null;
         return returnMe;
@@ -1491,7 +1587,10 @@ public final class AccessProto {
         return result.getMethod();
       }
       public Builder setMethod(java.lang.String value) {
-        result.hasMethod = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasMethod = true;
         result.method_ = value;
         return this;
       }
@@ -1509,7 +1608,10 @@ public final class AccessProto {
         return result.getProtocol();
       }
       public Builder setProtocol(java.lang.String value) {
-        result.hasProtocol = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasProtocol = true;
         result.protocol_ = value;
         return this;
       }
@@ -1527,7 +1629,10 @@ public final class AccessProto {
         return result.getRemoteAddress();
       }
       public Builder setRemoteAddress(java.lang.String value) {
-        result.hasRemoteAddress = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasRemoteAddress = true;
         result.remoteAddress_ = value;
         return this;
       }
@@ -1545,7 +1650,10 @@ public final class AccessProto {
         return result.getRemoteHost();
       }
       public Builder setRemoteHost(java.lang.String value) {
-        result.hasRemoteHost = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasRemoteHost = true;
         result.remoteHost_ = value;
         return this;
       }
@@ -1563,7 +1671,10 @@ public final class AccessProto {
         return result.getRemoteUser();
       }
       public Builder setRemoteUser(java.lang.String value) {
-        result.hasRemoteUser = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasRemoteUser = true;
         result.remoteUser_ = value;
         return this;
       }
@@ -1599,7 +1710,10 @@ public final class AccessProto {
         return result.getRequestUri();
       }
       public Builder setRequestUri(java.lang.String value) {
-        result.hasRequestUri = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasRequestUri = true;
         result.requestUri_ = value;
         return this;
       }
@@ -1617,7 +1731,10 @@ public final class AccessProto {
         return result.getRequestUrl();
       }
       public Builder setRequestUrl(java.lang.String value) {
-        result.hasRequestUrl = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasRequestUrl = true;
         result.requestUrl_ = value;
         return this;
       }
@@ -1671,7 +1788,10 @@ public final class AccessProto {
         return result.getServerName();
       }
       public Builder setServerName(java.lang.String value) {
-        result.hasServerName = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasServerName = true;
         result.serverName_ = value;
         return this;
       }
@@ -1689,6 +1809,9 @@ public final class AccessProto {
         return result.getRequestHeaders();
       }
       public Builder setRequestHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasRequestHeaders = true;
         result.requestHeaders_ = value;
         return this;
@@ -1723,6 +1846,9 @@ public final class AccessProto {
         return result.getRequestParameters();
       }
       public Builder setRequestParameters(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasRequestParameters = true;
         result.requestParameters_ = value;
         return this;
@@ -1757,6 +1883,9 @@ public final class AccessProto {
         return result.getResponseHeaders();
       }
       public Builder setResponseHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasResponseHeaders = true;
         result.responseHeaders_ = value;
         return this;
@@ -1791,6 +1920,9 @@ public final class AccessProto {
         return result.getLoggerContext();
       }
       public Builder setLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasLoggerContext = true;
         result.loggerContext_ = value;
         return this;
@@ -1849,18 +1981,21 @@ public final class AccessProto {
     }
     
     // optional int64 birth_time = 1;
+    public static final int BIRTH_TIME_FIELD_NUMBER = 1;
     private boolean hasBirthTime;
     private long birthTime_ = 0L;
     public boolean hasBirthTime() { return hasBirthTime; }
     public long getBirthTime() { return birthTime_; }
     
     // optional string name = 2;
+    public static final int NAME_FIELD_NUMBER = 2;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
     // optional .de.huxhorn.lilith.access.StringMap properties = 3;
+    public static final int PROPERTIES_FIELD_NUMBER = 3;
     private boolean hasProperties;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
     public boolean hasProperties() { return hasProperties; }
@@ -1947,6 +2082,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -1965,6 +2111,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -2000,7 +2147,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -2017,6 +2164,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext returnMe = result;
         result = null;
         return returnMe;
@@ -2125,7 +2275,10 @@ public final class AccessProto {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        result.hasName = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasName = true;
         result.name_ = value;
         return this;
       }
@@ -2143,6 +2296,9 @@ public final class AccessProto {
         return result.getProperties();
       }
       public Builder setProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.hasProperties = true;
         result.properties_ = value;
         return this;
@@ -2201,6 +2357,7 @@ public final class AccessProto {
     }
     
     // repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;
+    public static final int ENTRY_FIELD_NUMBER = 1;
     private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> entry_ =
       java.util.Collections.emptyList();
     public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> getEntryList() {
@@ -2278,6 +2435,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -2296,6 +2464,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -2331,7 +2500,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -2348,6 +2517,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         if (result.entry_ != java.util.Collections.EMPTY_LIST) {
           result.entry_ =
             java.util.Collections.unmodifiableList(result.entry_);
@@ -2431,6 +2603,9 @@ public final class AccessProto {
         return result.getEntry(index);
       }
       public Builder setEntry(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.entry_.set(index, value);
         return this;
       }
@@ -2439,6 +2614,9 @@ public final class AccessProto {
         return this;
       }
       public Builder addEntry(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         if (result.entry_.isEmpty()) {
           result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>();
         }
@@ -2497,12 +2675,14 @@ public final class AccessProto {
     }
     
     // required string key = 1;
+    public static final int KEY_FIELD_NUMBER = 1;
     private boolean hasKey;
     private java.lang.String key_ = "";
     public boolean hasKey() { return hasKey; }
     public java.lang.String getKey() { return key_; }
     
     // optional string value = 2;
+    public static final int VALUE_FIELD_NUMBER = 2;
     private boolean hasValue;
     private java.lang.String value_ = "";
     public boolean hasValue() { return hasValue; }
@@ -2580,6 +2760,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -2598,6 +2789,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -2633,7 +2825,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -2650,6 +2842,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry returnMe = result;
         result = null;
         return returnMe;
@@ -2728,7 +2923,10 @@ public final class AccessProto {
         return result.getKey();
       }
       public Builder setKey(java.lang.String value) {
-        result.hasKey = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasKey = true;
         result.key_ = value;
         return this;
       }
@@ -2746,7 +2944,10 @@ public final class AccessProto {
         return result.getValue();
       }
       public Builder setValue(java.lang.String value) {
-        result.hasValue = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasValue = true;
         result.value_ = value;
         return this;
       }
@@ -2788,6 +2989,7 @@ public final class AccessProto {
     }
     
     // repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;
+    public static final int ENTRY_FIELD_NUMBER = 1;
     private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> entry_ =
       java.util.Collections.emptyList();
     public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> getEntryList() {
@@ -2865,6 +3067,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -2883,6 +3096,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -2918,7 +3132,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -2935,6 +3149,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         if (result.entry_ != java.util.Collections.EMPTY_LIST) {
           result.entry_ =
             java.util.Collections.unmodifiableList(result.entry_);
@@ -3018,6 +3235,9 @@ public final class AccessProto {
         return result.getEntry(index);
       }
       public Builder setEntry(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.entry_.set(index, value);
         return this;
       }
@@ -3026,6 +3246,9 @@ public final class AccessProto {
         return this;
       }
       public Builder addEntry(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         if (result.entry_.isEmpty()) {
           result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>();
         }
@@ -3084,12 +3307,14 @@ public final class AccessProto {
     }
     
     // required string key = 1;
+    public static final int KEY_FIELD_NUMBER = 1;
     private boolean hasKey;
     private java.lang.String key_ = "";
     public boolean hasKey() { return hasKey; }
     public java.lang.String getKey() { return key_; }
     
     // repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;
+    public static final int VALUE_FIELD_NUMBER = 2;
     private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> value_ =
       java.util.Collections.emptyList();
     public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> getValueList() {
@@ -3172,6 +3397,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -3190,6 +3426,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -3225,7 +3462,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -3242,6 +3479,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         if (result.value_ != java.util.Collections.EMPTY_LIST) {
           result.value_ =
             java.util.Collections.unmodifiableList(result.value_);
@@ -3329,7 +3569,10 @@ public final class AccessProto {
         return result.getKey();
       }
       public Builder setKey(java.lang.String value) {
-        result.hasKey = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasKey = true;
         result.key_ = value;
         return this;
       }
@@ -3350,6 +3593,9 @@ public final class AccessProto {
         return result.getValue(index);
       }
       public Builder setValue(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         result.value_.set(index, value);
         return this;
       }
@@ -3358,6 +3604,9 @@ public final class AccessProto {
         return this;
       }
       public Builder addValue(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         if (result.value_.isEmpty()) {
           result.value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>();
         }
@@ -3416,6 +3665,7 @@ public final class AccessProto {
     }
     
     // optional string value = 1;
+    public static final int VALUE_FIELD_NUMBER = 1;
     private boolean hasValue;
     private java.lang.String value_ = "";
     public boolean hasValue() { return hasValue; }
@@ -3485,6 +3735,17 @@ public final class AccessProto {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
@@ -3503,6 +3764,7 @@ public final class AccessProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue prototype) {
       return new Builder().mergeFrom(prototype);
     }
+    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
@@ -3538,7 +3800,7 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue build() {
-        if (!isInitialized()) {
+        if (result != null && !isInitialized()) {
           throw new com.google.protobuf.UninitializedMessageException(
             result);
         }
@@ -3555,6 +3817,9 @@ public final class AccessProto {
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue returnMe = result;
         result = null;
         return returnMe;
@@ -3626,7 +3891,10 @@ public final class AccessProto {
         return result.getValue();
       }
       public Builder setValue(java.lang.String value) {
-        result.hasValue = true;
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasValue = true;
         result.value_ = value;
         return this;
       }
