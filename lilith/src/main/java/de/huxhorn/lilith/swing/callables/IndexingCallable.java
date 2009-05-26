@@ -17,10 +17,13 @@
  */
 package de.huxhorn.lilith.swing.callables;
 
-import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
+import de.huxhorn.sulky.codec.filebuffer.DefaultDataStrategy;
 import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
+import de.huxhorn.sulky.codec.filebuffer.DefaultIndexStrategy;
 import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
+import de.huxhorn.sulky.codec.filebuffer.IndexStrategy;
+import de.huxhorn.sulky.codec.filebuffer.SparseDataStrategy;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
 import org.slf4j.Logger;
@@ -74,12 +77,14 @@ public class IndexingCallable
 		FileHeader fileHeader = fhs.readFileHeader(dataFile);
 		if(fileHeader != null)
 		{
+			boolean sparse = fileHeader.getMetaData().isSparse();
 			long offset = fileHeader.getDataOffset();
 
 			RandomAccessFile dataRAFile = null;
 			RandomAccessFile indexRAFile = null;
 			Exception ex = null;
 			long counter = 0;
+			IndexStrategy indexStrategy = new DefaultIndexStrategy();
 			try
 			{
 				dataRAFile = new RandomAccessFile(dataFile, "r");
@@ -88,10 +93,20 @@ public class IndexingCallable
 				while(offset < fileSize)
 				{
 					dataRAFile.seek(offset);
-					indexRAFile.writeLong(offset);
-					counter++;
+
 					int dataSize = dataRAFile.readInt();
-					offset = offset + dataSize + CodecFileBuffer.DATA_LENGTH_SIZE;
+					if(!sparse)
+					{
+						indexStrategy.setOffset(indexRAFile, counter, offset);
+						offset = offset + dataSize + DefaultDataStrategy.DATA_LENGTH_SIZE;
+					}
+					else
+					{
+						long index = dataRAFile.readLong();
+						indexStrategy.setOffset(indexRAFile, index, offset);
+						offset = offset + dataSize + SparseDataStrategy.DATA_LENGTH_SIZE + SparseDataStrategy.INDEX_SIZE;
+					}
+					counter++;
 					setCurrentStep(offset);
 				}
 			}
