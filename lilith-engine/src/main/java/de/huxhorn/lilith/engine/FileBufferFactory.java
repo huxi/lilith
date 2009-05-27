@@ -84,7 +84,7 @@ public abstract class FileBufferFactory<T extends Serializable>
 	{
 		if(logger.isInfoEnabled()) logger.info("Creating buffer for dataFile '{}'.", dataFile.getAbsolutePath());
 
-		CodecFileBuffer<EventWrapper<T>> result = new CodecFileBuffer<EventWrapper<T>>(magicValue, usedMetaData, null, dataFile, indexFile);
+		CodecFileBuffer<EventWrapper<T>> result = new CodecFileBuffer<EventWrapper<T>>(magicValue, false, usedMetaData, null, dataFile, indexFile);
 
 		FileHeader fileHeader = result.getFileHeader();
 		MetaData actualMetaData = fileHeader.getMetaData();
