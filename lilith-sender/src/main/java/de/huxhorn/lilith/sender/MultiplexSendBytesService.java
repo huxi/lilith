@@ -29,7 +29,7 @@ public class MultiplexSendBytesService
 	private int queueSize;
 
 	private Set<SimpleSendBytesService> senderServices;
-	private BlockingQueue<byte[]> eventBytes;
+	private final BlockingQueue<byte[]> eventBytes;
 	private List<String> remoteHostsList;
 	private Thread dispatcherThread;
 	private String name;
@@ -44,7 +44,7 @@ public class MultiplexSendBytesService
 		this.queueSize = queueSize;
 		this.remoteHostsList = remoteHostsList;
 		this.senderServices = new HashSet<SimpleSendBytesService>();
-		this.eventBytes = new ArrayBlockingQueue<byte[]>(queueSize);
+		this.eventBytes = new ArrayBlockingQueue<byte[]>(queueSize, true);
 		this.writeByteStrategy = writeByteStrategy;
 		this.port = port;
 		this.reconnectionDelay = reconnectionDelay;
