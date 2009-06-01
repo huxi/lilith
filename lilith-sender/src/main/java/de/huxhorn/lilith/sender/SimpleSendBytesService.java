@@ -36,7 +36,7 @@ public class SimpleSendBytesService
 
 	public static final int DEFAULT_POLL_INTERVALL = 100;
 
-	private BlockingQueue<byte[]> localEventBytes;
+	private final BlockingQueue<byte[]> localEventBytes;
 
 	private WriteByteStrategy writeByteStrategy;
 	private DataOutputStreamFactory dataOutputStreamFactory;
@@ -76,7 +76,7 @@ public class SimpleSendBytesService
 			throw new IllegalArgumentException("pollIntervall must be greater than zero!");
 		}
 		this.connectionState = ConnectionState.Offline;
-		this.localEventBytes = new ArrayBlockingQueue<byte[]>(queueSize);
+		this.localEventBytes = new ArrayBlockingQueue<byte[]>(queueSize, true);
 		this.dataOutputStreamFactory = dataOutputStreamFactory;
 		this.writeByteStrategy = writeByteStrategy;
 		this.queueSize = queueSize;

@@ -33,6 +33,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	extends AbstractEventProducer<T>
@@ -42,7 +43,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	private final DataInputStream dataInput;
 	private Decoder<T> decoder;
 	private boolean compressing;
-	private long heartbeatTimestamp;
+	private final AtomicLong heartbeatTimestamp;
 
 	public AbstractMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream, boolean compressing)
 	{
@@ -50,6 +51,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		this.dataInput = new DataInputStream(new BufferedInputStream(inputStream));
 		this.compressing = compressing;
 		this.decoder = createDecoder();
+		this.heartbeatTimestamp = new AtomicLong();
 	}
 
 	protected abstract Decoder<T> createDecoder();
@@ -66,14 +68,14 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		t.start();
 	}
 
-	protected synchronized void updateHeartbeatTimestamp()
+	protected void updateHeartbeatTimestamp()
 	{
-		heartbeatTimestamp = System.currentTimeMillis();
+		heartbeatTimestamp.set(System.currentTimeMillis());
 	}
 
-	protected synchronized long getHeartbeatTimestamp()
+	protected long getHeartbeatTimestamp()
 	{
-		return heartbeatTimestamp;
+		return heartbeatTimestamp.get();
 	}
 
 	public boolean isCompressing()

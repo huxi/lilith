@@ -35,13 +35,13 @@ public class StdoutEventConsumer<T extends Serializable>
 	final Logger logger = LoggerFactory.getLogger(StdoutEventConsumer.class);
 
 	private List<EventWrapper> events;
-	private Lock lock;
+	private final Lock lock;
 	private long writeInterval;
 
 	public StdoutEventConsumer()
 	{
 		events = new LinkedList<EventWrapper>();
-		lock = new ReentrantLock();
+		lock = new ReentrantLock(true);
 		writeInterval = 2000;
 	}
 

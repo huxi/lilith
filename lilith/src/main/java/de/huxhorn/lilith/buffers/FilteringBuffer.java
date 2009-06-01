@@ -33,13 +33,13 @@ public class FilteringBuffer<E>
 
 	private Buffer<E> sourceBuffer;
 	private Condition condition;
-	private ReentrantReadWriteLock indicesLock;
+	private final ReentrantReadWriteLock indicesLock;
 	private final List<Long> filteredIndices;
 	private boolean disposed;
 
 	public FilteringBuffer(Buffer<E> sourceBuffer, Condition condition)
 	{
-		this.indicesLock = new ReentrantReadWriteLock();
+		this.indicesLock = new ReentrantReadWriteLock(true);
 		this.sourceBuffer = sourceBuffer;
 		this.condition = condition;
 		this.filteredIndices = new ArrayList<Long>();
@@ -59,7 +59,7 @@ public class FilteringBuffer<E>
 	public long getSourceIndex(long index)
 	{
 		long realIndex = -1;
-		//synchronized(filteredIndices)
+
 		ReentrantReadWriteLock.ReadLock lock = indicesLock.readLock();
 		lock.lock();
 		try
@@ -78,7 +78,6 @@ public class FilteringBuffer<E>
 
 	public long getSize()
 	{
-		//synchronized(filteredIndices)
 		ReentrantReadWriteLock.ReadLock lock = indicesLock.readLock();
 		lock.lock();
 		try
@@ -139,7 +138,7 @@ public class FilteringBuffer<E>
 		return condition;
 	}
 
-	public synchronized void dispose()
+	public void dispose()
 	{
 		this.disposed = true;
 	}
