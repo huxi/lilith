@@ -2273,6 +2273,18 @@ public class MainFrame
 
 	public void exit()
 	{
+		if(applicationPreferences.isAskingBeforeQuit())
+		{
+			// yes, I hate apps that ask this question...
+			String dialogTitle = "Exit now?";
+			String message = "Are you really 100% sure that you want to quit?\nPlease do yourself a favour and think about it before you answer...\nExit now?";
+			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if(JOptionPane.OK_OPTION != result)
+			{
+				return;
+			}
+		}
 		if(logger.isInfoEnabled()) logger.info("Exiting...");
 		// this probably isn't necessary since jmdns registers a shutdown hook.
 		if(senderService != null)

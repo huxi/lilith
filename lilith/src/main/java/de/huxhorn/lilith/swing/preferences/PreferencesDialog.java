@@ -57,6 +57,7 @@ public class PreferencesDialog
 	private JTabbedPane tabbedPane;
 
 	private GeneralPanel generalPanel;
+	private StartupShutdownPanel startupShutdownPanel;
 	private SoundsPanel soundsPanel;
 	private SourcesPanel sourcesPanel;
 	private SourceListsPanel sourceListsPanel;
@@ -84,6 +85,7 @@ public class PreferencesDialog
 	private void createUI()
 	{
 		generalPanel = new GeneralPanel(this);
+		startupShutdownPanel = new StartupShutdownPanel(this);
 		soundsPanel = new SoundsPanel(this);
 		sourcesPanel = new SourcesPanel(this);
 		sourceListsPanel = new SourceListsPanel(this);
@@ -95,6 +97,7 @@ public class PreferencesDialog
 		tabbedPane.setPreferredSize(new Dimension(600, 500));
 
 		tabbedPane.add("General", generalPanel);
+		tabbedPane.add("Startup & Shutdown", startupShutdownPanel);
 		tabbedPane.add("Sounds", soundsPanel);
 		tabbedPane.add("Sources", sourcesPanel);
 		tabbedPane.add("Source Lists", sourceListsPanel);
@@ -123,6 +126,7 @@ public class PreferencesDialog
 	private void initUI()
 	{
 		generalPanel.initUI();
+		startupShutdownPanel.initUI();
 		soundsPanel.initUI();
 		sourceNames = applicationPreferences.getSourceNames();
 		if(sourceNames == null)
@@ -213,6 +217,7 @@ public class PreferencesDialog
 	private void saveSettings()
 	{
 		generalPanel.saveSettings();
+		startupShutdownPanel.saveSettings();
 		soundsPanel.saveSettings();
 		conditionsPanel.saveSettings();
 		applicationPreferences.setSourceNames(sourceNames);
