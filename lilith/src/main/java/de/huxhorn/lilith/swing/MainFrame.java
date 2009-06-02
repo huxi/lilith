@@ -72,6 +72,8 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
+import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler;
+import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler16;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
@@ -409,6 +411,18 @@ public class MainFrame
 
 		desktop.add(taskManagerFrame);
 		desktop.validate();
+
+		// the following code must be executed after desktop has been initialized...
+		try
+		{
+			// try to use the 1.6 transfer handler...
+			new MainFrameTransferHandler16(this).attach();
+		}
+		catch(Throwable t)
+		{
+			// ... and use the basic 1.5 transfer handler if this fails.
+			new MainFrameTransferHandler(this).attach();
+		}
 
 		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
 	}
