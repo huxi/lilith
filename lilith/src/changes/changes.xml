@@ -96,6 +96,9 @@
 			<action dev="jhux" type="fix" issue="60">
 				Changed shortcut of "Import" to "command shift I". It collided with "Add condition...", previously.
 			</action>
+			<action dev="jhux" type="add" issue="47">
+				Implemented Drag and Drop of Lilith files.
+			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
 			</action>
