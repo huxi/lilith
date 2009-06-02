@@ -2869,7 +2869,7 @@ public class ViewActions
 		{
 			super("Import...");
 			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " I");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift I");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('i'));
