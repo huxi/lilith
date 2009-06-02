@@ -99,6 +99,15 @@
 			<action dev="jhux" type="add" issue="47">
 				Implemented Drag and Drop of Lilith files.
 			</action>
+			<action dev="jhux" type="add" issue="25">
+				Option to disable splash screen.
+			</action>
+			<action dev="jhux" type="add" issue="26">
+				Option to ask before exit.
+			</action>
+			<action dev="jhux" type="update">
+				Added "Startup &amp; Shutdown" pane to preferences dialog.
+			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
 			</action>

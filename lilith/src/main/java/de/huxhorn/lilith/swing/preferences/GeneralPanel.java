@@ -48,10 +48,6 @@ public class GeneralPanel
 	// Details view
 	private JCheckBox showFullCallstackCheckbox;
 
-	// Startup & Shutdown
-	private JCheckBox checkForUpdateCheckbox;
-	private JCheckBox cleaningLogsOnExitCheckbox;
-
 	// ???
 	private JFileChooser applicationPathFileChooser;
 	private JTextField appPathTextField;
@@ -70,11 +66,9 @@ public class GeneralPanel
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
 		showIdentifierCheckbox = new JCheckBox("Show identifier for named sources.");
 		showFullCallstackCheckbox = new JCheckBox("Show full Callstack.");
-		cleaningLogsOnExitCheckbox = new JCheckBox("Clean logs on exit.");
 		autoOpenCheckbox = new JCheckBox("Automatically open new views on connection.");
 		autoCloseCheckbox = new JCheckBox("Automatically close inactive views on disconnection.");
 		autoFocusCheckbox = new JCheckBox("Automatically focus window of new view.");
-		checkForUpdateCheckbox = new JCheckBox("Check for updates on startup.");
 		scrollingToBottomCheckbox = new JCheckBox("Initial 'Scrolling to Bottom' setting");
 		applicationPathFileChooser = new JFileChooser();
 		applicationPathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -122,11 +116,6 @@ public class GeneralPanel
 		detailsPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Details View"));
 		detailsPanel.add(showFullCallstackCheckbox);
 
-		JPanel startupShutdownPanel = new JPanel(new GridLayout(2, 1));
-		startupShutdownPanel.add(checkForUpdateCheckbox);
-		startupShutdownPanel.add(cleaningLogsOnExitCheckbox);
-		startupShutdownPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Startup & Shutdown"));
-
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 
 		setLayout(new GridBagLayout());
@@ -149,12 +138,9 @@ public class GeneralPanel
 			add(detailsPanel, gbc);
 
 			gbc.gridy = 3;
-			add(startupShutdownPanel, gbc);
-
-			gbc.gridy = 4;
 			add(lookAndFeelCombo, gbc);
 
-			gbc.gridy = 5;
+			gbc.gridy = 4;
 			add(appPathPanel, gbc);
 		}
 	}
@@ -171,10 +157,8 @@ public class GeneralPanel
 		autoOpenCheckbox.setSelected(applicationPreferences.isAutoOpening());
 		autoCloseCheckbox.setSelected(applicationPreferences.isAutoClosing());
 		autoFocusCheckbox.setSelected(applicationPreferences.isAutoFocusingWindow());
-		checkForUpdateCheckbox.setSelected(applicationPreferences.isCheckingForUpdate());
 		showIdentifierCheckbox.setSelected(applicationPreferences.isShowingIdentifier());
 		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
-		cleaningLogsOnExitCheckbox.setSelected(applicationPreferences.isCleaningLogsOnExit());
 		ArrayList<String> lookAndFeels = new ArrayList<String>();
 		for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 		{
@@ -211,11 +195,9 @@ public class GeneralPanel
 		applicationPreferences.setAutoOpening(autoOpenCheckbox.isSelected());
 		applicationPreferences.setAutoClosing(autoCloseCheckbox.isSelected());
 		applicationPreferences.setAutoFocusingWindow(autoFocusCheckbox.isSelected());
-		applicationPreferences.setCheckingForUpdate(checkForUpdateCheckbox.isSelected());
 		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
 		applicationPreferences.setShowingIdentifier(showIdentifierCheckbox.isSelected());
 		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
-		applicationPreferences.setCleaningLogsOnExit(cleaningLogsOnExitCheckbox.isSelected());
 		applicationPreferences.setLookAndFeel((String) lookAndFeelCombo.getSelectedItem());
 	}
 
