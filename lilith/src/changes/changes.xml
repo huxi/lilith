@@ -108,6 +108,13 @@
 			<action dev="jhux" type="update">
 				Added "Startup &amp; Shutdown" pane to preferences dialog.
 			</action>
+			<action dev="jhux" type="update">
+				MultiplexSocketAppenderBase is now extending UnsynchronizedAppenderBase instead of AppenderBase, as
+				suggested by Maarten Bosteels and Ralph Goers. This will circumvent the effects of
+				http://jira.qos.ch/browse/LBCORE-97 in this special case. This will also increase performance a bit
+				since locking was, in fact, done twice before: once in AppenderBase and once in
+				MultiplexSendBytesService.
+			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
 			</action>
