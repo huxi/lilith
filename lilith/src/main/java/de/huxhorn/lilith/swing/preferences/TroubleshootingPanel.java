@@ -57,6 +57,7 @@ public class TroubleshootingPanel
 			String message = "This resets all details view related files, all manual changes will be lost!\nReinitialize details view right now?";
 			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
 			if(JOptionPane.OK_OPTION != result)
 			{
 				return;
@@ -83,6 +84,7 @@ public class TroubleshootingPanel
 			String message = "This overwrites all example groovy conditions. Other conditions are not changed!\nReinitialize example groovy conditions right now?";
 			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
 			if(JOptionPane.OK_OPTION != result)
 			{
 				return;
@@ -109,6 +111,7 @@ public class TroubleshootingPanel
 			String message = "This deletes *all* log files, even the Lilith logs and the global logs!\nDelete all log files right now?";
 			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
 			if(JOptionPane.OK_OPTION != result)
 			{
 				return;
