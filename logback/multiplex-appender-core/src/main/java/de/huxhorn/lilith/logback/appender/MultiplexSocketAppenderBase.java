@@ -23,16 +23,16 @@ import de.huxhorn.lilith.sender.HeartbeatRunnable;
 import de.huxhorn.lilith.sender.MessageWriteByteStrategy;
 import de.huxhorn.lilith.sender.MultiplexSendBytesService;
 import de.huxhorn.lilith.sender.WriteByteStrategy;
+import de.huxhorn.sulky.codec.Encoder;
 
-import ch.qos.logback.core.AppenderBase;
+import ch.qos.logback.core.UnsynchronizedAppenderBase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import de.huxhorn.sulky.codec.Encoder;
 
 public abstract class MultiplexSocketAppenderBase<E>
-	extends AppenderBase<E>
+	extends UnsynchronizedAppenderBase<E>
 {
 	private static final int DEFAULT_QUEUE_SIZE = 1000;
 
