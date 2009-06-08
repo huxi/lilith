@@ -6,16 +6,7 @@
 	<body>
 		<release version="1.x.x" date="TBD" description="Future release">
 			<action dev="jhux" type="add">
-				TODO: Create index file from existing lilith file.
-			</action>
-			<action dev="jhux" type="add">
 				TODO: Create logger name index file from existing ljlog-file for *sigh* tree-view *yawn*
-			</action>
-			<action dev="jhux" type="add">
-				TODO: Drag&amp;Drop of lilith files.
-			</action>
-			<action dev="jhux" type="add">
-				TODO: "Open" or "Import" logs. [*command*-O] Support native Lilith, Lilith XML, log4j XML.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: "Save as" or "Export" logs. [*command*-S] This is only possible for inactive log views.
@@ -40,9 +31,6 @@
 				TODO: add SSL multiplexers.
 			</action>
 			<action dev="jhux" type="add">
-				TODO: add lilith-bridge, i.e. an app that receives events and forwards them using multiplexer.
-			</action>
-			<action dev="jhux" type="add">
 				TODO: evaluate jxlayer
 			</action>
 			<action dev="jhux" type="add">
@@ -53,6 +41,22 @@
 			</action>
 			<action dev="jhux" type="add">
 				TODO: Option to left-align Thread name in table (Lilianne)
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Add transfer size statistics.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
+				EventReceiver, EventHandler (?, stuff like the fart on error,
+				RRD statistics, anything that's working directly on received events), GoToSource).
+
+				Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
+			</action>
+			<action dev="jhux" type="add">
+				TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
+			</action>
+			<action dev="jhux" type="update">
+				TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
 			</action>
 		</release>
 
@@ -123,22 +127,6 @@
 			<action dev="jhux" type="update" issue="61">
 				"Copy call stack" and "Copy Throwable" are now prepending the StackTraceElements with "\tat " as
 				requested in ticket:61. The detailsView is also displaying "at " before any StackTraceElement.
-			</action>
-			<action dev="jhux" type="add">
-				TODO: Add transfer size statistics.
-			</action>
-			<action dev="jhux" type="add">
-				TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
-				EventReceiver, EventHandler (?, stuff like the fart on error,
-				RRD statistics, anything that's working directly on received events), GoToSource).
-
-				Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
-			</action>
-			<action dev="jhux" type="add">
-				TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
-			</action>
-			<action dev="jhux" type="update">
-				TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
 			</action>
 		</release>
 
