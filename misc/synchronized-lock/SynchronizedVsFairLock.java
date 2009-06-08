@@ -36,11 +36,11 @@ public class SynchronizedVsFairLock
 		
 		Thread.sleep(10000);
 		
-		for(int i=0;i<threadCount;i++)
+		for(int i=threadCount - 1 ; i>=0 ; i--)
 		{
 			threads[i].interrupt();
 		}
-		Thread.sleep(1000); // wait a moment for termination, to lazy for join ;)
+		Thread.sleep(1000); // wait a moment for termination, too lazy for join ;)
 	}
 	
 	public static void print(String text, Runnable[] runnables)
