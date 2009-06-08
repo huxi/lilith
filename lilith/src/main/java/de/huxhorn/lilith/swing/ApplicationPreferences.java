@@ -91,6 +91,7 @@ public class ApplicationPreferences
 	public static final String CLEANING_LOGS_ON_EXIT_PROPERTY = "cleaningLogsOnExit";
 	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
 	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
+	public static final String SHOWING_STACKTRACE_PROPERTY = "showingStackTrace";
 	public static final String CHECKING_FOR_UPDATE_PROPERTY = "checkingForUpdate";
 	public static final String SOURCE_FILTERING_PROPERTY = "sourceFiltering";
 	public static final String SOUND_LOCATIONS_PROPERTY = "soundLocations";
@@ -1191,6 +1192,19 @@ public class ApplicationPreferences
 	public boolean isShowingFullCallstack()
 	{
 		return PREFERENCES.getBoolean(SHOWING_FULL_CALLSTACK_PROPERTY, false);
+	}
+
+	public void setShowingStackTrace(boolean showingStackTrace)
+	{
+		Object oldValue = isShowingStackTrace();
+		PREFERENCES.putBoolean(SHOWING_STACKTRACE_PROPERTY, showingStackTrace);
+		Object newValue = isShowingStackTrace();
+		propertyChangeSupport.firePropertyChange(SHOWING_STACKTRACE_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isShowingStackTrace()
+	{
+		return PREFERENCES.getBoolean(SHOWING_STACKTRACE_PROPERTY, true);
 	}
 
 	public void setCleaningLogsOnExit(boolean cleaningLogsOnExit)

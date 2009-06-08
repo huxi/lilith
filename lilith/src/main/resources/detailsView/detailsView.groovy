@@ -24,13 +24,17 @@ import java.text.SimpleDateFormat
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if(!binding.variables.'completeCallStack')
+if(!binding.variables.containsKey('completeCallStack'))
 {
 	binding.setVariable('completeCallStack', false);
 }
+if(!binding.variables.containsKey('showStackTrace'))
+{
+	binding.setVariable('showStackTrace', true);
+}
 
 def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSSZ');
-def builder = new groovy.xml.StreamingMarkupBuilder();
+def builder = new StreamingMarkupBuilder();
 builder.encoding = "UTF-8";
 
 def writer = new StringWriter();
@@ -280,7 +284,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 					th('Throwable')
 					td([class: "throwableContainer"])
 						{
-							buildThrowable(it, event.throwable, true)
+							buildThrowable(it, event.throwable, null, true, showStackTrace)
 						}
 				}
 		}
@@ -467,7 +471,7 @@ def buildEventWrapperSpecific(table, eventWrapper, evenOdd)
 		}
 }
 
-def buildThrowable(element, throwable, isFirst = false)
+def buildThrowable(element, throwable, previousSTE, isFirst, showStackTrace)
 {
 	if(!isFirst)
 	{
@@ -475,29 +479,56 @@ def buildThrowable(element, throwable, isFirst = false)
 		element.mkp.yield 'Caused by:'
 		element.br()
 	}
-	element.div( [class: "throwable"] )
+	def stackTraceElement = null;
+	if(throwable.stackTrace && throwable.stackTrace.length > 0)
 	{
-		it.mkp.yield "${throwable.name}"
-		if(throwable.message && throwable.message != throwable.name)
+		stackTraceElement = throwable.stackTrace[0];
+	}
+	if(!stackTraceElement)
+	{
+		stackTraceElement = previousSTE;
+	}
+	element.div([class: "throwable"])
 		{
-			it.br();
-			it.pre()
+			if(stackTraceElement)
+			{
+				def steStr = stackTraceElement.toString();
+				it.a([href: 'ste://' + steStr])
+					{
+						buildThrowableText(it, throwable);
+					}
+			}
+			else
+			{
+				buildThrowableText(it, throwable);
+			}
+			if(showStackTrace)
+			{
+				it.hr();
+				buildStackTrace(it, throwable.stackTrace)
+				if(throwable.omittedElements > 0)
+				{
+					it.mkp.yield("${throwable.omittedElements} common elements omitted.");
+					it.br();
+				}
+			}
+
+			if(throwable.cause)
+			{
+				buildThrowable(it, throwable.cause, stackTraceElement, false, showStackTrace)
+			}
+		}
+}
+
+def buildThrowableText(element, throwable)
+{
+	element.mkp.yield "${throwable.name}"
+	if(throwable.message && throwable.message != throwable.name)
+	{
+		element.pre()
 			{
 				it.mkp.yield throwable.message;
 			}
-		}
-		it.br();
-		built=buildStackTrace(it, throwable.stackTrace)
-		if(throwable.omittedElements > 0)
-		{
-			it.mkp.yield("${throwable.omittedElements} common elements omitted.");
-			it.br();
-		}
-
-		if(throwable.cause)
-		{
-			buildThrowable(it, throwable.cause)
-		}
 	}
 }
 
@@ -626,8 +657,9 @@ def buildStackTraceElement(element, ste, isFirst = false)
 {
 	def steStr = ste.toString();
 	def extendedStr = ste.getExtendedString();
-	element.a([href: 'ste://' + ste.toString()])
+	element.a([href: 'ste://' + steStr])
 		{
+			it.mkp.yieldUnescaped("at&nbsp;");
 			it.mkp.yield steStr
 			if(extendedStr)
 			{

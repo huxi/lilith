@@ -1649,6 +1649,7 @@ public class MainFrame
 				binding.setVariable("eventWrapper", wrapper);
 				binding.setVariable("logger", logger);
 				binding.setVariable("completeCallStack", applicationPreferences.isShowingFullCallstack());
+				binding.setVariable("showStackTrace", applicationPreferences.isShowingStackTrace());
 
 				detailsViewScript.setBinding(binding);
 				Object result = detailsViewScript.run();

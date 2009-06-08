@@ -3191,8 +3191,7 @@ public class ViewActions
 					throwableText.append("StackTrace:\n");
 					for(ExtendedStackTraceElement current : st)
 					{
-						// TODO: extended optional?
-						throwableText.append("\t").append(current.toString(true)).append("\n");
+						throwableText.append("\tat ").append(current.toString(true)).append("\n");
 					}
 				}
 				info = info.getCause();
@@ -3257,7 +3256,7 @@ public class ViewActions
 					{
 						text.append("\n");
 					}
-					text.append(current);
+					text.append("\tat ").append(current);
 				}
 			}
 			mainFrame.copyText(text.toString());
