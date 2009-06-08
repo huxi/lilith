@@ -111,9 +111,18 @@
 			<action dev="jhux" type="update">
 				MultiplexSocketAppenderBase is now extending UnsynchronizedAppenderBase instead of AppenderBase, as
 				suggested by Maarten Bosteels and Ralph Goers. This will circumvent the effects of
-				http://jira.qos.ch/browse/LBCORE-97 in this special case. This will also increase performance a bit
+				http://jira.qos.ch/browse/LBCORE-97 in this special case. It will also increase performance a bit
 				since locking was, in fact, done twice before: once in AppenderBase and once in
 				MultiplexSendBytesService.
+			</action>
+			<action dev="jhux" type="add">
+				Added new option "Show stacktrace of Throwables" so non-technical people can disable it to just see
+				the exception and, if available, message. Clicking on the name or message of an exception will
+				now also open the code in IDEA.
+			</action>
+			<action dev="jhux" type="update" issue="61">
+				"Copy call stack" and "Copy Throwable" are now prepending the StackTraceElements with "\tat " as
+				requested in ticket:61. The detailsView is also displaying "at " before any StackTraceElement.
 			</action>
 			<action dev="jhux" type="add">
 				TODO: Add transfer size statistics.
