@@ -47,6 +47,7 @@ public class GeneralPanel
 
 	// Details view
 	private JCheckBox showFullCallstackCheckbox;
+	private JCheckBox showStackTraceCheckbox;
 
 	// ???
 	private JFileChooser applicationPathFileChooser;
@@ -66,6 +67,7 @@ public class GeneralPanel
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
 		showIdentifierCheckbox = new JCheckBox("Show identifier for named sources.");
 		showFullCallstackCheckbox = new JCheckBox("Show full Callstack.");
+		showStackTraceCheckbox = new JCheckBox("Show stacktrace of Throwables");
 		autoOpenCheckbox = new JCheckBox("Automatically open new views on connection.");
 		autoCloseCheckbox = new JCheckBox("Automatically close inactive views on disconnection.");
 		autoFocusCheckbox = new JCheckBox("Automatically focus window of new view.");
@@ -112,9 +114,10 @@ public class GeneralPanel
 		viewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "View"));
 		viewPanel.add(scrollingToBottomCheckbox);
 
-		JPanel detailsPanel = new JPanel(new GridLayout(1, 1));
+		JPanel detailsPanel = new JPanel(new GridLayout(2, 1));
 		detailsPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Details View"));
 		detailsPanel.add(showFullCallstackCheckbox);
+		detailsPanel.add(showStackTraceCheckbox);
 
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 
@@ -159,6 +162,7 @@ public class GeneralPanel
 		autoFocusCheckbox.setSelected(applicationPreferences.isAutoFocusingWindow());
 		showIdentifierCheckbox.setSelected(applicationPreferences.isShowingIdentifier());
 		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
+		showStackTraceCheckbox.setSelected(applicationPreferences.isShowingStackTrace());
 		ArrayList<String> lookAndFeels = new ArrayList<String>();
 		for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 		{
@@ -198,6 +202,7 @@ public class GeneralPanel
 		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
 		applicationPreferences.setShowingIdentifier(showIdentifierCheckbox.isSelected());
 		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
+		applicationPreferences.setShowingStackTrace(showStackTraceCheckbox.isSelected());
 		applicationPreferences.setLookAndFeel((String) lookAndFeelCombo.getSelectedItem());
 	}
 
