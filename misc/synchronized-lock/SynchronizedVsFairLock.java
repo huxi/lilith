@@ -2,11 +2,28 @@ import java.util.concurrent.locks.*;
 
 public class SynchronizedVsFairLock
 {
-
 	public static void main(String args[])
 		throws InterruptedException
 	{
+		int delay=1;
+		if(args.length>0)
+		{
+			try
+			{
+				delay=Integer.parseInt(args[0]);
+			}
+			catch(NumberFormatException ex)
+			{
+				//ignore
+			}
+		}
+		else
+		{
+			System.out.println("Usage: SynchronizedVsFairLock [delay in ms]");
+		}
+
 		System.out.println("Environment:");
+		System.out.println("delay                = "+delay);
 		System.out.println("java.runtime.name    = "+System.getProperty("java.runtime.name"));
 		System.out.println("java.runtime.version = "+System.getProperty("java.runtime.version"));
 		System.out.println("java.vendor          = "+System.getProperty("java.vendor"));
@@ -19,9 +36,9 @@ public class SynchronizedVsFairLock
 		System.out.println("os.arch              = "+System.getProperty("os.arch"));
 		System.out.println("##########################################");
 		
-		usingSynchronized(10);
-		usingUnfairLock(10);
-		usingFairLock(10);
+		usingSynchronized(10, delay);
+		usingUnfairLock(10, delay);
+		usingFairLock(10, delay);
 	}
 	
 	public static void execute(String text, Thread[] threads)
@@ -53,7 +70,7 @@ public class SynchronizedVsFairLock
 		System.out.println("##########################################");
 	}
 
-	public static void usingSynchronized(int threadCount)
+	public static void usingSynchronized(int threadCount, int delay)
 		throws InterruptedException
 	{
 		Object lockObject=new Object();
@@ -62,7 +79,7 @@ public class SynchronizedVsFairLock
 		
 		for(int i=0;i<threadCount;i++)
 		{
-			runnables[i]=new SynchronizedRunnable(lockObject);
+			runnables[i]=new SynchronizedRunnable(lockObject, delay);
 			threads[i]=new Thread(runnables[i]);
 		}
 		String text="usingSynchronized";
@@ -70,7 +87,7 @@ public class SynchronizedVsFairLock
 		print(text, runnables);
 	}
 	
-	public static void usingUnfairLock(int threadCount)
+	public static void usingUnfairLock(int threadCount, int delay)
 		throws InterruptedException
 	{
 		Lock lock=new ReentrantLock();
@@ -79,7 +96,7 @@ public class SynchronizedVsFairLock
 		
 		for(int i=0;i<threadCount;i++)
 		{
-			runnables[i]=new LockRunnable(lock);
+			runnables[i]=new LockRunnable(lock, delay);
 			threads[i]=new Thread(runnables[i]);
 		}
 		
@@ -88,7 +105,7 @@ public class SynchronizedVsFairLock
 		print(text, runnables);
 	}
 	
-	public static void usingFairLock(int threadCount)
+	public static void usingFairLock(int threadCount, int delay)
 		throws InterruptedException
 	{
 		Lock lock=new ReentrantLock(true);
@@ -97,7 +114,7 @@ public class SynchronizedVsFairLock
 		
 		for(int i=0;i<threadCount;i++)
 		{
-			runnables[i]=new LockRunnable(lock);
+			runnables[i]=new LockRunnable(lock, delay);
 			threads[i]=new Thread(runnables[i]);
 		}
 		
@@ -110,12 +127,14 @@ public class SynchronizedVsFairLock
 		implements Runnable
 	{
 		private final Object lockObject;
+		private final int delay;
 		private int counter;
 		private boolean running;
 		
-		public SynchronizedRunnable(Object lockObject)
+		public SynchronizedRunnable(Object lockObject, int delay)
 		{
 			this.lockObject=lockObject;
+			this.delay=delay;
 			this.counter=0;
 			this.running=false;
 		}
@@ -130,7 +149,7 @@ public class SynchronizedVsFairLock
 					counter++;
 					try
 					{
-						Thread.sleep(10);
+						Thread.sleep(delay);
 					}
 					catch(InterruptedException ex)
 					{
@@ -143,7 +162,7 @@ public class SynchronizedVsFairLock
 		
 		public String toString()
 		{
-			return "SynchronizedRunnable[counter="+counter+", running="+running+"]";
+			return "SynchronizedRunnable[counter="+counter+", running="+running+", delay="+delay+"]";
 		}
 	}
 
@@ -151,12 +170,14 @@ public class SynchronizedVsFairLock
 		implements Runnable
 	{
 		private final Lock lock;
+		private final int delay;
 		private int counter;
 		private boolean running;
 		
-		public LockRunnable(Lock lock)
+		public LockRunnable(Lock lock, int delay)
 		{
 			this.lock=lock;
+			this.delay=delay;
 			this.counter=0;
 			this.running=false;
 		}
@@ -170,7 +191,7 @@ public class SynchronizedVsFairLock
 				try
 				{
 					counter++;
-					Thread.sleep(10);
+					Thread.sleep(delay);
 				}
 				catch(InterruptedException ex)
 				{
@@ -186,7 +207,7 @@ public class SynchronizedVsFairLock
 		
 		public String toString()
 		{
-			return "LockRunnable[counter="+counter+", running="+running+"]";
+			return "LockRunnable[counter="+counter+", running="+running+", delay="+delay+"]";
 		}
 	}
 }
