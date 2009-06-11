@@ -21,13 +21,13 @@
 			<action dev="jhux" type="fix">
 				TODO: Improve behaviour of newly created filtered views, i.e. the pause.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="18">
 				TODO: Mac: Bouncing icon in case of error
 			</action>
 			<action dev="jhux" type="add">
 				TODO: Send message (not event) over Bonjour, i.e. a simple IM.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="17">
 				TODO: add SSL multiplexers.
 			</action>
 			<action dev="jhux" type="add">
@@ -42,44 +42,45 @@
 			<action dev="jhux" type="add">
 				TODO: Option to left-align Thread name in table (Lilianne)
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="9">
 				TODO: Add transfer size statistics.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="2">
 				TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
 				EventReceiver, EventHandler (?, stuff like the fart on error,
 				RRD statistics, anything that's working directly on received events), GoToSource).
-
+			</action>
+			<action dev="jhux" type="add" issue="3">
 				Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="5">
 				TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
 			</action>
-			<action dev="jhux" type="update">
+			<action dev="jhux" type="update" issue="6">
 				TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
 			</action>
 		</release>
 
 		<release version="1.0.0" date="TBD" description="Future release">
-			<action dev="jhux" type="fix">
+			<action dev="jhux" type="fix" issue="16">
 				TODO: get legitimate/better images for splash and about.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="15">
 				TODO: add application icon(s).
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="14">
 				TODO: add ip.ip.ip.ip:port to multiplexer receiver list.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="13">
 				TODO: launch4j, http://izpack.org/
 			</action>
-			<action dev="jhux" type="update">
+			<action dev="jhux" type="update" issue="12">
 				TODO: go to source on different thread, using xml StackTraceElement.
 			</action>
-			<action dev="jhux" type="add">
+			<action dev="jhux" type="add" issue="11">
 				TODO: homemade multicast discovery of other Lilith instances on LAN.
 			</action>
-			<action dev="jhux" type="update">
+			<action dev="jhux" type="update" issue="10">
 				TODO: Userfriendly and nice-looking preferences.
 			</action>
 		</release>
