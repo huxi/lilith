@@ -240,7 +240,7 @@ public class TimeWasted
 		private final int delay;
 		private int counter;
 		private boolean running;
-		private long minWasted;
+		private long minWasted=0xFFFFFFFFL;
 		private long maxWasted;
 		private long totalWasted;
 		
@@ -302,7 +302,7 @@ public class TimeWasted
 		private final int delay;
 		private int counter;
 		private boolean running;
-		private long minWasted;
+		private long minWasted=0xFFFFFFFFL;
 		private long maxWasted;
 		private long totalWasted;
 		
