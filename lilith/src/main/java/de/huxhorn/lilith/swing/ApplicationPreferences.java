@@ -89,6 +89,7 @@ public class ApplicationPreferences
 	public static final String LEVEL_COLORS_PROPERTY = "levelColors";
 	public static final String LOOK_AND_FEEL_PROPERTY = "lookAndFeel";
 	public static final String CLEANING_LOGS_ON_EXIT_PROPERTY = "cleaningLogsOnExit";
+	public static final String COLORING_WHOLE_ROW_PROPERTY = "coloringWholeRow";
 	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
 	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
 	public static final String SHOWING_STACKTRACE_PROPERTY = "showingStackTrace";
@@ -1218,6 +1219,19 @@ public class ApplicationPreferences
 	public boolean isCleaningLogsOnExit()
 	{
 		return PREFERENCES.getBoolean(CLEANING_LOGS_ON_EXIT_PROPERTY, false);
+	}
+
+	public void setColoringWholeRow(boolean coloringWholeRow)
+	{
+		Object oldValue = isColoringWholeRow();
+		PREFERENCES.putBoolean(COLORING_WHOLE_ROW_PROPERTY, coloringWholeRow);
+		Object newValue = isColoringWholeRow();
+		propertyChangeSupport.firePropertyChange(COLORING_WHOLE_ROW_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isColoringWholeRow()
+	{
+		return PREFERENCES.getBoolean(COLORING_WHOLE_ROW_PROPERTY, false);
 	}
 
 	public void setCheckingForUpdate(boolean checkingForUpdate)

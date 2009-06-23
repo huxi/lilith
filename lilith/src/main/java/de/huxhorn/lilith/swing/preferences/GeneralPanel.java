@@ -39,11 +39,13 @@ public class GeneralPanel
 
 	// Windows/View
 	private JCheckBox internalFramesCheckbox;
-	private JCheckBox scrollingToBottomCheckbox;
 	private JCheckBox autoOpenCheckbox;
-	private JCheckBox autoCloseCheckbox;
 	private JCheckBox autoFocusCheckbox;
+	private JCheckBox autoCloseCheckbox;
 	private JCheckBox showIdentifierCheckbox;
+
+	private JCheckBox scrollingToBottomCheckbox;
+	private JCheckBox coloringWholeRowCheckbox;
 
 	// Details view
 	private JCheckBox showFullCallstackCheckbox;
@@ -72,6 +74,7 @@ public class GeneralPanel
 		autoCloseCheckbox = new JCheckBox("Automatically close inactive views on disconnection.");
 		autoFocusCheckbox = new JCheckBox("Automatically focus window of new view.");
 		scrollingToBottomCheckbox = new JCheckBox("Initial 'Scrolling to Bottom' setting");
+		coloringWholeRowCheckbox = new JCheckBox("Color whole row according to Level or Status");
 		applicationPathFileChooser = new JFileChooser();
 		applicationPathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -110,9 +113,10 @@ public class GeneralPanel
 		windowPanel.add(autoCloseCheckbox);
 		windowPanel.add(showIdentifierCheckbox);
 
-		JPanel viewPanel = new JPanel(new GridLayout(1, 1));
+		JPanel viewPanel = new JPanel(new GridLayout(2, 1));
 		viewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "View"));
 		viewPanel.add(scrollingToBottomCheckbox);
+		viewPanel.add(coloringWholeRowCheckbox);
 
 		JPanel detailsPanel = new JPanel(new GridLayout(2, 1));
 		detailsPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Details View"));
@@ -152,6 +156,7 @@ public class GeneralPanel
 	{
 		internalFramesCheckbox.setSelected(applicationPreferences.isUsingInternalFrames());
 		scrollingToBottomCheckbox.setSelected(applicationPreferences.isScrollingToBottom());
+		coloringWholeRowCheckbox.setSelected(applicationPreferences.isColoringWholeRow());
 		String appPath = applicationPreferences.getApplicationPath().getAbsolutePath();
 		appPathTextField.setText(appPath);
 		appPathTextField.setToolTipText(appPath);
@@ -196,6 +201,7 @@ public class GeneralPanel
 	{
 		applicationPreferences.setUsingInternalFrames(internalFramesCheckbox.isSelected());
 		applicationPreferences.setScrollingToBottom(scrollingToBottomCheckbox.isSelected());
+		applicationPreferences.setColoringWholeRow(coloringWholeRowCheckbox.isSelected());
 		applicationPreferences.setAutoOpening(autoOpenCheckbox.isSelected());
 		applicationPreferences.setAutoClosing(autoCloseCheckbox.isSelected());
 		applicationPreferences.setAutoFocusingWindow(autoFocusCheckbox.isSelected());
