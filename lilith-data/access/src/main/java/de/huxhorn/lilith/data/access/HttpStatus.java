@@ -88,6 +88,31 @@ public enum HttpStatus
 		return codeMap.get(code);
 	}
 
+	public static HttpStatus.Type getType(int code)
+	{
+		if(code >= 100 && code < 200)
+		{
+			return Type.INFORMATIONAL;
+		}
+		if(code >= 200 && code < 300)
+		{
+			return Type.SUCCESSFUL;
+		}
+		if(code >= 300 && code < 400)
+		{
+			return Type.REDIRECTION;
+		}
+		if(code >= 400 && code < 500)
+		{
+			return Type.CLIENT_ERROR;
+		}
+		if(code >= 500 && code < 600)
+		{
+			return Type.SERVER_ERROR;
+		}
+		return null;
+	}
+
 	private int code;
 	private Type type;
 	private String description;

@@ -199,6 +199,7 @@ public class MainFrame
 	public static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
 	private JFileChooser openFileChooser;
 	private JFileChooser importFileChooser;
+	private boolean coloringWholeRow;
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 	 */
@@ -233,6 +234,8 @@ public class MainFrame
 	public MainFrame(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appName, boolean enableBonjour)
 	{
 		super(appName);
+		this.applicationPreferences = applicationPreferences;
+		this.coloringWholeRow = this.applicationPreferences.isColoringWholeRow();
 		this.splashScreen = splashScreen;
 		setSplashStatusText("Creating main frame.");
 		smallProgressIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Progress16.gif"));
@@ -276,7 +279,7 @@ public class MainFrame
 		longTaskManager.startUp();
 		longTaskManager.addTaskListener(new MainTaskListener());
 
-		startupApplicationPath = applicationPreferences.getStartupApplicationPath();
+		startupApplicationPath = this.applicationPreferences.getStartupApplicationPath();
 
 		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, LOGGING_FILE_SUBDIRECTORY));
 		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, ACCESS_FILE_SUBDIRECTORY));
@@ -301,8 +304,7 @@ public class MainFrame
 
 		loggingEventViewManager = new LoggingEventViewManager(this);
 		accessEventViewManager = new AccessEventViewManager(this);
-		this.applicationPreferences = applicationPreferences;
-		applicationPreferences.addPropertyChangeListener(new PreferencesChangeListener());
+		this.applicationPreferences.addPropertyChangeListener(new PreferencesChangeListener());
 		loggingSourceListener = new LoggingEventSourceListener();
 		accessSourceListener = new AccessEventSourceListener();
 		// this.cleanupWindowChangeListener = new CleanupWindowChangeListener();
@@ -396,12 +398,12 @@ public class MainFrame
 		openFileChooser = new JFileChooser();
 		openFileChooser.setFileFilter(new LilithFileFilter());
 		openFileChooser.setFileHidingEnabled(false);
-		openFileChooser.setCurrentDirectory(applicationPreferences.getPreviousOpenPath());
+		openFileChooser.setCurrentDirectory(this.applicationPreferences.getPreviousOpenPath());
 
 		importFileChooser = new JFileChooser();
 		importFileChooser.setFileFilter(new XmlImportFileFilter());
 		importFileChooser.setFileHidingEnabled(false);
-		importFileChooser.setCurrentDirectory(applicationPreferences.getPreviousImportPath());
+		importFileChooser.setCurrentDirectory(this.applicationPreferences.getPreviousImportPath());
 
 		setSplashStatusText("Creating task manager frame.");
 		taskManagerFrame = new TaskManagerInternalFrame(this);
@@ -865,6 +867,24 @@ public class MainFrame
 		popup.show(component, p.x, p.y);
 	}
 
+	public Colors getColors(HttpStatus.Type status)
+	{
+		if(statusColors == null)
+		{
+			initStatusColors();
+		}
+		return statusColors.get(status);
+	}
+
+	public Colors getColors(LoggingEvent.Level level)
+	{
+		if(levelColors == null)
+		{
+			initLevelColors();
+		}
+		return levelColors.get(level);
+	}
+
 	public Colors getColors(EventWrapper eventWrapper)
 	{
 		if(!SwingUtilities.isEventDispatchThread())
@@ -873,58 +893,27 @@ public class MainFrame
 		}
 		if(activeConditions != null)
 		{
-			Colors result = null;
-			/*
-			EventIdentifier id = eventWrapper.getEventIdentifier();
-
-			SoftColorsReference ref = colorsCache.get(id);
-			if(ref!=null)
-			{
-				Colors c=ref.get();
-				if(c!=null)
-				{
-					result=c;
-					// System.out.println("Retrieved from cache.");
-				}
-				else
-				{
-					// stale item... should be handled by CleanupThread
-					colorsCache.remove(id);
-				}
-			}
-			if(result==null)
-			{
-			*/
-			// no cached value found
 			for(SavedCondition current : activeConditions)
 			{
 				Condition condition = current.getCondition();
 				if(condition != null && condition.isTrue(eventWrapper))
 				{
-					result = new Colors(current.getColorScheme());
-					break;
+					return new Colors(current.getColorScheme());
 				}
 			}
-			/*
-				if(result==null)
-				{
-					try
-					{
-						result=NULL_COLORS.clone();
-					}
-					catch (CloneNotSupportedException e)
-					{
-						// ignore
-					}
-				}
-				colorsCache.put(id, new SoftColorsReference(id, result, colorsReferenceQueue));
-			}
-			if(NULL_COLORS.equals(result))
+		}
+
+		if(coloringWholeRow)
+		{
+			Object eventObj = eventWrapper.getEvent();
+			if(eventObj instanceof LoggingEvent)
 			{
-				return null;
+				return getColors(((LoggingEvent) eventObj).getLevel());
 			}
-			*/
-			return result;
+			if(eventObj instanceof AccessEvent)
+			{
+				return getColors(HttpStatus.getType(((AccessEvent) eventObj).getStatusCode()));
+			}
 		}
 		return null;
 	}
@@ -1286,14 +1275,6 @@ public class MainFrame
 	}
     */
 
-	public Colors getColors(HttpStatus.Type status)
-	{
-		if(statusColors == null)
-		{
-			initStatusColors();
-		}
-		return statusColors.get(status);
-	}
 
 	private void initStatusColors()
 	{
@@ -1306,14 +1287,6 @@ public class MainFrame
 		statusColors = colors;
 	}
 
-	public Colors getColors(LoggingEvent.Level level)
-	{
-		if(levelColors == null)
-		{
-			initLevelColors();
-		}
-		return levelColors.get(level);
-	}
 
 	private void initLevelColors()
 	{
@@ -2475,6 +2448,13 @@ public class MainFrame
 
 			if(ApplicationPreferences.SHOWING_STACKTRACE_PROPERTY.equals(propName))
 			{
+				updateLoggingViews();
+				//return;
+			}
+
+			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
+			{
+				coloringWholeRow = applicationPreferences.isColoringWholeRow();
 				updateLoggingViews();
 				//return;
 			}
