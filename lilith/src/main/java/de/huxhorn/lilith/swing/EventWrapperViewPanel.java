@@ -432,6 +432,20 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
+	public void updateView()
+	{
+		// update HTML detailsview
+		EventWrapper<T> selected = getSelectedEvent();
+		if(selected != null)
+		{
+			initMessage(selected);
+		}
+		else
+		{
+			resetMessage();
+		}
+	}
+
 	private class ScrollToBottomRunnable
 		implements Runnable
 	{

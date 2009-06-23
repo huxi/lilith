@@ -55,7 +55,6 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private CloseOtherFiltersAction closeOtherFiltersAction;
 	private SourceChangeListener sourceChangeListener;
 	private boolean disposed;
-	// TODO: probably move to container ;)
 	private ProgressGlassPane progressPanel;
 	private Component prevGlassPane;
 	private boolean searching;
@@ -122,6 +121,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		{
 			EventWrapperViewPanel<T> current = (EventWrapperViewPanel<T>) pane.getComponentAt(i);
 			EventSource source = current.getEventSource();
+			current.updateView();
 			Condition condition = source.getFilter();
 			if(logger.isDebugEnabled()) logger.debug("Condition: {}", condition);
 			if(condition != null)

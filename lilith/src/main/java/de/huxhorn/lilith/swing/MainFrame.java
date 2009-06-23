@@ -2464,6 +2464,18 @@ public class MainFrame
 			{
 				statusColors = null;
 				updateAccessViews();
+				return;
+			}
+
+			if(ApplicationPreferences.SHOWING_FULL_CALLSTACK_PROPERTY.equals(propName))
+			{
+				updateLoggingViews();
+				return;
+			}
+
+			if(ApplicationPreferences.SHOWING_STACKTRACE_PROPERTY.equals(propName))
+			{
+				updateLoggingViews();
 				//return;
 			}
 		}
