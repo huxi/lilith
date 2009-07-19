@@ -17,89 +17,76 @@
  */
 package de.huxhorn.lilith.data.logging;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoggerContext
-	implements Cloneable, Serializable
-{
-	private static final long serialVersionUID = -9193608097331229720L;
+        implements Cloneable, Serializable {
+    private static final long serialVersionUID = -9193608097331229720L;
 
-	private String name;
-	private Date birthTime;
-	private Map<String, String> properties;
+    private String name;
+    private Long birthTime;
+    private Map<String, String> properties;
 
-	public String getName()
-	{
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Date getBirthTime()
-	{
-		return birthTime;
-	}
+    public Long getBirthTime() {
+        return birthTime;
+    }
 
-	public void setBirthTime(Date birthTime)
-	{
-		this.birthTime = birthTime;
-	}
+    public void setBirthTime(Long birthTime) {
+        this.birthTime = birthTime;
+    }
 
-	public Map<String, String> getProperties()
-	{
-		return properties;
-	}
+    public Map<String, String> getProperties() {
+        return properties;
+    }
 
-	public void setProperties(Map<String, String> properties)
-	{
-		this.properties = properties;
-	}
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
 
-	@Override
-	public boolean equals(Object o)
-	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		LoggerContext that = (LoggerContext) o;
+        LoggerContext that = (LoggerContext) o;
 
-		if(birthTime != null ? !birthTime.equals(that.birthTime) : that.birthTime != null) return false;
-		if(name != null ? !name.equals(that.name) : that.name != null) return false;
-		if(properties != null ? !properties.equals(that.properties) : that.properties != null) return false;
+        if (birthTime != null ? !birthTime.equals(that.birthTime) : that.birthTime != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (properties != null ? !properties.equals(that.properties) : that.properties != null) return false;
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public int hashCode()
-	{
-		int result = name != null ? name.hashCode() : 0;
-		result = 31 * result + (birthTime != null ? birthTime.hashCode() : 0);
-		result = 31 * result + (properties != null ? properties.hashCode() : 0);
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (birthTime != null ? birthTime.hashCode() : 0);
+        result = 31 * result + (properties != null ? properties.hashCode() : 0);
+        return result;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "LoggerContext[name="+name+", birthTime="+birthTime+", properties="+properties+"]";
-	}
+    @Override
+    public String toString() {
+        return "LoggerContext[name=" + name + ", birthTime=" + birthTime + ", properties=" + properties + "]";
+    }
 
-	@Override
-	public LoggerContext clone()
-		throws CloneNotSupportedException
-	{
-		LoggerContext result = (LoggerContext) super.clone();
-		if(properties != null)
-		{
-			result.properties=new HashMap<String, String>(properties);
-		}
-		return result;
-	}
+    @Override
+    public LoggerContext clone()
+            throws CloneNotSupportedException {
+        LoggerContext result = (LoggerContext) super.clone();
+        if (properties != null) {
+            result.properties = new HashMap<String, String>(properties);
+        }
+        return result;
+    }
 }
