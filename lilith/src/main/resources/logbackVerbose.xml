@@ -1,221 +1,233 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true">
 
-	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<param name="Pattern" value="%-5level - %msg%n"/>
-		</layout>
-	</appender>
+    <property name="foo" value="bar"/>
 
-	<appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <param name="Pattern" value="%-5level - %msg%n"/>
+        </layout>
+    </appender>
 
-	<appender name="MultiplexClassicCompressed"
-	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-		<Compressing>true</Compressing>
-		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-Compressed</ApplicationIdentifier>
-		<ReconnectionDelay>30</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-		<RemoteHosts>localhost</RemoteHosts>
-	</appender>
+    <appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"/>
 
-	<appender name="MultiplexClassicUncompressed"
-	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-		<Compressing>false</Compressing>
-		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-Uncompressed</ApplicationIdentifier>
-		<ReconnectionDelay>290</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-		<RemoteHosts>localhost</RemoteHosts>
-	</appender>
+    <appender name="MultiplexClassicCompressed"
+              class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+        <Compressing>true</Compressing>
+        <!-- will automatically use correct default port -->
+        <ApplicationIdentifier>MultiplexClassicCompressed</ApplicationIdentifier>
+        <ReconnectionDelay>30</ReconnectionDelay>
+        <IncludeCallerData>true</IncludeCallerData>
+        <RemoteHosts>localhost</RemoteHosts>
+    </appender>
 
-	<appender name="MultiplexClassicXmlCompressed"
-	          class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
-		<Compressing>true</Compressing>
-		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-XML-Compressed</ApplicationIdentifier>
-		<ReconnectionDelay>290</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-		<RemoteHosts>localhost</RemoteHosts>
-	</appender>
+    <appender name="MultiplexClassicUncompressed"
+              class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+        <Compressing>false</Compressing>
+        <!-- will automatically use correct default port -->
+        <ApplicationIdentifier>MultiplexClassicUncompressed</ApplicationIdentifier>
+        <ReconnectionDelay>290</ReconnectionDelay>
+        <IncludeCallerData>true</IncludeCallerData>
+        <RemoteHosts>localhost</RemoteHosts>
+    </appender>
 
-	<appender name="MultiplexClassicXmlUncompressed"
-	          class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
-		<Compressing>false</Compressing>
-		<!-- will automatically use correct default port -->
-		<ApplicationIdentifier>Lilith-XML-Uncompressed</ApplicationIdentifier>
-		<ReconnectionDelay>290</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-		<RemoteHosts>localhost</RemoteHosts>
-	</appender>
+    <appender name="MultiplexClassicXmlCompressed"
+              class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
+        <Compressing>true</Compressing>
+        <!-- will automatically use correct default port -->
+        <ApplicationIdentifier>MultiplexClassicXmlCompressed</ApplicationIdentifier>
+        <ReconnectionDelay>290</ReconnectionDelay>
+        <IncludeCallerData>true</IncludeCallerData>
+        <RemoteHosts>localhost</RemoteHosts>
+    </appender>
 
-	<appender name="ZeroDelimitedMultiplexClassicXml"
-	          class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
-		<ApplicationIdentifier>Lilith-XML-ZeroDelimited</ApplicationIdentifier>
-		<ReconnectionDelay>290</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-		<RemoteHosts>localhost</RemoteHosts>
-	</appender>
+    <appender name="MultiplexClassicXmlUncompressed"
+              class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
+        <Compressing>false</Compressing>
+        <!-- will automatically use correct default port -->
+        <ApplicationIdentifier>MultiplexClassicXmlUncompressed</ApplicationIdentifier>
+        <ReconnectionDelay>290</ReconnectionDelay>
+        <IncludeCallerData>true</IncludeCallerData>
+        <RemoteHosts>localhost</RemoteHosts>
+    </appender>
 
-	<appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
-		<RemoteHost>localhost</RemoteHost>
-		<Port>4560</Port>
-		<ReconnectionDelay>170</ReconnectionDelay>
-		<IncludeCallerData>true</IncludeCallerData>
-	</appender>
+    <appender name="ZeroDelimitedMultiplexClassicXml"
+              class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
+        <ApplicationIdentifier>ZeroDelimitedMultiplexClassicXml</ApplicationIdentifier>
+        <ReconnectionDelay>290</ReconnectionDelay>
+        <IncludeCallerData>true</IncludeCallerData>
+        <RemoteHosts>localhost</RemoteHosts>
+    </appender>
 
-	<root>
-		<level value="DEBUG"/>
-		<appender-ref ref="CONSOLE"/>
-		<!--
-			  <appender-ref ref="Localhost"/>
-			  <appender-ref ref="multiplex" />
-			  <appender-ref ref="MultiplexClassicCompressed" />
-			  -->
+    <appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
+        <RemoteHost>localhost</RemoteHost>
+        <Port>4560</Port>
+        <ReconnectionDelay>170</ReconnectionDelay>
+        <IncludeCallerData>true</IncludeCallerData>
+    </appender>
 
-		<appender-ref ref="Lilith"/>
-	</root>
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="CONSOLE"/>
+        <!--
+                <appender-ref ref="Localhost"/>
+                <appender-ref ref="multiplex" />
+                <appender-ref ref="MultiplexClassicCompressed" />
+                -->
+        <appender-ref ref="Lilith"/>
+    </root>
 
-	<logger name="de.huxhorn.lilith.debug">
-		<level value="TRACE"/>
-		<appender-ref ref="MultiplexClassicCompressed"/>
-		<appender-ref ref="MultiplexClassicUncompressed"/>
-		<appender-ref ref="MultiplexClassicXmlCompressed"/>
-		<appender-ref ref="MultiplexClassicXmlUncompressed"/>
-		<appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
-		<appender-ref ref="LogbackClassic"/>
-	</logger>
-	<logger name="sun">
-		<level value="WARN"/>
-	</logger>
-	<logger name="java">
-		<level value="WARN"/>
-	</logger>
-	<logger name="javax">
-		<level value="WARN"/>
-	</logger>
-	<logger name="javax.jmdns">
-		<level value="TRACE"/>
-		<appender-ref ref="multiplex"/>
-	</logger>
-	<logger name="org.springframework">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.sulky">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.engine.impl.sourcemanager.EventPoller">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.consumers.FileSplitterEventConsumer">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.consumers.FileDumpEventConsumer">
-		<level value="WARN"/>
-	</logger>
+    <logger name="de.huxhorn.lilith.debug">
+        <level value="TRACE"/>
+        <appender-ref ref="MultiplexClassicCompressed"/>
+        <appender-ref ref="MultiplexClassicUncompressed"/>
+        <appender-ref ref="MultiplexClassicXmlCompressed"/>
+        <appender-ref ref="MultiplexClassicXmlUncompressed"/>
+        <appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
+        <appender-ref ref="LogbackClassic"/>
+    </logger>
+    <logger name="sun">
+        <level value="WARN"/>
+    </logger>
+    <logger name="java">
+        <level value="WARN"/>
+    </logger>
+    <logger name="javax">
+        <level value="WARN"/>
+    </logger>
+    <logger name="javax.jmdns">
+        <level value="TRACE"/>
+    </logger>
+    <logger name="org.springframework">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.sulky">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.consumers.SocketEventConsumer">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.consumers.SocketEventConsumer">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.engine.impl.sourcemanager.EventPoller">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.consumers.FileSplitterEventConsumer">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.consumers.FileDumpEventConsumer">
+        <level value="WARN"/>
+    </logger>
 
-	<logger name="de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer">
-		<level value="DEBUG"/>
-	</logger>
+    <logger name="de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer">
+        <level value="WARN"/>
+    </logger>
 
-	<logger name="de.huxhorn.lilith.swing.table.EventWrapperViewTable">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.sulky.buffers.FilteringBuffer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.sulky.swing.Windows">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.sulky.swing.KeyStrokes">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.preferences.PreferencesDialog">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences">
-		<level value="INFO"/>
-	</logger>
+    <logger name="de.huxhorn.lilith.swing.table.EventWrapperViewTable">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.sulky.buffers.FilteringBuffer">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.sulky.swing.Windows">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.sulky.swing.KeyStrokes">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.preferences">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.ApplicationPreferences">
+        <level value="INFO"/>
+    </logger>
 
-	<logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener">
-		<level value="DEBUG"/>
-	</logger>
-	<logger name="de.huxhorn.sulky.sounds.jlayer.JLayerSounds">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.consumers.RrdLoggingEventConsumer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.SplashScreen">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.MainFrame">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.AboutPanel">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.statistics.AbstractGraphImageProducer">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.callables.IndexingCallable">
-		<level value="DEBUG"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.ViewActions">
-		<level value="INFO"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.Lilith">
-		<level value="DEBUG"/>
-	</logger>
-	<logger name="org.apache.commons.httpclient">
-		<level value="WARN"/>
-	</logger>
-	<logger name="httpclient.wire.header">
-		<level value="WARN"/>
-	</logger>
-	<logger name="de.huxhorn.lilith.services.sender">
-		<level value="DEBUG"/>
-	</logger>
+    <logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="de.huxhorn.sulky.sounds.jlayer.JLayerSounds">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.consumers.RrdLoggingEventConsumer">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.SplashScreen">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.MainFrame">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.MainFrame$ColorsCollectionRunnable">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.AboutPanel">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.statistics.AbstractGraphImageProducer">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.callables.IndexingCallable">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.ViewActions">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.ViewContainerFrame">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.Lilith">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="org.apache.commons.httpclient">
+        <level value="WARN"/>
+    </logger>
+    <logger name="httpclient.wire">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.services.sender">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
+        <level value="WARN"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.taskmanager">
+        <level value="INFO"/>
+    </logger>
+    <logger name="de.huxhorn.lilith.swing.taskmanager.table">
+        <level value="WARN"/>
+    </logger>
 </configuration>
