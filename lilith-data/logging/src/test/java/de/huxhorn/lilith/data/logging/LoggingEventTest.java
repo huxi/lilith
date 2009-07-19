@@ -19,296 +19,279 @@ package de.huxhorn.lilith.data.logging;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
-
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoggingEventTest
-{
-	private LoggingEvent fresh;
+public class LoggingEventTest {
+    private LoggingEvent fresh;
 
-	@Before
-	public void initFresh()
-	{
-		fresh = new LoggingEvent();
-	}
+    @Before
+    public void initFresh() {
+        fresh = new LoggingEvent();
+    }
 
-	@Test
-	public void defaultConstructor()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void defaultConstructor()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		testSerialization(instance);
-		testXmlSerialization(instance);
-	}
+        testSerialization(instance);
+        testXmlSerialization(instance);
+    }
 
-	@Test
-	public void loggerContext()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void loggerContext()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		LoggerContext value = new LoggerContext();
-		value.setBirthTime(new Date(1234567890000L));
-		value.setName("contextName");
-		Map<String, String> properties = new HashMap<String, String>();
-		properties.put("foo", "bar");
-		value.setProperties(properties);
-		instance.setLoggerContext(value);
+        LoggerContext value = new LoggerContext();
+        value.setBirthTime(1234567890000L);
+        value.setName("contextName");
+        Map<String, String> properties = new HashMap<String, String>();
+        properties.put("foo", "bar");
+        value.setProperties(properties);
+        instance.setLoggerContext(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getLoggerContext());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getLoggerContext());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getLoggerContext());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getLoggerContext());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void logger()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void logger()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		String value = "value";
-		instance.setLogger(value);
+        String value = "value";
+        instance.setLogger(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getLogger());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getLogger());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getLogger());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getLogger());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void message()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void message()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
 
-		Message value = new Message("pattern", new String[]{"value"});
-		instance.setMessage(value);
+        Message value = new Message("pattern", new String[]{"value"});
+        instance.setMessage(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getMessage());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getMessage());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getMessage());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getMessage());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void level()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void level()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		LoggingEvent.Level value = LoggingEvent.Level.ERROR;
-		instance.setLevel(value);
+        LoggingEvent.Level value = LoggingEvent.Level.ERROR;
+        instance.setLevel(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertSame(value, obj.getLevel());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			// http://weblogs.java.net/blog/malenkov/archive/2006/08/how_to_encode_e.html
-			LoggingEvent obj = testXmlSerialization(instance, LoggingEvent.Level.class);
-			assertSame(value, obj.getLevel());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertSame(value, obj.getLevel());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            // http://weblogs.java.net/blog/malenkov/archive/2006/08/how_to_encode_e.html
+            LoggingEvent obj = testXmlSerialization(instance, LoggingEvent.Level.class);
+            assertSame(value, obj.getLevel());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void threadInfo()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void threadInfo()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		ThreadInfo value = new ThreadInfo();
-		instance.setThreadInfo(value);
+        ThreadInfo value = new ThreadInfo();
+        instance.setThreadInfo(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getThreadInfo());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getThreadInfo());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getThreadInfo());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getThreadInfo());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void throwable()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void throwable()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		ThrowableInfo value = new ThrowableInfo();
-		instance.setThrowable(value);
+        ThrowableInfo value = new ThrowableInfo();
+        instance.setThrowable(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getThrowable());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getThrowable());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getThrowable());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getThrowable());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void timeStamp()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void timeStamp()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		Date value = new Date();
-		instance.setTimeStamp(value);
+        Long value = 1234567890000L;
+        instance.setTimeStamp(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getTimeStamp());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getTimeStamp());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getTimeStamp());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getTimeStamp());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void sequenceNumber()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void sequenceNumber()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		Long value = 17L;
-		instance.setSequenceNumber(value);
+        Long value = 17L;
+        instance.setSequenceNumber(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getSequenceNumber());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getSequenceNumber());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getSequenceNumber());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getSequenceNumber());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void callStack()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void callStack()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		ExtendedStackTraceElement[] value = new ExtendedStackTraceElement[]{new ExtendedStackTraceElement()};
-		instance.setCallStack(value);
+        ExtendedStackTraceElement[] value = new ExtendedStackTraceElement[]{new ExtendedStackTraceElement()};
+        instance.setCallStack(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertArrayEquals(value, obj.getCallStack());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertArrayEquals(value, obj.getCallStack());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertArrayEquals(value, obj.getCallStack());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertArrayEquals(value, obj.getCallStack());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void marker()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void marker()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		Marker value = new Marker();
-		instance.setMarker(value);
+        Marker value = new Marker();
+        instance.setMarker(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getMarker());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getMarker());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getMarker());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getMarker());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void mdc()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void mdc()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		Map<String, String> value = new HashMap<String, String>();
-		value.put("foo", "bar");
+        Map<String, String> value = new HashMap<String, String>();
+        value.put("foo", "bar");
 
-		instance.setMdc(value);
+        instance.setMdc(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertEquals(value, obj.getMdc());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertEquals(value, obj.getMdc());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertEquals(value, obj.getMdc());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertEquals(value, obj.getMdc());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 
-	@Test
-	public void ndc()
-		throws ClassNotFoundException, IOException
-	{
-		LoggingEvent instance = new LoggingEvent();
+    @Test
+    public void ndc()
+            throws ClassNotFoundException, IOException {
+        LoggingEvent instance = new LoggingEvent();
 
-		Message[] value = new Message[]{
-			new Message("pattern", new String[]{"foo", "bar"})};
+        Message[] value = new Message[]{
+                new Message("pattern", new String[]{"foo", "bar"})};
 
-		instance.setNdc(value);
+        instance.setNdc(value);
 
-		{
-			LoggingEvent obj = testSerialization(instance);
-			assertArrayEquals(value, obj.getNdc());
-			assertFalse(fresh.equals(obj));
-		}
-		{
-			LoggingEvent obj = testXmlSerialization(instance);
-			assertArrayEquals(value, obj.getNdc());
-			assertFalse(fresh.equals(obj));
-		}
-	}
+        {
+            LoggingEvent obj = testSerialization(instance);
+            assertArrayEquals(value, obj.getNdc());
+            assertFalse(fresh.equals(obj));
+        }
+        {
+            LoggingEvent obj = testXmlSerialization(instance);
+            assertArrayEquals(value, obj.getNdc());
+            assertFalse(fresh.equals(obj));
+        }
+    }
 }

@@ -23,87 +23,74 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
+import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
-
 public class TimestampRenderer
-	implements TableCellRenderer
-{
-	private LabelCellRenderer renderer;
-	private SimpleDateFormat timeFormat;
+        implements TableCellRenderer {
+    private LabelCellRenderer renderer;
+    private SimpleDateFormat timeFormat;
 
-	public TimestampRenderer()
-	{
-		super();
-		renderer = new LabelCellRenderer();
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);
-		renderer.setToolTipText(null);
-		renderer.setIcon(null);
+    public TimestampRenderer() {
+        super();
+        renderer = new LabelCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        renderer.setToolTipText(null);
+        renderer.setIcon(null);
 
-		timeFormat = new SimpleDateFormat("HH:mm:ss.SSS");
-	}
+        timeFormat = new SimpleDateFormat("HH:mm:ss.SSS");
+    }
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
-	{
-		if(!isSelected)
-		{
-			isSelected = rowIndex == LabelCellRenderer.getSelectedRow(table);
-		}
-		if(!hasFocus && isSelected)
-		{
-			hasFocus = table.isFocusOwner();
-		}
-		renderer.setSelected(isSelected);
-		renderer.setFocused(hasFocus);
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {
+        if (!isSelected) {
+            isSelected = rowIndex == LabelCellRenderer.getSelectedRow(table);
+        }
+        if (!hasFocus && isSelected) {
+            hasFocus = table.isFocusOwner();
+        }
+        renderer.setSelected(isSelected);
+        renderer.setFocused(hasFocus);
 
-		Color foreground = Color.BLACK;
-		String text = "";
-		if(value instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) value;
-			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
-			{
-				LoggingEvent event = (LoggingEvent) eventObj;
-				Date timestamp = event.getTimeStamp();
-				text = timeFormat.format(timestamp);
-			}
-			else if(eventObj instanceof AccessEvent)
-			{
-				AccessEvent event = (AccessEvent) eventObj;
-				Date timestamp = event.getTimeStamp();
-				if(timestamp != null)
-				{
-					text = timeFormat.format(timestamp);
-				}
-			}
-		}
-		renderer.setText(text);
-		boolean colorsInitialized = false;
-		if(!hasFocus && !isSelected)
-		{
-			if(table instanceof ColorsProvider)
-			{
-				if(value instanceof EventWrapper)
-				{
-					EventWrapper wrapper = (EventWrapper) value;
-					ColorsProvider cp = (ColorsProvider) table;
-					Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
-					colorsInitialized = renderer.updateColors(colors);
-				}
-			}
-		}
-		if(!colorsInitialized)
-		{
-			renderer.setForeground(foreground);
-		}
+        Color foreground = Color.BLACK;
+        String text = "";
+        if (value instanceof EventWrapper) {
+            EventWrapper wrapper = (EventWrapper) value;
+            Object eventObj = wrapper.getEvent();
+            if (eventObj instanceof LoggingEvent) {
+                LoggingEvent event = (LoggingEvent) eventObj;
+                Long timestamp = event.getTimeStamp();
+                if (timestamp != null) {
+                    text = timeFormat.format(new Date(timestamp));
+                }
+            } else if (eventObj instanceof AccessEvent) {
+                AccessEvent event = (AccessEvent) eventObj;
+                Long timestamp = event.getTimeStamp();
+                if (timestamp != null) {
+                    text = timeFormat.format(new Date(timestamp));
+                }
+            }
+        }
+        renderer.setText(text);
+        boolean colorsInitialized = false;
+        if (!hasFocus && !isSelected) {
+            if (table instanceof ColorsProvider) {
+                if (value instanceof EventWrapper) {
+                    EventWrapper wrapper = (EventWrapper) value;
+                    ColorsProvider cp = (ColorsProvider) table;
+                    Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
+                    colorsInitialized = renderer.updateColors(colors);
+                }
+            }
+        }
+        if (!colorsInitialized) {
+            renderer.setForeground(foreground);
+        }
 
-		renderer.correctRowHeight(table);
+        renderer.correctRowHeight(table);
 
-		return renderer;
-	}
+        return renderer;
+    }
 }
