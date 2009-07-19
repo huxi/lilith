@@ -27,29 +27,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LogbackLoggingStreamEventProducer
-	extends AbstractLogbackStreamEventProducer<LoggingEvent>
-{
-	private LogbackLoggingAdapter adapter;
+        extends AbstractLogbackStreamEventProducer<LoggingEvent> {
+    private LogbackLoggingAdapter adapter;
 
-	public LogbackLoggingStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
-		throws IOException
-	{
-		super(sourceIdentifier, eventQueue, inputStream);
-		adapter = new LogbackLoggingAdapter();
-	}
+    public LogbackLoggingStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
+            throws IOException {
+        super(sourceIdentifier, eventQueue, inputStream);
+        adapter = new LogbackLoggingAdapter();
+    }
 
-	protected LoggingEvent postprocessEvent(Object o)
-	{
-		if(o instanceof ch.qos.logback.classic.spi.LoggingEvent)
-		{
-			ch.qos.logback.classic.spi.LoggingEvent logbackEvent = (ch.qos.logback.classic.spi.LoggingEvent) o;
-			return adapter.convert(logbackEvent, false);
-		}
-		if(logger.isInfoEnabled())
-		{
-			logger.info("Retrieved {} instead of ch.qos.logback.classic.spi.LoggingEvent.", o == null ? null : o
-				.getClass().getName());
-		}
-		return null;
-	}
+    protected LoggingEvent postprocessEvent(Object o) {
+        if (o instanceof ch.qos.logback.classic.spi.ILoggingEvent) {
+            ch.qos.logback.classic.spi.ILoggingEvent logbackEvent = (ch.qos.logback.classic.spi.ILoggingEvent) o;
+            return adapter.convert(logbackEvent, false);
+        }
+        if (logger.isInfoEnabled()) {
+            logger.info("Retrieved {} instead of ch.qos.logback.classic.spi.ILoggingEvent.", o == null ? null : o
+                    .getClass().getName());
+        }
+        return null;
+    }
 }
