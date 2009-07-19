@@ -129,6 +129,9 @@
 				"Copy call stack" and "Copy Throwable" are now prepending the StackTraceElements with "\tat " as
 				requested in ticket:61. The detailsView is also displaying "at " before any StackTraceElement.
 			</action>
+            <action dev="jhux" type="update"  issue="39">
+                Changes to support Logback 0.9.16. Updated SLF4J to 1.5.8.
+            </action>
 		</release>
 
 		<release version="0.9.35" date="2009-05-01" description="Release">
