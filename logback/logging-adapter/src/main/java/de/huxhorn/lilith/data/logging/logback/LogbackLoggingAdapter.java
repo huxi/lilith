@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class LogbackLoggingAdapter {
-    public LoggingEvent convert(ch.qos.logback.classic.spi.LoggingEvent event, boolean inSameThread) {
+    public LoggingEvent convert(ch.qos.logback.classic.spi.ILoggingEvent event, boolean inSameThread) {
         if (event == null) {
             return null;
         }
@@ -42,8 +42,9 @@ public class LogbackLoggingAdapter {
         if (argumentResult != null) {
             arguments = argumentResult.getArguments();
             Throwable t = argumentResult.getThrowable();
-            if (t != null && event.getThrowableProxy() == null) {
-                event.setThrowableProxy(new ThrowableProxy(t));
+            if (t != null && event.getThrowableProxy() == null && event instanceof ch.qos.logback.classic.spi.LoggingEvent) {
+                ch.qos.logback.classic.spi.LoggingEvent le = (ch.qos.logback.classic.spi.LoggingEvent) event;
+                le.setThrowableProxy(new ThrowableProxy(t));
             }
         }
         if (messagePattern != null || arguments != null) {
@@ -164,7 +165,7 @@ public class LogbackLoggingAdapter {
         return result;
     }
 
-    private void initMarker(ch.qos.logback.classic.spi.LoggingEvent src, LoggingEvent dst) {
+    private void initMarker(ch.qos.logback.classic.spi.ILoggingEvent src, LoggingEvent dst) {
         org.slf4j.Marker origMarker = src.getMarker();
         if (origMarker == null) {
             return;
