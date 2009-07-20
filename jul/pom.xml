@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.jul.master</artifactId>
-	<version><!-- LV -->0.9.36</version>
+	<version><!-- LV -->0.9.37-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith jul master pom file</name>
 	<description>This file is part of Lilith. It's the master pom file that is used to build java.util.logging modules.</description>

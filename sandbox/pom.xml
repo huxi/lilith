@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.sandbox.master</artifactId>
-	<version><!-- LV -->0.9.36</version>
+	<version><!-- LV -->0.9.37-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Lilith Sandbox master pom file</name>
 	<description>This file is part of Lilith. It's the sandbox master pom file that is used to build all sandbox modules.</description>
