@@ -161,7 +161,7 @@ public class Lilith
 		options.addOption(FLUSH_LICENSED_SHORT, FLUSH_LICENSED, false, "flush licensed.");
 		options.addOption(ENABLE_BONJOUR_SHORT, ENABLE_BONJOUR, false, "disable Bonjor.");
 		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
-		options.addOption(CREATE_MD5_SHORT, CREATE_MD5, false, "create an MD% checksum for the given file.");
+		options.addOption(CREATE_MD5_SHORT, CREATE_MD5, false, "create an MD5 checksum for the given file.");
 		boolean verbose = false;
 		boolean flushPrefs = false;
 		boolean flushLicensed = false;
