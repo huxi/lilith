@@ -91,7 +91,6 @@ import de.huxhorn.sulky.swing.Windows;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
-
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
@@ -107,7 +106,30 @@ import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EtchedBorder;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -139,12 +161,9 @@ import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-
 
 public class MainFrame
-	extends JFrame
+		extends JFrame
 {
 	private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
@@ -216,6 +235,16 @@ public class MainFrame
 		return applicationPreferences.resolveConditionScriptFile(input);
 	}
 
+	public AccessEventViewManager getAccessEventViewManager()
+	{
+		return accessEventViewManager;
+	}
+
+	public LoggingEventViewManager getLoggingEventViewManager()
+	{
+		return loggingEventViewManager;
+	}
+
 	public PreferencesDialog getPreferencesDialog()
 	{
 		return preferencesDialog;
@@ -245,7 +274,7 @@ public class MainFrame
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application = new DefaultApplication();
 		isMac = application.isMac();
-		if(!isMac)
+		if (!isMac)
 		{
 			String osName = System.getProperty("os.name").toLowerCase();
 			isWindows = osName.startsWith("windows");
@@ -373,9 +402,9 @@ public class MainFrame
 		add(statusBar, BorderLayout.SOUTH);
 
 		setSplashStatusText("Creating statistics dialog.");
-		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
+		if (logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
 		statisticsDialog = new StatisticsDialog(this);
-		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
+		if (logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
 
 		setSplashStatusText("Creating about dialog.");
 		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);
@@ -384,9 +413,9 @@ public class MainFrame
 		debugDialog = new DebugDialog(this, this);
 
 		setSplashStatusText("Creating preferences dialog.");
-		if(logger.isDebugEnabled()) logger.debug("Before creation of preferences-dialog...");
+		if (logger.isDebugEnabled()) logger.debug("Before creation of preferences-dialog...");
 		preferencesDialog = new PreferencesDialog(this);
-		if(logger.isDebugEnabled()) logger.debug("After creation of preferences-dialog...");
+		if (logger.isDebugEnabled()) logger.debug("After creation of preferences-dialog...");
 
 		setSplashStatusText("Creating \"Open inactive\" dialog.");
 		openInactiveLogsDialog = new OpenPreviousDialog(MainFrame.this);
@@ -420,7 +449,7 @@ public class MainFrame
 			// try to use the 1.6 transfer handler...
 			new MainFrameTransferHandler16(this).attach();
 		}
-		catch(Throwable t)
+		catch (Throwable t)
 		{
 			// ... and use the basic 1.5 transfer handler if this fails.
 			new MainFrameTransferHandler(this).attach();
@@ -442,9 +471,9 @@ public class MainFrame
 		// Autostart
 		{
 			File autostartDir = new File(startupApplicationPath, "autostart");
-			if(autostartDir.mkdirs())
+			if (autostartDir.mkdirs())
 			{
-				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", autostartDir.getAbsolutePath());
+				if (logger.isDebugEnabled()) logger.debug("Created '{}'.", autostartDir.getAbsolutePath());
 			}
 			File[] autoFiles = autostartDir.listFiles(new FileFilter()
 			{
@@ -454,7 +483,7 @@ public class MainFrame
 				}
 			});
 
-			if(autoFiles != null && autoFiles.length > 0)
+			if (autoFiles != null && autoFiles.length > 0)
 			{
 				Arrays.sort(autoFiles, new Comparator<File>()
 				{
@@ -463,7 +492,7 @@ public class MainFrame
 						return o1.getAbsolutePath().compareTo(o2.getAbsolutePath());
 					}
 				});
-				for(File current : autoFiles)
+				for (File current : autoFiles)
 				{
 					AutostartRunnable r = new AutostartRunnable(current);
 					autostartProcesses.add(r);
@@ -474,7 +503,7 @@ public class MainFrame
 			}
 			else
 			{
-				if(logger.isInfoEnabled())
+				if (logger.isInfoEnabled())
 				{
 					logger.info("No autostart files defined in '{}'.", autostartDir.getAbsolutePath());
 				}
@@ -519,114 +548,114 @@ public class MainFrame
 		{
 			loggingEventSourceManager.addEventSourceProducer(new LogbackLoggingServerSocketEventSourceProducer(4560));
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
 		setSplashStatusText("Starting event receivers.");
 		try
 		{
 			LoggingEventProtobufServerSocketEventSourceProducer producer
-				= new LoggingEventProtobufServerSocketEventSourceProducer
-				(ClassicMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
+					= new LoggingEventProtobufServerSocketEventSourceProducer
+					(ClassicMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 			// TODO: senderService.addLoggingProducer(producer);
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
 		try
 		{
 			LoggingEventProtobufServerSocketEventSourceProducer producer
-				= new LoggingEventProtobufServerSocketEventSourceProducer
-				(ClassicMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
+					= new LoggingEventProtobufServerSocketEventSourceProducer
+					(ClassicMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 			// TODO: senderService.addLoggingProducer(producer);
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
 
 		try
 		{
 			LilithXmlMessageLoggingServerSocketEventSourceProducer producer
-				= new LilithXmlMessageLoggingServerSocketEventSourceProducer
-				(ClassicXmlMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
+					= new LilithXmlMessageLoggingServerSocketEventSourceProducer
+					(ClassicXmlMultiplexSocketAppender.UNCOMRESSED_DEFAULT_PORT, false);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
 		try
 		{
 			LilithXmlMessageLoggingServerSocketEventSourceProducer producer
-				= new LilithXmlMessageLoggingServerSocketEventSourceProducer
-				(ClassicXmlMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
+					= new LilithXmlMessageLoggingServerSocketEventSourceProducer
+					(ClassicXmlMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 //
 		try
 		{
 			LilithXmlStreamLoggingServerSocketEventSourceProducer producer
-				= new LilithXmlStreamLoggingServerSocketEventSourceProducer
-				(ZeroDelimitedClassicXmlMultiplexSocketAppender.DEFAULT_PORT);
+					= new LilithXmlStreamLoggingServerSocketEventSourceProducer
+					(ZeroDelimitedClassicXmlMultiplexSocketAppender.DEFAULT_PORT);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
 		try
 		{
 			accessEventSourceManager.addEventSourceProducer(new LogbackAccessServerSocketEventSourceProducer(4570));
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 		try
 		{
 			AccessEventProtobufServerSocketEventSourceProducer producer
-				= new AccessEventProtobufServerSocketEventSourceProducer
-				(AccessMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
+					= new AccessEventProtobufServerSocketEventSourceProducer
+					(AccessMultiplexSocketAppender.COMRESSED_DEFAULT_PORT, true);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
 			// TODO: senderService.addAccessProducer(producer);
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
 		try
 		{
 			AccessEventProtobufServerSocketEventSourceProducer producer
-				= new AccessEventProtobufServerSocketEventSourceProducer
-				(AccessMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
+					= new AccessEventProtobufServerSocketEventSourceProducer
+					(AccessMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
 			// TODO: senderService.addAccessProducer(producer);
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 		viewActions = new ViewActions(this, null);
 		viewActions.getPopupMenu(); // initialize popup once in main frame only.
@@ -639,7 +668,7 @@ public class MainFrame
 		loggingEventAlarmSound.setSounds(sounds);
 
 		FileSplitterEventConsumer<LoggingEvent> fileSplitterLoggingEventConsumer =
-			new FileSplitterEventConsumer<LoggingEvent>(/*applicationPreferences, */loggingFileBufferFactory, loggingEventSourceManager);
+				new FileSplitterEventConsumer<LoggingEvent>(/*applicationPreferences, */loggingFileBufferFactory, loggingEventSourceManager);
 
 		List<EventConsumer<LoggingEvent>> loggingConsumers = new ArrayList<EventConsumer<LoggingEvent>>();
 
@@ -660,7 +689,7 @@ public class MainFrame
 		List<EventConsumer<AccessEvent>> accessConsumers = new ArrayList<EventConsumer<AccessEvent>>();
 
 		FileSplitterEventConsumer<AccessEvent> fileSplitterAccessEventConsumer =
-			new FileSplitterEventConsumer<AccessEvent>(/*applicationPreferences, */accessFileBufferFactory, accessEventSourceManager);
+				new FileSplitterEventConsumer<AccessEvent>(/*applicationPreferences, */accessFileBufferFactory, accessEventSourceManager);
 		AlarmSoundAccessEventConsumer accessEventAlarmSound = new AlarmSoundAccessEventConsumer();
 		accessEventAlarmSound.setSounds(sounds);
 		accessConsumers.add(accessEventAlarmSound);
@@ -686,11 +715,11 @@ public class MainFrame
 		application.setEnabledPreferencesMenu(true);
 		application.addApplicationListener(new MyApplicationListener());
 
-		if(enableBonjour)
+		if (enableBonjour)
 		{
 			senderService.start();
 		}
-		if(applicationPreferences.isCheckingForUpdate())
+		if (applicationPreferences.isCheckingForUpdate())
 		{
 			checkForUpdate(false);
 		}
@@ -702,17 +731,17 @@ public class MainFrame
 	private void updateTaskStatus()
 	{
 		int numberOfTasks = longTaskManager.getNumberOfTasks();
-		if(numberOfTasks != previousNumberOfTasks)
+		if (numberOfTasks != previousNumberOfTasks)
 		{
 			previousNumberOfTasks = numberOfTasks;
 			String text = "";
 			Icon icon = null;
-			if(numberOfTasks == 1)
+			if (numberOfTasks == 1)
 			{
 				text = "1 active task.";
 				icon = smallProgressIcon;
 			}
-			else if(numberOfTasks > 1)
+			else if (numberOfTasks > 1)
 			{
 				text = "" + numberOfTasks + " active tasks.";
 				icon = smallProgressIcon;
@@ -724,7 +753,7 @@ public class MainFrame
 
 	private void setSplashStatusText(String text)
 	{
-		if(splashScreen != null)
+		if (splashScreen != null)
 		{
 			splashScreen.setStatusText(text);
 		}
@@ -792,21 +821,21 @@ public class MainFrame
 		viewActions.updateWindowMenu();
 		// update other frames
 		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+		for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 		{
 			ViewContainer<LoggingEvent> value = current.getValue();
 			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
+			if (window instanceof JFrame)
 			{
 				window.getViewActions().updateWindowMenu();
 			}
 		}
 		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+		for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
 		{
 			ViewContainer<AccessEvent> value = current.getValue();
 			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
+			if (window instanceof JFrame)
 			{
 				window.getViewActions().updateWindowMenu();
 			}
@@ -835,7 +864,7 @@ public class MainFrame
 			if(logger.isWarnEnabled()) logger.warn("parentClassName: {}", parentClassName);
 		}
         */
-		if(gotoSource != null)
+		if (gotoSource != null)
 		{
 			gotoSource.goToSource(ste);
 		}
@@ -862,14 +891,14 @@ public class MainFrame
 
 	public void showPopup(Component component, Point p)
 	{
-		if(logger.isDebugEnabled()) logger.debug("Show popup at {}.", p);
+		if (logger.isDebugEnabled()) logger.debug("Show popup at {}.", p);
 		JPopupMenu popup = viewActions.getPopupMenu();
 		popup.show(component, p.x, p.y);
 	}
 
 	public Colors getColors(HttpStatus.Type status)
 	{
-		if(statusColors == null)
+		if (statusColors == null)
 		{
 			initStatusColors();
 		}
@@ -878,7 +907,7 @@ public class MainFrame
 
 	public Colors getColors(LoggingEvent.Level level)
 	{
-		if(levelColors == null)
+		if (levelColors == null)
 		{
 			initLevelColors();
 		}
@@ -887,30 +916,30 @@ public class MainFrame
 
 	public Colors getColors(EventWrapper eventWrapper)
 	{
-		if(!SwingUtilities.isEventDispatchThread())
+		if (!SwingUtilities.isEventDispatchThread())
 		{
-			if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
+			if (logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
 		}
-		if(activeConditions != null)
+		if (activeConditions != null)
 		{
-			for(SavedCondition current : activeConditions)
+			for (SavedCondition current : activeConditions)
 			{
 				Condition condition = current.getCondition();
-				if(condition != null && condition.isTrue(eventWrapper))
+				if (condition != null && condition.isTrue(eventWrapper))
 				{
 					return new Colors(current.getColorScheme());
 				}
 			}
 		}
 
-		if(coloringWholeRow)
+		if (coloringWholeRow)
 		{
 			Object eventObj = eventWrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
+			if (eventObj instanceof LoggingEvent)
 			{
 				return getColors(((LoggingEvent) eventObj).getLevel());
 			}
-			if(eventObj instanceof AccessEvent)
+			if (eventObj instanceof AccessEvent)
 			{
 				return getColors(HttpStatus.getType(((AccessEvent) eventObj).getStatusCode()));
 			}
@@ -922,7 +951,7 @@ public class MainFrame
 	{
 		int returnVal = openFileChooser.showOpenDialog(this);
 
-		if(returnVal == JFileChooser.APPROVE_OPTION)
+		if (returnVal == JFileChooser.APPROVE_OPTION)
 		{
 			open(openFileChooser.getSelectedFile());
 		}
@@ -932,11 +961,11 @@ public class MainFrame
 	{
 		int returnVal = importFileChooser.showOpenDialog(this);
 
-		if(returnVal == JFileChooser.APPROVE_OPTION)
+		if (returnVal == JFileChooser.APPROVE_OPTION)
 		{
 			File importFile = importFileChooser.getSelectedFile();
 			String fileName = importFile.getAbsolutePath();
-			if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+			if (fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
 			{
 				open(importFile);
 				return;
@@ -947,9 +976,9 @@ public class MainFrame
 
 	public void open(File dataFile)
 	{
-		if(logger.isInfoEnabled()) logger.info("Open file: {}", dataFile.getAbsolutePath());
+		if (logger.isInfoEnabled()) logger.info("Open file: {}", dataFile.getAbsolutePath());
 		ViewContainer<?> viewContainer = resolveViewContainer(dataFile);
-		if(viewContainer != null)
+		if (viewContainer != null)
 		{
 			showView(viewContainer);
 			String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
@@ -958,7 +987,7 @@ public class MainFrame
 		}
 		String fileName = dataFile.getAbsolutePath();
 		String indexFileName;
-		if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+		if (fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
 		{
 			indexFileName = fileName.substring(0, fileName.length() - FileConstants.FILE_EXTENSION.length());
 		}
@@ -969,21 +998,21 @@ public class MainFrame
 		indexFileName = indexFileName + FileConstants.INDEX_FILE_EXTENSION;
 
 		File indexFile = new File(indexFileName);
-		if(!indexFile.isFile())
+		if (!indexFile.isFile())
 		{
 			// ask if it should be indexed.
 			String dialogTitle = "Index file?";
 			String message = "Index file does not exist!\nIndex data file right now?";
 			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if(JOptionPane.OK_OPTION != result)
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (JOptionPane.OK_OPTION != result)
 			{
 				return;
 			}
 			String name = "Indexing Lilith file";
 			String description = "Indexing '" + dataFile.getAbsolutePath() + "'...";
 			Task<Long> task = longTaskManager.startTask(new IndexingCallable(dataFile, indexFile), name, description);
-			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+			if (logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 		}
 		else
 		{
@@ -993,7 +1022,7 @@ public class MainFrame
 
 	public void importFile(File importFile)
 	{
-		if(logger.isInfoEnabled()) logger.info("Import file: {}", importFile.getAbsolutePath());
+		if (logger.isInfoEnabled()) logger.info("Import file: {}", importFile.getAbsolutePath());
 
 		File parentFile = importFile.getParentFile();
 		String inputName = importFile.getName();
@@ -1002,38 +1031,38 @@ public class MainFrame
 		File indexFile = new File(parentFile, inputName + FileConstants.INDEX_FILE_EXTENSION);
 
 		// check if file exists and warn in that case
-		if(dataFile.isFile())
+		if (dataFile.isFile())
 		{
 			// check if file is already open
 			ViewContainer<?> viewContainer = resolveViewContainer(dataFile);
-			if(viewContainer != null)
+			if (viewContainer != null)
 			{
 				showView(viewContainer);
 				String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
 				JOptionPane
-					.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
+						.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
 				// TODO: Offer option to reimport anyway. Close view beforehand in tht case.
 				return;
 			}
 			String dialogTitle = "Reimport file?";
 			String message = "Data file does already exist!\nReimport data file right now?";
 			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if(JOptionPane.OK_OPTION != result)
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (JOptionPane.OK_OPTION != result)
 			{
 				return;
 			}
 
-			if(dataFile.delete())
+			if (dataFile.delete())
 			{
-				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", dataFile.getAbsolutePath());
+				if (logger.isInfoEnabled()) logger.info("Deleted file '{}'.", dataFile.getAbsolutePath());
 			}
 		}
-		if(indexFile.isFile())
+		if (indexFile.isFile())
 		{
-			if(indexFile.delete())
+			if (indexFile.delete())
 			{
-				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", indexFile.getAbsolutePath());
+				if (logger.isInfoEnabled()) logger.info("Deleted file '{}'.", indexFile.getAbsolutePath());
 			}
 		}
 
@@ -1043,23 +1072,23 @@ public class MainFrame
 		metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 
 		FileBuffer<EventWrapper<LoggingEvent>> buffer =
-			loggingFileBufferFactory.createBuffer(dataFile, indexFile, metaData);
+				loggingFileBufferFactory.createBuffer(dataFile, indexFile, metaData);
 
 		ImportType type = resolveType(importFile);
-		if(type == ImportType.LOG4J)
+		if (type == ImportType.LOG4J)
 		{
 			String name = "Importing Log4J XML file";
 			String description = "Importing Log4J XML file '" + importFile.getAbsolutePath() + "'...";
 			Task<Long> task = longTaskManager.startTask(new Log4jImportCallable(importFile, buffer), name, description);
-			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+			if (logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 			return;
 		}
-		if(type == ImportType.JUL)
+		if (type == ImportType.JUL)
 		{
 			String name = "Importing java.util.logging XML file";
 			String description = "Importing java.util.logging XML file '" + importFile.getAbsolutePath() + "'...";
 			Task<Long> task = longTaskManager.startTask(new JulImportCallable(importFile, buffer), name, description);
-			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+			if (logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 			return;
 		}
 
@@ -1074,36 +1103,36 @@ public class MainFrame
 		try
 		{
 			br = new BufferedReader(new FileReader(importFile));
-			for(int i = 0; i < 5; i++)
+			for (int i = 0; i < 5; i++)
 			{
 				String line = br.readLine();
-				if(line == null)
+				if (line == null)
 				{
 					break;
 				}
-				if(line.contains("<log4j:"))
+				if (line.contains("<log4j:"))
 				{
 					return ImportType.LOG4J;
 				}
-				if(line.contains("<log>") || line.contains("<record>"))
+				if (line.contains("<log>") || line.contains("<record>"))
 				{
 					return ImportType.JUL;
 				}
 			}
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while resolving type of file!", ex);
+			if (logger.isWarnEnabled()) logger.warn("Exception while resolving type of file!", ex);
 		}
 		finally
 		{
-			if(br != null)
+			if (br != null)
 			{
 				try
 				{
 					br.close();
 				}
-				catch(IOException e)
+				catch (IOException e)
 				{
 					// ignore
 				}
@@ -1121,19 +1150,19 @@ public class MainFrame
 	{
 		{ // logging
 			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> views = loggingEventViewManager.getViews();
-			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : views.entrySet())
+			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : views.entrySet())
 			{
 
 				ViewContainer<LoggingEvent> view = current.getValue();
 				EventWrapperViewPanel<LoggingEvent> defaultView = view.getDefaultView();
 				EventSource<LoggingEvent> es = defaultView.getEventSource();
-				if(es != null)
+				if (es != null)
 				{
 					Buffer<EventWrapper<LoggingEvent>> buffer = es.getBuffer();
-					if(buffer instanceof CodecFileBuffer)
+					if (buffer instanceof CodecFileBuffer)
 					{
 						CodecFileBuffer cfb = (CodecFileBuffer) buffer;
-						if(dataFile.equals(cfb.getDataFile()))
+						if (dataFile.equals(cfb.getDataFile()))
 						{
 							return view;
 						}
@@ -1144,19 +1173,19 @@ public class MainFrame
 
 		{ // access
 			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> views = accessEventViewManager.getViews();
-			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : views.entrySet())
+			for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : views.entrySet())
 			{
 
 				ViewContainer<AccessEvent> view = current.getValue();
 				EventWrapperViewPanel<AccessEvent> defaultView = view.getDefaultView();
 				EventSource<AccessEvent> es = defaultView.getEventSource();
-				if(es != null)
+				if (es != null)
 				{
 					Buffer<EventWrapper<AccessEvent>> buffer = es.getBuffer();
-					if(buffer instanceof CodecFileBuffer)
+					if (buffer instanceof CodecFileBuffer)
 					{
 						CodecFileBuffer cfb = (CodecFileBuffer) buffer;
-						if(dataFile.equals(cfb.getDataFile()))
+						if (dataFile.equals(cfb.getDataFile()))
 						{
 							return view;
 						}
@@ -1171,36 +1200,36 @@ public class MainFrame
 	private void createViewFor(File dataFile, File indexFile)
 	{
 		// create view for dataFile and indexFile.
-		if(logger.isInfoEnabled())
+		if (logger.isInfoEnabled())
 		{
 			logger
-				.info("Create view for dataFile '{}' and indexFile '{}'.", dataFile.getAbsolutePath(), indexFile.getAbsolutePath());
+					.info("Create view for dataFile '{}' and indexFile '{}'.", dataFile.getAbsolutePath(), indexFile.getAbsolutePath());
 		}
 
 		FileHeaderStrategy fileHeaderStrategy = new DefaultFileHeaderStrategy();
 		try
 		{
 			FileHeader header = fileHeaderStrategy.readFileHeader(dataFile);
-			if(header == null)
+			if (header == null)
 			{
-				if(logger.isWarnEnabled())
+				if (logger.isWarnEnabled())
 				{
 					logger.warn("Couldn't read file header from '{}'!", dataFile.getAbsolutePath());
 				}
 				return;
 			}
-			if(header.getMagicValue() != FileConstants.MAGIC_VALUE)
+			if (header.getMagicValue() != FileConstants.MAGIC_VALUE)
 			{
-				if(logger.isWarnEnabled())
+				if (logger.isWarnEnabled())
 				{
 					logger.warn("Invalid magic value! ", Integer.toHexString(header.getMagicValue()));
 				}
 				return;
 			}
 			MetaData metaData = header.getMetaData();
-			if(metaData == null || metaData.getData() == null)
+			if (metaData == null || metaData.getData() == null)
 			{
-				if(logger.isWarnEnabled())
+				if (logger.isWarnEnabled())
 				{
 					logger.warn("Couldn't read meta data from '{}'!", dataFile.getAbsolutePath());
 				}
@@ -1211,20 +1240,20 @@ public class MainFrame
 			Map<String, String> usedMetaData = new HashMap<String, String>();
 			SourceIdentifier si = new SourceIdentifier(dataFile.getAbsolutePath());
 
-			if(FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
+			if (FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
 			{
 				FileBuffer<EventWrapper<LoggingEvent>> buffer =
-					loggingFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
+						loggingFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
 				EventSource<LoggingEvent> eventSource = new EventSourceImpl<LoggingEvent>(si, buffer, false);
 				ViewContainer<LoggingEvent> viewContainer = loggingEventViewManager.retrieveViewContainer(eventSource);
 				EventWrapperViewPanel<LoggingEvent> panel = viewContainer.getDefaultView();
 				panel.setState(LoggingViewState.INACTIVE);
 				showLoggingView(eventSource);
 			}
-			else if(FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
+			else if (FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
 			{
 				FileBuffer<EventWrapper<AccessEvent>> buffer =
-					accessFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
+						accessFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
 				EventSource<AccessEvent> eventSource = new EventSourceImpl<AccessEvent>(si, buffer, false);
 				ViewContainer<AccessEvent> viewContainer = accessEventViewManager.retrieveViewContainer(eventSource);
 				EventWrapperViewPanel<AccessEvent> panel = viewContainer.getDefaultView();
@@ -1233,12 +1262,12 @@ public class MainFrame
 			}
 			else
 			{
-				if(logger.isWarnEnabled()) logger.warn("Unexpected content type {}.", contentType);
+				if (logger.isWarnEnabled()) logger.warn("Unexpected content type {}.", contentType);
 			}
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating view form file!", e);
+			if (logger.isWarnEnabled()) logger.warn("Exception while creating view form file!", e);
 		}
 	}
 
@@ -1280,7 +1309,7 @@ public class MainFrame
 	{
 		Map<HttpStatus.Type, ColorScheme> prefValue = applicationPreferences.getStatusColors();
 		Map<HttpStatus.Type, Colors> colors = new HashMap<HttpStatus.Type, Colors>();
-		for(Map.Entry<HttpStatus.Type, ColorScheme> current : prefValue.entrySet())
+		for (Map.Entry<HttpStatus.Type, ColorScheme> current : prefValue.entrySet())
 		{
 			colors.put(current.getKey(), new Colors(current.getValue()));
 		}
@@ -1292,7 +1321,7 @@ public class MainFrame
 	{
 		Map<LoggingEvent.Level, ColorScheme> prefValue = applicationPreferences.getLevelColors();
 		Map<LoggingEvent.Level, Colors> colors = new HashMap<LoggingEvent.Level, Colors>();
-		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : prefValue.entrySet())
+		for (Map.Entry<LoggingEvent.Level, ColorScheme> current : prefValue.entrySet())
 		{
 			colors.put(current.getKey(), new Colors(current.getValue()));
 		}
@@ -1300,7 +1329,7 @@ public class MainFrame
 	}
 
 	public class MyApplicationListener
-		implements ApplicationListener
+			implements ApplicationListener
 	{
 
 		public void handleAbout(ApplicationEvent event)
@@ -1312,12 +1341,12 @@ public class MainFrame
 
 		public void handleOpenApplication(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Open Application: {}", applicationEvent);
+			if (logger.isInfoEnabled()) logger.info("Open Application: {}", applicationEvent);
 		}
 
 		public void handleOpenFile(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Open File: {}", applicationEvent);
+			if (logger.isInfoEnabled()) logger.info("Open File: {}", applicationEvent);
 		}
 
 		public void handlePreferences(ApplicationEvent applicationEvent)
@@ -1327,7 +1356,7 @@ public class MainFrame
 
 		public void handlePrintFile(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Print: {}", applicationEvent);
+			if (logger.isInfoEnabled()) logger.info("Print: {}", applicationEvent);
 		}
 
 		public void handleQuit(ApplicationEvent applicationEvent)
@@ -1337,24 +1366,24 @@ public class MainFrame
 
 		public void handleReopenApplication(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Reopen Application: {}", applicationEvent);
+			if (logger.isInfoEnabled()) logger.info("Reopen Application: {}", applicationEvent);
 			setVisible(true);
 		}
 	}
 
 	private void setLoggingEventSourceManager(SourceManager<LoggingEvent> loggingEventSourceManager)
 	{
-		if(this.loggingEventSourceManager != null)
+		if (this.loggingEventSourceManager != null)
 		{
 			this.loggingEventSourceManager.removeEventSourceListener(loggingSourceListener);
 		}
 		this.loggingEventSourceManager = loggingEventSourceManager;
-		if(this.loggingEventSourceManager != null)
+		if (this.loggingEventSourceManager != null)
 		{
 			this.loggingEventSourceManager.addEventSourceListener(loggingSourceListener);
 
 			List<EventSource<LoggingEvent>> sources = this.loggingEventSourceManager.getSources();
-			for(EventSource<LoggingEvent> source : sources)
+			for (EventSource<LoggingEvent> source : sources)
 			{
 				loggingEventViewManager.retrieveViewContainer(source);
 			}
@@ -1368,17 +1397,17 @@ public class MainFrame
 
 	private void setAccessEventSourceManager(SourceManager<AccessEvent> accessEventSourceManager)
 	{
-		if(this.accessEventSourceManager != null)
+		if (this.accessEventSourceManager != null)
 		{
 			this.accessEventSourceManager.removeEventSourceListener(accessSourceListener);
 		}
 		this.accessEventSourceManager = accessEventSourceManager;
-		if(this.accessEventSourceManager != null)
+		if (this.accessEventSourceManager != null)
 		{
 			this.accessEventSourceManager.addEventSourceListener(accessSourceListener);
 
 			List<EventSource<AccessEvent>> sources = this.accessEventSourceManager.getSources();
-			for(EventSource<AccessEvent> source : sources)
+			for (EventSource<AccessEvent> source : sources)
 			{
 				accessEventViewManager.retrieveViewContainer(source);
 			}
@@ -1397,7 +1426,7 @@ public class MainFrame
 
 	public void setSounds(Sounds sounds)
 	{
-		if(sounds != null)
+		if (sounds != null)
 		{
 			sounds.setSoundLocations(applicationPreferences.getSoundLocations());
 			sounds.setMute(applicationPreferences.isMute());
@@ -1434,13 +1463,13 @@ public class MainFrame
 		File statisticsPath = new File(applicationPreferences.getStartupApplicationPath(), "statistics");
 		File[] files = statisticsPath.listFiles(rrdFileFilter);
 		SortedMap<String, SourceIdentifier> sources = new TreeMap<String, SourceIdentifier>();
-		if(files != null)
+		if (files != null)
 		{
-			for(File f : files)
+			for (File f : files)
 			{
 				String name = f.getName();
 				name = name.substring(0, name.length() - 4); // we are sure about .rrd here...
-				if(!name.equalsIgnoreCase("global"))
+				if (!name.equalsIgnoreCase("global"))
 				{
 					SourceIdentifier si = new SourceIdentifier(name);
 					sources.put(getSourceTitle(si), si);
@@ -1487,7 +1516,7 @@ public class MainFrame
 	{
 		// we need this since this method might also be called by a different thread
 		ShowViewRunnable runnable = new ShowViewRunnable(container);
-		if(SwingUtilities.isEventDispatchThread())
+		if (SwingUtilities.isEventDispatchThread())
 		{
 			runnable.run();
 		}
@@ -1524,7 +1553,7 @@ public class MainFrame
 		StringBuilder statusText = new StringBuilder();
 
 		ApplicationPreferences.SourceFiltering filtering = applicationPreferences.getSourceFiltering();
-		switch(filtering)
+		switch (filtering)
 		{
 			case BLACKLIST:
 				statusText.append("Blacklisting on '");
@@ -1538,15 +1567,15 @@ public class MainFrame
 				break;
 		}
 
-		if(activeCounter == 0)
+		if (activeCounter == 0)
 		{
 			statusText.append("No active connections.");
 		}
-		else if(activeCounter == 1)
+		else if (activeCounter == 1)
 		{
 			statusText.append("One active connection.");
 		}
-		else if(activeCounter > 1)
+		else if (activeCounter > 1)
 		{
 			statusText.append(activeCounter).append(" active connections.");
 		}
@@ -1561,7 +1590,7 @@ public class MainFrame
 	private void initDetailsViewScript()
 	{
 		long current = System.currentTimeMillis();
-		if(detailsViewScript != null && current - lastScriptRefresh < SCRIPT_REFRESH_INTERVAL)
+		if (detailsViewScript != null && current - lastScriptRefresh < SCRIPT_REFRESH_INTERVAL)
 		{
 			return;
 		}
@@ -1571,11 +1600,11 @@ public class MainFrame
 		File detailsViewRoot = getApplicationPreferences().getDetailsViewRoot();
 		File scriptFile = new File(detailsViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
 		long scriptFileTimestamp = scriptFile.lastModified();
-		if(detailsViewScript == null || previousScriptFileTimestamp != scriptFileTimestamp)
+		if (detailsViewScript == null || previousScriptFileTimestamp != scriptFileTimestamp)
 		{
-			if(!scriptFile.isFile())
+			if (!scriptFile.isFile())
 			{
-				if(logger.isWarnEnabled()) logger.warn("Scriptfile '{}' is not a file!", scriptFile.getAbsolutePath());
+				if (logger.isWarnEnabled()) logger.warn("Scriptfile '{}' is not a file!", scriptFile.getAbsolutePath());
 			}
 			GroovyClassLoader gcl = new GroovyClassLoader();
 			gcl.setShouldRecompile(true);
@@ -1583,19 +1612,19 @@ public class MainFrame
 			{
 				Class clazz = gcl.parseClass(scriptFile);
 				Object instance = clazz.newInstance();
-				if(instance instanceof Script)
+				if (instance instanceof Script)
 				{
 					detailsViewScript = (Script) instance;
 					previousScriptFileTimestamp = scriptFileTimestamp;
 				}
 			}
-			catch(Throwable e)
+			catch (Throwable e)
 			{
-				if(logger.isWarnEnabled())
+				if (logger.isWarnEnabled())
 				{
 					logger
-						.warn("Exception while instanciating groovy condition '" + scriptFile
-							.getAbsolutePath() + "'!", e);
+							.warn("Exception while instanciating groovy condition '" + scriptFile
+									.getAbsolutePath() + "'!", e);
 				}
 				detailsViewScript = null;
 			}
@@ -1610,7 +1639,7 @@ public class MainFrame
 //		if(wrapper!=null)
 //		{
 		//message=messageFormatter.createMessage(wrapper, true);
-		if(detailsViewScript == null)
+		if (detailsViewScript == null)
 		{
 			message = "<html><body>detailsView Script is broken!</body></html>";
 		}
@@ -1626,23 +1655,23 @@ public class MainFrame
 
 				detailsViewScript.setBinding(binding);
 				Object result = detailsViewScript.run();
-				if(result instanceof String)
+				if (result instanceof String)
 				{
 					message = (String) result;
 				}
-				else if(result != null)
+				else if (result != null)
 				{
 					message = result.toString();
 				}
 			}
-			catch(Throwable t)
+			catch (Throwable t)
 			{
 				message = "<html><body>Exception while executing detailsView Script!</body></html>";
-				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
+				if (logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
 			}
 		}
 		//}
-		if(logger.isDebugEnabled()) logger.debug("Message:\n{}", message);
+		if (logger.isDebugEnabled()) logger.debug("Message:\n{}", message);
 		// I'm not sure who is to blame for the following line of code...
 		// One could argue that it's a bug in the application logging the event but I think
 		// that it shouldn't be possible to cause a problem logging something weird.
@@ -1708,9 +1737,9 @@ public class MainFrame
 	{
 		{
 			List<ViewContainer<LoggingEvent>> removed = loggingEventViewManager.removeInactiveViews(onlyClosed);
-			if(clean)
+			if (clean)
 			{
-				for(ViewContainer current : removed)
+				for (ViewContainer current : removed)
 				{
 					EventWrapperViewPanel panel = current.getDefaultView();
 					panel.clear();
@@ -1720,9 +1749,9 @@ public class MainFrame
 
 		{
 			List<ViewContainer<AccessEvent>> removed = accessEventViewManager.removeInactiveViews(onlyClosed);
-			if(clean)
+			if (clean)
 			{
-				for(ViewContainer current : removed)
+				for (ViewContainer current : removed)
 				{
 					EventWrapperViewPanel panel = current.getDefaultView();
 					panel.clear();
@@ -1733,7 +1762,7 @@ public class MainFrame
 
 	public void openInactiveLogs()
 	{
-		if(logger.isInfoEnabled()) logger.info("Open inactive log...");
+		if (logger.isInfoEnabled()) logger.info("Open inactive log...");
 		Windows.showWindow(openInactiveLogsDialog, this, true);
 
 	}
@@ -1750,7 +1779,7 @@ public class MainFrame
 
 	public void showHelp()
 	{
-		if(helpUrl != null)
+		if (helpUrl != null)
 		{
 			helpFrame.setHelpUrl(helpUrl);
 		}
@@ -1761,7 +1790,7 @@ public class MainFrame
 	{
 		Windows.showWindow(aboutDialog, MainFrame.this, true);
 
-		if(!applicationPreferences.isMute() && sounds != null)
+		if (!applicationPreferences.isMute() && sounds != null)
 		{
 			//sounds.play(LilithSounds.ABOUT_SOUND);
 		}
@@ -1776,7 +1805,7 @@ public class MainFrame
 	}
 
 	class LoggingEventSourceListener
-		implements EventSourceListener<LoggingEvent>
+			implements EventSourceListener<LoggingEvent>
 	{
 		public void eventSourceAdded(EventSource<LoggingEvent> eventSource)
 		{
@@ -1789,7 +1818,7 @@ public class MainFrame
 		}
 
 		private class LoggingSourceAddedRunnable
-			implements Runnable
+				implements Runnable
 		{
 			EventSource<LoggingEvent> eventSource;
 
@@ -1803,21 +1832,21 @@ public class MainFrame
 				ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
 				EventWrapperViewPanel<LoggingEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.ACTIVE);
-				if(!applicationPreferences.isMute() && sounds != null)
+				if (!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_ADDED);
 				}
 				String primary = eventSource.getSourceIdentifier().getIdentifier();
 				Map<String, String> sourceNames = applicationPreferences.getSourceNames();
 
-				if(!sourceNames.containsKey(primary))
+				if (!sourceNames.containsKey(primary))
 				{
 					sourceNames = new HashMap<String, String>(sourceNames);
 					sourceNames.put(primary, primary);
 					applicationPreferences.setSourceNames(sourceNames);
 				}
 
-				if(applicationPreferences.isAutoOpening())
+				if (applicationPreferences.isAutoOpening())
 				{
 					showLoggingView(eventSource);
 				}
@@ -1825,7 +1854,7 @@ public class MainFrame
 		}
 
 		private class LoggingSourceRemovedRunnable
-			implements Runnable
+				implements Runnable
 		{
 			EventSource<LoggingEvent> eventSource;
 
@@ -1839,11 +1868,11 @@ public class MainFrame
 				ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
 				EventWrapperViewPanel<LoggingEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.INACTIVE);
-				if(!applicationPreferences.isMute() && sounds != null)
+				if (!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_REMOVED);
 				}
-				if(applicationPreferences.isAutoClosing())
+				if (applicationPreferences.isAutoClosing())
 				{
 					loggingEventViewManager.closeViewContainer(container);
 				}
@@ -1854,7 +1883,7 @@ public class MainFrame
 	}
 
 	class AccessEventSourceListener
-		implements EventSourceListener<AccessEvent>
+			implements EventSourceListener<AccessEvent>
 	{
 		public void eventSourceAdded(EventSource<AccessEvent> eventSource)
 		{
@@ -1867,7 +1896,7 @@ public class MainFrame
 		}
 
 		private class AccessSourceAddedRunnable
-			implements Runnable
+				implements Runnable
 		{
 			EventSource<AccessEvent> eventSource;
 
@@ -1881,7 +1910,7 @@ public class MainFrame
 				ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
 				EventWrapperViewPanel<AccessEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.ACTIVE);
-				if(!applicationPreferences.isMute() && sounds != null)
+				if (!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_ADDED);
 				}
@@ -1889,14 +1918,14 @@ public class MainFrame
 				String primary = eventSource.getSourceIdentifier().getIdentifier();
 				Map<String, String> sourceNames = applicationPreferences.getSourceNames();
 
-				if(!sourceNames.containsKey(primary))
+				if (!sourceNames.containsKey(primary))
 				{
 					sourceNames = new HashMap<String, String>(sourceNames);
 					sourceNames.put(primary, primary);
 					applicationPreferences.setSourceNames(sourceNames);
 				}
 
-				if(applicationPreferences.isAutoOpening())
+				if (applicationPreferences.isAutoOpening())
 				{
 					showAccessView(eventSource);
 				}
@@ -1904,7 +1933,7 @@ public class MainFrame
 		}
 
 		private class AccessSourceRemovedRunnable
-			implements Runnable
+				implements Runnable
 		{
 			EventSource<AccessEvent> eventSource;
 
@@ -1918,11 +1947,11 @@ public class MainFrame
 				ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
 				EventWrapperViewPanel<AccessEvent> panel = container.getDefaultView();
 				panel.setState(LoggingViewState.INACTIVE);
-				if(!applicationPreferences.isMute() && sounds != null)
+				if (!applicationPreferences.isMute() && sounds != null)
 				{
 					sounds.play(LilithSounds.SOURCE_REMOVED);
 				}
-				if(applicationPreferences.isAutoClosing())
+				if (applicationPreferences.isAutoClosing())
 				{
 					accessEventViewManager.closeViewContainer(container);
 				}
@@ -1934,15 +1963,15 @@ public class MainFrame
 
 	public String getPrimarySourceTitle(String primary)
 	{
-		if(primary == null)
+		if (primary == null)
 		{
 			return null;
 		}
 		Map<String, String> sourceNames = applicationPreferences.getSourceNames();
 		String resolvedName = sourceNames.get(primary);
-		if(resolvedName != null && !resolvedName.equals(primary))
+		if (resolvedName != null && !resolvedName.equals(primary))
 		{
-			if(applicationPreferences.isShowingIdentifier())
+			if (applicationPreferences.isShowingIdentifier())
 			{
 				return resolvedName + " [" + primary + "]";
 			}
@@ -1963,7 +1992,7 @@ public class MainFrame
 	{
 		String primary = getPrimarySourceTitle(identifier);
 		String secondary = identifier.getSecondaryIdentifier();
-		if(secondary == null)
+		if (secondary == null)
 		{
 			return primary;
 		}
@@ -1987,7 +2016,7 @@ public class MainFrame
 
 		Class clazz = container.getWrappedClass();
 		String title;
-		if(clazz == LoggingEvent.class)
+		if (clazz == LoggingEvent.class)
 		{
 			title = getLoggingSourceTitle(si);
 		}
@@ -2000,10 +2029,10 @@ public class MainFrame
 
 	public void openUrl(URL url)
 	{
-		if(logger.isInfoEnabled()) logger.info("Opening URL {}. ", url);
+		if (logger.isInfoEnabled()) logger.info("Opening URL {}. ", url);
 		Runtime runtime = Runtime.getRuntime();
 		String[] cmdArray = getOpenUrlCommandArray(url);
-		if(cmdArray != null)
+		if (cmdArray != null)
 		{
 			try
 			{
@@ -2013,14 +2042,14 @@ public class MainFrame
 				t.setDaemon(true);
 				t.start();
 			}
-			catch(IOException e)
+			catch (IOException e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while trying to open URL " + url + "!", e);
+				if (logger.isWarnEnabled()) logger.warn("Exception while trying to open URL " + url + "!", e);
 			}
 		}
 		else
 		{
-			if(logger.isInfoEnabled())
+			if (logger.isInfoEnabled())
 			{
 				logger.info("Can't open url {} because no command is defined for the current system.", url);
 			}
@@ -2031,39 +2060,39 @@ public class MainFrame
 	// Mac: open http://www.heise.de
 
 	private static final String[] MAC_OPEN_URL_ARRAY =
-		{
-			"open",
-			null
-		};
+			{
+					"open",
+					null
+			};
 
 	private static final String[] WINDOWS_OPEN_URL_ARRAY =
-		{
-			"cmd",
-			"/C",
-			"start",
-			null
-		};
+			{
+					"cmd",
+					"/C",
+					"start",
+					null
+			};
 
 	private String[] getOpenUrlCommandArray(URL url)
 	{
 		String[] result = null;
-		if(isWindows)
+		if (isWindows)
 		{
 			result = new String[WINDOWS_OPEN_URL_ARRAY.length];
 			System.arraycopy(WINDOWS_OPEN_URL_ARRAY, 0, result, 0, WINDOWS_OPEN_URL_ARRAY.length);
 		}
-		else if(isMac)
+		else if (isMac)
 		{
 			result = new String[MAC_OPEN_URL_ARRAY.length];
 			System.arraycopy(MAC_OPEN_URL_ARRAY, 0, result, 0, MAC_OPEN_URL_ARRAY.length);
 		}
 
-		if(result != null)
+		if (result != null)
 		{
 			String urlStr = url.toString();
-			for(int i = 0; i < result.length; i++)
+			for (int i = 0; i < result.length; i++)
 			{
-				if(result[i] == null)
+				if (result[i] == null)
 				{
 					result[i] = urlStr;
 				}
@@ -2102,23 +2131,23 @@ public class MainFrame
 	public void showTaskManager()
 	{
 		// don't add twice
-		if(taskManagerFrame.isClosed())
+		if (taskManagerFrame.isClosed())
 		{
 			desktop.add(taskManagerFrame);
 			desktop.validate();
 		}
-		if(taskManagerFrame.isIcon())
+		if (taskManagerFrame.isIcon())
 		{
 			try
 			{
 				taskManagerFrame.setIcon(false);
 			}
-			catch(PropertyVetoException e)
+			catch (PropertyVetoException e)
 			{
 				// ignore
 			}
 		}
-		if(!taskManagerFrame.isVisible())
+		if (!taskManagerFrame.isVisible())
 		{
 			taskManagerFrame.setVisible(true);
 		}
@@ -2127,7 +2156,7 @@ public class MainFrame
 		{
 			taskManagerFrame.setSelected(true);
 		}
-		catch(PropertyVetoException e)
+		catch (PropertyVetoException e)
 		{
 			// ignore
 		}
@@ -2141,7 +2170,7 @@ public class MainFrame
 	 */
 	private void executeScrollToBottom(ViewWindow window)
 	{
-		if(window != null)
+		if (window != null)
 		{
 			ScrollToBottomRunnable runnable = new ScrollToBottomRunnable(window);
 			SwingUtilities.invokeLater(runnable);
@@ -2149,7 +2178,7 @@ public class MainFrame
 	}
 
 	private static class ScrollToBottomRunnable
-		implements Runnable
+			implements Runnable
 	{
 		private ViewWindow window;
 
@@ -2161,7 +2190,7 @@ public class MainFrame
 		public void run()
 		{
 			ViewContainer viewContainer = window.getViewContainer();
-			if(viewContainer != null)
+			if (viewContainer != null)
 			{
 				viewContainer.scrollToEvent();
 			}
@@ -2185,33 +2214,33 @@ public class MainFrame
 			if(logger.isDebugEnabled()) logger.debug("Resolved height of titlebar: {}", result);
 		}
         */
-		if(logger.isDebugEnabled()) logger.debug("Height of titlebar: {}", result);
+		if (logger.isDebugEnabled()) logger.debug("Height of titlebar: {}", result);
 		return result;
 	}
 
 	private void showApplicationPathChangedDialog()
 	{
-		if(logger.isInfoEnabled()) logger.info("showApplicationPathChangedDialog()");
+		if (logger.isInfoEnabled()) logger.info("showApplicationPathChangedDialog()");
 		final Object[] options = {"Exit", "Cancel"};
 		Icon icon = null;
 		{
 			URL url = MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
-			if(url != null)
+			if (url != null)
 			{
 				icon = new ImageIcon(url);
 			}
 		}
 		int result = JOptionPane.showOptionDialog(this,
-			"You have changed the application path.\n" +
-				"You need to restart for this change to take effect.\n\n" +
+				"You have changed the application path.\n" +
+						"You need to restart for this change to take effect.\n\n" +
+						"Exit now?",
 				"Exit now?",
-			"Exit now?",
-			JOptionPane.DEFAULT_OPTION,
-			JOptionPane.WARNING_MESSAGE,
-			icon,
-			options,
-			options[0]);
-		if(result == 0)
+				JOptionPane.DEFAULT_OPTION,
+				JOptionPane.WARNING_MESSAGE,
+				icon,
+				options,
+				options[0]);
+		if (result == 0)
 		{
 			exit();
 		}
@@ -2219,27 +2248,27 @@ public class MainFrame
 
 	private void showLookAndFeelChangedDialog()
 	{
-		if(logger.isInfoEnabled()) logger.info("showLookAndFeelChangedDialog()");
+		if (logger.isInfoEnabled()) logger.info("showLookAndFeelChangedDialog()");
 		final Object[] options = {"Exit", "Cancel"};
 		Icon icon = null;
 		{
 			URL url = MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
-			if(url != null)
+			if (url != null)
 			{
 				icon = new ImageIcon(url);
 			}
 		}
 		int result = JOptionPane.showOptionDialog(this,
-			"You have changed the look & feel.\n" +
-				"You need to restart for this change to take effect.\n\n" +
+				"You have changed the look & feel.\n" +
+						"You need to restart for this change to take effect.\n\n" +
+						"Exit now?",
 				"Exit now?",
-			"Exit now?",
-			JOptionPane.DEFAULT_OPTION,
-			JOptionPane.WARNING_MESSAGE,
-			icon,
-			options,
-			options[0]);
-		if(result == 0)
+				JOptionPane.DEFAULT_OPTION,
+				JOptionPane.WARNING_MESSAGE,
+				icon,
+				options,
+				options[0]);
+		if (result == 0)
 		{
 			exit();
 		}
@@ -2247,31 +2276,30 @@ public class MainFrame
 
 	public void exit()
 	{
-		if(applicationPreferences.isAskingBeforeQuit())
+		if (applicationPreferences.isAskingBeforeQuit())
 		{
 			// yes, I hate apps that ask this question...
 			String dialogTitle = "Exit now?";
 			String message = "Are you really 100% sure that you want to quit?\nPlease do yourself a favour and think about it before you answer...\nExit now?";
 			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if(JOptionPane.OK_OPTION != result)
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (JOptionPane.OK_OPTION != result)
 			{
 				return;
 			}
 		}
-		if(logger.isInfoEnabled()) logger.info("Exiting...");
+		if (logger.isInfoEnabled()) logger.info("Exiting...");
 		// this probably isn't necessary since jmdns registers a shutdown hook.
-		if(senderService != null)
+		if (senderService != null)
 		{
 			senderService.stop();
 //			if(logger.isInfoEnabled()) logger.info("Unregistering services...");
 //			// this can't be done in the shutdown hook...
 //			jmDns.unregisterAllServices();
 		}
-		if(applicationPreferences.isCleaningLogsOnExit())
+		if (applicationPreferences.isCleaningLogsOnExit())
 		{
-			deleteInactiveLogs(loggingFileFactory);
-			deleteInactiveLogs(accessFileFactory);
+			deleteInactiveLogs();
 		}
 		applicationPreferences.setPreviousImportPath(importFileChooser.getCurrentDirectory());
 		applicationPreferences.setPreviousOpenPath(openFileChooser.getCurrentDirectory());
@@ -2281,7 +2309,7 @@ public class MainFrame
 	}
 
 	class ShowViewRunnable
-		implements Runnable
+			implements Runnable
 	{
 		private ViewContainer<?> container;
 
@@ -2294,10 +2322,10 @@ public class MainFrame
 		{
 			boolean isNew = false;
 			boolean isInternal = false;
-			if(container.getParent() == null)
+			if (container.getParent() == null)
 			{
 				isNew = true;
-				if(!applicationPreferences.isUsingInternalFrames())
+				if (!applicationPreferences.isUsingInternalFrames())
 				{
 					showFrame(container);
 				}
@@ -2308,20 +2336,20 @@ public class MainFrame
 			}
 			updateWindowMenus();
 			ViewWindow window = container.resolveViewWindow();
-			if(window instanceof ViewContainerInternalFrame)
+			if (window instanceof ViewContainerInternalFrame)
 			{
 				isInternal = true;
 			}
 
-			if(isNew)
+			if (isNew)
 			{
-				if(applicationPreferences.isAutoFocusingWindow())
+				if (applicationPreferences.isAutoFocusingWindow())
 				{
 					window.focusWindow();
-					if(isInternal)
+					if (isInternal)
 					{
 						// move mainframe to front.
-						if((getState() & Frame.ICONIFIED) != 0)
+						if ((getState() & Frame.ICONIFIED) != 0)
 						{
 							setState(Frame.NORMAL);
 						}
@@ -2333,7 +2361,7 @@ public class MainFrame
 			{
 				// reselected existing views should *always* be focused!
 				window.focusWindow();
-				if(isInternal)
+				if (isInternal)
 				{
 					// move mainframe to front.
 					toFront();
@@ -2344,7 +2372,7 @@ public class MainFrame
 
 
 	private class PreferencesChangeListener
-		implements PropertyChangeListener
+			implements PropertyChangeListener
 	{
 
 		@SuppressWarnings({"unchecked"})
@@ -2352,42 +2380,42 @@ public class MainFrame
 		{
 			String propName = evt.getPropertyName();
 
-			if(ApplicationPreferences.SOUND_LOCATIONS_PROPERTY.equals(propName))
+			if (ApplicationPreferences.SOUND_LOCATIONS_PROPERTY.equals(propName))
 			{
-				if(sounds != null)
+				if (sounds != null)
 				{
 					sounds.setSoundLocations((Map<String, String>) evt.getNewValue());
 				}
 				return;
 			}
 
-			if(ApplicationPreferences.SOURCE_NAMES_PROPERTY.equals(propName)
-				|| ApplicationPreferences.SHOWING_IDENTIFIER_PROPERTY.equals(propName))
+			if (ApplicationPreferences.SOURCE_NAMES_PROPERTY.equals(propName)
+					|| ApplicationPreferences.SHOWING_IDENTIFIER_PROPERTY.equals(propName))
 			{
 				updateSourceTitles();
 				return;
 			}
 
-			if(ApplicationPreferences.SOURCE_FILTERING_PROPERTY.equals(propName))
+			if (ApplicationPreferences.SOURCE_FILTERING_PROPERTY.equals(propName))
 			{
 				updateStatus();
 				return;
 			}
 
-			if(ApplicationPreferences.MUTE_PROPERTY.equals(propName))
+			if (ApplicationPreferences.MUTE_PROPERTY.equals(propName))
 			{
-				if(sounds != null)
+				if (sounds != null)
 				{
 					sounds.setMute((Boolean) evt.getNewValue());
 				}
 				return;
 			}
 
-			if(ApplicationPreferences.APPLICATION_PATH_PROPERTY.equals(propName))
+			if (ApplicationPreferences.APPLICATION_PATH_PROPERTY.equals(propName))
 			{
 				File newPath = (File) evt.getNewValue();
 				File oldPath = applicationPreferences.getStartupApplicationPath();
-				if(oldPath != null)
+				if (oldPath != null)
 				{
 					File previousApplicationPathFile = new File(newPath, ApplicationPreferences.PREVIOUS_APPLICATION_PATH_FILENAME);
 					FileWriter writer = null;
@@ -2396,13 +2424,13 @@ public class MainFrame
 						writer = new FileWriter(previousApplicationPathFile);
 						writer.append(oldPath.getAbsolutePath());
 					}
-					catch(IOException ex)
+					catch (IOException ex)
 					{
-						if(logger.isWarnEnabled())
+						if (logger.isWarnEnabled())
 						{
 							logger
-								.warn("Exception while writing previous application path to file '" + previousApplicationPathFile
-									.getAbsolutePath() + "'!", ex);
+									.warn("Exception while writing previous application path to file '" + previousApplicationPathFile
+											.getAbsolutePath() + "'!", ex);
 						}
 					}
 					finally
@@ -2414,45 +2442,45 @@ public class MainFrame
 				return;
 			}
 
-			if(ApplicationPreferences.LOOK_AND_FEEL_PROPERTY.equals(propName))
+			if (ApplicationPreferences.LOOK_AND_FEEL_PROPERTY.equals(propName))
 			{
 				showLookAndFeelChangedDialog();
 				return;
 			}
 
-			if(ApplicationPreferences.CONDITIONS_PROPERTY.equals(propName))
+			if (ApplicationPreferences.CONDITIONS_PROPERTY.equals(propName))
 			{
 				updateConditions();
 				return;
 			}
 
-			if(ApplicationPreferences.LEVEL_COLORS_PROPERTY.equals(propName))
+			if (ApplicationPreferences.LEVEL_COLORS_PROPERTY.equals(propName))
 			{
 				levelColors = null;
 				updateLoggingViews();
 				return;
 			}
 
-			if(ApplicationPreferences.STATUS_COLORS_PROPERTY.equals(propName))
+			if (ApplicationPreferences.STATUS_COLORS_PROPERTY.equals(propName))
 			{
 				statusColors = null;
 				updateAccessViews();
 				return;
 			}
 
-			if(ApplicationPreferences.SHOWING_FULL_CALLSTACK_PROPERTY.equals(propName))
+			if (ApplicationPreferences.SHOWING_FULL_CALLSTACK_PROPERTY.equals(propName))
 			{
 				updateLoggingViews();
 				return;
 			}
 
-			if(ApplicationPreferences.SHOWING_STACKTRACE_PROPERTY.equals(propName))
+			if (ApplicationPreferences.SHOWING_STACKTRACE_PROPERTY.equals(propName))
 			{
 				updateLoggingViews();
 				//return;
 			}
 
-			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
+			if (ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
 				coloringWholeRow = applicationPreferences.isColoringWholeRow();
 				updateLoggingViews();
@@ -2464,23 +2492,23 @@ public class MainFrame
 		{
 			updateWindowMenus();
 			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager
-				.getViews();
-			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+					.getViews();
+			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 			{
 				ViewContainer<LoggingEvent> value = current.getValue();
 				ViewWindow window = value.resolveViewWindow();
-				if(window != null)
+				if (window != null)
 				{
 					String title = resolveSourceTitle(value);
 					window.setTitle(title);
 				}
 			}
 			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+			for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
 			{
 				ViewContainer<AccessEvent> value = current.getValue();
 				ViewWindow window = value.resolveViewWindow();
-				if(window != null)
+				if (window != null)
 				{
 					String title = resolveSourceTitle(value);
 					window.setTitle(title);
@@ -2493,11 +2521,11 @@ public class MainFrame
 	{
 		List<SavedCondition> conditions = applicationPreferences.getConditions();
 		List<SavedCondition> active = new ArrayList<SavedCondition>();
-		if(conditions != null)
+		if (conditions != null)
 		{
-			for(SavedCondition current : conditions)
+			for (SavedCondition current : conditions)
 			{
-				if(current.isActive())
+				if (current.isActive())
 				{
 					active.add(current);
 				}
@@ -2512,7 +2540,7 @@ public class MainFrame
 	private void updateLoggingViews()
 	{
 		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+		for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 		{
 			ViewContainer<LoggingEvent> value = current.getValue();
 			value.updateViews();
@@ -2522,7 +2550,7 @@ public class MainFrame
 	private void updateAccessViews()
 	{
 		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+		for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
 		{
 			ViewContainer<AccessEvent> value = current.getValue();
 			value.updateViews();
@@ -2544,28 +2572,34 @@ public class MainFrame
 	public void cleanObsoleteFiles()
 	{
 		File obsoleteDir = new File(startupApplicationPath, "sources");
-		if(obsoleteDir.isDirectory())
+		if (obsoleteDir.isDirectory())
 		{
 			longTaskManager
-				.startTask(new CleanObsoleteCallable(obsoleteDir), "Clean obsolete files", "Deletes the directory '" + obsoleteDir
-					.getAbsolutePath() + "' recursively.");
+					.startTask(new CleanObsoleteCallable(obsoleteDir), "Clean obsolete files", "Deletes the directory '" + obsoleteDir
+							.getAbsolutePath() + "' recursively.");
 		}
 	}
 
-	public void deleteInactiveLogs(LogFileFactory fileFactory)
+	public void deleteInactiveLogs()
+	{
+		deleteInactiveLogs(loggingFileFactory);
+		deleteInactiveLogs(accessFileFactory);
+	}
+
+	protected void deleteInactiveLogs(LogFileFactory fileFactory)
 	{
 		List<SourceIdentifier> inactives = collectInactiveLogs(fileFactory);
-		for(SourceIdentifier si : inactives)
+		for (SourceIdentifier si : inactives)
 		{
 			File dataFile = fileFactory.getDataFile(si);
 			File indexFile = fileFactory.getIndexFile(si);
-			if(dataFile.delete())
+			if (dataFile.delete())
 			{
-				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
+				if (logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
 			}
-			if(indexFile.delete())
+			if (indexFile.delete())
 			{
-				if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
+				if (logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
 			}
 		}
 	}
@@ -2575,13 +2609,13 @@ public class MainFrame
 		List<SourceIdentifier> result = new ArrayList<SourceIdentifier>();
 		File logsRoot = fileFactory.getBaseDir();
 		File[] sources = logsRoot.listFiles(new DirectoryFilter());
-		if(sources != null)
+		if (sources != null)
 		{
-			for(File f : sources)
+			for (File f : sources)
 			{
 				collectInactiveLogs(fileFactory, f, result);
 			}
-			if(logger.isDebugEnabled()) logger.debug("Inactive logs: {}", result);
+			if (logger.isDebugEnabled()) logger.debug("Inactive logs: {}", result);
 		}
 		return result;
 	}
@@ -2592,12 +2626,12 @@ public class MainFrame
 
 		File[] logs = sourceDir.listFiles(new LogFileFilter(fileFactory));
 		String extension = fileFactory.getDataFileExtension();
-		for(File f : logs)
+		for (File f : logs)
 		{
 			String abs = f.getAbsolutePath();
 			abs = abs.substring(0, abs.length() - extension.length());
 			File active = new File(abs + FileConstants.ACTIVE_FILE_EXTENSION);
-			if(!active.isFile())
+			if (!active.isFile())
 			{
 				String secondary = f.getName();
 				secondary = secondary.substring(0, secondary.length() - extension.length());
@@ -2614,43 +2648,43 @@ public class MainFrame
 	}
 
 	public class EventSourceComparator<T extends Serializable>
-		implements Comparator<EventSource<T>>
+			implements Comparator<EventSource<T>>
 	{
 		public int compare(EventSource<T> o1, EventSource<T> o2)
 		{
-			if(o1 == o2)
+			if (o1 == o2)
 			{
 				return 0;
 			}
-			if(o1 == null)
+			if (o1 == null)
 			{
 				return -1;
 			}
-			if(o2 == null)
+			if (o2 == null)
 			{
 				return 1;
 			}
 			SourceIdentifier si1 = o1.getSourceIdentifier();
 			SourceIdentifier si2 = o2.getSourceIdentifier();
-			if(si1 == si2)
+			if (si1 == si2)
 			{
 				return 0;
 			}
-			if(si1 == null)
+			if (si1 == null)
 			{
 				return -1;
 			}
-			if(si2 == null)
+			if (si2 == null)
 			{
 				return 1;
 			}
 
 			String primary1 = getPrimarySourceTitle(si1);
 			String primary2 = getPrimarySourceTitle(si2);
-			if(primary1 != null && primary2 != null)
+			if (primary1 != null && primary2 != null)
 			{
 				int compare = primary1.compareTo(primary2);
-				if(compare != 0)
+				if (compare != 0)
 				{
 					return compare;
 				}
@@ -2660,7 +2694,7 @@ public class MainFrame
 	}
 
 	private class MainWindowListener
-		extends WindowAdapter
+			extends WindowAdapter
 	{
 		@Override
 		public void windowClosing(WindowEvent e)
@@ -2670,27 +2704,27 @@ public class MainFrame
 	}
 
 	private class ShutdownRunnable
-		implements Runnable
+			implements Runnable
 	{
 		public void run()
 		{
-			if(logger.isInfoEnabled()) logger.info("Executing shutdown hook...");
-			if(gotoSource != null)
+			if (logger.isInfoEnabled()) logger.info("Executing shutdown hook...");
+			if (gotoSource != null)
 			{
 				gotoSource.stop();
 				gotoSource = null;
 			}
-			for(AutostartRunnable current : autostartProcesses)
+			for (AutostartRunnable current : autostartProcesses)
 			{
 				current.destroyProcess();
 			}
-			if(logger.isInfoEnabled()) logger.info("Finished executing shutdown hook...");
+			if (logger.isInfoEnabled()) logger.info("Finished executing shutdown hook...");
 		}
 	}
 
 
 	public static class AutostartRunnable
-		implements Runnable
+			implements Runnable
 	{
 		private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
@@ -2704,7 +2738,7 @@ public class MainFrame
 
 		public void destroyProcess()
 		{
-			if(process != null)
+			if (process != null)
 			{
 				process.destroy();
 			}
@@ -2714,7 +2748,7 @@ public class MainFrame
 		{
 			try
 			{
-				if(logger.isInfoEnabled()) logger.info("Starting '{}'.", file.getAbsolutePath());
+				if (logger.isInfoEnabled()) logger.info("Starting '{}'.", file.getAbsolutePath());
 				process = Runtime.getRuntime().exec(file.getAbsolutePath());
 
 				Thread errThread = new Thread(new ErrorConsumerRunnable(process.getErrorStream()));
@@ -2726,21 +2760,21 @@ public class MainFrame
 				outThread.start();
 
 				int exitCode = process.waitFor();
-				if(logger.isInfoEnabled())
+				if (logger.isInfoEnabled())
 				{
 					logger.info("Execution of '{}' finished with exitCode {}.", file.getAbsolutePath(), exitCode);
 				}
 			}
-			catch(IOException e)
+			catch (IOException e)
 			{
-				if(logger.isWarnEnabled())
+				if (logger.isWarnEnabled())
 				{
 					logger.warn("Exception while executing '" + file.getAbsolutePath() + "'!", e);
 				}
 			}
-			catch(InterruptedException e)
+			catch (InterruptedException e)
 			{
-				if(logger.isDebugEnabled())
+				if (logger.isDebugEnabled())
 				{
 					logger.debug("Execution of '" + file.getAbsolutePath() + "' was interrupted.", e);
 				}
@@ -2748,7 +2782,7 @@ public class MainFrame
 		}
 
 		abstract class AbstractOutputConsumerRunnable
-			implements Runnable
+				implements Runnable
 		{
 			private BufferedReader inputReader;
 
@@ -2762,10 +2796,10 @@ public class MainFrame
 				try
 				{
 
-					for(; ;)
+					for (; ;)
 					{
 						String line = inputReader.readLine();
-						if(line == null)
+						if (line == null)
 						{
 							break;
 						}
@@ -2773,9 +2807,9 @@ public class MainFrame
 					}
 
 				}
-				catch(IOException e)
+				catch (IOException e)
 				{
-					if(logger.isDebugEnabled())
+					if (logger.isDebugEnabled())
 					{
 						logger.debug("Exception while reading from process '" + file.getAbsolutePath() + "'.", e);
 					}
@@ -2786,7 +2820,7 @@ public class MainFrame
 		}
 
 		private class OutConsumerRunnable
-			extends AbstractOutputConsumerRunnable
+				extends AbstractOutputConsumerRunnable
 		{
 			public OutConsumerRunnable(InputStream input)
 			{
@@ -2795,12 +2829,12 @@ public class MainFrame
 
 			public void processLine(String line)
 			{
-				if(logger.isInfoEnabled()) logger.info("{}: {}", file.getAbsolutePath(), line);
+				if (logger.isInfoEnabled()) logger.info("{}: {}", file.getAbsolutePath(), line);
 			}
 		}
 
 		private class ErrorConsumerRunnable
-			extends AbstractOutputConsumerRunnable
+				extends AbstractOutputConsumerRunnable
 		{
 			public ErrorConsumerRunnable(InputStream input)
 			{
@@ -2816,7 +2850,7 @@ public class MainFrame
 	}
 
 	public static class ProcessConsumerRunnable
-		implements Runnable
+			implements Runnable
 	{
 		private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
@@ -2829,7 +2863,7 @@ public class MainFrame
 
 		public void destroyProcess()
 		{
-			if(process != null)
+			if (process != null)
 			{
 				process.destroy();
 			}
@@ -2848,16 +2882,16 @@ public class MainFrame
 				outThread.start();
 
 				int exitCode = process.waitFor();
-				if(logger.isDebugEnabled()) logger.debug("Execution finished with exitCode {}.", exitCode);
+				if (logger.isDebugEnabled()) logger.debug("Execution finished with exitCode {}.", exitCode);
 			}
-			catch(InterruptedException e)
+			catch (InterruptedException e)
 			{
-				if(logger.isDebugEnabled()) logger.debug("Execution of openUrl process was interrupted.", e);
+				if (logger.isDebugEnabled()) logger.debug("Execution of openUrl process was interrupted.", e);
 			}
 		}
 
 		abstract class AbstractOutputConsumerRunnable
-			implements Runnable
+				implements Runnable
 		{
 			private BufferedReader inputReader;
 
@@ -2871,10 +2905,10 @@ public class MainFrame
 				try
 				{
 
-					for(; ;)
+					for (; ;)
 					{
 						String line = inputReader.readLine();
-						if(line == null)
+						if (line == null)
 						{
 							break;
 						}
@@ -2882,9 +2916,9 @@ public class MainFrame
 					}
 
 				}
-				catch(IOException e)
+				catch (IOException e)
 				{
-					if(logger.isDebugEnabled()) logger.debug("Exception while reading from openUrl process.", e);
+					if (logger.isDebugEnabled()) logger.debug("Exception while reading from openUrl process.", e);
 				}
 			}
 
@@ -2892,7 +2926,7 @@ public class MainFrame
 		}
 
 		private class OutConsumerRunnable
-			extends AbstractOutputConsumerRunnable
+				extends AbstractOutputConsumerRunnable
 		{
 			public OutConsumerRunnable(InputStream input)
 			{
@@ -2901,12 +2935,12 @@ public class MainFrame
 
 			public void processLine(String line)
 			{
-				if(logger.isDebugEnabled()) logger.debug("{}", line);
+				if (logger.isDebugEnabled()) logger.debug("{}", line);
 			}
 		}
 
 		private class ErrorConsumerRunnable
-			extends AbstractOutputConsumerRunnable
+				extends AbstractOutputConsumerRunnable
 		{
 			public ErrorConsumerRunnable(InputStream input)
 			{
@@ -2922,7 +2956,7 @@ public class MainFrame
 	}
 
 	private class CheckForUpdateRunnable
-		implements Runnable
+			implements Runnable
 	{
 		private boolean showAlways;
 
@@ -2942,7 +2976,7 @@ public class MainFrame
 
 			// Provide custom retry handler is necessary
 			method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-				new DefaultHttpMethodRetryHandler(3, false));
+					new DefaultHttpMethodRetryHandler(3, false));
 
 			String currentVersion = null;
 			try
@@ -2951,7 +2985,7 @@ public class MainFrame
 				int statusCode = client.executeMethod(method);
 
 				// lets use our HttpStatus instead...
-				if(statusCode != HttpStatus.OK.getCode())
+				if (statusCode != HttpStatus.OK.getCode())
 				{
 					System.err.println("Method failed: " + method.getStatusLine());
 				}
@@ -2962,9 +2996,9 @@ public class MainFrame
 
 				currentVersion = new String(responseBody, charSet);
 			}
-			catch(Throwable e)
+			catch (Throwable e)
 			{
-				if(logger.isInfoEnabled()) logger.info("Exception while checking current version!", e);
+				if (logger.isInfoEnabled()) logger.info("Exception while checking current version!", e);
 			}
 			finally
 			{
@@ -2974,14 +3008,14 @@ public class MainFrame
 
 			String message;
 			boolean newVersion = false;
-			if(currentVersion == null)
+			if (currentVersion == null)
 			{
 				message = "Couldn't retrieve current version!";
 			}
 			else
 			{
 				currentVersion = currentVersion.trim();
-				if(!currentVersion.equals(Lilith.APP_VERSION))
+				if (!currentVersion.equals(Lilith.APP_VERSION))
 				{
 					message = "New version is available: " + currentVersion;
 					newVersion = true;
@@ -2991,8 +3025,8 @@ public class MainFrame
 					message = "Your version is up to date.";
 				}
 			}
-			if(logger.isInfoEnabled()) logger.info("Message: {}, newVersion: {}", message, newVersion);
-			if(newVersion || showAlways)
+			if (logger.isInfoEnabled()) logger.info("Message: {}, newVersion: {}", message, newVersion);
+			if (newVersion || showAlways)
 			{
 				SwingUtilities.invokeLater(new ShowUpdateDialog(message));
 			}
@@ -3000,7 +3034,7 @@ public class MainFrame
 	}
 
 	private class ShowUpdateDialog
-		implements Runnable
+			implements Runnable
 	{
 		private String message;
 
@@ -3048,7 +3082,7 @@ public class MainFrame
 		}
 		*/
 	private class MainTaskListener
-		implements TaskListener<Long>
+			implements TaskListener<Long>
 	{
 		public void taskCreated(Task<Long> longTask)
 		{
@@ -3065,7 +3099,7 @@ public class MainFrame
 			updateTaskStatus();
 			Callable<Long> callable = longTask.getCallable();
 
-			if(callable instanceof IndexingCallable)
+			if (callable instanceof IndexingCallable)
 			{
 				IndexingCallable iCallable = (IndexingCallable) callable;
 				File dataFile = iCallable.getDataFile();
@@ -3073,11 +3107,11 @@ public class MainFrame
 				createViewFor(dataFile, indexFile);
 				return;
 			}
-			if(callable instanceof Log4jImportCallable)
+			if (callable instanceof Log4jImportCallable)
 			{
 				Log4jImportCallable iCallable = (Log4jImportCallable) callable;
 				AppendOperation<EventWrapper<LoggingEvent>> buffer = iCallable.getBuffer();
-				if(buffer instanceof CodecFileBuffer)
+				if (buffer instanceof CodecFileBuffer)
 				{
 					CodecFileBuffer cfb = (CodecFileBuffer) buffer;
 					File dataFile = cfb.getDataFile();
@@ -3087,11 +3121,11 @@ public class MainFrame
 				}
 				return;
 			}
-			if(callable instanceof JulImportCallable)
+			if (callable instanceof JulImportCallable)
 			{
 				JulImportCallable iCallable = (JulImportCallable) callable;
 				AppendOperation<EventWrapper<LoggingEvent>> buffer = iCallable.getBuffer();
-				if(buffer instanceof CodecFileBuffer)
+				if (buffer instanceof CodecFileBuffer)
 				{
 					CodecFileBuffer cfb = (CodecFileBuffer) buffer;
 					File dataFile = cfb.getDataFile();

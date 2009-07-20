@@ -17,14 +17,26 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
+import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.lilith.swing.AccessEventViewManager;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.lilith.swing.LoggingEventViewManager;
+import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.lilith.swing.ViewContainer;
+import de.huxhorn.sulky.buffers.Buffer;
+import de.huxhorn.sulky.buffers.Reset;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
-
-import javax.swing.*;
+import java.util.Map;
 
 public class TroubleshootingPanel
-	extends JPanel
+		extends JPanel
 {
 	private PreferencesDialog preferencesDialog;
 
@@ -42,7 +54,7 @@ public class TroubleshootingPanel
 	}
 
 	public class InitDetailsViewAction
-		extends AbstractAction
+			extends AbstractAction
 	{
 		private static final long serialVersionUID = 8374235720899930441L;
 
@@ -56,9 +68,9 @@ public class TroubleshootingPanel
 			String dialogTitle = "Reinitialize details view files?";
 			String message = "This resets all details view related files, all manual changes will be lost!\nReinitialize details view right now?";
 			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
-			if(JOptionPane.OK_OPTION != result)
+			if (JOptionPane.OK_OPTION != result)
 			{
 				return;
 			}
@@ -69,7 +81,7 @@ public class TroubleshootingPanel
 	}
 
 	public class InitExampleScriptsAction
-		extends AbstractAction
+			extends AbstractAction
 	{
 		private static final long serialVersionUID = -4197531497673863904L;
 
@@ -83,9 +95,9 @@ public class TroubleshootingPanel
 			String dialogTitle = "Reinitialize example groovy conditions?";
 			String message = "This overwrites all example groovy conditions. Other conditions are not changed!\nReinitialize example groovy conditions right now?";
 			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
-			if(JOptionPane.OK_OPTION != result)
+			if (JOptionPane.OK_OPTION != result)
 			{
 				return;
 			}
@@ -96,7 +108,7 @@ public class TroubleshootingPanel
 	}
 
 	public class DeleteAllLogsAction
-		extends AbstractAction
+			extends AbstractAction
 	{
 		private static final long serialVersionUID = 5218712842261152334L;
 
@@ -110,14 +122,49 @@ public class TroubleshootingPanel
 			String dialogTitle = "Delete all log files?";
 			String message = "This deletes *all* log files, even the Lilith logs and the global logs!\nDelete all log files right now?";
 			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
-			if(JOptionPane.OK_OPTION != result)
+			if (JOptionPane.OK_OPTION != result)
 			{
 				return;
 			}
 
-			// TODO: delete all log files, starting with the Lilith log.
+			MainFrame mainFrame = preferencesDialog.getMainFrame();
+			{ // Logging
+				LoggingEventViewManager levm = mainFrame.getLoggingEventViewManager();
+				Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> views = levm.getViews();
+				for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : views.entrySet())
+				{
+					reset(current.getValue());
+				}
+			}
+
+			{ // Access
+				AccessEventViewManager levm = mainFrame.getAccessEventViewManager();
+				Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> views = levm.getViews();
+				for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : views.entrySet())
+				{
+					reset(current.getValue());
+				}
+			}
+
+			mainFrame.cleanAllInactiveLogs();
 		}
+	}
+
+	public static void reset(ViewContainer<?> container)
+	{
+		if (container == null)
+		{
+			return;
+		}
+		EventSource eventSource = container.getEventSource();
+		if (eventSource == null)
+		{
+			return;
+		}
+		Buffer<?> buffer = eventSource.getBuffer();
+		Reset.reset(buffer);
+
 	}
 }
