@@ -1,15 +1,16 @@
 Validate correctness of trunk/lilith/lilith/src/main/resources/detailsView/history
+Check that lilith logback.xml does not include debug="true"
 
 #####
 
-Search for
+Search pom.xml for
 <!-- SV -->
 and replace with release version.
 Don't forget <sulkyVersion>!
 
 #####
 
-Search for
+Search pom.xml for
 <!-- LV -->
 and replace with release version.
 
@@ -58,14 +59,14 @@ Update current-version.txt
 
 #####
 
-Search for
+Search pom.xml for
 <!-- SV -->
 and replace with next snapshot version.
 Don't forget <sulkyVersion>!
 
 #####
 
-Search for
+Search pom.xml for
 <!-- LV -->
 and replace with next snapshot version.
 
