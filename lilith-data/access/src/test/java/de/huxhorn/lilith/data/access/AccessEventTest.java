@@ -19,6 +19,7 @@ package de.huxhorn.lilith.data.access;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
+
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,332 +29,350 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AccessEventTest {
-    private AccessEvent fresh;
+public class AccessEventTest
+{
+	private AccessEvent fresh;
 
-    @Before
-    public void initFresh() {
-        fresh = new AccessEvent();
-    }
+	@Before
+	public void initFresh()
+	{
+		fresh = new AccessEvent();
+	}
 
-    @Test
-    public void defaultConstructor()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        testSerialization(instance);
-        testXmlSerialization(instance);
-    }
+		testSerialization(instance);
+		testXmlSerialization(instance);
+	}
 
-    @Test
-    public void loggerContext()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void loggerContext()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        LoggerContext value = new LoggerContext();
-        value.setBirthTime(new Date(1234567890000L));
-        value.setName("contextName");
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put("foo", "bar");
-        value.setProperties(properties);
-        instance.setLoggerContext(value);
+		LoggerContext value = new LoggerContext();
+		value.setBirthTime(new Date(1234567890000L));
+		value.setName("contextName");
+		Map<String, String> properties = new HashMap<String, String>();
+		properties.put("foo", "bar");
+		value.setProperties(properties);
+		instance.setLoggerContext(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getLoggerContext());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getLoggerContext());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getLoggerContext());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getLoggerContext());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void method()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void method()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setMethod(value);
+		String value = "value";
+		instance.setMethod(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getMethod());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getMethod());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getMethod());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getMethod());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void protocol()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void protocol()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setProtocol(value);
+		String value = "value";
+		instance.setProtocol(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getProtocol());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getProtocol());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getProtocol());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getProtocol());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
 
-    @Test
-    public void remoteAddress()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void remoteAddress()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setRemoteAddress(value);
+		String value = "value";
+		instance.setRemoteAddress(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getRemoteAddress());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getRemoteAddress());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRemoteAddress());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRemoteAddress());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void remoteHost()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void remoteHost()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setRemoteHost(value);
+		String value = "value";
+		instance.setRemoteHost(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getRemoteHost());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getRemoteHost());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRemoteHost());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRemoteHost());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void remoteUser()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void remoteUser()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setRemoteUser(value);
+		String value = "value";
+		instance.setRemoteUser(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getRemoteUser());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getRemoteUser());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRemoteUser());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRemoteUser());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void requestUri()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void requestUri()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setRequestURI(value);
+		String value = "value";
+		instance.setRequestURI(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getRequestURI());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getRequestURI());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRequestURI());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRequestURI());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void requestUrl()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void requestUrl()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setRequestURL(value);
+		String value = "value";
+		instance.setRequestURL(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getRequestURL());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getRequestURL());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRequestURL());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRequestURL());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void serverName()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void serverName()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        String value = "value";
-        instance.setServerName(value);
+		String value = "value";
+		instance.setServerName(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getServerName());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getServerName());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getServerName());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getServerName());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void requestHeaders()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void requestHeaders()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        Map<String, String> value = new HashMap<String, String>();
-        value.put("foo", "bar");
-        instance.setRequestHeaders(value);
+		Map<String, String> value = new HashMap<String, String>();
+		value.put("foo", "bar");
+		instance.setRequestHeaders(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getRequestHeaders());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getRequestHeaders());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getRequestHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getRequestHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void requestParameters()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void requestParameters()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        Map<String, String[]> value = new HashMap<String, String[]>();
-        String[] array = new String[]{"bar"};
-        value.put("foo", array);
-        instance.setRequestParameters(value);
+		Map<String, String[]> value = new HashMap<String, String[]>();
+		String[] array = new String[]{"bar"};
+		value.put("foo", array);
+		instance.setRequestParameters(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertArrayEquals(array, obj.getRequestParameters().get("foo"));
-            //assertEquals(value, obj.getRequestParameters());
-            //assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertArrayEquals(array, obj.getRequestParameters().get("foo"));
-            //assertEquals(value, obj.getRequestParameters());
-            //assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertArrayEquals(array, obj.getRequestParameters().get("foo"));
+			//assertEquals(value, obj.getRequestParameters());
+			//assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertArrayEquals(array, obj.getRequestParameters().get("foo"));
+			//assertEquals(value, obj.getRequestParameters());
+			//assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void responseHeaders()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void responseHeaders()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        Map<String, String> value = new HashMap<String, String>();
-        value.put("foo", "bar");
-        instance.setResponseHeaders(value);
+		Map<String, String> value = new HashMap<String, String>();
+		value.put("foo", "bar");
+		instance.setResponseHeaders(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getResponseHeaders());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getResponseHeaders());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getResponseHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getResponseHeaders());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void timeStamp()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void timeStamp()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        Long value = 1234567890000L;
-        instance.setTimeStamp(value);
+		Long value = 1234567890000L;
+		instance.setTimeStamp(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getTimeStamp());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getTimeStamp());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getTimeStamp());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getTimeStamp());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void localPort()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void localPort()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        int value = 17;
-        instance.setLocalPort(value);
+		int value = 17;
+		instance.setLocalPort(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getLocalPort());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getLocalPort());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getLocalPort());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getLocalPort());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void statusCode()
-            throws ClassNotFoundException, IOException {
-        AccessEvent instance = new AccessEvent();
+	@Test
+	public void statusCode()
+		throws ClassNotFoundException, IOException
+	{
+		AccessEvent instance = new AccessEvent();
 
-        int value = 17;
-        instance.setStatusCode(value);
+		int value = 17;
+		instance.setStatusCode(value);
 
-        {
-            AccessEvent obj = testSerialization(instance);
-            assertEquals(value, obj.getStatusCode());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            AccessEvent obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getStatusCode());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			AccessEvent obj = testSerialization(instance);
+			assertEquals(value, obj.getStatusCode());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			AccessEvent obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getStatusCode());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 }

@@ -17,309 +17,353 @@
  */
 package de.huxhorn.lilith.data.logging.xml;
 
-import de.huxhorn.lilith.data.logging.*;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggerContext;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
+
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoggingEventIOTest {
-    private final Logger logger = LoggerFactory.getLogger(LoggingEventIOTest.class);
+import javax.xml.stream.XMLStreamException;
 
-    @Test
-    public void minimal()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        check(event);
-    }
+public class LoggingEventIOTest
+{
+	private final Logger logger = LoggerFactory.getLogger(LoggingEventIOTest.class);
 
-    @Test
-    public void loggerContext()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        LoggerContext value = new LoggerContext();
-        value.setName("ContextName");
-        value.setBirthTime(1234567890000L);
-        Map<String, String> propperties = new HashMap<String, String>();
-        propperties.put("foo", "bar");
-        value.setProperties(propperties);
-        event.setLoggerContext(value);
-        check(event);
-    }
+	@Test
+	public void minimal()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		check(event);
+	}
 
-    @Test
-    public void threadInfo()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
-        event.setThreadInfo(threadInfo);
-        check(event);
-    }
+	@Test
+	public void loggerContext()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		LoggerContext value = new LoggerContext();
+		value.setName("ContextName");
+		value.setBirthTime(1234567890000L);
+		Map<String, String> propperties = new HashMap<String, String>();
+		propperties.put("foo", "bar");
+		value.setProperties(propperties);
+		event.setLoggerContext(value);
+		check(event);
+	}
 
-    @Test
-    public void arguments()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        String[] arguments = new String[]{"arg1", "arg2"};
-        event.setMessage(new Message("message", arguments));
-        check(event);
-    }
+	@Test
+	public void threadInfo()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
+		event.setThreadInfo(threadInfo);
+		check(event);
+	}
 
-    @Test
-    public void nullArgument()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        String[] arguments = new String[]{"arg1", null, "arg3"};
-        event.setMessage(new Message("message", arguments));
-        check(event);
-    }
+	@Test
+	public void arguments()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		String[] arguments = new String[]{"arg1", "arg2"};
+		event.setMessage(new Message("message", arguments));
+		check(event);
+	}
 
-    @Test
-    public void singleThrowable()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
-        event.setThrowable(ti);
-        check(event);
-    }
+	@Test
+	public void nullArgument()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		String[] arguments = new String[]{"arg1", null, "arg3"};
+		event.setMessage(new Message("message", arguments));
+		check(event);
+	}
 
-    @Test
-    public void multiThrowable()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
-        ThrowableInfo ti2 = createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
-        ThrowableInfo ti3 = createThrowableInfo("yet.another.exception.class.Name", "Huhu! Exception Message");
-        ti.setCause(ti2);
-        ti2.setCause(ti3);
-        event.setThrowable(ti);
-        check(event);
-    }
+	@Test
+	public void singleThrowable()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
+		event.setThrowable(ti);
+		check(event);
+	}
 
-    @Test
-    public void mdc()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        Map<String, String> mdc = new HashMap<String, String>();
-        mdc.put("key1", "value1");
-        mdc.put("key2", "value2");
-        mdc.put("key3", "value3");
-        event.setMdc(mdc);
-        check(event);
-    }
+	@Test
+	public void multiThrowable()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
+		ThrowableInfo ti2 = createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
+		ThrowableInfo ti3 = createThrowableInfo("yet.another.exception.class.Name", "Huhu! Exception Message");
+		ti.setCause(ti2);
+		ti2.setCause(ti3);
+		event.setThrowable(ti);
+		check(event);
+	}
 
-    @Test
-    public void ndc()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        Message[] ndc = new Message[]{
-                new Message("message"),
-                new Message("messagePattern {}", new String[]{"foo"})
-        };
-        event.setNdc(ndc);
-        check(event);
-    }
+	@Test
+	public void mdc()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		Map<String, String> mdc = new HashMap<String, String>();
+		mdc.put("key1", "value1");
+		mdc.put("key2", "value2");
+		mdc.put("key3", "value3");
+		event.setMdc(mdc);
+		check(event);
+	}
 
-    @Test
-    public void singleMarker()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        Marker marker = new Marker("marker");
-        event.setMarker(marker);
-        check(event);
-    }
+	@Test
+	public void ndc()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		Message[] ndc = new Message[]{
+			new Message("message"),
+			new Message("messagePattern {}", new String[]{"foo"})
+		};
+		event.setNdc(ndc);
+		check(event);
+	}
 
-    @Test
-    public void childMarker()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        Marker marker = new Marker("marker");
-        Marker marker2_1 = new Marker("marker2-1");
-        Marker marker2_2 = new Marker("marker2-2");
-        marker.add(marker2_1);
-        marker.add(marker2_2);
-        event.setMarker(marker);
-        check(event);
-    }
+	@Test
+	public void singleMarker()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		Marker marker = new Marker("marker");
+		event.setMarker(marker);
+		check(event);
+	}
 
-    @Test
-    public void recursiveMarker()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        Marker marker = new Marker("marker");
-        Marker marker2_1 = new Marker("marker2-1");
-        Marker marker2_2 = new Marker("marker2-2");
-        Marker marker3_1 = new Marker("marker3-1");
-        marker.add(marker2_1);
-        marker.add(marker2_2);
-        marker2_2.add(marker3_1);
-        marker3_1.add(marker2_1);
-        event.setMarker(marker);
-        check(event);
-    }
+	@Test
+	public void childMarker()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		Marker marker = new Marker("marker");
+		Marker marker2_1 = new Marker("marker2-1");
+		Marker marker2_2 = new Marker("marker2-2");
+		marker.add(marker2_1);
+		marker.add(marker2_2);
+		event.setMarker(marker);
+		check(event);
+	}
 
-    @Test
-    public void callStack()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
-        event.setCallStack(createStackTraceElements());
-        check(event);
-    }
+	@Test
+	public void recursiveMarker()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		Marker marker = new Marker("marker");
+		Marker marker2_1 = new Marker("marker2-1");
+		Marker marker2_2 = new Marker("marker2-2");
+		Marker marker3_1 = new Marker("marker3-1");
+		marker.add(marker2_1);
+		marker.add(marker2_2);
+		marker2_2.add(marker3_1);
+		marker3_1.add(marker2_1);
+		event.setMarker(marker);
+		check(event);
+	}
 
-    @Test
-    public void full()
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingEvent event = createMinimalEvent();
+	@Test
+	public void callStack()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
+		event.setCallStack(createStackTraceElements());
+		check(event);
+	}
 
-        ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
-        event.setThreadInfo(threadInfo);
+	@Test
+	public void full()
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingEvent event = createMinimalEvent();
 
-        String[] arguments = new String[]{"arg1", null, "arg3"};
-        event.setMessage(new Message("message", arguments));
+		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
+		event.setThreadInfo(threadInfo);
 
-        ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
-        ThrowableInfo ti2 = createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
-        ThrowableInfo ti3 = createThrowableInfo("yet.another.exception.class.Name", "Huhu! Exception Message");
-        ti.setCause(ti2);
-        ti2.setCause(ti3);
-        event.setThrowable(ti);
+		String[] arguments = new String[]{"arg1", null, "arg3"};
+		event.setMessage(new Message("message", arguments));
 
-        Map<String, String> mdc = new HashMap<String, String>();
-        mdc.put("key1", "value1");
-        mdc.put("key2", "value2");
-        mdc.put("key3", "value3");
-        event.setMdc(mdc);
+		ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
+		ThrowableInfo ti2 = createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
+		ThrowableInfo ti3 = createThrowableInfo("yet.another.exception.class.Name", "Huhu! Exception Message");
+		ti.setCause(ti2);
+		ti2.setCause(ti3);
+		event.setThrowable(ti);
 
-        Message[] ndc = new Message[]{
-                new Message("message"),
-                new Message("messagePattern {}", new String[]{"foo"})
-        };
-        event.setNdc(ndc);
+		Map<String, String> mdc = new HashMap<String, String>();
+		mdc.put("key1", "value1");
+		mdc.put("key2", "value2");
+		mdc.put("key3", "value3");
+		event.setMdc(mdc);
 
-        Marker marker = new Marker("marker");
-        Marker marker2_1 = new Marker("marker2-1");
-        Marker marker2_2 = new Marker("marker2-2");
-        Marker marker3_1 = new Marker("marker3-1");
-        marker.add(marker2_1);
-        marker.add(marker2_2);
-        marker2_2.add(marker3_1);
-        marker3_1.add(marker2_1);
-        event.setMarker(marker);
+		Message[] ndc = new Message[]{
+			new Message("message"),
+			new Message("messagePattern {}", new String[]{"foo"})
+		};
+		event.setNdc(ndc);
 
-        event.setCallStack(createStackTraceElements());
-        check(event);
-    }
+		Marker marker = new Marker("marker");
+		Marker marker2_1 = new Marker("marker2-1");
+		Marker marker2_2 = new Marker("marker2-2");
+		Marker marker3_1 = new Marker("marker3-1");
+		marker.add(marker2_1);
+		marker.add(marker2_2);
+		marker2_2.add(marker3_1);
+		marker3_1.add(marker2_1);
+		event.setMarker(marker);
 
-    public LoggingEvent createMinimalEvent() {
-        LoggingEvent event = new LoggingEvent();
-        event.setLogger("Logger");
-        event.setLevel(LoggingEvent.Level.INFO);
-        event.setTimeStamp(1234567890000L);
-        return event;
-    }
+		event.setCallStack(createStackTraceElements());
+		check(event);
+	}
 
-    public ThrowableInfo createThrowableInfo(String className, String message) {
-        ThrowableInfo ti = new ThrowableInfo();
-        ti.setName(className);
-        ti.setMessage(message);
-        ti.setStackTrace(createStackTraceElements());
-        return ti;
-    }
+	public LoggingEvent createMinimalEvent()
+	{
+		LoggingEvent event = new LoggingEvent();
+		event.setLogger("Logger");
+		event.setLevel(LoggingEvent.Level.INFO);
+		event.setTimeStamp(1234567890000L);
+		return event;
+	}
 
-    public ExtendedStackTraceElement[] createStackTraceElements() {
-        //noinspection ThrowableInstanceNeverThrown
-        Throwable t = new Throwable();
-        StackTraceElement[] original = t.getStackTrace();
+	public ThrowableInfo createThrowableInfo(String className, String message)
+	{
+		ThrowableInfo ti = new ThrowableInfo();
+		ti.setName(className);
+		ti.setMessage(message);
+		ti.setStackTrace(createStackTraceElements());
+		return ti;
+	}
 
-        ExtendedStackTraceElement[] result = new ExtendedStackTraceElement[original.length];
-        for (int i = 0; i < original.length; i++) {
-            StackTraceElement current = original[i];
-            result[i] = new ExtendedStackTraceElement(current);
+	public ExtendedStackTraceElement[] createStackTraceElements()
+	{
+		//noinspection ThrowableInstanceNeverThrown
+		Throwable t = new Throwable();
+		StackTraceElement[] original = t.getStackTrace();
 
-            if (i == 0) {
-                // codeLocation, version and exact
-                result[i].setCodeLocation("CodeLocation");
-                result[i].setVersion("Version");
-                result[i].setExact(true);
-            } else if (i == 1) {
-                // codeLocation, version and exact
-                result[i].setCodeLocation("CodeLocation");
-                result[i].setVersion("Version");
-                result[i].setExact(false);
-            }
-        }
+		ExtendedStackTraceElement[] result = new ExtendedStackTraceElement[original.length];
+		for(int i = 0; i < original.length; i++)
+		{
+			StackTraceElement current = original[i];
+			result[i] = new ExtendedStackTraceElement(current);
 
-        return result;
-    }
+			if(i == 0)
+			{
+				// codeLocation, version and exact
+				result[i].setCodeLocation("CodeLocation");
+				result[i].setVersion("Version");
+				result[i].setExact(true);
+			}
+			else if(i == 1)
+			{
+				// codeLocation, version and exact
+				result[i].setCodeLocation("CodeLocation");
+				result[i].setVersion("Version");
+				result[i].setExact(false);
+			}
+		}
 
-    public void check(LoggingEvent event)
-            throws UnsupportedEncodingException, XMLStreamException {
-        if (logger.isDebugEnabled()) logger.debug("Processing LoggingEvent:\n{}", event);
-        byte[] bytes;
-        LoggingEvent readEvent;
+		return result;
+	}
 
-        bytes = write(event, false);
-        readEvent = read(bytes, false);
-        if (logger.isDebugEnabled()) logger.debug("LoggingEvent read uncompressed.");
-        if (logger.isInfoEnabled()) logger.info("Original marker: {}", toString(event.getMarker()));
-        if (logger.isInfoEnabled()) logger.info("Read     marker: {}", toString(readEvent.getMarker()));
-        assertEquals(event, readEvent);
+	public void check(LoggingEvent event)
+		throws UnsupportedEncodingException, XMLStreamException
+	{
+		if(logger.isDebugEnabled()) logger.debug("Processing LoggingEvent:\n{}", event);
+		byte[] bytes;
+		LoggingEvent readEvent;
 
-        bytes = write(event, true);
-        readEvent = read(bytes, true);
-        if (logger.isDebugEnabled()) logger.debug("LoggingEvent read compressed.");
-        if (logger.isInfoEnabled()) logger.info("Original marker: {}", toString(event.getMarker()));
-        if (logger.isInfoEnabled()) logger.info("Read     marker: {}", toString(readEvent.getMarker()));
-    }
+		bytes = write(event, false);
+		readEvent = read(bytes, false);
+		if(logger.isDebugEnabled()) logger.debug("LoggingEvent read uncompressed.");
+		if(logger.isInfoEnabled()) logger.info("Original marker: {}", toString(event.getMarker()));
+		if(logger.isInfoEnabled()) logger.info("Read     marker: {}", toString(readEvent.getMarker()));
+		assertEquals(event, readEvent);
 
-    public byte[] write(LoggingEvent event, boolean compressing)
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingXmlEncoder ser = new LoggingXmlEncoder(compressing);
-        return ser.encode(event);
-    }
+		bytes = write(event, true);
+		readEvent = read(bytes, true);
+		if(logger.isDebugEnabled()) logger.debug("LoggingEvent read compressed.");
+		if(logger.isInfoEnabled()) logger.info("Original marker: {}", toString(event.getMarker()));
+		if(logger.isInfoEnabled()) logger.info("Read     marker: {}", toString(readEvent.getMarker()));
+	}
 
-    public LoggingEvent read(byte[] bytes, boolean compressing)
-            throws XMLStreamException, UnsupportedEncodingException {
-        LoggingXmlDecoder des = new LoggingXmlDecoder(compressing);
-        return des.decode(bytes);
-    }
+	public byte[] write(LoggingEvent event, boolean compressing)
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingXmlEncoder ser = new LoggingXmlEncoder(compressing);
+		return ser.encode(event);
+	}
 
-    String toString(Marker marker) {
-        if (marker == null) {
-            return null;
-        }
-        StringBuilder result = new StringBuilder();
-        Map<String, Marker> processedMarkers = new HashMap<String, Marker>();
-        recursiveToString(result, processedMarkers, marker);
-        return result.toString();
-    }
+	public LoggingEvent read(byte[] bytes, boolean compressing)
+		throws XMLStreamException, UnsupportedEncodingException
+	{
+		LoggingXmlDecoder des = new LoggingXmlDecoder(compressing);
+		return des.decode(bytes);
+	}
 
-    private void recursiveToString(StringBuilder result, Map<String, Marker> processedMarkers, Marker marker) {
-        if (processedMarkers.containsKey(marker.getName())) {
-            result.append("Marker[ref=").append(marker.getName());
-        } else {
-            processedMarkers.put(marker.getName(), marker);
-            result.append("Marker[name=").append(marker.getName());
-            if (marker.hasReferences()) {
-                result.append(", children={");
-                Map<String, Marker> children = marker.getReferences();
-                boolean first = true;
-                for (Map.Entry<String, Marker> current : children.entrySet()) {
-                    if (first) {
-                        first = false;
-                    } else {
-                        result.append(", ");
-                    }
-                    recursiveToString(result, processedMarkers, current.getValue());
-                }
-                result.append("}");
-            }
-            result.append("]");
-        }
-    }
+	String toString(Marker marker)
+	{
+		if(marker == null)
+		{
+			return null;
+		}
+		StringBuilder result = new StringBuilder();
+		Map<String, Marker> processedMarkers = new HashMap<String, Marker>();
+		recursiveToString(result, processedMarkers, marker);
+		return result.toString();
+	}
+
+	private void recursiveToString(StringBuilder result, Map<String, Marker> processedMarkers, Marker marker)
+	{
+		if(processedMarkers.containsKey(marker.getName()))
+		{
+			result.append("Marker[ref=").append(marker.getName());
+		}
+		else
+		{
+			processedMarkers.put(marker.getName(), marker);
+			result.append("Marker[name=").append(marker.getName());
+			if(marker.hasReferences())
+			{
+				result.append(", children={");
+				Map<String, Marker> children = marker.getReferences();
+				boolean first = true;
+				for(Map.Entry<String, Marker> current : children.entrySet())
+				{
+					if(first)
+					{
+						first = false;
+					}
+					else
+					{
+						result.append(", ");
+					}
+					recursiveToString(result, processedMarkers, current.getValue());
+				}
+				result.append("}");
+			}
+			result.append("]");
+		}
+	}
 }

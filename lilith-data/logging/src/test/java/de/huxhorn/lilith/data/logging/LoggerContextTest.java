@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.data.logging;
 
 import static de.huxhorn.sulky.junit.JUnitTools.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import org.junit.Before;
@@ -28,96 +29,102 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoggerContextTest {
-    private LoggerContext fresh;
+public class LoggerContextTest
+{
+	private LoggerContext fresh;
 
-    @Before
-    public void initFresh() {
-        fresh = new LoggerContext();
-    }
+	@Before
+	public void initFresh()
+	{
+		fresh = new LoggerContext();
+	}
 
-    @Test
-    public void defaultConstructor()
-            throws ClassNotFoundException, IOException {
-        LoggerContext instance = new LoggerContext();
+	@Test
+	public void defaultConstructor()
+		throws ClassNotFoundException, IOException
+	{
+		LoggerContext instance = new LoggerContext();
 
-        testSerialization(instance);
-        testXmlSerialization(instance);
-    }
+		testSerialization(instance);
+		testXmlSerialization(instance);
+	}
 
-    @Test
-    public void name()
-            throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        LoggerContext instance = new LoggerContext();
+	@Test
+	public void name()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		LoggerContext instance = new LoggerContext();
 
-        String value = "value";
-        instance.setName(value);
+		String value = "value";
+		instance.setName(value);
 
-        {
-            LoggerContext obj = testSerialization(instance);
-            assertEquals(value, obj.getName());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            LoggerContext obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getName());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            LoggerContext obj = testClone(instance);
-            assertEquals(value, obj.getName());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			LoggerContext obj = testSerialization(instance);
+			assertEquals(value, obj.getName());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggerContext obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getName());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggerContext obj = testClone(instance);
+			assertEquals(value, obj.getName());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void birthTime()
-            throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        LoggerContext instance = new LoggerContext();
+	@Test
+	public void birthTime()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		LoggerContext instance = new LoggerContext();
 
-        Long value = 1234567890000L;
-        instance.setBirthTime(value);
+		Long value = 1234567890000L;
+		instance.setBirthTime(value);
 
-        {
-            LoggerContext obj = testSerialization(instance);
-            assertEquals(value, obj.getBirthTime());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            LoggerContext obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getBirthTime());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            LoggerContext obj = testClone(instance);
-            assertEquals(value, obj.getBirthTime());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			LoggerContext obj = testSerialization(instance);
+			assertEquals(value, obj.getBirthTime());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggerContext obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getBirthTime());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggerContext obj = testClone(instance);
+			assertEquals(value, obj.getBirthTime());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 
-    @Test
-    public void properties()
-            throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        LoggerContext instance = new LoggerContext();
+	@Test
+	public void properties()
+		throws ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException
+	{
+		LoggerContext instance = new LoggerContext();
 
-        Map<String, String> value = new HashMap<String, String>();
-        value.put("foo", "bar");
-        instance.setProperties(value);
+		Map<String, String> value = new HashMap<String, String>();
+		value.put("foo", "bar");
+		instance.setProperties(value);
 
-        {
-            LoggerContext obj = testSerialization(instance);
-            assertEquals(value, obj.getProperties());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            LoggerContext obj = testXmlSerialization(instance);
-            assertEquals(value, obj.getProperties());
-            assertFalse(fresh.equals(obj));
-        }
-        {
-            LoggerContext obj = testClone(instance);
-            assertEquals(value, obj.getProperties());
-            assertFalse(fresh.equals(obj));
-        }
-    }
+		{
+			LoggerContext obj = testSerialization(instance);
+			assertEquals(value, obj.getProperties());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggerContext obj = testXmlSerialization(instance);
+			assertEquals(value, obj.getProperties());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			LoggerContext obj = testClone(instance);
+			assertEquals(value, obj.getProperties());
+			assertFalse(fresh.equals(obj));
+		}
+	}
 }
