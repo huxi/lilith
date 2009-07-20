@@ -24,13 +24,23 @@ import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
-
 import groovy.ui.Console;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,10 +54,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.*;
-
 public class PreferencesDialog
-	extends JDialog
+		extends JDialog
 {
 	private final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
 
@@ -80,6 +88,11 @@ public class PreferencesDialog
 	public ApplicationPreferences getApplicationPreferences()
 	{
 		return applicationPreferences;
+	}
+
+	public MainFrame getMainFrame()
+	{
+		return mainFrame;
 	}
 
 	private void createUI()
@@ -129,7 +142,7 @@ public class PreferencesDialog
 		startupShutdownPanel.initUI();
 		soundsPanel.initUI();
 		sourceNames = applicationPreferences.getSourceNames();
-		if(sourceNames == null)
+		if (sourceNames == null)
 		{
 			sourceNames = new HashMap<String, String>();
 		}
@@ -159,7 +172,7 @@ public class PreferencesDialog
 
 	public void setSourceName(String oldIdentifier, String newIdentifier, String sourceName)
 	{
-		if(sourceNames.containsKey(oldIdentifier))
+		if (sourceNames.containsKey(oldIdentifier))
 		{
 			sourceNames.remove(oldIdentifier);
 		}
@@ -170,12 +183,12 @@ public class PreferencesDialog
 
 	public void setSourceList(String oldName, String newName, List<Source> sourceList)
 	{
-		if(sourceLists.containsKey(oldName))
+		if (sourceLists.containsKey(oldName))
 		{
 			sourceLists.remove(oldName);
 		}
 		Set<String> newList = new HashSet<String>();
-		for(Source s : sourceList)
+		for (Source s : sourceList)
 		{
 			newList.add(s.getIdentifier());
 		}
@@ -187,10 +200,10 @@ public class PreferencesDialog
 	public List<Source> getSourceList(String name)
 	{
 		Set<String> srcList = sourceLists.get(name);
-		if(srcList != null)
+		if (srcList != null)
 		{
 			List<Source> result = new ArrayList<Source>();
-			for(String current : srcList)
+			for (String current : srcList)
 			{
 				Source s = new Source();
 				s.setIdentifier(current);
@@ -206,7 +219,7 @@ public class PreferencesDialog
 	private String getSourceName(String identifier)
 	{
 		String result = sourceNames.get(identifier);
-		if(result == null)
+		if (result == null)
 		{
 			result = identifier;
 		}
@@ -238,9 +251,9 @@ public class PreferencesDialog
 
 	public void setVisible(boolean visible)
 	{
-		if(visible != isVisible())
+		if (visible != isVisible())
 		{
-			if(visible)
+			if (visible)
 			{
 				initUI();
 			}
@@ -255,7 +268,7 @@ public class PreferencesDialog
 
 	public void removeSourceList(String sourceListName)
 	{
-		if(sourceLists.containsKey(sourceListName))
+		if (sourceLists.containsKey(sourceListName))
 		{
 			sourceLists.remove(sourceListName);
 			sourceListsPanel.initUI();
@@ -265,7 +278,7 @@ public class PreferencesDialog
 
 	public String getBlackListName()
 	{
-		if(blackListName == null)
+		if (blackListName == null)
 		{
 			blackListName = applicationPreferences.getBlackListName();
 		}
@@ -274,7 +287,7 @@ public class PreferencesDialog
 
 	public String getWhiteListName()
 	{
-		if(whiteListName == null)
+		if (whiteListName == null)
 		{
 			whiteListName = applicationPreferences.getWhiteListName();
 		}
@@ -283,7 +296,7 @@ public class PreferencesDialog
 
 	public ApplicationPreferences.SourceFiltering getSourceFiltering()
 	{
-		if(sourceFiltering == null)
+		if (sourceFiltering == null)
 		{
 			sourceFiltering = applicationPreferences.getSourceFiltering();
 		}
@@ -306,7 +319,7 @@ public class PreferencesDialog
 	}
 
 	private class OkAction
-		extends AbstractAction
+			extends AbstractAction
 	{
 		public OkAction()
 		{
@@ -321,7 +334,7 @@ public class PreferencesDialog
 	}
 
 	private class ApplyAction
-		extends AbstractAction
+			extends AbstractAction
 	{
 		public ApplyAction()
 		{
@@ -335,7 +348,7 @@ public class PreferencesDialog
 	}
 
 	private class ResetAction
-		extends AbstractAction
+			extends AbstractAction
 	{
 		public ResetAction()
 		{
@@ -349,13 +362,13 @@ public class PreferencesDialog
 	}
 
 	private class CancelAction
-		extends AbstractAction
+			extends AbstractAction
 	{
 		public CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			if (logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -368,7 +381,7 @@ public class PreferencesDialog
 	public void editSourceName(String sourceIdentifier)
 	{
 		tabbedPane.setSelectedComponent(sourcesPanel);
-		if(!isVisible())
+		if (!isVisible())
 		{
 			mainFrame.showPreferencesDialog();
 		}
@@ -386,7 +399,7 @@ public class PreferencesDialog
 
 		console.setCurrentFileChooserDir(messageViewRoot);
 		String text = "";
-		if(messageViewGroovyFile.isFile())
+		if (messageViewGroovyFile.isFile())
 		{
 			// TODO: init with default if not...
 			InputStream is;
@@ -396,10 +409,10 @@ public class PreferencesDialog
 				List lines = IOUtils.readLines(is, "UTF-8");
 				boolean isFirst = true;
 				StringBuilder textBuffer = new StringBuilder();
-				for(Object o : lines)
+				for (Object o : lines)
 				{
 					String s = (String) o;
-					if(isFirst)
+					if (isFirst)
 					{
 						isFirst = false;
 					}
@@ -411,9 +424,9 @@ public class PreferencesDialog
 				}
 				text = textBuffer.toString();
 			}
-			catch(IOException e)
+			catch (IOException e)
 			{
-				if(logger.isInfoEnabled())
+				if (logger.isInfoEnabled())
 				{
 					logger.info("Exception while reading '" + messageViewGroovyFile.getAbsolutePath() + "'.", e);
 				}
@@ -437,7 +450,7 @@ public class PreferencesDialog
 	public void editCondition(Condition condition)
 	{
 		tabbedPane.setSelectedComponent(conditionsPanel);
-		if(!isVisible())
+		if (!isVisible())
 		{
 			mainFrame.showPreferencesDialog();
 		}

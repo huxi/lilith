@@ -29,11 +29,16 @@ import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -46,13 +51,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 public abstract class ViewContainer<T extends Serializable>
-	extends JPanel
-	implements DisposeOperation
+		extends JPanel
+		implements DisposeOperation
 {
 	// TODO: property change instead of change?
 	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
@@ -63,7 +64,7 @@ public abstract class ViewContainer<T extends Serializable>
 	static
 	{
 		URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/categories/applications-internet.png");
-		if(url != null)
+		if (url != null)
 		{
 			globalFrameImageIcon = new ImageIcon(url);
 		}
@@ -73,12 +74,12 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 		frameIconImages = new HashMap<LoggingViewState, ImageIcon>();
 		url = EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-receive.png");
-		if(url != null)
+		if (url != null)
 		{
 			frameIconImages.put(LoggingViewState.ACTIVE, new ImageIcon(url));
 		}
 		url = EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-offline.png");
-		if(url != null)
+		if (url != null)
 		{
 			frameIconImages.put(LoggingViewState.INACTIVE, new ImageIcon(url));
 		}
@@ -90,10 +91,12 @@ public abstract class ViewContainer<T extends Serializable>
 	private TaskManager<Long> taskManager;
 	private Map<Callable<Long>, EventWrapperViewPanel<T>> filterMapping;
 	private FilterTaskListener filterTaskListener;
+	private EventSource<T> eventSource;
 
 	public ViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		this.mainFrame = mainFrame;
+		this.eventSource = eventSource;
 		taskManager = mainFrame.getLongWorkManager();
 		filterMapping = new HashMap<Callable<Long>, EventWrapperViewPanel<T>>();
 		filterTaskListener = new FilterTaskListener();
@@ -103,13 +106,18 @@ public abstract class ViewContainer<T extends Serializable>
 		{
 			public void propertyChange(PropertyChangeEvent evt)
 			{
-				if(EventWrapperViewPanel.STATE_PROPERTY.equals(evt.getPropertyName()))
+				if (EventWrapperViewPanel.STATE_PROPERTY.equals(evt.getPropertyName()))
 				{
 					updateContainerIcon();
 				}
 			}
 		});
 
+	}
+
+	public EventSource<T> getEventSource()
+	{
+		return eventSource;
 	}
 
 	public MainFrame getMainFrame()
@@ -151,7 +159,7 @@ public abstract class ViewContainer<T extends Serializable>
 	protected Condition resolveCombinedCondition(EventWrapperViewPanel<T> original)
 	{
 		Condition currentFilter = original.getTable().getFilterCondition();
-		if(currentFilter == null)
+		if (currentFilter == null)
 		{
 			return null;
 		}
@@ -159,7 +167,7 @@ public abstract class ViewContainer<T extends Serializable>
 		Condition previousClone = original.getBufferCondition();
 
 		Condition filter = original.getCombinedCondition();
-		if(filter == null || filter.equals(previousClone))
+		if (filter == null || filter.equals(previousClone))
 		{
 			return null;
 		}
@@ -169,7 +177,7 @@ public abstract class ViewContainer<T extends Serializable>
 	public void addFilteredView(EventWrapperViewPanel<T> original)
 	{
 		Condition filter = resolveCombinedCondition(original);
-		if(filter == null)
+		if (filter == null)
 		{
 			return;
 		}
@@ -184,14 +192,14 @@ public abstract class ViewContainer<T extends Serializable>
 		filterMapping.put(callable, newViewPanel);
 		addView(newViewPanel);
 		taskManager.startTask(callable, "Filtering", "Filtering " + metaData
-			.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
-			+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
+				.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
+				+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
 	}
 
 	public void replaceFilteredView(EventWrapperViewPanel<T> original)
 	{
 		Condition filter = resolveCombinedCondition(original);
-		if(filter == null)
+		if (filter == null)
 		{
 			return;
 		}
@@ -200,24 +208,24 @@ public abstract class ViewContainer<T extends Serializable>
 
 		Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
 
-		if(buffer instanceof FilteringBuffer)
+		if (buffer instanceof FilteringBuffer)
 		{
 			// replace
 			Callable<Long> found = null;
-			for(Map.Entry<Callable<Long>, EventWrapperViewPanel<T>> current : filterMapping.entrySet())
+			for (Map.Entry<Callable<Long>, EventWrapperViewPanel<T>> current : filterMapping.entrySet())
 			{
-				if(current.getValue() == original)
+				if (current.getValue() == original)
 				{
 					found = current.getKey();
 					break;
 				}
 			}
-			if(found != null)
+			if (found != null)
 			{
 				// remove previous and cancel the task
 				filterMapping.remove(found);
 				Task<Long> task = taskManager.getTaskByCallable(found);
-				if(task != null)
+				if (task != null)
 				{
 					task.getFuture().cancel(true);
 				}
@@ -234,8 +242,8 @@ public abstract class ViewContainer<T extends Serializable>
 				filterMapping.put(callable, original);
 				// start the new task.
 				taskManager.startTask(callable, "Filtering", "Filtering " + metaData
-					.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
-					+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
+						.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
+						+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
 			}
 		}
 		else
@@ -249,7 +257,7 @@ public abstract class ViewContainer<T extends Serializable>
 	public ViewWindow resolveViewWindow()
 	{
 		Container parent = getParent();
-		while(parent != null && !(parent instanceof ViewWindow))
+		while (parent != null && !(parent instanceof ViewWindow))
 		{
 			parent = parent.getParent();
 		}
@@ -259,12 +267,12 @@ public abstract class ViewContainer<T extends Serializable>
 	private void updateContainerIcon()
 	{
 		ViewWindow window = resolveViewWindow();
-		if(window instanceof JFrame)
+		if (window instanceof JFrame)
 		{
 			JFrame frame = (JFrame) window;
 			updateFrameIcon(frame);
 		}
-		else if(window instanceof JInternalFrame)
+		else if (window instanceof JInternalFrame)
 		{
 			JInternalFrame frame = (JInternalFrame) window;
 			updateInternalFrameIcon(frame);
@@ -274,7 +282,7 @@ public abstract class ViewContainer<T extends Serializable>
 	private static ImageIcon resolveIconForState(LoggingViewState state)
 	{
 		ImageIcon result = globalFrameImageIcon;
-		if(state != null)
+		if (state != null)
 		{
 			result = frameIconImages.get(state);
 		}
@@ -285,7 +293,7 @@ public abstract class ViewContainer<T extends Serializable>
 	{
 		ImageIcon frameImageIcon = resolveIconForState(defaultView.getState());
 
-		if(frameImageIcon != null)
+		if (frameImageIcon != null)
 		{
 			frame.setIconImage(frameImageIcon.getImage());
 		}
@@ -295,7 +303,7 @@ public abstract class ViewContainer<T extends Serializable>
 	{
 		ImageIcon frameImageIcon = resolveIconForState(defaultView.getState());
 
-		if(frameImageIcon != null)
+		if (frameImageIcon != null)
 		{
 			iframe.setFrameIcon(frameImageIcon);
 			iframe.repaint(); // Apple L&F Bug workaround
@@ -311,15 +319,15 @@ public abstract class ViewContainer<T extends Serializable>
 	public void addChangeListener(ChangeListener listener)
 	{
 		boolean changed = false;
-		synchronized(changeListeners)
+		synchronized (changeListeners)
 		{
-			if(!changeListeners.contains(listener))
+			if (!changeListeners.contains(listener))
 			{
 				changeListeners.add(listener);
 				changed = true;
 			}
 		}
-		if(changed)
+		if (changed)
 		{
 			fireChange();
 		}
@@ -328,15 +336,15 @@ public abstract class ViewContainer<T extends Serializable>
 	public void removeChangeListener(ChangeListener listener)
 	{
 		boolean changed = false;
-		synchronized(changeListeners)
+		synchronized (changeListeners)
 		{
-			if(changeListeners.contains(listener))
+			if (changeListeners.contains(listener))
 			{
 				changeListeners.remove(listener);
 				changed = true;
 			}
 		}
-		if(changed)
+		if (changed)
 		{
 			fireChange();
 		}
@@ -345,19 +353,19 @@ public abstract class ViewContainer<T extends Serializable>
 	public void fireChange()
 	{
 		ArrayList<ChangeListener> clone;
-		synchronized(changeListeners)
+		synchronized (changeListeners)
 		{
 			clone = new ArrayList<ChangeListener>(changeListeners);
 		}
 		ChangeEvent event = new ChangeEvent(this);
-		for(ChangeListener listener : clone)
+		for (ChangeListener listener : clone)
 		{
 			listener.stateChanged(event);
 		}
 	}
 
 	class FilterTaskListener
-		implements TaskListener<Long>
+			implements TaskListener<Long>
 	{
 		private final Logger logger = LoggerFactory.getLogger(FilterTaskListener.class);
 
@@ -369,9 +377,9 @@ public abstract class ViewContainer<T extends Serializable>
 		public void executionFailed(Task<Long> task, ExecutionException exception)
 		{
 			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
-			if(view != null)
+			if (view != null)
 			{
-				if(logger.isInfoEnabled()) logger.info("Filter execution failed!", exception);
+				if (logger.isInfoEnabled()) logger.info("Filter execution failed!", exception);
 				finished(view);
 			}
 		}
@@ -379,9 +387,9 @@ public abstract class ViewContainer<T extends Serializable>
 		public void executionFinished(Task<Long> task, Long result)
 		{
 			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
-			if(view != null)
+			if (view != null)
 			{
-				if(logger.isInfoEnabled()) logger.info("Filter execution finished: {}!", result);
+				if (logger.isInfoEnabled()) logger.info("Filter execution finished: {}!", result);
 				finished(view);
 			}
 		}
@@ -389,9 +397,9 @@ public abstract class ViewContainer<T extends Serializable>
 		public void executionCanceled(Task<Long> task)
 		{
 			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
-			if(view != null)
+			if (view != null)
 			{
-				if(logger.isInfoEnabled()) logger.info("Filter execution canceled.");
+				if (logger.isInfoEnabled()) logger.info("Filter execution canceled.");
 				finished(view);
 			}
 		}
@@ -402,7 +410,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 		private void finished(EventWrapperViewPanel<T> view)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Executing FilterTaskListener.finished().");
+			if (logger.isDebugEnabled()) logger.debug("Executing FilterTaskListener.finished().");
 
 			removeView(view, true);
 		}
