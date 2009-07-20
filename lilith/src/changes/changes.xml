@@ -96,32 +96,33 @@
 				Added new messageRegex example groovy condition.
 			</action>
 			<action dev="jhux" type="update">
-				Groovy 1.6.3
+				Updated Groovy to 1.6.3
 			</action>
 			<action dev="jhux" type="fix">
 				Some locks and blocking queues are fair now.
 			</action>
 			<action dev="jhux" type="fix" issue="60">
 				Changed shortcut of "Import" to "command shift I". It collided with "Add condition...", previously.
+				This was reported by Scott Stanton.				
 			</action>
 			<action dev="jhux" type="add" issue="47">
 				Implemented Drag and Drop of Lilith files.
 			</action>
 			<action dev="jhux" type="add" issue="25">
-				Option to disable splash screen.
+				Option to disable splash screen. This was requested by Thorbjoern Ravn Andersen.
 			</action>
 			<action dev="jhux" type="add" issue="26">
-				Option to ask before exit.
+				Option to ask before exit. This was requested by Lothar Cezanne.
 			</action>
 			<action dev="jhux" type="update">
 				Added "Startup &amp; Shutdown" pane to preferences dialog.
 			</action>
+			<action dev="jhux" type="update" issue="55">
+				Added "Troubleshooting" pane to preferences dialog.
+			</action>
 			<action dev="jhux" type="update">
 				MultiplexSocketAppenderBase is now extending UnsynchronizedAppenderBase instead of AppenderBase, as
-				suggested by Maarten Bosteels and Ralph Goers. This will circumvent the effects of
-				http://jira.qos.ch/browse/LBCORE-97 in this special case. It will also increase performance a bit
-				since locking was, in fact, done twice before: once in AppenderBase and once in
-				MultiplexSendBytesService.
+				suggested by Maarten Bosteels and Ralph Goers.
 			</action>
 			<action dev="jhux" type="add">
 				Added new option "Show stacktrace of Throwables" so non-technical people can disable it to just see
@@ -131,6 +132,9 @@
 			<action dev="jhux" type="update" issue="61">
 				"Copy call stack" and "Copy Throwable" are now prepending the StackTraceElements with "\tat " as
 				requested in ticket:61. The detailsView is also displaying "at " before any StackTraceElement.
+			</action>
+			<action dev="jhux" type="add" issue="56">
+				Added option to color the entire row of a table according to the level/status of the event as requested by Scott Stanton.
 			</action>
             <action dev="jhux" type="update"  issue="39">
                 Changes to support Logback 0.9.16. Updated SLF4J to 1.5.8.
