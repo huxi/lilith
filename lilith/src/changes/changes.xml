@@ -85,7 +85,10 @@
 			</action>
 		</release>
 
-		<release version="0.9.36" date="TBD" description="Future release">
+		<release version="0.9.37" date="TBD" description="Future release">
+		</release>
+
+		<release version="0.9.36" date="2009-07-20" description="Release">
 			<action dev="jhux" type="fix">
 				Added missing contact page to help.
 			</action>
