@@ -83,7 +83,6 @@ Username: huxhorn
 
 #####
 
-Send mail to lilith-announce@lists.sourceforge.net with CC to lilith-user@lists.sourceforge.net
-Send mail to logback-user@qos.ch
-Send mail to user@slf4j.org
+Send mail to lilith-announce@lists.sourceforge.net with CC to lilith-user@lists.sourceforge.net (using joern@lilith.huxhorn.de as sender)
+Send mail to logback-user@qos.ch and user@slf4j.org (using jhuxhorn@googlemail.com as sender)
 Twitter about the release @Lilith
