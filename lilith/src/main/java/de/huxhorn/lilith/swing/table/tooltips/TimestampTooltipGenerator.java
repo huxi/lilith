@@ -22,41 +22,50 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
-import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.*;
+
 public class TimestampTooltipGenerator
-        implements TooltipGenerator {
-    private SimpleDateFormat fullFormat;
+	implements TooltipGenerator
+{
+	private SimpleDateFormat fullFormat;
 
-    public TimestampTooltipGenerator() {
-        fullFormat = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS");
+	public TimestampTooltipGenerator()
+	{
+		fullFormat = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS");
+	}
 
-    }
+	public String createTooltipText(JTable table, int row)
+	{
+		String tooltip = null;
+		Object value = table.getValueAt(row, 0);
+		if(value instanceof EventWrapper)
+		{
+			EventWrapper wrapper = (EventWrapper) value;
+			Object eventObj = wrapper.getEvent();
+			if(eventObj instanceof LoggingEvent)
+			{
+				LoggingEvent event = (LoggingEvent) eventObj;
+				Long timestamp = event.getTimeStamp();
+				if(timestamp != null)
+				{
+					tooltip = fullFormat.format(new Date(timestamp));
+				}
 
-    public String createTooltipText(JTable table, int row) {
-        String tooltip = null;
-        Object value = table.getValueAt(row, 0);
-        if (value instanceof EventWrapper) {
-            EventWrapper wrapper = (EventWrapper) value;
-            Object eventObj = wrapper.getEvent();
-            if (eventObj instanceof LoggingEvent) {
-                LoggingEvent event = (LoggingEvent) eventObj;
-                Long timestamp = event.getTimeStamp();
-                if (timestamp != null) {
-                    tooltip = fullFormat.format(new Date(timestamp));
-                }
-
-            } else if (eventObj instanceof AccessEvent) {
-                AccessEvent event = (AccessEvent) eventObj;
-                Long timestamp = event.getTimeStamp();
-                if (timestamp != null) {
-                    tooltip = fullFormat.format(new Date(timestamp));
-                }
-            }
-        }
-        return tooltip;
-    }
+			}
+			else if(eventObj instanceof AccessEvent)
+			{
+				AccessEvent event = (AccessEvent) eventObj;
+				Long timestamp = event.getTimeStamp();
+				if(timestamp != null)
+				{
+					tooltip = fullFormat.format(new Date(timestamp));
+				}
+			}
+		}
+		return tooltip;
+	}
 
 }
