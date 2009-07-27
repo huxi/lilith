@@ -101,7 +101,7 @@ public class SimpleSendBytesService
 
 	public void sendBytes(byte[] bytes)
 	{
-		if(sendBytesThread != null && bytes != null) // just to make sure...
+		if(connectionState == ConnectionState.Connected && sendBytesThread != null && bytes != null)
 		{
 			try
 			{

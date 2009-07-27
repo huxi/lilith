@@ -69,4 +69,10 @@ public class SocketDataOutputStreamFactory
 		TimeoutOutputStream tos = new TimeoutOutputStream(bos, writeTimeout);
 		return new DataOutputStream(tos);
 	}
+
+	@Override
+	public String toString()
+	{
+		return "SocketDataOutputStreamFactory[hostName="+hostName+", port="+port+", connectionTimeout="+connectionTimeout+", writeTimeout="+writeTimeout+"]";
+	}
 }
