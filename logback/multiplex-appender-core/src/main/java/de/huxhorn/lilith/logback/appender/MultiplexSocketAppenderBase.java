@@ -188,6 +188,15 @@ public abstract class MultiplexSocketAppenderBase<E>
 				initialize();
 				this.started = true;
 			}
+			addInfo("Waiting 1s to establish connections.");
+			try
+			{
+				Thread.currentThread().wait(1000);
+			}
+			catch(InterruptedException e)
+			{
+				// ignore
+			}
 			addInfo("Started " + this);
 		}
 	}
