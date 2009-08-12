@@ -191,7 +191,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 			addInfo("Waiting 1s to establish connections.");
 			try
 			{
-				Thread.currentThread().wait(1000);
+				Thread.sleep(1000);
 			}
 			catch(InterruptedException e)
 			{
