@@ -31,7 +31,7 @@ public class FilteringCallable<E>
 	private final Logger logger = LoggerFactory.getLogger(FilteringCallable.class);
 
 	private int filterDelay;
-	private long lastFilteredElement;
+	private long lastFilteredElement = -1;
 	private FilteringBuffer<E> filteringBuffer;
 
 
@@ -59,17 +59,18 @@ public class FilteringCallable<E>
 				break;
 			}
 			long currentSize = sourceBuffer.getSize();
-			long filterStartIndex = lastFilteredElement;
-			if(currentSize < lastFilteredElement)
+			long filterStartIndex = lastFilteredElement + 1;
+			if(filterStartIndex > currentSize)
 			{
 				filterStartIndex = 0;
+				lastFilteredElement = -1;
 				filteringBuffer.clearFilteredIndices();
 			}
 
 			setNumberOfSteps(currentSize);
 			setCurrentStep(filterStartIndex);
 
-			if(currentSize != lastFilteredElement + 1)
+			if(currentSize != filterStartIndex)
 			{
 				for(long i = filterStartIndex; i < currentSize; i++)
 				{

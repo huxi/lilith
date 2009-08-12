@@ -86,6 +86,18 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="fix" issue="64">
+				Events did sometimes show up twice in filtered views. This was caused by a classic off-by-one error.
+			</action>
+			<action dev="jhux" type="fix">
+				Fixed a remaining hang in the multiplex appenders in case of certain network problems.
+			</action>
+			<action dev="jhux" type="update">
+				Updated Groovy to 1.6.4.
+			</action>
+			<action dev="jhux" type="update" issue="63">
+				Updated Logback to 0.9.17. This fixes issue 63 that was caused by a Logback bug. Thanks for the fast fix, Ceki!
+			</action>
 		</release>
 
 		<release version="0.9.36" date="2009-07-20" description="Release">
