@@ -325,7 +325,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>1.6.3</version>
+				<version>1.6.4</version>
 			</dependency>
 
 			<dependency>
