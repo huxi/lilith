@@ -55,8 +55,8 @@ import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.simple.FSScrollPane;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
-import org.xhtmlrenderer.swing.SelectionHighlighter;
 import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
+import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -163,6 +163,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		showingFilters = false;
 
 		tableModelListener = new StatusTableModelListener();
+		scale = mainFrame.getApplicationPreferences().getScaleFactor();
 		initUi();
 	}
 
@@ -436,7 +437,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setScaleFactor(double scale)
 	{
-		this.scale=scale;
+		this.scale = scale;
 		messagePane.setScale(scale);
 	}
 

@@ -1644,7 +1644,7 @@ public class ViewActions
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					enable=true;
+					enable = true;
 				}
 			}
 			setEnabled(enable);
@@ -1671,6 +1671,10 @@ public class ViewActions
 			ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
 
 			double scale = prefs.getScaleFactor() - SCALE_FACTOR;
+			if(scale < 0.1d)
+			{
+				scale = 0.1d;
+			}
 			prefs.setScaleFactor(scale);
 		}
 
@@ -1682,7 +1686,7 @@ public class ViewActions
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					enable=true;
+					enable = true;
 				}
 			}
 			setEnabled(enable);
@@ -1719,7 +1723,7 @@ public class ViewActions
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					enable=true;
+					enable = true;
 				}
 			}
 			setEnabled(enable);
