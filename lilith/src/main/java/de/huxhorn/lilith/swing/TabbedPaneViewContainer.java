@@ -149,6 +149,15 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		}
 	}
 
+	public void updateViewScale(double scale)
+	{
+		for(int i = 0; i < pane.getTabCount(); i++)
+		{
+			EventWrapperViewPanel<T> current = (EventWrapperViewPanel<T>) pane.getComponentAt(i);
+			current.setScaleFactor(scale);
+		}
+	}
+
 	/**
 	 * @param view
 	 */
