@@ -364,6 +364,8 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
+	public abstract void updateViewScale(double scale);
+
 	class FilterTaskListener
 			implements TaskListener<Long>
 	{

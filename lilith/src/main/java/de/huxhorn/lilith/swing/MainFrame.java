@@ -2477,7 +2477,13 @@ public class MainFrame
 			if (ApplicationPreferences.SHOWING_STACKTRACE_PROPERTY.equals(propName))
 			{
 				updateLoggingViews();
-				//return;
+				return;
+			}
+
+			if (ApplicationPreferences.SCALE_FACTOR_PROPERTY.equals(propName))
+			{
+				updateViewScale(applicationPreferences.getScaleFactor());
+				return;
 			}
 
 			if (ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
@@ -2535,6 +2541,26 @@ public class MainFrame
 		//flushCachedConditionResults();
 
 		updateAllViews();
+	}
+
+	private void updateViewScale(double scale)
+	{
+		{
+			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+			for (Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+			{
+				ViewContainer<LoggingEvent> value = current.getValue();
+				value.updateViewScale(scale);
+			}
+		}
+		{
+			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+			for (Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+			{
+				ViewContainer<AccessEvent> value = current.getValue();
+				value.updateViewScale(scale);
+			}
+		}
 	}
 
 	private void updateLoggingViews()

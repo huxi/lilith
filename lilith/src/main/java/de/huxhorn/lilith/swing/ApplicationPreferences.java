@@ -96,6 +96,7 @@ public class ApplicationPreferences
 	public static final String CHECKING_FOR_UPDATE_PROPERTY = "checkingForUpdate";
 	public static final String SOURCE_FILTERING_PROPERTY = "sourceFiltering";
 	public static final String SOUND_LOCATIONS_PROPERTY = "soundLocations";
+	public static final String SCALE_FACTOR_PROPERTY = "scaleFactor";
 	public static final String MUTE_PROPERTY = "mute";
 	public static final String USING_INTERNAL_FRAMES_PROPERTY = "usingInternalFrames";
 	public static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
@@ -1350,6 +1351,19 @@ public class ApplicationPreferences
 		PREFERENCES.put(SOUND_PATH_PROPERTY, soundPath.getAbsolutePath());
 		Object newValue = getSoundPath();
 		propertyChangeSupport.firePropertyChange(SOUND_PATH_PROPERTY, oldValue, newValue);
+	}
+
+	public void setScaleFactor(double scale)
+	{
+		Object oldValue = getScaleFactor();
+		PREFERENCES.putDouble(SCALE_FACTOR_PROPERTY, scale);
+		Object newValue = getScaleFactor();
+		propertyChangeSupport.firePropertyChange(SCALE_FACTOR_PROPERTY, oldValue, newValue);
+	}
+
+	public double getScaleFactor()
+	{
+		return PREFERENCES.getDouble(SCALE_FACTOR_PROPERTY, 1.0d);
 	}
 
 	public void setMute(boolean mute)

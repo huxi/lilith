@@ -53,10 +53,10 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.simple.FSScrollPane;
-import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
+import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -143,11 +143,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private static final Color ERROR_COLOR = new Color(0xffaaaa);
 	protected JMenu sendToMenuItem;
 
-	private XHTMLPanel messagePane;
+	private ScalableXHTMLPanel messagePane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private EventWrapper<T> selectedEvent;
 	private SelectionHighlighter messagePaneCaret;
 	private SelectionHighlighter.CopyAction copyAction;
+	private double scale;
 
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
@@ -179,7 +180,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		JScrollPane tableScrollPane = new JScrollPane(table);
 		verticalLogScrollbar = tableScrollPane.getVerticalScrollBar();
 
-		messagePane = new XHTMLPanel();
+		messagePane = new ScalableXHTMLPanel();
+		messagePane.setScale(mainFrame.getApplicationPreferences().getScaleFactor());
 		messagePaneCaret = new SelectionHighlighter();
 		messagePaneCaret.install(messagePane);
 
@@ -430,6 +432,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			SwingUtilities.invokeLater(new SelectFirstEventRunnable());
 		}
+	}
+
+	public void setScaleFactor(double scale)
+	{
+		this.scale=scale;
+		messagePane.setScale(scale);
 	}
 
 	public void updateView()
@@ -753,6 +761,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		try
 		{
 			messagePane.setDocumentFromString(message, messageViewRootUrl.toExternalForm(), xhtmlNamespaceHandler);
+			messagePane.setScale(scale); // this fixes a bug
 		}
 		catch(Throwable t)
 		{
@@ -768,6 +777,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		try
 		{
 			messagePane.setDocumentFromString(message, messageViewRootUrl.toExternalForm(), xhtmlNamespaceHandler);
+			messagePane.setScale(scale); // this fixes a bug
 		}
 		catch(Throwable t)
 		{

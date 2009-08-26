@@ -468,6 +468,10 @@ public class ViewActions
 	private ResetLayoutAction resetLayoutAction;
 	private EditConditionMenuAction editConditionMenuAction;
 
+	private ZoomInMenuAction zoomInMenuAction;
+	private ZoomOutMenuAction zoomOutMenuAction;
+	private ResetZoomMenuAction resetZoomMenuAction;
+
 	private NextTabAction nextTabAction;
 	private PreviousTabAction previousTabAction;
 	private CloseFilterAction closeFilterAction;
@@ -612,6 +616,10 @@ public class ViewActions
 		resetLayoutAction = new ResetLayoutAction();
 		editConditionMenuAction = new EditConditionMenuAction();
 
+		zoomInMenuAction = new ZoomInMenuAction();
+		zoomOutMenuAction = new ZoomOutMenuAction();
+		resetZoomMenuAction = new ResetZoomMenuAction();
+
 		previousTabAction = new PreviousTabAction();
 		nextTabAction = new NextTabAction();
 		closeFilterAction = new CloseFilterAction();
@@ -743,6 +751,10 @@ public class ViewActions
 		viewMenu.add(statisticsMenuAction);
 		viewMenu.add(editSourceNameMenuAction);
 		viewMenu.add(editConditionMenuAction);
+		viewMenu.addSeparator();
+		viewMenu.add(zoomInMenuAction);
+		viewMenu.add(zoomOutMenuAction);
+		viewMenu.add(resetZoomMenuAction);
 		viewMenu.addSeparator();
 		JMenu layoutMenu = new JMenu("Layout");
 		columnsMenu = new JMenu("Columns");
@@ -880,7 +892,7 @@ public class ViewActions
 		editSourceNameMenuAction.setEnabled(hasView);
 		saveLayoutAction.setEnabled(hasView);
 		resetLayoutAction.setEnabled(hasView);
-		editConditionMenuAction.setEnabled(hasView);
+		//editConditionMenuAction.setEnabled(hasView);
 		pauseMenuAction.setEnabled(hasView);
 		clearMenuAction.setEnabled(hasView && !hasFilteredBuffer);
 		attachMenuAction.setEnabled(hasView);
@@ -900,6 +912,10 @@ public class ViewActions
 		scrollToBottomMenuAction.updateAction();
 		editSourceNameMenuAction.updateAction();
 		editConditionMenuAction.updateAction();
+		zoomInMenuAction.updateAction();
+		zoomOutMenuAction.updateAction();
+		resetZoomMenuAction.updateAction();
+
 		pauseMenuAction.updateAction();
 		attachMenuAction.updateAction();
 		closeFilterAction.updateAction();
@@ -1592,6 +1608,121 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			clear();
+		}
+	}
+
+	private static final double SCALE_FACTOR = 0.1d;
+
+	private class ZoomInMenuAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -8380709624103338783L;
+
+		public ZoomInMenuAction()
+		{
+			super("Zoom in");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift PLUS");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SHORT_DESCRIPTION, "Zoom in on the details view.");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
+
+			double scale = prefs.getScaleFactor() + SCALE_FACTOR;
+			prefs.setScaleFactor(scale);
+		}
+
+		public void updateAction()
+		{
+			boolean enable = false;
+			if(viewContainer != null)
+			{
+				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+				if(eventWrapperViewPanel != null)
+				{
+					enable=true;
+				}
+			}
+			setEnabled(enable);
+		}
+	}
+
+	private class ZoomOutMenuAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -8380709624103338783L;
+
+		public ZoomOutMenuAction()
+		{
+			super("Zoom out");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift MINUS");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SHORT_DESCRIPTION, "Zoom out on the details view.");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
+
+			double scale = prefs.getScaleFactor() - SCALE_FACTOR;
+			prefs.setScaleFactor(scale);
+		}
+
+		public void updateAction()
+		{
+			boolean enable = false;
+			if(viewContainer != null)
+			{
+				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+				if(eventWrapperViewPanel != null)
+				{
+					enable=true;
+				}
+			}
+			setEnabled(enable);
+		}
+	}
+
+	private class ResetZoomMenuAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -8380709624103338783L;
+
+		public ResetZoomMenuAction()
+		{
+			super("Reset Zoom");
+			//KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " +");
+			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			//putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SHORT_DESCRIPTION, "Reset Zoom of the details view.");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
+
+			prefs.setScaleFactor(1.0d);
+		}
+
+		public void updateAction()
+		{
+			boolean enable = false;
+			if(viewContainer != null)
+			{
+				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+				if(eventWrapperViewPanel != null)
+				{
+					enable=true;
+				}
+			}
+			setEnabled(enable);
 		}
 	}
 
