@@ -59,19 +59,10 @@ import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Serializable;
+import java.io.*;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -214,6 +205,15 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane messageScrollPane = new FSScrollPane(messagePane);
+		MouseWheelListener[] mwl = messageScrollPane.getMouseWheelListeners();
+		if(mwl != null)
+		{
+			for(MouseWheelListener current:mwl)
+			{
+				messageScrollPane.removeMouseWheelListener(current);
+			}
+		}
+		messageScrollPane.addMouseWheelListener(new WrappingMouseWheelListener(mwl));
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tableScrollPane, messageScrollPane);
 		PropertyChangeListener splitPaneListener = new SplitPaneListener();
@@ -1750,6 +1750,55 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void focusLost(FocusEvent e)
 		{
 			messagePane.setBorder(unfocusedBorder);
+		}
+	}
+
+	private class WrappingMouseWheelListener
+			implements MouseWheelListener
+	{
+
+		private MouseWheelListener[] wrapped;
+
+		private WrappingMouseWheelListener(MouseWheelListener[] wrapped)
+		{
+			this.wrapped = wrapped;
+		}
+
+		public void mouseWheelMoved(MouseWheelEvent e)
+		{
+			if(e.getModifiers() == KeyStrokes.COMMAND_KEYMASK)
+			{
+				// special handling, i.e. zoom in, zoomm out
+				int rotation = e.getWheelRotation();
+				boolean up=false;
+				if(rotation < 0)
+				{
+					up = true;
+					rotation = -rotation;
+				}
+				for(int i=0;i<rotation;i++)
+				{
+					if(up)
+					{
+						mainFrame.zoomIn();
+					}
+					else
+					{
+						mainFrame.zoomOut();
+					}
+				}
+			}
+			else
+			{
+				logger.warn("ELSE");
+				if(wrapped != null)
+				{
+					for(MouseWheelListener current:wrapped)
+					{
+						current.mouseWheelMoved(e);
+					}
+				}
+			}
 		}
 	}
 }

@@ -1611,8 +1611,6 @@ public class ViewActions
 		}
 	}
 
-	private static final double SCALE_FACTOR = 0.1d;
-
 	private class ZoomInMenuAction
 		extends AbstractAction
 	{
@@ -1630,10 +1628,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
-
-			double scale = prefs.getScaleFactor() + SCALE_FACTOR;
-			prefs.setScaleFactor(scale);
+			mainFrame.zoomIn();
 		}
 
 		public void updateAction()
@@ -1668,14 +1663,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
-
-			double scale = prefs.getScaleFactor() - SCALE_FACTOR;
-			if(scale < 0.1d)
-			{
-				scale = 0.1d;
-			}
-			prefs.setScaleFactor(scale);
+			mainFrame.zoomOut();
 		}
 
 		public void updateAction()
@@ -1710,9 +1698,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
-
-			prefs.setScaleFactor(1.0d);
+			mainFrame.resetZoom();
 		}
 
 		public void updateAction()
