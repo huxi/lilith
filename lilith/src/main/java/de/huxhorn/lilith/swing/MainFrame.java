@@ -219,6 +219,9 @@ public class MainFrame
 	private JFileChooser openFileChooser;
 	private JFileChooser importFileChooser;
 	private boolean coloringWholeRow;
+
+	private static final double SCALE_FACTOR = 0.1d;
+
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 	 */
@@ -1139,6 +1142,27 @@ public class MainFrame
 			}
 		}
 		return null;
+	}
+
+	public void zoomOut()
+	{
+		double scale = applicationPreferences.getScaleFactor() - SCALE_FACTOR;
+		if(scale < 0.1d)
+		{
+			scale = 0.1d;
+		}
+		applicationPreferences.setScaleFactor(scale);
+	}
+
+	public void zoomIn()
+	{
+		double scale = applicationPreferences.getScaleFactor() + SCALE_FACTOR;
+		applicationPreferences.setScaleFactor(scale);
+	}
+
+	public void resetZoom()
+	{
+		applicationPreferences.setScaleFactor(1.0d);
 	}
 
 	public enum ImportType
