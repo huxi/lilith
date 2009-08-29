@@ -831,7 +831,7 @@ public class ViewActions
 				this.viewContainer.addChangeListener(containerChangeListener);
 				this.viewContainer.addPropertyChangeListener(containerPropertyChangeListener);
 
-				EventWrapperViewPanel view = viewContainer.getSelectedView();
+				EventWrapperViewPanel zview = viewContainer.getSelectedView();
 
 				setEventWrapper(this.viewContainer.getSelectedEvent());
 			}

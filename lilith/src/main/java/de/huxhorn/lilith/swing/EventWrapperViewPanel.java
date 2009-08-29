@@ -137,7 +137,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private ScalableXHTMLPanel messagePane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private EventWrapper<T> selectedEvent;
-	private SelectionHighlighter messagePaneCaret;
 	private SelectionHighlighter.CopyAction copyAction;
 	private double scale;
 
@@ -174,7 +173,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		messagePane = new ScalableXHTMLPanel();
 		messagePane.setScale(mainFrame.getApplicationPreferences().getScaleFactor());
-		messagePaneCaret = new SelectionHighlighter();
+		SelectionHighlighter messagePaneCaret = new SelectionHighlighter();
 		messagePaneCaret.install(messagePane);
 
 		copyAction = new SelectionHighlighter.CopyAction();
@@ -1790,7 +1789,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 			else
 			{
-				logger.warn("ELSE");
 				if(wrapped != null)
 				{
 					for(MouseWheelListener current:wrapped)

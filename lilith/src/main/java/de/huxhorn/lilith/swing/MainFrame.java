@@ -220,7 +220,7 @@ public class MainFrame
 	private JFileChooser importFileChooser;
 	private boolean coloringWholeRow;
 
-	private static final double SCALE_FACTOR = 0.1d;
+	private static final double SCALE_FACTOR = 0.05d;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
