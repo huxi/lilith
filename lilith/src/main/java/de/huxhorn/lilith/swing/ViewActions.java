@@ -1619,7 +1619,7 @@ public class ViewActions
 		public ZoomInMenuAction()
 		{
 			super("Zoom in");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift PLUS");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " PERIOD");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
@@ -1654,7 +1654,7 @@ public class ViewActions
 		public ZoomOutMenuAction()
 		{
 			super("Zoom out");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift MINUS");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift PERIOD");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
