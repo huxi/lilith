@@ -642,6 +642,7 @@ public class ViewActions
 		DebugAction debugAction = new DebugAction();
 		aboutAction = new AboutAction();
 		CheckForUpdateAction checkForUpdateAction = new CheckForUpdateAction();
+		TroubleshootingAction troubleshootingAction = new TroubleshootingAction();
 
 		// ##### ToolBar Actions #####
 		scrollToBottomToolBarAction = new ScrollToBottomToolBarAction();
@@ -782,6 +783,7 @@ public class ViewActions
 
 		helpMenu.add(new JMenuItem(keyboardHelpAction));
 		helpMenu.add(new JMenuItem(checkForUpdateAction));
+		helpMenu.add(new JMenuItem(troubleshootingAction));
 		helpMenu.addSeparator();
 		helpMenu.add(new JMenuItem(debugAction));
 		if(!app.isMac())
@@ -2858,6 +2860,23 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.checkForUpdate(true);
+		}
+	}
+
+	class TroubleshootingAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = 529742851501771901L;
+
+		public TroubleshootingAction()
+		{
+			super("Troubleshooting...");
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.troubleshooting();
 		}
 	}
 

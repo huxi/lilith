@@ -86,6 +86,12 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="add" issue="65">
+				Added "Troubleshooting..." menu item in "Help" menu as a shortcut to the throubleshooting section of Preferences.
+			</action>
+			<action dev="jhux" type="add" issue="65">
+				Added new command "Copy Properties" to Troubleshooting section of Preferences.
+			</action>
 			<action dev="jhux" type="remove" issue="24">
 				Removed useless action. Statistics can be obtained using "Window" &gt; "Statistics".
 			</action>
