@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="add" issue="59">
+				Added persistent zoom-in (*command* .) and zoom-out (*command* shift .) of details view.
+			</action>
 			<action dev="jhux" type="fix" issue="64">
 				Events did sometimes show up twice in filtered views. This was caused by a classic off-by-one error.
 			</action>
