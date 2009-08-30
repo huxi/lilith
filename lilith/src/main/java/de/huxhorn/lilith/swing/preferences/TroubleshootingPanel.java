@@ -34,6 +34,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.util.Map;
+import java.util.Properties;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.Enumeration;
 
 public class TroubleshootingPanel
 		extends JPanel
@@ -51,6 +55,7 @@ public class TroubleshootingPanel
 		add(new JButton(new InitDetailsViewAction()));
 		add(new JButton(new InitExampleScriptsAction()));
 		add(new JButton(new DeleteAllLogsAction()));
+		add(new JButton(new CopySystemPropertiesAction()));
 	}
 
 	public class InitDetailsViewAction
@@ -149,6 +154,43 @@ public class TroubleshootingPanel
 			}
 
 			mainFrame.cleanAllInactiveLogs();
+		}
+	}
+
+	public class CopySystemPropertiesAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -2375370123070284280L;
+
+		public CopySystemPropertiesAction()
+		{
+			super("Copy properties");
+			putValue(SHORT_DESCRIPTION, "Copy system properties to the clipboard.");
+		}
+
+		public void actionPerformed(ActionEvent actionEvent)
+		{
+			Properties props = System.getProperties();
+			SortedMap<String, String> sortedProps=new TreeMap<String, String>();
+			Enumeration<?> keys = props.propertyNames();
+			while(keys.hasMoreElements())
+			{
+				String current=(String)keys.nextElement();
+				String value=props.getProperty(current);
+				if("line.separator".equals(current))
+				{
+					value=value.replace("\n","\\n");
+					value=value.replace("\r","\\r");
+				}
+				sortedProps.put(current, value);
+
+			}
+			StringBuilder builder=new StringBuilder();
+			for(Map.Entry<String, String> current:sortedProps.entrySet())
+			{
+				builder.append(current.getKey()).append("=").append(current.getValue()).append("\n");
+			}
+			preferencesDialog.getMainFrame().copyText(builder.toString());
 		}
 	}
 

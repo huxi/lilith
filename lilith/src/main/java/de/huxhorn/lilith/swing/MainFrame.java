@@ -1165,6 +1165,11 @@ public class MainFrame
 		applicationPreferences.setScaleFactor(1.0d);
 	}
 
+	public void troubleshooting()
+	{
+		preferencesDialog.troubleshooting();
+	}
+
 	public enum ImportType
 	{
 		LOG4J, JUL

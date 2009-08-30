@@ -76,6 +76,7 @@ public class PreferencesDialog
 	private String blackListName;
 	private String whiteListName;
 	private ApplicationPreferences.SourceFiltering sourceFiltering;
+	private TroubleshootingPanel troubleshootingPanel;
 
 	public PreferencesDialog(MainFrame mainFrame)
 	{
@@ -104,7 +105,7 @@ public class PreferencesDialog
 		sourceListsPanel = new SourceListsPanel(this);
 		sourceFilteringPanel = new SourceFilteringPanel(this);
 		conditionsPanel = new ConditionsPanel(this);
-		TroubleshootingPanel troubleshootingPanel = new TroubleshootingPanel(this);
+		troubleshootingPanel = new TroubleshootingPanel(this);
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setPreferredSize(new Dimension(600, 500));
@@ -386,6 +387,15 @@ public class PreferencesDialog
 			mainFrame.showPreferencesDialog();
 		}
 		sourcesPanel.editSourceName(sourceIdentifier);
+	}
+
+	public void troubleshooting()
+	{
+		tabbedPane.setSelectedComponent(troubleshootingPanel);
+		if (!isVisible())
+		{
+			mainFrame.showPreferencesDialog();
+		}
 	}
 
 	public void editDetailsFormatter()
