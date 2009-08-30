@@ -60,6 +60,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Handler;
 
 import javax.swing.*;
@@ -416,6 +418,10 @@ public class Lilith
 		//UIManager.installLookAndFeel("Napkin", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
 		Application application = new DefaultApplication();
 		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
+
+		final String[] defaultNames={"MenuBarUI", "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI"};
+
+		HashMap<String, Object> storedDefaults = new HashMap<String, Object>();
 		if(application.isMac())
 		{
 			// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
@@ -428,6 +434,22 @@ public class Lilith
 				// try the older menu bar property
 				System.setProperty("com.apple.macos.useScreenMenuBar", "true");
 				// this shouldn't happen since we only run on 1.5+
+			}
+
+			// this is part 1 of Mac Menu for all PLAFs.
+			// Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
+			try
+			{
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+				for(String current : defaultNames)
+				{
+					storedDefaults.put(current, UIManager.get(current));
+				}
+			}
+			catch(Throwable t)
+			{
+				if(logger.isErrorEnabled()) logger.error("Exception while setting SystemLookAndFeel!!", t);
 			}
 		}
 
@@ -448,21 +470,17 @@ public class Lilith
 					}
 				}
 			}
-			catch(UnsupportedLookAndFeelException e)
+			catch(Throwable t)
 			{
-				// ignore
+				if(logger.isErrorEnabled()) logger.error("Exception while setting look & feel '"+lookAndFeel+"'!", t);
 			}
-			catch(ClassNotFoundException e)
+
+			// this is part 2 of Mac Menu for all PLAFs.
+			// Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
+			if(logger.isDebugEnabled()) logger.debug("storedDefaults: {}", storedDefaults);
+			for(Map.Entry<String, Object> current:storedDefaults.entrySet())
 			{
-				// ignore
-			}
-			catch(InstantiationException e)
-			{
-				// ignore
-			}
-			catch(IllegalAccessException e)
-			{
-				// ignore
+				UIManager.put(current.getKey(), current.getValue());
 			}
 		}
 
