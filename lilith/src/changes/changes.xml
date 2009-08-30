@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="remove" issue="24">
+				Removed useless action. Statistics can be obtained using "Window" &gt; "Statistics".
+			</action>
 			<action dev="jhux" type="add" issue="59">
 				Added persistent zoom-in (*command* .) and zoom-out (*command* shift .) of details view.
 			</action>

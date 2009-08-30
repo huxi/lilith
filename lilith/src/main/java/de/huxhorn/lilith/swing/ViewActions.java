@@ -92,7 +92,7 @@ public class ViewActions
 	private static final Icon PAUSED_TOOLBAR_ICON;
 	private static final Icon UNPAUSED_TOOLBAR_ICON;
 	private static final Icon FIND_TOOLBAR_ICON;
-	private static final Icon STATISTICS_TOOLBAR_ICON;
+	//private static final Icon STATISTICS_TOOLBAR_ICON;
 	private static final Icon DISCONNECT_TOOLBAR_ICON;
 	private static final Icon TAIL_TOOLBAR_ICON;
 
@@ -286,6 +286,7 @@ public class ViewActions
 		}
 		STATISTICS_MENU_ICON = icon;
 
+/*
 		{
 			URL url = ViewActions.class.getResource("/tango/32x32/apps/utilities-system-monitor.png");
 			if(url != null)
@@ -298,6 +299,7 @@ public class ViewActions
 			}
 		}
 		STATISTICS_TOOLBAR_ICON = icon;
+*/
 
 		{
 			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-eject.png");
@@ -498,12 +500,12 @@ public class ViewActions
 	private ClearMenuAction clearMenuAction;
 	private FocusMessageAction focusMessageAction;
 	private FocusEventsAction focusEventsAction;
-	private StatisticsMenuAction statisticsMenuAction;
+	//private StatisticsMenuAction statisticsMenuAction;
 	private ChangeListener containerChangeListener;
 	private ScrollToBottomToolBarAction scrollToBottomToolBarAction;
 	private ClearToolBarAction clearToolBarAction;
 	private FindToolBarAction findToolBarAction;
-	private StatisticsToolBarAction statisticsToolBarAction;
+	//private StatisticsToolBarAction statisticsToolBarAction;
 	private CopySelectionAction copySelectionAction;
 	private CopyEventAction copyEventAction;
 	private CopyLoggingMessageAction copyLoggingMessageAction;
@@ -610,7 +612,7 @@ public class ViewActions
 		focusMessageAction = new FocusMessageAction();
 		focusEventsAction = new FocusEventsAction();
 
-		statisticsMenuAction = new StatisticsMenuAction();
+		//statisticsMenuAction = new StatisticsMenuAction();
 		editSourceNameMenuAction = new EditSourceNameMenuAction();
 		saveLayoutAction = new SaveLayoutAction();
 		resetLayoutAction = new ResetLayoutAction();
@@ -646,7 +648,7 @@ public class ViewActions
 		pauseToolBarAction = new PauseToolBarAction();
 		clearToolBarAction = new ClearToolBarAction();
 		findToolBarAction = new FindToolBarAction();
-		statisticsToolBarAction = new StatisticsToolBarAction();
+		//statisticsToolBarAction = new StatisticsToolBarAction();
 		attachToolBarAction = new AttachToolBarAction();
 		PreferencesToolBarAction preferencesToolBarAction = new PreferencesToolBarAction();
 		disconnectToolBarAction = new DisconnectToolBarAction();
@@ -680,10 +682,9 @@ public class ViewActions
 
 		toolbar.addSeparator();
 
-		JButton statisticsButton = new JButton(statisticsToolBarAction);
-		toolbar.add(statisticsButton);
-
-		toolbar.addSeparator();
+		//JButton statisticsButton = new JButton(statisticsToolBarAction);
+		//toolbar.add(statisticsButton);
+		//toolbar.addSeparator();
 
 		JButton attachButton = new JButton(attachToolBarAction);
 		toolbar.add(attachButton);
@@ -748,7 +749,7 @@ public class ViewActions
 		viewMenu.add(disconnectMenuAction);
 		viewMenu.add(focusEventsAction);
 		viewMenu.add(focusMessageAction);
-		viewMenu.add(statisticsMenuAction);
+		//viewMenu.add(statisticsMenuAction);
 		viewMenu.add(editSourceNameMenuAction);
 		viewMenu.add(editConditionMenuAction);
 		viewMenu.addSeparator();
@@ -831,7 +832,7 @@ public class ViewActions
 				this.viewContainer.addChangeListener(containerChangeListener);
 				this.viewContainer.addPropertyChangeListener(containerPropertyChangeListener);
 
-				EventWrapperViewPanel zview = viewContainer.getSelectedView();
+				//EventWrapperViewPanel zview = viewContainer.getSelectedView();
 
 				setEventWrapper(this.viewContainer.getSelectedEvent());
 			}
@@ -899,7 +900,7 @@ public class ViewActions
 		disconnectMenuAction.setEnabled(isActive);
 		focusEventsAction.setEnabled(hasView);
 		focusMessageAction.setEnabled(hasView);
-		statisticsMenuAction.setEnabled(hasView);
+		//statisticsMenuAction.setEnabled(hasView);
 		updateShowHideMenu();
 		previousTabAction.updateAction();
 		nextTabAction.updateAction();
@@ -930,7 +931,7 @@ public class ViewActions
 		pauseToolBarAction.setEnabled(hasView);
 		clearToolBarAction.setEnabled(hasView && !hasFilteredBuffer);
 		findToolBarAction.setEnabled(hasView);
-		statisticsToolBarAction.setEnabled(hasView);
+		//statisticsToolBarAction.setEnabled(hasView);
 		attachToolBarAction.setEnabled(hasView);
 		disconnectToolBarAction.setEnabled(isActive);
 
@@ -1120,7 +1121,7 @@ public class ViewActions
 		focusTable();
 	}
 
-
+/*
 	private void showStatistics()
 	{
 		if(viewContainer != null)
@@ -1133,6 +1134,7 @@ public class ViewActions
 			}
 		}
 	}
+*/
 
 	private void disconnect()
 	{
@@ -2021,6 +2023,23 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+		}
+	}
+/*
+	private class StatisticsMenuAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -6336357605789928345L;
+
+		public StatisticsMenuAction()
+		{
+			super("Statistics");
+			putValue(Action.SMALL_ICON, STATISTICS_MENU_ICON);
+			putValue(Action.SHORT_DESCRIPTION, "Statistics");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
 			showStatistics();
 		}
 	}
@@ -2042,6 +2061,7 @@ public class ViewActions
 			showStatistics();
 		}
 	}
+*/
 
 	private class DisconnectMenuAction
 		extends AbstractAction
