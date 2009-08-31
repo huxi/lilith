@@ -89,9 +89,12 @@
 			<action dev="jhux" type="update">
 				Updated keyboard help. Better symbol for "Ctrl"/"cmd".
 			</action>
+<!--
+			Too bad, does not work :(
 			<action dev="jhux" type="update">
 				MAC: Mac menu-bar is used for all PLAFs. Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
 			</action>
+-->
 			<action dev="jhux" type="add" issue="65">
 				Added "Troubleshooting..." menu item in "Help" menu as a shortcut to the throubleshooting section of Preferences.
 			</action>

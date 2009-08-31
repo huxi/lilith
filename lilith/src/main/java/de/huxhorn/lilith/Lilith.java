@@ -419,7 +419,7 @@ public class Lilith
 		Application application = new DefaultApplication();
 		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
 
-		final String[] defaultNames={"MenuBarUI", "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI"};
+		//final String[] defaultNames={"MenuBarUI", "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI"};
 
 		HashMap<String, Object> storedDefaults = new HashMap<String, Object>();
 		if(application.isMac())
@@ -438,6 +438,42 @@ public class Lilith
 
 			// this is part 1 of Mac Menu for all PLAFs.
 			// Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
+			/*
+			Does not work, exception while displaying popup menu:
+			java.lang.NullPointerException
+				at com.apple.laf.AquaMenuPainter.paintSelectedMenuItemBackground(AquaMenuPainter.java:147)
+				at com.apple.laf.AquaMenuItemUI.paintBackground(AquaMenuItemUI.java:93)
+				at com.apple.laf.AquaMenuPainter.paintMenuItem(AquaMenuPainter.java:192)
+				at com.apple.laf.AquaMenuItemUI.paintMenuItem(AquaMenuItemUI.java:66)
+				at javax.swing.plaf.basic.BasicMenuItemUI.paint(BasicMenuItemUI.java:594)
+				at com.apple.laf.AquaMenuItemUI.update(AquaMenuItemUI.java:82)
+				at javax.swing.JComponent.paintComponent(JComponent.java:763)
+				at javax.swing.JComponent.paint(JComponent.java:1027)
+				at javax.swing.JComponent.paintChildren(JComponent.java:864)
+				at javax.swing.JComponent.paint(JComponent.java:1036)
+				at javax.swing.JComponent.paintChildren(JComponent.java:864)
+				at javax.swing.JComponent.paint(JComponent.java:1036)
+				at javax.swing.JComponent.paintChildren(JComponent.java:864)
+				at javax.swing.JComponent.paint(JComponent.java:1036)
+				at javax.swing.JLayeredPane.paint(JLayeredPane.java:564)
+				at javax.swing.JComponent.paintChildren(JComponent.java:864)
+				at javax.swing.JComponent.paint(JComponent.java:1036)
+				at javax.swing.JComponent._paintImmediately(JComponent.java:5096)
+				at javax.swing.JComponent.paintImmediately(JComponent.java:4880)
+				at javax.swing.RepaintManager.paintDirtyRegions(RepaintManager.java:829)
+				at javax.swing.RepaintManager.paintDirtyRegions(RepaintManager.java:714)
+				at javax.swing.RepaintManager.seqPaintDirtyRegions(RepaintManager.java:694)
+				at javax.swing.SystemEventQueueUtilities$ComponentWorkRequest.run(SystemEventQueueUtilities.java:128)
+				at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:209)
+				at java.awt.EventQueue.dispatchEvent(EventQueue.java:633)
+				at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:296)
+				at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:211)
+				at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:201)
+				at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:196)
+				at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:188)
+				at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
+			*/
+			/*
 			try
 			{
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -451,6 +487,7 @@ public class Lilith
 			{
 				if(logger.isErrorEnabled()) logger.error("Exception while setting SystemLookAndFeel!!", t);
 			}
+			*/
 		}
 
 		// init look & feel
