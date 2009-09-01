@@ -19,7 +19,7 @@ package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggerContext;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
@@ -205,7 +205,7 @@ public class EventContainsCondition
 				}
 
 				{
-					de.huxhorn.lilith.data.access.LoggerContext context = event.getLoggerContext();
+					LoggerContext context = event.getLoggerContext();
 					if(context != null)
 					{
 						if(checkString(context.getName()))

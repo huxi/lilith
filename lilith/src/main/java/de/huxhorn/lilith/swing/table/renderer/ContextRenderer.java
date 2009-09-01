@@ -17,27 +17,24 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
-import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
 import java.awt.*;
-import java.io.Serializable;
-import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 
-public class ApplicationRenderer
+public class ContextRenderer
 	implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
 
-	public ApplicationRenderer()
+	public ContextRenderer()
 	{
 		super();
 		renderer = new LabelCellRenderer();
@@ -58,33 +55,30 @@ public class ApplicationRenderer
 		}
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
-
 		Color foreground = Color.BLACK;
 		String text = "";
 		//String tooltip="";
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;
-			Serializable evtObject = wrapper.getEvent();
+			Object eventObj = wrapper.getEvent();
 			LoggerContext context = null;
-			if(evtObject instanceof LoggingEvent)
+			if(eventObj instanceof LoggingEvent)
 			{
-				context = ((LoggingEvent) evtObject).getLoggerContext();
+				context = ((LoggingEvent) eventObj).getLoggerContext();
 			}
-			else if(evtObject instanceof AccessEvent)
+			else if(eventObj instanceof AccessEvent)
 			{
-				context = ((AccessEvent) evtObject).getLoggerContext();
+				context = ((AccessEvent) eventObj).getLoggerContext();
 			}
+
 			if(context != null)
 			{
-				Map<String, String> props = context.getProperties();
-				if(props!= null)
-				{
-					text=props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
-				}
+				text=context.getName();
 			}
 		}
 		renderer.setText(text);
+
 		boolean colorsInitialized = false;
 		if(!hasFocus && !isSelected)
 		{

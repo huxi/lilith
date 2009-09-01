@@ -17,8 +17,8 @@
  */
 package de.huxhorn.lilith.data.logging.logback;
 
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.sulky.codec.Encoder;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 

@@ -18,8 +18,8 @@
 package de.huxhorn.lilith.data.access.protobuf;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.access.LoggerContext;
 import de.huxhorn.lilith.data.access.protobuf.generated.AccessProto;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.sulky.codec.Encoder;
 
 import java.io.ByteArrayOutputStream;
@@ -239,10 +239,10 @@ public class AccessEventProtobufEncoder
 			}
 		}
 		{
-			Date birthTime = context.getBirthTime();
+			Long birthTime = context.getBirthTime();
 			if(birthTime != null)
 			{
-				builder.setBirthTime(birthTime.getTime());
+				builder.setBirthTime(birthTime);
 			}
 		}
 		{

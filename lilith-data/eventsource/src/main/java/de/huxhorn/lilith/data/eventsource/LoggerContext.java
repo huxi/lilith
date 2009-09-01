@@ -15,20 +15,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.data.access;
+package de.huxhorn.lilith.data.eventsource;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoggerContext
 	implements Cloneable, Serializable
 {
-	private static final long serialVersionUID = -9193608097331229720L;
+	private static final long serialVersionUID = -1979182848053339299L;
 
 	private String name;
-	private Date birthTime;
+	private Long birthTime;
 	private Map<String, String> properties;
 
 	public String getName()
@@ -41,12 +40,12 @@ public class LoggerContext
 		this.name = name;
 	}
 
-	public Date getBirthTime()
+	public Long getBirthTime()
 	{
 		return birthTime;
 	}
 
-	public void setBirthTime(Date birthTime)
+	public void setBirthTime(Long birthTime)
 	{
 		this.birthTime = birthTime;
 	}

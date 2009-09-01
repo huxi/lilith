@@ -22,20 +22,8 @@ import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
-import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
-import de.huxhorn.lilith.swing.table.renderer.MethodRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ProtocolRenderer;
-import de.huxhorn.lilith.swing.table.renderer.RemoteAddrRenderer;
-import de.huxhorn.lilith.swing.table.renderer.RequestUriRenderer;
-import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
-import de.huxhorn.lilith.swing.table.renderer.StatusCodeRenderer;
-import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
-import de.huxhorn.lilith.swing.table.tooltips.ApplicationTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.RequestUrlTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.SourceTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.StatusCodeTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.TimestampTooltipGenerator;
+import de.huxhorn.lilith.swing.table.renderer.*;
+import de.huxhorn.lilith.swing.table.tooltips.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +42,7 @@ public class AccessEventViewTable
 	public static final String DEFAULT_COLUMN_NAME_PROTOCOL = "Protocol";
 	public static final String DEFAULT_COLUMN_NAME_REMOTE_ADDR = "Remote Address";
 	public static final String DEFAULT_COLUMN_NAME_APPLICATIION = "Application";
+	//public static final String DEFAULT_COLUMN_NAME_CONTEXT = "Context";
 	public static final String DEFAULT_COLUMN_NAME_SOURCE = "Source";
 
 	public AccessEventViewTable(MainFrame mainFrame, EventWrapperTableModel<AccessEvent> model, boolean global)
@@ -72,6 +61,8 @@ public class AccessEventViewTable
 			new StatusCodeTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATIION,
 			new ApplicationTooltipGenerator());
+//		tooltipGenerators.put(DEFAULT_COLUMN_NAME_CONTEXT,
+//			new ContextTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_SOURCE,
 			new SourceTooltipGenerator());
 	}
@@ -127,6 +118,14 @@ public class AccessEventViewTable
 			col.setCellRenderer(new ApplicationRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
 		}
+/*
+		{
+			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_CONTEXT);
+			col.setCellRenderer(new ContextRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+*/
 		{
 			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_SOURCE);
@@ -148,6 +147,7 @@ public class AccessEventViewTable
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REQUEST_URI, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REMOTE_ADDR, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATIION, 75, true));
+//		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_CONTEXT, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_SOURCE, 75, isGlobal()));
 
 		return result;

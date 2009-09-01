@@ -21,26 +21,8 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
-import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
-import de.huxhorn.lilith.swing.table.renderer.LevelRenderer;
-import de.huxhorn.lilith.swing.table.renderer.LoggerNameRenderer;
-import de.huxhorn.lilith.swing.table.renderer.MarkerRenderer;
-import de.huxhorn.lilith.swing.table.renderer.MessageRenderer;
-import de.huxhorn.lilith.swing.table.renderer.NdcRenderer;
-import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ThreadRenderer;
-import de.huxhorn.lilith.swing.table.renderer.ThrowableRenderer;
-import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
-import de.huxhorn.lilith.swing.table.tooltips.ApplicationTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.LoggerNameTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.MarkerTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.MessageTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.NdcTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.SourceTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.ThreadTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.ThrowableTooltipGenerator;
-import de.huxhorn.lilith.swing.table.tooltips.TimestampTooltipGenerator;
+import de.huxhorn.lilith.swing.table.renderer.*;
+import de.huxhorn.lilith.swing.table.tooltips.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +43,7 @@ public class LoggingEventViewTable
 	public static final String DEFAULT_COLUMN_NAME_MARKER = "Marker";
 	public static final String DEFAULT_COLUMN_NAME_NDC = "NDC";
 	public static final String DEFAULT_COLUMN_NAME_APPLICATIION = "Application";
+	public static final String DEFAULT_COLUMN_NAME_CONTEXT = "Context";
 	public static final String DEFAULT_COLUMN_NAME_SOURCE = "Source";
 
 	public LoggingEventViewTable(MainFrame mainFrame, EventWrapperTableModel<LoggingEvent> model, boolean global)
@@ -87,6 +70,8 @@ public class LoggingEventViewTable
 			new TimestampTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATIION,
 			new ApplicationTooltipGenerator());
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_CONTEXT,
+			new ContextTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_SOURCE,
 			new SourceTooltipGenerator());
 	}
@@ -156,6 +141,12 @@ public class LoggingEventViewTable
 		}
 		{
 			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_CONTEXT);
+			col.setCellRenderer(new ContextRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+		{
+			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_SOURCE);
 			col.setCellRenderer(new SourceRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
@@ -177,6 +168,7 @@ public class LoggingEventViewTable
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_MARKER, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_NDC, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATIION, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_CONTEXT, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_SOURCE, 75, isGlobal()));
 
 		return result;
