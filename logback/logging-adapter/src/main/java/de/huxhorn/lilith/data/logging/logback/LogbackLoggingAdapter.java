@@ -18,13 +18,13 @@
 package de.huxhorn.lilith.data.logging.logback;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.logback.classic.NDC;
 
 import ch.qos.logback.classic.spi.ClassPackagingData;
@@ -87,7 +87,7 @@ public class LogbackLoggingAdapter
 			Map<String, String> props = lcv.getPropertyMap();
 			if(props != null)
 			{
-				// TODO: lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
+				// lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
 				props = new HashMap<String, String>(props);
 			}
 			LoggerContext loggerContext = new LoggerContext();

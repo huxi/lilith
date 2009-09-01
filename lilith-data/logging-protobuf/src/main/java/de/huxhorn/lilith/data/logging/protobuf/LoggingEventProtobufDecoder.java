@@ -18,13 +18,13 @@
 package de.huxhorn.lilith.data.logging.protobuf;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.sulky.codec.Decoder;
 
 import com.google.protobuf.InvalidProtocolBufferException;

@@ -18,6 +18,10 @@
 package de.huxhorn.lilith.data.access.logback;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class LogbackAccessAdapter
 {
@@ -30,6 +34,25 @@ public class LogbackAccessAdapter
 		AccessEvent result = new AccessEvent();
 
 		// TODO: add support for LoggerContext once available
+		/*
+		LoggerContextVO lcv = event.getLoggerContextVO();
+		if(lcv != null)
+		{
+			String name = lcv.getName();
+			Map<String, String> props = lcv.getPropertyMap();
+			if(props != null)
+			{
+				// lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
+				props = new HashMap<String, String>(props);
+			}
+			LoggerContext loggerContext = new LoggerContext();
+			loggerContext.setName(name);
+			loggerContext.setProperties(props);
+			loggerContext.setBirthTime(lcv.getBirthTime());
+			result.setLoggerContext(loggerContext);
+		}
+		*/
+
 		result.setLocalPort(event.getLocalPort());
 		result.setMethod(event.getMethod());
 		result.setProtocol(event.getProtocol());

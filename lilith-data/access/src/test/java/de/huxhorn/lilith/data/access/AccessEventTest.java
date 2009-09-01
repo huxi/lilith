@@ -19,13 +19,13 @@ package de.huxhorn.lilith.data.access;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +56,7 @@ public class AccessEventTest
 		AccessEvent instance = new AccessEvent();
 
 		LoggerContext value = new LoggerContext();
-		value.setBirthTime(new Date(1234567890000L));
+		value.setBirthTime(1234567890000L);
 		value.setName("contextName");
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put("foo", "bar");

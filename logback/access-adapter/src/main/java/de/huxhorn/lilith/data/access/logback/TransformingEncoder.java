@@ -17,8 +17,8 @@
  */
 package de.huxhorn.lilith.data.access.logback;
 
-import de.huxhorn.lilith.data.access.LoggerContext;
 import de.huxhorn.sulky.codec.Encoder;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 
 import ch.qos.logback.access.spi.AccessEvent;
 

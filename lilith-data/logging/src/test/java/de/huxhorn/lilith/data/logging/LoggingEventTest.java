@@ -19,6 +19,7 @@ package de.huxhorn.lilith.data.logging;
 
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

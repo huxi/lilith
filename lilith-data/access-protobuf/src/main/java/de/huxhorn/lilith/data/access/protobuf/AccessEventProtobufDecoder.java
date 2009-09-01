@@ -18,8 +18,8 @@
 package de.huxhorn.lilith.data.access.protobuf;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.access.LoggerContext;
 import de.huxhorn.lilith.data.access.protobuf.generated.AccessProto;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.sulky.codec.Decoder;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -27,7 +27,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -202,7 +201,7 @@ public class AccessEventProtobufDecoder
 		}
 		if(loggerContext.hasBirthTime())
 		{
-			result.setBirthTime(new Date(loggerContext.getBirthTime()));
+			result.setBirthTime(loggerContext.getBirthTime());
 		}
 		if(loggerContext.hasProperties())
 		{

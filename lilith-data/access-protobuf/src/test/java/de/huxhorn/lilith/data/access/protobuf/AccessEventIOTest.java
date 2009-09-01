@@ -1,7 +1,7 @@
 package de.huxhorn.lilith.data.access.protobuf;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.access.LoggerContext;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class AccessEventIOTest
 		AccessEvent event = createMinimalEvent();
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(new Date(1234567890000L));
+		value.setBirthTime(1234567890000L);
 		Map<String, String> propperties = new HashMap<String, String>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.data.access;
+package de.huxhorn.lilith.data.eventsource;
 
 import static de.huxhorn.sulky.junit.JUnitTools.*;
 
@@ -26,7 +26,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +81,7 @@ public class LoggerContextTest
 	{
 		LoggerContext instance = new LoggerContext();
 
-		Date value = new Date(1234567890000L);
+		Long value = 1234567890000L;
 		instance.setBirthTime(value);
 
 		{

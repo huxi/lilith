@@ -17,13 +17,15 @@
  */
 package de.huxhorn.lilith.data.access;
 
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
+
 import java.io.Serializable;
 import java.util.Map;
 
 public class AccessEvent
 	implements Serializable
 {
-	private static final long serialVersionUID = -716078283933754505L;
+	private static final long serialVersionUID = 4290137484866338570L;
 
 	private Long timeStamp;
 	private LoggerContext loggerContext;

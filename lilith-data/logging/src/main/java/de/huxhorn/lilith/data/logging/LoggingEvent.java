@@ -17,6 +17,8 @@
  */
 package de.huxhorn.lilith.data.logging;
 
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Map;
@@ -36,7 +38,7 @@ import java.util.Map;
 public class LoggingEvent
 	implements Serializable
 {
-	private static final long serialVersionUID = -5298580552977499507L;
+	private static final long serialVersionUID = -2135999771611827603L;
 
 	public enum Level
 	{
