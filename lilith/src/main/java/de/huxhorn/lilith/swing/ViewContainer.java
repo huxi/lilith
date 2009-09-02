@@ -29,16 +29,11 @@ import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.Container;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -50,6 +45,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public abstract class ViewContainer<T extends Serializable>
 		extends JPanel
@@ -92,12 +91,16 @@ public abstract class ViewContainer<T extends Serializable>
 	private Map<Callable<Long>, EventWrapperViewPanel<T>> filterMapping;
 	private FilterTaskListener filterTaskListener;
 	private EventSource<T> eventSource;
+	private ProgressGlassPane progressPanel;
+	private Component prevGlassPane;
+	private boolean searching;
 
 	public ViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		this.mainFrame = mainFrame;
 		this.eventSource = eventSource;
 		taskManager = mainFrame.getLongWorkManager();
+		progressPanel = new ProgressGlassPane();
 		filterMapping = new HashMap<Callable<Long>, EventWrapperViewPanel<T>>();
 		filterTaskListener = new FilterTaskListener();
 		taskManager.addTaskListener(filterTaskListener);
@@ -430,15 +433,56 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract int getViewIndex();
 
-	public abstract void hideSearchPanel();
+	public boolean isSearching()
+	{
+		return searching;
+	}
 
-	public abstract void showSearchPanel(Task<Long> future);
+	public void cancelSearching()
+	{
+		progressPanel.getFindCancelAction().actionPerformed(null);
 
-	public abstract boolean isSearching();
+	}
 
-	public abstract void cancelSearching();
+	public void hideSearchPanel()
+	{
+		if(searching)
+		{
+			searching = false;
+			ViewWindow window = resolveViewWindow();
+			if(window != null && prevGlassPane != null)
+			{
+				window.setGlassPane(prevGlassPane);
+				prevGlassPane = null;
+				fireChange();
+			}
+		}
+	}
 
-	public abstract ProgressGlassPane getProgressPanel();
+	public void showSearchPanel(Task<Long> task)
+	{
+		if(task != null)
+		{
+			searching = true;
+			progressPanel.setProgress(0);
+			progressPanel.getFindCancelAction().setTask(task);
+
+			ViewWindow window = resolveViewWindow();
+			if(window != null)
+			{
+				prevGlassPane = window.getGlassPane();
+				window.setGlassPane(progressPanel);
+				progressPanel.setVisible(true);
+			}
+
+			fireChange();
+		}
+	}
+
+	public ProgressGlassPane getProgressPanel()
+	{
+		return progressPanel;
+	}
 
 	public abstract EventWrapper<T> getSelectedEvent();
 

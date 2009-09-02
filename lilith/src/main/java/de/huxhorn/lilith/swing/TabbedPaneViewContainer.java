@@ -24,7 +24,6 @@ import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Dispose;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
-import de.huxhorn.sulky.tasks.Task;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,15 +54,11 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private CloseOtherFiltersAction closeOtherFiltersAction;
 	private SourceChangeListener sourceChangeListener;
 	private boolean disposed;
-	private ProgressGlassPane progressPanel;
-	private Component prevGlassPane;
-	private boolean searching;
 	private EventWrapper<T> selectedEvent;
 
 	public TabbedPaneViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		super(mainFrame, eventSource);
-		progressPanel = new ProgressGlassPane();
 		disposed = false;
 		pane = new JTabbedPane(JTabbedPane.TOP);
 		pane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -158,9 +153,6 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		}
 	}
 
-	/**
-	 * @param view
-	 */
 	public void removeView(EventWrapperViewPanel<T> view, boolean dispose)
 	{
 		pane.remove(view);
@@ -496,57 +488,6 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 			}
 		}
 		fireChange();
-	}
-
-	public boolean isSearching()
-	{
-		return searching;
-	}
-
-	public void cancelSearching()
-	{
-		progressPanel.getFindCancelAction().actionPerformed(null);
-
-	}
-
-	public void hideSearchPanel()
-	{
-		if(searching)
-		{
-			searching = false;
-			ViewWindow window = resolveViewWindow();
-			if(window != null && prevGlassPane != null)
-			{
-				window.setGlassPane(prevGlassPane);
-				prevGlassPane = null;
-				fireChange();
-			}
-		}
-	}
-
-	public void showSearchPanel(Task<Long> task)
-	{
-		if(task != null)
-		{
-			searching = true;
-			progressPanel.setProgress(0);
-			progressPanel.getFindCancelAction().setTask(task);
-
-			ViewWindow window = resolveViewWindow();
-			if(window != null)
-			{
-				prevGlassPane = window.getGlassPane();
-				window.setGlassPane(progressPanel);
-				progressPanel.setVisible(true);
-			}
-
-			fireChange();
-		}
-	}
-
-	public ProgressGlassPane getProgressPanel()
-	{
-		return progressPanel;
 	}
 
 	private class TabChangeListener
