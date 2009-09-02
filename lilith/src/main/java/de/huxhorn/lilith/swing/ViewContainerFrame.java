@@ -35,6 +35,8 @@ public class ViewContainerFrame
 	private ViewActions viewActions;
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
+	private JToolBar toolbar;
+	private boolean showingToolbar;
 
 	public ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer)
 		throws HeadlessException
@@ -45,7 +47,8 @@ public class ViewContainerFrame
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		add(viewContainer, BorderLayout.CENTER);
-		add(viewActions.getToolbar(), BorderLayout.NORTH);
+		toolbar=viewActions.getToolbar();
+		add(toolbar, BorderLayout.NORTH);
 		setJMenuBar(viewActions.getMenuBar());
 		addWindowListener(new CleanupWindowChangeListener());
 	}
@@ -88,6 +91,17 @@ public class ViewContainerFrame
 		Component prev = getGlassPane();
 		super.setGlassPane(glassPane);
 		if(logger.isDebugEnabled()) logger.debug("Glasspane\nprev: {}\n new: {}", prev, glassPane);
+	}
+
+	public void setShowingToolbar(boolean showingToolbar)
+	{
+		this.showingToolbar=showingToolbar;
+		toolbar.setVisible(showingToolbar);
+	}
+
+	public boolean isShowingToolbar()
+	{
+		return showingToolbar;
 	}
 
 	class CleanupWindowChangeListener

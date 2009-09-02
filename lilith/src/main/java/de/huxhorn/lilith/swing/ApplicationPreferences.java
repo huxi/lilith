@@ -90,6 +90,7 @@ public class ApplicationPreferences
 	public static final String LOOK_AND_FEEL_PROPERTY = "lookAndFeel";
 	public static final String CLEANING_LOGS_ON_EXIT_PROPERTY = "cleaningLogsOnExit";
 	public static final String COLORING_WHOLE_ROW_PROPERTY = "coloringWholeRow";
+	public static final String SHOWING_TOOLBAR_PROPERTY = "showingToolbar";
 	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
 	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
 	public static final String SHOWING_STACKTRACE_PROPERTY = "showingStackTrace";
@@ -1142,6 +1143,19 @@ public class ApplicationPreferences
 	public boolean isAutoOpening()
 	{
 		return PREFERENCES.getBoolean(AUTO_OPENING_PROPERTY, true);
+	}
+
+	public void setShowingToolbar(boolean showingToolbarName)
+	{
+		Object oldValue = isShowingToolbar();
+		PREFERENCES.putBoolean(SHOWING_TOOLBAR_PROPERTY, showingToolbarName);
+		Object newValue = isShowingToolbar();
+		propertyChangeSupport.firePropertyChange(SHOWING_TOOLBAR_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isShowingToolbar()
+	{
+		return PREFERENCES.getBoolean(SHOWING_TOOLBAR_PROPERTY, true);
 	}
 
 	public void setShowingIdentifier(boolean showingIdentifierWithName)

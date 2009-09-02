@@ -35,6 +35,5 @@ public interface ViewWindow
 
 	Component getGlassPane();
 
-
 	ViewContainer getViewContainer();
 }

@@ -34,6 +34,7 @@ public class ViewContainerInternalFrame
 	private final Logger logger = LoggerFactory.getLogger(ViewContainerInternalFrame.class);
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
+	private boolean showingToolbar;
 
 	public ViewContainerInternalFrame(MainFrame mainFrame, ViewContainer viewContainer)
 	{

@@ -91,6 +91,7 @@ import de.huxhorn.sulky.swing.Windows;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
+
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
@@ -106,30 +107,7 @@ import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EtchedBorder;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -160,6 +138,9 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 
 
 public class MainFrame
@@ -221,6 +202,7 @@ public class MainFrame
 	private boolean coloringWholeRow;
 
 	private static final double SCALE_FACTOR = 0.05d;
+	private JToolBar toolbar;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -710,7 +692,7 @@ public class MainFrame
 		accessEventSourceManager.start();
 
 		JMenuBar menuBar = viewActions.getMenuBar();
-		JToolBar toolbar = viewActions.getToolbar();
+		toolbar = viewActions.getToolbar();
 		add(toolbar, BorderLayout.NORTH);
 		setJMenuBar(menuBar);
 		viewActions.updateWindowMenu();
@@ -727,6 +709,7 @@ public class MainFrame
 			checkForUpdate(false);
 		}
 		updateConditions(); // to initialize active conditions.
+		setShowingToolbar(applicationPreferences.isShowingToolbar());
 		setSplashStatusText("Finished.");
 		cleanObsoleteFiles();
 	}
@@ -2134,6 +2117,7 @@ public class MainFrame
 	{
 		String title = resolveSourceTitle(container);
 		ViewContainerFrame frame = new ViewContainerFrame(this, container);
+		frame.setShowingToolbar(applicationPreferences.isShowingToolbar());
 		frame.setTitle(title);
 		frame.setSize(800, 600);
 
@@ -2515,6 +2499,12 @@ public class MainFrame
 				return;
 			}
 
+			if (ApplicationPreferences.SHOWING_TOOLBAR_PROPERTY.equals(propName))
+			{
+				setShowingToolbar(applicationPreferences.isShowingToolbar());
+				return;
+			}
+
 			if (ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
 				coloringWholeRow = applicationPreferences.isColoringWholeRow();
@@ -2549,6 +2539,37 @@ public class MainFrame
 					window.setTitle(title);
 				}
 			}
+		}
+	}
+
+	private void setShowingToolbar(boolean showingToolbar)
+	{
+		toolbar.setVisible(showingToolbar);
+
+		// change for all other open windows
+		{
+			SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> views = getSortedLoggingViews();
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current: views.entrySet())
+			{
+				setShowingToolbar(current.getValue(), showingToolbar);
+			}
+		}
+		{
+			SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> views = getSortedAccessViews();
+			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current: views.entrySet())
+			{
+				setShowingToolbar(current.getValue(), showingToolbar);
+			}
+		}
+	}
+
+	private void setShowingToolbar(ViewContainer container, boolean showingToolbar)
+	{
+		ViewWindow viewWindow = container.resolveViewWindow();
+		if(viewWindow instanceof ViewContainerFrame)
+		{
+			ViewContainerFrame viewContainerFrame=(ViewContainerFrame)viewWindow;
+			viewContainerFrame.setShowingToolbar(showingToolbar);
 		}
 	}
 
