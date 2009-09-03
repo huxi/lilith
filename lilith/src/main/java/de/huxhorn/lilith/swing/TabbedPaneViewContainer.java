@@ -23,15 +23,11 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Dispose;
 import de.huxhorn.sulky.conditions.Condition;
-import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -48,10 +44,6 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private final Logger logger = LoggerFactory.getLogger(TabbedPaneViewContainer.class);
 
 	private JTabbedPane pane;
-	private JPopupMenu popup;
-	private CloseFilterAction closeFilterAction;
-	private CloseAllFiltersAction closeAllFiltersAction;
-	private CloseOtherFiltersAction closeOtherFiltersAction;
 	private SourceChangeListener sourceChangeListener;
 	private boolean disposed;
 	private EventWrapper<T> selectedEvent;
@@ -62,16 +54,8 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		disposed = false;
 		pane = new JTabbedPane(JTabbedPane.TOP);
 		pane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		pane.addMouseListener(new PopupMouseListener());
 		setLayout(new BorderLayout());
 		add(pane, BorderLayout.CENTER);
-		closeFilterAction = new CloseFilterAction();
-		closeOtherFiltersAction = new CloseOtherFiltersAction();
-		closeAllFiltersAction = new CloseAllFiltersAction();
-		popup = new JPopupMenu();
-		popup.add(closeFilterAction);
-		popup.add(closeOtherFiltersAction);
-		popup.add(closeAllFiltersAction);
 		pane.addChangeListener(new TabChangeListener());
 		sourceChangeListener = new SourceChangeListener();
 		addView(getDefaultView());
@@ -196,19 +180,8 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 		if(logger.isDebugEnabled()) logger.debug("removeNotify");
 	}
 
-	private void showPopup(MouseEvent evt)
-	{
-		Point p = evt.getPoint();
-		if(logger.isInfoEnabled()) logger.info("Show popup at {}.", p);
-		selectedViewChanged();
-		popup.show(pane, p.x, p.y);
-	}
-
 	private void selectedViewChanged()
 	{
-		closeFilterAction.updateAction();
-		closeOtherFiltersAction.updateAction();
-		closeAllFiltersAction.updateAction();
 		EventWrapperViewPanel<T> selectedView = getSelectedView();
 		if(selectedView != null)
 		{
@@ -261,143 +234,6 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	public EventWrapper<T> getSelectedEvent()
 	{
 		return selectedEvent;
-	}
-
-	private class PopupMouseListener
-		implements MouseListener
-	{
-		public void mouseClicked(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mousePressed(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseReleased(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
-	}
-
-	// TODO: Move to ViewActions
-	private class CloseFilterAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -4479133859495740687L;
-
-		public CloseFilterAction()
-		{
-			super("Close this filter");
-			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " W");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void updateAction()
-		{
-			int viewIndex = getViewIndex();
-			if(viewIndex > 0)
-			{
-				setEnabled(true);
-			}
-			else
-			{
-				setEnabled(false);
-			}
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			closeCurrentFilter();
-		}
-
-	}
-
-	// TODO: Move to ViewActions
-	private class CloseOtherFiltersAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 3059023089248619076L;
-
-		public CloseOtherFiltersAction()
-		{
-			super("Close all other filters");
-			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift W");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void updateAction()
-		{
-			int viewIndex = getViewIndex();
-			int viewCount = getViewCount();
-			if(viewIndex > -1 && ((viewIndex == 0 && viewCount > 1) || viewCount > 2))
-			{
-				setEnabled(true);
-			}
-			else
-			{
-				setEnabled(false);
-			}
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			closeOtherFilters();
-		}
-	}
-
-	// TODO: Move to ViewActions
-	private class CloseAllFiltersAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 3947832933965311324L;
-
-		public CloseAllFiltersAction()
-		{
-			super("Close all filters");
-			putValue(Action.MNEMONIC_KEY, Integer.valueOf('a'));
-		}
-
-		public void updateAction()
-		{
-			int viewCount = getViewCount();
-			if(viewCount > 1)
-			{
-				setEnabled(true);
-			}
-			else
-			{
-				setEnabled(false);
-			}
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			closeAllFilters();
-		}
 	}
 
 	public EventWrapperViewPanel<T> getViewAt(int index)
