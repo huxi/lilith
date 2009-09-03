@@ -59,10 +59,21 @@ import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -97,6 +108,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	public static final String PAUSED_PROPERTY = "paused";
 	public static final String SELECTED_EVENT_PROPERTY = "selectedEvent";
 
+	private static final String GROOVY_IDENTIFIER = "#groovy#";
+	private static final String SAVED_CONDITION_IDENTIFIER = "#condition#";
+	private static final Color ERROR_COLOR = new Color(0xffaaaa);
+
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
 
 	private EventSource<T> eventSource;
@@ -129,16 +144,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private MatteBorder unfocusedBorder;
 	private DecimalFormat eventCountFormat;
 	private FindResultListener findResultListener;
-	private static final String GROOVY_IDENTIFIER = "#groovy#";
-	private static final String SAVED_CONDITION_IDENTIFIER = "#condition#";
-	private static final Color ERROR_COLOR = new Color(0xffaaaa);
-	protected JMenu sendToMenuItem;
 
 	private ScalableXHTMLPanel messagePane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private EventWrapper<T> selectedEvent;
 	private SelectionHighlighter.CopyAction copyAction;
 	private double scale;
+	private JScrollPane tableScrollPane;
 
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
@@ -168,7 +180,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		tableModel.addTableModelListener(tableModelListener);
 		table = createTable(tableModel);
 		table.getSelectionModel().addListSelectionListener(new TableRowSelectionListener());
-		JScrollPane tableScrollPane = new JScrollPane(table);
+		tableScrollPane = new JScrollPane(table);
+		table.addMouseListener(new TableMouseListener());
+		tableScrollPane.addMouseListener(new ScrollPaneMouseListener());
+
 		verticalLogScrollbar = tableScrollPane.getVerticalScrollBar();
 
 		messagePane = new ScalableXHTMLPanel();
@@ -207,7 +222,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		MouseWheelListener[] mwl = messageScrollPane.getMouseWheelListeners();
 		if(mwl != null)
 		{
-			for(MouseWheelListener current:mwl)
+			for(MouseWheelListener current : mwl)
 			{
 				messageScrollPane.removeMouseWheelListener(current);
 			}
@@ -225,7 +240,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		verticalLogScrollbar.getModel().addChangeListener(scrollBarChangeListener);
 
 
-		table.addMouseListener(new TableMouseListener());
 		table.addPropertyChangeListener(new EventWrapperViewChangeListener());
 
 		focusTraversalPolicy = new MyFocusTraversalPolicy();
@@ -1313,6 +1327,54 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	}
 
+	private class ScrollPaneMouseListener
+		implements MouseListener
+	{
+		public ScrollPaneMouseListener()
+		{
+		}
+
+		private void showPopup(MouseEvent evt)
+		{
+			Point p = evt.getPoint();
+			mainFrame.showPopup(tableScrollPane, p);
+		}
+
+		public void mouseClicked(MouseEvent evt)
+		{
+			tableScrollPane.requestFocusInWindow();
+			if(evt.isPopupTrigger())
+			{
+				showPopup(evt);
+			}
+		}
+
+		public void mousePressed(MouseEvent evt)
+		{
+			if(evt.isPopupTrigger())
+			{
+				showPopup(evt);
+			}
+		}
+
+		public void mouseReleased(MouseEvent evt)
+		{
+			if(evt.isPopupTrigger())
+			{
+				showPopup(evt);
+			}
+		}
+
+		public void mouseEntered(MouseEvent e)
+		{
+		}
+
+		public void mouseExited(MouseEvent e)
+		{
+		}
+
+	}
+
 	private class TableRowSelectionListener
 		implements ListSelectionListener
 	{
@@ -1753,7 +1815,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 	private class WrappingMouseWheelListener
-			implements MouseWheelListener
+		implements MouseWheelListener
 	{
 
 		private MouseWheelListener[] wrapped;
@@ -1769,13 +1831,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				// special handling, i.e. zoom in, zoomm out
 				int rotation = e.getWheelRotation();
-				boolean up=false;
+				boolean up = false;
 				if(rotation < 0)
 				{
 					up = true;
 					rotation = -rotation;
 				}
-				for(int i=0;i<rotation;i++)
+				for(int i = 0; i < rotation; i++)
 				{
 					if(up)
 					{
@@ -1791,7 +1853,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				if(wrapped != null)
 				{
-					for(MouseWheelListener current:wrapped)
+					for(MouseWheelListener current : wrapped)
 					{
 						current.mouseWheelMoved(e);
 					}

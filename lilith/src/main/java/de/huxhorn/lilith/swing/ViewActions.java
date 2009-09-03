@@ -483,7 +483,7 @@ public class ViewActions
 	//private ClearAndRemoveInactiveAction clearAndRemoveInactiveAction;
 	private RemoveInactiveAction removeInactiveAction;
 	private CloseAllAction closeAllAction;
-	private CloseAllOtherAction closeAllOtherAction;
+	private CloseOtherAction closeOtherAction;
 	private MinimizeAllAction minimizeAllAction;
 	private MinimizeAllOtherAction minimizeAllOtherAction;
 
@@ -631,7 +631,7 @@ public class ViewActions
 		// Window
 		ShowTaskManagerAction showTaskManagerAction = new ShowTaskManagerAction();
 		closeAllAction = new CloseAllAction();
-		closeAllOtherAction = new CloseAllOtherAction();
+		closeOtherAction = new CloseOtherAction();
 		minimizeAllAction = new MinimizeAllAction();
 		minimizeAllOtherAction = new MinimizeAllOtherAction();
 		removeInactiveAction = new RemoveInactiveAction();
@@ -656,7 +656,7 @@ public class ViewActions
 
 		showTaskManagerItem = new JMenuItem(showTaskManagerAction);
 		closeAllItem = new JMenuItem(closeAllAction);
-		closeAllOtherItem = new JMenuItem(closeAllOtherAction);
+		closeAllOtherItem = new JMenuItem(closeOtherAction);
 		minimizeAllItem = new JMenuItem(minimizeAllAction);
 		minimizeAllOtherItem = new JMenuItem(minimizeAllOtherAction);
 		removeInactiveItem = new JMenuItem(removeInactiveAction);
@@ -1321,6 +1321,12 @@ public class ViewActions
 		copyMenuItem.addSeparator();
 		copyMenuItem.add(new JMenuItem(copyAccessUriAction));
 
+		JMenu filterMenuItem = new JMenu("Filter...");
+		popup.add(filterMenuItem);
+		filterMenuItem.add(new JMenuItem(closeFilterAction));
+		filterMenuItem.add(new JMenuItem(closeOtherFiltersAction));
+		filterMenuItem.add(new JMenuItem(closeAllFiltersAction));
+
 		sendToMenuItem = new JMenu("Send to...");
 
 		popup.add(sendToMenuItem);
@@ -1513,12 +1519,12 @@ public class ViewActions
 		}
 	}
 
-	private class CloseAllOtherAction
+	private class CloseOtherAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = -3031217070975763827L;
 
-		public CloseAllOtherAction()
+		public CloseOtherAction()
 		{
 			super("Close all other");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
@@ -2697,12 +2703,12 @@ public class ViewActions
 			if(viewContainer == null || viewCounter <= 1)
 			{
 				minimizeAllOtherAction.setEnabled(false);
-				closeAllOtherAction.setEnabled(false);
+				closeOtherAction.setEnabled(false);
 			}
 			else
 			{
 				minimizeAllOtherAction.setEnabled(true);
-				closeAllOtherAction.setEnabled(true);
+				closeOtherAction.setEnabled(true);
 			}
 
 			mainFrame.setActiveConnectionsCounter(activeCounter);
