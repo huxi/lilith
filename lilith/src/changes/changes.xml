@@ -86,8 +86,14 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
-			<action dev="jhux" type="update" issue="57">
-				Option to show/hide the toolbar.
+			<action dev="jhux" type="add">
+				Added "Execute GC" to Troubleshooting.
+			</action>
+			<action dev="jhux" type="add">
+				Added option to show/hide the statusbar.
+			</action>
+			<action dev="jhux" type="add" issue="57">
+				Added option to show/hide the toolbar.
 			</action>
 			<action dev="jhux" type="add">
 				Added "Context" column for logging events.

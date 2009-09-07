@@ -37,6 +37,7 @@ public class ViewContainerFrame
 	private ViewContainer viewContainer;
 	private JToolBar toolbar;
 	private boolean showingToolbar;
+	private boolean showingStatusbar;
 
 	public ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer)
 		throws HeadlessException
@@ -91,6 +92,15 @@ public class ViewContainerFrame
 		Component prev = getGlassPane();
 		super.setGlassPane(glassPane);
 		if(logger.isDebugEnabled()) logger.debug("Glasspane\nprev: {}\n new: {}", prev, glassPane);
+	}
+
+	public void setShowingStatusbar(boolean showingStatusbar)
+	{
+		this.showingStatusbar=showingStatusbar;
+		if(viewContainer != null)
+		{
+			viewContainer.setShowingStatusbar(showingStatusbar);
+		}
 	}
 
 	public void setShowingToolbar(boolean showingToolbar)

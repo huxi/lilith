@@ -151,6 +151,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private SelectionHighlighter.CopyAction copyAction;
 	private double scale;
 	private JScrollPane tableScrollPane;
+	private boolean showingStatusbar;
+	private JPanel statusPanel;
 
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
@@ -166,6 +168,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		tableModelListener = new StatusTableModelListener();
 		scale = mainFrame.getApplicationPreferences().getScaleFactor();
+		showingStatusbar = mainFrame.getApplicationPreferences().isShowingStatusbar();
 		initUi();
 	}
 
@@ -254,7 +257,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findTextField.setBackground(Color.WHITE);
 
 		JPanel bottomPanel = new JPanel(new BorderLayout());
-		JPanel statusPanel = new JPanel(new GridBagLayout());
+		statusPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		bottomPanel.add(findPanel, BorderLayout.CENTER);
@@ -270,7 +273,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		gbc.insets = new Insets(0, 5, 0, 0);
 
 		statusPanel.add(statusLabel, gbc);
-
+		statusPanel.setVisible(showingStatusbar);
 		add(bottomPanel, BorderLayout.SOUTH);
 
 		setScrollingToBottom(false);
@@ -466,6 +469,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			resetMessage();
 		}
+	}
+
+	public void setShowingStatusBar(boolean showingStatusbar)
+	{
+		this.showingStatusbar=showingStatusbar;
+		statusPanel.setVisible(showingStatusbar);
 	}
 
 	private class ScrollToBottomRunnable

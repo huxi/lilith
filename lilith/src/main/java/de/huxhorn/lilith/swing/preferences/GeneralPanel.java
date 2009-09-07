@@ -39,6 +39,7 @@ public class GeneralPanel
 
 	// Windows/View
 	private JCheckBox showingToolbarCheckbox;
+	private JCheckBox showingStatusbarCheckbox;
 	private JCheckBox internalFramesCheckbox;
 	private JCheckBox autoOpenCheckbox;
 	private JCheckBox autoFocusCheckbox;
@@ -68,6 +69,7 @@ public class GeneralPanel
 	{
 		// General
 		showingToolbarCheckbox = new JCheckBox("Show toolbar.");
+		showingStatusbarCheckbox = new JCheckBox("Show statusbar.");
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
 		showIdentifierCheckbox = new JCheckBox("Show identifier for named sources.");
 		showFullCallstackCheckbox = new JCheckBox("Show full Callstack.");
@@ -107,9 +109,10 @@ public class GeneralPanel
 		}
 		lookAndFeelCombo = new JComboBox();
 
-		JPanel windowPanel = new JPanel(new GridLayout(6, 1));
+		JPanel windowPanel = new JPanel(new GridLayout(7, 1));
 		windowPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Frames"));
 		windowPanel.add(showingToolbarCheckbox);
+		windowPanel.add(showingStatusbarCheckbox);
 		windowPanel.add(internalFramesCheckbox);
 		windowPanel.add(autoOpenCheckbox);
 		windowPanel.add(autoFocusCheckbox);
@@ -158,6 +161,7 @@ public class GeneralPanel
 	public void initUI()
 	{
 		showingToolbarCheckbox.setSelected(applicationPreferences.isShowingToolbar());
+		showingStatusbarCheckbox.setSelected(applicationPreferences.isShowingStatusbar());
 		internalFramesCheckbox.setSelected(applicationPreferences.isUsingInternalFrames());
 		scrollingToBottomCheckbox.setSelected(applicationPreferences.isScrollingToBottom());
 		coloringWholeRowCheckbox.setSelected(applicationPreferences.isColoringWholeRow());
@@ -204,6 +208,7 @@ public class GeneralPanel
 	public void saveSettings()
 	{
 		applicationPreferences.setShowingToolbar(showingToolbarCheckbox.isSelected());
+		applicationPreferences.setShowingStatusbar(showingStatusbarCheckbox.isSelected());
 		applicationPreferences.setUsingInternalFrames(internalFramesCheckbox.isSelected());
 		applicationPreferences.setScrollingToBottom(scrollingToBottomCheckbox.isSelected());
 		applicationPreferences.setColoringWholeRow(coloringWholeRowCheckbox.isSelected());

@@ -28,16 +28,14 @@ import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Reset;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.Enumeration;
+
+import javax.swing.*;
 
 public class TroubleshootingPanel
 		extends JPanel
@@ -56,6 +54,7 @@ public class TroubleshootingPanel
 		add(new JButton(new InitExampleScriptsAction()));
 		add(new JButton(new DeleteAllLogsAction()));
 		add(new JButton(new CopySystemPropertiesAction()));
+		add(new JButton(new GarbageCollectionAction()));
 	}
 
 	public class InitDetailsViewAction
@@ -191,6 +190,23 @@ public class TroubleshootingPanel
 				builder.append(current.getKey()).append("=").append(current.getValue()).append("\n");
 			}
 			preferencesDialog.getMainFrame().copyText(builder.toString());
+		}
+	}
+
+	public class GarbageCollectionAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -4636919088257143096L;
+
+		public GarbageCollectionAction()
+		{
+			super("Execute GC");
+			putValue(SHORT_DESCRIPTION, "Execute garbage collection.");
+		}
+
+		public void actionPerformed(ActionEvent actionEvent)
+		{
+			System.gc();
 		}
 	}
 

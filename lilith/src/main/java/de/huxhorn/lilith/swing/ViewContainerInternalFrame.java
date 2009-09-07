@@ -35,6 +35,7 @@ public class ViewContainerInternalFrame
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
 	private boolean showingToolbar;
+	private boolean showingStatusbar;
 
 	public ViewContainerInternalFrame(MainFrame mainFrame, ViewContainer viewContainer)
 	{
@@ -56,6 +57,15 @@ public class ViewContainerInternalFrame
 		Component prev = getGlassPane();
 		super.setGlassPane(glassPane);
 		if(logger.isDebugEnabled()) logger.debug("Glasspane\nprev: {}\n new: {}", prev, glassPane);
+	}
+
+	public void setShowingStatusbar(boolean showingStatusbar)
+	{
+		this.showingStatusbar=showingStatusbar;
+		if(viewContainer != null)
+		{
+			viewContainer.setShowingStatusbar(showingStatusbar);
+		}
 	}
 
 	public ViewActions getViewActions()

@@ -47,6 +47,7 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 	private SourceChangeListener sourceChangeListener;
 	private boolean disposed;
 	private EventWrapper<T> selectedEvent;
+	private boolean showingStatusbar;
 
 	public TabbedPaneViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
@@ -324,6 +325,26 @@ public abstract class TabbedPaneViewContainer<T extends Serializable>
 			}
 		}
 		fireChange();
+	}
+
+	public void setShowingStatusbar(boolean showingStatusbar)
+	{
+		this.showingStatusbar=showingStatusbar;
+		int tabCount = pane.getTabCount();
+		List<Component> panes = new ArrayList<Component>(tabCount);
+		for(int i = 0; i < tabCount; i++)
+		{
+			panes.add(pane.getComponentAt(i));
+		}
+
+		for(Component comp : panes)
+		{
+			if(comp instanceof EventWrapperViewPanel)
+			{
+				EventWrapperViewPanel<T> lvp = (EventWrapperViewPanel<T>) comp;
+				lvp.setShowingStatusBar(showingStatusbar);
+			}
+		}
 	}
 
 	private class TabChangeListener

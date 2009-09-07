@@ -35,5 +35,7 @@ public interface ViewWindow
 
 	Component getGlassPane();
 
+	void setShowingStatusbar(boolean showingToolbar);
+
 	ViewContainer getViewContainer();
 }
