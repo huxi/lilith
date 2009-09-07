@@ -17,17 +17,30 @@
  */
 package de.huxhorn.lilith.swing.table.tooltips;
 
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.swing.*;
 
 public class ContextTooltipGenerator
 	implements TooltipGenerator
 {
+	private SimpleDateFormat fullFormat;
+
+	public ContextTooltipGenerator()
+	{
+		fullFormat = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS");
+	}
+
 	public String createTooltipText(JTable table, int row)
 	{
 		String tooltip = null;
@@ -48,8 +61,34 @@ public class ContextTooltipGenerator
 
 			if(context != null)
 			{
-				tooltip=context.getName();
-				// TODO: more info
+				StringBuilder msg = new StringBuilder();
+				msg.append("<html><h4>Name</h4>").append(context.getName());
+				Long timestamp = context.getBirthTime();
+				if(timestamp != null)
+				{
+					msg.append("<h4>Birthtime</h4>");
+					msg.append(fullFormat.format(new Date(timestamp)));
+				}
+				Map<String, String> props = context.getProperties();
+				if(props != null && props.size() > 0)
+				{
+					msg.append("<h4>Properties</h4>");
+					SortedMap<String, String> sortedProps = new TreeMap<String, String>(props);
+					msg.append("<table>");
+					msg.append("<tr>");
+					msg.append("<th>Key</th><th>Value</th>");
+					msg.append("</tr>");
+					for(Map.Entry<String, String> current : sortedProps.entrySet())
+					{
+						msg.append("<tr>");
+						msg.append("<td>").append(current.getKey()).append("</td>");
+						msg.append("<td>").append(current.getValue()).append("</td>");
+						msg.append("</tr>");
+					}
+					msg.append("</table>");
+				}
+				msg.append("</html>");
+				tooltip = msg.toString();
 			}
 		}
 		return tooltip;
