@@ -369,6 +369,8 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract void updateViewScale(double scale);
 
+	public abstract void setShowingStatusbar(boolean showingStatusbar);
+
 	class FilterTaskListener
 			implements TaskListener<Long>
 	{
