@@ -86,6 +86,10 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="update" issue="58">
+				Replaced tabs of event view with a combobox. The combobox is only visible if there are
+				filtered views. There's also more room for the condition string.
+			</action>
 			<action dev="jhux" type="add">
 				Added "Execute GC" to Troubleshooting.
 			</action>

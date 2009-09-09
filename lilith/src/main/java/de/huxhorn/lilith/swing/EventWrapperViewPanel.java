@@ -313,6 +313,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		closeFindAction = new CloseFindAction();
 		JButton findViewButton = new JButton(closeFindAction);
+		findViewButton.setMargin(new Insets(0, 0, 0, 0));
 		findPanel.add(findViewButton);
 		findPanel.addSeparator();
 		findPanel.add(new JLabel("Find: "));
@@ -323,6 +324,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findNotButton = new JToggleButton("!");
 		findNotButton.addActionListener(findTypeModifiedListener);
 		findNotButton.setToolTipText("Not - inverts condition");
+		findNotButton.setMargin(new Insets(0, 0, 0, 0));
 		findTextField = new JTextField();
 		findTextField.setColumns(15);
 		findPanel.add(findNotButton);
@@ -331,10 +333,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		findPrevAction = new FindPreviousAction();
 		findPrevButton = new JButton(findPrevAction);
+		findPrevButton.setMargin(new Insets(0, 0, 0, 0));
 		findPanel.add(findPrevButton);
 
 		findNextAction = new FindNextAction();
 		findNextButton = new JButton(findNextAction);
+		findNextButton.setMargin(new Insets(0, 0, 0, 0));
 		findPanel.add(findNextButton);
 		enableFindComponents(true);
 	}
@@ -788,7 +792,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		catch(Throwable t)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while setting message!", t);
+			if(logger.isWarnEnabled()) logger.warn("Exception while setting message "+message+"!", t);
 			writeErrorMessage(message);
 		}
 	}

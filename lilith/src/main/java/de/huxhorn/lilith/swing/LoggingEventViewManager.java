@@ -30,6 +30,7 @@ public class LoggingEventViewManager
 
 	protected ViewContainer<LoggingEvent> createViewContainer(EventSource<LoggingEvent> eventSource)
 	{
-		return new TabbedLoggingViewContainer(getMainFrame(), eventSource);
+		//return new TabbedLoggingViewContainer(getMainFrame(), eventSource);
+		return new ComboLoggingViewContainer(getMainFrame(), eventSource);
 	}
 }
