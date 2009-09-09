@@ -30,6 +30,7 @@ public class AccessEventViewManager
 
 	protected ViewContainer<AccessEvent> createViewContainer(EventSource<AccessEvent> eventSource)
 	{
-		return new TabbedAccessViewContainer(getMainFrame(), eventSource);
+		//return new TabbedAccessViewContainer(getMainFrame(), eventSource);
+		return new ComboAccessViewContainer(getMainFrame(), eventSource);
 	}
 }
