@@ -151,8 +151,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private SelectionHighlighter.CopyAction copyAction;
 	private double scale;
 	private JScrollPane tableScrollPane;
-	private boolean showingStatusbar;
-	private JPanel statusPanel;
 
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
@@ -168,7 +166,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		tableModelListener = new StatusTableModelListener();
 		scale = mainFrame.getApplicationPreferences().getScaleFactor();
-		showingStatusbar = mainFrame.getApplicationPreferences().isShowingStatusbar();
 		initUi();
 	}
 
@@ -186,6 +183,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		tableScrollPane = new JScrollPane(table);
 		table.addMouseListener(new TableMouseListener());
 		tableScrollPane.addMouseListener(new ScrollPaneMouseListener());
+		tableScrollPane.setPreferredSize(new Dimension(400, 400));
 
 		verticalLogScrollbar = tableScrollPane.getVerticalScrollBar();
 
@@ -222,6 +220,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane messageScrollPane = new FSScrollPane(messagePane);
+		messageScrollPane.setPreferredSize(new Dimension(400, 400));
+
 		MouseWheelListener[] mwl = messageScrollPane.getMouseWheelListeners();
 		if(mwl != null)
 		{
@@ -257,7 +257,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findTextField.setBackground(Color.WHITE);
 
 		JPanel bottomPanel = new JPanel(new BorderLayout());
-		statusPanel = new JPanel(new GridBagLayout());
+		JPanel statusPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		bottomPanel.add(findPanel, BorderLayout.CENTER);
@@ -273,7 +273,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		gbc.insets = new Insets(0, 5, 0, 0);
 
 		statusPanel.add(statusLabel, gbc);
-		statusPanel.setVisible(showingStatusbar);
 		add(bottomPanel, BorderLayout.SOUTH);
 
 		setScrollingToBottom(false);
@@ -302,6 +301,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		KeyStrokes.registerCommand(this, findPrevAction, "FIND_PREV_ACTION");
 		KeyStrokes.registerCommand(this, closeFindAction, "CLOSE_FIND_ACTION");
 		KeyStrokes.registerCommand(findTextField, replaceFilterAction, "REPLACE_FILTER_ACTION");
+		splitPane.setDividerLocation(0.5d);
+		setShowingStatusBar(mainFrame.getApplicationPreferences().isShowingStatusbar());
 	}
 
 	private void initFindPanel()
@@ -477,8 +478,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setShowingStatusBar(boolean showingStatusbar)
 	{
-		this.showingStatusbar=showingStatusbar;
-		statusPanel.setVisible(showingStatusbar);
+		statusLabel.setVisible(showingStatusbar);
 	}
 
 	private class ScrollToBottomRunnable
@@ -486,7 +486,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		public void run()
 		{
-			table.scrollToBottom();
+			// recheck because this is executed with invokeLater.
+			if(table.isScrollingToBottom())
+			{
+				table.scrollToBottom();
+			}
 		}
 	}
 
@@ -792,7 +796,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		catch(Throwable t)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while setting message "+message+"!", t);
+			if(logger.isWarnEnabled()) logger.warn("Exception while setting message " + message + "!", t);
 			writeErrorMessage(message);
 		}
 	}
@@ -1212,6 +1216,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 						container.showDefaultView();
 						defaultView.setSelectedRow((int) unfilteredRow);
 					}
+					else if(logger.isWarnEnabled())
+					{
+						logger.info("Can't show unfiltered event {} for filtered event {}...", unfilteredRow, row);
+					}
 				}
 			}
 		}
@@ -1252,6 +1260,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				}
 				else
 				{
+					Point p = evt.getPoint();
+					EventWrapper<T> wrapper = getEventWrapper(p); // To ensure that the event below the mouse is selected.
+					if(logger.isDebugEnabled()) logger.debug("Show unfiltered event {}.", wrapper);
 					showUnfilteredEvent();
 				}
 			}
