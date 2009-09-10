@@ -86,9 +86,22 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="fix" issue="66">
+				Jumping to the unfiltered event didn't work the first time if Tail was enabled.
+				This was reported by Joe.
+			</action>
+			<action dev="jhux" type="update">
+				Preferences dialog can now be closed by pressing Enter.
+				This was suggested by Vlad Satanovski.
+			</action>
+			<action dev="jhux" type="fix">
+				Table and message view are now having reasonable preferred sizes (needed because of splitpane).
+			</action>
 			<action dev="jhux" type="update" issue="58">
-				Replaced tabs of event view with a combobox. The combobox is only visible if there are
-				filtered views. There's also more room for the condition string.
+				Replaced tabs of event view with a combobox.
+				The combobox is only visible if there are filtered views. There's also more room
+				for the condition string.
+				Something like this was suggested by Scott Stanton and Joe.
 			</action>
 			<action dev="jhux" type="add">
 				Added "Execute GC" to Troubleshooting.
@@ -98,6 +111,7 @@
 			</action>
 			<action dev="jhux" type="add" issue="57">
 				Added option to show/hide the toolbar.
+				This was suggested by Scott Stanton, Ekkehard Gentz and Joe.
 			</action>
 			<action dev="jhux" type="add">
 				Added "Context" column for logging events.
@@ -108,23 +122,28 @@
 <!--
 			Too bad, does not work :(
 			<action dev="jhux" type="update">
-				MAC: Mac menu-bar is used for all PLAFs. Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
+				MAC: Mac menu-bar is used for all PLAFs.
+				Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
 			</action>
 -->
 			<action dev="jhux" type="add" issue="65">
-				Added "Troubleshooting..." menu item in "Help" menu as a shortcut to the throubleshooting section of Preferences.
+				Added "Troubleshooting..." menu item in "Help" menu as a shortcut to the throubleshooting
+				section of Preferences.
 			</action>
 			<action dev="jhux" type="add" issue="65">
 				Added new command "Copy Properties" to Troubleshooting section of Preferences.
 			</action>
 			<action dev="jhux" type="remove" issue="24">
-				Removed useless action. Statistics can be obtained using "Window" &gt; "Statistics".
+				Removed useless Statistics action for current source.
+				Statistics can be obtained using "Window" &gt; "Statistics".
 			</action>
 			<action dev="jhux" type="add" issue="59">
 				Added persistent zoom-in (*command* .) and zoom-out (*command* shift .) of details view.
 			</action>
 			<action dev="jhux" type="fix" issue="64">
-				Events did sometimes show up twice in filtered views. This was caused by a classic off-by-one error.
+				Events did sometimes show up twice in filtered views.
+				This was caused by a classic off-by-one error.
+				Reported by Joe.
 			</action>
 			<action dev="jhux" type="fix">
 				Fixed a remaining hang in the multiplex appenders in case of certain network problems.
@@ -133,7 +152,8 @@
 				Updated Groovy to 1.6.4.
 			</action>
 			<action dev="jhux" type="update" issue="63">
-				Updated Logback to 0.9.17. This fixes issue 63 that was caused by a Logback bug. Thanks for the fast fix, Ceki!
+				Updated Logback to 0.9.17.
+				This fixes issue 63 that was caused by a Logback bug. Thanks for the fast fix, Ceki!
 			</action>
 		</release>
 
