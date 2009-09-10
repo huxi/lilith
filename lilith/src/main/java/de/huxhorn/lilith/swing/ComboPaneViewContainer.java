@@ -41,14 +41,13 @@ import java.util.List;
 import javax.swing.*;
 
 public abstract class ComboPaneViewContainer<T extends Serializable>
-		extends ViewContainer<T>
+	extends ViewContainer<T>
 {
 	private final Logger logger = LoggerFactory.getLogger(ComboPaneViewContainer.class);
 
 	private SourceChangeListener sourceChangeListener;
 	private boolean disposed;
 	private EventWrapper<T> selectedEvent;
-	private boolean showingStatusbar;
 	private JPanel contentPane;
 	private DefaultComboBoxModel comboBoxModel;
 	private int comboCounter;
@@ -61,27 +60,27 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		super(mainFrame, eventSource);
 		disposed = false;
 		comboBoxPane = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc=new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints();
 		comboBoxModel = new DefaultComboBoxModel();
 		JComboBox cb = new JComboBox(comboBoxModel);
 		cb.setRenderer(new MyComboBoxRenderer());
 		cb.setEditable(false);
 		cb.addItemListener(new ComboItemListener());
 
-		gbc.gridx=0;
-		gbc.gridy=0;
-		gbc.weightx=0.0;
-		gbc.weighty=0.0;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 
 		closeAction = new CloseAction();
 		JButton closeButton = new JButton(closeAction);
 		closeButton.setMargin(new Insets(0, 0, 0, 0));
 		comboBoxPane.add(closeButton, gbc);
 
-		gbc.gridx=1;
-		gbc.gridy=0;
-		gbc.weightx=1.0;
-		gbc.weighty=1.0;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
 
 		comboBoxPane.add(cb, gbc);
@@ -94,7 +93,8 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		addView(getDefaultView());
 	}
 
-	private class CloseAction extends AbstractAction
+	private class CloseAction
+		extends AbstractAction
 	{
 		private static final long serialVersionUID = 7687142682378711767L;
 
@@ -123,7 +123,8 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		}
 	}
 
-	private class ComboItemListener implements ItemListener
+	private class ComboItemListener
+		implements ItemListener
 	{
 		public void itemStateChanged(ItemEvent e)
 		{
@@ -168,13 +169,13 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 		public boolean equals(Object o)
 		{
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
+			if(this == o) return true;
+			if(o == null || getClass() != o.getClass()) return false;
 
 			ViewHolder that = (ViewHolder) o;
 
-			if (id != null ? !id.equals(that.id) : that.id != null) return false;
-			if (view != null ? !view.equals(that.view) : that.view != null) return false;
+			if(id != null ? !id.equals(that.id) : that.id != null) return false;
+			if(view != null ? !view.equals(that.view) : that.view != null) return false;
 
 			return true;
 		}
@@ -189,17 +190,17 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 		public String toString()
 		{
-			return "ViewHolder[id="+id+", view="+view+"]";
+			return "ViewHolder[id=" + id + ", view=" + view + "]";
 		}
 	}
 
 	public void addView(EventWrapperViewPanel<T> view)
 	{
 		EventSource source = view.getEventSource();
-		if (logger.isInfoEnabled()) logger.info("Adding view for {}", source);
+		if(logger.isInfoEnabled()) logger.info("Adding view for {}", source);
 		ViewHolder holder = new ViewHolder(view);
 		Condition filter = source.getFilter();
-		if (filter == null)
+		if(filter == null)
 		{
 			comboBoxModel.insertElementAt(holder, 0);
 		}
@@ -212,7 +213,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		cardLayout.show(contentPane, holder.getId());
 		view.addPropertyChangeListener(sourceChangeListener);
 		view.requestFocusInWindow();
-		fireChange();
+		selectedViewChanged();
 	}
 
 	public void updateViews()
@@ -221,44 +222,11 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		{
 			comboBoxPane.repaint();
 		}
-/*
-// TODO
-		for(int i = 0; i < pane.getTabCount(); i++)
-		{
-			EventWrapperViewPanel<T> current = (EventWrapperViewPanel<T>) pane.getComponentAt(i);
-			EventSource source = current.getEventSource();
-			current.updateView();
-			Condition condition = source.getFilter();
-			if(logger.isDebugEnabled()) logger.debug("Condition: {}", condition);
-			if(condition != null)
-			{
-				String title;
-				String toolTip;
-				SavedCondition savedCondition = getMainFrame().getApplicationPreferences()
-					.resolveSavedCondition(condition);
-				if(savedCondition != null)
-				{
-					title = savedCondition.getName();
-					toolTip = condition.toString();
-				}
-				else
-				{
-					String text = condition.toString();
-					title = text;
-					toolTip = text;
-				}
-				pane.setTitleAt(i, title);
-				pane.setToolTipTextAt(i, toolTip);
-			}
-			// trigger repaint of table
-			pane.repaint();
-		}
-*/
 	}
 
 	public void updateViewScale(double scale)
 	{
-		for (int i = 0; i < comboBoxModel.getSize(); i++)
+		for(int i = 0; i < comboBoxModel.getSize(); i++)
 		{
 			ViewHolder holder = (ViewHolder) comboBoxModel.getElementAt(i);
 
@@ -270,46 +238,45 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	public void removeView(EventWrapperViewPanel<T> view, boolean dispose)
 	{
 		ViewHolder found = null;
-		for (int i = 0; i < comboBoxModel.getSize(); i++)
+		for(int i = 0; i < comboBoxModel.getSize(); i++)
 		{
 			ViewHolder holder = (ViewHolder) comboBoxModel.getElementAt(i);
 
 			EventWrapperViewPanel<T> current = holder.getView();
-			if (current == view)
+			if(current == view)
 			{
 				found = holder;
 				break;
 			}
 		}
 
-		if (found != null)
+		if(found != null)
 		{
 			comboBoxModel.removeElement(found);
 			contentPane.remove(found.getView());
 			view.removePropertyChangeListener(sourceChangeListener);
-			if (logger.isDebugEnabled()) logger.debug("Removed view {}.", view);
-			if (dispose)
+			if(logger.isDebugEnabled()) logger.debug("Removed view {}.", view);
+			if(dispose)
 			{
 				view.dispose();
 				Buffer<EventWrapper<T>> buffer = view.getEventSource().getBuffer();
 				Dispose.dispose(buffer);
-				if (logger.isDebugEnabled()) logger.debug("Disposed view {}.", view);
+				if(logger.isDebugEnabled()) logger.debug("Disposed view {}.", view);
 			}
-			fireChange();
+			selectedViewChanged();
 		}
 	}
 
 	public void showDefaultView()
 	{
-		if(comboBoxModel.getSize()>0)
+		if(comboBoxModel.getSize() > 0)
 		{
-			ViewHolder holder= (ViewHolder) comboBoxModel.getElementAt(0);
+			ViewHolder holder = (ViewHolder) comboBoxModel.getElementAt(0);
 			if(holder != null)
 			{
 				comboBoxModel.setSelectedItem(holder);
 				cardLayout.show(contentPane, holder.getId());
 				selectedViewChanged();
-				//fireChange();
 			}
 		}
 	}
@@ -317,13 +284,13 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	public void addNotify()
 	{
 		super.addNotify();
-		if (logger.isDebugEnabled()) logger.debug("addNotify - parent: {}", getParent());
+		if(logger.isDebugEnabled()) logger.debug("addNotify - parent: {}", getParent());
 	}
 
 	public void scrollToEvent()
 	{
 		EventWrapperViewPanel<T> selectedView = getSelectedView();
-		if (selectedView != null)
+		if(selectedView != null)
 		{
 			selectedView.scrollToEvent();
 			setSelectedEvent(selectedView.getSelectedEvent());
@@ -333,13 +300,13 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	public void removeNotify()
 	{
 		super.removeNotify();
-		if (logger.isDebugEnabled()) logger.debug("removeNotify");
+		if(logger.isDebugEnabled()) logger.debug("removeNotify");
 	}
 
 	private void selectedViewChanged()
 	{
 		EventWrapperViewPanel<T> selectedView = getSelectedView();
-		if (selectedView != null)
+		if(selectedView != null)
 		{
 			selectedView.scrollToEvent();
 			setSelectedEvent(selectedView.getSelectedEvent());
@@ -349,8 +316,8 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 			setSelectedEvent(null);
 		}
 
-		int count=comboBoxModel.getSize();
-		if(count>1)
+		int count = comboBoxModel.getSize();
+		if(count > 1)
 		{
 			comboBoxPane.setVisible(true);
 		}
@@ -366,12 +333,12 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		super.dispose();
 		disposed = true;
 		List<ViewHolder> removedPanes = new ArrayList<ViewHolder>();
-		for(int i=0;i<comboBoxModel.getSize();i++)
+		for(int i = 0; i < comboBoxModel.getSize(); i++)
 		{
 			removedPanes.add((ViewHolder) comboBoxModel.getElementAt(i));
 		}
 
-		for (ViewHolder current : removedPanes)
+		for(ViewHolder current : removedPanes)
 		{
 			removeView(current.getView(), true);
 		}
@@ -398,7 +365,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 	public EventWrapperViewPanel<T> getViewAt(int index)
 	{
-		if (index >= 0 && index < comboBoxModel.getSize())
+		if(index >= 0 && index < comboBoxModel.getSize())
 		{
 			return ((ViewHolder) comboBoxModel.getElementAt(index)).getView();
 		}
@@ -407,7 +374,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 	public EventWrapperViewPanel<T> getSelectedView()
 	{
-		ViewHolder holder= (ViewHolder) comboBoxModel.getSelectedItem();
+		ViewHolder holder = (ViewHolder) comboBoxModel.getSelectedItem();
 		if(holder != null)
 		{
 			return holder.getView();
@@ -417,9 +384,9 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 	public void setViewIndex(int index)
 	{
-		ViewHolder holder= (ViewHolder) comboBoxModel.getElementAt(index);
+		ViewHolder holder = (ViewHolder) comboBoxModel.getElementAt(index);
 		comboBoxModel.setSelectedItem(holder);
-		fireChange();
+		selectedViewChanged();
 	}
 
 	public int getViewIndex()
@@ -436,7 +403,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	{
 		ViewHolder holder = (ViewHolder) comboBoxModel.getSelectedItem();
 		int index = comboBoxModel.getIndexOf(holder);
-		if (holder != null && index >0)
+		if(holder != null && index > 0)
 		{
 			EventWrapperViewPanel<T> lvp = holder.getView();
 			removeView(lvp, true);
@@ -451,15 +418,15 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 		int tabCount = comboBoxModel.getSize();
 		List<ViewHolder> removedPanes = new ArrayList<ViewHolder>();
-		for (int i = 1; i < tabCount; i++)
+		for(int i = 1; i < tabCount; i++)
 		{
-			if (i != index)
+			if(i != index)
 			{
 				removedPanes.add((ViewHolder) comboBoxModel.getElementAt(i));
 			}
 		}
 
-		for (ViewHolder current : removedPanes)
+		for(ViewHolder current : removedPanes)
 		{
 			removeView(current.getView(), true);
 		}
@@ -469,12 +436,12 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	public void closeAllFilters()
 	{
 		List<ViewHolder> removedPanes = new ArrayList<ViewHolder>();
-		for (int i = 1; i < comboBoxModel.getSize(); i++)
+		for(int i = 1; i < comboBoxModel.getSize(); i++)
 		{
 			removedPanes.add((ViewHolder) comboBoxModel.getElementAt(i));
 		}
 
-		for (ViewHolder current : removedPanes)
+		for(ViewHolder current : removedPanes)
 		{
 			removeView(current.getView(), true);
 		}
@@ -483,40 +450,39 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 	public void setShowingStatusbar(boolean showingStatusbar)
 	{
-		this.showingStatusbar = showingStatusbar;
 		int tabCount = comboBoxModel.getSize();
-		for(int i=0;i<tabCount;i++)
+		for(int i = 0; i < tabCount; i++)
 		{
-			ViewHolder current= (ViewHolder) comboBoxModel.getElementAt(i);
+			ViewHolder current = (ViewHolder) comboBoxModel.getElementAt(i);
 			current.getView().setShowingStatusBar(showingStatusbar);
 		}
 	}
 
 	private class SourceChangeListener
-			implements PropertyChangeListener
+		implements PropertyChangeListener
 	{
 
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			String propName = evt.getPropertyName();
-			if (EventWrapperViewPanel.EVENT_SOURCE_PROPERTY.equals(propName))
+			if(EventWrapperViewPanel.EVENT_SOURCE_PROPERTY.equals(propName))
 			{
-				if (logger.isDebugEnabled()) logger.debug("EventSource changed: {}", evt.getNewValue());
+				if(logger.isDebugEnabled()) logger.debug("EventSource changed: {}", evt.getNewValue());
 				EventWrapperViewPanel<T> lvp = (EventWrapperViewPanel<T>) evt.getSource();
 				removeView(lvp, false);
 				addView(lvp);
 			}
-			else if (EventWrapperViewPanel.SELECTED_EVENT_PROPERTY.equals(propName))
+			else if(EventWrapperViewPanel.SELECTED_EVENT_PROPERTY.equals(propName))
 			{
-				if (getSelectedView() == evt.getSource())
+				if(getSelectedView() == evt.getSource())
 				{
-					if (logger.isDebugEnabled()) logger.debug("EventSource changed: {}", evt.getNewValue());
+					if(logger.isDebugEnabled()) logger.debug("EventSource changed: {}", evt.getNewValue());
 					setSelectedEvent((EventWrapper<T>) evt.getNewValue());
 				}
 			}
 			else
 			{
-				if (logger.isDebugEnabled()) logger.debug("Other change: {}", propName);
+				if(logger.isDebugEnabled()) logger.debug("Other change: {}", propName);
 				fireChange();
 			}
 		}
@@ -529,7 +495,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 		public MyComboBoxRenderer()
 		{
-			label=new JLabel();
+			label = new JLabel();
 			label.setOpaque(true);
 			label.setHorizontalAlignment(SwingConstants.LEFT);
 			label.setVerticalAlignment(SwingConstants.CENTER);
@@ -537,7 +503,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
 		{
-			if (isSelected)
+			if(isSelected)
 			{
 				label.setBackground(list.getSelectionBackground());
 				label.setForeground(list.getSelectionForeground());
@@ -548,11 +514,11 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 				label.setForeground(list.getForeground());
 			}
 
-			String title=null;
-			String toolTip=null;
+			String title = null;
+			String toolTip = null;
 			//if(value instanceof ViewHolder)
 			{
-				ViewHolder holder= (ViewHolder) value;
+				ViewHolder holder = (ViewHolder) value;
 				EventWrapperViewPanel<T> view = holder.getView();
 				if(view != null)
 				{
@@ -561,12 +527,13 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 					if(filter == null)
 					{
-						title="Unfiltered";
-						toolTip=title;
+						title = "Unfiltered";
+						toolTip = title;
 					}
 					else
 					{
-						SavedCondition savedCondition = getMainFrame().getApplicationPreferences().resolveSavedCondition(filter);
+						SavedCondition savedCondition = getMainFrame().getApplicationPreferences()
+							.resolveSavedCondition(filter);
 						if(savedCondition != null)
 						{
 							title = savedCondition.getName();
