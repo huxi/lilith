@@ -516,7 +516,8 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 			String title = null;
 			String toolTip = null;
-			//if(value instanceof ViewHolder)
+
+			if(value != null && value.getClass() == ViewHolder.class)
 			{
 				ViewHolder holder = (ViewHolder) value;
 				EventWrapperViewPanel<T> view = holder.getView();
