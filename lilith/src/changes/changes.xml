@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Updated protobuf to 2.2.0.
+			</action>
 			<action dev="jhux" type="fix" issue="66">
 				Jumping to the unfiltered event didn't work the first time if Tail was enabled.
 				This was reported by Joe.
