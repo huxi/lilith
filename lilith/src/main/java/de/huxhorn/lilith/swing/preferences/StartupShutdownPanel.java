@@ -19,11 +19,10 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 
-import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class StartupShutdownPanel
 	extends JPanel
@@ -33,6 +32,7 @@ public class StartupShutdownPanel
 
 	// Startup
 	private JCheckBox showSplashCheckbox;
+	private JCheckBox showTipOfTheDayCheckbox;
 	private JCheckBox checkForUpdateCheckbox;
 
 	// Shutdown
@@ -50,13 +50,15 @@ public class StartupShutdownPanel
 	{
 		showSplashCheckbox = new JCheckBox("Show splash screen.");
 		checkForUpdateCheckbox = new JCheckBox("Check for updates on startup.");
+		showTipOfTheDayCheckbox = new JCheckBox("Show Tip of the Day on startup.");
 
 		askBeforeQuitCheckbox = new JCheckBox("Ask before exit.");
 		cleaningLogsOnExitCheckbox = new JCheckBox("Clean logs on exit.");
 
-		JPanel startupPanel = new JPanel(new GridLayout(2, 1));
+		JPanel startupPanel = new JPanel(new GridLayout(3, 1));
 		startupPanel.add(showSplashCheckbox);
 		startupPanel.add(checkForUpdateCheckbox);
+		startupPanel.add(showTipOfTheDayCheckbox);
 		startupPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Startup"));
 
 		JPanel shutdownPanel = new JPanel(new GridLayout(2, 1));
@@ -86,6 +88,7 @@ public class StartupShutdownPanel
 	{
 		showSplashCheckbox.setSelected(!applicationPreferences.isSplashScreenDisabled());
 		checkForUpdateCheckbox.setSelected(applicationPreferences.isCheckingForUpdate());
+		showTipOfTheDayCheckbox.setSelected(applicationPreferences.isShowingTipOfTheDay());
 
 		askBeforeQuitCheckbox.setSelected(applicationPreferences.isAskingBeforeQuit());
 		cleaningLogsOnExitCheckbox.setSelected(applicationPreferences.isCleaningLogsOnExit());
@@ -95,6 +98,7 @@ public class StartupShutdownPanel
 	{
 		applicationPreferences.setSplashScreenDisabled(!showSplashCheckbox.isSelected());
 		applicationPreferences.setCheckingForUpdate(checkForUpdateCheckbox.isSelected());
+		applicationPreferences.setShowingTipOfTheDay(showTipOfTheDayCheckbox.isSelected());
 
 		applicationPreferences.setAskingBeforeQuit(askBeforeQuitCheckbox.isSelected());
 		applicationPreferences.setCleaningLogsOnExit(cleaningLogsOnExitCheckbox.isSelected());
