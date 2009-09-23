@@ -230,4 +230,7 @@
     <logger name="de.huxhorn.lilith.swing.taskmanager.table">
         <level value="WARN"/>
     </logger>
+	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog">
+	    <level value="DEBUG"/>
+	</logger>
 </configuration>
