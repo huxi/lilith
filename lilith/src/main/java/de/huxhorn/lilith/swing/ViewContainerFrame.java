@@ -20,11 +20,10 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
-import javax.swing.*;
 
 public class ViewContainerFrame
 	extends JFrame
@@ -145,10 +144,12 @@ public class ViewContainerFrame
 
 		public void windowActivated(WindowEvent e)
 		{
+			mainFrame.getViewActions().setViewContainer(viewContainer);
 		}
 
 		public void windowDeactivated(WindowEvent e)
 		{
+			mainFrame.getViewActions().setViewContainer(null);
 		}
 	}
 
