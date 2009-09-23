@@ -86,6 +86,10 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="fix" issue="67">
+				Copy actions are now working correctly in case of external frames.
+				This was reported by Matthias "Alfred" Neumann.
+			</action>
 			<action dev="jhux" type="update">
 				Updated protobuf to 2.2.0.
 			</action>
