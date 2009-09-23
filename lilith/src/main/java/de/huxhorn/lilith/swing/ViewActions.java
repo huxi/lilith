@@ -639,6 +639,7 @@ public class ViewActions
 
 		// Help
 		KeyboardHelpAction keyboardHelpAction = new KeyboardHelpAction();
+		TipOfTheDayAction tipOfTheDayAction = new TipOfTheDayAction();
 		DebugAction debugAction = new DebugAction();
 		aboutAction = new AboutAction();
 		CheckForUpdateAction checkForUpdateAction = new CheckForUpdateAction();
@@ -782,6 +783,7 @@ public class ViewActions
 		helpMenu.setMnemonic('h');
 
 		helpMenu.add(new JMenuItem(keyboardHelpAction));
+		helpMenu.add(new JMenuItem(tipOfTheDayAction));
 		helpMenu.add(new JMenuItem(checkForUpdateAction));
 		helpMenu.add(new JMenuItem(troubleshootingAction));
 		helpMenu.addSeparator();
@@ -2900,6 +2902,21 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showHelp();
+		}
+	}
+
+	class TipOfTheDayAction
+		extends AbstractAction
+	{
+		public TipOfTheDayAction()
+		{
+			super("Tip of the Day...");
+			putValue(Action.SMALL_ICON, HELP_MENU_ICON);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.showTipOfTheDayDialog();
 		}
 	}
 

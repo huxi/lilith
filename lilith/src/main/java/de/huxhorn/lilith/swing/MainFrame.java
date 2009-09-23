@@ -204,6 +204,7 @@ public class MainFrame
 	private static final double SCALE_FACTOR = 0.05d;
 	private JToolBar toolbar;
 	private JPanel statusBar;
+	private TipOfTheDayDialog tipOfTheDayDialog;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -442,6 +443,9 @@ public class MainFrame
 		}
 
 		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
+
+		setSplashStatusText("Creating Tip of the Day dialog.");
+		tipOfTheDayDialog = new TipOfTheDayDialog(this);
 
 		setSplashStatusText("Creating actions and menus.");
 		viewActions = new ViewActions(this, null);
@@ -716,8 +720,19 @@ public class MainFrame
 			checkForUpdate(false);
 		}
 		updateConditions(); // to initialize active conditions.
+
+		if(applicationPreferences.isShowingTipOfTheDay())
+		{
+			showTipOfTheDayDialog();
+		}
+
 		setSplashStatusText("Finished.");
 		cleanObsoleteFiles();
+	}
+
+	public void showTipOfTheDayDialog()
+	{
+		Windows.showWindow(tipOfTheDayDialog, this, true);
 	}
 
 	private void updateTaskStatus()
