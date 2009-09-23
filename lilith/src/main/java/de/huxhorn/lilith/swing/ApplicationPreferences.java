@@ -115,6 +115,8 @@ public class ApplicationPreferences
 	public static final String CONDITIONS_PROPERTY = "conditions";
 	public static final String SPLASH_SCREEN_DISABLED_PROPERTY = "splashScreenDisabled";
 	public static final String ASKING_BEFORE_QUIT_PROPERTY = "askingBeforeQuit";
+	public static final String CURRENT_TIP_OF_THE_DAY_PROPERTY = "currentTipOfTheDay";
+	public static final String SHOWING_TIP_OF_THE_DAY_PROPERTY = "showingTipOfTheDay";
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
 	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
@@ -1005,6 +1007,32 @@ public class ApplicationPreferences
 			if(logger.isInfoEnabled()) logger.info("Look and Feel corrected to \"{}\".", result);
 		}
 		return result;
+	}
+
+	public void setCurrentTipOfTheDay(int currentTipOfTheDay)
+	{
+		Object oldValue = getCurrentTipOfTheDay();
+		PREFERENCES.putInt(CURRENT_TIP_OF_THE_DAY_PROPERTY, currentTipOfTheDay);
+		Object newValue = getCurrentTipOfTheDay();
+		propertyChangeSupport.firePropertyChange(CURRENT_TIP_OF_THE_DAY_PROPERTY, oldValue, newValue);
+	}
+
+	public int getCurrentTipOfTheDay()
+	{
+		return PREFERENCES.getInt(CURRENT_TIP_OF_THE_DAY_PROPERTY, -1);
+	}
+
+	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
+	{
+		Object oldValue = isShowingTipOfTheDay();
+		PREFERENCES.putBoolean(SHOWING_TIP_OF_THE_DAY_PROPERTY, showingTipOfTheDay);
+		Object newValue = isShowingTipOfTheDay();
+		propertyChangeSupport.firePropertyChange(SHOWING_TIP_OF_THE_DAY_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isShowingTipOfTheDay()
+	{
+		return PREFERENCES.getBoolean(SHOWING_TIP_OF_THE_DAY_PROPERTY, true);
 	}
 
 	private void initConditions()
