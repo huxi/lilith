@@ -167,6 +167,7 @@ public class HelpFrame
 	public void setHelpUrl(URL helpUrl)
 	{
 		helpPane.setDocument(helpUrl.toExternalForm(), xhtmlNamespaceHandler);
+		// TODO: jump to anchor. How can I do this??
 		//helpPane.setText(helpText);
 		//helpPane.setCaretPosition(0);
 	}
