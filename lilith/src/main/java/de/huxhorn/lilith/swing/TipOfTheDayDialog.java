@@ -29,6 +29,8 @@ import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -39,20 +41,19 @@ public class TipOfTheDayDialog
 {
 	private final Logger logger = LoggerFactory.getLogger(TipOfTheDayDialog.class);
 
-	private MainFrame mainFrame;
 	private ArrayList<URL> tipsOfTheDay;
 	private int currentTipOfTheDay;
 	private ApplicationPreferences applicationPreferences;
 	private XHTMLPanel helpPane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private SelectionHighlighter.CopyAction copyAction;
+	private JCheckBox showTipOfTheDayCheckbox;
 
 	public TipOfTheDayDialog(MainFrame owner)
 	{
 		super(owner);
 
-		this.mainFrame = owner;
-		applicationPreferences = this.mainFrame.getApplicationPreferences();
+		applicationPreferences = owner.getApplicationPreferences();
 
 		setTitle("Tip of the Day");
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
@@ -63,11 +64,32 @@ public class TipOfTheDayDialog
 
 		add(didYouKnowLabel, BorderLayout.NORTH);
 
-		JPanel buttonPanel = new JPanel();
+		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
-		buttonPanel.add(new JButton(new PreviousTipAction()));
-		buttonPanel.add(new JButton(new NextTipAction()));
-		buttonPanel.add(new JButton(new CloseAction()));
+		GridBagConstraints gbc=new GridBagConstraints();
+
+		gbc.gridwidth = 3;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+
+		showTipOfTheDayCheckbox = new JCheckBox("Show Tip of the Day on startup.");
+		showTipOfTheDayCheckbox.setSelected(applicationPreferences.isShowingTipOfTheDay());
+		showTipOfTheDayCheckbox.addItemListener(new CheckboxListener());
+		buttonPanel.add(showTipOfTheDayCheckbox, gbc);
+
+		gbc.gridwidth = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		buttonPanel.add(new JButton(new PreviousTipAction()), gbc);
+
+		gbc.gridx = 1;
+		buttonPanel.add(new JButton(new NextTipAction()), gbc);
+
+		gbc.gridx = 2;
+		buttonPanel.add(new JButton(new CloseAction()), gbc);
+		
 		initHelpResources();
 		helpPane = new XHTMLPanel();
 
@@ -86,7 +108,7 @@ public class TipOfTheDayDialog
 					}
 				}
 			}
-			helpPane.addMouseTrackingListener(new OpenUrlLinkListener(mainFrame, originalLinkListener));
+			helpPane.addMouseTrackingListener(new OpenUrlLinkListener(owner, originalLinkListener));
 		}
 
 		SelectionHighlighter helpPaneCaret = new SelectionHighlighter();
@@ -154,6 +176,11 @@ public class TipOfTheDayDialog
 		copyAction.actionPerformed(null);
 	}
 
+	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
+	{
+		showTipOfTheDayCheckbox.setSelected(showingTipOfTheDay);
+	}
+
 	private class PreviousTipAction
 		extends AbstractAction
 	{
@@ -199,6 +226,21 @@ public class TipOfTheDayDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			setVisible(false);
+		}
+	}
+
+	private class CheckboxListener
+		implements ItemListener
+	{
+
+		public void itemStateChanged(ItemEvent e)
+		{
+			Object source = e.getItemSelectable();
+
+			if(source == showTipOfTheDayCheckbox)
+			{
+				applicationPreferences.setShowingTipOfTheDay(showTipOfTheDayCheckbox.isSelected());
+			}
 		}
 	}
 }

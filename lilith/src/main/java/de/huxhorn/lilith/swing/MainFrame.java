@@ -128,6 +128,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -1172,6 +1173,46 @@ public class MainFrame
 	public void troubleshooting()
 	{
 		preferencesDialog.troubleshooting();
+	}
+
+	public void openHelp(String help)
+	{
+
+		String helpFile=help;
+		String helpAnchor=null;
+		int hashIndex = helpFile.indexOf('#');
+		if(hashIndex > -1)
+		{
+			helpFile=help.substring(0, hashIndex);
+			helpAnchor = help.substring(hashIndex);
+		}
+		String resourceName="/help/"+helpFile;
+		URL url = MainFrame.class.getResource(resourceName);
+		if(url == null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Couldn't find help resource '{}'!", resourceName);
+			return;
+		}
+
+		if(helpAnchor != null)
+		{
+			String urlString = url.toString()+helpAnchor;
+			try
+			{
+				url=new URL(urlString);
+			}
+			catch(MalformedURLException e)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Couldn't create help URL for '{}'!", urlString);
+			}
+		}
+		if(logger.isInfoEnabled()) logger.info("Opening help: {}", url);
+		helpFrame.setHelpUrl(url);
+		if(!helpFrame.isVisible())
+		{
+			Windows.showWindow(helpFrame, this, false);
+		}
+		helpFrame.toFront();
 	}
 
 	public enum ImportType
@@ -2540,6 +2581,12 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.SHOWING_TIP_OF_THE_DAY_PROPERTY.equals(propName))
+			{
+				setShowingTipOfTheDay(applicationPreferences.isShowingTipOfTheDay());
+				return;
+			}
+
 			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
 				coloringWholeRow = applicationPreferences.isColoringWholeRow();
@@ -2595,6 +2642,12 @@ public class MainFrame
 				setShowingStatusbar(current.getValue(), showingStatusbar);
 			}
 		}
+	}
+
+	private void setShowingTipOfTheDay(boolean showingTipOfTheDay)
+	{
+		preferencesDialog.setShowingTipOfTheDay(showingTipOfTheDay);
+		tipOfTheDayDialog.setShowingTipOfTheDay(showingTipOfTheDay);
 	}
 
 	private void setShowingToolbar(boolean showingToolbar)

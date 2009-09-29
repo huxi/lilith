@@ -314,6 +314,11 @@ public class PreferencesDialog
 		this.whiteListName = whiteListName;
 	}
 
+	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
+	{
+		startupShutdownPanel.setShowingTipOfTheDay(showingTipOfTheDay);
+	}
+
 	private class OkAction
 		extends AbstractAction
 	{

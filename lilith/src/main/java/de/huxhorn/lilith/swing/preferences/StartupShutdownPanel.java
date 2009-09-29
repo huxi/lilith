@@ -103,4 +103,9 @@ public class StartupShutdownPanel
 		applicationPreferences.setAskingBeforeQuit(askBeforeQuitCheckbox.isSelected());
 		applicationPreferences.setCleaningLogsOnExit(cleaningLogsOnExitCheckbox.isSelected());
 	}
+
+	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
+	{
+		showTipOfTheDayCheckbox.setSelected(showingTipOfTheDay);
+	}
 }
