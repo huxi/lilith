@@ -2598,6 +2598,12 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.CHECKING_FOR_UPDATE_PROPERTY.equals(propName))
+			{
+				setCheckingForUpdate(applicationPreferences.isCheckingForUpdate());
+				return;
+			}
+
 			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
 				coloringWholeRow = applicationPreferences.isColoringWholeRow();
@@ -2633,6 +2639,12 @@ public class MainFrame
 				}
 			}
 		}
+	}
+
+	private void setCheckingForUpdate(boolean checkingForUpdate)
+	{
+		preferencesDialog.setCheckingForUpdate(checkingForUpdate);
+		checkForUpdateDialog.setCheckingForUpdate(checkingForUpdate);
 	}
 
 	private void setShowingStatusbar(boolean showingStatusbar)
@@ -3217,7 +3229,7 @@ public class MainFrame
 
 		public String retrieveChanges(String currentVersion)
 		{
-			final String url = "http://lilith.huxhorn.de/changes-"+currentVersion+".xhtml";
+			final String url = "http://lilith.huxhorn.de/changes-" + currentVersion + ".xhtml";
 			// Create an instance of HttpClient.
 			HttpClient client = new HttpClient();
 
@@ -3265,7 +3277,7 @@ public class MainFrame
 			String currentVersion = retrieveCurrentVersion();
 
 			String message;
-			String changes=null;
+			String changes = null;
 			boolean newVersion = false;
 			if(currentVersion == null)
 			{
@@ -3277,14 +3289,14 @@ public class MainFrame
 				{
 					message = "New version is available: " + currentVersion;
 					newVersion = true;
-					changes=retrieveChanges(currentVersion);
+					changes = retrieveChanges(currentVersion);
 				}
 				else
 				{
 					message = "Your version is up to date.";
 					if(showAlways)
 					{
-						changes=retrieveChanges(currentVersion);
+						changes = retrieveChanges(currentVersion);
 					}
 				}
 			}

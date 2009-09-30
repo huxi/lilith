@@ -320,6 +320,11 @@ public class PreferencesDialog
 		startupShutdownPanel.setShowingTipOfTheDay(showingTipOfTheDay);
 	}
 
+	public void setCheckingForUpdate(boolean checkingForUpdate)
+	{
+		startupShutdownPanel.setCheckingForUpdate(checkingForUpdate);
+	}
+
 	private class OkAction
 		extends AbstractAction
 	{
