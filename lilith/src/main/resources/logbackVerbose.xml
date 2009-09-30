@@ -66,19 +66,12 @@
         <IncludeCallerData>true</IncludeCallerData>
     </appender>
 
-    <root>
-        <level value="INFO"/>
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <!--
-                <appender-ref ref="Localhost"/>
-                <appender-ref ref="multiplex" />
-                <appender-ref ref="MultiplexClassicCompressed" />
-                -->
         <appender-ref ref="Lilith"/>
     </root>
 
-    <logger name="de.huxhorn.lilith.debug">
-        <level value="TRACE"/>
+    <logger name="de.huxhorn.lilith.debug" level="TRACE">
         <appender-ref ref="MultiplexClassicCompressed"/>
         <appender-ref ref="MultiplexClassicUncompressed"/>
         <appender-ref ref="MultiplexClassicXmlCompressed"/>
@@ -86,148 +79,54 @@
         <appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
         <appender-ref ref="LogbackClassic"/>
     </logger>
-    <logger name="sun">
-        <level value="WARN"/>
-    </logger>
-    <logger name="java">
-        <level value="WARN"/>
-    </logger>
-    <logger name="javax">
-        <level value="WARN"/>
-    </logger>
-    <logger name="javax.jmdns">
-        <level value="TRACE"/>
-    </logger>
-    <logger name="org.springframework">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.sulky">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.consumers.SocketEventConsumer">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.consumers.SocketEventConsumer">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.engine.impl.sourcemanager.EventPoller">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.consumers.FileSplitterEventConsumer">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.consumers.FileDumpEventConsumer">
-        <level value="WARN"/>
-    </logger>
 
-    <logger name="de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer">
-        <level value="WARN"/>
-    </logger>
-
-    <logger name="de.huxhorn.lilith.swing.table.EventWrapperViewTable">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.sulky.buffers.FilteringBuffer">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.sulky.swing.Windows">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.sulky.swing.KeyStrokes">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.preferences">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.ApplicationPreferences">
-        <level value="INFO"/>
-    </logger>
-
-    <logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener">
-        <level value="DEBUG"/>
-    </logger>
-    <logger name="de.huxhorn.sulky.sounds.jlayer.JLayerSounds">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.consumers.RrdLoggingEventConsumer">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.SplashScreen">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.MainFrame">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.MainFrame$ColorsCollectionRunnable">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.AboutPanel">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.statistics.AbstractGraphImageProducer">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.callables.IndexingCallable">
-        <level value="DEBUG"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.ViewActions">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.ViewContainerFrame">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.Lilith">
-        <level value="DEBUG"/>
-    </logger>
-    <logger name="org.apache.commons.httpclient">
-        <level value="WARN"/>
-    </logger>
-    <logger name="httpclient.wire">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.services.sender">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer">
-        <level value="WARN"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.taskmanager">
-        <level value="INFO"/>
-    </logger>
-    <logger name="de.huxhorn.lilith.swing.taskmanager.table">
-        <level value="WARN"/>
-    </logger>
+	<logger name="de.huxhorn.lilith" level="INFO"/>
+	<logger name="de.huxhorn.lilith.Lilith" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.consumers.FileDumpEventConsumer" level="WARN"/>
+	<logger name="de.huxhorn.lilith.consumers.FileSplitterEventConsumer" level="WARN"/>
+	<logger name="de.huxhorn.lilith.consumers.RrdLoggingEventConsumer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="WARN"/>
+	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.engine.impl.sourcemanager.EventPoller" level="WARN"/>
+	<logger name="de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl" level="WARN"/>
+	<logger name="de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer" level="WARN"/>
+	<logger name="de.huxhorn.lilith.services.sender" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.AboutPanel" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.MainFrame" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.MainFrame$ColorsCollectionRunnable" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.SplashScreen" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.swing.ViewActions" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame" level="WARN" />
+	<logger name="de.huxhorn.lilith.swing.callables.IndexingCallable" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.swing.preferences" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.statistics.AbstractGraphImageProducer" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.table.EventWrapperViewTable" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.taskmanager" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.taskmanager.table" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.xhtml" level="DEBUG"/>
+	<logger name="de.huxhorn.sulky" level="INFO"/>
+	<logger name="de.huxhorn.sulky.buffers.FilteringBuffer" level="INFO"/>
+	<logger name="de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer" level="WARN"/>
+	<logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener" level="DEBUG"/>
+	<logger name="de.huxhorn.sulky.sounds.jlayer.JLayerSounds" level="WARN"/>
+	<logger name="de.huxhorn.sulky.swing.KeyStrokes" level="INFO"/>
+	<logger name="de.huxhorn.sulky.swing.Windows" level="INFO"/>
+	<logger name="httpclient.wire" level="WARN"/>
+	<logger name="java" level="WARN"/>
+	<logger name="javax" level="WARN"/>
+	<logger name="javax.jmdns" level="TRACE"/>
+	<logger name="org.apache.commons.httpclient" level="WARN"/>
+	<logger name="org.springframework" level="INFO"/>
+	<logger name="sun" level="WARN"/>
 </configuration>
