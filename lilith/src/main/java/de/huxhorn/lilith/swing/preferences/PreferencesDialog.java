@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -330,6 +331,7 @@ public class PreferencesDialog
 			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ENTER");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -347,6 +349,7 @@ public class PreferencesDialog
 		public ApplyAction()
 		{
 			super("Apply");
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_A);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -363,6 +366,7 @@ public class PreferencesDialog
 		public ResetAction()
 		{
 			super("Reset");
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -382,6 +386,7 @@ public class PreferencesDialog
 			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}
 
 		public void actionPerformed(ActionEvent e)
