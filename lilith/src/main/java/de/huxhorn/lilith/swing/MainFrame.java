@@ -206,6 +206,7 @@ public class MainFrame
 	private JToolBar toolbar;
 	private JPanel statusBar;
 	private TipOfTheDayDialog tipOfTheDayDialog;
+	private CheckForUpdateDialog checkForUpdateDialog;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -396,6 +397,9 @@ public class MainFrame
 
 		setSplashStatusText("Creating about dialog.");
 		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);
+
+		setSplashStatusText("Creating update dialog.");
+		checkForUpdateDialog = new CheckForUpdateDialog(this);
 
 		setSplashStatusText("Creating debug dialog.");
 		debugDialog = new DebugDialog(this, this);
@@ -3159,7 +3163,7 @@ public class MainFrame
 			this.showAlways = showAlways;
 		}
 
-		public void run()
+		public String retrieveCurrentVersion()
 		{
 			final String url = "http://lilith.huxhorn.de/current-version.txt";
 			// Create an instance of HttpClient.
@@ -3183,12 +3187,14 @@ public class MainFrame
 				{
 					System.err.println("Method failed: " + method.getStatusLine());
 				}
+				else
+				{
+					// Read the response body.
+					byte[] responseBody = method.getResponseBody();
+					String charSet = method.getResponseCharSet();
 
-				// Read the response body.
-				byte[] responseBody = method.getResponseBody();
-				String charSet = method.getResponseCharSet();
-
-				currentVersion = new String(responseBody, charSet);
+					currentVersion = new String(responseBody, charSet).trim();
+				}
 			}
 			catch(Throwable e)
 			{
@@ -3199,8 +3205,60 @@ public class MainFrame
 				// Release the connection.
 				method.releaseConnection();
 			}
+			return currentVersion;
+		}
+
+		public String retrieveChanges(String currentVersion)
+		{
+			final String url = "http://lilith.huxhorn.de/changes-"+currentVersion+".xhtml";
+			// Create an instance of HttpClient.
+			HttpClient client = new HttpClient();
+
+			// Create a method instance.
+			GetMethod method = new GetMethod(url);
+
+			// Provide custom retry handler is necessary
+			method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+				new DefaultHttpMethodRetryHandler(3, false));
+
+			String changes = null;
+			try
+			{
+				// Execute the method.
+				int statusCode = client.executeMethod(method);
+
+				// lets use our HttpStatus instead...
+				if(statusCode != HttpStatus.OK.getCode())
+				{
+					System.err.println("Method failed: " + method.getStatusLine());
+				}
+				else
+				{
+					// Read the response body.
+					byte[] responseBody = method.getResponseBody();
+					String charSet = method.getResponseCharSet();
+
+					changes = new String(responseBody, charSet).trim();
+				}
+			}
+			catch(Throwable e)
+			{
+				if(logger.isInfoEnabled()) logger.info("Exception while checking current version!", e);
+			}
+			finally
+			{
+				// Release the connection.
+				method.releaseConnection();
+			}
+			return changes;
+		}
+
+		public void run()
+		{
+			String currentVersion = retrieveCurrentVersion();
 
 			String message;
+			String changes=null;
 			boolean newVersion = false;
 			if(currentVersion == null)
 			{
@@ -3208,21 +3266,25 @@ public class MainFrame
 			}
 			else
 			{
-				currentVersion = currentVersion.trim();
 				if(!currentVersion.equals(Lilith.APP_VERSION))
 				{
 					message = "New version is available: " + currentVersion;
 					newVersion = true;
+					changes=retrieveChanges(currentVersion);
 				}
 				else
 				{
 					message = "Your version is up to date.";
+					if(showAlways)
+					{
+						changes=retrieveChanges(currentVersion);
+					}
 				}
 			}
 			if(logger.isInfoEnabled()) logger.info("Message: {}, newVersion: {}", message, newVersion);
 			if(newVersion || showAlways)
 			{
-				SwingUtilities.invokeLater(new ShowUpdateDialog(message));
+				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
 			}
 		}
 	}
@@ -3231,21 +3293,27 @@ public class MainFrame
 		implements Runnable
 	{
 		private String message;
+		private String changes;
 
-		public ShowUpdateDialog(String message)
+		public ShowUpdateDialog(String message, String changes)
 		{
 			this.message = message;
+			this.changes = changes;
 		}
 
 		public void run()
 		{
-			MainFrame.this.showUpdateDialog(message);
+			MainFrame.this.showUpdateDialog(message, changes);
 		}
 	}
 
-	private void showUpdateDialog(String message)
+	private void showUpdateDialog(String message, String changes)
 	{
-		JOptionPane.showMessageDialog(this, message, "Check for update...", JOptionPane.INFORMATION_MESSAGE);
+		checkForUpdateDialog.setMessage(message);
+		checkForUpdateDialog.setChanges(changes);
+		if(logger.isWarnEnabled()) logger.warn("Check for update: message='{}', changes='{}'", message, changes);
+		Windows.showWindow(checkForUpdateDialog, this, true);
+		//JOptionPane.showMessageDialog(this, message, "Check for update...", JOptionPane.INFORMATION_MESSAGE);
 		// TODO: Improve update available dialog
 
 	}
