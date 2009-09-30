@@ -18,12 +18,12 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
+import de.huxhorn.lilith.swing.xhtml.EnhancedXHTMLPanel;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.simple.FSScrollPane;
-import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
@@ -42,7 +42,7 @@ public class HelpFrame
 {
 	private final Logger logger = LoggerFactory.getLogger(HelpFrame.class);
 
-	private XHTMLPanel helpPane;
+	private EnhancedXHTMLPanel helpPane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private MainFrame mainFrame;
 	private SelectionHighlighter.CopyAction copyAction;
@@ -60,7 +60,12 @@ public class HelpFrame
 
 	private void initUI()
 	{
-		helpPane = new XHTMLPanel();
+		helpPane = new EnhancedXHTMLPanel();
+
+		URL baseUrl = HelpFrame.class.getResource("/help");
+		String baseUrlString=baseUrl.toString()+"/";
+		if(logger.isWarnEnabled()) logger.warn("Help Base-URL: {}", baseUrlString);
+		helpPane.getSharedContext().setBaseURL(baseUrlString);
 
 		{
 			LinkListener originalLinkListener = null;
@@ -164,9 +169,17 @@ public class HelpFrame
 		copyAction.actionPerformed(null);
 	}
 
-	public void setHelpUrl(URL helpUrl)
+	public void setHelpUrl(String helpUrl)
 	{
-		helpPane.setDocument(helpUrl.toExternalForm(), xhtmlNamespaceHandler);
+		helpPane.setDocumentRelative(helpUrl);
+		helpPane.relayout();
+		int hashIndex=helpUrl.indexOf('#');
+		if(hashIndex > -1)
+		{
+			helpUrl=helpUrl.substring(hashIndex);
+			if(logger.isInfoEnabled()) logger.info("Jumping to anchor: '{}'", helpUrl);
+			helpPane.setDocumentRelative(helpUrl);
+		}
 		// TODO: jump to anchor. How can I do this??
 		//helpPane.setText(helpText);
 		//helpPane.setCaretPosition(0);
