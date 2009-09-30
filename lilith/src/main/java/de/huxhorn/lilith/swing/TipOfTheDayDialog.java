@@ -30,8 +30,8 @@ import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.ArrayList;
@@ -61,40 +61,21 @@ public class TipOfTheDayDialog
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		setModal(false);
 
-		JPanel content=new JPanel(new BorderLayout());
-		setLayout(new GridLayout(1,1));
-		JLabel didYouKnowLabel = new JLabel("Did you know...?");
+		JPanel content = new JPanel(new GridBagLayout());
 
-		content.add(didYouKnowLabel, BorderLayout.NORTH);
+		setLayout(new GridLayout(1, 1));
 
-		JPanel buttonPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
 
-		GridBagConstraints gbc=new GridBagConstraints();
-
-		gbc.gridwidth = 3;
+		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.gridwidth = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
+		JLabel didYouKnowLabel = new JLabel("Did you know...?");
 
-		showTipOfTheDayCheckbox = new JCheckBox("Show Tip of the Day on startup.");
-		showTipOfTheDayCheckbox.setSelected(applicationPreferences.isShowingTipOfTheDay());
-		showTipOfTheDayCheckbox.addItemListener(new CheckboxListener());
-		showTipOfTheDayCheckbox.setMnemonic(KeyEvent.VK_S);
-		buttonPanel.add(showTipOfTheDayCheckbox, gbc);
+		content.add(didYouKnowLabel, gbc);
 
-		gbc.gridwidth = 1;
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-
-		buttonPanel.add(new JButton(new PreviousTipAction()), gbc);
-
-		gbc.gridx = 1;
-		buttonPanel.add(new JButton(new NextTipAction()), gbc);
-
-		CloseAction closeAction = new CloseAction();
-		gbc.gridx = 2;
-		buttonPanel.add(new JButton(closeAction), gbc);
-		
 		initHelpResources();
 		helpPane = new XHTMLPanel();
 
@@ -127,13 +108,51 @@ public class TipOfTheDayDialog
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
 		helpScrollPane.setPreferredSize(new Dimension(400, 200));
 
-		content.add(helpScrollPane, BorderLayout.CENTER);
-		content.add(buttonPanel, BorderLayout.SOUTH);
+		gbc.gridy = 1;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+
+		content.add(helpScrollPane, gbc);
+
+		gbc.gridy = 2;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.LINE_START;
+
+
+		showTipOfTheDayCheckbox = new JCheckBox("Show Tip of the Day on startup.");
+		showTipOfTheDayCheckbox.setSelected(applicationPreferences.isShowingTipOfTheDay());
+		showTipOfTheDayCheckbox.addItemListener(new CheckboxListener());
+		showTipOfTheDayCheckbox.setMnemonic(KeyEvent.VK_S);
+		content.add(showTipOfTheDayCheckbox, gbc);
+
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.gridx = 0;
+		gbc.gridx = 0;
+
+		JPanel buttonPanel = new JPanel(new GridBagLayout());
+
+		buttonPanel.add(new JButton(new PreviousTipAction()), gbc);
+
+		gbc.gridx = 1;
+		buttonPanel.add(new JButton(new NextTipAction()), gbc);
+
+		CloseAction closeAction = new CloseAction();
+		gbc.gridx = 2;
+		buttonPanel.add(new JButton(closeAction), gbc);
+
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.anchor = GridBagConstraints.LINE_END;
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		content.add(buttonPanel, gbc);
 
 		KeyStrokes.registerCommand(content, closeAction, "CLOSE_ACTION");
 
 
-		setContentPane(content);
+		add(content);
 
 		setCurrentTipOfTheDay(applicationPreferences.getCurrentTipOfTheDay() + 1);
 	}
@@ -236,7 +255,7 @@ public class TipOfTheDayDialog
 			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
 			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);			
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}
 
 		public void actionPerformed(ActionEvent e)

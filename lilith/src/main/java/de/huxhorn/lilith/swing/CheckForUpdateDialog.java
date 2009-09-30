@@ -97,6 +97,7 @@ public class CheckForUpdateDialog
 		setLayout(new GridLayout(1, 1));
 		GridBagConstraints gbc = new GridBagConstraints();
 
+		gbc.insets = new Insets(10, 10, 10, 10);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
@@ -105,18 +106,27 @@ public class CheckForUpdateDialog
 		content.add(messageLabel, gbc);
 
 		gbc.gridy = 1;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+
 		content.add(helpScrollPane, gbc);
 
 		gbc.gridy = 2;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.LINE_START;
 		content.add(checkForUpdateCheckbox, gbc);
 
+		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.gridy = 3;
 		OkAction okAction = new OkAction();
 		content.add(new JButton(okAction), gbc);
 		KeyStrokes.registerCommand(content, okAction, "OK_ACTION");
 		KeyStrokes.registerCommand(content, new CancelAction(), "CANCEL_ACTION");
 
-		setContentPane(content);
+		add(content);
 
 		URL docRootUrl = CheckForUpdateDialog.class.getResource("/help");
 		if(docRootUrl != null)
