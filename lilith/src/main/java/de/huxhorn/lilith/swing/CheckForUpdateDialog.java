@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
+import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.FSScrollPane;
@@ -30,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.net.URL;
 
 import javax.swing.*;
@@ -81,7 +83,8 @@ public class CheckForUpdateDialog
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
 		helpScrollPane.setPreferredSize(new Dimension(600,300));
 
-		setLayout(new GridBagLayout());
+		JPanel content = new JPanel(new GridBagLayout());
+		setLayout(new GridLayout(1,1));
 		GridBagConstraints gbc=new GridBagConstraints();
 
 		gbc.gridx = 0;
@@ -89,13 +92,18 @@ public class CheckForUpdateDialog
 
 		messageLabel=new JLabel();
 
-		add(messageLabel, gbc);
+		content.add(messageLabel, gbc);
 
 		gbc.gridy = 1;
-		add(helpScrollPane, gbc);
+		content.add(helpScrollPane, gbc);
 
 		gbc.gridy = 2;
-		add(new JButton(new OkAction()), gbc);
+		OkAction okAction = new OkAction();
+		content.add(new JButton(okAction), gbc);
+		KeyStrokes.registerCommand(content, okAction, "OK_ACTION");
+		KeyStrokes.registerCommand(content, new CancelAction(), "CANCEL_ACTION");
+
+		setContentPane(content);
 
 		URL docRootUrl = CheckForUpdateDialog.class.getResource("/help");
 		if(docRootUrl != null)
@@ -140,7 +148,31 @@ public class CheckForUpdateDialog
 
 		public OkAction()
 		{
-			super("OK");
+			super("Ok");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ENTER");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			setVisible(false);
+		}
+	}
+
+	private class CancelAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -7356773009949031885L;
+
+		public CancelAction()
+		{
+			super("Cancel");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}
 
 		public void actionPerformed(ActionEvent e)

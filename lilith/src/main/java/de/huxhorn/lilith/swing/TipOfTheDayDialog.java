@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
+import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -59,10 +61,11 @@ public class TipOfTheDayDialog
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		setModal(false);
 
-		setLayout(new BorderLayout());
+		JPanel content=new JPanel(new BorderLayout());
+		setLayout(new GridLayout(1,1));
 		JLabel didYouKnowLabel = new JLabel("Did you know...?");
 
-		add(didYouKnowLabel, BorderLayout.NORTH);
+		content.add(didYouKnowLabel, BorderLayout.NORTH);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
@@ -76,6 +79,7 @@ public class TipOfTheDayDialog
 		showTipOfTheDayCheckbox = new JCheckBox("Show Tip of the Day on startup.");
 		showTipOfTheDayCheckbox.setSelected(applicationPreferences.isShowingTipOfTheDay());
 		showTipOfTheDayCheckbox.addItemListener(new CheckboxListener());
+		showTipOfTheDayCheckbox.setMnemonic(KeyEvent.VK_S);
 		buttonPanel.add(showTipOfTheDayCheckbox, gbc);
 
 		gbc.gridwidth = 1;
@@ -87,8 +91,9 @@ public class TipOfTheDayDialog
 		gbc.gridx = 1;
 		buttonPanel.add(new JButton(new NextTipAction()), gbc);
 
+		CloseAction closeAction = new CloseAction();
 		gbc.gridx = 2;
-		buttonPanel.add(new JButton(new CloseAction()), gbc);
+		buttonPanel.add(new JButton(closeAction), gbc);
 		
 		initHelpResources();
 		helpPane = new XHTMLPanel();
@@ -122,8 +127,13 @@ public class TipOfTheDayDialog
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
 		helpScrollPane.setPreferredSize(new Dimension(400, 200));
 
-		add(helpScrollPane, BorderLayout.CENTER);
-		add(buttonPanel, BorderLayout.SOUTH);
+		content.add(helpScrollPane, BorderLayout.CENTER);
+		content.add(buttonPanel, BorderLayout.SOUTH);
+
+		KeyStrokes.registerCommand(content, closeAction, "CLOSE_ACTION");
+
+
+		setContentPane(content);
 
 		setCurrentTipOfTheDay(applicationPreferences.getCurrentTipOfTheDay() + 1);
 	}
@@ -189,6 +199,7 @@ public class TipOfTheDayDialog
 		private PreviousTipAction()
 		{
 			super("Previous Tip");
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_P);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -205,6 +216,7 @@ public class TipOfTheDayDialog
 		private NextTipAction()
 		{
 			super("Next Tip");
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -221,6 +233,10 @@ public class TipOfTheDayDialog
 		private CloseAction()
 		{
 			super("Close");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);			
 		}
 
 		public void actionPerformed(ActionEvent e)
