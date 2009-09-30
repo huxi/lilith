@@ -79,7 +79,7 @@ public class CheckForUpdateDialog
 
 
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
-		helpScrollPane.setPreferredSize(new Dimension(400,400));
+		helpScrollPane.setPreferredSize(new Dimension(600,300));
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc=new GridBagConstraints();
