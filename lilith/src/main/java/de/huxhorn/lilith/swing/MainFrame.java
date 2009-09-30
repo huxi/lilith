@@ -128,7 +128,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -182,7 +181,6 @@ public class MainFrame
 	private Application application;
 	private int activeCounter;
 	private List<AutostartRunnable> autostartProcesses;
-	private URL helpUrl;
 	private SenderService senderService;
 	private boolean enableBonjour;
 	private final boolean isMac;
@@ -446,8 +444,6 @@ public class MainFrame
 			// ... and use the basic 1.5 transfer handler if this fails.
 			new MainFrameTransferHandler(this).attach();
 		}
-
-		helpUrl = MainFrame.class.getResource("/help/index.xhtml");
 
 		setSplashStatusText("Creating Tip of the Day dialog.");
 		tipOfTheDayDialog = new TipOfTheDayDialog(this);
@@ -1182,6 +1178,7 @@ public class MainFrame
 	public void openHelp(String help)
 	{
 
+		/*
 		String helpFile=help;
 		String helpAnchor=null;
 		int hashIndex = helpFile.indexOf('#');
@@ -1212,6 +1209,9 @@ public class MainFrame
 		}
 		if(logger.isInfoEnabled()) logger.info("Opening help: {}", url);
 		helpFrame.setHelpUrl(url);
+		*/
+		if(logger.isInfoEnabled()) logger.info("Opening help: {}", help);
+		helpFrame.setHelpUrl(help);
 		if(!helpFrame.isVisible())
 		{
 			Windows.showWindow(helpFrame, this, false);
@@ -1863,11 +1863,18 @@ public class MainFrame
 
 	public void showHelp()
 	{
+		openHelp("index.xhtml");
+		/*
 		if(helpUrl != null)
 		{
-			helpFrame.setHelpUrl(helpUrl);
+			helpFrame.setHelpUrl("index.xhtml");
 		}
-		Windows.showWindow(helpFrame, MainFrame.this, false);
+		if(!helpFrame.isVisible())
+		{
+			Windows.showWindow(helpFrame, MainFrame.this, false);
+		}
+		helpFrame.toFront();
+		*/
 	}
 
 	public void showAboutDialog()
