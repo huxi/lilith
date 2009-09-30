@@ -19,10 +19,11 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 
+import java.awt.*;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 public class StartupShutdownPanel
 	extends JPanel
@@ -107,5 +108,10 @@ public class StartupShutdownPanel
 	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
 	{
 		showTipOfTheDayCheckbox.setSelected(showingTipOfTheDay);
+	}
+
+	public void setCheckingForUpdate(boolean checkingForUpdate)
+	{
+		checkForUpdateCheckbox.setSelected(checkingForUpdate);
 	}
 }

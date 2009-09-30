@@ -20,19 +20,21 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
-import org.xhtmlrenderer.simple.XHTMLPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.simple.FSScrollPane;
+import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -45,10 +47,13 @@ public class CheckForUpdateDialog
 	private JLabel messageLabel;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private String docRoot;
+	private ApplicationPreferences applicationPreferences;
+	private JCheckBox checkForUpdateCheckbox;
 
 	public CheckForUpdateDialog(MainFrame mainFrame)
 	{
 		super(mainFrame);
+		this.applicationPreferences = mainFrame.getApplicationPreferences();
 		setTitle("Check for update...");
 		setModal(false);
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
@@ -79,18 +84,23 @@ public class CheckForUpdateDialog
 		copyAction = new SelectionHighlighter.CopyAction();
 		copyAction.install(helpPaneCaret);
 
+		checkForUpdateCheckbox = new JCheckBox("Check for updates on startup.");
+		checkForUpdateCheckbox.setSelected(applicationPreferences.isCheckingForUpdate());
+		checkForUpdateCheckbox.addItemListener(new CheckboxListener());
+		checkForUpdateCheckbox.setMnemonic(KeyEvent.VK_U);
+
 
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
-		helpScrollPane.setPreferredSize(new Dimension(600,300));
+		helpScrollPane.setPreferredSize(new Dimension(600, 300));
 
 		JPanel content = new JPanel(new GridBagLayout());
-		setLayout(new GridLayout(1,1));
-		GridBagConstraints gbc=new GridBagConstraints();
+		setLayout(new GridLayout(1, 1));
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		messageLabel=new JLabel();
+		messageLabel = new JLabel();
 
 		content.add(messageLabel, gbc);
 
@@ -98,6 +108,9 @@ public class CheckForUpdateDialog
 		content.add(helpScrollPane, gbc);
 
 		gbc.gridy = 2;
+		content.add(checkForUpdateCheckbox, gbc);
+
+		gbc.gridy = 3;
 		OkAction okAction = new OkAction();
 		content.add(new JButton(okAction), gbc);
 		KeyStrokes.registerCommand(content, okAction, "OK_ACTION");
@@ -108,7 +121,7 @@ public class CheckForUpdateDialog
 		URL docRootUrl = CheckForUpdateDialog.class.getResource("/help");
 		if(docRootUrl != null)
 		{
-			docRoot=docRootUrl.toString()+"/";
+			docRoot = docRootUrl.toString() + "/";
 		}
 		if(logger.isDebugEnabled()) logger.debug("Changes docroot: {}", docRoot);
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
@@ -123,7 +136,7 @@ public class CheckForUpdateDialog
 	{
 		if(changes == null)
 		{
-			changes="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+			changes = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<!DOCTYPE html\n" +
 				"\tPUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n" +
 				"\t\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
@@ -133,12 +146,17 @@ public class CheckForUpdateDialog
 				"\t<link href=\"help.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" +
 				"</head>\n" +
 				"<body>\n" +
-				"<p>Couldn't load changes file!</p>\n"+
+				"<p>Couldn't load changes file!</p>\n" +
 				"</body>\n" +
 				"</html>";
 		}
 		helpPane.setDocumentFromString(changes, docRoot, xhtmlNamespaceHandler);
 
+	}
+
+	public void setCheckingForUpdate(boolean checkingForUpdate)
+	{
+		checkForUpdateCheckbox.setSelected(checkingForUpdate);
 	}
 
 	private class OkAction
@@ -180,4 +198,20 @@ public class CheckForUpdateDialog
 			setVisible(false);
 		}
 	}
+
+	private class CheckboxListener
+		implements ItemListener
+	{
+
+		public void itemStateChanged(ItemEvent e)
+		{
+			Object source = e.getItemSelectable();
+
+			if(source == checkForUpdateCheckbox)
+			{
+				applicationPreferences.setCheckingForUpdate(checkForUpdateCheckbox.isSelected());
+			}
+		}
+	}
+
 }
