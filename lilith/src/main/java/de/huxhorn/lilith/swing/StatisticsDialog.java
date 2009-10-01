@@ -19,15 +19,13 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.statistics.StatisticsPanel;
+import de.huxhorn.sulky.swing.Windows;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
 
 import javax.swing.*;
@@ -47,36 +45,11 @@ public class StatisticsDialog
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(false);
 		setResizable(false);
+		URL url = StatisticsDialog.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
+		if(url != null)
 		{
-			Throwable error = null;
-			try
-			{
-				Method setIconMethod = StatisticsDialog.class.getMethod("setIconImage", Image.class);
-
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
-				if(url != null)
-				{
-					ImageIcon icon = new ImageIcon(url);
-					setIconMethod.invoke(this, icon.getImage());
-				}
-			}
-			catch(NoSuchMethodException e)
-			{
-				if(logger.isInfoEnabled()) logger.info("No setIconImage-method found...");
-			}
-			catch(IllegalAccessException e)
-			{
-				error = e;
-			}
-			catch(InvocationTargetException e)
-			{
-				error = e;
-			}
-			if(error != null)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while executing setIconImage-method!", error);
-			}
-
+			ImageIcon icon = new ImageIcon(url);
+			Windows.setIconImage(this, icon.getImage());
 		}
 
 		statisticsPanel = new StatisticsPanel(owner);

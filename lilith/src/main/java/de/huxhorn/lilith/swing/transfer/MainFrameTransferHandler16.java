@@ -47,7 +47,7 @@ public class MainFrameTransferHandler16
 	{
 		super.attach();
 		mainFrame.setTransferHandler(this);
-		if(logger.isInfoEnabled()) logger.info("Attached transfer handler to mainFrame.");
+		if(logger.isDebugEnabled()) logger.debug("Attached transfer handler to mainFrame.");
 	}
 
 	@Override

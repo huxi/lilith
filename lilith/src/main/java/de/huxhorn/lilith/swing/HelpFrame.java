@@ -64,7 +64,7 @@ public class HelpFrame
 
 		URL baseUrl = HelpFrame.class.getResource("/help");
 		String baseUrlString=baseUrl.toString()+"/";
-		if(logger.isWarnEnabled()) logger.warn("Help Base-URL: {}", baseUrlString);
+		if(logger.isDebugEnabled()) logger.debug("Help Base-URL: {}", baseUrlString);
 		helpPane.getSharedContext().setBaseURL(baseUrlString);
 
 		{
