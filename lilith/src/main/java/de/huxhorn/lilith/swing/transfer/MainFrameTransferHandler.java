@@ -55,7 +55,7 @@ public class MainFrameTransferHandler
 	public void attach()
 	{
 		this.desktop.setTransferHandler(this);
-		if(logger.isInfoEnabled()) logger.info("Attached transfer handler to desktop.");
+		if(logger.isDebugEnabled()) logger.debug("Attached transfer handler to desktop.");
 	}
 
 	@Override

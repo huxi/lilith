@@ -1409,7 +1409,6 @@ public class MainFrame
 	public class MyApplicationListener
 		implements ApplicationListener
 	{
-
 		public void handleAbout(ApplicationEvent event)
 		{
 			//application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
@@ -1419,12 +1418,12 @@ public class MainFrame
 
 		public void handleOpenApplication(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Open Application: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("Open Application: {}", applicationEvent);
 		}
 
 		public void handleOpenFile(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Open File: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("Open File: {}", applicationEvent);
 		}
 
 		public void handlePreferences(ApplicationEvent applicationEvent)
@@ -1434,7 +1433,7 @@ public class MainFrame
 
 		public void handlePrintFile(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Print: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("Print: {}", applicationEvent);
 		}
 
 		public void handleQuit(ApplicationEvent applicationEvent)
@@ -1444,7 +1443,7 @@ public class MainFrame
 
 		public void handleReopenApplication(ApplicationEvent applicationEvent)
 		{
-			if(logger.isInfoEnabled()) logger.info("Reopen Application: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("Reopen Application: {}", applicationEvent);
 			setVisible(true);
 		}
 	}
@@ -3293,14 +3292,14 @@ public class MainFrame
 				}
 				else
 				{
-					message = "Your version is up to date.";
+					message = null;
 					if(showAlways)
 					{
 						changes = retrieveChanges(currentVersion);
 					}
 				}
 			}
-			if(logger.isInfoEnabled()) logger.info("Message: {}, newVersion: {}", message, newVersion);
+			if(logger.isDebugEnabled()) logger.debug("Message: {}, newVersion: {}", message, newVersion);
 			if(newVersion || showAlways)
 			{
 				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
@@ -3330,11 +3329,8 @@ public class MainFrame
 	{
 		checkForUpdateDialog.setMessage(message);
 		checkForUpdateDialog.setChanges(changes);
-		if(logger.isWarnEnabled()) logger.warn("Check for update: message='{}', changes='{}'", message, changes);
+		if(logger.isDebugEnabled()) logger.debug("Check for update: message='{}', changes='{}'", message, changes);
 		Windows.showWindow(checkForUpdateDialog, this, true);
-		//JOptionPane.showMessageDialog(this, message, "Check for update...", JOptionPane.INFORMATION_MESSAGE);
-		// TODO: Improve update available dialog
-
 	}
 
 	/*

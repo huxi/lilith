@@ -49,6 +49,26 @@ public class CheckForUpdateDialog
 	private String docRoot;
 	private ApplicationPreferences applicationPreferences;
 	private JCheckBox checkForUpdateCheckbox;
+	private static final int INSET = 10;
+
+	private static final Icon UPDATE_ICON;
+
+	static
+	{
+		Icon icon;
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/status/software-update-available.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		UPDATE_ICON = icon;
+	}
 
 	public CheckForUpdateDialog(MainFrame mainFrame)
 	{
@@ -97,11 +117,17 @@ public class CheckForUpdateDialog
 		setLayout(new GridLayout(1, 1));
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.insets.top = INSET;
+		gbc.insets.bottom = 0;
+		gbc.insets.left = INSET;
+		gbc.insets.right = INSET;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
 		messageLabel = new JLabel();
+		Font labelFont = messageLabel.getFont();
+		labelFont=labelFont.deriveFont(1.5f*labelFont.getSize2D());
+		messageLabel.setFont(labelFont);
 
 		content.add(messageLabel, gbc);
 
@@ -119,6 +145,10 @@ public class CheckForUpdateDialog
 		gbc.anchor = GridBagConstraints.LINE_START;
 		content.add(checkForUpdateCheckbox, gbc);
 
+		gbc.insets.top = INSET;
+		gbc.insets.bottom = INSET;
+		gbc.insets.left = INSET;
+		gbc.insets.right = INSET;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.gridy = 3;
 		OkAction okAction = new OkAction();
@@ -139,7 +169,16 @@ public class CheckForUpdateDialog
 
 	public void setMessage(String message)
 	{
-		messageLabel.setText(message);
+		if(message == null)
+		{
+			messageLabel.setText("Your version is up to date.");
+			messageLabel.setIcon(null);
+		}
+		else
+		{
+			messageLabel.setText(message);
+			messageLabel.setIcon(UPDATE_ICON);
+		}
 	}
 
 	public void setChanges(String changes)

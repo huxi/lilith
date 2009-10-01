@@ -79,14 +79,15 @@
         <appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
         <appender-ref ref="LogbackClassic"/>
     </logger>
-
 	<logger name="de.huxhorn.lilith" level="INFO"/>
-	<logger name="de.huxhorn.lilith.Lilith" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.Lilith" level="INFO"/>
+	<logger name="de.huxhorn.lilith.buffers.SoftReferenceCachingBuffer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.consumers.FileDumpEventConsumer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.consumers.FileSplitterEventConsumer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.consumers.RrdLoggingEventConsumer" level="INFO"/>
 	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer" level="INFO"/>
 	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.engine.FileBufferFactory" level="WARN"/>
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="INFO"/>
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.OldStreamEventProducer" level="INFO"/>
@@ -96,16 +97,18 @@
 	<logger name="de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.services.sender" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.AboutPanel" level="WARN"/>
-	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.ComboPaneViewContainer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.MainFrame" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.MainFrame$ColorsCollectionRunnable" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.SplashScreen" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer" level="WARN"/>
-	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ViewActions" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame" level="WARN" />
+	<logger name="de.huxhorn.lilith.swing.ViewManager" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.callables.IndexingCallable" level="DEBUG"/>
 	<logger name="de.huxhorn.lilith.swing.preferences" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.statistics.AbstractGraphImageProducer" level="WARN"/>
@@ -121,7 +124,7 @@
 	<logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener" level="DEBUG"/>
 	<logger name="de.huxhorn.sulky.sounds.jlayer.JLayerSounds" level="WARN"/>
 	<logger name="de.huxhorn.sulky.swing.KeyStrokes" level="INFO"/>
-	<logger name="de.huxhorn.sulky.swing.Windows" level="INFO"/>
+	<logger name="de.huxhorn.sulky.swing.Windows" level="WARN"/>
 	<logger name="httpclient.wire" level="WARN"/>
 	<logger name="java" level="WARN"/>
 	<logger name="javax" level="WARN"/>

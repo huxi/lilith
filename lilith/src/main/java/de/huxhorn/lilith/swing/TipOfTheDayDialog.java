@@ -51,6 +51,27 @@ public class TipOfTheDayDialog
 	private SelectionHighlighter.CopyAction copyAction;
 	private JCheckBox showTipOfTheDayCheckbox;
 
+	private static final int INSET = 10;
+
+	private static final Icon INFO_ICON;
+
+	static
+	{
+		Icon icon;
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/status/dialog-information.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		INFO_ICON = icon;
+	}
+
 	public TipOfTheDayDialog(MainFrame owner)
 	{
 		super(owner);
@@ -67,15 +88,25 @@ public class TipOfTheDayDialog
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.insets.top = INSET;
+		gbc.insets.bottom = 0;
+		gbc.insets.left = INSET;
+		gbc.insets.right = INSET;
+
 		gbc.gridwidth = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.LINE_START;
 
 		JLabel didYouKnowLabel = new JLabel("Did you know...?");
+		Font labelFont = didYouKnowLabel.getFont();
+		labelFont=labelFont.deriveFont(2.0f*labelFont.getSize2D());
+		didYouKnowLabel.setFont(labelFont);
+		didYouKnowLabel.setIcon(INFO_ICON);
 
 		content.add(didYouKnowLabel, gbc);
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		initHelpResources();
 		helpPane = new XHTMLPanel();
 
@@ -134,6 +165,10 @@ public class TipOfTheDayDialog
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
+		gbc.insets.top = 0;
+		gbc.insets.bottom = 0;
+		gbc.insets.left = 0;
+		gbc.insets.right = INSET;
 		buttonPanel.add(new JButton(new PreviousTipAction()), gbc);
 
 		gbc.gridx = 1;
@@ -141,9 +176,16 @@ public class TipOfTheDayDialog
 
 		CloseAction closeAction = new CloseAction();
 		gbc.gridx = 2;
+		gbc.insets.top = 0;
+		gbc.insets.bottom = 0;
+		gbc.insets.left = 0;
+		gbc.insets.right = 0;
 		buttonPanel.add(new JButton(closeAction), gbc);
 
-		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.insets.top = INSET;
+		gbc.insets.bottom = INSET;
+		gbc.insets.left = INSET;
+		gbc.insets.right = INSET;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
