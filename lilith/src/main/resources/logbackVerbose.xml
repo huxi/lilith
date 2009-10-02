@@ -107,8 +107,8 @@
 	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.ViewActions" level="INFO"/>
-	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame" level="WARN"/>
-	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame" level="WARN" />
+	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame" level="DEBUG" />
 	<logger name="de.huxhorn.lilith.swing.ViewManager" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.callables.IndexingCallable" level="DEBUG"/>
 	<logger name="de.huxhorn.lilith.swing.preferences" level="WARN"/>

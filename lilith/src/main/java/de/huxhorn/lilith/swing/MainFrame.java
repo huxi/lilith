@@ -848,6 +848,18 @@ public class MainFrame
 				window.getViewActions().updateWindowMenu();
 			}
 		}
+		JInternalFrame selected = desktop.getSelectedFrame();
+		if(logger.isDebugEnabled()) logger.debug("Selected IFrame: {}", selected);
+		if(selected instanceof ViewContainerInternalFrame)
+		{
+			ViewContainerInternalFrame iframe= (ViewContainerInternalFrame) selected;
+			viewActions.setViewContainer(iframe.getViewContainer());
+		}
+		else
+		{
+			viewActions.setViewContainer(null); // no frame or task manager
+		}
+
 	}
 
 
@@ -2212,8 +2224,9 @@ public class MainFrame
 		frame.setShowingStatusbar(applicationPreferences.isShowingStatusbar());
 		frame.setTitle(title);
 		frame.setSize(800, 600);
-
+		// XXX
 		Windows.showWindow(frame, null, false);
+
 		executeScrollToBottom(frame);
 	}
 
@@ -2229,7 +2242,9 @@ public class MainFrame
 		frame.setBounds(titleBarHeight * (count % 10), titleBarHeight * (count % 10), 640, 480);
 
 		desktop.add(frame);
+		viewActions.setViewContainer(container);
 
+		// XXX
 		frame.setVisible(true);
 		executeScrollToBottom(frame);
 	}

@@ -20,10 +20,11 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
+import javax.swing.*;
 
 public class ViewContainerFrame
 	extends JFrame
@@ -118,16 +119,17 @@ public class ViewContainerFrame
 	{
 		public void windowOpened(WindowEvent e)
 		{
+			if(logger.isDebugEnabled()) logger.debug("windowOpened: {}", e.getWindow());
 		}
 
 		public void windowClosing(WindowEvent e)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Window closing.");
+			if(logger.isDebugEnabled()) logger.debug("windowClosing: {}", e.getWindow());
 		}
 
 		public void windowClosed(WindowEvent e)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Window closed.");
+			if(logger.isDebugEnabled()) logger.debug("windowClosed: {}", e.getWindow());
 			viewContainer.cancelSearching();
 			getContentPane().removeAll();
 			viewActions.setViewContainer(null); // to remove listener from container
@@ -136,20 +138,23 @@ public class ViewContainerFrame
 
 		public void windowIconified(WindowEvent e)
 		{
+			if(logger.isDebugEnabled()) logger.debug("windowIconified: {}", e.getWindow());
+
 		}
 
 		public void windowDeiconified(WindowEvent e)
 		{
+			if(logger.isDebugEnabled()) logger.debug("windowDeiconified: {}", e.getWindow());
 		}
 
 		public void windowActivated(WindowEvent e)
 		{
-			mainFrame.getViewActions().setViewContainer(viewContainer);
+			if(logger.isDebugEnabled()) logger.debug("windowActivated: {}", e.getWindow());
 		}
 
 		public void windowDeactivated(WindowEvent e)
 		{
-			mainFrame.getViewActions().setViewContainer(null);
+			if(logger.isDebugEnabled()) logger.debug("windowDeactivated: {}", e.getWindow());
 		}
 	}
 

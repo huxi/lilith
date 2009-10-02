@@ -86,6 +86,12 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="fix" issue="71">
+				Toolbar of mainframe was not switched active after attach.
+			</action>
+			<action dev="jhux" type="fix" issue="70">
+				Toolbar of mainframe stayed active after detach.
+			</action>
 			<action dev="jhux" type="update">
 				Removed appBuildNumber from title. It was annoying at best.
 			</action>
