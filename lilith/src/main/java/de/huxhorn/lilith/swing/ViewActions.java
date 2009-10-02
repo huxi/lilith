@@ -100,6 +100,7 @@ public class ViewActions
 
 	private static final Icon CHECK_UPDATE_ICON;
 	private static final Icon TOTD_ICON;
+	private static final Icon WINDOW_16_ICON;
 
 	// TODO: Resource classes
 	// TODO: Separate Toolbar and Menu creation.
@@ -475,6 +476,19 @@ public class ViewActions
 			}
 		}
 		TOTD_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/mimetypes/text-x-generic.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		WINDOW_16_ICON = icon;
 	}
 
 
@@ -2581,7 +2595,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
+					JMenuItem menuItem = createLoggingMenuItem(key, value);
 					windowMenu.add(menuItem);
 				}
 			}
@@ -2604,7 +2618,7 @@ public class ViewActions
 							first = false;
 							windowMenu.addSeparator();
 						}
-						JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
+						JMenuItem menuItem = createLoggingMenuItem(key, value);
 						windowMenu.add(menuItem);
 					}
 				}
@@ -2625,7 +2639,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JCheckBoxMenuItem menuItem = createAccessMenuItem(key, value);
+					JMenuItem menuItem = createAccessMenuItem(key, value);
 					windowMenu.add(menuItem);
 				}
 			}
@@ -2647,7 +2661,7 @@ public class ViewActions
 							first = false;
 							windowMenu.addSeparator();
 						}
-						JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
+						JMenuItem menuItem = createLoggingMenuItem(key, value);
 						windowMenu.add(menuItem);
 						activeCounter++;
 					}
@@ -2669,7 +2683,7 @@ public class ViewActions
 							first = false;
 							windowMenu.addSeparator();
 						}
-						JCheckBoxMenuItem menuItem = createLoggingMenuItem(key, value);
+						JMenuItem menuItem = createLoggingMenuItem(key, value);
 						menuItem.setFont(inactiveFont);
 						windowMenu.add(menuItem);
 						inactiveCounter++;
@@ -2691,7 +2705,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JCheckBoxMenuItem menuItem = createAccessMenuItem(key, value);
+					JMenuItem menuItem = createAccessMenuItem(key, value);
 					windowMenu.add(menuItem);
 					activeCounter++;
 				}
@@ -2709,7 +2723,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JCheckBoxMenuItem menuItem = createAccessMenuItem(key, value);
+					JMenuItem menuItem = createAccessMenuItem(key, value);
 					menuItem.setFont(inactiveFont);
 					windowMenu.add(menuItem);
 					inactiveCounter++;
@@ -2746,34 +2760,34 @@ public class ViewActions
 		}
 
 
-		private JCheckBoxMenuItem createLoggingMenuItem(EventSource<LoggingEvent> key, ViewContainer<LoggingEvent> viewContainer)
+		private JMenuItem createLoggingMenuItem(EventSource<LoggingEvent> key, ViewContainer<LoggingEvent> viewContainer)
 		{
-			JCheckBoxMenuItem result = new JCheckBoxMenuItem(new ViewLoggingAction(key));
+			JMenuItem result = new JMenuItem(new ViewLoggingAction(key));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
 			if(compParent == null)
 			{
-				result.setState(false);
+				result.setIcon(EMPTY_16_ICON);
 			}
 			else
 			{
-				result.setState(true);
+				result.setIcon(WINDOW_16_ICON);
 			}
 			return result;
 		}
 
-		private JCheckBoxMenuItem createAccessMenuItem(EventSource<AccessEvent> key, ViewContainer<AccessEvent> viewContainer)
+		private JMenuItem createAccessMenuItem(EventSource<AccessEvent> key, ViewContainer<AccessEvent> viewContainer)
 		{
-			JCheckBoxMenuItem result = new JCheckBoxMenuItem(new ViewAccessAction(key));
+			JMenuItem result = new JMenuItem(new ViewAccessAction(key));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
 			if(compParent == null)
 			{
-				result.setState(false);
+				result.setIcon(EMPTY_16_ICON);
 			}
 			else
 			{
-				result.setState(true);
+				result.setIcon(WINDOW_16_ICON);
 			}
 			return result;
 		}
