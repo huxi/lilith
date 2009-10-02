@@ -1172,7 +1172,7 @@ public class MainFrame
 
 	public void troubleshooting()
 	{
-		preferencesDialog.troubleshooting();
+		preferencesDialog.showPane(PreferencesDialog.Panes.Troubleshooting);
 	}
 
 	public void openHelp(String help)
@@ -1221,7 +1221,15 @@ public class MainFrame
 
 	public void openPreferences(String panelName)
 	{
-		// TODO: Implement openPreferences
+		try
+		{
+			PreferencesDialog.Panes pane=PreferencesDialog.Panes.valueOf(panelName);
+			preferencesDialog.showPane(pane);
+		}
+		catch(IllegalArgumentException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Couldn't resolve preferences pane '{}'!", panelName);
+		}
 	}
 
 	public enum ImportType

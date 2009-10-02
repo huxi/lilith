@@ -1,4 +1,3 @@
-levelHigherOrEqual.groovy
 messageRegex.groovy
 odd.groovy
 threadNameStartsWith.groovy

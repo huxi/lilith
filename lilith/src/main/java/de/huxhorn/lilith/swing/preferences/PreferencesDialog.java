@@ -50,6 +50,18 @@ import javax.swing.*;
 public class PreferencesDialog
 	extends JDialog
 {
+	public enum Panes
+	{
+		General,
+		StartupShutdown,
+		Sounds,
+		Sources,
+		SourceLists,
+		SourceFiltering,
+		Conditions,
+		Troubleshooting
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
 
 	private ApplicationPreferences applicationPreferences;
@@ -410,9 +422,35 @@ public class PreferencesDialog
 		sourcesPanel.editSourceName(sourceIdentifier);
 	}
 
-	public void troubleshooting()
+	public void showPane(Panes pane)
 	{
-		tabbedPane.setSelectedComponent(troubleshootingPanel);
+		switch(pane)
+		{
+			case General:
+					tabbedPane.setSelectedComponent(generalPanel);
+				break;
+			case StartupShutdown:
+					tabbedPane.setSelectedComponent(startupShutdownPanel);
+				break;
+			case Sounds:
+					tabbedPane.setSelectedComponent(soundsPanel);
+				break;
+			case Sources:
+					tabbedPane.setSelectedComponent(sourcesPanel);
+				break;
+			case SourceLists:
+					tabbedPane.setSelectedComponent(sourceListsPanel);
+				break;
+			case SourceFiltering:
+					tabbedPane.setSelectedComponent(sourceFilteringPanel);
+				break;
+			case Conditions:
+					tabbedPane.setSelectedComponent(conditionsPanel);
+				break;
+			case Troubleshooting:
+					tabbedPane.setSelectedComponent(troubleshootingPanel);
+				break;
+		}
 		if(!isVisible())
 		{
 			mainFrame.showPreferencesDialog();
