@@ -1143,14 +1143,6 @@ public class ViewActions
 				mainFrame.showFrame(container);
 			}
 		}
-		if(viewContainer != null)
-		{
-			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel != null)
-			{
-				eventWrapperViewPanel.scrollToEvent();
-			}
-		}
 		focusTable();
 	}
 

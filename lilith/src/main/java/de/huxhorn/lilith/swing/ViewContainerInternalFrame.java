@@ -155,12 +155,12 @@ public class ViewContainerInternalFrame
 	{
 		public void internalFrameClosing(InternalFrameEvent e)
 		{
-			if(logger.isDebugEnabled()) logger.debug("internalFrameClosing");
+			if(logger.isDebugEnabled()) logger.debug("internalFrameClosing: {}", e.getInternalFrame());
 		}
 
 		public void internalFrameClosed(InternalFrameEvent e)
 		{
-			if(logger.isDebugEnabled()) logger.debug("internalFrameClosed");
+			if(logger.isDebugEnabled()) logger.debug("internalFrameClosed: {}", e.getInternalFrame());
 			viewContainer.cancelSearching();
 			getContentPane().removeAll();
 
@@ -169,25 +169,29 @@ public class ViewContainerInternalFrame
 
 		public void internalFrameOpened(InternalFrameEvent e)
 		{
+			if(logger.isDebugEnabled()) logger.debug("internalFrameOpened: {}", e.getInternalFrame());
 		}
-
 
 		public void internalFrameIconified(InternalFrameEvent e)
 		{
+			if(logger.isDebugEnabled()) logger.debug("internalFrameIconified: {}", e.getInternalFrame());
 		}
 
 		public void internalFrameDeiconified(InternalFrameEvent e)
 		{
+			if(logger.isDebugEnabled()) logger.debug("internalFrameDeiconified: {}", e.getInternalFrame());
 		}
 
 		public void internalFrameActivated(InternalFrameEvent e)
 		{
+			if(logger.isDebugEnabled()) logger.debug("internalFrameActivated: {}", e.getInternalFrame());
+
 			mainFrame.getViewActions().setViewContainer(viewContainer);
 		}
 
 		public void internalFrameDeactivated(InternalFrameEvent e)
 		{
-			mainFrame.getViewActions().setViewContainer(null);
+			if(logger.isDebugEnabled()) logger.debug("internalFrameDeactivated: {}", e.getInternalFrame());
 		}
 	}
 
