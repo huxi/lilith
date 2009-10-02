@@ -33,6 +33,7 @@ public class OpenUrlLinkListener
 	private final Logger logger = LoggerFactory.getLogger(OpenUrlLinkListener.class);
 	public static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
 	public static final String HELP_URI_PREFIX = "help://";
+	public static final String PREFS_URI_PREFIX = "prefs://";
 
 	private MainFrame mainFrame;
 	private LinkListener originalLinkListener;
@@ -51,6 +52,10 @@ public class OpenUrlLinkListener
 		if(uri.startsWith(HELP_URI_PREFIX))
 		{
 			mainFrame.openHelp(uri.substring(HELP_URI_PREFIX.length()));
+		}
+		else if(uri.startsWith(PREFS_URI_PREFIX))
+		{
+			mainFrame.openPreferences(uri.substring(PREFS_URI_PREFIX.length()));
 		}
 		else if(uri.contains("://"))
 		{
