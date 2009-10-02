@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Replaced JCheckboxMenuItem in Window menu with a JMenuItem containing an Icon if the entry has a frame.
+			</action>
 			<action dev="jhux" type="fix" issue="71">
 				Toolbar of mainframe was not switched active after attach.
 			</action>
@@ -144,13 +147,13 @@
 			<action dev="jhux" type="update">
 				Updated keyboard help. Better symbol for "Ctrl"/"cmd".
 			</action>
-<!--
-			Too bad, does not work :(
-			<action dev="jhux" type="update">
-				MAC: Mac menu-bar is used for all PLAFs.
-				Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
-			</action>
--->
+			<!--
+			   Too bad, does not work :(
+			   <action dev="jhux" type="update">
+				   MAC: Mac menu-bar is used for all PLAFs.
+				   Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
+			   </action>
+   -->
 			<action dev="jhux" type="add" issue="65">
 				Added "Troubleshooting..." menu item in "Help" menu as a shortcut to the throubleshooting
 				section of Preferences.
@@ -197,7 +200,7 @@
 			</action>
 			<action dev="jhux" type="fix" issue="60">
 				Changed shortcut of "Import" to "command shift I". It collided with "Add condition...", previously.
-				This was reported by Scott Stanton.				
+				This was reported by Scott Stanton.
 			</action>
 			<action dev="jhux" type="add" issue="47">
 				Implemented Drag and Drop of Lilith files.
@@ -230,9 +233,9 @@
 			<action dev="jhux" type="add" issue="56">
 				Added option to color the entire row of a table according to the level/status of the event as requested by Scott Stanton.
 			</action>
-            <action dev="jhux" type="update"  issue="39">
-                Changes to support Logback 0.9.16. Updated SLF4J to 1.5.8.
-            </action>
+			<action dev="jhux" type="update" issue="39">
+				Changes to support Logback 0.9.16. Updated SLF4J to 1.5.8.
+			</action>
 		</release>
 
 		<release version="0.9.35" date="2009-05-01" description="Release">
