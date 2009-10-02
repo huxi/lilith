@@ -1219,6 +1219,11 @@ public class MainFrame
 		helpFrame.toFront();
 	}
 
+	public void openPreferences(String panelName)
+	{
+		// TODO: Implement openPreferences
+	}
+
 	public enum ImportType
 	{
 		LOG4J, JUL

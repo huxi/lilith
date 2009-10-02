@@ -123,10 +123,11 @@ public class CheckForUpdateDialog
 		gbc.insets.right = INSET;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.LINE_START;
 
 		messageLabel = new JLabel();
 		Font labelFont = messageLabel.getFont();
-		labelFont=labelFont.deriveFont(1.5f*labelFont.getSize2D());
+		labelFont = labelFont.deriveFont(1.5f * labelFont.getSize2D());
 		messageLabel.setFont(labelFont);
 
 		content.add(messageLabel, gbc);
@@ -135,6 +136,7 @@ public class CheckForUpdateDialog
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.CENTER;
 
 		content.add(helpScrollPane, gbc);
 
