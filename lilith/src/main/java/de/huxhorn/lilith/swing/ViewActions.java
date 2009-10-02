@@ -98,6 +98,9 @@ public class ViewActions
 
 	private static final Icon PREFERENCES_TOOLBAR_ICON;
 
+	private static final Icon CHECK_UPDATE_ICON;
+	private static final Icon TOTD_ICON;
+
 	// TODO: Resource classes
 	// TODO: Separate Toolbar and Menu creation.
 	// TODO: toolbar action, menu action => same action
@@ -446,6 +449,32 @@ public class ViewActions
 			}
 		}
 		PREFERENCES_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/status/software-update-available.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		CHECK_UPDATE_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/status/dialog-information.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		TOTD_ICON = icon;
 	}
 
 
@@ -2862,7 +2891,7 @@ public class ViewActions
 		public CheckForUpdateAction()
 		{
 			super("Check for Update...");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, CHECK_UPDATE_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -2908,10 +2937,12 @@ public class ViewActions
 	class TipOfTheDayAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3703967582739382172L;
+
 		public TipOfTheDayAction()
 		{
 			super("Tip of the Day...");
-			putValue(Action.SMALL_ICON, HELP_MENU_ICON);
+			putValue(Action.SMALL_ICON, TOTD_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
