@@ -59,9 +59,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Handler;
 
 import javax.swing.*;
@@ -70,7 +70,7 @@ public class Lilith
 {
 	public static final String APP_NAME;
 	public static final String APP_VERSION;
-	public static final String APP_BUILD_NUMBER;
+	//public static final String APP_BUILD_NUMBER;
 	public static final long APP_TIMESTAMP;
 
 	private static final String VERBOSE_SHORT = "v";
@@ -117,7 +117,7 @@ public class Lilith
 		}
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
-		APP_BUILD_NUMBER = p.getProperty("application.buildNumber");
+		//APP_BUILD_NUMBER = p.getProperty("application.buildNumber");
 		String tsStr = p.getProperty("application.timestamp");
 		long ts = -1;
 		if(tsStr != null)
@@ -193,7 +193,7 @@ public class Lilith
 			printHelp = true;
 		}
 
-		String appTitle = APP_NAME + " V" + APP_VERSION + "." + APP_BUILD_NUMBER;
+		String appTitle = APP_NAME + " V" + APP_VERSION;// + "." + APP_BUILD_NUMBER;
 		if(verbose)
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -427,6 +427,7 @@ public class Lilith
 			// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
 			try
 			{
+				//System.setProperty("apple.awt.brushMetalLook", "true");
 				System.setProperty("apple.laf.useScreenMenuBar", "true");
 			}
 			catch(Exception e)
@@ -503,6 +504,23 @@ public class Lilith
 						String lafClassName = info.getClassName();
 						if(logger.isDebugEnabled()) logger.debug("Setting look&feel to {}.", lafClassName);
 						UIManager.setLookAndFeel(lafClassName);
+
+						if(application.isMac() && lafClassName.equals(UIManager.getSystemLookAndFeelClassName()))
+						{
+							// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
+							try
+							{
+								System.setProperty("apple.laf.useScreenMenuBar", "true");
+							}
+							catch(Exception e)
+							{
+								// try the older menu bar property
+								System.setProperty("com.apple.macos.useScreenMenuBar", "true");
+								// this shouldn't happen since we only run on 1.5+
+							}
+						}
+
+
 						break;
 					}
 				}

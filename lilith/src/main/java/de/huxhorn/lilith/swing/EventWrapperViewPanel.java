@@ -21,6 +21,7 @@ import de.huxhorn.lilith.buffers.FilteringBuffer;
 import de.huxhorn.lilith.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.lilith.conditions.EventContainsCondition;
 import de.huxhorn.lilith.conditions.GroovyCondition;
+import de.huxhorn.lilith.conditions.LevelCondition;
 import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.lilith.conditions.MessageContainsCondition;
@@ -591,11 +592,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
 	private static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
 	private static final String LOGGER_EQUALS_CONDITION = "logger.equals";
+	private static final String LEVEL_CONDITION = "Level>=";
 	private static final String[] DEFAULT_CONDITIONS = new String[]{
 		EVENT_CONTAINS_CONDITION,
 		MESSAGE_CONTAINS_CONDITION,
 		LOGGER_STARTS_WITH_CONDITION,
-		LOGGER_EQUALS_CONDITION};
+		LOGGER_EQUALS_CONDITION,
+		LEVEL_CONDITION
+	};
 
 	private void initTypeCombo()
 	{
@@ -951,6 +955,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			else if(LOGGER_EQUALS_CONDITION.equals(selectedType))
 			{
 				condition = new LoggerEqualsCondition(text);
+			}
+			else if(LEVEL_CONDITION.equals(selectedType))
+			{
+				condition = new LevelCondition(text);
 			}
 			else
 			{

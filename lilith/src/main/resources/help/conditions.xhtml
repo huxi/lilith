@@ -51,6 +51,8 @@
 <p>Beside that, saved conditions also have the effect that their name is used as the title of a
 	filtered views tab instead of the (most likely much longer) string representation of the condition.</p>
 
+<p>Saved conditions can be configured in the <a href="prefs://Conditions">Conditions preferences</a>.</p>
+
 <p><a href="#top">Back to top.</a></p>
 
 <h2><a name="groovy">Custom Groovy conditions</a></h2>
@@ -71,6 +73,8 @@
 	a script of the given name exists.</p>
 
 <p>See <a href="http://groovy.codehaus.org/">http://groovy.codehaus.org/</a> for help on Groovy.</p>
+
+<p>You can reinitialize the example conditions in the <a href="prefs://Troubleshooting">Troubleshooting preferences</a>.</p>
 
 <h3>Relevant javadocs</h3>
 <ul>
@@ -101,6 +105,7 @@ if(event instanceof LoggingEvent)
 }
 return false;</code></pre>
 
+<!--
 <h3>Example 3: Match logging events with a level higher or equal to the one given as searchString</h3>
 <pre><code>/**
  * Returns true if the logging event has a level higher or equal to the
@@ -137,8 +142,8 @@ if(event instanceof LoggingEvent)
   }
 }
 return false;</code></pre>
-
-<h3>Example 4: Match logging events with a message matching the regex given as searchString</h3>
+-->
+<h3>Example 3: Match logging events with a message matching the regex given as searchString</h3>
 <pre><code>/**
  * Returns true if the logging events message matches the regex 
  * given as searchString.

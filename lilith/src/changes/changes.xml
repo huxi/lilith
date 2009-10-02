@@ -86,6 +86,18 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Removed appBuildNumber from title. It was annoying at best.
+			</action>
+			<action dev="jhux" type="update" issue="68">
+				Enhanced "Check for update" dialog.
+			</action>
+			<action dev="jhux" type="add" issue="22">
+				Implement optional "Tip of the Day" dialog.
+			</action>
+			<action dev="jhux" type="add">
+				Added "Level>=" as a native default condition to increase performance.
+			</action>
 			<action dev="jhux" type="fix" issue="67">
 				Copy actions are now working correctly in case of external frames.
 				This was reported by Matthias "Alfred" Neumann.
