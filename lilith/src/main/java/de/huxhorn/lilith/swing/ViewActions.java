@@ -1161,6 +1161,12 @@ public class ViewActions
 	}
 
 /*
+	public void requestMenuBarFocus()
+	{
+		menubar.getComponent().requestFocusInWindow();
+	}
+*/
+/*
 	private void showStatistics()
 	{
 		if(viewContainer != null)
