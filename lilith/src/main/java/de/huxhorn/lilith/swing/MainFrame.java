@@ -727,8 +727,9 @@ public class MainFrame
 			showTipOfTheDayDialog();
 		}
 
-		setSplashStatusText("Finished.");
 		cleanObsoleteFiles();
+		setSplashStatusText("Finished.");
+//		viewActions.requestMenuBarFocus();
 	}
 
 	public void showTipOfTheDayDialog()
@@ -852,7 +853,7 @@ public class MainFrame
 		if(logger.isDebugEnabled()) logger.debug("Selected IFrame: {}", selected);
 		if(selected instanceof ViewContainerInternalFrame)
 		{
-			ViewContainerInternalFrame iframe= (ViewContainerInternalFrame) selected;
+			ViewContainerInternalFrame iframe = (ViewContainerInternalFrame) selected;
 			viewActions.setViewContainer(iframe.getViewContainer());
 		}
 		else
@@ -1235,7 +1236,7 @@ public class MainFrame
 	{
 		try
 		{
-			PreferencesDialog.Panes pane=PreferencesDialog.Panes.valueOf(panelName);
+			PreferencesDialog.Panes pane = PreferencesDialog.Panes.valueOf(panelName);
 			preferencesDialog.showPane(pane);
 		}
 		catch(IllegalArgumentException ex)
