@@ -14,8 +14,7 @@
 
 	<scm>
 		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-parent</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-parent
-		</developerConnection>
+		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-parent</developerConnection>
 		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-parent/</url>
 	</scm>
 
@@ -71,6 +70,16 @@
 
 		<!-- scp doesn't work anymore -->
 		<repository>
+			<id>private-lilith-repos</id>
+			<url>sftp://ftp.huxhorn.de/lilith/repository</url>
+		</repository>
+		<snapshotRepository>
+			<id>private-lilith-snapshot-repos</id>
+			<uniqueVersion>false</uniqueVersion>
+			<url>sftp://ftp.huxhorn.de/lilith/snapshot-repository</url>
+		</snapshotRepository>
+<!--
+		<repository>
 			<id>lilith-repos</id>
 			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
 		</repository>
@@ -79,6 +88,7 @@
 			<uniqueVersion>false</uniqueVersion>
 			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
 		</snapshotRepository>
+-->
 	</distributionManagement>
 
 	<!--

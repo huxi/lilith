@@ -55,6 +55,7 @@ https://frs.sourceforge.net/webupload
 
 #####
 
+Upload changes-x.x.x.xhtml
 Update current-version.txt
 
 #####
