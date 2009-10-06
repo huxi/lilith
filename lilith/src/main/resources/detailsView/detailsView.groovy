@@ -1,3 +1,4 @@
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.access.AccessEvent
 import de.huxhorn.lilith.data.access.HttpStatus
 import de.huxhorn.lilith.data.logging.LoggingEvent
@@ -235,8 +236,9 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 				}
 		}
 
-		if(event.loggerContext)
+		if(event.loggerContext instanceof LoggerContext)
 		{
+			LoggerContext loggerContext=event.loggerContext;
 			evenOdd.toggle()
 			it.tr([class: "${evenOdd}"])
 				{
@@ -244,11 +246,56 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 					{
 						it.mkp.yieldUnescaped 'Logger&nbsp;Context'
 					}
-					td(event.loggerContext);
+					td
+					{
+						buildLoggerContext(it, loggerContext, dateFormat);
+					}
 				}
 		}
 
 		buildEventWrapperSpecific(it, eventWrapper, evenOdd);
+	}
+}
+
+
+def buildLoggerContext(element, LoggerContext loggerContext, dateFormat)
+{
+	if(loggerContext)
+	{
+		if(loggerContext.name || loggerContext.birthTime || loggerContext.properties)
+		{
+			element.table
+			{
+				if(loggerContext.name)
+				{
+					tr
+					{
+						th('Name')
+						td(loggerContext.name)
+					}
+				}
+				if(loggerContext.birthTime)
+				{
+					Date d=new Date(loggerContext.birthTime);
+					tr
+					{
+						th('Birthtime')
+						td(dateFormat.format(d))
+					}
+				}
+				if(loggerContext.properties)
+				{
+					tr
+					{
+						th('Properties')
+						td()
+						{
+							buildStringMap(it, loggerContext.properties);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -426,8 +473,9 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 			}
 		}
 
-		if(event.loggerContext)
+		if(event.loggerContext instanceof LoggerContext)
 		{
+			LoggerContext loggerContext=event.loggerContext;
 			evenOdd.toggle()
 			it.tr([class: "${evenOdd}"])
 				{
@@ -435,7 +483,10 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 					{
 						it.mkp.yieldUnescaped 'Logger&nbsp;Context'
 					}
-					td(event.loggerContext);
+					td
+					{
+						buildLoggerContext(it, loggerContext, dateFormat);
+					}
 				}
 		}
 
@@ -492,11 +543,7 @@ def buildThrowable(element, throwable, previousSTE, isFirst, showStackTrace)
 		{
 			if(stackTraceElement)
 			{
-				def steStr = stackTraceElement.toString();
-				it.a([href: 'ste://' + steStr])
-					{
-						buildThrowableText(it, throwable);
-					}
+				buildThrowableText(it, throwable, 'ste://' + stackTraceElement.toString());
 			}
 			else
 			{
@@ -520,15 +567,35 @@ def buildThrowable(element, throwable, previousSTE, isFirst, showStackTrace)
 		}
 }
 
-def buildThrowableText(element, throwable)
+def buildThrowableText(element, throwable, steHref=null)
 {
-	element.mkp.yield "${throwable.name}"
-	if(throwable.message && throwable.message != throwable.name)
+	if(steHref)
 	{
-		element.pre()
+		element.a([href: steHref])
+		{
+			it.mkp.yield "${throwable.name}"
+		}
+		if(throwable.message && throwable.message != throwable.name)
+		{
+			element.pre()
+			{
+				it.a([href: steHref])
+				{
+					it.mkp.yield throwable.message;
+				}
+			}
+		}
+	}
+	else
+	{
+		element.mkp.yield "${throwable.name}"
+		if(throwable.message && throwable.message != throwable.name)
+		{
+			element.pre()
 			{
 				it.mkp.yield throwable.message;
 			}
+		}
 	}
 }
 
