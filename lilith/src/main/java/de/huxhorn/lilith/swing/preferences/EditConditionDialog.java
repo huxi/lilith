@@ -192,6 +192,8 @@ public class EditConditionDialog
 	private class OkAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7380136684827113354L;
+
 		public OkAction()
 		{
 			super("Ok");
@@ -229,6 +231,8 @@ public class EditConditionDialog
 	private class ResetAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 3523022122100092148L;
+
 		public ResetAction()
 		{
 			super("Reset");
@@ -243,6 +247,7 @@ public class EditConditionDialog
 	private class CancelAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 5442950514112749763L;
 
 		public CancelAction()
 		{

@@ -173,32 +173,87 @@ public class ConditionsPanel
 			savedCondition = new SavedCondition(condition);
 		}
 
+		try
+		{
+			savedCondition = savedCondition.clone();
+		}
+		catch(CloneNotSupportedException e)
+		{
+			if(logger.isErrorEnabled()) logger.error("Coudln't clone saved condition!", e);
+		}
+
 		editConditionDialog.setSavedCondition(savedCondition);
 		editConditionDialog.setAdding(adding);
-		Windows.showWindow(editConditionDialog, preferencesDialog, true);
-		if(!editConditionDialog.isCanceled())
+		for(; ;)
 		{
-			// TODO: check for duplicate name
+			Windows.showWindow(editConditionDialog, preferencesDialog, true);
+			if(editConditionDialog.isCanceled())
+			{
+				break;
+			}
+			// XXX
 			SavedCondition newCondition = editConditionDialog.getSavedCondition();
-			int index = -1;
+			String newName = newCondition.getName();
+			Condition containedCondition = newCondition.getCondition();
+			int conditionIndex = -1;
+			int nameIndex = -1;
 			for(int i = 0; i < conditions.size(); i++)
 			{
-				if(newCondition.getCondition().equals(conditions.get(i).getCondition()))
+				if(containedCondition.equals(conditions.get(i).getCondition()))
 				{
-					index = i;
-					break;
+					conditionIndex = i;
+				}
+				if(newName.equals(conditions.get(i).getName()))
+				{
+					nameIndex = i;
 				}
 			}
-			if(index < 0)
+			if(logger.isDebugEnabled()) logger.debug("conditionIndex={}, nameIndex={}", conditionIndex, nameIndex);
+			boolean done = false;
+			// check for duplicate name
+			if(nameIndex >= 0 && nameIndex != conditionIndex)
 			{
-				index = conditionTableModel.add(savedCondition);
+				// replace?
+				String dialogTitle = "Duplicate condition name!";
+				String message = "A different confition with the same name does already exist!\nOverwrite that condition?";
+				int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(JOptionPane.OK_OPTION == result)
+				{
+					// yes, replace condition@nameIndex
+					conditionTableModel.set(nameIndex, savedCondition);
+					if(conditionIndex >= 0)
+					{
+						// remove other with same condition if it exists
+						conditionTableModel.remove(conditionIndex);
+						if(conditionIndex < nameIndex)
+						{
+							// correct name index
+							nameIndex--;
+						}
+					}
+					conditionIndex = nameIndex;
+					done = true;
+				}
+				// no, leave done=false => editDialog will reopen
+			}
+			else if(conditionIndex < 0)
+			{
+				conditionIndex = conditionTableModel.add(savedCondition);
+				done = true;
 			}
 			else
 			{
-				conditionTableModel.set(index, savedCondition);
+				conditionTableModel.set(conditionIndex, savedCondition);
+				done = true;
 			}
-			conditionTable.setRowSelectionInterval(index, index);
-			updateConditions();
+
+			if(done)
+			{
+				conditionTable.setRowSelectionInterval(conditionIndex, conditionIndex);
+				updateConditions();
+				break;
+			}
 		}
 	}
 
@@ -246,6 +301,8 @@ public class ConditionsPanel
 	private class EditConditionAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 95425194239658313L;
+
 		public EditConditionAction()
 		{
 			super("Edit");
@@ -284,6 +341,8 @@ public class ConditionsPanel
 	private class RemoveConditionAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 4573645407508010450L;
+
 		public RemoveConditionAction()
 		{
 			super("Remove");
@@ -335,6 +394,8 @@ public class ConditionsPanel
 	private class MoveUpAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -5414336722079117405L;
+
 		public MoveUpAction()
 		{
 			super("Move up");
@@ -375,6 +436,8 @@ public class ConditionsPanel
 	private class MoveDownAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -1115999498183305487L;
+
 		public MoveDownAction()
 		{
 			super("Move down");
