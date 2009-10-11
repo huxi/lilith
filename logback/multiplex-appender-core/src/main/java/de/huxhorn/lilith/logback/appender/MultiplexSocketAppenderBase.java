@@ -38,7 +38,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	private Encoder<E> encoder;
 	private int port;
-	private List<String> remoteHostsList;
+	private final List<String> remoteHostsList;
 	private String applicationIdentifier;
 	private Thread heartbeatThread;
 	private int reconnectionDelay;
@@ -61,6 +61,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 	{
 		this.writeByteStrategy = writeByteStrategy;
 		setQueueSize(queueSize);
+		remoteHostsList=new ArrayList<String>();
 	}
 
 	public boolean isDebug()
@@ -155,7 +156,17 @@ public abstract class MultiplexSocketAppenderBase<E>
 		{
 			System.err.println("RemoteHosts: " + remoteHostsList);
 		}
-		this.remoteHostsList = remoteHostsList;
+		this.remoteHostsList.clear();
+		this.remoteHostsList.addAll(remoteHostsList);
+	}
+
+	public void addRemoteHost(String remoteHost)
+	{
+		remoteHost=remoteHost.trim();
+		if(!"".equals(remoteHost) && !this.remoteHostsList.contains(remoteHost))
+		{
+			this.remoteHostsList.add(remoteHost);
+		}
 	}
 
 	/**
