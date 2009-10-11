@@ -28,6 +28,11 @@ public class LevelCondition
 	private String searchString;
 	private transient LoggingEvent.Level level;
 
+	public LevelCondition()
+	{
+		setSearchString(null);
+	}
+
 	public LevelCondition(String searchString)
 	{
 		setSearchString(searchString);
