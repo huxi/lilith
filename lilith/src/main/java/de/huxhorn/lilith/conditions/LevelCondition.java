@@ -30,7 +30,7 @@ public class LevelCondition
 
 	public LevelCondition()
 	{
-		setSearchString(null);
+		this(null);
 	}
 
 	public LevelCondition(String searchString)
