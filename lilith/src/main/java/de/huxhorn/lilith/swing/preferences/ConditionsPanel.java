@@ -154,8 +154,6 @@ public class ConditionsPanel
 
 	public void editCondition(Condition condition)
 	{
-		//TODO: finish implementation.
-		//String conditionName=null;
 		SavedCondition savedCondition = null;
 		for(SavedCondition current : conditions)
 		{
@@ -191,7 +189,7 @@ public class ConditionsPanel
 			{
 				break;
 			}
-			// XXX
+
 			SavedCondition newCondition = editConditionDialog.getSavedCondition();
 			String newName = newCondition.getName();
 			Condition containedCondition = newCondition.getCondition();

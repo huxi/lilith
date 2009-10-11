@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Preventing saved conditions with duplicate name or condition.
+			</action>
 			<action dev="jhux" type="add">
 				The Appenders are now supporting the "Adder-Idiom" that is common for Logback appenders.
 				You can now use multiple &lt;RemoteHost&gt; tags to define the remote hosts.
