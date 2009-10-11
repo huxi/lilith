@@ -42,7 +42,7 @@ public class LevelCondition
 		}
 		catch(Throwable e)
 		{
-			level=null;
+			level = null;
 		}
 	}
 
@@ -79,25 +79,33 @@ public class LevelCondition
 
 	public boolean equals(Object o)
 	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
 
 		LevelCondition that = (LevelCondition) o;
 
-		if (searchString != null ? !searchString.equals(that.searchString) : that.searchString != null) return false;
-
-		return true;
+		return level == that.level;
 	}
 
 	public int hashCode()
 	{
-		return (searchString != null ? searchString.hashCode() : 0);
+		return (level != null ? level.hashCode() : 0);
 	}
 
-	public LevelCondition clone() throws CloneNotSupportedException
+	public LevelCondition clone()
+		throws CloneNotSupportedException
 	{
 		LevelCondition result = (LevelCondition) super.clone();
 		result.setSearchString(searchString);
 		return result;
+	}
+
+	@Override
+	public String toString()
+	{
+		StringBuilder result = new StringBuilder();
+		result.append(getDescription());
+		result.append(level);
+		return result.toString();
 	}
 }
