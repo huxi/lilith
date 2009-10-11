@@ -46,6 +46,11 @@ mvn site:deploy
 
 #####
 
+rsync from huxhorn.de to sf.net webspace:
+rsync -avP -e ssh ~/lilith/repository huxhorn,lilith@web.sourceforge.net:htdocs
+
+#####
+
 Write release notes and changes for sf.net upload.
 
 #####
