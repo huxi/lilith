@@ -86,6 +86,10 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="add" issue="73">
+				Added option to disable global logs.
+				This was requested by Joe.
+			</action>
 			<action dev="jhux" type="update">
 				Preventing saved conditions with duplicate name or condition.
 			</action>
