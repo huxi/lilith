@@ -79,10 +79,10 @@ public class SourceFilteringPanel
 		setLayout(new GridBagLayout());
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridwidth = 2;
 		add(disabledButton, gbc);
 
 		gbc.gridx = 0;
@@ -92,17 +92,21 @@ public class SourceFilteringPanel
 
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.weightx = 1;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(blackListNames, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		gbc.gridwidth = 1;
+		gbc.weightx = 0;
+		gbc.fill = GridBagConstraints.NONE;
 		add(whitelistButton, gbc);
 
 		gbc.gridx = 1;
 		gbc.gridy = 2;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(whiteListNames, gbc);
 	}
 
@@ -198,6 +202,8 @@ public class SourceFilteringPanel
 	private class DisabledAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -4154256012969198212L;
+
 		public DisabledAction()
 		{
 			super("None");
@@ -218,6 +224,8 @@ public class SourceFilteringPanel
 	private class BlacklistAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -1181737422196108645L;
+
 		public BlacklistAction()
 		{
 			super("Blacklist on...");
@@ -238,6 +246,8 @@ public class SourceFilteringPanel
 	private class WhitelistAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3403085106091507255L;
+
 		public WhitelistAction()
 		{
 			super("Whitelist on...");

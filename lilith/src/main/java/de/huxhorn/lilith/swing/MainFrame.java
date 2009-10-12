@@ -205,6 +205,8 @@ public class MainFrame
 	private JPanel statusBar;
 	private TipOfTheDayDialog tipOfTheDayDialog;
 	private CheckForUpdateDialog checkForUpdateDialog;
+	private FileDumpEventConsumer<LoggingEvent> loggingFileDump;
+	private FileDumpEventConsumer<AccessEvent> accessFileDump;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -522,9 +524,9 @@ public class MainFrame
 		setSplashStatusText("Creating global views.");
 		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
 
-		FileDumpEventConsumer<LoggingEvent> loggingFileDump = new FileDumpEventConsumer<LoggingEvent>(globalSourceIdentifier, loggingFileBufferFactory);
-
-		FileDumpEventConsumer<AccessEvent> accessFileDump = new FileDumpEventConsumer<AccessEvent>(globalSourceIdentifier, accessFileBufferFactory);
+		loggingFileDump = new FileDumpEventConsumer<LoggingEvent>(globalSourceIdentifier, loggingFileBufferFactory);
+		accessFileDump = new FileDumpEventConsumer<AccessEvent>(globalSourceIdentifier, accessFileBufferFactory);
+		setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
 
 		BlockingCircularBuffer<EventWrapper<LoggingEvent>> loggingEventQueue = new LilithBuffer<LoggingEvent>(applicationPreferences, 1000);
 		BlockingCircularBuffer<EventWrapper<AccessEvent>> accessEventQueue = new LilithBuffer<AccessEvent>(applicationPreferences, 1000);
@@ -2225,7 +2227,6 @@ public class MainFrame
 		frame.setShowingStatusbar(applicationPreferences.isShowingStatusbar());
 		frame.setTitle(title);
 		frame.setSize(800, 600);
-		// XXX
 		Windows.showWindow(frame, null, false);
 
 		executeScrollToBottom(frame);
@@ -2632,6 +2633,12 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.GLOBAL_LOGGING_ENABLED_PROPERTY.equals(propName))
+			{
+				setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
+				return;
+			}
+
 			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
 				coloringWholeRow = applicationPreferences.isColoringWholeRow();
@@ -2667,6 +2674,12 @@ public class MainFrame
 				}
 			}
 		}
+	}
+
+	private void setGlobalLoggingEnabled(boolean globalLoggingEnabled)
+	{
+		loggingFileDump.setEnabled(globalLoggingEnabled);
+		accessFileDump.setEnabled(globalLoggingEnabled);
 	}
 
 	private void setCheckingForUpdate(boolean checkingForUpdate)

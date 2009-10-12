@@ -37,15 +37,7 @@ public class GeneralPanel
 	private PreferencesDialog preferencesDialog;
 	private ApplicationPreferences applicationPreferences;
 
-	// Windows/View
-	private JCheckBox showingToolbarCheckbox;
-	private JCheckBox showingStatusbarCheckbox;
-	private JCheckBox internalFramesCheckbox;
-	private JCheckBox autoOpenCheckbox;
-	private JCheckBox autoFocusCheckbox;
-	private JCheckBox autoCloseCheckbox;
-	private JCheckBox showIdentifierCheckbox;
-
+	// Views
 	private JCheckBox scrollingToBottomCheckbox;
 	private JCheckBox coloringWholeRowCheckbox;
 
@@ -58,6 +50,8 @@ public class GeneralPanel
 	private JTextField appPathTextField;
 	private JComboBox lookAndFeelCombo;
 
+	private JCheckBox globalLoggingEnabledCheckbox;
+
 	public GeneralPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
@@ -68,17 +62,12 @@ public class GeneralPanel
 	private void createUI()
 	{
 		// General
-		showingToolbarCheckbox = new JCheckBox("Show toolbar.");
-		showingStatusbarCheckbox = new JCheckBox("Show statusbar.");
-		internalFramesCheckbox = new JCheckBox("Use internal frames.");
-		showIdentifierCheckbox = new JCheckBox("Show identifier for named sources.");
-		showFullCallstackCheckbox = new JCheckBox("Show full Callstack.");
-		showStackTraceCheckbox = new JCheckBox("Show stacktrace of Throwables");
-		autoOpenCheckbox = new JCheckBox("Automatically open new views on connection.");
-		autoCloseCheckbox = new JCheckBox("Automatically close inactive views on disconnection.");
-		autoFocusCheckbox = new JCheckBox("Automatically focus window of new view.");
 		scrollingToBottomCheckbox = new JCheckBox("Initial 'Scrolling to Bottom' setting");
 		coloringWholeRowCheckbox = new JCheckBox("Color whole row according to Level or Status");
+
+		showFullCallstackCheckbox = new JCheckBox("Show full Callstack.");
+		showStackTraceCheckbox = new JCheckBox("Show stacktrace of Throwables");
+
 		applicationPathFileChooser = new JFileChooser();
 		applicationPathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -109,15 +98,8 @@ public class GeneralPanel
 		}
 		lookAndFeelCombo = new JComboBox();
 
-		JPanel windowPanel = new JPanel(new GridLayout(7, 1));
-		windowPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Frames"));
-		windowPanel.add(showingToolbarCheckbox);
-		windowPanel.add(showingStatusbarCheckbox);
-		windowPanel.add(internalFramesCheckbox);
-		windowPanel.add(autoOpenCheckbox);
-		windowPanel.add(autoFocusCheckbox);
-		windowPanel.add(autoCloseCheckbox);
-		windowPanel.add(showIdentifierCheckbox);
+		globalLoggingEnabledCheckbox = new JCheckBox("Enable global logs.");
+
 
 		JPanel viewPanel = new JPanel(new GridLayout(2, 1));
 		viewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "View"));
@@ -131,6 +113,10 @@ public class GeneralPanel
 
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 
+		JPanel globalPanel = new JPanel(new GridLayout(1, 1));
+		globalPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Global logs"));
+		globalPanel.add(globalLoggingEnabledCheckbox);
+
 		setLayout(new GridBagLayout());
 
 		{
@@ -138,44 +124,35 @@ public class GeneralPanel
 
 			gbc.gridwidth = 1;
 			gbc.weightx = 1;
+			gbc.anchor = GridBagConstraints.FIRST_LINE_START;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 
 			gbc.gridx = 0;
 			gbc.gridy = 0;
-			add(windowPanel, gbc);
-
-			gbc.gridy = 1;
 			add(viewPanel, gbc);
 
-			gbc.gridy = 2;
+			gbc.gridy = 1;
 			add(detailsPanel, gbc);
 
-			gbc.gridy = 3;
+			gbc.gridy = 2;
 			add(lookAndFeelCombo, gbc);
 
-			gbc.gridy = 4;
+			gbc.gridy = 3;
 			add(appPathPanel, gbc);
+
+			gbc.gridy = 4;
+			gbc.weighty = 1;
+			add(globalPanel, gbc);
 		}
 	}
 
 	public void initUI()
 	{
-		showingToolbarCheckbox.setSelected(applicationPreferences.isShowingToolbar());
-		showingStatusbarCheckbox.setSelected(applicationPreferences.isShowingStatusbar());
-		internalFramesCheckbox.setSelected(applicationPreferences.isUsingInternalFrames());
 		scrollingToBottomCheckbox.setSelected(applicationPreferences.isScrollingToBottom());
 		coloringWholeRowCheckbox.setSelected(applicationPreferences.isColoringWholeRow());
-		String appPath = applicationPreferences.getApplicationPath().getAbsolutePath();
-		appPathTextField.setText(appPath);
-		appPathTextField.setToolTipText(appPath);
-
-
-		autoOpenCheckbox.setSelected(applicationPreferences.isAutoOpening());
-		autoCloseCheckbox.setSelected(applicationPreferences.isAutoClosing());
-		autoFocusCheckbox.setSelected(applicationPreferences.isAutoFocusingWindow());
-		showIdentifierCheckbox.setSelected(applicationPreferences.isShowingIdentifier());
 		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
 		showStackTraceCheckbox.setSelected(applicationPreferences.isShowingStackTrace());
+
 		ArrayList<String> lookAndFeels = new ArrayList<String>();
 		for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 		{
@@ -203,28 +180,33 @@ public class GeneralPanel
 		}
 		lookAndFeelCombo.setModel(new DefaultComboBoxModel(lookAndFeels.toArray()));
 		lookAndFeelCombo.setSelectedIndex(selectedIndex);
+
+		String appPath = applicationPreferences.getApplicationPath().getAbsolutePath();
+		appPathTextField.setText(appPath);
+		appPathTextField.setToolTipText(appPath);
+
+		globalLoggingEnabledCheckbox.setSelected(applicationPreferences.isGlobalLoggingEnabled());
 	}
 
 	public void saveSettings()
 	{
-		applicationPreferences.setShowingToolbar(showingToolbarCheckbox.isSelected());
-		applicationPreferences.setShowingStatusbar(showingStatusbarCheckbox.isSelected());
-		applicationPreferences.setUsingInternalFrames(internalFramesCheckbox.isSelected());
 		applicationPreferences.setScrollingToBottom(scrollingToBottomCheckbox.isSelected());
 		applicationPreferences.setColoringWholeRow(coloringWholeRowCheckbox.isSelected());
-		applicationPreferences.setAutoOpening(autoOpenCheckbox.isSelected());
-		applicationPreferences.setAutoClosing(autoCloseCheckbox.isSelected());
-		applicationPreferences.setAutoFocusingWindow(autoFocusCheckbox.isSelected());
-		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
-		applicationPreferences.setShowingIdentifier(showIdentifierCheckbox.isSelected());
 		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
 		applicationPreferences.setShowingStackTrace(showStackTraceCheckbox.isSelected());
+
 		applicationPreferences.setLookAndFeel((String) lookAndFeelCombo.getSelectedItem());
+
+		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
+
+		applicationPreferences.setGlobalLoggingEnabled(globalLoggingEnabledCheckbox.isSelected());
 	}
 
 	private class BrowseApplicationPathAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -5563121695654253673L;
+
 		public BrowseApplicationPathAction()
 		{
 			super();

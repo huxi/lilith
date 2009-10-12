@@ -72,6 +72,7 @@ public class StartupShutdownPanel
 		{
 			GridBagConstraints gbc = new GridBagConstraints();
 
+			gbc.anchor = GridBagConstraints.FIRST_LINE_START;
 			gbc.gridwidth = 1;
 			gbc.weightx = 1;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -81,6 +82,7 @@ public class StartupShutdownPanel
 			add(startupPanel, gbc);
 
 			gbc.gridy = 1;
+			gbc.weighty = 1;
 			add(shutdownPanel, gbc);
 		}
 	}
