@@ -54,6 +54,7 @@ public class PreferencesDialog
 	{
 		General,
 		StartupShutdown,
+		Windows,
 		Sounds,
 		Sources,
 		SourceLists,
@@ -71,6 +72,7 @@ public class PreferencesDialog
 
 	private GeneralPanel generalPanel;
 	private StartupShutdownPanel startupShutdownPanel;
+	private WindowsPanel windowsPanel;
 	private SoundsPanel soundsPanel;
 	private SourcesPanel sourcesPanel;
 	private SourceListsPanel sourceListsPanel;
@@ -105,6 +107,7 @@ public class PreferencesDialog
 	{
 		generalPanel = new GeneralPanel(this);
 		startupShutdownPanel = new StartupShutdownPanel(this);
+		windowsPanel = new WindowsPanel(this);
 		soundsPanel = new SoundsPanel(this);
 		sourcesPanel = new SourcesPanel(this);
 		sourceListsPanel = new SourceListsPanel(this);
@@ -117,6 +120,7 @@ public class PreferencesDialog
 
 		tabbedPane.add("General", generalPanel);
 		tabbedPane.add("Startup & Shutdown", startupShutdownPanel);
+		tabbedPane.add("Windows", windowsPanel);
 		tabbedPane.add("Sounds", soundsPanel);
 		tabbedPane.add("Sources", sourcesPanel);
 		tabbedPane.add("Source Lists", sourceListsPanel);
@@ -149,6 +153,7 @@ public class PreferencesDialog
 	{
 		generalPanel.initUI();
 		startupShutdownPanel.initUI();
+		windowsPanel.initUI();
 		soundsPanel.initUI();
 		sourceNames = applicationPreferences.getSourceNames();
 		if(sourceNames == null)
@@ -240,6 +245,7 @@ public class PreferencesDialog
 	{
 		generalPanel.saveSettings();
 		startupShutdownPanel.saveSettings();
+		windowsPanel.saveSettings();
 		soundsPanel.saveSettings();
 		conditionsPanel.saveSettings();
 		applicationPreferences.setSourceNames(sourceNames);
@@ -427,28 +433,31 @@ public class PreferencesDialog
 		switch(pane)
 		{
 			case General:
-					tabbedPane.setSelectedComponent(generalPanel);
+				tabbedPane.setSelectedComponent(generalPanel);
 				break;
 			case StartupShutdown:
-					tabbedPane.setSelectedComponent(startupShutdownPanel);
+				tabbedPane.setSelectedComponent(startupShutdownPanel);
+				break;
+			case Windows:
+				tabbedPane.setSelectedComponent(windowsPanel);
 				break;
 			case Sounds:
-					tabbedPane.setSelectedComponent(soundsPanel);
+				tabbedPane.setSelectedComponent(soundsPanel);
 				break;
 			case Sources:
-					tabbedPane.setSelectedComponent(sourcesPanel);
+				tabbedPane.setSelectedComponent(sourcesPanel);
 				break;
 			case SourceLists:
-					tabbedPane.setSelectedComponent(sourceListsPanel);
+				tabbedPane.setSelectedComponent(sourceListsPanel);
 				break;
 			case SourceFiltering:
-					tabbedPane.setSelectedComponent(sourceFilteringPanel);
+				tabbedPane.setSelectedComponent(sourceFilteringPanel);
 				break;
 			case Conditions:
-					tabbedPane.setSelectedComponent(conditionsPanel);
+				tabbedPane.setSelectedComponent(conditionsPanel);
 				break;
 			case Troubleshooting:
-					tabbedPane.setSelectedComponent(troubleshootingPanel);
+				tabbedPane.setSelectedComponent(troubleshootingPanel);
 				break;
 		}
 		if(!isVisible())

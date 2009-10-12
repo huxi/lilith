@@ -36,20 +36,35 @@ public class FileDumpEventConsumer<T extends Serializable>
 	private final Logger logger = LoggerFactory.getLogger(FileDumpEventConsumer.class);
 
 	private FileBuffer<EventWrapper<T>> fileBuffer;
+	private boolean enabled;
 
 	public FileDumpEventConsumer(SourceIdentifier sourceIdentifier, FileBufferFactory<T> fileBufferFactory)
 	{
+		enabled = true;
 		fileBuffer = fileBufferFactory.createActiveBuffer(sourceIdentifier);
 	}
 
 	public void consume(List<EventWrapper<T>> events)
 	{
-		fileBuffer.addAll(events);
-		if(logger.isInfoEnabled()) logger.info("Wrote {} events to file.", events.size());
+		if(enabled)
+		{
+			fileBuffer.addAll(events);
+			if(logger.isInfoEnabled()) logger.info("Wrote {} events to file.", events.size());
+		}
 	}
 
 	public Buffer<EventWrapper<T>> getBuffer()
 	{
 		return fileBuffer;
+	}
+
+	public void setEnabled(boolean enabled)
+	{
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled()
+	{
+		return enabled;
 	}
 }

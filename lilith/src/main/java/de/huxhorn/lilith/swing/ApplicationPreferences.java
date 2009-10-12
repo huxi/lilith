@@ -117,6 +117,7 @@ public class ApplicationPreferences
 	public static final String ASKING_BEFORE_QUIT_PROPERTY = "askingBeforeQuit";
 	public static final String CURRENT_TIP_OF_THE_DAY_PROPERTY = "currentTipOfTheDay";
 	public static final String SHOWING_TIP_OF_THE_DAY_PROPERTY = "showingTipOfTheDay";
+	public static final String GLOBAL_LOGGING_ENABLED_PROPERTY = "globalLoggingEnabled";
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
 	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
@@ -1035,6 +1036,19 @@ public class ApplicationPreferences
 		return PREFERENCES.getBoolean(SHOWING_TIP_OF_THE_DAY_PROPERTY, true);
 	}
 
+	public void setGlobalLoggingEnabled(boolean globalLoggingEnabled)
+	{
+		Object oldValue = isGlobalLoggingEnabled();
+		PREFERENCES.putBoolean(GLOBAL_LOGGING_ENABLED_PROPERTY, globalLoggingEnabled);
+		Object newValue = isGlobalLoggingEnabled();
+		propertyChangeSupport.firePropertyChange(GLOBAL_LOGGING_ENABLED_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isGlobalLoggingEnabled()
+	{
+		return PREFERENCES.getBoolean(GLOBAL_LOGGING_ENABLED_PROPERTY, true);
+	}
+
 	private void initConditions()
 	{
 		File appPath = getStartupApplicationPath();
@@ -1762,6 +1776,8 @@ public class ApplicationPreferences
 	}
 
 	/**
+	 * @param file the properties xml file
+	 * @return the resulting map
 	 * @noinspection MismatchedQueryAndUpdateOfCollection
 	 */
 	private Map<String, String> loadPropertiesXml(File file)
@@ -1799,12 +1815,16 @@ public class ApplicationPreferences
 	}
 
 	/**
+	 * @param file            the properties xml file
+	 * @param stringStringMap the map to be written
+	 * @param comment         the comment
+	 * @return whether or not the file could be written
 	 * @noinspection MismatchedQueryAndUpdateOfCollection
 	 */
-	private boolean writePropertiesXml(File file, Map<String, String> sourceNames, String comment)
+	private boolean writePropertiesXml(File file, Map<String, String> stringStringMap, String comment)
 	{
 		Properties output = new Properties();
-		for(Map.Entry<String, String> entry : sourceNames.entrySet())
+		for(Map.Entry<String, String> entry : stringStringMap.entrySet())
 		{
 			String key = entry.getKey();
 			String value = entry.getValue();
