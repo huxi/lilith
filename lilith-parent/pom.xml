@@ -23,6 +23,9 @@
 		<sulkyVersion><!-- SV -->0.9.9-SNAPSHOT</sulkyVersion>
 		<slf4jVersion>1.5.8</slf4jVersion>
 		<logbackVersion>0.9.17</logbackVersion>
+		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<licenses>
@@ -327,6 +330,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+			</dependency>
+			
+			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
 				<version>1.6</version>
@@ -389,7 +398,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.6</version>
+				<version>4.7</version>
 			</dependency>
 
 			<dependency>
