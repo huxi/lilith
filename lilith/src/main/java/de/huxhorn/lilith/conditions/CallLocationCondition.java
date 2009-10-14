@@ -18,24 +18,25 @@
 package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
 import java.io.ObjectStreamException;
 
-public class LevelCondition
+public class CallLocationCondition
 	implements LilithCondition
 {
-	private static final long serialVersionUID = -5498023202272568557L;
+	private static final long serialVersionUID = -3772942542557888560L;
 
 	private String searchString;
-	private transient LoggingEvent.Level level;
+	private transient StackTraceElement stackTraceElement;
 
-	public LevelCondition()
+	public CallLocationCondition()
 	{
 		this(null);
 	}
 
-	public LevelCondition(String searchString)
+	public CallLocationCondition(String searchString)
 	{
 		setSearchString(searchString);
 	}
@@ -45,27 +46,25 @@ public class LevelCondition
 		this.searchString = searchString;
 		try
 		{
-			level = LoggingEvent.Level.valueOf(searchString);
+			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(searchString);
+			if(ste != null)
+			{
+				stackTraceElement = ste.getStackTraceElement();
+			}
+			else
+			{
+				stackTraceElement = null;
+			}
 		}
 		catch(Throwable e)
 		{
-			level = null;
+			stackTraceElement = null;
 		}
-	}
-
-	public String getSearchString()
-	{
-		return searchString;
-	}
-
-	public String getDescription()
-	{
-		return "Level>=";
 	}
 
 	public boolean isTrue(Object value)
 	{
-		if(level == null)
+		if(stackTraceElement == null)
 		{
 			return false;
 		}
@@ -77,34 +76,40 @@ public class LevelCondition
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
 
-				LoggingEvent.Level eventLevel = event.getLevel();
-				return eventLevel != null && level.compareTo(eventLevel) <= 0;
+				ExtendedStackTraceElement[] callStack = event.getCallStack();
+				if(callStack != null && callStack.length > 0)
+				{
+					return stackTraceElement.equals(callStack[0].getStackTraceElement());
+				}
 			}
 		}
 		return false;
 	}
 
+	public CallLocationCondition clone()
+		throws CloneNotSupportedException
+	{
+		CallLocationCondition result = (CallLocationCondition) super.clone();
+		result.setSearchString(searchString);
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 
-		LevelCondition that = (LevelCondition) o;
+		CallLocationCondition that = (CallLocationCondition) o;
 
-		return level == that.level;
+		return !(stackTraceElement != null ? !stackTraceElement
+			.equals(that.stackTraceElement) : that.stackTraceElement != null);
 	}
 
+	@Override
 	public int hashCode()
 	{
-		return (level != null ? level.hashCode() : 0);
-	}
-
-	public LevelCondition clone()
-		throws CloneNotSupportedException
-	{
-		LevelCondition result = (LevelCondition) super.clone();
-		result.setSearchString(searchString);
-		return result;
+		return stackTraceElement != null ? stackTraceElement.hashCode() : 0;
 	}
 
 	private Object readResolve()
@@ -114,12 +119,19 @@ public class LevelCondition
 		return this;
 	}
 
+	public String getDescription()
+	{
+		return "CallLocation";
+	}
+
 	@Override
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();
 		result.append(getDescription());
-		result.append(level);
+		result.append("(");
+		result.append(stackTraceElement);
+		result.append(")");
 		return result.toString();
 	}
 }
