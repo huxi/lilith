@@ -554,6 +554,7 @@ public class ViewActions
 	private CopyLoggingMessageAction copyLoggingMessageAction;
 	private CopyLoggingThrowableAction copyLoggingThrowableAction;
 	private CopyLoggingCallStackAction copyLoggingCallStackAction;
+	private CopyLoggingCallLocationAction copyLoggingCallLocationAction;
 	private CopyLoggingMarkerAction copyLoggingMarkerAction;
 	private CopyLoggingMdcAction copyLoggingMdcAction;
 	private CopyLoggingNdcAction copyLoggingNdcAction;
@@ -633,6 +634,7 @@ public class ViewActions
 		copyLoggerNameAction = new CopyLoggerNameAction();
 		copyLoggingThrowableAction = new CopyLoggingThrowableAction();
 		copyLoggingCallStackAction = new CopyLoggingCallStackAction();
+		copyLoggingCallLocationAction = new CopyLoggingCallLocationAction();
 		copyLoggingMarkerAction = new CopyLoggingMarkerAction();
 		copyLoggingMdcAction = new CopyLoggingMdcAction();
 		copyLoggingNdcAction = new CopyLoggingNdcAction();
@@ -769,6 +771,7 @@ public class ViewActions
 		editMenu.add(copyLoggerNameAction);
 		editMenu.add(copyLoggingThrowableAction);
 		editMenu.add(copyLoggingCallStackAction);
+		editMenu.add(copyLoggingCallLocationAction);
 		editMenu.add(copyLoggingMarkerAction);
 		editMenu.add(copyLoggingMdcAction);
 		editMenu.add(copyLoggingNdcAction);
@@ -1358,6 +1361,7 @@ public class ViewActions
 		copyMenuItem.add(new JMenuItem(copyLoggerNameAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingThrowableAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingCallStackAction));
+		copyMenuItem.add(new JMenuItem(copyLoggingCallLocationAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingMarkerAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingMdcAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingNdcAction));
@@ -1387,6 +1391,7 @@ public class ViewActions
 		copyLoggerNameAction.setEventWrapper(wrapper);
 		copyLoggingThrowableAction.setEventWrapper(wrapper);
 		copyLoggingCallStackAction.setEventWrapper(wrapper);
+		copyLoggingCallLocationAction.setEventWrapper(wrapper);
 		copyLoggingMarkerAction.setEventWrapper(wrapper);
 		copyLoggingMdcAction.setEventWrapper(wrapper);
 		copyLoggingNdcAction.setEventWrapper(wrapper);
@@ -3486,6 +3491,50 @@ public class ViewActions
 				}
 			}
 			mainFrame.copyText(text.toString());
+		}
+	}
+
+	private class CopyLoggingCallLocationAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = 185572014769971173L;
+
+		private ExtendedStackTraceElement[] callStack;
+
+		public CopyLoggingCallLocationAction()
+		{
+			super("Copy call location");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the call location, i.e. the first element of the logging events call stack, to the clipboard.");
+		}
+
+		public void setEventWrapper(EventWrapper wrapper)
+		{
+			ExtendedStackTraceElement[] callStack = null;
+			if(wrapper != null && wrapper.getEvent() != null)
+			{
+				Object eventObj = wrapper.getEvent();
+				if(eventObj instanceof LoggingEvent)
+				{
+					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
+					callStack = loggingEvent.getCallStack();
+				}
+			}
+			setCallStack(callStack);
+		}
+
+		private void setCallStack(ExtendedStackTraceElement[] callStack)
+		{
+			this.callStack = callStack;
+			setEnabled(callStack != null && callStack.length > 0);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			ExtendedStackTraceElement[] cs = callStack;
+			if(cs != null && cs.length > 0)
+			{
+				mainFrame.copyText(cs[0].toString());
+			}
 		}
 	}
 

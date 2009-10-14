@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.buffers.FilteringBuffer;
 import de.huxhorn.lilith.buffers.SoftReferenceCachingBuffer;
+import de.huxhorn.lilith.conditions.CallLocationCondition;
 import de.huxhorn.lilith.conditions.EventContainsCondition;
 import de.huxhorn.lilith.conditions.GroovyCondition;
 import de.huxhorn.lilith.conditions.LevelCondition;
@@ -593,12 +594,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
 	private static final String LOGGER_EQUALS_CONDITION = "logger.equals";
 	private static final String LEVEL_CONDITION = "Level>=";
+	private static final String CALL_LOCATION_CONDITION = "CallLocation";
 	private static final String[] DEFAULT_CONDITIONS = new String[]{
 		EVENT_CONTAINS_CONDITION,
 		MESSAGE_CONTAINS_CONDITION,
 		LOGGER_STARTS_WITH_CONDITION,
 		LOGGER_EQUALS_CONDITION,
-		LEVEL_CONDITION
+		LEVEL_CONDITION,
+		CALL_LOCATION_CONDITION,
 	};
 
 	private void initTypeCombo()
@@ -959,6 +962,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			else if(LEVEL_CONDITION.equals(selectedType))
 			{
 				condition = new LevelCondition(text);
+			}
+			else if(CALL_LOCATION_CONDITION.equals(selectedType))
+			{
+				condition = new CallLocationCondition(text);
 			}
 			else
 			{
