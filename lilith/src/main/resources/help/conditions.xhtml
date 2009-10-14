@@ -37,6 +37,16 @@
 		It will only return a positive result in case of logging events because access events don't have
 		a logger name.
 	</li>
+	<li>Level&gt;=<br/>
+		Checks only if the level of the logging event is higher or equal than given string. Valid values are TRACE (useless, shows all events), DEBUG, INFO, WARN &amp; ERROR (shows only errors).<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a level.
+	</li>
+	<li>CallLocation<br/>
+		Checks only if the call location, i.e. the first element of a logging events call stack, is exactly the same as the StackTraceElement given as the search string. Format is required to be the same as StackTraceElement.toString(). Use "Copy call location" for ease of use.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a call location.
+	</li>
 	<li><a href="#saved">Saved conditions</a></li>
 	<li><a href="#groovy">Custom Groovy conditions</a></li>
 </ul>

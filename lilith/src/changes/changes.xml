@@ -86,6 +86,14 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				Added "Copy call location" action. This is quite useful in combination with the
+				CallLocation condition.
+			</action>
+			<action dev="jhux" type="add">
+				Added CallLocation condition that returns true if the first element of the call stack
+				equals the given StackTraceElement.
+			</action>
 			<action dev="jhux" type="add" issue="73">
 				Added option to disable global logs.
 				This was requested by Joe.
