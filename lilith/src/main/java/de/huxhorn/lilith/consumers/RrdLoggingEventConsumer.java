@@ -62,6 +62,12 @@ public class RrdLoggingEventConsumer
 	private RrdDbPool pool = RrdDbPool.getInstance();
 
 	private File basePath;
+	private boolean enabled;
+
+	public RrdLoggingEventConsumer()
+	{
+		this.enabled=true;
+	}
 
 	public File getBasePath()
 	{
@@ -75,6 +81,10 @@ public class RrdLoggingEventConsumer
 
 	public void consume(List<EventWrapper<LoggingEvent>> events)
 	{
+		if(!enabled)
+		{
+			return;
+		}
 		// TODO: evaluate transfer size info if available
 		Map<String, EventCounter> eventCounters = new HashMap<String, EventCounter>();
 		EventCounter globalCounter = new EventCounter();
@@ -128,6 +138,16 @@ public class RrdLoggingEventConsumer
 		eventCounters.put("global", globalCounter);
 		// collected events in eventCounters...
 		updateRrdFile(eventCounters);
+	}
+
+	public void setEnabled(boolean enabled)
+	{
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled()
+	{
+		return enabled;
 	}
 
 	private void updateRrdFile(Map<String, EventCounter> eventCounters)
