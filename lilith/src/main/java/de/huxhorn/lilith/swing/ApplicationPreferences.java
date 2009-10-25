@@ -118,6 +118,7 @@ public class ApplicationPreferences
 	public static final String CURRENT_TIP_OF_THE_DAY_PROPERTY = "currentTipOfTheDay";
 	public static final String SHOWING_TIP_OF_THE_DAY_PROPERTY = "showingTipOfTheDay";
 	public static final String GLOBAL_LOGGING_ENABLED_PROPERTY = "globalLoggingEnabled";
+	public static final String LOGGING_STATISTIC_ENABLED_PROPERTY = "loggingStatisticEnabled";
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
 	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
@@ -1048,6 +1049,20 @@ public class ApplicationPreferences
 	{
 		return PREFERENCES.getBoolean(GLOBAL_LOGGING_ENABLED_PROPERTY, true);
 	}
+
+	public void setLoggingStatisticEnabled(boolean enabled)
+	{
+		Object oldValue = isLoggingStatisticEnabled();
+		PREFERENCES.putBoolean(LOGGING_STATISTIC_ENABLED_PROPERTY, enabled);
+		Object newValue = isLoggingStatisticEnabled();
+		propertyChangeSupport.firePropertyChange(LOGGING_STATISTIC_ENABLED_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isLoggingStatisticEnabled()
+	{
+		return PREFERENCES.getBoolean(LOGGING_STATISTIC_ENABLED_PROPERTY, true);
+	}
+
 
 	private void initConditions()
 	{

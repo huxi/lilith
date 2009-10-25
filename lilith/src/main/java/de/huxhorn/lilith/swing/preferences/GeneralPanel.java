@@ -51,6 +51,7 @@ public class GeneralPanel
 	private JComboBox lookAndFeelCombo;
 
 	private JCheckBox globalLoggingEnabledCheckbox;
+	private JCheckBox loggingStatsEnabledCheckbox;
 
 	public GeneralPanel(PreferencesDialog preferencesDialog)
 	{
@@ -99,6 +100,7 @@ public class GeneralPanel
 		lookAndFeelCombo = new JComboBox();
 
 		globalLoggingEnabledCheckbox = new JCheckBox("Enable global logs.");
+		loggingStatsEnabledCheckbox = new JCheckBox("Enable logging statistics.");
 
 
 		JPanel viewPanel = new JPanel(new GridLayout(2, 1));
@@ -113,9 +115,10 @@ public class GeneralPanel
 
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 
-		JPanel globalPanel = new JPanel(new GridLayout(1, 1));
-		globalPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Global logs"));
+		JPanel globalPanel = new JPanel(new GridLayout(2, 1));
+		globalPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Global settings"));
 		globalPanel.add(globalLoggingEnabledCheckbox);
+		globalPanel.add(loggingStatsEnabledCheckbox);
 
 		setLayout(new GridBagLayout());
 
@@ -186,6 +189,7 @@ public class GeneralPanel
 		appPathTextField.setToolTipText(appPath);
 
 		globalLoggingEnabledCheckbox.setSelected(applicationPreferences.isGlobalLoggingEnabled());
+		loggingStatsEnabledCheckbox.setSelected(applicationPreferences.isLoggingStatisticEnabled());
 	}
 
 	public void saveSettings()
@@ -200,6 +204,7 @@ public class GeneralPanel
 		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
 
 		applicationPreferences.setGlobalLoggingEnabled(globalLoggingEnabledCheckbox.isSelected());
+		applicationPreferences.setLoggingStatisticEnabled(loggingStatsEnabledCheckbox.isSelected());
 	}
 
 	private class BrowseApplicationPathAction
