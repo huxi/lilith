@@ -207,6 +207,7 @@ public class MainFrame
 	private CheckForUpdateDialog checkForUpdateDialog;
 	private FileDumpEventConsumer<LoggingEvent> loggingFileDump;
 	private FileDumpEventConsumer<AccessEvent> accessFileDump;
+	private RrdLoggingEventConsumer rrdLoggingEventConsumer;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -665,8 +666,9 @@ public class MainFrame
 
 		setSplashStatusText("Setting up event consumers.");
 
-		RrdLoggingEventConsumer rrdDb = new RrdLoggingEventConsumer();
-		rrdDb.setBasePath(new File(startupApplicationPath, "statistics"));
+		rrdLoggingEventConsumer = new RrdLoggingEventConsumer();
+		rrdLoggingEventConsumer.setBasePath(new File(startupApplicationPath, "statistics"));
+		setStatisticsEnabled(applicationPreferences.isLoggingStatisticEnabled());
 		AlarmSoundLoggingEventConsumer loggingEventAlarmSound = new AlarmSoundLoggingEventConsumer();
 		loggingEventAlarmSound.setSounds(sounds);
 
@@ -675,7 +677,7 @@ public class MainFrame
 
 		List<EventConsumer<LoggingEvent>> loggingConsumers = new ArrayList<EventConsumer<LoggingEvent>>();
 
-		loggingConsumers.add(rrdDb);
+		loggingConsumers.add(rrdLoggingEventConsumer);
 		loggingConsumers.add(loggingEventAlarmSound);
 		loggingConsumers.add(fileSplitterLoggingEventConsumer);
 		loggingConsumers.add(loggingFileDump);
@@ -2246,7 +2248,6 @@ public class MainFrame
 		desktop.add(frame);
 		viewActions.setViewContainer(container);
 
-		// XXX
 		frame.setVisible(true);
 		executeScrollToBottom(frame);
 	}
@@ -2638,6 +2639,12 @@ public class MainFrame
 				setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
 				return;
 			}
+			if(ApplicationPreferences.LOGGING_STATISTIC_ENABLED_PROPERTY.equals(propName))
+			{
+				setStatisticsEnabled(applicationPreferences.isLoggingStatisticEnabled());
+				return;
+			}
+
 
 			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
@@ -2680,6 +2687,11 @@ public class MainFrame
 	{
 		loggingFileDump.setEnabled(globalLoggingEnabled);
 		accessFileDump.setEnabled(globalLoggingEnabled);
+	}
+
+	private void setStatisticsEnabled(boolean statisticsEnabled)
+	{
+		rrdLoggingEventConsumer.setEnabled(statisticsEnabled);
 	}
 
 	private void setCheckingForUpdate(boolean checkingForUpdate)
