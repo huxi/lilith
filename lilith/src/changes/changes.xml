@@ -86,6 +86,12 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Enhanced debug dialog. Better layout and tooltips.
+			</action>
+			<action dev="jhux" type="add" issue="4">
+				Added option to disable the creation of statistics.
+			</action>
 			<action dev="jhux" type="add">
 				Added "Copy call location" action. This is quite useful in combination with the
 				CallLocation condition.
