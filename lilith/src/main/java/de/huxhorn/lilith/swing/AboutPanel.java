@@ -51,7 +51,7 @@ import javax.swing.event.MouseInputAdapter;
 // TODO: VersionString centered to bg/scroll.
 // TODO: relative ScrollAreas (values given as % of backgroundImage)
 // TODO: Handle errors in Image-Loading
-// TODO: offscreenImage höchstens so groß wie die size / nicht gesamten bg malen
+// TODO: offscreenImage hoechstens so gross wie die size / nicht gesamten bg malen
 // TODO: paint background-color for rest of component (not only behind bg-image)
 // TODO: scroll-area defined by object-array containing icons and strings...
 // TODO: transient attributes
