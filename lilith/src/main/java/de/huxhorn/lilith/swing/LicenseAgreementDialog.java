@@ -36,14 +36,12 @@ public class LicenseAgreementDialog
 {
 	private final Logger logger = LoggerFactory.getLogger(LicenseAgreementDialog.class);
 
-	private AcceptAction acceptAction;
-	private DeclineAction declineAction;
 	private boolean licenseAgreed;
 
 
 	public LicenseAgreementDialog()
 	{
-		super((Frame) null, "§§§ EULA §§§", true);
+		super((Frame) null, "Â§Â§Â§ EULA Â§Â§Â§", true);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter()
 		{
@@ -101,8 +99,8 @@ public class LicenseAgreementDialog
 		content.add(licenseScrollPane, BorderLayout.CENTER);
 		content.add(buttonPanel, BorderLayout.SOUTH);
 
-		acceptAction = new AcceptAction();
-		declineAction = new DeclineAction();
+		AcceptAction acceptAction = new AcceptAction();
+		DeclineAction declineAction = new DeclineAction();
 
 		JButton acceptButton = new JButton(acceptAction);
 		JButton declineButton = new JButton(declineAction);
@@ -141,6 +139,8 @@ public class LicenseAgreementDialog
 	private class AcceptAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 5602271076398281248L;
+
 		public AcceptAction()
 		{
 			super("Accept");
@@ -155,6 +155,8 @@ public class LicenseAgreementDialog
 	private class DeclineAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 5007161609485321187L;
+
 		public DeclineAction()
 		{
 			super("Decline");
