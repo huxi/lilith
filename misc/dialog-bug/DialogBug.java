@@ -24,6 +24,7 @@ public class DialogBug
 {
 	public static void main(String[] args)
 	{
+		System.out.println("java.version="+System.getProperty("java.version"));
 		SwingUtilities.invokeLater(new StartupRunnable(args.length == 0));
 	}
 

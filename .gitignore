@@ -4,3 +4,4 @@ buildNumber.properties
 *.iml
 *.iws
 *.ipr
+*.class
