@@ -25,7 +25,23 @@ public class DialogBug
 	public static void main(String[] args)
 	{
 		System.out.println("java.version="+System.getProperty("java.version"));
+		Toolkit.getDefaultToolkit().addAWTEventListener( new MyAwtListener(),
+			AWTEvent.FOCUS_EVENT_MASK |
+			AWTEvent.CONTAINER_EVENT_MASK |
+			AWTEvent.WINDOW_FOCUS_EVENT_MASK |
+			AWTEvent.WINDOW_EVENT_MASK |
+			AWTEvent.WINDOW_STATE_EVENT_MASK);
+
 		SwingUtilities.invokeLater(new StartupRunnable(args.length == 0));
+	}
+
+	public static class MyAwtListener
+		implements AWTEventListener
+	{
+		public void eventDispatched(AWTEvent event)
+		{
+			System.out.println("event = " + event);
+		}
 	}
 
 	public static class StartupRunnable
@@ -95,14 +111,22 @@ public class DialogBug
 				System.out.println("Open executed");
 			}
 		}
+
+		public String toString()
+		{
+			return "MyFrame";
+		}
 	}
 
 	public static class MyDialog
 		extends JDialog
 	{
+		private String title;
+
 		public MyDialog(JFrame parent, String title)
 		{
 			super(parent);
+			this.title=title;
 			setTitle(title);
 			setModal(false);
 			add(new JButton(new OkAction()));
@@ -121,6 +145,11 @@ public class DialogBug
 			{
 				setVisible(false);
 			}
+		}
+
+		public String toString()
+		{
+			return title;
 		}
 	}
 }
