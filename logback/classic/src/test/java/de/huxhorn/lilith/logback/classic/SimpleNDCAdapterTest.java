@@ -22,13 +22,9 @@ import de.huxhorn.lilith.data.logging.Message;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SimpleNDCAdapterTest
 {
-	private final Logger logger = LoggerFactory.getLogger(SimpleNDCAdapterTest.class);
-
 	private SimpleNDCAdapter instance;
 
 	@Before
@@ -103,7 +99,6 @@ public class SimpleNDCAdapterTest
 		}
 
 		Message[] stack = instance.getContextStack();
-		if(logger.isDebugEnabled()) logger.debug("Retrieved contextStack={}.", new Object[]{stack});
 		assertArrayEquals(messages, stack);
 	}
 

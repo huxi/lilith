@@ -243,7 +243,7 @@ public class LoggingEventReader
 
 	private ThrowableInfo parseThrowableInfo(List<String> lines)
 	{
-		System.out.println("Lines: " + lines);
+		//System.out.println("Lines: " + lines);
 		ThrowableInfo result = null;
 		ThrowableInfo currentTI = null;
 		List<ExtendedStackTraceElement> stackTraceElements = new ArrayList<ExtendedStackTraceElement>();
