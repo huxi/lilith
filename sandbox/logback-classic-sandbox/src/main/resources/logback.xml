@@ -23,14 +23,11 @@
 		<IncludeCallerData>true</IncludeCallerData>
 	</appender>
 
-	<root>
-		<level value="ALL"/>
+	<root level="ALL">
 		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="MultiplexClassicCompressed"/>
 		<appender-ref ref="LogbackClassic"/>
 	</root>
 
-	<logger name="de.huxhorn.lilith.slf4j">
-		<level value="ALL"/>
-	</logger>
+	<logger name="de.huxhorn.lilith.slf4j" level="ALL"/>
 </configuration>

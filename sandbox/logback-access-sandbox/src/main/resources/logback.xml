@@ -25,11 +25,11 @@
 		</layout>
 	</appender>
 
-	<root>
-		<level value="DEBUG"/>
+	<root level="DEBUG">
 		<appender-ref ref="multiplex"/>
 		<appender-ref ref="LogbackClassic"/>
 		<appender-ref ref="CONSOLE"/>
 	</root>
 
 </configuration>
+
