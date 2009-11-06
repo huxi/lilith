@@ -86,6 +86,10 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Removed additivity from the debug loggers. Debug logger events won't show up in the
+				Lilith log or the console.
+			</action>
 			<action dev="jhux" type="add" issue="74">
 				Prevented duplicate start of application by the same user.
 				Duplicate startup by a different user is still possible but quite useless until the event receivers are

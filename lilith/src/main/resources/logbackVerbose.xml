@@ -81,7 +81,7 @@
         <appender-ref ref="Lilith"/>
     </root>
 
-    <logger name="de.huxhorn.lilith.debug" level="TRACE">
+    <logger name="de.huxhorn.lilith.debug" level="TRACE" additivity="false">
         <appender-ref ref="MultiplexClassicCompressed"/>
         <appender-ref ref="MultiplexClassicUncompressed"/>
         <appender-ref ref="MultiplexClassicXmlCompressed"/>
