@@ -86,6 +86,12 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="add" issue="74">
+				Prevented duplicate start of application by the same user.
+				Duplicate startup by a different user is still possible but quite useless until the event receivers are
+				configurable.
+				This was requested by Joe.
+			</action>
 			<action dev="jhux" type="update">
 				Enhanced debug dialog. Better layout and tooltips.
 			</action>

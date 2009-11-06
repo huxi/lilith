@@ -369,6 +369,13 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.3rdparty.junique</artifactId>
+			<version>1.0.2</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<!--
 		<dependency>
 			<groupId>org.swinglabs</groupId>

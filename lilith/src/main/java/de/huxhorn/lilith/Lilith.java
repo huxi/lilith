@@ -32,6 +32,9 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
+import it.sauronsoftware.junique.AlreadyLockedException;
+import it.sauronsoftware.junique.JUnique;
+import it.sauronsoftware.junique.MessageHandler;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -89,8 +92,13 @@ public class Lilith
 	private static final String ENABLE_BONJOUR = "bonjour";
 	private static final String CREATE_MD5 = "md5";
 
+	private static final String JUNIQUE_MSG_SHOW = "Show";
+	private static final String JUNIQUE_REPLY_OK = "OK";
+	private static final String JUNIQUE_REPLY_UNKNOWN = "Unknown";
+
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
+	private static MainFrame mainFrame;
 
 	static
 	{
@@ -361,6 +369,26 @@ public class Lilith
 
 		Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
 
+		// preventing duplicate instances...
+		try
+		{
+			JUnique.acquireLock(Lilith.class.getName(), new MessageHandler()
+			{
+				public String handle(String message)
+				{
+					return handleJUniqueMessage(message);
+				}
+			});
+		}
+		catch(AlreadyLockedException e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Detected running instance, quitting.");
+			String result=JUnique.sendMessage(Lilith.class.getName(),"Show");
+			if(logger.isDebugEnabled()) logger.debug("JUnique result: {}", result);
+			return;
+		}
+		// ok, we are the first instance this user has started...
+
 		SwingUtilities.invokeLater(new Runnable()
 		{
 
@@ -370,6 +398,38 @@ public class Lilith
 			}
 		});
 		startUI(appTitle, enableBonjour);
+	}
+
+	private static String handleJUniqueMessage(String msg)
+	{
+		if(JUNIQUE_MSG_SHOW.equals(msg))
+		{
+			showMainFrame();
+			return JUNIQUE_REPLY_OK;
+		}
+		return JUNIQUE_REPLY_UNKNOWN;
+	}
+
+	private static void showMainFrame()
+	{
+		if(mainFrame != null)
+		{
+			final MainFrame frame = mainFrame;
+			SwingUtilities.invokeLater(new Runnable()
+			{
+
+				public void run()
+				{
+
+					if(frame.isVisible())
+					{
+						frame.setVisible(false);
+					}
+					Windows.showWindow(frame, null, false);
+					frame.toFront();
+				}
+			});
+		}
 	}
 
 	private static void updateSplashStatus(final SplashScreen splashScreen, final String status)
@@ -527,13 +587,16 @@ public class Lilith
 			}
 			catch(Throwable t)
 			{
-				if(logger.isErrorEnabled()) logger.error("Exception while setting look & feel '"+lookAndFeel+"'!", t);
+				if(logger.isErrorEnabled())
+				{
+					logger.error("Exception while setting look & feel '" + lookAndFeel + "'!", t);
+				}
 			}
 
 			// this is part 2 of Mac Menu for all PLAFs.
 			// Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
 			if(logger.isDebugEnabled()) logger.debug("storedDefaults: {}", storedDefaults);
-			for(Map.Entry<String, Object> current:storedDefaults.entrySet())
+			for(Map.Entry<String, Object> current : storedDefaults.entrySet())
 			{
 				UIManager.put(current.getKey(), current.getValue());
 			}
@@ -623,6 +686,7 @@ public class Lilith
 				}
 			});
 			hideSplashScreen(splashScreen);
+			mainFrame=frame;
 
 		}
 		catch(InterruptedException ex)
