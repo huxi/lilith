@@ -9,19 +9,13 @@
 	<description>This file is part of Lilith. It's a java.util.logging sandbox.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
-	<scm>
-		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/sandbox/jul-sandbox</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/sandbox/jul-sandbox</developerConnection>
-		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/sandbox/jul-sandbox/</url>
-	</scm>
-
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
 		<version><!-- LV -->0.9.37-SNAPSHOT</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
-
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -74,7 +68,7 @@
 		</resources>
 		<finalName>jul-sandbox</finalName>
 	</build>
-
-	<dependencies>
-	</dependencies>
+	
+	<dependencies></dependencies>
 </project>
+

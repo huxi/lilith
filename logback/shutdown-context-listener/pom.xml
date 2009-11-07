@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.logback.servlet</artifactId>
@@ -9,20 +9,14 @@
 	<name>Logback Shutdown ServletContextListener</name>
 	<description>This file is part of Lilith. It contains a ServletContextListener that shuts down logback.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
-
-	<scm>
-		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback/shutdown-context-listener</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/logback/shutdown-context-listener</developerConnection>
-		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/logback/shutdown-context-listener/</url>
-	</scm>
-
+	
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
 		<version><!-- LV -->0.9.37-SNAPSHOT</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
-
+	
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License v3 (LGPL)</name>
@@ -30,7 +24,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -45,3 +39,4 @@
 		</dependency>
 	</dependencies>
 </project>
+

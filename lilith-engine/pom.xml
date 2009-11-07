@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.engine</artifactId>
@@ -9,81 +9,75 @@
 	<name>Lilith Engine</name>
 	<description>This file is part of Lilith. It contains the engine part of Lilith.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
-
-	<scm>
-		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-engine</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith-engine</developerConnection>
-		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith-engine/</url>
-	</scm>
-
+	
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
 		<version><!-- LV -->0.9.37-SNAPSHOT</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.sender</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.eventsource</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.logging.protobuf</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.access</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.access.protobuf</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.codec.filebuffer</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.conditions</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.codec</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -91,3 +85,4 @@
 		</dependency>
 	</dependencies>
 </project>
+

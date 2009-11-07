@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.sandbox.log4j</artifactId>
@@ -9,20 +9,14 @@
 	<name>Lo4j Sandbox</name>
 	<description>This file is part of Lilith. It's a log4j sandbox.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
-
-	<scm>
-		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/sandbox/log4j-sandbox</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/sandbox/log4j-sandbox</developerConnection>
-		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/sandbox/log4j-sandbox/</url>
-	</scm>
-
+	
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
 		<version><!-- LV -->0.9.37-SNAPSHOT</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
-
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -75,7 +69,7 @@
 		</resources>
 		<finalName>log4j-sandbox</finalName>
 	</build>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -101,14 +95,17 @@
 			<artifactId>commons-cli</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<!-- commons-lang dependency below is needed to override 1.0 dependency
-		from commons-cli -->
+		
+		<!--
+		commons-lang dependency below is needed to override 1.0 dependency
+		from commons-cli
+		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -116,3 +113,4 @@
 		</dependency>
 	</dependencies>
 </project>
+
