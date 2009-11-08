@@ -7,3 +7,4 @@ mvn deploy:deploy-file -Duser.name=huxhorn,lilith -Durl=sftp://web.sourceforge.n
 mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=de.huxhorn.lilith -DartifactId=de.huxhorn.lilith.3rdparty.jgroups -Dversion=2.8.0.CR3 -Dfile=jgroups-all-2.8.0.CR3.jar
 
 mvn deploy:deploy-file -Duser.name=huxhorn,lilith -Durl=sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dfile=jgroups-all-2.8.0.CR3.jar -DpomFile=jgroups-pom-2.8.0.CR3.xml
+
