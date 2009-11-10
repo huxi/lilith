@@ -13,7 +13,7 @@ import java.awt.event.*;
  * Dismiss both dialogs clicking on "Ok".
  * Press "Ctrl-O". This should print "Open executed" but doesn't.
  * Click on "File" menu.
- * Press "Ctrl-O". Now "Open executed" is printed as expeczed.
+ * Press "Ctrl-O". Now "Open executed" is printed as expected.
  *
  * Alternatively, execute running "java DialogBug x".
  * Only one dialog will appear.
