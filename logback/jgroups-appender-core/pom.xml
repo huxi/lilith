@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.huxhorn.lilith</groupId>
+	<artifactId>de.huxhorn.lilith.logback.appender.jgroups-core</artifactId>
+	<version>${parent.version}</version>
+	<packaging>jar</packaging>
+	<name>Logback JGroups Appender Core</name>
+	<description>This file is part of Lilith. It contains the JGroups appender core classes.</description>
+	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
+	
+	<parent>
+		<groupId>de.huxhorn.lilith</groupId>
+		<artifactId>de.huxhorn.lilith.parent</artifactId>
+		<version><!-- LV -->0.9.37-SNAPSHOT</version>
+		<relativePath>../../lilith-parent/pom.xml</relativePath>
+	</parent>
+	
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License v3 (LGPL)</name>
+			<url>http://www.gnu.org/copyleft/lesser.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<dependencies>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.codec</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.3rdparty.jgroups-all</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+	</dependencies>
+</project>
+
