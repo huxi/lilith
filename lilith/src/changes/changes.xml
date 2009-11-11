@@ -85,7 +85,7 @@
 			</action>
 		</release>
 
-		<release version="0.9.37" date="TBD" description="Future release">
+		<release version="0.9.37" date="2009-11-11" description="Release">
 			<action dev="jhux" type="fix" issue="75">
 				Change of active Conditions was not repainting views. This was only the case in internal betas.
 				Reported by Alfred.

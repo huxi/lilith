@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.37-SNAPSHOT</version>
+		<version><!-- LV -->0.9.37</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
