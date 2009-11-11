@@ -86,6 +86,10 @@
 		</release>
 
 		<release version="0.9.37" date="TBD" description="Future release">
+			<action dev="jhux" type="fix" issue="75">
+				Change of active Conditions was not repainting views. This was only the case in internal betas.
+				Reported by Alfred.
+			</action>
 			<action dev="jhux" type="update">
 				Removed additivity from the debug loggers. Debug logger events won't show up in the
 				Lilith log or the console.

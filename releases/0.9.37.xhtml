@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 0.9.37</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 0.9.37</h1>
+
+		<div>
+		<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/0.9.37">Download Now!
+		<br />(Released: 2009-11-xx)</a>
+		</div>
+		
+		<h2>Changes</h2>
+		<ul>
+			<li>
+			Change of active Conditions was not repainting views. This was only the case in internal betas.
+			<br/>This was reported by Alfred.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/75">Ticket 75</a>)			
+			</li>
+			
+			<li>
+			Removed additivity from the debug loggers. Debug logger events won't show up in the
+			Lilith log or the console.
+			</li>
+
+			<li>
+			Prevented duplicate start of application by the same user.
+			<br/>Duplicate startup by a different user is still possible but quite useless until the event receivers are configurable.
+			<br/>This was requested by Joe.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/74">Ticket 74</a>)			
+			</li>
+
+			<li>
+			Enhanced debug dialog. Better layout and tooltips.
+			</li>
+			
+			<li>
+			Added option to disable the creation of statistics.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/4">Ticket 4</a>)			
+			</li>
+
+			<li>
+			Added "Copy call location" action. This is quite useful in combination with the
+			CallLocation condition.
+			</li>
+			
+			<li>
+			Added CallLocation condition that returns true if the first element of the call stack
+			equals the given StackTraceElement.
+			</li>
+
+			<li>
+			Added option to disable global logs.
+			<br/>This was requested by Joe.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/73">Ticket 73</a>)			
+			</li>
+
+			<li>
+			Preventing saved conditions with duplicate name or condition.
+			</li>
+			
+			<li>
+			The Appenders are now supporting the "Adder-Idiom" that is common for Logback appenders.
+			<br/>You can now use multiple &lt;RemoteHost&gt; tags to define the remote hosts.
+			</li>
+
+			<li>
+			Replaced JCheckboxMenuItem in Window menu with a JMenuItem containing an Icon if the entry has a frame.
+			</li>
+
+			<li>
+			Toolbar of mainframe was not switched active after attach.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/71">Ticket 71</a>)			
+			</li>
+
+			<li>
+			Toolbar of mainframe stayed active after detach.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/70">Ticket 70</a>)			
+			</li>
+
+			<li>
+			Removed appBuildNumber from title. It was annoying at best.
+			</li>
+
+			<li>
+			Enhanced "Check for update" dialog.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/68">Ticket 68</a>)			
+			</li>
+
+			<li>
+			Implement optional "Tip of the Day" dialog.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/22">Ticket 22</a>)			
+			</li>
+
+			<li>
+			Added "Level>=" as a native default condition to increase performance.
+			</li>
+
+			<li>
+			Copy actions are now working correctly in case of external frames.<br/>
+			This was reported by Matthias "Alfred" Neumann.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/67">Ticket 67</a>)			
+			</li>
+
+			<li>
+			Updated protobuf to 2.2.0.
+			</li>
+
+			<li>
+			Jumping to the unfiltered event didn't work the first time if Tail was enabled.<br/>
+			This was reported by Joe.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/66">Ticket 66</a>)			
+			</li>
+
+			<li>
+			Preferences dialog can now be closed by pressing Enter.<br/>
+			This was suggested by Vlad Satanovski.
+			</li>
+
+			<li>
+			Table and message view are now having reasonable preferred sizes (needed because of splitpane).
+			</li>
+
+			<li>
+			Replaced tabs of event view with a combobox.<br/>
+			The combobox is only visible if there are filtered views. There's also more room
+			for the condition string.<br/>
+			Something like this was suggested by Scott Stanton and Joe.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/58">Ticket 58</a>)			
+			</li>
+
+			<li>
+			Added "Execute GC" to Troubleshooting.
+			</li>
+
+			<li>
+			Added option to show/hide the statusbar.
+			</li>
+
+			<li>
+			Added option to show/hide the toolbar.<br/>
+			This was suggested by Scott Stanton, Ekkehard Gentz and Joe.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/57">Ticket 57</a>)			
+			</li>
+
+			<li>
+			Added "Context" column for logging events.
+			</li>
+
+			<li>
+			Updated keyboard help. Better symbol for "Ctrl"/"cmd".
+			</li>
+
+			<li>
+			Added "Troubleshooting..." menu item in "Help" menu as a shortcut to the throubleshooting
+			section of Preferences.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/65">Ticket 65</a>)			
+			</li>
+
+			<li>
+			Added new command "Copy Properties" to Troubleshooting section of Preferences.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/65">Ticket 65</a>)			
+			</li>
+
+			<li>
+			Removed useless Statistics action for current source.
+			Statistics can be obtained using "Window" &gt; "Statistics".
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/24">Ticket 24</a>)			
+			</li>
+
+			<li>
+			Added persistent zoom-in (*command* .) and zoom-out (*command* shift .) of details view.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/59">Ticket 59</a>)			
+			</li>
+
+			<li>
+			Events did sometimes show up twice in filtered views.
+			This was caused by a classic off-by-one error.<br/>
+			Reported by Joe.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/64">Ticket 64</a>)			
+			</li>
+
+			<li>
+			Fixed a remaining hang in the multiplex appenders in case of certain network problems.
+			</li>
+
+			<li>
+			Updated Groovy to 1.6.5.
+			</li>
+			
+			<li>
+			Updated Logback to 0.9.17.<br/>
+			This fixes issue 63 that was caused by a Logback bug. Thanks for the fast fix, Ceki!
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/63">Ticket 63</a>)			
+			</li>
+		</ul>
+		
+		
+		<h2>Known Issues</h2>
+		<ul>
+		
+			<li>Mac OS X 10.5 + 10.6:
+			<br/>Shortcuts/Accelerators are not working if both the "Tip of the Day" and "Check for Update" dialogs show after startup.
+			<br/>This seems to be a bug in the Java implementation from Apple.
+			<br/>See <a href="http://sourceforge.net/apps/trac/lilith/ticket/72">Ticket 72</a>.
+			</li>
+		
+			<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+				This is a limitation of Flying Saucer that's used as the XHTML renderer.
+			</li>
+		</ul>
+
+		
+		<h2>Previous Versions</h2>
+		<ul>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.36.xhtml">0.9.36</a></li>
+		</ul>
+
+	</body>
+</html>
+

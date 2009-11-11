@@ -3282,7 +3282,7 @@ public class MainFrame
 
 		public String retrieveChanges(String currentVersion)
 		{
-			final String url = "http://lilith.huxhorn.de/changes-" + currentVersion + ".xhtml";
+			final String url = "http://lilith.huxhorn.de/releases/" + currentVersion + ".xhtml";
 			// Create an instance of HttpClient.
 			HttpClient client = new HttpClient();
 

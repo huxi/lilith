@@ -222,6 +222,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		{
 			comboBoxPane.repaint();
 		}
+		contentPane.repaint();
 	}
 
 	public void updateViewScale(double scale)
