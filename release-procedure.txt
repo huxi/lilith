@@ -58,7 +58,6 @@ Write release notes and changes for sf.net upload.
 #####
 
 Upload lilith-files to sf.net
-https://frs.sourceforge.net/webupload
 
 #####
 
