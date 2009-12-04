@@ -21,8 +21,8 @@
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
 		<sulkyVersion><!-- SV -->0.9.10-SNAPSHOT</sulkyVersion>
-		<slf4jVersion>1.5.8</slf4jVersion>
-		<logbackVersion>0.9.17</logbackVersion>
+		<slf4jVersion>1.5.10</slf4jVersion>
+		<logbackVersion>0.9.18</logbackVersion>
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -403,7 +403,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>1.6.5</version>
+				<version>1.6.7</version>
 			</dependency>
 			
 			<dependency>
