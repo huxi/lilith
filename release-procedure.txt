@@ -50,6 +50,7 @@ mvn site:deploy
 
 rsync from huxhorn.de to sf.net webspace:
 rsync -avP -e ssh ~/lilith/repository huxhorn,lilith@web.sourceforge.net:htdocs
+rsync -avP -e ssh ~/lilith/repository huxhorn,sulky@web.sourceforge.net:htdocs
 
 #####
 
