@@ -267,27 +267,32 @@ public class ApplicationPreferences
 			return;
 		}
 
-		List<String> previousSearchStrings=getPreviousSearchStrings();
-		if(previousSearchStrings.contains(searchString) || searchString.trim().length() == 0)
+		if(searchString.trim().length() == 0)
 		{
-			// ignore duplicates and whitespace-only strings
+			// ignore whitespace-only strings
+			return;
+		}
+		List<String> previousSearchStrings=getPreviousSearchStrings();
+		if(previousSearchStrings.contains(searchString)) 
+		{
+			// ignore duplicates
 			return;
 		}
 		previousSearchStrings.add(0, searchString);
-		while(previousSearchStrings.size() > MAX_PREV_SEARCHES)
-		{
-			previousSearchStrings.remove(MAX_PREV_SEARCHES);
-		}
 		setPreviousSearchStrings(previousSearchStrings);
 	}
 
 	private void setPreviousSearchStrings(List<String> previousSearchStrings)
 	{
 		Object oldValue=getPreviousSearchStrings();
+		while(previousSearchStrings.size() > MAX_PREV_SEARCHES)
+		{
+			previousSearchStrings.remove(MAX_PREV_SEARCHES);
+		}
 		writePreviousSearchStrings(previousSearchStrings);
 		Object newValue=getPreviousSearchStrings();
 		propertyChangeSupport.firePropertyChange(PREVIOUS_SEARCH_STRINGS_PROPERTY, oldValue, newValue);
-		if(logger.isInfoEnabled()) logger.info("previousSearchStrings set to {}.", newValue);
+		if(logger.isWarnEnabled()) logger.warn("previousSearchStrings set to {}.", newValue);
 	}
 
 	public List<String> getPreviousSearchStrings()
