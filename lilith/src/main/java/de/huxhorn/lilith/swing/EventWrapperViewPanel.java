@@ -59,6 +59,7 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -89,6 +90,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -112,7 +114,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private static final String GROOVY_IDENTIFIER = "#groovy#";
 	private static final String SAVED_CONDITION_IDENTIFIER = "#condition#";
-	private static final Color ERROR_COLOR = new Color(0xffaaaa);
+	private static final Color ERROR_COLOR = new Color(0x990000);
+	private static final Color NO_ERROR_COLOR = Color.BLACK;
 
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
 
@@ -136,7 +139,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private JToolBar findPanel;
 	private JToggleButton findNotButton;
 	private JComboBox findTypeCombo;
-	private JTextField findTextField;
+	private JComboBox findTextCombo;
 	private JLabel statusLabel;
 	private JScrollBar verticalLogScrollbar;
 
@@ -254,9 +257,20 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		ReplaceFilterAction replaceFilterAction = new ReplaceFilterAction();
 
 		FindTextFieldListener findTextFieldListener = new FindTextFieldListener();
-		findTextField.addActionListener(findTextFieldListener);
-		findTextField.getDocument().addDocumentListener(findTextFieldListener);
-		findTextField.setBackground(Color.WHITE);
+		JTextComponent findEditorComponent = getFindEditorComponent();
+		if(findEditorComponent instanceof JTextField)
+		{
+			((JTextField)findEditorComponent).addActionListener(findTextFieldListener);
+		}
+		else
+		{
+			if(logger.isWarnEnabled()) logger.warn("findEditorComponent ({}) is not instanceof JTextField!", findEditorComponent.getClass().getName());
+		}
+		if(findEditorComponent != null)
+		{
+			findEditorComponent.getDocument().addDocumentListener(findTextFieldListener);
+			findEditorComponent.setForeground(NO_ERROR_COLOR);
+		}
 
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		JPanel statusPanel = new JPanel(new GridBagLayout());
@@ -302,9 +316,20 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		KeyStrokes.registerCommand(this, findNextAction, "FIND_NEXT_ACTION");
 		KeyStrokes.registerCommand(this, findPrevAction, "FIND_PREV_ACTION");
 		KeyStrokes.registerCommand(this, closeFindAction, "CLOSE_FIND_ACTION");
-		KeyStrokes.registerCommand(findTextField, replaceFilterAction, "REPLACE_FILTER_ACTION");
+		KeyStrokes.registerCommand(findTextCombo, replaceFilterAction, "REPLACE_FILTER_ACTION");
 		splitPane.setDividerLocation(0.5d);
 		setShowingStatusBar(mainFrame.getApplicationPreferences().isShowingStatusbar());
+	}
+
+	private JTextComponent getFindEditorComponent()
+	{
+		Component findComponent = findTextCombo.getEditor().getEditorComponent();
+		if(findComponent instanceof JTextComponent)
+		{
+			return (JTextComponent) findComponent;
+		}
+		if(logger.isWarnEnabled()) logger.warn("findComponent ({}) is not instanceof JTextComponent!", findComponent.getClass().getName());
+		return null;
 	}
 
 	private void initFindPanel()
@@ -323,16 +348,21 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		ActionListener findTypeModifiedListener = new FindTypeSelectionActionListener();
 		findTypeCombo = new JComboBox();
+		// not editable, so decorator will be strict
+		AutoCompleteDecorator.decorate(this.findTypeCombo);
+
 		findTypeCombo.addActionListener(findTypeModifiedListener);
 		findNotButton = new JToggleButton("!");
 		findNotButton.addActionListener(findTypeModifiedListener);
 		findNotButton.setToolTipText("Not - inverts condition");
 		findNotButton.setMargin(new Insets(0, 0, 0, 0));
-		findTextField = new JTextField();
-		findTextField.setColumns(15);
+		findTextCombo = new JComboBox();
+		findTextCombo.setEditable(true); // so decorator won't be strict
+		AutoCompleteDecorator.decorate(this.findTextCombo);
+
 		findPanel.add(findNotButton);
 		findPanel.add(findTypeCombo);
-		findPanel.add(findTextField);
+		findPanel.add(findTextCombo);
 
 		findPrevAction = new FindPreviousAction();
 		findPrevButton = new JButton(findPrevAction);
@@ -436,8 +466,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.setVisible(showingFilters);
 		if(showingFilters)
 		{
-			findTextField.requestFocusInWindow();
-			findTextField.selectAll();
+			findTextCombo.requestFocusInWindow();
+			findTextCombo.getEditor().selectAll();
 			applyFilter();
 		}
 		scrollToEvent();
@@ -595,6 +625,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private static final String LOGGER_EQUALS_CONDITION = "logger.equals";
 	private static final String LEVEL_CONDITION = "Level>=";
 	private static final String CALL_LOCATION_CONDITION = "CallLocation";
+	private static final String NAMED_CONDITION = "Named";
 	private static final String[] DEFAULT_CONDITIONS = new String[]{
 		EVENT_CONTAINS_CONDITION,
 		MESSAGE_CONTAINS_CONDITION,
@@ -602,6 +633,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		LOGGER_EQUALS_CONDITION,
 		LEVEL_CONDITION,
 		CALL_LOCATION_CONDITION,
+		NAMED_CONDITION,
 	};
 
 	private void initTypeCombo()
@@ -633,7 +665,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void resetFind()
 	{
-		findTextField.setText("");
+		JTextComponent findEditorComponent = getFindEditorComponent();
+		if(findEditorComponent != null)
+		{
+			findEditorComponent.setText("");
+		}
 		setFilterCondition(null);
 	}
 
@@ -673,9 +709,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 			if(aComponent.equals(findTypeCombo))
 			{
-				return findTextField;
+				return findTextCombo;
 			}
-			if(aComponent.equals(findTextField))
+			if(aComponent.equals(findTextCombo))
 			{
 				if(findPrevButton.isEnabled())
 				{
@@ -726,13 +762,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				return findNotButton;
 			}
-			if(aComponent.equals(findTextField))
+			if(aComponent.equals(findTextCombo))
 			{
 				return findTypeCombo;
 			}
 			if(aComponent.equals(findPrevButton))
 			{
-				return findTextField;
+				return findTextCombo;
 			}
 			if(aComponent.equals(findNextButton))
 			{
@@ -740,7 +776,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				{
 					return findPrevButton;
 				}
-				return findTextField;
+				return findTextCombo;
 			}
 
 			if(aComponent.equals(findPanel))
@@ -759,7 +795,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				{
 					return findPrevButton;
 				}
-				return findTextField;
+				return findTextCombo;
 			}
 			// I guess focus was inside table so focus component before table.
 			if(logger.isInfoEnabled())
@@ -880,9 +916,15 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private void applyFilter()
 	{
-		String text = findTextField.getText();
+		String text=null;
+		JTextComponent findEditorComponent = getFindEditorComponent();
+		if(findEditorComponent != null)
+		{
+			text=findEditorComponent.getText();
+		}
+
 		Condition condition;
-		//boolean error=false;
+
 		String errorMessage = null;
 		if(text == null)
 		{
@@ -978,20 +1020,24 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				}
 				else
 				{
+					errorMessage = "Couldn't find condition '"+selectedType+"'!";
 					condition = null;
 				}
 			}
 		}
-		if(errorMessage != null)
+		if(findEditorComponent != null)
 		{
-			// problem with condition
-			findTextField.setBackground(ERROR_COLOR);
-			findTextField.setToolTipText(errorMessage);
-		}
-		else
-		{
-			findTextField.setBackground(Color.WHITE);
-			findTextField.setToolTipText(null);
+			if(errorMessage != null)
+			{
+				// problem with condition
+				findEditorComponent.setForeground(ERROR_COLOR);
+				findEditorComponent.setToolTipText(errorMessage);
+			}
+			else
+			{
+				findEditorComponent.setForeground(NO_ERROR_COLOR);
+				findEditorComponent.setToolTipText(null);
+			}
 		}
 		if(condition != null)
 		{
@@ -1533,7 +1579,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			applyFilter();
 			if(logger.isDebugEnabled()) logger.debug("modifiers: " + e.getModifiers());
-			findTextField.selectAll();
+			JTextComponent findEditorComponent = getFindEditorComponent();
+			if(findEditorComponent != null)
+			{
+				findEditorComponent.selectAll();
+			}
 			createFilteredView();
 		}
 
@@ -1788,7 +1838,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	void enableFindComponents(boolean enabled)
 	{
 		closeFindAction.setEnabled(enabled);
-		findTextField.setEnabled(enabled);
+		findTextCombo.setEnabled(enabled);
 		if(table.getFilterCondition() != null)
 		{
 			findPrevAction.setEnabled(enabled);
