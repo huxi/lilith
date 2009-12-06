@@ -77,6 +77,9 @@ public class ApplicationPreferences
 	private static final Preferences PREFERENCES =
 		Preferences.userNodeForPackage(ApplicationPreferences.class);
 
+	private static final int MAX_PREV_SEARCHES = 15;
+
+	private static final String PREVIOUS_SEARCH_STRINGS_XML_FILENAME = "previousSearchStrings.xml";
 	private static final String STATUS_COLORS_XML_FILENAME = "statusColors.xml";
 	private static final String LEVEL_COLORS_XML_FILENAME = "levelColors.xml";
 
@@ -119,6 +122,7 @@ public class ApplicationPreferences
 	public static final String SHOWING_TIP_OF_THE_DAY_PROPERTY = "showingTipOfTheDay";
 	public static final String GLOBAL_LOGGING_ENABLED_PROPERTY = "globalLoggingEnabled";
 	public static final String LOGGING_STATISTIC_ENABLED_PROPERTY = "loggingStatisticEnabled";
+	public static final String PREVIOUS_SEARCH_STRINGS_PROPERTY = "previousSearchStrings";
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
 	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
@@ -224,6 +228,8 @@ public class ApplicationPreferences
 	private Set<String> blackList;
 	private Set<String> whiteList;
 	private List<SavedCondition> conditions;
+	private List<String> previousSearchStrings;
+
 
 	private File groovyConditionsPath;
 
@@ -247,6 +253,122 @@ public class ApplicationPreferences
 			// groovy Conditions was generated, create examples...
 			installExampleConditions();
 		}
+	}
+
+	public void clearPreviousSearchStrings()
+	{
+		setPreviousSearchStrings(new ArrayList<String>());
+	}
+
+	public void addPreviousSearchString(String searchString)
+	{
+		if(searchString == null)
+		{
+			return;
+		}
+
+		List<String> previousSearchStrings=getPreviousSearchStrings();
+		if(previousSearchStrings.contains(searchString) || searchString.trim().length() == 0)
+		{
+			// ignore duplicates and whitespace-only strings
+			return;
+		}
+		previousSearchStrings.add(0, searchString);
+		while(previousSearchStrings.size() > MAX_PREV_SEARCHES)
+		{
+			previousSearchStrings.remove(MAX_PREV_SEARCHES);
+		}
+		setPreviousSearchStrings(previousSearchStrings);
+	}
+
+	private void setPreviousSearchStrings(List<String> previousSearchStrings)
+	{
+		Object oldValue=getPreviousSearchStrings();
+		writePreviousSearchStrings(previousSearchStrings);
+		Object newValue=getPreviousSearchStrings();
+		propertyChangeSupport.firePropertyChange(PREVIOUS_SEARCH_STRINGS_PROPERTY, oldValue, newValue);
+		if(logger.isInfoEnabled()) logger.info("previousSearchStrings set to {}.", newValue);
+	}
+
+	public List<String> getPreviousSearchStrings()
+	{
+		initPreviousSearchStrings();
+		return new ArrayList<String>(previousSearchStrings);
+
+	}
+
+	private void initPreviousSearchStrings()
+	{
+		File appPath = getStartupApplicationPath();
+		File file = new File(appPath, PREVIOUS_SEARCH_STRINGS_XML_FILENAME);
+
+		if(file.isFile() && previousSearchStrings == null)
+		{
+			XMLDecoder d = null;
+			try
+			{
+				d = new XMLDecoder(
+					new BufferedInputStream(
+						new FileInputStream(file)));
+
+				//noinspection unchecked
+				previousSearchStrings = (List<String>) d.readObject();
+			}
+			catch(Throwable ex)
+			{
+				if(logger.isWarnEnabled())
+				{
+					logger
+						.warn("Exception while loading previous search strings from file '" + file
+							.getAbsolutePath() + "'!", ex);
+				}
+			}
+			finally
+			{
+				if(d != null)
+				{
+					d.close();
+				}
+			}
+		}
+
+		if(previousSearchStrings == null)
+		{
+			previousSearchStrings = new ArrayList<String>();
+		}
+
+	}
+
+	private boolean writePreviousSearchStrings(List<String> searchStrings)
+	{
+		File appPath = getStartupApplicationPath();
+		File file = new File(appPath, PREVIOUS_SEARCH_STRINGS_XML_FILENAME);
+		XMLEncoder e = null;
+		Throwable error = null;
+		try
+		{
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			e = new XMLEncoder(bos);
+			e.writeObject(searchStrings);
+		}
+		catch(FileNotFoundException ex)
+		{
+			error = ex;
+		}
+		finally
+		{
+			if(e != null)
+			{
+				e.close();
+			}
+		}
+		this.previousSearchStrings = null;
+		if(error != null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing previous search strings!", error);
+			return false;
+		}
+		return true;
 	}
 
 	public File resolveConditionScriptFile(String input)
@@ -335,7 +457,7 @@ public class ApplicationPreferences
 					if(logger.isWarnEnabled())
 					{
 						logger
-							.warn("Exception while loading level colors from sourceListsFile '" + levelColorsFile
+							.warn("Exception while loading level colors from file '" + levelColorsFile
 								.getAbsolutePath() + "'!", ex);
 					}
 					levelColors = null;
@@ -459,7 +581,7 @@ public class ApplicationPreferences
 					if(logger.isWarnEnabled())
 					{
 						logger
-							.warn("Exception while loading status colors from sourceListsFile '" + statusColorsFile
+							.warn("Exception while loading status colors from file '" + statusColorsFile
 								.getAbsolutePath() + "'!", ex);
 					}
 					statusColors = null;
