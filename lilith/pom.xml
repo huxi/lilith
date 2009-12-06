@@ -299,7 +299,13 @@
 			<version>1.0.0</version>
 		</dependency>
 		-->
-		
+
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swingx</artifactId>
+            <scope>compile</scope>
+        </dependency> 
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.sounds</artifactId>
