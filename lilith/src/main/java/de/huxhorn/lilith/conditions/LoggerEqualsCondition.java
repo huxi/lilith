@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class LoggerEqualsCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -7972026995883628318L;
 

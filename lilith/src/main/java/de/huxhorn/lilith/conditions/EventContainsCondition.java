@@ -33,7 +33,7 @@ import java.util.Map;
 
 
 public class EventContainsCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -8094852331877521764L;
 

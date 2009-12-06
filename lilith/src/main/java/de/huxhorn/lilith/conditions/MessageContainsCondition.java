@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class MessageContainsCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -5047505055619482146L;
 

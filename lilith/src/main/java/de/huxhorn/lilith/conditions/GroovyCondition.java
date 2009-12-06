@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class GroovyCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = 907179107764473874L;
 

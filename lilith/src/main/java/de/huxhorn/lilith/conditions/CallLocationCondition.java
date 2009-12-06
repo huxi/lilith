@@ -24,7 +24,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import java.io.ObjectStreamException;
 
 public class CallLocationCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -3772942542557888560L;
 
@@ -60,6 +60,11 @@ public class CallLocationCondition
 		{
 			stackTraceElement = null;
 		}
+	}
+
+	public String getSearchString()
+	{
+		return searchString;
 	}
 
 	public boolean isTrue(Object value)
