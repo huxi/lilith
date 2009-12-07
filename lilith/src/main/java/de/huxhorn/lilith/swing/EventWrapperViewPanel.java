@@ -19,13 +19,6 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.buffers.FilteringBuffer;
 import de.huxhorn.lilith.buffers.SoftReferenceCachingBuffer;
-import de.huxhorn.lilith.conditions.CallLocationCondition;
-import de.huxhorn.lilith.conditions.EventContainsCondition;
-import de.huxhorn.lilith.conditions.GroovyCondition;
-import de.huxhorn.lilith.conditions.LevelCondition;
-import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
-import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
-import de.huxhorn.lilith.conditions.MessageContainsCondition;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
@@ -35,7 +28,6 @@ import de.huxhorn.lilith.swing.callables.CallableMetaData;
 import de.huxhorn.lilith.swing.callables.FindNextCallable;
 import de.huxhorn.lilith.swing.callables.FindPreviousCallable;
 import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
-import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
@@ -43,7 +35,6 @@ import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
-import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
@@ -59,11 +50,8 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
@@ -81,21 +69,16 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -105,6 +88,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	extends JPanel
 	implements DisposeOperation
 {
+	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
+
 	public static final String STATE_PROPERTY = "state";
 	public static final String FILTER_CONDITION_PROPERTY = "filterCondition";
 	public static final String EVENT_SOURCE_PROPERTY = "eventSource";
@@ -112,12 +97,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	public static final String PAUSED_PROPERTY = "paused";
 	public static final String SELECTED_EVENT_PROPERTY = "selectedEvent";
 
-	private static final String GROOVY_IDENTIFIER = "#groovy#";
-	private static final String SAVED_CONDITION_IDENTIFIER = "#condition#";
-	private static final Color ERROR_COLOR = new Color(0x990000);
-	private static final Color NO_ERROR_COLOR = Color.BLACK;
-
-	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
 
 	private EventSource<T> eventSource;
 	private LoggingViewState state;
@@ -129,17 +108,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private EventWrapperViewTable<T> table;
 	private EventWrapperTableModel<T> tableModel;
 
-	private FindNextAction findNextAction;
-	private FindPreviousAction findPrevAction;
-	private CloseFindAction closeFindAction;
-
-	private JButton findPrevButton;
-	private JButton findNextButton;
-
-	private JToolBar findPanel;
-	private JToggleButton findNotButton;
-	private JComboBox findTypeCombo;
-	private JComboBox findTextCombo;
 	private JLabel statusLabel;
 	private JScrollBar verticalLogScrollbar;
 
@@ -156,7 +124,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private SelectionHighlighter.CopyAction copyAction;
 	private double scale;
 	private JScrollPane tableScrollPane;
-
+	private FindPanel<T> findPanel;
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
 	{
@@ -252,30 +220,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		focusTraversalPolicy = new MyFocusTraversalPolicy();
 
-		initFindPanel();
-
-		ReplaceFilterAction replaceFilterAction = new ReplaceFilterAction();
-
-		FindTextFieldListener findTextFieldListener = new FindTextFieldListener();
-		JTextComponent findEditorComponent = getFindEditorComponent();
-		if(findEditorComponent instanceof JTextField)
-		{
-			((JTextField)findEditorComponent).addActionListener(findTextFieldListener);
-		}
-		else
-		{
-			if(logger.isWarnEnabled()) logger.warn("findEditorComponent ({}) is not instanceof JTextField!", findEditorComponent.getClass().getName());
-		}
-		if(findEditorComponent != null)
-		{
-			findEditorComponent.getDocument().addDocumentListener(findTextFieldListener);
-			findEditorComponent.setForeground(NO_ERROR_COLOR);
-		}
-
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		JPanel statusPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-
+		findPanel = new FindPanel<T>(this);
+		findPanel.addPropertyChangeListener(new FindPanelChangeListener());
 		bottomPanel.add(findPanel, BorderLayout.CENTER);
 		bottomPanel.add(statusPanel, BorderLayout.SOUTH);
 
@@ -313,67 +262,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		updateStatusText();
 
-		KeyStrokes.registerCommand(this, findNextAction, "FIND_NEXT_ACTION");
-		KeyStrokes.registerCommand(this, findPrevAction, "FIND_PREV_ACTION");
-		KeyStrokes.registerCommand(this, closeFindAction, "CLOSE_FIND_ACTION");
-		KeyStrokes.registerCommand(findTextCombo, replaceFilterAction, "REPLACE_FILTER_ACTION");
 		splitPane.setDividerLocation(0.5d);
 		setShowingStatusBar(mainFrame.getApplicationPreferences().isShowingStatusbar());
-	}
-
-	private JTextComponent getFindEditorComponent()
-	{
-		Component findComponent = findTextCombo.getEditor().getEditorComponent();
-		if(findComponent instanceof JTextComponent)
-		{
-			return (JTextComponent) findComponent;
-		}
-		if(logger.isWarnEnabled()) logger.warn("findComponent ({}) is not instanceof JTextComponent!", findComponent.getClass().getName());
-		return null;
-	}
-
-	private void initFindPanel()
-	{
-		findPanel = new JToolBar(SwingConstants.HORIZONTAL);
-		findPanel.setFloatable(false);
-		findPanel.setFocusTraversalPolicy(focusTraversalPolicy);
-		findPanel.setFocusCycleRoot(true);
-
-		closeFindAction = new CloseFindAction();
-		JButton findViewButton = new JButton(closeFindAction);
-		findViewButton.setMargin(new Insets(0, 0, 0, 0));
-		findPanel.add(findViewButton);
-		findPanel.addSeparator();
-		findPanel.add(new JLabel("Find: "));
-
-		ActionListener findTypeModifiedListener = new FindTypeSelectionActionListener();
-		findTypeCombo = new JComboBox();
-		// not editable, so decorator will be strict
-		AutoCompleteDecorator.decorate(this.findTypeCombo);
-
-		findTypeCombo.addActionListener(findTypeModifiedListener);
-		findNotButton = new JToggleButton("!");
-		findNotButton.addActionListener(findTypeModifiedListener);
-		findNotButton.setToolTipText("Not - inverts condition");
-		findNotButton.setMargin(new Insets(0, 0, 0, 0));
-		findTextCombo = new JComboBox();
-		findTextCombo.setEditable(true); // so decorator won't be strict
-		AutoCompleteDecorator.decorate(this.findTextCombo);
-
-		findPanel.add(findNotButton);
-		findPanel.add(findTypeCombo);
-		findPanel.add(findTextCombo);
-
-		findPrevAction = new FindPreviousAction();
-		findPrevButton = new JButton(findPrevAction);
-		findPrevButton.setMargin(new Insets(0, 0, 0, 0));
-		findPanel.add(findPrevButton);
-
-		findNextAction = new FindNextAction();
-		findNextButton = new JButton(findNextAction);
-		findNextButton.setMargin(new Insets(0, 0, 0, 0));
-		findPanel.add(findNextButton);
-		enableFindComponents(true);
 	}
 
 	public EventWrapperViewTable<T> getTable()
@@ -414,60 +304,16 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void setShowingFilters(boolean showingFilters)
 	{
+		if(logger.isDebugEnabled()) logger.debug("ShowingFilters: {}", showingFilters);
 		this.showingFilters = showingFilters;
 		if(showingFilters)
 		{
-			initTypeCombo();
-			// select correct type in combo
-			Condition condition = getFilterCondition();
-			boolean not = false;
-			if(condition instanceof Not)
-			{
-				Not notCondition = (Not) condition;
-				not = true;
-				condition = notCondition.getCondition();
-			}
-			if(condition != null)
-			{
-				String conditionName = null;
-				if(condition instanceof EventContainsCondition)
-				{
-					conditionName = EVENT_CONTAINS_CONDITION;
-				}
-				else if(condition instanceof MessageContainsCondition)
-				{
-					conditionName = MESSAGE_CONTAINS_CONDITION;
-				}
-				else if(condition instanceof LoggerStartsWithCondition)
-				{
-					conditionName = LOGGER_STARTS_WITH_CONDITION;
-				}
-				else if(condition instanceof LoggerEqualsCondition)
-				{
-					conditionName = LOGGER_EQUALS_CONDITION;
-				}
-				else if(condition instanceof GroovyCondition)
-				{
-					GroovyCondition groovyCondition = (GroovyCondition) condition;
-					String scriptFileName = groovyCondition.getScriptFileName();
-					if(scriptFileName != null)
-					{
-						File scriptFile = new File(scriptFileName);
-						conditionName = scriptFile.getName();
-					}
-				}
-				if(conditionName != null)
-				{
-					findTypeCombo.setSelectedItem(conditionName);
-				}
-			}
-			findNotButton.setSelected(not);
+			findPanel.updateUi();
 		}
 		findPanel.setVisible(showingFilters);
 		if(showingFilters)
 		{
-			findTextCombo.requestFocusInWindow();
-			findTextCombo.getEditor().selectAll();
+			findPanel.requestComboFocus();
 			applyFilter();
 		}
 		scrollToEvent();
@@ -618,40 +464,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	protected abstract EventWrapperViewTable<T> createTable(EventWrapperTableModel<T> tableModel);
 
-
-	private static final String EVENT_CONTAINS_CONDITION = "event.contains";
-	private static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
-	private static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
-	private static final String LOGGER_EQUALS_CONDITION = "logger.equals";
-	private static final String LEVEL_CONDITION = "Level>=";
-	private static final String CALL_LOCATION_CONDITION = "CallLocation";
-	private static final String NAMED_CONDITION = "Named";
-	private static final String[] DEFAULT_CONDITIONS = new String[]{
-		EVENT_CONTAINS_CONDITION,
-		MESSAGE_CONTAINS_CONDITION,
-		LOGGER_STARTS_WITH_CONDITION,
-		LOGGER_EQUALS_CONDITION,
-		LEVEL_CONDITION,
-		CALL_LOCATION_CONDITION,
-		NAMED_CONDITION,
-	};
-
-	private void initTypeCombo()
-	{
-		Vector<String> itemsVector = new Vector<String>();
-
-		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
-
-		String[] groovyConditions = mainFrame.getAllConditionScriptFiles();
-		if(groovyConditions != null)
-		{
-			itemsVector.addAll(Arrays.asList(groovyConditions));
-		}
-
-		ComboBoxModel model = new DefaultComboBoxModel(itemsVector);
-		findTypeCombo.setModel(model);
-	}
-
 	public void dispose()
 	{
 		tableModel.dispose();
@@ -665,11 +477,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	public void resetFind()
 	{
-		JTextComponent findEditorComponent = getFindEditorComponent();
-		if(findEditorComponent != null)
-		{
-			findEditorComponent.setText("");
-		}
+		findPanel.resetFind();
 		setFilterCondition(null);
 	}
 
@@ -695,50 +503,51 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				return messagePane;
 			}
-			if(aComponent.equals(messagePane))
-			{
-				if(isShowingFilters())
-				{
-					return findNotButton;
-				}
-				return table;
-			}
-			if(aComponent.equals(findNotButton))
-			{
-				return findTypeCombo;
-			}
-			if(aComponent.equals(findTypeCombo))
-			{
-				return findTextCombo;
-			}
-			if(aComponent.equals(findTextCombo))
-			{
-				if(findPrevButton.isEnabled())
-				{
-					return findPrevButton;
-				}
-				if(findNextButton.isEnabled())
-				{
-					return findNextButton;
-				}
-				return table;
-			}
-			if(aComponent.equals(findPrevButton))
-			{
-				if(findNextButton.isEnabled())
-				{
-					return findNextButton;
-				}
-				return table;
-			}
-			if(aComponent.equals(findNextButton))
-			{
-				return table;
-			}
-			if(aComponent.equals(findPanel))
-			{
-				return table;
-			}
+			// TODO: Focus
+//			if(aComponent.equals(messagePane))
+//			{
+//				if(isShowingFilters())
+//				{
+//					return findNotButton;
+//				}
+//				return table;
+//			}
+//			if(aComponent.equals(findNotButton))
+//			{
+//				return findTypeCombo;
+//			}
+//			if(aComponent.equals(findTypeCombo))
+//			{
+//				return findTextCombo;
+//			}
+//			if(aComponent.equals(findTextCombo))
+//			{
+//				if(findPrevButton.isEnabled())
+//				{
+//					return findPrevButton;
+//				}
+//				if(findNextButton.isEnabled())
+//				{
+//					return findNextButton;
+//				}
+//				return table;
+//			}
+//			if(aComponent.equals(findPrevButton))
+//			{
+//				if(findNextButton.isEnabled())
+//				{
+//					return findNextButton;
+//				}
+//				return table;
+//			}
+//			if(aComponent.equals(findNextButton))
+//			{
+//				return table;
+//			}
+//			if(aComponent.equals(findPanel))
+//			{
+//				return table;
+//			}
 			// I guess focus was inside table so focus component after table.
 			if(logger.isInfoEnabled())
 			{
@@ -754,49 +563,50 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				return table;
 			}
-			if(aComponent.equals(findNotButton))
-			{
-				return messagePane;
-			}
-			if(aComponent.equals(findTypeCombo))
-			{
-				return findNotButton;
-			}
-			if(aComponent.equals(findTextCombo))
-			{
-				return findTypeCombo;
-			}
-			if(aComponent.equals(findPrevButton))
-			{
-				return findTextCombo;
-			}
-			if(aComponent.equals(findNextButton))
-			{
-				if(findPrevButton.isEnabled())
-				{
-					return findPrevButton;
-				}
-				return findTextCombo;
-			}
-
-			if(aComponent.equals(findPanel))
-			{
-				return messagePane;
-			}
-
-			// table
-			if(isShowingFilters())
-			{
-				if(findNextButton.isEnabled())
-				{
-					return findNextButton;
-				}
-				if(findPrevButton.isEnabled())
-				{
-					return findPrevButton;
-				}
-				return findTextCombo;
-			}
+			// TODO: focus
+//			if(aComponent.equals(findNotButton))
+//			{
+//				return messagePane;
+//			}
+//			if(aComponent.equals(findTypeCombo))
+//			{
+//				return findNotButton;
+//			}
+//			if(aComponent.equals(findTextCombo))
+//			{
+//				return findTypeCombo;
+//			}
+//			if(aComponent.equals(findPrevButton))
+//			{
+//				return findTextCombo;
+//			}
+//			if(aComponent.equals(findNextButton))
+//			{
+//				if(findPrevButton.isEnabled())
+//				{
+//					return findPrevButton;
+//				}
+//				return findTextCombo;
+//			}
+//
+//			if(aComponent.equals(findPanel))
+//			{
+//				return messagePane;
+//			}
+//
+//			// table
+//			if(isShowingFilters())
+//			{
+//				if(findNextButton.isEnabled())
+//				{
+//					return findNextButton;
+//				}
+//				if(findPrevButton.isEnabled())
+//				{
+//					return findPrevButton;
+//				}
+//				return findTextCombo;
+//			}
 			// I guess focus was inside table so focus component before table.
 			if(logger.isInfoEnabled())
 			{
@@ -916,137 +726,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private void applyFilter()
 	{
-		String text=null;
-		JTextComponent findEditorComponent = getFindEditorComponent();
-		if(findEditorComponent != null)
-		{
-			text=findEditorComponent.getText();
-		}
-
-		Condition condition;
-
-		String errorMessage = null;
-		if(text == null)
-		{
-			text = "";
-		}
-		if(text.startsWith(GROOVY_IDENTIFIER))
-		{
-			String scriptName = text.substring(GROOVY_IDENTIFIER.length());
-
-			int idx = scriptName.indexOf('#');
-			if(idx > -1)
-			{
-				if(idx + 1 < scriptName.length())
-				{
-					text = scriptName.substring(idx + 1);
-				}
-				else
-				{
-					text = "";
-				}
-				scriptName = scriptName.substring(0, idx);
-			}
-			else
-			{
-				text = "";
-			}
-			if(logger.isDebugEnabled())
-			{
-				logger.debug("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
-			}
-			File resolvedScriptFile = mainFrame.resolveConditionScriptFile(scriptName);
-			if(resolvedScriptFile != null)
-			{
-				// there is a file...
-				condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
-			}
-			else
-			{
-				errorMessage = "Couldn't find groovy script '" + scriptName + "'.";
-				condition = null;
-			}
-		}
-		else if(text.startsWith(SAVED_CONDITION_IDENTIFIER))
-		{
-			String conditionName = text.substring(SAVED_CONDITION_IDENTIFIER.length());
-			SavedCondition savedCondition = mainFrame.getApplicationPreferences().resolveSavedCondition(conditionName);
-			if(savedCondition != null)
-			{
-				condition = savedCondition.getCondition();
-			}
-			else
-			{
-				errorMessage = "Couldn't find saved condition '" + conditionName + "'.";
-				condition = null;
-			}
-		}
-		else
-		{
-			// create condition matching the selected type
-			String selectedType = (String) findTypeCombo.getSelectedItem();
-			if(EVENT_CONTAINS_CONDITION.equals(selectedType))
-			{
-				condition = new EventContainsCondition(text);
-			}
-			else if(MESSAGE_CONTAINS_CONDITION.equals(selectedType))
-			{
-				condition = new MessageContainsCondition(text);
-			}
-			else if(LOGGER_STARTS_WITH_CONDITION.equals(selectedType))
-			{
-				condition = new LoggerStartsWithCondition(text);
-			}
-			else if(LOGGER_EQUALS_CONDITION.equals(selectedType))
-			{
-				condition = new LoggerEqualsCondition(text);
-			}
-			else if(LEVEL_CONDITION.equals(selectedType))
-			{
-				condition = new LevelCondition(text);
-			}
-			else if(CALL_LOCATION_CONDITION.equals(selectedType))
-			{
-				condition = new CallLocationCondition(text);
-			}
-			else
-			{
-				// we assume a groovy condition...
-				File resolvedScriptFile = mainFrame.resolveConditionScriptFile(selectedType);
-				if(resolvedScriptFile != null)
-				{
-					// there is a file...
-					condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
-				}
-				else
-				{
-					errorMessage = "Couldn't find condition '"+selectedType+"'!";
-					condition = null;
-				}
-			}
-		}
-		if(findEditorComponent != null)
-		{
-			if(errorMessage != null)
-			{
-				// problem with condition
-				findEditorComponent.setForeground(ERROR_COLOR);
-				findEditorComponent.setToolTipText(errorMessage);
-			}
-			else
-			{
-				findEditorComponent.setForeground(NO_ERROR_COLOR);
-				findEditorComponent.setToolTipText(null);
-			}
-		}
-		if(condition != null)
-		{
-			// wrap in Not if not is selected.
-			if(findNotButton.isSelected())
-			{
-				condition = new Not(condition);
-			}
-		}
+		Condition condition=findPanel.getCondition();
 		if(logger.isDebugEnabled()) logger.debug("Setting condition: {}", condition);
 		setFilterCondition(condition);
 	}
@@ -1235,12 +915,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		catch(CloneNotSupportedException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while cloning!", ex);
+			if(logger.isWarnEnabled()) logger.warn("Exception while cloning "+previousCondition+"!", ex);
 		}
 		return null;
 	}
 
-	private void createFilteredView()
+	void createFilteredView()
 	{
 		ViewContainer<T> container = resolveContainer();
 		if(container != null)
@@ -1530,186 +1210,20 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				Object newValue = event.getNewValue();
 				firePropertyChange(SCROLLING_TO_BOTTOM_PROPERTY, oldValue, newValue);
 			}
-			else if(EventWrapperViewTable.FILTER_CONDITION_PROPERTY.equals(propertyName))
-			{
-				if(null == event.getNewValue())
-				{
-					findPrevAction.setEnabled(false);
-					findNextAction.setEnabled(false);
-				}
-				else
-				{
-					findPrevAction.setEnabled(true);
-					findNextAction.setEnabled(true);
-				}
-			}
 		}
 	}
 
-	private class ReplaceFilterAction
-		extends AbstractAction
+	class FindPanelChangeListener
+		implements PropertyChangeListener
 	{
-		private static final long serialVersionUID = 3876315232050114189L;
+		final Logger logger = LoggerFactory.getLogger(FindPanelChangeListener.class);
 
-		public ReplaceFilterAction()
+		public void propertyChange(PropertyChangeEvent event)
 		{
-			super();
-			putValue(Action.SHORT_DESCRIPTION, "Replace filter.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("shift ENTER");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			if(logger.isInfoEnabled()) logger.info("Replace filter.");
-			ViewContainer<T> container = resolveContainer();
-			if(container != null)
+			String propertyName = event.getPropertyName();
+			if(FindPanel.CONDITION_PROPERTY.equals(propertyName))
 			{
-				container.replaceFilteredView(EventWrapperViewPanel.this);
-			}
-		}
-	}
-
-	private class FindTextFieldListener
-		implements ActionListener, DocumentListener
-	{
-
-		public void actionPerformed(ActionEvent e)
-		{
-			applyFilter();
-			if(logger.isDebugEnabled()) logger.debug("modifiers: " + e.getModifiers());
-			JTextComponent findEditorComponent = getFindEditorComponent();
-			if(findEditorComponent != null)
-			{
-				findEditorComponent.selectAll();
-			}
-			createFilteredView();
-		}
-
-		public void insertUpdate(DocumentEvent e)
-		{
-			applyFilter();
-		}
-
-		public void removeUpdate(DocumentEvent e)
-		{
-			applyFilter();
-		}
-
-		public void changedUpdate(DocumentEvent e)
-		{
-			applyFilter();
-		}
-	}
-
-	/**
-	 * This action has different enabled logic than the one in ViewActions
-	 */
-	private class FindNextAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -6469494975854597398L;
-
-		public FindNextAction()
-		{
-			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-down.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
-			putValue(Action.SHORT_DESCRIPTION, "Find next.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift G");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			findNext(getSelectedRow(), getFilterCondition());
-		}
-	}
-
-	/**
-	 * This action has different enabled logic than the one in ViewActions
-	 */
-	private class FindPreviousAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -8192948220602398223L;
-
-		public FindPreviousAction()
-		{
-			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-up.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
-			putValue(Action.SHORT_DESCRIPTION, "Find previous.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " G");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			findPrevious(getSelectedRow(), getFilterCondition());
-		}
-	}
-
-	private class CloseFindAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -7757686292973276423L;
-
-		public CloseFindAction()
-		{
-			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/emblems/emblem-unreadable.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
-			putValue(Action.SHORT_DESCRIPTION, "Close");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			ViewContainer<T> container = resolveContainer();
-			if(container != null)
-			{
-				ProgressGlassPane progressPanel = container.getProgressPanel();
-				progressPanel.getFindCancelAction().cancelSearch();
-				setShowingFilters(false);
+				applyFilter();
 			}
 		}
 	}
@@ -1723,7 +1237,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			+ " on " + metaData
 			.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER) + " starting at row " + currentRow + ".";
 
-		enableFindComponents(false);
+		findPanel.enableFindComponents(false, condition);
 		findResultListener.setCallable(callable);
 		Task<Long> task = taskManager.startTask(callable, name, description, metaData);
 		ViewContainer<T> container = resolveContainer();
@@ -1820,7 +1334,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				container.hideSearchPanel();
 			}
 
-			enableFindComponents(true);
+			findPanel.enableFindComponents(true, table.getFilterCondition());
 		}
 
 		public void setCallable(Callable<Long> callable)
@@ -1835,22 +1349,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
-	void enableFindComponents(boolean enabled)
-	{
-		closeFindAction.setEnabled(enabled);
-		findTextCombo.setEnabled(enabled);
-		if(table.getFilterCondition() != null)
-		{
-			findPrevAction.setEnabled(enabled);
-			findNextAction.setEnabled(enabled);
-		}
-		else
-		{
-			findPrevAction.setEnabled(false);
-			findNextAction.setEnabled(false);
-		}
-	}
-
 	protected abstract void closeConnection(SourceIdentifier sourceIdentifier);
 
 	private class StatusTableModelListener
@@ -1861,16 +1359,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			if(logger.isDebugEnabled()) logger.debug("TableModelEvent: {}", e);
 			updateStatusText();
-		}
-	}
-
-	private class FindTypeSelectionActionListener
-		implements ActionListener
-	{
-
-		public void actionPerformed(ActionEvent e)
-		{
-			applyFilter();
 		}
 	}
 
