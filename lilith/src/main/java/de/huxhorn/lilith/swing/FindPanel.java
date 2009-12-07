@@ -31,10 +31,11 @@ import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.io.File;
 import java.io.Serializable;
-import java.util.Vector;
-import java.util.Arrays;
+import java.util.*;
+import java.util.List;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
+import de.huxhorn.sulky.swing.ListComboBoxModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.lilith.conditions.*;
@@ -79,18 +80,25 @@ public class FindPanel<T extends Serializable>
 		NAMED_CONDITION,
 	};
 
-	// TODO: Named condition combo values & condition
-	// TODO: Level>= combo values
-	// TODO: previousSearchStrings combo values
 	// TODO: Focus traversal
 	private MainFrame mainFrame;
 	public static final String CONDITION_PROPERTY = "condition";
 	private Condition condition;
+	private ListComboBoxModel findComboModel;
+	private static final String[] LEVEL_VALUES = {
+			"TRACE", "DEBUG", "INFO", "WARN", "ERROR"
+	};
+	private ApplicationPreferences applicationPreferences;
+	private List<String> previousSearchStrings;
+	private List<String> conditionNames;
 
 	public FindPanel(EventWrapperViewPanel<T> eventWrapperViewPanel)
 	{
 		this.eventWrapperViewPanel = eventWrapperViewPanel;
 		this.mainFrame=this.eventWrapperViewPanel.getMainFrame();
+		this.applicationPreferences=mainFrame.getApplicationPreferences();
+		this.previousSearchStrings=applicationPreferences.getPreviousSearchStrings();
+		this.conditionNames=applicationPreferences.getConditionNames();
 		initUi();
 	}
 
@@ -123,6 +131,8 @@ public class FindPanel<T extends Serializable>
 		findNotButton.setMargin(new Insets(0, 0, 0, 0));
 		findTextCombo = new JComboBox();
 		findTextCombo.setEditable(true); // so decorator won't be strict
+		findComboModel=new ListComboBoxModel();
+		findTextCombo.setModel(findComboModel);
 		AutoCompleteDecorator.decorate(this.findTextCombo);
 
 		gbc.gridx = 2;
@@ -282,14 +292,14 @@ public class FindPanel<T extends Serializable>
 		else if(text.startsWith(SAVED_CONDITION_IDENTIFIER))
 		{
 			String conditionName = text.substring(SAVED_CONDITION_IDENTIFIER.length());
-			SavedCondition savedCondition = mainFrame.getApplicationPreferences().resolveSavedCondition(conditionName);
+			SavedCondition savedCondition = applicationPreferences.resolveSavedCondition(conditionName);
 			if(savedCondition != null)
 			{
 				condition = savedCondition.getCondition();
 			}
 			else
 			{
-				errorMessage = "Couldn't find saved condition '" + conditionName + "'.";
+				errorMessage = "Couldn't find condition named '" + conditionName + "'.";
 				condition = null;
 			}
 		}
@@ -315,11 +325,41 @@ public class FindPanel<T extends Serializable>
 			}
 			else if(LEVEL_CONDITION.equals(selectedType))
 			{
-				condition = new LevelCondition(text);
+				boolean found = false;
+				for(String current : LEVEL_VALUES)
+				{
+					if(current.equalsIgnoreCase(text))
+					{
+						text=current;
+						found=true;
+					}
+				}
+				if(found)
+				{
+					condition = new LevelCondition(text);
+				}
+				else
+				{
+					condition=null;
+					errorMessage = "Unknown level value '"+text+"'!";
+				}
 			}
 			else if(CALL_LOCATION_CONDITION.equals(selectedType))
 			{
 				condition = new CallLocationCondition(text);
+			}
+			else if(NAMED_CONDITION.equals(selectedType))
+			{
+				SavedCondition savedCondition = applicationPreferences.resolveSavedCondition(text);
+				if(savedCondition != null)
+				{
+					condition = savedCondition.getCondition();
+				}
+				else
+				{
+					errorMessage = "Couldn't find condition named '" + text + "'.";
+					condition = null;
+				}
 			}
 			else
 			{
@@ -402,6 +442,11 @@ public class FindPanel<T extends Serializable>
 			{
 				conditionName = LOGGER_EQUALS_CONDITION;
 			}
+			else if(condition instanceof LevelCondition)
+			{
+				conditionName = LEVEL_CONDITION;
+			}
+			// TODO? Special handling of NAMED_CONDITION
 			else if(condition instanceof GroovyCondition)
 			{
 				GroovyCondition groovyCondition = (GroovyCondition) condition;
@@ -418,6 +463,7 @@ public class FindPanel<T extends Serializable>
 			}
 		}
 		findNotButton.setSelected(not);
+		updateFindCombo();
 	}
 
 	private void initTypeCombo()
@@ -476,6 +522,34 @@ public class FindPanel<T extends Serializable>
 		}
 	}
 
+	private void updateFindCombo()
+	{
+		String selectedType = (String) findTypeCombo.getSelectedItem();
+
+		if(LEVEL_CONDITION.equals(selectedType))
+		{
+			findComboModel.replace(LEVEL_VALUES);
+		}
+		else if(NAMED_CONDITION.equals(selectedType))
+		{
+			findComboModel.replace(conditionNames);
+		}
+		else
+		{
+			findComboModel.replace(previousSearchStrings);
+		}
+	}
+
+	public void setPreviousSearchStrings(List<String> previousSearchStrings)
+	{
+		this.previousSearchStrings=previousSearchStrings;
+	}
+
+	public void setConditionNames(List<String> conditionNames)
+	{
+		this.conditionNames=conditionNames;
+	}
+
 	private class FindTextFieldListener
 		implements ActionListener, DocumentListener
 	{
@@ -488,6 +562,15 @@ public class FindPanel<T extends Serializable>
 			if(findEditorComponent != null)
 			{
 				findEditorComponent.selectAll();
+			}
+			String selectedType = (String) findTypeCombo.getSelectedItem();
+
+			if(!LEVEL_CONDITION.equals(selectedType) && !NAMED_CONDITION.equals(selectedType))
+			{
+				if(condition instanceof SearchStringCondition)
+				{
+					mainFrame.getApplicationPreferences().addPreviousSearchString(((SearchStringCondition)condition).getSearchString());
+				}
 			}
 			eventWrapperViewPanel.createFilteredView();
 		}
@@ -540,8 +623,7 @@ public class FindPanel<T extends Serializable>
 
 		public void actionPerformed(ActionEvent e)
 		{
-			// TODO: simply findNext()
-			eventWrapperViewPanel.findNext(eventWrapperViewPanel.getSelectedRow(), eventWrapperViewPanel.getFilterCondition());
+			eventWrapperViewPanel.findNext();
 		}
 	}
 
@@ -577,8 +659,7 @@ public class FindPanel<T extends Serializable>
 
 		public void actionPerformed(ActionEvent e)
 		{
-			// TODO: simply findPrevious()
-			eventWrapperViewPanel.findPrevious(eventWrapperViewPanel.getSelectedRow(), eventWrapperViewPanel.getFilterCondition());
+			eventWrapperViewPanel.findPrevious();
 		}
 	}
 
@@ -649,10 +730,12 @@ public class FindPanel<T extends Serializable>
 	private class FindTypeSelectionActionListener
 		implements ActionListener
 	{
-
 		public void actionPerformed(ActionEvent e)
 		{
+			updateFindCombo();
+
 			updateCondition();
 		}
+
 	}
 }

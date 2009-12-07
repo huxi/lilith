@@ -359,6 +359,16 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		statusLabel.setVisible(showingStatusbar);
 	}
 
+	public void setPreviousSearchStrings(List<String> previousSearchStrings)
+	{
+		findPanel.setPreviousSearchStrings(previousSearchStrings);
+	}
+
+	public void setConditionNames(List<String> conditionNames)
+	{
+		findPanel.setConditionNames(conditionNames);
+	}
+
 	private class ScrollToBottomRunnable
 		implements Runnable
 	{
@@ -750,6 +760,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		table.requestFocusInWindow();
 	}
 
+	public void findPrevious()
+	{
+		findPrevious(getSelectedRow(), getFilterCondition());
+	}
+
 	public void findPrevious(int currentRow, Condition condition)
 	{
 		if(condition != null)
@@ -757,6 +772,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			ProgressingCallable<Long> callable = new FindPreviousCallable<T>(tableModel, currentRow, condition);
 			executeFind(callable, "Find previous", currentRow, condition);
 		}
+	}
+
+	public void findNext()
+	{
+		findNext(getSelectedRow(), getFilterCondition());
 	}
 
 	public void findNext(int currentRow, Condition condition)
