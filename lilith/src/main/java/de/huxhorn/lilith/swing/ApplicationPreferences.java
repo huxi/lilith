@@ -273,10 +273,10 @@ public class ApplicationPreferences
 			return;
 		}
 		List<String> previousSearchStrings=getPreviousSearchStrings();
-		if(previousSearchStrings.contains(searchString)) 
+		if(previousSearchStrings.contains(searchString))
 		{
-			// ignore duplicates
-			return;
+			// remove previous string so it'll be at position 0
+			previousSearchStrings.remove(searchString);
 		}
 		previousSearchStrings.add(0, searchString);
 		setPreviousSearchStrings(previousSearchStrings);
@@ -1304,6 +1304,20 @@ public class ApplicationPreferences
 			{
 				// ignore
 			}
+		}
+
+		return result;
+	}
+
+	public List<String> getConditionNames()
+	{
+		initConditions();
+
+		// perform deep clone... otherwise no propchange would be fired.
+		ArrayList<String> result = new ArrayList<String>(conditions.size());
+		for(SavedCondition current : conditions)
+		{
+			result.add(current.getName());
 		}
 
 		return result;
