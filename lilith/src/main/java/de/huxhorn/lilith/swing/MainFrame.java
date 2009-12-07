@@ -2578,6 +2578,12 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.PREVIOUS_SEARCH_STRINGS_PROPERTY.equals(propName))
+			{
+				updatePreviousSearchStrings();
+				return;
+			}
+
 			if(ApplicationPreferences.LEVEL_COLORS_PROPERTY.equals(propName))
 			{
 				levelColors = null;
@@ -2766,6 +2772,28 @@ public class MainFrame
 		}
 	}
 
+	private void updatePreviousSearchStrings()
+	{
+		List<String> previousSearchStrings = applicationPreferences.getPreviousSearchStrings();
+		{
+			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+			{
+				ViewContainer<LoggingEvent> value = current.getValue();
+				value.setPreviousSearchStrings(previousSearchStrings);
+			}
+		}
+		{
+			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+			{
+				ViewContainer<AccessEvent> value = current.getValue();
+				value.setPreviousSearchStrings(previousSearchStrings);
+			}
+
+		}
+	}
+
 	private void updateConditions()
 	{
 		List<SavedCondition> conditions = applicationPreferences.getConditions();
@@ -2784,6 +2812,24 @@ public class MainFrame
 		//flushCachedConditionResults();
 
 		updateAllViews();
+		List<String> conditionNames = applicationPreferences.getConditionNames();
+		{
+			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+			{
+				ViewContainer<LoggingEvent> value = current.getValue();
+				value.setConditionNames(conditionNames);
+			}
+		}
+		{
+			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+			{
+				ViewContainer<AccessEvent> value = current.getValue();
+				value.setConditionNames(conditionNames);
+			}
+
+		}
 	}
 
 	private void updateViewScale(double scale)

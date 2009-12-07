@@ -23,7 +23,6 @@ import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.swing.callables.CallableMetaData;
 import de.huxhorn.lilith.swing.callables.FilteringCallable;
-import de.huxhorn.lilith.conditions.SearchStringCondition;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.conditions.Condition;
@@ -174,10 +173,6 @@ public abstract class ViewContainer<T extends Serializable>
 		if (filter == null || filter.equals(previousClone))
 		{
 			return null;
-		}
-		if(previousClone instanceof SearchStringCondition)
-		{
-			mainFrame.getApplicationPreferences().addPreviousSearchString(((SearchStringCondition)previousClone).getSearchString());
 		}
 		return filter;
 	}
@@ -369,6 +364,24 @@ public abstract class ViewContainer<T extends Serializable>
 		for (ChangeListener listener : clone)
 		{
 			listener.stateChanged(event);
+		}
+	}
+
+	public void setPreviousSearchStrings(List<String> previousSearchStrings)
+	{
+		for(int i=0;i<getViewCount();i++)
+		{
+			EventWrapperViewPanel<T> view = getViewAt(i);
+			view.setPreviousSearchStrings(previousSearchStrings);
+		}
+	}
+
+	public void setConditionNames(List<String> conditionNames)
+	{
+		for(int i=0;i<getViewCount();i++)
+		{
+			EventWrapperViewPanel<T> view = getViewAt(i);
+			view.setConditionNames(conditionNames);
 		}
 	}
 
