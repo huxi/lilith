@@ -378,6 +378,10 @@ public class ApplicationPreferences
 
 	public File resolveConditionScriptFile(String input)
 	{
+		if(input == null)
+		{
+			return null;
+		}
 		if(!input.endsWith(GROOVY_SUFFIX))
 		{
 			input = input + GROOVY_SUFFIX;
