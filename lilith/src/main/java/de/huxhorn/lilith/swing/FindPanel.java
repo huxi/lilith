@@ -46,18 +46,6 @@ public class FindPanel<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FindPanel.class);
 
-	private EventWrapperViewPanel<T> eventWrapperViewPanel;
-	private FindNextAction findNextAction;
-	private FindPreviousAction findPrevAction;
-	private CloseFindAction closeFindAction;
-
-	private JButton findPrevButton;
-	private JButton findNextButton;
-
-	private JToggleButton findNotButton;
-	private JComboBox findTypeCombo;
-	private JComboBox findTextCombo;
-
 	private static final String GROOVY_IDENTIFIER = "#groovy#";
 	private static final String SAVED_CONDITION_IDENTIFIER = "#condition#";
 	private static final Color ERROR_COLOR = new Color(0x990000);
@@ -80,9 +68,23 @@ public class FindPanel<T extends Serializable>
 		NAMED_CONDITION,
 	};
 
-	// TODO: Focus traversal
-	private MainFrame mainFrame;
 	public static final String CONDITION_PROPERTY = "condition";
+
+	private MainFrame mainFrame;
+	private EventWrapperViewPanel<T> eventWrapperViewPanel;
+
+	private FindNextAction findNextAction;
+	private FindPreviousAction findPrevAction;
+	private CloseFindAction closeFindAction;
+
+	private JButton closeFindButton;
+	private JToggleButton findNotButton;
+	private JComboBox findTypeCombo;
+	private JComboBox findTextCombo;
+	private JButton findPrevButton;
+	private JButton findNextButton;
+
+
 	private Condition condition;
 	private ListComboBoxModel findComboModel;
 	private static final String[] LEVEL_VALUES = {
@@ -91,6 +93,7 @@ public class FindPanel<T extends Serializable>
 	private ApplicationPreferences applicationPreferences;
 	private List<String> previousSearchStrings;
 	private List<String> conditionNames;
+
 
 	public FindPanel(EventWrapperViewPanel<T> eventWrapperViewPanel)
 	{
@@ -105,7 +108,7 @@ public class FindPanel<T extends Serializable>
 	private void initUi()
 	{
 		closeFindAction = new CloseFindAction();
-		JButton closeFindButton = new JButton(closeFindAction);
+		closeFindButton = new JButton(closeFindAction);
 		closeFindButton.setMargin(new Insets(0, 0, 0, 0));
 		GridBagConstraints gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());
@@ -187,6 +190,12 @@ public class FindPanel<T extends Serializable>
 		KeyStrokes.registerCommand(this, findPrevAction, "FIND_PREV_ACTION");
 		KeyStrokes.registerCommand(this, closeFindAction, "CLOSE_FIND_ACTION");
 		KeyStrokes.registerCommand(findTextCombo, replaceFilterAction, "REPLACE_FILTER_ACTION");
+
+		FocusTraversalPolicy focusTraversalPolicy = new MyFocusTraversalPolicy();
+		setFocusTraversalPolicy(focusTraversalPolicy);
+		setFocusCycleRoot(false);
+		setFocusTraversalPolicyProvider(true);
+		setFocusable(true);
 	}
 
 	private void setCondition(Condition condition)
@@ -361,7 +370,7 @@ public class FindPanel<T extends Serializable>
 					condition = null;
 				}
 			}
-			else
+			else if(selectedType != null)
 			{
 				// we assume a groovy condition...
 				File resolvedScriptFile = mainFrame.resolveConditionScriptFile(selectedType);
@@ -375,6 +384,10 @@ public class FindPanel<T extends Serializable>
 					errorMessage = "Couldn't find condition '"+selectedType+"'!";
 					condition = null;
 				}
+			}
+			else
+			{
+				condition=null;
 			}
 		}
 		if(findEditorComponent != null)
@@ -536,18 +549,148 @@ public class FindPanel<T extends Serializable>
 		}
 		else
 		{
+			String prev=(String)findTextCombo.getSelectedItem(); // save...
 			findComboModel.replace(previousSearchStrings);
+			findTextCombo.setSelectedItem(prev); // ...and restore
 		}
 	}
 
 	public void setPreviousSearchStrings(List<String> previousSearchStrings)
 	{
-		this.previousSearchStrings=previousSearchStrings;
+		this.previousSearchStrings=new ArrayList<String>(previousSearchStrings);
+		this.previousSearchStrings.add(0, ""); // always add an empty string as first
+		updateFindCombo();
 	}
 
 	public void setConditionNames(List<String> conditionNames)
 	{
 		this.conditionNames=conditionNames;
+		updateFindCombo();
+	}
+
+	class MyFocusTraversalPolicy
+		extends FocusTraversalPolicy
+	{
+		private final Logger logger = LoggerFactory.getLogger(MyFocusTraversalPolicy.class);
+
+		private Component resolveComponent(Component component)
+		{
+			Container container = component.getParent();
+			while(container != null)
+			{
+				if(container == findTypeCombo)
+				{
+					return findTypeCombo;
+				}
+				if(container == findTextCombo)
+				{
+					return findTextCombo;
+				}
+				container = container.getParent();
+			}
+			return null;
+		}
+
+		public Component getComponentAfter(Container aContainer, Component aComponent)
+		{
+			if(aComponent.equals(closeFindButton))
+			{
+				return findNotButton;
+			}
+			if(aComponent.equals(findNotButton))
+			{
+				return findTypeCombo;
+			}
+			if(aComponent.equals(findTypeCombo))
+			{
+				return findTextCombo;
+			}
+			if(aComponent.equals(findTextCombo))
+			{
+				return findPrevButton;
+			}
+			if(aComponent.equals(findPrevButton))
+			{
+				return findNextButton;
+			}
+			if(aComponent.equals(findNextButton))
+			{
+				return closeFindButton;
+			}
+
+			// not found, try to resolve it...
+			Component c = resolveComponent(aComponent);
+			if(findTypeCombo.equals(c))
+			{
+				return findTextCombo;
+			}
+			if(findTextCombo.equals(c))
+			{
+				return findPrevButton;
+			}
+
+			if(logger.isWarnEnabled()) logger.warn("Moving focus forward was not explicitly handled.\ncontainer={}\ncomponent={}", aContainer, aComponent);
+
+			return null;
+		}
+
+		public Component getComponentBefore(Container aContainer, Component aComponent)
+		{
+			if(aComponent.equals(closeFindButton))
+			{
+				return findNextButton;
+			}
+			if(aComponent.equals(findNotButton))
+			{
+				return closeFindButton;
+			}
+			if(aComponent.equals(findTypeCombo))
+			{
+				return findNotButton;
+			}
+			if(aComponent.equals(findTextCombo))
+			{
+				return findTypeCombo;
+			}
+			if(aComponent.equals(findPrevButton))
+			{
+				return findTextCombo;
+			}
+			if(aComponent.equals(findNextButton))
+			{
+				return findPrevButton;
+			}
+
+			// not found, try to resolve it...
+			Component c = resolveComponent(aComponent);
+			if(findTypeCombo.equals(c))
+			{
+				return findNotButton;
+			}
+			if(findTextCombo.equals(c))
+			{
+				return findTypeCombo;
+			}
+
+			if(logger.isWarnEnabled()) logger.warn("Moving focus backward was not explicitly handled.\ncontainer={}\ncomponent={}", aContainer, aComponent);
+
+			return null;
+		}
+
+		public Component getFirstComponent(Container aContainer)
+		{
+			return closeFindButton;
+		}
+
+		public Component getLastComponent(Container aContainer)
+		{
+			return findNextButton;
+		}
+
+		public Component getDefaultComponent(Container aContainer)
+		{
+			return findTextCombo;
+		}
 	}
 
 	private class FindTextFieldListener

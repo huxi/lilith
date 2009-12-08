@@ -112,7 +112,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private JScrollBar verticalLogScrollbar;
 
 	private StatusTableModelListener tableModelListener;
-	private FocusTraversalPolicy focusTraversalPolicy;
 	private MatteBorder focusedBorder;
 	private MatteBorder unfocusedBorder;
 	private DecimalFormat eventCountFormat;
@@ -218,7 +217,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		table.addPropertyChangeListener(new EventWrapperViewChangeListener());
 
-		focusTraversalPolicy = new MyFocusTraversalPolicy();
 
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		JPanel statusPanel = new JPanel(new GridBagLayout());
@@ -242,6 +240,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		setScrollingToBottom(false);
 		setPaused(false);
+
+		FocusTraversalPolicy focusTraversalPolicy = new MyFocusTraversalPolicy();
 		setFocusTraversalPolicy(focusTraversalPolicy);
 		setFocusCycleRoot(true);
 		setFocusTraversalPolicyProvider(true);
@@ -504,67 +504,111 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		return selectedEvent;
 	}
 
+	/**
+	 * Alright... The code in this class sucks big time. I'm fully aware of this fact.
+	 * One would expect that Focus Traversal would play well in an hierarchy, too, but it doesn't.
+	 * It's only supporting up- and down-cycling which isn't what I want/need.
+	 * I'd like to traverse into the findPanel and back out of it....
+	 * buuuuuut.....
+	 * if I implement that in a sophisticated, i.e. non-sucking, way I'd risk to infringe the
+	 * software patent "US Patent 6606106 - Hierarchical model for expressing focus traversal"
+	 * which you may review here:
+	 * http://www.patentstorm.us/patents/6606106/fulltext.html
+	 *
+	 * This is a hilarious example for the epic fail inherent to all software patents.
+	 * It's also a really good reason why you should vote for your local Pirate Party, or,
+	 * if your country doesn't have a Pirate Party yet, a reason to start one.
+	 *
+	 * If this is out of question then please try to vote for a party that opposes software patents,
+	 * assuming there is one in your country.
+	 *
+	 * kthxbai, Joern. 
+	 */
 	class MyFocusTraversalPolicy
 		extends FocusTraversalPolicy
 	{
+		private Component resolveComponent(Component component)
+		{
+			Container container = component.getParent();
+			while(container != null)
+			{
+				if(container == table)
+				{
+					return table;
+				}
+				if(container == messagePane)
+				{
+					return messagePane;
+				}
+				container = container.getParent();
+			}
+			return null;
+		}
+
 		public Component getComponentAfter(Container aContainer, Component aComponent)
 		{
 			if(aComponent.equals(table))
 			{
 				return messagePane;
 			}
-			// TODO: Focus
-//			if(aComponent.equals(messagePane))
-//			{
-//				if(isShowingFilters())
-//				{
-//					return findNotButton;
-//				}
-//				return table;
-//			}
-//			if(aComponent.equals(findNotButton))
-//			{
-//				return findTypeCombo;
-//			}
-//			if(aComponent.equals(findTypeCombo))
-//			{
-//				return findTextCombo;
-//			}
-//			if(aComponent.equals(findTextCombo))
-//			{
-//				if(findPrevButton.isEnabled())
-//				{
-//					return findPrevButton;
-//				}
-//				if(findNextButton.isEnabled())
-//				{
-//					return findNextButton;
-//				}
-//				return table;
-//			}
-//			if(aComponent.equals(findPrevButton))
-//			{
-//				if(findNextButton.isEnabled())
-//				{
-//					return findNextButton;
-//				}
-//				return table;
-//			}
-//			if(aComponent.equals(findNextButton))
-//			{
-//				return table;
-//			}
-//			if(aComponent.equals(findPanel))
-//			{
-//				return table;
-//			}
-			// I guess focus was inside table so focus component after table.
-			if(logger.isInfoEnabled())
+			if(aComponent.equals(messagePane))
 			{
-				logger
-					.info("Moving focus forward to messagePane since it was not explicitly handled. (component={})", aComponent);
+				if(isShowingFilters())
+				{
+					/*
+					Attention, sucking code below!
+					*/
+					if(logger.isDebugEnabled()) logger.debug("Performing FocusTraversal-Voodoo...");
+
+					FocusTraversalPolicy policy = findPanel.getFocusTraversalPolicy();
+					return policy.getDefaultComponent(aContainer);
+					/*
+					Attention, sucking code above!
+					*/
+				}
+				return table;
 			}
-			return messagePane;
+			if(aComponent.equals(findPanel))
+			{
+				return table;
+			}
+
+			/*
+			Attention, sucking code below!
+			*/
+			if(logger.isDebugEnabled()) logger.debug("Performing FocusTraversal-Yaddayadda...");
+
+			Component c = resolveComponent(aComponent);
+			if(table.equals(c))
+			{
+				return messagePane;
+			}
+			if(messagePane.equals(c))
+			{
+				if(isShowingFilters())
+				{
+					return findPanel;
+				}
+				return table;
+			}
+
+			FocusTraversalPolicy policy = findPanel.getFocusTraversalPolicy();
+			Component result = policy.getComponentAfter(aContainer, aComponent);
+			if(result == policy.getFirstComponent(aContainer))
+			{
+				return table;
+			}
+			else if (result != null)
+			{
+				return result;
+			}
+			/*
+			Attention, sucking code above!
+			*/
+
+			if(logger.isWarnEnabled()) logger.warn("Moving focus forward was not explicitly handled.\ncontainer={}\ncomponent={}", aContainer, aComponent);
+
+			return null;
 		}
 
 		public Component getComponentBefore(Container aContainer, Component aComponent)
@@ -573,57 +617,64 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				return table;
 			}
-			// TODO: focus
-//			if(aComponent.equals(findNotButton))
-//			{
-//				return messagePane;
-//			}
-//			if(aComponent.equals(findTypeCombo))
-//			{
-//				return findNotButton;
-//			}
-//			if(aComponent.equals(findTextCombo))
-//			{
-//				return findTypeCombo;
-//			}
-//			if(aComponent.equals(findPrevButton))
-//			{
-//				return findTextCombo;
-//			}
-//			if(aComponent.equals(findNextButton))
-//			{
-//				if(findPrevButton.isEnabled())
-//				{
-//					return findPrevButton;
-//				}
-//				return findTextCombo;
-//			}
-//
-//			if(aComponent.equals(findPanel))
-//			{
-//				return messagePane;
-//			}
-//
-//			// table
-//			if(isShowingFilters())
-//			{
-//				if(findNextButton.isEnabled())
-//				{
-//					return findNextButton;
-//				}
-//				if(findPrevButton.isEnabled())
-//				{
-//					return findPrevButton;
-//				}
-//				return findTextCombo;
-//			}
-			// I guess focus was inside table so focus component before table.
-			if(logger.isInfoEnabled())
+			if(aComponent.equals(findPanel))
 			{
-				logger
-					.info("Moving focus backward to messagePane since it was not explicitly handled. (component={})", aComponent);
+				return messagePane;
 			}
-			return messagePane;
+			if(aComponent.equals(table))
+			{
+				if(isShowingFilters())
+				{
+					/*
+					Attention, sucking code below!
+					*/
+					if(logger.isDebugEnabled()) logger.debug("Performing FocusTraversal-Voodoo...");
+
+					FocusTraversalPolicy policy = findPanel.getFocusTraversalPolicy();
+					return policy.getDefaultComponent(aContainer);
+					/*
+					Attention, sucking code above!
+					*/
+				}
+				return messagePane;
+			}
+
+			/*
+			Attention, sucking code below!
+			*/
+			if(logger.isDebugEnabled()) logger.debug("Performing FocusTraversal-Yaddayadda...");
+
+			Component c = resolveComponent(aComponent);
+			if(table.equals(c))
+			{
+				if(isShowingFilters())
+				{
+					return findPanel;
+				}
+				return messagePane;
+			}
+			if(messagePane.equals(c))
+			{
+				return table;
+			}
+
+			FocusTraversalPolicy policy = findPanel.getFocusTraversalPolicy();
+			Component result = policy.getComponentBefore(aContainer, aComponent);
+			if(result == policy.getLastComponent(aContainer))
+			{
+				return messagePane;
+			}
+			else if (result != null)
+			{
+				return result;
+			}
+			/*
+			Attention, sucking code above!
+			*/
+
+			if(logger.isWarnEnabled()) logger.warn("Moving focus backward was not explicitly handled.\ncontainer={}\ncomponent={}", aContainer, aComponent);
+
+			return null;
 		}
 
 		public Component getFirstComponent(Container aContainer)
