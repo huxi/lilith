@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.3rdparty.jmdns</artifactId>
-	<version>2.0-patched</version>
+	<version>3.0</version>
 	<packaging>jar</packaging>
 	<name>JMDNS</name>
-	<description>This is the third-party library JMDNS that isn't available in the central maven repository. An applied patch is available in the SCM.</description>
+	<description>This is the third-party library JMDNS that isn't available in the central maven repository. It's compiled for JDK 1.5 instead of 1.6.</description>
 	<url>http://jmdns.sourceforge.net/</url>
 	<licenses>
 		<license>
@@ -21,12 +21,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
-	<scm>
-		<connection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith/miscJars/jmdns</connection>
-		<developerConnection>scm:svn:https://lilith.svn.sourceforge.net/svnroot/lilith/trunk/lilith/miscJars/jmdns</developerConnection>
-		<url>http://lilith.svn.sourceforge.net/viewvc/lilith/trunk/lilith//miscJars/jmdns/</url>
-	</scm>
 
 	<dependencies></dependencies>
 </project>
