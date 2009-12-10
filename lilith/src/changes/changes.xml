@@ -86,8 +86,17 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+            <action dev="jhux" type="fix" issue="50">
+                The find panel has been heavily refactored.
+                Instead of a text-field it now features a combobox containing the previous 15 searches that were used
+                for filtered views. Additionally, there's a new filter type "Named" that populates the combobox with
+                named/saved conditions. Similarly, selecting "Level>=" populates the combobox with the correct values
+                from TRACE to ERROR. The comboboxes, both filter type selection and filter text, feature autocompletion
+                of entered text.
+                This was suggested by Joe.
+            </action>
             <action dev="jhux" type="update">
-                Groovy 1.6.7
+                Groovy 1.7-rc-2
             </action>
             <action dev="jhux" type="update">
                 Logback 0.9.18
