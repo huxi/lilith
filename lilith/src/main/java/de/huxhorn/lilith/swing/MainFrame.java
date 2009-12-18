@@ -2498,7 +2498,6 @@ public class MainFrame
 	private class PreferencesChangeListener
 		implements PropertyChangeListener
 	{
-
 		@SuppressWarnings({"unchecked"})
 		public void propertyChange(PropertyChangeEvent evt)
 		{

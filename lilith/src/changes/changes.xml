@@ -86,6 +86,12 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+            <action dev="jhux" type="update">
+                Lilith log is now showing uncaught exceptions as errors.
+            </action>
+            <action dev="jhux" type="add">
+                Added "Uncaught Exception" debug action.
+            </action>
             <action dev="jhux" type="fix" issue="50">
                 The find panel has been heavily refactored.
                 Instead of a text-field it now features a combobox containing the previous 15 searches that were used

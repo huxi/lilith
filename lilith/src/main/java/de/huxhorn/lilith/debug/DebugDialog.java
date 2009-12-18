@@ -150,6 +150,12 @@ public class DebugDialog
 		gbc.gridy = 2;
 		miscPanel.add(button, gbc);
 
+		action = new UncaughtExceptionAction();
+		button = new JButton(action);
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		miscPanel.add(button, gbc);
+
 		JPanel centerPanel = new JPanel(new GridBagLayout());
 		gbc.gridwidth = 1;
 		gbc.gridx = 0;
@@ -419,7 +425,7 @@ public class DebugDialog
 
 		public EditGroovyAction()
 		{
-			super("Edit groovy!");
+			super("Edit details view groovy!");
 			putValue(Action.SHORT_DESCRIPTION, "Edit the details view Groovy file.");
 			// broken: http://jira.codehaus.org/browse/GROOVY-2790
 			setEnabled(false);
@@ -431,4 +437,20 @@ public class DebugDialog
 		}
 	}
 
+	private class UncaughtExceptionAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -3600189121760822853L;
+
+		public UncaughtExceptionAction()
+		{
+			super("Uncaught Exception");
+			putValue(Action.SHORT_DESCRIPTION, "Throws an uncaught exception.");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			throw new RuntimeException("Uncaught Exception!");
+		}
+	}
 }
