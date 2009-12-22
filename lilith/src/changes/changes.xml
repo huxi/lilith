@@ -102,7 +102,7 @@
                 This was suggested by Joe.
             </action>
             <action dev="jhux" type="update">
-                Groovy 1.7-rc-2
+                Groovy 1.7.0
             </action>
             <action dev="jhux" type="update">
                 Logback 0.9.18

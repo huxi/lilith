@@ -403,8 +403,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<!-- <version>1.6.7</version> -->
-                <version>1.7-rc-2</version>
+                <version>1.7.0</version>
 			</dependency>
 			
 			<dependency>
