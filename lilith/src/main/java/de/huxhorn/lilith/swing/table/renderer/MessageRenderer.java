@@ -82,7 +82,6 @@ public class MessageRenderer
 							}
 						}
 						text = text.substring(0, newlineIndex);
-						newlineCounter--;
 						if(newlineCounter > 0)
 						{
 							text = text + " [+" + newlineCounter + " lines]";
