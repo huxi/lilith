@@ -86,6 +86,11 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+            <action dev="jhux" type="fix" issue="72">
+                Implemented the workaround for Apple Problem ID #7240026 suggested by GalaJon.
+                Thanks a lot!
+                See http://bit.ly/5vF5M2
+            </action>
             <action dev="jhux" type="fix">
                 Of-by-one error in message renderer [+x lines].
             </action>

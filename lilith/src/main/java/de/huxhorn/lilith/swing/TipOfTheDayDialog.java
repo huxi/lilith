@@ -303,6 +303,13 @@ public class TipOfTheDayDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			setVisible(false);
+			// workaround for http://sourceforge.net/apps/trac/lilith/ticket/72 below
+			Container parentContainer = getParent();
+			if(parentContainer != null)
+			{
+				parentContainer.requestFocus();
+			}
+			// workaround for http://sourceforge.net/apps/trac/lilith/ticket/72 above
 		}
 	}
 
