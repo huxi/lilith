@@ -86,6 +86,12 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Moved BufferTableModel to new module sulky-buffers-table.
+			</action>
+			<action dev="jhux" type="update">
+				Moved RowBasedTableModel and PersistentTableColumnModel to module sulky-swing.
+			</action>
             <action dev="jhux" type="fix" issue="72">
                 Implemented the workaround for Apple Problem ID #7240026 suggested by GalaJon.
                 Thanks a lot!
