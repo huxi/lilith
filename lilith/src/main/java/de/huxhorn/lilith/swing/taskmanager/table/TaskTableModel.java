@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.taskmanager.table;
 
-import de.huxhorn.lilith.swing.table.model.RowBasedTableModel;
+import de.huxhorn.sulky.swing.RowBasedTableModel;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;

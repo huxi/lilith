@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.table.model;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.Buffer;
+import de.huxhorn.sulky.buffers.table.BufferTableModel;
 
 import java.io.Serializable;
 

@@ -240,7 +240,12 @@
 			<artifactId>de.huxhorn.sulky.buffers</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.buffers.table</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.swing</artifactId>
