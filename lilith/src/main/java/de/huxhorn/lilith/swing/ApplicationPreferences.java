@@ -24,7 +24,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
-import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
+import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 
 import org.apache.commons.io.IOUtils;

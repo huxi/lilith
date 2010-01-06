@@ -28,7 +28,7 @@ import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
-import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
+import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
 

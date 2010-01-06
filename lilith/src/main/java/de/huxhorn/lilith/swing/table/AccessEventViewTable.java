@@ -21,7 +21,7 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
-import de.huxhorn.lilith.swing.table.model.PersistentTableColumnModel;
+import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.lilith.swing.table.renderer.*;
 import de.huxhorn.lilith.swing.table.tooltips.*;
 
