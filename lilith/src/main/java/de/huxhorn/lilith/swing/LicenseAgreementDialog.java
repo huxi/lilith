@@ -41,7 +41,7 @@ public class LicenseAgreementDialog
 
 	public LicenseAgreementDialog()
 	{
-		super((Frame) null, "§§§ EULA §§§", true);
+		super((Frame) null, "License Agreement", true);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter()
 		{
