@@ -1554,9 +1554,9 @@ public class ViewActions
 		{
 			super("Close all");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
-			//KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" R");
-			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			//putValue(Action.ACCELERATOR_KEY, accelerator);
+			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift W");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
 			//putValue(Action.MNEMONIC_KEY, Integer.valueOf('r'));
 		}
 

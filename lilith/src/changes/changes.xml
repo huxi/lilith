@@ -86,6 +86,12 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				Added some more tips.
+			</action>
+			<action dev="jhux" type="add">
+				Added shortcut for "Close all" action.
+			</action>
 			<action dev="jhux" type="fix" issue="76">
 				Views aren't opened anymore in case of connection closed for black- or not whitelisted sources.
 				This was reported by Vlad Satanovski.
