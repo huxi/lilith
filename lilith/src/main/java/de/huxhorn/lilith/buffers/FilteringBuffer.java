@@ -4,6 +4,8 @@ import de.huxhorn.lilith.swing.callables.FilteringCallable;
 import de.huxhorn.sulky.buffers.BasicBufferIterator;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.buffers.Reset;
+import de.huxhorn.sulky.buffers.ResetOperation;
 import de.huxhorn.sulky.conditions.Condition;
 
 import org.slf4j.Logger;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class FilteringBuffer<E>
-	implements Buffer<E>, DisposeOperation
+	implements Buffer<E>, DisposeOperation, ResetOperation
 {
 	private final Logger logger = LoggerFactory.getLogger(FilteringCallable.class);
 
@@ -146,5 +148,14 @@ public class FilteringBuffer<E>
 	public boolean isDisposed()
 	{
 		return disposed;
+	}
+
+	public void reset()
+	{
+		boolean reset = Reset.reset(sourceBuffer);
+		if(reset)
+		{
+			clearFilteredIndices();
+		}
 	}
 }

@@ -86,6 +86,11 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				Added the ability to clear a filtered view. Doing this clears the original view and resets
+				the filtered view.
+				This was suggested by Joe.
+			</action>
 			<action dev="jhux" type="update">
 				Moved BufferTableModel to new module sulky-buffers-table.
 			</action>

@@ -905,7 +905,7 @@ public class ViewActions
 		boolean hasView = false;
 		boolean hasFilter = false;
 		boolean isActive = false;
-		boolean hasFilteredBuffer = false;
+		//boolean hasFilteredBuffer = false;
 		EventSource eventSource = null;
 		if(viewContainer != null)
 		{
@@ -916,7 +916,7 @@ public class ViewActions
 				eventSource = eventWrapperViewPanel.getEventSource();
 				hasFilter = eventWrapperViewPanel.getFilterCondition() != null;
 				isActive = eventWrapperViewPanel.getState() == LoggingViewState.ACTIVE;
-				hasFilteredBuffer = eventWrapperViewPanel.getBufferCondition() != null;
+				//hasFilteredBuffer = eventWrapperViewPanel.getBufferCondition() != null;
 			}
 			copySelectionAction.setView(eventWrapperViewPanel);
 		}
@@ -924,7 +924,7 @@ public class ViewActions
 		if(logger.isDebugEnabled())
 		{
 			logger
-				.debug("updateActions() eventSource={}, hasFilteredBuffer={}", new Object[]{eventSource, hasFilteredBuffer});
+				.debug("updateActions() eventSource={}", eventSource);
 		}
 		// Edit
 		editMenu.setEnabled(hasView);
@@ -945,7 +945,7 @@ public class ViewActions
 		resetLayoutAction.setEnabled(hasView);
 		//editConditionMenuAction.setEnabled(hasView);
 		pauseMenuAction.setEnabled(hasView);
-		clearMenuAction.setEnabled(hasView && !hasFilteredBuffer);
+		clearMenuAction.setEnabled(hasView/* && !hasFilteredBuffer*/);
 		attachMenuAction.setEnabled(hasView);
 		disconnectMenuAction.setEnabled(isActive);
 		focusEventsAction.setEnabled(hasView);
@@ -979,7 +979,7 @@ public class ViewActions
 
 		scrollToBottomToolBarAction.setEnabled(hasView);
 		pauseToolBarAction.setEnabled(hasView);
-		clearToolBarAction.setEnabled(hasView && !hasFilteredBuffer);
+		clearToolBarAction.setEnabled(hasView/* && !hasFilteredBuffer*/);
 		findToolBarAction.setEnabled(hasView);
 		//statisticsToolBarAction.setEnabled(hasView);
 		attachToolBarAction.setEnabled(hasView);
@@ -2529,6 +2529,7 @@ public class ViewActions
 		}
 	}
 
+/*
 	static class StatisticsSubMenuAction
 		extends AbstractAction
 	{
@@ -2544,7 +2545,7 @@ public class ViewActions
 		{
 		}
 	}
-
+*/
 
 	class UpdateWindowMenuRunnable
 		implements Runnable
