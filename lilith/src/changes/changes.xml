@@ -86,6 +86,10 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+			<action dev="jhux" type="fix" issue="76">
+				Views aren't opened anymore in case of connection closed for black- or not whitelisted sources.
+				This was reported by Vlad Satanovski.
+			</action>
 			<action dev="jhux" type="add">
 				Added the ability to clear a filtered view. Doing this clears the original view and resets
 				the filtered view.

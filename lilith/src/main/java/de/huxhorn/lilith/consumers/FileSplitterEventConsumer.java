@@ -78,14 +78,28 @@ public class FileSplitterEventConsumer<T extends Serializable>
 				SourceIdentifier si = entry.getKey();
 				List<EventWrapper<T>> value = entry.getValue();
 				int valueCount = value.size();
-				// we know that valueCount is > 0 because otherwise it wouldn' exist.
+				// we know that valueCount is > 0 because otherwise it wouldn't exist.
 				EventWrapper<T> lastEvent = value.get(valueCount - 1);
-				// only create view/add if valid
-				FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
-				buffer.addAll(value);
-				if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
-
+				boolean close=false;
+				boolean dontOpen=false;
 				if(lastEvent.getEvent() == null)
+				{
+					close=true;
+					if(valueCount == 1)
+					{
+						dontOpen=true;
+					}
+				}
+				// only create view/add if valid
+				if(!dontOpen)
+				{
+					// resolveBuffer is also creating the view
+					FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
+					buffer.addAll(value);
+					if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
+				}
+
+				if(close)
 				{
 					if(sourceManager != null)
 					{
