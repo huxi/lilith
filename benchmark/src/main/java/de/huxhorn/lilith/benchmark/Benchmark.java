@@ -833,14 +833,14 @@ public class Benchmark
 
 		if(compressing)
 		{
-			metaData.put(FileConstants.COMPRESSED_KEY, "true");
+			metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 		}
 		else
 		{
-			metaData.put(FileConstants.COMPRESSED_KEY, "false");
+			//metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 		}
 
-		CodecFileBuffer<EventWrapper<LoggingEvent>> result = new CodecFileBuffer<EventWrapper<LoggingEvent>>(magicValue, metaData, null, dataFile, indexFile);
+		CodecFileBuffer<EventWrapper<LoggingEvent>> result = new CodecFileBuffer<EventWrapper<LoggingEvent>>(magicValue, false, metaData, null, dataFile, indexFile);
 
 		FileHeader fileHeader = result.getFileHeader();
 		MetaData actualMetaData = fileHeader.getMetaData();
@@ -850,7 +850,7 @@ public class Benchmark
 		String formatStr = null;
 		if(md != null)
 		{
-			compressed = Boolean.valueOf(md.get(FileConstants.COMPRESSED_KEY));
+			compressed = FileConstants.COMPRESSION_VALUE_GZIP.equals(md.get(FileConstants.COMPRESSION_KEY));
 			formatStr = md.get(FileConstants.CONTENT_FORMAT_KEY);
 		}
 
@@ -958,7 +958,7 @@ public class Benchmark
 		result.setCallStack(callStack);
 		ThrowableInfo throwableInfo = createThrowableInfo();
 		result.setThrowable(throwableInfo);
-		result.setTimeStamp(new Date(1234567890000L));
+		result.setTimeStamp(1234567890000L);
 		return result;
 	}
 
@@ -1026,6 +1026,8 @@ public class Benchmark
 			System.exit(0);
 		}
 		boolean benchmarkXml=false;
+		boolean noExceptions=false;
+		boolean noCallstack=false;
 		if(args != null)
 		{
 			for(String current : args)
@@ -1038,11 +1040,35 @@ public class Benchmark
 				{
 					benchmarkXml=true;
 				}
+				if("-nc".equals(current))
+				{
+					noCallstack=true;
+				}
+				if("-ne".equals(current))
+				{
+					noExceptions=true;
+				}
 			}
 		}
 		System.out.print("Creating events... ");
 		System.out.flush();
 		List<EventWrapper<LoggingEvent>> loggingEvents = createDataSet(2000);
+		if(noCallstack)
+		{
+			System.out.println("Removing callstacks...");
+			for(EventWrapper<LoggingEvent> current:loggingEvents)
+			{
+				current.getEvent().setCallStack(null);
+			}
+		}
+		if(noExceptions)
+		{
+			System.out.println("Removing exceptions...");
+			for(EventWrapper<LoggingEvent> current:loggingEvents)
+			{
+				current.getEvent().setThrowable(null);
+			}
+		}
 		System.out.println("done!");
 		Benchmark benchmark = new Benchmark();
 		
