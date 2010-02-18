@@ -428,7 +428,7 @@ public class DebugDialog
 			super("Edit details view groovy!");
 			putValue(Action.SHORT_DESCRIPTION, "Edit the details view Groovy file.");
 			// broken: http://jira.codehaus.org/browse/GROOVY-2790
-			setEnabled(false);
+			//setEnabled(false);
 		}
 
 		public void actionPerformed(ActionEvent e)

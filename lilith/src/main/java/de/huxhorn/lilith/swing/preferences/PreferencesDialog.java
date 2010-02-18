@@ -46,6 +46,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
 public class PreferencesDialog
 	extends JDialog
@@ -514,7 +516,17 @@ public class PreferencesDialog
 
 		console.setScriptFile(messageViewGroovyFile);
 		JTextPane inputArea = console.getInputArea();
-		inputArea.setText(text);
+		//inputArea.setText(text);
+		Document doc = inputArea.getDocument();
+		try
+		{
+			doc.remove( 0, doc.getLength() );
+			doc.insertString( 0, text, null );
+		}
+		catch(BadLocationException e)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while setting source!", e);
+		}
 		console.setDirty(false);
 		inputArea.setCaretPosition(0);
 		inputArea.requestFocusInWindow();
