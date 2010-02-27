@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.engine.impl;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.engine.LogFileFactory;
 
 import java.io.File;

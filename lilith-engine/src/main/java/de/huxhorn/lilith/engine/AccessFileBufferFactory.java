@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.engine;
 
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.protobuf.AccessEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.access.protobuf.CompressingAccessEventWrapperProtobufCodec;

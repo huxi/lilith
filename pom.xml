@@ -40,6 +40,7 @@
 		<module>lilith-parent</module>
 		<module>lilith-sender</module>
 		<module>lilith-data</module>
+		<module>lilith-constants</module>
 		<module>lilith-engine</module>
 		<module>lilith-xml-logging</module>
 		<module>logback</module>

@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.filefilters;
 
-import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.api.FileConstants;
 
 import java.io.File;
 

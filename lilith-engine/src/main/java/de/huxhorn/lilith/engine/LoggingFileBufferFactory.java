@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.engine;
 
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperProtobufCodec;

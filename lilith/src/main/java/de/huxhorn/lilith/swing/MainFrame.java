@@ -37,7 +37,7 @@ import de.huxhorn.lilith.engine.EventConsumer;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
 import de.huxhorn.lilith.engine.FileBufferFactory;
-import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.SourceManager;

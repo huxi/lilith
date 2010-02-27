@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.engine;
+package de.huxhorn.lilith.api;
 
 /**
  * Defining the constants in one place...

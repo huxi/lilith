@@ -22,7 +22,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
 import de.huxhorn.lilith.engine.FileBufferFactory;
-import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.swing.ApplicationPreferences;

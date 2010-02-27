@@ -15,7 +15,7 @@ import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlDecoder;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
-import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.engine.impl.CompressingLoggingEventWrapperXmlCodec;
 import de.huxhorn.lilith.engine.impl.LoggingEventWrapperXmlCodec;
 import de.huxhorn.sulky.codec.Codec;

@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.transfer;
 
-import de.huxhorn.lilith.engine.FileConstants;
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.swing.MainFrame;
 
 import org.slf4j.Logger;
