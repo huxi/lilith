@@ -93,7 +93,13 @@
 			<artifactId>logback-classic</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.logback.encoder.classic</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic</artifactId>

@@ -2,9 +2,23 @@
 <configuration debug="true">
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<param name="Pattern" value="%-5level - %msg%n"/>
-		</layout>
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE1" class="ch.qos.logback.core.FileAppender">
+		<file>file1.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE2" class="ch.qos.logback.core.FileAppender">
+		<file>file2.lilith</file>
+		<encoder class="de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder">
+			<IncludeCallerData>true</IncludeCallerData>
+		</encoder>
 	</appender>
 
 	<appender name="MultiplexClassicCompressed"
@@ -25,6 +39,8 @@
 
 	<root level="ALL">
 		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE1"/>
+		<appender-ref ref="FILE2"/>
 		<appender-ref ref="MultiplexClassicCompressed"/>
 		<appender-ref ref="LogbackClassic"/>
 	</root>

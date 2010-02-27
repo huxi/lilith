@@ -20,9 +20,9 @@
 	</appender>
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<param name="Pattern" value="%-5level - %msg%n" />
-		</layout>
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
 	</appender>
 
 	<root level="DEBUG">

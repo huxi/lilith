@@ -86,6 +86,12 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+			<action dev="jhux" type="add" issue="23">
+				Added new modules de.huxhorn.lilith.logback.encoder.classic
+				and de.huxhorn.lilith.logback.encoder.access to support writing of Lilith
+				logfiles using Logback FileAppender.
+				Thanks to Ceki for supporting this!
+			</action>
 			<action dev="jhux" type="add">
 				Added some more tips.
 			</action>
@@ -134,10 +140,10 @@
                 Groovy 1.7.0
             </action>
             <action dev="jhux" type="update">
-                Logback 0.9.18
+                Logback 0.9.19-SNAPSHOT
             </action>
             <action dev="jhux" type="update">
-                SLF4J 1.5.10
+                SLF4J 1.5.11
             </action>
         </release>
 

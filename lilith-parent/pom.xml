@@ -249,6 +249,24 @@
 				<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.constants</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.logback.encoder.core</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.logback.encoder.classic</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
 
 			<!-- Start of 3rd party jars -->
 			<dependency>

@@ -27,6 +27,9 @@
 		<module>multiplex-appender-access</module>
 		<module>multiplex-appender-classic-xml</module>
 		<module>shutdown-context-listener</module>
+		<module>encoder-core</module>
+		<module>encoder-classic</module>
+		<module>encoder-access</module>
 	</modules>
 
 </project>

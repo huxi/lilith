@@ -72,6 +72,12 @@
 						<version>${lilithVersion}</version>
 						<scope>runtime</scope>
 					</dependency>
+					<dependency>
+						<groupId>de.huxhorn.lilith</groupId>
+						<artifactId>de.huxhorn.lilith.logback.encoder.access</artifactId>
+						<version>${lilithVersion}</version>
+						<scope>runtime</scope>
+					</dependency>
 				</dependencies>
 			</plugin>
 		</plugins>
