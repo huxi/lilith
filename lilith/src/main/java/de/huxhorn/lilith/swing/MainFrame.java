@@ -3460,18 +3460,23 @@ public class MainFrame
 	private class MainTaskListener
 		implements TaskListener<Long>
 	{
+		private final Logger logger = LoggerFactory.getLogger(MainTaskListener.class);
+
 		public void taskCreated(Task<Long> longTask)
 		{
+			if(logger.isInfoEnabled()) logger.info("Task "+longTask.getName()+" created.");
 			updateTaskStatus();
 		}
 
 		public void executionFailed(Task<Long> longTask, ExecutionException exception)
 		{
+			if(logger.isWarnEnabled()) logger.warn("Execution of task "+longTask.getName()+" failed!", exception);
 			updateTaskStatus();
 		}
 
 		public void executionFinished(Task<Long> longTask, Long result)
 		{
+			if(logger.isInfoEnabled()) logger.info("Execution of task "+longTask.getName()+" finished!");
 			updateTaskStatus();
 			Callable<Long> callable = longTask.getCallable();
 
@@ -3514,11 +3519,13 @@ public class MainFrame
 
 		public void executionCanceled(Task<Long> longTask)
 		{
+			if(logger.isInfoEnabled()) logger.info("Execution of task "+longTask.getName()+" canceled!");
 			updateTaskStatus();
 		}
 
 		public void progressUpdated(Task<Long> longTask, int progress)
 		{
+			if(logger.isDebugEnabled()) logger.debug("Progress of task "+longTask.getName()+" updated to "+progress+".");
 			updateTaskStatus();
 		}
 	}
