@@ -5,3 +5,6 @@ buildNumber.properties
 *.iws
 *.ipr
 *.class
+*.idx
+*.log
+*.lilith
