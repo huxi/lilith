@@ -145,6 +145,9 @@
             <action dev="jhux" type="update">
                 SLF4J 1.5.11
             </action>
+			<action dev="jhux" type="update">
+				Protobuf 2.3.0
+			</action>
         </release>
 
 		<release version="0.9.37" date="2009-11-11" description="Release">
