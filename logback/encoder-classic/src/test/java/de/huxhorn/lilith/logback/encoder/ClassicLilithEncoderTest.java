@@ -19,6 +19,7 @@ package de.huxhorn.lilith.logback.encoder;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.core.recovery.ResilientFileOutputStream;
 import de.huxhorn.lilith.data.access.protobuf.AccessEventProtobufEncoder;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.api.FileConstants;
@@ -36,6 +37,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class ClassicLilithEncoderTest
 {
 	private final Logger logger = LoggerFactory.getLogger(ClassicLilithEncoderTest.class);
@@ -48,7 +50,7 @@ public class ClassicLilithEncoderTest
 	{
 		ClassicLilithEncoder instance = new ClassicLilithEncoder();
 		File file=folder.newFile("foo.lilith");
-		FileOutputStream fos=new FileOutputStream(file);
+		ResilientFileOutputStream fos=new ResilientFileOutputStream(file, false);
 
 		instance.init(fos);
 

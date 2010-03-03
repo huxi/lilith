@@ -24,7 +24,6 @@ import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.codec.filebuffer.MetaDataCodec;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -40,12 +39,12 @@ public abstract class LilithEncoderBase<E>
 	public void init(OutputStream os) throws IOException
 	{
 		super.init(os);
-		dataOutputStream=new DataOutputStream(os);
+		dataOutputStream = new DataOutputStream(os);
 	}
 
 	protected void writeHeader(Map<String, String> metaDataMap) throws IOException
 	{
-		MetaData metaData=new MetaData(metaDataMap, false);
+		MetaData metaData = new MetaData(metaDataMap, false);
 
 		dataOutputStream.writeInt(DefaultFileHeaderStrategy.CODEC_FILE_HEADER_MAGIC_VALUE);
 		dataOutputStream.writeInt(FileConstants.MAGIC_VALUE);
@@ -56,7 +55,7 @@ public abstract class LilithEncoderBase<E>
 		{
 			dataOutputStream.writeInt(buffer.length);
 			dataOutputStream.write(buffer);
-			System.out.println("Wrote header: " + (12+buffer.length));
+			//System.out.println("Wrote header: " + (12 + buffer.length));
 		}
 		else
 		{
@@ -71,11 +70,11 @@ public abstract class LilithEncoderBase<E>
 		byte[] buffer = encoder.encode(event);
 		if(buffer == null)
 		{
-			throw new IOException("Couldn't encode event "+event+"!");
+			throw new IOException("Couldn't encode event " + event + "!");
 		}
 		dataOutputStream.writeInt(buffer.length);
 		dataOutputStream.write(buffer);
-		System.out.println("Wrote event : " + (4+buffer.length));
+		//System.out.println("Wrote event : " + (4 + buffer.length));
 		dataOutputStream.flush();
 	}
 
