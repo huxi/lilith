@@ -93,6 +93,7 @@
 				<includes>
 					<include>help/classic-appender.xhtml</include>
 					<include>help/access-appender.xhtml</include>
+					<include>help/file-appender.xhtml</include>
 					<include>app.properties</include>
 				</includes>
 			</resource>

@@ -4,33 +4,57 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>Using the Lilith Access Socket Appender</title>
+	<title>Using Lilith Encoders with Logback FileAppender</title>
 	<link href="help.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <p><a href="index.xhtml">ToC</a></p>
 
-<h1><a name="top">Using the Lilith Access Socket Appender</a></h1>
+<h1><a name="top">Using Lilith Encoders with Logback FileAppender</a></h1>
 
-<p>The Lilith Access Socket Appender is a replacement for <code>ch.qos.logback.access.net.SocketAppender</code>.
-	While LogBACK's appender is stream-based, i.e. it streams access events using an <code>ObjectOutputStream</code>, the
-	Lilith appender is message based, i.e. it sends access events one after the other as single messages.</p>
+<p>Starting with Lilith 0.9.38 and Logback 0.9.19, you can write Lilith files directly from within Logback.</p>
+<p>Those files can be opened by Lilith using either the Open command or drag&amp;drop.</p>
 
-<p>A message consists of an integer that specifies the number of bytes of the following event, followed by the
-	bytes of the serialized event.</p>
+<h2>Logback Classic</h2>
+<p>Add the following dependency to your applications <code>pom.xml</code> file:</p>
+		<pre><code><![CDATA[<dependency>
+  <groupId>de.huxhorn.lilith</groupId>
+  <artifactId>de.huxhorn.lilith.logback.encoder.classic</artifactId>
+  <version>${pom.version}</version>
+  <scope>runtime</scope>
+</dependency>]]></code></pre>
 
-<p>This has several benefits:</p>
-<ul>
-	<li>Sending to multiple remote hosts is supported while the event is only serialized once.</li>
-	<li>Events can (and should) be compressed using GZIP.</li>
-	<li>The appender supports heartbeat and timeout.
-		<ul>
-			<li>The event receiver can find out that the event sender connection died if a heartbeat is missing.</li>
-			<li>The event sender can find out that the event receiver connection died by means of a timeout</li>
-		</ul>
-		This means that an application won't stop (at least not for very long) in case of network problems.
-	</li>
-</ul>
+<p>If you aren't using <a href="http://maven.apache.org">Maven</a> you can find a list of all required dependencies
+	here:<br/>
+	<a href="http://lilith.huxhorn.de/projects/de.huxhorn.lilith.logback.encoder.classic/dependencies.html">http://lilith.huxhorn.de/projects/de.huxhorn.lilith.logback.encoder.classic/dependencies.html</a>
+</p>
+
+
+<p>Then, add the following to your <code>logback.xml</code> file:</p>
+		<pre><code><![CDATA[<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+  <file>classic.lilith</file>
+  <encoder class="de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder">
+    <IncludeCallerData>true</IncludeCallerData>
+  </encoder>
+</appender>]]></code></pre>
+
+
+<p>You also have to attach the appender to some logger, e.g. the root logger...</p>
+		<pre><code><![CDATA[<root>
+  <level value="INFO"/>
+  <appender-ref ref="FILE"/>
+</root>]]></code></pre>
+
+
+<p>... or a specific logger...</p>
+		<pre><code><![CDATA[<logger name="foo.Bar">
+  <level value="DEBUG"/>
+  <appender-ref ref="FILE"/>
+</logger>]]></code></pre>
+
+<p><a href="#top">Back to top.</a></p>
+
+<h2>Logback Access</h2>
 
 <p>Add the following to your applications <code>pom.xml</code> file:</p>
 		<pre><code><![CDATA[<plugin>
@@ -73,20 +97,20 @@
       <version>${logbackVersion}</version>
       <scope>runtime</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>de.huxhorn.lilith</groupId>
       <artifactId>de.huxhorn.lilith.logback.appender.multiplex-access</artifactId>
       <version>${lilithVersion}</version>
       <scope>runtime</scope>
     </dependency>
-    <!--
+    -->
     <dependency>
       <groupId>de.huxhorn.lilith</groupId>
       <artifactId>de.huxhorn.lilith.logback.encoder.access</artifactId>
       <version>${lilithVersion}</version>
       <scope>runtime</scope>
     </dependency>
-    -->
   </dependencies>
 </plugin>]]></code></pre>
 
@@ -100,15 +124,14 @@
       <Pattern>combined</Pattern>
     </layout>
   </appender>
-  <appender name="multiplex" class="de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender">
-    <Compressing>true</Compressing> <!-- will automatically use correct default port -->
-    <ReconnectionDelay>30000</ReconnectionDelay>
-    <RemoteHosts>localhost</RemoteHosts>
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>access.lilith</file>
+    <encoder class="de.huxhorn.lilith.logback.encoder.AccessLilithEncoder"/>
   </appender>
 
-  <appender-ref ref="STDOUT" />
-  <appender-ref ref="multiplex" />
+  <appender-ref ref="FILE" />
 </configuration>]]></code></pre>
+
 
 <p><a href="#top">Back to top.</a></p>
 </body>
