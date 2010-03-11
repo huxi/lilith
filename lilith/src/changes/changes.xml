@@ -6,7 +6,7 @@
 	<body>
 		<release version="1.x.x" date="TBD" description="Future release">
 			<action dev="jhux" type="add">
-				TODO: Create logger name index file from existing ljlog-file for *sigh* tree-view *yawn*
+				TODO: Create logger name index file from existing lilith-file for *sigh* tree-view *yawn*
 			</action>
 			<action dev="jhux" type="add">
 				TODO: "Save as" or "Export" logs. [*command*-S] This is only possible for inactive log views.
@@ -86,6 +86,13 @@
 		</release>
 
         <release version="0.9.38" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				Added help about using Lilith encoders in FileAppender.
+			</action>
+			<action dev="jhux" type="add">
+				Added detection of outdated index files and the option to reindex a log file in that case.
+				This is helpful while reopening log files created by a FileAppender.
+			</action>
 			<action dev="jhux" type="add" issue="23">
 				Added new modules de.huxhorn.lilith.logback.encoder.classic
 				and de.huxhorn.lilith.logback.encoder.access to support writing of Lilith

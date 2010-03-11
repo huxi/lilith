@@ -1022,27 +1022,55 @@ public class MainFrame
 		}
 		indexFileName = indexFileName + FileConstants.INDEX_FILE_EXTENSION;
 
+		long dataModified=dataFile.lastModified();
+
 		File indexFile = new File(indexFileName);
 		if(!indexFile.isFile())
 		{
-			// ask if it should be indexed.
+			// Index file does not exist. Ask if it should be indexed.
 			String dialogTitle = "Index file?";
 			String message = "Index file does not exist!\nIndex data file right now?";
 			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if(JOptionPane.OK_OPTION != result)
 			{
+				// file will not be opened.
 				return;
 			}
 			String name = "Indexing Lilith file";
 			String description = "Indexing '" + dataFile.getAbsolutePath() + "'...";
 			Task<Long> task = longTaskManager.startTask(new IndexingCallable(dataFile, indexFile), name, description);
 			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+			// opening of view will be done by the task
+			return;
 		}
-		else
+
+		// Previous index file was found
+		long indexModified=indexFile.lastModified();
+		if(indexModified < dataModified)
 		{
-			createViewFor(dataFile, indexFile);
+			// Index file is outdated. Ask if it should be reindexed.
+			String dialogTitle = "Index outdated. Reindex file?";
+			String message = "The index file is older than the data file!\nReindex data file right now?";
+			int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if(JOptionPane.OK_OPTION == result)
+			{
+				if(indexFile.delete())
+				{
+					if(logger.isInfoEnabled()) logger.info("Deleted previous index file {}.", indexFile.getAbsolutePath());
+					String name = "Reindexing Lilith file";
+					String description = "Reindexing '" + dataFile.getAbsolutePath() + "'...";
+					Task<Long> task = longTaskManager.startTask(new IndexingCallable(dataFile, indexFile), name, description);
+					if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+					// opening of view will be done by the task
+					return;
+				}
+			}
+			// It's fine to use the outdated index.
 		}
+		// use existing index file
+		createViewFor(dataFile, indexFile);
 	}
 
 	public void importFile(File importFile)
