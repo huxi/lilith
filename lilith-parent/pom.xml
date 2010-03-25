@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.parent</artifactId>
-	<version><!-- LV -->0.9.38-SNAPSHOT</version>
+	<version><!-- LV -->0.9.38</version>
 	<packaging>pom</packaging>
 	<name>Lilith parent pom file</name>
 	<description>This file is part of Lilith. It's the parent pom that contains general project informations.
@@ -20,7 +20,7 @@
 	
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
-		<sulkyVersion><!-- SV -->0.9.10-SNAPSHOT</sulkyVersion>
+		<sulkyVersion><!-- SV -->0.9.10</sulkyVersion>
 		<slf4jVersion>1.5.11</slf4jVersion>
 		<logbackVersion>0.9.19</logbackVersion>
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->

@@ -85,7 +85,10 @@
 			</action>
 		</release>
 
-        <release version="0.9.38" date="TBD" description="Future release">
+        <release version="0.9.39" date="TBD" description="Future release">
+		</release>
+
+        <release version="0.9.38" date="2010-03-26" description="Release">
 			<action dev="jhux" type="add">
 				Added help about using Lilith encoders in FileAppender.
 			</action>

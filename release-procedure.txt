@@ -18,7 +18,7 @@ and replace with release version.
 
 Commit sulky with comment "x.x.x release"
 Tag sulky with comment "x.x.x release".
-git -s vx.x.x -m "x.x.x release"
+git tag -s vx.x.x -m "x.x.x release"
 
 #####
 
@@ -36,7 +36,7 @@ Remember to update changes.xml.
 
 Commit lilith with comment "x.x.x release"
 Tag lilith with comment "x.x.x release".
-git -s vx.x.x -m "x.x.x release"
+git tag -s vx.x.x -m "x.x.x release"
 
 #####
 
