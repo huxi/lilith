@@ -147,7 +147,7 @@
                 Groovy 1.7.0
             </action>
             <action dev="jhux" type="update">
-                Logback 0.9.19-SNAPSHOT
+                Logback 0.9.19
             </action>
             <action dev="jhux" type="update">
                 SLF4J 1.5.11
