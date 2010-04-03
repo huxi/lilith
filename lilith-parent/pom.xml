@@ -22,7 +22,7 @@
 		<lilithVersion>${pom.version}</lilithVersion>
 		<sulkyVersion><!-- SV -->0.9.11-SNAPSHOT</sulkyVersion>
 		<slf4jVersion>1.5.11</slf4jVersion>
-		<logbackVersion>0.9.19</logbackVersion>
+		<logbackVersion>0.9.20</logbackVersion>
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
