@@ -32,6 +32,7 @@ public class WindowsPanel
 	private JCheckBox showingToolbarCheckbox;
 	private JCheckBox showingStatusbarCheckbox;
 	private JCheckBox internalFramesCheckbox;
+	private JCheckBox maximizeInternalFramesCheckbox;
 	private JCheckBox autoOpenCheckbox;
 	private JCheckBox autoFocusCheckbox;
 	private JCheckBox autoCloseCheckbox;
@@ -48,6 +49,7 @@ public class WindowsPanel
 		showingToolbarCheckbox = new JCheckBox("Show toolbar.");
 		showingStatusbarCheckbox = new JCheckBox("Show statusbar.");
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
+		maximizeInternalFramesCheckbox = new JCheckBox("Maximize internal frames.");
 		showIdentifierCheckbox = new JCheckBox("Show identifier for named sources.");
 		autoOpenCheckbox = new JCheckBox("Automatically open new views on connection.");
 		autoCloseCheckbox = new JCheckBox("Automatically close inactive views on disconnection.");
@@ -62,23 +64,26 @@ public class WindowsPanel
 		gbc.gridy = 0;
 		add(showingToolbarCheckbox, gbc);
 
-		gbc.gridy = 1;
+		gbc.gridy++;
 		add(showingStatusbarCheckbox, gbc);
 
-		gbc.gridy = 2;
+		gbc.gridy++;
 		add(internalFramesCheckbox, gbc);
 
-		gbc.gridy = 3;
+		gbc.gridy++;
+		add(maximizeInternalFramesCheckbox, gbc);
+
+		gbc.gridy++;
 		add(autoOpenCheckbox, gbc);
 
-		gbc.gridy = 4;
+		gbc.gridy++;
 		add(autoFocusCheckbox, gbc);
 
-		gbc.gridy = 5;
+		gbc.gridy++;
 		add(autoCloseCheckbox, gbc);
 
 		gbc.weighty = 1;
-		gbc.gridy = 6;
+		gbc.gridy++;
 		add(showIdentifierCheckbox, gbc);
 	}
 
@@ -87,6 +92,7 @@ public class WindowsPanel
 		showingToolbarCheckbox.setSelected(applicationPreferences.isShowingToolbar());
 		showingStatusbarCheckbox.setSelected(applicationPreferences.isShowingStatusbar());
 		internalFramesCheckbox.setSelected(applicationPreferences.isUsingInternalFrames());
+		maximizeInternalFramesCheckbox.setSelected(applicationPreferences.isMaximizingInternalFrames());
 		autoOpenCheckbox.setSelected(applicationPreferences.isAutoOpening());
 		autoFocusCheckbox.setSelected(applicationPreferences.isAutoFocusingWindow());
 		autoCloseCheckbox.setSelected(applicationPreferences.isAutoClosing());
@@ -98,6 +104,7 @@ public class WindowsPanel
 		applicationPreferences.setShowingToolbar(showingToolbarCheckbox.isSelected());
 		applicationPreferences.setShowingStatusbar(showingStatusbarCheckbox.isSelected());
 		applicationPreferences.setUsingInternalFrames(internalFramesCheckbox.isSelected());
+		applicationPreferences.setMaximizingInternalFrames(maximizeInternalFramesCheckbox.isSelected());
 		applicationPreferences.setAutoOpening(autoOpenCheckbox.isSelected());
 		applicationPreferences.setAutoFocusingWindow(autoFocusCheckbox.isSelected());
 		applicationPreferences.setAutoClosing(autoCloseCheckbox.isSelected());

@@ -120,6 +120,7 @@ public class ApplicationPreferences
 	public static final String ASKING_BEFORE_QUIT_PROPERTY = "askingBeforeQuit";
 	public static final String CURRENT_TIP_OF_THE_DAY_PROPERTY = "currentTipOfTheDay";
 	public static final String SHOWING_TIP_OF_THE_DAY_PROPERTY = "showingTipOfTheDay";
+	public static final String MAXIMIZING_INTERNAL_FRAMES_PROPERTY = "maximizingInternalFrames";
 	public static final String GLOBAL_LOGGING_ENABLED_PROPERTY = "globalLoggingEnabled";
 	public static final String LOGGING_STATISTIC_ENABLED_PROPERTY = "loggingStatisticEnabled";
 	public static final String PREVIOUS_SEARCH_STRINGS_PROPERTY = "previousSearchStrings";
@@ -1166,6 +1167,19 @@ public class ApplicationPreferences
 	public boolean isShowingTipOfTheDay()
 	{
 		return PREFERENCES.getBoolean(SHOWING_TIP_OF_THE_DAY_PROPERTY, true);
+	}
+
+	public void setMaximizingInternalFrames(boolean showingTipOfTheDay)
+	{
+		Object oldValue = isMaximizingInternalFrames();
+		PREFERENCES.putBoolean(MAXIMIZING_INTERNAL_FRAMES_PROPERTY, showingTipOfTheDay);
+		Object newValue = isMaximizingInternalFrames();
+		propertyChangeSupport.firePropertyChange(MAXIMIZING_INTERNAL_FRAMES_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isMaximizingInternalFrames()
+	{
+		return PREFERENCES.getBoolean(MAXIMIZING_INTERNAL_FRAMES_PROPERTY, false);
 	}
 
 	public void setGlobalLoggingEnabled(boolean globalLoggingEnabled)

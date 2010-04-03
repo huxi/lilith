@@ -2272,8 +2272,23 @@ public class MainFrame
 		int count = desktop.getComponentCount();
 		final int titleBarHeight = resolveInternalTitlebarHeight(/*frame*/);
 		frame.setBounds(titleBarHeight * (count % 10), titleBarHeight * (count % 10), 640, 480);
-
+		// set bounds in any case
 		desktop.add(frame);
+
+		boolean maximize = applicationPreferences.isMaximizingInternalFrames();
+		if(maximize)
+		{
+			try
+			{
+				// must call after adding to the desktop
+				frame.setMaximum(true);
+			}
+			catch(PropertyVetoException ex)
+			{
+				if(logger.isErrorEnabled()) logger.error("Vetoed maximizing!", ex);
+			}
+		}
+
 		viewActions.setViewContainer(container);
 
 		frame.setVisible(true);
