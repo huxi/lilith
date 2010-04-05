@@ -2454,10 +2454,10 @@ public class ViewActions
 
 		private EventSource<LoggingEvent> eventSource;
 
-		public ViewLoggingAction(EventSource<LoggingEvent> eventSource)
+		public ViewLoggingAction(ViewContainer<LoggingEvent> container)
 		{
-			super(mainFrame.getLoggingSourceTitle(eventSource.getSourceIdentifier()));
-			this.eventSource = eventSource;
+			super(mainFrame.resolveSourceTitle(container));
+			this.eventSource = container.getEventSource();
 			if(eventSource.isGlobal())
 			{
 				KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 1");
@@ -2491,10 +2491,10 @@ public class ViewActions
 
 		private EventSource<AccessEvent> eventSource;
 
-		public ViewAccessAction(EventSource<AccessEvent> eventSource)
+		public ViewAccessAction(ViewContainer<AccessEvent> container)
 		{
-			super(mainFrame.getAccessSourceTitle(eventSource.getSourceIdentifier()));
-			this.eventSource = eventSource;
+			super(mainFrame.resolveSourceTitle(container));
+			this.eventSource = container.getEventSource();
 			if(eventSource.isGlobal())
 			{
 				KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 2");
@@ -2774,7 +2774,7 @@ public class ViewActions
 
 		private JMenuItem createLoggingMenuItem(EventSource<LoggingEvent> key, ViewContainer<LoggingEvent> viewContainer)
 		{
-			JMenuItem result = new JMenuItem(new ViewLoggingAction(key));
+			JMenuItem result = new JMenuItem(new ViewLoggingAction(viewContainer));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
 			if(compParent == null)
@@ -2790,7 +2790,7 @@ public class ViewActions
 
 		private JMenuItem createAccessMenuItem(EventSource<AccessEvent> key, ViewContainer<AccessEvent> viewContainer)
 		{
-			JMenuItem result = new JMenuItem(new ViewAccessAction(key));
+			JMenuItem result = new JMenuItem(new ViewAccessAction(viewContainer));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
 			if(compParent == null)

@@ -20,6 +20,8 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
+import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.debug.DebugDialog;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.consumers.AlarmSoundAccessEventConsumer;
@@ -1607,7 +1609,7 @@ public class MainFrame
 				if(!name.equalsIgnoreCase("global"))
 				{
 					SourceIdentifier si = new SourceIdentifier(name);
-					sources.put(getSourceTitle(si), si);
+					sources.put(getSourceTitle(si, null), si);
 				}
 			}
 		}
@@ -2136,43 +2138,110 @@ public class MainFrame
 		return getPrimarySourceTitle(identifier.getIdentifier());
 	}
 
-	public String getSourceTitle(SourceIdentifier identifier)
+	public String getSourceTitle(SourceIdentifier identifier, String name)
 	{
 		String primary = getPrimarySourceTitle(identifier);
 		String secondary = identifier.getSecondaryIdentifier();
 		if(secondary == null)
 		{
-			return primary;
+			if(name == null)
+			{
+				return primary;
+			}
+			return primary + " - " + name;
 		}
-		return primary + " - " + secondary;
+		if(name == null)
+		{
+			return primary + " - " + secondary;
+		}
+		return primary + " - " +name + " - " + secondary;
 	}
 
-	public String getLoggingSourceTitle(SourceIdentifier identifier)
+	public String getLoggingSourceTitle(SourceIdentifier identifier, String name)
 	{
-		return getSourceTitle(identifier) + " (Logging)";
+		return getSourceTitle(identifier, name) + " (Logging)";
 	}
 
-	public String getAccessSourceTitle(SourceIdentifier identifier)
+	public String getAccessSourceTitle(SourceIdentifier identifier, String name)
 	{
-		return getSourceTitle(identifier) + " (Access)";
+		return getSourceTitle(identifier, name) + " (Access)";
 	}
 
 	String resolveSourceTitle(ViewContainer container)
 	{
-		EventSource eventSource = container.getDefaultView().getEventSource();
+		EventWrapperViewPanel defaultView = container.getDefaultView();
+		EventSource eventSource = defaultView.getEventSource();
+		boolean global=eventSource.isGlobal();
+
+		String name=null;
+		if(!global)
+		{
+			Buffer buffer = defaultView.getSourceBuffer();
+			Object event=null;
+			if(buffer != null)
+			{
+				event = buffer.get(0);
+			}
+			name=resolveName(event);
+		}
+
 		SourceIdentifier si = eventSource.getSourceIdentifier();
 
 		Class clazz = container.getWrappedClass();
 		String title;
 		if(clazz == LoggingEvent.class)
 		{
-			title = getLoggingSourceTitle(si);
+			title = getLoggingSourceTitle(si, name);
 		}
 		else
 		{
-			title = getAccessSourceTitle(si);
+			title = getAccessSourceTitle(si, name);
 		}
 		return title;
+	}
+
+	private String resolveName(Object eventWrapperObj)
+	{
+		String name=null;
+		String appId=null;
+		if(eventWrapperObj instanceof EventWrapper)
+		{
+			EventWrapper wrapper= (EventWrapper) eventWrapperObj;
+			Serializable evtObject = wrapper.getEvent();
+			LoggerContext context = null;
+			if(evtObject instanceof LoggingEvent)
+			{
+				context = ((LoggingEvent) evtObject).getLoggerContext();
+			}
+			else if(evtObject instanceof AccessEvent)
+			{
+				context = ((AccessEvent) evtObject).getLoggerContext();
+			}
+			if(context != null)
+			{
+				name=context.getName();
+				if("default".equals(name) || "".equals(name))
+				{
+					name = null;
+				}
+				Map<String, String> props = context.getProperties();
+				if(props!= null)
+				{
+					appId=props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+				}
+
+				if(name != null)
+				{
+					if(appId == null || name.equals(appId))
+					{
+						return name;
+					}
+					return name+"/"+appId;
+				}
+				return appId;
+			}
+		}
+		return null;
 	}
 
 	public void openUrl(URL url)
