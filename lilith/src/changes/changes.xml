@@ -92,7 +92,7 @@
 			</action>
 			<action dev="jhux" type="update">
 				Added contextName and/or applicationIdentifier to the title of the frames.
-				This was suggested by Joe.
+				This was suggested by Alfred &amp; Joe.
 			</action>
 			<action dev="jhux" type="update">
 				Logback 0.9.20
