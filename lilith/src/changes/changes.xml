@@ -94,6 +94,10 @@
 				Added contextName and/or applicationIdentifier to the title of the frames.
 				This was suggested by Alfred &amp; Joe.
 			</action>
+            <action dev="jhux" type="fix" issue="79">
+                It wasn't possible to cancel an exit-request executed by closing the main frame.
+                This bug was found by Gareth Doutch (gdoutch).
+            </action>
 			<action dev="jhux" type="update">
 				Logback 0.9.20
 			</action>
