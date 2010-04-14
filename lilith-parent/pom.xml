@@ -427,7 +427,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-                <version>1.7.0</version>
+                <version>1.7.2</version>
 			</dependency>
 			
 			<dependency>
