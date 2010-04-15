@@ -17,30 +17,25 @@
  */
 package de.huxhorn.lilith;
 
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.joran.JoranConfigurator;
+import ch.qos.logback.core.joran.spi.JoranException;
+import ch.qos.logback.core.util.StatusPrinter;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.handler.Slf4JHandler;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.LicenseAgreementDialog;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.SplashScreen;
-import de.huxhorn.lilith.swing.callables.IndexingCallable;
+import de.huxhorn.lilith.tools.CatCommand;
+import de.huxhorn.lilith.tools.CreateMd5Command;
+import de.huxhorn.lilith.tools.IndexCommand;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
-import de.huxhorn.sulky.tasks.ProgressingCallable;
-
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.joran.JoranConfigurator;
-import ch.qos.logback.core.joran.spi.JoranException;
-import ch.qos.logback.core.util.StatusPrinter;
 import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
 import it.sauronsoftware.junique.MessageHandler;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.simplericity.macify.eawt.Application;
@@ -49,15 +44,8 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
+import javax.swing.*;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -66,8 +54,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Handler;
-
-import javax.swing.*;
 
 public class Lilith
 {
@@ -83,6 +69,7 @@ public class Lilith
 	private static final String INDEX_SHORT = "i";
 	private static final String ENABLE_BONJOUR_SHORT = "b";
 	private static final String CREATE_MD5_SHORT = "m";
+	private static final String CAT_SHORT = "c";
 
 	private static final String VERBOSE = "verbose";
 	private static final String PRINT_HELP = "help";
@@ -91,6 +78,7 @@ public class Lilith
 	private static final String INDEX = "indexFile";
 	private static final String ENABLE_BONJOUR = "bonjour";
 	private static final String CREATE_MD5 = "md5";
+	private static final String CAT = "cat";
 
 	private static final String JUNIQUE_MSG_SHOW = "Show";
 	private static final String JUNIQUE_REPLY_OK = "OK";
@@ -152,8 +140,6 @@ public class Lilith
 
 	public static void main(String args[])
 	{
-		final Logger logger = LoggerFactory.getLogger(Lilith.class);
-
 		{
 			// initialize java.util.logging to use slf4j...
 			Handler handler = new Slf4JHandler();
@@ -172,12 +158,14 @@ public class Lilith
 		options.addOption(ENABLE_BONJOUR_SHORT, ENABLE_BONJOUR, false, "disable Bonjor.");
 		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
 		options.addOption(CREATE_MD5_SHORT, CREATE_MD5, false, "create an MD5 checksum for the given file.");
+		options.addOption(CAT_SHORT, CAT, false, "'cat' the given Lilith logfile.");
 		boolean verbose = false;
 		boolean flushPrefs = false;
 		boolean flushLicensed = false;
 		boolean enableBonjour = false;
 		boolean indexFileOpt = false;
 		boolean createMd5 = false;
+		boolean cat = false;
 		boolean printHelp;
 		String[] originalArgs = args;
 		int exitCode = 0;
@@ -193,6 +181,7 @@ public class Lilith
 			enableBonjour = line.hasOption(ENABLE_BONJOUR_SHORT);
 			indexFileOpt = line.hasOption(INDEX_SHORT);
 			createMd5 = line.hasOption(CREATE_MD5_SHORT);
+			cat = line.hasOption(CAT_SHORT);
 			args = line.getArgs(); // remaining unparsed args...
 		}
 		catch(ParseException exp)
@@ -223,45 +212,6 @@ public class Lilith
 			"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
 		System.out.println("Use commandline option -h to view help.\n\n");
 
-		if(createMd5)
-		{
-			File input = new File(args[0]);
-
-			if(!input.isFile())
-			{
-				if(logger.isWarnEnabled()) logger.warn("{} isn't a file!", input.getAbsolutePath());
-				return;
-			}
-			File output = new File(input.getParentFile(), input.getName() + ".md5");
-
-			try
-			{
-
-				FileInputStream fis = new FileInputStream(input);
-				byte[] md5 = ApplicationPreferences.getMD5(fis);
-				if(md5 == null)
-				{
-					if(logger.isWarnEnabled())
-					{
-						logger.warn("Couldn't calculate checksum for {}!", input.getAbsolutePath());
-					}
-					return;
-				}
-				FileOutputStream fos = new FileOutputStream(output);
-				fos.write(md5);
-				fos.close();
-				if(logger.isInfoEnabled())
-				{
-					logger.info("Wrote checksum of {} to {}.", input.getAbsolutePath(), output.getAbsolutePath());
-				}
-			}
-			catch(IOException e)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while creating checksum!", e);
-			}
-			return;
-		}
-
 		if(verbose)
 		{
 			for(int i = 0; i < originalArgs.length; i++)
@@ -273,49 +223,56 @@ public class Lilith
 				System.out.println("args[" + i + "]: " + args[i]);
 			}
 			System.out.println("\n");
+
+			initVerboseLogging();
 		}
 
-		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-		if(loggerFactory instanceof LoggerContext)
+		final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+		if(createMd5)
 		{
-			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-			if(verbose)
+			if(args.length < 1)
 			{
-				// reset previous configuration initially loaded from logback.xml
-				loggerContext.reset();
-				JoranConfigurator configurator = new JoranConfigurator();
-				configurator.setContext(loggerContext);
-				URL configUrl;
-				configUrl = Lilith.class.getResource("/logbackVerbose.xml");
-				try
-				{
-					configurator.doConfigure(configUrl);
-					if(logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
-					StatusPrinter.print(loggerContext);
-				}
-				catch(JoranException ex)
-				{
-					if(logger.isErrorEnabled()) logger.error("Error configuring logging framework!", ex);
-					StatusPrinter.print(loggerContext);
-				}
+				if(logger.isErrorEnabled()) logger.error("Missing file argument! -"+CREATE_MD5_SHORT+" requires an additional file!");
+				System.exit(-1);
 			}
+			File input = new File(args[0]);
+
+			if(CreateMd5Command.createMd5(input))
+			{
+				System.exit(0);
+			}
+			System.exit(-1);
+		}
+
+		if(cat)
+		{
+			if(args.length < 1)
+			{
+				if(logger.isErrorEnabled()) logger.error("Missing file argument! -"+CAT_SHORT+" requires an additional file!");
+				System.exit(-1);
+			}
+			File input = new File(args[0]);
+			String pattern=null;
+			if(args.length > 1)
+			{
+				pattern = args[1];
+			}
+			if(CatCommand.catFile(input, pattern))
+			{
+				System.exit(0);
+			}
+			System.exit(-1);
 		}
 
 		if(flushPrefs)
 		{
-			ApplicationPreferences prefs = new ApplicationPreferences();
-			prefs.reset();
-			prefs.setLicensed(false);
-			if(logger.isInfoEnabled()) logger.info("Flushed preferences...");
-			return;
+			flushPreferences();
 		}
 
 		if(flushLicensed)
 		{
-			ApplicationPreferences prefs = new ApplicationPreferences();
-			prefs.setLicensed(false);
-			if(logger.isInfoEnabled()) logger.info("Flushed licensed...");
-			return;
+			flushLicensed();
 		}
 
 		if(printHelp)
@@ -327,36 +284,35 @@ public class Lilith
 
 		if(indexFileOpt)
 		{
+			if(args.length < 1)
+			{
+				if(logger.isErrorEnabled()) logger.error("Missing file argument! Usage: -"+INDEX_SHORT+" <logFile> [<indexFile>]");
+				System.exit(-1);
+			}
+
+			String logFile=args[0];
+			String indexFile=null;
 			if(args.length >= 2)
 			{
-				String logFileStr = args[0];
-				String indexFileStr = args[1];
-				File logFile = new File(logFileStr);
-				File indexFile = new File(indexFileStr);
-				IndexingCallable callable = new IndexingCallable(logFile, indexFile);
-				callable.addPropertyChangeListener(new IndexingChangeListener());
-				try
-				{
-					long count = callable.call();
-					if(logger.isInfoEnabled())
-					{
-						logger.info("Finished indexing {}. Number of events: {}", logFile.getAbsolutePath(), count);
-					}
-					System.exit(0);
-				}
-				catch(Exception e)
-				{
-					if(logger.isErrorEnabled())
-					{
-						logger.error("Exception while indexing '" + logFile.getAbsolutePath() + "'!", e);
-					}
-					System.exit(-1);
-				}
-
+				indexFile=args[1];
 			}
-			if(logger.isErrorEnabled()) logger.error("Missing file argument!");
+			else
+			{
+				IndexCommand.indexLogFile(args[0], null);
+			}
+			if(IndexCommand.indexLogFile(logFile, indexFile))
+			{
+				System.exit(0);
+			}
 			System.exit(-1);
 		}
+
+		startLilith(appTitle, enableBonjour);
+	}
+
+	private static void startLilith(String appTitle, boolean enableBonjour)
+	{
+		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
 		uncaughtExceptionHandler = new Thread.UncaughtExceptionHandler()
 		{
@@ -399,6 +355,57 @@ public class Lilith
 			}
 		});
 		startUI(appTitle, enableBonjour);
+	}
+
+	private static void initVerboseLogging()
+	{
+		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+		if(loggerFactory instanceof LoggerContext)
+		{
+			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+			// reset previous configuration initially loaded from logback.xml
+			loggerContext.reset();
+			JoranConfigurator configurator = new JoranConfigurator();
+			configurator.setContext(loggerContext);
+			URL configUrl;
+			configUrl = Lilith.class.getResource("/logbackVerbose.xml");
+			try
+			{
+				configurator.doConfigure(configUrl);
+				final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+				if(logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
+				StatusPrinter.print(loggerContext);
+			}
+			catch(JoranException ex)
+			{
+				final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+				if(logger.isErrorEnabled()) logger.error("Error configuring logging framework!", ex);
+				StatusPrinter.print(loggerContext);
+			}
+		}
+	}
+
+
+	private static void flushLicensed()
+	{
+		final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+		ApplicationPreferences prefs = new ApplicationPreferences();
+		prefs.setLicensed(false);
+		if(logger.isInfoEnabled()) logger.info("Flushed licensed...");
+		System.exit(0);
+	}
+
+	private static void flushPreferences()
+	{
+		final Logger logger = LoggerFactory.getLogger(Lilith.class);
+		ApplicationPreferences prefs = new ApplicationPreferences();
+		prefs.reset();
+		prefs.setLicensed(false);
+		if(logger.isInfoEnabled()) logger.info("Flushed preferences...");
+		System.exit(0);
 	}
 
 	private static String handleJUniqueMessage(String msg)
@@ -802,29 +809,9 @@ public class Lilith
 					.info("Moved content from previous application path '{}' to new application path '{}'.", prevPath.getAbsolutePath(), startupApplicationPath.getAbsolutePath());
 			}
 		}
-		prevPathFile.delete();
-	}
-
-
-	private static class IndexingChangeListener
-		implements PropertyChangeListener
-	{
-		private final Logger logger = LoggerFactory.getLogger(Lilith.class);
-
-		/**
-		 * This method gets called when a bound property is changed.
-		 *
-		 * @param evt A PropertyChangeEvent object describing the event source
-		 *            and the property that has changed.
-		 */
-
-		public void propertyChange(PropertyChangeEvent evt)
+		if(prevPathFile.delete())
 		{
-			if(ProgressingCallable.PROGRESS_PROPERTY_NAME.equals(evt.getPropertyName()))
-			{
-				if(logger.isInfoEnabled()) logger.info("Progress: {}%", evt.getNewValue());
-			}
+			if(logger.isDebugEnabled()) logger.debug("Deleted {}.", prevPathFile.getAbsolutePath());
 		}
 	}
-
 }
