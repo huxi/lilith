@@ -215,7 +215,7 @@ public class Lilith
 			"| |___| | | | |_| | | |\n" +
 			"|_____|_|_|_|\\__|_| |_|");
 		System.out.println(appTitle);
-		System.out.println("\nCopyright (C) 2007-2008  Joern Huxhorn\n\n" +
+		System.out.println("\nCopyright (C) 2007-2010  Joern Huxhorn\n\n" +
 			"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
 			"This is free software, and you are welcome to redistribute it\n" +
 			"under certain conditions.\n" +
