@@ -86,6 +86,12 @@
 		</release>
 
         <release version="0.9.39" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Changed the license of all files previously licensed as LGPLv3
+				to both LGPLv3 and ASLv2 instead. Use whichever license suits
+				you better.
+				This was requested by Ekkehard Gentz.
+			</action>
 			<action dev="jhux" type="add" issue="77">
 				Added option to maximize internal frames by default. This is actually very good idea!
 				This was suggested by snstanton.
