@@ -17,7 +17,10 @@
  */
 package de.huxhorn.lilith.swing;
 
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+//import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.matchers.TextMatcherEditor;
+import ca.odell.glazedlists.swing.AutoCompleteSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +38,6 @@ import java.util.*;
 import java.util.List;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
-import de.huxhorn.sulky.swing.ListComboBoxModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.lilith.conditions.*;
@@ -79,20 +81,24 @@ public class FindPanel<T extends Serializable>
 
 	private JButton closeFindButton;
 	private JToggleButton findNotButton;
-	private JComboBox findTypeCombo;
-	private JComboBox findTextCombo;
 	private JButton findPrevButton;
 	private JButton findNextButton;
 
 
 	private Condition condition;
-	private ListComboBoxModel findComboModel;
+	//private ListComboBoxModel findComboModel;
 	private static final String[] LEVEL_VALUES = {
 			"TRACE", "DEBUG", "INFO", "WARN", "ERROR"
 	};
 	private ApplicationPreferences applicationPreferences;
 	private List<String> previousSearchStrings;
 	private List<String> conditionNames;
+
+	private JComboBox findTypeCombo;
+	private BasicEventList<String> findTypeEventList;
+
+	private JComboBox findTextCombo;
+	private BasicEventList<String> findTextEventList;
 
 
 	public FindPanel(EventWrapperViewPanel<T> eventWrapperViewPanel)
@@ -125,19 +131,35 @@ public class FindPanel<T extends Serializable>
 		ActionListener findTypeModifiedListener = new FindTypeSelectionActionListener();
 		findTypeCombo = new JComboBox();
 		// not editable, so decorator will be strict
-		AutoCompleteDecorator.decorate(this.findTypeCombo);
-
+		//AutoCompleteDecorator.decorate(this.findTypeCombo);
+		// AUTO-COMPLETION
+		findTypeEventList = new BasicEventList<String>();
+		AutoCompleteSupport<String> findTypeComboAutoSupport = AutoCompleteSupport.install(findTypeCombo, findTypeEventList);
+		findTypeComboAutoSupport.setFirstItem("");
+		findTypeComboAutoSupport.setStrict(true);
+		findTypeComboAutoSupport.setCorrectsCase(true);
+		findTypeComboAutoSupport.setTextMatchingStrategy(TextMatcherEditor.IDENTICAL_STRATEGY);
+		findTypeComboAutoSupport.setFilterMode(TextMatcherEditor.CONTAINS);
+		findTypeComboAutoSupport.setBeepOnStrictViolation(false);
 		findTypeCombo.addActionListener(findTypeModifiedListener);
 		findNotButton = new JToggleButton("!");
 		findNotButton.addActionListener(findTypeModifiedListener);
 		findNotButton.setToolTipText("Not - inverts condition");
 		findNotButton.setMargin(new Insets(0, 0, 0, 0));
-		findTextCombo = new JComboBox();
-		findTextCombo.setEditable(true); // so decorator won't be strict
-		findComboModel=new ListComboBoxModel();
-		findTextCombo.setModel(findComboModel);
-		AutoCompleteDecorator.decorate(this.findTextCombo);
 
+		// AUTO-COMPLETION
+		findTextCombo = new JComboBox();
+		//findTextCombo.setEditable(true); // so decorator won't be strict
+		//findComboModel=new ListComboBoxModel();
+		//findTextCombo.setModel(findComboModel);
+		//AutoCompleteDecorator.decorate(this.findTextCombo);
+		findTextEventList = new BasicEventList<String>();
+		AutoCompleteSupport<String> findTextComboAutoSupport = AutoCompleteSupport.install(findTextCombo, findTextEventList);
+		findTextComboAutoSupport.setFirstItem("");
+		findTextComboAutoSupport.setStrict(false);
+		findTextComboAutoSupport.setCorrectsCase(false);
+		findTextComboAutoSupport.setTextMatchingStrategy(TextMatcherEditor.NORMALIZED_STRATEGY);
+		findTextComboAutoSupport.setFilterMode(TextMatcherEditor.CONTAINS);
 		gbc.gridx = 2;
 		gbc.fill=GridBagConstraints.VERTICAL;
 		add(findNotButton, gbc);
@@ -481,7 +503,7 @@ public class FindPanel<T extends Serializable>
 
 	private void initTypeCombo()
 	{
-		Vector<String> itemsVector = new Vector<String>();
+		List<String> itemsVector = new ArrayList<String>();
 
 		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
 
@@ -491,8 +513,10 @@ public class FindPanel<T extends Serializable>
 			itemsVector.addAll(Arrays.asList(groovyConditions));
 		}
 
-		ComboBoxModel model = new DefaultComboBoxModel(itemsVector);
-		findTypeCombo.setModel(model);
+		findTypeEventList.clear();
+		findTypeEventList.addAll(itemsVector);
+		//ComboBoxModel model = new DefaultComboBoxModel(itemsVector);
+		//findTypeCombo.setModel(model);
 	}
 
 	public void setVisible(boolean visible)
@@ -541,16 +565,22 @@ public class FindPanel<T extends Serializable>
 
 		if(LEVEL_CONDITION.equals(selectedType))
 		{
-			findComboModel.replace(LEVEL_VALUES);
+			findTextEventList.clear();
+			findTextEventList.addAll(Arrays.asList(LEVEL_VALUES));
+			//findComboModel.replace(LEVEL_VALUES);
 		}
 		else if(NAMED_CONDITION.equals(selectedType))
 		{
-			findComboModel.replace(conditionNames);
+			findTextEventList.clear();
+			findTextEventList.addAll(conditionNames);
+			//findComboModel.replace(conditionNames);
 		}
 		else
 		{
 			String prev=(String)findTextCombo.getSelectedItem(); // save...
-			findComboModel.replace(previousSearchStrings);
+			findTextEventList.clear();
+			findTextEventList.addAll(previousSearchStrings);
+			//findComboModel.replace(previousSearchStrings);
 			findTextCombo.setSelectedItem(prev); // ...and restore
 		}
 	}

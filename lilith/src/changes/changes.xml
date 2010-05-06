@@ -86,10 +86,15 @@
 		</release>
 
         <release version="0.9.39" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Changed autocomplete of find combos from uber-annoying swingx to much less annoying
+				Glazedlists.
+				This annoyed Alfred and me.
+			</action>
 			<action dev="jhux" type="fix" issue="82">
 				Neither "Window" menu nor status bar did update properly if
 				"Automatically open new views on connection." was deselected.
-				This was reported by Joe.
+				This bug was found by Joe.
 			</action>
 			<action dev="jhux" type="update">
 				Changed the license of all files previously licensed as LGPLv3

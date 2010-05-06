@@ -455,12 +455,20 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			
+
+			<!--
             <dependency>
                 <groupId>org.swinglabs</groupId>
                 <artifactId>swingx</artifactId>
                 <version>1.0</version>
             </dependency>
+			-->
+			
+			<dependency>
+				<groupId>net.java.dev.glazedlists</groupId>
+				<artifactId>glazedlists_java15</artifactId>
+				<version>1.8.0</version>
+			</dependency>
 
 			<dependency>
 				<groupId>com.google.protobuf</groupId>
