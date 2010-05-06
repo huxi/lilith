@@ -115,6 +115,9 @@
                 This bug was found by Gareth Doutch (gdoutch).
             </action>
 			<action dev="jhux" type="update">
+				httpclient 4.0.1
+			</action>
+			<action dev="jhux" type="update">
 				Logback 0.9.20
 			</action>
             <action dev="jhux" type="update">

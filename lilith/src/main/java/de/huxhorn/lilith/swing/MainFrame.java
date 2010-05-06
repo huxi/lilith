@@ -97,11 +97,15 @@ import de.huxhorn.sulky.tasks.TaskManager;
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.ApplicationEvent;
 import org.simplericity.macify.eawt.ApplicationListener;
@@ -2211,7 +2215,7 @@ public class MainFrame
 
 	private String resolveName(Object eventWrapperObj)
 	{
-		String name=null;
+		String name;
 		String appId=null;
 		if(eventWrapperObj instanceof EventWrapper)
 		{
@@ -3391,6 +3395,39 @@ public class MainFrame
 
 	}
 
+	private static String readUrl(String url)
+	{
+		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
+
+		// Create an instance of HttpClient.
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpContext localContext = new BasicHttpContext();
+		HttpGet httpget = new HttpGet(url);
+		try
+		{
+			HttpResponse response = client.execute(httpget, localContext);
+			StatusLine status = response.getStatusLine();
+			if(status.getStatusCode() != HttpStatus.OK.getCode())
+			{
+				if(logger.isWarnEnabled()) logger.warn("Status while retrieving '{}': {}", url, status);
+				return null;
+			}
+			HttpEntity entity = response.getEntity();
+			String result = EntityUtils.toString(entity);
+			entity.consumeContent(); // just to make extremely sure ;)
+			return result;
+		}
+		catch(IOException e)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while retrieving '" + url + "'!", e);
+			return null;
+		}
+		finally
+		{
+			client.getConnectionManager().shutdown();
+		}
+	}
+
 	private class CheckForUpdateRunnable
 		implements Runnable
 	{
@@ -3404,44 +3441,11 @@ public class MainFrame
 		public String retrieveCurrentVersion()
 		{
 			final String url = "http://lilith.huxhorn.de/current-version.txt";
-			// Create an instance of HttpClient.
-			HttpClient client = new HttpClient();
-
-			// Create a method instance.
-			GetMethod method = new GetMethod(url);
-
-			// Provide custom retry handler is necessary
-			method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-				new DefaultHttpMethodRetryHandler(3, false));
-
-			String currentVersion = null;
-			try
+			String currentVersion = readUrl(url);
+			if(currentVersion != null)
 			{
-				// Execute the method.
-				int statusCode = client.executeMethod(method);
-
-				// lets use our HttpStatus instead...
-				if(statusCode != HttpStatus.OK.getCode())
-				{
-					System.err.println("Method failed: " + method.getStatusLine());
-				}
-				else
-				{
-					// Read the response body.
-					byte[] responseBody = method.getResponseBody();
-					String charSet = method.getResponseCharSet();
-
-					currentVersion = new String(responseBody, charSet).trim();
-				}
-			}
-			catch(Throwable e)
-			{
-				if(logger.isInfoEnabled()) logger.info("Exception while checking current version!", e);
-			}
-			finally
-			{
-				// Release the connection.
-				method.releaseConnection();
+				currentVersion=currentVersion.trim();
+				if(logger.isDebugEnabled()) logger.debug("Current version: {}", currentVersion);
 			}
 			return currentVersion;
 		}
@@ -3449,46 +3453,8 @@ public class MainFrame
 		public String retrieveChanges(String currentVersion)
 		{
 			final String url = "http://lilith.huxhorn.de/releases/" + currentVersion + ".xhtml";
-			// Create an instance of HttpClient.
-			HttpClient client = new HttpClient();
 
-			// Create a method instance.
-			GetMethod method = new GetMethod(url);
-
-			// Provide custom retry handler is necessary
-			method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-				new DefaultHttpMethodRetryHandler(3, false));
-
-			String changes = null;
-			try
-			{
-				// Execute the method.
-				int statusCode = client.executeMethod(method);
-
-				// lets use our HttpStatus instead...
-				if(statusCode != HttpStatus.OK.getCode())
-				{
-					System.err.println("Method failed: " + method.getStatusLine());
-				}
-				else
-				{
-					// Read the response body.
-					byte[] responseBody = method.getResponseBody();
-					String charSet = method.getResponseCharSet();
-
-					changes = new String(responseBody, charSet).trim();
-				}
-			}
-			catch(Throwable e)
-			{
-				if(logger.isInfoEnabled()) logger.info("Exception while checking current version!", e);
-			}
-			finally
-			{
-				// Release the connection.
-				method.releaseConnection();
-			}
-			return changes;
+			return readUrl(url);
 		}
 
 		public void run()

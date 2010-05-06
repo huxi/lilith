@@ -487,7 +487,8 @@
 				<artifactId>commons-io</artifactId>
 				<version>1.3.1</version>
 			</dependency>
-			
+
+			<!--
 			<dependency>
 				<groupId>commons-httpclient</groupId>
 				<artifactId>commons-httpclient</artifactId>
@@ -498,13 +499,21 @@
 						<artifactId>commons-logging</artifactId>
 					</exclusion>
 				</exclusions>
-				<!-- This will likely move to:
+			</dependency>
+			-->
+
+			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
-				<version>4.0</version>
-				-->
+				<version>4.0.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>stax</groupId>
 				<artifactId>stax</artifactId>
