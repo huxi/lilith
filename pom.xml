@@ -49,6 +49,7 @@
 		<module>lilith-sounds</module>
 		<module>lilith</module>
 		<module>slf4j</module>
+		<module>tracing</module>
 	</modules>
 	
 	<reporting>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="Localhorst" class="ch.qos.logback.classic.net.SocketAppender">
+		<RemoteHost>localhost</RemoteHost>
+		<Port>4560</Port>
+		<ReconnectionDelay>1</ReconnectionDelay>
+		<IncludeCallerData>false</IncludeCallerData>
+	</appender>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<param name="Pattern" value="%-8marker - %d{HH:mm:ss.SSS} [%thread] - %logger - %msg%n%ex{short}"/>
+		</layout>
+	</appender>
+
+	<logger name="org.springframework" level="WARN"/>
+
+	<root level="DEBUG">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="Localhorst"/>
+		<!--
+		-->
+	</root>
+
+</configuration>
+

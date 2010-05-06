@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean id="tracingAspect" class="de.huxhorn.lilith.tracing.TracingAspect">
+		<property name="loggerName" value="DefaultTracing"/>
+	</bean>
+
+	<bean id="exampleService" class="de.huxhorn.lilith.tracing.ExampleService">
+		<property name="other">
+			<bean class="de.huxhorn.lilith.tracing.Other"/>
+		</property>
+	</bean>
+
+	<aop:config>
+		<aop:aspect ref="tracingAspect">
+			<aop:pointcut id="testServicePointcut"
+					expression="execution(* de.huxhorn.lilith.tracing.ExampleServiceIfc.*(..))"/>
+			<aop:around pointcut-ref="testServicePointcut" method="trace"/>
+
+			<aop:pointcut id="testOtherPointcut"
+					expression="execution(* de.huxhorn.lilith.tracing.OtherIfc.*(..))"/>
+			<aop:around pointcut-ref="testOtherPointcut" method="trace"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
