@@ -2001,6 +2001,10 @@ public class MainFrame
 				{
 					showLoggingView(eventSource);
 				}
+				else
+				{
+					updateWindowMenus();
+				}
 			}
 		}
 
@@ -2079,6 +2083,10 @@ public class MainFrame
 				if(applicationPreferences.isAutoOpening())
 				{
 					showAccessView(eventSource);
+				}
+				else
+				{
+					updateWindowMenus();
 				}
 			}
 		}
