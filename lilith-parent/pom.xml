@@ -29,6 +29,9 @@
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- making sure that gpg2 works -->
+		<gpg.useagent>true</gpg.useagent>
+		<gpg.keyname>740A1840</gpg.keyname>
 	</properties>
 	
 	<licenses>
@@ -822,6 +825,10 @@
 					<version>2.1</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.0</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-source-plugin</artifactId>
 					<version>2.1</version>
 				</plugin>
@@ -968,5 +975,33 @@
 			-->
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+				<name>performRelease</name>
+				<value>true</value>
+			</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
 

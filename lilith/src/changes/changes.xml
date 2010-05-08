@@ -88,7 +88,7 @@
         <release version="0.9.39" date="TBD" description="Future release">
 			<action dev="jhux" type="update">
 				Changed autocomplete of find combos from uber-annoying swingx to much less annoying
-				Glazedlists.
+				Glazed Lists.
 				This annoyed Alfred and me.
 			</action>
 			<action dev="jhux" type="fix" issue="82">

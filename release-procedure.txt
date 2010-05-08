@@ -1,3 +1,8 @@
+Start gpg-agent:
+gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info"
+
+#####
+
 Validate correctness of trunk/lilith/lilith/src/main/resources/detailsView/history
 Check that lilith logback.xml does not include debug="true"
 
@@ -23,9 +28,9 @@ git tag -s vx.x.x -m "x.x.x release"
 #####
 
 Change into sulky root.
-mvn clean install
+mvn clean install -DperformRelease=true
 mvn site:site
-mvn deploy
+mvn deploy -DperformRelease=true
 mvn site:deploy
 
 #####
@@ -41,9 +46,9 @@ git tag -s vx.x.x -m "x.x.x release"
 #####
 
 Change into lilith root.
-mvn clean install
+mvn clean install -DperformRelease=true
 mvn site:site
-mvn deploy
+mvn deploy -DperformRelease=true
 mvn site:deploy
 
 #####
