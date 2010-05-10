@@ -22,10 +22,13 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.LoggerContextVO;
+import ch.qos.logback.classic.spi.ThrowableProxy;
+import ch.qos.logback.classic.spi.ThrowableProxyVO;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.status.Status;
 import ch.qos.logback.core.status.StatusManager;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
@@ -33,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,6 +115,7 @@ public class LoggingFormatter
 		{
 			this.event=event;
 		}
+
 		public String getThreadName()
 		{
 			if(event != null)
@@ -196,42 +201,93 @@ public class LoggingFormatter
 
 		public LoggerContextVO getLoggerContextVO()
 		{
-			return null;  //To change body of implemented methods use File | Settings | File Templates.
+			if(event != null)
+			{
+				// TODO: LoggerContextVO result=new LoggerContextVO(loggerContext);
+			}
+			return null;
 		}
 
 		public IThrowableProxy getThrowableProxy()
 		{
-			return null;  //To change body of implemented methods use File | Settings | File Templates.
+			if(event != null)
+			{
+				// TODO: return ThrowableProxyVO.build(throwableProxy);
+			}
+			return null;
 		}
 
 		public StackTraceElement[] getCallerData()
 		{
-			return new StackTraceElement[0];  //To change body of implemented methods use File | Settings | File Templates.
+			if(event != null)
+			{
+				ExtendedStackTraceElement[] callStack = event.getCallStack();
+				if(callStack != null)
+				{
+					StackTraceElement[] result=new StackTraceElement[callStack.length];
+					for(int i=0;i<callStack.length;i++)
+					{
+						result[i]=callStack[i].getStackTraceElement();
+					}
+					return result;
+				}
+			}
+			return new StackTraceElement[0];
 		}
 
 		public boolean hasCallerData()
 		{
-			return false;  //To change body of implemented methods use File | Settings | File Templates.
+			if(event != null)
+			{
+				ExtendedStackTraceElement[] callStack = event.getCallStack();
+
+				return callStack!=null && callStack.length>0;
+			}
+			return false;
 		}
 
 		public Marker getMarker()
 		{
-			return null;  //To change body of implemented methods use File | Settings | File Templates.
+			if(event != null)
+			{
+				// TODO: Marker
+			}
+			return null;
 		}
 
 		public Map<String, String> getMDCPropertyMap()
 		{
-			return null;  //To change body of implemented methods use File | Settings | File Templates.
+			if(event != null)
+			{
+				return event.getMdc();
+			}
+			return null;
+		}
+
+		public Map<String, String> getMdc()
+		{
+			if(event != null)
+			{
+				return event.getMdc();
+			}
+			return null;
 		}
 
 		public long getTimeStamp()
 		{
-			return 0;  //To change body of implemented methods use File | Settings | File Templates.
+			if(event != null)
+			{
+				Long timeStamp=event.getTimeStamp();
+				if(timeStamp != null)
+				{
+					return timeStamp;
+				}
+			}
+			return 0;
 		}
 
 		public void prepareForDeferredProcessing()
 		{
-			//To change body of implemented methods use File | Settings | File Templates.
 		}
 	}
 

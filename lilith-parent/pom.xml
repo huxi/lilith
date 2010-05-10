@@ -21,8 +21,8 @@
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
 		<sulkyVersion><!-- SV -->0.9.11-SNAPSHOT</sulkyVersion>
-		<slf4jVersion>1.5.11</slf4jVersion>
-		<logbackVersion>0.9.20</logbackVersion>
+		<slf4jVersion>1.6.0</slf4jVersion>
+		<logbackVersion>0.9.21</logbackVersion>
 		<springVersion>3.0.2.RELEASE</springVersion>
 		<aspectjVersion>1.6.8</aspectjVersion>
 		

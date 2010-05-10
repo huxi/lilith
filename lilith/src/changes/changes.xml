@@ -90,8 +90,14 @@
 				Added cat (-c) and tail (-t, -f) functionality to Lilith so it's possible to print entries
 				of binary Lilith log-files to the console. Number of printed entries can be
 				configured using -n. The format string of for the event can be given at runtime.
+
 				Unfortunately, this is only possible with Logback-Classic, not Logback-Access. The reason for
 				this shortcoming is http://jira.qos.ch/browse/LBACCESS-12
+
+				The following parts of LoggingEvent aren't supported yet:
+				- LoggerContextVO
+				- IThrowableProxy
+				- Marker
 			</action>
 			<action dev="jhux" type="update">
 				Removed LogbackClassic appender from default logback.xml of Lilith to prevent warning during
@@ -131,13 +137,16 @@
 				See http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for info.
 			</action>
 			<action dev="jhux" type="update">
+				Logback 0.9.21
+			</action>
+			<action dev="jhux" type="update">
+				SLF4J 1.6.0
+			</action>
+			<action dev="jhux" type="update">
 				commons-cli 1.2
 			</action>
 			<action dev="jhux" type="update">
 				httpclient 4.0.1
-			</action>
-			<action dev="jhux" type="update">
-				Logback 0.9.20
 			</action>
             <action dev="jhux" type="update">
                 Groovy 1.7.2
