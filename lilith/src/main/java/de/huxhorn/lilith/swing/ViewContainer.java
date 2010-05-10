@@ -26,6 +26,7 @@ import de.huxhorn.lilith.swing.callables.FilteringCallable;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.conditions.Condition;
+import de.huxhorn.sulky.tasks.ProgressingCallable;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
@@ -82,6 +83,16 @@ public abstract class ViewContainer<T extends Serializable>
 		{
 			frameIconImages.put(LoggingViewState.INACTIVE, new ImageIcon(url));
 		}
+		url = EventWrapperViewPanel.class.getResource("/tango/16x16/emotes/face-grin.png");
+		if (url != null)
+		{
+			frameIconImages.put(LoggingViewState.UPDATING_FILE, new ImageIcon(url));
+		}
+		url = EventWrapperViewPanel.class.getResource("/tango/16x16/emotes/face-plain.png");
+		if (url != null)
+		{
+			frameIconImages.put(LoggingViewState.STALE_FILE, new ImageIcon(url));
+		}
 	}
 
 	private final List<ChangeListener> changeListeners = new LinkedList<ChangeListener>();
@@ -94,6 +105,7 @@ public abstract class ViewContainer<T extends Serializable>
 	private ProgressGlassPane progressPanel;
 	private Component prevGlassPane;
 	private boolean searching;
+	private ProgressingCallable<Long> updateCallable;
 
 	public ViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
@@ -150,6 +162,7 @@ public abstract class ViewContainer<T extends Serializable>
 	public void dispose()
 	{
 		taskManager.removeTaskListener(filterTaskListener);
+		cancelUpdateTask();
 	}
 
 	/**
@@ -389,6 +402,31 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract void setShowingStatusbar(boolean showingStatusbar);
 
+	public void setUpdateCallable(ProgressingCallable<Long> updateCallable)
+	{
+		cancelUpdateTask();
+		this.updateCallable=updateCallable;
+		if(this.updateCallable != null)
+		{
+			taskManager.startTask(this.updateCallable, "Checking for updates.");
+			getDefaultView().setState(LoggingViewState.UPDATING_FILE);
+		}
+	}
+
+	private void cancelUpdateTask()
+	{
+		if(this.updateCallable != null)
+		{
+			Task<Long> task = taskManager.getTaskByCallable(this.updateCallable);
+			if(task != null)
+			{
+				task.getFuture().cancel(true);
+			}
+			this.updateCallable=null;
+			getDefaultView().setState(LoggingViewState.STALE_FILE);
+		}
+	}
+
 	class FilterTaskListener
 			implements TaskListener<Long>
 	{
@@ -407,6 +445,10 @@ public abstract class ViewContainer<T extends Serializable>
 				if (logger.isInfoEnabled()) logger.info("Filter execution failed!", exception);
 				finished(view);
 			}
+			if(task.getCallable() == ViewContainer.this.updateCallable)
+			{
+				cancelUpdateTask();
+			}
 		}
 
 		public void executionFinished(Task<Long> task, Long result)
@@ -417,6 +459,10 @@ public abstract class ViewContainer<T extends Serializable>
 				if (logger.isInfoEnabled()) logger.info("Filter execution finished: {}!", result);
 				finished(view);
 			}
+			if(task.getCallable() == ViewContainer.this.updateCallable)
+			{
+				cancelUpdateTask();
+			}
 		}
 
 		public void executionCanceled(Task<Long> task)
@@ -426,6 +472,10 @@ public abstract class ViewContainer<T extends Serializable>
 			{
 				if (logger.isInfoEnabled()) logger.info("Filter execution canceled.");
 				finished(view);
+			}
+			if(task.getCallable() == ViewContainer.this.updateCallable)
+			{
+				cancelUpdateTask();
 			}
 		}
 

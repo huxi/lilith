@@ -19,5 +19,5 @@ package de.huxhorn.lilith.swing;
 
 public enum LoggingViewState
 {
-	ACTIVE, INACTIVE
+	ACTIVE, INACTIVE, UPDATING_FILE, STALE_FILE
 }

@@ -61,6 +61,7 @@ import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceP
 import de.huxhorn.lilith.services.gotosrc.GoToSourceService;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
+import de.huxhorn.lilith.swing.callables.CheckFileChangeCallable;
 import de.huxhorn.lilith.swing.callables.CleanAllInactiveCallable;
 import de.huxhorn.lilith.swing.callables.CleanObsoleteCallable;
 import de.huxhorn.lilith.swing.callables.IndexingCallable;
@@ -1077,7 +1078,7 @@ public class MainFrame
 			// It's fine to use the outdated index.
 		}
 		// use existing index file
-		createViewFor(dataFile, indexFile);
+		createViewFor(dataFile, indexFile, true);
 	}
 
 	public void importFile(File importFile)
@@ -1101,7 +1102,6 @@ public class MainFrame
 				String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
 				JOptionPane
 					.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
-				// TODO: Offer option to reimport anyway. Close view beforehand in tht case.
 				return;
 			}
 			String dialogTitle = "Reimport file?";
@@ -1340,7 +1340,7 @@ public class MainFrame
 		return null;
 	}
 
-	private void createViewFor(File dataFile, File indexFile)
+	private void createViewFor(File dataFile, File indexFile, boolean keepUpdating)
 	{
 		// create view for dataFile and indexFile.
 		if(logger.isInfoEnabled())
@@ -1383,6 +1383,7 @@ public class MainFrame
 			Map<String, String> usedMetaData = new HashMap<String, String>();
 			SourceIdentifier si = new SourceIdentifier(dataFile.getAbsolutePath());
 
+			// XXX 
 			if(FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
 			{
 				FileBuffer<EventWrapper<LoggingEvent>> buffer =
@@ -1390,8 +1391,17 @@ public class MainFrame
 				EventSource<LoggingEvent> eventSource = new EventSourceImpl<LoggingEvent>(si, buffer, false);
 				ViewContainer<LoggingEvent> viewContainer = loggingEventViewManager.retrieveViewContainer(eventSource);
 				EventWrapperViewPanel<LoggingEvent> panel = viewContainer.getDefaultView();
-				panel.setState(LoggingViewState.INACTIVE);
+				if(keepUpdating)
+				{
+					panel.setState(LoggingViewState.UPDATING_FILE);
+					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile));
+				}
+				else
+				{
+					panel.setState(LoggingViewState.STALE_FILE);
+				}
 				showLoggingView(eventSource);
+				// XXX add dataFile to recent file list
 			}
 			else if(FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
 			{
@@ -1400,8 +1410,17 @@ public class MainFrame
 				EventSource<AccessEvent> eventSource = new EventSourceImpl<AccessEvent>(si, buffer, false);
 				ViewContainer<AccessEvent> viewContainer = accessEventViewManager.retrieveViewContainer(eventSource);
 				EventWrapperViewPanel<AccessEvent> panel = viewContainer.getDefaultView();
-				panel.setState(LoggingViewState.INACTIVE);
+				if(keepUpdating)
+				{
+					panel.setState(LoggingViewState.UPDATING_FILE);
+					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile));
+				}
+				else
+				{
+					panel.setState(LoggingViewState.STALE_FILE);
+				}
 				showAccessView(eventSource);
+				// XXX add dataFile to recent file list
 			}
 			else
 			{
@@ -3572,7 +3591,7 @@ public class MainFrame
 				IndexingCallable iCallable = (IndexingCallable) callable;
 				File dataFile = iCallable.getDataFile();
 				File indexFile = iCallable.getIndexFile();
-				createViewFor(dataFile, indexFile);
+				createViewFor(dataFile, indexFile, true);
 				return;
 			}
 			if(callable instanceof Log4jImportCallable)
@@ -3585,7 +3604,7 @@ public class MainFrame
 					File dataFile = cfb.getDataFile();
 					File indexFile = cfb.getIndexFile();
 					cfb.dispose();
-					createViewFor(dataFile, indexFile);
+					createViewFor(dataFile, indexFile, false);
 				}
 				return;
 			}
@@ -3599,7 +3618,7 @@ public class MainFrame
 					File dataFile = cfb.getDataFile();
 					File indexFile = cfb.getIndexFile();
 					cfb.dispose();
-					createViewFor(dataFile, indexFile);
+					createViewFor(dataFile, indexFile, false);
 				}
 			}
 		}

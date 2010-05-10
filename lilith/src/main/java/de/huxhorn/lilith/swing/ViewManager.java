@@ -139,7 +139,7 @@ public abstract class ViewManager<T extends Serializable>
 				ViewContainer<T> value = entry.getValue();
 				EventWrapperViewPanel panel = value.getDefaultView();
 
-				if (!key.isGlobal() && LoggingViewState.INACTIVE == panel.getState())
+				if (!key.isGlobal() && LoggingViewState.ACTIVE != panel.getState())
 				{
 					if (onlyClosed)
 					{

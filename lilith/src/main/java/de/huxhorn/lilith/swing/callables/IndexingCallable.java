@@ -39,7 +39,6 @@ import java.io.RandomAccessFile;
  */
 public class IndexingCallable
 	extends AbstractProgressingCallable<Long>
-
 {
 	private final Logger logger = LoggerFactory.getLogger(IndexingCallable.class);
 

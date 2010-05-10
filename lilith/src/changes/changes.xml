@@ -86,6 +86,21 @@
 		</release>
 
         <release version="0.9.39" date="TBD" description="Future release">
+			<!--
+			<action dev="jhux" type="add" issue="83">
+				Added "recent files" menu.
+				This was suggested by Jeff Jensen (jeffjensen).
+			</action>
+			-->
+			<action dev="jhux" type="add" issue="48">
+				Added special icons for views opened from a file, different ones for refreshing (Lilith) and
+				non-refreshing (imported) ones. They arguably suck a little bit. ;)
+			</action>
+			<action dev="jhux" type="add" issue="84">
+				Added automatic refreshing of opened Lilith files. This should work but isn't tested
+				very thoroughly, yet.
+				This was suggested by Jeff Jensen (jeffjensen).
+			</action>
 			<action dev="jhux" type="add">
 				Added cat (-c) and tail (-t, -f) functionality to Lilith so it's possible to print entries
 				of binary Lilith log-files to the console. Number of printed entries can be
