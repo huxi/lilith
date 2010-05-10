@@ -7,10 +7,12 @@ public class LogbackClassicSandbox
 {
 	public static class InnerClass
 	{
-		public static void execute()
+		int counter;
+		public void execute()
 		{
 			final Logger logger = LoggerFactory.getLogger(InnerClass.class);
-			if(logger.isDebugEnabled()) logger.debug("Foo!");
+			if(logger.isDebugEnabled()) logger.debug("Foo! counter={}", counter);
+			counter++;
 		}
 	}
 
@@ -19,12 +21,14 @@ public class LogbackClassicSandbox
 		throws Exception
 	{
 		final Logger logger = LoggerFactory.getLogger(LogbackClassicSandbox.class);
+
+		if(logger.isDebugEnabled()) logger.debug("args: {}", args);
+
+		InnerClass inner=new InnerClass();
 		for(;;)
 		{
-			if(logger.isDebugEnabled()) logger.debug("args: {}", args);
-
-			InnerClass.execute();
-			Thread.sleep(10);
+			inner.execute();
+			Thread.sleep(1000);
 		}
 	}
 }

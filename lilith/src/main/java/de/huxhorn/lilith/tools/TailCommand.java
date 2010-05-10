@@ -25,9 +25,11 @@ import de.huxhorn.lilith.engine.AccessFileBufferFactory;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
+import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.lilith.tools.formatters.AccessFormatter;
 import de.huxhorn.lilith.tools.formatters.Formatter;
 import de.huxhorn.lilith.tools.formatters.LoggingFormatter;
+import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.FileHeader;
@@ -42,11 +44,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CatCommand
+public class TailCommand
 {
-	public static boolean catFile(File dataFile, String pattern, int amount)
+	public static boolean tailFile(File dataFile, String pattern, long amount, boolean keepRunning)
 	{
-		final Logger logger = LoggerFactory.getLogger(CatCommand.class);
+		final Logger logger = LoggerFactory.getLogger(TailCommand.class);
 
 		String logFileStr = dataFile.getAbsolutePath();
 		if (!dataFile.isFile())
@@ -140,7 +142,11 @@ public class CatCommand
 				LoggingFormatter formatter = new LoggingFormatter();
 				formatter.setPattern(pattern);
 
-				printContent(buffer, formatter, amount);
+				long firstUnprinted=printContent(buffer, formatter, amount);
+				if(keepRunning)
+				{
+					pollFile(buffer, formatter, dataFile, indexFile, firstUnprinted);
+				}
 				return true;
 			}
 			else if (FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
@@ -157,7 +163,11 @@ public class CatCommand
 				AccessFormatter formatter = new AccessFormatter();
 				formatter.setPattern(pattern);
 
-				printContent(buffer, formatter, amount);
+				long firstUnprinted=printContent(buffer, formatter, amount);
+				if(keepRunning)
+				{
+					pollFile(buffer, formatter, dataFile, indexFile, firstUnprinted);
+				}
 				return true;
 			}
 			else
@@ -176,14 +186,63 @@ public class CatCommand
 		return false;
 	}
 
-	private static <T extends Serializable> void printContent(FileBuffer<EventWrapper<T>> buffer, Formatter<EventWrapper<T>> formatter, long amount)
+	private static <T extends Serializable> void pollFile(Buffer<EventWrapper<T>> buffer, Formatter<EventWrapper<T>> formatter, File dataFile, File indexFile, long index)
+	{
+		final Logger logger = LoggerFactory.getLogger(TailCommand.class);
+
+		for(;;)
+		{
+			long dataModified = dataFile.lastModified();
+			long indexModified = indexFile.lastModified();
+			if (indexModified < dataModified)
+			{
+				// Index file is outdated.
+				IndexingCallable callable=new IndexingCallable(dataFile, indexFile, true);
+				try
+				{
+					callable.call();
+				}
+				catch(Exception e)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Exception while reindexing!", e);
+					break;
+				}
+				for(;index < buffer.getSize();index++)
+				{
+					EventWrapper<T> current = buffer.get(index);
+					if (current != null)
+					{
+						String msg = formatter.format(current);
+						if (msg != null)
+						{
+							System.out.print(msg);
+							System.out.flush();
+						}
+					}
+				}
+			}
+			try
+			{
+				Thread.sleep(5000);
+			}
+			catch(InterruptedException e)
+			{
+				if(logger.isInfoEnabled()) logger.info("Interrupted...");
+				break;
+			}
+		}
+	}
+
+	private static <T extends Serializable> long printContent(Buffer<EventWrapper<T>> buffer, Formatter<EventWrapper<T>> formatter, long amount)
 	{
 		long bufferSize=buffer.getSize();
 		if(amount < 1 || amount > bufferSize)
 		{
-			amount = bufferSize;
+			amount = 1;
 		}
-		for (long i = 0; i < amount; i++)
+
+		long i;
+		for (i = bufferSize-amount; i < bufferSize; i++)
 		{
 			EventWrapper<T> current = buffer.get(i);
 			if (current != null)
@@ -196,5 +255,6 @@ public class CatCommand
 				}
 			}
 		}
+		return i;
 	}
 }

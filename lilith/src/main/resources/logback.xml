@@ -120,7 +120,7 @@
 	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame" level="WARN" />
 	<logger name="de.huxhorn.lilith.swing.ViewManager" level="WARN"/>
-	<logger name="de.huxhorn.lilith.swing.callables.IndexingCallable" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.swing.callables.IndexingCallable" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.preferences" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.statistics.AbstractGraphImageProducer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.statistics.StatisticsPanel" level="INFO"/>
@@ -129,6 +129,7 @@
 	<logger name="de.huxhorn.lilith.swing.taskmanager" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.taskmanager.table" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.xhtml" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.tools" level="WARN"/>
 	<logger name="de.huxhorn.sulky" level="INFO"/>
 	<logger name="de.huxhorn.sulky.buffers.FilteringBuffer" level="INFO"/>
 	<logger name="de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer" level="WARN"/>

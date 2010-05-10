@@ -45,11 +45,27 @@ public class IndexingCallable
 
 	private File dataFile;
 	private File indexFile;
+	private boolean reindexing;
 
 	public IndexingCallable(File dataFile, File indexFile)
 	{
+		this(dataFile, indexFile, false);
+	}
+	public IndexingCallable(File dataFile, File indexFile, boolean reindexing)
+	{
 		this.dataFile = dataFile;
 		this.indexFile = indexFile;
+		this.reindexing = reindexing;
+	}
+
+	public boolean isReindexing()
+	{
+		return reindexing;
+	}
+
+	public void setReindexing(boolean reindexing)
+	{
+		this.reindexing = reindexing;
 	}
 
 	/**
@@ -89,7 +105,30 @@ public class IndexingCallable
 			{
 				dataRAFile = new RandomAccessFile(dataFile, "r");
 				indexRAFile = new RandomAccessFile(indexFile, "rw");
-				indexRAFile.setLength(0);
+				boolean deleteIndex = !reindexing;
+				if(reindexing && indexFile.isFile())
+				{
+					counter = indexStrategy.getSize(indexRAFile) - 1;
+					offset = indexStrategy.getOffset(indexRAFile, counter);
+					if(offset > fileSize)
+					{
+						// this means that the index was for a different data file...
+						// It's just a heuristic, though.
+						deleteIndex=true;
+					}
+				}
+				else
+				{
+					deleteIndex=true; // not strictly necessary but doesn't hurt, either.
+				}
+
+				if(deleteIndex)
+				{
+					indexRAFile.setLength(0);
+					counter = 0;
+					offset = fileHeader.getDataOffset();
+				}
+
 				while(offset < fileSize)
 				{
 					dataRAFile.seek(offset);

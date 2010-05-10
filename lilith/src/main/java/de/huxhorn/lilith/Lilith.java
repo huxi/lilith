@@ -30,6 +30,7 @@ import de.huxhorn.lilith.swing.SplashScreen;
 import de.huxhorn.lilith.tools.CatCommand;
 import de.huxhorn.lilith.tools.CreateMd5Command;
 import de.huxhorn.lilith.tools.IndexCommand;
+import de.huxhorn.lilith.tools.TailCommand;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
 import it.sauronsoftware.junique.AlreadyLockedException;
@@ -70,6 +71,9 @@ public class Lilith
 	private static final String ENABLE_BONJOUR_SHORT = "b";
 	private static final String CREATE_MD5_SHORT = "m";
 	private static final String CAT_SHORT = "c";
+	private static final String TAIL_SHORT = "t";
+	private static final String KEEP_RUNNING_SHORT = "f"; // tail
+	private static final String NUMBER_OF_ENTRIES_SHORT = "n"; // cat & tail
 
 	private static final String VERBOSE = "verbose";
 	private static final String PRINT_HELP = "help";
@@ -79,6 +83,9 @@ public class Lilith
 	private static final String ENABLE_BONJOUR = "bonjour";
 	private static final String CREATE_MD5 = "md5";
 	private static final String CAT = "cat";
+	private static final String TAIL = "tail";
+	private static final String KEEP_RUNNING = "keep-running"; // tail
+	private static final String NUMBER_OF_ENTRIES = "numberOfLines"; // cat & tail
 
 	private static final String JUNIQUE_MSG_SHOW = "Show";
 	private static final String JUNIQUE_REPLY_OK = "OK";
@@ -159,6 +166,22 @@ public class Lilith
 		options.addOption(INDEX_SHORT, INDEX, false, "indexes the given file.");
 		options.addOption(CREATE_MD5_SHORT, CREATE_MD5, false, "create an MD5 checksum for the given file.");
 		options.addOption(CAT_SHORT, CAT, false, "'cat' the given Lilith logfile.");
+		options.addOption(TAIL_SHORT, TAIL, false, "'tail' the given Lilith logfile.");
+		options.addOption(KEEP_RUNNING_SHORT, KEEP_RUNNING, false, "keep tailing the given Lilith logfile.");
+		Option numberOfEntriesOption =
+			new Option(NUMBER_OF_ENTRIES_SHORT, NUMBER_OF_ENTRIES, true, "number of entries printed by cat or tail");
+		numberOfEntriesOption.setArgName("numberOfEntries");
+
+
+			/*
+			OptionBuilder.withArgName( "numberOfEntries" )
+				.hasArg()
+			.withLongOpt(NUMBER_OF_ENTRIES)
+				.withDescription(  "number of entries printed by cat or tail" )
+				.create(NUMBER_OF_ENTRIES_SHORT);
+				*/
+		options.addOption(numberOfEntriesOption);
+
 		boolean verbose = false;
 		boolean flushPrefs = false;
 		boolean flushLicensed = false;
@@ -166,7 +189,10 @@ public class Lilith
 		boolean indexFileOpt = false;
 		boolean createMd5 = false;
 		boolean cat = false;
+		boolean tail = false;
+		boolean keepRunning = false;
 		boolean printHelp;
+		int numberOfEntries = -1;
 		String[] originalArgs = args;
 		int exitCode = 0;
 		try
@@ -182,6 +208,23 @@ public class Lilith
 			indexFileOpt = line.hasOption(INDEX_SHORT);
 			createMd5 = line.hasOption(CREATE_MD5_SHORT);
 			cat = line.hasOption(CAT_SHORT);
+			tail = line.hasOption(TAIL_SHORT);
+			keepRunning = line.hasOption(KEEP_RUNNING_SHORT);
+			if(line.hasOption(NUMBER_OF_ENTRIES_SHORT))
+			{
+				String numStr = line.getOptionValue(NUMBER_OF_ENTRIES_SHORT);
+				try
+				{
+					numberOfEntries =Integer.parseInt(numStr);
+				}
+				catch(NumberFormatException ex)
+				{
+					final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+					if(logger.isWarnEnabled()) logger.warn("Invalid value for option -"+ NUMBER_OF_ENTRIES_SHORT +": "+numStr);
+				}
+			}
+
 			args = line.getArgs(); // remaining unparsed args...
 		}
 		catch(ParseException exp)
@@ -198,19 +241,22 @@ public class Lilith
 
 			appTitle += " - " + sdf.format(d);
 		}
-		System.out.println(" _     _ _ _ _   _     \n" +
-			"| |   (_) (_) |_| |__  \n" +
-			"| |   | | | | __| '_ \\ \n" +
-			"| |___| | | | |_| | | |\n" +
-			"|_____|_|_|_|\\__|_| |_|");
-		System.out.println(appTitle);
-		System.out.println("\nCopyright (C) 2007-2010  Joern Huxhorn\n\n" +
-			"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
-			"This is free software, and you are welcome to redistribute it\n" +
-			"under certain conditions.\n" +
-			"You should have received a copy of the GNU General Public License\n" +
-			"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
-		System.out.println("Use commandline option -h to view help.\n\n");
+		if(!cat && !tail) // don't print info in case of cat or tail
+		{
+			System.out.println(" _     _ _ _ _   _     \n" +
+				"| |   (_) (_) |_| |__  \n" +
+				"| |   | | | | __| '_ \\ \n" +
+				"| |___| | | | |_| | | |\n" +
+				"|_____|_|_|_|\\__|_| |_|");
+			System.out.println(appTitle);
+			System.out.println("\nCopyright (C) 2007-2010  Joern Huxhorn\n\n" +
+				"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
+				"This is free software, and you are welcome to redistribute it\n" +
+				"under certain conditions.\n" +
+				"You should have received a copy of the GNU General Public License\n" +
+				"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
+			System.out.println("Use commandline option -h to view help.\n\n");
+		}
 
 		if(verbose)
 		{
@@ -258,7 +304,27 @@ public class Lilith
 			{
 				pattern = args[1];
 			}
-			if(CatCommand.catFile(input, pattern))
+			if(CatCommand.catFile(input, pattern, numberOfEntries))
+			{
+				System.exit(0);
+			}
+			System.exit(-1);
+		}
+
+		if(tail)
+		{
+			if(args.length < 1)
+			{
+				if(logger.isErrorEnabled()) logger.error("Missing file argument! -"+TAIL_SHORT+" requires an additional file!");
+				System.exit(-1);
+			}
+			File input = new File(args[0]);
+			String pattern=null;
+			if(args.length > 1)
+			{
+				pattern = args[1];
+			}
+			if(TailCommand.tailFile(input, pattern, numberOfEntries, keepRunning))
 			{
 				System.exit(0);
 			}
