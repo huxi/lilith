@@ -5,9 +5,9 @@
     <property name="foo" value="bar"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
+        <encoder>
             <param name="Pattern" value="%-5level - %msg%n"/>
-        </layout>
+        </encoder>
     </appender>
 
     <appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"/>

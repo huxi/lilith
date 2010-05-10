@@ -9,9 +9,9 @@
 	</appender>
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
+		<encoder>
 			<param name="Pattern" value="%-8marker - %d{HH:mm:ss.SSS} [%thread] - %logger - %msg%n%ex{short}"/>
-		</layout>
+		</encoder>
 	</appender>
 
 	<logger name="org.springframework" level="WARN"/>
