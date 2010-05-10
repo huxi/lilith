@@ -10,7 +10,7 @@
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<param name="Pattern" value="%-8marker - %d{HH:mm:ss.SSS} [%thread] - %logger - %msg%n%ex{short}"/>
+			<pattern>%-8marker - %d{HH:mm:ss.SSS} [%thread] - %logger - %msg%n%ex{short}</pattern>
 		</encoder>
 	</appender>
 

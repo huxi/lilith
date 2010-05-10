@@ -3,7 +3,7 @@
 	
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<param name="Pattern" value="%msg%n"/>
+			<pattern>%msg%n</pattern>
 		</encoder>
 	</appender>
 
