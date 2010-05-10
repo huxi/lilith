@@ -89,7 +89,7 @@
 			<!--
 			<action dev="jhux" type="add" issue="83">
 				Added "recent files" menu.
-				This was suggested by Jeff Jensen (jeffjensen).
+				This was requested by Jeff Jensen (jeffjensen).
 			</action>
 			-->
 			<action dev="jhux" type="add" issue="48">
@@ -99,7 +99,7 @@
 			<action dev="jhux" type="add" issue="84">
 				Added automatic refreshing of opened Lilith files. This should work but isn't tested
 				very thoroughly, yet.
-				This was suggested by Jeff Jensen (jeffjensen).
+				This was requested by Jeff Jensen (jeffjensen).
 			</action>
 			<action dev="jhux" type="add">
 				Added cat (-c) and tail (-t, -f) functionality to Lilith so it's possible to print entries
