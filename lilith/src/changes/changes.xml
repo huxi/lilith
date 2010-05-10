@@ -127,6 +127,10 @@
                 This bug was found by Gareth Doutch (gdoutch).
             </action>
 			<action dev="jhux" type="update">
+				Replaced all &lt;layout&gt; with &lt;encoder&gt; in logback*.xml.
+				See http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for info.
+			</action>
+			<action dev="jhux" type="update">
 				commons-cli 1.2
 			</action>
 			<action dev="jhux" type="update">
