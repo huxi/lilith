@@ -86,15 +86,16 @@
 		</release>
 
         <release version="0.9.39" date="TBD" description="Future release">
-			<!--
+			<action dev="jhux" type="add">
+				Added some error messages.
+			</action>
 			<action dev="jhux" type="add" issue="83">
 				Added "recent files" menu.
 				This was requested by Jeff Jensen (jeffjensen).
 			</action>
-			-->
 			<action dev="jhux" type="update" issue="80">
 				lilith.bat does not strictly require a %JAVA_HOME% environment variable anymore.
-				<br/>This was requested by Gareth Doutch (gdoutch).
+				This was requested by Gareth Doutch (gdoutch).
 			</action>
 			<action dev="jhux" type="add" issue="48">
 				Added special icons for views opened from a file, different ones for refreshing (Lilith) and

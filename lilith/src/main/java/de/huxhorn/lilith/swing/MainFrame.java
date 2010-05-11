@@ -1010,6 +1010,18 @@ public class MainFrame
 	public void open(File dataFile)
 	{
 		if(logger.isInfoEnabled()) logger.info("Open file: {}", dataFile.getAbsolutePath());
+		if(!dataFile.isFile())
+		{
+			String message = "'" + dataFile.getAbsolutePath() + "' is not a file!";
+			JOptionPane.showMessageDialog(this, message, "Can't open file...", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(!dataFile.canRead())
+		{
+			String message = "Can't read from '" + dataFile.getAbsolutePath() + "'!";
+			JOptionPane.showMessageDialog(this, message, "Can't open file...", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		ViewContainer<?> viewContainer = resolveViewContainer(dataFile);
 		if(viewContainer != null)
 		{
@@ -1087,6 +1099,18 @@ public class MainFrame
 
 		File parentFile = importFile.getParentFile();
 		String inputName = importFile.getName();
+		if(!importFile.isFile())
+		{
+			String message = "'" + importFile.getAbsolutePath() + "' is not a file!";
+			JOptionPane.showMessageDialog(this, message, "Can't import file...", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(!importFile.canRead())
+		{
+			String message = "Can't read from '" + importFile.getAbsolutePath() + "'!";
+			JOptionPane.showMessageDialog(this, message, "Can't import file...", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
 		File dataFile = new File(parentFile, inputName + FileConstants.FILE_EXTENSION);
 		File indexFile = new File(parentFile, inputName + FileConstants.INDEX_FILE_EXTENSION);
@@ -1383,7 +1407,6 @@ public class MainFrame
 			Map<String, String> usedMetaData = new HashMap<String, String>();
 			SourceIdentifier si = new SourceIdentifier(dataFile.getAbsolutePath());
 
-			// XXX 
 			if(FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
 			{
 				FileBuffer<EventWrapper<LoggingEvent>> buffer =
@@ -1401,7 +1424,7 @@ public class MainFrame
 					panel.setState(LoggingViewState.STALE_FILE);
 				}
 				showLoggingView(eventSource);
-				// XXX add dataFile to recent file list
+				applicationPreferences.addRecentFile(dataFile);
 			}
 			else if(FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
 			{
@@ -1420,11 +1443,12 @@ public class MainFrame
 					panel.setState(LoggingViewState.STALE_FILE);
 				}
 				showAccessView(eventSource);
-				// XXX add dataFile to recent file list
+				applicationPreferences.addRecentFile(dataFile);
 			}
 			else
 			{
 				if(logger.isWarnEnabled()) logger.warn("Unexpected content type {}.", contentType);
+				applicationPreferences.removeRecentFile(dataFile);
 			}
 		}
 		catch(IOException e)
@@ -2727,6 +2751,18 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.RECENT_FILES_PROPERTY.equals(propName))
+			{
+				updateRecentFiles();
+				return;
+			}
+
+			if(ApplicationPreferences.SHOWING_FULL_RECENT_PATH_PROPERTY.equals(propName))
+			{
+				updateRecentFiles();
+				return;
+			}
+
 			if(ApplicationPreferences.LEVEL_COLORS_PROPERTY.equals(propName))
 			{
 				levelColors = null;
@@ -2934,6 +2970,32 @@ public class MainFrame
 				value.setPreviousSearchStrings(previousSearchStrings);
 			}
 
+		}
+	}
+
+	private void updateRecentFiles()
+	{
+		viewActions.updateRecentFiles();
+		// update other frames
+		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+		{
+			ViewContainer<LoggingEvent> value = current.getValue();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof JFrame)
+			{
+				window.getViewActions().updateRecentFiles();
+			}
+		}
+		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+		{
+			ViewContainer<AccessEvent> value = current.getValue();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof JFrame)
+			{
+				window.getViewActions().updateRecentFiles();
+			}
 		}
 	}
 
@@ -3577,6 +3639,15 @@ public class MainFrame
 		public void executionFailed(Task<Long> longTask, ExecutionException exception)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Execution of task "+longTask.getName()+" failed!", exception);
+			String message="Execution of task "+longTask.getName()+" failed!";
+			Throwable cause=exception.getCause();
+			if(cause==null)
+			{
+				cause=exception;
+			}
+			message=message+"\n"+cause.getMessage();
+			JOptionPane.showMessageDialog(MainFrame.this, message, "Exception while executing task...", JOptionPane.ERROR_MESSAGE);
+
 			updateTaskStatus();
 		}
 

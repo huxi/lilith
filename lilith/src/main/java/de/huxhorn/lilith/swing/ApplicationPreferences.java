@@ -58,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -78,8 +79,10 @@ public class ApplicationPreferences
 		Preferences.userNodeForPackage(ApplicationPreferences.class);
 
 	private static final int MAX_PREV_SEARCHES = 15;
+	private static final int MAX_RECENT_FILES = 15;
 
 	private static final String PREVIOUS_SEARCH_STRINGS_XML_FILENAME = "previousSearchStrings.xml";
+	private static final String RECENT_FILES_XML_FILENAME = "recentFiles.xml";
 	private static final String STATUS_COLORS_XML_FILENAME = "statusColors.xml";
 	private static final String LEVEL_COLORS_XML_FILENAME = "levelColors.xml";
 
@@ -124,6 +127,9 @@ public class ApplicationPreferences
 	public static final String GLOBAL_LOGGING_ENABLED_PROPERTY = "globalLoggingEnabled";
 	public static final String LOGGING_STATISTIC_ENABLED_PROPERTY = "loggingStatisticEnabled";
 	public static final String PREVIOUS_SEARCH_STRINGS_PROPERTY = "previousSearchStrings";
+	public static final String RECENT_FILES_PROPERTY = "recentFiles";
+	public static final String SHOWING_FULL_RECENT_PATH_PROPERTY="showingFullRecentPath";
+
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
 	public static final String LOGGING_LAYOUT_XML_FILENAME = "loggingLayout.xml";
@@ -134,7 +140,7 @@ public class ApplicationPreferences
 	public static final String SOURCE_LISTS_XML_FILENAME = "SourceLists.xml";
 	public static final String SOURCE_NAMES_PROPERTIES_FILENAME = "SourceNames.properties";
 	public static final String SOUND_LOCATIONS_XML_FILENAME = "SoundLocations.xml";
-	public static final String SOUND_LOCATIONS_PROPERTIES_FILENAME = "SoundLocations.properties";
+	//public static final String SOUND_LOCATIONS_PROPERTIES_FILENAME = "SoundLocations.properties";
 	public static final String PREVIOUS_APPLICATION_PATH_FILENAME = ".previous.application.path";
 
 	private static final String OLD_LICENSED_PREFERENCES_KEY = "licensed";
@@ -231,6 +237,7 @@ public class ApplicationPreferences
 	private List<SavedCondition> conditions;
 	private List<String> previousSearchStrings;
 
+	private List<String> recentFiles;
 
 	private File groovyConditionsPath;
 
@@ -256,9 +263,158 @@ public class ApplicationPreferences
 		}
 	}
 
+	public void addRecentFile(File dataFile)
+	{
+		if(dataFile == null)
+		{
+			return;
+		}
+		if(!dataFile.isFile() || !dataFile.canRead())
+		{
+			if(logger.isWarnEnabled()) logger.warn("Tried to add invalid recent file.");
+		}
+		String absName=dataFile.getAbsolutePath();
+
+		List<String> recents = getRecentFiles();
+		recents.remove(absName); // remove previous entry if available
+		recents.add(0, absName); // add to start of list.
+		setRecentFiles(recents);
+	}
+
+	public void removeRecentFile(File dataFile)
+	{
+		if(dataFile == null)
+		{
+			return;
+		}
+		String absName=dataFile.getAbsolutePath();
+
+		List<String> recents = getRecentFiles();
+		recents.remove(absName); // remove previous entry if available
+		setRecentFiles(recents);
+	}
+
+
+	private void setRecentFiles(List<String> recents)
+	{
+		List<String> copy;
+		if(recents == null)
+		{
+			copy=new ArrayList<String>();
+		}
+		else
+		{
+			copy=new ArrayList<String>(recents);
+		}
+		Iterator<String> iter = copy.iterator();
+		while(iter.hasNext())
+		{
+			String current = iter.next();
+			File f=new File(current);
+			if(!f.isFile() || !f.canRead())
+			{
+				iter.remove();
+			}
+			// Cleanup before setting...
+		}
+		Object oldValue=getRecentFiles();
+		while(copy.size() > MAX_RECENT_FILES)
+		{
+			copy.remove(MAX_RECENT_FILES);
+		}
+		writeRecentFiles(copy);
+		Object newValue=getRecentFiles();
+		propertyChangeSupport.firePropertyChange(RECENT_FILES_PROPERTY, oldValue, newValue);
+		if(logger.isInfoEnabled()) logger.info("recentFiles set to {}.", newValue);
+	}
+
+	public void clearRecentFiles()
+	{
+		setRecentFiles(new ArrayList<String>());
+	}
+
+	public List<String> getRecentFiles()
+	{
+		initRecentFiles();
+		return new ArrayList<String>(recentFiles);
+	}
+
 	public void clearPreviousSearchStrings()
 	{
 		setPreviousSearchStrings(new ArrayList<String>());
+	}
+
+	private void initRecentFiles()
+	{
+		File appPath = getStartupApplicationPath();
+		File file = new File(appPath, RECENT_FILES_XML_FILENAME);
+
+		if(file.isFile() && this.recentFiles == null)
+		{
+			XMLDecoder d = null;
+			try
+			{
+				d = new XMLDecoder(
+					new BufferedInputStream(
+						new FileInputStream(file)));
+
+				//noinspection unchecked
+				this.recentFiles = (List<String>) d.readObject();
+			}
+			catch(Throwable ex)
+			{
+				if(logger.isWarnEnabled())
+				{
+					logger
+						.warn("Exception while loading recentFiles from file '" + file
+							.getAbsolutePath() + "'!", ex);
+				}
+			}
+			finally
+			{
+				if(d != null)
+				{
+					d.close();
+				}
+			}
+		}
+
+		if(this.recentFiles == null)
+		{
+			this.recentFiles = new ArrayList<String>();
+		}
+	}
+
+	private boolean writeRecentFiles(List<String> recentFiles)
+	{
+		File appPath = getStartupApplicationPath();
+		File file = new File(appPath, RECENT_FILES_XML_FILENAME);
+		XMLEncoder e = null;
+		Throwable error = null;
+		try
+		{
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			e = new XMLEncoder(bos);
+			e.writeObject(recentFiles);
+		}
+		catch(FileNotFoundException ex)
+		{
+			error = ex;
+		}
+		finally
+		{
+			if(e != null)
+			{
+				e.close();
+			}
+		}
+		this.recentFiles = null;
+		if(error != null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing recentFiles!", error);
+			return false;
+		}
+		return true;
 	}
 
 	public void addPreviousSearchString(String searchString)
@@ -293,14 +449,13 @@ public class ApplicationPreferences
 		writePreviousSearchStrings(previousSearchStrings);
 		Object newValue=getPreviousSearchStrings();
 		propertyChangeSupport.firePropertyChange(PREVIOUS_SEARCH_STRINGS_PROPERTY, oldValue, newValue);
-		if(logger.isWarnEnabled()) logger.warn("previousSearchStrings set to {}.", newValue);
+		if(logger.isInfoEnabled()) logger.info("previousSearchStrings set to {}.", newValue);
 	}
 
 	public List<String> getPreviousSearchStrings()
 	{
 		initPreviousSearchStrings();
 		return new ArrayList<String>(previousSearchStrings);
-
 	}
 
 	private void initPreviousSearchStrings()
@@ -308,7 +463,7 @@ public class ApplicationPreferences
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, PREVIOUS_SEARCH_STRINGS_XML_FILENAME);
 
-		if(file.isFile() && previousSearchStrings == null)
+		if(file.isFile() && this.previousSearchStrings == null)
 		{
 			XMLDecoder d = null;
 			try
@@ -318,7 +473,7 @@ public class ApplicationPreferences
 						new FileInputStream(file)));
 
 				//noinspection unchecked
-				previousSearchStrings = (List<String>) d.readObject();
+				this.previousSearchStrings = (List<String>) d.readObject();
 			}
 			catch(Throwable ex)
 			{
@@ -338,11 +493,10 @@ public class ApplicationPreferences
 			}
 		}
 
-		if(previousSearchStrings == null)
+		if(this.previousSearchStrings == null)
 		{
-			previousSearchStrings = new ArrayList<String>();
+			this.previousSearchStrings = new ArrayList<String>();
 		}
-
 	}
 
 	private boolean writePreviousSearchStrings(List<String> searchStrings)
@@ -1711,6 +1865,33 @@ public class ApplicationPreferences
 	public boolean isAutoFocusingWindow()
 	{
 		return PREFERENCES.getBoolean(AUTO_FOCUSING_WINDOW_PROPERTY, false);
+	}
+
+	/**
+	 * Whether or not the full path of recent files should be visible in the "Recent Files" menu.
+	 * I'm not going to add this to the preferences UI until someone screams for this option.
+	 * Default is false.
+	 *
+	 * @param showingFullRecentPath show full path for recent files
+	 */
+	public void setShowingFullRecentPath(boolean showingFullRecentPath)
+	{
+		Object oldValue = isShowingFullRecentPath();
+		PREFERENCES.putBoolean(SHOWING_FULL_RECENT_PATH_PROPERTY, showingFullRecentPath);
+		Object newValue = isShowingFullRecentPath();
+		propertyChangeSupport.firePropertyChange(SHOWING_FULL_RECENT_PATH_PROPERTY, oldValue, newValue);
+	}
+
+	/**
+	 * Whether or not the full path of recent files should be visible in the "Recent Files" menu.
+	 * I'm not going to add this to the preferences UI until someone screams for this option.
+	 * Default is false.
+	 *
+	 * @return show full path for recent files
+	 */
+	public boolean isShowingFullRecentPath()
+	{
+		return PREFERENCES.getBoolean(SHOWING_FULL_RECENT_PATH_PROPERTY, false);
 	}
 
 	public void setSourceNames(Map<String, String> sourceNames)

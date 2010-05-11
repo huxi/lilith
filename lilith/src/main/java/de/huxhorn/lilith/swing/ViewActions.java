@@ -41,6 +41,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
@@ -572,6 +573,8 @@ public class ViewActions
 	private JMenuItem closeAllOtherItem;
 	private JMenuItem minimizeAllOtherItem;
 	private JMenu editMenu;
+	private JMenu recentFilesMenu;
+	private ClearRecentFilesAction clearRecentFilesAction;
 
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
@@ -619,6 +622,7 @@ public class ViewActions
 		// ##### Menu Actions #####
 		// File
 		OpenMenuAction openMenuAction = new OpenMenuAction();
+		clearRecentFilesAction=new ClearRecentFilesAction();
 		OpenInactiveLogMenuAction openInactiveLogMenuAction = new OpenInactiveLogMenuAction();
 		ImportMenuAction importMenuAction = new ImportMenuAction();
 		CleanAllInactiveLogsMenuAction cleanAllInactiveLogsMenuAction = new CleanAllInactiveLogsMenuAction();
@@ -741,6 +745,8 @@ public class ViewActions
 		JButton preferencesButton = new JButton(preferencesToolBarAction);
 		toolbar.add(preferencesButton);
 
+		recentFilesMenu=new JMenu("Recent Files");
+
 		Application app = mainFrame.getApplication();
 
 		menubar = new JMenuBar();
@@ -749,6 +755,7 @@ public class ViewActions
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setMnemonic('f');
 		fileMenu.add(new JMenuItem(openMenuAction));
+		fileMenu.add(recentFilesMenu);
 		fileMenu.add(new JMenuItem(openInactiveLogMenuAction));
 		fileMenu.add(new JMenuItem(cleanAllInactiveLogsMenuAction));
 		fileMenu.add(new JMenuItem(importMenuAction));
@@ -849,6 +856,7 @@ public class ViewActions
 		menubar.add(helpMenu);
 
 		updateWindowMenu();
+		updateRecentFiles();
 		updateActions();
 	}
 
@@ -1479,6 +1487,74 @@ public class ViewActions
 		return popup;
 	}
 
+	public void updateRecentFiles()
+	{
+		ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
+		List<String> recentFilesStrings = prefs.getRecentFiles();
+		if(recentFilesStrings == null || recentFilesStrings.size()==0)
+		{
+			recentFilesMenu.removeAll();
+			recentFilesMenu.setEnabled(false);
+		}
+		else
+		{
+			boolean fullPath=prefs.isShowingFullRecentPath();
+
+			recentFilesMenu.removeAll();
+
+			for(String current:recentFilesStrings)
+			{
+				recentFilesMenu.add(new OpenFileAction(current, fullPath));
+			}
+			recentFilesMenu.addSeparator();
+			recentFilesMenu.add(clearRecentFilesAction);
+			recentFilesMenu.setEnabled(true);
+		}
+	}
+
+	private class OpenFileAction
+		extends AbstractAction
+	{
+		private String absoluteName;
+
+		public OpenFileAction(String absoluteName, boolean fullPath)
+		{
+			super();
+
+			this.absoluteName=absoluteName;
+			String name=absoluteName;
+			if(!fullPath)
+			{
+				File f=new File(absoluteName);
+				name=f.getName();
+			}
+			putValue(Action.NAME, name);
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SHORT_DESCRIPTION, absoluteName);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.open(new File(absoluteName));
+		}
+	}
+
+	private class ClearRecentFilesAction
+		extends AbstractAction
+	{
+
+		public ClearRecentFilesAction()
+		{
+			super("Clear Recent Files");
+			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.getApplicationPreferences().clearRecentFiles();
+		}
+	}
 /*
 	private class ClearAndRemoveInactiveAction
 		extends AbstractAction
