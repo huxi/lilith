@@ -38,6 +38,7 @@
 
 @REM set %HOME% to equivalent of $HOME
 if "%HOME%" == "" (set HOME=%HOMEDRIVE%%HOMEPATH%)
+if "%JAVA_BIN%" == "" (set JAVA_BIN=javaw.exe)
 
 set ERROR_CODE=0
 
@@ -49,24 +50,25 @@ if "%OS%"=="WINNT" @setlocal
 if not "%JAVA_HOME%" == "" goto OkJHome
 
 echo.
-echo ERROR: JAVA_HOME not found in your environment.
+echo WARN: JAVA_HOME not found in your environment.
 echo Please set the JAVA_HOME variable in your environment to match the
 echo location of your Java installation
 echo.
-goto error
+goto chkLHome
+@REM goto error
 
 :OkJHome
-if exist "%JAVA_HOME%\bin\java.exe" goto chkMHome
+if exist "%JAVA_HOME%\bin\%JAVA_BIN%" goto chkLHome
 
 echo.
-echo ERROR: JAVA_HOME is set to an invalid directory.
+echo WARN: JAVA_HOME is set to an invalid directory.
 echo JAVA_HOME = %JAVA_HOME%
 echo Please set the JAVA_HOME variable in your environment to match the
 echo location of your Java installation
 echo.
 goto error
 
-:chkMHome
+:chkLHome
 if not "%LILITH_HOME%"=="" goto valLHome
 
 if "%OS%"=="Windows_NT" SET LILITH_HOME=%~dp0..
@@ -134,7 +136,8 @@ goto Win9xApp
 
 @REM Reaching here means variables are defined and arguments have been captured
 :endInit
-SET LILITH_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
+SET LILITH_JAVA_EXE="%JAVA_HOME%\bin\%JAVA_BIN%"
+if "%JAVA_HOME%" == "" (set LILITH_JAVA_EXE="%JAVA_BIN%")
 
 :runm2
 %LILITH_JAVA_EXE% %LILITH_OPTS% "-Dlilith.home=%LILITH_HOME%" -jar "%LILITH_HOME%\lib\lilith.jar" %LILITH_CMD_LINE_ARGS%

@@ -92,6 +92,10 @@
 				This was requested by Jeff Jensen (jeffjensen).
 			</action>
 			-->
+			<action dev="jhux" type="update" issue="80">
+				lilith.bat does not strictly require a %JAVA_HOME% environment variable anymore.
+				<br/>This was requested by Gareth Doutch (gdoutch).
+			</action>
 			<action dev="jhux" type="add" issue="48">
 				Added special icons for views opened from a file, different ones for refreshing (Lilith) and
 				non-refreshing (imported) ones. They arguably suck a little bit. ;)
