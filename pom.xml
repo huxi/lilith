@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.master</artifactId>
-	<version><!-- LV -->0.9.39-SNAPSHOT</version>
+	<version><!-- LV -->0.9.39</version>
 	<packaging>pom</packaging>
 	<name>Lilith master pom file</name>
 	<description>This file is part of Lilith. It's the master pom file that is used to build all other modules.</description>
@@ -17,23 +17,25 @@
 	</scm>
 	
 	<distributionManagement>
+
 		<site>
-			<id>lilith.huxhorn.de</id>
-			<url>scp://huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/${pom.artifactId}</url>
+			<id>local-site</id>
+			<url>file://${user.home}/local-maven/site/lilith/${pom.artifactId}</url>
 		</site>
 
-		<!--
-		scp doesn't work anymore
-		-->
 		<repository>
-			<id>lilith-repos</id>
-			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
+			<id>local-repository</id>
+			<name>Local Repository</name>
+			<url>file://${user.home}/local-maven/deploy/release</url>
 		</repository>
+		
 		<snapshotRepository>
-			<id>lilith-snapshot-repos</id>
+			<id>local-snapshot-repository</id>
+			<name>Local Snapshot Repository</name>
 			<uniqueVersion>false</uniqueVersion>
-			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
+			<url>file://${user.home}/local-maven/deploy/snapshot</url>
 		</snapshotRepository>
+
 	</distributionManagement>
 	
 	<modules>

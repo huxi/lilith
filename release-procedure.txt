@@ -1,6 +1,7 @@
 Start gpg-agent:
 gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info"
-
+Quite Console.
+Restart Console and check that gpg-agent is running by calling gpg-agent without arguments.
 #####
 
 Validate correctness of trunk/lilith/lilith/src/main/resources/detailsView/history
@@ -28,10 +29,8 @@ git tag -s vx.x.x -m "x.x.x release"
 #####
 
 Change into sulky root.
-mvn clean install -DperformRelease=true
-mvn site:site
-mvn deploy -DperformRelease=true
-mvn site:deploy
+mvn clean deploy -DperformRelease=true
+mvn site:site site:deploy
 
 #####
 
@@ -46,16 +45,19 @@ git tag -s vx.x.x -m "x.x.x release"
 #####
 
 Change into lilith root.
-mvn clean install -DperformRelease=true
-mvn site:site
-mvn deploy -DperformRelease=true
-mvn site:deploy
+mvn clean deploy -DperformRelease=true
+mvn site:site site:deploy
 
 #####
 
-rsync from huxhorn.de to sf.net webspace:
-rsync -avP -e ssh ~/lilith/repository huxhorn,lilith@web.sourceforge.net:htdocs
-rsync -avP -e ssh ~/lilith/repository huxhorn,sulky@web.sourceforge.net:htdocs
+rsync -avP -e ssh ~/local-maven/deploy/release huxhorn,lilith@web.sourceforge.net:htdocs
+rsync -avP -e ssh ~/local-maven/deploy/release huxhorn,sulky@web.sourceforge.net:htdocs
+
+#####
+
+Upload
+~/local-maven/site/sulky to huxhorn.de/kunden/homepages/37/d18379763/htdocs/sulky/projects/
+~/local-maven/site/lilith to huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/
 
 #####
 
@@ -103,3 +105,4 @@ Create new version (and default) and milestone in Trac.
 Send mail to lilith-announce@lists.sourceforge.net with CC to lilith-user@lists.sourceforge.net (using joern@lilith.huxhorn.de as sender)
 Send mail to logback-user@qos.ch and slf4j-user@qos.ch (using jhuxhorn@googlemail.com as sender)
 Twitter about the release @Lilith
+

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.parent</artifactId>
-	<version><!-- LV -->0.9.39-SNAPSHOT</version>
+	<version><!-- LV -->0.9.39</version>
 	<packaging>pom</packaging>
 	<name>Lilith parent pom file</name>
 	<description>This file is part of Lilith. It's the parent pom that contains general project informations.
@@ -20,7 +20,7 @@
 	
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
-		<sulkyVersion><!-- SV -->0.9.11-SNAPSHOT</sulkyVersion>
+		<sulkyVersion><!-- SV -->0.9.11</sulkyVersion>
 		<slf4jVersion>1.6.0</slf4jVersion>
 		<logbackVersion>0.9.21</logbackVersion>
 		<springVersion>3.0.2.RELEASE</springVersion>
@@ -72,32 +72,25 @@
 	</mailingLists>
 	
 	<distributionManagement>
+
 		<site>
-			<id>lilith.huxhorn.de</id>
-			<url>scp://huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/</url>
+			<id>local-site</id>
+			<url>file://${user.home}/local-maven/site/lilith/${pom.artifactId}</url>
 		</site>
 
-		<!-- scp doesn't work anymore -->
 		<repository>
-			<id>private-lilith-repos</id>
-			<url>sftp://ftp.huxhorn.de/lilith/repository</url>
+			<id>local-repository</id>
+			<name>Local Repository</name>
+			<url>file://${user.home}/local-maven/deploy/release</url>
 		</repository>
+		
 		<snapshotRepository>
-			<id>private-lilith-snapshot-repos</id>
+			<id>local-snapshot-repository</id>
+			<name>Local Snapshot Repository</name>
 			<uniqueVersion>false</uniqueVersion>
-			<url>sftp://ftp.huxhorn.de/lilith/snapshot-repository</url>
+			<url>file://${user.home}/local-maven/deploy/snapshot</url>
 		</snapshotRepository>
-		<!--
-		<repository>
-			<id>lilith-repos</id>
-			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository</url>
-		</repository>
-		<snapshotRepository>
-			<id>lilith-snapshot-repos</id>
-			<uniqueVersion>false</uniqueVersion>
-			<url>sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/snapshot-repository</url>
-		</snapshotRepository>
-		-->
+
 	</distributionManagement>
 
 	<!--

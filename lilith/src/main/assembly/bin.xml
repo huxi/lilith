@@ -16,6 +16,10 @@
 			<outputDirectory>/</outputDirectory>
 		</file>
 		<file>
+			<source>LICENSE-2.0.txt</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<file>
 			<source>readme.txt</source>
 			<outputDirectory>/</outputDirectory>
 			<filtered>true</filtered>

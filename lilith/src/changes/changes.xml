@@ -85,7 +85,7 @@
 			</action>
 		</release>
 
-        <release version="0.9.39" date="TBD" description="Future release">
+        <release version="0.9.39" date="2010-05-12" description="Release">
 			<action dev="jhux" type="add">
 				Added some error messages.
 			</action>
