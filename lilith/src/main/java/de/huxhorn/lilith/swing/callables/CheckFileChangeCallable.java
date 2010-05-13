@@ -26,7 +26,7 @@ public class CheckFileChangeCallable
 {
 	private File dataFile;
 	private File indexFile;
-	private static final int POLL_INTERVAL = 5000;
+	private static final int POLL_INTERVAL = 1000;
 
 	public CheckFileChangeCallable(File dataFile, File indexFile)
 	{

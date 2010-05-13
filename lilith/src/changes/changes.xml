@@ -85,6 +85,12 @@
 			</action>
 		</release>
 
+		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="update">
+				Changed update interval of opened files from 5 seconds to 1 second.
+			</action>
+		</release>
+
         <release version="0.9.39" date="2010-05-12" description="Release">
 			<action dev="jhux" type="add">
 				Added some error messages.
