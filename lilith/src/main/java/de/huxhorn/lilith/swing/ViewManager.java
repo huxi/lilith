@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.engine.EventSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,19 +142,22 @@ public abstract class ViewManager<T extends Serializable>
 
 				if (!key.isGlobal() && LoggingViewState.ACTIVE != panel.getState())
 				{
-					if (onlyClosed)
+					if(!key.getSourceIdentifier().equals(InternalLilithAppender.getSourceIdentifier()))
 					{
-						//if(value.resolveInternalFrame()==null && value.resolveFrame()==null)
-						if (value.resolveViewWindow() == null)
+						if (onlyClosed)
+						{
+							//if(value.resolveInternalFrame()==null && value.resolveFrame()==null)
+							if (value.resolveViewWindow() == null)
+							{
+								result.add(value);
+								inactiveKeys.add(key);
+							}
+						}
+						else
 						{
 							result.add(value);
 							inactiveKeys.add(key);
 						}
-					}
-					else
-					{
-						result.add(value);
-						inactiveKeys.add(key);
 					}
 				}
 			}

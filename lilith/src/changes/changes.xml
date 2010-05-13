@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="fix" issue="85">
+				Fixed the regression that the internal Lilith log wouldn't show up in the menu anymore.
+			</action>
 			<action dev="jhux" type="update">
 				Changed update interval of opened files from 5 seconds to 1 second.
 			</action>
