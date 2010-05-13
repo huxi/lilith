@@ -21,6 +21,14 @@
 		</encoder>
 	</appender>
 
+	<appender name="FILE3" class="ch.qos.logback.core.FileAppender">
+		<file>file3.lilith</file>
+		<append>false</append>
+		<encoder class="de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder">
+			<IncludeCallerData>true</IncludeCallerData>
+		</encoder>
+	</appender>
+
 	<appender name="MultiplexClassicCompressed"
 	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
 		<Compressing>true</Compressing>
@@ -41,6 +49,7 @@
 		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="FILE1"/>
 		<appender-ref ref="FILE2"/>
+		<appender-ref ref="FILE3"/>
 		<appender-ref ref="MultiplexClassicCompressed"/>
 		<appender-ref ref="LogbackClassic"/>
 	</root>
