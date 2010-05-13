@@ -86,6 +86,11 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="fix" issue="84">
+				Fixed issue that could lead to exception while checking for update
+				of files that are recreated by &lt;append&gt;false&lt;/append&gt;.
+				This issue was raised by Jeff Jensen (jeffjensen).
+			</action>
 			<action dev="jhux" type="fix" issue="85">
 				Fixed the regression that the internal Lilith log wouldn't show up in the menu anymore.
 			</action>

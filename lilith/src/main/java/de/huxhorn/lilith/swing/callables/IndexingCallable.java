@@ -108,12 +108,20 @@ public class IndexingCallable
 				if(reindexing && indexFile.isFile())
 				{
 					counter = indexStrategy.getSize(indexRAFile) - 1;
-					offset = indexStrategy.getOffset(indexRAFile, counter);
-					if(offset > fileSize)
+					if(counter >= 0)
 					{
-						// this means that the index was for a different data file...
-						// It's just a heuristic, though.
-						deleteIndex=true;
+						offset = indexStrategy.getOffset(indexRAFile, counter);
+						if(offset > fileSize)
+						{
+							// this means that the index was for a different data file...
+							// It's just a heuristic, though.
+							deleteIndex=true;
+						}
+					}
+					else
+					{
+						counter=0;
+						deleteIndex = true;
 					}
 				}
 				else
