@@ -87,6 +87,10 @@
 
 		<release version="0.9.40" date="TBD" description="Future Release">
 			<action dev="jhux" type="add">
+				Added ability to define a sound for WARN-level events, but without any assigned default sound.
+				This was requested by Adrien Sales.
+			</action>
+			<action dev="jhux" type="add">
 				Added F1 as shortcut for Help.
 				This was requested by Adrien Sales.
 			</action>

@@ -45,14 +45,22 @@ public class AlarmSoundLoggingEventConsumer
 		if(sounds != null)
 		{
 			boolean errorDetected = false;
+			boolean warnDetected = false;
 			for(EventWrapper<LoggingEvent> current : events)
 			{
 				LoggingEvent event = current.getEvent();
 				if(event != null && LoggingEvent.Level.ERROR == event.getLevel())
 				{
 					errorDetected = true;
-					break;
 				}
+				if(event != null && LoggingEvent.Level.WARN == event.getLevel())
+				{
+					warnDetected = true;
+				}
+			}
+			if(warnDetected)
+			{
+				sounds.play(LilithSounds.WARN_EVENT_ALARM);
 			}
 			if(errorDetected)
 			{

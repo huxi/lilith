@@ -173,6 +173,7 @@ public class ApplicationPreferences
 		defaultSoundLocations.put(LilithSounds.SOURCE_ADDED, "/events/SourceAdded.mp3");
 		defaultSoundLocations.put(LilithSounds.SOURCE_REMOVED, "/events/SourceRemoved.mp3");
 		defaultSoundLocations.put(LilithSounds.ERROR_EVENT_ALARM, "/events/ErrorEventAlarm.mp3");
+		defaultSoundLocations.put(LilithSounds.WARN_EVENT_ALARM, "/events/WarnEventAlarm.mp3");
 		DEFAULT_SOUND_LOCATIONS = Collections.unmodifiableMap(defaultSoundLocations);
 
 		Map<String, String> defaultSourceNames = new HashMap<String, String>();
@@ -2010,6 +2011,14 @@ public class ApplicationPreferences
 		if(props != null)
 		{
 			lastSoundLocationsModified = lastModified;
+			// correct values, i.e. add missing keys
+			for(Map.Entry<String, String> current : DEFAULT_SOUND_LOCATIONS.entrySet())
+			{
+				if(!props.containsKey(current.getKey()))
+				{
+					props.put(current.getKey(), "");
+				}
+			}
 			soundLocations = props;
 			return true;
 		}

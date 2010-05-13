@@ -19,9 +19,9 @@ package de.huxhorn.lilith;
 
 public interface LilithSounds
 {
-	//String ABOUT_SOUND="aboutSound";
 	String SOURCE_ADDED = "sourceAdded";
 	String SOURCE_REMOVED = "sourceRemoved";
 
+	String WARN_EVENT_ALARM = "warnEventAlarm";
 	String ERROR_EVENT_ALARM = "errorEventAlarm";
 }
