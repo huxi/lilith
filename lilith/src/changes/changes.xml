@@ -86,6 +86,10 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add">
+				Added F1 as shortcut for Help.
+				This was requested by Adrien Sales.
+			</action>
 			<action dev="jhux" type="fix" issue="84">
 				Fixed issue that could lead to exception while checking for update
 				of files that are recreated by &lt;append&gt;false&lt;/append&gt;.

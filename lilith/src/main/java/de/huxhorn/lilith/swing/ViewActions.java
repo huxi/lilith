@@ -3020,6 +3020,10 @@ public class ViewActions
 		{
 			super("Help Topics");
 			putValue(Action.SMALL_ICON, HELP_MENU_ICON);
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("F1");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+
 		}
 
 		public void actionPerformed(ActionEvent e)
