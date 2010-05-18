@@ -3645,7 +3645,12 @@ public class MainFrame
 			{
 				cause=exception;
 			}
-			message=message+"\n"+cause.getMessage();
+			String causeMsg=cause.getMessage();
+			if(causeMsg == null)
+			{
+				causeMsg=cause.toString();
+			}
+			message=message+"\n"+causeMsg;
 			JOptionPane.showMessageDialog(MainFrame.this, message, "Exception while executing task...", JOptionPane.ERROR_MESSAGE);
 
 			updateTaskStatus();
