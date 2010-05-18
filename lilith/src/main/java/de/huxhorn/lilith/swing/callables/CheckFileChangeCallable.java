@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
+import java.io.EOFException;
 import java.io.File;
 
 public class CheckFileChangeCallable
@@ -45,8 +46,16 @@ public class CheckFileChangeCallable
 
 			if(dataModified > indexModified)
 			{
-				IndexingCallable indexing=new IndexingCallable(dataFile, indexFile, true);
-				indexing.call();
+				try
+				{
+					IndexingCallable indexing=new IndexingCallable(dataFile, indexFile, true);
+					indexing.call();
+				}
+				catch(EOFException ex)
+				{
+					// this happens for example if the header hasn't been fully written, yet.
+					// this can be safely ignored.
+				}
 			}
 			try
 			{
