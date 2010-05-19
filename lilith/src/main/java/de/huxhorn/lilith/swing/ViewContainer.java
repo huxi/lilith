@@ -25,6 +25,8 @@ import de.huxhorn.lilith.swing.callables.CallableMetaData;
 import de.huxhorn.lilith.swing.callables.FilteringCallable;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.buffers.Flush;
+import de.huxhorn.sulky.buffers.FlushOperation;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
 import de.huxhorn.sulky.tasks.Task;
@@ -53,7 +55,7 @@ import javax.swing.event.ChangeListener;
 
 public abstract class ViewContainer<T extends Serializable>
 		extends JPanel
-		implements DisposeOperation
+		implements DisposeOperation, FlushOperation
 {
 	// TODO: property change instead of change?
 	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
@@ -163,6 +165,14 @@ public abstract class ViewContainer<T extends Serializable>
 	{
 		taskManager.removeTaskListener(filterTaskListener);
 		cancelUpdateTask();
+	}
+
+	public void flush()
+	{
+		for(int i=0;i<getViewCount();i++)
+		{
+			Flush.flush(getViewAt(i));
+		}
 	}
 
 	/**
@@ -408,7 +418,7 @@ public abstract class ViewContainer<T extends Serializable>
 		this.updateCallable=updateCallable;
 		if(this.updateCallable != null)
 		{
-			taskManager.startTask(this.updateCallable, "Checking for updates.");
+			taskManager.startTask(this.updateCallable, "Updating: "+this.updateCallable);
 			getDefaultView().setState(LoggingViewState.UPDATING_FILE);
 		}
 	}

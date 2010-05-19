@@ -86,6 +86,11 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="fix" issue="90">
+				Fixed a caching issue that was likely responsible for the oddity described in issue #90.
+				Again, in case of files that are recreated by &lt;append&gt;false&lt;/append&gt;.
+				This issue was raised by Jeff Jensen (jeffjensen).
+			</action>
 			<action dev="jhux" type="fix" issue="88">
 				Fixed another issue that could lead to exception while checking for update
 				of files that are recreated by &lt;append&gt;false&lt;/append&gt;.

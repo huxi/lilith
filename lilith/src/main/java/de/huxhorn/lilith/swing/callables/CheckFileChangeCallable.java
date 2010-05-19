@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.callables;
 
+import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
 import java.io.EOFException;
@@ -28,11 +29,13 @@ public class CheckFileChangeCallable
 	private File dataFile;
 	private File indexFile;
 	private static final int POLL_INTERVAL = 1000;
+	private ViewContainer<?> viewContainer;
 
-	public CheckFileChangeCallable(File dataFile, File indexFile)
+	public CheckFileChangeCallable(File dataFile, File indexFile, ViewContainer<?> viewContainer)
 	{
 		this.dataFile = dataFile;
 		this.indexFile = indexFile;
+		this.viewContainer = viewContainer;
 	}
 
 
@@ -50,6 +53,7 @@ public class CheckFileChangeCallable
 				{
 					IndexingCallable indexing=new IndexingCallable(dataFile, indexFile, true);
 					indexing.call();
+					viewContainer.flush();
 				}
 				catch(EOFException ex)
 				{
@@ -67,5 +71,11 @@ public class CheckFileChangeCallable
 			}
 		}
 		return 0L;
+	}
+
+	@Override
+	public String toString()
+	{
+		return dataFile.getAbsolutePath();
 	}
 }

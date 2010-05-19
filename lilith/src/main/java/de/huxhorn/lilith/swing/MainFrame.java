@@ -1417,7 +1417,7 @@ public class MainFrame
 				if(keepUpdating)
 				{
 					panel.setState(LoggingViewState.UPDATING_FILE);
-					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile));
+					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile, viewContainer));
 				}
 				else
 				{
@@ -1436,7 +1436,7 @@ public class MainFrame
 				if(keepUpdating)
 				{
 					panel.setState(LoggingViewState.UPDATING_FILE);
-					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile));
+					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile, viewContainer));
 				}
 				else
 				{

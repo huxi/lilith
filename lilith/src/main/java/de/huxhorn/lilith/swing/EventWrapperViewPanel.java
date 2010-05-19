@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.buffers.FilteringBuffer;
-import de.huxhorn.lilith.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
@@ -32,6 +31,9 @@ import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
+import de.huxhorn.sulky.buffers.Flush;
+import de.huxhorn.sulky.buffers.FlushOperation;
+import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
 import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
@@ -86,7 +88,7 @@ import javax.swing.event.TableModelListener;
 
 public abstract class EventWrapperViewPanel<T extends Serializable>
 	extends JPanel
-	implements DisposeOperation
+	implements DisposeOperation, FlushOperation
 {
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
 
@@ -124,6 +126,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private double scale;
 	private JScrollPane tableScrollPane;
 	private FindPanel<T> findPanel;
+	private SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer;
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
 	{
@@ -147,7 +150,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		focusedBorder = new MatteBorder(borderInsets, Color.YELLOW);
 		unfocusedBorder = new MatteBorder(borderInsets, Color.WHITE);
 
-		SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer = createCachedBuffer(eventSource.getBuffer());
+		cachedBuffer = createCachedBuffer(eventSource.getBuffer());
 		tableModel = createTableModel(cachedBuffer);
 		tableModel.addTableModelListener(tableModelListener);
 		table = createTable(tableModel);
@@ -480,6 +483,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		taskManager.removeTaskListener(findResultListener);
 	}
 
+	public void flush()
+	{
+		Flush.flush(cachedBuffer);
+		resetFind();
+	}
+
 	public boolean isDisposed()
 	{
 		return tableModel.isDisposed();
@@ -764,6 +773,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 
 	}
+
 
 	/**
 	 * Does also disable scrollingToBottom and selects the clicked row, if any.

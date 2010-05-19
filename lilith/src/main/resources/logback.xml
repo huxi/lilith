@@ -97,7 +97,6 @@
     </logger>
 	<logger name="de.huxhorn.lilith" level="INFO"/>
 	<logger name="de.huxhorn.lilith.Lilith" level="INFO"/>
-	<logger name="de.huxhorn.lilith.buffers.SoftReferenceCachingBuffer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.consumers.FileDumpEventConsumer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.consumers.FileSplitterEventConsumer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.consumers.RrdLoggingEventConsumer" level="INFO"/>
