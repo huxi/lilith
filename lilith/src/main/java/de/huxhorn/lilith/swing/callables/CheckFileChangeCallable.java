@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.callables;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
+import javax.swing.SwingUtilities;
 import java.io.EOFException;
 import java.io.File;
 
@@ -30,12 +31,14 @@ public class CheckFileChangeCallable
 	private File indexFile;
 	private static final int POLL_INTERVAL = 1000;
 	private ViewContainer<?> viewContainer;
+	private FlushRunnable flushRunnable;
 
 	public CheckFileChangeCallable(File dataFile, File indexFile, ViewContainer<?> viewContainer)
 	{
 		this.dataFile = dataFile;
 		this.indexFile = indexFile;
 		this.viewContainer = viewContainer;
+		this.flushRunnable = new FlushRunnable();
 	}
 
 
@@ -53,7 +56,7 @@ public class CheckFileChangeCallable
 				{
 					IndexingCallable indexing=new IndexingCallable(dataFile, indexFile, true);
 					indexing.call();
-					viewContainer.flush();
+					SwingUtilities.invokeAndWait(flushRunnable);
 				}
 				catch(EOFException ex)
 				{
@@ -77,5 +80,15 @@ public class CheckFileChangeCallable
 	public String toString()
 	{
 		return dataFile.getAbsolutePath();
+	}
+
+	private class FlushRunnable
+		implements Runnable
+	{
+
+		public void run()
+		{
+			viewContainer.flush();
+		}
 	}
 }
