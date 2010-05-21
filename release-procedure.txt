@@ -50,8 +50,8 @@ mvn site:site site:deploy
 
 #####
 
-rsync -avP -e ssh ~/local-maven/deploy/release huxhorn,lilith@web.sourceforge.net:htdocs
-rsync -avP -e ssh ~/local-maven/deploy/release huxhorn,sulky@web.sourceforge.net:htdocs
+rsync -avP -e ssh ~/local-maven/deploy/repository huxhorn,lilith@web.sourceforge.net:htdocs
+rsync -avP -e ssh ~/local-maven/deploy/repository huxhorn,sulky@web.sourceforge.net:htdocs
 
 #####
 
