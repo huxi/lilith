@@ -29,7 +29,16 @@
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- making sure that gpg2 works -->
+		<!--
+		making sure that gpg2 works
+		
+		Hint:
+		I had to do the following to make using gpg-agent work:
+		mv gpg gpg1
+		ln gpg2 gpg
+		due to http://jira.codehaus.org/browse/MGPG-23
+		This sucks pretty hard :(
+		-->
 		<gpg.useagent>true</gpg.useagent>
 		<gpg.keyname>740A1840</gpg.keyname>
 	</properties>

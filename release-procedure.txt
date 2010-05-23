@@ -1,6 +1,6 @@
 Start gpg-agent:
 gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info"
-Quite Console.
+Quit Console.
 Restart Console and check that gpg-agent is running by calling gpg-agent without arguments.
 #####
 
