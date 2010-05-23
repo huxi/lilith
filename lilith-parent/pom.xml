@@ -638,7 +638,7 @@
 				</reportSets>
 				<configuration>
 					<issueLinkTemplatePerSystem>
-						<default>http://apps.sourceforge.net/trac/sulky/ticket/%ISSUE%</default>
+						<default>http://apps.sourceforge.net/trac/lilith/ticket/%ISSUE%</default>
 					</issueLinkTemplatePerSystem>
 					<!--
 					<issueLinkTemplate>http://apps.sourceforge.net/trac/sulky/ticket/%ISSUE%</issueLinkTemplate>
