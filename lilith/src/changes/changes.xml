@@ -86,6 +86,11 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add">
+				Added an additional executable lilith-all.jar containing all dependencies as
+				another download option.
+				This was requested by Adrien Sales.
+			</action>
 			<action dev="jhux" type="fix" issue="90">
 				Fixed a caching issue that was likely responsible for the oddity described in issue #90.
 				Again, in case of files that are recreated by &lt;append&gt;false&lt;/append&gt;.
