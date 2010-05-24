@@ -222,16 +222,6 @@ public class MainFrame
 	//private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
 	//private ReferenceQueue<Colors> colorsReferenceQueue;
 
-	public String[] getAllConditionScriptFiles()
-	{
-		return applicationPreferences.getAllConditionScriptFiles();
-	}
-
-	public File resolveConditionScriptFile(String input)
-	{
-		return applicationPreferences.resolveConditionScriptFile(input);
-	}
-
 	public AccessEventViewManager getAccessEventViewManager()
 	{
 		return accessEventViewManager;

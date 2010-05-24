@@ -264,6 +264,11 @@ public class ApplicationPreferences
 		}
 	}
 
+	public File getGroovyConditionsPath()
+	{
+		return groovyConditionsPath;
+	}
+
 	public void addRecentFile(File dataFile)
 	{
 		if(dataFile == null)
@@ -532,7 +537,7 @@ public class ApplicationPreferences
 		return true;
 	}
 
-	public File resolveConditionScriptFile(String input)
+	public File resolveGroovyConditionScriptFile(String input)
 	{
 		if(input == null)
 		{
@@ -550,7 +555,7 @@ public class ApplicationPreferences
 		return null;
 	}
 
-	public String[] getAllConditionScriptFiles()
+	public String[] getAllGroovyConditionScriptFiles()
 	{
 		if(conditionScriptFiles == null || ((System
 			.currentTimeMillis() - lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))

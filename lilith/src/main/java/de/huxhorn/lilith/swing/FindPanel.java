@@ -308,7 +308,7 @@ public class FindPanel<T extends Serializable>
 			{
 				logger.debug("GroovyCondition with scriptName '{}' and searchString '{}'", scriptName, text);
 			}
-			File resolvedScriptFile = mainFrame.resolveConditionScriptFile(scriptName);
+			File resolvedScriptFile = applicationPreferences.resolveGroovyConditionScriptFile(scriptName);
 			if(resolvedScriptFile != null)
 			{
 				// there is a file...
@@ -395,7 +395,7 @@ public class FindPanel<T extends Serializable>
 			else if(selectedType != null)
 			{
 				// we assume a groovy condition...
-				File resolvedScriptFile = mainFrame.resolveConditionScriptFile(selectedType);
+				File resolvedScriptFile = applicationPreferences.resolveGroovyConditionScriptFile(selectedType);
 				if(resolvedScriptFile != null)
 				{
 					// there is a file...
@@ -507,7 +507,7 @@ public class FindPanel<T extends Serializable>
 
 		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
 
-		String[] groovyConditions = mainFrame.getAllConditionScriptFiles();
+		String[] groovyConditions = applicationPreferences.getAllGroovyConditionScriptFiles();
 		if(groovyConditions != null)
 		{
 			itemsVector.addAll(Arrays.asList(groovyConditions));
