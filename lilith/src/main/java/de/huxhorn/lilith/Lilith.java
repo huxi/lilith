@@ -229,6 +229,9 @@ public class Lilith
 		}
 		catch(ParseException exp)
 		{
+			final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+			if(logger.isErrorEnabled()) logger.error("Exception while parsing options! {}", exp.getMessage());
 			exitCode = -1;
 			printHelp = true;
 		}
