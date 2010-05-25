@@ -86,6 +86,11 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<!--
+			<action dev="jhux" type="fix">
+				Fixed deployment of site.
+			</action>
+			-->
 			<action dev="jhux" type="add" issue="81">
 				Added --export-preferences &lt;file&gt; and --import-preferences &lt;file&gt;
 				commandline options to be able to export and import all preferences.
