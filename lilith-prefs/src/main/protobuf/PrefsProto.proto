@@ -1,0 +1,100 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2010 Joern Huxhorn
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package de.huxhorn.lilith.prefs;
+
+option optimize_for = SPEED;
+
+option java_package = "de.huxhorn.lilith.prefs.protobuf.generated";
+//option java_multiple_files = true;
+
+message LilithPreferences {
+	optional DirectoryContent  groovy_conditions            =  1;
+	optional DirectoryContent  details_view                 =  2;
+	optional DirectoryContent  root_files                   =  3;
+	
+	optional string            blacklist_name               =  4;
+	optional string            whitelist_name               =  5;
+	optional string            look_and_feel                =  6;
+	
+	optional bool              asking_before_quit           =  7;
+	optional bool              auto_closing                 =  8;
+	optional bool              auto_focusing_window         =  9;
+	optional bool              auto_opening                 = 10;
+	optional bool              checking_for_update          = 11;
+	optional bool              cleaning_logs_on_exit        = 12;
+	optional bool              coloring_whole_row           = 13;
+	optional bool              global_logging_enabled       = 14;
+	optional bool              licensed                     = 15;
+	optional bool              logging_statistic_enabled    = 16;
+	optional bool              maximizing_internal_frames   = 17;
+	optional bool              mute                         = 18;
+	optional bool              scrolling_to_bottom          = 19;
+	optional bool              showing_full_callstack       = 20;
+	optional bool              showing_identifier           = 21;
+	optional bool              showing_statusbar            = 22;
+	optional bool              showing_stacktrace           = 23;
+	optional bool              showing_tip_of_the_day       = 24;
+	optional bool              showing_toolbar              = 25;
+	optional bool              splash_screen_disabled       = 26;
+	optional bool              using_internal_frames        = 27;
+	
+	optional SourceFiltering   source_filtering             = 28;
+}
+
+enum SourceFiltering {
+	NONE      = 0;
+	BLACKLIST = 1;
+	WHITELIST = 2;
+}
+
+message DirectoryContent {
+	optional string  name                = 1;
+	repeated ByteArrayMapEntry entry     = 2;
+	repeated DirectoryContent  directory = 3; // supporting sub-dirs, unused
+}
+
+message ByteArrayMapEntry {
+	required string key   = 1;
+	optional bytes  value = 2;
+}
+
+message StringMap {
+	repeated StringMapEntry entry = 1;
+}
+
+
+message StringMapEntry {
+	required string key   = 1;
+	optional string value = 2;
+}
+
+message StringArrayMap {
+	repeated StringArrayMapEntry entry = 1;
+}
+
+message StringArrayMapEntry {
+	required string           key   = 1;
+	repeated StringArrayValue value = 2;
+}
+
+// this is necessary to support null values
+message StringArrayValue {
+	optional string value = 1;
+}
+

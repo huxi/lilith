@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
+import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 
 import org.slf4j.Logger;
@@ -136,7 +137,7 @@ public class SourceFilteringPanel
 		blackListNamesModel.removeAllElements();
 		whiteListNamesModel.removeAllElements();
 
-		ApplicationPreferences.SourceFiltering filtering = preferencesDialog.getSourceFiltering();
+		LilithPreferences.SourceFiltering filtering = preferencesDialog.getSourceFiltering();
 		String blackListName = preferencesDialog.getBlackListName();
 		String whiteListName = preferencesDialog.getWhiteListName();
 		if(!sourceListNames.contains(blackListName))
@@ -147,10 +148,10 @@ public class SourceFilteringPanel
 			}
 			blackListName = fallbackSourceListName;
 			preferencesDialog.setBlackListName(blackListName);
-			if(filtering == ApplicationPreferences.SourceFiltering.BLACKLIST)
+			if(filtering == LilithPreferences.SourceFiltering.BLACKLIST)
 			{
 				if(logger.isInfoEnabled()) logger.info("Resetting filtering '{}'.", filtering);
-				filtering = ApplicationPreferences.SourceFiltering.NONE;
+				filtering = LilithPreferences.SourceFiltering.NONE;
 				preferencesDialog.setSourceFiltering(filtering);
 			}
 		}
@@ -162,10 +163,10 @@ public class SourceFilteringPanel
 			}
 			whiteListName = fallbackSourceListName;
 			preferencesDialog.setWhiteListName(whiteListName);
-			if(filtering == ApplicationPreferences.SourceFiltering.WHITELIST)
+			if(filtering == LilithPreferences.SourceFiltering.WHITELIST)
 			{
 				if(logger.isInfoEnabled()) logger.info("Resetting filtering '{}'.", filtering);
-				filtering = ApplicationPreferences.SourceFiltering.NONE;
+				filtering = LilithPreferences.SourceFiltering.NONE;
 				preferencesDialog.setSourceFiltering(filtering);
 			}
 		}
@@ -216,7 +217,7 @@ public class SourceFilteringPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Disabled");
-			preferencesDialog.setSourceFiltering(ApplicationPreferences.SourceFiltering.NONE);
+			preferencesDialog.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 		}
 	}
 
@@ -238,7 +239,7 @@ public class SourceFilteringPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Blacklist");
-			preferencesDialog.setSourceFiltering(ApplicationPreferences.SourceFiltering.BLACKLIST);
+			preferencesDialog.setSourceFiltering(LilithPreferences.SourceFiltering.BLACKLIST);
 		}
 	}
 
@@ -260,7 +261,7 @@ public class SourceFilteringPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Whitelist");
-			preferencesDialog.setSourceFiltering(ApplicationPreferences.SourceFiltering.WHITELIST);
+			preferencesDialog.setSourceFiltering(LilithPreferences.SourceFiltering.WHITELIST);
 		}
 	}
 

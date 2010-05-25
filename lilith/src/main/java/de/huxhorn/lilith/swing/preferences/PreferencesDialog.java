@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.preferences;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.conditions.Condition;
@@ -84,7 +85,7 @@ public class PreferencesDialog
 	private SourceFilteringPanel sourceFilteringPanel;
 	private String blackListName;
 	private String whiteListName;
-	private ApplicationPreferences.SourceFiltering sourceFiltering;
+	private LilithPreferences.SourceFiltering sourceFiltering;
 	private TroubleshootingPanel troubleshootingPanel;
 
 	public PreferencesDialog(MainFrame mainFrame)
@@ -311,7 +312,7 @@ public class PreferencesDialog
 		return whiteListName;
 	}
 
-	public ApplicationPreferences.SourceFiltering getSourceFiltering()
+	public LilithPreferences.SourceFiltering getSourceFiltering()
 	{
 		if(sourceFiltering == null)
 		{
@@ -320,7 +321,7 @@ public class PreferencesDialog
 		return sourceFiltering;
 	}
 
-	public void setSourceFiltering(ApplicationPreferences.SourceFiltering sourceFiltering)
+	public void setSourceFiltering(LilithPreferences.SourceFiltering sourceFiltering)
 	{
 		this.sourceFiltering = sourceFiltering;
 	}

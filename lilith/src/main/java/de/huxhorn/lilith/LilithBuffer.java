@@ -19,6 +19,7 @@ package de.huxhorn.lilith;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 
@@ -47,7 +48,7 @@ public class LilithBuffer<T extends Serializable>
 	{
 		T event = element.getEvent();
 		if(event == null
-			|| applicationPreferences.getSourceFiltering() == ApplicationPreferences.SourceFiltering.NONE)
+			|| applicationPreferences.getSourceFiltering() == LilithPreferences.SourceFiltering.NONE)
 		{
 			// we *must* add null events so a closed connection is detected!
 			super.add(element);

@@ -21,6 +21,7 @@ import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
@@ -70,10 +71,6 @@ import javax.swing.*;
 
 public class ApplicationPreferences
 {
-	public static enum SourceFiltering
-	{
-		NONE, BLACKLIST, WHITELIST
-	}
 
 	private static final Preferences PREFERENCES =
 		Preferences.userNodeForPackage(ApplicationPreferences.class);
@@ -83,13 +80,13 @@ public class ApplicationPreferences
 
 	private static final String PREVIOUS_SEARCH_STRINGS_XML_FILENAME = "previousSearchStrings.xml";
 	private static final String RECENT_FILES_XML_FILENAME = "recentFiles.xml";
-	private static final String STATUS_COLORS_XML_FILENAME = "statusColors.xml";
-	private static final String LEVEL_COLORS_XML_FILENAME = "levelColors.xml";
+	public static final String STATUS_COLORS_XML_FILENAME = "statusColors.xml";
+	public static final String LEVEL_COLORS_XML_FILENAME = "levelColors.xml";
 
 	private static final String DETAILS_VIEW_ROOT_FOLDER = "detailsView";
 	public static final String DETAILS_VIEW_CSS_FILENAME = "detailsView.css";
 	public static final String DETAILS_VIEW_GROOVY_FILENAME = "detailsView.groovy";
-	private static final String CONDITIONS_XML_FILENAME = "savedConditions.xml";
+	public static final String CONDITIONS_XML_FILENAME = "savedConditions.xml";
 
 	public static final String STATUS_COLORS_PROPERTY = "statusColors";
 	public static final String LEVEL_COLORS_PROPERTY = "levelColors";
@@ -231,7 +228,7 @@ public class ApplicationPreferences
 	private Map<String, Set<String>> sourceLists;
 	private long lastSourceListsModified;
 
-	private SourceFiltering sourceFiltering;
+	private LilithPreferences.SourceFiltering sourceFiltering;
 
 	private Set<String> blackList;
 	private Set<String> whiteList;
@@ -851,7 +848,7 @@ public class ApplicationPreferences
 		return cloneStatusColors(statusColors);
 	}
 
-	public void setSourceFiltering(SourceFiltering sourceFiltering)
+	public void setSourceFiltering(LilithPreferences.SourceFiltering sourceFiltering)
 	{
 		Object oldValue = getSourceFiltering();
 		PREFERENCES.put(SOURCE_FILTERING_PROPERTY, sourceFiltering.toString());
@@ -924,7 +921,7 @@ public class ApplicationPreferences
 		propertyChangeSupport.firePropertyChange(SOURCE_LISTS_PROPERTY, oldValue, newValue);
 	}
 
-	public SourceFiltering getSourceFiltering()
+	public LilithPreferences.SourceFiltering getSourceFiltering()
 	{
 		if(sourceFiltering != null)
 		{
@@ -933,11 +930,11 @@ public class ApplicationPreferences
 		String sf = PREFERENCES.get(SOURCE_FILTERING_PROPERTY, "NONE");
 		try
 		{
-			sourceFiltering = SourceFiltering.valueOf(sf);
+			sourceFiltering = LilithPreferences.SourceFiltering.valueOf(sf);
 		}
 		catch(IllegalArgumentException e)
 		{
-			sourceFiltering = SourceFiltering.NONE;
+			sourceFiltering = LilithPreferences.SourceFiltering.NONE;
 		}
 		return sourceFiltering;
 	}
@@ -1206,7 +1203,7 @@ public class ApplicationPreferences
 		{
 			return false;
 		}
-		SourceFiltering filtering = getSourceFiltering();
+		LilithPreferences.SourceFiltering filtering = getSourceFiltering();
 		switch(filtering)
 		{
 			case BLACKLIST:
@@ -1228,7 +1225,7 @@ public class ApplicationPreferences
 			{
 				// meaning there was no list of the given blacklist name.
 				if(logger.isInfoEnabled()) logger.info("Couldn't find blacklist '{}'!", listName);
-				setSourceFiltering(SourceFiltering.NONE);
+				setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 				setBlackListName("");
 				return true;
 			}
@@ -1261,7 +1258,7 @@ public class ApplicationPreferences
 			{
 				// meaning there was no list of the given blacklist name.
 				if(logger.isInfoEnabled()) logger.info("Couldn't find whitelist '{}'!", listName);
-				setSourceFiltering(SourceFiltering.NONE);
+				setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 				setWhiteListName("");
 				return true;
 			}

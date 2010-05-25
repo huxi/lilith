@@ -276,6 +276,12 @@
 				<version>${lilithVersion}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.prefs</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
 			<!-- Start of 3rd party jars -->
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>

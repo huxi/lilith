@@ -24,6 +24,7 @@ import ch.qos.logback.core.util.StatusPrinter;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.handler.Slf4JHandler;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.lilith.tools.ImportExportCommand;
 import de.huxhorn.lilith.swing.LicenseAgreementDialog;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.SplashScreen;
@@ -74,6 +75,8 @@ public class Lilith
 	private static final String TAIL_SHORT = "t";
 	private static final String KEEP_RUNNING_SHORT = "f"; // tail
 	private static final String NUMBER_OF_ENTRIES_SHORT = "n"; // cat & tail
+	private static final String EXPORT_PREFERENCES_SHORT = "e";
+	private static final String IMPORT_PREFERENCES_SHORT = "i";
 
 	private static final String VERBOSE = "verbose";
 	private static final String PRINT_HELP = "help";
@@ -86,6 +89,8 @@ public class Lilith
 	private static final String TAIL = "tail";
 	private static final String KEEP_RUNNING = "keep-running"; // tail
 	private static final String NUMBER_OF_ENTRIES = "numberOfLines"; // cat & tail
+	private static final String EXPORT_PREFERENCES = "export-preferences";
+	private static final String IMPORT_PREFERENCES = "import-preferences";
 
 	private static final String JUNIQUE_MSG_SHOW = "Show";
 	private static final String JUNIQUE_REPLY_OK = "OK";
@@ -171,16 +176,17 @@ public class Lilith
 		Option numberOfEntriesOption =
 			new Option(NUMBER_OF_ENTRIES_SHORT, NUMBER_OF_ENTRIES, true, "number of entries printed by cat or tail");
 		numberOfEntriesOption.setArgName("numberOfEntries");
-
-
-			/*
-			OptionBuilder.withArgName( "numberOfEntries" )
-				.hasArg()
-			.withLongOpt(NUMBER_OF_ENTRIES)
-				.withDescription(  "number of entries printed by cat or tail" )
-				.create(NUMBER_OF_ENTRIES_SHORT);
-				*/
 		options.addOption(numberOfEntriesOption);
+
+		Option exportFileOption =
+			new Option(EXPORT_PREFERENCES_SHORT, EXPORT_PREFERENCES, true, "export preferences into the given file");
+		exportFileOption.setArgName("exportFile");
+		options.addOption(exportFileOption);
+
+		Option importFileOption =
+			new Option(IMPORT_PREFERENCES_SHORT, IMPORT_PREFERENCES, true, "import preferences from the given file");
+		importFileOption.setArgName("importFile");
+		options.addOption(importFileOption);
 
 		boolean verbose = false;
 		boolean flushPrefs = false;
@@ -192,6 +198,8 @@ public class Lilith
 		boolean tail = false;
 		boolean keepRunning = false;
 		boolean printHelp;
+		String importFile=null;
+		String exportFile=null;
 		int numberOfEntries = -1;
 		String[] originalArgs = args;
 		int exitCode = 0;
@@ -223,6 +231,16 @@ public class Lilith
 
 					if(logger.isWarnEnabled()) logger.warn("Invalid value for option -"+ NUMBER_OF_ENTRIES_SHORT +": "+numStr);
 				}
+			}
+
+			if(line.hasOption(IMPORT_PREFERENCES_SHORT))
+			{
+				importFile = line.getOptionValue(IMPORT_PREFERENCES_SHORT);
+			}
+
+			if(line.hasOption(EXPORT_PREFERENCES_SHORT))
+			{
+				exportFile = line.getOptionValue(EXPORT_PREFERENCES_SHORT);
 			}
 
 			args = line.getArgs(); // remaining unparsed args...
@@ -334,6 +352,21 @@ public class Lilith
 			System.exit(-1);
 		}
 
+		if(exportFile != null)
+		{
+			exportPreferences(exportFile);
+		}
+
+		if(importFile != null)
+		{
+			importPreferences(importFile);
+		}
+
+		if(exportFile != null || importFile != null)
+		{
+			System.exit(0);
+		}
+
 		if(flushPrefs)
 		{
 			flushPreferences();
@@ -377,6 +410,16 @@ public class Lilith
 		}
 
 		startLilith(appTitle, enableBonjour);
+	}
+
+	private static void importPreferences(String file)
+	{
+		ImportExportCommand.importPreferences(new File(file));
+	}
+
+	private static void exportPreferences(String file)
+	{
+		ImportExportCommand.exportPreferences(new File(file));
 	}
 
 	private static void startLilith(String appTitle, boolean enableBonjour)

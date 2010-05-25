@@ -58,6 +58,7 @@ import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.producer.LogbackAccessServerSocketEventSourceProducer;
 import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.services.gotosrc.GoToSourceService;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
@@ -1727,7 +1728,7 @@ public class MainFrame
 	{
 		StringBuilder statusText = new StringBuilder();
 
-		ApplicationPreferences.SourceFiltering filtering = applicationPreferences.getSourceFiltering();
+		LilithPreferences.SourceFiltering filtering = applicationPreferences.getSourceFiltering();
 		switch(filtering)
 		{
 			case BLACKLIST:

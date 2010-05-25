@@ -134,6 +134,7 @@
 	<logger name="de.huxhorn.lilith.swing.taskmanager.table" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.xhtml" level="DEBUG"/>
 	<logger name="de.huxhorn.lilith.tools" level="WARN"/>
+	<logger name="de.huxhorn.lilith.tools.ImportExportCommand" level="INFO"/>
 	<logger name="de.huxhorn.sulky" level="INFO"/>
 	<logger name="de.huxhorn.sulky.buffers.FilteringBuffer" level="INFO"/>
 	<logger name="de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer" level="WARN"/>
