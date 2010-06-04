@@ -1,7 +1,8 @@
 Start gpg-agent:
-gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info"
-Quit Console.
-Restart Console and check that gpg-agent is running by calling gpg-agent without arguments.
+gpg-agent --daemon --write-env-file "${HOME}/.gpg-agent-info"
+. ~/.profile
+
+Check that gpg-agent is running by calling gpg-agent without arguments.
 #####
 
 Validate correctness of trunk/lilith/lilith/src/main/resources/detailsView/history
