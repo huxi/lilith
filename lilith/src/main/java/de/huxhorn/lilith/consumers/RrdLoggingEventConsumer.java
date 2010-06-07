@@ -61,8 +61,10 @@ public class RrdLoggingEventConsumer
 
 	private RrdDbPool pool = RrdDbPool.getInstance();
 
+	private long lastUpdateTime;
 	private File basePath;
 	private boolean enabled;
+	private HashMap<String, EventCounter> eventCounters;
 
 	public RrdLoggingEventConsumer()
 	{
@@ -86,8 +88,17 @@ public class RrdLoggingEventConsumer
 			return;
 		}
 		// TODO: evaluate transfer size info if available
-		Map<String, EventCounter> eventCounters = new HashMap<String, EventCounter>();
-		EventCounter globalCounter = new EventCounter();
+		EventCounter globalCounter;
+		if(eventCounters == null)
+		{
+			eventCounters = new HashMap<String, EventCounter>();
+			globalCounter = new EventCounter();
+			eventCounters.put("global", globalCounter);
+		}
+		else
+		{
+			globalCounter=eventCounters.get("global");
+		}
 		for(EventWrapper<LoggingEvent> wrapper : events)
 		{
 			LoggingEvent event = wrapper.getEvent();
@@ -135,9 +146,8 @@ public class RrdLoggingEventConsumer
 				}
 			}
 		} // for
-		eventCounters.put("global", globalCounter);
 		// collected events in eventCounters...
-		updateRrdFile(eventCounters);
+		updateRrdFile();
 	}
 
 	public void setEnabled(boolean enabled)
@@ -150,79 +160,84 @@ public class RrdLoggingEventConsumer
 		return enabled;
 	}
 
-	private void updateRrdFile(Map<String, EventCounter> eventCounters)
+	private void updateRrdFile()
 	{
-		if(eventCounters.size() > 0)
+		if(eventCounters != null && eventCounters.size() > 0)
 		{
 			long timestamp = Util.getTime();
 			//long creationTS=timestamp-1000;
-			for(Map.Entry<String, EventCounter> current : eventCounters.entrySet())
+			if(System.currentTimeMillis()-lastUpdateTime > 1000)
 			{
-				String primary = current.getKey();
-				EventCounter eventCounter = current.getValue();
-				File rrdFile = new File(basePath, primary + ".rrd");
-				if(!rrdFile.isFile())
+				for(Map.Entry<String, EventCounter> current : eventCounters.entrySet())
 				{
-					try
-					{
-						createRrdFile(rrdFile, timestamp - 1);
-					}
-					catch(IOException ex)
-					{
-						if(logger.isWarnEnabled())
-						{
-							logger.warn("Exception while creating rrd-db '" + rrdFile.getAbsolutePath() + "'!", ex);
-						}
-					}
-				}
-
-				RrdDb rrd = null;
-				try
-				{
-					//rrd = new RrdDb(rrdFile.getAbsolutePath());
-					rrd = pool.requestRrdDb(rrdFile.getAbsolutePath());
-					Sample sample = rrd.createSample(timestamp);
-					for(Map.Entry<String, Counter> curCount : eventCounter.counters.entrySet())
-					{
-						String name = curCount.getKey();
-						Counter counter = curCount.getValue();
-						int counterValue = counter.getValue();
-						sample.setValue(name, counterValue);
-						if(logger.isDebugEnabled())
-						{
-							logger
-								.debug("Setting rrd-db '{}' with counterValue[{}] {}.", new Object[]{rrdFile.getAbsolutePath(), name, counterValue});
-						}
-					}
-					sample.update();
-				}
-				catch(IOException ex)
-				{
-					if(logger.isWarnEnabled())
-					{
-						logger.warn("Exception while updating rrd-db '" + rrdFile.getAbsolutePath() + "'!", ex);
-					}
-				}
-				finally
-				{
-					if(rrd != null)
+					String primary = current.getKey();
+					EventCounter eventCounter = current.getValue();
+					File rrdFile = new File(basePath, primary + ".rrd");
+					if(!rrdFile.isFile())
 					{
 						try
 						{
-							pool.release(rrd);
-							//rrd.close();
+							createRrdFile(rrdFile, timestamp - 1);
 						}
 						catch(IOException ex)
 						{
 							if(logger.isWarnEnabled())
 							{
-								logger
-									.warn("Exception while releasing rrd-db '" + rrdFile.getAbsolutePath() + "'!", ex);
+								logger.warn("Exception while creating rrd-db '" + rrdFile.getAbsolutePath() + "'!", ex);
 							}
 						}
 					}
-				}
-			} // for
+
+					RrdDb rrd = null;
+					try
+					{
+						//rrd = new RrdDb(rrdFile.getAbsolutePath());
+						rrd = pool.requestRrdDb(rrdFile.getAbsolutePath());
+						Sample sample = rrd.createSample(timestamp);
+						for(Map.Entry<String, Counter> curCount : eventCounter.counters.entrySet())
+						{
+							String name = curCount.getKey();
+							Counter counter = curCount.getValue();
+							int counterValue = counter.getValue();
+							sample.setValue(name, counterValue);
+							if(logger.isDebugEnabled())
+							{
+								logger
+									.debug("Setting rrd-db '{}' with counterValue[{}] {}.", new Object[]{rrdFile.getAbsolutePath(), name, counterValue});
+							}
+						}
+						sample.update();
+					}
+					catch(IOException ex)
+					{
+						if(logger.isWarnEnabled())
+						{
+							logger.warn("Exception while updating rrd-db '" + rrdFile.getAbsolutePath() + "'!", ex);
+						}
+					}
+					finally
+					{
+						if(rrd != null)
+						{
+							try
+							{
+								pool.release(rrd);
+								//rrd.close();
+							}
+							catch(IOException ex)
+							{
+								if(logger.isWarnEnabled())
+								{
+									logger
+										.warn("Exception while releasing rrd-db '" + rrdFile.getAbsolutePath() + "'!", ex);
+								}
+							}
+						}
+					}
+				} // for
+				lastUpdateTime = System.currentTimeMillis();
+				eventCounters=null;
+			}
 		}
 	}
 
