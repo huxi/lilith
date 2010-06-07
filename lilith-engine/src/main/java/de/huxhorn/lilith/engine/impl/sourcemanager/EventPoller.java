@@ -36,11 +36,22 @@ public class EventPoller<T extends Serializable>
 	private RemoveOperation<EventWrapper<T>> queue;
 	private int pollDelay;
 	private List<EventConsumer<T>> consumers;
+	private static final int DEFAULT_POLL_INTERVAL = 1000;
 
 	public EventPoller(RemoveOperation<EventWrapper<T>> queue)
 	{
 		this.queue = queue;
-		this.pollDelay = 2000;
+		this.pollDelay = DEFAULT_POLL_INTERVAL;
+	}
+
+	public int getPollDelay()
+	{
+		return pollDelay;
+	}
+
+	public void setPollDelay(int pollDelay)
+	{
+		this.pollDelay = pollDelay;
 	}
 
 	public List<EventConsumer<T>> getConsumers()

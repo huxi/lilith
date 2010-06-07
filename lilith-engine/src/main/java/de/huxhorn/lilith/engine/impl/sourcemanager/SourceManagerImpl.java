@@ -59,6 +59,7 @@ public class SourceManagerImpl<T extends Serializable>
 	{
 		this.queue = queue;
 		this.eventPoller = new EventPoller<T>(queue);
+		this.eventPoller.setPollDelay(100);
 		eventProducers = new HashMap<SourceIdentifier, EventProducer>();
 		eventSourceProducers = new ArrayList<EventSourceProducer<T>>();
 		listeners = new HashSet<EventSourceListener<T>>();
