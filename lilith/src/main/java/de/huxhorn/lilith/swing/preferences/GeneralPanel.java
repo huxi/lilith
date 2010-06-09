@@ -24,8 +24,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -49,6 +49,7 @@ public class GeneralPanel
 	private JFileChooser applicationPathFileChooser;
 	private JTextField appPathTextField;
 	private JComboBox lookAndFeelCombo;
+	private JComboBox defaultConditionCombo;
 
 	private JCheckBox globalLoggingEnabledCheckbox;
 	private JCheckBox loggingStatsEnabledCheckbox;
@@ -98,6 +99,7 @@ public class GeneralPanel
 			appPathPanel.add(browseAppPathButton, gbc);
 		}
 		lookAndFeelCombo = new JComboBox();
+		defaultConditionCombo = new JComboBox();
 
 		globalLoggingEnabledCheckbox = new JCheckBox("Enable global logs.");
 		loggingStatsEnabledCheckbox = new JCheckBox("Enable logging statistics.");
@@ -114,6 +116,7 @@ public class GeneralPanel
 		detailsPanel.add(showStackTraceCheckbox);
 
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
+		defaultConditionCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Default search condition"));
 
 		JPanel globalPanel = new JPanel(new GridLayout(2, 1));
 		globalPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Global settings"));
@@ -141,9 +144,12 @@ public class GeneralPanel
 			add(lookAndFeelCombo, gbc);
 
 			gbc.gridy = 3;
-			add(appPathPanel, gbc);
+			add(defaultConditionCombo, gbc);
 
 			gbc.gridy = 4;
+			add(appPathPanel, gbc);
+
+			gbc.gridy = 5;
 			gbc.weighty = 1;
 			add(globalPanel, gbc);
 		}
@@ -156,34 +162,50 @@ public class GeneralPanel
 		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
 		showStackTraceCheckbox.setSelected(applicationPreferences.isShowingStackTrace());
 
-		ArrayList<String> lookAndFeels = new ArrayList<String>();
-		for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+		// look and feel
 		{
-			lookAndFeels.add(info.getName());
-		}
-		Collections.sort(lookAndFeels);
-		int selectedIndex = 0;
-		String lookAndFeel = applicationPreferences.getLookAndFeel();
-		if(lookAndFeel == null || "".equals(lookAndFeel))
-		{
-			lookAndFeel = UIManager.getLookAndFeel().getName();
-		}
-		int idx = lookAndFeels.indexOf(lookAndFeel);
-		if(idx > -1)
-		{
-			selectedIndex = idx;
-		}
-		else
-		{
-			idx = lookAndFeels.indexOf(ApplicationPreferences.STARTUP_LOOK_AND_FEEL);
+			ArrayList<String> lookAndFeels = new ArrayList<String>();
+			for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+			{
+				lookAndFeels.add(info.getName());
+			}
+			Collections.sort(lookAndFeels);
+			int selectedIndex = 0;
+			String lookAndFeel = applicationPreferences.getLookAndFeel();
+			if(lookAndFeel == null || "".equals(lookAndFeel))
+			{
+				lookAndFeel = UIManager.getLookAndFeel().getName();
+			}
+			int idx = lookAndFeels.indexOf(lookAndFeel);
 			if(idx > -1)
 			{
 				selectedIndex = idx;
 			}
+			else
+			{
+				idx = lookAndFeels.indexOf(ApplicationPreferences.STARTUP_LOOK_AND_FEEL);
+				if(idx > -1)
+				{
+					selectedIndex = idx;
+				}
+			}
+			lookAndFeelCombo.setModel(new DefaultComboBoxModel(lookAndFeels.toArray()));
+			lookAndFeelCombo.setSelectedIndex(selectedIndex);
 		}
-		lookAndFeelCombo.setModel(new DefaultComboBoxModel(lookAndFeels.toArray()));
-		lookAndFeelCombo.setSelectedIndex(selectedIndex);
 
+		// default condition name
+		{
+			List<String> conditionNames = applicationPreferences.retrieveAllConditions();
+			String defaultName=applicationPreferences.getDefaultConditionName();
+			int idx = conditionNames.indexOf(defaultName);
+			if(idx < 0)
+			{
+				idx=0;
+			}
+
+			defaultConditionCombo.setModel(new DefaultComboBoxModel(conditionNames.toArray()));
+			defaultConditionCombo.setSelectedIndex(idx);
+		}
 		String appPath = applicationPreferences.getApplicationPath().getAbsolutePath();
 		appPathTextField.setText(appPath);
 		appPathTextField.setToolTipText(appPath);
@@ -200,6 +222,7 @@ public class GeneralPanel
 		applicationPreferences.setShowingStackTrace(showStackTraceCheckbox.isSelected());
 
 		applicationPreferences.setLookAndFeel((String) lookAndFeelCombo.getSelectedItem());
+		applicationPreferences.setDefaultConditionName((String) defaultConditionCombo.getSelectedItem());
 
 		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
 
