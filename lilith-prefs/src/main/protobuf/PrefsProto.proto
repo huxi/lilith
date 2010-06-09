@@ -55,6 +55,8 @@ message LilithPreferences {
 	optional bool              using_internal_frames        = 27;
 	
 	optional SourceFiltering   source_filtering             = 28;
+
+	optional string            default_condition_name       = 29;
 }
 
 enum SourceFiltering {

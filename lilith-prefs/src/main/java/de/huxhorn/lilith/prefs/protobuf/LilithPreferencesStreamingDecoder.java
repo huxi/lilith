@@ -210,7 +210,10 @@ public class LilithPreferencesStreamingDecoder
 		{
 			prefs.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);			
 		}
-
+		if(p.hasDefaultConditionName())
+		{
+			prefs.setDefaultConditionName(p.getDefaultConditionName());
+		}
 		return prefs;
 	}
 

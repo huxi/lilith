@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.swing;
 
-//import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.matchers.TextMatcherEditor;
 import ca.odell.glazedlists.swing.AutoCompleteSupport;
@@ -53,23 +52,6 @@ public class FindPanel<T extends Serializable>
 	private static final Color ERROR_COLOR = new Color(0x990000);
 	private static final Color NO_ERROR_COLOR = Color.BLACK;
 
-	private static final String EVENT_CONTAINS_CONDITION = "event.contains";
-	private static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
-	private static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
-	private static final String LOGGER_EQUALS_CONDITION = "logger.equals";
-	private static final String LEVEL_CONDITION = "Level>=";
-	private static final String CALL_LOCATION_CONDITION = "CallLocation";
-	private static final String NAMED_CONDITION = "Named";
-	private static final String[] DEFAULT_CONDITIONS = new String[]{
-		EVENT_CONTAINS_CONDITION,
-		MESSAGE_CONTAINS_CONDITION,
-		LOGGER_STARTS_WITH_CONDITION,
-		LOGGER_EQUALS_CONDITION,
-		LEVEL_CONDITION,
-		CALL_LOCATION_CONDITION,
-		NAMED_CONDITION,
-	};
-
 	public static final String CONDITION_PROPERTY = "condition";
 
 	private MainFrame mainFrame;
@@ -86,10 +68,6 @@ public class FindPanel<T extends Serializable>
 
 
 	private Condition condition;
-	//private ListComboBoxModel findComboModel;
-	private static final String[] LEVEL_VALUES = {
-			"TRACE", "DEBUG", "INFO", "WARN", "ERROR"
-	};
 	private ApplicationPreferences applicationPreferences;
 	private List<String> previousSearchStrings;
 	private List<String> conditionNames;
@@ -123,15 +101,12 @@ public class FindPanel<T extends Serializable>
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(closeFindButton, gbc);
-		//findPanel.addSeparator();
 
 		gbc.gridx = 1;
 		add(new JLabel(" Find: "), gbc);
 
 		ActionListener findTypeModifiedListener = new FindTypeSelectionActionListener();
 		findTypeCombo = new JComboBox();
-		// not editable, so decorator will be strict
-		//AutoCompleteDecorator.decorate(this.findTypeCombo);
 		// AUTO-COMPLETION
 		findTypeEventList = new BasicEventList<String>();
 		AutoCompleteSupport<String> findTypeComboAutoSupport = AutoCompleteSupport.install(findTypeCombo, findTypeEventList);
@@ -149,10 +124,6 @@ public class FindPanel<T extends Serializable>
 
 		// AUTO-COMPLETION
 		findTextCombo = new JComboBox();
-		//findTextCombo.setEditable(true); // so decorator won't be strict
-		//findComboModel=new ListComboBoxModel();
-		//findTextCombo.setModel(findComboModel);
-		//AutoCompleteDecorator.decorate(this.findTextCombo);
 		findTextEventList = new BasicEventList<String>();
 		AutoCompleteSupport<String> findTextComboAutoSupport = AutoCompleteSupport.install(findTextCombo, findTextEventList);
 		findTextComboAutoSupport.setFirstItem("");
@@ -276,7 +247,7 @@ public class FindPanel<T extends Serializable>
 			text=findEditorComponent.getText();
 		}
 
-		Condition condition;
+		Condition condition=null;
 
 		String errorMessage = null;
 		if(text == null)
@@ -338,78 +309,13 @@ public class FindPanel<T extends Serializable>
 		{
 			// create condition matching the selected type
 			String selectedType = (String) findTypeCombo.getSelectedItem();
-			if(EVENT_CONTAINS_CONDITION.equals(selectedType))
+			try
 			{
-				condition = new EventContainsCondition(text);
+				condition = applicationPreferences.createCondition(selectedType, text);
 			}
-			else if(MESSAGE_CONTAINS_CONDITION.equals(selectedType))
+			catch(IllegalArgumentException ex)
 			{
-				condition = new MessageContainsCondition(text);
-			}
-			else if(LOGGER_STARTS_WITH_CONDITION.equals(selectedType))
-			{
-				condition = new LoggerStartsWithCondition(text);
-			}
-			else if(LOGGER_EQUALS_CONDITION.equals(selectedType))
-			{
-				condition = new LoggerEqualsCondition(text);
-			}
-			else if(LEVEL_CONDITION.equals(selectedType))
-			{
-				boolean found = false;
-				for(String current : LEVEL_VALUES)
-				{
-					if(current.equalsIgnoreCase(text))
-					{
-						text=current;
-						found=true;
-					}
-				}
-				if(found)
-				{
-					condition = new LevelCondition(text);
-				}
-				else
-				{
-					condition=null;
-					errorMessage = "Unknown level value '"+text+"'!";
-				}
-			}
-			else if(CALL_LOCATION_CONDITION.equals(selectedType))
-			{
-				condition = new CallLocationCondition(text);
-			}
-			else if(NAMED_CONDITION.equals(selectedType))
-			{
-				SavedCondition savedCondition = applicationPreferences.resolveSavedCondition(text);
-				if(savedCondition != null)
-				{
-					condition = savedCondition.getCondition();
-				}
-				else
-				{
-					errorMessage = "Couldn't find condition named '" + text + "'.";
-					condition = null;
-				}
-			}
-			else if(selectedType != null)
-			{
-				// we assume a groovy condition...
-				File resolvedScriptFile = applicationPreferences.resolveGroovyConditionScriptFile(selectedType);
-				if(resolvedScriptFile != null)
-				{
-					// there is a file...
-					condition = new GroovyCondition(resolvedScriptFile.getAbsolutePath(), text);
-				}
-				else
-				{
-					errorMessage = "Couldn't find condition '"+selectedType+"'!";
-					condition = null;
-				}
-			}
-			else
-			{
-				condition=null;
+				errorMessage = ex.getMessage();
 			}
 		}
 		if(findEditorComponent != null)
@@ -460,38 +366,8 @@ public class FindPanel<T extends Serializable>
 		}
 		if(condition != null)
 		{
-			String conditionName = null;
-			if(condition instanceof EventContainsCondition)
-			{
-				conditionName = EVENT_CONTAINS_CONDITION;
-			}
-			else if(condition instanceof MessageContainsCondition)
-			{
-				conditionName = MESSAGE_CONTAINS_CONDITION;
-			}
-			else if(condition instanceof LoggerStartsWithCondition)
-			{
-				conditionName = LOGGER_STARTS_WITH_CONDITION;
-			}
-			else if(condition instanceof LoggerEqualsCondition)
-			{
-				conditionName = LOGGER_EQUALS_CONDITION;
-			}
-			else if(condition instanceof LevelCondition)
-			{
-				conditionName = LEVEL_CONDITION;
-			}
-			// TODO? Special handling of NAMED_CONDITION
-			else if(condition instanceof GroovyCondition)
-			{
-				GroovyCondition groovyCondition = (GroovyCondition) condition;
-				String scriptFileName = groovyCondition.getScriptFileName();
-				if(scriptFileName != null)
-				{
-					File scriptFile = new File(scriptFileName);
-					conditionName = scriptFile.getName();
-				}
-			}
+			String conditionName = applicationPreferences.resolveConditionName(condition);
+
 			if(conditionName != null)
 			{
 				findTypeCombo.setSelectedItem(conditionName);
@@ -503,20 +379,11 @@ public class FindPanel<T extends Serializable>
 
 	private void initTypeCombo()
 	{
-		List<String> itemsVector = new ArrayList<String>();
-
-		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
-
-		String[] groovyConditions = applicationPreferences.getAllGroovyConditionScriptFiles();
-		if(groovyConditions != null)
-		{
-			itemsVector.addAll(Arrays.asList(groovyConditions));
-		}
+		List<String> itemsVector = applicationPreferences.retrieveAllConditions();
 
 		findTypeEventList.clear();
 		findTypeEventList.addAll(itemsVector);
-		//ComboBoxModel model = new DefaultComboBoxModel(itemsVector);
-		//findTypeCombo.setModel(model);
+		findTypeCombo.setSelectedItem(applicationPreferences.getDefaultConditionName());
 	}
 
 	public void setVisible(boolean visible)
@@ -563,24 +430,21 @@ public class FindPanel<T extends Serializable>
 	{
 		String selectedType = (String) findTypeCombo.getSelectedItem();
 
-		if(LEVEL_CONDITION.equals(selectedType))
+		if(ApplicationPreferences.LEVEL_CONDITION.equals(selectedType))
 		{
 			findTextEventList.clear();
-			findTextEventList.addAll(Arrays.asList(LEVEL_VALUES));
-			//findComboModel.replace(LEVEL_VALUES);
+			findTextEventList.addAll(applicationPreferences.retrieveLevelValues());
 		}
-		else if(NAMED_CONDITION.equals(selectedType))
+		else if(ApplicationPreferences.NAMED_CONDITION.equals(selectedType))
 		{
 			findTextEventList.clear();
 			findTextEventList.addAll(conditionNames);
-			//findComboModel.replace(conditionNames);
 		}
 		else
 		{
 			String prev=(String)findTextCombo.getSelectedItem(); // save...
 			findTextEventList.clear();
 			findTextEventList.addAll(previousSearchStrings);
-			//findComboModel.replace(previousSearchStrings);
 			findTextCombo.setSelectedItem(prev); // ...and restore
 		}
 	}
@@ -738,7 +602,8 @@ public class FindPanel<T extends Serializable>
 			}
 			String selectedType = (String) findTypeCombo.getSelectedItem();
 
-			if(!LEVEL_CONDITION.equals(selectedType) && !NAMED_CONDITION.equals(selectedType))
+			if(!ApplicationPreferences.LEVEL_CONDITION.equals(selectedType)
+				&& !ApplicationPreferences.NAMED_CONDITION.equals(selectedType))
 			{
 				if(condition instanceof SearchStringCondition)
 				{

@@ -66,6 +66,7 @@ public class LilithPreferences
 	private boolean splashScreenDisabled;
 	private boolean usingInternalFrames;
 	private SourceFiltering sourceFiltering;
+	private String defaultConditionName;
 
 	public Map<String, byte[]> getGroovyConditions()
 	{
@@ -345,6 +346,16 @@ public class LilithPreferences
 	public void setSourceFiltering(SourceFiltering sourceFiltering)
 	{
 		this.sourceFiltering = sourceFiltering;
+	}
+
+	public String getDefaultConditionName()
+	{
+		return defaultConditionName;
+	}
+
+	public void setDefaultConditionName(String defaultConditionName)
+	{
+		this.defaultConditionName = defaultConditionName;
 	}
 
 	public static enum SourceFiltering

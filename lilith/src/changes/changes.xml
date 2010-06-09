@@ -86,6 +86,11 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add">
+				Added default condition name to preferences. It's preselected for every new view.
+				This was suggested by Lothar Cezanne.
+				<!-- TODO: Change it in Preferences dialog! --> 
+			</action>
 			<action dev="jhux" type="update">
 				Polling events every 100ms instead of every 2s.
 				This results in less congestion and a much snappier feeling.

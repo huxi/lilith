@@ -300,6 +300,13 @@ public final class PrefsProto {
     public boolean hasSourceFiltering() { return hasSourceFiltering; }
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering getSourceFiltering() { return sourceFiltering_; }
     
+    // optional string default_condition_name = 29;
+    public static final int DEFAULT_CONDITION_NAME_FIELD_NUMBER = 29;
+    private boolean hasDefaultConditionName;
+    private java.lang.String defaultConditionName_ = "";
+    public boolean hasDefaultConditionName() { return hasDefaultConditionName; }
+    public java.lang.String getDefaultConditionName() { return defaultConditionName_; }
+    
     private void initFields() {
       groovyConditions_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
       detailsView_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
@@ -405,6 +412,9 @@ public final class PrefsProto {
       }
       if (hasSourceFiltering()) {
         output.writeEnum(28, getSourceFiltering().getNumber());
+      }
+      if (hasDefaultConditionName()) {
+        output.writeString(29, getDefaultConditionName());
       }
       getUnknownFields().writeTo(output);
     }
@@ -526,6 +536,10 @@ public final class PrefsProto {
       if (hasSourceFiltering()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(28, getSourceFiltering().getNumber());
+      }
+      if (hasDefaultConditionName()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(29, getDefaultConditionName());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -769,6 +783,9 @@ public final class PrefsProto {
         if (other.hasSourceFiltering()) {
           setSourceFiltering(other.getSourceFiltering());
         }
+        if (other.hasDefaultConditionName()) {
+          setDefaultConditionName(other.getDefaultConditionName());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -925,6 +942,10 @@ public final class PrefsProto {
               } else {
                 setSourceFiltering(value);
               }
+              break;
+            }
+            case 234: {
+              setDefaultConditionName(input.readString());
               break;
             }
           }
@@ -1502,6 +1523,27 @@ public final class PrefsProto {
       public Builder clearSourceFiltering() {
         result.hasSourceFiltering = false;
         result.sourceFiltering_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering.NONE;
+        return this;
+      }
+      
+      // optional string default_condition_name = 29;
+      public boolean hasDefaultConditionName() {
+        return result.hasDefaultConditionName();
+      }
+      public java.lang.String getDefaultConditionName() {
+        return result.getDefaultConditionName();
+      }
+      public Builder setDefaultConditionName(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasDefaultConditionName = true;
+        result.defaultConditionName_ = value;
+        return this;
+      }
+      public Builder clearDefaultConditionName() {
+        result.hasDefaultConditionName = false;
+        result.defaultConditionName_ = getDefaultInstance().getDefaultConditionName();
         return this;
       }
       
@@ -4021,7 +4063,7 @@ public final class PrefsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\"src/main/protobuf/PrefsProto.proto\022\027de" +
-      ".huxhorn.lilith.prefs\"\261\007\n\021LilithPreferen" +
+      ".huxhorn.lilith.prefs\"\321\007\n\021LilithPreferen" +
       "ces\022D\n\021groovy_conditions\030\001 \001(\0132).de.huxh" +
       "orn.lilith.prefs.DirectoryContent\022?\n\014det" +
       "ails_view\030\002 \001(\0132).de.huxhorn.lilith.pref" +
@@ -4045,23 +4087,23 @@ public final class PrefsProto {
       "\n\026splash_screen_disabled\030\032 \001(\010\022\035\n\025using_" +
       "internal_frames\030\033 \001(\010\022B\n\020source_filterin" +
       "g\030\034 \001(\0162(.de.huxhorn.lilith.prefs.Source" +
-      "Filtering\"\231\001\n\020DirectoryContent\022\014\n\004name\030\001" +
-      " \001(\t\0229\n\005entry\030\002 \003(\0132*.de.huxhorn.lilith." +
-      "prefs.ByteArrayMapEntry\022<\n\tdirectory\030\003 \003" +
-      "(\0132).de.huxhorn.lilith.prefs.DirectoryCo" +
-      "ntent\"/\n\021ByteArrayMapEntry\022\013\n\003key\030\001 \002(\t\022",
-      "\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry\030\001 \003" +
-      "(\0132\'.de.huxhorn.lilith.prefs.StringMapEn" +
-      "try\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005va" +
-      "lue\030\002 \001(\t\"M\n\016StringArrayMap\022;\n\005entry\030\001 \003" +
-      "(\0132,.de.huxhorn.lilith.prefs.StringArray" +
-      "MapEntry\"\\\n\023StringArrayMapEntry\022\013\n\003key\030\001" +
-      " \002(\t\0228\n\005value\030\002 \003(\0132).de.huxhorn.lilith." +
-      "prefs.StringArrayValue\"!\n\020StringArrayVal" +
-      "ue\022\r\n\005value\030\001 \001(\t*9\n\017SourceFiltering\022\010\n\004" +
-      "NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020\002B.\n*",
-      "de.huxhorn.lilith.prefs.protobuf.generat" +
-      "edH\001"
+      "Filtering\022\036\n\026default_condition_name\030\035 \001(" +
+      "\t\"\231\001\n\020DirectoryContent\022\014\n\004name\030\001 \001(\t\0229\n\005" +
+      "entry\030\002 \003(\0132*.de.huxhorn.lilith.prefs.By" +
+      "teArrayMapEntry\022<\n\tdirectory\030\003 \003(\0132).de." +
+      "huxhorn.lilith.prefs.DirectoryContent\"/\n",
+      "\021ByteArrayMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value" +
+      "\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry\030\001 \003(\0132\'.de." +
+      "huxhorn.lilith.prefs.StringMapEntry\",\n\016S" +
+      "tringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(" +
+      "\t\"M\n\016StringArrayMap\022;\n\005entry\030\001 \003(\0132,.de." +
+      "huxhorn.lilith.prefs.StringArrayMapEntry" +
+      "\"\\\n\023StringArrayMapEntry\022\013\n\003key\030\001 \002(\t\0228\n\005" +
+      "value\030\002 \003(\0132).de.huxhorn.lilith.prefs.St" +
+      "ringArrayValue\"!\n\020StringArrayValue\022\r\n\005va" +
+      "lue\030\001 \001(\t*9\n\017SourceFiltering\022\010\n\004NONE\020\000\022\r",
+      "\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020\002B.\n*de.huxho" +
+      "rn.lilith.prefs.protobuf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4073,7 +4115,7 @@ public final class PrefsProto {
           internal_static_de_huxhorn_lilith_prefs_LilithPreferences_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_prefs_LilithPreferences_descriptor,
-              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "Licensed", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", },
+              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "Licensed", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", },
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.class,
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.Builder.class);
           internal_static_de_huxhorn_lilith_prefs_DirectoryContent_descriptor =

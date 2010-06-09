@@ -125,6 +125,7 @@ public class LilithPreferencesStreamingEncoder
 		prefs.setShowingToolbar(p.isShowingToolbar());
 		prefs.setSplashScreenDisabled(p.isSplashScreenDisabled());
 		prefs.setUsingInternalFrames(p.isUsingInternalFrames());
+		prefs.setDefaultConditionName(p.getDefaultConditionName());
 
 		LilithPreferences.SourceFiltering sf = p.getSourceFiltering();
 		if(sf != null)

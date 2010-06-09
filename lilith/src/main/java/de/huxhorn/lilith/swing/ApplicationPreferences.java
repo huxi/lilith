@@ -19,6 +19,13 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithSounds;
+import de.huxhorn.lilith.conditions.CallLocationCondition;
+import de.huxhorn.lilith.conditions.EventContainsCondition;
+import de.huxhorn.lilith.conditions.GroovyCondition;
+import de.huxhorn.lilith.conditions.LevelCondition;
+import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
+import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
+import de.huxhorn.lilith.conditions.MessageContainsCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.prefs.LilithPreferences;
@@ -126,6 +133,7 @@ public class ApplicationPreferences
 	public static final String PREVIOUS_SEARCH_STRINGS_PROPERTY = "previousSearchStrings";
 	public static final String RECENT_FILES_PROPERTY = "recentFiles";
 	public static final String SHOWING_FULL_RECENT_PATH_PROPERTY="showingFullRecentPath";
+	public static final String DEFAULT_CONDITION_NAME_PROPERTY = "defaultConditionName";
 
 
 	public static final String LOGGING_LAYOUT_GLOBAL_XML_FILENAME = "loggingLayoutGlobal.xml";
@@ -157,6 +165,29 @@ public class ApplicationPreferences
 	private static final String GROOVY_SUFFIX = ".groovy";
 	private static final String EXAMPLE_GROOVY_BASE = "/conditions/";
 	private static final String EXAMPLE_GROOVY_LIST = "conditions.txt";
+
+	public static final String EVENT_CONTAINS_CONDITION = "event.contains";
+	public static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
+	public static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
+	public static final String LOGGER_EQUALS_CONDITION = "logger.equals";
+	public static final String LEVEL_CONDITION = "Level>=";
+	public static final String CALL_LOCATION_CONDITION = "CallLocation";
+	public static final String NAMED_CONDITION = "Named";
+
+	private static final String[] DEFAULT_CONDITIONS = new String[]{
+		EVENT_CONTAINS_CONDITION,
+		MESSAGE_CONTAINS_CONDITION,
+		LOGGER_STARTS_WITH_CONDITION,
+		LOGGER_EQUALS_CONDITION,
+		LEVEL_CONDITION,
+		CALL_LOCATION_CONDITION,
+		NAMED_CONDITION,
+	};
+
+	private static final String[] LEVEL_VALUES = {
+			"TRACE", "DEBUG", "INFO", "WARN", "ERROR"
+	};
+
 
 	static
 	{
@@ -195,6 +226,145 @@ public class ApplicationPreferences
 		DEFAULT_STATUS_COLORS = Collections.unmodifiableMap(defaultStatusColors);
 
 		STARTUP_LOOK_AND_FEEL = UIManager.getLookAndFeel().getName();
+	}
+
+	/**
+	 *
+	 * @param conditionName
+	 * @param value
+	 * @return
+	 * @throws IllegalArgumentException if value is not allowed for conditionName.
+	 */
+	public Condition createCondition(String conditionName, String value)
+	{
+		if(conditionName == null)
+		{
+			throw new NullPointerException("conditionName must not be null!");
+		}
+
+		if(EVENT_CONTAINS_CONDITION.equals(conditionName))
+		{
+			return new EventContainsCondition(value);
+		}
+
+		if(MESSAGE_CONTAINS_CONDITION.equals(conditionName))
+		{
+			return new MessageContainsCondition(value);
+		}
+
+		if(LOGGER_STARTS_WITH_CONDITION.equals(conditionName))
+		{
+			return new LoggerStartsWithCondition(value);
+		}
+
+		if(LOGGER_EQUALS_CONDITION.equals(conditionName))
+		{
+			return new LoggerEqualsCondition(value);
+		}
+
+		if(CALL_LOCATION_CONDITION.equals(conditionName))
+		{
+			return new CallLocationCondition(value);
+		}
+
+		if(LEVEL_CONDITION.equals(conditionName))
+		{
+			boolean found = false;
+			for(String current : LEVEL_VALUES)
+			{
+				if(current.equalsIgnoreCase(value))
+				{
+					value=current;
+					found=true;
+				}
+			}
+			if(found)
+			{
+				return new LevelCondition(value);
+			}
+			throw new IllegalArgumentException("Unknown level value '"+value+"'!");
+		}
+
+		if(NAMED_CONDITION.equals(conditionName))
+		{
+			SavedCondition savedCondition = resolveSavedCondition(value);
+			if(savedCondition != null)
+			{
+				return savedCondition.getCondition();
+			}
+			throw new IllegalArgumentException("Couldn't find condition named '" + value + "'.");
+		}
+
+		// we assume a groovy condition...
+		File resolvedScriptFile = resolveGroovyConditionScriptFile(conditionName);
+		if(resolvedScriptFile != null)
+		{
+			// there is a file...
+			return new GroovyCondition(resolvedScriptFile.getAbsolutePath(), value);
+		}
+		throw new IllegalArgumentException("Couldn't find condition '"+conditionName+"'!");
+	}
+
+	public String resolveConditionName(Condition condition)
+	{
+
+		if(condition instanceof EventContainsCondition)
+		{
+			return EVENT_CONTAINS_CONDITION;
+		}
+
+		if(condition instanceof MessageContainsCondition)
+		{
+			return MESSAGE_CONTAINS_CONDITION;
+		}
+
+		if(condition instanceof LoggerStartsWithCondition)
+		{
+			return LOGGER_STARTS_WITH_CONDITION;
+		}
+
+		if(condition instanceof LoggerEqualsCondition)
+		{
+			return LOGGER_EQUALS_CONDITION;
+		}
+
+		if(condition instanceof LevelCondition)
+		{
+			return LEVEL_CONDITION;
+		}
+
+		// TODO? Special handling of NAMED_CONDITION
+		if(condition instanceof GroovyCondition)
+		{
+			GroovyCondition groovyCondition = (GroovyCondition) condition;
+			String scriptFileName = groovyCondition.getScriptFileName();
+			if(scriptFileName != null)
+			{
+				File scriptFile = new File(scriptFileName);
+				return scriptFile.getName();
+			}
+		}
+
+		return null;
+	}
+
+	public List<String> retrieveLevelValues()
+	{
+		return Arrays.asList(LEVEL_VALUES);
+	}
+
+	public List<String> retrieveAllConditions()
+	{
+		List<String> itemsVector = new ArrayList<String>();
+
+		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
+
+		String[] groovyConditions = getAllGroovyConditionScriptFiles();
+		if(groovyConditions != null)
+		{
+			itemsVector.addAll(Arrays.asList(groovyConditions));
+		}
+		return itemsVector;
 	}
 
 	private final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
@@ -1826,6 +1996,19 @@ public class ApplicationPreferences
 			if(logger.isInfoEnabled()) logger.info("Created directory {}.", result.getAbsolutePath());
 		}
 		return result;
+	}
+
+	public void setDefaultConditionName(String conditionName)
+	{
+		Object oldValue = getDefaultConditionName();
+		PREFERENCES.put(DEFAULT_CONDITION_NAME_PROPERTY, conditionName);
+		Object newValue = getDefaultConditionName();
+		propertyChangeSupport.firePropertyChange(DEFAULT_CONDITION_NAME_PROPERTY, oldValue, newValue);
+	}
+
+	public String getDefaultConditionName()
+	{
+		return PREFERENCES.get(DEFAULT_CONDITION_NAME_PROPERTY, EVENT_CONTAINS_CONDITION);
 	}
 
 	/**
