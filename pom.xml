@@ -50,6 +50,7 @@
 		<module>jul</module>
 		<module>lilith-sounds</module>
 		<module>lilith-prefs</module>
+		<module>lilith-conditions</module>
 		<module>lilith</module>
 		<module>slf4j</module>
 		<module>tracing</module>

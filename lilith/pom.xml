@@ -173,6 +173,12 @@
 		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.conditions</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.event-producers</artifactId>
 			<scope>compile</scope>
 		</dependency>
@@ -264,6 +270,7 @@
 			<scope>compile</scope>
 			<!-- required to deserialize access-events! -->
 		</dependency>
+
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
@@ -281,11 +288,13 @@
 			<artifactId>de.huxhorn.sulky.sounds-impl-jlayer</artifactId>
 			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.buffers</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.buffers.table</artifactId>
