@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 
 import org.rrd4j.ConsolFun;
 import org.rrd4j.DsType;
@@ -38,11 +38,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RrdLoggingEventConsumer
-	implements EventConsumer<LoggingEvent>
+public class RrdLoggingEventHandler
+	implements EventHandler<LoggingEvent>
 
 {
-	private final Logger logger = LoggerFactory.getLogger(RrdLoggingEventConsumer.class);
+	private final Logger logger = LoggerFactory.getLogger(RrdLoggingEventHandler.class);
 	public static final String TRACE = "" + LoggingEvent.Level.TRACE;
 	public static final String DEBUG = "" + LoggingEvent.Level.DEBUG;
 	public static final String INFO = "" + LoggingEvent.Level.INFO;
@@ -66,7 +66,7 @@ public class RrdLoggingEventConsumer
 	private boolean enabled;
 	private HashMap<String, EventCounter> eventCounters;
 
-	public RrdLoggingEventConsumer()
+	public RrdLoggingEventHandler()
 	{
 		this.enabled=true;
 	}
@@ -81,7 +81,7 @@ public class RrdLoggingEventConsumer
 		this.basePath = basePath;
 	}
 
-	public void consume(List<EventWrapper<LoggingEvent>> events)
+	public void handle(List<EventWrapper<LoggingEvent>> events)
 	{
 		if(!enabled)
 		{

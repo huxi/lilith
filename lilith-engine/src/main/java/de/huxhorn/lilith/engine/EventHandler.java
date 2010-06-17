@@ -22,7 +22,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import java.io.Serializable;
 import java.util.List;
 
-public interface EventConsumer<T extends Serializable>
+public interface EventHandler<T extends Serializable>
 {
-	public void consume(List<EventWrapper<T>> events);
+	public void handle(List<EventWrapper<T>> events);
 }

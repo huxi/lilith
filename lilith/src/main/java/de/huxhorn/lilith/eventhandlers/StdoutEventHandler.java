@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +29,16 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class StdoutEventConsumer<T extends Serializable>
-	implements EventConsumer<T>, Runnable
+public class StdoutEventHandler<T extends Serializable>
+	implements EventHandler<T>, Runnable
 {
-	final Logger logger = LoggerFactory.getLogger(StdoutEventConsumer.class);
+	final Logger logger = LoggerFactory.getLogger(StdoutEventHandler.class);
 
 	private List<EventWrapper> events;
 	private final Lock lock;
 	private long writeInterval;
 
-	public StdoutEventConsumer()
+	public StdoutEventHandler()
 	{
 		events = new LinkedList<EventWrapper>();
 		lock = new ReentrantLock(true);
@@ -55,7 +55,7 @@ public class StdoutEventConsumer<T extends Serializable>
 		this.writeInterval = writeInterval;
 	}
 
-	public void consume(List<EventWrapper<T>> events)
+	public void handle(List<EventWrapper<T>> events)
 	{
 		lock.lock();
 		try

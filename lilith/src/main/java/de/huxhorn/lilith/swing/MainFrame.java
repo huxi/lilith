@@ -20,22 +20,22 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
+import de.huxhorn.lilith.eventhandlers.AlarmSoundAccessEventHandler;
+import de.huxhorn.lilith.eventhandlers.AlarmSoundLoggingEventHandler;
+import de.huxhorn.lilith.eventhandlers.FileDumpEventHandler;
+import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.debug.DebugDialog;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
-import de.huxhorn.lilith.consumers.AlarmSoundAccessEventConsumer;
-import de.huxhorn.lilith.consumers.AlarmSoundLoggingEventConsumer;
-import de.huxhorn.lilith.consumers.FileDumpEventConsumer;
-import de.huxhorn.lilith.consumers.FileSplitterEventConsumer;
-import de.huxhorn.lilith.consumers.RrdLoggingEventConsumer;
+import de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.AccessFileBufferFactory;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
 import de.huxhorn.lilith.engine.FileBufferFactory;
@@ -213,9 +213,9 @@ public class MainFrame
 	private JPanel statusBar;
 	private TipOfTheDayDialog tipOfTheDayDialog;
 	private CheckForUpdateDialog checkForUpdateDialog;
-	private FileDumpEventConsumer<LoggingEvent> loggingFileDump;
-	private FileDumpEventConsumer<AccessEvent> accessFileDump;
-	private RrdLoggingEventConsumer rrdLoggingEventConsumer;
+	private FileDumpEventHandler<LoggingEvent> loggingFileDump;
+	private FileDumpEventHandler<AccessEvent> accessFileDump;
+	private RrdLoggingEventHandler rrdLoggingEventHandler;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -524,8 +524,8 @@ public class MainFrame
 		setSplashStatusText("Creating global views.");
 		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
 
-		loggingFileDump = new FileDumpEventConsumer<LoggingEvent>(globalSourceIdentifier, loggingFileBufferFactory);
-		accessFileDump = new FileDumpEventConsumer<AccessEvent>(globalSourceIdentifier, accessFileBufferFactory);
+		loggingFileDump = new FileDumpEventHandler<LoggingEvent>(globalSourceIdentifier, loggingFileBufferFactory);
+		accessFileDump = new FileDumpEventHandler<AccessEvent>(globalSourceIdentifier, accessFileBufferFactory);
 		setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
 
 		BlockingCircularBuffer<EventWrapper<LoggingEvent>> loggingEventQueue = new LilithBuffer<LoggingEvent>(applicationPreferences, 1000);
@@ -663,51 +663,51 @@ public class MainFrame
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
-		setSplashStatusText("Setting up event consumers.");
+		setSplashStatusText("Setting up event handlers.");
 
-		rrdLoggingEventConsumer = new RrdLoggingEventConsumer();
-		rrdLoggingEventConsumer.setBasePath(new File(startupApplicationPath, "statistics"));
+		rrdLoggingEventHandler = new RrdLoggingEventHandler();
+		rrdLoggingEventHandler.setBasePath(new File(startupApplicationPath, "statistics"));
 		setStatisticsEnabled(applicationPreferences.isLoggingStatisticEnabled());
-		AlarmSoundLoggingEventConsumer loggingEventAlarmSound = new AlarmSoundLoggingEventConsumer();
+		AlarmSoundLoggingEventHandler loggingEventAlarmSound = new AlarmSoundLoggingEventHandler();
 		loggingEventAlarmSound.setSounds(sounds);
 
-		FileSplitterEventConsumer<LoggingEvent> fileSplitterLoggingEventConsumer =
-			new FileSplitterEventConsumer<LoggingEvent>(/*applicationPreferences, */loggingFileBufferFactory, loggingEventSourceManager);
+		FileSplitterEventHandler<LoggingEvent> fileSplitterLoggingEventHandler =
+			new FileSplitterEventHandler<LoggingEvent>(/*applicationPreferences, */loggingFileBufferFactory, loggingEventSourceManager);
 
-		List<EventConsumer<LoggingEvent>> loggingConsumers = new ArrayList<EventConsumer<LoggingEvent>>();
+		List<EventHandler<LoggingEvent>> loggingHandlers = new ArrayList<EventHandler<LoggingEvent>>();
 
-		loggingConsumers.add(rrdLoggingEventConsumer);
-		loggingConsumers.add(loggingEventAlarmSound);
-		loggingConsumers.add(fileSplitterLoggingEventConsumer);
-		loggingConsumers.add(loggingFileDump);
+		loggingHandlers.add(rrdLoggingEventHandler);
+		loggingHandlers.add(loggingEventAlarmSound);
+		loggingHandlers.add(fileSplitterLoggingEventHandler);
+		loggingHandlers.add(loggingFileDump);
 
 		// crashs the app using j2se 6
 		//if(application.isMac())
 		//{
-		//	UserNotificationLoggingEventConsumer notification = new UserNotificationLoggingEventConsumer(application);
-		//	loggingConsumers.add(notification);
+		//	UserNotificationLoggingEventHandler notification = new UserNotificationLoggingEventHandler(application);
+		//	loggingHandlers.add(notification);
 		//}
-		loggingEventSourceManager.setEventConsumers(loggingConsumers);
+		loggingEventSourceManager.setEventHandlers(loggingHandlers);
 		loggingEventSourceManager.start();
 
-		List<EventConsumer<AccessEvent>> accessConsumers = new ArrayList<EventConsumer<AccessEvent>>();
+		List<EventHandler<AccessEvent>> accessHandlers = new ArrayList<EventHandler<AccessEvent>>();
 
-		FileSplitterEventConsumer<AccessEvent> fileSplitterAccessEventConsumer =
-			new FileSplitterEventConsumer<AccessEvent>(/*applicationPreferences, */accessFileBufferFactory, accessEventSourceManager);
-		AlarmSoundAccessEventConsumer accessEventAlarmSound = new AlarmSoundAccessEventConsumer();
+		FileSplitterEventHandler<AccessEvent> fileSplitterAccessEventHandler =
+			new FileSplitterEventHandler<AccessEvent>(/*applicationPreferences, */accessFileBufferFactory, accessEventSourceManager);
+		AlarmSoundAccessEventHandler accessEventAlarmSound = new AlarmSoundAccessEventHandler();
 		accessEventAlarmSound.setSounds(sounds);
-		accessConsumers.add(accessEventAlarmSound);
-		accessConsumers.add(fileSplitterAccessEventConsumer);
-		accessConsumers.add(accessFileDump);
+		accessHandlers.add(accessEventAlarmSound);
+		accessHandlers.add(fileSplitterAccessEventHandler);
+		accessHandlers.add(accessFileDump);
 
 		// crashs the app using j2se 6
 		//if(application.isMac())
 		//{
-		//	UserNotificationAccessEventConsumer notification = new UserNotificationAccessEventConsumer(application);
-		//	accessConsumers.add(notification);
+		//	UserNotificationAccessEventHandler notification = new UserNotificationAccessEventHandler(application);
+		//	accessHandlers.add(notification);
 		//}
 
-		accessEventSourceManager.setEventConsumers(accessConsumers);
+		accessEventSourceManager.setEventHandlers(accessHandlers);
 		accessEventSourceManager.start();
 
 		viewActions.updateWindowMenu();
@@ -2867,7 +2867,7 @@ public class MainFrame
 
 	private void setStatisticsEnabled(boolean statisticsEnabled)
 	{
-		rrdLoggingEventConsumer.setEnabled(statisticsEnabled);
+		rrdLoggingEventHandler.setEnabled(statisticsEnabled);
 	}
 
 	private void setCheckingForUpdate(boolean checkingForUpdate)

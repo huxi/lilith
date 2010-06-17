@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.engine.impl.sourcemanager;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.sulky.buffers.CircularBuffer;
 import de.huxhorn.sulky.buffers.RemoveOperation;
 
@@ -35,7 +35,7 @@ public class EventPoller<T extends Serializable>
 
 	private RemoveOperation<EventWrapper<T>> queue;
 	private int pollDelay;
-	private List<EventConsumer<T>> consumers;
+	private List<EventHandler<T>> handlers;
 	private static final int DEFAULT_POLL_INTERVAL = 1000;
 
 	public EventPoller(RemoveOperation<EventWrapper<T>> queue)
@@ -54,14 +54,14 @@ public class EventPoller<T extends Serializable>
 		this.pollDelay = pollDelay;
 	}
 
-	public List<EventConsumer<T>> getConsumers()
+	public List<EventHandler<T>> getEventHandlers()
 	{
-		return consumers;
+		return handlers;
 	}
 
-	public void setConsumers(List<EventConsumer<T>> consumers)
+	public void setEventHandlers(List<EventHandler<T>> handlers)
 	{
-		this.consumers = consumers;
+		this.handlers = handlers;
 	}
 
 	public RemoveOperation<EventWrapper<T>> getQueue()
@@ -87,18 +87,18 @@ public class EventPoller<T extends Serializable>
 				{
 					if(logger.isInfoEnabled()) logger.info("Consuming {} events.", eventCount);
 					long time = System.currentTimeMillis();
-					if(consumers != null)
+					if(handlers != null)
 					{
-						for(EventConsumer<T> consumer : consumers)
+						for(EventHandler<T> handler : handlers)
 						{
 							try
 							{
-								consumer.consume(events);
-								if(logger.isDebugEnabled()) logger.debug("Executed consumer {}.", consumer);
+								handler.handle(events);
+								if(logger.isDebugEnabled()) logger.debug("Executed handler {}.", handler);
 							}
 							catch(Throwable t)
 							{
-								if(logger.isWarnEnabled()) logger.warn("Exception while executing event consumer!", t);
+								if(logger.isWarnEnabled()) logger.warn("Exception while executing event handler!", t);
 							}
 						}
 					}

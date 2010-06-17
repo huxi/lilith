@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
@@ -30,21 +30,21 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.List;
 
-public class FileDumpEventConsumer<T extends Serializable>
-	implements EventConsumer<T>
+public class FileDumpEventHandler<T extends Serializable>
+	implements EventHandler<T>
 {
-	private final Logger logger = LoggerFactory.getLogger(FileDumpEventConsumer.class);
+	private final Logger logger = LoggerFactory.getLogger(FileDumpEventHandler.class);
 
 	private FileBuffer<EventWrapper<T>> fileBuffer;
 	private boolean enabled;
 
-	public FileDumpEventConsumer(SourceIdentifier sourceIdentifier, FileBufferFactory<T> fileBufferFactory)
+	public FileDumpEventHandler(SourceIdentifier sourceIdentifier, FileBufferFactory<T> fileBufferFactory)
 	{
 		enabled = true;
 		fileBuffer = fileBufferFactory.createActiveBuffer(sourceIdentifier);
 	}
 
-	public void consume(List<EventWrapper<T>> events)
+	public void handle(List<EventWrapper<T>> events)
 	{
 		if(enabled)
 		{

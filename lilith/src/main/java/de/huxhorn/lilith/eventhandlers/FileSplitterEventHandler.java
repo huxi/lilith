@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
@@ -37,23 +37,23 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class FileSplitterEventConsumer<T extends Serializable>
-	implements EventConsumer<T>
+public class FileSplitterEventHandler<T extends Serializable>
+	implements EventHandler<T>
 {
-	private final Logger logger = LoggerFactory.getLogger(FileSplitterEventConsumer.class);
+	private final Logger logger = LoggerFactory.getLogger(FileSplitterEventHandler.class);
 
 	private FileBufferFactory<T> fileBufferFactory;
 	private ConcurrentMap<SourceIdentifier, FileBuffer<EventWrapper<T>>> fileBuffers;
 	private SourceManager<T> sourceManager;
 
-	public FileSplitterEventConsumer(FileBufferFactory<T> fileBufferFactory, SourceManager<T> sourceManager)
+	public FileSplitterEventHandler(FileBufferFactory<T> fileBufferFactory, SourceManager<T> sourceManager)
 	{
 		this.fileBufferFactory = fileBufferFactory;
 		fileBuffers = new ConcurrentHashMap<SourceIdentifier, FileBuffer<EventWrapper<T>>>();
 		this.sourceManager = sourceManager;
 	}
 
-	public void consume(List<EventWrapper<T>> events)
+	public void handle(List<EventWrapper<T>> events)
 	{
 		if(events != null && events.size() > 0)
 		{

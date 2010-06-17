@@ -15,28 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 
 import org.simplericity.macify.eawt.Application;
 
 import java.util.List;
 
-public class UserNotificationAccessEventConsumer
-	implements EventConsumer<AccessEvent>
+public class UserNotificationAccessEventHandler
+	implements EventHandler<AccessEvent>
 {
 	private Application application;
 
-	public UserNotificationAccessEventConsumer(Application application)
+	public UserNotificationAccessEventHandler(Application application)
 	{
 		this.application = application;
 	}
 
-	public void consume(List<EventWrapper<AccessEvent>> events)
+	public void handle(List<EventWrapper<AccessEvent>> events)
 	{
 		if(application != null)
 		{

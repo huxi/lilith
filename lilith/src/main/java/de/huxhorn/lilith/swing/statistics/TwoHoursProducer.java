@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.statistics;
 
-import de.huxhorn.lilith.consumers.RrdLoggingEventConsumer;
+import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.MainFrame;
 
@@ -67,34 +67,34 @@ public class TwoHoursProducer
 		graphDef.setVerticalLabel("Events/s" + description);
 
 		graphDef
-			.datasource(RrdLoggingEventConsumer.TRACE, absoluteRrdPath, RrdLoggingEventConsumer.TRACE_DS_NAME, consolFun);
+			.datasource(RrdLoggingEventHandler.TRACE, absoluteRrdPath, RrdLoggingEventHandler.TRACE_DS_NAME, consolFun);
 		graphDef
-			.datasource(RrdLoggingEventConsumer.DEBUG, absoluteRrdPath, RrdLoggingEventConsumer.DEBUG_DS_NAME, consolFun);
+			.datasource(RrdLoggingEventHandler.DEBUG, absoluteRrdPath, RrdLoggingEventHandler.DEBUG_DS_NAME, consolFun);
 		graphDef
-			.datasource(RrdLoggingEventConsumer.INFO, absoluteRrdPath, RrdLoggingEventConsumer.INFO_DS_NAME, consolFun);
+			.datasource(RrdLoggingEventHandler.INFO, absoluteRrdPath, RrdLoggingEventHandler.INFO_DS_NAME, consolFun);
 		graphDef
-			.datasource(RrdLoggingEventConsumer.WARN, absoluteRrdPath, RrdLoggingEventConsumer.WARN_DS_NAME, consolFun);
+			.datasource(RrdLoggingEventHandler.WARN, absoluteRrdPath, RrdLoggingEventHandler.WARN_DS_NAME, consolFun);
 		graphDef
-			.datasource(RrdLoggingEventConsumer.ERROR, absoluteRrdPath, RrdLoggingEventConsumer.ERROR_DS_NAME, consolFun);
+			.datasource(RrdLoggingEventHandler.ERROR, absoluteRrdPath, RrdLoggingEventHandler.ERROR_DS_NAME, consolFun);
 
-		graphDef.area(RrdLoggingEventConsumer.TRACE, new Color(0x00, 0x00, 0xff), RrdLoggingEventConsumer.TRACE);
-		graphDef.stack(RrdLoggingEventConsumer.DEBUG, new Color(0x00, 0xff, 0x00), RrdLoggingEventConsumer.DEBUG);
-		graphDef.stack(RrdLoggingEventConsumer.INFO, new Color(0xff, 0xff, 0xff), RrdLoggingEventConsumer.INFO);
-		graphDef.stack(RrdLoggingEventConsumer.WARN, new Color(0xff, 0xff, 0x00), RrdLoggingEventConsumer.WARN);
-		graphDef.stack(RrdLoggingEventConsumer.ERROR, new Color(0xff, 0x00, 0x00), RrdLoggingEventConsumer.ERROR);
+		graphDef.area(RrdLoggingEventHandler.TRACE, new Color(0x00, 0x00, 0xff), RrdLoggingEventHandler.TRACE);
+		graphDef.stack(RrdLoggingEventHandler.DEBUG, new Color(0x00, 0xff, 0x00), RrdLoggingEventHandler.DEBUG);
+		graphDef.stack(RrdLoggingEventHandler.INFO, new Color(0xff, 0xff, 0xff), RrdLoggingEventHandler.INFO);
+		graphDef.stack(RrdLoggingEventHandler.WARN, new Color(0xff, 0xff, 0x00), RrdLoggingEventHandler.WARN);
+		graphDef.stack(RrdLoggingEventHandler.ERROR, new Color(0xff, 0x00, 0x00), RrdLoggingEventHandler.ERROR);
 
 		if(showMax)
 		{
 			graphDef
-				.datasource(RrdLoggingEventConsumer.TOTAL, absoluteRrdPath, RrdLoggingEventConsumer.TOTAL_DS_NAME, consolFun);
-			graphDef.line(RrdLoggingEventConsumer.TOTAL, Color.BLACK, RrdLoggingEventConsumer.TOTAL);
+				.datasource(RrdLoggingEventHandler.TOTAL, absoluteRrdPath, RrdLoggingEventHandler.TOTAL_DS_NAME, consolFun);
+			graphDef.line(RrdLoggingEventHandler.TOTAL, Color.BLACK, RrdLoggingEventHandler.TOTAL);
 		}
 
 		if(showMax)
 		{
 			graphDef
-				.datasource(RrdLoggingEventConsumer.TOTAL, absoluteRrdPath, RrdLoggingEventConsumer.TOTAL_DS_NAME, consolFun);
-			graphDef.line(RrdLoggingEventConsumer.TOTAL, Color.BLACK, RrdLoggingEventConsumer.TOTAL);
+				.datasource(RrdLoggingEventHandler.TOTAL, absoluteRrdPath, RrdLoggingEventHandler.TOTAL_DS_NAME, consolFun);
+			graphDef.line(RrdLoggingEventHandler.TOTAL, Color.BLACK, RrdLoggingEventHandler.TOTAL);
 		}
 
 		graphDef.setAntiAliasing(true);

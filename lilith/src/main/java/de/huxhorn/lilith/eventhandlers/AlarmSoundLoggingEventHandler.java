@@ -15,44 +15,56 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
+import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.engine.EventConsumer;
-
-import org.simplericity.macify.eawt.Application;
+import de.huxhorn.lilith.engine.EventHandler;
+import de.huxhorn.sulky.sounds.Sounds;
 
 import java.util.List;
 
-public class UserNotificationLoggingEventConsumer
-	implements EventConsumer<LoggingEvent>
+public class AlarmSoundLoggingEventHandler
+	implements EventHandler<LoggingEvent>
 {
-	private Application application;
+	private Sounds sounds;
 
-	public UserNotificationLoggingEventConsumer(Application application)
+	public Sounds getSounds()
 	{
-		this.application = application;
+		return sounds;
 	}
 
-	public void consume(List<EventWrapper<LoggingEvent>> events)
+	public void setSounds(Sounds sounds)
 	{
-		if(application != null)
+		this.sounds = sounds;
+	}
+
+	public void handle(List<EventWrapper<LoggingEvent>> events)
+	{
+		if(sounds != null)
 		{
 			boolean errorDetected = false;
+			boolean warnDetected = false;
 			for(EventWrapper<LoggingEvent> current : events)
 			{
 				LoggingEvent event = current.getEvent();
 				if(event != null && LoggingEvent.Level.ERROR == event.getLevel())
 				{
 					errorDetected = true;
-					break;
 				}
+				if(event != null && LoggingEvent.Level.WARN == event.getLevel())
+				{
+					warnDetected = true;
+				}
+			}
+			if(warnDetected)
+			{
+				sounds.play(LilithSounds.WARN_EVENT_ALARM);
 			}
 			if(errorDetected)
 			{
-				//application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
-				application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_CRITICAL);
+				sounds.play(LilithSounds.ERROR_EVENT_ALARM);
 			}
 		}
 	}

@@ -19,7 +19,7 @@ package de.huxhorn.lilith.engine.impl.sourcemanager;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
@@ -159,14 +159,14 @@ public class SourceManagerImpl<T extends Serializable>
 		}
 	}
 
-	public void setEventConsumers(List<EventConsumer<T>> consumers)
+	public void setEventHandlers(List<EventHandler<T>> handlers)
 	{
-		eventPoller.setConsumers(consumers);
+		eventPoller.setEventHandlers(handlers);
 	}
 
-	public List<EventConsumer<T>> getEventConsumers()
+	public List<EventHandler<T>> getEventHandlers()
 	{
-		return eventPoller.getConsumers();
+		return eventPoller.getEventHandlers();
 	}
 
 
@@ -205,12 +205,12 @@ public class SourceManagerImpl<T extends Serializable>
 			t.start();
 		}
 
-		// start consumer if necessary...
-		for(EventConsumer<T> consumer : getEventConsumers())
+		// start handlers if necessary...
+		for(EventHandler<T> handler : getEventHandlers())
 		{
-			if(consumer instanceof Runnable)
+			if(handler instanceof Runnable)
 			{
-				Thread t = new Thread((Runnable) consumer, "Consumer-Thread");
+				Thread t = new Thread((Runnable) handler, "Consumer-Thread");
 				t.setDaemon(true);
 				t.start();
 				if(logger.isInfoEnabled()) logger.info("Started {}.", t);

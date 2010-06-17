@@ -15,19 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.sulky.sounds.Sounds;
 
 import java.util.List;
 
-public class AlarmSoundAccessEventConsumer
-	implements EventConsumer<AccessEvent>
+public class AlarmSoundAccessEventHandler
+	implements EventHandler<AccessEvent>
 {
 	private Sounds sounds;
 
@@ -41,7 +41,7 @@ public class AlarmSoundAccessEventConsumer
 		this.sounds = sounds;
 	}
 
-	public void consume(List<EventWrapper<AccessEvent>> events)
+	public void handle(List<EventWrapper<AccessEvent>> events)
 	{
 		if(sounds != null)
 		{

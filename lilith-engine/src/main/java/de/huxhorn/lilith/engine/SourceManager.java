@@ -42,9 +42,9 @@ public interface SourceManager<T extends Serializable>
 
 	void removeEventProducer(SourceIdentifier id);
 
-	void setEventConsumers(List<EventConsumer<T>> consumers);
+	void setEventHandlers(List<EventHandler<T>> handlers);
 
-	List<EventConsumer<T>> getEventConsumers();
+	List<EventHandler<T>> getEventHandlers();
 
 	//void removeEventProducer(EventProducer producer);
 	void start();

@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.consumers;
+package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.engine.EventConsumer;
+import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.sulky.io.TimeoutOutputStream;
 
 import org.apache.commons.io.IOUtils;
@@ -34,10 +34,10 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.List;
 
-public class SocketEventConsumer<T extends Serializable>
-	implements EventConsumer<T>, Runnable
+public class SocketEventHandler<T extends Serializable>
+	implements EventHandler<T>, Runnable
 {
-	final Logger logger = LoggerFactory.getLogger(SocketEventConsumer.class);
+	final Logger logger = LoggerFactory.getLogger(SocketEventHandler.class);
 
 	private static final int DEFAULT_RECONNECTION_DELAY = 60 * 1000;
 	private static final int DEFAULT_CONNECTION_TIMEOUT = 10000;
@@ -51,14 +51,14 @@ public class SocketEventConsumer<T extends Serializable>
 	private int writeTimeout;
 	private long reconnectionDelay;
 
-	public SocketEventConsumer(String host, int port)
+	public SocketEventHandler(String host, int port)
 	{
 		this();
 		this.host = host;
 		this.port = port;
 	}
 
-	public SocketEventConsumer()
+	public SocketEventHandler()
 	{
 		output = null;
 		failTime = 0;
@@ -118,7 +118,7 @@ public class SocketEventConsumer<T extends Serializable>
 	}
 
 
-	public void consume(List<EventWrapper<T>> events)
+	public void handle(List<EventWrapper<T>> events)
 	{
 		if(events == null)
 		{

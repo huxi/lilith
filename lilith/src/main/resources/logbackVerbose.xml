@@ -93,11 +93,11 @@
 
 	<logger name="de.huxhorn.lilith" level="INFO"/>
 	<logger name="de.huxhorn.lilith.Lilith" level="DEBUG"/>
-	<logger name="de.huxhorn.lilith.consumers.FileDumpEventConsumer" level="WARN"/>
-	<logger name="de.huxhorn.lilith.consumers.FileSplitterEventConsumer" level="WARN"/>
-	<logger name="de.huxhorn.lilith.consumers.RrdLoggingEventConsumer" level="INFO"/>
-	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer" level="INFO"/>
-	<logger name="de.huxhorn.lilith.consumers.SocketEventConsumer" level="INFO"/>
+	<logger name="de.huxhorn.lilith.handlers.FileDumpEventHandler" level="WARN"/>
+	<logger name="de.huxhorn.lilith.handlers.FileSplitterEventHandler" level="WARN"/>
+	<logger name="de.huxhorn.lilith.handlers.RrdLoggingEventHandler" level="INFO"/>
+	<logger name="de.huxhorn.lilith.handlers.SocketEventHandler" level="INFO"/>
+	<logger name="de.huxhorn.lilith.handlers.SocketEventHandler" level="INFO"/>
 	<logger name="de.huxhorn.lilith.engine.FileBufferFactory" level="INFO‚"/>
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="INFO"/>
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="WARN"/>
