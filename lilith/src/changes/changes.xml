@@ -140,6 +140,9 @@
 			<action dev="jhux" type="update">
 				Groovy 1.7.3
 			</action>
+			<action dev="jhux" type="update">
+				Logback 0.9.22
+			</action>
 		</release>
 
         <release version="0.9.39" date="2010-05-12" description="Release">
