@@ -229,10 +229,11 @@ public class ApplicationPreferences
 	}
 
 	/**
+	 * Creates a condition of the given name and value.
 	 *
-	 * @param conditionName
-	 * @param value
-	 * @return
+	 * @param conditionName the name of the condition
+	 * @param value the value for the condition
+	 * @return the created condition
 	 * @throws IllegalArgumentException if value is not allowed for conditionName.
 	 */
 	public Condition createCondition(String conditionName, String value)
