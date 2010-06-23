@@ -93,11 +93,6 @@
 
 	<logger name="de.huxhorn.lilith" level="INFO"/>
 	<logger name="de.huxhorn.lilith.Lilith" level="DEBUG"/>
-	<logger name="de.huxhorn.lilith.handlers.FileDumpEventHandler" level="WARN"/>
-	<logger name="de.huxhorn.lilith.handlers.FileSplitterEventHandler" level="WARN"/>
-	<logger name="de.huxhorn.lilith.handlers.RrdLoggingEventHandler" level="INFO"/>
-	<logger name="de.huxhorn.lilith.handlers.SocketEventHandler" level="INFO"/>
-	<logger name="de.huxhorn.lilith.handlers.SocketEventHandler" level="INFO"/>
 	<logger name="de.huxhorn.lilith.engine.FileBufferFactory" level="INFO‚"/>
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="INFO"/>
 	<logger name="de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer" level="WARN"/>
@@ -106,6 +101,10 @@
 	<logger name="de.huxhorn.lilith.engine.impl.sourcemanager.EventPoller" level="WARN"/>
 	<logger name="de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl" level="WARN"/>
 	<logger name="de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer" level="WARN"/>
+	<logger name="de.huxhorn.lilith.eventhandlers.FileDumpEventHandler" level="WARN"/>
+	<logger name="de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler" level="WARN"/>
+	<logger name="de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler" level="INFO"/>
+	<logger name="de.huxhorn.lilith.eventhandlers.SocketEventHandler" level="INFO"/>
 	<logger name="de.huxhorn.lilith.services.sender" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.AboutPanel" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences" level="INFO"/>
