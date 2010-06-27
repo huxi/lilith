@@ -24,5 +24,5 @@ import java.util.List;
 
 public interface EventHandler<T extends Serializable>
 {
-	public void handle(List<EventWrapper<T>> events);
+	void handle(List<EventWrapper<T>> events);
 }
