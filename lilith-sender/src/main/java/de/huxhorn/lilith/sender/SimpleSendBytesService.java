@@ -118,36 +118,45 @@ public class SimpleSendBytesService
 
 	public void sendBytes(byte[] bytes)
 	{
-		if(connectionState == ConnectionState.Connected && sendBytesThread != null && bytes != null)
+		synchronized(localEventBytes)
 		{
-			try
+			if(connectionState == ConnectionState.Connected && sendBytesThread != null && bytes != null)
 			{
-				localEventBytes.put(bytes);
-			}
-			catch(InterruptedException e)
-			{
-				// ignore
+				try
+				{
+					localEventBytes.put(bytes);
+				}
+				catch(InterruptedException e)
+				{
+					// ignore
+				}
 			}
 		}
 	}
 
-	public synchronized void startUp()
+	public void startUp()
 	{
-		if(sendBytesThread == null)
+		synchronized(localEventBytes)
 		{
-			sendBytesThread = new SendBytesThread();
-			sendBytesThread.start();
+			if(sendBytesThread == null)
+			{
+				sendBytesThread = new SendBytesThread();
+				sendBytesThread.start();
+			}
 		}
 	}
 
-	public synchronized void shutDown()
+	public void shutDown()
 	{
-		connectionState = ConnectionState.Canceled;
-		if(sendBytesThread != null)
+		synchronized(localEventBytes)
 		{
-			sendBytesThread.interrupt();
-			sendBytesThread = null;
-			localEventBytes.clear();
+			connectionState = ConnectionState.Canceled;
+			if(sendBytesThread != null)
+			{
+				sendBytesThread.interrupt();
+				sendBytesThread = null;
+				localEventBytes.clear();
+			}
 		}
 	}
 
@@ -164,7 +173,7 @@ public class SimpleSendBytesService
 
 		public void closeConnection()
 		{
-			synchronized(SimpleSendBytesService.this)
+			synchronized(localEventBytes)
 			{
 				if(dataOutputStream != null)
 				{
@@ -207,7 +216,7 @@ public class SimpleSendBytesService
 					if(copy.size() > 0)
 					{
 						DataOutputStream outputStream;
-						synchronized(SimpleSendBytesService.this)
+						synchronized(localEventBytes)
 						{
 							outputStream = dataOutputStream;
 						}
@@ -265,7 +274,7 @@ public class SimpleSendBytesService
 				for(; ;)
 				{
 					boolean connect = false;
-					synchronized(SimpleSendBytesService.this)
+					synchronized(localEventBytes)
 					{
 						if(dataOutputStream == null && connectionState != ConnectionState.Canceled)
 						{
@@ -286,7 +295,7 @@ public class SimpleSendBytesService
 						}
 					}
 
-					synchronized(SimpleSendBytesService.this)
+					synchronized(localEventBytes)
 					{
 						if(connect)
 						{
