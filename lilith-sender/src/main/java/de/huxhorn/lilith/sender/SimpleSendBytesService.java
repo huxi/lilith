@@ -198,7 +198,7 @@ public class SimpleSendBytesService
 						System.err.println("Closed dataOutputStream.");
 					}
 				}
-				SimpleSendBytesService.this.notifyAll();
+				localEventBytes.notifyAll();
 			}
 		}
 
