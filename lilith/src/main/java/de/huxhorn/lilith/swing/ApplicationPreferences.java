@@ -158,6 +158,7 @@ public class ApplicationPreferences
 	private static final Map<HttpStatus.Type, ColorScheme> DEFAULT_STATUS_COLORS;
 	private static final String PREVIOUS_OPEN_PATH_PROPERTY = "previousOpenPath";
 	private static final String PREVIOUS_IMPORT_PATH_PROPERTY = "previousImportPath";
+	private static final String PREVIOUS_EXPORT_PATH_PROPERTY = "previousExportPath";
 
 	public static final String STARTUP_LOOK_AND_FEEL;
 
@@ -1882,8 +1883,8 @@ public class ApplicationPreferences
 
 	public File getPreviousImportPath()
 	{
-		String imagePath = PREFERENCES.get(PREVIOUS_IMPORT_PATH_PROPERTY, USER_HOME);
-		File result = new File(imagePath);
+		String path = PREFERENCES.get(PREVIOUS_IMPORT_PATH_PROPERTY, USER_HOME);
+		File result = new File(path);
 		if(!result.isDirectory())
 		{
 			result = new File(USER_HOME);
@@ -1901,6 +1902,29 @@ public class ApplicationPreferences
 		PREFERENCES.put(PREVIOUS_IMPORT_PATH_PROPERTY, importPath.getAbsolutePath());
 		Object newValue = getPreviousImportPath();
 		propertyChangeSupport.firePropertyChange(PREVIOUS_IMPORT_PATH_PROPERTY, oldValue, newValue);
+	}
+
+	public File getPreviousExportPath()
+	{
+		String path = PREFERENCES.get(PREVIOUS_EXPORT_PATH_PROPERTY, USER_HOME);
+		File result = new File(path);
+		if(!result.isDirectory())
+		{
+			result = new File(USER_HOME);
+		}
+		return result;
+	}
+
+	public void setPreviousExportPath(File exportPath)
+	{
+		if(!exportPath.isDirectory())
+		{
+			throw new IllegalArgumentException("'" + exportPath.getAbsolutePath() + "' is not a directory!");
+		}
+		Object oldValue = getPreviousImportPath();
+		PREFERENCES.put(PREVIOUS_EXPORT_PATH_PROPERTY, exportPath.getAbsolutePath());
+		Object newValue = getPreviousExportPath();
+		propertyChangeSupport.firePropertyChange(PREVIOUS_EXPORT_PATH_PROPERTY, oldValue, newValue);
 	}
 
 	public File getSoundPath()

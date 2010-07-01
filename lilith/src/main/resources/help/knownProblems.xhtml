@@ -13,10 +13,14 @@
 <h1><a name="top">Known Problems</a></h1>
 
 <ul>
-    <li>Mac OS X 10.5 + 10.6:
-    <br/>Shortcuts/Accelerators are not working if both the "Tip of the Day" and "Check for update" dialogs show after startup.
-    <br/>This seems to be a bug in the Java implementation from Apple.
-    <br/>See <a href="http://sourceforge.net/apps/trac/lilith/ticket/72">Ticket 72</a>.
+    <li>
+		Canceling an Export does not delete the data and index files - even though there's code
+		that's supposed to do exactly that.
+		<br/>
+		Take a look at the internal Lilith log. The "WTF??" is printed in exactly this situation.
+		<br/>
+		Feel free to find out what's going wrong here. It's actually quite hot right now so it might
+		be a brain-issue ;) - enlighten me!
     </li>
 
     <li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.

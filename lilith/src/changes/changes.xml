@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add" issue="92">
+				Added "Export" functionality which exports the currently selected view into a Lilith file.
+			</action>
 			<action dev="jhux" type="add">
 				Added default condition name to preferences. It's preselected for every new view.
 				This was suggested by Lothar Cezanne.

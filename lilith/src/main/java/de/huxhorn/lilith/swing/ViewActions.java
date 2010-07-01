@@ -84,6 +84,7 @@ public class ViewActions
 	private static final Icon FIND_PREV_MENU_ICON;
 	private static final Icon HELP_MENU_ICON;
 	private static final Icon OPEN_INACTIVE_MENU_ICON;
+	private static final Icon EXPORT_MENU_ICON;
 	private static final Icon EXIT_MENU_ICON;
 	private static final Icon PREFERENCES_MENU_ICON;
 
@@ -413,6 +414,20 @@ public class ViewActions
 		}
 		OPEN_INACTIVE_MENU_ICON = icon;
 
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/actions/document-save.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		EXPORT_MENU_ICON = icon;
+
 		{
 			URL url = ViewActions.class.getResource("/tango/16x16/actions/system-log-out.png");
 			if(url != null)
@@ -499,6 +514,8 @@ public class ViewActions
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
 	private JToggleButton scrollToBottomButton;
+
+	private ExportMenuAction exportMenuAction;
 	private AttachToolBarAction attachToolBarAction;
 	private AttachMenuAction attachMenuAction;
 	private DisconnectToolBarAction disconnectToolBarAction;
@@ -625,6 +642,7 @@ public class ViewActions
 		clearRecentFilesAction=new ClearRecentFilesAction();
 		OpenInactiveLogMenuAction openInactiveLogMenuAction = new OpenInactiveLogMenuAction();
 		ImportMenuAction importMenuAction = new ImportMenuAction();
+		exportMenuAction = new ExportMenuAction();
 		CleanAllInactiveLogsMenuAction cleanAllInactiveLogsMenuAction = new CleanAllInactiveLogsMenuAction();
 		preferencesMenuAction = new PreferencesMenuAction();
 		ExitMenuAction exitMenuAction = new ExitMenuAction();
@@ -759,6 +777,7 @@ public class ViewActions
 		fileMenu.add(new JMenuItem(openInactiveLogMenuAction));
 		fileMenu.add(new JMenuItem(cleanAllInactiveLogsMenuAction));
 		fileMenu.add(new JMenuItem(importMenuAction));
+		fileMenu.add(new JMenuItem(exportMenuAction));
 		if(!app.isMac())
 		{
 			fileMenu.addSeparator();
@@ -915,10 +934,11 @@ public class ViewActions
 		boolean isActive = false;
 		//boolean hasFilteredBuffer = false;
 		EventSource eventSource = null;
+		EventWrapperViewPanel eventWrapperViewPanel=null;
 		if(viewContainer != null)
 		{
 			hasView = true;
-			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+			eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
 			{
 				eventSource = eventWrapperViewPanel.getEventSource();
@@ -934,6 +954,10 @@ public class ViewActions
 			logger
 				.debug("updateActions() eventSource={}", eventSource);
 		}
+
+		// File
+		exportMenuAction.setView(eventWrapperViewPanel);
+
 		// Edit
 		editMenu.setEnabled(hasView);
 
@@ -1515,6 +1539,8 @@ public class ViewActions
 	private class OpenFileAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 3138705799791457944L;
+
 		private String absoluteName;
 
 		public OpenFileAction(String absoluteName, boolean fullPath)
@@ -1542,6 +1568,7 @@ public class ViewActions
 	private class ClearRecentFilesAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 2330892725802760973L;
 
 		public ClearRecentFilesAction()
 		{
@@ -3190,6 +3217,35 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.importFile();
+		}
+	}
+
+	class ExportMenuAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -5912177735718627089L;
+
+		private EventWrapperViewPanel view;
+
+		public ExportMenuAction()
+		{
+			super("Export...");
+			putValue(Action.SMALL_ICON, EXPORT_MENU_ICON);
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift E");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			putValue(Action.MNEMONIC_KEY, Integer.valueOf('e'));
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.exportFile(view);
+		}
+
+		public void setView(EventWrapperViewPanel eventWrapperViewPanel)
+		{
+			this.view=eventWrapperViewPanel;
+			setEnabled(view != null);
 		}
 	}
 

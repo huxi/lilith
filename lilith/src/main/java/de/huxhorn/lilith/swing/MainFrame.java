@@ -65,6 +65,7 @@ import de.huxhorn.lilith.services.sender.SenderService;
 import de.huxhorn.lilith.swing.callables.CheckFileChangeCallable;
 import de.huxhorn.lilith.swing.callables.CleanAllInactiveCallable;
 import de.huxhorn.lilith.swing.callables.CleanObsoleteCallable;
+import de.huxhorn.lilith.swing.callables.ExportCallable;
 import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LilithFileFilter;
@@ -206,6 +207,7 @@ public class MainFrame
 	public static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
 	private JFileChooser openFileChooser;
 	private JFileChooser importFileChooser;
+	private JFileChooser exportFileChooser;
 	private boolean coloringWholeRow;
 
 	private static final double SCALE_FACTOR = 0.05d;
@@ -216,6 +218,7 @@ public class MainFrame
 	private FileDumpEventHandler<LoggingEvent> loggingFileDump;
 	private FileDumpEventHandler<AccessEvent> accessFileDump;
 	private RrdLoggingEventHandler rrdLoggingEventHandler;
+	private static final int EXPORT_WARNING_SIZE = 20000;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -425,6 +428,11 @@ public class MainFrame
 		importFileChooser.setFileFilter(new XmlImportFileFilter());
 		importFileChooser.setFileHidingEnabled(false);
 		importFileChooser.setCurrentDirectory(this.applicationPreferences.getPreviousImportPath());
+
+		exportFileChooser = new JFileChooser();
+		exportFileChooser.setFileFilter(new LilithFileFilter());
+		exportFileChooser.setFileHidingEnabled(false);
+		exportFileChooser.setCurrentDirectory(this.applicationPreferences.getPreviousExportPath());
 
 		setSplashStatusText("Creating task manager frame.");
 		taskManagerFrame = new TaskManagerInternalFrame(this);
@@ -996,6 +1004,110 @@ public class MainFrame
 			}
 			importFile(importFile);
 		}
+	}
+
+	public void exportFile(EventWrapperViewPanel view)
+	{
+		long size=view.getEventSource().getBuffer().getSize();
+		if(size == 0)
+		{
+			return;
+		}
+		int returnVal = exportFileChooser.showSaveDialog(this);
+
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{
+			if(size > EXPORT_WARNING_SIZE)
+			{
+				String dialogTitle = "Large export! Are you sure?";
+				String message = "You are about to export "+size+" events. This could take some time.\nAre you sure you want to export?";
+				int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(JOptionPane.OK_OPTION != result)
+				{
+					return;
+				}
+			}
+			File file = exportFileChooser.getSelectedFile();
+			String fileName = file.getAbsolutePath();
+			String baseName;
+			if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+			{
+				baseName=fileName.substring(0, fileName.length()-FileConstants.FILE_EXTENSION.length());
+			}
+			else
+			{
+				baseName=fileName;
+			}
+
+			File dataFile=new File(baseName+FileConstants.FILE_EXTENSION);
+			File indexFile=new File(baseName+FileConstants.INDEX_FILE_EXTENSION);
+
+			if(dataFile.isFile())
+			{
+				String dialogTitle = "Overwrite file?";
+				String message = "Data file does already exist!\nOverwrite data file?";
+				int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(JOptionPane.OK_OPTION != result)
+				{
+					return;
+				}
+				if(!dataFile.delete())
+				{
+					if(logger.isWarnEnabled()) logger.warn("Couldn't delete existing file {}!", dataFile.getAbsolutePath());
+				}
+				if(indexFile.isFile() && !indexFile.delete())
+				{
+					if(logger.isWarnEnabled()) logger.warn("Couldn't delete existing file {}!", indexFile.getAbsolutePath());
+				}
+			}
+
+			if(view instanceof AccessEventViewPanel)
+			{
+				exportFile(dataFile, indexFile, (AccessEventViewPanel) view);
+			}
+			else if(view instanceof LoggingEventViewPanel)
+			{
+				exportFile(dataFile, indexFile, (LoggingEventViewPanel) view);
+			}
+		}
+	}
+
+	private void exportFile(File dataFile, File indexFile, AccessEventViewPanel viewPanel)
+	{
+		Map<String, String> metaData = new HashMap<String, String>();
+		metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
+		metaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
+		metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
+
+		FileBuffer<EventWrapper<AccessEvent>> outputBuffer =
+			accessFileBufferFactory.createBuffer(dataFile, indexFile, metaData);
+
+		Buffer<EventWrapper<AccessEvent>> inputBuffer = viewPanel.getEventSource().getBuffer();
+
+		String name="Export to "+dataFile.getName();
+		String description="Exporting "+inputBuffer.getSize()+" access events into file '"+dataFile.getAbsolutePath()+"'.";
+		Task<Long> task = longTaskManager.startTask(new ExportCallable<AccessEvent>(inputBuffer, outputBuffer), name, description);
+		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
+	}
+
+	private void exportFile(File dataFile, File indexFile, LoggingEventViewPanel viewPanel)
+	{
+		Map<String, String> metaData = new HashMap<String, String>();
+		metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
+		metaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
+		metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
+
+		FileBuffer<EventWrapper<LoggingEvent>> outputBuffer =
+			loggingFileBufferFactory.createBuffer(dataFile, indexFile, metaData);
+
+		Buffer<EventWrapper<LoggingEvent>> inputBuffer = viewPanel.getEventSource().getBuffer();
+
+		String name="Export to "+dataFile.getName();
+		String description="Exporting "+inputBuffer.getSize()+" logging events into file '"+dataFile.getAbsolutePath()+"'.";
+		Task<Long> task = longTaskManager.startTask(new ExportCallable<LoggingEvent>(inputBuffer, outputBuffer), name, description);
+		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 	}
 
 	public void open(File dataFile)
@@ -2585,6 +2697,7 @@ public class MainFrame
 			deleteInactiveLogs();
 		}
 		applicationPreferences.setPreviousImportPath(importFileChooser.getCurrentDirectory());
+		applicationPreferences.setPreviousExportPath(exportFileChooser.getCurrentDirectory());
 		applicationPreferences.setPreviousOpenPath(openFileChooser.getCurrentDirectory());
 		applicationPreferences.flush();
 		longTaskManager.shutDown();
@@ -3693,6 +3806,38 @@ public class MainFrame
 		public void executionCanceled(Task<Long> longTask)
 		{
 			if(logger.isInfoEnabled()) logger.info("Execution of task "+longTask.getName()+" canceled!");
+			Callable<Long> c = longTask.getCallable();
+			if(c instanceof ExportCallable)
+			{
+				if(logger.isInfoEnabled()) logger.info("Done? {}",longTask.getFuture().isDone());
+				ExportCallable ec = (ExportCallable) c;
+				FileBuffer output = ec.getOutput();
+				output.reset();
+				File dataFile = output.getDataFile();
+				if(dataFile.isFile())
+				{
+					if(dataFile.delete())
+					{
+						if(logger.isInfoEnabled()) logger.info("Deleted {}.", dataFile.getAbsolutePath());
+						if(dataFile.isFile())
+						{
+							if(logger.isWarnEnabled()) logger.warn("WTF???? I just deleted {} and now it's still a file?!", dataFile.getAbsolutePath());
+						}
+						if(dataFile.exists())
+						{
+							if(logger.isWarnEnabled()) logger.warn("WTF???? I just deleted {} and now it still exists?!", dataFile.getAbsolutePath());
+						}
+					}
+					else
+					{
+						if(logger.isWarnEnabled()) logger.warn("Couldn't delete {}.", dataFile.getAbsolutePath());
+					}
+				}
+				else
+				{
+					if(logger.isWarnEnabled()) logger.warn("WTF? {}", dataFile.getAbsolutePath());
+				}
+			}
 			updateTaskStatus();
 		}
 
