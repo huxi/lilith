@@ -50,15 +50,23 @@
 		
 		<dependency>
 			<groupId>stax</groupId>
+			<artifactId>stax-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>stax</groupId>
 			<artifactId>stax</artifactId>
-			<version>1.2.0</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!--
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
@@ -69,6 +77,8 @@
 			<artifactId>logback-classic</artifactId>
 			<scope>test</scope>
 		</dependency>
+		-->
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

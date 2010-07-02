@@ -527,6 +527,12 @@
 
 			<dependency>
 				<groupId>stax</groupId>
+				<artifactId>stax-api</artifactId>
+				<version>1.0.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>stax</groupId>
 				<artifactId>stax</artifactId>
 				<version>1.2.0</version>
 			</dependency>

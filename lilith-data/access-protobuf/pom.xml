@@ -55,6 +55,7 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!--
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
@@ -72,6 +73,7 @@
 			<artifactId>de.huxhorn.sulky.junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		-->
 		
 		<dependency>
 			<groupId>junit</groupId>

@@ -54,35 +54,21 @@
 			<scope>compile</scope>
 		</dependency>
 		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.codec.filebuffer</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.conditions</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
+		<!--
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		-->
 		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.codec</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
+		<!--
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		-->
 	</dependencies>
 </project>
 
