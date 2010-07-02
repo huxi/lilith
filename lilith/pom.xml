@@ -285,10 +285,34 @@
 		
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.sounds-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.sounds-impl-jlayer</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.conditions</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.codec</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.codec.filebuffer</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.buffers</artifactId>
@@ -301,6 +325,12 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.formatting</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.swing</artifactId>
@@ -352,6 +382,12 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
