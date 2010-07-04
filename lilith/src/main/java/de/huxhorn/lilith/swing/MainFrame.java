@@ -89,6 +89,7 @@ import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.conditions.Condition;
+import de.huxhorn.sulky.conditions.Or;
 import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
@@ -219,6 +220,7 @@ public class MainFrame
 	private FileDumpEventHandler<AccessEvent> accessFileDump;
 	private RrdLoggingEventHandler rrdLoggingEventHandler;
 	private static final int EXPORT_WARNING_SIZE = 20000;
+	private Condition findActiveCondition;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -3103,6 +3105,11 @@ public class MainFrame
 		}
 	}
 
+	public Condition getFindActiveCondition()
+	{
+		return findActiveCondition;
+	}
+
 	private void updateConditions()
 	{
 		List<SavedCondition> conditions = applicationPreferences.getConditions();
@@ -3118,6 +3125,26 @@ public class MainFrame
 			}
 		}
 		activeConditions = active;
+		int activeCount = active.size();
+		if(activeCount>0)
+		{
+			if(activeCount == 1)
+			{
+				findActiveCondition = active.get(0).getCondition();
+			}
+			else
+			{
+				Or or=new Or();
+
+				List<Condition> cond=new ArrayList<Condition>(activeCount);
+				for(SavedCondition current:active)
+				{
+					cond.add(current.getCondition());
+				}
+				or.setConditions(cond);
+				findActiveCondition=or;
+			}
+		}
 		//flushCachedConditionResults();
 
 		updateAllViews();

@@ -524,6 +524,8 @@ public class ViewActions
 	private PauseMenuAction pauseMenuAction;
 	private FindPreviousAction findPreviousAction;
 	private FindNextAction findNextAction;
+	private FindPreviousActiveAction findPreviousActiveAction;
+	private FindNextActiveAction findNextActiveAction;
 	private ResetFindAction resetFindAction;
 	private ScrollToBottomMenuAction scrollToBottomMenuAction;
 	private EditSourceNameMenuAction editSourceNameMenuAction;
@@ -667,6 +669,8 @@ public class ViewActions
 		findMenuAction = new FindMenuAction();
 		findPreviousAction = new FindPreviousAction();
 		findNextAction = new FindNextAction();
+		findPreviousActiveAction = new FindPreviousActiveAction();
+		findNextActiveAction = new FindNextActiveAction();
 		resetFindAction = new ResetFindAction();
 
 		// View
@@ -811,6 +815,8 @@ public class ViewActions
 		searchMenu.add(resetFindAction);
 		searchMenu.add(findPreviousAction);
 		searchMenu.add(findNextAction);
+		searchMenu.add(findPreviousActiveAction);
+		searchMenu.add(findNextActiveAction);
 
 		// View
 		viewMenu = new JMenu("View");
@@ -968,6 +974,10 @@ public class ViewActions
 		resetFindAction.setEnabled(hasFilter);
 		findPreviousAction.setEnabled(hasFilter);
 		findNextAction.setEnabled(hasFilter);
+
+		Condition condition = mainFrame.getFindActiveCondition();
+		findPreviousActiveAction.setEnabled(hasView && condition != null);
+		findNextActiveAction.setEnabled(hasView && condition != null);
 
 		// View
 		viewMenu.setEnabled(hasView);
@@ -1265,6 +1275,19 @@ public class ViewActions
 		}
 	}
 
+	private void findNextActive()
+	{
+		Condition condition = mainFrame.getFindActiveCondition();
+		if(viewContainer != null && condition != null)
+		{
+			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+			if(eventWrapperViewPanel != null)
+			{
+				eventWrapperViewPanel
+					.findNext(eventWrapperViewPanel.getSelectedRow(), condition);
+			}
+		}
+	}
 
 	private void findPrevious()
 	{
@@ -1279,6 +1302,19 @@ public class ViewActions
 		}
 	}
 
+	private void findPreviousActive()
+	{
+		Condition condition = mainFrame.getFindActiveCondition();
+		if(viewContainer != null && condition != null)
+		{
+			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+			if(eventWrapperViewPanel != null)
+			{
+				eventWrapperViewPanel
+					.findPrevious(eventWrapperViewPanel.getSelectedRow(), condition);
+			}
+		}
+	}
 
 	private void resetFind()
 	{
@@ -2343,6 +2379,49 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			findPrevious();
+		}
+	}
+
+	private class FindNextActiveAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = 8153060295931745089L;
+
+		public FindNextActiveAction()
+		{
+			super("Find next active");
+			putValue(Action.SMALL_ICON, FIND_NEXT_MENU_ICON);
+			putValue(Action.SHORT_DESCRIPTION, "Find next match of any active condition.");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift T");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			findNextActive();
+		}
+
+	}
+
+	private class FindPreviousActiveAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = 2473715367685180389L;
+
+		public FindPreviousActiveAction()
+		{
+			super("Find previous active");
+			putValue(Action.SMALL_ICON, FIND_PREV_MENU_ICON);
+			putValue(Action.SHORT_DESCRIPTION, "Find previous match of any active condition.");
+			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " T");
+			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			findPreviousActive();
 		}
 	}
 
