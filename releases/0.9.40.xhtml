@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 0.9.40</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 0.9.40</h1>
+
+		<div>
+		<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/0.9.40">Download Now!
+		<br />(Released: 2010-xx-xx)</a>
+		</div>
+		
+		<h2>Changes</h2>
+		<ul>
+			<li>
+				Added "Find previous active" (*command* T) and "Find next active" (*command* shift T) functionality
+				to quickly jump to events that match any active condition.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/93">Ticket 93</a>)			
+			</li>
+			
+			<li>
+				Added "Export" functionality which exports the currently selected view into a Lilith file.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/92">Ticket 92</a>)			
+			</li>
+			
+			<li>
+				Added default condition name to preferences. It's preselected for every new view.<br />
+				This was suggested by Lothar Cezanne.
+			</li>
+			
+			<li>
+				Polling events every 100ms instead of every 2s.<br />
+				This results in less congestion and a much snappier feeling.
+			</li>
+			
+			<li>
+				Fixed deployment of site.<br />
+				See <a href="http://sulky.huxhorn.de/projects/">sulky</a> and <a href="http://lilith.huxhorn.de/projects/">lilith</a>.
+			</li>
+			
+			<li>
+				Added --export-preferences &lt;file&gt; and --import-preferences &lt;file&gt; 
+				commandline options to be able to export and import all preferences.
+				<br/>This was requested by Gareth Doutch (gdoutch).
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/81">Ticket 81</a>)			
+			</li>
+			
+			<li>
+				Added an additional executable lilith-all.jar containing all dependencies as
+				another download option.
+				<br/>This was requested by Adrien Sales.
+			</li>
+
+			<li>
+				Added ability to define a sound for WARN-level events, but without any assigned default sound.
+				<br/>This was requested by Adrien Sales.
+			</li>
+
+			<li>
+				Added F1 as shortcut for Help.
+				<br/>This was requested by Adrien Sales.
+			</li>
+
+			<li>
+				Fixed several issue in case of log files that are recreated by
+				&lt;append&gt;false&lt;/append&gt; in FileAppender.
+				<br/>Those were all raised by Jeff Jensen (jeffjensen). Thank you very much!
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/84">Ticket 84</a>)			
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/88">Ticket 88</a>)			
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/90">Ticket 90</a>)			
+			</li>
+
+			<li>
+				Fixed the regression that the internal Lilith log wouldn't show up in the menu anymore.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/85">Ticket 85</a>)			
+			</li>
+			
+			<li>
+				Changed update interval of opened files from 5 seconds to 1 second.
+			</li>
+			
+			<li>
+				Groovy 1.7.3
+			</li>
+		</ul>
+		
+		
+		<h2>Known Issues</h2>
+		<ul>
+			<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+				This is a limitation of Flying Saucer that's used as the XHTML renderer.
+			</li>
+			<li>cat and tail are currently still experimental features.
+			<br/>AccessEvent isn't (and can't be) supported yet. LoggingEvent isn't
+			fully supported, either.
+			</li>
+		</ul>
+
+		
+		<h2>Previous Versions</h2>
+		<ul>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.39.xhtml">0.9.39</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.38.xhtml">0.9.38</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.37.xhtml">0.9.37</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.36.xhtml">0.9.36</a></li>
+		</ul>
+
+	</body>
+</html>
+

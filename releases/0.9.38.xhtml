@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 0.9.38</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 0.9.38</h1>
+
+		<div>
+		<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/0.9.38">Download Now!
+		<br />(Released: 2010-03-26)</a>
+		</div>
+		<h2>Changes</h2>
+		<ul>
+		
+			<li>
+				Added help about using Lilith encoders in FileAppender.
+			</li>
+
+			<li>
+				Added detection of outdated index files and the option to reindex a log file in that case.
+				<br/>This is helpful while reopening log files created by a FileAppender.
+			</li>
+
+			<li>
+				Added new modules de.huxhorn.lilith.logback.encoder.classic
+				and de.huxhorn.lilith.logback.encoder.access to support writing of Lilith
+				logfiles using Logback FileAppender.
+				<br/>Thanks to Ceki for supporting this!
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/23">Ticket 23</a>)			
+			</li>
+
+			<li>
+			Added some more tips.
+			</li>
+
+			<li>
+			Added shortcut for "Close all" action.
+			</li>
+
+			<li>
+			Views aren't opened anymore in case of connection closed for black- or not whitelisted sources.
+			<br/>This was reported by Vlad Satanovski.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/76">Ticket 76</a>)			
+			</li>
+
+			<li>
+			Added the ability to clear a filtered view. Doing this clears the original view and resets
+			the filtered view.
+			<br/>This was suggested by Joe.
+			</li>
+			
+			<li>
+			Moved BufferTableModel to new module sulky-buffers-table.
+			</li>
+			
+			<li>
+			Moved RowBasedTableModel and PersistentTableColumnModel to module sulky-swing.
+			</li>
+			
+			<li>
+            Implemented the workaround for Apple Problem ID #7240026 suggested by GalaJon.
+            <br/>Thanks a lot!
+            <br/>See <a href="http://bit.ly/5vF5M2">his answer on stackoverflow.com</a>.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/72">Ticket 72</a>)			
+			</li>
+
+			<li>
+            Of-by-one error in message renderer [+x lines].
+			</li>
+
+			<li>
+            Lilith log is now showing uncaught exceptions as errors.
+			</li>
+			
+			<li>
+            Added "Uncaught Exception" debug action.
+			</li>
+			
+			<li>
+            The find panel has been heavily refactored.
+            <br/>Instead of a text-field it now features a combobox containing the previous 15 searches that were used
+            for filtered views. Additionally, there's a new filter type "Named" that populates the combobox with
+            named/saved conditions. Similarly, selecting "Level>=" populates the combobox with the correct values
+            from TRACE to ERROR. The comboboxes, both filter type selection and filter text, feature autocompletion
+            of entered text.
+            <br/>This was suggested by Joe.
+			<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/50">Ticket 50</a>)			
+			</li>
+
+			<li>
+            Groovy 1.7.0
+			</li>
+			
+			<li>
+            Logback 0.9.19
+			</li>
+			
+			<li>
+            SLF4J 1.5.11
+			</li>
+
+		</ul>
+		
+		
+		<h2>Known Issues</h2>
+		<ul>
+			<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+				This is a limitation of Flying Saucer that's used as the XHTML renderer.
+			</li>
+		</ul>
+
+		
+		<h2>Previous Versions</h2>
+		<ul>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.37.xhtml">0.9.37</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.36.xhtml">0.9.36</a></li>
+		</ul>
+
+	</body>
+</html>
+
