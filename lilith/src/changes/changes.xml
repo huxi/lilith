@@ -148,6 +148,9 @@
 				Groovy 1.7.3
 			</action>
 			<action dev="jhux" type="update">
+				SLF4J 1.6.1
+			</action>
+			<action dev="jhux" type="update">
 				Logback 0.9.24
 			</action>
 		</release>
