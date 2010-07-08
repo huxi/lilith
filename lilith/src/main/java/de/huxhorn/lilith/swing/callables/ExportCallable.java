@@ -21,17 +21,12 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.Serializable;
 
 public class ExportCallable<T extends Serializable>
 	extends AbstractProgressingCallable<Long>
 {
-	private final Logger logger = LoggerFactory.getLogger(ExportCallable.class);
-
 	private Buffer<EventWrapper<T>> input;
 	private FileBuffer<EventWrapper<T>> output;
 

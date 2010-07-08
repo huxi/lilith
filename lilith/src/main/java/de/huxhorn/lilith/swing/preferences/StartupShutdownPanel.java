@@ -28,7 +28,6 @@ import javax.swing.border.TitledBorder;
 public class StartupShutdownPanel
 	extends JPanel
 {
-	private PreferencesDialog preferencesDialog;
 	private ApplicationPreferences applicationPreferences;
 
 	// Startup
@@ -42,7 +41,6 @@ public class StartupShutdownPanel
 
 	public StartupShutdownPanel(PreferencesDialog preferencesDialog)
 	{
-		this.preferencesDialog = preferencesDialog;
 		this.applicationPreferences = preferencesDialog.getApplicationPreferences();
 		createUI();
 	}

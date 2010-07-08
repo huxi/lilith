@@ -34,8 +34,6 @@ public class ViewContainerInternalFrame
 	private final Logger logger = LoggerFactory.getLogger(ViewContainerInternalFrame.class);
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
-	private boolean showingToolbar;
-	private boolean showingStatusbar;
 
 	public ViewContainerInternalFrame(MainFrame mainFrame, ViewContainer viewContainer)
 	{
@@ -61,7 +59,6 @@ public class ViewContainerInternalFrame
 
 	public void setShowingStatusbar(boolean showingStatusbar)
 	{
-		this.showingStatusbar=showingStatusbar;
 		if(viewContainer != null)
 		{
 			viewContainer.setShowingStatusbar(showingStatusbar);

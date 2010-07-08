@@ -36,8 +36,6 @@ public class ViewContainerFrame
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
 	private JToolBar toolbar;
-	private boolean showingToolbar;
-	private boolean showingStatusbar;
 
 	public ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer)
 		throws HeadlessException
@@ -96,7 +94,6 @@ public class ViewContainerFrame
 
 	public void setShowingStatusbar(boolean showingStatusbar)
 	{
-		this.showingStatusbar=showingStatusbar;
 		if(viewContainer != null)
 		{
 			viewContainer.setShowingStatusbar(showingStatusbar);
@@ -105,13 +102,12 @@ public class ViewContainerFrame
 
 	public void setShowingToolbar(boolean showingToolbar)
 	{
-		this.showingToolbar=showingToolbar;
 		toolbar.setVisible(showingToolbar);
 	}
 
 	public boolean isShowingToolbar()
 	{
-		return showingToolbar;
+		return toolbar.isVisible();
 	}
 
 	class CleanupWindowChangeListener

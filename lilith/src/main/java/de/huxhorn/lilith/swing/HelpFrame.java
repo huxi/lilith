@@ -24,7 +24,6 @@ import de.huxhorn.sulky.swing.KeyStrokes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.simple.FSScrollPane;
-import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
@@ -43,7 +42,6 @@ public class HelpFrame
 	private final Logger logger = LoggerFactory.getLogger(HelpFrame.class);
 
 	private EnhancedXHTMLPanel helpPane;
-	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private MainFrame mainFrame;
 	private SelectionHighlighter.CopyAction copyAction;
 	private JPopupMenu popup;
@@ -92,7 +90,6 @@ public class HelpFrame
 		copyAction.install(helpPaneCaret);
 
 
-		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
 
 		setContentPane(helpScrollPane);
