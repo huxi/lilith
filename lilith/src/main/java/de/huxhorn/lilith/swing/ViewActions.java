@@ -2204,7 +2204,7 @@ public class ViewActions
 		}
 	}
 
-	private class StatisticsMenuAction
+	private static class StatisticsMenuAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = -6336357605789928345L;
@@ -4025,7 +4025,7 @@ public class ViewActions
 		}
 	}
 
-	protected class SendAction<T extends Serializable>
+	protected static class SendAction<T extends Serializable>
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = 6612401555757959404L;
@@ -4049,7 +4049,7 @@ public class ViewActions
 		}
 	}
 
-	private class ShowHideAction
+	private static class ShowHideAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = 7775753128032553866L;
