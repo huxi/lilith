@@ -42,6 +42,8 @@ import java.io.Serializable;
 public class ThreadGroupInfo
 	implements Serializable, Cloneable
 {
+	private static final long serialVersionUID = -979166102420961284L;
+
 	private String name;
 	private ThreadGroupInfo parent;
 
