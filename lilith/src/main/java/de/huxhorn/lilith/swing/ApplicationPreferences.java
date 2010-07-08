@@ -1169,7 +1169,7 @@ public class ApplicationPreferences
 				// ignore
 			}
 
-			byte[] current = getMD5(getClass().getResourceAsStream(resourcePath));
+			byte[] current = getMD5(ApplicationPreferences.class.getResourceAsStream(resourcePath));
 			if(Arrays.equals(available, current))
 			{
 				// we are done already. The current version is the latest version.
