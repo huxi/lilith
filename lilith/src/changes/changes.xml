@@ -86,6 +86,9 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="fix">
+				Fixed glitch in case of "Find next"/"Find prev" while search is already running. Additional searches are now ignored.
+			</action>
 			<action dev="jhux" type="add" issue="93">
 				Added "Find previous active" (*command* T) and "Find next active" (*command* shift T) functionality
 				to quickly jump to events that match any active condition.

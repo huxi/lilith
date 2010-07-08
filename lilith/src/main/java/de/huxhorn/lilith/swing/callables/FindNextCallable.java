@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
@@ -35,13 +36,20 @@ public class FindNextCallable<T extends Serializable>
 	private int currentRow;
 	private Condition condition;
 	private EventWrapperTableModel<T> tableModel;
+	private EventWrapperViewPanel<T> viewPanel;
 
-	public FindNextCallable(EventWrapperTableModel<T> tableModel, int currentRow, Condition condition)
+	public FindNextCallable(EventWrapperViewPanel<T> viewPanel, int currentRow, Condition condition)
 	{
 		super(200, 1000);
-		this.tableModel = tableModel;
+		this.viewPanel=viewPanel;
+		this.tableModel = viewPanel.getTableModel();
 		this.currentRow = currentRow;
 		this.condition = condition;
+	}
+
+	public EventWrapperViewPanel<T> getViewPanel()
+	{
+		return viewPanel;
 	}
 
 	public Long call()

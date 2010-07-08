@@ -830,7 +830,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(condition != null)
 		{
-			ProgressingCallable<Long> callable = new FindPreviousCallable<T>(tableModel, currentRow, condition);
+			ProgressingCallable<Long> callable = new FindPreviousCallable<T>(this, currentRow, condition);
 			executeFind(callable, "Find previous", currentRow, condition);
 		}
 	}
@@ -844,7 +844,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(condition != null)
 		{
-			ProgressingCallable<Long> callable = new FindNextCallable<T>(tableModel, currentRow, condition);
+			ProgressingCallable<Long> callable = new FindNextCallable<T>(this, currentRow, condition);
 			executeFind(callable, "Find next", currentRow, condition);
 		}
 	}
@@ -1311,6 +1311,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private void executeFind(Callable<Long> callable, String name, int currentRow, Condition condition)
 	{
+		ViewContainer<T> container = resolveContainer();
+		if(container != null)
+		{
+			if(container.isSearching())
+			{
+				return; // prevent scheduling of multiple searches...
+			}
+		}
 		Map<String, String> metaData = CallableMetaData.createFindMetaData(condition, eventSource, currentRow);
 
 		String description = "Executing '" + name + "' for condition " + metaData
@@ -1321,14 +1329,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.enableFindComponents(false, condition);
 		findResultListener.setCallable(callable);
 		Task<Long> task = taskManager.startTask(callable, name, description, metaData);
-		ViewContainer<T> container = resolveContainer();
 		if(container != null)
 		{
 			container.showSearchPanel(task);
 		}
 	}
 
-	class FindResultListener
+	private class FindResultListener
 		implements TaskListener<Long>
 	{
 		private Callable<Long> callable;
