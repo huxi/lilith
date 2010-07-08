@@ -161,7 +161,6 @@ public class TipOfTheDayDialog
 
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 0;
-		gbc.gridx = 0;
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 
