@@ -156,6 +156,8 @@ public class AboutPanel
 	 *                           scrolling should take place. This parameter is optional. If it's null
 	 *                           then the scroll-area is set to (0, 0, background.width,
 	 *                           background.height).
+	 * @param scrollText The text that will be scrolled.
+	 * @throws java.io.IOException If receiving content from backgroundImageUrl fails
 	 */
 	public AboutPanel(URL backgroundImageUrl, Rectangle scrollArea, String scrollText)
 		throws IOException
@@ -403,9 +405,9 @@ public class AboutPanel
 	}
 
 
-	public void setScrollText(String ScrollText)
+	public void setScrollText(String scrollText)
 	{
-		StringTokenizer st = new StringTokenizer(ScrollText, "\n", true);
+		StringTokenizer st = new StringTokenizer(scrollText, "\n", true);
 
 		List<String> lines = new ArrayList<String>(st.countTokens() / 2);
 		String prevToken = null;
@@ -464,16 +466,16 @@ public class AboutPanel
 	/**
 	 * Sets the backgroundImage attribute of the <code>AboutPanel</code> object
 	 *
-	 * @param BackgroundImage The new backgroundImage value
+	 * @param backgroundImage The new backgroundImage value
 	 */
-	public void setBackgroundImage(BufferedImage BackgroundImage)
+	public void setBackgroundImage(BufferedImage backgroundImage)
 	{
-		if(backgroundImage != null)
+		if(this.backgroundImage != null)
 		{
-			backgroundImage.flush();
-			backgroundImage = null;
+			this.backgroundImage.flush();
+			this.backgroundImage = null;
 		}
-		backgroundImage = BackgroundImage;
+		this.backgroundImage = backgroundImage;
 		updateBackgroundAttributes();
 	}
 
@@ -485,27 +487,27 @@ public class AboutPanel
 	}
 
 
-	public void setAboutImage(BufferedImage AboutImage)
+	public void setAboutImage(BufferedImage aboutImage)
 	{
-		if(aboutImage != null)
+		if(this.aboutImage != null)
 		{
-			aboutImage.flush();
-			aboutImage = null;
+			this.aboutImage.flush();
+			this.aboutImage = null;
 		}
-		aboutImage = AboutImage;
+		this.aboutImage = aboutImage;
 		flushScrollImage();
 	}
 
 	/**
 	 * Sets the scrollArea attribute of the <code>AboutPanel</code> object
 	 *
-	 * @param ScrollArea The new scrollArea value
+	 * @param scrollArea The new scrollArea value
 	 */
-	public void setScrollArea(Rectangle ScrollArea)
+	public void setScrollArea(Rectangle scrollArea)
 	{
-		if(ScrollArea != null)
+		if(scrollArea != null)
 		{
-			maxScrollArea = backgroundImageArea.intersection(ScrollArea);
+			maxScrollArea = backgroundImageArea.intersection(scrollArea);
 		}
 		else
 		{
@@ -1026,23 +1028,23 @@ public class AboutPanel
 	/**
 	 * Paints this component.
 	 *
-	 * @param _g <code>Graphics</code>-object
+	 * @param graphics <code>Graphics</code>-object
 	 */
-	public void paintComponent(Graphics _g)
+	public void paintComponent(Graphics graphics)
 	{
-		super.paintComponent(_g);
+		super.paintComponent(graphics);
 
 		processOffscreenImage();
 
 		// we need to create a copy of the given graphics since we
 		// change the clip. Otherwise the border wouldn't be painted
 		// propertly (not at all in this case).
-		Graphics2D g = (Graphics2D) _g.create();
+		Graphics2D graphics2D = (Graphics2D) graphics.create();
 
-		g.setClip(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
+		graphics2D.setClip(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
 
-		g.drawImage(offscreenImage, paintArea.x + offscreenOffset.x, paintArea.y + offscreenOffset.y, this);
-		g.dispose();
+		graphics2D.drawImage(offscreenImage, paintArea.x + offscreenOffset.x, paintArea.y + offscreenOffset.y, this);
+		graphics2D.dispose();
 		//setPainted(true);
 	}
 
@@ -1164,14 +1166,14 @@ public class AboutPanel
 	 * of <code>true</code> will notify the scroll-thread that it has to resume
 	 * work. A value of <code>false</code> will send it into wait-state instead.
 	 *
-	 * @param Scrolling The new scrolling value
+	 * @param scrolling The new scrolling value
 	 */
-	public void setScrolling(boolean Scrolling)
+	public void setScrolling(boolean scrolling)
 	{
-		if(scrolling != Scrolling)
+		if(this.scrolling != scrolling)
 		{
-			scrolling = Scrolling;
-			if(scrolling)
+			this.scrolling = scrolling;
+			if(this.scrolling)
 			{
 				timer.start();
 				if(logger.isInfoEnabled()) logger.info("Timer started.");
