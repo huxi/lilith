@@ -282,12 +282,12 @@ public class ExtendedStackTraceElement
 		{
 			ste = ste.substring(AT_PREFIX.length());
 		}
-		int idx = ste.lastIndexOf("(");
+		int idx = ste.lastIndexOf('(');
 		if(idx < 0)
 		{
 			return null; // not a ste
 		}
-		int endIdx = ste.lastIndexOf(")");
+		int endIdx = ste.lastIndexOf(')');
 		if(endIdx < 0)
 		{
 			return null; // not a ste
@@ -296,10 +296,10 @@ public class ExtendedStackTraceElement
 		String classAndMethod = ste.substring(0, idx);
 		String source = ste.substring(idx + 1, endIdx);
 		String remainder = ste.substring(endIdx + 1);
-		idx = classAndMethod.lastIndexOf(".");
+		idx = classAndMethod.lastIndexOf('.');
 		String clazz = classAndMethod.substring(0, idx);
 		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
-		idx = source.lastIndexOf(":");
+		idx = source.lastIndexOf(':');
 		String file = null;
 		int lineNumber = UNKNOWN_SOURCE;
 		if(idx != -1)
@@ -318,7 +318,7 @@ public class ExtendedStackTraceElement
 				file = source;
 			}
 		}
-		int vEndIdx = remainder.lastIndexOf("]");
+		int vEndIdx = remainder.lastIndexOf(']');
 		if(vEndIdx >= 0)
 		{
 			boolean exact = false;
@@ -335,7 +335,7 @@ public class ExtendedStackTraceElement
 			}
 			if(versionStr != null)
 			{
-				int colonIdx = versionStr.indexOf(":");
+				int colonIdx = versionStr.indexOf(':');
 				if(colonIdx > -1)
 				{
 					String codeLocation = versionStr.substring(0, colonIdx);
