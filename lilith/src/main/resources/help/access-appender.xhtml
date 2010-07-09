@@ -102,6 +102,7 @@
   </appender>
   <appender name="multiplex" class="de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender">
     <Compressing>true</Compressing> <!-- will automatically use correct default port -->
+    <!-- Default port for compressed is 10010 and uncompressed 10011 -->
     <ReconnectionDelay>30000</ReconnectionDelay>
     <RemoteHosts>localhost</RemoteHosts>
   </appender>
@@ -109,6 +110,28 @@
   <appender-ref ref="STDOUT" />
   <appender-ref ref="multiplex" />
 </configuration>]]></code></pre>
+
+<p><a href="#top">Back to top.</a></p>
+
+<h2>logback-access SocketAppender</h2>
+Lilith listens for connections of the logback-access SocketAppender on port 4570.
+
+<p>Add the following dependency to your applications <code>pom.xml</code> file:</p>
+		<pre><code><![CDATA[<dependency>
+  <groupId>ch.qos.logback</groupId>
+  <artifactId>logback-access</artifactId>
+  <version>${logbackVersion}</version>
+  <scope>runtime</scope>
+</dependency>]]></code></pre>
+
+<p>Then, add the following to your <code>logback-access.xml</code> file:</p>
+		<pre><code><![CDATA[<appender name="LogbackAccess" class="ch.qos.logback.access.net.SocketAppender">
+  <RemoteHost>localhost</RemoteHost>
+  <Port>4570</Port>
+  <ReconnectionDelay>170</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
+</appender>
+]]></code></pre>
 
 <p><a href="#top">Back to top.</a></p>
 </body>

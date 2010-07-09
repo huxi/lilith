@@ -54,22 +54,26 @@
 <p>Then, add the following to your <code>logback.xml</code> file:</p>
 		<pre><code><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
   <Compressing>true</Compressing> <!-- will automatically use correct default port -->
+  <!-- Default port for compressed is 10000 and uncompressed 10001 -->
   <ReconnectionDelay>10000</ReconnectionDelay>
   <IncludeCallerData>true</IncludeCallerData>
   <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+  <!--
+  Alternatively:
+  <RemoteHost>localhost</RemoteHost>
+  <RemoteHost>10.200.55.13</RemoteHost>
+  -->
 </appender>]]></code></pre>
 
 
 <p>You also have to attach the appender to some logger, e.g. the root logger...</p>
-		<pre><code><![CDATA[<root>
-  <level value="INFO"/>
+		<pre><code><![CDATA[<root level="INFO">
   <appender-ref ref="multiplex"/>
 </root>]]></code></pre>
 
 
 <p>... or a specific logger...</p>
-		<pre><code><![CDATA[<logger name="foo.Bar">
-  <level value="DEBUG"/>
+		<pre><code><![CDATA[<logger name="foo.Bar" level="DEBUG">
   <appender-ref ref="multiplex"/>
 </logger>]]></code></pre>
 
@@ -111,18 +115,52 @@
 <p>Then, add the following to your <code>logback.xml</code> file:</p>
 		<pre><code><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
   <Compressing>true</Compressing> <!-- will automatically use correct default port -->
+  <!-- Default port for compressed is 10020 and uncompressed 10021 -->
   <ReconnectionDelay>10000</ReconnectionDelay>
   <IncludeCallerData>true</IncludeCallerData>
   <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+  <!--
+  Alternatively:
+  <RemoteHost>localhost</RemoteHost>
+  <RemoteHost>10.200.55.13</RemoteHost>
+  -->
 </appender>]]></code></pre>
 
 <p>or, for zero-delimited messages instead of "size, event-bytes" messages,</p>
 
 		<pre><code><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
   <ReconnectionDelay>10000</ReconnectionDelay>
+  <!-- Default port is 11000 -->
   <IncludeCallerData>true</IncludeCallerData>
   <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+  <!--
+  Alternatively:
+  <RemoteHost>localhost</RemoteHost>
+  <RemoteHost>10.200.55.13</RemoteHost>
+  -->
 </appender>]]></code></pre>
+
+<p><a href="#top">Back to top.</a></p>
+
+<h2>logback-classic SocketAppender</h2>
+Lilith listens for connections of the Logback SocketAppender on port 4560.
+
+<p>Add the following dependency to your applications <code>pom.xml</code> file:</p>
+		<pre><code><![CDATA[<dependency>
+  <groupId>ch.qos.logback</groupId>
+  <artifactId>logback-classic</artifactId>
+  <version>${logbackVersion}</version>
+  <scope>runtime</scope>
+</dependency>]]></code></pre>
+
+<p>Then, add the following to your <code>logback.xml</code> file:</p>
+		<pre><code><![CDATA[<appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
+  <RemoteHost>localhost</RemoteHost>
+  <Port>4560</Port>
+  <ReconnectionDelay>170</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
+</appender>
+]]></code></pre>
 
 <p><a href="#top">Back to top.</a></p>
 
