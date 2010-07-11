@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.services.gotosrc;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,7 +98,7 @@ public class GoToSourceService
 	{
 		if(oos != null)
 		{
-			IOUtils.closeQuietly(oos);
+			IOUtilities.closeQuietly(oos);
 			oos = null;
 		}
 		if(socket != null)

@@ -36,7 +36,7 @@ package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -96,7 +96,7 @@ public class LoggingXmlDecoder
 		}
 		finally
 		{
-			IOUtils.closeQuietly(in);
+			IOUtilities.closeQuietly(in);
 		}
 		return null;
 	}

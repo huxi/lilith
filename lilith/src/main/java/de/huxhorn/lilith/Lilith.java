@@ -39,6 +39,7 @@ import it.sauronsoftware.junique.JUnique;
 import it.sauronsoftware.junique.MessageHandler;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.DefaultApplication;
@@ -121,7 +122,7 @@ public class Lilith
 		}
 		finally
 		{
-			IOUtils.closeQuietly(is);
+			IOUtilities.closeQuietly(is);
 		}
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
@@ -897,7 +898,7 @@ public class Lilith
 		}
 		finally
 		{
-			IOUtils.closeQuietly(is);
+			IOUtilities.closeQuietly(is);
 		}
 		if(prevPathStr != null)
 		{

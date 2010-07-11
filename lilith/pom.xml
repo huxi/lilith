@@ -371,6 +371,12 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.io</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
 		<!--
 		<dependency>
 			<groupId>commons-httpclient</groupId>

@@ -21,7 +21,7 @@ import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.prefs.protobuf.LilithPreferencesStreamingDecoder;
 import de.huxhorn.lilith.prefs.protobuf.LilithPreferencesStreamingEncoder;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +122,7 @@ public class ImportExportCommand
 				}
 				finally
 				{
-					IOUtils.closeQuietly(is);
+					IOUtilities.closeQuietly(is);
 				}
 			}
 		}
@@ -174,7 +174,7 @@ public class ImportExportCommand
 				}
 				finally
 				{
-					IOUtils.closeQuietly(os);
+					IOUtilities.closeQuietly(os);
 				}
 			}
 			else

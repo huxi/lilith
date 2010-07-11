@@ -25,7 +25,7 @@ import de.huxhorn.lilith.data.logging.xml.LoggingEventSchemaConstants;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ public class LilithXmlStreamLoggingEventProducer
 
 	public void close()
 	{
-		IOUtils.closeQuietly(inputStream);
+		IOUtilities.closeQuietly(inputStream);
 	}
 
 	private class ReceiverRunnable
@@ -127,6 +127,7 @@ public class LilithXmlStreamLoggingEventProducer
 							.getClass().getName(), e.getMessage());
 				}
 				addEvent(null);
+				IOUtilities.interruptIfNecessary(e);
 			}
 			finally
 			{

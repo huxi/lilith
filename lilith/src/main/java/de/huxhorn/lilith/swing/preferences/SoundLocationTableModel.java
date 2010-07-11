@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -207,6 +208,7 @@ public class SoundLocationTableModel
 					catch(Throwable ex)
 					{
 						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!", ex);
+						IOUtilities.interruptIfNecessary(ex);
 					}
 				}
 			}

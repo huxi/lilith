@@ -39,7 +39,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,6 +111,7 @@ public abstract class AbstractLogbackStreamEventProducer<T extends Serializable>
 								.getClass().getName(), e.getMessage());
 					}
 					addEvent(null);
+					IOUtilities.interruptIfNecessary(e);
 /*
 					localIdCounter++;
 					EventWrapper<T> wrapper=new EventWrapper<T>(sourceIdentifier, localIdCounter, null);
@@ -125,6 +126,6 @@ public abstract class AbstractLogbackStreamEventProducer<T extends Serializable>
 
 	public void close()
 	{
-		IOUtils.closeQuietly(dataInput);
+		IOUtilities.closeQuietly(dataInput);
 	}
 }

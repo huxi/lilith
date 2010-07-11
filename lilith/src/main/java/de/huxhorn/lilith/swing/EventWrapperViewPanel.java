@@ -44,7 +44,7 @@ import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.simple.FSScrollPane;
@@ -769,7 +769,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		finally
 		{
-			IOUtils.closeQuietly(fos);
+			IOUtilities.closeQuietly(fos);
 		}
 
 	}

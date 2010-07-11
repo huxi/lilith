@@ -21,7 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.sulky.io.TimeoutOutputStream;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -159,7 +159,7 @@ public class SocketEventHandler<T extends Serializable>
 			catch(IOException e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Exception while writing event.", e);
-				IOUtils.closeQuietly(output);
+				IOUtilities.closeQuietly(output);
 				output = null;
 				failTime = System.currentTimeMillis();
 			}
@@ -207,7 +207,7 @@ public class SocketEventHandler<T extends Serializable>
 			catch(IOException e)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Exception while creating connection to " + address + ".", e);
-				IOUtils.closeQuietly(output);
+				IOUtilities.closeQuietly(output);
 				output = null;
 				failTime = current;
 			}

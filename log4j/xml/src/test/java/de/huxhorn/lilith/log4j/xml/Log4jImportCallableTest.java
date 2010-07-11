@@ -4,6 +4,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
+import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -75,7 +76,7 @@ public class Log4jImportCallableTest
 		inputFile.delete();
 		FileOutputStream output = new FileOutputStream(inputFile);
 		IOUtils.copyLarge(input, output);
-		IOUtils.closeQuietly(output);
+		IOUtilities.closeQuietly(output);
 	}
 
 	private static class AppendOpStub

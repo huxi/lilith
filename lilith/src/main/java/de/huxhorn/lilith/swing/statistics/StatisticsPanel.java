@@ -22,7 +22,7 @@ import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.filefilters.PngFileFilter;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.rrd4j.core.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -374,7 +374,7 @@ public class StatisticsPanel
 			finally
 			{
 				// close output stream no matter what. shouldn't be necessary...
-				IOUtils.closeQuietly(imageOutput);
+				IOUtilities.closeQuietly(imageOutput);
 				resultImage.flush();
 			}
 		}

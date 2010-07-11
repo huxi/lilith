@@ -34,6 +34,8 @@
 
 package de.huxhorn.lilith.sender;
 
+import de.huxhorn.sulky.io.IOUtilities;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -177,7 +179,7 @@ public class SimpleSendBytesService
 			{
 				if(dataOutputStream != null)
 				{
-					//IOUtils.closeQuietly(dataOutputStream);
+					//IOUtilities.closeQuietly(dataOutputStream);
 					// the above call can result in a ClassNotFoundException if a
 					// webapp is already unloaded!!!
 					try
@@ -232,12 +234,9 @@ public class SimpleSendBytesService
 								outputStream.flush();
 //									System.out.println(this+" wrote "+copy.size()+" events.");
 							}
-							catch(IOException e)
-							{
-								closeConnection();
-							}
 							catch(Throwable e)
 							{
+								IOUtilities.interruptIfNecessary(e);
 								closeConnection();
 							}
 						}

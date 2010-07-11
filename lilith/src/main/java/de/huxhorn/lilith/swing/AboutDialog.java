@@ -33,7 +33,6 @@ import javax.swing.*;
 public class AboutDialog
 	extends JDialog
 {
-	private final Logger logger = LoggerFactory.getLogger(AboutDialog.class);
 
 	private boolean wasScrolling;
 	private AboutPanel aboutPanel;
@@ -45,6 +44,7 @@ public class AboutDialog
 		setLayout(new BorderLayout());
 		InputStream is = MainFrame.class.getResourceAsStream("/about/aboutText.txt");
 		String aboutText = null;
+		final Logger logger = LoggerFactory.getLogger(AboutDialog.class);
 		if(is != null)
 		{
 			try

@@ -101,7 +101,7 @@ import de.huxhorn.sulky.tasks.TaskManager;
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -2832,7 +2832,7 @@ public class MainFrame
 					}
 					finally
 					{
-						IOUtils.closeQuietly(writer);
+						IOUtilities.closeQuietly(writer);
 					}
 				}
 				showApplicationPathChangedDialog();

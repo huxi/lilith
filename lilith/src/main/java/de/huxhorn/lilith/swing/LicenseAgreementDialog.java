@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,9 +80,14 @@ public class LicenseAgreementDialog
 			{
 				licenseText = IOUtils.toString(licenseStream);
 			}
-			catch(IOException e)
+			catch(IOException ex)
 			{
-				if(logger.isErrorEnabled()) logger.error("Exception while loading license!", e);
+				if(logger.isErrorEnabled()) logger.error("Exception while loading license!", ex);
+				IOUtilities.interruptIfNecessary(ex);
+			}
+			finally
+			{
+				IOUtilities.closeQuietly(licenseStream);
 			}
 		}
 		if(licenseText == null)

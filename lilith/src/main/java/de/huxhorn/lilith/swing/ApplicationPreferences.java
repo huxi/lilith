@@ -35,6 +35,7 @@ import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 
+import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -544,6 +545,7 @@ public class ApplicationPreferences
 						.warn("Exception while loading recentFiles from file '" + file
 							.getAbsolutePath() + "'!", ex);
 				}
+				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
 			{
@@ -658,6 +660,7 @@ public class ApplicationPreferences
 						.warn("Exception while loading previous search strings from file '" + file
 							.getAbsolutePath() + "'!", ex);
 				}
+				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
 			{
@@ -800,6 +803,7 @@ public class ApplicationPreferences
 								.getAbsolutePath() + "'!", ex);
 					}
 					levelColors = null;
+					IOUtilities.interruptIfNecessary(ex);
 				}
 				finally
 				{
@@ -845,9 +849,10 @@ public class ApplicationPreferences
 				result.put(current.getKey(), current.getValue().clone());
 			}
 		}
-		catch(Throwable e)
+		catch(Throwable ex)
 		{
-			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", e);
+			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", ex);
+			IOUtilities.interruptIfNecessary(ex);
 		}
 		return result;
 	}
@@ -867,7 +872,6 @@ public class ApplicationPreferences
 	{
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, LEVEL_COLORS_XML_FILENAME);
-		Throwable error = null;
 		try
 		{
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
@@ -879,11 +883,8 @@ public class ApplicationPreferences
 		}
 		catch(Throwable ex)
 		{
-			error = ex;
-		}
-		if(error != null)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", error);
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", ex);
+			IOUtilities.interruptIfNecessary(ex);
 		}
 	}
 
@@ -924,6 +925,7 @@ public class ApplicationPreferences
 								.getAbsolutePath() + "'!", ex);
 					}
 					statusColors = null;
+					IOUtilities.interruptIfNecessary(ex);
 				}
 				finally
 				{
@@ -969,9 +971,10 @@ public class ApplicationPreferences
 				result.put(current.getKey(), current.getValue().clone());
 			}
 		}
-		catch(Throwable e)
+		catch(Throwable ex)
 		{
-			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", e);
+			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", ex);
+			IOUtilities.interruptIfNecessary(ex);
 		}
 		return result;
 	}
@@ -991,7 +994,6 @@ public class ApplicationPreferences
 	{
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, STATUS_COLORS_XML_FILENAME);
-		Throwable error = null;
 		try
 		{
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
@@ -1003,11 +1005,8 @@ public class ApplicationPreferences
 		}
 		catch(Throwable ex)
 		{
-			error = ex;
-		}
-		if(error != null)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", error);
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", ex);
+			IOUtilities.interruptIfNecessary(ex);
 		}
 	}
 
@@ -1062,6 +1061,7 @@ public class ApplicationPreferences
 							.getAbsolutePath() + "'!", ex);
 				}
 				sourceLists = new HashMap<String, Set<String>>();
+				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
 			{
@@ -1290,8 +1290,8 @@ public class ApplicationPreferences
 			}
 			finally
 			{
-				IOUtils.closeQuietly(is);
-				IOUtils.closeQuietly(os);
+				IOUtilities.closeQuietly(is);
+				IOUtilities.closeQuietly(os);
 			}
 		}
 		else
@@ -1570,6 +1570,7 @@ public class ApplicationPreferences
 					logger.warn("Exception while loading conditions from file '" + conditionsFile
 						.getAbsolutePath() + "'!", ex);
 				}
+				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
 			{
@@ -2383,7 +2384,7 @@ public class ApplicationPreferences
 		}
 		finally
 		{
-			IOUtils.closeQuietly(is);
+			IOUtilities.closeQuietly(is);
 		}
 		return null;
 	}
@@ -2424,7 +2425,7 @@ public class ApplicationPreferences
 		}
 		finally
 		{
-			IOUtils.closeQuietly(os);
+			IOUtilities.closeQuietly(os);
 		}
 		if(error != null)
 		{
@@ -2464,7 +2465,7 @@ public class ApplicationPreferences
 		}
 		finally
 		{
-			IOUtils.closeQuietly(is);
+			IOUtilities.closeQuietly(is);
 		}
 		return null;
 	}
@@ -2586,6 +2587,7 @@ public class ApplicationPreferences
 					.info("Exception while loading layouts from file '{}'':", file.getAbsolutePath(), ex.getMessage());
 			}
 			result = null;
+			IOUtilities.interruptIfNecessary(ex);
 		}
 		finally
 		{
@@ -2626,10 +2628,11 @@ public class ApplicationPreferences
 			}
 			return messageDigest.digest();
 		}
-		catch(Throwable t)
+		catch(Throwable ex)
 		{
 			final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
-			if(logger.isWarnEnabled()) logger.warn("Exception while calculating checksum!", t);
+			if(logger.isWarnEnabled()) logger.warn("Exception while calculating checksum!", ex);
+			IOUtilities.interruptIfNecessary(ex);
 		}
 		finally
 		{

@@ -23,7 +23,7 @@ import de.huxhorn.lilith.sender.HeartbeatRunnable;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
 
-import org.apache.commons.io.IOUtils;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -205,6 +205,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 								.getClass().getName(), e.getMessage());
 					}
 					addEvent(null);
+					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 			}
@@ -230,6 +231,6 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	public void close()
 	{
 		if(logger.isInfoEnabled()) logger.info("Closing {}.", this.getClass().getName());
-		IOUtils.closeQuietly(dataInput);
+		IOUtilities.closeQuietly(dataInput);
 	}
 }
