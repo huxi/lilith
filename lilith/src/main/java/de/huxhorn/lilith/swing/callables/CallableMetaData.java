@@ -17,12 +17,12 @@
  */
 package de.huxhorn.lilith.swing.callables;
 
-import de.huxhorn.lilith.buffers.FilteringBuffer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.sulky.buffers.filtering.FilteringBuffer;
 import de.huxhorn.sulky.conditions.Condition;
 
 import java.io.File;

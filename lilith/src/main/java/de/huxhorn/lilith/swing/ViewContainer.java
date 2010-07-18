@@ -17,16 +17,16 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.buffers.FilteringBuffer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.swing.callables.CallableMetaData;
-import de.huxhorn.lilith.swing.callables.FilteringCallable;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.buffers.Flush;
 import de.huxhorn.sulky.buffers.FlushOperation;
+import de.huxhorn.sulky.buffers.filtering.FilteringBuffer;
+import de.huxhorn.sulky.buffers.filtering.FilteringCallable;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
 import de.huxhorn.sulky.tasks.Task;

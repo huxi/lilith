@@ -377,6 +377,11 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.buffers.filtering</artifactId>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 		<dependency>
 			<groupId>commons-httpclient</groupId>

@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.buffers.FilteringBuffer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
@@ -34,6 +33,7 @@ import de.huxhorn.sulky.buffers.DisposeOperation;
 import de.huxhorn.sulky.buffers.Flush;
 import de.huxhorn.sulky.buffers.FlushOperation;
 import de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer;
+import de.huxhorn.sulky.buffers.filtering.FilteringBuffer;
 import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
