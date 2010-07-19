@@ -38,7 +38,7 @@ public interface SourceManager<T extends Serializable>
 
 	void addEventSourceProducer(EventSourceProducer<T> producer);
 
-	void addEventProducer(EventProducer producer);
+	void addEventProducer(EventProducer<T> producer);
 
 	void removeEventProducer(SourceIdentifier id);
 

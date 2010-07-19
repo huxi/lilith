@@ -26,6 +26,10 @@ import de.huxhorn.sulky.codec.SerializableDecoder;
 import java.io.InputStream;
 import java.io.Serializable;
 
+/**
+ *
+ * @param <T> the type that is expected as serialized messages
+ */
 public class SerializingMessageBasedEventProducer<T extends Serializable>
 	extends AbstractMessageBasedEventProducer<T>
 {

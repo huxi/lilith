@@ -27,7 +27,7 @@ public class LoggingEventProtobufServerSocketEventSourceProducer
 		return compressing;
 	}
 
-	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
+	protected EventProducer<LoggingEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
 		return new LoggingEventProtobufMessageBasedEventProducer(id, eventQueue, inputStream, compressing);

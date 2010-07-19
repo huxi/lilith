@@ -23,17 +23,18 @@ import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.SerializingMessageBasedEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+/**
+ *
+ * @param <T> the type that is expected as serialized messages
+ * @deprecated Sender should use protobuf implementations instead.
+ */
 public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Serializable>
 	extends AbstractServerSocketEventSourceProducer<T>
 {
-	final Logger logger = LoggerFactory.getLogger(SerializingMessageBasedServerSocketEventSourceProducer.class);
 	private boolean compressing;
 
 
@@ -49,7 +50,7 @@ public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Se
 		return compressing;
 	}
 
-	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
+	protected EventProducer<T> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
 		return new SerializingMessageBasedEventProducer<T>(id, eventQueue, inputStream, compressing);

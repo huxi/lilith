@@ -49,7 +49,7 @@ public class SourceManagerImpl<T extends Serializable>
 	private Set<EventSourceListener<T>> listeners;
 	private PropertyChangeSupport changeSupport;
 	private List<EventSource<T>> sources;
-	private Map<SourceIdentifier, EventProducer> eventProducers;
+	private Map<SourceIdentifier, EventProducer<T>> eventProducers;
 	private EventPoller<T> eventPoller;
 
 	private static final String NUMBER_OF_SOURCES = "numberOfSources";
@@ -60,7 +60,7 @@ public class SourceManagerImpl<T extends Serializable>
 		this.queue = queue;
 		this.eventPoller = new EventPoller<T>(queue);
 		this.eventPoller.setPollDelay(100);
-		eventProducers = new HashMap<SourceIdentifier, EventProducer>();
+		eventProducers = new HashMap<SourceIdentifier, EventProducer<T>>();
 		eventSourceProducers = new ArrayList<EventSourceProducer<T>>();
 		listeners = new HashSet<EventSourceListener<T>>();
 		changeSupport = new PropertyChangeSupport(this);
@@ -138,7 +138,7 @@ public class SourceManagerImpl<T extends Serializable>
 		eventSourceProducers.add(producer);
 	}
 
-	public void addEventProducer(EventProducer producer)
+	public void addEventProducer(EventProducer<T> producer)
 	{
 		SourceIdentifier id = producer.getSourceIdentifier();
 		EventProducer previous = eventProducers.put(id, producer);

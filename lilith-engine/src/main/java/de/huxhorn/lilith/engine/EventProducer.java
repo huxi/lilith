@@ -17,12 +17,31 @@
  */
 package de.huxhorn.lilith.engine;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.sulky.buffers.AppendOperation;
 
-public interface EventProducer
-//	extends Runnable
+import java.io.Serializable;
+
+/**
+ * The responsibility of EventProducers is the creation of events from
+ * some kind of input, e.g. an InputStream.
+ * Those events are wrapped into an EventWrapper and appended to the event queue of
+ * the producer.
+ */
+public interface EventProducer<T extends Serializable>
 {
+	/**
+	 *
+	 * @return the source of the events.
+	 */
 	SourceIdentifier getSourceIdentifier();
+
+	/**
+	 *
+	 * @return the event queue that this producer appends events to.
+	 */
+	AppendOperation<EventWrapper<T>> getEventQueue();
 
 	void start();
 

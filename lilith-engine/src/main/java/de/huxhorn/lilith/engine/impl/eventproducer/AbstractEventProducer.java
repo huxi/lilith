@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 public abstract class AbstractEventProducer<T extends Serializable>
-	implements EventProducer
+	implements EventProducer<T>
 {
 	private final Logger logger = LoggerFactory.getLogger(AbstractEventProducer.class);
 
@@ -46,6 +46,11 @@ public abstract class AbstractEventProducer<T extends Serializable>
 	public SourceIdentifier getSourceIdentifier()
 	{
 		return sourceIdentifier;
+	}
+
+	public AppendOperation<EventWrapper<T>> getEventQueue()
+	{
+		return eventQueue;
 	}
 
 	protected void addEvent(T event)

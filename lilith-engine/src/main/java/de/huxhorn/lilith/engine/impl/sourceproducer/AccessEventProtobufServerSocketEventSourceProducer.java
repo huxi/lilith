@@ -27,7 +27,7 @@ public class AccessEventProtobufServerSocketEventSourceProducer
 		return compressing;
 	}
 
-	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
+	protected EventProducer<AccessEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
 		return new AccessEventProtobufMessageBasedEventProducer(id, eventQueue, inputStream, compressing);

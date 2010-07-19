@@ -38,13 +38,14 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.AbstractServerSocketEventSourceProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public class LogbackAccessServerSocketEventSourceProducer
-	extends AbstractLogbackServerSocketEventSourceProducer<AccessEvent>
+	extends AbstractServerSocketEventSourceProducer<AccessEvent>
 {
 	public LogbackAccessServerSocketEventSourceProducer(int port)
 		throws IOException
@@ -52,7 +53,7 @@ public class LogbackAccessServerSocketEventSourceProducer
 		super(port);
 	}
 
-	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
+	protected EventProducer<AccessEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
 		return new LogbackAccessStreamEventProducer(id, eventQueue, inputStream);

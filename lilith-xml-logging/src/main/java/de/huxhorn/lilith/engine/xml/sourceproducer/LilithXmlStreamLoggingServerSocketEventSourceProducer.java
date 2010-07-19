@@ -39,7 +39,7 @@ public class LilithXmlStreamLoggingServerSocketEventSourceProducer
 		super(port);
 	}
 
-	protected EventProducer createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
+	protected EventProducer<LoggingEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
 		try

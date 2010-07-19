@@ -38,14 +38,19 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.logback.LogbackAccessAdapter;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.engine.impl.eventproducer.AbstractStreamEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public class LogbackAccessStreamEventProducer
-	extends AbstractLogbackStreamEventProducer<AccessEvent>
+	extends AbstractStreamEventProducer<AccessEvent>
 {
+	private final Logger logger = LoggerFactory.getLogger(LogbackAccessStreamEventProducer.class);
+
 	private LogbackAccessAdapter adapter;
 	
 	public LogbackAccessStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)

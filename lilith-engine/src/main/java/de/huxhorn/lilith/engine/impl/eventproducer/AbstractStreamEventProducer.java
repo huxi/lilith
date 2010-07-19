@@ -32,11 +32,10 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.producer;
+package de.huxhorn.lilith.engine.impl.eventproducer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
 import de.huxhorn.sulky.io.IOUtilities;
@@ -49,14 +48,14 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-public abstract class AbstractLogbackStreamEventProducer<T extends Serializable>
+public abstract class AbstractStreamEventProducer<T extends Serializable>
 	extends AbstractEventProducer<T>
 {
-	final Logger logger = LoggerFactory.getLogger(AbstractLogbackStreamEventProducer.class);
+	final Logger logger = LoggerFactory.getLogger(AbstractStreamEventProducer.class);
 
 	private ObjectInputStream dataInput;
 
-	public AbstractLogbackStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
+	public AbstractStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
 		super(sourceIdentifier, eventQueue);

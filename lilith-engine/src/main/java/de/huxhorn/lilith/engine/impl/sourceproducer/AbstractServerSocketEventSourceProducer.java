@@ -125,7 +125,7 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 			try
 			{
 				SourceIdentifier id = createSourceIdentifier(socket);
-				EventProducer producer = createProducer(id, queue, socket.getInputStream());
+				EventProducer<T> producer = createProducer(id, queue, socket.getInputStream());
 				producer.start();
 				sourceManager.addEventProducer(producer);
 			}
@@ -157,7 +157,7 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 		return new SourceIdentifier(primary, secondary);
 	}
 
-	protected abstract EventProducer createProducer(SourceIdentifier id,
+	protected abstract EventProducer<T> createProducer(SourceIdentifier id,
 	                                                AppendOperation<EventWrapper<T>> eventQueue,
 	                                                InputStream inputStream)
 		throws IOException;
