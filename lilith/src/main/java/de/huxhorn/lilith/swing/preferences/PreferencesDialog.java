@@ -214,6 +214,11 @@ public class PreferencesDialog
 		sourceFilteringPanel.initUI();
 	}
 
+	/**
+	 *
+	 * @param name the name of the source list
+	 * @return the source list of the given name or an empty List
+	 */
 	public List<Source> getSourceList(String name)
 	{
 		Set<String> srcList = sourceLists.get(name);
