@@ -234,6 +234,8 @@ public class SourceListsPanel
 	private class AddSourceListAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -8798134029913043849L;
+
 		public AddSourceListAction()
 		{
 			super("Add");
@@ -264,6 +266,8 @@ public class SourceListsPanel
 	private class EditSourceListAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -951778721167306615L;
+
 		public EditSourceListAction()
 		{
 			super("Edit");
@@ -298,6 +302,8 @@ public class SourceListsPanel
 	private class RemoveSourceListAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 1225472137465986071L;
+
 		public RemoveSourceListAction()
 		{
 			super("Remove");
@@ -367,7 +373,8 @@ public class SourceListsPanel
 
 
 		/**
-		 * @noinspection UNUSED_SYMBOL
+		 * @param evt the mouse event the popup should be shown at
+		 * @noinspection UnusedDeclaration
 		 */
 		private void showPopup(MouseEvent evt)
 		{
