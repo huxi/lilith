@@ -136,7 +136,6 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 					int size = 0;
 					try
 					{
-						// TODO: obtain transfer size info						
 						size = dataInput.readInt();
 						updateHeartbeatTimestamp();
 						if(size > 0)
@@ -145,27 +144,14 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 							allocating = false;
 							dataInput.readFully(bytes);
 
-							Object object = decoder.decode(bytes);
+							T object = decoder.decode(bytes);
 							if(object == null)
 							{
 								if(logger.isInfoEnabled()) logger.info("Retrieved null!");
 							}
-							else// if(object instanceof T)
+							else
 							{
-								try
-								{
-									//noinspection unchecked
-									T event = (T) object;
-									addEvent(event);
-								}
-								catch(ClassCastException ex)
-								{
-									if(logger.isInfoEnabled())
-									{
-										logger
-											.info("Ignoring object of class '" + object.getClass().getName() + "'...");
-									}
-								}
+								addEvent(object);
 							}
 						}
 						else

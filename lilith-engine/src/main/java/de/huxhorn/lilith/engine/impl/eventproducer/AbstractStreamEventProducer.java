@@ -76,12 +76,10 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 	{
 		public void run()
 		{
-//			long localIdCounter = 0;
 			for(; ;)
 			{
 				try
 				{
-					// TODO: obtain transfer size info
 					Object object = dataInput.readObject();
 
 					T event = postprocessEvent(object);
@@ -93,12 +91,6 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 					else
 					{
 						addEvent(event);
-/*
-						localIdCounter++;
-						EventWrapper<T> wrapper=new EventWrapper<T>(sourceIdentifier, localIdCounter, event);
-						eventQueue.add(wrapper);
-						if(logger.isDebugEnabled()) logger.debug("Added event-wrapper for {}.", event);
-*/
 					}
 				}
 				catch(Throwable e)
@@ -111,12 +103,6 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 					}
 					addEvent(null);
 					IOUtilities.interruptIfNecessary(e);
-/*
-					localIdCounter++;
-					EventWrapper<T> wrapper=new EventWrapper<T>(sourceIdentifier, localIdCounter, null);
-					eventQueue.add(wrapper);
-					if(logger.isDebugEnabled()) logger.debug("Added event.");
-*/
 					break;
 				}
 			}

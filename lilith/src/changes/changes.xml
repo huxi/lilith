@@ -42,9 +42,6 @@
 			<action dev="jhux" type="add">
 				TODO: Option to left-align Thread name in table (Lilianne)
 			</action>
-			<action dev="jhux" type="add" issue="9">
-				TODO: Add transfer size statistics.
-			</action>
 			<action dev="jhux" type="add" issue="2">
 				TODO: Plugin interfaces (EventSender (e.g. Bonjour etc.),
 				EventReceiver, EventHandler (?, stuff like the fart on error,

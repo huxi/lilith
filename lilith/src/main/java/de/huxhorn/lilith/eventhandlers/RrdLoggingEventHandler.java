@@ -87,7 +87,6 @@ public class RrdLoggingEventHandler
 		{
 			return;
 		}
-		// TODO: evaluate transfer size info if available
 		EventCounter globalCounter;
 		if(eventCounters == null)
 		{

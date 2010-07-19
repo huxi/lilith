@@ -95,7 +95,6 @@ public class LilithXmlStreamLoggingEventProducer
 						}
 						bytes.add(current);
 					}
-					// TODO: obtain transfer size info
 
 					if(bytes.size() > 0)
 					{

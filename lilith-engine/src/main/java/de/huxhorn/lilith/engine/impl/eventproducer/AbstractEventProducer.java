@@ -65,7 +65,6 @@ public abstract class AbstractEventProducer<T extends Serializable>
 			return;
 		}
 		localIdCounter++;
-		// TODO: add transfer size info if available
 		EventWrapper<T> wrapper = new EventWrapper<T>(getSourceIdentifier(), localIdCounter, event);
 		eventQueue.add(wrapper);
 		if(logger.isDebugEnabled()) logger.debug("Added event-wrapper for {}.", event);
