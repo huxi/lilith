@@ -2093,10 +2093,10 @@ public class MainFrame
 	{
 		Windows.showWindow(aboutDialog, MainFrame.this, true);
 
-		if(!applicationPreferences.isMute() && sounds != null)
-		{
-			//sounds.play(LilithSounds.ABOUT_SOUND);
-		}
+//		if(!applicationPreferences.isMute() && sounds != null)
+//		{
+//			sounds.play(LilithSounds.ABOUT_SOUND);
+//		}
 	}
 
 	public void cleanAllInactiveLogs()
