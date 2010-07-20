@@ -1,17 +1,19 @@
-ATTENTION!!
-
-Lilith >= 0.9.24 isn't compatible to previous versions!!
-Lilith >= 0.9.27 access events aren't compatible to previous versions!!
-slf4j-1.5.0 and logback-0.9.9 are absolutely required!
-It is possible, though, to use Lilith >= V0.9.24 side by side with Lumberjack V0.9.23
-so a smooth transition should be possible...
+Lilith is a logging- and access-event viewer for Logback.
+It can also receive Log4j logging-events and import both Log4j and
+java.util.logging XML files.
 
 Start Lilith with
 java -jar lib/lilith.jar
 
+Alternatively, you can use bin/lilith.bat or bin/lilith (a shell script).
+
+Please take a look at the help contained in Lilith itself.
+Hopefully, lots of questions are answered by it.
+
 Lilith opens:
-- a standard LoggingEvent server socket on port 4560 as used by LogBACK.
-- a standard AccessEvent server socket on port 4570 as used by LogBACK.
+- a standard LoggingEvent server socket on port 4560 as used by LogBACK classic SocketAppender.
+- a standard AccessEvent server socket on port 4570 as used by LogBACK access SocketAppender.
+- a standard Log4j LoggingEvent server socket on port 4445 as used by Log4j SocketAppender.
 - a multiplex Lilith LoggingEvent server socket on ports 10000 (compressed)
   and 10001 (uncompressed).
 - a multiplex AccessEvent server socket on ports 10010 (compressed)
@@ -33,7 +35,7 @@ multiplex-appender-classic Example configuration:
 <dependency>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic</artifactId>
-	<version>version</version>
+	<version>${pom.version}</version>
 	<scope>runtime</scope>
 </dependency>
 
@@ -133,7 +135,7 @@ In pom.xml:
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-access</artifactId>
-			<version>version</version>
+			<version>${pom.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>

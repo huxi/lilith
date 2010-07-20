@@ -39,8 +39,6 @@ import java.io.Serializable;
 /**
  * Replacement for java.lang.StackTraceElement containing additional infos about
  * version and code location of the given class/package of the class.
- * Those informations will be available in the next version of logback, supposedly
- * 0.9.10.
  */
 public class ExtendedStackTraceElement
 	implements Serializable, Cloneable

@@ -60,7 +60,7 @@ public class ApplicationRenderer
 		renderer.setFocused(hasFocus);
 
 		Color foreground = Color.BLACK;
-		String text = "";
+		String text = null;
 		//String tooltip="";
 		if(value instanceof EventWrapper)
 		{
@@ -82,7 +82,16 @@ public class ApplicationRenderer
 				{
 					text=props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
 				}
+				if(text == null)
+				{
+					// using context name as a fallback
+					text=context.getName();
+				}
 			}
+		}
+		if(text == null)
+		{
+			text="";
 		}
 		renderer.setText(text);
 		boolean colorsInitialized = false;

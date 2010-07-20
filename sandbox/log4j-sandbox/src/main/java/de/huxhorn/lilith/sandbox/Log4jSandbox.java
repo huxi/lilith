@@ -48,6 +48,23 @@ public class Log4jSandbox
 		MDC.put("key2", "value2");
 		if(logger.isDebugEnabled()) logger.debug("Foobar!", new Throwable());
 
-		InnerClass.execute();
+		for(;;)
+		{
+			InnerClass.execute();
+			logger.trace("Trace!");
+			logger.debug("Debug!");
+			logger.info("Info!");
+			logger.warn("Warn!");
+			logger.error("Error!");
+			logger.fatal("Fatal!");
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch(InterruptedException ex)
+			{
+				break;
+			}
+		}
 	}
 }

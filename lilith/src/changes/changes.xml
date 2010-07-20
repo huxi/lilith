@@ -9,10 +9,6 @@
 				TODO: Create logger name index file from existing lilith-file for *sigh* tree-view *yawn*
 			</action>
 			<action dev="jhux" type="add">
-				TODO: "Save as" or "Export" logs. [*command*-S] This is only possible for inactive log views.
-				Support native Lilith, Lilith XML, log4j XML.
-			</action>
-			<action dev="jhux" type="add">
 				TODO: SVG Icons
 			</action>
 			<action dev="jhux" type="add">
@@ -83,6 +79,10 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add" issue="32">
+				Added support for Log4j SocketAppender. Lilith is listening on port 4445 for incoming connections.
+				I'd still recommend to switch to SLF4J/Logback, though!
+			</action>
 			<action dev="jhux" type="fix">
 				Fixed glitch in case of "Find next"/"Find prev" while search is already running. Additional searches are now ignored.
 			</action>

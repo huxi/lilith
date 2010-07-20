@@ -64,15 +64,22 @@ public class LoggerNameRenderer
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
 				String fullName = event.getLogger();
-				int lastDot = fullName.lastIndexOf('.');
-				if(lastDot == -1 || lastDot == fullName.length() - 1)
+				if(fullName == null)
 				{
-					text = fullName;
+					text="";
 				}
 				else
 				{
-					lastDot++;
-					text = fullName.substring(lastDot);
+					int lastDot = fullName.lastIndexOf('.');
+					if(lastDot == -1 || lastDot == fullName.length() - 1)
+					{
+						text = fullName;
+					}
+					else
+					{
+						lastDot++;
+						text = fullName.substring(lastDot);
+					}
 				}
 			}
 		}

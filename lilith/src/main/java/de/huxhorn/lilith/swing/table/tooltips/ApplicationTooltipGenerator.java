@@ -45,10 +45,12 @@ public class ApplicationTooltipGenerator
 				if(context != null)
 				{
 					Map<String, String> props = context.getProperties();
-					if(props!= null)
+					if(props != null)
 					{
 						return props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
 					}
+					// using context name as a fallback
+					return context.getName();
 				}
 			}
 			else if(evtObject instanceof AccessEvent)
@@ -62,6 +64,8 @@ public class ApplicationTooltipGenerator
 					{
 						return props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
 					}
+					// using context name as a fallback
+					return context.getName();
 				}
 			}
 		}

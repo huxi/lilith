@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%5p [%t] (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="rolling" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="example.log"/>
+		<param name="MaxFileSize" value="100KB"/>
+		<param name="MaxBackupIndex" value="1"/>
+		<layout class="org.apache.log4j.xml.XMLLayout">
+			<param name="locationInfo" value="true"/>
+			<param name="properties" value="true"/>
+		</layout>
+	</appender>
+
+	<appender name="socket" class="org.apache.log4j.net.SocketAppender">
+		<param name="Application" value="log4j-Sandbox"/>
+		<param name="locationInfo" value="true"/>
+		<param name="Port" value="4445"/>
+		<param name="RemoteHost" value="127.0.0.1"/>
+		<param name="ReconnectionDelay" value="10"/>
+	</appender>
+
+	<root>
+		<priority value ="ALL" />
+		<appender-ref ref="console" />
+		<appender-ref ref="rolling" />
+		<appender-ref ref="socket" />
+	</root>
+
+</log4j:configuration>

@@ -18,7 +18,9 @@
 	</parent>
 	
 	<modules>
+		<module>throwable-parser</module>
 		<module>xml</module>
+		<module>producer</module>
 	</modules>
 
 </project>

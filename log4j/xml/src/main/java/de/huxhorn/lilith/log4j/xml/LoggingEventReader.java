@@ -39,6 +39,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.log4j.ThrowableInfoParser;
 import de.huxhorn.sulky.stax.GenericStreamReader;
 import de.huxhorn.sulky.stax.StaxUtilities;
 
@@ -55,11 +56,7 @@ import javax.xml.stream.XMLStreamReader;
 public class LoggingEventReader
 	implements GenericStreamReader<LoggingEvent>, LoggingEventSchemaConstants
 {
-	private static final String CAUSED_BY_PREFIX = "Caused by: ";
-	private static final String AT_PREFIX = "at ";
-	private static final String OMITTED_PREFIX = "... ";
-	private static final String OMITTED_POSTFIX = " more";
-	private static final String CLASS_MESSAGE_SEPARATOR = ": ";
+	private static final String NEWLINE = "\n";
 
 	public LoggingEventReader()
 	{
@@ -242,132 +239,34 @@ public class LoggingEventReader
 		String throwableString = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_NODE);
 		if(throwableString != null)
 		{
-			StringTokenizer tok = new StringTokenizer(throwableString, "\n", false);
+			StringTokenizer tok = new StringTokenizer(throwableString, NEWLINE, true);
 			List<String> lines = new ArrayList<String>();
+			boolean wasNewline=false;
 			while(tok.hasMoreTokens())
 			{
 				String current = tok.nextToken();
-				current = current.trim();
-				if(current.length() > 0)
+				if(NEWLINE.equals(current))
 				{
+					if(wasNewline)
+					{
+						// support empty lines
+						lines.add("");
+						wasNewline=false;
+					}
+					else
+					{
+						wasNewline=true;
+					}
+				}
+				else
+				{
+					wasNewline=false;
 					lines.add(current);
 				}
 			}
-			return parseThrowableInfo(lines);
+			return ThrowableInfoParser.parseThrowableInfo(lines);
 		}
 		return null;
-	}
-
-	private ThrowableInfo parseThrowableInfo(List<String> lines)
-	{
-		//System.out.println("Lines: " + lines);
-		ThrowableInfo result = null;
-		ThrowableInfo currentTI = null;
-		List<ExtendedStackTraceElement> stackTraceElements = new ArrayList<ExtendedStackTraceElement>();
-		boolean insideMessage = false;
-		for(String current : lines)
-		{
-			if(current.startsWith(AT_PREFIX))
-			{
-				current = current.substring(AT_PREFIX.length());
-				ExtendedStackTraceElement este = ExtendedStackTraceElement.parseStackTraceElement(current);
-				if(este != null)
-				{
-					stackTraceElements.add(este);
-				}
-				insideMessage = false;
-			}
-			else if(current.startsWith(OMITTED_PREFIX))
-			{
-				if(currentTI != null)
-				{
-					if(current.endsWith(OMITTED_POSTFIX))
-					{
-						String countStr = current
-							.substring(OMITTED_PREFIX.length(), current.length() - OMITTED_POSTFIX.length());
-						currentTI.setOmittedElements(Integer.parseInt(countStr));
-						insideMessage = false;
-					}
-					else if(insideMessage)
-					{
-						String prevMessage = currentTI.getMessage();
-						if(prevMessage == null)
-						{
-							currentTI.setMessage(current);
-						}
-						else
-						{
-							currentTI.setMessage(prevMessage + "\n" + current);
-						}
-					}
-				}
-			}
-			else
-			{
-				if(current.startsWith(CAUSED_BY_PREFIX))
-				{
-					current = current.substring(CAUSED_BY_PREFIX.length());
-				}
-				if(currentTI != null)
-				{
-					if(!insideMessage)
-					{
-						ThrowableInfo newTI = new ThrowableInfo();
-						currentTI.setCause(newTI);
-						if(stackTraceElements.size() > 0)
-						{
-							currentTI
-								.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements
-									.size()]));
-							stackTraceElements.clear();
-						}
-						currentTI = newTI;
-					}
-				}
-				else
-				{
-					currentTI = new ThrowableInfo();
-				}
-				if(result == null)
-				{
-					result = currentTI;
-				}
-				if(insideMessage)
-				{
-					String prevMessage = currentTI.getMessage();
-					if(prevMessage == null)
-					{
-						currentTI.setMessage(current);
-					}
-					else
-					{
-						currentTI.setMessage(prevMessage + "\n" + current);
-					}
-				}
-				else
-				{
-					int colonIndex = current.indexOf(CLASS_MESSAGE_SEPARATOR);
-					if(colonIndex > -1)
-					{
-						currentTI.setName(current.substring(0, colonIndex));
-						currentTI.setMessage(current.substring(colonIndex + CLASS_MESSAGE_SEPARATOR.length()));
-					}
-					else
-					{
-						currentTI.setName(current);
-					}
-					insideMessage = true;
-				}
-			}
-		}
-		if(currentTI != null && stackTraceElements.size() > 0)
-		{
-			currentTI
-				.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements.size()]));
-			stackTraceElements.clear();
-		}
-
-		return result;
 	}
 
 	private Message[] readNdc(XMLStreamReader reader)

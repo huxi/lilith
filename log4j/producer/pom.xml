@@ -3,10 +3,10 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
-	<artifactId>de.huxhorn.lilith.log4j.xml</artifactId>
+	<artifactId>de.huxhorn.lilith.log4j.producer</artifactId>
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
-	<name>Lilith - LOG4J - XML (StaX)</name>
+	<name>Lilith - LOG4J - Producer</name>
 	<description>This file is part of Lilith. It contains LOG4J XML I/O.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
@@ -45,31 +45,19 @@
 
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.stax</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.tasks</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.buffers</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.engine</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		
@@ -80,17 +68,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>stax</groupId>
-			<artifactId>stax-api</artifactId>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>stax</groupId>
-			<artifactId>stax</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>

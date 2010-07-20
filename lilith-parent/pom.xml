@@ -26,6 +26,7 @@
 		<springVersion>3.0.2.RELEASE</springVersion>
 		<aspectjVersion>1.6.8</aspectjVersion>
 		<httpcomponentsVersion>4.0.1</httpcomponentsVersion>
+		<log4jVersion>1.2.16</log4jVersion>
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -242,10 +243,22 @@
 			
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.log4j.throwable</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.log4j.xml</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
 			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.log4j.producer</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
@@ -436,6 +449,26 @@
 				<groupId>de.huxhorn.sulky</groupId>
 				<artifactId>de.huxhorn.sulky.buffers.filtering</artifactId>
 				<version>${sulkyVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4jVersion}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.jms</groupId>
+						<artifactId>jms</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun.jdmk</groupId>
+						<artifactId>jmxtools</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun.jmx</groupId>
+						<artifactId>jmxri</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>

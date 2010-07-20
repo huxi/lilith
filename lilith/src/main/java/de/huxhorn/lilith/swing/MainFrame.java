@@ -51,6 +51,7 @@ import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSo
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.jul.xml.JulImportCallable;
+import de.huxhorn.lilith.log4j.producer.Log4jLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
 import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
@@ -562,6 +563,15 @@ public class MainFrame
 		try
 		{
 			loggingEventSourceManager.addEventSourceProducer(new LogbackLoggingServerSocketEventSourceProducer(4560));
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+		}
+
+		try
+		{
+			loggingEventSourceManager.addEventSourceProducer(new Log4jLoggingServerSocketEventSourceProducer(4445));
 		}
 		catch(IOException ex)
 		{

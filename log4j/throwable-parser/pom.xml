@@ -3,11 +3,11 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
-	<artifactId>de.huxhorn.lilith.log4j.xml</artifactId>
+	<artifactId>de.huxhorn.lilith.log4j.throwable</artifactId>
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
-	<name>Lilith - LOG4J - XML (StaX)</name>
-	<description>This file is part of Lilith. It contains LOG4J XML I/O.</description>
+	<name>Lilith - LOG4J - ThrowableInfo-Parser</name>
+	<description>This file is part of Lilith. It contains the Log4j ThrowableInfo-Parser.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
 	<parent>
@@ -38,30 +38,6 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.log4j.throwable</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.stax</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.tasks</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.buffers</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<scope>compile</scope>
@@ -71,24 +47,6 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.io</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>stax</groupId>
-			<artifactId>stax-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>stax</groupId>
-			<artifactId>stax</artifactId>
-			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
