@@ -179,7 +179,13 @@
 
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.logback.event-producers</artifactId>
+			<artifactId>de.huxhorn.lilith.logback.producer.classic</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.logback.producer.access</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		

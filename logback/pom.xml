@@ -21,7 +21,8 @@
 		<module>classic</module>
 		<module>logging-adapter</module>
 		<module>access-adapter</module>
-		<module>event-producers</module>
+		<module>producer-classic</module>
+		<module>producer-access</module>
 		<module>multiplex-appender-core</module>
 		<module>multiplex-appender-classic</module>
 		<module>multiplex-appender-access</module>

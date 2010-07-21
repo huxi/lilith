@@ -219,10 +219,16 @@
 			
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
-				<artifactId>de.huxhorn.lilith.logback.event-producers</artifactId>
+				<artifactId>de.huxhorn.lilith.logback.producer.classic</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
 			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.logback.producer.access</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.logback.logging-adapter</artifactId>
