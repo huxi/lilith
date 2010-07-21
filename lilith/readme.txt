@@ -23,8 +23,6 @@ Lilith opens:
 - a multiplex Lilith LoggingEvent XML server socket on ports 11000 that is using zero-delimited xml-events,
   as required by ActionScript XMLSocket.
 
-Logging of zero-delimited xml event producer in Lilith has deliberately been left enabled.
-
 If Lilith takes a long time to start up and you are using windows you should probably execute
 regsvr32 /u %windir%\system32\zipfldr.dll
 to disable ZIP-support in the windows file explorer. It sucks anyway...
