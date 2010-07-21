@@ -79,6 +79,9 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="update">
+				Replaced Commons-CLI with JCommander. Very nice replacement!
+			</action>
 			<action dev="jhux" type="add" issue="32">
 				Added support for Log4j SocketAppender. Lilith is listening on port 4445 for incoming connections.
 				I'd still recommend to switch to SLF4J/Logback, though!
