@@ -144,7 +144,7 @@ public class Lilith
 		}
 		catch(ParameterException ex)
 		{
-			printAppInfo(appTitle);
+			printAppInfo(appTitle, false);
 			System.out.println("\n"+ex.getMessage());
 			commander = new JCommander(cl);
 			commander.usage();
@@ -159,7 +159,7 @@ public class Lilith
 		}
 		if(cl.catFile == null && cl.tailFile == null) // don't print info in case of cat or tail
 		{
-			printAppInfo(appTitle);
+			printAppInfo(appTitle, !cl.showHelp);
 		}
 
 		if(cl.verbose)
@@ -242,21 +242,26 @@ public class Lilith
 		startLilith(appTitle, cl.enableBonjour);
 	}
 
-	private static void printAppInfo(String appTitle)
+	private static void printAppInfo(String appTitle, boolean printHelpInfo)
 	{
-		System.out.println(" _     _ _ _ _   _     \n" +
+		System.out.println(
+			" _     _ _ _ _   _     \n" +
 			"| |   (_) (_) |_| |__  \n" +
 			"| |   | | | | __| '_ \\ \n" +
 			"| |___| | | | |_| | | |\n" +
 			"|_____|_|_|_|\\__|_| |_|");
 		System.out.println(appTitle);
+		System.out.println("http://lilith.huxhorn.de");
 		System.out.println("\nCopyright (C) 2007-2010  Joern Huxhorn\n\n" +
 			"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
 			"This is free software, and you are welcome to redistribute it\n" +
 			"under certain conditions.\n" +
 			"You should have received a copy of the GNU General Public License\n" +
 			"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n");
-		System.out.println("Use commandline option -h to view help.\n\n");
+		if(printHelpInfo)
+		{
+			System.out.println("Use commandline option -h to view help.\n");
+		}
 	}
 
 	private static void importPreferences(String file)
