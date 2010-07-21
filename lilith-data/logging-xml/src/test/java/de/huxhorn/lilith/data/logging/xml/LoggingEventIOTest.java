@@ -257,8 +257,8 @@ public class LoggingEventIOTest
 	}
 
 	/*
-			  * This is not supported by SLF4J/Logback at the moment.
-			  */
+	 * This is not supported by SLF4J/Logback at the moment.
+	 */
 	@Test
 	public void recursiveMarker()
 		throws XMLStreamException, UnsupportedEncodingException
