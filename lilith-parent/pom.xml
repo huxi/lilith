@@ -339,11 +339,11 @@
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.3rdparty.macify</artifactId>
-				<version>1.1</version>
+				<version>1.4</version>
 				<!--
 				<groupId>org.simplericity.macify</groupId>
 				<artifactId>macify</artifactId>
-				<version>1.0</version>
+				<version>1.4</version>
 				-->
 			</dependency>
 			

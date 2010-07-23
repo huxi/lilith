@@ -1664,7 +1664,7 @@ public class MainFrame
 			exit();
 		}
 
-		public void handleReopenApplication(ApplicationEvent applicationEvent)
+		public void handleReOpenApplication(ApplicationEvent applicationEvent)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Reopen Application: {}", applicationEvent);
 			setVisible(true);

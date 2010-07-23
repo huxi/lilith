@@ -56,8 +56,7 @@ public class UserNotificationAccessEventHandler
 			}
 			if(errorDetected)
 			{
-				//application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
-				application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_CRITICAL);
+				application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
 			}
 		}
 	}
