@@ -1,0 +1,1 @@
+include 'lilith-sender', 'lilith-data:eventsource', 'lilith-data:eventsource-xml', 'lilith-data:logging', 'lilith-data:logging-xml', 'lilith-data:logging-xml-serializer'

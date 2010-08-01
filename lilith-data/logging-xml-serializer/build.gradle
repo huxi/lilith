@@ -1,0 +1,11 @@
+archivesBaseName = 'de.huxhorn.lilith.data.logging-xml-serializer'
+
+dependencies {
+	compile project(':lilith-data:logging-xml')
+	compile libraries.'sulky-codec'
+	compile libraries.'sulky-io'
+	compile libraries.'sulky-stax'
+	compile libraries.'stax-api'
+	testCompile libraries.'stax'
+}
+

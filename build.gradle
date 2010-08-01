@@ -1,0 +1,112 @@
+defaultTasks 'clean', 'build'
+
+versions = [
+'aspectj':        '1.6.8',
+'easymock':       '2.4',
+'httpcomponents': '4.0.1',
+'log4j':          '1.2.16',
+'logback':        '0.9.24',
+'slf4j':          '1.6.1',
+'spring':         '3.0.2-RELEASE',
+'sulky':          '0.9.12-SNAPSHOT'
+]
+
+libraries = [ 
+'aspectjrt':                "org.aspectj:aspectjrt:${versions.aspectj}",
+'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
+'commons-io':               'commons-io:commons-io:1.3.1',
+'commons-lang':             'commons-lang:commons-lang:2.3',
+'easymock':                 "org.easymock:easymock:${versions.easymock}",
+'easymockclassextension':   "org.easymock:easymockclassextension:${versions.easymock}",
+'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
+'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.8.0',
+'groovy':                   'com.codehaus.groovy:groovy:1.7.3',
+'httpclient':               "org.apache.httpcomponents:httpclient:${versions.httpcomponents}",
+'httpcore':                 "org.apache.httpcomponents:httpcore:${versions.httpcomponents}",
+'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
+'jgroups-all':              'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jgroups-all:2.8.0.CR3',
+'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
+'joda-time':                'joda-time:joda-time:1.6',
+'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
+'junit':                    'junit:junit:4.8.1',
+'log4j':                    "log4j:log4j:${versions.log4j}",
+'log4j-over-slf4j':         "org.slf4j:log4j-over-slf4j:${versions.slf4j}",
+'logback-access':           "ch.qos.logback:logback-access:${versions.logback}",
+'logback-classic':          "ch.qos.logback:logback-classic:${versions.logback}",
+'logback-core':             "ch.qos.logback:logback-core:${versions.logback}",
+'macify':                   'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.macify:1.4',
+'protobuf':                 'com.google.protobuf:protobuf-java:2.3.0',
+'rrd4j':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.rrd4j:2.0.5',
+'servlet-api':              'javax.servlet:servlet-api:2.5',
+'slf4j-api':                "org.slf4j:slf4j-api:${versions.slf4j}",
+'spring-aop':               "org.springframework:spring-aop:${versions.spring}",
+'spring-context':           "org.springframework:spring-context:${versions.spring}",
+'spring-instrument':        "org.springframework:spring-instrument:${versions.spring}",
+'stax':                     'stax:stax:1.2.0',
+'stax-api':                 'stax:stax-api:1.0.1',
+'sulky-buffers':            "de.huxhorn.sulky:de.huxhorn.sulky.buffers:${versions.sulky}",
+'sulky-buffers-filtering':  "de.huxhorn.sulky:de.huxhorn.sulky.buffers.filtering:${versions.sulky}",
+'sulky-buffers-table':      "de.huxhorn.sulky:de.huxhorn.sulky.buffers.table:${versions.sulky}",
+'sulky-codec':              "de.huxhorn.sulky:de.huxhorn.sulky.codec:${versions.sulky}",
+'sulky-codec-filebuffer':   "de.huxhorn.sulky:de.huxhorn.sulky.codec.filebuffer:${versions.sulky}",
+'sulky-conditions':         "de.huxhorn.sulky:de.huxhorn.sulky.conditions:${versions.sulky}",
+'sulky-formatting':         "de.huxhorn.sulky:de.huxhorn.sulky.formatting:${versions.sulky}",
+'sulky-io':                 "de.huxhorn.sulky:de.huxhorn.sulky.io:${versions.sulky}",
+'sulky-junit':              "de.huxhorn.sulky:de.huxhorn.sulky.junit:${versions.sulky}",
+'sulky-logging':            "de.huxhorn.sulky:de.huxhorn.sulky.logging:${versions.sulky}",
+'sulky-sounds-api':         "de.huxhorn.sulky:de.huxhorn.sulky.sounds-api:${versions.sulky}",
+'sulky-sounds-impl-jlayer': "de.huxhorn.sulky:de.huxhorn.sulky.sounds-impl-jlayer:${versions.sulky}",
+'sulky-stax':               "de.huxhorn.sulky:de.huxhorn.sulky.stax:${versions.sulky}",
+'sulky-swing':              "de.huxhorn.sulky:de.huxhorn.sulky.swing:${versions.sulky}",
+'sulky-tasks':              "de.huxhorn.sulky:de.huxhorn.sulky.tasks:${versions.sulky}"
+]
+
+dependsOnChildren()
+
+task build << {
+	// this is just a dummy task so it's possible to call release on the master
+}
+
+allprojects {
+    group = 'de.huxhorn.lilith'
+    version = '0.9.40'
+    
+}
+
+def localMavenRepo = new File("${System.properties.'user.home'}/.m2/repository").toURL().toString()
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven'
+    apply plugin: 'project-reports'
+
+    sourceCompatibility = 1.5
+    targetCompatibility = 1.5
+
+    repositories {
+       mavenCentral()
+       mavenRepo urls: localMavenRepo
+    }
+
+    dependencies {
+        testCompile libraries.junit
+        testCompile libraries.'slf4j-api'
+        testCompile libraries.'logback-classic'
+    }
+
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
+
+    gradle.taskGraph.whenReady {taskGraph ->
+		if (!taskGraph.hasTask(':release')) {
+			version = version+'-SNAPSHOT'
+		}
+	}
+
+	task release(dependsOn: 'build') << {
+		println 'Finished release.'
+	}
+}

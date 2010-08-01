@@ -1,0 +1,6 @@
+archivesBaseName = 'de.huxhorn.lilith.data.eventsource'
+
+dependencies {
+	testCompile libraries.'sulky-junit'
+}
+

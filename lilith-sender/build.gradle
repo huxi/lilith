@@ -1,0 +1,7 @@
+archivesBaseName = 'de.huxhorn.lilith.sender'
+
+dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'sulky-io'
+}
+
