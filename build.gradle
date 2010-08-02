@@ -1,5 +1,3 @@
-defaultTasks 'clean', 'build'
-
 versions = [
 'aspectj':        '1.6.8',
 'easymock':       '2.4',
@@ -61,6 +59,16 @@ libraries = [
 'sulky-tasks':              "de.huxhorn.sulky:de.huxhorn.sulky.tasks:${versions.sulky}"
 ]
 
+artifactMapping = [
+'eventsource-xml':        'de.huxhorn.lilith.data.eventsource-xml',
+'eventsource':            'de.huxhorn.lilith.data.eventsource',
+'lilith-data':            'lilith-data', // ignore
+'lilith-sender':          'de.huxhorn.lilith.sender',
+'logging':                'de.huxhorn.lilith.data.logging',
+'logging-xml':            'de.huxhorn.lilith.data.logging-xml',
+'logging-xml-serializer': 'de.huxhorn.lilith.data.logging-xml-serializer'
+]
+
 dependsOnChildren()
 
 task build << {
@@ -68,9 +76,9 @@ task build << {
 }
 
 allprojects {
+	defaultTasks 'clean', 'build'
     group = 'de.huxhorn.lilith'
     version = '0.9.40'
-    
 }
 
 def localMavenRepo = new File("${System.properties.'user.home'}/.m2/repository").toURL().toString()
@@ -83,6 +91,13 @@ subprojects {
 
     sourceCompatibility = 1.5
     targetCompatibility = 1.5
+
+    mapped=artifactMapping[project.name];
+    if(!mapped)
+    {
+    	throw new IllegalStateException("${project.name} does not have an entry in artifactMapping!");
+    }
+    archivesBaseName=mapped
 
     repositories {
        mavenCentral()
@@ -100,13 +115,32 @@ subprojects {
         manifest.attributes provider: 'gradle'
     }
 
+	task release(dependsOn: [build.taskDependencies]) << {
+		println 'Finished release.'
+	}
+
     gradle.taskGraph.whenReady {taskGraph ->
-		if (!taskGraph.hasTask(':release')) {
+		if (!taskGraph.hasTask(release)) {
 			version = version+'-SNAPSHOT'
 		}
 	}
 
-	task release(dependsOn: 'build') << {
-		println 'Finished release.'
+	// the following is a workaround for http://jira.codehaus.org/browse/GRADLE-443
+	uploadArchives {
+		repositories.mavenDeployer {
+			repository(url: localMavenRepo)
+			// In the future Gradle will allow to use dynamic props for dependencies to deal with optionals
+			pom.whenConfigured { pom ->
+				// dep is a native Maven dependency object (With properties artifactId, groupId, ...)
+				for(dep in pom.dependencies) {
+					println(dep.artifactId)
+					mapping=artifactMapping[dep.artifactId];
+					if(mapping) {
+						println("Mapping ${dep.artifactId} to ${mapping}...")
+						dep.artifactId=mapping
+					}
+				}
+			}
+		}
 	}
 }

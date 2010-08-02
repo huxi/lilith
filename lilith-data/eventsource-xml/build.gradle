@@ -1,5 +1,3 @@
-archivesBaseName = 'de.huxhorn.lilith.data.eventsource-xml'
-
 dependencies {
 	compile project(':lilith-data:eventsource')
 	compile libraries.'sulky-stax'

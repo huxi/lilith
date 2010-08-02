@@ -1,10 +1,9 @@
-archivesBaseName = 'de.huxhorn.lilith.data.logging-xml'
-
 dependencies {
 	compile project(':lilith-data:logging')
 	compile project(':lilith-data:eventsource-xml')
 	compile libraries.'sulky-stax'
 	compile libraries.'stax-api'
 	testCompile libraries.'stax'
+	testCompile project(':lilith-data:eventsource')
 }
 

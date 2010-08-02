@@ -1,5 +1,3 @@
-archivesBaseName = 'de.huxhorn.lilith.data.logging'
-
 dependencies {
 	compile project(':lilith-data:eventsource')
 	testCompile libraries.'sulky-junit'
