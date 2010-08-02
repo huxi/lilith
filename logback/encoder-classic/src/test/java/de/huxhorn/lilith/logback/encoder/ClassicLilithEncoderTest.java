@@ -37,7 +37,6 @@ package de.huxhorn.lilith.logback.encoder;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.recovery.ResilientFileOutputStream;
-import de.huxhorn.lilith.data.access.protobuf.AccessEventProtobufEncoder;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
