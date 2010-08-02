@@ -66,7 +66,10 @@ artifactMapping = [
 'lilith-sender':          'de.huxhorn.lilith.sender',
 'logging':                'de.huxhorn.lilith.data.logging',
 'logging-xml':            'de.huxhorn.lilith.data.logging-xml',
-'logging-xml-serializer': 'de.huxhorn.lilith.data.logging-xml-serializer'
+'logging-xml-serializer': 'de.huxhorn.lilith.data.logging-xml-serializer',
+'logging-protobuf':       'de.huxhorn.lilith.data.logging.protobuf',
+'access':                 'de.huxhorn.lilith.data.access',
+'access-protobuf':        'de.huxhorn.lilith.data.access.protobuf'
 ]
 
 dependsOnChildren()
