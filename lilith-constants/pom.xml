@@ -17,58 +17,5 @@
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
-	<dependencies>
-		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.sender</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.data.eventsource</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.data.logging.protobuf</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.data.access</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.data.access.protobuf</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
-		<!--
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		-->
-		
-		<!--
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		-->
-	</dependencies>
 </project>
 
