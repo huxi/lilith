@@ -60,16 +60,33 @@ libraries = [
 ]
 
 artifactMapping = [
-'eventsource-xml':        'de.huxhorn.lilith.data.eventsource-xml',
-'eventsource':            'de.huxhorn.lilith.data.eventsource',
-'lilith-data':            'lilith-data', // ignore
-'lilith-sender':          'de.huxhorn.lilith.sender',
-'logging':                'de.huxhorn.lilith.data.logging',
-'logging-xml':            'de.huxhorn.lilith.data.logging-xml',
-'logging-xml-serializer': 'de.huxhorn.lilith.data.logging-xml-serializer',
-'logging-protobuf':       'de.huxhorn.lilith.data.logging.protobuf',
-'access':                 'de.huxhorn.lilith.data.access',
-'access-protobuf':        'de.huxhorn.lilith.data.access.protobuf'
+'eventsource-xml':                'de.huxhorn.lilith.data.eventsource-xml',
+'eventsource':                    'de.huxhorn.lilith.data.eventsource',
+'lilith-data':                    'lilith-data', // ignore
+'lilith-sender':                  'de.huxhorn.lilith.sender',
+'logging':                        'de.huxhorn.lilith.data.logging',
+'logging-xml':                    'de.huxhorn.lilith.data.logging-xml',
+'logging-xml-serializer':         'de.huxhorn.lilith.data.logging-xml-serializer',
+'logging-protobuf':               'de.huxhorn.lilith.data.logging.protobuf',
+'access':                         'de.huxhorn.lilith.data.access',
+'access-protobuf':                'de.huxhorn.lilith.data.access.protobuf',
+'lilith-constants':               'de.huxhorn.lilith.constants',
+'lilith-engine':                  'de.huxhorn.lilith.engine',
+'lilith-xml-logging':             'de.huxhorn.lilith.xml-logging',
+'logback':                        'logback', // ignore
+'classic':                        'de.huxhorn.lilith.logback.classic',
+'logging-adapter':                'de.huxhorn.lilith.logback.logging-adapter',
+'access-adapter':                 'de.huxhorn.lilith.logback.access-adapter',
+'producer-classic':               'de.huxhorn.lilith.logback.producer.classic',
+'producer-access':                'de.huxhorn.lilith.logback.producer.access',
+'multiplex-appender-core':        'de.huxhorn.lilith.logback.appender.multiplex-core',
+'multiplex-appender-classic':     'de.huxhorn.lilith.logback.appender.multiplex-classic',
+'multiplex-appender-access':      'de.huxhorn.lilith.logback.appender.multiplex-access',
+'multiplex-appender-classic-xml': 'de.huxhorn.lilith.logback.appender.multiplex-classic-xml',
+'shutdown-context-listener':      'de.huxhorn.lilith.logback.servlet',
+'encoder-core':                   'de.huxhorn.lilith.logback.encoder.core',
+'encoder-classic':                'de.huxhorn.lilith.logback.encoder.classic',
+'encoder-access':                 'de.huxhorn.lilith.logback.encoder.access'
 ]
 
 dependsOnChildren()

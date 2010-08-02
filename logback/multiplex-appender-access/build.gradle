@@ -1,0 +1,9 @@
+dependencies {
+	compile libraries.'sulky-codec'
+	compile project(':logback:multiplex-appender-core')
+	compile project(':lilith-data:access')
+	compile project(':lilith-data:access-protobuf')
+	compile project(':logback:access-adapter')
+	compile libraries.'logback-access'
+}
+

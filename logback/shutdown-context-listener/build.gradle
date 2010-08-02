@@ -1,0 +1,6 @@
+dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'servlet-api'
+	compile libraries.'logback-classic'
+}
+

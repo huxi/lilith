@@ -1,0 +1,11 @@
+dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'sulky-codec'
+	compile project(':logback:encoder-core')
+	compile project(':logback:logging-adapter')
+	compile project(':lilith-data:logging-protobuf')
+	compile libraries.'logback-core'
+	compile libraries.'logback-classic'
+	testCompile project(':lilith-constants')
+}
+

@@ -1,0 +1,6 @@
+dependencies {
+	compile project(':lilith-sender')
+	compile libraries.'sulky-codec'
+	compile libraries.'logback-core'
+}
+

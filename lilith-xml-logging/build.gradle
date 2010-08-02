@@ -1,0 +1,10 @@
+dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'sulky-io'
+	compile libraries.'stax-api'
+	compile libraries.'sulky-buffers'
+	compile libraries.'sulky-codec'
+	compile project(':lilith-engine')
+	compile project(':lilith-data:logging-xml-serializer')
+}
+
