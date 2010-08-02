@@ -1,0 +1,13 @@
+dependencies {
+	compile project(':lilith-data:logging')
+	compile libraries.'sulky-stax'
+	compile libraries.'sulky-tasks'
+	compile libraries.'sulky-buffers'
+	compile libraries.'slf4j-api'
+	compile libraries.'commons-io'
+	compile libraries.'sulky-io'
+	compile libraries.'stax-api'
+	testRuntime libraries.'stax'
+	testCompile project(':lilith-data:eventsource')
+}
+

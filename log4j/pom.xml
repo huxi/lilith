@@ -18,9 +18,9 @@
 	</parent>
 	
 	<modules>
-		<module>throwable-parser</module>
-		<module>xml</module>
-		<module>producer</module>
+		<module>log4j-throwable-parser</module>
+		<module>log4j-xml</module>
+		<module>log4j-producer</module>
 	</modules>
 
 </project>

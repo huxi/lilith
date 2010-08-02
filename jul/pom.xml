@@ -18,7 +18,7 @@
 	</parent>
 	
 	<modules>
-		<module>xml</module>
+		<module>jul-xml</module>
 		<module>jul-slf4j-handler</module>
 	</modules>
 

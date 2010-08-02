@@ -86,7 +86,14 @@ artifactMapping = [
 'shutdown-context-listener':      'de.huxhorn.lilith.logback.servlet',
 'encoder-core':                   'de.huxhorn.lilith.logback.encoder.core',
 'encoder-classic':                'de.huxhorn.lilith.logback.encoder.classic',
-'encoder-access':                 'de.huxhorn.lilith.logback.encoder.access'
+'encoder-access':                 'de.huxhorn.lilith.logback.encoder.access',
+'log4j':                          'log4j', // ignore
+'log4j-throwable-parser':         'de.huxhorn.lilith.log4j.throwable',
+'log4j-xml':                      'de.huxhorn.lilith.log4j.xml',
+'log4j-producer':                 'de.huxhorn.lilith.log4j.producer',
+'jul':                            'jul', // ignore
+'jul-xml':                        'de.huxhorn.lilith.jul.xml',
+'jul-slf4j-handler':              'de.huxhorn.lilith.jul-slf4j-handler'
 ]
 
 dependsOnChildren()
