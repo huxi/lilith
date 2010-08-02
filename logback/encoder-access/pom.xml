@@ -39,6 +39,12 @@
 
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.data.access.protobuf</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.encoder.core</artifactId>
 			<scope>compile</scope>
 		</dependency>
