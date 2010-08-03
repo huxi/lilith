@@ -233,7 +233,7 @@
 				Logback 0.9.21
 			</action>
 			<action dev="jhux" type="update">
-				SLF4J 1.6.0
+				SLF4J 1.6.1
 			</action>
 			<action dev="jhux" type="update">
 				commons-cli 1.2
@@ -242,7 +242,10 @@
 				httpclient 4.0.1
 			</action>
             <action dev="jhux" type="update">
-                Groovy 1.7.2
+                Groovy 1.7.4
+            </action>
+            <action dev="jhux" type="update">
+                JCommander 1.4
             </action>
 		</release>
 
