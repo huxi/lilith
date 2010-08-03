@@ -1,0 +1,5 @@
+dependencies {
+	compile libraries.'slf4j-api'
+	testRuntime project(':logback:multiplex-appender-classic')
+}
+

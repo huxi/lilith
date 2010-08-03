@@ -5,25 +5,28 @@ versions = [
 'log4j':          '1.2.16',
 'logback':        '0.9.24',
 'slf4j':          '1.6.1',
-'spring':         '3.0.2-RELEASE',
+'spring':         '3.0.3.RELEASE',
 'sulky':          '0.9.12-SNAPSHOT'
 ]
 
 libraries = [ 
 'aspectjrt':                "org.aspectj:aspectjrt:${versions.aspectj}",
 'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
+'cglib-nodep':              'cglib:cglib-nodep:2.2',
 'commons-io':               'commons-io:commons-io:1.3.1',
 'commons-lang':             'commons-lang:commons-lang:2.3',
 'easymock':                 "org.easymock:easymock:${versions.easymock}",
 'easymockclassextension':   "org.easymock:easymockclassextension:${versions.easymock}",
 'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
 'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.8.0',
-'groovy':                   'com.codehaus.groovy:groovy:1.7.3',
+'groovy':                   'org.codehaus.groovy:groovy:1.7.4',
 'httpclient':               "org.apache.httpcomponents:httpclient:${versions.httpcomponents}",
 'httpcore':                 "org.apache.httpcomponents:httpcore:${versions.httpcomponents}",
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
 'jgroups-all':              'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jgroups-all:2.8.0.CR3',
 'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
+'jcommander':               'com.beust:jcommander:1.4',
+'jgoodies-looks':           'com.jgoodies:looks:2.2.0',
 'joda-time':                'joda-time:joda-time:1.6',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
 'junit':                    'junit:junit:4.8.1',
@@ -38,7 +41,9 @@ libraries = [
 'servlet-api':              'javax.servlet:servlet-api:2.5',
 'slf4j-api':                "org.slf4j:slf4j-api:${versions.slf4j}",
 'spring-aop':               "org.springframework:spring-aop:${versions.spring}",
+'spring-beans':             "org.springframework:spring-beans:${versions.spring}",
 'spring-context':           "org.springframework:spring-context:${versions.spring}",
+'spring-core':              "org.springframework:spring-core:${versions.spring}",
 'spring-instrument':        "org.springframework:spring-instrument:${versions.spring}",
 'stax':                     'stax:stax:1.2.0',
 'stax-api':                 'stax:stax-api:1.0.1',
@@ -93,14 +98,16 @@ artifactMapping = [
 'log4j-producer':                 'de.huxhorn.lilith.log4j.producer',
 'jul':                            'jul', // ignore
 'jul-xml':                        'de.huxhorn.lilith.jul.xml',
-'jul-slf4j-handler':              'de.huxhorn.lilith.jul-slf4j-handler'
+'jul-slf4j-handler':              'de.huxhorn.lilith.jul-slf4j-handler',
+'lilith-sounds':                  'de.huxhorn.lilith.sounds',
+'lilith-prefs':                   'de.huxhorn.lilith.prefs',
+'lilith-conditions':              'de.huxhorn.lilith.conditions',
+'lilith':                         'de.huxhorn.lilith',
+'slf4j':                          'de.huxhorn.lilith.slf4j',
+'tracing':                        'de.huxhorn.lilith.tracing'
 ]
 
 dependsOnChildren()
-
-task build << {
-	// this is just a dummy task so it's possible to call release on the master
-}
 
 allprojects {
 	defaultTasks 'clean', 'build', 'uploadArchives'
@@ -108,7 +115,8 @@ allprojects {
     version = '0.9.40'
 }
 
-def localMavenRepo = new File("${System.properties.'user.home'}/.m2/repository").toURL().toString()
+def localReleaseRepo = new File("${System.properties.'user.home'}/local-gradle-repository/release").toURL().toString()
+def localSnapshotRepo = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot").toURL().toString()
 
 subprojects {
     apply plugin: 'java'
@@ -128,7 +136,8 @@ subprojects {
 
     repositories {
        mavenCentral()
-       mavenRepo urls: localMavenRepo
+       mavenRepo urls: localReleaseRepo
+       mavenRepo urls: localSnapshotRepo
     }
 
     dependencies {
@@ -155,7 +164,8 @@ subprojects {
 	// the following is a workaround for http://jira.codehaus.org/browse/GRADLE-443
 	uploadArchives {
 		repositories.mavenDeployer {
-			repository(url: localMavenRepo)
+			repository(url: localReleaseRepo)
+			snapshotRepository(url: localSnapshotRepo)
 			// In the future Gradle will allow to use dynamic props for dependencies to deal with optionals
 			pom.whenConfigured { pom ->
 				// dep is a native Maven dependency object (With properties artifactId, groupId, ...)

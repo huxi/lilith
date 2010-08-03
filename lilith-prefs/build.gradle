@@ -1,0 +1,5 @@
+dependencies {
+	compile libraries.'sulky-codec'
+	compile libraries.'protobuf'
+}
+
