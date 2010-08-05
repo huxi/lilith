@@ -1,185 +1,327 @@
-versions = [
-'aspectj':        '1.6.8',
-'easymock':       '2.4',
-'httpcomponents': '4.0.1',
-'log4j':          '1.2.16',
-'logback':        '0.9.24',
-'slf4j':          '1.6.1',
-'spring':         '3.0.3.RELEASE',
-'sulky':          '0.9.12-SNAPSHOT'
-]
+apply from: 'dependencyDefinitions.gradle'
+apply from: 'config.gradle'
 
-libraries = [ 
-'aspectjrt':                "org.aspectj:aspectjrt:${versions.aspectj}",
-'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
-'cglib-nodep':              'cglib:cglib-nodep:2.2',
-'commons-io':               'commons-io:commons-io:1.3.1',
-'commons-lang':             'commons-lang:commons-lang:2.3',
-'easymock':                 "org.easymock:easymock:${versions.easymock}",
-'easymockclassextension':   "org.easymock:easymockclassextension:${versions.easymock}",
-'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
-'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.8.0',
-'groovy':                   'org.codehaus.groovy:groovy:1.7.4',
-'httpclient':               "org.apache.httpcomponents:httpclient:${versions.httpcomponents}",
-'httpcore':                 "org.apache.httpcomponents:httpcore:${versions.httpcomponents}",
-'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
-'jgroups-all':              'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jgroups-all:2.8.0.CR3',
-'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
-'jcommander':               'com.beust:jcommander:1.4',
-'jgoodies-looks':           'com.jgoodies:looks:2.2.0',
-'joda-time':                'joda-time:joda-time:1.6',
-'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
-'junit':                    'junit:junit:4.8.1',
-'log4j':                    "log4j:log4j:${versions.log4j}",
-'log4j-over-slf4j':         "org.slf4j:log4j-over-slf4j:${versions.slf4j}",
-'logback-access':           "ch.qos.logback:logback-access:${versions.logback}",
-'logback-classic':          "ch.qos.logback:logback-classic:${versions.logback}",
-'logback-core':             "ch.qos.logback:logback-core:${versions.logback}",
-'macify':                   'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.macify:1.4',
-'protobuf':                 'com.google.protobuf:protobuf-java:2.3.0',
-'rrd4j':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.rrd4j:2.0.5',
-'servlet-api':              'javax.servlet:servlet-api:2.5',
-'slf4j-api':                "org.slf4j:slf4j-api:${versions.slf4j}",
-'spring-aop':               "org.springframework:spring-aop:${versions.spring}",
-'spring-beans':             "org.springframework:spring-beans:${versions.spring}",
-'spring-context':           "org.springframework:spring-context:${versions.spring}",
-'spring-core':              "org.springframework:spring-core:${versions.spring}",
-'spring-instrument':        "org.springframework:spring-instrument:${versions.spring}",
-'stax':                     'stax:stax:1.2.0',
-'stax-api':                 'stax:stax-api:1.0.1',
-'sulky-buffers':            "de.huxhorn.sulky:de.huxhorn.sulky.buffers:${versions.sulky}",
-'sulky-buffers-filtering':  "de.huxhorn.sulky:de.huxhorn.sulky.buffers.filtering:${versions.sulky}",
-'sulky-buffers-table':      "de.huxhorn.sulky:de.huxhorn.sulky.buffers.table:${versions.sulky}",
-'sulky-codec':              "de.huxhorn.sulky:de.huxhorn.sulky.codec:${versions.sulky}",
-'sulky-codec-filebuffer':   "de.huxhorn.sulky:de.huxhorn.sulky.codec.filebuffer:${versions.sulky}",
-'sulky-conditions':         "de.huxhorn.sulky:de.huxhorn.sulky.conditions:${versions.sulky}",
-'sulky-formatting':         "de.huxhorn.sulky:de.huxhorn.sulky.formatting:${versions.sulky}",
-'sulky-io':                 "de.huxhorn.sulky:de.huxhorn.sulky.io:${versions.sulky}",
-'sulky-junit':              "de.huxhorn.sulky:de.huxhorn.sulky.junit:${versions.sulky}",
-'sulky-logging':            "de.huxhorn.sulky:de.huxhorn.sulky.logging:${versions.sulky}",
-'sulky-sounds-api':         "de.huxhorn.sulky:de.huxhorn.sulky.sounds-api:${versions.sulky}",
-'sulky-sounds-impl-jlayer': "de.huxhorn.sulky:de.huxhorn.sulky.sounds-impl-jlayer:${versions.sulky}",
-'sulky-stax':               "de.huxhorn.sulky:de.huxhorn.sulky.stax:${versions.sulky}",
-'sulky-swing':              "de.huxhorn.sulky:de.huxhorn.sulky.swing:${versions.sulky}",
-'sulky-tasks':              "de.huxhorn.sulky:de.huxhorn.sulky.tasks:${versions.sulky}"
-]
-
-artifactMapping = [
-'eventsource-xml':                'de.huxhorn.lilith.data.eventsource-xml',
-'eventsource':                    'de.huxhorn.lilith.data.eventsource',
-'lilith-data':                    'lilith-data', // ignore
-'lilith-sender':                  'de.huxhorn.lilith.sender',
-'logging':                        'de.huxhorn.lilith.data.logging',
-'logging-xml':                    'de.huxhorn.lilith.data.logging-xml',
-'logging-xml-serializer':         'de.huxhorn.lilith.data.logging-xml-serializer',
-'logging-protobuf':               'de.huxhorn.lilith.data.logging.protobuf',
-'access':                         'de.huxhorn.lilith.data.access',
-'access-protobuf':                'de.huxhorn.lilith.data.access.protobuf',
-'lilith-constants':               'de.huxhorn.lilith.constants',
-'lilith-engine':                  'de.huxhorn.lilith.engine',
-'lilith-xml-logging':             'de.huxhorn.lilith.xml-logging',
-'logback':                        'logback', // ignore
-'classic':                        'de.huxhorn.lilith.logback.classic',
-'logging-adapter':                'de.huxhorn.lilith.logback.logging-adapter',
-'access-adapter':                 'de.huxhorn.lilith.logback.access-adapter',
-'producer-classic':               'de.huxhorn.lilith.logback.producer.classic',
-'producer-access':                'de.huxhorn.lilith.logback.producer.access',
-'multiplex-appender-core':        'de.huxhorn.lilith.logback.appender.multiplex-core',
-'multiplex-appender-classic':     'de.huxhorn.lilith.logback.appender.multiplex-classic',
-'multiplex-appender-access':      'de.huxhorn.lilith.logback.appender.multiplex-access',
-'multiplex-appender-classic-xml': 'de.huxhorn.lilith.logback.appender.multiplex-classic-xml',
-'shutdown-context-listener':      'de.huxhorn.lilith.logback.servlet',
-'encoder-core':                   'de.huxhorn.lilith.logback.encoder.core',
-'encoder-classic':                'de.huxhorn.lilith.logback.encoder.classic',
-'encoder-access':                 'de.huxhorn.lilith.logback.encoder.access',
-'log4j':                          'log4j', // ignore
-'log4j-throwable-parser':         'de.huxhorn.lilith.log4j.throwable',
-'log4j-xml':                      'de.huxhorn.lilith.log4j.xml',
-'log4j-producer':                 'de.huxhorn.lilith.log4j.producer',
-'jul':                            'jul', // ignore
-'jul-xml':                        'de.huxhorn.lilith.jul.xml',
-'jul-slf4j-handler':              'de.huxhorn.lilith.jul-slf4j-handler',
-'lilith-sounds':                  'de.huxhorn.lilith.sounds',
-'lilith-prefs':                   'de.huxhorn.lilith.prefs',
-'lilith-conditions':              'de.huxhorn.lilith.conditions',
-'lilith':                         'de.huxhorn.lilith',
-'slf4j':                          'de.huxhorn.lilith.slf4j',
-'tracing':                        'de.huxhorn.lilith.tracing'
-]
-
-dependsOnChildren()
-
-allprojects {
-	defaultTasks 'clean', 'build', 'uploadArchives'
-    group = 'de.huxhorn.lilith'
-    version = '0.9.40'
+project(':lilith-sender').dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'sulky-io'
 }
 
-def localReleaseRepo = new File("${System.properties.'user.home'}/local-gradle-repository/release").toURL().toString()
-def localSnapshotRepo = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot").toURL().toString()
-
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'eclipse'
-    apply plugin: 'maven'
-    apply plugin: 'project-reports'
-
-    sourceCompatibility = 1.5
-    targetCompatibility = 1.5
-
-    compileJava.options.compilerArgs = ['-Xlint:unchecked', '-Xlint:deprecation', '-g']
-    
-    mapped=artifactMapping[project.name];
-    if(!mapped)
-    {
-    	throw new IllegalStateException("${project.name} does not have an entry in artifactMapping!");
-    }
-    archivesBaseName=mapped
-
-    repositories {
-       mavenCentral()
-       mavenRepo urls: localReleaseRepo
-       mavenRepo urls: localSnapshotRepo
-    }
-
-    dependencies {
-        testCompile libraries.junit
-        testCompile libraries.'slf4j-api'
-        testRuntime libraries.'logback-classic'
-    }
-
-
-    jar {
-        manifest.attributes provider: 'gradle'
-    }
-
-	task release(dependsOn: [build.taskDependencies]) << {
-		println 'Finished release.'
-	}
-
-    gradle.taskGraph.whenReady {taskGraph ->
-		if (!taskGraph.hasTask(release)) {
-			version = version+'-SNAPSHOT'
-		}
-	}
-
-	// the following is a workaround for http://jira.codehaus.org/browse/GRADLE-443
-	uploadArchives {
-		repositories.mavenDeployer {
-			repository(url: localReleaseRepo)
-			snapshotRepository(url: localSnapshotRepo)
-			// In the future Gradle will allow to use dynamic props for dependencies to deal with optionals
-			pom.whenConfigured { pom ->
-				// dep is a native Maven dependency object (With properties artifactId, groupId, ...)
-				for(dep in pom.dependencies) {
-					//println(dep.artifactId)
-					mapping=artifactMapping[dep.artifactId];
-					if(mapping) {
-						println("Mapping ${dep.artifactId} to ${mapping}...")
-						dep.artifactId=mapping
-					}
-				}
-			}
-		}
-	}
+project(':lilith-data:eventsource').dependencies {
+	testCompile libraries.'sulky-junit'
 }
+
+project(':lilith-data:eventsource-xml').dependencies {
+	compile project(':lilith-data:eventsource')
+	compile libraries.'sulky-stax'
+	compile libraries.'stax-api'
+	testCompile libraries.'stax'
+}
+
+project(':lilith-data:logging').dependencies {
+	compile project(':lilith-data:eventsource')
+	testCompile libraries.'sulky-junit'
+}
+
+project(':lilith-data:logging-xml').dependencies {
+	compile project(':lilith-data:logging')
+	compile project(':lilith-data:eventsource-xml')
+	compile libraries.'sulky-stax'
+	compile libraries.'stax-api'
+	testCompile libraries.'stax'
+	testCompile project(':lilith-data:eventsource')
+}
+
+project(':lilith-data:logging-xml-serializer').dependencies {
+	compile project(':lilith-data:logging-xml')
+	compile libraries.'sulky-codec'
+	compile libraries.'sulky-io'
+	compile libraries.'sulky-stax'
+	compile libraries.'stax-api'
+	testCompile libraries.'stax'
+	testCompile project(':lilith-data:logging')
+	testCompile project(':lilith-data:eventsource')
+}
+
+project(':lilith-data:logging-protobuf').dependencies {
+	compile project(':lilith-data:logging')
+	compile libraries.'protobuf'
+	compile libraries.'sulky-codec'
+	testCompile project(':lilith-data:eventsource')
+}
+
+project(':lilith-data:access').dependencies {
+	compile project(':lilith-data:eventsource')
+	testCompile libraries.'sulky-junit'
+}
+
+project(':lilith-data:access-protobuf').dependencies {
+	compile project(':lilith-data:access')
+	compile libraries.'protobuf'
+	compile libraries.'sulky-codec'
+	testCompile project(':lilith-data:eventsource')
+}
+
+//project(':lilith-constants').dependencies {
+//}
+
+project(':lilith-engine').dependencies {
+	compile project(':lilith-constants')
+	compile project(':lilith-sender')
+	compile project(':lilith-data:eventsource')
+	compile project(':lilith-data:logging')
+	compile project(':lilith-data:logging-protobuf')
+	compile project(':lilith-data:access')
+	compile project(':lilith-data:access-protobuf')
+	compile libraries.'sulky-codec-filebuffer'
+	compile libraries.'sulky-buffers'
+	compile libraries.'sulky-conditions'
+	compile libraries.'sulky-io'
+	compile libraries.'sulky-codec'
+	compile libraries.'slf4j-api'
+}
+
+project(':lilith-xml-logging').dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'sulky-io'
+	compile libraries.'stax-api'
+	compile libraries.'sulky-buffers'
+	compile libraries.'sulky-codec'
+	compile project(':lilith-engine')
+	compile project(':lilith-data:logging-xml-serializer')
+}
+
+project(':logback:classic').dependencies {
+	compile project(':lilith-data:logging')
+}
+
+project(':logback:logging-adapter').dependencies {
+	compile project(':lilith-data:logging')
+	compile project(':logback:classic')
+	compile libraries.'sulky-codec'
+	compile libraries.'slf4j-api'
+	compile libraries.'logback-classic'
+}
+
+project(':logback:access-adapter').dependencies {
+	compile project(':lilith-data:access')
+	compile libraries.'sulky-codec'
+	compile libraries.'logback-access'
+}
+
+project(':logback:producer-classic').dependencies {
+	compile libraries.'logback-classic'
+	compile project(':lilith-engine')
+	compile project(':lilith-data:logging')
+	compile project(':logback:logging-adapter')
+	compile libraries.'sulky-buffers'
+	compile libraries.'slf4j-api'
+}
+
+project(':logback:producer-access').dependencies {
+	compile libraries.'logback-access'
+	compile project(':lilith-engine')
+	compile project(':lilith-data:access')
+	compile project(':logback:access-adapter')
+	compile libraries.'sulky-buffers'
+	compile libraries.'slf4j-api'
+}
+
+project(':logback:multiplex-appender-core').dependencies {
+	compile project(':lilith-sender')
+	compile libraries.'sulky-codec'
+	compile libraries.'logback-core'
+}
+
+project(':logback:multiplex-appender-classic').dependencies {
+	compile libraries.'sulky-codec'
+	compile project(':lilith-data:logging-protobuf')
+	compile project(':logback:multiplex-appender-core')
+	compile project(':logback:logging-adapter')
+	compile libraries.'logback-classic'
+}
+
+project(':logback:multiplex-appender-access').dependencies {
+	compile libraries.'sulky-codec'
+	compile project(':logback:multiplex-appender-core')
+	compile project(':lilith-data:access')
+	compile project(':lilith-data:access-protobuf')
+	compile project(':logback:access-adapter')
+	compile libraries.'logback-access'
+}
+
+project(':logback:multiplex-appender-classic-xml').dependencies {
+	compile libraries.'sulky-codec'
+	compile project(':lilith-data:logging-xml-serializer')
+	compile project(':logback:multiplex-appender-core')
+	compile project(':logback:logging-adapter')
+	compile libraries.'logback-classic'
+}
+
+project(':logback:shutdown-context-listener').dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'servlet-api'
+	compile libraries.'logback-classic'
+}
+
+project(':logback:encoder-core').dependencies {
+	compile project(':lilith-constants')
+	compile libraries.'logback-core'
+	compile libraries.'sulky-codec'
+	compile libraries.'sulky-codec-filebuffer'
+}
+
+project(':logback:encoder-classic').dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'sulky-codec'
+	compile project(':logback:encoder-core')
+	compile project(':logback:logging-adapter')
+	compile project(':lilith-data:logging-protobuf')
+	compile libraries.'logback-core'
+	compile libraries.'logback-classic'
+	testCompile project(':lilith-constants')
+}
+
+project(':logback:encoder-access').dependencies {
+	compile libraries.'sulky-codec'
+	compile project(':logback:encoder-core')
+	compile project(':lilith-data:access-protobuf')
+	compile project(':logback:access-adapter')
+	compile libraries.'logback-core'
+	compile libraries.'logback-access'
+}
+
+project(':log4j:log4j-throwable-parser').dependencies {
+	compile project(':lilith-data:logging')
+	compile libraries.'slf4j-api'
+}
+
+project(':log4j:log4j-xml').dependencies {
+	compile project(':lilith-data:logging')
+	compile project(':log4j:log4j-throwable-parser')
+	compile libraries.'sulky-stax'
+	compile libraries.'sulky-tasks'
+	compile libraries.'sulky-buffers'
+	compile libraries.'slf4j-api'
+	compile libraries.'commons-io'
+	compile libraries.'sulky-io'
+	compile libraries.'stax-api'
+	testRuntime libraries.'stax'
+	testCompile project(':lilith-data:eventsource')
+}
+
+project(':log4j:log4j-producer').dependencies {
+	compile project(':lilith-data:logging')
+	compile project(':log4j:log4j-throwable-parser')
+	compile libraries.'sulky-buffers'
+	compile project(':lilith-engine')
+	compile libraries.'slf4j-api'
+	compile libraries.'log4j'
+}
+
+project(':jul:jul-xml').dependencies {
+	compile project(':lilith-data:logging')
+	compile libraries.'sulky-stax'
+	compile libraries.'sulky-tasks'
+	compile libraries.'sulky-buffers'
+	compile libraries.'slf4j-api'
+	compile libraries.'commons-io'
+	compile libraries.'sulky-io'
+	compile libraries.'stax-api'
+	testRuntime libraries.'stax'
+	testCompile project(':lilith-data:eventsource')
+}
+
+project(':jul:jul-slf4j-handler').dependencies {
+	compile libraries.'slf4j-api'
+}
+
+//project(':lilith-sounds').dependencies {
+//}
+
+project(':lilith-prefs').dependencies {
+	compile libraries.'sulky-codec'
+	compile libraries.'protobuf'
+}
+
+project(':lilith-conditions').dependencies {
+	compile project(':lilith-data:eventsource')
+	compile project(':lilith-data:logging')
+	compile project(':lilith-data:access')
+	compile libraries.'sulky-conditions'
+	compile libraries.'slf4j-api'
+	compile libraries.'groovy'
+}
+
+project(':lilith').dependencies {
+	compile libraries.'slf4j-api'
+	runtime libraries.'jcl-over-slf4j'
+	compile libraries.'logback-core'
+	compile libraries.'logback-classic'
+	compile libraries.'logback-access'
+	compile project(':lilith-conditions')
+	compile project(':logback:producer-classic')
+	compile project(':logback:producer-access')
+	compile project(':lilith-data:logging')
+	compile project(':lilith-data:logging-protobuf')
+	compile project(':lilith-data:access')
+	compile project(':lilith-engine')
+	compile project(':log4j:log4j-producer')
+	runtime libraries.'jgoodies-looks'
+	compile project(':jul:jul-slf4j-handler')
+	compile project(':logback:multiplex-appender-classic')
+	compile project(':logback:multiplex-appender-classic-xml')
+	compile project(':logback:multiplex-appender-access')
+	compile project(':lilith-xml-logging')
+	compile project(':logback:logging-adapter')
+	compile project(':log4j:log4j-xml')
+	compile project(':jul:jul-xml')
+	compile project(':lilith-prefs')
+	compile libraries.'servlet-api'
+	compile libraries.'groovy'
+	compile libraries.'sulky-logging'
+	compile libraries.'sulky-sounds-api'
+	compile libraries.'sulky-sounds-impl-jlayer'
+	compile libraries.'sulky-conditions'
+	compile libraries.'sulky-codec'
+	compile libraries.'sulky-codec-filebuffer'
+	compile libraries.'sulky-buffers'
+	compile libraries.'sulky-buffers-table'
+	compile libraries.'sulky-buffers-filtering'
+	compile libraries.'sulky-formatting'
+	compile libraries.'sulky-swing'
+	compile libraries.'sulky-tasks'
+	compile libraries.'sulky-io'
+	compile libraries.'jcommander'
+	compile libraries.'commons-lang'
+	compile libraries.'commons-io'
+	compile libraries.'httpclient'
+	compile libraries.'httpcore'
+	compile libraries.'glazedlists'
+	runtime project(':lilith-sounds')
+	runtime libraries.'stax'
+	compile libraries.'flyingsaucer'
+	compile libraries.'jmdns'
+	compile libraries.'junique'
+	compile libraries.'macify'
+	compile libraries.'rrd4j'
+}
+
+project(':slf4j').dependencies {
+	compile libraries.'slf4j-api'
+	testRuntime project(':logback:multiplex-appender-classic')
+}
+
+project(':tracing').dependencies {
+	compile libraries.'aspectjrt'
+	compile libraries.'slf4j-api'
+	compile project(':lilith-data:logging')
+	testCompile libraries.'spring-beans'
+	testCompile libraries.'spring-context'
+	testCompile libraries.'spring-core'
+	testRuntime libraries.'aspectjweaver'
+	testRuntime libraries.'cglib-nodep'
+	testRuntime libraries.'jcl-over-slf4j'
+	testRuntime libraries.'spring-aop'
+	testRuntime project(':logback:multiplex-appender-classic')
+}
+

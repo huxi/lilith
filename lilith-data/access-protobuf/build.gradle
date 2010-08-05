@@ -1,7 +1,0 @@
-dependencies {
-	compile project(':lilith-data:access')
-	compile libraries.'protobuf'
-	compile libraries.'sulky-codec'
-	testCompile project(':lilith-data:eventsource')
-}
-

@@ -1,7 +1,0 @@
-dependencies {
-	compile project(':lilith-data:eventsource')
-	compile libraries.'sulky-stax'
-	compile libraries.'stax-api'
-	testCompile libraries.'stax'
-}
-

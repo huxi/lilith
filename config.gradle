@@ -1,0 +1,213 @@
+artifactMapping = [
+'eventsource-xml':                'de.huxhorn.lilith.data.eventsource-xml',
+'eventsource':                    'de.huxhorn.lilith.data.eventsource',
+'lilith-data':                    'lilith-data', // ignore
+'lilith-sender':                  'de.huxhorn.lilith.sender',
+'logging':                        'de.huxhorn.lilith.data.logging',
+'logging-xml':                    'de.huxhorn.lilith.data.logging-xml',
+'logging-xml-serializer':         'de.huxhorn.lilith.data.logging-xml-serializer',
+'logging-protobuf':               'de.huxhorn.lilith.data.logging.protobuf',
+'access':                         'de.huxhorn.lilith.data.access',
+'access-protobuf':                'de.huxhorn.lilith.data.access.protobuf',
+'lilith-constants':               'de.huxhorn.lilith.constants',
+'lilith-engine':                  'de.huxhorn.lilith.engine',
+'lilith-xml-logging':             'de.huxhorn.lilith.xml-logging',
+'logback':                        'logback', // ignore
+'classic':                        'de.huxhorn.lilith.logback.classic',
+'logging-adapter':                'de.huxhorn.lilith.logback.logging-adapter',
+'access-adapter':                 'de.huxhorn.lilith.logback.access-adapter',
+'producer-classic':               'de.huxhorn.lilith.logback.producer.classic',
+'producer-access':                'de.huxhorn.lilith.logback.producer.access',
+'multiplex-appender-core':        'de.huxhorn.lilith.logback.appender.multiplex-core',
+'multiplex-appender-classic':     'de.huxhorn.lilith.logback.appender.multiplex-classic',
+'multiplex-appender-access':      'de.huxhorn.lilith.logback.appender.multiplex-access',
+'multiplex-appender-classic-xml': 'de.huxhorn.lilith.logback.appender.multiplex-classic-xml',
+'shutdown-context-listener':      'de.huxhorn.lilith.logback.servlet',
+'encoder-core':                   'de.huxhorn.lilith.logback.encoder.core',
+'encoder-classic':                'de.huxhorn.lilith.logback.encoder.classic',
+'encoder-access':                 'de.huxhorn.lilith.logback.encoder.access',
+'log4j':                          'log4j', // ignore
+'log4j-throwable-parser':         'de.huxhorn.lilith.log4j.throwable',
+'log4j-xml':                      'de.huxhorn.lilith.log4j.xml',
+'log4j-producer':                 'de.huxhorn.lilith.log4j.producer',
+'jul':                            'jul', // ignore
+'jul-xml':                        'de.huxhorn.lilith.jul.xml',
+'jul-slf4j-handler':              'de.huxhorn.lilith.jul-slf4j-handler',
+'lilith-sounds':                  'de.huxhorn.lilith.sounds',
+'lilith-prefs':                   'de.huxhorn.lilith.prefs',
+'lilith-conditions':              'de.huxhorn.lilith.conditions',
+'lilith':                         'de.huxhorn.lilith',
+'slf4j':                          'de.huxhorn.lilith.slf4j',
+'tracing':                        'de.huxhorn.lilith.tracing'
+]
+
+dependsOnChildren()
+
+allprojects {
+	defaultTasks 'clean', 'build', 'uploadArchives'
+    group = 'de.huxhorn.lilith'
+    version = '0.9.40'
+}
+
+def localReleaseRepo = new File("${System.properties.'user.home'}/local-gradle-repository/release").toURL().toString()
+def localSnapshotRepo = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot").toURL().toString()
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven'
+    apply plugin: 'project-reports'
+
+	boolean gpl=['lilith', 'lilith-conditions', 'lilith-engine', 'lilith-xml-logging'].contains(project.name)
+
+    sourceCompatibility = 1.5
+    targetCompatibility = 1.5
+
+    compileJava.options.compilerArgs = ['-Xlint:unchecked', '-Xlint:deprecation', '-g']
+    
+    defaultProject= {
+    	url 'http://lilith.huxhorn.de'
+    	
+    	inceptionYear '2007'
+    	
+    	scm {
+    		connection 'scm:git:git://github.com/huxi/lilith.git'
+    		developerConnection 'scm:git:ssh://git@github.com:huxi/lilith.git'
+    		url 'http://github.com/huxi/lilith/'
+    	}
+    	
+		licenses {
+			if(gpl)
+			{
+				license {
+					name 'GNU General Public License v3 (GPL)'
+					url 'http://www.gnu.org/licenses/gpl.html'
+					distribution 'repo'
+				}
+			}
+			else
+			{
+				license {
+					name 'GNU Lesser General Public License v3 (LGPL)'
+					url 'http://www.gnu.org/copyleft/lesser.html'
+					distribution 'repo'
+				}
+				
+				license {
+					name 'The Apache Software License, Version 2.0'
+					url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					distribution 'repo'
+				}
+			}
+		}
+		
+		issueManagement {
+			system 'trac'
+			url 'http://apps.sourceforge.net/trac/lilith/'
+		}
+		
+		mailingLists {
+			mailingList {
+				name 'Announce List'
+				subscribe 'lilith-announce-join@lists.sourceforge.net'
+				unsubscribe 'lilith-announce-leave@lists.sourceforge.net'
+				post 'lilith-announce@lists.sourceforge.net'
+				archive 'http://sourceforge.net/mailarchive/forum.php?forum_name=lilith-announce'
+			}
+			mailingList {
+				name 'User List'
+				subscribe 'lilith-user-join@lists.sourceforge.net'
+				unsubscribe 'lilith-user-leave@lists.sourceforge.net'
+				post 'lilith-user@lists.sourceforge.net'
+				archive 'http://sourceforge.net/mailarchive/forum.php?forum_name=lilith-user'
+			}
+			mailingList {
+				name 'Developer List'
+				subscribe 'lilith-devel-join@lists.sourceforge.net'
+				unsubscribe 'lilith-devel-leave@lists.sourceforge.net'
+				post 'lilith-devel@lists.sourceforge.net'
+				archive 'http://sourceforge.net/mailarchive/forum.php?forum_name=lilith-devel'
+			}
+		}
+		
+		developers {
+			developer {
+				id 'huxhorn'
+				email 'huxhorn@users.sourceforge.net'
+				name 'Joern Huxhorn'
+				organization 'Joern Huxhorn'
+				organizationUrl 'http://lilith.huxhorn.de'
+				roles {
+					role 'Developer'
+				}
+			}
+		}
+		
+		properties {
+			'project.build.sourceEncoding' 'UTF-8'
+			'project.reporting.outputEncoding' 'UTF-8'
+		}
+	}
+
+    mapped=artifactMapping[project.name];
+    if(!mapped)
+    {
+    	throw new IllegalStateException("${project.name} does not have an entry in artifactMapping!");
+    }
+    archivesBaseName=mapped
+
+    repositories {
+       mavenCentral()
+       mavenRepo urls: localReleaseRepo
+       mavenRepo urls: localSnapshotRepo
+    }
+
+    dependencies {
+        testCompile libraries.junit
+        testCompile libraries.'slf4j-api'
+        testRuntime libraries.'logback-classic'
+    }
+
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
+
+	task release(dependsOn: [build.taskDependencies]) << {
+		println 'Finished release.'
+	}
+
+    gradle.taskGraph.whenReady {taskGraph ->
+		if (!taskGraph.hasTask(release)) {
+			version = version+'-SNAPSHOT'
+		}
+	}
+
+	def deployer = null
+	
+	// the following is a workaround for http://jira.codehaus.org/browse/GRADLE-443
+	uploadArchives {
+		deployer = repositories.mavenDeployer {
+			repository(url: localReleaseRepo)
+			snapshotRepository(url: localSnapshotRepo)
+			pom.whenConfigured { pom ->
+				// dep is a native Maven dependency object (With properties artifactId, groupId, ...)
+				for(dep in pom.dependencies) {
+					//println(dep.artifactId)
+					mapping=artifactMapping[dep.artifactId];
+					if(mapping) {
+						println("Mapping ${dep.artifactId} to ${mapping}...")
+						dep.artifactId=mapping
+					}
+				}
+			}
+		}
+	}
+	
+	installer = install.repositories.mavenInstaller
+	
+	installer.pom.project defaultProject
+	
+	deployer.pom.project defaultProject
+
+}

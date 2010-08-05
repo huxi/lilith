@@ -1,7 +1,0 @@
-dependencies {
-	compile project(':lilith-constants')
-	compile libraries.'logback-core'
-	compile libraries.'sulky-codec'
-	compile libraries.'sulky-codec-filebuffer'
-}
-

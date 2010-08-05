@@ -1,9 +1,0 @@
-dependencies {
-	compile libraries.'logback-classic'
-	compile project(':lilith-engine')
-	compile project(':lilith-data:logging')
-	compile project(':logback:logging-adapter')
-	compile libraries.'sulky-buffers'
-	compile libraries.'slf4j-api'
-}
-

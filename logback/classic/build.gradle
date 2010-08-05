@@ -1,4 +1,0 @@
-dependencies {
-	compile project(':lilith-data:logging')
-}
-

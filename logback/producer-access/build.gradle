@@ -1,9 +1,0 @@
-dependencies {
-	compile libraries.'logback-access'
-	compile project(':lilith-engine')
-	compile project(':lilith-data:access')
-	compile project(':logback:access-adapter')
-	compile libraries.'sulky-buffers'
-	compile libraries.'slf4j-api'
-}
-

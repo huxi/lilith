@@ -1,8 +1,0 @@
-dependencies {
-	compile libraries.'sulky-codec'
-	compile project(':lilith-data:logging-protobuf')
-	compile project(':logback:multiplex-appender-core')
-	compile project(':logback:logging-adapter')
-	compile libraries.'logback-classic'
-}
-

@@ -1,9 +1,0 @@
-dependencies {
-	compile libraries.'sulky-codec'
-	compile project(':logback:encoder-core')
-	compile project(':lilith-data:access-protobuf')
-	compile project(':logback:access-adapter')
-	compile libraries.'logback-core'
-	compile libraries.'logback-access'
-}
-

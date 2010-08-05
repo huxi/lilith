@@ -1,4 +1,0 @@
-dependencies {
-	testCompile libraries.'sulky-junit'
-}
-
