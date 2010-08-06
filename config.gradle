@@ -44,9 +44,13 @@ artifactMapping = [
 dependsOnChildren()
 
 allprojects {
+	apply plugin: 'project-reports'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	
 	defaultTasks 'clean', 'build', 'uploadArchives'
-    group = 'de.huxhorn.lilith'
-    version = '0.9.40'
+	group = 'de.huxhorn.lilith'
+	version = '0.9.40'
 }
 
 def localReleaseRepo = new File("${System.properties.'user.home'}/local-gradle-repository/release").toURL().toString()
@@ -54,9 +58,8 @@ def localSnapshotRepo = new File("${System.properties.'user.home'}/local-gradle-
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'eclipse'
     apply plugin: 'maven'
-    apply plugin: 'project-reports'
+    //apply plugin: 'code-quality'
 
 	boolean gpl=['lilith', 'lilith-conditions', 'lilith-engine', 'lilith-xml-logging'].contains(project.name)
 
