@@ -63,7 +63,7 @@ public class Lilith
 {
 	public static final String APP_NAME;
 	public static final String APP_VERSION;
-	//public static final String APP_BUILD_NUMBER;
+	public static final String APP_REVISION;
 	public static final long APP_TIMESTAMP;
 
 	private static final String JUNIQUE_MSG_SHOW = "Show";
@@ -99,7 +99,7 @@ public class Lilith
 		}
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
-		//APP_BUILD_NUMBER = p.getProperty("application.buildNumber");
+		APP_REVISION = p.getProperty("application.revision");
 		String tsStr = p.getProperty("application.timestamp");
 		long ts = -1;
 		if(tsStr != null)
@@ -134,7 +134,7 @@ public class Lilith
 			rootLogger.setLevel(java.util.logging.Level.WARNING);
 		}
 
-		String appTitle = APP_NAME + " V" + APP_VERSION;// + "." + APP_BUILD_NUMBER;
+		String appTitle = APP_NAME + " V" + APP_VERSION;
 
 		CommandLineArgs cl=new CommandLineArgs();
 		JCommander commander;
@@ -156,6 +156,7 @@ public class Lilith
 			Date d = new Date(APP_TIMESTAMP);
 
 			appTitle += " - " + sdf.format(d);
+			appTitle += " - " + APP_REVISION;
 		}
 		if(cl.catFile == null && cl.tailFile == null) // don't print info in case of cat or tail
 		{

@@ -1,3 +1,6 @@
+import org.apache.tools.ant.filters.ReplaceTokens;
+apply from: 'GitHeadHash.gradle'
+
 artifactMapping = [
 'eventsource-xml':                'de.huxhorn.lilith.data.eventsource-xml',
 'eventsource':                    'de.huxhorn.lilith.data.eventsource',
@@ -68,6 +71,11 @@ subprojects {
 
     compileJava.options.compilerArgs = ['-Xlint:unchecked', '-Xlint:deprecation', '-g']
     
+	task sourceJar(type: Jar) { from sourceSets.main.allSource; classifier = 'source' }
+	task javadocJar(type: Jar) { from javadoc.outputs.files; classifier = 'javadoc' }
+	
+	artifacts { archives sourceJar, javadocJar }
+
     defaultProject= {
     	url 'http://lilith.huxhorn.de'
     	
@@ -171,7 +179,6 @@ subprojects {
         testRuntime libraries.'logback-classic'
     }
 
-
     jar {
         manifest.attributes provider: 'gradle'
     }
@@ -213,4 +220,26 @@ subprojects {
 	
 	deployer.pom.project defaultProject
 
+}
+
+project(':lilith') {
+	processResources {
+		from(sourceSets.main.resources.srcDirs) {
+			exclude '**/*.properties'
+			exclude '**/*.xhtml'
+			}
+
+		from(sourceSets.main.resources.srcDirs) {
+			include '**/*.properties'
+			include '**/*.xhtml'
+			expand(
+				'pom': [name: 'Lilith', version: version],
+				'lilithVersion': version,
+				'slf4jVersion': versions.slf4j,
+				'logbackVersion': versions.logback,
+				'gitRevision': git.getHeadHash(),
+				'timestamp': System.currentTimeMillis()
+			)
+		}
+	}
 }
