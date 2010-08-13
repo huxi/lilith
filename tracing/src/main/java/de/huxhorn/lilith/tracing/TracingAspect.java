@@ -34,7 +34,7 @@
 
 package de.huxhorn.lilith.tracing;
 
-import de.huxhorn.lilith.data.logging.MessageFormatter;
+import de.huxhorn.sulky.formatting.SafeString;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -158,7 +158,7 @@ public class TracingAspect
 						{
 							msg.append(", ");
 						}
-						msg.append(MessageFormatter.deepToString(arg));
+						msg.append(SafeString.toString(arg));
 					}
 				}
 				else

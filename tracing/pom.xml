@@ -57,9 +57,8 @@
 		</dependency>
 
 		<dependency>
-			<!-- Because of MessageFormatter -->
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.formatting</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		

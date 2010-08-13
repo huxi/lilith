@@ -19,6 +19,7 @@ project(':lilith-data:eventsource-xml').dependencies {
 
 project(':lilith-data:logging').dependencies {
 	compile project(':lilith-data:eventsource')
+	compile libraries.'sulky-formatting'
 	testCompile libraries.'sulky-junit'
 }
 
@@ -314,7 +315,7 @@ project(':slf4j').dependencies {
 project(':tracing').dependencies {
 	compile libraries.'aspectjrt'
 	compile libraries.'slf4j-api'
-	compile project(':lilith-data:logging')
+	compile libraries.'sulky-formatting'
 	testCompile libraries.'spring-beans'
 	testCompile libraries.'spring-context'
 	testCompile libraries.'spring-core'

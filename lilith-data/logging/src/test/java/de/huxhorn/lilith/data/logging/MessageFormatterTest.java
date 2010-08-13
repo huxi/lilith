@@ -35,19 +35,14 @@
 package de.huxhorn.lilith.data.logging;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+
+import de.huxhorn.sulky.formatting.SafeString;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class MessageFormatterTest
 {
@@ -69,8 +64,8 @@ public class MessageFormatterTest
 		Object[] multiArrayRecursive = new Object[]{null, p1};
 		multiArrayRecursive[0] = multiArrayRecursive;
 		multiArray[0] = multiArrayRecursive;
-		String multiArrayRecId = MessageFormatter.identityToString(multiArrayRecursive);
-		String multiArrayRec = MessageFormatter.RECURSION_PREFIX + multiArrayRecId + MessageFormatter.RECURSION_SUFFIX;
+		String multiArrayRecId = SafeString.identityToString(multiArrayRecursive);
+		String multiArrayRec = SafeString.RECURSION_PREFIX + multiArrayRecId + SafeString.RECURSION_SUFFIX;
 
 		Integer[] ia0 = new Integer[]{i1, i2, i3};
 		Integer[] ia1 = new Integer[]{10, 20, 30};
@@ -81,7 +76,7 @@ public class MessageFormatterTest
 		Object[] cyclicA = new Object[1];
 		cyclicA[0] = cyclicA;
 
-		String cyclicAId = MessageFormatter.identityToString(cyclicA);
+		String cyclicAId = SafeString.identityToString(cyclicA);
 
 		Object[] recArray;
 		Object[] cyclicB = new Object[2];
@@ -92,7 +87,7 @@ public class MessageFormatterTest
 			recArray = b;
 			cyclicB[1] = b;
 		}
-		String cyclicBRecId = MessageFormatter.identityToString(recArray);
+		String cyclicBRecId = SafeString.identityToString(recArray);
 
 		Object[] cyclicC = new Object[3];
 		{
@@ -103,16 +98,12 @@ public class MessageFormatterTest
 			cyclicC[1] = b;
 			cyclicC[2] = t;
 		}
-		String cyclicCRecId = MessageFormatter.identityToString(recArray);
+		String cyclicCRecId = SafeString.identityToString(recArray);
 
-		String cyclicARec = MessageFormatter.RECURSION_PREFIX + cyclicAId + MessageFormatter.RECURSION_SUFFIX;
-		String cyclicBRec = MessageFormatter.RECURSION_PREFIX + cyclicBRecId + MessageFormatter.RECURSION_SUFFIX;
-		String cyclicCRec = MessageFormatter.RECURSION_PREFIX + cyclicCRecId + MessageFormatter.RECURSION_SUFFIX;
+		String cyclicARec = SafeString.RECURSION_PREFIX + cyclicAId + SafeString.RECURSION_SUFFIX;
+		String cyclicBRec = SafeString.RECURSION_PREFIX + cyclicBRecId + SafeString.RECURSION_SUFFIX;
+		String cyclicCRec = SafeString.RECURSION_PREFIX + cyclicCRecId + SafeString.RECURSION_SUFFIX;
 
-//		if(logger.isInfoEnabled()) logger.info("multiArray rec identity: {}", multiArrayRecId);
-//		if(logger.isInfoEnabled()) logger.info("cyclicA identity: {}", cyclicAId);
-//		if(logger.isInfoEnabled()) logger.info("cyclicB rec identity: {}", cyclicBRecId);
-//		if(logger.isInfoEnabled()) logger.info("cyclicC rec identity: {}", cyclicCRecId);
 		useCases = new UseCase[]{
 
 
@@ -179,8 +170,7 @@ public class MessageFormatterTest
 			new UseCase("CyclicArrays", "{}{}", cyclicB, new String[]{"1", "[2, [3, [1, " + cyclicBRec + "]]]"}, 2, "1[2, [3, [1, " + cyclicBRec + "]]]", null),
 			new UseCase("CyclicArrays", "{}{}", cyclicC, new String[]{"1", "[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]"}, 2, "1[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]", t),
 			new UseCase("CyclicArrays", "{}{}{}", cyclicC, new String[]{"1", "[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]", "FooThrowable"}, 3, "1[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]FooThrowable", null),
-			new UseCase("Array & Used Throwable", "Value {} is smaller than {} and {}. Also: {}!", new Object[]{i1, i2, i3, t}, 4, "Value 1 is smaller than 2 and 3. Also: " + t
-				.toString() + "!"),
+			new UseCase("Array & Used Throwable", "Value {} is smaller than {} and {}. Also: {}!", new Object[]{i1, i2, i3, t}, 4, "Value 1 is smaller than 2 and 3. Also: " + t.toString() + "!"),
 			new UseCase("Array & Used Throwable", "{}{}{}{}", new Object[]{i1, i2, i3, t}, 4, "123" + t.toString()),
 			new UseCase("Escaping", "Value {} is smaller than \\\\{}", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than \\2", t),
 			new UseCase("Escaping", "Value {} is smaller than \\\\{} tail", new Object[]{i1, i2, i3, t}, 2, "Value 1 is smaller than \\2 tail", t),
@@ -193,27 +183,16 @@ public class MessageFormatterTest
 			new UseCase("Escaping", "\\{}", new Object[]{i1, i2, i3, t}, 0, "{}", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{i1, p1}, 2, i1 + Arrays.toString(p1)),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", p1}, 2, "a" + Arrays.toString(p1)),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}}, 2, "a" + Arrays
-				.toString(new byte[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new short[]{1, 2}}, 2, "a" + Arrays
-				.toString(new short[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new int[]{1, 2}}, 2, "a" + Arrays
-				.toString(new int[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new long[]{1, 2}}, 2, "a" + Arrays
-				.toString(new long[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new float[]{1, 2}}, 2, "a" + Arrays
-				.toString(new float[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new double[]{1, 2}}, 2, "a" + Arrays
-				.toString(new double[]{1, 2})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new boolean[]{true, false}}, 2, "a" + Arrays
-				.toString(new boolean[]{true, false})),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new char[]{'b', 'c'}}, 2, "a" + Arrays
-				.toString(new char[]{'b', 'c'})),
-			new UseCase("ArrayValues", "{}{}", multiArray, new String[]{"[" + multiArrayRec + ", " + Arrays
-				.toString(p1) + "]", Arrays.toString(p1)}, 2, "[" + multiArrayRec + ", " + Arrays
-				.toString(p1) + "]" + Arrays.toString(p1), null),
-			new UseCase("SpecialOneArgument", "Special {}", new Object[]{"One", "Two", "Three"}, new String[]{"[One, Two, Three]"}, 1, "Special " + Arrays
-				.toString(new Object[]{"One", "Two", "Three"}), null),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}}, 2, "a" + Arrays.toString(new byte[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new short[]{1, 2}}, 2, "a" + Arrays.toString(new short[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new int[]{1, 2}}, 2, "a" + Arrays.toString(new int[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new long[]{1, 2}}, 2, "a" + Arrays.toString(new long[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new float[]{1, 2}}, 2, "a" + Arrays.toString(new float[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new double[]{1, 2}}, 2, "a" + Arrays.toString(new double[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new boolean[]{true, false}}, 2, "a" + Arrays.toString(new boolean[]{true, false})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new char[]{'b', 'c'}}, 2, "a" + Arrays.toString(new char[]{'b', 'c'})),
+			new UseCase("ArrayValues", "{}{}", multiArray, new String[]{"[" + multiArrayRec + ", " + Arrays.toString(p1) + "]", Arrays.toString(p1)}, 2, "[" + multiArrayRec + ", " + Arrays.toString(p1) + "]" + Arrays.toString(p1), null),
+			new UseCase("SpecialOneArgument", "Special {}", new Object[]{"One", "Two", "Three"}, new String[]{"[One, Two, Three]"}, 1, "Special " + Arrays.toString(new Object[]{"One", "Two", "Three"}), null),
 		};
 	}
 
@@ -326,162 +305,6 @@ public class MessageFormatterTest
 
 			validateFormatMessage(useCase);
 		}
-	}
-
-	@SuppressWarnings({"unchecked"})
-	@Test(expected = StackOverflowError.class)
-	public void showMapRecursionProblem()
-	{
-		Map a = new HashMap();
-		Map b = new HashMap();
-		b.put("bar", a);
-		a.put("foo", b);
-		// the following line will throw an java.lang.StackOverflowError!
-		a.toString();
-	}
-
-	@SuppressWarnings({"unchecked"})
-	@Test(expected = java.lang.StackOverflowError.class)
-	public void showCollectionRecursionProblem()
-	{
-		List a = new ArrayList();
-		List b = new ArrayList();
-		b.add(a);
-		a.add(b);
-		// the following line will throw an java.lang.StackOverflowError!
-		a.toString();
-	}
-
-	@Test
-	public void deepToString()
-	{
-		String result;
-		String expected;
-		Object o;
-
-		{
-			List<String> list = new ArrayList<String>();
-			list.add("One");
-			list.add("Two");
-			Map<String, List<String>> map = new TreeMap<String, List<String>>();
-			map.put("foo", list);
-			map.put("bar", list);
-			o = map;
-			expected = "{bar=[One, Two], foo=[One, Two]}";
-		}
-		if(logger.isInfoEnabled()) logger.info("Evaluating {}...", o);
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result of {} is {}.", o, result);
-		assertEquals(expected, result);
-
-		{
-			String[] array = new String[]{"One", "Two"};
-			Map<String, String[]> map = new TreeMap<String, String[]>();
-			map.put("foo", array);
-			map.put("bar", array);
-			o = map;
-			expected = "{bar=[One, Two], foo=[One, Two]}";
-		}
-		if(logger.isInfoEnabled()) logger.info("Evaluating {}...", o);
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result of {} is {}.", o, result);
-		assertEquals(expected, result);
-
-
-		{
-			List<String> list = new ArrayList<String>();
-			list.add("One");
-			list.add("Two");
-			List<List<String>> outer = new ArrayList<List<String>>();
-			outer.add(list);
-			outer.add(list);
-			o = outer;
-			expected = "[[One, Two], [One, Two]]";
-		}
-		if(logger.isInfoEnabled()) logger.info("Evaluating {}...", o);
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result of {} is {}.", o, result);
-		assertEquals(expected, result);
-
-		{
-			String[] array = new String[]{"One", "Two"};
-			List<String[]> map = new ArrayList<String[]>();
-			map.add(array);
-			map.add(array);
-			o = map;
-			expected = "[[One, Two], [One, Two]]";
-		}
-		if(logger.isInfoEnabled()) logger.info("Evaluating {}...", o);
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result of {} is {}.", o, result);
-		assertEquals(expected, result);
-	}
-
-	@Test
-	public void date()
-	{
-		String result;
-		String expected;
-		Object o;
-
-		{
-			o = new Date(1234567890000L);
-			expected = "2009-02-14T00:31:30.000";
-		}
-		if(logger.isInfoEnabled()) logger.info("Evaluating {}...", o);
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result of {} is {}.", o, result);
-		assertTrue(result.startsWith(expected));
-	}
-
-	@SuppressWarnings({"unchecked"})
-	@Test
-	public void deepToStringSpecial()
-	{
-		String result;
-		String expected;
-		Object o;
-
-		o = null;
-		expected = null;
-		result = MessageFormatter.deepToString(o);
-		assertEquals(expected, result);
-
-		o = new ProblematicToString();
-		expected = MessageFormatter.ERROR_PREFIX + MessageFormatter.identityToString(o)
-			+ MessageFormatter.ERROR_SEPARATOR + FooThrowable.class.getName()
-			+ MessageFormatter.ERROR_MSG_SEPARATOR
-			+ "FooThrowable"
-			+ MessageFormatter.ERROR_SUFFIX;
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result is {}.", result);
-		assertEquals(expected, result);
-
-		{
-			Map a = new HashMap();
-			Map b = new HashMap();
-			b.put("bar", a);
-			a.put("foo", b);
-			o = a;
-			expected = "{foo={bar=" + MessageFormatter.RECURSION_PREFIX + MessageFormatter
-				.identityToString(a) + MessageFormatter.RECURSION_SUFFIX + "}}";
-		}
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result is {}.", result);
-		assertEquals(expected, result);
-
-		{
-			List a = new ArrayList();
-			List b = new ArrayList();
-			b.add(a);
-			a.add(b);
-			o = a;
-			expected = "[[" + MessageFormatter.RECURSION_PREFIX + MessageFormatter
-				.identityToString(a) + MessageFormatter.RECURSION_SUFFIX + "]]";
-		}
-		result = MessageFormatter.deepToString(o);
-		if(logger.isInfoEnabled()) logger.info("Result is {}.", result);
-		assertEquals(expected, result);
 	}
 
 	private void validateEvaluateArguments(String messagePattern, Object[] arguments, MessageFormatter.ArgumentResult expected)
@@ -901,11 +724,4 @@ public class MessageFormatterTest
 		}
 	}
 
-	private static class ProblematicToString
-	{
-		public String toString()
-		{
-			throw new FooThrowable("FooThrowable");
-		}
-	}
 }
