@@ -23,6 +23,15 @@ project(':lilith-data:logging').dependencies {
 	testCompile libraries.'sulky-junit'
 }
 
+project(':lilith-data:logging-io-test').dependencies {
+	compile project(':lilith-data:eventsource')
+	compile project(':lilith-data:logging')
+	compile libraries.'sulky-formatting'
+	compile libraries.'sulky-junit'
+	compile libraries.junit
+	compile libraries.'slf4j-api'
+}
+
 project(':lilith-data:logging-xml').dependencies {
 	compile project(':lilith-data:logging')
 	compile project(':lilith-data:eventsource-xml')
@@ -40,6 +49,7 @@ project(':lilith-data:logging-xml-serializer').dependencies {
 	compile libraries.'stax-api'
 	testCompile libraries.'stax'
 	testCompile project(':lilith-data:logging')
+	testCompile project(':lilith-data:logging-io-test')
 	testCompile project(':lilith-data:eventsource')
 }
 
@@ -47,6 +57,7 @@ project(':lilith-data:logging-protobuf').dependencies {
 	compile project(':lilith-data:logging')
 	compile libraries.'protobuf'
 	compile libraries.'sulky-codec'
+	testCompile project(':lilith-data:logging-io-test')
 	testCompile project(':lilith-data:eventsource')
 }
 

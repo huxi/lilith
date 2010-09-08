@@ -7,6 +7,7 @@ artifactMapping = [
 'lilith-data':                    'lilith-data', // ignore
 'lilith-sender':                  'de.huxhorn.lilith.sender',
 'logging':                        'de.huxhorn.lilith.data.logging',
+'logging-io-test':                'de.huxhorn.lilith.data.logging-io-test',
 'logging-xml':                    'de.huxhorn.lilith.data.logging-xml',
 'logging-xml-serializer':         'de.huxhorn.lilith.data.logging-xml-serializer',
 'logging-protobuf':               'de.huxhorn.lilith.data.logging.protobuf',
