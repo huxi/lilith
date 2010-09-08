@@ -23,5 +23,9 @@
 		-->
 	</root>
 
+	<!--
+	<logger name="de.huxhorn.lilith.data.logging.xml" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.data.logging.test" level="DEBUG"/>
+	-->
 </configuration>
 

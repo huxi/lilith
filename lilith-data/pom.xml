@@ -25,6 +25,7 @@
 		<module>logging-xml</module>
 		<module>logging-xml-serializer</module>
 		<module>logging-protobuf</module>
+		<module>logging-json-serializer</module>
 		<module>access</module>
 		<module>access-protobuf</module>
 	</modules>

@@ -230,6 +230,7 @@ public abstract class LoggingEventIOTestBase
 	public void full()
 		throws Throwable
 	{
+		if(logger.isInfoEnabled()) logger.info("Full");
 		LoggingEvent event = createMinimalEvent();
 
 		event.setSequenceNumber(42L);
@@ -331,17 +332,20 @@ public abstract class LoggingEventIOTestBase
 
 		bytes = write(event, false);
 		readEvent = read(bytes, false);
-		if(logger.isDebugEnabled()) logger.debug("LoggingEvent read uncompressed.");
-		if(logger.isInfoEnabled()) logger.info("Original marker: {}", toString(event.getMarker()));
-		if(logger.isInfoEnabled()) logger.info("Read     marker: {}", toString(readEvent.getMarker()));
+		if(logger.isInfoEnabled()) logger.info("LoggingEvent read uncompressed. (size={})", bytes.length);
+		if(logger.isDebugEnabled()) logger.debug("Original marker: {}", toString(event.getMarker()));
+		if(logger.isDebugEnabled()) logger.debug("Read     marker: {}", toString(readEvent.getMarker()));
+		logUncompressedData(bytes);
 		assertEquals(event, readEvent);
 
 		bytes = write(event, true);
 		readEvent = read(bytes, true);
-		if(logger.isDebugEnabled()) logger.debug("LoggingEvent read compressed.");
-		if(logger.isInfoEnabled()) logger.info("Original marker: {}", toString(event.getMarker()));
-		if(logger.isInfoEnabled()) logger.info("Read     marker: {}", toString(readEvent.getMarker()));
+		if(logger.isInfoEnabled()) logger.info("LoggingEvent read compressed. (size={})", bytes.length);
+		if(logger.isDebugEnabled()) logger.debug("Original marker: {}", toString(event.getMarker()));
+		if(logger.isDebugEnabled()) logger.debug("Read     marker: {}", toString(readEvent.getMarker()));
 	}
+
+	protected abstract void logUncompressedData(byte[] bytes);
 
 	protected String toString(Marker marker)
 	{

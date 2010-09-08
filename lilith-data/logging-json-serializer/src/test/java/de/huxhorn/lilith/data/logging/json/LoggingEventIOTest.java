@@ -32,15 +32,23 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.protobuf;
+package de.huxhorn.lilith.data.logging.json;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
 import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+
+import javax.xml.stream.XMLStreamException;
 
 public class LoggingEventIOTest
 	extends LoggingEventIOTestBase
 {
+	private final Logger logger = LoggerFactory.getLogger(LoggingEventIOTest.class);
+
 	public LoggingEventIOTest(Boolean logging)
 	{
 		super(logging);
@@ -49,18 +57,31 @@ public class LoggingEventIOTest
 	@Override
 	protected void logUncompressedData(byte[] bytes)
 	{
-		// do nothing
+		if(logger.isDebugEnabled())
+		{
+			try
+			{
+				String data = new String(bytes, "UTF-8");
+				logger.debug("Data: {}", data);
+			}
+			catch(UnsupportedEncodingException ex)
+			{
+				if(logger.isErrorEnabled()) logger.error("Exception while converting data to string!", ex);
+			}
+		}
 	}
 
 	public byte[] write(LoggingEvent event, boolean compressing)
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		LoggingEventProtobufEncoder ser = new LoggingEventProtobufEncoder(compressing);
+		LoggingJsonEncoder ser = new LoggingJsonEncoder(compressing);
 		return ser.encode(event);
 	}
 
 	public LoggingEvent read(byte[] bytes, boolean compressing)
+		throws XMLStreamException, UnsupportedEncodingException
 	{
-		LoggingEventProtobufDecoder des = new LoggingEventProtobufDecoder(compressing);
+		LoggingJsonDecoder des = new LoggingJsonDecoder(compressing);
 		return des.decode(bytes);
 	}
 }

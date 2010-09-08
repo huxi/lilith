@@ -32,56 +32,55 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.xml;
+package de.huxhorn.lilith.data.logging.json;
 
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.json.mixin.ExtendedStackTraceElementMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.MessageMixIn;
+import de.huxhorn.sulky.codec.Encoder;
+import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.UnsupportedEncodingException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.zip.GZIPOutputStream;
 
-import javax.xml.stream.XMLStreamException;
-
-public class LoggingEventIOTest
-	extends LoggingEventIOTestBase
+public class LoggingJsonEncoder
+	implements Encoder<LoggingEvent>
 {
-	private final Logger logger = LoggerFactory.getLogger(LoggingEventIOTest.class);
+	private boolean compressing;
+	private ObjectMapper mapper;
 
-	public LoggingEventIOTest(Boolean logging)
+	public LoggingJsonEncoder(boolean compressing)
 	{
-		super(logging);
+		this.compressing = compressing;
+		mapper = new ObjectMapper();
+		mapper.getSerializationConfig().addMixInAnnotations(Message.class, MessageMixIn.class);
+		mapper.getSerializationConfig().addMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
 	}
 
-	@Override
-	protected void logUncompressedData(byte[] bytes)
+	public byte[] encode(LoggingEvent event)
 	{
-		if(logger.isDebugEnabled())
+		ByteArrayOutputStream output=new ByteArrayOutputStream();
+		try
 		{
-			try
+			if(!compressing)
 			{
-				String data = new String(bytes, "UTF-8");
-				logger.debug("Data: {}", data);
+				mapper.writeValue(output, event);
+				return output.toByteArray();
 			}
-			catch(UnsupportedEncodingException ex)
-			{
-				if(logger.isErrorEnabled()) logger.error("Exception while converting data to string!", ex);
-			}
+			GZIPOutputStream gzos=new GZIPOutputStream(output);
+			mapper.writeValue(gzos, event);
+			gzos.flush();
+			gzos.close();
+			return output.toByteArray();
 		}
-	}
-
-	public byte[] write(LoggingEvent event, boolean compressing)
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		LoggingXmlEncoder ser = new LoggingXmlEncoder(compressing);
-		return ser.encode(event);
-	}
-
-	public LoggingEvent read(byte[] bytes, boolean compressing)
-		throws XMLStreamException, UnsupportedEncodingException
-	{
-		LoggingXmlDecoder des = new LoggingXmlDecoder(compressing);
-		return des.decode(bytes);
+		catch(IOException ex)
+		{
+			ex.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+		return null;
 	}
 }

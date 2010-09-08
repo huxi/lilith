@@ -5,9 +5,9 @@ versions = [
 'log4j':          '1.2.16',
 'logback':        '0.9.24',
 'slf4j':          '1.6.1',
-'jackson':        '1.6.0'
+'jackson':        '1.6.0',
 'spring':         '3.0.4.RELEASE',
-'sulky':          '0.9.12-SNAPSHOT',
+'sulky':          '0.9.12-SNAPSHOT'
 ]
 
 libraries = [

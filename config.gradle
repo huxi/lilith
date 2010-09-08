@@ -11,6 +11,7 @@ artifactMapping = [
 'logging-xml':                    'de.huxhorn.lilith.data.logging-xml',
 'logging-xml-serializer':         'de.huxhorn.lilith.data.logging-xml-serializer',
 'logging-protobuf':               'de.huxhorn.lilith.data.logging.protobuf',
+'logging-json-serializer':        'de.huxhorn.lilith.data.logging-json-serializer',
 'access':                         'de.huxhorn.lilith.data.access',
 'access-protobuf':                'de.huxhorn.lilith.data.access.protobuf',
 'lilith-constants':               'de.huxhorn.lilith.constants',

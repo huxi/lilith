@@ -32,35 +32,49 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.protobuf;
+package de.huxhorn.lilith.data.logging.json;
 
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.json.mixin.ExtendedStackTraceElementMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.MessageMixIn;
+import de.huxhorn.sulky.codec.Decoder;
+import org.codehaus.jackson.map.ObjectMapper;
 
-public class LoggingEventIOTest
-	extends LoggingEventIOTestBase
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.zip.GZIPInputStream;
+
+public class LoggingJsonDecoder
+	implements Decoder<LoggingEvent>
 {
-	public LoggingEventIOTest(Boolean logging)
+	private boolean compressing;
+	private ObjectMapper mapper;
+
+	public LoggingJsonDecoder(boolean compressing)
 	{
-		super(logging);
+		this.compressing = compressing;
+		mapper = new ObjectMapper();
+		mapper.getDeserializationConfig().addMixInAnnotations(Message.class, MessageMixIn.class);
+		mapper.getDeserializationConfig().addMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
 	}
 
-	@Override
-	protected void logUncompressedData(byte[] bytes)
+	public LoggingEvent decode(byte[] bytes)
 	{
-		// do nothing
-	}
-
-	public byte[] write(LoggingEvent event, boolean compressing)
-	{
-		LoggingEventProtobufEncoder ser = new LoggingEventProtobufEncoder(compressing);
-		return ser.encode(event);
-	}
-
-	public LoggingEvent read(byte[] bytes, boolean compressing)
-	{
-		LoggingEventProtobufDecoder des = new LoggingEventProtobufDecoder(compressing);
-		return des.decode(bytes);
+		try
+		{
+			if(compressing)
+			{
+				return mapper.readValue(new GZIPInputStream(new ByteArrayInputStream(bytes)), LoggingEvent.class);
+			}
+			return mapper.readValue(new ByteArrayInputStream(bytes), LoggingEvent.class);
+		}
+		catch(IOException ex)
+		{
+			ex.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+		return null;
 	}
 }

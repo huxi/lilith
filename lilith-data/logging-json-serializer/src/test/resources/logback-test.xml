@@ -22,10 +22,11 @@
 		<appender-ref ref="Localhorst"/>
 		-->
 	</root>
-
+	
 	<!--
-	<logger name="de.huxhorn.lilith.data.logging.protobuf" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.data.logging.json" level="DEBUG"/>
 	<logger name="de.huxhorn.lilith.data.logging.test" level="DEBUG"/>
 	-->
 
 </configuration>
+
