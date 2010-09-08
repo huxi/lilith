@@ -116,6 +116,12 @@
 			
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.data.logging-io-test</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.data.access</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>

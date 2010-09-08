@@ -56,6 +56,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.data.logging-io-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>stax</groupId>
 			<artifactId>stax</artifactId>
 			<version>1.2.0</version>

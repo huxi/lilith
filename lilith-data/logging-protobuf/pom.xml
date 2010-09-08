@@ -50,6 +50,12 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.data.logging-io-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<scope>test</scope>
