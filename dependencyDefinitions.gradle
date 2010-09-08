@@ -5,6 +5,7 @@ versions = [
 'log4j':          '1.2.16',
 'logback':        '0.9.24',
 'slf4j':          '1.6.1',
+'jackson':        '1.6.0'
 'spring':         '3.0.4.RELEASE',
 'sulky':          '0.9.12-SNAPSHOT',
 ]
@@ -25,6 +26,8 @@ libraries = [
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
 'jgroups-all':              'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jgroups-all:2.8.0.CR3',
 'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
+'jackson-core':             "org.codehaus.jackson:jackson-core-lgpl:${versions.jackson}",
+'jackson-mapper':           "org.codehaus.jackson:jackson-mapper-lgpl:${versions.jackson}",
 'jcommander':               'com.beust:jcommander:1.7',
 'jgoodies-looks':           'com.jgoodies:looks:2.2.0',
 'joda-time':                'joda-time:joda-time:1.6',

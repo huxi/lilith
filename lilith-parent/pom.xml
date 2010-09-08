@@ -27,6 +27,7 @@
 		<aspectjVersion>1.6.8</aspectjVersion>
 		<httpcomponentsVersion>4.0.1</httpcomponentsVersion>
 		<log4jVersion>1.2.16</log4jVersion>
+		<jacksonVersion>1.6.0</jacksonVersion>
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -486,6 +487,18 @@
 				<groupId>com.beust</groupId>
 				<artifactId>jcommander</artifactId>
 				<version>1.7</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-core-lgpl</artifactId>
+				<version>${jacksonVersion}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-lgpl</artifactId>
+				<version>${jacksonVersion}</version>
 			</dependency>
 			
 			<dependency>
