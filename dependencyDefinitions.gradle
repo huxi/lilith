@@ -25,7 +25,7 @@ libraries = [
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
 'jgroups-all':              'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jgroups-all:2.8.0.CR3',
 'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
-'jcommander':               'com.beust:jcommander:1.4',
+'jcommander':               'com.beust:jcommander:1.7',
 'jgoodies-looks':           'com.jgoodies:looks:2.2.0',
 'joda-time':                'joda-time:joda-time:1.6',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
