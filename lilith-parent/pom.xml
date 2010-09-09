@@ -153,6 +153,12 @@
 			
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.data.logging-json-serializer</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.data.logging-xml</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
@@ -201,6 +207,12 @@
 			
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic-json</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
@@ -223,6 +235,12 @@
 				<version>${lilithVersion}</version>
 			</dependency>
 			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.json-logging</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.logback.producer.classic</artifactId>

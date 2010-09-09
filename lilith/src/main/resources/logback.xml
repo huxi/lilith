@@ -60,9 +60,43 @@
 	    <RemoteHost>localhost</RemoteHost>
     </appender>
 
-    <appender name="ZeroDelimitedMultiplexClassicXml"
-              class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
-        <ApplicationIdentifier>ZeroDelimitedMultiplexClassicXml</ApplicationIdentifier>
+	<appender name="ZeroDelimitedMultiplexClassicXml"
+			  class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
+		<ApplicationIdentifier>ZeroDelimitedMultiplexClassicXml</ApplicationIdentifier>
+		<ReconnectionDelay>290</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
+
+	<appender name="MultiplexClassicJsonCompressed"
+			  class="de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<!-- will automatically use correct default port -->
+		<ApplicationIdentifier>MultiplexClassicJsonCompressed</ApplicationIdentifier>
+		<ReconnectionDelay>290</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
+
+	<appender name="MultiplexClassicJsonUncompressed"
+			  class="de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender">
+		<Compressing>false</Compressing>
+		<!-- will automatically use correct default port -->
+		<ApplicationIdentifier>MultiplexClassicJsonUncompressed</ApplicationIdentifier>
+		<ReconnectionDelay>290</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
+
+    <appender name="ZeroDelimitedMultiplexClassicJson"
+              class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender">
+        <ApplicationIdentifier>ZeroDelimitedMultiplexClassicJson</ApplicationIdentifier>
         <ReconnectionDelay>290</ReconnectionDelay>
         <IncludeCallerData>true</IncludeCallerData>
 
@@ -91,6 +125,9 @@
         <appender-ref ref="MultiplexClassicXmlCompressed"/>
         <appender-ref ref="MultiplexClassicXmlUncompressed"/>
         <appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
+		<appender-ref ref="MultiplexClassicJsonCompressed"/>
+		<appender-ref ref="MultiplexClassicJsonUncompressed"/>
+		<appender-ref ref="ZeroDelimitedMultiplexClassicJson"/>
 		<!--
         <appender-ref ref="LogbackClassic"/>
         -->

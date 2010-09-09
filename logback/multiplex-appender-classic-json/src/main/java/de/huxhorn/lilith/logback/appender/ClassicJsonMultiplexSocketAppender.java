@@ -35,34 +35,34 @@
 package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
-public class ClassicXmlMultiplexSocketAppender
+public class ClassicJsonMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>
 {
 	/**
-	 * The default port number of compressed new-style remote logging server (10020).
+	 * The default port number of compressed new-style remote logging server (10030).
 	 */
-	public static final int COMPRESSED_DEFAULT_PORT = 10020;
+	public static final int COMPRESSED_DEFAULT_PORT = 10030;
 
 	/**
-	 * The default port number of uncompressed new-style remote logging server (10021).
+	 * The default port number of uncompressed new-style remote logging server (10031).
 	 */
-	public static final int UNCOMPRESSED_DEFAULT_PORT = 10021;
+	public static final int UNCOMPRESSED_DEFAULT_PORT = 10031;
 
 	private boolean includeCallerData;
 	private boolean compressing;
 	private boolean usingDefaultPort;
 	private TransformingEncoder transformingEncoder;
 
-	public ClassicXmlMultiplexSocketAppender()
+	public ClassicJsonMultiplexSocketAppender()
 	{
 		this(true);
 	}
 
-	public ClassicXmlMultiplexSocketAppender(boolean compressing)
+	public ClassicJsonMultiplexSocketAppender(boolean compressing)
 	{
 		super();
 		usingDefaultPort = true;
@@ -106,7 +106,7 @@ public class ClassicXmlMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(compressing));
+		transformingEncoder.setLilithEncoder(new LoggingJsonEncoder(compressing));
 	}
 
 	public boolean isCompressing()

@@ -242,6 +242,11 @@
 		</dependency>
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic-json</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-access</artifactId>
 			<scope>compile</scope>
 		</dependency>
@@ -251,7 +256,12 @@
 			<artifactId>de.huxhorn.lilith.xml-logging</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.json-logging</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.logging-adapter</artifactId>

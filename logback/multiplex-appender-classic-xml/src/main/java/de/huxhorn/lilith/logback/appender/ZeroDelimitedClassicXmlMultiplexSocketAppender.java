@@ -36,6 +36,7 @@ package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import de.huxhorn.lilith.sender.ZeroDelimitedWriteByteStrategy;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 

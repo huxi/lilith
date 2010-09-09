@@ -45,7 +45,7 @@ public class AccessMultiplexSocketAppender
 	/**
 	 * The default port number of compressed new-style remote logging server (10010).
 	 */
-	public static final int COMRESSED_DEFAULT_PORT = 10010;
+	public static final int COMPRESSED_DEFAULT_PORT = 10010;
 
 	/**
 	 * The default port number of uncompressed new-style remote logging server (10011).
@@ -96,7 +96,7 @@ public class AccessMultiplexSocketAppender
 		{
 			if(compressing)
 			{
-				setPort(COMRESSED_DEFAULT_PORT);
+				setPort(COMPRESSED_DEFAULT_PORT);
 			}
 			else
 			{

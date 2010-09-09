@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.appender;
+package de.huxhorn.lilith.sender;
 
 import de.huxhorn.lilith.sender.WriteByteStrategy;
 

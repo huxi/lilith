@@ -45,12 +45,12 @@ public class ClassicMultiplexSocketAppender
 	/**
 	 * The default port number of compressed new-style remote logging server (10000).
 	 */
-	public static final int COMRESSED_DEFAULT_PORT = 10000;
+	public static final int COMPRESSED_DEFAULT_PORT = 10000;
 
 	/**
 	 * The default port number of uncompressed new-style remote logging server (10001).
 	 */
-	public static final int UNCOMRESSED_DEFAULT_PORT = 10001;
+	public static final int UNCOMPRESSED_DEFAULT_PORT = 10001;
 
 	private boolean includeCallerData;
 	private boolean compressing;
@@ -98,11 +98,11 @@ public class ClassicMultiplexSocketAppender
 		{
 			if(compressing)
 			{
-				setPort(COMRESSED_DEFAULT_PORT);
+				setPort(COMPRESSED_DEFAULT_PORT);
 			}
 			else
 			{
-				setPort(UNCOMRESSED_DEFAULT_PORT);
+				setPort(UNCOMPRESSED_DEFAULT_PORT);
 			}
 			usingDefaultPort = true;
 		}

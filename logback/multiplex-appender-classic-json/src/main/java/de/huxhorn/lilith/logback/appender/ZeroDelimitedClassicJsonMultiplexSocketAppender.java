@@ -35,83 +35,41 @@
 package de.huxhorn.lilith.logback.appender;
 
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
+import de.huxhorn.lilith.sender.ZeroDelimitedWriteByteStrategy;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 
-public class ClassicXmlMultiplexSocketAppender
+/**
+ * This appender should not be used and is only implemented for symmetric reasons so both an appender
+ * and a producer is available. It's only used to debug Lilith.
+ * <p/>
+ * The producer is only used for programming languages that are unable to count bytes, i.e. ActionScript... ;)
+ */
+public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>
 {
 	/**
-	 * The default port number of compressed new-style remote logging server (10020).
+	 * The default port number of remote logging server (11010).
 	 */
-	public static final int COMPRESSED_DEFAULT_PORT = 10020;
-
-	/**
-	 * The default port number of uncompressed new-style remote logging server (10021).
-	 */
-	public static final int UNCOMPRESSED_DEFAULT_PORT = 10021;
+	public static final int DEFAULT_PORT = 11010;
 
 	private boolean includeCallerData;
-	private boolean compressing;
-	private boolean usingDefaultPort;
-	private TransformingEncoder transformingEncoder;
+	private TransformingEncoder transforminEncoder;
 
-	public ClassicXmlMultiplexSocketAppender()
+	public ZeroDelimitedClassicJsonMultiplexSocketAppender()
 	{
-		this(true);
-	}
-
-	public ClassicXmlMultiplexSocketAppender(boolean compressing)
-	{
-		super();
-		usingDefaultPort = true;
-		transformingEncoder = new TransformingEncoder(true);
-		setEncoder(transformingEncoder);
-		setCompressing(compressing);
-		includeCallerData = false;
+		super(new ZeroDelimitedWriteByteStrategy());
+		transforminEncoder=new TransformingEncoder(true);
+		transforminEncoder.setLilithEncoder(new LoggingJsonEncoder(false));
+		setEncoder(transforminEncoder);
+		includeCallerData = true;
+		setPort(DEFAULT_PORT);
 	}
 
 	protected void applicationIdentifierChanged()
 	{
-		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
-	}
-
-	@Override
-	public void setPort(int port)
-	{
-		super.setPort(port);
-		usingDefaultPort = false;
-	}
-
-	/**
-	 * GZIPs the event if set to true.
-	 * <p/>
-	 * Automatically chooses the correct default port if it was not previously set manually.
-	 *
-	 * @param compressing if events will be gzipped or not.
-	 */
-	public void setCompressing(boolean compressing)
-	{
-		this.compressing = compressing;
-		if(usingDefaultPort)
-		{
-			if(compressing)
-			{
-				setPort(COMPRESSED_DEFAULT_PORT);
-			}
-			else
-			{
-				setPort(UNCOMPRESSED_DEFAULT_PORT);
-			}
-			usingDefaultPort = true;
-		}
-		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(compressing));
-	}
-
-	public boolean isCompressing()
-	{
-		return compressing;
+		transforminEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
 	public boolean isIncludeCallerData()
@@ -134,4 +92,5 @@ public class ClassicXmlMultiplexSocketAppender
 			}
 		}
 	}
+
 }

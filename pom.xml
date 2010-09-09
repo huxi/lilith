@@ -51,6 +51,7 @@
 		<module>lilith-constants</module>
 		<module>lilith-engine</module>
 		<module>lilith-xml-logging</module>
+		<module>lilith-json-logging</module>
 		<module>logback</module>
 		<module>log4j</module>
 		<module>jul</module>

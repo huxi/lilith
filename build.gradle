@@ -111,6 +111,15 @@ project(':lilith-xml-logging').dependencies {
 	compile project(':lilith-data:logging-xml-serializer')
 }
 
+project(':lilith-json-logging').dependencies {
+	compile libraries.'slf4j-api'
+	compile libraries.'sulky-io'
+	compile libraries.'sulky-buffers'
+	compile libraries.'sulky-codec'
+	compile project(':lilith-engine')
+	compile project(':lilith-data:logging-json-serializer')
+}
+
 project(':logback:classic').dependencies {
 	compile project(':lilith-data:logging')
 }
@@ -173,6 +182,14 @@ project(':logback:multiplex-appender-access').dependencies {
 project(':logback:multiplex-appender-classic-xml').dependencies {
 	compile libraries.'sulky-codec'
 	compile project(':lilith-data:logging-xml-serializer')
+	compile project(':logback:multiplex-appender-core')
+	compile project(':logback:logging-adapter')
+	compile libraries.'logback-classic'
+}
+
+project(':logback:multiplex-appender-classic-json').dependencies {
+	compile libraries.'sulky-codec'
+	compile project(':lilith-data:logging-json-serializer')
 	compile project(':logback:multiplex-appender-core')
 	compile project(':logback:logging-adapter')
 	compile libraries.'logback-classic'
@@ -291,8 +308,10 @@ project(':lilith').dependencies {
 	compile project(':jul:jul-slf4j-handler')
 	compile project(':logback:multiplex-appender-classic')
 	compile project(':logback:multiplex-appender-classic-xml')
+	compile project(':logback:multiplex-appender-classic-json')
 	compile project(':logback:multiplex-appender-access')
 	compile project(':lilith-xml-logging')
+	compile project(':lilith-json-logging')
 	compile project(':logback:logging-adapter')
 	compile project(':log4j:log4j-xml')
 	compile project(':jul:jul-xml')

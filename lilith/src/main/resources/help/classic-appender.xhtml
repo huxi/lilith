@@ -126,11 +126,68 @@
   -->
 </appender>]]></code></pre>
 
-<p>or, for zero-delimited messages instead of "size, event-bytes" messages,</p>
+<p>or, for zero-delimited events instead of "size, event-bytes" messages,</p>
 
 		<pre><code><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
   <ReconnectionDelay>10000</ReconnectionDelay>
   <!-- Default port is 11000 -->
+  <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+  <!--
+  Alternatively:
+  <RemoteHost>localhost</RemoteHost>
+  <RemoteHost>10.200.55.13</RemoteHost>
+  -->
+</appender>]]></code></pre>
+
+<p><a href="#top">Back to top.</a></p>
+
+<h2>Using the Lilith Classic JSON Appender</h2>
+
+<p>Alternatively, you could also use one of the Lilith Classic JSON Appenders. Instead of serialized Java
+	objects those are using JSON-encoded logging events. There's not much sense in using those, though, if you just
+	want to receive events in Lilith.</p>
+
+<p>The primary use of those appenders is to enable an application to send language-independent events.</p>
+
+<p>Lilith can understand those events so you are able to receive messages from non-Java systems, too, as
+	long as those systems support the sending of JSON messages over sockets.</p>
+
+<p>The appenders were only implemented for symmetric reasons so there's both an event appender and an
+	event receiver available in the Lilith suite.</p>
+
+<p>Add the following dependency to your applications <code>pom.xml</code> file:</p>
+		<pre><code><![CDATA[<dependency>
+  <groupId>de.huxhorn.lilith</groupId>
+  <artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic-json</artifactId>
+  <version>${pom.version}</version>
+  <scope>runtime</scope>
+</dependency>]]></code></pre>
+
+<p>If you aren't using <a href="http://maven.apache.org">Maven</a> you can find a list of all required dependencies
+	here:<br/>
+	<a href="http://lilith.huxhorn.de/projects/de.huxhorn.lilith.logback.appender.multiplex-classic-json/dependencies.html">http://lilith.huxhorn.de/projects/de.huxhorn.lilith.logback.appender.multiplex-classic-json/dependencies.html</a>
+</p>
+
+<p>Then, add the following to your <code>logback.xml</code> file:</p>
+		<pre><code><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender">
+  <Compressing>true</Compressing> <!-- will automatically use correct default port -->
+  <!-- Default port for compressed is 10030 and uncompressed 10031 -->
+  <ReconnectionDelay>10000</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+  <!--
+  Alternatively:
+  <RemoteHost>localhost</RemoteHost>
+  <RemoteHost>10.200.55.13</RemoteHost>
+  -->
+</appender>]]></code></pre>
+
+<p>or, for zero-delimited events instead of "size, event-bytes" messages,</p>
+
+		<pre><code><![CDATA[<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender">
+  <ReconnectionDelay>10000</ReconnectionDelay>
+  <!-- Default port is 11010 -->
   <IncludeCallerData>true</IncludeCallerData>
   <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
   <!--

@@ -79,8 +79,15 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add">
+				Added JSON-Appenders and JSON-Receivers.
+				Lilith is listening for message-based JSON-Events on port 10030 (uncompressed) and 10031 (compressed).
+				Zero-delimited JSON-Events are consumed on port 11010.
+			</action>
 			<action dev="jhux" type="update">
-				Replaced Commons-CLI with JCommander. Very nice replacement!
+				Replaced Commons-CLI with JCommander. Very nice replacement.
+				I'd like to take this opportunity to thank Cédric Beust for his great (and fast!) support. You should seriously
+				check JCommander out if your application is handling command line arguments at all.
 			</action>
 			<action dev="jhux" type="add" issue="32">
 				Added support for Log4j SocketAppender. Lilith is listening on port 4445 for incoming connections.
@@ -146,6 +153,9 @@
 			</action>
 			<action dev="jhux" type="update">
 				Changed update interval of opened files from 5 seconds to 1 second.
+			</action>
+			<action dev="jhux" type="update">
+				Spring 3.0.4.RELEASE
 			</action>
 			<action dev="jhux" type="update">
 				Groovy 1.7.3
