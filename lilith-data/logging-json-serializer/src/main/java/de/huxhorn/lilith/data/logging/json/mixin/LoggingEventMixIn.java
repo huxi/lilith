@@ -34,11 +34,9 @@
 
 package de.huxhorn.lilith.data.logging.json.mixin;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-@JsonIgnoreProperties({"stackTraceElement", "nativeMethod", "extendedString"})
-public abstract class ExtendedStackTraceElementMixIn
+public abstract class LoggingEventMixIn
 {
 }

@@ -34,12 +34,20 @@
 
 package de.huxhorn.lilith.data.logging.json;
 
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
+import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.logging.json.mixin.ExtendedStackTraceElementMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.LoggerContextMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.LoggingEventMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.MarkerMixIn;
 import de.huxhorn.lilith.data.logging.json.mixin.MessageMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.ThreadInfoMixIn;
 import de.huxhorn.sulky.codec.Encoder;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -59,6 +67,11 @@ public class LoggingJsonEncoder
 		mapper = new ObjectMapper();
 		mapper.getSerializationConfig().addMixInAnnotations(Message.class, MessageMixIn.class);
 		mapper.getSerializationConfig().addMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
+		mapper.getSerializationConfig().addMixInAnnotations(LoggerContext.class, LoggerContextMixIn.class);
+		mapper.getSerializationConfig().addMixInAnnotations(Marker.class, MarkerMixIn.class);
+		mapper.getSerializationConfig().addMixInAnnotations(ThreadInfo.class, ThreadInfoMixIn.class);
+		mapper.getSerializationConfig().addMixInAnnotations(LoggingEvent.class, LoggingEventMixIn.class);
+		mapper.getSerializationConfig().addMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
 	}
 
 	public byte[] encode(LoggingEvent event)

@@ -238,6 +238,14 @@ public abstract class LoggingEventIOTestBase
 		ThreadInfo threadInfo = new ThreadInfo(17L, "Thread-Name", 42L, "ThreadGroup-Name");
 		event.setThreadInfo(threadInfo);
 
+		LoggerContext value = new LoggerContext();
+		value.setName("ContextName");
+		value.setBirthTime(1234567890000L);
+		Map<String, String> propperties = new HashMap<String, String>();
+		propperties.put("foo", "bar");
+		value.setProperties(propperties);
+		event.setLoggerContext(value);
+
 		String[] arguments = new String[]{"arg1", null, "arg3"};
 		event.setMessage(new Message("message", arguments));
 
