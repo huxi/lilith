@@ -105,12 +105,6 @@
 		<dependencies>
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
-				<artifactId>de.huxhorn.lilith.jul-slf4j-handler</artifactId>
-				<version>${lilithVersion}</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.sender</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
@@ -291,7 +285,25 @@
 
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.jul-slf4j-handler</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.jul.xml-import</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.jul.xml.receiver</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
 			

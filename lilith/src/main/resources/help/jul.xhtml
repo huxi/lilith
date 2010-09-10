@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Using the java.util.logging SocketHandler</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
+
+<h1><a name="top">Using the java.util.logging SocketHandler</a></h1>
+
+<p>Starting with Lilith 0.9.40, receiving events from java.util.logging is also an option.</p>
+
+<p>Some people are forced to use java.util.logging. If you are one of those poor souls, you have my deepest sympathy.<br/>
+	Seriously.</p>
+
+<p>If you are not exactly forced to keep using java.util.logging I'd seriously suggest to consider a switch
+	to the <a href="http://slf4j.org/">SLF4J</a>/<a href="http://logback.qos.ch/">Logback</a> combination.</p>
+
+<p>The only missing feature that java.util.logging has to offer are user-defined log-levels, albeit very, very poorly implemented.
+	If you are actually using this feature then you are risking a memory leak. It would be a wise decision to use the SLF4J-Marker-support instead.
+</p>
+
+<p>
+	The java.util.logging SocketHandler does also have one major downside compared to all alternatives:<br/>
+	It will only send the top-most exception of an exception-hierarchy. You won't be able to see the root-cause(s) of an exception.<br/>
+	Bummer.
+</p>
+
+<p>Check out this list of <a href="http://logback.qos.ch/reasonsToSwitch.html">reasons to prefer logback over log4j</a> for a quite detailed
+overview of the advantages you'll get if you decide to take the dive. While this page isn't related to java.util.logging it will still give
+you a very good summary of all the nice features you'll get.</p>
+
+<p>Last but not least, you'd be able to use the <a href="classic-appender.xhtml">Lilith Classic Socket Appender</a>, a partially asynchronous
+	appender designed for high-performance multiple-recipient usage in a live environment.</p>
+
+<h2>java.util.logging Configuration Example</h2>
+<p>Configure java.util.logging as usual and define a
+	<a href="http://download.oracle.com/javase/1.4.2/docs/api/java/util/logging/SocketHandler.html">SocketHandler</a> connecting to port 11020.</p>
+		<pre><code><![CDATA[Logger rootLogger=Logger.getLogger("");
+try
+{
+    SocketHandler fh = new SocketHandler("127.0.0.1", 11020);
+    fh.setEncoding("UTF-8");
+    fh.setFormatter(new XMLFormatter());
+
+    rootLogger.addHandler(fh);
+}
+catch(IOException ex)
+{
+    System.out.println("Couldn't connect the SocketHandler. Nope, no reconnect. What a fail.");
+    ex.printStackTrace();
+}]]></code></pre>
+
+<p><a href="#top">Back to top.</a></p>
+</body>
+</html>

@@ -259,7 +259,34 @@ project(':log4j:log4j-producer').dependencies {
 project(':jul:jul-xml').dependencies {
 	compile project(':lilith-data:logging')
 	compile libraries.'sulky-stax'
+	compile libraries.'slf4j-api'
+	compile libraries.'commons-io'
+	compile libraries.'sulky-io'
+	compile libraries.'stax-api'
+	testRuntime libraries.'stax'
+	testCompile project(':lilith-data:eventsource')
+}
+
+
+project(':jul:jul-xml-import').dependencies {
+	compile project(':lilith-data:logging')
+	compile project(':jul:jul-xml')
+	compile libraries.'sulky-stax'
 	compile libraries.'sulky-tasks'
+	compile libraries.'sulky-buffers'
+	compile libraries.'slf4j-api'
+	compile libraries.'commons-io'
+	compile libraries.'sulky-io'
+	compile libraries.'stax-api'
+	testRuntime libraries.'stax'
+	testCompile project(':lilith-data:eventsource')
+}
+
+project(':jul:jul-xml-receiver').dependencies {
+	compile project(':lilith-data:logging')
+	compile project(':jul:jul-xml')
+	compile project(':lilith-engine')
+	compile libraries.'sulky-stax'
 	compile libraries.'sulky-buffers'
 	compile libraries.'slf4j-api'
 	compile libraries.'commons-io'
@@ -315,6 +342,8 @@ project(':lilith').dependencies {
 	compile project(':logback:logging-adapter')
 	compile project(':log4j:log4j-xml')
 	compile project(':jul:jul-xml')
+	compile project(':jul:jul-xml-import')
+	compile project(':jul:jul-xml-receiver')
 	compile project(':lilith-prefs')
 	compile libraries.'servlet-api'
 	compile libraries.'groovy'

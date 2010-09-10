@@ -19,6 +19,8 @@
 	
 	<modules>
 		<module>jul-xml</module>
+		<module>jul-xml-import</module>
+		<module>jul-xml-receiver</module>
 		<module>jul-slf4j-handler</module>
 	</modules>
 

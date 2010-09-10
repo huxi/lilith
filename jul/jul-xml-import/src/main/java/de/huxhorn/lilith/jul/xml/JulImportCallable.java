@@ -24,21 +24,16 @@ public class JulImportCallable
 {
 	private final Logger logger = LoggerFactory.getLogger(JulImportCallable.class);
 
-	public static final String CLOSING_LOG4J_EVENT_TAG = "</log4j:event>";
-	public static final String LOG4J_NAMESPACE = "xmlns:log4j=\"http://jakarta.apache.org/log4j/\"";
-	public static final String OPENING_LOG4J_EVENT_TAG_EXCL_NS = "<log4j:event ";
-	public static final String OPENING_LOG4J_EVENT_TAG_INCL_NS = OPENING_LOG4J_EVENT_TAG_EXCL_NS + LOG4J_NAMESPACE + " ";
-
 	private File inputFile;
 	private AppendOperation<EventWrapper<LoggingEvent>> buffer;
-	private LoggingEventReader instance;
+	private LoggingEventReader loggingEventReader;
 	private long result;
 
 	public JulImportCallable(File inputFile, AppendOperation<EventWrapper<LoggingEvent>> buffer)
 	{
 		this.buffer = buffer;
 		this.inputFile = inputFile;
-		instance = new LoggingEventReader();
+		loggingEventReader = new LoggingEventReader();
 	}
 
 	public AppendOperation<EventWrapper<LoggingEvent>> getBuffer()
@@ -73,7 +68,7 @@ public class JulImportCallable
 		{
 			try
 			{
-				LoggingEvent event = instance.read(reader);
+				LoggingEvent event = loggingEventReader.read(reader);
 				setCurrentStep(cis.getByteCount());
 				if(event == null)
 				{

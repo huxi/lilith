@@ -26,6 +26,7 @@ Lilith opens:
   as required by ActionScript XMLSocket.
 - a multiplex Lilith LoggingEvent JSON server socket on ports 11010 that is using zero-delimited xml-events,
   as required by ActionScript XMLSocket.
+- a java.util.logging server socket on ports 11020. You can send events to Lilith using a java.util.logging.SocketHandler.
 
 If Lilith takes a long time to start up and you are using windows you should probably execute
 regsvr32 /u %windir%\system32\zipfldr.dll

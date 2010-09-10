@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Using the LOG4J SocketAppender</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
+
+<h1><a name="top">Using the LOG4J SocketAppender</a></h1>
+
+<p>Starting with Lilith 0.9.40, receiving events from LOG4J is also an option.</p>
+
+<p>Some people are still forced to use LOG4J, for example because its compatibility with Java&lt;1.5. Others
+	may be using it because it's wide-spread and considered very mature code.</p>
+
+<p>If you are not exactly forced to keep using LOG4J I'd seriously suggest to consider a switch
+	to the <a href="http://slf4j.org/">SLF4J</a>/<a href="http://logback.qos.ch/">Logback</a> combination.</p>
+
+<p>The only missing feature that LOG4J has to offer is the
+	<a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/NDC.html">Nested Diagnostic Context (NDC)</a>.
+	If you aren't using the NDC in your code then a transition to SLF4J will be quite painless.
+</p>
+
+<p>Check out this list of <a href="http://logback.qos.ch/reasonsToSwitch.html">reasons to prefer logback over log4j</a> for a quite detailed
+overview of the advantages you'll get if you decide to take the dive.</p>
+
+<p>Last but not least, you'll be able to use the <a href="classic-appender.xhtml">Lilith Classic Socket Appender</a>, a partially asynchronous
+	appender designed for high-performance multiple-recipient usage in a live environment.</p>
+
+<h2>log4j.xml Example</h2>
+<p>Configure LOG4J as usual and define a SocketAppender connecting to port 4445.</p>
+		<pre><code><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="socket" class="org.apache.log4j.net.SocketAppender">
+        <param name="Application" value="YourApplication"/>
+        <param name="locationInfo" value="true"/>
+        <param name="Port" value="4445"/>
+        <param name="RemoteHost" value="127.0.0.1"/>
+        <param name="ReconnectionDelay" value="10"/>
+    </appender>
+
+    <root>
+        <priority value ="ALL" />
+        <appender-ref ref="socket" />
+    </root>
+
+</log4j:configuration>]]></code></pre>
+
+<p><a href="#top">Back to top.</a></p>
+</body>
+</html>

@@ -3,11 +3,11 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
-	<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
+	<artifactId>de.huxhorn.lilith.jul.xml-import</artifactId>
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
-	<name>Lilith - java.util.logging - XML (StaX)</name>
-	<description>This file is part of Lilith. It contains java.util.logging XML I/O.</description>
+	<name>Lilith - java.util.logging - XML-Import</name>
+	<description>This file is part of Lilith. It contains java.util.logging XML-Import.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
 	<parent>
@@ -38,8 +38,25 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.stax</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.tasks</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.buffers</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		

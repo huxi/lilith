@@ -40,6 +40,8 @@ artifactMapping = [
 'log4j-producer':                  'de.huxhorn.lilith.log4j.producer',
 'jul':                             'jul', // ignore
 'jul-xml':                         'de.huxhorn.lilith.jul.xml',
+'jul-xml-import':                  'de.huxhorn.lilith.jul.xml-import',
+'jul-xml-receiver':                'de.huxhorn.lilith.jul.xml.receiver',
 'jul-slf4j-handler':               'de.huxhorn.lilith.jul-slf4j-handler',
 'lilith-sounds':                   'de.huxhorn.lilith.sounds',
 'lilith-prefs':                    'de.huxhorn.lilith.prefs',

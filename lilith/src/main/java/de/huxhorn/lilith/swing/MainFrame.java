@@ -22,6 +22,7 @@ import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonStreamLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.jul.sourceproducer.JulXmlStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.eventhandlers.AlarmSoundAccessEventHandler;
 import de.huxhorn.lilith.eventhandlers.AlarmSoundLoggingEventHandler;
 import de.huxhorn.lilith.eventhandlers.FileDumpEventHandler;
@@ -683,6 +684,18 @@ public class MainFrame
 			LilithJsonStreamLoggingServerSocketEventSourceProducer producer
 				= new LilithJsonStreamLoggingServerSocketEventSourceProducer
 				(ZeroDelimitedClassicJsonMultiplexSocketAppender.DEFAULT_PORT);
+
+			loggingEventSourceManager.addEventSourceProducer(producer);
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+		}
+
+		try
+		{
+			JulXmlStreamLoggingServerSocketEventSourceProducer producer
+				= new JulXmlStreamLoggingServerSocketEventSourceProducer(11020);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}

@@ -3,10 +3,10 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
-	<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
+	<artifactId>de.huxhorn.lilith.jul.xml.receiver</artifactId>
 	<version>${parent.version}</version>
 	<packaging>jar</packaging>
-	<name>Lilith - java.util.logging - XML (StaX)</name>
+	<name>Lilith - java.util.logging - XML Receiver</name>
 	<description>This file is part of Lilith. It contains java.util.logging XML I/O.</description>
 	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
 	
@@ -38,6 +38,18 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.jul.xml</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.engine</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.stax</artifactId>
 			<scope>compile</scope>
@@ -58,12 +70,6 @@
 		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.io</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>stax</groupId>
-			<artifactId>stax-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
