@@ -639,6 +639,7 @@ def buildNdc(element, Message[] ndc)
 
 def buildStringMap(element, Map<String, String> map)
 {
+	SortedMap<String, String> sorted=new TreeMap<String, String>(map);
 	element.table
 	{
 		tableIt ->
@@ -647,7 +648,7 @@ def buildStringMap(element, Map<String, String> map)
 			th('Key')
 			th('Value')
 		}
-		map.each
+		sorted.each
 		{
 			key, value ->
 			tableIt.tr
