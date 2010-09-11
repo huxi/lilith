@@ -79,6 +79,10 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add" issue="35">
+				Added support for java.util.logging SocketHandler. Lilith is listening on port 11020 for incoming connections.
+				I'd still recommend to switch to SLF4J/Logback, though!
+			</action>
 			<action dev="jhux" type="add">
 				Added JSON-Appenders and JSON-Receivers.
 				Lilith is listening for message-based JSON-Events on port 10030 (uncompressed) and 10031 (compressed).
