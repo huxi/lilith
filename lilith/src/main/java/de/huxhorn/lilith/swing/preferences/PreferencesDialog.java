@@ -351,6 +351,11 @@ public class PreferencesDialog
 		startupShutdownPanel.setCheckingForUpdate(checkingForUpdate);
 	}
 
+	public void setCheckingForSnapshot(boolean checkingForSnapshot)
+	{
+		startupShutdownPanel.setCheckingForSnapshot(checkingForSnapshot);
+	}
+
 	private class OkAction
 		extends AbstractAction
 	{

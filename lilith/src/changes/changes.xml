@@ -79,6 +79,24 @@
 		</release>
 
 		<release version="0.9.40" date="TBD" description="Future Release">
+			<action dev="jhux" type="add">
+				Added preferences to check for pre-release versions in addition to release versions. Off by default.
+			</action>
+			<action dev="jhux" type="add">
+				Added -T/--print-timestamp command line argument that prints the timestamp and date of build.
+			</action>
+			<action dev="jhux" type="update">
+				If the used version is a SNAPSHOT, Lilith will always check for a new SNAPSHOT pre-release regardless
+				of the "Check for updates on startup." settings.
+			</action>
+			<action dev="jhux" type="update">
+				Enhanced "Check for update" functionality.
+				No more false update warnings in case of SNAPSHOT pre-releases. A new release takes precedence over a new pre-release.
+			</action>
+			<action dev="jhux" type="update">
+				SNAPSHOT pre-releases will now contain the date and time of the build in the window title.
+			</action>
+			
 			<action dev="jhux" type="add" issue="35">
 				Added support for java.util.logging SocketHandler. Lilith is listening on port 11020 for incoming connections.
 				I'd still recommend to switch to SLF4J/Logback, though!

@@ -307,6 +307,13 @@ public final class PrefsProto {
     public boolean hasDefaultConditionName() { return hasDefaultConditionName; }
     public java.lang.String getDefaultConditionName() { return defaultConditionName_; }
     
+    // optional bool checking_for_snapshot = 30;
+    public static final int CHECKING_FOR_SNAPSHOT_FIELD_NUMBER = 30;
+    private boolean hasCheckingForSnapshot;
+    private boolean checkingForSnapshot_ = false;
+    public boolean hasCheckingForSnapshot() { return hasCheckingForSnapshot; }
+    public boolean getCheckingForSnapshot() { return checkingForSnapshot_; }
+    
     private void initFields() {
       groovyConditions_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
       detailsView_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
@@ -415,6 +422,9 @@ public final class PrefsProto {
       }
       if (hasDefaultConditionName()) {
         output.writeString(29, getDefaultConditionName());
+      }
+      if (hasCheckingForSnapshot()) {
+        output.writeBool(30, getCheckingForSnapshot());
       }
       getUnknownFields().writeTo(output);
     }
@@ -540,6 +550,10 @@ public final class PrefsProto {
       if (hasDefaultConditionName()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(29, getDefaultConditionName());
+      }
+      if (hasCheckingForSnapshot()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(30, getCheckingForSnapshot());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -786,6 +800,9 @@ public final class PrefsProto {
         if (other.hasDefaultConditionName()) {
           setDefaultConditionName(other.getDefaultConditionName());
         }
+        if (other.hasCheckingForSnapshot()) {
+          setCheckingForSnapshot(other.getCheckingForSnapshot());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -946,6 +963,10 @@ public final class PrefsProto {
             }
             case 234: {
               setDefaultConditionName(input.readString());
+              break;
+            }
+            case 240: {
+              setCheckingForSnapshot(input.readBool());
               break;
             }
           }
@@ -1544,6 +1565,24 @@ public final class PrefsProto {
       public Builder clearDefaultConditionName() {
         result.hasDefaultConditionName = false;
         result.defaultConditionName_ = getDefaultInstance().getDefaultConditionName();
+        return this;
+      }
+      
+      // optional bool checking_for_snapshot = 30;
+      public boolean hasCheckingForSnapshot() {
+        return result.hasCheckingForSnapshot();
+      }
+      public boolean getCheckingForSnapshot() {
+        return result.getCheckingForSnapshot();
+      }
+      public Builder setCheckingForSnapshot(boolean value) {
+        result.hasCheckingForSnapshot = true;
+        result.checkingForSnapshot_ = value;
+        return this;
+      }
+      public Builder clearCheckingForSnapshot() {
+        result.hasCheckingForSnapshot = false;
+        result.checkingForSnapshot_ = false;
         return this;
       }
       
@@ -4063,7 +4102,7 @@ public final class PrefsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\"src/main/protobuf/PrefsProto.proto\022\027de" +
-      ".huxhorn.lilith.prefs\"\321\007\n\021LilithPreferen" +
+      ".huxhorn.lilith.prefs\"\360\007\n\021LilithPreferen" +
       "ces\022D\n\021groovy_conditions\030\001 \001(\0132).de.huxh" +
       "orn.lilith.prefs.DirectoryContent\022?\n\014det" +
       "ails_view\030\002 \001(\0132).de.huxhorn.lilith.pref" +
@@ -4088,22 +4127,23 @@ public final class PrefsProto {
       "internal_frames\030\033 \001(\010\022B\n\020source_filterin" +
       "g\030\034 \001(\0162(.de.huxhorn.lilith.prefs.Source" +
       "Filtering\022\036\n\026default_condition_name\030\035 \001(" +
-      "\t\"\231\001\n\020DirectoryContent\022\014\n\004name\030\001 \001(\t\0229\n\005" +
-      "entry\030\002 \003(\0132*.de.huxhorn.lilith.prefs.By" +
-      "teArrayMapEntry\022<\n\tdirectory\030\003 \003(\0132).de." +
-      "huxhorn.lilith.prefs.DirectoryContent\"/\n",
-      "\021ByteArrayMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value" +
-      "\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry\030\001 \003(\0132\'.de." +
-      "huxhorn.lilith.prefs.StringMapEntry\",\n\016S" +
-      "tringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(" +
-      "\t\"M\n\016StringArrayMap\022;\n\005entry\030\001 \003(\0132,.de." +
-      "huxhorn.lilith.prefs.StringArrayMapEntry" +
-      "\"\\\n\023StringArrayMapEntry\022\013\n\003key\030\001 \002(\t\0228\n\005" +
-      "value\030\002 \003(\0132).de.huxhorn.lilith.prefs.St" +
-      "ringArrayValue\"!\n\020StringArrayValue\022\r\n\005va" +
-      "lue\030\001 \001(\t*9\n\017SourceFiltering\022\010\n\004NONE\020\000\022\r",
-      "\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020\002B.\n*de.huxho" +
-      "rn.lilith.prefs.protobuf.generatedH\001"
+      "\t\022\035\n\025checking_for_snapshot\030\036 \001(\010\"\231\001\n\020Dir" +
+      "ectoryContent\022\014\n\004name\030\001 \001(\t\0229\n\005entry\030\002 \003" +
+      "(\0132*.de.huxhorn.lilith.prefs.ByteArrayMa" +
+      "pEntry\022<\n\tdirectory\030\003 \003(\0132).de.huxhorn.l",
+      "ilith.prefs.DirectoryContent\"/\n\021ByteArra" +
+      "yMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\014\"C\n" +
+      "\tStringMap\0226\n\005entry\030\001 \003(\0132\'.de.huxhorn.l" +
+      "ilith.prefs.StringMapEntry\",\n\016StringMapE" +
+      "ntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"M\n\016Stri" +
+      "ngArrayMap\022;\n\005entry\030\001 \003(\0132,.de.huxhorn.l" +
+      "ilith.prefs.StringArrayMapEntry\"\\\n\023Strin" +
+      "gArrayMapEntry\022\013\n\003key\030\001 \002(\t\0228\n\005value\030\002 \003" +
+      "(\0132).de.huxhorn.lilith.prefs.StringArray" +
+      "Value\"!\n\020StringArrayValue\022\r\n\005value\030\001 \001(\t",
+      "*9\n\017SourceFiltering\022\010\n\004NONE\020\000\022\r\n\tBLACKLI" +
+      "ST\020\001\022\r\n\tWHITELIST\020\002B.\n*de.huxhorn.lilith" +
+      ".prefs.protobuf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4115,7 +4155,7 @@ public final class PrefsProto {
           internal_static_de_huxhorn_lilith_prefs_LilithPreferences_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_prefs_LilithPreferences_descriptor,
-              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "Licensed", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", },
+              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "Licensed", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", },
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.class,
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.Builder.class);
           internal_static_de_huxhorn_lilith_prefs_DirectoryContent_descriptor =

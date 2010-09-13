@@ -127,6 +127,10 @@ public class LilithPreferencesStreamingDecoder
 		{
 			prefs.setCheckingForUpdate(p.getCheckingForUpdate());
 		}
+		if(p.hasCheckingForSnapshot())
+		{
+			prefs.setCheckingForSnapshot(p.getCheckingForSnapshot());
+		}
 		if(p.hasCleaningLogsOnExit())
 		{
 			prefs.setCleaningLogsOnExit(p.getCleaningLogsOnExit());

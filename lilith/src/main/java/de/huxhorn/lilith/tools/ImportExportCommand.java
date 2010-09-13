@@ -202,6 +202,7 @@ public class ImportExportCommand
 		p.setAutoFocusingWindow(prefs.isAutoFocusingWindow());
 		p.setAutoOpening(prefs.isAutoOpening());
 		p.setCheckingForUpdate(prefs.isCheckingForUpdate());
+		p.setCheckingForSnapshot(prefs.isCheckingForSnapshot());
 		p.setCleaningLogsOnExit(prefs.isCleaningLogsOnExit());
 		p.setColoringWholeRow(prefs.isColoringWholeRow());
 		p.setGlobalLoggingEnabled(prefs.isGlobalLoggingEnabled());
@@ -248,6 +249,7 @@ public class ImportExportCommand
 		prefs.setAutoFocusingWindow(p.isAutoFocusingWindow());
 		prefs.setAutoOpening(p.isAutoOpening());
 		prefs.setCheckingForUpdate(p.isCheckingForUpdate());
+		prefs.setCheckingForSnapshot(p.isCheckingForSnapshot());
 		prefs.setCleaningLogsOnExit(p.isCleaningLogsOnExit());
 		prefs.setColoringWholeRow(p.isColoringWholeRow());
 		prefs.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());

@@ -65,4 +65,7 @@ public class CommandLineArgs
 
 	@Parameter(names = { "-i", "--import-preferences"  }, description = "import preferences from the given file.")
 	public String importPreferencesFile;
+
+	@Parameter(names = { "-T", "--print-timestamp"  }, description = "prints the build timestamp of this Lilith version.")
+	public boolean printBuildTimestamp=false;
 }

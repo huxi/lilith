@@ -109,6 +109,7 @@ public class LilithPreferencesStreamingEncoder
 		prefs.setAutoFocusingWindow(p.isAutoFocusingWindow());
 		prefs.setAutoOpening(p.isAutoOpening());
 		prefs.setCheckingForUpdate(p.isCheckingForUpdate());
+		prefs.setCheckingForSnapshot(p.isCheckingForSnapshot());
 		prefs.setCleaningLogsOnExit(p.isCleaningLogsOnExit());
 		prefs.setColoringWholeRow(p.isColoringWholeRow());
 		prefs.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());

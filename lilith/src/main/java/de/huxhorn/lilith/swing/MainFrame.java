@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
+import de.huxhorn.lilith.VersionBundle;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.jul.sourceproducer.JulXmlStreamLoggingServerSocketEventSourceProducer;
@@ -144,9 +145,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -796,8 +799,9 @@ public class MainFrame
 		{
 			senderService.start();
 		}
-		if(applicationPreferences.isCheckingForUpdate())
+		if(Lilith.APP_SNAPSHOT || applicationPreferences.isCheckingForUpdate())
 		{
+			// always check for update in case of SNAPSHOT!
 			checkForUpdate(false);
 		}
 		updateConditions(); // to initialize active conditions.
@@ -986,7 +990,7 @@ public class MainFrame
 
 	public void checkForUpdate(boolean showAlways)
 	{
-		Thread t = new Thread(new CheckForUpdateRunnable(showAlways));
+		Thread t = new Thread(new CheckForUpdateRunnable(showAlways, applicationPreferences.isCheckingForSnapshot()));
 		t.start();
 	}
 
@@ -2992,6 +2996,12 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.CHECKING_FOR_SNAPSHOT_PROPERTY.equals(propName))
+			{
+				setCheckingForSnapshot(applicationPreferences.isCheckingForSnapshot());
+				return;
+			}
+
 			if(ApplicationPreferences.GLOBAL_LOGGING_ENABLED_PROPERTY.equals(propName))
 			{
 				setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
@@ -3056,6 +3066,12 @@ public class MainFrame
 	{
 		preferencesDialog.setCheckingForUpdate(checkingForUpdate);
 		checkForUpdateDialog.setCheckingForUpdate(checkingForUpdate);
+	}
+
+	private void setCheckingForSnapshot(boolean checkingForSnapshot)
+	{
+		preferencesDialog.setCheckingForSnapshot(checkingForSnapshot);
+//		checkForUpdateDialog.setCheckingForSnapshot(checkingForSnapshot);
 	}
 
 	private void setShowingStatusbar(boolean showingStatusbar)
@@ -3710,23 +3726,22 @@ public class MainFrame
 	private class CheckForUpdateRunnable
 		implements Runnable
 	{
-		private boolean showAlways;
+		private static final String RELEASE_VERSION_URL = "http://lilith.huxhorn.de/release-version.txt";
+		private static final String SNAPSHOT_VERSION_URL = "http://lilith.huxhorn.de/snapshot-version.txt";
 
-		public CheckForUpdateRunnable(boolean showAlways)
+		private boolean showAlways;
+		private boolean checkSnapshot;
+
+		public CheckForUpdateRunnable(boolean showAlways, boolean checkSnapshot)
 		{
 			this.showAlways = showAlways;
+			this.checkSnapshot = checkSnapshot;
 		}
 
-		public String retrieveCurrentVersion()
+
+		public VersionBundle retrieveVersion(String url)
 		{
-			final String url = "http://lilith.huxhorn.de/current-version.txt";
-			String currentVersion = readUrl(url);
-			if(currentVersion != null)
-			{
-				currentVersion=currentVersion.trim();
-				if(logger.isDebugEnabled()) logger.debug("Current version: {}", currentVersion);
-			}
-			return currentVersion;
+			return VersionBundle.fromString(readUrl(url));
 		}
 
 		public String retrieveChanges(String currentVersion)
@@ -3738,35 +3753,38 @@ public class MainFrame
 
 		public void run()
 		{
-			String currentVersion = retrieveCurrentVersion();
+			VersionBundle releaseVersionBundle = retrieveVersion(RELEASE_VERSION_URL);
 
-			String message;
-			String changes = null;
-			boolean newVersion = false;
-			if(currentVersion == null)
+			if(Lilith.APP_VERSION_BUNDLE.compareTo(releaseVersionBundle)<0)
 			{
-				message = "Couldn't retrieve current version!";
+				String version = releaseVersionBundle.getVersion();
+				String message = "New release: " + version;
+				String changes = retrieveChanges(version);
+				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+				return;
 			}
-			else
+
+			if(Lilith.APP_SNAPSHOT || checkSnapshot)
 			{
-				if(!currentVersion.equals(Lilith.APP_VERSION))
+				// check for snapshot if either checking is enabled or we are already using a snapshot
+				VersionBundle snapshotVersionBundle = retrieveVersion(SNAPSHOT_VERSION_URL);
+				if(Lilith.APP_VERSION_BUNDLE.compareTo(snapshotVersionBundle)<0)
 				{
-					message = "New version is available: " + currentVersion;
-					newVersion = true;
-					changes = retrieveChanges(currentVersion);
-				}
-				else
-				{
-					message = null;
-					if(showAlways)
-					{
-						changes = retrieveChanges(currentVersion);
-					}
+					String version = snapshotVersionBundle.getVersion();
+					Date d=new Date(snapshotVersionBundle.getTimestamp());
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+					String message = "New snapshot: " + version + "-" + format.format(d);
+					String changes = retrieveChanges(version);
+					SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+					return;
 				}
 			}
-			if(logger.isDebugEnabled()) logger.debug("Message: {}, newVersion: {}", message, newVersion);
-			if(newVersion || showAlways)
+
+			if(showAlways)
 			{
+				String message=null; // up to date
+				String changes = retrieveChanges(Lilith.APP_VERSION_BUNDLE.getVersion());
 				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
 			}
 		}

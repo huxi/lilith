@@ -18,6 +18,23 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<h2>Changes</h2>
 		<ul>
 			<li>
+				Added preferences to check for pre-release versions in addition to release versions. Off by default.
+			</li>
+			<li>
+				Added -T/--print-timestamp command line argument that prints the timestamp and date of build.
+			</li>
+			<li>
+				If the used version is a SNAPSHOT, Lilith will always check for a new SNAPSHOT pre-release regardless
+				of the "Check for updates on startup." settings.
+			</li>
+			<li>
+				Enhanced "Check for update" functionality.
+				No more false update warnings in case of SNAPSHOT pre-releases. A new release takes precedence over a new pre-release.
+			</li>
+			<li>
+				SNAPSHOT pre-releases will now contain the date and time of the build in the window title.
+			</li>
+			<li>
 				Added support for java.util.logging SocketHandler. Lilith is listening on port 11020 for incoming connections.
 				<br/>I'd still recommend to switch to SLF4J/Logback, though!
 				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/35">Ticket 35</a>)

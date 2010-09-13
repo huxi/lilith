@@ -57,6 +57,7 @@ message LilithPreferences {
 	optional SourceFiltering   source_filtering             = 28;
 
 	optional string            default_condition_name       = 29;
+	optional bool              checking_for_snapshot        = 30;
 }
 
 enum SourceFiltering {

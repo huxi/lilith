@@ -210,6 +210,11 @@ public class CheckForUpdateDialog
 		checkForUpdateCheckbox.setSelected(checkingForUpdate);
 	}
 
+//	public void setCheckingForSnapshot(boolean checkingForSnapshot)
+//	{
+//		checkForSnapshotCheckbox.setSelected(checkingForUpdate);
+//	}
+	
 	private class OkAction
 		extends AbstractAction
 	{

@@ -61,15 +61,48 @@ import java.util.logging.Handler;
 
 public class Lilith
 {
+	/**
+	 * Application name
+	 */
 	public static final String APP_NAME;
+
+	/**
+	 * Version string *including* a -SNAPSHOT, if available
+	 */
 	public static final String APP_VERSION;
+
+	/**
+	 * Version string *excluding* the -SNAPSHOT
+	 */
+	public static final String APP_PLAIN_VERSION;
+
+	/**
+	 * true if APP_VERSION ends in -SNAPSHOT, false otherwise.
+	 */
+	public static final boolean APP_SNAPSHOT;
+
+	/**
+	 * The git revision of this version
+	 */
 	public static final String APP_REVISION;
+
+	/**
+	 * Long containing the timestamp of the build.
+	 */
 	public static final long APP_TIMESTAMP;
 
+	/**
+	 * The timestamp of the build formatted as a date.
+	 */
+	public static final String APP_TIMESTAMP_DATE;
+
+	public static final VersionBundle APP_VERSION_BUNDLE;
+
+	private static final String SNAPSHOT_POSTFIX = "-SNAPSHOT";
+	
 	private static final String JUNIQUE_MSG_SHOW = "Show";
 	private static final String JUNIQUE_REPLY_OK = "OK";
 	private static final String JUNIQUE_REPLY_UNKNOWN = "Unknown";
-
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 	private static MainFrame mainFrame;
@@ -99,14 +132,28 @@ public class Lilith
 		}
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
+		boolean snapshot=false;
+		String plainVersion=APP_VERSION;
+		if(plainVersion.endsWith(SNAPSHOT_POSTFIX))
+		{
+			snapshot = true;
+			plainVersion = plainVersion.substring(0, plainVersion.length()-SNAPSHOT_POSTFIX.length());
+		}
+		APP_SNAPSHOT = snapshot;
+		APP_PLAIN_VERSION = plainVersion;
+
 		APP_REVISION = p.getProperty("application.revision");
 		String tsStr = p.getProperty("application.timestamp");
 		long ts = -1;
+		String dateStr = null;
 		if(tsStr != null)
 		{
 			try
 			{
 				ts = Long.parseLong(tsStr);
+				Date d=new Date(ts);
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+				dateStr = format.format(d);
 			}
 			catch(NumberFormatException ex)
 			{
@@ -119,6 +166,8 @@ public class Lilith
 		}
 
 		APP_TIMESTAMP = ts;
+		APP_TIMESTAMP_DATE = dateStr;
+		APP_VERSION_BUNDLE = new VersionBundle(APP_PLAIN_VERSION, APP_TIMESTAMP);
 	}
 
 	// TODO: - Shortcut in tooltip of toolbars...?
@@ -135,6 +184,10 @@ public class Lilith
 		}
 
 		String appTitle = APP_NAME + " V" + APP_VERSION;
+		if(APP_SNAPSHOT)
+		{
+			appTitle = appTitle + " ("+APP_TIMESTAMP_DATE+")";
+		}
 
 		CommandLineArgs cl=new CommandLineArgs();
 		JCommander commander;
@@ -171,6 +224,13 @@ public class Lilith
 			}
 
 			initVerboseLogging();
+		}
+
+		if(cl.printBuildTimestamp)
+		{
+			System.out.println("Build-Timestamp: " + APP_TIMESTAMP);
+			System.out.println("Build-Date     : " + APP_TIMESTAMP_DATE);
+			System.exit(0);
 		}
 
 		if(cl.md5File != null)

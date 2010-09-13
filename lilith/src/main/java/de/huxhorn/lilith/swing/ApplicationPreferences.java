@@ -107,6 +107,7 @@ public class ApplicationPreferences
 	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
 	public static final String SHOWING_STACKTRACE_PROPERTY = "showingStackTrace";
 	public static final String CHECKING_FOR_UPDATE_PROPERTY = "checkingForUpdate";
+	public static final String CHECKING_FOR_SNAPSHOT_PROPERTY = "checkingForSnapshot";
 	public static final String SOURCE_FILTERING_PROPERTY = "sourceFiltering";
 	public static final String SOUND_LOCATIONS_PROPERTY = "soundLocations";
 	public static final String SCALE_FACTOR_PROPERTY = "scaleFactor";
@@ -1821,6 +1822,19 @@ public class ApplicationPreferences
 	public boolean isCheckingForUpdate()
 	{
 		return PREFERENCES.getBoolean(CHECKING_FOR_UPDATE_PROPERTY, true);
+	}
+
+	public void setCheckingForSnapshot(boolean checkingForSnapshot)
+	{
+		Object oldValue = isCheckingForSnapshot();
+		PREFERENCES.putBoolean(CHECKING_FOR_SNAPSHOT_PROPERTY, checkingForSnapshot);
+		Object newValue = isCheckingForSnapshot();
+		propertyChangeSupport.firePropertyChange(CHECKING_FOR_SNAPSHOT_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isCheckingForSnapshot()
+	{
+		return PREFERENCES.getBoolean(CHECKING_FOR_SNAPSHOT_PROPERTY, false);
 	}
 
 	public void setAutoClosing(boolean autoClosing)

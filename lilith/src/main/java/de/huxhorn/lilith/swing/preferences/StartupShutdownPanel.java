@@ -34,6 +34,7 @@ public class StartupShutdownPanel
 	private JCheckBox showSplashCheckbox;
 	private JCheckBox showTipOfTheDayCheckbox;
 	private JCheckBox checkForUpdateCheckbox;
+	private JCheckBox checkForSnapshotCheckbox;
 
 	// Shutdown
 	private JCheckBox askBeforeQuitCheckbox;
@@ -49,14 +50,16 @@ public class StartupShutdownPanel
 	{
 		showSplashCheckbox = new JCheckBox("Show splash screen.");
 		checkForUpdateCheckbox = new JCheckBox("Check for updates on startup.");
+		checkForSnapshotCheckbox = new JCheckBox("Check also for pre-release versions instead of just releases.");
 		showTipOfTheDayCheckbox = new JCheckBox("Show Tip of the Day on startup.");
 
 		askBeforeQuitCheckbox = new JCheckBox("Ask before exit.");
 		cleaningLogsOnExitCheckbox = new JCheckBox("Clean logs on exit.");
 
-		JPanel startupPanel = new JPanel(new GridLayout(3, 1));
+		JPanel startupPanel = new JPanel(new GridLayout(4, 1));
 		startupPanel.add(showSplashCheckbox);
 		startupPanel.add(checkForUpdateCheckbox);
+		startupPanel.add(checkForSnapshotCheckbox);
 		startupPanel.add(showTipOfTheDayCheckbox);
 		startupPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Startup"));
 
@@ -89,6 +92,7 @@ public class StartupShutdownPanel
 	{
 		showSplashCheckbox.setSelected(!applicationPreferences.isSplashScreenDisabled());
 		checkForUpdateCheckbox.setSelected(applicationPreferences.isCheckingForUpdate());
+		checkForSnapshotCheckbox.setSelected(applicationPreferences.isCheckingForSnapshot());
 		showTipOfTheDayCheckbox.setSelected(applicationPreferences.isShowingTipOfTheDay());
 
 		askBeforeQuitCheckbox.setSelected(applicationPreferences.isAskingBeforeQuit());
@@ -99,6 +103,7 @@ public class StartupShutdownPanel
 	{
 		applicationPreferences.setSplashScreenDisabled(!showSplashCheckbox.isSelected());
 		applicationPreferences.setCheckingForUpdate(checkForUpdateCheckbox.isSelected());
+		applicationPreferences.setCheckingForSnapshot(checkForSnapshotCheckbox.isSelected());
 		applicationPreferences.setShowingTipOfTheDay(showTipOfTheDayCheckbox.isSelected());
 
 		applicationPreferences.setAskingBeforeQuit(askBeforeQuitCheckbox.isSelected());
@@ -113,5 +118,10 @@ public class StartupShutdownPanel
 	public void setCheckingForUpdate(boolean checkingForUpdate)
 	{
 		checkForUpdateCheckbox.setSelected(checkingForUpdate);
+	}
+
+	public void setCheckingForSnapshot(boolean checkingForSnapshot)
+	{
+		checkForSnapshotCheckbox.setSelected(checkingForSnapshot);
 	}
 }

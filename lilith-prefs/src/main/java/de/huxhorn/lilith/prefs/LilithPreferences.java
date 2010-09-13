@@ -49,6 +49,7 @@ public class LilithPreferences
 	private boolean autoFocusingWindow;
 	private boolean autoOpening;
 	private boolean checkingForUpdate;
+	private boolean checkingForSnapshot;
 	private boolean cleaningLogsOnExit;
 	private boolean coloringWholeRow;
 	private boolean globalLoggingEnabled;
@@ -176,6 +177,16 @@ public class LilithPreferences
 	public void setCheckingForUpdate(boolean checkingForUpdate)
 	{
 		this.checkingForUpdate = checkingForUpdate;
+	}
+
+	public boolean isCheckingForSnapshot()
+	{
+		return checkingForSnapshot;
+	}
+
+	public void setCheckingForSnapshot(boolean checkingForSnapshot)
+	{
+		this.checkingForSnapshot = checkingForSnapshot;
 	}
 
 	public boolean isCleaningLogsOnExit()
