@@ -29,7 +29,7 @@ Lilith opens:
 - a java.util.logging server socket on ports 11020. You can send events to Lilith using a java.util.logging.SocketHandler.
 
 If Lilith takes a long time to start up and you are using windows you should probably execute
-regsvr32 /u %windir%\system32\zipfldr.dll
+regsvr32 /u %windir%\\system32\\zipfldr.dll
 to disable ZIP-support in the windows file explorer. It sucks anyway...
 http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6578753
 http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5050516
