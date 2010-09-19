@@ -6,6 +6,7 @@ versions = [
 'logback':        '0.9.24',
 'slf4j':          '1.6.1',
 'jackson':        '1.6.0',
+'commonsLogging': '1.1.1',
 'spring':         '3.0.4.RELEASE',
 'sulky':          '0.9.12-SNAPSHOT'
 ]
