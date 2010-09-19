@@ -186,9 +186,9 @@ subprojects {
         testRuntime libraries.'logback-classic'
     }
 
-    jar {
-        manifest.attributes provider: 'gradle'
-    }
+	jar {
+		manifest.attributes provider: 'gradle'
+	}
 
 	task release(dependsOn: [build.taskDependencies]) << {
 		println 'Finished release.'
@@ -229,7 +229,22 @@ subprojects {
 
 }
 
+// TODO: Exclude commons-logging globally
+// TODO: shaded/uberjar
+// TODO: Add (renamed) lilith.jar to /libs of dists
+// TODO: OSX
+// TODO: gpg-sign
 project(':lilith') {
+	
+	jar {
+		manifest.attributes(
+			"Main-Class": "de.huxhorn.lilith.Lilith"//,
+
+			// TODO: "Class-Path": ??
+		)
+
+	}
+	
 	processResources {
 		from(sourceSets.main.resources.srcDirs) {
 			exclude '**/*.properties'
@@ -249,4 +264,65 @@ project(':lilith') {
 			)
 		}
 	}
+	
+
+	distSpec = copySpec {
+		into("lilith-${version}") {
+			
+			//println "projectDir: ${projectDir}"
+			from(projectDir) {
+				include 'COPYING'
+				include 'COPYING.LESSER'
+				include 'LICENSE-2.0.txt'
+				include 'build.txt'
+			}
+		
+			from(projectDir) {
+				include 'readme.txt'
+				expand(
+					'pom': [name: 'Lilith', version: version],
+					'lilithVersion': version,
+					'slf4jVersion': versions.slf4j,
+					'logbackVersion': versions.logback,
+					'log4jVersion': versions.log4j,
+					'commonsLoggingVersion': versions.commonsLogging,
+					'gitRevision': git.getHeadHash(),
+					'timestamp': System.currentTimeMillis()
+				)
+			}
+
+			into('bin') {
+				from("${projectDir}/src/bin") {
+					include 'lilith.bat'
+				}
+			}
+			
+			into('bin') {
+				from("${projectDir}/src/bin") {
+					include 'lilith'
+					fileMode = 0755
+				}
+			}
+			
+			into('libs') {
+				from configurations.runtime {
+					exclude '*-source.jar'
+					exclude '*-javadoc.jar'
+				}
+			}
+		}
+	}
+	
+	task distZip(type: Zip) {
+		classifier = 'bin'
+		with distSpec
+	}
+
+	task distTgz(type: Tar) {
+		classifier = 'bin'
+		compression = Compression.GZIP
+		with distSpec
+	}
+	
+	artifacts { archives sourceJar, javadocJar, distZip, distTgz }
 }
