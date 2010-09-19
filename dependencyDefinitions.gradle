@@ -21,7 +21,7 @@ libraries = [
 'easymockclassextension':   "org.easymock:easymockclassextension:${versions.easymock}",
 'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
 'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.8.0',
-'groovy':                   'org.codehaus.groovy:groovy:1.7.4',
+'groovy':                   'org.codehaus.groovy:groovy:1.7.5',
 'httpclient':               "org.apache.httpcomponents:httpclient:${versions.httpcomponents}",
 'httpcore':                 "org.apache.httpcomponents:httpcore:${versions.httpcomponents}",
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",

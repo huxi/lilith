@@ -180,7 +180,7 @@
 				Spring 3.0.4.RELEASE
 			</action>
 			<action dev="jhux" type="update">
-				Groovy 1.7.3
+				Groovy 1.7.5
 			</action>
 			<action dev="jhux" type="update">
 				SLF4J 1.6.1
