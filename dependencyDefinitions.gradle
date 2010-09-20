@@ -1,3 +1,5 @@
+sulkyBaseVersion = '0.9.12'
+
 versions = [
 'aspectj':        '1.6.8',
 'easymock':       '2.4',
@@ -8,7 +10,7 @@ versions = [
 'jackson':        '1.6.0',
 'commonsLogging': '1.1.1',
 'spring':         '3.0.4.RELEASE',
-'sulky':          '0.9.12-SNAPSHOT'
+'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
 
 libraries = [
