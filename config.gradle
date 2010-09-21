@@ -323,7 +323,7 @@ project(':lilith') {
 				}
 			}
 			
-			into('libs') {
+			into('lib') {
 				from configurations.default
 				from configurations.default.allArtifactFiles
 				exclude '*-source.jar'
