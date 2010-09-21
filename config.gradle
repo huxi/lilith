@@ -1,4 +1,5 @@
-import org.apache.tools.ant.filters.ReplaceTokens;
+import org.apache.tools.ant.filters.FixCrLfFilter
+
 apply from: 'GitHeadHash.gradle'
 
 artifactMapping = [
@@ -314,6 +315,11 @@ project(':lilith') {
 				from("${projectDir}/src/bin") {
 					include 'lilith'
 					fileMode = 0755
+					filter(FixCrLfFilter, 
+						eol: FixCrLfFilter.CrLf.newInstance('lf'),
+						tab: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
+						eof: FixCrLfFilter.AddAsisRemove.newInstance('remove'),
+						fixlast: true)
 				}
 			}
 			
@@ -327,13 +333,25 @@ project(':lilith') {
 		}
 	}
 
-/*
+/* Does not work yet.
 	task distAll(dependsOn: configurations.default.buildArtifacts, type: Jar) {
 		classifier = 'all'
-		from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
-		exclude 'META-INF/*.SF'
-		exclude 'META-INF/*.DSA'
-		exclude 'META-INF/*.RSA'
+
+		//Without copy/copyRecursive:
+		//	* What went wrong:
+		//	A problem occurred evaluating root project 'lilith'.
+		//	Cause: You can't change a configuration which is not in unresolved state!
+
+		def conf = configurations.compile.copyRecursive();
+		conf.resolve();
+		//With copy/copyRecursive:
+		//	jar does only contain META-INF/MANIFEST.MF
+		
+		from (conf.collect { it.isDirectory() ? it : zipTree(it) }) {
+			exclude 'META-INF/*.SF'
+			exclude 'META-INF/*.DSA'
+			exclude 'META-INF/*.RSA'
+		}
 	}
 */
 
