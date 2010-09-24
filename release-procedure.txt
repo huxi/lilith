@@ -93,6 +93,16 @@ Commit lilith root with comment "Starting work on x.x.x+1"
 
 #####
 
+Push everything to the remote git repositories
+git push origin
+git push github
+git push gitorious
+git push --tags origin
+git push --tags github
+git push --tags gitorious
+
+#####
+
 Submit info to Freshmeat
 http://freshmeat.net/projects/lilith-viewer/releases
 Username: huxhorn
