@@ -20,7 +20,7 @@
 	
 	<properties>
 		<lilithVersion>${pom.version}</lilithVersion>
-		<sulkyVersion><!-- SV -->0.9.12-SNAPSHOT</sulkyVersion>
+		<sulkyVersion><!-- SV -->0.9.13-SNAPSHOT</sulkyVersion>
 		<slf4jVersion>1.6.1</slf4jVersion>
 		<logbackVersion>0.9.24</logbackVersion>
 		<springVersion>3.0.4.RELEASE</springVersion>
