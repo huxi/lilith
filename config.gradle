@@ -244,14 +244,13 @@ subprojects {
 
 }
 
-// TODO: shaded/uberjar
 // TODO: OSX
 // TODO: gpg-sign
 project(':lilith') {
 	
 	jar {
 		manifest.attributes(
-			"Main-Class": "de.huxhorn.lilith.Lilith",
+			'Main-Class': 'de.huxhorn.lilith.Lilith',
 			// Class-Path must be evaluated at runtime not configuration time.
 			// see http://gradle.1045684.n5.nabble.com/Manifest-classpath-incomplete-and-distribution-ZIP-empty-td2635807.html
 			"Class-Path": "${ -> configurations.runtime.collect { File file -> file.name }.sort().join(' ')}"
@@ -333,38 +332,38 @@ project(':lilith') {
 		}
 	}
 
-/* Does not work yet.
-	task distAll(dependsOn: configurations.default.buildArtifacts, type: Jar) {
+	task jarAll(dependsOn: configurations.default.buildArtifacts, type: Jar) {
+		description = 'Creates a shaded/uberjar/fatjar of the application.'
 		classifier = 'all'
 
-		//Without copy/copyRecursive:
-		//	* What went wrong:
-		//	A problem occurred evaluating root project 'lilith'.
-		//	Cause: You can't change a configuration which is not in unresolved state!
+		manifest.attributes(
+			'Main-Class': 'de.huxhorn.lilith.Lilith'
+		)
 
-		def conf = configurations.compile.copyRecursive();
-		conf.resolve();
-		//With copy/copyRecursive:
-		//	jar does only contain META-INF/MANIFEST.MF
-		
-		from (conf.collect { it.isDirectory() ? it : zipTree(it) }) {
-			exclude 'META-INF/*.SF'
-			exclude 'META-INF/*.DSA'
-			exclude 'META-INF/*.RSA'
+		from (sourceSets.main.classesDir)
+
+		doFirst {  // <- note the doFirst
+			// the following must be executed in doFirst since the configuration
+			// has not been initialized at configuration time
+			from (configurations.runtime.resolve().collect { it.isDirectory() ? it : zipTree(it) }) {
+				exclude 'META-INF/MANIFEST.MF'
+				exclude 'META-INF/*.SF'
+				exclude 'META-INF/*.DSA'
+				exclude 'META-INF/*.RSA'
+			}
 		}
 	}
-*/
 
 	task distZip(dependsOn: configurations.default.buildArtifacts, type: Zip) {
+		description = 'Creates a ZIP containing the Lilith distribution.'
 		classifier = 'bin'
 		with distSpec
 	}
 
 	task distTgz(dependsOn: configurations.default.buildArtifacts, type: Tar) {
+		description = 'Creates a TGZ containing the Lilith distribution.'
 		classifier = 'bin'
 		compression = Compression.GZIP
 		with distSpec
 	}
-	
-	//artifacts { archives sourceJar, javadocJar, distZip, distTgz }
 }
