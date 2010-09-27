@@ -83,7 +83,7 @@ public class VersionBundle
 				result=new VersionBundle(input);
 			}
 		}
-		if(logger.isInfoEnabled()) logger.info("VersionBundle: {}", result);
+		if(logger.isDebugEnabled()) logger.debug("VersionBundle: {}", result);
 		return result;
 	}
 

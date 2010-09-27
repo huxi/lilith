@@ -168,6 +168,9 @@ public class Lilith
 		APP_TIMESTAMP = ts;
 		APP_TIMESTAMP_DATE = dateStr;
 		APP_VERSION_BUNDLE = new VersionBundle(APP_PLAIN_VERSION, APP_TIMESTAMP);
+		System.setProperty("lilith.version", APP_VERSION);
+		System.setProperty("lilith.timestamp", APP_TIMESTAMP_DATE);
+		System.setProperty("lilith.revision", APP_REVISION);
 	}
 
 	// TODO: - Shortcut in tooltip of toolbars...?
