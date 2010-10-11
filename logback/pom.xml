@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 	<name>Lilith Logback master pom file</name>
 	<description>This file is part of Lilith. It's the master pom file that is used to build all logback modules.</description>
-	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
+	<url>http://lilith.huxhorn.de/projects/${project.artifactId}/</url>
 	
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>

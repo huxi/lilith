@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith</artifactId>
-	<version>${parent.version}</version>
+	<version><!-- LV -->0.9.40-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Lilith</name>
 	<description>Lilith is a logging and access event viewer for the Logback logging framework. It has features comparable to Chainsaw, a logging event viewer for log4j. This means that it can receive logging events from remote applications using Logback as their logging backend. It uses files to buffer the received events locally, so it is possible to keep vast amounts of logging events at your fingertip while still being able to check only the ones you are really interested in by using filtering conditions.</description>
@@ -58,7 +58,7 @@
 							<addClasspath>true</addClasspath>
 						</manifest>
 						<manifestEntries>
-							<url>${pom.url}</url>
+							<url>${project.url}</url>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -84,7 +84,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.3.2</version>
+				<version>1.4</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -96,7 +96,7 @@
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 								<manifestEntries>
 									<Main-Class>de.huxhorn.lilith.Lilith</Main-Class>
-									<url>${pom.url}</url>
+									<url>${project.url}</url>
 								</manifestEntries>
 								</transformer>
 							</transformers>

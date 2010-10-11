@@ -19,7 +19,7 @@
 	</scm>
 	
 	<properties>
-		<lilithVersion>${pom.version}</lilithVersion>
+		<lilithVersion>${project.version}</lilithVersion>
 		<sulkyVersion><!-- SV -->0.9.13-SNAPSHOT</sulkyVersion>
 		<slf4jVersion>1.6.1</slf4jVersion>
 		<logbackVersion>0.9.24</logbackVersion>
@@ -1002,7 +1002,7 @@
 				
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.6</version>
 				</plugin>
 				
 				<plugin>

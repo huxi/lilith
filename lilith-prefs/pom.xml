@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.prefs</artifactId>
-	<version>${parent.version}</version>
+	<version><!-- LV -->0.9.40-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Lilith Preferences - Protobuf classes</name>
 	<description>This file is part of Lilith. It contains the Preferences Protobuf classes.</description>
-	<url>http://lilith.huxhorn.de/projects/${pom.artifactId}/</url>
+	<url>http://lilith.huxhorn.de/projects/${project.artifactId}/</url>
 	
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
