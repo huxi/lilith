@@ -1,4 +1,5 @@
 import org.apache.tools.ant.filters.FixCrLfFilter
+import de.huxhorn.sulky.plist.*
 
 apply from: 'GitHeadHash.gradle'
 
@@ -54,35 +55,36 @@ artifactMapping = [
 
 dependsOnChildren()
 
-allprojects {
-	apply plugin: 'project-reports'
-	apply plugin: 'eclipse'
-	apply plugin: 'idea'
-	
-	defaultTasks 'clean', 'build', 'uploadArchives'
-	group = 'de.huxhorn.lilith'
-	version = '0.9.40'
-	if(!System.properties.'release')
-	{
-		version = version + '-SNAPSHOT'
+buildscript {
+	apply from: 'dependencyDefinitions.gradle'
+	localReleaseRepo = new File("${System.properties.'user.home'}/local-gradle-repository/release").toURL().toString()
+	localSnapshotRepo = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot").toURL().toString()
+	repositories {
+		mavenCentral()
+		mavenRepo urls: localReleaseRepo
+		mavenRepo urls: localSnapshotRepo
+	}
+	dependencies {
+		//classpath 'de.huxhorn.gradle:pgp-gradle-plugin:0.0.2-SNAPSHOT'
+		classpath "de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}"
 	}
 }
 
-def localReleaseRepo = new File("${System.properties.'user.home'}/local-gradle-repository/release").toURL().toString()
-def localSnapshotRepo = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot").toURL().toString()
+allprojects {
+	/*
+    //apply plugin: 'sign'
+    apply plugin: de.huxhorn.gradle.pgp.PgpPlugin
+    
+	pgp {
+		secretKeyRingFile = new File("${System.properties['user.home']}/.gnupg/secring.gpg")
+		keyId = '740A1840'
+	}
+	*/
+}
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-    //apply plugin: 'code-quality'
-
 	boolean gpl=['lilith', 'lilith-conditions', 'lilith-engine', 'lilith-xml-logging'].contains(project.name)
 
-    sourceCompatibility = 1.5
-    targetCompatibility = 1.5
-
-    compileJava.options.compilerArgs = ['-Xlint:unchecked', '-Xlint:deprecation', '-g']
-    
 	task sourceJar(type: Jar) { from sourceSets.main.allSource; classifier = 'source' }
 	task javadocJar(type: Jar) { from javadoc.outputs.files; classifier = 'javadoc' }
 	
@@ -198,22 +200,6 @@ subprojects {
 	jar {
 		manifest.attributes provider: 'gradle'
 	}
-
-/*
-	Does not work.
-	processResources is evaluated before this is executed.
-	
-	task release(dependsOn: [build.taskDependencies]) << {
-		println 'Finished release.'
-	}
-
-    gradle.taskGraph.whenReady {taskGraph ->
-		if (!taskGraph.hasTask(release)) {
-			version = version+'-SNAPSHOT'
-		}
-		println version
-	}
-*/
 
 	def deployer = null
 	
@@ -365,5 +351,147 @@ project(':lilith') {
 		classifier = 'bin'
 		compression = Compression.GZIP
 		with distSpec
+	}
+	
+	task preparePropertyList(dependsOn: configurations.default.buildArtifacts) << {
+		File propFile=file('src/main/mac-resources/Info.plist')
+		PropertyList plist
+		if(propFile.isFile())
+		{
+			PropertyListDecoder decoder=new PropertyListDecoder()
+			plist=decoder.decode(new FileInputStream(propFile))
+		}
+		println("PropertyList before: ${plist}")
+		if(!plist)
+		{
+			plist=new PropertyList()
+		}
+		if(!plist.root)
+		{
+			plist.root=new TreeMap()
+		}
+		else
+		{
+			plist.root=new TreeMap(plist.root)
+		}
+		String bundleName='Lilith'
+		
+		plist.root.'CFBundleName'="${bundleName}"
+		plist.root.'CFBundleIdentifier'='de.huxhorn.lilith'
+		plist.root.'CFBundleVersion'="${version}"
+		plist.root.'CFBundleGetInfoString'="${bundleName} ${version}, Copyright \u00a9 2007-2010 J\u00f6rn Huxhorn"
+		plist.root.'CFBundleShortVersionString'="${version}"
+		plist.root.'CFBundleAllowMixedLocalizations'='true'
+		plist.root.'CFBundleExecutable'='JavaApplicationStub'
+		plist.root.'CFBundleDevelopmentRegion'='English'
+		plist.root.'CFBundlePackageType'='APPL'
+		//plist.root.'CFBundleSignature'='Llth'
+		plist.root.'CFBundleInfoDictionaryVersion'='6.0'
+		plist.root.'CFBundleIconFile'='Lilith.icns'
+		
+		List macClasspath=new ArrayList()
+		println configurations.default
+		configurations.default.collect  { File file -> 
+			String currentName='$JAVAROOT/'+file.name
+			if(!currentName.endsWith('-source.jar') && !currentName.endsWith('-javadoc.jar')
+				&& !macClasspath.contains(currentName))
+			{
+				macClasspath.add(currentName)
+				println "Added ${currentName}"
+			}
+		}
+		println "classpath 1 = ${macClasspath}"
+		println configurations.default.allArtifactFiles
+		configurations.default.allArtifactFiles.collect { File file -> 
+			String currentName='$JAVAROOT/'+file.name
+			if(!currentName.endsWith('-source.jar') && !currentName.endsWith('-javadoc.jar')
+				&& !macClasspath.contains(currentName))
+			{
+				macClasspath.add(currentName)
+				println "Added ${currentName}"
+			}
+		}
+		println "classpath 2 = ${macClasspath}"
+
+		//String foo = "${ -> configurations.runtime.collect { File file -> file.name }.sort().join(' ')}"
+		//println foo
+		configurations.runtime.collect { File file -> 
+			String currentName='$JAVAROOT/'+file.name
+			if(!currentName.endsWith('-source.jar') && !currentName.endsWith('-javadoc.jar')
+				&& !macClasspath.contains(currentName))
+			{
+				macClasspath.add(currentName)
+				println "Added ${currentName}"
+			}
+		}
+		println "classpath 3 = ${macClasspath}"
+		Collections.sort(macClasspath)
+		
+		Map javaMap=plist.root.'Java'
+		if(!javaMap)
+		{
+			javaMap=new TreeMap()
+			plist.root.'Java'=javaMap
+		}
+		else
+		{
+			javaMap=new TreeMap(javaMap)
+			plist.root.'Java'=javaMap
+		}
+		javaMap.'MainClass'='de.huxhorn.lilith.Lilith'
+		javaMap.'JVMVersion'='1.5+'
+		javaMap.'ClassPath'=macClasspath
+		javaMap.'VMOptions'='-Dcom.apple.macos.useScreenMenuBar=true'
+		
+		
+		println("PropertyList after: ${plist}")
+		File propOutFile=file('build/Info.plist')
+		propOutFile.parentFile.mkdirs()
+		PropertyListEncoder encoder=new PropertyListEncoder()
+		plist=encoder.encode(plist, new FileOutputStream(propOutFile))
+		
+		println "Foo!!"
+	}
+	
+	appSpec = copySpec {
+		into("Lilith.app") {
+			
+			into('Contents') {
+				from("${projectDir}/build/Info.plist")
+			}
+
+			into('Contents/Resources') {
+				from("${projectDir}/src/main/mac-resources/Lilith.icns")
+			}
+			
+			into('Contents/MacOS') {
+				from("${projectDir}/src/main/mac-resources/JavaApplicationStub")
+				fileMode = 0755
+			}
+			
+			into('Contents/Resources/Java') {
+				from configurations.default
+				from configurations.default.allArtifactFiles
+				exclude '*-source.jar'
+				exclude '*-javadoc.jar'
+			}
+		}
+	}
+	
+	task copyApp(dependsOn: preparePropertyList, type: Copy) {
+		with appSpec
+		into file('build/explodedApp')
+		doLast {
+			// due to http://jira.codehaus.org/browse/GRADLE-971
+			File f=file('build/explodedApp/Lilith.app/Contents/MacOS/JavaApplicationStub')
+			println 'setExecutable: '+f.setExecutable(true, true)
+		}
+	}
+
+	task appTgz(dependsOn: preparePropertyList, type: Tar) {
+		description = 'Creates a TGZ containing the Lilith Mac OS X app.'
+		classifier = 'app'
+		compression = Compression.GZIP
+		with appSpec
 	}
 }
