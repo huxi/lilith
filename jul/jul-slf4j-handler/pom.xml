@@ -14,7 +14,7 @@
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
 		<version><!-- LV -->0.9.40-SNAPSHOT</version>
-		<relativePath>../lilith-parent/pom.xml</relativePath>
+		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
 	<licenses>
