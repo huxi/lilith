@@ -177,7 +177,7 @@
 				Changed update interval of opened files from 5 seconds to 1 second.
 			</action>
 			<action dev="jhux" type="update">
-				Spring 3.0.4.RELEASE
+				Spring 3.0.5.RELEASE
 			</action>
 			<action dev="jhux" type="update">
 				Groovy 1.7.5
@@ -186,7 +186,7 @@
 				SLF4J 1.6.1
 			</action>
 			<action dev="jhux" type="update">
-				Logback 0.9.25
+				Logback 0.9.26
 			</action>
 		</release>
 

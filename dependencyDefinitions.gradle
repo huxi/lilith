@@ -5,11 +5,11 @@ versions = [
 'easymock':       '2.4',
 'httpcomponents': '4.0.1',
 'log4j':          '1.2.16',
-'logback':        '0.9.25',
+'logback':        '0.9.26',
 'slf4j':          '1.6.1',
 'jackson':        '1.6.0',
 'commonsLogging': '1.1.1',
-'spring':         '3.0.4.RELEASE',
+'spring':         '3.0.5.RELEASE',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
 
