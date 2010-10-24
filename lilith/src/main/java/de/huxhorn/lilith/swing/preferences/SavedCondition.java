@@ -41,7 +41,7 @@ public class SavedCondition
 
 	public SavedCondition(Condition condition)
 	{
-		this("", condition, new ColorScheme(), false);
+		this("", condition, new ColorScheme().initDefaults(), false);
 	}
 
 	public SavedCondition(String name, Condition condition, ColorScheme colorScheme, boolean active)

@@ -80,6 +80,14 @@
 
 		<release version="0.9.40" date="TBD" description="Future Release">
 			<action dev="jhux" type="add">
+				Color-Schemes (as used by saved conditions, for example) can now be defined partially, i.e. one condition
+				can set a border while the text-color might be defined by a different condition.
+			</action>
+			<action dev="jhux" type="update">
+				Maps, e.g. MDC, are now sorted by key-value in the details view.
+				This was suggested by Joe.
+			</action>
+			<action dev="jhux" type="add">
 				Added preferences to check for pre-release versions in addition to release versions. Off by default.
 			</action>
 			<action dev="jhux" type="add">

@@ -31,12 +31,7 @@ public final class ColorScheme
 
 	public ColorScheme()
 	{
-		this(Color.BLACK, Color.WHITE, Color.WHITE);
-	}
-
-	public ColorScheme(Color textColor, Color backgroundColor)
-	{
-		this(textColor, backgroundColor, backgroundColor);
+		this(null, null, null);
 	}
 
 	public ColorScheme(Color textColor, Color backgroundColor, Color borderColor)
@@ -44,6 +39,14 @@ public final class ColorScheme
 		this.textColor = textColor;
 		this.backgroundColor = backgroundColor;
 		this.borderColor = borderColor;
+	}
+
+	public ColorScheme initDefaults()
+	{
+		this.textColor = clone(Color.BLACK);
+		this.backgroundColor = clone(Color.WHITE);
+		this.borderColor = clone(Color.WHITE);
+		return this;
 	}
 
 	public Color getTextColor()
@@ -74,6 +77,41 @@ public final class ColorScheme
 	public void setBorderColor(Color borderColor)
 	{
 		this.borderColor = borderColor;
+	}
+
+	/**
+	 * Fills in missing values (i.e. null-values) from the other ColorScheme.
+	 *
+	 * @param other the ColorScheme that's used to fill in undefined values. Does nothing if other is null.
+	 * @return this ColorScheme after merging values with other.
+	 */
+	public ColorScheme mergeWith(ColorScheme other)
+	{
+		if(!isAbsolute() && other != null)
+		{
+			if(this.textColor == null)
+			{
+				this.textColor = other.textColor;
+			}
+			if(this.backgroundColor == null)
+			{
+				this.backgroundColor = other.backgroundColor;
+			}
+			if(this.borderColor == null)
+			{
+				this.borderColor = other.borderColor;
+			}
+		}
+		return this;
+	}
+
+	/**
+	 *
+	 * @return true, if textColor, backgroundColor and borderColor are all defined, i.e. non-null.
+	 */
+	public boolean isAbsolute()
+	{
+		return (this.textColor != null && this.backgroundColor != null && this.borderColor != null);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public abstract class ColorSchemePreviewRenderer
 	implements TableCellRenderer
 
 {
-	private static final ColorScheme DEFAULT_SCHEME = new ColorScheme();
+	private static final ColorScheme DEFAULT_SCHEME = new ColorScheme().initDefaults();
 
 	private ConditionalBorder border;
 	protected JLabel renderer;

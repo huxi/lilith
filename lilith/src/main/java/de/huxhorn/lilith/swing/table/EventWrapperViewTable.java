@@ -343,9 +343,12 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		super.changeSelection(rowIndex, columnIndex, toggle, extend);
 	}
 
-	private static final Colors NOT_MATCHING_COLORS = new Colors(new Color(192, 192, 192), new Color(245, 245, 245), true);
-	private static final Colors EVEN_ROW_COLORS = new Colors(new Color(0, 0, 0), new Color(255, 255, 255));
-	private static final Colors ODD_ROW_COLORS = new Colors(new Color(0, 0, 0), new Color(0xE9, 0xED, 0xF2));
+	private static final Colors NOT_MATCHING_COLORS =
+		new Colors(new ColorScheme(new Color(192, 192, 192), new Color(245, 245, 245), new Color(245, 245, 245)), true);
+	private static final ColorScheme EVEN_ROW_COLOR_SCHEME =
+		new ColorScheme(new Color(0, 0, 0), new Color(255, 255, 255), new Color(255, 255, 255));
+	private static final ColorScheme ODD_ROW_COLOR_SCHEME =
+		new ColorScheme(new Color(0, 0, 0), new Color(0xE9, 0xED, 0xF2), new Color(0xE9, 0xED, 0xF2));
 
 	public Colors resolveColors(Object object, int row, int column)
 	{
@@ -357,16 +360,57 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			}
 			// check active conditions...
 			Colors colors = mainFrame.getColors((EventWrapper) object);
+			ColorScheme scheme=null;
 			if(colors != null)
 			{
-				return colors;
+				scheme=colors.getColorScheme();
+				if(scheme != null && scheme.isAbsolute())
+				{
+					return colors;
+				}
 			}
 			// if none match...
 			if(row % 2 == 0)
 			{
-				return EVEN_ROW_COLORS;
+				if(scheme != null)
+				{
+					scheme.mergeWith(EVEN_ROW_COLOR_SCHEME);
+				}
+				else
+				{
+					try
+					{
+						scheme = EVEN_ROW_COLOR_SCHEME.clone();
+					}
+					catch(CloneNotSupportedException e)
+					{
+						if(logger.isErrorEnabled()) logger.error("Exception while cloning ColorScheme!!", e);
+					}
+				}
+
 			}
-			return ODD_ROW_COLORS;
+			else
+			{
+				if(scheme != null)
+				{
+					scheme.mergeWith(ODD_ROW_COLOR_SCHEME);
+				}
+				else
+				{
+					try
+					{
+						scheme = ODD_ROW_COLOR_SCHEME.clone();
+					}
+					catch(CloneNotSupportedException e)
+					{
+						if(logger.isErrorEnabled()) logger.error("Exception while cloning ColorScheme!!", e);
+					}
+				}
+			}
+			if(scheme != null)
+			{
+				return new Colors(scheme, false);
+			}
 		}
 		return null;
 	}

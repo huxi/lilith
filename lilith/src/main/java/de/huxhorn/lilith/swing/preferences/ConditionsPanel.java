@@ -177,7 +177,7 @@ public class ConditionsPanel
 		}
 		catch(CloneNotSupportedException e)
 		{
-			if(logger.isErrorEnabled()) logger.error("Coudln't clone saved condition!", e);
+			if(logger.isErrorEnabled()) logger.error("Couldn't clone saved condition!", e);
 		}
 
 		editConditionDialog.setSavedCondition(savedCondition);

@@ -1007,7 +1007,19 @@ public class MainFrame
 		{
 			initStatusColors();
 		}
-		return statusColors.get(status);
+		Colors c = statusColors.get(status);
+		if(c != null)
+		{
+			try
+			{
+				c = c.clone();
+			}
+			catch(CloneNotSupportedException e)
+			{
+				if(logger.isErrorEnabled()) logger.error("Exception while cloning Colors!!", e);
+			}
+		}
+		return c;
 	}
 
 	public Colors getColors(LoggingEvent.Level level)
@@ -1016,7 +1028,19 @@ public class MainFrame
 		{
 			initLevelColors();
 		}
-		return levelColors.get(level);
+		Colors c = levelColors.get(level);
+		if(c != null)
+		{
+			try
+			{
+				c = c.clone();
+			}
+			catch(CloneNotSupportedException e)
+			{
+				if(logger.isErrorEnabled()) logger.error("Exception while cloning Colors!!", e);
+			}
+		}
+		return c;
 	}
 
 	public Colors getColors(EventWrapper eventWrapper)
@@ -1025,6 +1049,8 @@ public class MainFrame
 		{
 			if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
 		}
+
+		ColorScheme result=null;
 		if(activeConditions != null)
 		{
 			for(SavedCondition current : activeConditions)
@@ -1032,22 +1058,62 @@ public class MainFrame
 				Condition condition = current.getCondition();
 				if(condition != null && condition.isTrue(eventWrapper))
 				{
-					return new Colors(current.getColorScheme());
+					if(result == null)
+					{
+						result=current.getColorScheme();
+						if(result != null)
+						{
+							try
+							{
+								result = result.clone();
+							}
+							catch(CloneNotSupportedException e)
+							{
+								if(logger.isErrorEnabled()) logger.error("Exception while cloning ColorScheme!!", e);
+							}
+						}
+					}
+					else
+					{
+						result.mergeWith(current.getColorScheme());
+					}
+
+				}
+				if(result != null && result.isAbsolute())
+				{
+					return new Colors(result, false);
 				}
 			}
 		}
+
 
 		if(coloringWholeRow)
 		{
 			Object eventObj = eventWrapper.getEvent();
 			if(eventObj instanceof LoggingEvent)
 			{
-				return getColors(((LoggingEvent) eventObj).getLevel());
+				Colors c=getColors(((LoggingEvent) eventObj).getLevel());
+				if(result != null)
+				{
+					return new Colors(result.mergeWith(c.getColorScheme()), false);
+				}
+				return c;
 			}
 			if(eventObj instanceof AccessEvent)
 			{
-				return getColors(HttpStatus.getType(((AccessEvent) eventObj).getStatusCode()));
+				Colors c=getColors(HttpStatus.getType(((AccessEvent) eventObj).getStatusCode()));
+				if(result != null)
+				{
+					return new Colors(result.mergeWith(c.getColorScheme()), false);
+				}
+				return c;
 			}
+		}
+
+		// return the previously found ColorScheme even though it's not absolute
+		if(result != null)
+		{
+			return  new Colors(result, false);
 		}
 		return null;
 	}
@@ -1673,7 +1739,7 @@ public class MainFrame
 		Map<HttpStatus.Type, Colors> colors = new HashMap<HttpStatus.Type, Colors>();
 		for(Map.Entry<HttpStatus.Type, ColorScheme> current : prefValue.entrySet())
 		{
-			colors.put(current.getKey(), new Colors(current.getValue()));
+			colors.put(current.getKey(), new Colors(current.getValue(), false));
 		}
 		statusColors = colors;
 	}
@@ -1685,7 +1751,7 @@ public class MainFrame
 		Map<LoggingEvent.Level, Colors> colors = new HashMap<LoggingEvent.Level, Colors>();
 		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : prefValue.entrySet())
 		{
-			colors.put(current.getKey(), new Colors(current.getValue()));
+			colors.put(current.getKey(), new Colors(current.getValue(), false));
 		}
 		levelColors = colors;
 	}

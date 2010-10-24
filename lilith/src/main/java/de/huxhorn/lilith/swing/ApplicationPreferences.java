@@ -156,8 +156,8 @@ public class ApplicationPreferences
 	public static final String DEFAULT_APPLICATION_PATH;
 	private static final Map<String, String> DEFAULT_SOURCE_NAMES;
 	private static final Map<String, String> DEFAULT_SOUND_LOCATIONS;
-	private static final Map<LoggingEvent.Level, ColorScheme> DEFAULT_LEVEL_COLORS;
-	private static final Map<HttpStatus.Type, ColorScheme> DEFAULT_STATUS_COLORS;
+	private static final Map<LoggingEvent.Level, ColorScheme> DEFAULT_LEVEL_COLOR_SCHEMES;
+	private static final Map<HttpStatus.Type, ColorScheme> DEFAULT_STATUS_COLOR_SCHEMES;
 	private static final String PREVIOUS_OPEN_PATH_PROPERTY = "previousOpenPath";
 	private static final String PREVIOUS_IMPORT_PATH_PROPERTY = "previousImportPath";
 	private static final String PREVIOUS_EXPORT_PATH_PROPERTY = "previousExportPath";
@@ -212,21 +212,30 @@ public class ApplicationPreferences
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
 
 		HashMap<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<LoggingEvent.Level, ColorScheme>();
-		defaultLevelColors
-			.put(LoggingEvent.Level.TRACE, new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9)));
-		defaultLevelColors.put(LoggingEvent.Level.DEBUG, new ColorScheme(Color.BLACK, Color.GREEN));
-		defaultLevelColors.put(LoggingEvent.Level.INFO, new ColorScheme(Color.BLACK, Color.WHITE));
-		defaultLevelColors.put(LoggingEvent.Level.WARN, new ColorScheme(Color.BLACK, Color.YELLOW));
-		defaultLevelColors.put(LoggingEvent.Level.ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
-		DEFAULT_LEVEL_COLORS = Collections.unmodifiableMap(defaultLevelColors);
+		defaultLevelColors.put(LoggingEvent.Level.TRACE,
+			new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9), new Color(0x80, 0xBA, 0xD9)));
+		defaultLevelColors.put(LoggingEvent.Level.DEBUG,
+			new ColorScheme(Color.BLACK, Color.GREEN, Color.GREEN));
+		defaultLevelColors.put(LoggingEvent.Level.INFO,
+			new ColorScheme(Color.BLACK, Color.WHITE, Color.WHITE));
+		defaultLevelColors.put(LoggingEvent.Level.WARN,
+			new ColorScheme(Color.BLACK, Color.YELLOW, Color.YELLOW));
+		defaultLevelColors.put(LoggingEvent.Level.ERROR,
+			new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
+		DEFAULT_LEVEL_COLOR_SCHEMES = Collections.unmodifiableMap(defaultLevelColors);
 
 		HashMap<HttpStatus.Type, ColorScheme> defaultStatusColors = new HashMap<HttpStatus.Type, ColorScheme>();
-		defaultStatusColors.put(HttpStatus.Type.SUCCESSFUL, new ColorScheme(Color.BLACK, Color.GREEN));
-		defaultStatusColors.put(HttpStatus.Type.INFORMATIONAL, new ColorScheme(Color.BLACK, Color.WHITE));
-		defaultStatusColors.put(HttpStatus.Type.REDIRECTION, new ColorScheme(Color.BLACK, Color.YELLOW));
-		defaultStatusColors.put(HttpStatus.Type.CLIENT_ERROR, new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE));
-		defaultStatusColors.put(HttpStatus.Type.SERVER_ERROR, new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
-		DEFAULT_STATUS_COLORS = Collections.unmodifiableMap(defaultStatusColors);
+		defaultStatusColors.put(HttpStatus.Type.SUCCESSFUL,
+			new ColorScheme(Color.BLACK, Color.GREEN, Color.GREEN));
+		defaultStatusColors.put(HttpStatus.Type.INFORMATIONAL,
+			new ColorScheme(Color.BLACK, Color.WHITE, Color.WHITE));
+		defaultStatusColors.put(HttpStatus.Type.REDIRECTION,
+			new ColorScheme(Color.BLACK, Color.YELLOW, Color.YELLOW));
+		defaultStatusColors.put(HttpStatus.Type.CLIENT_ERROR,
+			new ColorScheme(Color.GREEN, Color.RED, Color.ORANGE));
+		defaultStatusColors.put(HttpStatus.Type.SERVER_ERROR,
+			new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
+		DEFAULT_STATUS_COLOR_SCHEMES = Collections.unmodifiableMap(defaultStatusColors);
 
 		STARTUP_LOOK_AND_FEEL = UIManager.getLookAndFeel().getName();
 	}
@@ -788,9 +797,7 @@ public class ApplicationPreferences
 				XMLDecoder d = null;
 				try
 				{
-					d = new XMLDecoder(
-						new BufferedInputStream(
-							new FileInputStream(levelColorsFile)));
+					d = new XMLDecoder(new BufferedInputStream(new FileInputStream(levelColorsFile)));
 
 					//noinspection unchecked
 					levelColors = (Map<LoggingEvent.Level, ColorScheme>) d.readObject();
@@ -799,9 +806,8 @@ public class ApplicationPreferences
 				{
 					if(logger.isWarnEnabled())
 					{
-						logger
-							.warn("Exception while loading level colors from file '" + levelColorsFile
-								.getAbsolutePath() + "'!", ex);
+						logger.warn("Exception while loading Level-ColorSchemes from file '"
+							+ levelColorsFile.getAbsolutePath() + "'!", ex);
 					}
 					levelColors = null;
 					IOUtilities.interruptIfNecessary(ex);
@@ -816,44 +822,43 @@ public class ApplicationPreferences
 			}
 		}
 
-		if(levelColors != null && levelColors.size() != DEFAULT_LEVEL_COLORS.size())
+		if(levelColors != null && levelColors.size() != DEFAULT_LEVEL_COLOR_SCHEMES.size())
 		{
-			if(logger.isWarnEnabled()) logger.warn("Reverting level colors to defaults.");
+			if(logger.isWarnEnabled()) logger.warn("Reverting Level-ColorSchemes to defaults.");
 			levelColors = null;
 		}
 
 		if(levelColors == null)
 		{
-			levelColors = cloneLevelColors(DEFAULT_LEVEL_COLORS);
+			levelColors = cloneLevelColors(DEFAULT_LEVEL_COLOR_SCHEMES);
 		}
 	}
 
 	private Map<LoggingEvent.Level, ColorScheme> cloneLevelColors(Map<LoggingEvent.Level, ColorScheme> input)
 	{
-		if(input != null && input.size() != DEFAULT_LEVEL_COLORS.size())
+		if(input != null && input.size() != DEFAULT_LEVEL_COLOR_SCHEMES.size())
 		{
-			if(logger.isWarnEnabled()) logger.warn("Reverting colors to defaults.");
+			if(logger.isWarnEnabled()) logger.warn("Reverting Level-ColorSchemes to defaults.");
 			input = null;
 		}
 
 		if(input == null)
 		{
-			input = DEFAULT_LEVEL_COLORS;
+			input = DEFAULT_LEVEL_COLOR_SCHEMES;
 		}
 
 		Map<LoggingEvent.Level, ColorScheme> result = new HashMap<LoggingEvent.Level, ColorScheme>();
 
-		try
+		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : input.entrySet())
 		{
-			for(Map.Entry<LoggingEvent.Level, ColorScheme> current : input.entrySet())
+			try
 			{
 				result.put(current.getKey(), current.getValue().clone());
 			}
-		}
-		catch(Throwable ex)
-		{
-			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", ex);
-			IOUtilities.interruptIfNecessary(ex);
+			catch(CloneNotSupportedException ex)
+			{
+				if(logger.isErrorEnabled()) logger.error("Exception while cloning Level-ColorScheme!!", ex);
+			}
 		}
 		return result;
 	}
@@ -910,9 +915,7 @@ public class ApplicationPreferences
 				XMLDecoder d = null;
 				try
 				{
-					d = new XMLDecoder(
-						new BufferedInputStream(
-							new FileInputStream(statusColorsFile)));
+					d = new XMLDecoder(new BufferedInputStream(new FileInputStream(statusColorsFile)));
 
 					//noinspection unchecked
 					statusColors = (Map<HttpStatus.Type, ColorScheme>) d.readObject();
@@ -921,9 +924,8 @@ public class ApplicationPreferences
 				{
 					if(logger.isWarnEnabled())
 					{
-						logger
-							.warn("Exception while loading status colors from file '" + statusColorsFile
-								.getAbsolutePath() + "'!", ex);
+						logger.warn("Exception while loading status Status-ColorSchemes from file '"
+							+ statusColorsFile.getAbsolutePath() + "'!", ex);
 					}
 					statusColors = null;
 					IOUtilities.interruptIfNecessary(ex);
@@ -938,44 +940,43 @@ public class ApplicationPreferences
 			}
 		}
 
-		if(statusColors != null && statusColors.size() != DEFAULT_STATUS_COLORS.size())
+		if(statusColors != null && statusColors.size() != DEFAULT_STATUS_COLOR_SCHEMES.size())
 		{
-			if(logger.isWarnEnabled()) logger.warn("Reverting status colors to defaults.");
+			if(logger.isWarnEnabled()) logger.warn("Reverting Status-ColorSchemes to defaults.");
 			statusColors = null;
 		}
 
 		if(statusColors == null)
 		{
-			statusColors = cloneStatusColors(DEFAULT_STATUS_COLORS);
+			statusColors = cloneStatusColors(DEFAULT_STATUS_COLOR_SCHEMES);
 		}
 	}
 
 	private Map<HttpStatus.Type, ColorScheme> cloneStatusColors(Map<HttpStatus.Type, ColorScheme> input)
 	{
-		if(input != null && input.size() != DEFAULT_STATUS_COLORS.size())
+		if(input != null && input.size() != DEFAULT_STATUS_COLOR_SCHEMES.size())
 		{
-			if(logger.isWarnEnabled()) logger.warn("Reverting colors to defaults.");
+			if(logger.isWarnEnabled()) logger.warn("Reverting Status-ColorSchemes to defaults.");
 			input = null;
 		}
 
 		if(input == null)
 		{
-			input = DEFAULT_STATUS_COLORS;
+			input = DEFAULT_STATUS_COLOR_SCHEMES;
 		}
 
 		Map<HttpStatus.Type, ColorScheme> result = new HashMap<HttpStatus.Type, ColorScheme>();
 
-		try
+		for(Map.Entry<HttpStatus.Type, ColorScheme> current : input.entrySet())
 		{
-			for(Map.Entry<HttpStatus.Type, ColorScheme> current : input.entrySet())
+			try
 			{
 				result.put(current.getKey(), current.getValue().clone());
 			}
-		}
-		catch(Throwable ex)
-		{
-			if(logger.isErrorEnabled()) logger.error("Exception while cloning colors!", ex);
-			IOUtilities.interruptIfNecessary(ex);
+			catch(CloneNotSupportedException ex)
+			{
+				if(logger.isErrorEnabled()) logger.error("Exception while cloning Status-ColorScheme!!", ex);
+			}
 		}
 		return result;
 	}

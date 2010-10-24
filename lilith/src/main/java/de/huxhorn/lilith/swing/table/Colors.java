@@ -17,8 +17,6 @@
  */
 package de.huxhorn.lilith.swing.table;
 
-import java.awt.*;
-
 public class Colors
 	implements Cloneable
 {
@@ -28,27 +26,6 @@ public class Colors
 	public Colors()
 	{
 		this(null, false);
-	}
-
-	/**
-	 * Not sticky.
-	 *
-	 * @param foreground foreground color
-	 * @param background background color
-	 */
-	public Colors(Color foreground, Color background)
-	{
-		this(new ColorScheme(foreground, background), false);
-	}
-
-	public Colors(Color foreground, Color background, boolean sticky)
-	{
-		this(new ColorScheme(foreground, background), sticky);
-	}
-
-	public Colors(ColorScheme colorScheme)
-	{
-		this(colorScheme, false);
 	}
 
 	public Colors(ColorScheme colorScheme, boolean sticky)

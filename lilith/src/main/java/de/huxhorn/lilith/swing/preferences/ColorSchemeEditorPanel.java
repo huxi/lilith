@@ -37,12 +37,12 @@ public class ColorSchemeEditorPanel
 {
 	private final Logger logger = LoggerFactory.getLogger(ColorSchemeEditorPanel.class);
 
-	private JColorChooser textChooser;
-	private JColorChooser backgroundChooser;
-	private JColorChooser borderChooser;
 	private ColorChangeListener colorChangeListener;
 	private ConditionPreviewRenderer previewDummyRenderer;
 	private ColorScheme colorScheme;
+	private ColorChooserPanel textChooserPanel;
+	private ColorChooserPanel backgroundChooserPanel;
+	private ColorChooserPanel borderChooserPanel;
 
 	public ColorSchemeEditorPanel()
 	{
@@ -51,28 +51,19 @@ public class ColorSchemeEditorPanel
 
 	private void createUI()
 	{
-		JPanel emptyPreview = new JPanel();
-		emptyPreview.setMinimumSize(new Dimension(0, 0));
-		emptyPreview.setPreferredSize(new Dimension(0, 0));
-		emptyPreview.setMaximumSize(new Dimension(0, 0));
-
 		colorChangeListener = new ColorChangeListener();
-		textChooser = new JColorChooser();
-		textChooser.setPreviewPanel(emptyPreview);
-		attachChangeListener(textChooser);
+		textChooserPanel = new ColorChooserPanel(Color.BLACK);
+		backgroundChooserPanel = new ColorChooserPanel(Color.WHITE);
+		borderChooserPanel = new ColorChooserPanel(Color.WHITE);
 
-		backgroundChooser = new JColorChooser();
-		backgroundChooser.setPreviewPanel(emptyPreview);
-		attachChangeListener(backgroundChooser);
-
-		borderChooser = new JColorChooser();
-		borderChooser.setPreviewPanel(emptyPreview);
-		attachChangeListener(borderChooser);
+		attachChangeListener(textChooserPanel.getColorChooser());
+		attachChangeListener(backgroundChooserPanel.getColorChooser());
+		attachChangeListener(borderChooserPanel.getColorChooser());
 
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.add("Text", textChooser);
-		tabbedPane.add("Background", backgroundChooser);
-		tabbedPane.add("Border", borderChooser);
+		tabbedPane.add("Text", textChooserPanel);
+		tabbedPane.add("Background", backgroundChooserPanel);
+		tabbedPane.add("Border", borderChooserPanel);
 
 		setLayout(new GridBagLayout());
 
@@ -82,6 +73,8 @@ public class ColorSchemeEditorPanel
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
 
 		add(tabbedPane, gbc);
 		previewDummyRenderer = new ConditionPreviewRenderer();
@@ -92,6 +85,8 @@ public class ColorSchemeEditorPanel
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.weightx = 1.0;
+		gbc.weighty = 0.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(previewPanel, gbc);
 	}
@@ -101,7 +96,7 @@ public class ColorSchemeEditorPanel
 	 */
 	public void saveColors()
 	{
-		this.colorScheme = new ColorScheme(textChooser.getColor(), backgroundChooser.getColor(), borderChooser.getColor());
+		this.colorScheme = new ColorScheme(textChooserPanel.getColor(), backgroundChooserPanel.getColor(), borderChooserPanel.getColor());
 	}
 
 	/**
@@ -111,11 +106,12 @@ public class ColorSchemeEditorPanel
 	{
 		if(colorScheme == null)
 		{
-			colorScheme = new ColorScheme();
+			colorScheme = new ColorScheme().initDefaults();
 		}
-		textChooser.setColor(colorScheme.getTextColor());
-		backgroundChooser.setColor(colorScheme.getBackgroundColor());
-		borderChooser.setColor(colorScheme.getBorderColor());
+
+		textChooserPanel.setColor(colorScheme.getTextColor());
+		backgroundChooserPanel.setColor(colorScheme.getBackgroundColor());
+		borderChooserPanel.setColor(colorScheme.getBorderColor());
 	}
 
 	public ColorScheme getColorScheme()
@@ -158,16 +154,16 @@ public class ColorSchemeEditorPanel
 		private ColorChangeListener()
 		{
 			dummyCondition = new SavedCondition();
-			dummyCondition.setColorScheme(new ColorScheme());
+			dummyCondition.setColorScheme(new ColorScheme().initDefaults());
 		}
 
 		public void stateChanged(ChangeEvent e)
 		{
 			// update preview component...
 			ColorScheme cs = dummyCondition.getColorScheme();
-			cs.setTextColor(textChooser.getColor());
-			cs.setBackgroundColor(backgroundChooser.getColor());
-			cs.setBorderColor(borderChooser.getColor());
+			cs.setTextColor(textChooserPanel.getColor(true));
+			cs.setBackgroundColor(backgroundChooserPanel.getColor(true));
+			cs.setBorderColor(borderChooserPanel.getColor(true));
 			if(logger.isDebugEnabled()) logger.debug("initializing to {}...", dummyCondition);
 			previewDummyRenderer.getTableCellRendererComponent(null, dummyCondition, false, false, 0, 0);
 		}

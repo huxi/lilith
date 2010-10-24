@@ -70,6 +70,7 @@ public class EditConditionDialog
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.CENTER;
 		//gbc.insets = new Insets(0,5,0,0);
@@ -79,21 +80,24 @@ public class EditConditionDialog
 
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
+		gbc.weighty = 0.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		mainPanel.add(conditionName, gbc);
 
 		gbc.gridx = 2;
 		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
 		gbc.fill = GridBagConstraints.NONE;
 		activeCheckBox = new JCheckBox("Active");
-		activeCheckBox
-			.setToolTipText("<html>Active conditions are used to determine the rendering of the table cells.<br>Too many active conditions will slow down the application!</html>");
+		activeCheckBox.setToolTipText("<html>Active conditions are used to determine the rendering of the table cells.<br>Too many active conditions will slow down the application!</html>");
 		mainPanel.add(activeCheckBox, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 3;
 		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
 
 		colorSchemeEditorPanel = new ColorSchemeEditorPanel();
 
@@ -180,7 +184,7 @@ public class EditConditionDialog
 
 		if(colorScheme == null)
 		{
-			colorScheme = new ColorScheme();
+			colorScheme = new ColorScheme().initDefaults();
 		}
 
 		colorSchemeEditorPanel.setColorScheme(colorScheme);

@@ -18,6 +18,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<h2>Changes</h2>
 		<ul>
 			<li>
+				Color-Schemes (as used by saved conditions, for example) can now be defined partially, i.e. one condition
+				can set a border while the text-color might be defined by a different condition.
+			</li>
+			<li>
+				Maps, e.g. MDC, are now sorted by key-value in the details view.
+				<br/>This was suggested by Joe.
+			</li>
+			<li>
 				Added preferences to check for pre-release versions in addition to release versions. Off by default.
 			</li>
 			<li>
@@ -29,7 +37,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			</li>
 			<li>
 				Enhanced "Check for update" functionality.
-				No more false update warnings in case of SNAPSHOT pre-releases. A new release takes precedence over a new pre-release.
+				<br/>No more false update warnings in case of SNAPSHOT pre-releases. A new release takes precedence over a new pre-release.
 			</li>
 			<li>
 				SNAPSHOT pre-releases will now contain the date and time of the build in the window title.
@@ -63,50 +71,41 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 				to quickly jump to events that match any active condition.
 				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/93">Ticket 93</a>)
 			</li>
-
 			<li>
 				Added "Export" functionality which exports the currently selected view into a Lilith file.
 				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/92">Ticket 92</a>)
 			</li>
-
 			<li>
 				Added default condition name to preferences. It's preselected for every new view.<br />
 				This was suggested by Lothar Cezanne.
 			</li>
-
 			<li>
 				Polling events every 100ms instead of every 2s.<br />
 				This results in less congestion and a much snappier feeling.
 			</li>
-
 			<li>
 				Fixed deployment of site.<br />
 				See <a href="http://sulky.huxhorn.de/projects/">sulky</a> and <a href="http://lilith.huxhorn.de/projects/">lilith</a>.
 			</li>
-
 			<li>
 				Added --export-preferences &lt;file&gt; and --import-preferences &lt;file&gt;
 				commandline options to be able to export and import all preferences.
 				<br/>This was requested by Gareth Doutch (gdoutch).
 				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/81">Ticket 81</a>)
 			</li>
-
 			<li>
 				Added an additional executable lilith-all.jar containing all dependencies as
 				another download option.
 				<br/>This was requested by Adrien Sales.
 			</li>
-
 			<li>
 				Added ability to define a sound for WARN-level events, but without any assigned default sound.
 				<br/>This was requested by Adrien Sales.
 			</li>
-
 			<li>
 				Added F1 as shortcut for Help.
 				<br/>This was requested by Adrien Sales.
 			</li>
-
 			<li>
 				Fixed several issues in case of log files that are recreated by
 				&lt;append&gt;false&lt;/append&gt; in FileAppender.
@@ -115,33 +114,26 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 				<a href="http://sourceforge.net/apps/trac/lilith/ticket/88">Ticket 88</a>,
 				<a href="http://sourceforge.net/apps/trac/lilith/ticket/90">Ticket 90</a>)
 			</li>
-
 			<li>
 				Fixed the regression that the internal Lilith log wouldn't show up in the menu anymore.
 				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/85">Ticket 85</a>)
 			</li>
-
 			<li>
 				Changed update interval of opened files from 5 seconds to 1 second.
 			</li>
-
 			<li>
-				Spring 3.0.4.RELEASE
+				Spring 3.0.5.RELEASE
 			</li>
-
 			<li>
 				Groovy 1.7.5
 			</li>
-
 			<li>
 				SLF4J 1.6.1
 			</li>
-
 			<li>
-				Logback 0.9.24
+				Logback 0.9.26
 			</li>
 		</ul>
-
 
 		<h2>Known Issues</h2>
 		<ul>
@@ -154,7 +146,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			</li>
 		</ul>
 
-
 		<h2>Previous Versions</h2>
 		<ul>
 			<li><a href="http://lilith.huxhorn.de/releases/0.9.39.xhtml">0.9.39</a></li>
@@ -165,3 +156,4 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 
 	</body>
 </html>
+
