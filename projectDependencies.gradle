@@ -1,419 +1,525 @@
-allprojects {
-	apply plugin: 'project-reports'
-	apply plugin: 'eclipse'
-	apply plugin: 'idea'
-	
-	defaultTasks 'clean', 'build', 'uploadArchives'
-	group = 'de.huxhorn.lilith'
-	version = '0.9.40'
-	if(!System.properties.'release')
-	{
-		version = version + '-SNAPSHOT'
-	}
-}
+apply from: 'dependencyDefinitions.gradle'
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
-	
-    //apply plugin: 'code-quality'
-
-    sourceCompatibility = 1.5
-    targetCompatibility = 1.5
-
-    compileJava.options.compilerArgs = ['-Xlint:unchecked', '-Xlint:deprecation', '-g']
 }
 
-project(':lilith-sender').dependencies {
-	compile libraries.'slf4j-api'
-	compile libraries.'sulky-io'
+project(':lilith-sender') {
+	description = 'This file is part of Lilith. It contains the event sender definition.'
+	dependencies {
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-io'
+	}
 }
 
-project(':lilith-data:eventsource').dependencies {
-	testCompile libraries.'sulky-junit'
+project(':lilith-data:eventsource') {
+	description = 'This file is part of Lilith. It contains the EventSource datatype and related classes.'
+	dependencies {
+		testCompile libraries.'sulky-junit'
+	}
 }
 
-project(':lilith-data:eventsource-xml').dependencies {
-	compile project(':lilith-data:eventsource')
-	compile libraries.'sulky-stax'
-	compile libraries.'stax-api'
-	testCompile libraries.'stax'
+project(':lilith-data:eventsource-xml') {
+	description = 'This file is part of Lilith. It contains XML I/O for EventSource.'
+	dependencies {
+		compile project(':lilith-data:eventsource')
+		compile libraries.'sulky-stax'
+		compile libraries.'stax-api'
+		testCompile libraries.'stax'
+	}
 }
 
-project(':lilith-data:logging').dependencies {
-	compile project(':lilith-data:eventsource')
-	compile libraries.'sulky-formatting'
-	testCompile libraries.'sulky-junit'
+project(':lilith-data:logging') {
+	description = 'This file is part of Lilith. It contains the LoggingEvent datatype and related classes.'
+	dependencies {
+		compile project(':lilith-data:eventsource')
+		compile libraries.'sulky-formatting'
+		testCompile libraries.'sulky-junit'
+	}
 }
 
-project(':lilith-data:logging-io-test').dependencies {
-	compile project(':lilith-data:eventsource')
-	compile project(':lilith-data:logging')
-	compile libraries.'sulky-formatting'
-	compile libraries.'sulky-junit'
-	compile libraries.junit
-	compile libraries.'slf4j-api'
+project(':lilith-data:logging-io-test') {
+	description = 'This file is part of Lilith. It contains a Baseclass for LoggingEvent-De/Serializer tests.'
+	dependencies {
+		compile project(':lilith-data:eventsource')
+		compile project(':lilith-data:logging')
+		compile libraries.'sulky-formatting'
+		compile libraries.'sulky-junit'
+		compile libraries.junit
+		compile libraries.'slf4j-api'
+	}
 }
 
-project(':lilith-data:logging-xml').dependencies {
-	compile project(':lilith-data:logging')
-	compile project(':lilith-data:eventsource-xml')
-	compile libraries.'sulky-stax'
-	compile libraries.'stax-api'
-	testCompile libraries.'stax'
-	testCompile project(':lilith-data:eventsource')
+project(':lilith-data:logging-xml') {
+	description = 'This file is part of Lilith. It contains XML I/O for LoggingEvent.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile project(':lilith-data:eventsource-xml')
+		compile libraries.'sulky-stax'
+		compile libraries.'stax-api'
+		testCompile libraries.'stax'
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-project(':lilith-data:logging-xml-serializer').dependencies {
-	compile project(':lilith-data:logging-xml')
-	compile libraries.'sulky-codec'
-	compile libraries.'sulky-io'
-	compile libraries.'sulky-stax'
-	compile libraries.'stax-api'
-	testCompile libraries.'stax'
-	testCompile project(':lilith-data:logging')
-	testCompile project(':lilith-data:logging-io-test')
-	testCompile project(':lilith-data:eventsource')
+project(':lilith-data:logging-xml-serializer') {
+	description = 'This file is part of Lilith. It contains XML De/Serializer for LoggingEvent.'
+	dependencies {
+		compile project(':lilith-data:logging-xml')
+		compile libraries.'sulky-codec'
+		compile libraries.'sulky-io'
+		compile libraries.'sulky-stax'
+		compile libraries.'stax-api'
+		testCompile libraries.'stax'
+		testCompile project(':lilith-data:logging')
+		testCompile project(':lilith-data:logging-io-test')
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-project(':lilith-data:logging-protobuf').dependencies {
-	compile project(':lilith-data:logging')
-	compile libraries.'protobuf'
-	compile libraries.'sulky-codec'
-	testCompile project(':lilith-data:logging-io-test')
-	testCompile project(':lilith-data:eventsource')
+project(':lilith-data:logging-protobuf') {
+	description = 'This file is part of Lilith. It contains the Logging Protobuf classes.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile libraries.'protobuf'
+		compile libraries.'sulky-codec'
+		testCompile project(':lilith-data:logging-io-test')
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-project(':lilith-data:logging-json-serializer').dependencies {
-	compile project(':lilith-data:logging')
-	compile libraries.'sulky-codec'
-	compile libraries.'sulky-io'
-	compile libraries.'jackson-mapper'
-	testCompile project(':lilith-data:logging-io-test')
-	testCompile project(':lilith-data:eventsource')
+project(':lilith-data:logging-json-serializer') {
+	description = 'This file is part of Lilith. It contains JSON De/Serializer for LoggingEvent.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile libraries.'sulky-codec'
+		compile libraries.'sulky-io'
+		compile libraries.'jackson-mapper'
+		testCompile project(':lilith-data:logging-io-test')
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-project(':lilith-data:access').dependencies {
-	compile project(':lilith-data:eventsource')
-	testCompile libraries.'sulky-junit'
+project(':lilith-data:access') {
+	description = 'This file is part of Lilith. It contains the AccesEvent datatype and related classes.'
+	dependencies {
+		compile project(':lilith-data:eventsource')
+		testCompile libraries.'sulky-junit'
+	}
 }
 
-project(':lilith-data:access-protobuf').dependencies {
-	compile project(':lilith-data:access')
-	compile libraries.'protobuf'
-	compile libraries.'sulky-codec'
-	testCompile project(':lilith-data:eventsource')
+project(':lilith-data:access-protobuf') {
+	description = 'This file is part of Lilith. It contains the Access Protobuf classes.'
+	dependencies {
+		compile project(':lilith-data:access')
+		compile libraries.'protobuf'
+		compile libraries.'sulky-codec'
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-//project(':lilith-constants').dependencies {
-//}
-
-project(':lilith-engine').dependencies {
-	compile project(':lilith-constants')
-	compile project(':lilith-sender')
-	compile project(':lilith-data:eventsource')
-	compile project(':lilith-data:logging')
-	compile project(':lilith-data:logging-protobuf')
-	compile project(':lilith-data:access')
-	compile project(':lilith-data:access-protobuf')
-	compile libraries.'sulky-codec-filebuffer'
-	compile libraries.'sulky-buffers'
-	compile libraries.'sulky-conditions'
-	compile libraries.'sulky-io'
-	compile libraries.'sulky-codec'
-	compile libraries.'slf4j-api'
+project(':lilith-constants') {
+	description = 'This file is part of Lilith. It contains part of the Lilith API (Constants).'
+	//dependencies {
+	//}
 }
 
-project(':lilith-xml-logging').dependencies {
-	compile libraries.'slf4j-api'
-	compile libraries.'sulky-io'
-	compile libraries.'stax-api'
-	compile libraries.'sulky-buffers'
-	compile libraries.'sulky-codec'
-	compile project(':lilith-engine')
-	compile project(':lilith-data:logging-xml-serializer')
+project(':lilith-engine') {
+	description = 'This file is part of Lilith. It contains the engine part of Lilith.'
+	dependencies {
+		compile project(':lilith-constants')
+		compile project(':lilith-sender')
+		compile project(':lilith-data:eventsource')
+		compile project(':lilith-data:logging')
+		compile project(':lilith-data:logging-protobuf')
+		compile project(':lilith-data:access')
+		compile project(':lilith-data:access-protobuf')
+		compile libraries.'sulky-codec-filebuffer'
+		compile libraries.'sulky-buffers'
+		compile libraries.'sulky-conditions'
+		compile libraries.'sulky-io'
+		compile libraries.'sulky-codec'
+		compile libraries.'slf4j-api'
+	}
 }
 
-project(':lilith-json-logging').dependencies {
-	compile libraries.'slf4j-api'
-	compile libraries.'sulky-io'
-	compile libraries.'sulky-buffers'
-	compile libraries.'sulky-codec'
-	compile project(':lilith-engine')
-	compile project(':lilith-data:logging-json-serializer')
+project(':lilith-xml-logging') {
+	description = 'This file is part of Lilith. It contains XML logging classes.'
+	dependencies {
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-io'
+		compile libraries.'stax-api'
+		compile libraries.'sulky-buffers'
+		compile libraries.'sulky-codec'
+		compile project(':lilith-engine')
+		compile project(':lilith-data:logging-xml-serializer')
+	}
 }
 
-project(':logback:classic').dependencies {
-	compile project(':lilith-data:logging')
+project(':lilith-json-logging') {
+	description = 'This file is part of Lilith. It contains JSON logging classes.'
+	dependencies {
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-io'
+		compile libraries.'sulky-buffers'
+		compile libraries.'sulky-codec'
+		compile project(':lilith-engine')
+		compile project(':lilith-data:logging-json-serializer')
+	}
 }
 
-project(':logback:logging-adapter').dependencies {
-	compile project(':lilith-data:logging')
-	compile project(':logback:classic')
-	compile libraries.'sulky-codec'
-	compile libraries.'slf4j-api'
-	compile libraries.'logback-classic'
+project(':logback:classic') {
+	description = 'This file is part of Lilith. It contains an NDC implementation that can be used in conjunction with the lilith appenders to get NDC functionality in Logback.'
+	dependencies {
+		compile project(':lilith-data:logging')
+	}
 }
 
-project(':logback:access-adapter').dependencies {
-	compile project(':lilith-data:access')
-	compile libraries.'sulky-codec'
-	compile libraries.'logback-access'
+project(':logback:logging-adapter') {
+	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith logging events.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile project(':logback:classic')
+		compile libraries.'sulky-codec'
+		compile libraries.'slf4j-api'
+		compile libraries.'logback-classic'
+	}
 }
 
-project(':logback:producer-classic').dependencies {
-	compile libraries.'logback-classic'
-	compile project(':lilith-engine')
-	compile project(':lilith-data:logging')
-	compile project(':logback:logging-adapter')
-	compile libraries.'sulky-buffers'
-	compile libraries.'slf4j-api'
+project(':logback:access-adapter') {
+	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith access events.'
+	dependencies {
+		compile project(':lilith-data:access')
+		compile libraries.'sulky-codec'
+		compile libraries.'logback-access'
+	}
 }
 
-project(':logback:producer-access').dependencies {
-	compile libraries.'logback-access'
-	compile project(':lilith-engine')
-	compile project(':lilith-data:access')
-	compile project(':logback:access-adapter')
-	compile libraries.'sulky-buffers'
-	compile libraries.'slf4j-api'
+project(':logback:producer-classic') {
+	description = 'This file is part of Lilith. It contains event producers.'
+	dependencies {
+		compile libraries.'logback-classic'
+		compile project(':lilith-engine')
+		compile project(':lilith-data:logging')
+		compile project(':logback:logging-adapter')
+		compile libraries.'sulky-buffers'
+		compile libraries.'slf4j-api'
+	}
 }
 
-project(':logback:multiplex-appender-core').dependencies {
-	compile project(':lilith-sender')
-	compile libraries.'sulky-codec'
-	compile libraries.'logback-core'
+project(':logback:producer-access') {
+	description = 'This file is part of Lilith. It contains event producers.'
+	dependencies {
+		compile libraries.'logback-access'
+		compile project(':lilith-engine')
+		compile project(':lilith-data:access')
+		compile project(':logback:access-adapter')
+		compile libraries.'sulky-buffers'
+		compile libraries.'slf4j-api'
+	}
 }
 
-project(':logback:multiplex-appender-classic').dependencies {
-	compile libraries.'sulky-codec'
-	compile project(':lilith-data:logging-protobuf')
-	compile project(':logback:multiplex-appender-core')
-	compile project(':logback:logging-adapter')
-	compile libraries.'logback-classic'
+project(':logback:multiplex-appender-core') {
+	description = 'This file is part of Lilith. It contains the multiplexing appender core classes.'
+	dependencies {
+		compile project(':lilith-sender')
+		compile libraries.'sulky-codec'
+		compile libraries.'logback-core'
+	}
 }
 
-project(':logback:multiplex-appender-access').dependencies {
-	compile libraries.'sulky-codec'
-	compile project(':logback:multiplex-appender-core')
-	compile project(':lilith-data:access')
-	compile project(':lilith-data:access-protobuf')
-	compile project(':logback:access-adapter')
-	compile libraries.'logback-access'
+project(':logback:multiplex-appender-classic') {
+	description = 'This file is part of Lilith. It contains the multiplexing logging appender.'
+	dependencies {
+		compile libraries.'sulky-codec'
+		compile project(':lilith-data:logging-protobuf')
+		compile project(':logback:multiplex-appender-core')
+		compile project(':logback:logging-adapter')
+		compile libraries.'logback-classic'
+	}
 }
 
-project(':logback:multiplex-appender-classic-xml').dependencies {
-	compile libraries.'sulky-codec'
-	compile project(':lilith-data:logging-xml-serializer')
-	compile project(':logback:multiplex-appender-core')
-	compile project(':logback:logging-adapter')
-	compile libraries.'logback-classic'
+project(':logback:multiplex-appender-access') {
+	description = 'This file is part of Lilith. It contains the multiplexing access appender.'
+	dependencies {
+		compile libraries.'sulky-codec'
+		compile project(':logback:multiplex-appender-core')
+		compile project(':lilith-data:access')
+		compile project(':lilith-data:access-protobuf')
+		compile project(':logback:access-adapter')
+		compile libraries.'logback-access'
+	}
 }
 
-project(':logback:multiplex-appender-classic-json').dependencies {
-	compile libraries.'sulky-codec'
-	compile project(':lilith-data:logging-json-serializer')
-	compile project(':logback:multiplex-appender-core')
-	compile project(':logback:logging-adapter')
-	compile libraries.'logback-classic'
+project(':logback:multiplex-appender-classic-xml') {
+	description = 'This file is part of Lilith. It contains the multiplexing logging appender (XML).'
+	dependencies {
+		compile libraries.'sulky-codec'
+		compile project(':lilith-data:logging-xml-serializer')
+		compile project(':logback:multiplex-appender-core')
+		compile project(':logback:logging-adapter')
+		compile libraries.'logback-classic'
+	}
 }
 
-project(':logback:shutdown-context-listener').dependencies {
-	compile libraries.'slf4j-api'
-	compile libraries.'servlet-api'
-	compile libraries.'logback-classic'
+project(':logback:multiplex-appender-classic-json') {
+	description = 'This file is part of Lilith. It contains the multiplexing logging appender (JSON).'
+	dependencies {
+		compile libraries.'sulky-codec'
+		compile project(':lilith-data:logging-json-serializer')
+		compile project(':logback:multiplex-appender-core')
+		compile project(':logback:logging-adapter')
+		compile libraries.'logback-classic'
+	}
 }
 
-project(':logback:encoder-core').dependencies {
-	compile project(':lilith-constants')
-	compile libraries.'logback-core'
-	compile libraries.'sulky-codec'
-	compile libraries.'sulky-codec-filebuffer'
+project(':logback:shutdown-context-listener') {
+	description = 'This file is part of Lilith. It contains a ServletContextListener that shuts down logback.'
+	dependencies {
+		compile libraries.'slf4j-api'
+		compile libraries.'servlet-api'
+		compile libraries.'logback-classic'
+	}
 }
 
-project(':logback:encoder-classic').dependencies {
-	compile libraries.'slf4j-api'
-	compile libraries.'sulky-codec'
-	compile project(':logback:encoder-core')
-	compile project(':logback:logging-adapter')
-	compile project(':lilith-data:logging-protobuf')
-	compile libraries.'logback-core'
-	compile libraries.'logback-classic'
-	testCompile project(':lilith-constants')
+project(':logback:encoder-core') {
+	description = 'This file is part of Lilith. It contains the encoder base class.'
+	dependencies {
+		compile project(':lilith-constants')
+		compile libraries.'logback-core'
+		compile libraries.'sulky-codec'
+		compile libraries.'sulky-codec-filebuffer'
+	}
 }
 
-project(':logback:encoder-access').dependencies {
-	compile libraries.'sulky-codec'
-	compile project(':logback:encoder-core')
-	compile project(':lilith-data:access-protobuf')
-	compile project(':logback:access-adapter')
-	compile libraries.'logback-core'
-	compile libraries.'logback-access'
+project(':logback:encoder-classic') {
+	description = 'This file is part of Lilith. It contains the classic encoder.'
+	dependencies {
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-codec'
+		compile project(':logback:encoder-core')
+		compile project(':logback:logging-adapter')
+		compile project(':lilith-data:logging-protobuf')
+		compile libraries.'logback-core'
+		compile libraries.'logback-classic'
+		testCompile project(':lilith-constants')
+	}
 }
 
-project(':log4j:log4j-throwable-parser').dependencies {
-	compile project(':lilith-data:logging')
-	compile libraries.'slf4j-api'
+project(':logback:encoder-access') {
+	description = 'This file is part of Lilith. It contains the access encoder.'
+	dependencies {
+		compile libraries.'sulky-codec'
+		compile project(':logback:encoder-core')
+		compile project(':lilith-data:access-protobuf')
+		compile project(':logback:access-adapter')
+		compile libraries.'logback-core'
+		compile libraries.'logback-access'
+	}
 }
 
-project(':log4j:log4j-xml').dependencies {
-	compile project(':lilith-data:logging')
-	compile project(':log4j:log4j-throwable-parser')
-	compile libraries.'sulky-stax'
-	compile libraries.'sulky-tasks'
-	compile libraries.'sulky-buffers'
-	compile libraries.'slf4j-api'
-	compile libraries.'commons-io'
-	compile libraries.'sulky-io'
-	compile libraries.'stax-api'
-	testRuntime libraries.'stax'
-	testCompile project(':lilith-data:eventsource')
+project(':log4j:log4j-throwable-parser') {
+	description = 'This file is part of Lilith. It contains the Log4j ThrowableInfo-Parser.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile libraries.'slf4j-api'
+	}
 }
 
-project(':log4j:log4j-producer').dependencies {
-	compile project(':lilith-data:logging')
-	compile project(':log4j:log4j-throwable-parser')
-	compile libraries.'sulky-buffers'
-	compile project(':lilith-engine')
-	compile libraries.'slf4j-api'
-	compile libraries.'log4j'
+project(':log4j:log4j-xml') {
+	description = 'This file is part of Lilith. It contains LOG4J XML I/O.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile project(':log4j:log4j-throwable-parser')
+		compile libraries.'sulky-stax'
+		compile libraries.'sulky-tasks'
+		compile libraries.'sulky-buffers'
+		compile libraries.'slf4j-api'
+		compile libraries.'commons-io'
+		compile libraries.'sulky-io'
+		compile libraries.'stax-api'
+		testRuntime libraries.'stax'
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-project(':jul:jul-xml').dependencies {
-	compile project(':lilith-data:logging')
-	compile libraries.'sulky-stax'
-	compile libraries.'slf4j-api'
-	compile libraries.'commons-io'
-	compile libraries.'sulky-io'
-	compile libraries.'stax-api'
-	testRuntime libraries.'stax'
-	testCompile project(':lilith-data:eventsource')
+project(':log4j:log4j-producer') {
+	description = 'This file is part of Lilith. It contains the LOG4J Producer.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile project(':log4j:log4j-throwable-parser')
+		compile libraries.'sulky-buffers'
+		compile project(':lilith-engine')
+		compile libraries.'slf4j-api'
+		compile libraries.'log4j'
+	}
 }
 
-
-project(':jul:jul-xml-import').dependencies {
-	compile project(':lilith-data:logging')
-	compile project(':jul:jul-xml')
-	compile libraries.'sulky-stax'
-	compile libraries.'sulky-tasks'
-	compile libraries.'sulky-buffers'
-	compile libraries.'slf4j-api'
-	compile libraries.'commons-io'
-	compile libraries.'sulky-io'
-	compile libraries.'stax-api'
-	testRuntime libraries.'stax'
-	testCompile project(':lilith-data:eventsource')
+project(':jul:jul-xml') {
+	description = 'This file is part of Lilith. It contains java.util.logging XML I/O.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile libraries.'sulky-stax'
+		compile libraries.'slf4j-api'
+		compile libraries.'commons-io'
+		compile libraries.'sulky-io'
+		compile libraries.'stax-api'
+		testRuntime libraries.'stax'
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-project(':jul:jul-xml-receiver').dependencies {
-	compile project(':lilith-data:logging')
-	compile project(':jul:jul-xml')
-	compile project(':lilith-engine')
-	compile libraries.'sulky-stax'
-	compile libraries.'sulky-buffers'
-	compile libraries.'slf4j-api'
-	compile libraries.'commons-io'
-	compile libraries.'sulky-io'
-	compile libraries.'stax-api'
-	testRuntime libraries.'stax'
-	testCompile project(':lilith-data:eventsource')
+project(':jul:jul-xml-import') {
+	description = 'This file is part of Lilith. It contains java.util.logging XML-Import.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile project(':jul:jul-xml')
+		compile libraries.'sulky-stax'
+		compile libraries.'sulky-tasks'
+		compile libraries.'sulky-buffers'
+		compile libraries.'slf4j-api'
+		compile libraries.'commons-io'
+		compile libraries.'sulky-io'
+		compile libraries.'stax-api'
+		testRuntime libraries.'stax'
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-project(':jul:jul-slf4j-handler').dependencies {
-	compile libraries.'slf4j-api'
+project(':jul:jul-xml-receiver') {
+	description = 'This file is part of Lilith. It contains java.util.logging XML I/O.'
+	dependencies {
+		compile project(':lilith-data:logging')
+		compile project(':jul:jul-xml')
+		compile project(':lilith-engine')
+		compile libraries.'sulky-stax'
+		compile libraries.'sulky-buffers'
+		compile libraries.'slf4j-api'
+		compile libraries.'commons-io'
+		compile libraries.'sulky-io'
+		compile libraries.'stax-api'
+		testRuntime libraries.'stax'
+		testCompile project(':lilith-data:eventsource')
+	}
 }
 
-//project(':lilith-sounds').dependencies {
-//}
-
-project(':lilith-prefs').dependencies {
-	compile libraries.'sulky-codec'
-	compile libraries.'protobuf'
+project(':jul:jul-slf4j-handler') {
+	description = 'This file is part of Lilith. It\'s a java.util.logging to slf4j bridge handler.'
+	dependencies {
+		compile libraries.'slf4j-api'
+	}
 }
 
-project(':lilith-conditions').dependencies {
-	compile project(':lilith-data:eventsource')
-	compile project(':lilith-data:logging')
-	compile project(':lilith-data:access')
-	compile libraries.'sulky-conditions'
-	compile libraries.'slf4j-api'
-	compile libraries.'groovy'
+project(':lilith-sounds') {
+	description = 'This file is part of Lilith. It contains the sound files of Lilith.'
+	//dependencies {
+	//}
 }
 
-project(':lilith').dependencies {
-	compile libraries.'slf4j-api'
-	runtime libraries.'jcl-over-slf4j'
-	compile libraries.'logback-core'
-	compile libraries.'logback-classic'
-	compile libraries.'logback-access'
-	compile project(':lilith-conditions')
-	compile project(':logback:producer-classic')
-	compile project(':logback:producer-access')
-	compile project(':lilith-data:logging')
-	compile project(':lilith-data:logging-protobuf')
-	compile project(':lilith-data:access')
-	compile project(':lilith-engine')
-	compile project(':log4j:log4j-producer')
-	runtime libraries.'jgoodies-looks'
-	compile project(':jul:jul-slf4j-handler')
-	compile project(':logback:multiplex-appender-classic')
-	compile project(':logback:multiplex-appender-classic-xml')
-	compile project(':logback:multiplex-appender-classic-json')
-	compile project(':logback:multiplex-appender-access')
-	compile project(':lilith-xml-logging')
-	compile project(':lilith-json-logging')
-	compile project(':logback:logging-adapter')
-	compile project(':log4j:log4j-xml')
-	compile project(':jul:jul-xml')
-	compile project(':jul:jul-xml-import')
-	compile project(':jul:jul-xml-receiver')
-	compile project(':lilith-prefs')
-	compile libraries.'servlet-api'
-	compile libraries.'groovy'
-	compile libraries.'sulky-logging'
-	compile libraries.'sulky-sounds-api'
-	compile libraries.'sulky-sounds-impl-jlayer'
-	compile libraries.'sulky-conditions'
-	compile libraries.'sulky-codec'
-	compile libraries.'sulky-codec-filebuffer'
-	compile libraries.'sulky-buffers'
-	compile libraries.'sulky-buffers-table'
-	compile libraries.'sulky-buffers-filtering'
-	compile libraries.'sulky-formatting'
-	compile libraries.'sulky-swing'
-	compile libraries.'sulky-tasks'
-	compile libraries.'sulky-io'
-	compile libraries.'jcommander'
-	compile libraries.'commons-lang'
-	compile libraries.'commons-io'
-	compile libraries.'httpclient'
-	compile libraries.'httpcore'
-	compile libraries.'glazedlists'
-	runtime project(':lilith-sounds')
-	runtime libraries.'stax'
-	compile libraries.'flyingsaucer'
-	compile libraries.'jmdns'
-	compile libraries.'junique'
-	compile libraries.'macify'
-	compile libraries.'rrd4j'
+project(':lilith-prefs') {
+	description = 'This file is part of Lilith. It contains the Preferences Protobuf classes.'
+	dependencies {
+		compile libraries.'sulky-codec'
+		compile libraries.'protobuf'
+	}
 }
 
-project(':slf4j').dependencies {
-	compile libraries.'slf4j-api'
-	testRuntime project(':logback:multiplex-appender-classic')
+project(':lilith-conditions') {
+	description = 'This file is part of Lilith. It contains conditions.'
+	dependencies {
+		compile project(':lilith-data:eventsource')
+		compile project(':lilith-data:logging')
+		compile project(':lilith-data:access')
+		compile libraries.'sulky-conditions'
+		compile libraries.'slf4j-api'
+		compile libraries.'groovy'
+	}
 }
 
-project(':tracing').dependencies {
-	compile libraries.'aspectjrt'
-	compile libraries.'slf4j-api'
-	compile libraries.'sulky-formatting'
-	testCompile libraries.'spring-beans'
-	testCompile libraries.'spring-context'
-	testCompile libraries.'spring-core'
-	testRuntime libraries.'aspectjweaver'
-	testRuntime libraries.'cglib-nodep'
-	testRuntime libraries.'jcl-over-slf4j'
-	testRuntime libraries.'spring-aop'
-	testRuntime project(':logback:multiplex-appender-classic')
+project(':lilith') {
+	description = 'Lilith is a logging and access event viewer for the Logback logging framework. It has features comparable to Chainsaw, a logging event viewer for log4j. This means that it can receive logging events from remote applications using Logback as their logging backend. It uses files to buffer the received events locally, so it is possible to keep vast amounts of logging events at your fingertip while still being able to check only the ones you are really interested in by using filtering conditions.'
+	dependencies {
+		compile libraries.'slf4j-api'
+		runtime libraries.'jcl-over-slf4j'
+		compile libraries.'logback-core'
+		compile libraries.'logback-classic'
+		compile libraries.'logback-access'
+		compile project(':lilith-conditions')
+		compile project(':logback:producer-classic')
+		compile project(':logback:producer-access')
+		compile project(':lilith-data:logging')
+		compile project(':lilith-data:logging-protobuf')
+		compile project(':lilith-data:access')
+		compile project(':lilith-engine')
+		compile project(':log4j:log4j-producer')
+		runtime libraries.'jgoodies-looks'
+		compile project(':jul:jul-slf4j-handler')
+		compile project(':logback:multiplex-appender-classic')
+		compile project(':logback:multiplex-appender-classic-xml')
+		compile project(':logback:multiplex-appender-classic-json')
+		compile project(':logback:multiplex-appender-access')
+		compile project(':lilith-xml-logging')
+		compile project(':lilith-json-logging')
+		compile project(':logback:logging-adapter')
+		compile project(':log4j:log4j-xml')
+		compile project(':jul:jul-xml')
+		compile project(':jul:jul-xml-import')
+		compile project(':jul:jul-xml-receiver')
+		compile project(':lilith-prefs')
+		compile libraries.'servlet-api'
+		compile libraries.'groovy'
+		compile libraries.'sulky-logging'
+		compile libraries.'sulky-sounds-api'
+		compile libraries.'sulky-sounds-impl-jlayer'
+		compile libraries.'sulky-conditions'
+		compile libraries.'sulky-codec'
+		compile libraries.'sulky-codec-filebuffer'
+		compile libraries.'sulky-buffers'
+		compile libraries.'sulky-buffers-table'
+		compile libraries.'sulky-buffers-filtering'
+		compile libraries.'sulky-formatting'
+		compile libraries.'sulky-swing'
+		compile libraries.'sulky-tasks'
+		compile libraries.'sulky-io'
+		compile libraries.'jcommander'
+		compile libraries.'commons-lang'
+		compile libraries.'commons-io'
+		compile libraries.'httpclient'
+		compile libraries.'httpcore'
+		compile libraries.'glazedlists'
+		runtime project(':lilith-sounds')
+		runtime libraries.'stax'
+		compile libraries.'flyingsaucer'
+		compile libraries.'jmdns'
+		compile libraries.'junique'
+		compile libraries.'macify'
+		compile libraries.'rrd4j'
+	}
+}
+
+project(':slf4j') {
+	description = 'This is a concept how SLF4J could be redesigned for Java>=5'
+	dependencies {
+		compile libraries.'slf4j-api'
+		testRuntime project(':logback:multiplex-appender-classic')
+	}
+}
+
+project(':tracing') {
+	description = 'This module contains a tracing and profiling aspect.'
+	dependencies {
+		compile libraries.'aspectjrt'
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-formatting'
+		testCompile libraries.'spring-beans'
+		testCompile libraries.'spring-context'
+		testCompile libraries.'spring-core'
+		testRuntime libraries.'aspectjweaver'
+		testRuntime libraries.'cglib-nodep'
+		testRuntime libraries.'jcl-over-slf4j'
+		testRuntime libraries.'spring-aop'
+		testRuntime project(':logback:multiplex-appender-classic')
+	}
 }
 
