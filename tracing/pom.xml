@@ -7,7 +7,7 @@
 	<version><!-- LV -->0.9.40-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>TracingAspect</name>
-	<description>This is a concept how SLF4J could be redesigned for Java&gt;=5</description>
+	<description>This module contains a tracing and profiling aspect.</description>
 	<url>http://lilith.huxhorn.de/projects/${project.artifactId}/</url>
 	
 	<parent>
