@@ -92,7 +92,7 @@ task javadoc(type: Javadoc) {
 }
 
 task sourceZip(type: Zip) {
-	classifier = 'source'
+	classifier = 'sources'
 	from { subprojects.collect { it.sourceSets.main.allSource } }
 }
 
@@ -180,7 +180,7 @@ subprojects {
 
 	boolean gpl=['lilith', 'lilith-conditions', 'lilith-engine', 'lilith-xml-logging'].contains(project.name)
 
-	task sourceJar(type: Jar) { from sourceSets.main.allSource; classifier = 'source' }
+	task sourceJar(type: Jar) { from sourceSets.main.allSource; classifier = 'sources' }
 	task javadocJar(type: Jar) { from javadoc.outputs.files; classifier = 'javadoc' }
 	
 	artifacts { archives sourceJar, javadocJar }
