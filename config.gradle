@@ -438,7 +438,7 @@ project(':lilith') {
 			into('lib') {
 				from configurations.default
 				from configurations.default.allArtifactFiles
-				exclude '*-source.jar'
+				exclude '*-sources.jar'
 				exclude '*-javadoc.jar'
 				rename 'de.huxhorn.lilith-(.*).jar', 'lilith.jar'
 			}
@@ -520,7 +520,7 @@ project(':lilith') {
 		println configurations.default
 		configurations.default.collect  { File file -> 
 			String currentName='$JAVAROOT/'+file.name
-			if(!currentName.endsWith('-source.jar') && !currentName.endsWith('-javadoc.jar')
+			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
 				&& !macClasspath.contains(currentName))
 			{
 				macClasspath.add(currentName)
@@ -531,7 +531,7 @@ project(':lilith') {
 		println configurations.default.allArtifactFiles
 		configurations.default.allArtifactFiles.collect { File file -> 
 			String currentName='$JAVAROOT/'+file.name
-			if(!currentName.endsWith('-source.jar') && !currentName.endsWith('-javadoc.jar')
+			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
 				&& !macClasspath.contains(currentName))
 			{
 				macClasspath.add(currentName)
@@ -544,7 +544,7 @@ project(':lilith') {
 		//println foo
 		configurations.runtime.collect { File file -> 
 			String currentName='$JAVAROOT/'+file.name
-			if(!currentName.endsWith('-source.jar') && !currentName.endsWith('-javadoc.jar')
+			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
 				&& !macClasspath.contains(currentName))
 			{
 				macClasspath.add(currentName)
@@ -599,7 +599,7 @@ project(':lilith') {
 			into('Contents/Resources/Java') {
 				from configurations.default
 				from configurations.default.allArtifactFiles
-				exclude '*-source.jar'
+				exclude '*-sources.jar'
 				exclude '*-javadoc.jar'
 			}
 		}
