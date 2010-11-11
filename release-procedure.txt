@@ -23,19 +23,23 @@ and replace with release version.
 
 #####
 
-Commit sulky with comment "x.x.x release"
-Tag sulky with comment "x.x.x release".
-git tag -s vx.x.x -m "x.x.x release"
+Remember to update changes.xml.
 
 #####
 
 Change into sulky root.
-mvn clean deploy -DperformRelease=true
-mvn site:site site:deploy
+mvn3 clean install
 
 #####
 
-Remember to update changes.xml.
+Change into lilith root.
+mvn3 clean install
+
+#####
+
+Commit sulky with comment "x.x.x release"
+Tag sulky with comment "x.x.x release".
+git tag -s vx.x.x -m "x.x.x release"
 
 #####
 
@@ -45,20 +49,27 @@ git tag -s vx.x.x -m "x.x.x release"
 
 #####
 
+rm -rf ~/local-gradle-repository/release
+
+#####
+
+Change into sulky root.
+gradle -Drelease=true
+
+#####
+
 Change into lilith root.
-mvn clean deploy -DperformRelease=true
-mvn site:site site:deploy
+gradle -Drelease=true
+gradle syncStaging
 
 #####
 
-rsync -avP -e ssh ~/local-maven/deploy/repository huxhorn,lilith@web.sourceforge.net:htdocs
-rsync -avP -e ssh ~/local-maven/deploy/repository huxhorn,sulky@web.sourceforge.net:htdocs
+Validate staged files and release them:
+https://oss.sonatype.org
 
 #####
 
-Upload
-~/local-maven/site/sulky to huxhorn.de/kunden/homepages/37/d18379763/htdocs/sulky/projects/
-~/local-maven/site/lilith to huxhorn.de/kunden/homepages/37/d18379763/htdocs/lilith/projects/
+Upload javadocs
 
 #####
 
