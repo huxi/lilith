@@ -150,7 +150,7 @@ allprojects {
 
 	defaultTasks 'clean', 'build', 'uploadArchives'
 	group = 'de.huxhorn.lilith'
-	version = '0.9.40'
+	version = '0.9.41'
 	if(!System.properties.'release')
 	{
 		version = version + '-SNAPSHOT'

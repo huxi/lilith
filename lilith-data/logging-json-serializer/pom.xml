@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.data.logging-json-serializer</artifactId>
-	<version><!-- LV -->0.9.40</version>
+	<version><!-- LV -->0.9.41-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Lilith Data Types - Logging - JSON De/Serializer</name>
 	<description>This file is part of Lilith. It contains JSON De/Serializer for LoggingEvent.</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.40</version>
+		<version><!-- LV -->0.9.41-SNAPSHOT</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
