@@ -78,7 +78,10 @@
 			</action>
 		</release>
 
-		<release version="0.9.40" date="TBD" description="Future Release">
+		<release version="0.9.41" date="TBD" description="Future Release">
+		</release>
+
+		<release version="0.9.40" date="2010-11-11" description="Release">
 			<action dev="jhux" type="add">
 				Color-Schemes (as used by saved conditions, for example) can now be defined partially, i.e. one condition
 				can set a border while the text-color might be defined by a different condition.
@@ -104,7 +107,6 @@
 			<action dev="jhux" type="update">
 				SNAPSHOT pre-releases will now contain the date and time of the build in the window title.
 			</action>
-			
 			<action dev="jhux" type="add" issue="35">
 				Added support for java.util.logging SocketHandler. Lilith is listening on port 11020 for incoming connections.
 				I'd still recommend to switch to SLF4J/Logback, though!
@@ -141,10 +143,12 @@
 				Polling events every 100ms instead of every 2s.
 				This results in less congestion and a much snappier feeling.
 			</action>
+			<!--
 			<action dev="jhux" type="fix">
 				Fixed deployment of site.
 				See http://sulky.huxhorn.de/projects/ and http://lilith.huxhorn.de/projects/
 			</action>
+			-->
 			<action dev="jhux" type="add" issue="81">
 				Added --export-preferences &lt;file&gt; and --import-preferences &lt;file&gt;
 				commandline options to be able to export and import all preferences.
