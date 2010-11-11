@@ -77,6 +77,11 @@ Write release notes and changes for sf.net upload.
 
 #####
 
+Sign dists
+gpg --local-user huxhorn@users.sf.net --armor --detach-sign <file>
+
+#####
+
 Upload lilith-files to sf.net
 
 #####
