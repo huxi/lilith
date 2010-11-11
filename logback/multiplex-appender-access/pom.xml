@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.logback.appender.multiplex-access</artifactId>
-	<version><!-- LV -->0.9.40-SNAPSHOT</version>
+	<version><!-- LV -->0.9.40</version>
 	<packaging>jar</packaging>
 	<name>Logback Multiplex Appender Access</name>
 	<description>This file is part of Lilith. It contains the multiplexing access appender.</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.40-SNAPSHOT</version>
+		<version><!-- LV -->0.9.40</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
