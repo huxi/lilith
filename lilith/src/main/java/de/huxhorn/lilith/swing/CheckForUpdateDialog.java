@@ -22,6 +22,8 @@ import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.extend.TextRenderer;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.FSScrollPane;
 import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
@@ -79,6 +81,12 @@ public class CheckForUpdateDialog
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 
 		helpPane = new XHTMLPanel();
+		{
+			SharedContext sharedContext = helpPane.getSharedContext();
+			TextRenderer textRenderer = sharedContext.getTextRenderer();
+			textRenderer.setSmoothingLevel(TextRenderer.MEDIUM); // anything != TextRenderer.NONE
+			textRenderer.setSmoothingThreshold(6.0f);
+		}
 
 		{
 			LinkListener originalLinkListener = null;

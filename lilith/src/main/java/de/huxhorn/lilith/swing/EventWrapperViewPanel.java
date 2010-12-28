@@ -47,6 +47,8 @@ import de.huxhorn.sulky.tasks.TaskManager;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.extend.TextRenderer;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.FSScrollPane;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
@@ -163,6 +165,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		verticalLogScrollbar = tableScrollPane.getVerticalScrollBar();
 
 		messagePane = new ScalableXHTMLPanel();
+
+		{
+			SharedContext sharedContext = messagePane.getSharedContext();
+			TextRenderer textRenderer = sharedContext.getTextRenderer();
+			textRenderer.setSmoothingLevel(TextRenderer.MEDIUM); // anything != TextRenderer.NONE
+			textRenderer.setSmoothingThreshold(6.0f);
+		}
+
 		messagePane.setScale(mainFrame.getApplicationPreferences().getScaleFactor());
 		SelectionHighlighter messagePaneCaret = new SelectionHighlighter();
 		messagePaneCaret.install(messagePane);

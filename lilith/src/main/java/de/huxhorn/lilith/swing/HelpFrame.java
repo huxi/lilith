@@ -23,6 +23,8 @@ import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.extend.TextRenderer;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.FSScrollPane;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
@@ -64,6 +66,13 @@ public class HelpFrame
 		String baseUrlString=baseUrl.toString()+"/";
 		if(logger.isDebugEnabled()) logger.debug("Help Base-URL: {}", baseUrlString);
 		helpPane.getSharedContext().setBaseURL(baseUrlString);
+
+		{
+			SharedContext sharedContext = helpPane.getSharedContext();
+			TextRenderer textRenderer = sharedContext.getTextRenderer();
+			textRenderer.setSmoothingLevel(TextRenderer.MEDIUM); // anything != TextRenderer.NONE
+			textRenderer.setSmoothingThreshold(6.0f);
+		}
 
 		{
 			LinkListener originalLinkListener = null;
