@@ -38,6 +38,13 @@
 	<li>The 'Send to' functionality isn't working as expected if the network infrastructure changes.
 		It should work but doesn't. I think it's a JmDNS problem but I have to investigate further.
 	</li>
+
+	<li>Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.<br/>
+		This is caused by <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182">bug #6995182</a>
+		and I can't do anything about it.<br/>
+		Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.<br/>
+		m(
+	</li>
 </ul>
 <p><a href="#top">Back to top.</a></p>
 </body>
