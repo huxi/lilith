@@ -22,6 +22,8 @@ import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.context.AWTFontResolver;
+import org.xhtmlrenderer.extend.FontResolver;
 import org.xhtmlrenderer.extend.TextRenderer;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.FSScrollPane;
@@ -116,7 +118,14 @@ public class TipOfTheDayDialog
 			SharedContext sharedContext = helpPane.getSharedContext();
 			TextRenderer textRenderer = sharedContext.getTextRenderer();
 			textRenderer.setSmoothingLevel(TextRenderer.MEDIUM); // anything != TextRenderer.NONE
-			textRenderer.setSmoothingThreshold(6.0f);
+			textRenderer.setSmoothingThreshold(RendererConstants.SMOOTHING_THRESHOLD);
+			FontResolver fontResolver = sharedContext.getFontResolver();
+			if(fontResolver instanceof AWTFontResolver && RendererConstants.MENSCH_FONT != null)
+			{
+				AWTFontResolver awtFontResolver = (AWTFontResolver) fontResolver;
+				awtFontResolver.setFontMapping(RendererConstants.MONOSPACED_FAMILY, RendererConstants.MENSCH_FONT);
+				if(logger.isInfoEnabled()) logger.info("Installed '{}' font.", RendererConstants.MONOSPACED_FAMILY);
+			}
 		}
 
 		{

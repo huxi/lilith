@@ -4,3 +4,13 @@ body
 	margin: 0;
 	padding: 0.5em;
 }
+
+pre
+{
+	font-family: monospace;
+}
+
+code
+{
+	font-family: monospace;
+}

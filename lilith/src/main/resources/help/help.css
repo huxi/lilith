@@ -5,6 +5,16 @@ body
 	padding: 0.5em;
 }
 
+pre
+{
+	font-family: monospace;
+}
+
+code
+{
+	font-family: monospace;
+}
+
 a.download
 {
 	background: #afa url('software-update-available.png') no-repeat center left;
@@ -34,4 +44,3 @@ a.download:active
 {
 	color:#000;
 }
-

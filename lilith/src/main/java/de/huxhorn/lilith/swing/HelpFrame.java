@@ -18,14 +18,17 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
-import de.huxhorn.lilith.swing.xhtml.EnhancedXHTMLPanel;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.context.AWTFontResolver;
+import org.xhtmlrenderer.extend.FontResolver;
 import org.xhtmlrenderer.extend.TextRenderer;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.simple.FSScrollPane;
+import org.xhtmlrenderer.simple.XHTMLPanel;
+import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
@@ -43,10 +46,14 @@ public class HelpFrame
 {
 	private final Logger logger = LoggerFactory.getLogger(HelpFrame.class);
 
-	private EnhancedXHTMLPanel helpPane;
+	//private EnhancedXHTMLPanel helpPane;
+	private XHTMLPanel helpPane;
+	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private MainFrame mainFrame;
 	private SelectionHighlighter.CopyAction copyAction;
 	private JPopupMenu popup;
+	private static final URL HELP_BASE_URL = HelpFrame.class.getResource("/help");
+
 
 
 	public HelpFrame(MainFrame mainFrame)
@@ -60,18 +67,27 @@ public class HelpFrame
 
 	private void initUI()
 	{
-		helpPane = new EnhancedXHTMLPanel();
+		//helpPane = new EnhancedXHTMLPanel();
+		helpPane = new XHTMLPanel();
+		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 
-		URL baseUrl = HelpFrame.class.getResource("/help");
-		String baseUrlString=baseUrl.toString()+"/";
-		if(logger.isDebugEnabled()) logger.debug("Help Base-URL: {}", baseUrlString);
-		helpPane.getSharedContext().setBaseURL(baseUrlString);
+		// below does not work properly...
+		//String baseUrlString=HELP_BASE_URL.toString()+"/";
+		//if(logger.isDebugEnabled()) logger.debug("Help Base-URL: {}", baseUrlString);
+		//helpPane.getSharedContext().setBaseURL(baseUrlString);
 
 		{
 			SharedContext sharedContext = helpPane.getSharedContext();
 			TextRenderer textRenderer = sharedContext.getTextRenderer();
 			textRenderer.setSmoothingLevel(TextRenderer.MEDIUM); // anything != TextRenderer.NONE
-			textRenderer.setSmoothingThreshold(6.0f);
+			textRenderer.setSmoothingThreshold(RendererConstants.SMOOTHING_THRESHOLD);
+			FontResolver fontResolver = sharedContext.getFontResolver();
+			if(fontResolver instanceof AWTFontResolver && RendererConstants.MENSCH_FONT != null)
+			{
+				AWTFontResolver awtFontResolver = (AWTFontResolver) fontResolver;
+				awtFontResolver.setFontMapping(RendererConstants.MONOSPACED_FAMILY, RendererConstants.MENSCH_FONT);
+				if(logger.isInfoEnabled()) logger.info("Installed '{}' font.", RendererConstants.MONOSPACED_FAMILY);
+			}
 		}
 
 		{
@@ -177,15 +193,24 @@ public class HelpFrame
 
 	public void setHelpUrl(String helpUrl)
 	{
-		helpPane.setDocumentRelative(helpUrl);
-		helpPane.relayout();
 		int hashIndex=helpUrl.indexOf('#');
 		if(hashIndex > -1)
 		{
-			helpUrl=helpUrl.substring(hashIndex);
-			if(logger.isInfoEnabled()) logger.info("Jumping to anchor: '{}'", helpUrl);
-			helpPane.setDocumentRelative(helpUrl);
+			// drop anchor for now...
+			helpUrl=helpUrl.substring(0,hashIndex);
 		}
+		helpUrl= HELP_BASE_URL.toExternalForm()+"/"+helpUrl;
+		if(logger.isDebugEnabled()) logger.debug("Final helpUrl: {}", helpUrl);
+		helpPane.setDocument(helpUrl, xhtmlNamespaceHandler);
+//		helpPane.setDocumentRelative(helpUrl);
+//		helpPane.relayout();
+//		int hashIndex=helpUrl.indexOf('#');
+//		if(hashIndex > -1)
+//		{
+//			helpUrl=helpUrl.substring(hashIndex);
+//			if(logger.isInfoEnabled()) logger.info("Jumping to anchor: '{}'", helpUrl);
+//			helpPane.setDocumentRelative(helpUrl);
+//		}
 		// TODO: jump to anchor. How can I do this??
 		//helpPane.setText(helpText);
 		//helpPane.setCaretPosition(0);
