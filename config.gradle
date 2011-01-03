@@ -148,7 +148,7 @@ allprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
 
-	defaultTasks 'clean', 'build', 'uploadArchives'
+	defaultTasks 'build', 'uploadArchives'
 	group = 'de.huxhorn.lilith'
 	version = '0.9.41'
 	if(!System.properties.'release')
@@ -360,7 +360,10 @@ subprojects {
 // TODO: OSX
 // TODO: gpg-sign
 project(':lilith') {
-	
+
+	// added 'clean' because changed resources aren't picked up by jar etc.
+	defaultTasks 'clean', 'build', 'uploadArchives'
+
 	jar {
 		manifest.attributes(
 			'Main-Class': 'de.huxhorn.lilith.Lilith',
@@ -372,6 +375,7 @@ project(':lilith') {
 	}
 	
 	processResources {
+		outputs.upToDateWhen { false } // Workaround for http://jira.codehaus.org/browse/GRADLE-1276
 		from(sourceSets.main.resources.srcDirs) {
 			exclude '**/*.properties'
 			exclude '**/*.xhtml'
