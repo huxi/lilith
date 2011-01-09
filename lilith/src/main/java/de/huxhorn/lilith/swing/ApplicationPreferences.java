@@ -26,6 +26,7 @@ import de.huxhorn.lilith.conditions.LevelCondition;
 import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.lilith.conditions.MessageContainsCondition;
+import de.huxhorn.lilith.conditions.MessagePatternContainsCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.prefs.LilithPreferences;
@@ -171,6 +172,7 @@ public class ApplicationPreferences
 
 	public static final String EVENT_CONTAINS_CONDITION = "event.contains";
 	public static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
+	public static final String MESSAGE_PATTERN_CONTAINS_CONDITION = "messagePattern.contains";
 	public static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
 	public static final String LOGGER_EQUALS_CONDITION = "logger.equals";
 	public static final String LEVEL_CONDITION = "Level>=";
@@ -180,6 +182,7 @@ public class ApplicationPreferences
 	private static final String[] DEFAULT_CONDITIONS = new String[]{
 		EVENT_CONTAINS_CONDITION,
 		MESSAGE_CONTAINS_CONDITION,
+		MESSAGE_PATTERN_CONTAINS_CONDITION,
 		LOGGER_STARTS_WITH_CONDITION,
 		LOGGER_EQUALS_CONDITION,
 		LEVEL_CONDITION,
@@ -265,6 +268,11 @@ public class ApplicationPreferences
 			return new MessageContainsCondition(value);
 		}
 
+		if(MESSAGE_PATTERN_CONTAINS_CONDITION.equals(conditionName))
+		{
+			return new MessagePatternContainsCondition(value);
+		}
+
 		if(LOGGER_STARTS_WITH_CONDITION.equals(conditionName))
 		{
 			return new LoggerStartsWithCondition(value);
@@ -329,6 +337,11 @@ public class ApplicationPreferences
 		if(condition instanceof MessageContainsCondition)
 		{
 			return MESSAGE_CONTAINS_CONDITION;
+		}
+
+		if(condition instanceof MessagePatternContainsCondition)
+		{
+			return MESSAGE_PATTERN_CONTAINS_CONDITION;
 		}
 
 		if(condition instanceof LoggerStartsWithCondition)

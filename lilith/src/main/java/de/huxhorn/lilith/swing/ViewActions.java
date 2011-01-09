@@ -572,6 +572,7 @@ public class ViewActions
 	private CopySelectionAction copySelectionAction;
 	private CopyEventAction copyEventAction;
 	private CopyLoggingMessageAction copyLoggingMessageAction;
+	private CopyLoggingMessagePatternAction copyLoggingMessagePatternAction;
 	private CopyLoggingThrowableAction copyLoggingThrowableAction;
 	private CopyLoggingCallStackAction copyLoggingCallStackAction;
 	private CopyLoggingCallLocationAction copyLoggingCallLocationAction;
@@ -655,6 +656,7 @@ public class ViewActions
 		copySelectionAction = new CopySelectionAction();
 		copyEventAction = new CopyEventAction();
 		copyLoggingMessageAction = new CopyLoggingMessageAction();
+		copyLoggingMessagePatternAction = new CopyLoggingMessagePatternAction();
 		copyLoggerNameAction = new CopyLoggerNameAction();
 		copyLoggingThrowableAction = new CopyLoggingThrowableAction();
 		copyLoggingCallStackAction = new CopyLoggingCallStackAction();
@@ -798,6 +800,7 @@ public class ViewActions
 		editMenu.add(copyEventAction);
 		editMenu.addSeparator();
 		editMenu.add(copyLoggingMessageAction);
+		editMenu.add(copyLoggingMessagePatternAction);
 		editMenu.add(copyLoggerNameAction);
 		editMenu.add(copyLoggingThrowableAction);
 		editMenu.add(copyLoggingCallStackAction);
@@ -1426,6 +1429,7 @@ public class ViewActions
 		copyMenuItem.add(new JMenuItem(copyEventAction));
 		copyMenuItem.addSeparator();
 		copyMenuItem.add(new JMenuItem(copyLoggingMessageAction));
+		copyMenuItem.add(new JMenuItem(copyLoggingMessagePatternAction));
 		copyMenuItem.add(new JMenuItem(copyLoggerNameAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingThrowableAction));
 		copyMenuItem.add(new JMenuItem(copyLoggingCallStackAction));
@@ -1456,6 +1460,7 @@ public class ViewActions
 		gotoSourceAction.setEventWrapper(wrapper);
 		copyEventAction.setEventWrapper(wrapper);
 		copyLoggingMessageAction.setEventWrapper(wrapper);
+		copyLoggingMessagePatternAction.setEventWrapper(wrapper);
 		copyLoggerNameAction.setEventWrapper(wrapper);
 		copyLoggingThrowableAction.setEventWrapper(wrapper);
 		copyLoggingCallStackAction.setEventWrapper(wrapper);
@@ -3528,6 +3533,50 @@ public class ViewActions
 					if(messageObj != null)
 					{
 						message = messageObj.getMessage();
+					}
+				}
+			}
+			setMessage(message);
+		}
+
+		private void setMessage(String message)
+		{
+			this.message = message;
+			setEnabled(message != null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.copyText(message);
+		}
+	}
+
+	private class CopyLoggingMessagePatternAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -6482725824431433972L;
+
+		private String message;
+
+		public CopyLoggingMessagePatternAction()
+		{
+			super("Copy message pattern");
+			putValue(Action.SHORT_DESCRIPTION, "Copies the message pattern of the logging event to the clipboard.");
+		}
+
+		public void setEventWrapper(EventWrapper wrapper)
+		{
+			String message = null;
+			if(wrapper != null && wrapper.getEvent() != null)
+			{
+				Object eventObj = wrapper.getEvent();
+				if(eventObj instanceof LoggingEvent)
+				{
+					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
+					Message messageObj = loggingEvent.getMessage();
+					if(messageObj != null)
+					{
+						message = messageObj.getMessagePattern();
 					}
 				}
 			}

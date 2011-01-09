@@ -24,19 +24,19 @@ import de.huxhorn.lilith.data.logging.Message;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class MessageContainsCondition
+public class MessagePatternContainsCondition
 	implements LilithCondition, SearchStringCondition
 {
-	private static final long serialVersionUID = -5047505055619482146L;
+	private static final long serialVersionUID = -4701718332615561032L;
 
 	private String searchString;
 
-	public MessageContainsCondition()
+	public MessagePatternContainsCondition()
 	{
 		this(null);
 	}
 
-	public MessageContainsCondition(String searchString)
+	public MessagePatternContainsCondition(String searchString)
 	{
 		setSearchString(searchString);
 	}
@@ -73,7 +73,7 @@ public class MessageContainsCondition
 				Message messageObj = event.getMessage();
 				if(messageObj != null)
 				{
-					message = messageObj.getMessage();
+					message = messageObj.getMessagePattern();
 				}
 
 				return message != null && message.contains(searchString);
@@ -87,7 +87,7 @@ public class MessageContainsCondition
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 
-		final MessageContainsCondition that = (MessageContainsCondition) o;
+		final MessagePatternContainsCondition that = (MessagePatternContainsCondition) o;
 
 		return !(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null);
 	}
@@ -106,10 +106,10 @@ public class MessageContainsCondition
 		setSearchString(this.searchString);
 	}
 
-	public MessageContainsCondition clone()
+	public MessagePatternContainsCondition clone()
 		throws CloneNotSupportedException
 	{
-		return (MessageContainsCondition) super.clone();
+		return (MessagePatternContainsCondition) super.clone();
 	}
 
 	public String toString()
@@ -132,6 +132,6 @@ public class MessageContainsCondition
 
 	public String getDescription()
 	{
-		return "message.contains";
+		return "messagePattern.contains";
 	}
 }
