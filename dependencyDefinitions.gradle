@@ -5,7 +5,7 @@ versions = [
 'easymock':       '2.4',
 'httpcomponents': '4.0.1',
 'log4j':          '1.2.16',
-'logback':        '0.9.26',
+'logback':        '0.9.27',
 'slf4j':          '1.6.1',
 'jackson':        '1.6.0',
 'commonsLogging': '1.1.1',
