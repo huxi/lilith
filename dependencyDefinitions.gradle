@@ -1,4 +1,4 @@
-sulkyBaseVersion = '0.9.13'
+sulkyBaseVersion = '0.9.14'
 
 versions = [
 'aspectj':        '1.6.8',
