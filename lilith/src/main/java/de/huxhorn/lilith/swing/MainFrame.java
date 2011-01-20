@@ -3775,7 +3775,7 @@ public class MainFrame
 			}
 			HttpEntity entity = response.getEntity();
 			String result = EntityUtils.toString(entity);
-			entity.consumeContent(); // just to make extremely sure ;)
+			EntityUtils.consume(entity);
 			return result;
 		}
 		catch(IOException e)

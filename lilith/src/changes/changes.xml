@@ -92,6 +92,33 @@
 			<action dev="jhux" type="update">
 				Logback 0.9.27
 			</action>
+			<action dev="jhux" type="update">
+				AspectJ 1.6.10
+			</action>
+			<action dev="jhux" type="update">
+				Jackson 1.7.1
+			</action>
+			<action dev="jhux" type="update">
+				JCommander 1.13
+			</action>
+			<action dev="jhux" type="update">
+				JGoodies Looks 2.2.2
+			</action>
+			<action dev="jhux" type="update">
+				Groovy 1.7.6
+			</action>
+			<action dev="jhux" type="update">
+				commons-lang 2.6
+			</action>
+			<action dev="jhux" type="update">
+				commons-io 2.0.1
+			</action>
+			<action dev="jhux" type="update">
+				httpcore 4.1
+			</action>
+			<action dev="jhux" type="update">
+				httpclient 4.0.3
+			</action>
 		</release>
 
 		<release version="0.9.40" date="2010-11-11" description="Release">
