@@ -24,6 +24,12 @@ import ch.qos.logback.core.util.StatusPrinter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
+import de.huxhorn.lilith.cli.Cat;
+import de.huxhorn.lilith.cli.CommandLineArgs;
+import de.huxhorn.lilith.cli.Help;
+import de.huxhorn.lilith.cli.Index;
+import de.huxhorn.lilith.cli.Md5;
+import de.huxhorn.lilith.cli.Tail;
 import de.huxhorn.lilith.handler.Slf4JHandler;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.tools.ImportExportCommand;
@@ -55,6 +61,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Handler;
@@ -193,17 +200,27 @@ public class Lilith
 		}
 
 		CommandLineArgs cl=new CommandLineArgs();
-		JCommander commander;
+		JCommander commander = new JCommander(cl);
+		Cat cat = new Cat();
+		commander.addCommand(Cat.NAME, cat);
+		Tail tail = new Tail();
+		commander.addCommand(Tail.NAME, tail);
+		Index index = new Index();
+		commander.addCommand(Index.NAME, index);
+		Md5 md5 = new Md5();
+		commander.addCommand(Md5.NAME, md5);
+		Help help = new Help();
+		commander.addCommand(Help.NAME, help);
+
 		try
 		{
-			commander = new JCommander(cl, argv);
+			commander.parse(argv);
 		}
 		catch(ParameterException ex)
 		{
 			printAppInfo(appTitle, false);
 			System.out.println("\n"+ex.getMessage());
-			commander = new JCommander(cl);
-			commander.usage();
+			printHelp(commander);
 			System.exit(-1);
 		}
 		if(cl.verbose)
@@ -214,7 +231,8 @@ public class Lilith
 			appTitle += " - " + sdf.format(d);
 			appTitle += " - " + APP_REVISION;
 		}
-		if(cl.catFile == null && cl.tailFile == null) // don't print info in case of cat or tail
+		String command = commander.getParsedCommand();
+		if(Tail.NAME.equals(command) || Cat.NAME.equals(command)) // don't print info in case of cat or tail
 		{
 			printAppInfo(appTitle, !cl.showHelp);
 		}
@@ -233,34 +251,114 @@ public class Lilith
 		{
 			System.out.println("Build-Timestamp: " + APP_TIMESTAMP);
 			System.out.println("Build-Date     : " + APP_TIMESTAMP_DATE);
+			System.out.println("Build-Revision : " + APP_REVISION);
 			System.exit(0);
 		}
 
-		if(cl.md5File != null)
+		if(Help.NAME.equals(command))
 		{
-			if(CreateMd5Command.createMd5(cl.md5File))
+			commander.usage();
+			if(help.commands == null || help.commands.size()==0)
+			{
+				commander.usage(Help.NAME);
+			}
+			else
+			{
+				Map<String, JCommander> commands = commander.getCommands();
+				for(String current : help.commands)
+				{
+					if(commands.containsKey(current))
+					{
+						commander.usage(current);
+					}
+					else
+					{
+						System.out.println("Unknown command '"+current+"'!");
+					}
+				}
+			}
+			System.exit(0);
+		}
+		
+		if(Md5.NAME.equals(command))
+		{
+			List<String> files = md5.files;
+			if(files == null || files.size()==0)
+			{
+				printHelp(commander);
+				System.exit(-1);
+			}
+			boolean error=false;
+			for(String current:files)
+			{
+				if(!CreateMd5Command.createMd5(new File(current)))
+				{
+					error=true;
+				}
+			}
+			if(error)
+			{
+				System.exit(-1);
+			}
+			System.exit(0);
+		}
+
+		if(Index.NAME.equals(command))
+		{
+			List<String> files = index.files;
+			if(files == null || files.size()==0)
+			{
+				printHelp(commander);
+				System.exit(-1);
+			}
+			boolean error=false;
+			for(String current:files)
+			{
+				if(!IndexCommand.indexLogFile(current, null))
+				{
+					error=true;
+				}
+			}
+			if(error)
+			{
+				System.exit(-1);
+			}
+			System.exit(0);
+		}
+
+		if(Cat.NAME.equals(command))
+		{
+			List<String> files = cat.files;
+			if(files == null || files.size()!=1)
+			{
+				printHelp(commander);
+				System.exit(-1);
+			}
+			if(CatCommand.catFile(new File(files.get(0)), cat.pattern, cat.numberOfLines))
 			{
 				System.exit(0);
 			}
 			System.exit(-1);
 		}
 
-		if(cl.catFile != null)
+		if(Tail.NAME.equals(command))
 		{
-			if(CatCommand.catFile(cl.catFile, cl.pattern, cl.numberOfLines))
+			List<String> files = tail.files;
+			if(files == null || files.size()!=1)
+			{
+				printHelp(commander);
+				System.exit(-1);
+			}
+			if(TailCommand.tailFile(new File(files.get(0)), tail.pattern, tail.numberOfLines, tail.keepRunning))
 			{
 				System.exit(0);
 			}
 			System.exit(-1);
 		}
 
-		if(cl.tailFile != null)
+		if(cl.flushPreferences)
 		{
-			if(TailCommand.tailFile(cl.tailFile, cl.pattern, cl.numberOfLines, cl.keepRunning))
-			{
-				System.exit(0);
-			}
-			System.exit(-1);
+			flushPreferences();
 		}
 
 		if(cl.exportPreferencesFile != null)
@@ -278,11 +376,6 @@ public class Lilith
 			System.exit(0);
 		}
 
-		if(cl.flushPreferences)
-		{
-			flushPreferences();
-		}
-
 		if(cl.flushLicensed)
 		{
 			flushLicensed();
@@ -290,20 +383,30 @@ public class Lilith
 
 		if(cl.showHelp)
 		{
-			commander.usage();
+			printHelp(commander);
 			System.exit(0);
 		}
 
-		if(cl.indexFile != null)
-		{
-			if(IndexCommand.indexLogFile(cl.indexFile, null))
-			{
-				System.exit(0);
-			}
-			System.exit(-1);
-		}
-
 		startLilith(appTitle, cl.enableBonjour);
+	}
+
+	private static void printHelp(JCommander commander)
+	{
+		commander.usage();
+
+		String command = commander.getParsedCommand();
+		if(command != null)
+		{
+			Map<String, JCommander> commands = commander.getCommands();
+			if(commands.containsKey(command))
+			{
+				commander.usage(command);
+			}
+			else
+			{
+				System.out.println("Unknown command '"+command+"'!");
+			}
+		}
 	}
 
 	private static void printAppInfo(String appTitle, boolean printHelpInfo)

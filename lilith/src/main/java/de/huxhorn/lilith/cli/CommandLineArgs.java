@@ -15,12 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith;
+package de.huxhorn.lilith.cli;
 
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.converters.FileConverter;
-
-import java.io.File;
 
 public class CommandLineArgs
 {
@@ -36,29 +33,29 @@ public class CommandLineArgs
 	@Parameter(names = { "-L", "--flush-licensed"  }, description = "flush licensed.")
 	public boolean flushLicensed = false;
 
-	@Parameter(names = { "-I", "--index-file"  }, description = "indexes the given file.")
-	public String indexFile;
+//	@Parameter(names = { "-I", "--index-file"  }, description = "indexes the given file.")
+//	public String indexFile;
 
 	@Parameter(names = { "-b", "--bonjour"  }, description = "enable Bonjour.")
 	public boolean enableBonjour = false;
 
-	@Parameter(names = { "-m", "--md5"  }, description = "create an MD5 checksum for the given file.", converter = FileConverter.class)
-	public File md5File;
-
-	@Parameter(names = { "-c", "--cat"  }, description = "'cat' the given Lilith logfile.", converter = FileConverter.class)
-	public File catFile;
-
-	@Parameter(names = { "-t", "--tail"  }, description = "'tail' the given Lilith logfile.", converter = FileConverter.class)
-	public File tailFile;
-
-	@Parameter(names = { "-p", "--pattern"  }, description = "pattern used by 'cat' or 'tail'.")
-	public String pattern;
-
-	@Parameter(names = { "-f", "--keep-running"  }, description = "keep tailing the given Lilith logfile.")
-	public boolean keepRunning = false;
-
-	@Parameter(names = { "-n", "--number-of-lines"  }, description = "number of entries printed by cat or tail")
-	public Integer numberOfLines = -1;
+//	@Parameter(names = { "-m", "--md5"  }, description = "create an MD5 checksum for the given file.", converter = FileConverter.class)
+//	public File md5File;
+//
+//	@Parameter(names = { "-c", "--cat"  }, description = "'cat' the given Lilith logfile.", converter = FileConverter.class)
+//	public File catFile;
+//
+//	@Parameter(names = { "-t", "--tail"  }, description = "'tail' the given Lilith logfile.", converter = FileConverter.class)
+//	public File tailFile;
+//
+//	@Parameter(names = { "-p", "--pattern"  }, description = "pattern used by 'cat' or 'tail'.")
+//	public String pattern;
+//
+//	@Parameter(names = { "-f", "--keep-running"  }, description = "keep tailing the given Lilith logfile.")
+//	public boolean keepRunning = false;
+//
+//	@Parameter(names = { "-n", "--number-of-lines"  }, description = "number of entries printed by cat or tail")
+//	public Integer numberOfLines = -1;
 
 	@Parameter(names = { "-e", "--export-preferences"  }, description = "export preferences into the given file.")
 	public String exportPreferencesFile;
