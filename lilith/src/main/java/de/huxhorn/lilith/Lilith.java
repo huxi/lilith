@@ -232,7 +232,7 @@ public class Lilith
 			appTitle += " - " + APP_REVISION;
 		}
 		String command = commander.getParsedCommand();
-		if(Tail.NAME.equals(command) || Cat.NAME.equals(command)) // don't print info in case of cat or tail
+		if(!Tail.NAME.equals(command) && !Cat.NAME.equals(command)) // don't print info in case of cat or tail
 		{
 			printAppInfo(appTitle, !cl.showHelp);
 		}
