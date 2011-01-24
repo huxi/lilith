@@ -149,10 +149,13 @@
 	<logger name="de.huxhorn.lilith.services.sender" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.AboutPanel" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.CheckForUpdateDialog" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ComboPaneViewContainer" level="WARN"/>
-	<logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.EventWrapperViewPanel" level="WARN"/>
+	<logger name="de.huxhorn.lilith.swing.HelpFrame" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.MainFrame" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.MainFrame.ColorsCollectionRunnable" level="INFO"/>
+	<logger name="de.huxhorn.lilith.swing.RendererConstants" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.SplashScreen" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog" level="WARN"/>
