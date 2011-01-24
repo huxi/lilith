@@ -114,10 +114,10 @@
 				commons-io 2.0.1
 			</action>
 			<action dev="jhux" type="update">
-				httpcore 4.1
+				httpclient 4.1
 			</action>
 			<action dev="jhux" type="update">
-				httpclient 4.0.3
+				httpcore 4.1
 			</action>
 		</release>
 
