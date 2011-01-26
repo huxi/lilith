@@ -401,7 +401,7 @@ public class ApplicationPreferences
 
 	private File detailsViewRoot;
 
-	private ArrayList<String> installedLookAndFeels;
+	private List<String> installedLookAndFeels;
 	private String[] conditionScriptFiles;
 	private long lastConditionsCheck;
 

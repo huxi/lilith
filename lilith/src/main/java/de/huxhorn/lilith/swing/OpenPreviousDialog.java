@@ -203,7 +203,7 @@ public class OpenPreviousDialog
 	private class OpenPreviousPanel
 		extends JPanel
 	{
-		private ArrayList<List<SourceIdentifier>> secondaries;
+		private List<List<SourceIdentifier>> secondaries;
 		private JList primaryList;
 		private JList secondaryList;
 		private JTextArea infoArea;

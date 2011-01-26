@@ -3844,7 +3844,7 @@ public class ViewActions
 			mainFrame.copyText(text.toString());
 		}
 
-		private void buildMarker(StringBuilder text, int indent, Marker marker, ArrayList<String> handledMarkers)
+		private void buildMarker(StringBuilder text, int indent, Marker marker, List<String> handledMarkers)
 		{
 			if(logger.isInfoEnabled()) logger.info("Implement!");
 			if(marker != null)

@@ -64,7 +64,7 @@ public class RrdLoggingEventHandler
 	private long lastUpdateTime;
 	private File basePath;
 	private boolean enabled;
-	private HashMap<String, EventCounter> eventCounters;
+	private Map<String, EventCounter> eventCounters;
 
 	public RrdLoggingEventHandler()
 	{

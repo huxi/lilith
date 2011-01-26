@@ -32,22 +32,37 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
-import java.awt.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.List;
 import java.util.ArrayList;
 
-import javax.swing.*;
 
 public class TipOfTheDayDialog
 	extends JDialog
 {
 	private final Logger logger = LoggerFactory.getLogger(TipOfTheDayDialog.class);
 
-	private ArrayList<URL> tipsOfTheDay;
+	private List<URL> tipsOfTheDay;
 	private int currentTipOfTheDay;
 	private ApplicationPreferences applicationPreferences;
 	private XHTMLPanel helpPane;
