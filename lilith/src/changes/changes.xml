@@ -79,6 +79,11 @@
 		</release>
 
 		<release version="0.9.41" date="TBD" description="Future Release">
+			<action dev="jhux" type="fix" issue="95">
+				Detached windows were using the popup menu of the main frame.
+				They are now using the popup menu of the detached frame as originally intended.
+				This bug was found by Dimi.
+			</action>
 			<action dev="jhux" type="add">
 				Added messagePattern.contains condition and "Copy message pattern" action. Using message pattern for filtering is faster
 				than using message.

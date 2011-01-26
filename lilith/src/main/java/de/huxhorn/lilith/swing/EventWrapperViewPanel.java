@@ -1066,6 +1066,31 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 	}
 
+
+	private void showPopup(Component component, Point p)
+	{
+		ViewContainer<T> container = resolveContainer();
+		if(container != null)
+		{
+			ViewWindow viewWindow = container.resolveViewWindow();
+			if(viewWindow != null)
+			{
+				ViewActions viewActions = viewWindow.getViewActions();
+				JPopupMenu popup = viewActions.getPopupMenu();
+				if(logger.isDebugEnabled()) logger.debug("Show popup at {}.", p);
+				popup.show(component, p.x, p.y);
+			}
+			else
+			{
+				if(logger.isWarnEnabled()) logger.warn("Couldn't resolve viewWindow of viewContainer {}!", container);
+			}
+		}
+		else
+		{
+			if(logger.isWarnEnabled()) logger.warn("Couldn't resolve viewContainer of viewPanel {}!", this);
+		}
+	}
+
 	private class TableMouseListener
 		implements MouseListener
 	{
@@ -1115,7 +1140,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			Point p = evt.getPoint();
 			EventWrapper<T> wrapper = getEventWrapper(p); // To ensure that the event below the mouse is selected.
 			if(logger.isDebugEnabled()) logger.debug("Show popup at {} for event {}.", p, wrapper);
-			mainFrame.showPopup(table, p);
+			EventWrapperViewPanel.this.showPopup(table, p);
 		}
 
 		public void mousePressed(MouseEvent evt)
@@ -1154,7 +1179,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		private void showPopup(MouseEvent evt)
 		{
 			Point p = evt.getPoint();
-			mainFrame.showPopup(messagePane, p);
+			EventWrapperViewPanel.this.showPopup(messagePane, p);
 		}
 
 		public void mouseClicked(MouseEvent evt)
@@ -1202,7 +1227,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		private void showPopup(MouseEvent evt)
 		{
 			Point p = evt.getPoint();
-			mainFrame.showPopup(tableScrollPane, p);
+			EventWrapperViewPanel.this.showPopup(tableScrollPane, p);
 		}
 
 		public void mouseClicked(MouseEvent evt)

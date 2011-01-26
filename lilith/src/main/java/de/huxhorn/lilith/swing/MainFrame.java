@@ -994,13 +994,6 @@ public class MainFrame
 		t.start();
 	}
 
-	public void showPopup(Component component, Point p)
-	{
-		if(logger.isDebugEnabled()) logger.debug("Show popup at {}.", p);
-		JPopupMenu popup = viewActions.getPopupMenu();
-		popup.show(component, p.x, p.y);
-	}
-
 	public Colors getColors(HttpStatus.Type status)
 	{
 		if(statusColors == null)
