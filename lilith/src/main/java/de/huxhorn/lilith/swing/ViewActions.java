@@ -958,11 +958,7 @@ public class ViewActions
 			copySelectionAction.setView(eventWrapperViewPanel);
 		}
 
-		if(logger.isDebugEnabled())
-		{
-			logger
-				.debug("updateActions() eventSource={}", eventSource);
-		}
+		if(logger.isDebugEnabled()) logger.debug("updateActions() eventSource={}", eventSource);
 
 		// File
 		exportMenuAction.setView(eventWrapperViewPanel);
@@ -1414,6 +1410,7 @@ public class ViewActions
 
 	private void initPopup()
 	{
+		if(logger.isDebugEnabled()) logger.debug("initPopup()");
 		popup = new JPopupMenu();
 		JMenuItem showUnfilteredMenuItem = new JMenuItem(showUnfilteredEventAction);
 		Font f = showUnfilteredMenuItem.getFont();
@@ -1456,6 +1453,7 @@ public class ViewActions
 
 	private void setEventWrapper(EventWrapper wrapper)
 	{
+		if(logger.isDebugEnabled()) logger.debug("setEventWrapper: {}", wrapper);
 		this.eventWrapper = wrapper;
 		gotoSourceAction.setEventWrapper(wrapper);
 		copyEventAction.setEventWrapper(wrapper);
@@ -1484,8 +1482,9 @@ public class ViewActions
 		return aboutAction;
 	}
 
-	public void updatePopup()
+	private void updatePopup()
 	{
+		if(logger.isDebugEnabled()) logger.debug("updatePopup()");
 		if(popup == null)
 		{
 			initPopup();
