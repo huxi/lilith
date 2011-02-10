@@ -25,93 +25,138 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class GoToSourceService
 {
-	private final Logger logger = LoggerFactory.getLogger(GoToSourceService.class);
+	private final BlockingQueue<StackTraceElement> queue=new LinkedBlockingQueue<StackTraceElement>();
+	private Thread goToSourceThread;
 
-	private Socket socket;
-	private ObjectOutputStream oos;
-
-	public void start()
+	public GoToSourceService()
 	{
-		try
-		{
-			socket = new Socket("localhost", 11111);
-			oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-		}
-		catch(IOException e)
-		{
-			if(logger.isInfoEnabled()) logger.info("Exception while creating connection with IDE!", e);
-			stop();
-		}
+		goToSourceThread=new Thread(new GoToSourceRunnable());
+		goToSourceThread.setDaemon(true);
+		goToSourceThread.start();
 	}
 
 	public void goToSource(StackTraceElement ste)
 	{
-		if(logger.isInfoEnabled()) logger.info("Go to source of {}.", ste);
 		if(ste == null)
 		{
 			return;
 		}
-		if(oos == null)
+		try
 		{
-			start();
+			queue.put(ste);
 		}
-		boolean error = false;
-		if(oos != null)
+		catch(InterruptedException e)
 		{
-			try
-			{
-				oos.writeObject(ste);
-				oos.flush();
-			}
-			catch(IOException e)
-			{
-				if(logger.isDebugEnabled()) logger.debug("Exception on first try, probably lingering connection.", e);
-				stop();
-				error = true;
-			}
+			stop();
 		}
-		if(error)
-		{
-			// try to send it again to work around lingering connections.
-			start();
-			if(oos != null)
-			{
-				try
-				{
-					oos.writeObject(ste);
-					oos.flush();
-				}
-				catch(IOException e)
-				{
-					if(logger.isWarnEnabled()) logger.warn("Exception on second try!", e);
-					stop();
-				}
-			}
-		}
-
 	}
 
 	public void stop()
 	{
-		if(oos != null)
-		{
-			IOUtilities.closeQuietly(oos);
-			oos = null;
-		}
-		if(socket != null)
+		goToSourceThread.interrupt();
+	}
+
+	private class GoToSourceRunnable
+		implements Runnable
+	{
+		private final Logger logger = LoggerFactory.getLogger(GoToSourceRunnable.class);
+
+		private Socket socket;
+		private ObjectOutputStream oos;
+
+		private void openConnection()
 		{
 			try
 			{
-				socket.close();
+				socket = new Socket("localhost", 11111);
+				oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			}
 			catch(IOException e)
 			{
-				// ignore
+				if(logger.isInfoEnabled()) logger.info("Exception while creating connection with IDE!", e);
+				closeConnection();
 			}
-			socket = null;
+		}
+
+		private void closeConnection()
+		{
+			if(oos != null)
+			{
+				IOUtilities.closeQuietly(oos);
+				oos = null;
+			}
+			if(socket != null)
+			{
+				try
+				{
+					socket.close();
+				}
+				catch(IOException e)
+				{
+					// ignore
+				}
+				socket = null;
+			}
+		}
+
+		public void run()
+		{
+			for(;;)
+			{
+				StackTraceElement ste;
+				try
+				{
+					ste=queue.take();
+				}
+				catch(InterruptedException e)
+				{
+					break;
+				}
+				if(logger.isInfoEnabled()) logger.info("Go to source of {}.", ste);
+				if(oos == null)
+				{
+					openConnection();
+				}
+				boolean error = false;
+				if(oos != null)
+				{
+					try
+					{
+						oos.writeObject(ste);
+						oos.flush();
+					}
+					catch(IOException e)
+					{
+						if(logger.isDebugEnabled()) logger.debug("Exception on first try, probably lingering connection.", e);
+						closeConnection();
+						error = true;
+					}
+				}
+				if(error)
+				{
+					// try to send it again to work around lingering connections.
+					openConnection();
+					if(oos != null)
+					{
+						try
+						{
+							oos.writeObject(ste);
+							oos.flush();
+						}
+						catch(IOException e)
+						{
+							if(logger.isWarnEnabled()) logger.warn("Exception on second try!", e);
+							closeConnection();
+						}
+					}
+				}
+			}
 		}
 	}
+
 }
