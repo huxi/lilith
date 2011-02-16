@@ -359,12 +359,10 @@ subprojects {
 	}
 }
 
-// TODO: OSX
-// TODO: gpg-sign
 project(':lilith') {
 
 	// added 'clean' because changed resources aren't picked up by jar etc.
-	defaultTasks 'clean', 'build', 'uploadArchives'
+	compileJava.dependsOn clean
 
 	jar {
 		manifest.attributes(
