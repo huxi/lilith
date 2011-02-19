@@ -18,7 +18,7 @@ libraries = [
 'commons-lang':             'commons-lang:commons-lang:2.6',
 'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
 'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.8.0',
-'groovy':                   'org.codehaus.groovy:groovy:1.7.8',
+'groovy':                   'org.codehaus.groovy:groovy:1.8.0-rc-1',
 'httpclient':               "org.apache.httpcomponents:httpclient:4.1",
 'httpcore':                 "org.apache.httpcomponents:httpcore:4.1",
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
