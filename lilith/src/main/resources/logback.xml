@@ -157,7 +157,6 @@
 	<logger name="de.huxhorn.lilith.swing.MainFrame.ColorsCollectionRunnable" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.RendererConstants" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.SplashScreen" level="WARN"/>
-	<logger name="de.huxhorn.lilith.swing.TabbedPaneViewContainer" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ViewActions" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame" level="WARN"/>
