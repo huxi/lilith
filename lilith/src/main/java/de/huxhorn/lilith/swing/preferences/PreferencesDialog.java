@@ -31,8 +31,15 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,7 +53,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
@@ -71,7 +90,10 @@ public class PreferencesDialog
 	private ApplicationPreferences applicationPreferences;
 	private MainFrame mainFrame;
 
-	private JTabbedPane tabbedPane;
+	private JComboBox comboBox;
+	private DefaultComboBoxModel comboBoxModel;
+	private CardLayout cardLayout;
+	private JPanel content;
 
 	private GeneralPanel generalPanel;
 	private StartupShutdownPanel startupShutdownPanel;
@@ -86,7 +108,6 @@ public class PreferencesDialog
 	private String blackListName;
 	private String whiteListName;
 	private LilithPreferences.SourceFiltering sourceFiltering;
-	private TroubleshootingPanel troubleshootingPanel;
 
 	public PreferencesDialog(MainFrame mainFrame)
 	{
@@ -116,20 +137,36 @@ public class PreferencesDialog
 		sourceListsPanel = new SourceListsPanel(this);
 		sourceFilteringPanel = new SourceFilteringPanel(this);
 		conditionsPanel = new ConditionsPanel(this);
-		troubleshootingPanel = new TroubleshootingPanel(this);
+		TroubleshootingPanel troubleshootingPanel = new TroubleshootingPanel(this);
 
-		tabbedPane = new JTabbedPane();
-		tabbedPane.setPreferredSize(new Dimension(600, 500));
+		comboBoxModel = new DefaultComboBoxModel();
+		comboBoxModel.addElement(Panes.General);
+		comboBoxModel.addElement(Panes.StartupShutdown);
+		comboBoxModel.addElement(Panes.Windows);
+		comboBoxModel.addElement(Panes.Sounds);
+		comboBoxModel.addElement(Panes.Sources);
+		comboBoxModel.addElement(Panes.SourceLists);
+		comboBoxModel.addElement(Panes.SourceFiltering);
+		comboBoxModel.addElement(Panes.Conditions);
+		comboBoxModel.addElement(Panes.Troubleshooting);
+		comboBox = new JComboBox(comboBoxModel);
+		comboBox.setRenderer(new MyComboBoxRenderer());
+		comboBox.setEditable(false);
+		comboBox.addItemListener(new ComboItemListener());
 
-		tabbedPane.add("General", generalPanel);
-		tabbedPane.add("Startup & Shutdown", startupShutdownPanel);
-		tabbedPane.add("Windows", windowsPanel);
-		tabbedPane.add("Sounds", soundsPanel);
-		tabbedPane.add("Sources", sourcesPanel);
-		tabbedPane.add("Source Lists", sourceListsPanel);
-		tabbedPane.add("Source Filtering", sourceFilteringPanel);
-		tabbedPane.add("Conditions", conditionsPanel);
-		tabbedPane.add("Troubleshooting", troubleshootingPanel);
+		cardLayout = new CardLayout();
+		content = new JPanel(cardLayout);
+		content.setPreferredSize(new Dimension(600, 500));
+
+		content.add(generalPanel, Panes.General.toString());
+		content.add(startupShutdownPanel, Panes.StartupShutdown.toString());
+		content.add(windowsPanel, Panes.Windows.toString());
+		content.add(soundsPanel, Panes.Sounds.toString());
+		content.add(sourcesPanel, Panes.Sources.toString());
+		content.add(sourceListsPanel, Panes.SourceLists.toString());
+		content.add(sourceFilteringPanel, Panes.SourceFiltering.toString());
+		content.add(conditionsPanel, Panes.Conditions.toString());
+		content.add(troubleshootingPanel, Panes.Troubleshooting.toString());
 
 		// Main buttons
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -143,11 +180,12 @@ public class PreferencesDialog
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		contentPane.add(comboBox, BorderLayout.NORTH);
+		contentPane.add(content, BorderLayout.CENTER);
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
-		KeyStrokes.registerCommand(tabbedPane, okAction, "OK_ACTION");
+		KeyStrokes.registerCommand(content, okAction, "OK_ACTION");
 		KeyStrokes.registerCommand(buttonPanel, okAction, "OK_ACTION");
-		KeyStrokes.registerCommand(tabbedPane, cancelAction, "CANCEL_ACTION");
+		KeyStrokes.registerCommand(content, cancelAction, "CANCEL_ACTION");
 		KeyStrokes.registerCommand(buttonPanel, cancelAction, "CANCEL_ACTION");
 	}
 
@@ -436,35 +474,13 @@ public class PreferencesDialog
 
 	public void showPane(Panes pane)
 	{
-		switch(pane)
+		if(pane != null)
 		{
-			case General:
-				tabbedPane.setSelectedComponent(generalPanel);
-				break;
-			case StartupShutdown:
-				tabbedPane.setSelectedComponent(startupShutdownPanel);
-				break;
-			case Windows:
-				tabbedPane.setSelectedComponent(windowsPanel);
-				break;
-			case Sounds:
-				tabbedPane.setSelectedComponent(soundsPanel);
-				break;
-			case Sources:
-				tabbedPane.setSelectedComponent(sourcesPanel);
-				break;
-			case SourceLists:
-				tabbedPane.setSelectedComponent(sourceListsPanel);
-				break;
-			case SourceFiltering:
-				tabbedPane.setSelectedComponent(sourceFilteringPanel);
-				break;
-			case Conditions:
-				tabbedPane.setSelectedComponent(conditionsPanel);
-				break;
-			case Troubleshooting:
-				tabbedPane.setSelectedComponent(troubleshootingPanel);
-				break;
+			cardLayout.show(content, pane.toString());
+			if(!pane.equals(comboBox.getSelectedItem()))
+			{
+				comboBox.setSelectedItem(pane);
+			}
 		}
 		if(!isVisible())
 		{
@@ -543,18 +559,106 @@ public class PreferencesDialog
 		inputArea.requestFocusInWindow();
 //		console.selectFilename();
 //		console.fileOpen();
-
-
 	}
 
 
 	public void editCondition(Condition condition)
 	{
-		tabbedPane.setSelectedComponent(conditionsPanel);
-		if(!isVisible())
-		{
-			mainFrame.showPreferencesDialog();
-		}
+		showPane(Panes.Conditions);
 		conditionsPanel.editCondition(condition);
+	}
+
+	private static class MyComboBoxRenderer
+		implements ListCellRenderer
+	{
+		private JLabel label;
+
+		public MyComboBoxRenderer()
+		{
+			label = new JLabel();
+			label.setOpaque(true);
+			label.setHorizontalAlignment(SwingConstants.LEFT);
+			label.setVerticalAlignment(SwingConstants.CENTER);
+		}
+
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+		{
+			if(isSelected)
+			{
+				label.setBackground(list.getSelectionBackground());
+				label.setForeground(list.getSelectionForeground());
+			}
+			else
+			{
+				label.setBackground(list.getBackground());
+				label.setForeground(list.getForeground());
+			}
+
+			String title = null;
+			String toolTip = null;
+
+			if(value != null && value.getClass() == Panes.class)
+			{
+				Panes panes = (Panes) value;
+
+				switch(panes)
+				{
+					case General:
+						title="General";
+						toolTip=null;
+						break;
+					case StartupShutdown:
+						title="Startup & Shutdown";
+						toolTip=null;
+						break;
+					case Windows:
+						title="Windows";
+						toolTip=null;
+						break;
+					case Sounds:
+						title="Sounds";
+						toolTip=null;
+						break;
+					case Sources:
+						title="Sources";
+						toolTip=null;
+						break;
+					case SourceLists:
+						title="Source Lists";
+						toolTip=null;
+						break;
+					case SourceFiltering:
+						title="Source Filtering";
+						toolTip=null;
+						break;
+					case Conditions:
+						title="Conditions";
+						toolTip=null;
+						break;
+					case Troubleshooting:
+						title="Troubleshooting";
+						toolTip=null;
+						break;
+				}
+			}
+			label.setText(title);
+			label.setToolTipText(toolTip);
+
+			return label;
+		}
+	}
+
+	private class ComboItemListener
+		implements ItemListener
+	{
+		public void itemStateChanged(ItemEvent e)
+		{
+			Object item = comboBoxModel.getSelectedItem();
+			if(item instanceof Panes)
+			{
+				Panes pane = (Panes) item;
+				showPane(pane);
+			}
+		}
 	}
 }
