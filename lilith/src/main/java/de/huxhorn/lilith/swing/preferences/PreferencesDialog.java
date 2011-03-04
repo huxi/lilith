@@ -261,14 +261,11 @@ public class PreferencesDialog
 		applicationPreferences.setBlackListName(blackListName);
 		applicationPreferences.setWhiteListName(whiteListName);
 		applicationPreferences.setSourceFiltering(sourceFiltering);
-		//sourcesPanel.saveSettings();
-		//sourceListsPanel.saveSettings();
 	}
 
 	private void resetSettings()
 	{
 		// just reinit from preferences, nobody would expect anything else...
-		// applicationPreferences.reset();
 		initUI();
 	}
 
@@ -433,11 +430,7 @@ public class PreferencesDialog
 
 	public void editSourceName(String sourceIdentifier)
 	{
-		tabbedPane.setSelectedComponent(sourcesPanel);
-		if(!isVisible())
-		{
-			mainFrame.showPreferencesDialog();
-		}
+		showPane(Panes.Sources);
 		sourcesPanel.editSourceName(sourceIdentifier);
 	}
 
