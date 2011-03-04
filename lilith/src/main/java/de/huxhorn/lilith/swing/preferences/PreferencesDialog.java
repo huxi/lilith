@@ -490,9 +490,12 @@ public class PreferencesDialog
 
 		console.setCurrentFileChooserDir(messageViewRoot);
 		String text = "";
+		if(!messageViewGroovyFile.isFile())
+		{
+			applicationPreferences.initDetailsViewRoot(true);
+		}
 		if(messageViewGroovyFile.isFile())
 		{
-			// TODO: init with default if not...
 			InputStream is;
 			try
 			{
@@ -522,6 +525,10 @@ public class PreferencesDialog
 					logger.info("Exception while reading '" + messageViewGroovyFile.getAbsolutePath() + "'.", e);
 				}
 			}
+		}
+		else
+		{
+			if(logger.isWarnEnabled()) logger.warn("Failed to initialize detailsView file '{}'!", messageViewGroovyFile.getAbsolutePath());
 		}
 		console.run(); // initializes everything
 
