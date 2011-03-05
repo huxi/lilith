@@ -35,7 +35,7 @@ public class XmlImportFileFilter
 		if(file.isFile())
 		{
 			String fileName = file.getName().toLowerCase();
-			if(fileName.endsWith(".xml"))
+			if(fileName.endsWith(".xml") || fileName.endsWith(".xml.gz"))
 			{
 				return true;
 			}

@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.zip.GZIPInputStream;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -69,7 +70,18 @@ public class Log4jImportCallable
 		setNumberOfSteps(fileSize);
 		FileInputStream fis = new FileInputStream(inputFile);
 		CountingInputStream cis = new CountingInputStream(fis);
-		BufferedReader br = new BufferedReader(new InputStreamReader(cis, "UTF-8"));
+
+		String fileName=inputFile.getName().toLowerCase();
+		BufferedReader br;
+		if(fileName.endsWith(".gz"))
+		{
+			br = new BufferedReader(new InputStreamReader(new GZIPInputStream(cis), "UTF-8"));
+		}
+		else
+		{
+			br = new BufferedReader(new InputStreamReader(cis, "UTF-8"));
+		}
+
 		StringBuilder builder = new StringBuilder();
 
 		result = 0;

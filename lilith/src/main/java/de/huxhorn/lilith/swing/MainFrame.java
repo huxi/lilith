@@ -138,7 +138,7 @@ import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -157,6 +157,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.zip.GZIPInputStream;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -1416,12 +1417,22 @@ public class MainFrame
 		JOptionPane.showMessageDialog(this, message, "Unknown file type...", JOptionPane.WARNING_MESSAGE);
 	}
 
-	private ImportType resolveType(File importFile)
+	private ImportType resolveType(File inputFile)
 	{
 		BufferedReader br = null;
 		try
 		{
-			br = new BufferedReader(new FileReader(importFile));
+			FileInputStream fis = new FileInputStream(inputFile);
+
+			String fileName=inputFile.getName().toLowerCase();
+			if(fileName.endsWith(".gz"))
+			{
+				br = new BufferedReader(new InputStreamReader(new GZIPInputStream(fis), "UTF-8"));
+			}
+			else
+			{
+				br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+			}
 			for(int i = 0; i < 5; i++)
 			{
 				String line = br.readLine();

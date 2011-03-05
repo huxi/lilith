@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.zip.GZIPInputStream;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -60,10 +61,20 @@ public class JulImportCallable
 		long fileSize = inputFile.length();
 		setNumberOfSteps(fileSize);
 		FileInputStream fis = new FileInputStream(inputFile);
-
 		CountingInputStream cis = new CountingInputStream(fis);
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(cis, "utf-8"));
+
+		String fileName=inputFile.getName().toLowerCase();
+		XMLStreamReader reader;
+		if(fileName.endsWith(".gz"))
+		{
+			reader = inputFactory.createXMLStreamReader(new InputStreamReader(new GZIPInputStream(cis), "utf-8"));
+		}
+		else
+		{
+			reader = inputFactory.createXMLStreamReader(new InputStreamReader(cis, "utf-8"));
+		}
+
 		for(; ;)
 		{
 			try

@@ -80,6 +80,9 @@
 
 		<release version="0.9.41" date="TBD" description="Future Release">
 			<action dev="jhux" type="update">
+				Importing gzipped java.util.logging or log4j xml is now supported.
+			</action>
+			<action dev="jhux" type="update">
 				Using JComboBox &amp; CardLayout instead of JTabbedPane in Preferences Dialog.
 			</action>
 			<action dev="jhux" type="update" issue="12">
