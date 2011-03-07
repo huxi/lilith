@@ -108,7 +108,7 @@ public class ColorChooserPanel
 
 	private void updateComponents()
 	{
-		if(logger.isWarnEnabled()) logger.warn("updateComponents...");
+		if(logger.isDebugEnabled()) logger.debug("updateComponents...");
 
 		// Due to http://bugs.sun.com/view_bug.do?bug_id=4222508
 		// reported 1999-03-22 and seemingly fixed in some beta build

@@ -17,23 +17,25 @@
  */
 package de.huxhorn.lilith.swing.preferences.table;
 
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.table.ColorScheme;
+
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
+import java.util.Map;
 
-public class ConditionTableColumnModel
+public class LoggingLevelColumnModel
 	extends DefaultTableColumnModel
 {
 	public static final int DEFAULT_COLUMN_INDEX_INDEX = 0;
-	public static final int DEFAULT_COLUMN_INDEX_NAME = 1;
-	public static final int DEFAULT_COLUMN_INDEX_PREVIEW = 2;
-	public static final int DEFAULT_COLUMN_INDEX_ACTIVE = 3;
+	public static final int DEFAULT_COLUMN_INDEX_PREVIEW = 1;
 
 	private static final String DEFAULT_COLUMN_NAME_INDEX = "#";
-	private static final String DEFAULT_COLUMN_NAME_NAME = "Name";
 	private static final String DEFAULT_COLUMN_NAME_PREVIEW = "Preview";
-	private static final String DEFAULT_COLUMN_NAME_ACTIVE = "Active";
+	
+	private LoggingLevelPreviewRenderer previewRenderer;
 
-	public ConditionTableColumnModel()
+	public LoggingLevelColumnModel()
 	{
 		super();
 
@@ -46,24 +48,20 @@ public class ConditionTableColumnModel
 
 		{
 			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_NAME);
-			col.setCellRenderer(new ConditionNameRenderer());
-			addColumn(col);
-		}
-
-		{
-			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_PREVIEW);
-			col.setCellRenderer(new ConditionPreviewRenderer());
+			previewRenderer = new LoggingLevelPreviewRenderer();
+			col.setCellRenderer(previewRenderer);
 			addColumn(col);
 		}
+	}
 
-		{
-			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_ACTIVE);
-			col.setCellRenderer(new ConditionActiveRenderer());
-			addColumn(col);
-		}
+	public Map<LoggingEvent.Level, ColorScheme> getSchemes()
+	{
+		return previewRenderer.getSchemes();
+	}
 
+	public void setSchemes(Map<LoggingEvent.Level, ColorScheme> schemes)
+	{
+		previewRenderer.setSchemes(schemes);
 	}
 }

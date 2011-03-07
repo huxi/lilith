@@ -79,6 +79,9 @@
 		</release>
 
 		<release version="0.9.41" date="TBD" description="Future Release">
+			<action dev="jhux" type="update" issue="5">
+				Colors of logging level and access status type are now configurable.
+			</action>
 			<action dev="jhux" type="update">
 				Importing gzipped java.util.logging or log4j xml is now supported.
 			</action>

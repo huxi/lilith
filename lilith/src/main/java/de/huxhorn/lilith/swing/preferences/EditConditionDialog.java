@@ -34,7 +34,7 @@ import javax.swing.*;
 public class EditConditionDialog
 	extends JDialog
 {
-	private final Logger logger = LoggerFactory.getLogger(EditSourceNameDialog.class);
+	private final Logger logger = LoggerFactory.getLogger(EditConditionDialog.class);
 
 	private SavedCondition savedCondition;
 	private JTextField conditionName;

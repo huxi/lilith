@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.preferences;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableColumnModel;
+import de.huxhorn.lilith.swing.preferences.table.ConditionTableModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.Windows;
 

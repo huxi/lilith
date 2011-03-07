@@ -82,6 +82,8 @@ public class PreferencesDialog
 		SourceLists,
 		SourceFiltering,
 		Conditions,
+		LoggingLevels,
+		AccessStatus,
 		Troubleshooting
 	}
 
@@ -102,6 +104,9 @@ public class PreferencesDialog
 	private SourcesPanel sourcesPanel;
 	private SourceListsPanel sourceListsPanel;
 	private ConditionsPanel conditionsPanel;
+	private LoggingLevelPanel loggingLevelPanel;
+	private AccessStatusTypePanel accessStatusTypePanel;
+
 	private Map<String, String> sourceNames;
 	private Map<String, Set<String>> sourceLists;
 	private SourceFilteringPanel sourceFilteringPanel;
@@ -137,18 +142,15 @@ public class PreferencesDialog
 		sourceListsPanel = new SourceListsPanel(this);
 		sourceFilteringPanel = new SourceFilteringPanel(this);
 		conditionsPanel = new ConditionsPanel(this);
+		loggingLevelPanel = new LoggingLevelPanel(this);
+		accessStatusTypePanel = new AccessStatusTypePanel(this);
 		TroubleshootingPanel troubleshootingPanel = new TroubleshootingPanel(this);
 
 		comboBoxModel = new DefaultComboBoxModel();
-		comboBoxModel.addElement(Panes.General);
-		comboBoxModel.addElement(Panes.StartupShutdown);
-		comboBoxModel.addElement(Panes.Windows);
-		comboBoxModel.addElement(Panes.Sounds);
-		comboBoxModel.addElement(Panes.Sources);
-		comboBoxModel.addElement(Panes.SourceLists);
-		comboBoxModel.addElement(Panes.SourceFiltering);
-		comboBoxModel.addElement(Panes.Conditions);
-		comboBoxModel.addElement(Panes.Troubleshooting);
+		for(Panes current : Panes.values())
+		{
+			comboBoxModel.addElement(current);
+		}
 		comboBox = new JComboBox(comboBoxModel);
 		comboBox.setRenderer(new MyComboBoxRenderer());
 		comboBox.setEditable(false);
@@ -166,6 +168,8 @@ public class PreferencesDialog
 		content.add(sourceListsPanel, Panes.SourceLists.toString());
 		content.add(sourceFilteringPanel, Panes.SourceFiltering.toString());
 		content.add(conditionsPanel, Panes.Conditions.toString());
+		content.add(loggingLevelPanel, Panes.LoggingLevels.toString());
+		content.add(accessStatusTypePanel, Panes.AccessStatus.toString());
 		content.add(troubleshootingPanel, Panes.Troubleshooting.toString());
 
 		// Main buttons
@@ -210,7 +214,8 @@ public class PreferencesDialog
 		sourcesPanel.initUI();
 		sourceListsPanel.initUI();
 		sourceFilteringPanel.initUI();
-		conditionsPanel.initUI();
+		loggingLevelPanel.initUI();
+		accessStatusTypePanel.initUI();
 	}
 
 	public Map<String, String> getSourceNames()
@@ -294,6 +299,8 @@ public class PreferencesDialog
 		windowsPanel.saveSettings();
 		soundsPanel.saveSettings();
 		conditionsPanel.saveSettings();
+		loggingLevelPanel.saveSettings();
+		accessStatusTypePanel.saveSettings();
 		applicationPreferences.setSourceNames(sourceNames);
 		applicationPreferences.setSourceLists(sourceLists);
 		applicationPreferences.setBlackListName(blackListName);
@@ -633,6 +640,14 @@ public class PreferencesDialog
 						break;
 					case Conditions:
 						title="Conditions";
+						toolTip=null;
+						break;
+					case LoggingLevels:
+						title="Logging levels";
+						toolTip=null;
+						break;
+					case AccessStatus:
+						title="Access status types";
 						toolTip=null;
 						break;
 					case Troubleshooting:

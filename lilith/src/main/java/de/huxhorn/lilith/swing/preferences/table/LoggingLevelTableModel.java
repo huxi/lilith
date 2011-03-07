@@ -15,43 +15,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing.preferences;
+package de.huxhorn.lilith.swing.preferences.table;
 
+import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-public class ConditionTableModel
+public class LoggingLevelTableModel
 	implements TableModel
 {
-	private final Logger logger = LoggerFactory.getLogger(ConditionTableModel.class);
+	private final Logger logger = LoggerFactory.getLogger(LoggingLevelTableModel.class);
 
-	public static final int CONDITION_COLUMN = 0;
+	public static final int LEVEL_COLUMN = 0;
 
-	private List<SavedCondition> data;
+	private List<LoggingEvent.Level> data;
 	private final EventListenerList eventListenerList;
 
-	public ConditionTableModel(List<SavedCondition> data)
+	public LoggingLevelTableModel()
 	{
 		eventListenerList = new EventListenerList();
-		setData(data);
+		LoggingEvent.Level[] values = LoggingEvent.Level.values();
+		data = Collections.unmodifiableList(Arrays.asList(values));
 	}
 
-	public void setData(List<SavedCondition> data)
-	{
-		this.data = data;
-		fireTableChange(new TableModelEvent(this));
-	}
-
-	public List<SavedCondition> getData()
+	public List<LoggingEvent.Level> getData()
 	{
 		return data;
 	}
@@ -74,7 +71,7 @@ public class ConditionTableModel
 	{
 		switch(columnIndex)
 		{
-			case CONDITION_COLUMN:
+			case LEVEL_COLUMN:
 				return "Condition";
 		}
 		return null;
@@ -84,20 +81,14 @@ public class ConditionTableModel
 	{
 		switch(columnIndex)
 		{
-			case CONDITION_COLUMN:
-				return SavedCondition.class;
+			case LEVEL_COLUMN:
+				return LoggingEvent.Level.class;
 		}
 		return null;
 	}
 
 	public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
-		switch(columnIndex)
-		{
-			case CONDITION_COLUMN:
-				return false;
-		}
-
 		return false;
 	}
 
@@ -109,7 +100,7 @@ public class ConditionTableModel
 		}
 		switch(columnIndex)
 		{
-			case CONDITION_COLUMN:
+			case LEVEL_COLUMN:
 			{
 				return data.get(rowIndex);
 			}
@@ -119,70 +110,11 @@ public class ConditionTableModel
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
-		if(data == null || columnIndex > 0 || rowIndex < 0 || rowIndex >= data.size())
-		{
-			return;
-		}
-		switch(columnIndex)
-		{
-			case CONDITION_COLUMN:
-			{
-				SavedCondition newValue = (SavedCondition) aValue;
-				data.set(rowIndex, newValue);
-				fireTableChange(new TableModelEvent(this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
-			}
-		}
-
 	}
 
-	public void remove(int row)
+	public void refresh()
 	{
-		if(row >= 0)
-		{
-			if(row < data.size())
-			{
-				data.remove(row);
-				fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
-			}
-		}
-
-	}
-
-	public int moveUp(int row)
-	{
-		int result = -1;
-		if(row >= 0)
-		{
-			int newRow = row - 1;
-			if(row < data.size() && newRow >= 0 && newRow < data.size())
-			{
-				SavedCondition prev = data.set(newRow, data.get(row));
-				data.set(row, prev);
-				fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
-				fireTableChange(new TableModelEvent(this, newRow, newRow, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
-				result = newRow;
-			}
-		}
-		return result;
-	}
-
-	public int moveDown(int row)
-	{
-		int result = -1;
-		if(row >= 0)
-		{
-			int newRow = row + 1;
-			if(row < data.size() && newRow >= 0 && newRow < data.size())
-			{
-				SavedCondition prev = data.set(newRow, data.get(row));
-				data.set(row, prev);
-				fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
-				fireTableChange(new TableModelEvent(this, newRow, newRow, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
-				result = newRow;
-			}
-		}
-		return result;
-
+		fireTableChange(new TableModelEvent(this));
 	}
 
 	private void fireTableChange(TableModelEvent evt)
@@ -196,23 +128,6 @@ public class ConditionTableModel
 		{
 			SwingUtilities.invokeLater(r);
 		}
-	}
-
-	public void set(int row, SavedCondition savedCondition)
-	{
-		if(row > -1 && row < data.size())
-		{
-			data.set(row, savedCondition);
-			fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
-		}
-	}
-
-	public int add(SavedCondition savedCondition)
-	{
-		data.add(savedCondition);
-		int row = data.size() - 1;
-		fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT));
-		return row;
 	}
 
 	private class FireTableChangeRunnable

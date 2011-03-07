@@ -23,12 +23,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-public class ConditionIndexRenderer
+public class IndexRenderer
 	implements TableCellRenderer
 {
 	private DefaultTableCellRenderer renderer;
 
-	public ConditionIndexRenderer()
+	public IndexRenderer()
 	{
 		super();
 		renderer = new DefaultTableCellRenderer();
