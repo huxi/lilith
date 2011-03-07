@@ -75,7 +75,7 @@ public class LilithJsonStreamLoggingEventProducer
 						int readByte = inputStream.read();
 						if(readByte == -1)
 						{
-							if(logger.isInfoEnabled()) logger.info("Read -1!!");
+							if(logger.isDebugEnabled()) logger.debug("Read -1, stopping...");
 							return;
 						}
 						byte current = (byte) readByte;
