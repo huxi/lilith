@@ -23,17 +23,18 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 import de.huxhorn.sulky.formatting.SimpleXml;
 
-import java.util.StringTokenizer;
-
 import javax.swing.*;
 
 public class MessageTooltipGenerator
 	implements TooltipGenerator
 {
+	private static final int MAX_LINE_LENGTH = 80;
+	private static final int MAX_LINES = 20;
+	private static final String TAB_REPLACEMENT = "    ";
+	private static final String LINE_TRUNCATION = "[..]";
+
 	public String createTooltipText(JTable table, int row)
 	{
-		final int MAX_LINE_LENGTH = 80;
-		final int MAX_LINES = 20;
 		String tooltip = null;
 		Object value = table.getValueAt(row, 0);
 		if(value instanceof EventWrapper)
@@ -52,47 +53,60 @@ public class MessageTooltipGenerator
 				if(text != null)
 				{
 					// crop to a sane size, e.g. 80x25 characters
-					StringTokenizer tok = new StringTokenizer(text, "\n", false);
-					StringBuilder string = new StringBuilder();
+					StringBuilder tooltipBuilder=new StringBuilder();
+					StringBuilder lineBuilder=new StringBuilder();
 					int lineCounter = 0;
-					while(tok.hasMoreTokens())
+					for(int i=0;i<text.length();i++)
 					{
-						String line = tok.nextToken();
-						line = line.trim();
-						if(line.length() > 0)
+						char current = text.charAt(i);
+						if(current == '\t')
 						{
-							line = line.replace('\t', ' ');
+							lineBuilder.append(TAB_REPLACEMENT);
+						}
+						else if(current == '\n')
+						{
 							if(lineCounter < MAX_LINES)
 							{
-								if(lineCounter > 0)
-								{
-									string.append("\n");
-								}
-								if(line.length() > MAX_LINE_LENGTH)
-								{
-									string.append(line.substring(0, MAX_LINE_LENGTH - 4));
-									string.append("[..]");
-								}
-								else
-								{
-									string.append(line);
-								}
+								appendTruncated(lineBuilder, tooltipBuilder);
+								tooltipBuilder.append('\n');
 							}
+							lineBuilder.setLength(0);
 							lineCounter++;
+						}
+						else if(current != '\r')
+						{
+							lineBuilder.append(current);
 						}
 					}
 					if(lineCounter >= MAX_LINES)
 					{
 						int remaining = lineCounter - MAX_LINES + 1;
-						string.append("\n[.. ").append(remaining).append(" more lines ..]");
+						tooltipBuilder.append("[.. ").append(remaining).append(" more lines ..]");
 					}
-					tooltip = SimpleXml.escape(string.toString());
+					else
+					{
+						appendTruncated(lineBuilder, tooltipBuilder);
+					}
+					tooltip = SimpleXml.escape(tooltipBuilder.toString());
 					tooltip = tooltip.replace("\n", "<br>");
 					tooltip = "<html><tt><pre>" + tooltip + "</pre></tt></html>";
 				}
 			}
 		}
 		return tooltip;
+	}
+
+	private void appendTruncated(StringBuilder sourceBuilder, StringBuilder targetBuilder)
+	{
+		if(sourceBuilder.length() > MAX_LINE_LENGTH)
+		{
+			targetBuilder.append(sourceBuilder.substring(0, MAX_LINE_LENGTH - 4));
+			targetBuilder.append(LINE_TRUNCATION);
+		}
+		else
+		{
+			targetBuilder.append(sourceBuilder.toString());
+		}
 	}
 
 }
