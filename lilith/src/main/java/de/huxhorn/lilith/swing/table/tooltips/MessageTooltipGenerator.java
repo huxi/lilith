@@ -29,7 +29,7 @@ public class MessageTooltipGenerator
 	implements TooltipGenerator
 {
 	private static final int MAX_LINE_LENGTH = 80;
-	private static final int MAX_LINES = 20;
+	private static final int MAX_LINES = 25;
 	private static final String TAB_REPLACEMENT = "    ";
 	private static final String LINE_TRUNCATION = "[..]";
 
