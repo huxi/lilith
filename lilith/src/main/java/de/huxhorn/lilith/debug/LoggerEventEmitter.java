@@ -141,9 +141,11 @@ public class LoggerEventEmitter
 		execute(new LogAnonymousRunnable(delay));
 	}
 
-	public void logSkull()
+	public void logASCII()
 	{
 		execute(new LogSkullRunnable(delay));
+		execute(new LogPinupRunnable(delay));
+		execute(new LogPinupLargeRunnable(delay));
 	}
 
 

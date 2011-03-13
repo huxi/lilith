@@ -80,7 +80,7 @@ public class DebugDialog
 		gbc.gridy = 0;
 		loggingPanel.add(button, gbc);
 
-		action = new LogSkullAction();
+		action = new LogASCIIArtAction();
 		button = new JButton(action);
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -208,20 +208,20 @@ public class DebugDialog
 		}
 	}
 
-	private class LogSkullAction
+	private class LogASCIIArtAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = -3162155864945849819L;
 
-		public LogSkullAction()
+		public LogASCIIArtAction()
 		{
-			super("Log skull");
-			putValue(Action.SHORT_DESCRIPTION, "Logs an ASCII-art skull. This can be used to see if details view is handling preformatted text correctly.");
+			super("Log ASCII-Art");
+			putValue(Action.SHORT_DESCRIPTION, "Logs some ASCII-Art. This can be used to see if details view is handling preformatted text correctly. May be NSFW depending on the closed-mindedness of your working environment...");
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			loggerEventEmitter.logSkull();
+			loggerEventEmitter.logASCII();
 		}
 	}
 
@@ -337,7 +337,7 @@ public class DebugDialog
 		public LogAllAction()
 		{
 			super("Log all!");
-			putValue(Action.SHORT_DESCRIPTION, "Executes all of the above logging examples.");
+			putValue(Action.SHORT_DESCRIPTION, "Executes all of the above logging examples. May be NSFW depending on the closed-mindedness of your working environment...");
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -350,7 +350,7 @@ public class DebugDialog
 			loggerEventEmitter.logException2();
 			loggerEventEmitter.logParamException();
 			loggerEventEmitter.logParamException2();
-			loggerEventEmitter.logSkull();
+			loggerEventEmitter.logASCII();
 			loggerEventEmitter.logTruth();
 			loggerEventEmitter.logAnonymous();
 			loggerEventEmitter.logNDC();
