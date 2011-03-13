@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class LogNdcRunnable
 	extends AbstractDebugRunnable
 {
-	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
+	private final Logger logger = LoggerFactory.getLogger(LogNdcRunnable.class);
 
 	public LogNdcRunnable(int delay)
 	{

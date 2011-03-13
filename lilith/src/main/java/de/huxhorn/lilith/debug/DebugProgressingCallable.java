@@ -5,8 +5,6 @@ import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 public class DebugProgressingCallable
 	extends AbstractProgressingCallable<Long>
 {
-	//private final Logger logger = LoggerFactory.getLogger(DebugProgressingCallable.class);
-
 	public Long call()
 		throws Exception
 	{
@@ -16,7 +14,6 @@ public class DebugProgressingCallable
 		{
 			setCurrentStep(i);
 			Thread.sleep(500);
-			//if(logger.isInfoEnabled()) logger.info("At step {}...", i);
 		}
 
 		return 31337L;

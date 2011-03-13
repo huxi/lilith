@@ -25,7 +25,7 @@ import org.slf4j.Marker;
 public class LogTruthRunnable
 	extends AbstractDebugRunnable
 {
-	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
+	private final Logger logger = LoggerFactory.getLogger(LogTruthRunnable.class);
 	private Marker marker;
 	private boolean formatted;
 

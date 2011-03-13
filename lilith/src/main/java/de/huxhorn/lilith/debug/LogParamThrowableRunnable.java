@@ -24,7 +24,7 @@ import org.slf4j.MDC;
 public class LogParamThrowableRunnable
 	extends AbstractDebugRunnable
 {
-	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
+	private final Logger logger = LoggerFactory.getLogger(LogParamThrowableRunnable.class);
 	private Throwable throwable;
 
 	public LogParamThrowableRunnable(int delay, Throwable throwable)

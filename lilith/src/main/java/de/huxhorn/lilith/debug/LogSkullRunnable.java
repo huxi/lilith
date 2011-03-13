@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class LogSkullRunnable
 	extends AbstractDebugRunnable
 {
-	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
+	private final Logger logger = LoggerFactory.getLogger(LogSkullRunnable.class);
 
 	public LogSkullRunnable(int delay)
 	{
@@ -58,7 +58,7 @@ public class LogSkullRunnable
 				"          q__p\n" +
 				"          q__p\n" +
 				"          q__p\n" +
-				"          q__p\n");
+				"          q__p");
 		}
 	}
 }

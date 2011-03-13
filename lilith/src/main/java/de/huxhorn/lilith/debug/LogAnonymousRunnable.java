@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class LogAnonymousRunnable
 	extends AbstractDebugRunnable
 {
-	private final Logger logger = LoggerFactory.getLogger(LogStuffRunnable.class);
+	private final Logger logger = LoggerFactory.getLogger(LogAnonymousRunnable.class);
 
 	public LogAnonymousRunnable(int delay)
 	{
