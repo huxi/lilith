@@ -24,8 +24,12 @@
     </li>
 
     <li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
-        This is a limitation of Flying Saucer that's used as the XHTML renderer.
+        <br/>This is a limitation of Flying Saucer that's used as the XHTML renderer.
     </li>
+
+	<li>The first line of the message in HTML view not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
+		<br/>This is a limitation of Flying Saucer that's used as the XHTML renderer.
+	</li>
 
     <li>'Copy event' was meant to copy the event as HTML but this is severely broken in Java.<br/>
         There's no workaround available but this will *probably* be fixed in JDK7.
