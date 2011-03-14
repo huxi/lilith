@@ -23,12 +23,20 @@
 		be a brain-issue ;) - enlighten me!
     </li>
 
-    <li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
-        <br/>This is a limitation of Flying Saucer that's used as the XHTML renderer.
-    </li>
+	<li>Flying Saucer related issues:
+		<ul>
+			<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+				<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>
+			</li>
 
-	<li>The first line of the message in HTML view not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
-		<br/>This is a limitation of Flying Saucer that's used as the XHTML renderer.
+			<li>The first line of the message in HTML view is not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
+				<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=125">Issue 125: &lt;pre&gt; ignores leading whitespace</a>
+			</li>
+
+			<li>Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+				<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=105">Issue 105: URLs with anchors</a>
+			</li>
+		</ul>
 	</li>
 
     <li>'Copy event' was meant to copy the event as HTML but this is severely broken in Java.<br/>
