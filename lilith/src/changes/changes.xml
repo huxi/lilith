@@ -80,7 +80,7 @@
 
 		<release version="0.9.41" date="TBD" description="Future Release">
 			<action dev="jhux" type="update">
-				Better generation of message tooltip. Content is not tailed anymore so.
+				Better generation of message tooltip. Content is not tailed anymore.
 			</action>
 			<action dev="jhux" type="update" issue="5">
 				Colors of logging level and access status type are now configurable.
