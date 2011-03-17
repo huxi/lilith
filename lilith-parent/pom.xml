@@ -507,7 +507,7 @@
 			<dependency>
 				<groupId>com.beust</groupId>
 				<artifactId>jcommander</artifactId>
-				<version>1.13</version>
+				<version>1.17</version>
 			</dependency>
 			
 			<dependency>

@@ -28,13 +28,10 @@ public class Cat
 {
 	public static final String NAME = "cat";
 
-	@Parameter(names = { "-n", "--number-of-lines"  }, description = "number of entries printed by tail")
+	@Parameter(names = { "-n", "--number-of-lines" }, description = "number of entries printed by tail")
 	public Integer numberOfLines = -1;
 
-//	@Parameter(names = { "-p", "--pattern"  }, description = "pattern used by 'cat'. See http://logback.qos.ch/manual/layouts.html#ClassicPatternLayout and http://logback.qos.ch/manual/layouts.html#AccessPatternLayout")
-//	public String pattern;
-
-	@Parameter(names = { "-p", "--pattern"  }, description = "pattern used by 'cat'. See http://logback.qos.ch/manual/layouts.html")
+	@Parameter(names = { "-p", "--pattern" }, description = "pattern used by 'cat'. See http://logback.qos.ch/manual/layouts.html#ClassicPatternLayout and http://logback.qos.ch/manual/layouts.html#AccessPatternLayout")
 	public String pattern;
 
 	@Parameter(description = "'cat' the given Lilith logfile.")

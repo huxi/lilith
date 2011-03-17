@@ -28,16 +28,13 @@ public class Tail
 {
 	public static final String NAME = "tail";
 	
-	@Parameter(names = { "-f", "--keep-running"  }, description = "keep tailing the given Lilith logfile.")
+	@Parameter(names = { "-f", "--keep-running" }, description = "keep tailing the given Lilith logfile.")
 	public boolean keepRunning = false;
 
-	@Parameter(names = { "-n", "--number-of-lines"  }, description = "number of entries printed by tail")
+	@Parameter(names = { "-n", "--number-of-lines" }, description = "number of entries printed by tail")
 	public Integer numberOfLines = 20;
 
-//	@Parameter(names = { "-p", "--pattern"  }, description = "pattern used by 'tail'. See http://logback.qos.ch/manual/layouts.html#ClassicPatternLayout and http://logback.qos.ch/manual/layouts.html#AccessPatternLayout")
-//	public String pattern;
-
-	@Parameter(names = { "-p", "--pattern"  }, description = "pattern used by 'tail'. See http://logback.qos.ch/manual/layouts.html")
+	@Parameter(names = { "-p", "--pattern" }, description = "pattern used by 'tail'. See http://logback.qos.ch/manual/layouts.html#ClassicPatternLayout and http://logback.qos.ch/manual/layouts.html#AccessPatternLayout")
 	public String pattern;
 
 	@Parameter(description = "'tail' the given Lilith logfile.")

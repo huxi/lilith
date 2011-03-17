@@ -119,7 +119,7 @@
 				Jackson 1.7.1
 			</action>
 			<action dev="jhux" type="update">
-				JCommander 1.13
+				JCommander 1.17
 			</action>
 			<action dev="jhux" type="update">
 				JGoodies Looks 2.2.2

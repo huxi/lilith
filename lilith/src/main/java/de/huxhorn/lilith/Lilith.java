@@ -219,7 +219,7 @@ public class Lilith
 		catch(ParameterException ex)
 		{
 			printAppInfo(appTitle, false);
-			System.out.println("\n"+ex.getMessage());
+			System.out.println(ex.getMessage()+"\n");
 			printHelp(commander);
 			System.exit(-1);
 		}
@@ -231,19 +231,22 @@ public class Lilith
 			appTitle += " - " + sdf.format(d);
 			appTitle += " - " + APP_REVISION;
 		}
+
+		if(cl.showHelp)
+		{
+			printAppInfo(appTitle, false);
+			printHelp(commander);
+			System.exit(0);
+		}
+
 		String command = commander.getParsedCommand();
 		if(!Tail.NAME.equals(command) && !Cat.NAME.equals(command)) // don't print info in case of cat or tail
 		{
-			printAppInfo(appTitle, !cl.showHelp);
+			printAppInfo(appTitle, true);
 		}
 
 		if(cl.verbose)
 		{
-			for(int i = 0; i < argv.length; i++)
-			{
-				System.out.println("args[" + i + "]: " + argv[i]);
-			}
-
 			initVerboseLogging();
 		}
 
@@ -381,12 +384,6 @@ public class Lilith
 			flushLicensed();
 		}
 
-		if(cl.showHelp)
-		{
-			printHelp(commander);
-			System.exit(0);
-		}
-
 		startLilith(appTitle, cl.enableBonjour);
 	}
 
@@ -397,15 +394,7 @@ public class Lilith
 		String command = commander.getParsedCommand();
 		if(command != null)
 		{
-			Map<String, JCommander> commands = commander.getCommands();
-			if(commands.containsKey(command))
-			{
-				commander.usage(command);
-			}
-			else
-			{
-				System.out.println("Unknown command '"+command+"'!");
-			}
+			commander.usage(command);
 		}
 	}
 
