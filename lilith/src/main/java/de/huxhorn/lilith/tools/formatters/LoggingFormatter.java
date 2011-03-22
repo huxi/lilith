@@ -19,11 +19,11 @@ package de.huxhorn.lilith.tools.formatters;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.spi.ClassPackagingData;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.LoggerContextVO;
-import ch.qos.logback.classic.spi.ThrowableProxy;
-import ch.qos.logback.classic.spi.ThrowableProxyVO;
+import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.status.Status;
 import ch.qos.logback.core.status.StatusManager;
@@ -32,9 +32,11 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -201,18 +203,23 @@ public class LoggingFormatter
 
 		public LoggerContextVO getLoggerContextVO()
 		{
+			LoggerContextVO result=null;
 			if(event != null)
 			{
-				// TODO: LoggerContextVO result=new LoggerContextVO(loggerContext);
+				de.huxhorn.lilith.data.eventsource.LoggerContext loggerContext = event.getLoggerContext();
+				if(loggerContext != null)
+				{
+					// TODO: result=new LoggerContextVO(loggerContext.getName(), loggerContext.getProperties(), loggerContext.getBirthTime());
+				}
 			}
-			return null;
+			return result;
 		}
 
 		public IThrowableProxy getThrowableProxy()
 		{
 			if(event != null)
 			{
-				// TODO: return ThrowableProxyVO.build(throwableProxy);
+				return ThrowableProxyFoo.convert(event.getThrowable());
 			}
 			return null;
 		}
@@ -250,7 +257,8 @@ public class LoggingFormatter
 		{
 			if(event != null)
 			{
-				// TODO: Marker
+				Map<String, Marker> markerMap = new HashMap<String, Marker>();
+				return convert(event.getMarker(), markerMap);
 			}
 			return null;
 		}
@@ -289,6 +297,147 @@ public class LoggingFormatter
 		public void prepareForDeferredProcessing()
 		{
 		}
+
+		private static Marker convert(de.huxhorn.lilith.data.logging.Marker originalMarker, Map<String, Marker> markerMap)
+		{
+			Marker result = null;
+			if(originalMarker != null)
+			{
+				String originalName = originalMarker.getName();
+				if(originalName != null)
+				{
+					result = markerMap.get(originalName);
+					if(result == null)
+					{
+						result = MarkerFactory.getDetachedMarker(originalName);
+						markerMap.put(originalName, result);
+
+						Map<String,de.huxhorn.lilith.data.logging.Marker> references = originalMarker.getReferences();
+						if(references != null)
+						{
+							for(Map.Entry<String, de.huxhorn.lilith.data.logging.Marker> current : references.entrySet())
+							{
+								String name = current.getKey();
+								de.huxhorn.lilith.data.logging.Marker value = current.getValue();
+								Marker marker = markerMap.get(name);
+								if(marker == null)
+								{
+									marker = convert(value, markerMap);
+								}
+								result.add(marker);
+							}
+						}
+					}
+				}
+			}
+			return result;
+		}
 	}
 
+	private static class ThrowableProxyFoo
+		implements IThrowableProxy
+	{
+		private String message;
+		private String className;
+		private StackTraceElementProxy[] stackTraceElementProxyArray;
+		private IThrowableProxy cause;
+		private int commonFrames;
+
+		public String getMessage()
+		{
+			return message;
+		}
+
+		public void setMessage(String message)
+		{
+			this.message = message;
+		}
+
+		public String getClassName()
+		{
+			return className;
+		}
+
+		public void setClassName(String className)
+		{
+			this.className = className;
+		}
+
+		public StackTraceElementProxy[] getStackTraceElementProxyArray()
+		{
+			return stackTraceElementProxyArray;
+		}
+
+		public void setStackTraceElementProxyArray(StackTraceElementProxy[] stackTraceElementProxyArray)
+		{
+			this.stackTraceElementProxyArray = stackTraceElementProxyArray;
+		}
+
+		public IThrowableProxy getCause()
+		{
+			return cause;
+		}
+
+		public void setCause(IThrowableProxy cause)
+		{
+			this.cause = cause;
+		}
+
+		public int getCommonFrames()
+		{
+			return commonFrames;
+		}
+
+		public void setCommonFrames(int commonFrames)
+		{
+			this.commonFrames = commonFrames;
+		}
+
+		private static ThrowableProxyFoo convert(ThrowableInfo throwableInfo)
+		{
+			ThrowableProxyFoo result=null;
+			if(throwableInfo != null)
+			{
+				result = new ThrowableProxyFoo();
+				result.setMessage(throwableInfo.getMessage());
+				result.setClassName(throwableInfo.getName());
+				result.setCommonFrames(throwableInfo.getOmittedElements());
+				result.setStackTraceElementProxyArray(convert(throwableInfo.getStackTrace()));
+				result.setCause(convert(throwableInfo.getCause()));
+			}
+			return result;
+		}
+
+		private static StackTraceElementProxy[] convert(ExtendedStackTraceElement[] stackTrace)
+		{
+			StackTraceElementProxy[] result = null;
+			if(stackTrace != null)
+			{
+				result = new StackTraceElementProxy[stackTrace.length];
+				for(int i=0;i<stackTrace.length;i++)
+				{
+					ExtendedStackTraceElement current = stackTrace[i];
+					if(current == null)
+					{
+						continue;
+					}
+					StackTraceElement ste = current.getStackTraceElement();
+					if(ste == null)
+					{
+						continue;
+					}
+					result[i] = new StackTraceElementProxy(ste);
+					String codeLocation=current.getCodeLocation();
+					String version=current.getVersion();
+					if(codeLocation != null || version != null)
+					{
+						boolean exact = current.isExact();
+						ClassPackagingData cpd=new ClassPackagingData(codeLocation, version, exact);
+						result[i].setClassPackagingData(cpd);
+					}
+				}
+			}
+			return result;
+		}
+	}
 }
