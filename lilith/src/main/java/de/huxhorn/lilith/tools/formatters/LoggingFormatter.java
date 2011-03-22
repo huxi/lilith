@@ -210,6 +210,7 @@ public class LoggingFormatter
 				if(loggerContext != null)
 				{
 					// TODO: result=new LoggerContextVO(loggerContext.getName(), loggerContext.getProperties(), loggerContext.getBirthTime());
+					// see http://jira.qos.ch/browse/LBCLASSIC-257
 				}
 			}
 			return result;
