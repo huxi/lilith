@@ -80,6 +80,9 @@
 
 		<release version="0.9.41" date="TBD" description="Future Release">
 			<action dev="jhux" type="update">
+				Added support for cat/tail of Lilith AccessEvent files.
+			</action>
+			<action dev="jhux" type="update">
 				Better generation of message tooltip. Content is not tailed anymore.
 			</action>
 			<action dev="jhux" type="update" issue="5">
