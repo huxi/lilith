@@ -98,6 +98,7 @@ import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Or;
 import de.huxhorn.sulky.formatting.SimpleXml;
+import de.huxhorn.sulky.groovy.GroovyInstance;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
@@ -106,7 +107,6 @@ import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
 import groovy.lang.Binding;
-import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.http.HttpEntity;
@@ -231,6 +231,7 @@ public class MainFrame
 	private RrdLoggingEventHandler rrdLoggingEventHandler;
 	private static final int EXPORT_WARNING_SIZE = 20000;
 	private Condition findActiveCondition;
+	private GroovyInstance detailsViewInstance;
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -481,6 +482,11 @@ public class MainFrame
 
 		setShowingToolbar(applicationPreferences.isShowingToolbar());
 		setShowingStatusbar(applicationPreferences.isShowingStatusbar());
+
+		File detailsViewRoot = getApplicationPreferences().getDetailsViewRoot();
+		File scriptFile = new File(detailsViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
+		detailsViewInstance = new GroovyInstance();
+		detailsViewInstance.setGroovyFileName(scriptFile.getAbsolutePath());
 	}
 
 	/**
@@ -2013,69 +2019,31 @@ public class MainFrame
 		statusLabel.setText(statusText.toString());
 	}
 
-	private long lastScriptRefresh = 0;
-	private long previousScriptFileTimestamp = 0;
-	private Script detailsViewScript;
-	private static final int SCRIPT_REFRESH_INTERVAL = 5000;
-
-	private void initDetailsViewScript()
-	{
-		long current = System.currentTimeMillis();
-		if(detailsViewScript != null && current - lastScriptRefresh < SCRIPT_REFRESH_INTERVAL)
-		{
-			return;
-		}
-
-		lastScriptRefresh = current;
-
-		File detailsViewRoot = getApplicationPreferences().getDetailsViewRoot();
-		File scriptFile = new File(detailsViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
-		long scriptFileTimestamp = scriptFile.lastModified();
-		if(detailsViewScript == null || previousScriptFileTimestamp != scriptFileTimestamp)
-		{
-			if(!scriptFile.isFile())
-			{
-				if(logger.isWarnEnabled()) logger.warn("Scriptfile '{}' is not a file!", scriptFile.getAbsolutePath());
-			}
-			GroovyClassLoader gcl = new GroovyClassLoader();
-			gcl.setShouldRecompile(true);
-			try
-			{
-				Class clazz = gcl.parseClass(scriptFile);
-				Object instance = clazz.newInstance();
-				if(instance instanceof Script)
-				{
-					detailsViewScript = (Script) instance;
-					previousScriptFileTimestamp = scriptFileTimestamp;
-				}
-			}
-			catch(Throwable e)
-			{
-				if(logger.isWarnEnabled())
-				{
-					logger
-						.warn("Exception while instanciating groovy condition '" + scriptFile
-							.getAbsolutePath() + "'!", e);
-				}
-				detailsViewScript = null;
-			}
-		}
-	}
 
 
 	public String createMessage(EventWrapper wrapper)
 	{
-		initDetailsViewScript();
 		String message = "<html><body>detailsView Script returned null!</body></html>";
-//		if(wrapper!=null)
-//		{
-		//message=messageFormatter.createMessage(wrapper, true);
-		if(detailsViewScript == null)
+
+		Object instance = detailsViewInstance.getInstance();
+		if(instance == null)
 		{
-			message = "<html><body>detailsView Script is broken!</body></html>";
+			StringBuilder msg = new StringBuilder("<html><body>detailsView Script is broken!");
+			String errorMessage = detailsViewInstance.getErrorMessage();
+			if(errorMessage != null)
+			{
+				msg.append("<br/>").append(message);
+			}
+			Throwable errorCause = detailsViewInstance.getErrorCause();
+			if(errorCause != null)
+			{
+				msg.append("<br/>").append(errorCause);
+			}
+			msg.append("</body></html>");
 		}
-		else
+		else if(instance instanceof Script)
 		{
+			Script detailsViewScript = (Script) instance;
 			try
 			{
 				Binding binding = new Binding();
@@ -2097,11 +2065,21 @@ public class MainFrame
 			}
 			catch(Throwable t)
 			{
-				message = "<html><body>Exception while executing detailsView Script!</body></html>";
+				StringBuilder msg = new StringBuilder("<html><body>Exception while executing detailsView Script!");
+				msg.append("<br/>").append(t);
+				msg.append("</body></html>");
+				message = msg.toString();
 				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
 			}
 		}
-		//}
+		else
+		{
+			StringBuilder msg = new StringBuilder("<html><body>Expected Script but got ").append(instance.getClass().getName()).append("!");
+			msg.append("</body></html>");
+			message = msg.toString();
+			if(logger.isWarnEnabled()) logger.warn("Expected a Script but got {}!", instance.getClass().getName());
+		}
+
 		if(logger.isDebugEnabled()) logger.debug("Message:\n{}", message);
 		// I'm not sure who is to blame for the following line of code...
 		// One could argue that it's a bug in the application logging the event but I think

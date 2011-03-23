@@ -485,6 +485,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>de.huxhorn.sulky</groupId>
+				<artifactId>de.huxhorn.sulky.groovy</artifactId>
+				<version>${sulkyVersion}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
 				<version>${log4jVersion}</version>

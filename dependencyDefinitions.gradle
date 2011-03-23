@@ -63,6 +63,7 @@ libraries = [
 'sulky-stax':               "de.huxhorn.sulky:de.huxhorn.sulky.stax:${versions.sulky}",
 'sulky-swing':              "de.huxhorn.sulky:de.huxhorn.sulky.swing:${versions.sulky}",
 'sulky-tasks':              "de.huxhorn.sulky:de.huxhorn.sulky.tasks:${versions.sulky}",
-'sulky-plist':              "de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}"
+'sulky-plist':              "de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}",
+'sulky-groovy':             "de.huxhorn.sulky:de.huxhorn.sulky.groovy:${versions.sulky}"
 ]
 

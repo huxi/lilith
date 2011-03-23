@@ -19,8 +19,8 @@ package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.sulky.conditions.Condition;
 
+import de.huxhorn.sulky.groovy.GroovyInstance;
 import groovy.lang.Binding;
-import groovy.lang.GroovyClassLoader;
 import groovy.lang.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +38,8 @@ public class GroovyCondition
 
 	private String scriptFileName;
 	private String searchString;
-	private transient Object instance;
 	private transient String scriptName;
-
+	private transient GroovyInstance groovyInstance;
 
 	public GroovyCondition()
 	{
@@ -70,33 +69,16 @@ public class GroovyCondition
 
 	public void setScriptFileName(String scriptFileName)
 	{
-		this.instance = null;
-		this.scriptName = null;
+		if(groovyInstance == null)
+		{
+			groovyInstance=new GroovyInstance();
+		}
 		this.scriptFileName = scriptFileName;
+		groovyInstance.setGroovyFileName(scriptFileName);
 		if(scriptFileName != null)
 		{
 			File scriptFile = new File(scriptFileName);
-			if(!scriptFile.isFile())
-			{
-				if(logger.isWarnEnabled()) logger.warn("Scriptfile '{}' is not a file!", scriptFile.getAbsolutePath());
-			}
-			GroovyClassLoader gcl = new GroovyClassLoader();
-			gcl.setShouldRecompile(true);
-			try
-			{
-				Class clazz = gcl.parseClass(scriptFile);
-				instance = clazz.newInstance();
-				this.scriptName = scriptFile.getName();
-			}
-			catch(Throwable e)
-			{
-				if(logger.isWarnEnabled())
-				{
-					logger
-						.warn("Exception while instanciating groovy condition '" + scriptFile
-							.getAbsolutePath() + "'!", e);
-				}
-			}
+			this.scriptName = scriptFile.getName();
 		}
 	}
 
@@ -107,6 +89,26 @@ public class GroovyCondition
 
 	public boolean isTrue(Object o)
 	{
+		Object instance = groovyInstance.getInstance();
+
+		if(instance == null)
+		{
+			if(logger.isWarnEnabled())
+			{
+				String message = "Couldn't retrieve condition! " + groovyInstance.getErrorMessage();
+				Throwable cause = groovyInstance.getErrorCause();
+				if(cause != null)
+				{
+					logger.warn(message, cause);
+				}
+				else
+				{
+					logger.warn(message);
+				}
+			}
+			return false;
+		}
+
 		try
 		{
 			if(instance instanceof Condition)
@@ -115,7 +117,8 @@ public class GroovyCondition
 				//noinspection unchecked
 				return condition.isTrue(o);
 			}
-			else if(instance instanceof Script)
+
+			if(instance instanceof Script)
 			{
 				Script script = (Script) instance;
 
@@ -131,10 +134,8 @@ public class GroovyCondition
 				Object result = script.run();
 				return !(result == null || result.equals(Boolean.FALSE));
 			}
-			else
-			{
-				return false;
-			}
+			if(logger.isWarnEnabled()) logger.warn("Expected either Condition or Script but got {} instead!", instance.getClass().getName());
+			return false;
 		}
 		catch(Throwable t)
 		{
