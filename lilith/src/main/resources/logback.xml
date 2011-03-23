@@ -176,6 +176,7 @@
 	<logger name="de.huxhorn.sulky" level="INFO"/>
 	<logger name="de.huxhorn.sulky.buffers.filtering.FilteringBuffer" level="INFO"/>
 	<logger name="de.huxhorn.sulky.buffers.SoftReferenceCachingBuffer" level="WARN"/>
+	<logger name="de.huxhorn.sulky.groovy" level="WARN"/>
 	<logger name="de.huxhorn.sulky.logging.LoggingPropertyChangeListener" level="DEBUG"/>
 	<logger name="de.huxhorn.sulky.sounds.jlayer.JLayerSounds" level="WARN"/>
 	<logger name="de.huxhorn.sulky.swing.KeyStrokes" level="INFO"/>
