@@ -22,10 +22,18 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.Message;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.lilith.services.clipboard.AccessUriFormatter;
+import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingCallLocationFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingCallStackFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingLoggerNameFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingMarkerFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingMdcFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingMessageFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingMessagePatternFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingNdcFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingThrowableFormatter;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
@@ -44,12 +52,10 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.Serializable;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -570,17 +576,17 @@ public class ViewActions
 	private FindToolBarAction findToolBarAction;
 	//private StatisticsToolBarAction statisticsToolBarAction;
 	private CopySelectionAction copySelectionAction;
-	private CopyEventAction copyEventAction;
-	private CopyLoggingMessageAction copyLoggingMessageAction;
-	private CopyLoggingMessagePatternAction copyLoggingMessagePatternAction;
-	private CopyLoggingThrowableAction copyLoggingThrowableAction;
-	private CopyLoggingCallStackAction copyLoggingCallStackAction;
-	private CopyLoggingCallLocationAction copyLoggingCallLocationAction;
-	private CopyLoggingMarkerAction copyLoggingMarkerAction;
-	private CopyLoggingMdcAction copyLoggingMdcAction;
-	private CopyLoggingNdcAction copyLoggingNdcAction;
-	private CopyLoggerNameAction copyLoggerNameAction;
-	private CopyAccessUriAction copyAccessUriAction;
+	private CopyToClipboardAction copyEventAction;
+	private CopyToClipboardAction copyLoggingMessageAction;
+	private CopyToClipboardAction copyLoggingMessagePatternAction;
+	private CopyToClipboardAction copyLoggingThrowableAction;
+	private CopyToClipboardAction copyLoggingCallStackAction;
+	private CopyToClipboardAction copyLoggingCallLocationAction;
+	private CopyToClipboardAction copyLoggingMarkerAction;
+	private CopyToClipboardAction copyLoggingMdcAction;
+	private CopyToClipboardAction copyLoggingNdcAction;
+	private CopyToClipboardAction copyLoggerNameAction;
+	private CopyToClipboardAction copyAccessUriAction;
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
 	private JPopupMenu popup;
 	private GotoSourceAction gotoSourceAction;
@@ -654,17 +660,17 @@ public class ViewActions
 		showUnfilteredEventAction = new ShowUnfilteredEventAction();
 		gotoSourceAction = new GotoSourceAction();
 		copySelectionAction = new CopySelectionAction();
-		copyEventAction = new CopyEventAction();
-		copyLoggingMessageAction = new CopyLoggingMessageAction();
-		copyLoggingMessagePatternAction = new CopyLoggingMessagePatternAction();
-		copyLoggerNameAction = new CopyLoggerNameAction();
-		copyLoggingThrowableAction = new CopyLoggingThrowableAction();
-		copyLoggingCallStackAction = new CopyLoggingCallStackAction();
-		copyLoggingCallLocationAction = new CopyLoggingCallLocationAction();
-		copyLoggingMarkerAction = new CopyLoggingMarkerAction();
-		copyLoggingMdcAction = new CopyLoggingMdcAction();
-		copyLoggingNdcAction = new CopyLoggingNdcAction();
-		copyAccessUriAction = new CopyAccessUriAction();
+		copyEventAction = new CopyToClipboardAction(new EventFormatter());
+		copyLoggingMessageAction = new CopyToClipboardAction(new LoggingMessageFormatter());
+		copyLoggingMessagePatternAction = new CopyToClipboardAction(new LoggingMessagePatternFormatter());
+		copyLoggerNameAction = new CopyToClipboardAction(new LoggingLoggerNameFormatter());
+		copyLoggingThrowableAction = new CopyToClipboardAction(new LoggingThrowableFormatter());
+		copyLoggingCallStackAction = new CopyToClipboardAction(new LoggingCallStackFormatter());
+		copyLoggingCallLocationAction = new CopyToClipboardAction(new LoggingCallLocationFormatter());
+		copyLoggingMarkerAction = new CopyToClipboardAction(new LoggingMarkerFormatter());
+		copyLoggingMdcAction = new CopyToClipboardAction(new LoggingMdcFormatter());
+		copyLoggingNdcAction = new CopyToClipboardAction(new LoggingNdcFormatter());
+		copyAccessUriAction = new CopyToClipboardAction(new AccessUriFormatter());
 
 
 		// Search
@@ -3465,548 +3471,100 @@ public class ViewActions
 		}
 	}
 
-	private class CopyEventAction
-		extends AbstractAction
+
+	private class EventFormatter
+		implements ClipboardFormatter
 	{
-		private static final long serialVersionUID = -551520865313383753L;
 
-		private EventWrapper eventWrapper;
-
-		public CopyEventAction()
+		public String getName()
 		{
-			super("Copy event");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the event to the clipboard.");
+			return "Copy event";
 		}
 
-		public void setEventWrapper(EventWrapper wrapper)
+		public String getDescription()
 		{
-			this.eventWrapper = wrapper;
-			if(wrapper == null)
-			{
-				setEnabled(false);
-			}
-			else
-			{
-				Serializable eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent || eventObj instanceof AccessEvent)
-				{
-					setEnabled(true);
-				}
-				else
-				{
-					setEnabled(false);
-				}
-			}
+			return "Copies the event to the clipboard.";
 		}
 
-		public void actionPerformed(ActionEvent e)
+		public boolean isCompatible(Object object)
 		{
-			String message = mainFrame.createMessage(eventWrapper);
-			mainFrame.copyHtml(message);
+			if(object instanceof EventWrapper)
+			{
+				EventWrapper wrapper = (EventWrapper) object;
+				Object eventObj = wrapper.getEvent();
+				return eventObj instanceof LoggingEvent || eventObj instanceof AccessEvent;
+			}
+			return false;
+		}
+
+		public String toString(Object object)
+		{
+			if(object instanceof EventWrapper)
+			{
+				EventWrapper wrapper = (EventWrapper) object;
+				return mainFrame.createMessage(wrapper);
+			}
+			return null;
 		}
 	}
 
-	private class CopyLoggingMessageAction
+
+	private class CopyToClipboardAction
 		extends AbstractAction
 	{
-		private static final long serialVersionUID = -1147972057354807369L;
+		private static final long serialVersionUID = 7832452126107208925L;
 
-		private String message;
+		private ClipboardFormatter clipboardFormatter;
+		private transient EventWrapper wrapper;
 
-		public CopyLoggingMessageAction()
+		public CopyToClipboardAction()
 		{
-			super("Copy message");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the message of the logging event to the clipboard.");
+		}
+
+		private CopyToClipboardAction(ClipboardFormatter clipboardFormatter)
+		{
+			setClipboardFormatter(clipboardFormatter);
+		}
+
+		public ClipboardFormatter getClipboardFormatter()
+		{
+			return clipboardFormatter;
+		}
+
+		public void setClipboardFormatter(ClipboardFormatter clipboardFormatter)
+		{
+			if(clipboardFormatter == null)
+			{
+				throw new IllegalArgumentException("clipboardFormatter must not be null!");
+			}
+			this.clipboardFormatter = clipboardFormatter;
+			setEventWrapper(this.wrapper); // this initializes name, description and enabled.
 		}
 
 		public void setEventWrapper(EventWrapper wrapper)
 		{
-			String message = null;
-			if(wrapper != null && wrapper.getEvent() != null)
+			if(clipboardFormatter == null)
 			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Message messageObj = loggingEvent.getMessage();
-					if(messageObj != null)
-					{
-						message = messageObj.getMessage();
-					}
-				}
+				throw new IllegalStateException("clipboardFormatter must not be null!");
 			}
-			setMessage(message);
-		}
 
-		private void setMessage(String message)
-		{
-			this.message = message;
-			setEnabled(message != null);
+			putValue(Action.NAME, clipboardFormatter.getName());
+			putValue(Action.SHORT_DESCRIPTION, clipboardFormatter.getDescription());
+			setEnabled(clipboardFormatter.isCompatible(wrapper));
+			this.wrapper = wrapper;
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			mainFrame.copyText(message);
-		}
-	}
-
-	private class CopyLoggingMessagePatternAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -6482725824431433972L;
-
-		private String message;
-
-		public CopyLoggingMessagePatternAction()
-		{
-			super("Copy message pattern");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the message pattern of the logging event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			String message = null;
-			if(wrapper != null && wrapper.getEvent() != null)
+			if(clipboardFormatter == null)
 			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Message messageObj = loggingEvent.getMessage();
-					if(messageObj != null)
-					{
-						message = messageObj.getMessagePattern();
-					}
-				}
+				throw new IllegalStateException("clipboardFormatter must not be null!");
 			}
-			setMessage(message);
-		}
-
-		private void setMessage(String message)
-		{
-			this.message = message;
-			setEnabled(message != null);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			mainFrame.copyText(message);
-		}
-	}
-
-	private class CopyLoggerNameAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 6056521432357588113L;
-
-		private String loggerName;
-
-		public CopyLoggerNameAction()
-		{
-			super("Copy logger name");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the logger name of the logging event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			String loggerName = null;
-			if(wrapper != null && wrapper.getEvent() != null)
+			String text = clipboardFormatter.toString(this.wrapper);
+			if(text != null)
 			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					loggerName = loggingEvent.getLogger();
-				}
+				mainFrame.copyText(text);
 			}
-			setLoggerName(loggerName);
-		}
-
-		private void setLoggerName(String loggerName)
-		{
-			this.loggerName = loggerName;
-			setEnabled(loggerName != null);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			mainFrame.copyText(loggerName);
-		}
-	}
-
-	private class CopyLoggingThrowableAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -2869680200462202650L;
-
-		private ThrowableInfo throwableInfo;
-
-		public CopyLoggingThrowableAction()
-		{
-			super("Copy Throwable");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the Throwable of the logging event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			ThrowableInfo info = null;
-			if(wrapper != null && wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					info = loggingEvent.getThrowable();
-				}
-			}
-			setThrowableInfo(info);
-		}
-
-		private void setThrowableInfo(ThrowableInfo info)
-		{
-			this.throwableInfo = info;
-			setEnabled(info != null);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			StringBuilder throwableText = new StringBuilder();
-			ThrowableInfo info = throwableInfo;
-			for(; ;)
-			{
-				throwableText.append("Exception: ").append(info.getName()).append("\n");
-				String message = info.getMessage();
-				if(message != null && !message.equals(info.getName()))
-				{
-					throwableText.append("Message: ").append(message).append("\n");
-				}
-				ExtendedStackTraceElement[] st = info.getStackTrace();
-				if(st != null)
-				{
-					throwableText.append("StackTrace:\n");
-					for(ExtendedStackTraceElement current : st)
-					{
-						throwableText.append("\tat ").append(current.toString(true)).append("\n");
-					}
-				}
-				info = info.getCause();
-				if(info == null)
-				{
-					break;
-				}
-				throwableText.append("\nCaused by:\n");
-			}
-			mainFrame.copyText(throwableText.toString());
-		}
-	}
-
-	private class CopyLoggingCallStackAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -7271955597619779579L;
-
-		private ExtendedStackTraceElement[] callStack;
-
-		public CopyLoggingCallStackAction()
-		{
-			super("Copy call stack");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the call stack of the logging event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			ExtendedStackTraceElement[] callStack = null;
-			if(wrapper != null && wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					callStack = loggingEvent.getCallStack();
-				}
-			}
-			setCallStack(callStack);
-		}
-
-		private void setCallStack(ExtendedStackTraceElement[] callStack)
-		{
-			this.callStack = callStack;
-			setEnabled(callStack != null && callStack.length > 0);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			StringBuilder text = new StringBuilder();
-			ExtendedStackTraceElement[] cs = callStack;
-			if(cs != null)
-			{
-				boolean first = true;
-				for(ExtendedStackTraceElement current : cs)
-				{
-					if(first)
-					{
-						first = false;
-					}
-					else
-					{
-						text.append("\n");
-					}
-					text.append("\tat ").append(current);
-				}
-			}
-			mainFrame.copyText(text.toString());
-		}
-	}
-
-	private class CopyLoggingCallLocationAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 185572014769971173L;
-
-		private ExtendedStackTraceElement[] callStack;
-
-		public CopyLoggingCallLocationAction()
-		{
-			super("Copy call location");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the call location, i.e. the first element of the logging events call stack, to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			ExtendedStackTraceElement[] callStack = null;
-			if(wrapper != null && wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					callStack = loggingEvent.getCallStack();
-				}
-			}
-			setCallStack(callStack);
-		}
-
-		private void setCallStack(ExtendedStackTraceElement[] callStack)
-		{
-			this.callStack = callStack;
-			setEnabled(callStack != null && callStack.length > 0);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			ExtendedStackTraceElement[] cs = callStack;
-			if(cs != null && cs.length > 0)
-			{
-				mainFrame.copyText(cs[0].toString());
-			}
-		}
-	}
-
-	private class CopyLoggingMarkerAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -3523674814363899315L;
-
-		private Marker marker;
-
-		public CopyLoggingMarkerAction()
-		{
-			super("Copy Marker");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the Marker of the logging event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			Marker marker = null;
-			if(wrapper != null && wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					marker = loggingEvent.getMarker();
-				}
-			}
-			setMarker(marker);
-		}
-
-		private void setMarker(Marker marker)
-		{
-			this.marker = marker;
-			setEnabled(marker != null);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			StringBuilder text = new StringBuilder();
-			buildMarker(text, 0, marker, new ArrayList<String>());
-			mainFrame.copyText(text.toString());
-		}
-
-		private void buildMarker(StringBuilder text, int indent, Marker marker, List<String> handledMarkers)
-		{
-			if(logger.isInfoEnabled()) logger.info("Implement!");
-			if(marker != null)
-			{
-				for(int i = 0; i < indent; i++)
-				{
-					text.append("  ");
-				}
-				String markerName = marker.getName();
-				text.append("- ").append(markerName);
-				if(handledMarkers.contains(markerName))
-				{
-					text.append(" [..]\n");
-				}
-				else
-				{
-					text.append("\n");
-					handledMarkers.add(markerName);
-					Map<String, Marker> references = marker.getReferences();
-					if(references != null)
-					{
-						for(Map.Entry<String, Marker> current : references.entrySet())
-						{
-							buildMarker(text, indent + 1, current.getValue(), handledMarkers);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private class CopyLoggingMdcAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 2453432319268833157L;
-
-		private Map<String, String> mdc;
-
-		public CopyLoggingMdcAction()
-		{
-			super("Copy MDC");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the Mapped Diagnostic Context of the logging event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			Map<String, String> mdc = null;
-			if(wrapper != null && wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					mdc = loggingEvent.getMdc();
-				}
-			}
-			setMdc(mdc);
-		}
-
-		private void setMdc(Map<String, String> mdc)
-		{
-			this.mdc = mdc;
-			setEnabled(mdc != null);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			StringBuilder text = new StringBuilder();
-			if(mdc != null)
-			{
-				SortedMap<String, String> sorted = new TreeMap<String, String>(mdc);
-				for(Map.Entry<String, String> current : sorted.entrySet())
-				{
-					text.append(current.getKey()).append("\t").append(current.getValue()).append("\n");
-				}
-			}
-			mainFrame.copyText(text.toString());
-		}
-	}
-
-	private class CopyLoggingNdcAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -1530866703421390638L;
-		private Message[] ndc;
-
-		public CopyLoggingNdcAction()
-		{
-			super("Copy NDC");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the Nested Diagnostic Context of the logging event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			Message[] ndc = null;
-			if(wrapper != null && wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ndc = loggingEvent.getNdc();
-				}
-			}
-			setNdc(ndc);
-		}
-
-		private void setNdc(Message[] ndc)
-		{
-			this.ndc = ndc;
-			setEnabled(ndc != null);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			StringBuilder text = new StringBuilder();
-			if(ndc != null)
-			{
-				for(Message current : ndc)
-				{
-					text.append(current.getMessage()).append("\n");
-				}
-			}
-			mainFrame.copyText(text.toString());
-		}
-	}
-
-	private class CopyAccessUriAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -3535746663619981434L;
-		private String requestUri;
-
-		public CopyAccessUriAction()
-		{
-			super("Copy request URI");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the request URI of the access event to the clipboard.");
-		}
-
-		public void setEventWrapper(EventWrapper wrapper)
-		{
-			String requestUrl = null;
-			if(wrapper != null && wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof AccessEvent)
-				{
-					AccessEvent accessEvent = (AccessEvent) eventObj;
-					requestUrl = accessEvent.getRequestURI();
-				}
-			}
-			setRequestUri(requestUrl);
-		}
-
-		private void setRequestUri(String requestUri)
-		{
-			this.requestUri = requestUri;
-			setEnabled(requestUri != null);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			mainFrame.copyText(requestUri);
 		}
 	}
 
