@@ -39,6 +39,7 @@ import java.util.Map;
 public class LilithPreferences
 {
 	private Map<String, byte[]> groovyConditions;
+	private Map<String, byte[]> groovyClipboardFormatters;
 	private Map<String, byte[]> detailsView;
 	private Map<String, byte[]> rootFiles;
 	private String blackListName;
@@ -77,6 +78,16 @@ public class LilithPreferences
 	public void setGroovyConditions(Map<String, byte[]> groovyConditions)
 	{
 		this.groovyConditions = groovyConditions;
+	}
+
+	public Map<String, byte[]> getGroovyClipboardFormatters()
+	{
+		return groovyClipboardFormatters;
+	}
+
+	public void setGroovyClipboardFormatters(Map<String, byte[]> groovyClipboardFormatters)
+	{
+		this.groovyClipboardFormatters = groovyClipboardFormatters;
 	}
 
 	public Map<String, byte[]> getDetailsView()

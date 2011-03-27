@@ -25,6 +25,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.services.clipboard.AccessUriFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
+import de.huxhorn.lilith.services.clipboard.GroovyFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallLocationFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallStackFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingLoggerNameFormatter;
@@ -52,10 +53,16 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -601,6 +608,9 @@ public class ViewActions
 	private JMenu editMenu;
 	private JMenu recentFilesMenu;
 	private ClearRecentFilesAction clearRecentFilesAction;
+	private JMenu customCopyMenu;
+	private JMenu customCopyPopupMenu;
+	private HashMap<String, CopyToClipboardAction> groovyClipboardActions;
 
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
@@ -816,6 +826,10 @@ public class ViewActions
 		editMenu.add(copyLoggingNdcAction);
 		editMenu.addSeparator();
 		editMenu.add(copyAccessUriAction);
+		editMenu.addSeparator();
+		customCopyMenu = new JMenu("Custom copy...");
+		customCopyPopupMenu = new JMenu("Custom copy...");
+		editMenu.add(customCopyMenu);
 
 		// Search
 		searchMenu = new JMenu("Search");
@@ -1425,6 +1439,8 @@ public class ViewActions
 
 		popup.add(showUnfilteredMenuItem);
 
+		updateCustomCopyMenu(this.eventWrapper);
+
 		JMenu copyMenuItem = new JMenu("Copy...");
 		popup.add(copyMenuItem);
 		copyMenuItem.add(new JMenuItem(copySelectionAction));
@@ -1442,6 +1458,8 @@ public class ViewActions
 		copyMenuItem.add(new JMenuItem(copyLoggingNdcAction));
 		copyMenuItem.addSeparator();
 		copyMenuItem.add(new JMenuItem(copyAccessUriAction));
+		copyMenuItem.addSeparator();
+		copyMenuItem.add(customCopyPopupMenu);
 
 		JMenu filterMenuItem = new JMenu("Filter...");
 		popup.add(filterMenuItem);
@@ -1473,6 +1491,97 @@ public class ViewActions
 		copyLoggingMdcAction.setEventWrapper(wrapper);
 		copyLoggingNdcAction.setEventWrapper(wrapper);
 		copyAccessUriAction.setEventWrapper(wrapper);
+		updateCustomCopyMenu(wrapper);
+	}
+
+	private void updateCustomCopyMenu(EventWrapper wrapper)
+	{
+		ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
+		String[] scripts = prefs.getClipboardFormatterScriptFiles();
+		File basePath = prefs.getGroovyClipboardFormattersPath();
+		boolean changed = false;
+		if(groovyClipboardActions == null)
+		{
+			groovyClipboardActions = new HashMap<String, CopyToClipboardAction>();
+			changed = true;
+		}
+		if(scripts == null || scripts.length == 0)
+		{
+			if(groovyClipboardActions.size() > 0)
+			{
+				groovyClipboardActions.clear();
+				changed = true;
+			}
+		}
+		else
+		{
+			List<String> scriptsList = Arrays.asList(scripts);
+			// add missing formatters
+			for(String current : scriptsList)
+			{
+				if(!groovyClipboardActions.containsKey(current))
+				{
+					GroovyFormatter newFormatter = new GroovyFormatter();
+					newFormatter.setGroovyFileName(prefs.resolveClipboardFormatterScriptFile(current).getAbsolutePath());
+					CopyToClipboardAction newAction = new CopyToClipboardAction(newFormatter);
+					groovyClipboardActions.put(current, newAction);
+					changed = true;
+				}
+			}
+
+			// find deleted formatters
+			List<String> deletedList = new ArrayList<String>();
+			for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
+			{
+				if(!scriptsList.contains(current.getKey()))
+				{
+					deletedList.add(current.getKey());
+				}
+			}
+
+			// remove deleted formatters
+			for(String current : deletedList)
+			{
+				groovyClipboardActions.remove(current);
+				changed = true;
+			}
+		}
+		if(changed)
+		{
+			if(groovyClipboardActions.size() == 0)
+			{
+				customCopyMenu.setEnabled(false);
+				customCopyPopupMenu.setEnabled(false);
+				customCopyMenu.removeAll();
+				customCopyPopupMenu.removeAll();
+			}
+			else
+			{
+				customCopyMenu.setEnabled(true);
+				customCopyPopupMenu.setEnabled(true);
+				customCopyMenu.removeAll();
+				customCopyPopupMenu.removeAll();
+
+				SortedSet<CopyToClipboardAction> sorted = new TreeSet<CopyToClipboardAction>(CopyToClipboardByNameComparator.INSTANCE);
+				// sort the actions by name
+				for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
+				{
+					sorted.add(current.getValue());
+				}
+
+				// add the sorted actions to the menus.
+				for(CopyToClipboardAction current : sorted)
+				{
+					customCopyMenu.add(new JMenuItem(current));
+					customCopyPopupMenu.add(new JMenuItem(current));
+				}
+			}
+		}
+
+		for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
+		{
+			current.getValue().setEventWrapper(wrapper);
+		}
 	}
 
 	public void updateWindowMenu(JMenu windowMenu)
@@ -3691,6 +3800,59 @@ public class ViewActions
 			{
 				tableColumnModel.setColumnVisible(found, visible);
 			}
+		}
+	}
+
+	private static class CopyToClipboardByNameComparator
+		implements Comparator<CopyToClipboardAction>
+	{
+		public static final CopyToClipboardByNameComparator INSTANCE = new CopyToClipboardByNameComparator();
+
+		public int compare(CopyToClipboardAction o1, CopyToClipboardAction o2)
+		{
+			if(o1 == o2)
+			{
+				return 0;
+			}
+			if(o1 == null)
+			{
+				return -1;
+			}
+			if(o2 == null)
+			{
+				return 1;
+			}
+			ClipboardFormatter f1 = o1.getClipboardFormatter();
+			ClipboardFormatter f2 = o2.getClipboardFormatter();
+			if(f1 == f2)
+			{
+				return 0;
+			}
+			if(f1 == null)
+			{
+				return -1;
+			}
+			if(f2 == null)
+			{
+				return 1;
+			}
+			String n1 = f1.getName();
+			String n2 = f2.getName();
+			//noinspection StringEquality
+			if(n1 == n2)
+			{
+				return 0;
+			}
+			if(n1 == null)
+			{
+				return -1;
+			}
+			if(n2 == null)
+			{
+				return 1;
+			}
+
+			return n1.compareTo(n2);
 		}
 	}
 }

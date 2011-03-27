@@ -167,8 +167,9 @@ public class ApplicationPreferences
 
 	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
 	private static final String GROOVY_SUFFIX = ".groovy";
-	private static final String EXAMPLE_GROOVY_BASE = "/conditions/";
-	private static final String EXAMPLE_GROOVY_LIST = "conditions.txt";
+	private static final String EXAMPLE_GROOVY_CONDITIONS_BASE = "/conditions/";
+	private static final String EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE = "/clipboardFormatters/";
+	private static final String GROOVY_EXAMPLE_LIST = "list.txt";
 
 	public static final String EVENT_CONTAINS_CONDITION = "event.contains";
 	public static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
@@ -193,6 +194,8 @@ public class ApplicationPreferences
 	private static final String[] LEVEL_VALUES = {
 			"TRACE", "DEBUG", "INFO", "WARN", "ERROR"
 	};
+	private String[] clipboardFormatterScriptFiles;
+	private long lastClipboardFormatterCheck;
 
 
 	static
@@ -434,6 +437,7 @@ public class ApplicationPreferences
 	private List<String> recentFiles;
 
 	private File groovyConditionsPath;
+	private File groovyClipboardFormattersPath;
 
 	public ApplicationPreferences()
 	{
@@ -452,14 +456,25 @@ public class ApplicationPreferences
 		groovyConditionsPath = new File(startupApplicationPath, "conditions");
 		if(groovyConditionsPath.mkdirs())
 		{
-			// groovy Conditions was generated, create examples...
+			// groovy conditions directory was generated, create examples...
 			installExampleConditions();
+		}
+		groovyClipboardFormattersPath = new File(startupApplicationPath, "clipboardFormatters");
+		if(groovyClipboardFormattersPath.mkdirs())
+		{
+			// groovy clipboardFormatters directory was generated, create examples...
+			installExampleClipboardFormatters();
 		}
 	}
 
 	public File getGroovyConditionsPath()
 	{
 		return groovyConditionsPath;
+	}
+
+	public File getGroovyClipboardFormattersPath()
+	{
+		return groovyClipboardFormattersPath;
 	}
 
 	public void addRecentFile(File dataFile)
@@ -772,9 +787,52 @@ public class ApplicationPreferences
 		return conditionScriptFiles;
 	}
 
+	public File resolveClipboardFormatterScriptFile(String input)
+	{
+		if(input == null)
+		{
+			return null;
+		}
+		if(!input.endsWith(GROOVY_SUFFIX))
+		{
+			input = input + GROOVY_SUFFIX;
+		}
+		File scriptFile = new File(groovyClipboardFormattersPath, input);
+		if(scriptFile.isFile())
+		{
+			return scriptFile;
+		}
+		return null;
+	}
+
+	public String[] getClipboardFormatterScriptFiles()
+	{
+		if(clipboardFormatterScriptFiles == null || ((System.currentTimeMillis() - lastClipboardFormatterCheck) > CONDITIONS_CHECK_INTERVAL))
+		{
+
+			File[] groovyFiles = groovyClipboardFormattersPath.listFiles(new GroovyConditionFileFilter());
+			if(groovyFiles != null && groovyFiles.length > 0)
+			{
+				clipboardFormatterScriptFiles = new String[groovyFiles.length];
+				for(int i = 0; i < groovyFiles.length; i++)
+				{
+					File current = groovyFiles[i];
+					clipboardFormatterScriptFiles[i] = current.getName();
+				}
+				Arrays.sort(clipboardFormatterScriptFiles);
+				lastClipboardFormatterCheck = System.currentTimeMillis();
+			}
+			else
+			{
+				clipboardFormatterScriptFiles = null;
+			}
+		}
+		return clipboardFormatterScriptFiles;
+	}
+
 	public void installExampleConditions()
 	{
-		String path = EXAMPLE_GROOVY_BASE + EXAMPLE_GROOVY_LIST;
+		String path = EXAMPLE_GROOVY_CONDITIONS_BASE + GROOVY_EXAMPLE_LIST;
 		URL url = ApplicationPreferences.class.getResource(path);
 		if(url == null)
 		{
@@ -785,7 +843,7 @@ public class ApplicationPreferences
 			List<String> lines = readLines(url);
 			for(String current : lines)
 			{
-				path = EXAMPLE_GROOVY_BASE + current;
+				path = EXAMPLE_GROOVY_CONDITIONS_BASE + current;
 				url = ApplicationPreferences.class.getResource(path);
 				if(url == null)
 				{
@@ -793,6 +851,32 @@ public class ApplicationPreferences
 					continue;
 				}
 				File target = new File(groovyConditionsPath, current);
+				copy(url, target, true);
+			}
+		}
+	}
+
+	public void installExampleClipboardFormatters()
+	{
+		String path = EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE + GROOVY_EXAMPLE_LIST;
+		URL url = ApplicationPreferences.class.getResource(path);
+		if(url == null)
+		{
+			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
+		}
+		else
+		{
+			List<String> lines = readLines(url);
+			for(String current : lines)
+			{
+				path = EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE + current;
+				url = ApplicationPreferences.class.getResource(path);
+				if(url == null)
+				{
+					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
+					continue;
+				}
+				File target = new File(groovyClipboardFormattersPath, current);
 				copy(url, target, true);
 			}
 		}

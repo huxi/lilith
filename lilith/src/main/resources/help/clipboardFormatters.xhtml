@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Custom Clipboard Formatters</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
+
+<h1><a name="top">Custom Clipboard Formatters</a></h1>
+
+<p>It is possible to create complex clipboard formatters in Groovy.
+	The scripts must be created in "[lilith.home]/clipboardFormatters" and must have a ".groovy" extension.</p>
+
+<p>By default, [lilith.home] equals [user.home]/.lilith but this can be changed
+	in preferences.</p>
+
+<p>A clipboard formatter must implement the de.huxhorn.lilith.services.clipboard.ClipboardFormatter interface.</p>
+
+<p>See <a href="http://groovy.codehaus.org/">http://groovy.codehaus.org/</a> for help on Groovy.</p>
+
+<p>You can reinitialize the example clipboard formatters in the <a href="prefs://Troubleshooting">Troubleshooting preferences</a>.</p>
+
+<h3>Relevant javadocs</h3>
+<ul>
+	<li><a href="http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/services/clipboard/package-summary.html">ClipboardFormatter and related classes</a></li>
+	<li><a href="http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/data/eventsource/package-summary.html">EventWrapper and related classes</a></li>
+	<li><a href="http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/data/logging/package-summary.html">LoggingEvent and related classes</a></li>
+	<li><a href="http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/data/access/package-summary.html">AccessEvent and related classes</a></li>
+</ul>
+
+<h3>Example: Copy username to clipboard.</h3>
+    <pre><code>/**
+ * Copy username to the clipboard if 'username' is available in the MDC.
+ */
+class CopyUsername
+    implements ClipboardFormatter
+{
+
+    String getName()
+    {
+        return 'Copy username'
+    }
+
+    String getDescription()
+    {
+        return 'Copy username from MDC, if available.'
+    }
+
+    boolean isCompatible(Object object)
+    {
+        if(object instanceof EventWrapper)
+        {
+            EventWrapper wrapper = (EventWrapper)object
+            def event = wrapper.getEvent();
+            if(event instanceof LoggingEvent)
+            {
+                LoggingEvent loggingEvent = (LoggingEvent)event
+                return loggingEvent.getMdc()!=null &amp;&amp; loggingEvent.getMdc().containsKey('username')
+            }
+        }
+        return false;
+    }
+
+    String toString(Object object)
+    {
+        if(object instanceof EventWrapper)
+        {
+            EventWrapper wrapper = (EventWrapper)object
+            def event = wrapper.getEvent();
+            if(event instanceof LoggingEvent)
+            {
+                LoggingEvent loggingEvent = (LoggingEvent)event
+                return loggingEvent.getMdc()?.get('username')
+            }
+        }
+        return null;
+    }
+}</code></pre>
+
+
+<p><a href="#top">Back to top.</a></p>
+</body>
+</html>

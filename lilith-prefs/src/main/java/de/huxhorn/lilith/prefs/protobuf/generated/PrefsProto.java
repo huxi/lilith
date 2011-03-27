@@ -314,11 +314,19 @@ public final class PrefsProto {
     public boolean hasCheckingForSnapshot() { return hasCheckingForSnapshot; }
     public boolean getCheckingForSnapshot() { return checkingForSnapshot_; }
     
+    // optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;
+    public static final int GROOVY_CLIPBOARD_FORMATTERS_FIELD_NUMBER = 31;
+    private boolean hasGroovyClipboardFormatters;
+    private de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent groovyClipboardFormatters_;
+    public boolean hasGroovyClipboardFormatters() { return hasGroovyClipboardFormatters; }
+    public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyClipboardFormatters() { return groovyClipboardFormatters_; }
+    
     private void initFields() {
       groovyConditions_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
       detailsView_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
       rootFiles_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
       sourceFiltering_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering.NONE;
+      groovyClipboardFormatters_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
     }
     public final boolean isInitialized() {
       if (hasGroovyConditions()) {
@@ -329,6 +337,9 @@ public final class PrefsProto {
       }
       if (hasRootFiles()) {
         if (!getRootFiles().isInitialized()) return false;
+      }
+      if (hasGroovyClipboardFormatters()) {
+        if (!getGroovyClipboardFormatters().isInitialized()) return false;
       }
       return true;
     }
@@ -425,6 +436,9 @@ public final class PrefsProto {
       }
       if (hasCheckingForSnapshot()) {
         output.writeBool(30, getCheckingForSnapshot());
+      }
+      if (hasGroovyClipboardFormatters()) {
+        output.writeMessage(31, getGroovyClipboardFormatters());
       }
       getUnknownFields().writeTo(output);
     }
@@ -554,6 +568,10 @@ public final class PrefsProto {
       if (hasCheckingForSnapshot()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(30, getCheckingForSnapshot());
+      }
+      if (hasGroovyClipboardFormatters()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(31, getGroovyClipboardFormatters());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -803,6 +821,9 @@ public final class PrefsProto {
         if (other.hasCheckingForSnapshot()) {
           setCheckingForSnapshot(other.getCheckingForSnapshot());
         }
+        if (other.hasGroovyClipboardFormatters()) {
+          mergeGroovyClipboardFormatters(other.getGroovyClipboardFormatters());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -967,6 +988,15 @@ public final class PrefsProto {
             }
             case 240: {
               setCheckingForSnapshot(input.readBool());
+              break;
+            }
+            case 250: {
+              de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder subBuilder = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.newBuilder();
+              if (hasGroovyClipboardFormatters()) {
+                subBuilder.mergeFrom(getGroovyClipboardFormatters());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setGroovyClipboardFormatters(subBuilder.buildPartial());
               break;
             }
           }
@@ -1583,6 +1613,43 @@ public final class PrefsProto {
       public Builder clearCheckingForSnapshot() {
         result.hasCheckingForSnapshot = false;
         result.checkingForSnapshot_ = false;
+        return this;
+      }
+      
+      // optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;
+      public boolean hasGroovyClipboardFormatters() {
+        return result.hasGroovyClipboardFormatters();
+      }
+      public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyClipboardFormatters() {
+        return result.getGroovyClipboardFormatters();
+      }
+      public Builder setGroovyClipboardFormatters(de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasGroovyClipboardFormatters = true;
+        result.groovyClipboardFormatters_ = value;
+        return this;
+      }
+      public Builder setGroovyClipboardFormatters(de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder builderForValue) {
+        result.hasGroovyClipboardFormatters = true;
+        result.groovyClipboardFormatters_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeGroovyClipboardFormatters(de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent value) {
+        if (result.hasGroovyClipboardFormatters() &&
+            result.groovyClipboardFormatters_ != de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance()) {
+          result.groovyClipboardFormatters_ =
+            de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.newBuilder(result.groovyClipboardFormatters_).mergeFrom(value).buildPartial();
+        } else {
+          result.groovyClipboardFormatters_ = value;
+        }
+        result.hasGroovyClipboardFormatters = true;
+        return this;
+      }
+      public Builder clearGroovyClipboardFormatters() {
+        result.hasGroovyClipboardFormatters = false;
+        result.groovyClipboardFormatters_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
         return this;
       }
       
@@ -4102,7 +4169,7 @@ public final class PrefsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\"src/main/protobuf/PrefsProto.proto\022\027de" +
-      ".huxhorn.lilith.prefs\"\360\007\n\021LilithPreferen" +
+      ".huxhorn.lilith.prefs\"\300\010\n\021LilithPreferen" +
       "ces\022D\n\021groovy_conditions\030\001 \001(\0132).de.huxh" +
       "orn.lilith.prefs.DirectoryContent\022?\n\014det" +
       "ails_view\030\002 \001(\0132).de.huxhorn.lilith.pref" +
@@ -4127,10 +4194,12 @@ public final class PrefsProto {
       "internal_frames\030\033 \001(\010\022B\n\020source_filterin" +
       "g\030\034 \001(\0162(.de.huxhorn.lilith.prefs.Source" +
       "Filtering\022\036\n\026default_condition_name\030\035 \001(" +
-      "\t\022\035\n\025checking_for_snapshot\030\036 \001(\010\"\231\001\n\020Dir" +
-      "ectoryContent\022\014\n\004name\030\001 \001(\t\0229\n\005entry\030\002 \003" +
+      "\t\022\035\n\025checking_for_snapshot\030\036 \001(\010\022N\n\033groo" +
+      "vy_clipboard_formatters\030\037 \001(\0132).de.huxho" +
+      "rn.lilith.prefs.DirectoryContent\"\231\001\n\020Dir" +
+      "ectoryContent\022\014\n\004name\030\001 \001(\t\0229\n\005entry\030\002 \003",
       "(\0132*.de.huxhorn.lilith.prefs.ByteArrayMa" +
-      "pEntry\022<\n\tdirectory\030\003 \003(\0132).de.huxhorn.l",
+      "pEntry\022<\n\tdirectory\030\003 \003(\0132).de.huxhorn.l" +
       "ilith.prefs.DirectoryContent\"/\n\021ByteArra" +
       "yMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\014\"C\n" +
       "\tStringMap\0226\n\005entry\030\001 \003(\0132\'.de.huxhorn.l" +
@@ -4138,9 +4207,9 @@ public final class PrefsProto {
       "ntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"M\n\016Stri" +
       "ngArrayMap\022;\n\005entry\030\001 \003(\0132,.de.huxhorn.l" +
       "ilith.prefs.StringArrayMapEntry\"\\\n\023Strin" +
-      "gArrayMapEntry\022\013\n\003key\030\001 \002(\t\0228\n\005value\030\002 \003" +
+      "gArrayMapEntry\022\013\n\003key\030\001 \002(\t\0228\n\005value\030\002 \003",
       "(\0132).de.huxhorn.lilith.prefs.StringArray" +
-      "Value\"!\n\020StringArrayValue\022\r\n\005value\030\001 \001(\t",
+      "Value\"!\n\020StringArrayValue\022\r\n\005value\030\001 \001(\t" +
       "*9\n\017SourceFiltering\022\010\n\004NONE\020\000\022\r\n\tBLACKLI" +
       "ST\020\001\022\r\n\tWHITELIST\020\002B.\n*de.huxhorn.lilith" +
       ".prefs.protobuf.generatedH\001"
@@ -4155,7 +4224,7 @@ public final class PrefsProto {
           internal_static_de_huxhorn_lilith_prefs_LilithPreferences_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_prefs_LilithPreferences_descriptor,
-              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "Licensed", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", },
+              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "Licensed", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", },
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.class,
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.Builder.class);
           internal_static_de_huxhorn_lilith_prefs_DirectoryContent_descriptor =

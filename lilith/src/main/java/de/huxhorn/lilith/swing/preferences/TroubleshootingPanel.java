@@ -60,7 +60,8 @@ public class TroubleshootingPanel
 	private void createUI()
 	{
 		add(new JButton(new InitDetailsViewAction()));
-		add(new JButton(new InitExampleScriptsAction()));
+		add(new JButton(new InitExampleConditionScriptsAction()));
+		add(new JButton(new InitExampleClipboardFormatterScriptsAction()));
 		add(new JButton(new DeleteAllLogsAction()));
 		add(new JButton(new CopySystemPropertiesAction()));
 		add(new JButton(new CopyThreadsAction()));
@@ -94,12 +95,12 @@ public class TroubleshootingPanel
 		}
 	}
 
-	public class InitExampleScriptsAction
+	public class InitExampleConditionScriptsAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = -4197531497673863904L;
 
-		public InitExampleScriptsAction()
+		public InitExampleConditionScriptsAction()
 		{
 			super("Reinitialize example groovy conditions.");
 		}
@@ -118,6 +119,33 @@ public class TroubleshootingPanel
 
 			ApplicationPreferences prefs = preferencesDialog.getApplicationPreferences();
 			prefs.installExampleConditions();
+		}
+	}
+
+	public class InitExampleClipboardFormatterScriptsAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -4197531497673863904L;
+
+		public InitExampleClipboardFormatterScriptsAction()
+		{
+			super("Reinitialize example groovy clipboard formatters.");
+		}
+
+		public void actionPerformed(ActionEvent actionEvent)
+		{
+			String dialogTitle = "Reinitialize example groovy clipboard formatters?";
+			String message = "This overwrites all example groovy clipboard formatters. Other clipboard formatters are not changed!\nReinitialize example groovy clipboard formatters right now?";
+			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
+			if(JOptionPane.OK_OPTION != result)
+			{
+				return;
+			}
+
+			ApplicationPreferences prefs = preferencesDialog.getApplicationPreferences();
+			prefs.installExampleClipboardFormatters();
 		}
 	}
 

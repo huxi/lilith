@@ -58,6 +58,8 @@ message LilithPreferences {
 
 	optional string            default_condition_name       = 29;
 	optional bool              checking_for_snapshot        = 30;
+
+	optional DirectoryContent  groovy_clipboard_formatters  =  31;
 }
 
 enum SourceFiltering {

@@ -89,6 +89,10 @@ public class LilithPreferencesStreamingEncoder
 		{
 			prefs.setGroovyConditions(convert(p.getGroovyConditions()));
 		}
+		if(p.getGroovyClipboardFormatters() != null)
+		{
+			prefs.setGroovyClipboardFormatters(convert(p.getGroovyClipboardFormatters()));
+		}
 		if(p.getDetailsView() != null)
 		{
 			prefs.setDetailsView(convert(p.getDetailsView()));

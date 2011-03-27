@@ -79,6 +79,10 @@
 		</release>
 
 		<release version="0.9.41" date="TBD" description="Future Release">
+			<action dev="jhux" type="add">
+				Implemented custom "Copy to clipboard" functionality using Groovy.
+				This was suggested by Joe.
+			</action>
 			<action dev="jhux" type="update">
 				Added support for cat/tail of Lilith AccessEvent files.
 			</action>

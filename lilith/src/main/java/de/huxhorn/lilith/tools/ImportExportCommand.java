@@ -54,6 +54,16 @@ public class ImportExportCommand
 		return exportFiles(prefs.getGroovyConditionsPath(), files);
 	}
 
+	public static Map<String, byte[]> exportClipboardFormatterScriptFiles(ApplicationPreferences prefs)
+	{
+		String[] files = prefs.getClipboardFormatterScriptFiles();
+		if(files == null)
+		{
+			return null;
+		}
+		return exportFiles(prefs.getGroovyConditionsPath(), files);
+	}
+
 	public static Map<String, byte[]> exportDetailsView(ApplicationPreferences prefs)
 	{
 		String[] files = new String[]
@@ -90,7 +100,15 @@ public class ImportExportCommand
 
 		for(String current : files)
 		{
-			File currentFile = new File(basePath, current);
+			File currentFile;
+			if(basePath != null)
+			{
+				currentFile = new File(basePath, current);
+			}
+			else
+			{
+				currentFile = new File(current);
+			}
 
 			if(!currentFile.exists())
 			{
@@ -188,6 +206,7 @@ public class ImportExportCommand
 	{
 		LilithPreferences p=new LilithPreferences();
 		p.setGroovyConditions(exportGroovyConditions(prefs));
+		p.setGroovyClipboardFormatters(exportClipboardFormatterScriptFiles(prefs));
 		p.setDetailsView(exportDetailsView(prefs));
 		p.setRootFiles(exportRootFiles(prefs));
 
@@ -228,6 +247,10 @@ public class ImportExportCommand
 		if(p.getGroovyConditions() != null)
 		{
 			importFiles(prefs.getGroovyConditionsPath(), p.getGroovyConditions());
+		}
+		if(p.getGroovyConditions() != null)
+		{
+			importFiles(prefs.getGroovyClipboardFormattersPath(), p.getGroovyClipboardFormatters());
 		}
 		if(p.getDetailsView() != null)
 		{
