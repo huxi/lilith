@@ -66,7 +66,8 @@ import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocket
 import de.huxhorn.lilith.logback.producer.LogbackAccessServerSocketEventSourceProducer;
 import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.prefs.LilithPreferences;
-import de.huxhorn.lilith.services.gotosrc.GoToSourceService;
+import de.huxhorn.lilith.services.gotosrc.GoToSource;
+import de.huxhorn.lilith.services.gotosrc.SerializingGoToSource;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.services.sender.SenderService;
 import de.huxhorn.lilith.swing.callables.CheckFileChangeCallable;
@@ -171,7 +172,7 @@ public class MainFrame
 	private final File startupApplicationPath;
 
 
-	private GoToSourceService gotoSource;
+	private GoToSource gotoSource;
 	private LogFileFactory loggingFileFactory;
 	private SourceManager<LoggingEvent> loggingEventSourceManager;
 	private FileBufferFactory<LoggingEvent> loggingFileBufferFactory;
@@ -543,7 +544,7 @@ public class MainFrame
 
 		// go to source
 		{
-			gotoSource = new GoToSourceService();
+			gotoSource = new SerializingGoToSource();
 			//gotoSource.start() started when needed...
 		}
 

@@ -28,20 +28,48 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class GoToSourceService
+/**
+ * This class sends serialized StackTraceElements to a server.
+ * By default, this server is expected to be running on port 11111.
+ */
+public class SerializingGoToSource
+	implements GoToSource
 {
-	private final BlockingQueue<StackTraceElement> queue=new LinkedBlockingQueue<StackTraceElement>();
-	private Thread goToSourceThread;
+	public static final int DEFAULT_PORT = 11111;
 
-	public GoToSourceService()
+	private final BlockingQueue<StackTraceElement> queue=new LinkedBlockingQueue<StackTraceElement>();
+	private final GoToSourceRunnable goToSourceRunnable;
+	private Thread goToSourceThread=null;
+
+	public SerializingGoToSource(int port)
 	{
-		goToSourceThread=new Thread(new GoToSourceRunnable());
-		goToSourceThread.setDaemon(true);
-		goToSourceThread.start();
+		goToSourceRunnable = new GoToSourceRunnable();
+		setPort(port);
+	}
+
+	public SerializingGoToSource()
+	{
+		this(DEFAULT_PORT);
+	}
+
+	public int getPort()
+	{
+		return goToSourceRunnable.getPort();
+	}
+
+	public void setPort(int port)
+	{
+		goToSourceRunnable.setPort(port);
 	}
 
 	public void goToSource(StackTraceElement ste)
 	{
+		if(goToSourceThread == null)
+		{
+			goToSourceThread=new Thread(goToSourceRunnable);
+			goToSourceThread.setDaemon(true);
+			goToSourceThread.start();
+		}
 		if(ste == null)
 		{
 			return;
@@ -58,7 +86,11 @@ public class GoToSourceService
 
 	public void stop()
 	{
-		goToSourceThread.interrupt();
+		if(goToSourceThread != null)
+		{
+			goToSourceThread.interrupt();
+			goToSourceThread=null;
+		}
 	}
 
 	private class GoToSourceRunnable
@@ -66,14 +98,26 @@ public class GoToSourceService
 	{
 		private final Logger logger = LoggerFactory.getLogger(GoToSourceRunnable.class);
 
+		private int port;
 		private Socket socket;
 		private ObjectOutputStream oos;
+
+		public int getPort()
+		{
+			return port;
+		}
+
+		public void setPort(int port)
+		{
+			this.port = port;
+			closeConnection();
+		}
 
 		private void openConnection()
 		{
 			try
 			{
-				socket = new Socket("localhost", 11111);
+				socket = new Socket("localhost", port);
 				oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			}
 			catch(IOException e)
