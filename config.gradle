@@ -510,7 +510,7 @@ project(':lilith') {
 		plist.root.'CFBundleName'="${bundleName}"
 		plist.root.'CFBundleIdentifier'='de.huxhorn.lilith'
 		plist.root.'CFBundleVersion'="${version}"
-		plist.root.'CFBundleGetInfoString'="${bundleName} ${version}, Copyright \u00a9 2007-2010 J\u00f6rn Huxhorn"
+		plist.root.'CFBundleGetInfoString'="${bundleName} ${version}, Copyright \u00a9 2007-2011 J\u00f6rn Huxhorn"
 		plist.root.'CFBundleShortVersionString'="${version}"
 		plist.root.'CFBundleAllowMixedLocalizations'='true'
 		plist.root.'CFBundleExecutable'='JavaApplicationStub'

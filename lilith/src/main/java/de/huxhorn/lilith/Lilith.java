@@ -408,7 +408,7 @@ public class Lilith
 			"|_____|_|_|_|\\__|_| |_|");
 		System.out.println(appTitle);
 		System.out.println("http://lilith.huxhorn.de");
-		System.out.println("\nCopyright (C) 2007-2010  Joern Huxhorn\n\n" +
+		System.out.println("\nCopyright (C) 2007-2011 Joern Huxhorn\n\n" +
 			"This program comes with ABSOLUTELY NO WARRANTY!\n\n" +
 			"This is free software, and you are welcome to redistribute it\n" +
 			"under certain conditions.\n" +
