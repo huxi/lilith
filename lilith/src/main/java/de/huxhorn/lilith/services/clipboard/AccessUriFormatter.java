@@ -35,6 +35,11 @@ public class AccessUriFormatter
 		return "Copies the request URI of the access event to the clipboard.";
 	}
 
+	public String getAccelerator()
+	{
+		return null;
+	}
+
 	public boolean isCompatible(Object object)
 	{
 		return toString(object) != null;

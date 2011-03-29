@@ -36,6 +36,11 @@ class CopyUsername
 		return 'Copy username from MDC, if available.'
 	}
 
+	String getAccelerator()
+	{
+		return 'command shift U'
+	}
+
 	boolean isCompatible(Object object)
 	{
 		if(object instanceof EventWrapper)

@@ -22,8 +22,41 @@ import java.io.Serializable;
 public interface ClipboardFormatter
 	extends Serializable
 {
+	/**
+	 * The name of this formatter.
+	 * It is used as the name of the menu item.
+	 *
+	 * @return the name of this formatter.
+	 */
 	String getName();
+
+	/**
+	 * The description of this formatter.
+	 * It is used as the tooltip in the menu.
+	 *
+	 * @return the description of this formatter.
+	 */
 	String getDescription();
+
+	/**
+	 *
+	 * @return the accelerator of this formatter, can be null.
+	 */
+	String getAccelerator();
+
+	/**
+	 * Returns true, if this formatter is able to format the given object into a String.
+	 *
+	 * @param object the input to both isCompatible(...) and toString(...).
+	 * @return true, if this formatter is able to format the given object.
+	 */
 	boolean isCompatible(Object object);
+
+	/**
+	 * Returns true, if this formatter is able to format the given object into a String.
+	 *
+	 * @param object the input to both isCompatible(...) and toString(...).
+	 * @return object formatted into a String or null if this formatter is unable to format the object.
+	 */
 	String toString(Object object);
 }

@@ -94,6 +94,12 @@ public class GroovyFormatter
 		return shortName + " - "+errorMessage;
 	}
 
+	public String getAccelerator()
+	{
+		ClipboardFormatter formatter = getFormatter();
+		return formatter == null ? null : formatter.getAccelerator();
+	}
+
 	public boolean isCompatible(Object object)
 	{
 		ClipboardFormatter formatter = getFormatter();

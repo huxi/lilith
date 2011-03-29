@@ -37,6 +37,11 @@ public class LoggingThrowableFormatter
 		return "Copies the Throwable of the logging event to the clipboard.";
 	}
 
+	public String getAccelerator()
+	{
+		return null;
+	}
+
 	public boolean isCompatible(Object object)
 	{
 		if(object instanceof EventWrapper)

@@ -36,6 +36,11 @@ public class LoggingCallLocationFormatter
 		return "Copies the call location, i.e. the first element of the logging events call stack, to the clipboard.";
 	}
 
+	public String getAccelerator()
+	{
+		return null;
+	}
+
 	public boolean isCompatible(Object object)
 	{
 		if(object instanceof EventWrapper)

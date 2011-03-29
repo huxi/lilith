@@ -40,6 +40,11 @@ public class LoggingNdcFormatter
 		return "Copies the Nested Diagnostic Context of the logging event to the clipboard.";
 	}
 
+	public String getAccelerator()
+	{
+		return null;
+	}
+
 	public boolean isCompatible(Object object)
 	{
 		if(object instanceof EventWrapper)

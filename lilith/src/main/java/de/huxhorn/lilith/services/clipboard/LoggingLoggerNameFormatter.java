@@ -35,6 +35,11 @@ public class LoggingLoggerNameFormatter
 		return "Copies the logger name of the logging event to the clipboard.";
 	}
 
+	public String getAccelerator()
+	{
+		return null;
+	}
+
 	public boolean isCompatible(Object object)
 	{
 		return toString(object) != null;

@@ -36,6 +36,11 @@ public class LoggingCallStackFormatter
 		return "Copies the call stack of the logging event to the clipboard.";
 	}
 
+	public String getAccelerator()
+	{
+		return null;
+	}
+
 	public boolean isCompatible(Object object)
 	{
 		if(object instanceof EventWrapper)

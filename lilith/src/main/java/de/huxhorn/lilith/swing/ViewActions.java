@@ -25,6 +25,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.services.clipboard.AccessUriFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
+import de.huxhorn.lilith.services.clipboard.ClipboardFormatterData;
 import de.huxhorn.lilith.services.clipboard.GroovyFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallLocationFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallStackFormatter;
@@ -611,6 +612,7 @@ public class ViewActions
 	private JMenu customCopyMenu;
 	private JMenu customCopyPopupMenu;
 	private HashMap<String, CopyToClipboardAction> groovyClipboardActions;
+	private HashMap<String, ClipboardFormatterData> groovyClipboardData;
 
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
@@ -1498,11 +1500,15 @@ public class ViewActions
 	{
 		ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
 		String[] scripts = prefs.getClipboardFormatterScriptFiles();
-		File basePath = prefs.getGroovyClipboardFormattersPath();
 		boolean changed = false;
 		if(groovyClipboardActions == null)
 		{
 			groovyClipboardActions = new HashMap<String, CopyToClipboardAction>();
+			changed = true;
+		}
+		if(groovyClipboardData == null)
+		{
+			groovyClipboardData = new HashMap<String, ClipboardFormatterData>();
 			changed = true;
 		}
 		if(scripts == null || scripts.length == 0)
@@ -1510,6 +1516,7 @@ public class ViewActions
 			if(groovyClipboardActions.size() > 0)
 			{
 				groovyClipboardActions.clear();
+				groovyClipboardData.clear();
 				changed = true;
 			}
 		}
@@ -1546,6 +1553,25 @@ public class ViewActions
 				changed = true;
 			}
 		}
+
+		for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
+		{
+			String key = current.getKey();
+			CopyToClipboardAction value = current.getValue();
+			ClipboardFormatter formatter = value.getClipboardFormatter();
+			if(formatter == null)
+			{
+				continue;
+			}
+			ClipboardFormatterData data = new ClipboardFormatterData(formatter);
+			if(!data.equals(groovyClipboardData.get(key)))
+			{
+				changed = true;
+				groovyClipboardData.put(key, data);
+				value.setClipboardFormatter(formatter); // this reinitializes the action
+			}
+		}
+		
 		if(changed)
 		{
 			if(groovyClipboardActions.size() == 0)
@@ -3584,6 +3610,7 @@ public class ViewActions
 	private class EventFormatter
 		implements ClipboardFormatter
 	{
+		private static final long serialVersionUID = 2263706767713579277L;
 
 		public String getName()
 		{
@@ -3593,6 +3620,11 @@ public class ViewActions
 		public String getDescription()
 		{
 			return "Copies the event to the clipboard.";
+		}
+
+		public String getAccelerator()
+		{
+			return null;
 		}
 
 		public boolean isCompatible(Object object)
@@ -3647,7 +3679,23 @@ public class ViewActions
 				throw new IllegalArgumentException("clipboardFormatter must not be null!");
 			}
 			this.clipboardFormatter = clipboardFormatter;
-			setEventWrapper(this.wrapper); // this initializes name, description and enabled.
+			putValue(Action.NAME, clipboardFormatter.getName());
+			putValue(Action.SHORT_DESCRIPTION, clipboardFormatter.getDescription());
+			String acc = clipboardFormatter.getAccelerator();
+			if(acc != null)
+			{
+				KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(acc);
+				if(logger.isDebugEnabled()) logger.debug("accelerator for '{}': {}", acc, accelerator);
+
+				if(accelerator != null)
+				{
+					putValue(Action.ACCELERATOR_KEY, accelerator);
+				}
+				else
+				{
+					if(logger.isWarnEnabled()) logger.warn("'{}' did not represent a valid KeyStroke!", acc);
+				}
+			}
 		}
 
 		public void setEventWrapper(EventWrapper wrapper)
@@ -3657,8 +3705,6 @@ public class ViewActions
 				throw new IllegalStateException("clipboardFormatter must not be null!");
 			}
 
-			putValue(Action.NAME, clipboardFormatter.getName());
-			putValue(Action.SHORT_DESCRIPTION, clipboardFormatter.getDescription());
 			setEnabled(clipboardFormatter.isCompatible(wrapper));
 			this.wrapper = wrapper;
 		}
