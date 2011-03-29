@@ -15,92 +15,92 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.eventhandlers;
-
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.engine.EventHandler;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-public class StdoutEventHandler<T extends Serializable>
-	implements EventHandler<T>, Runnable
-{
-	final Logger logger = LoggerFactory.getLogger(StdoutEventHandler.class);
-
-	private List<EventWrapper> events;
-	private final Lock lock;
-	private long writeInterval;
-
-	public StdoutEventHandler()
-	{
-		events = new LinkedList<EventWrapper>();
-		lock = new ReentrantLock(true);
-		writeInterval = 2000;
-	}
-
-	public long getWriteInterval()
-	{
-		return writeInterval;
-	}
-
-	public void setWriteInterval(long writeInterval)
-	{
-		this.writeInterval = writeInterval;
-	}
-
-	public void handle(List<EventWrapper<T>> events)
-	{
-		lock.lock();
-		try
-		{
-			this.events.addAll(events);
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
-	public void run()
-	{
-		for(; ;)
-		{
-			lock.lock();
-			int eventCount = 0;
-			try
-			{
-
-				if(events.size() > 0)
-				{
-					EventWrapper event = events.remove(0);
-					System.out.println("Event: " + event);
-					eventCount = events.size();
-				}
-			}
-			finally
-			{
-				lock.unlock();
-			}
-
-			if(eventCount == 0)
-			{
-				try
-				{
-					Thread.sleep(writeInterval);
-				}
-				catch(InterruptedException e)
-				{
-					if(logger.isDebugEnabled()) logger.debug("Interrupted...");
-					break;
-				}
-			}
-		}
-	}
-}
+//package de.huxhorn.lilith.eventhandlers;
+//
+//import de.huxhorn.lilith.data.eventsource.EventWrapper;
+//import de.huxhorn.lilith.engine.EventHandler;
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//
+//import java.io.Serializable;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.concurrent.locks.Lock;
+//import java.util.concurrent.locks.ReentrantLock;
+//
+//public class StdoutEventHandler<T extends Serializable>
+//	implements EventHandler<T>, Runnable
+//{
+//	final Logger logger = LoggerFactory.getLogger(StdoutEventHandler.class);
+//
+//	private List<EventWrapper> events;
+//	private final Lock lock;
+//	private long writeInterval;
+//
+//	public StdoutEventHandler()
+//	{
+//		events = new LinkedList<EventWrapper>();
+//		lock = new ReentrantLock(true);
+//		writeInterval = 2000;
+//	}
+//
+//	public long getWriteInterval()
+//	{
+//		return writeInterval;
+//	}
+//
+//	public void setWriteInterval(long writeInterval)
+//	{
+//		this.writeInterval = writeInterval;
+//	}
+//
+//	public void handle(List<EventWrapper<T>> events)
+//	{
+//		lock.lock();
+//		try
+//		{
+//			this.events.addAll(events);
+//		}
+//		finally
+//		{
+//			lock.unlock();
+//		}
+//	}
+//
+//	public void run()
+//	{
+//		for(; ;)
+//		{
+//			lock.lock();
+//			int eventCount = 0;
+//			try
+//			{
+//
+//				if(events.size() > 0)
+//				{
+//					EventWrapper event = events.remove(0);
+//					System.out.println("Event: " + event);
+//					eventCount = events.size();
+//				}
+//			}
+//			finally
+//			{
+//				lock.unlock();
+//			}
+//
+//			if(eventCount == 0)
+//			{
+//				try
+//				{
+//					Thread.sleep(writeInterval);
+//				}
+//				catch(InterruptedException e)
+//				{
+//					if(logger.isDebugEnabled()) logger.debug("Interrupted...");
+//					break;
+//				}
+//			}
+//		}
+//	}
+//}

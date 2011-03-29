@@ -145,7 +145,6 @@
 	<logger name="de.huxhorn.lilith.eventhandlers.FileDumpEventHandler" level="WARN"/>
 	<logger name="de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler" level="WARN"/>
 	<logger name="de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler" level="INFO"/>
-	<logger name="de.huxhorn.lilith.eventhandlers.SocketEventHandler" level="INFO"/>
 	<logger name="de.huxhorn.lilith.services.sender" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.AboutPanel" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences" level="WARN"/>
