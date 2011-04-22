@@ -55,6 +55,7 @@ public class GeneralPanel
 	private JCheckBox globalLoggingEnabledCheckbox;
 	private JCheckBox loggingStatsEnabledCheckbox;
 	private JCheckBox trayActiveCheckbox;
+	private JCheckBox hidingOnCloseCheckbox;
 
 	public GeneralPanel(PreferencesDialog preferencesDialog)
 	{
@@ -106,6 +107,8 @@ public class GeneralPanel
 		globalLoggingEnabledCheckbox = new JCheckBox("Enable global logs.");
 		loggingStatsEnabledCheckbox = new JCheckBox("Enable logging statistics.");
 		trayActiveCheckbox = new JCheckBox("Enable tray icon.");
+		hidingOnCloseCheckbox = new JCheckBox("Hide windows on close.");
+		hidingOnCloseCheckbox.setToolTipText("Hide all windows on close of main frame instead of exiting the application. This is only relevant if tray icon is enabled.");
 
 
 		JPanel viewPanel = new JPanel(new GridLayout(2, 1));
@@ -121,11 +124,12 @@ public class GeneralPanel
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 		defaultConditionCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Default search condition"));
 
-		JPanel globalPanel = new JPanel(new GridLayout(3, 1));
+		JPanel globalPanel = new JPanel(new GridLayout(4, 1));
 		globalPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Global settings"));
 		globalPanel.add(globalLoggingEnabledCheckbox);
 		globalPanel.add(loggingStatsEnabledCheckbox);
 		globalPanel.add(trayActiveCheckbox);
+		globalPanel.add(hidingOnCloseCheckbox);
 
 		setLayout(new GridBagLayout());
 
@@ -218,6 +222,8 @@ public class GeneralPanel
 		loggingStatsEnabledCheckbox.setSelected(applicationPreferences.isLoggingStatisticEnabled());
 		trayActiveCheckbox.setSelected(applicationPreferences.isTrayActive());
 		trayActiveCheckbox.setEnabled(TraySupport.isAvailable());
+		hidingOnCloseCheckbox.setSelected(applicationPreferences.isHidingOnClose());
+		hidingOnCloseCheckbox.setEnabled(TraySupport.isAvailable());
 	}
 
 	public void saveSettings()
@@ -235,6 +241,7 @@ public class GeneralPanel
 		applicationPreferences.setGlobalLoggingEnabled(globalLoggingEnabledCheckbox.isSelected());
 		applicationPreferences.setLoggingStatisticEnabled(loggingStatsEnabledCheckbox.isSelected());
 		applicationPreferences.setTrayActive(trayActiveCheckbox.isSelected());
+		applicationPreferences.setHidingOnClose(hidingOnCloseCheckbox.isSelected());
 	}
 
 	private class BrowseApplicationPathAction

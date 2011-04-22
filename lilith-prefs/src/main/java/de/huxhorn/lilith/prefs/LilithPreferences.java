@@ -54,6 +54,7 @@ public class LilithPreferences
 	private boolean cleaningLogsOnExit = false;
 	private boolean coloringWholeRow = false;
 	private boolean globalLoggingEnabled = true;
+	private boolean hidingOnClose = true;
 	private boolean loggingStatisticEnabled = true;
 	private boolean maximizingInternalFrames = false;
 	private boolean mute = false;
@@ -389,6 +390,16 @@ public class LilithPreferences
 	public void setShowingFullRecentPath(boolean showingFullRecentPath)
 	{
 		this.showingFullRecentPath = showingFullRecentPath;
+	}
+
+	public boolean isHidingOnClose()
+	{
+		return hidingOnClose;
+	}
+
+	public void setHidingOnClose(boolean hidingOnClose)
+	{
+		this.hidingOnClose = hidingOnClose;
 	}
 
 	public static enum SourceFiltering

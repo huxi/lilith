@@ -118,6 +118,7 @@ public class ApplicationPreferences
 	public static final String SOURCE_NAMES_PROPERTY = "sourceNames";
 	public static final String APPLICATION_PATH_PROPERTY = "applicationPath";
 	public static final String TRAY_ACTIVE_PROPERTY = "trayActive";
+	public static final String HIDING_ON_CLOSE_PROPERTY = "hidingOnClose";
 	public static final String AUTO_OPENING_PROPERTY = "autoOpening";
 	public static final String AUTO_CLOSING_PROPERTY = "autoClosing";
 	public static final String IMAGE_PATH_PROPERTY = "imagePath";
@@ -1804,6 +1805,19 @@ public class ApplicationPreferences
 	public boolean isTrayActive()
 	{
 		return PREFERENCES.getBoolean(TRAY_ACTIVE_PROPERTY, DEFAULT_VALUES.isTrayActive());
+	}
+
+	public void setHidingOnClose(boolean trayActive)
+	{
+		Object oldValue = isHidingOnClose();
+		PREFERENCES.putBoolean(HIDING_ON_CLOSE_PROPERTY, trayActive);
+		Object newValue = isHidingOnClose();
+		propertyChangeSupport.firePropertyChange(HIDING_ON_CLOSE_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isHidingOnClose()
+	{
+		return PREFERENCES.getBoolean(HIDING_ON_CLOSE_PROPERTY, DEFAULT_VALUES.isHidingOnClose());
 	}
 
 	public void setShowingToolbar(boolean showingToolbarName)

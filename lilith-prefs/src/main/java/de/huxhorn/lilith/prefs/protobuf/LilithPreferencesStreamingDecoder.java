@@ -147,6 +147,10 @@ public class LilithPreferencesStreamingDecoder
 		{
 			prefs.setGlobalLoggingEnabled(p.getGlobalLoggingEnabled());
 		}
+		if(p.hasHidingOnClose())
+		{
+			prefs.setHidingOnClose(p.getHidingOnClose());
+		}
 		if(p.hasLoggingStatisticEnabled())
 		{
 			prefs.setLoggingStatisticEnabled(p.getLoggingStatisticEnabled());

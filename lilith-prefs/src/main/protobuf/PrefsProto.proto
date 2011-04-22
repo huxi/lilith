@@ -62,6 +62,7 @@ message LilithPreferences {
 	optional DirectoryContent  groovy_clipboard_formatters  = 31;
 	optional bool              tray_active                  = 32;
 	optional bool              showing_full_recent_path     = 33;
+	optional bool              hiding_on_close              = 34;
 }
 
 enum SourceFiltering {

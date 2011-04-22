@@ -225,6 +225,7 @@ public class ImportExportCommand
 		p.setCleaningLogsOnExit(prefs.isCleaningLogsOnExit());
 		p.setColoringWholeRow(prefs.isColoringWholeRow());
 		p.setGlobalLoggingEnabled(prefs.isGlobalLoggingEnabled());
+		p.setHidingOnClose(prefs.isHidingOnClose());
 		p.setLoggingStatisticEnabled(prefs.isLoggingStatisticEnabled());
 		p.setMaximizingInternalFrames(prefs.isMaximizingInternalFrames());
 		p.setMute(prefs.isMute());
@@ -277,6 +278,7 @@ public class ImportExportCommand
 		prefs.setCleaningLogsOnExit(p.isCleaningLogsOnExit());
 		prefs.setColoringWholeRow(p.isColoringWholeRow());
 		prefs.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());
+		prefs.setHidingOnClose(p.isHidingOnClose());
 		prefs.setLoggingStatisticEnabled(p.isLoggingStatisticEnabled());
 		prefs.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
 		prefs.setMute(p.isMute());

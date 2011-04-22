@@ -117,6 +117,7 @@ public class LilithPreferencesStreamingEncoder
 		prefs.setCleaningLogsOnExit(p.isCleaningLogsOnExit());
 		prefs.setColoringWholeRow(p.isColoringWholeRow());
 		prefs.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());
+		prefs.setHidingOnClose(p.isHidingOnClose());
 		prefs.setLoggingStatisticEnabled(p.isLoggingStatisticEnabled());
 		prefs.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
 		prefs.setMute(p.isMute());

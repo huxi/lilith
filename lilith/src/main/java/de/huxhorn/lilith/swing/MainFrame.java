@@ -3515,7 +3515,7 @@ public class MainFrame
 		@Override
 		public void windowClosing(WindowEvent e)
 		{
-			if(traySupport != null && traySupport.isActive())
+			if(traySupport != null && traySupport.isActive() && applicationPreferences.isHidingOnClose())
 			{
 				setFramesVisible(false);
 			}
