@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.tray.TraySupport;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -53,6 +54,7 @@ public class GeneralPanel
 
 	private JCheckBox globalLoggingEnabledCheckbox;
 	private JCheckBox loggingStatsEnabledCheckbox;
+	private JCheckBox trayActiveCheckbox;
 
 	public GeneralPanel(PreferencesDialog preferencesDialog)
 	{
@@ -103,6 +105,7 @@ public class GeneralPanel
 
 		globalLoggingEnabledCheckbox = new JCheckBox("Enable global logs.");
 		loggingStatsEnabledCheckbox = new JCheckBox("Enable logging statistics.");
+		trayActiveCheckbox = new JCheckBox("Enable tray icon.");
 
 
 		JPanel viewPanel = new JPanel(new GridLayout(2, 1));
@@ -118,10 +121,11 @@ public class GeneralPanel
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 		defaultConditionCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Default search condition"));
 
-		JPanel globalPanel = new JPanel(new GridLayout(2, 1));
+		JPanel globalPanel = new JPanel(new GridLayout(3, 1));
 		globalPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Global settings"));
 		globalPanel.add(globalLoggingEnabledCheckbox);
 		globalPanel.add(loggingStatsEnabledCheckbox);
+		globalPanel.add(trayActiveCheckbox);
 
 		setLayout(new GridBagLayout());
 
@@ -212,6 +216,8 @@ public class GeneralPanel
 
 		globalLoggingEnabledCheckbox.setSelected(applicationPreferences.isGlobalLoggingEnabled());
 		loggingStatsEnabledCheckbox.setSelected(applicationPreferences.isLoggingStatisticEnabled());
+		trayActiveCheckbox.setSelected(applicationPreferences.isTrayActive());
+		trayActiveCheckbox.setEnabled(TraySupport.isAvailable());
 	}
 
 	public void saveSettings()
@@ -228,6 +234,7 @@ public class GeneralPanel
 
 		applicationPreferences.setGlobalLoggingEnabled(globalLoggingEnabledCheckbox.isSelected());
 		applicationPreferences.setLoggingStatisticEnabled(loggingStatsEnabledCheckbox.isSelected());
+		applicationPreferences.setTrayActive(trayActiveCheckbox.isSelected());
 	}
 
 	private class BrowseApplicationPathAction

@@ -87,6 +87,7 @@ import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
 import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler;
 import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler16;
+import de.huxhorn.lilith.tray.TraySupport;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
@@ -233,6 +234,7 @@ public class MainFrame
 	private static final int EXPORT_WARNING_SIZE = 20000;
 	private Condition findActiveCondition;
 	private GroovyInstance detailsViewInstance;
+	private TraySupport traySupport; // may be null
 
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
@@ -820,6 +822,12 @@ public class MainFrame
 		}
 
 		cleanObsoleteFiles();
+
+		traySupport = TraySupport.getInstance();
+		if(traySupport != null)
+		{
+			traySupport.setMainFrame(this);
+		}
 		setSplashStatusText("Finished.");
 //		viewActions.requestMenuBarFocus();
 	}
@@ -2017,7 +2025,13 @@ public class MainFrame
 		{
 			statusText.append(activeCounter).append(" active connections.");
 		}
-		statusLabel.setText(statusText.toString());
+		String status = statusText.toString();
+
+		statusLabel.setText(status);
+		if(traySupport != null)
+		{
+			traySupport.setToolTip(status);
+		}
 	}
 
 
@@ -2172,6 +2186,38 @@ public class MainFrame
 					EventWrapperViewPanel panel = current.getDefaultView();
 					panel.clear();
 				}
+			}
+		}
+	}
+
+	public void toggleVisible()
+	{
+		setFramesVisible(!isVisible());
+	}
+
+	public void setFramesVisible(boolean visible)
+	{
+		setVisible(visible);
+		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+		{
+			ViewContainer<LoggingEvent> value = current.getValue();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof ViewContainerFrame)
+			{
+				ViewContainerFrame frame = (ViewContainerFrame) window;
+				frame.setVisible(visible);
+			}
+		}
+		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+		{
+			ViewContainer<AccessEvent> value = current.getValue();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof ViewContainerFrame)
+			{
+				ViewContainerFrame frame = (ViewContainerFrame) window;
+				frame.setVisible(visible);
 			}
 		}
 	}
@@ -3041,6 +3087,14 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.TRAY_ACTIVE_PROPERTY.equals(propName))
+			{
+				if(traySupport != null)
+				{
+					traySupport.setActive(applicationPreferences.isTrayActive());
+				}
+				return;
+			}
 
 			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
@@ -3461,7 +3515,14 @@ public class MainFrame
 		@Override
 		public void windowClosing(WindowEvent e)
 		{
-			exit();
+			if(traySupport != null && traySupport.isActive())
+			{
+				setFramesVisible(false);
+			}
+			else
+			{
+				exit();
+			}
 		}
 	}
 

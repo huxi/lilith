@@ -46,9 +46,6 @@
 			<action dev="jhux" type="add" issue="3">
 				Ability to add/remove/configure event receivers, make RRD optional (it's quite expensive) etc.
 			</action>
-			<action dev="jhux" type="add" issue="5">
-				TODO: Make color scheme of LoggingEvent.Level and HttpStatus.Type rendering configurable.
-			</action>
 			<action dev="jhux" type="update" issue="6">
 				TODO: Cleanup of duplicated code in actions, e.g. the new layout actions.
 			</action>
@@ -79,6 +76,13 @@
 		</release>
 
 		<release version="0.9.41" date="TBD" description="Future Release">
+			<action dev="jhux" type="add" issue="91">
+				Minimize to system tray.
+				Added support for (optional, default is on) system tray icon. Double-clicking the icon hides/shows all
+				windows. The menu also contains a Quit action. If system tray icon is active (supported and enabled) then
+				closing the main frame does not exit the application. This will now hide all windows, instead.
+				This was requested by Adrien Sales and Joe.
+			</action>
 			<action dev="jhux" type="add">
 				Implemented custom "Copy to clipboard" functionality using Groovy.
 				This was suggested by Joe.
