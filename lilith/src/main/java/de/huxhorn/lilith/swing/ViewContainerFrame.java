@@ -64,12 +64,15 @@ public class ViewContainerFrame
 
 	public void focusWindow()
 	{
+		if(!isVisible())
+		{
+			setVisible(true);
+		}
 		if((getState() & Frame.ICONIFIED) != 0)
 		{
 			setState(Frame.NORMAL);
 		}
 		toFront();
-
 	}
 
 	public void minimizeWindow()
