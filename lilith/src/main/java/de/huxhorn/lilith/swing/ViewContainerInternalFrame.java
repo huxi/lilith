@@ -77,6 +77,16 @@ public class ViewContainerInternalFrame
 
 	public void focusWindow()
 	{
+		// move mainframe to front.
+		if(!mainFrame.isVisible())
+		{
+			mainFrame.setVisible(true);
+		}
+		if((mainFrame.getState() & Frame.ICONIFIED) != 0)
+		{
+			mainFrame.setState(Frame.NORMAL);
+		}
+		mainFrame.toFront();
 		try
 		{
 			setIcon(false);
