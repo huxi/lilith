@@ -2859,31 +2859,10 @@ public class MainFrame
 				isInternal = true;
 			}
 
-			if(isNew)
-			{
-				if(applicationPreferences.isAutoFocusingWindow())
-				{
-					window.focusWindow();
-					if(isInternal)
-					{
-						// move mainframe to front.
-						if((getState() & Frame.ICONIFIED) != 0)
-						{
-							setState(Frame.NORMAL);
-						}
-						toFront();
-					}
-				}
-			}
-			else
+			if(!isNew || applicationPreferences.isAutoFocusingWindow())
 			{
 				// reselected existing views should *always* be focused!
 				window.focusWindow();
-				if(isInternal)
-				{
-					// move mainframe to front.
-					toFront();
-				}
 			}
 		}
 	}
