@@ -760,7 +760,7 @@ public class MainFrame
 		loggingEventAlarmSound.setSounds(sounds);
 
 		FileSplitterEventHandler<LoggingEvent> fileSplitterLoggingEventHandler =
-			new FileSplitterEventHandler<LoggingEvent>(/*applicationPreferences, */loggingFileBufferFactory, loggingEventSourceManager);
+			new FileSplitterEventHandler<LoggingEvent>(loggingFileBufferFactory, loggingEventSourceManager);
 
 		List<EventHandler<LoggingEvent>> loggingHandlers = new ArrayList<EventHandler<LoggingEvent>>();
 
@@ -769,7 +769,7 @@ public class MainFrame
 		loggingHandlers.add(fileSplitterLoggingEventHandler);
 		loggingHandlers.add(loggingFileDump);
 
-		// crashs the app using j2se 6
+		// crashes the app using j2se 6
 		//if(application.isMac())
 		//{
 		//	UserNotificationLoggingEventHandler notification = new UserNotificationLoggingEventHandler(application);
@@ -781,14 +781,14 @@ public class MainFrame
 		List<EventHandler<AccessEvent>> accessHandlers = new ArrayList<EventHandler<AccessEvent>>();
 
 		FileSplitterEventHandler<AccessEvent> fileSplitterAccessEventHandler =
-			new FileSplitterEventHandler<AccessEvent>(/*applicationPreferences, */accessFileBufferFactory, accessEventSourceManager);
+			new FileSplitterEventHandler<AccessEvent>(accessFileBufferFactory, accessEventSourceManager);
 		AlarmSoundAccessEventHandler accessEventAlarmSound = new AlarmSoundAccessEventHandler();
 		accessEventAlarmSound.setSounds(sounds);
 		accessHandlers.add(accessEventAlarmSound);
 		accessHandlers.add(fileSplitterAccessEventHandler);
 		accessHandlers.add(accessFileDump);
 
-		// crashs the app using j2se 6
+		// crashes the app using j2se 6
 		//if(application.isMac())
 		//{
 		//	UserNotificationAccessEventHandler notification = new UserNotificationAccessEventHandler(application);
@@ -3074,8 +3074,7 @@ public class MainFrame
 		private void updateSourceTitles()
 		{
 			updateWindowMenus();
-			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager
-				.getViews();
+			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
 			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 			{
 				ViewContainer<LoggingEvent> value = current.getValue();
