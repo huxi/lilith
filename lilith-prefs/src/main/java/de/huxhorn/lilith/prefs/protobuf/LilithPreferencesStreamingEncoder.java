@@ -117,18 +117,19 @@ public class LilithPreferencesStreamingEncoder
 		prefs.setCleaningLogsOnExit(p.isCleaningLogsOnExit());
 		prefs.setColoringWholeRow(p.isColoringWholeRow());
 		prefs.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());
-		prefs.setLicensed(p.isLicensed());
 		prefs.setLoggingStatisticEnabled(p.isLoggingStatisticEnabled());
 		prefs.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
 		prefs.setMute(p.isMute());
 		prefs.setScrollingToBottom(p.isScrollingToBottom());
 		prefs.setShowingFullCallstack(p.isShowingFullCallstack());
+		prefs.setShowingFullRecentPath(p.isShowingFullRecentPath());
 		prefs.setShowingIdentifier(p.isShowingIdentifier());
 		prefs.setShowingStatusbar(p.isShowingStatusbar());
 		prefs.setShowingStacktrace(p.isShowingStackTrace());
 		prefs.setShowingTipOfTheDay(p.isShowingTipOfTheDay());
 		prefs.setShowingToolbar(p.isShowingToolbar());
 		prefs.setSplashScreenDisabled(p.isSplashScreenDisabled());
+		prefs.setTrayActive(p.isTrayActive());
 		prefs.setUsingInternalFrames(p.isUsingInternalFrames());
 		prefs.setDefaultConditionName(p.getDefaultConditionName());
 

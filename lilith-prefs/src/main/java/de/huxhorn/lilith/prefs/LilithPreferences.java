@@ -45,28 +45,29 @@ public class LilithPreferences
 	private String blackListName;
 	private String whiteListName;
 	private String lookAndFeel;
-	private boolean askingBeforeQuit;
-	private boolean autoClosing;
-	private boolean autoFocusingWindow;
-	private boolean autoOpening;
-	private boolean checkingForUpdate;
-	private boolean checkingForSnapshot;
-	private boolean cleaningLogsOnExit;
-	private boolean coloringWholeRow;
-	private boolean globalLoggingEnabled;
-	private boolean licensed;
-	private boolean loggingStatisticEnabled;
-	private boolean maximizingInternalFrames;
-	private boolean mute;
-	private boolean scrollingToBottom;
-	private boolean showingFullCallstack;
-	private boolean showingIdentifier;
-	private boolean showingStatusbar;
-	private boolean showingStackTrace;
-	private boolean showingTipOfTheDay;
-	private boolean showingToolbar;
-	private boolean splashScreenDisabled;
-	private boolean usingInternalFrames;
+	private boolean askingBeforeQuit = false;
+	private boolean autoClosing = false;
+	private boolean autoFocusingWindow = false;
+	private boolean autoOpening = true;
+	private boolean checkingForUpdate = true;
+	private boolean checkingForSnapshot = false;
+	private boolean cleaningLogsOnExit = false;
+	private boolean coloringWholeRow = false;
+	private boolean globalLoggingEnabled = true;
+	private boolean loggingStatisticEnabled = true;
+	private boolean maximizingInternalFrames = false;
+	private boolean mute = false;
+	private boolean scrollingToBottom = true;
+	private boolean showingFullCallstack = false;
+	private boolean showingFullRecentPath = false;
+	private boolean showingIdentifier = true;
+	private boolean showingStatusbar = true;
+	private boolean showingStackTrace = true;
+	private boolean showingTipOfTheDay = true;
+	private boolean showingToolbar = true;
+	private boolean trayActive = true;
+	private boolean splashScreenDisabled = false;
+	private boolean usingInternalFrames = true;
 	private SourceFiltering sourceFiltering;
 	private String defaultConditionName;
 
@@ -230,16 +231,6 @@ public class LilithPreferences
 		this.globalLoggingEnabled = globalLoggingEnabled;
 	}
 
-	public boolean isLicensed()
-	{
-		return licensed;
-	}
-
-	public void setLicensed(boolean licensed)
-	{
-		this.licensed = licensed;
-	}
-
 	public boolean isLoggingStatisticEnabled()
 	{
 		return loggingStatisticEnabled;
@@ -378,6 +369,26 @@ public class LilithPreferences
 	public void setDefaultConditionName(String defaultConditionName)
 	{
 		this.defaultConditionName = defaultConditionName;
+	}
+
+	public boolean isTrayActive()
+	{
+		return trayActive;
+	}
+
+	public void setTrayActive(boolean trayActive)
+	{
+		this.trayActive = trayActive;
+	}
+
+	public boolean isShowingFullRecentPath()
+	{
+		return showingFullRecentPath;
+	}
+
+	public void setShowingFullRecentPath(boolean showingFullRecentPath)
+	{
+		this.showingFullRecentPath = showingFullRecentPath;
 	}
 
 	public static enum SourceFiltering

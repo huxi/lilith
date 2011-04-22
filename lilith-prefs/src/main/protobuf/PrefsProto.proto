@@ -40,7 +40,7 @@ message LilithPreferences {
 	optional bool              cleaning_logs_on_exit        = 12;
 	optional bool              coloring_whole_row           = 13;
 	optional bool              global_logging_enabled       = 14;
-	optional bool              licensed                     = 15;
+//	optional bool              licensed                     = 15;
 	optional bool              logging_statistic_enabled    = 16;
 	optional bool              maximizing_internal_frames   = 17;
 	optional bool              mute                         = 18;
@@ -59,7 +59,9 @@ message LilithPreferences {
 	optional string            default_condition_name       = 29;
 	optional bool              checking_for_snapshot        = 30;
 
-	optional DirectoryContent  groovy_clipboard_formatters  =  31;
+	optional DirectoryContent  groovy_clipboard_formatters  = 31;
+	optional bool              tray_active                  = 32;
+	optional bool              showing_full_recent_path     = 33;
 }
 
 enum SourceFiltering {

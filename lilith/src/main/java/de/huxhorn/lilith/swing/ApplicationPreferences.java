@@ -117,6 +117,7 @@ public class ApplicationPreferences
 	public static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
 	public static final String SOURCE_NAMES_PROPERTY = "sourceNames";
 	public static final String APPLICATION_PATH_PROPERTY = "applicationPath";
+	public static final String TRAY_ACTIVE_PROPERTY = "trayActive";
 	public static final String AUTO_OPENING_PROPERTY = "autoOpening";
 	public static final String AUTO_CLOSING_PROPERTY = "autoClosing";
 	public static final String IMAGE_PATH_PROPERTY = "imagePath";
@@ -197,6 +198,7 @@ public class ApplicationPreferences
 	private String[] clipboardFormatterScriptFiles;
 	private long lastClipboardFormatterCheck;
 
+	private static final LilithPreferences DEFAULT_VALUES=new LilithPreferences();
 
 	static
 	{
@@ -1594,7 +1596,7 @@ public class ApplicationPreferences
 
 	public boolean isShowingTipOfTheDay()
 	{
-		return PREFERENCES.getBoolean(SHOWING_TIP_OF_THE_DAY_PROPERTY, true);
+		return PREFERENCES.getBoolean(SHOWING_TIP_OF_THE_DAY_PROPERTY, DEFAULT_VALUES.isShowingTipOfTheDay());
 	}
 
 	public void setMaximizingInternalFrames(boolean showingTipOfTheDay)
@@ -1607,7 +1609,7 @@ public class ApplicationPreferences
 
 	public boolean isMaximizingInternalFrames()
 	{
-		return PREFERENCES.getBoolean(MAXIMIZING_INTERNAL_FRAMES_PROPERTY, false);
+		return PREFERENCES.getBoolean(MAXIMIZING_INTERNAL_FRAMES_PROPERTY, DEFAULT_VALUES.isMaximizingInternalFrames());
 	}
 
 	public void setGlobalLoggingEnabled(boolean globalLoggingEnabled)
@@ -1620,7 +1622,7 @@ public class ApplicationPreferences
 
 	public boolean isGlobalLoggingEnabled()
 	{
-		return PREFERENCES.getBoolean(GLOBAL_LOGGING_ENABLED_PROPERTY, true);
+		return PREFERENCES.getBoolean(GLOBAL_LOGGING_ENABLED_PROPERTY, DEFAULT_VALUES.isGlobalLoggingEnabled());
 	}
 
 	public void setLoggingStatisticEnabled(boolean enabled)
@@ -1633,7 +1635,7 @@ public class ApplicationPreferences
 
 	public boolean isLoggingStatisticEnabled()
 	{
-		return PREFERENCES.getBoolean(LOGGING_STATISTIC_ENABLED_PROPERTY, true);
+		return PREFERENCES.getBoolean(LOGGING_STATISTIC_ENABLED_PROPERTY, DEFAULT_VALUES.isLoggingStatisticEnabled());
 	}
 
 
@@ -1788,7 +1790,20 @@ public class ApplicationPreferences
 
 	public boolean isAutoOpening()
 	{
-		return PREFERENCES.getBoolean(AUTO_OPENING_PROPERTY, true);
+		return PREFERENCES.getBoolean(AUTO_OPENING_PROPERTY, DEFAULT_VALUES.isAutoOpening());
+	}
+
+	public void setTrayActive(boolean trayActive)
+	{
+		Object oldValue = isTrayActive();
+		PREFERENCES.putBoolean(TRAY_ACTIVE_PROPERTY, trayActive);
+		Object newValue = isTrayActive();
+		propertyChangeSupport.firePropertyChange(TRAY_ACTIVE_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isTrayActive()
+	{
+		return PREFERENCES.getBoolean(TRAY_ACTIVE_PROPERTY, DEFAULT_VALUES.isTrayActive());
 	}
 
 	public void setShowingToolbar(boolean showingToolbarName)
@@ -1801,12 +1816,12 @@ public class ApplicationPreferences
 
 	public boolean isShowingToolbar()
 	{
-		return PREFERENCES.getBoolean(SHOWING_TOOLBAR_PROPERTY, true);
+		return PREFERENCES.getBoolean(SHOWING_TOOLBAR_PROPERTY, DEFAULT_VALUES.isShowingToolbar());
 	}
 
 	public boolean isShowingStatusbar()
 	{
-		return PREFERENCES.getBoolean(SHOWING_STATUSBAR_PROPERTY, true);
+		return PREFERENCES.getBoolean(SHOWING_STATUSBAR_PROPERTY, DEFAULT_VALUES.isShowingStatusbar());
 	}
 
 	public void setShowingStatusbar(boolean showingStatusbarName)
@@ -1828,7 +1843,7 @@ public class ApplicationPreferences
 
 	public boolean isShowingIdentifier()
 	{
-		return PREFERENCES.getBoolean(SHOWING_IDENTIFIER_PROPERTY, true);
+		return PREFERENCES.getBoolean(SHOWING_IDENTIFIER_PROPERTY, DEFAULT_VALUES.isShowingIdentifier());
 	}
 
 	public void setSplashScreenDisabled(boolean splashScreenDisabled)
@@ -1841,7 +1856,7 @@ public class ApplicationPreferences
 
 	public boolean isSplashScreenDisabled()
 	{
-		return PREFERENCES.getBoolean(SPLASH_SCREEN_DISABLED_PROPERTY, false);
+		return PREFERENCES.getBoolean(SPLASH_SCREEN_DISABLED_PROPERTY, DEFAULT_VALUES.isSplashScreenDisabled());
 	}
 
 	public void setAskingBeforeQuit(boolean askingBeforeQuit)
@@ -1854,7 +1869,7 @@ public class ApplicationPreferences
 
 	public boolean isAskingBeforeQuit()
 	{
-		return PREFERENCES.getBoolean(ASKING_BEFORE_QUIT_PROPERTY, false);
+		return PREFERENCES.getBoolean(ASKING_BEFORE_QUIT_PROPERTY, DEFAULT_VALUES.isAskingBeforeQuit());
 	}
 
 	public void setShowingFullCallstack(boolean showingFullCallstack)
@@ -1867,7 +1882,7 @@ public class ApplicationPreferences
 
 	public boolean isShowingFullCallstack()
 	{
-		return PREFERENCES.getBoolean(SHOWING_FULL_CALLSTACK_PROPERTY, false);
+		return PREFERENCES.getBoolean(SHOWING_FULL_CALLSTACK_PROPERTY, DEFAULT_VALUES.isShowingFullCallstack());
 	}
 
 	public void setShowingStackTrace(boolean showingStackTrace)
@@ -1880,7 +1895,7 @@ public class ApplicationPreferences
 
 	public boolean isShowingStackTrace()
 	{
-		return PREFERENCES.getBoolean(SHOWING_STACKTRACE_PROPERTY, true);
+		return PREFERENCES.getBoolean(SHOWING_STACKTRACE_PROPERTY, DEFAULT_VALUES.isShowingStackTrace());
 	}
 
 	public void setCleaningLogsOnExit(boolean cleaningLogsOnExit)
@@ -1893,7 +1908,7 @@ public class ApplicationPreferences
 
 	public boolean isCleaningLogsOnExit()
 	{
-		return PREFERENCES.getBoolean(CLEANING_LOGS_ON_EXIT_PROPERTY, false);
+		return PREFERENCES.getBoolean(CLEANING_LOGS_ON_EXIT_PROPERTY, DEFAULT_VALUES.isCleaningLogsOnExit());
 	}
 
 	public void setColoringWholeRow(boolean coloringWholeRow)
@@ -1906,7 +1921,7 @@ public class ApplicationPreferences
 
 	public boolean isColoringWholeRow()
 	{
-		return PREFERENCES.getBoolean(COLORING_WHOLE_ROW_PROPERTY, false);
+		return PREFERENCES.getBoolean(COLORING_WHOLE_ROW_PROPERTY, DEFAULT_VALUES.isColoringWholeRow());
 	}
 
 	public void setCheckingForUpdate(boolean checkingForUpdate)
@@ -1919,7 +1934,7 @@ public class ApplicationPreferences
 
 	public boolean isCheckingForUpdate()
 	{
-		return PREFERENCES.getBoolean(CHECKING_FOR_UPDATE_PROPERTY, true);
+		return PREFERENCES.getBoolean(CHECKING_FOR_UPDATE_PROPERTY, DEFAULT_VALUES.isCheckingForUpdate());
 	}
 
 	public void setCheckingForSnapshot(boolean checkingForSnapshot)
@@ -1932,7 +1947,7 @@ public class ApplicationPreferences
 
 	public boolean isCheckingForSnapshot()
 	{
-		return PREFERENCES.getBoolean(CHECKING_FOR_SNAPSHOT_PROPERTY, false);
+		return PREFERENCES.getBoolean(CHECKING_FOR_SNAPSHOT_PROPERTY, DEFAULT_VALUES.isCheckingForSnapshot());
 	}
 
 	public void setAutoClosing(boolean autoClosing)
@@ -1945,7 +1960,7 @@ public class ApplicationPreferences
 
 	public boolean isAutoClosing()
 	{
-		return PREFERENCES.getBoolean(AUTO_CLOSING_PROPERTY, false);
+		return PREFERENCES.getBoolean(AUTO_CLOSING_PROPERTY, DEFAULT_VALUES.isAutoClosing());
 	}
 
 	public File getImagePath()
@@ -2086,7 +2101,7 @@ public class ApplicationPreferences
 
 	public boolean isMute()
 	{
-		return PREFERENCES.getBoolean(MUTE_PROPERTY, false);
+		return PREFERENCES.getBoolean(MUTE_PROPERTY, DEFAULT_VALUES.isMute());
 	}
 
 	public void setLicensed(boolean licensed)
@@ -2175,7 +2190,7 @@ public class ApplicationPreferences
 
 	public boolean isUsingInternalFrames()
 	{
-		return PREFERENCES.getBoolean(USING_INTERNAL_FRAMES_PROPERTY, true);
+		return PREFERENCES.getBoolean(USING_INTERNAL_FRAMES_PROPERTY, DEFAULT_VALUES.isUsingInternalFrames());
 	}
 
 	public void setAutoFocusingWindow(boolean autoFocusingWindow)
@@ -2188,7 +2203,7 @@ public class ApplicationPreferences
 
 	public boolean isAutoFocusingWindow()
 	{
-		return PREFERENCES.getBoolean(AUTO_FOCUSING_WINDOW_PROPERTY, false);
+		return PREFERENCES.getBoolean(AUTO_FOCUSING_WINDOW_PROPERTY, DEFAULT_VALUES.isAutoFocusingWindow());
 	}
 
 	/**
@@ -2215,7 +2230,7 @@ public class ApplicationPreferences
 	 */
 	public boolean isShowingFullRecentPath()
 	{
-		return PREFERENCES.getBoolean(SHOWING_FULL_RECENT_PATH_PROPERTY, false);
+		return PREFERENCES.getBoolean(SHOWING_FULL_RECENT_PATH_PROPERTY, DEFAULT_VALUES.isShowingFullRecentPath());
 	}
 
 	public void setSourceNames(Map<String, String> sourceNames)
@@ -2319,7 +2334,7 @@ public class ApplicationPreferences
 
 	public boolean isScrollingToBottom()
 	{
-		return PREFERENCES.getBoolean(SCROLLING_TO_BOTTOM_PROPERTY, true);
+		return PREFERENCES.getBoolean(SCROLLING_TO_BOTTOM_PROPERTY, DEFAULT_VALUES.isScrollingToBottom());
 	}
 
 	private boolean loadSoundLocationsXml(File file)

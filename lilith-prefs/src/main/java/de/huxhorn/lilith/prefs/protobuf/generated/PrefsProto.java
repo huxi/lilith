@@ -202,13 +202,6 @@ public final class PrefsProto {
     public boolean hasGlobalLoggingEnabled() { return hasGlobalLoggingEnabled; }
     public boolean getGlobalLoggingEnabled() { return globalLoggingEnabled_; }
     
-    // optional bool licensed = 15;
-    public static final int LICENSED_FIELD_NUMBER = 15;
-    private boolean hasLicensed;
-    private boolean licensed_ = false;
-    public boolean hasLicensed() { return hasLicensed; }
-    public boolean getLicensed() { return licensed_; }
-    
     // optional bool logging_statistic_enabled = 16;
     public static final int LOGGING_STATISTIC_ENABLED_FIELD_NUMBER = 16;
     private boolean hasLoggingStatisticEnabled;
@@ -321,6 +314,20 @@ public final class PrefsProto {
     public boolean hasGroovyClipboardFormatters() { return hasGroovyClipboardFormatters; }
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyClipboardFormatters() { return groovyClipboardFormatters_; }
     
+    // optional bool tray_active = 32;
+    public static final int TRAY_ACTIVE_FIELD_NUMBER = 32;
+    private boolean hasTrayActive;
+    private boolean trayActive_ = false;
+    public boolean hasTrayActive() { return hasTrayActive; }
+    public boolean getTrayActive() { return trayActive_; }
+    
+    // optional bool showing_full_recent_path = 33;
+    public static final int SHOWING_FULL_RECENT_PATH_FIELD_NUMBER = 33;
+    private boolean hasShowingFullRecentPath;
+    private boolean showingFullRecentPath_ = false;
+    public boolean hasShowingFullRecentPath() { return hasShowingFullRecentPath; }
+    public boolean getShowingFullRecentPath() { return showingFullRecentPath_; }
+    
     private void initFields() {
       groovyConditions_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
       detailsView_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
@@ -389,9 +396,6 @@ public final class PrefsProto {
       if (hasGlobalLoggingEnabled()) {
         output.writeBool(14, getGlobalLoggingEnabled());
       }
-      if (hasLicensed()) {
-        output.writeBool(15, getLicensed());
-      }
       if (hasLoggingStatisticEnabled()) {
         output.writeBool(16, getLoggingStatisticEnabled());
       }
@@ -439,6 +443,12 @@ public final class PrefsProto {
       }
       if (hasGroovyClipboardFormatters()) {
         output.writeMessage(31, getGroovyClipboardFormatters());
+      }
+      if (hasTrayActive()) {
+        output.writeBool(32, getTrayActive());
+      }
+      if (hasShowingFullRecentPath()) {
+        output.writeBool(33, getShowingFullRecentPath());
       }
       getUnknownFields().writeTo(output);
     }
@@ -505,10 +515,6 @@ public final class PrefsProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(14, getGlobalLoggingEnabled());
       }
-      if (hasLicensed()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(15, getLicensed());
-      }
       if (hasLoggingStatisticEnabled()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(16, getLoggingStatisticEnabled());
@@ -572,6 +578,14 @@ public final class PrefsProto {
       if (hasGroovyClipboardFormatters()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(31, getGroovyClipboardFormatters());
+      }
+      if (hasTrayActive()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(32, getTrayActive());
+      }
+      if (hasShowingFullRecentPath()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(33, getShowingFullRecentPath());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -773,9 +787,6 @@ public final class PrefsProto {
         if (other.hasGlobalLoggingEnabled()) {
           setGlobalLoggingEnabled(other.getGlobalLoggingEnabled());
         }
-        if (other.hasLicensed()) {
-          setLicensed(other.getLicensed());
-        }
         if (other.hasLoggingStatisticEnabled()) {
           setLoggingStatisticEnabled(other.getLoggingStatisticEnabled());
         }
@@ -823,6 +834,12 @@ public final class PrefsProto {
         }
         if (other.hasGroovyClipboardFormatters()) {
           mergeGroovyClipboardFormatters(other.getGroovyClipboardFormatters());
+        }
+        if (other.hasTrayActive()) {
+          setTrayActive(other.getTrayActive());
+        }
+        if (other.hasShowingFullRecentPath()) {
+          setShowingFullRecentPath(other.getShowingFullRecentPath());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -920,10 +937,6 @@ public final class PrefsProto {
               setGlobalLoggingEnabled(input.readBool());
               break;
             }
-            case 120: {
-              setLicensed(input.readBool());
-              break;
-            }
             case 128: {
               setLoggingStatisticEnabled(input.readBool());
               break;
@@ -997,6 +1010,14 @@ public final class PrefsProto {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setGroovyClipboardFormatters(subBuilder.buildPartial());
+              break;
+            }
+            case 256: {
+              setTrayActive(input.readBool());
+              break;
+            }
+            case 264: {
+              setShowingFullRecentPath(input.readBool());
               break;
             }
           }
@@ -1322,24 +1343,6 @@ public final class PrefsProto {
         return this;
       }
       
-      // optional bool licensed = 15;
-      public boolean hasLicensed() {
-        return result.hasLicensed();
-      }
-      public boolean getLicensed() {
-        return result.getLicensed();
-      }
-      public Builder setLicensed(boolean value) {
-        result.hasLicensed = true;
-        result.licensed_ = value;
-        return this;
-      }
-      public Builder clearLicensed() {
-        result.hasLicensed = false;
-        result.licensed_ = false;
-        return this;
-      }
-      
       // optional bool logging_statistic_enabled = 16;
       public boolean hasLoggingStatisticEnabled() {
         return result.hasLoggingStatisticEnabled();
@@ -1650,6 +1653,42 @@ public final class PrefsProto {
       public Builder clearGroovyClipboardFormatters() {
         result.hasGroovyClipboardFormatters = false;
         result.groovyClipboardFormatters_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
+        return this;
+      }
+      
+      // optional bool tray_active = 32;
+      public boolean hasTrayActive() {
+        return result.hasTrayActive();
+      }
+      public boolean getTrayActive() {
+        return result.getTrayActive();
+      }
+      public Builder setTrayActive(boolean value) {
+        result.hasTrayActive = true;
+        result.trayActive_ = value;
+        return this;
+      }
+      public Builder clearTrayActive() {
+        result.hasTrayActive = false;
+        result.trayActive_ = false;
+        return this;
+      }
+      
+      // optional bool showing_full_recent_path = 33;
+      public boolean hasShowingFullRecentPath() {
+        return result.hasShowingFullRecentPath();
+      }
+      public boolean getShowingFullRecentPath() {
+        return result.getShowingFullRecentPath();
+      }
+      public Builder setShowingFullRecentPath(boolean value) {
+        result.hasShowingFullRecentPath = true;
+        result.showingFullRecentPath_ = value;
+        return this;
+      }
+      public Builder clearShowingFullRecentPath() {
+        result.hasShowingFullRecentPath = false;
+        result.showingFullRecentPath_ = false;
         return this;
       }
       
@@ -4169,7 +4208,7 @@ public final class PrefsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\"src/main/protobuf/PrefsProto.proto\022\027de" +
-      ".huxhorn.lilith.prefs\"\300\010\n\021LilithPreferen" +
+      ".huxhorn.lilith.prefs\"\345\010\n\021LilithPreferen" +
       "ces\022D\n\021groovy_conditions\030\001 \001(\0132).de.huxh" +
       "orn.lilith.prefs.DirectoryContent\022?\n\014det" +
       "ails_view\030\002 \001(\0132).de.huxhorn.lilith.pref" +
@@ -4182,37 +4221,38 @@ public final class PrefsProto {
       "_opening\030\n \001(\010\022\033\n\023checking_for_update\030\013 " +
       "\001(\010\022\035\n\025cleaning_logs_on_exit\030\014 \001(\010\022\032\n\022co" +
       "loring_whole_row\030\r \001(\010\022\036\n\026global_logging" +
-      "_enabled\030\016 \001(\010\022\020\n\010licensed\030\017 \001(\010\022!\n\031logg" +
-      "ing_statistic_enabled\030\020 \001(\010\022\"\n\032maximizin" +
-      "g_internal_frames\030\021 \001(\010\022\014\n\004mute\030\022 \001(\010\022\033\n" +
-      "\023scrolling_to_bottom\030\023 \001(\010\022\036\n\026showing_fu" +
-      "ll_callstack\030\024 \001(\010\022\032\n\022showing_identifier" +
-      "\030\025 \001(\010\022\031\n\021showing_statusbar\030\026 \001(\010\022\032\n\022sho",
-      "wing_stacktrace\030\027 \001(\010\022\036\n\026showing_tip_of_" +
-      "the_day\030\030 \001(\010\022\027\n\017showing_toolbar\030\031 \001(\010\022\036" +
-      "\n\026splash_screen_disabled\030\032 \001(\010\022\035\n\025using_" +
-      "internal_frames\030\033 \001(\010\022B\n\020source_filterin" +
-      "g\030\034 \001(\0162(.de.huxhorn.lilith.prefs.Source" +
-      "Filtering\022\036\n\026default_condition_name\030\035 \001(" +
-      "\t\022\035\n\025checking_for_snapshot\030\036 \001(\010\022N\n\033groo" +
-      "vy_clipboard_formatters\030\037 \001(\0132).de.huxho" +
-      "rn.lilith.prefs.DirectoryContent\"\231\001\n\020Dir" +
-      "ectoryContent\022\014\n\004name\030\001 \001(\t\0229\n\005entry\030\002 \003",
-      "(\0132*.de.huxhorn.lilith.prefs.ByteArrayMa" +
-      "pEntry\022<\n\tdirectory\030\003 \003(\0132).de.huxhorn.l" +
-      "ilith.prefs.DirectoryContent\"/\n\021ByteArra" +
-      "yMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\014\"C\n" +
-      "\tStringMap\0226\n\005entry\030\001 \003(\0132\'.de.huxhorn.l" +
-      "ilith.prefs.StringMapEntry\",\n\016StringMapE" +
-      "ntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"M\n\016Stri" +
-      "ngArrayMap\022;\n\005entry\030\001 \003(\0132,.de.huxhorn.l" +
-      "ilith.prefs.StringArrayMapEntry\"\\\n\023Strin" +
-      "gArrayMapEntry\022\013\n\003key\030\001 \002(\t\0228\n\005value\030\002 \003",
-      "(\0132).de.huxhorn.lilith.prefs.StringArray" +
-      "Value\"!\n\020StringArrayValue\022\r\n\005value\030\001 \001(\t" +
-      "*9\n\017SourceFiltering\022\010\n\004NONE\020\000\022\r\n\tBLACKLI" +
-      "ST\020\001\022\r\n\tWHITELIST\020\002B.\n*de.huxhorn.lilith" +
-      ".prefs.protobuf.generatedH\001"
+      "_enabled\030\016 \001(\010\022!\n\031logging_statistic_enab" +
+      "led\030\020 \001(\010\022\"\n\032maximizing_internal_frames\030" +
+      "\021 \001(\010\022\014\n\004mute\030\022 \001(\010\022\033\n\023scrolling_to_bott" +
+      "om\030\023 \001(\010\022\036\n\026showing_full_callstack\030\024 \001(\010" +
+      "\022\032\n\022showing_identifier\030\025 \001(\010\022\031\n\021showing_" +
+      "statusbar\030\026 \001(\010\022\032\n\022showing_stacktrace\030\027 ",
+      "\001(\010\022\036\n\026showing_tip_of_the_day\030\030 \001(\010\022\027\n\017s" +
+      "howing_toolbar\030\031 \001(\010\022\036\n\026splash_screen_di" +
+      "sabled\030\032 \001(\010\022\035\n\025using_internal_frames\030\033 " +
+      "\001(\010\022B\n\020source_filtering\030\034 \001(\0162(.de.huxho" +
+      "rn.lilith.prefs.SourceFiltering\022\036\n\026defau" +
+      "lt_condition_name\030\035 \001(\t\022\035\n\025checking_for_" +
+      "snapshot\030\036 \001(\010\022N\n\033groovy_clipboard_forma" +
+      "tters\030\037 \001(\0132).de.huxhorn.lilith.prefs.Di" +
+      "rectoryContent\022\023\n\013tray_active\030  \001(\010\022 \n\030s" +
+      "howing_full_recent_path\030! \001(\010\"\231\001\n\020Direct",
+      "oryContent\022\014\n\004name\030\001 \001(\t\0229\n\005entry\030\002 \003(\0132" +
+      "*.de.huxhorn.lilith.prefs.ByteArrayMapEn" +
+      "try\022<\n\tdirectory\030\003 \003(\0132).de.huxhorn.lili" +
+      "th.prefs.DirectoryContent\"/\n\021ByteArrayMa" +
+      "pEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\014\"C\n\tSt" +
+      "ringMap\0226\n\005entry\030\001 \003(\0132\'.de.huxhorn.lili" +
+      "th.prefs.StringMapEntry\",\n\016StringMapEntr" +
+      "y\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"M\n\016StringA" +
+      "rrayMap\022;\n\005entry\030\001 \003(\0132,.de.huxhorn.lili" +
+      "th.prefs.StringArrayMapEntry\"\\\n\023StringAr",
+      "rayMapEntry\022\013\n\003key\030\001 \002(\t\0228\n\005value\030\002 \003(\0132" +
+      ").de.huxhorn.lilith.prefs.StringArrayVal" +
+      "ue\"!\n\020StringArrayValue\022\r\n\005value\030\001 \001(\t*9\n" +
+      "\017SourceFiltering\022\010\n\004NONE\020\000\022\r\n\tBLACKLIST\020" +
+      "\001\022\r\n\tWHITELIST\020\002B.\n*de.huxhorn.lilith.pr" +
+      "efs.protobuf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4224,7 +4264,7 @@ public final class PrefsProto {
           internal_static_de_huxhorn_lilith_prefs_LilithPreferences_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_prefs_LilithPreferences_descriptor,
-              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "Licensed", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", },
+              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", "TrayActive", "ShowingFullRecentPath", },
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.class,
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.Builder.class);
           internal_static_de_huxhorn_lilith_prefs_DirectoryContent_descriptor =

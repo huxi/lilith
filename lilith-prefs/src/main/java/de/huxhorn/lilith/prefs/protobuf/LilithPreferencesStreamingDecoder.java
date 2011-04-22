@@ -147,10 +147,6 @@ public class LilithPreferencesStreamingDecoder
 		{
 			prefs.setGlobalLoggingEnabled(p.getGlobalLoggingEnabled());
 		}
-		if(p.hasLicensed())
-		{
-			prefs.setLicensed(p.getLicensed());
-		}
 		if(p.hasLoggingStatisticEnabled())
 		{
 			prefs.setLoggingStatisticEnabled(p.getLoggingStatisticEnabled());
@@ -170,6 +166,10 @@ public class LilithPreferencesStreamingDecoder
 		if(p.hasShowingFullCallstack())
 		{
 			prefs.setShowingFullCallstack(p.getShowingFullCallstack());
+		}
+		if(p.hasShowingFullRecentPath())
+		{
+			prefs.setShowingFullRecentPath(p.getShowingFullRecentPath());
 		}
 		if(p.hasShowingIdentifier())
 		{
@@ -194,6 +194,10 @@ public class LilithPreferencesStreamingDecoder
 		if(p.hasSplashScreenDisabled())
 		{
 			prefs.setSplashScreenDisabled(p.getSplashScreenDisabled());
+		}
+		if(p.hasTrayActive())
+		{
+			prefs.setTrayActive(p.getTrayActive());
 		}
 		if(p.hasUsingInternalFrames())
 		{
