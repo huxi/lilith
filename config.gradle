@@ -492,7 +492,7 @@ project(':lilith') {
 			PropertyListDecoder decoder=new PropertyListDecoder()
 			plist=decoder.decode(new FileInputStream(propFile))
 		}
-		println("PropertyList before: ${plist}")
+		//println("PropertyList before: ${plist}")
 		if(!plist)
 		{
 			plist=new PropertyList()
@@ -521,28 +521,28 @@ project(':lilith') {
 		plist.root.'CFBundleIconFile'='Lilith.icns'
 		
 		List macClasspath=new ArrayList()
-		println configurations.default
+		//println configurations.default
 		configurations.default.collect  { File file -> 
 			String currentName='$JAVAROOT/'+file.name
 			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
 				&& !macClasspath.contains(currentName))
 			{
 				macClasspath.add(currentName)
-				println "Added ${currentName}"
+				//println "Added ${currentName}"
 			}
 		}
-		println "classpath 1 = ${macClasspath}"
-		println configurations.default.allArtifactFiles
+		//println "classpath 1 = ${macClasspath}"
+		//println configurations.default.allArtifactFiles
 		configurations.default.allArtifactFiles.collect { File file -> 
 			String currentName='$JAVAROOT/'+file.name
 			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
 				&& !macClasspath.contains(currentName))
 			{
 				macClasspath.add(currentName)
-				println "Added ${currentName}"
+				//println "Added ${currentName}"
 			}
 		}
-		println "classpath 2 = ${macClasspath}"
+		//println "classpath 2 = ${macClasspath}"
 
 		//String foo = "${ -> configurations.runtime.collect { File file -> file.name }.sort().join(' ')}"
 		//println foo
@@ -552,10 +552,10 @@ project(':lilith') {
 				&& !macClasspath.contains(currentName))
 			{
 				macClasspath.add(currentName)
-				println "Added ${currentName}"
+				//println "Added ${currentName}"
 			}
 		}
-		println "classpath 3 = ${macClasspath}"
+		//println "classpath 3 = ${macClasspath}"
 		Collections.sort(macClasspath)
 		
 		Map javaMap=plist.root.'Java'
@@ -575,13 +575,11 @@ project(':lilith') {
 		javaMap.'VMOptions'='-Dcom.apple.macos.useScreenMenuBar=true'
 		
 		
-		println("PropertyList after: ${plist}")
+		//println("PropertyList after: ${plist}")
 		File propOutFile=file('build/Info.plist')
 		propOutFile.parentFile.mkdirs()
 		PropertyListEncoder encoder=new PropertyListEncoder()
 		plist=encoder.encode(plist, new FileOutputStream(propOutFile))
-		
-		println "Foo!!"
 	}
 	
 	appSpec = copySpec {
