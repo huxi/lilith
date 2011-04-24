@@ -463,6 +463,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		implements PropertyChangeListener
 	{
 
+		@SuppressWarnings({"unchecked"})
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			String propName = evt.getPropertyName();
