@@ -68,6 +68,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -561,6 +562,119 @@ public class ApplicationPreferences
 		setPreviousSearchStrings(new ArrayList<String>());
 	}
 
+	/**
+	 * This will prevent unchecked warnings and will also validate the content properly.
+	 *
+	 * @param iface the expected type of the elements.
+	 * @param obj the input Object, ideally a List of the given type
+	 * @return the input as a List of the given type.
+	 */
+	private static <T> List<T> transformToList(Class<T> iface, Object obj)
+	{
+		final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
+
+		List<T> resultList = null;
+		if(obj instanceof List)
+		{
+			List list = (List) obj;
+			resultList = new ArrayList<T>(list.size());
+			for(Object current:list)
+			{
+				if(iface.isInstance(current))
+				{
+					resultList.add(iface.cast(current));
+				}
+				else
+				{
+					if(logger.isWarnEnabled()) logger.warn("Expected {} but got {}!", iface.getName(), current);
+				}
+			}
+		}
+		else
+		{
+			if(logger.isWarnEnabled()) logger.warn("Expected List but got {}!", obj);
+		}
+		return resultList;
+	}
+
+	/**
+	 * This will prevent unchecked warnings and will also validate the content properly.
+	 *
+	 * @param iface the expected type of the elements.
+	 * @param obj the input Object, ideally a Set of the given type
+	 * @return the input as a Set of the given type.
+	 */
+	private static <T> Set<T> transformToSet(Class<T> iface, Object obj)
+	{
+		final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
+
+		Set<T> resultSet = null;
+		if(obj instanceof Set)
+		{
+			Set set = (Set) obj;
+			resultSet = new HashSet<T>(set.size());
+			for(Object current:set)
+			{
+				if(iface.isInstance(current))
+				{
+					resultSet.add(iface.cast(current));
+				}
+				else
+				{
+					if(logger.isWarnEnabled()) logger.warn("Expected {} but got {}!", iface.getName(), current);
+				}
+			}
+		}
+		else
+		{
+			if(logger.isWarnEnabled()) logger.warn("Expected Set but got {}!", obj);
+		}
+		return resultSet;
+	}
+
+	/**
+	 * This will prevent unchecked warnings and will also validate the content properly.
+	 *
+	 * @param keyClass the expected type of the keys.
+	 * @param valueClass the expected type of the values.
+	 * @param obj the input Object, ideally a Map of the given types
+	 * @return the input as a Map of the given types.
+	 */
+	private static <K,V> Map<K,V> transformToMap(Class<K> keyClass, Class<V> valueClass, Object obj)
+	{
+		final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
+
+		Map<K,V> resultMap = null;
+		if(obj instanceof Map)
+		{
+			Map map = (Map) obj;
+			resultMap = new HashMap<K,V>(map.size());
+			for(Object c:map.entrySet())
+			{
+				Map.Entry current = (Map.Entry) c;
+				Object key = current.getKey();
+				Object value = current.getValue();
+
+				if(!keyClass.isInstance(key))
+				{
+					if(logger.isWarnEnabled()) logger.warn("Expected {} as key but got {}!", keyClass.getName(), key);
+					continue;
+				}
+				if(!valueClass.isInstance(value))
+				{
+					if(logger.isWarnEnabled()) logger.warn("Expected {} as value but got {}!", valueClass.getName(), value);
+					continue;
+				}
+				resultMap.put(keyClass.cast(key), valueClass.cast(value));
+			}
+		}
+		else
+		{
+			if(logger.isWarnEnabled()) logger.warn("Expected Map but got {}!", obj);
+		}
+		return resultMap;
+	}
+
 	private void initRecentFiles()
 	{
 		File appPath = getStartupApplicationPath();
@@ -571,21 +685,13 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(
-					new BufferedInputStream(
-						new FileInputStream(file)));
+				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(file)));
 
-				//noinspection unchecked
-				this.recentFiles = (List<String>) d.readObject();
+				this.recentFiles = transformToList(String.class, d.readObject());
 			}
 			catch(Throwable ex)
 			{
-				if(logger.isWarnEnabled())
-				{
-					logger
-						.warn("Exception while loading recentFiles from file '" + file
-							.getAbsolutePath() + "'!", ex);
-				}
+				if(logger.isWarnEnabled()) logger.warn("Exception while loading recentFiles from file '" + file.getAbsolutePath() + "'!", ex);
 				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
@@ -686,21 +792,13 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(
-					new BufferedInputStream(
-						new FileInputStream(file)));
+				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(file)));
 
-				//noinspection unchecked
-				this.previousSearchStrings = (List<String>) d.readObject();
+				this.previousSearchStrings = transformToList(String.class, d.readObject());
 			}
 			catch(Throwable ex)
 			{
-				if(logger.isWarnEnabled())
-				{
-					logger
-						.warn("Exception while loading previous search strings from file '" + file
-							.getAbsolutePath() + "'!", ex);
-				}
+				if(logger.isWarnEnabled()) logger.warn("Exception while loading previous search strings from file '" + file.getAbsolutePath() + "'!", ex);
 				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
@@ -899,16 +997,11 @@ public class ApplicationPreferences
 				{
 					d = new XMLDecoder(new BufferedInputStream(new FileInputStream(levelColorsFile)));
 
-					//noinspection unchecked
-					levelColors = (Map<LoggingEvent.Level, ColorScheme>) d.readObject();
+					levelColors = transformToMap(LoggingEvent.Level.class, ColorScheme.class, d.readObject());
 				}
 				catch(Throwable ex)
 				{
-					if(logger.isWarnEnabled())
-					{
-						logger.warn("Exception while loading Level-ColorSchemes from file '"
-							+ levelColorsFile.getAbsolutePath() + "'!", ex);
-					}
+					if(logger.isWarnEnabled()) logger.warn("Exception while loading Level-ColorSchemes from file '"	+ levelColorsFile.getAbsolutePath() + "'!", ex);
 					levelColors = null;
 					IOUtilities.interruptIfNecessary(ex);
 				}
@@ -1017,16 +1110,11 @@ public class ApplicationPreferences
 				{
 					d = new XMLDecoder(new BufferedInputStream(new FileInputStream(statusColorsFile)));
 
-					//noinspection unchecked
-					statusColors = (Map<HttpStatus.Type, ColorScheme>) d.readObject();
+					statusColors = transformToMap(HttpStatus.Type.class, ColorScheme.class, d.readObject());
 				}
 				catch(Throwable ex)
 				{
-					if(logger.isWarnEnabled())
-					{
-						logger.warn("Exception while loading status Status-ColorSchemes from file '"
-							+ statusColorsFile.getAbsolutePath() + "'!", ex);
-					}
+					if(logger.isWarnEnabled()) logger.warn("Exception while loading status Status-ColorSchemes from file '" + statusColorsFile.getAbsolutePath() + "'!", ex);
 					statusColors = null;
 					IOUtilities.interruptIfNecessary(ex);
 				}
@@ -1146,22 +1234,30 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(
-					new BufferedInputStream(
-						new FileInputStream(sourceListsFile)));
+				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(sourceListsFile)));
 
-				//noinspection unchecked
-				sourceLists = (Map<String, Set<String>>) d.readObject();
+				Map<String, Set> interimMap = transformToMap(String.class, Set.class, d.readObject());
+
+				HashMap<String, Set<String>> resultMap = null;
+				if(interimMap != null)
+				{
+					resultMap = new HashMap<String, Set<String>>();
+					for(Map.Entry<String, Set> current : interimMap.entrySet())
+					{
+						Set<String> value = transformToSet(String.class, current.getValue());
+						if(value == null)
+						{
+							continue;
+						}
+						resultMap.put(current.getKey(), value);
+					}
+				}
+				sourceLists = resultMap;
 				lastSourceListsModified = lastModified;
 			}
 			catch(Throwable ex)
 			{
-				if(logger.isWarnEnabled())
-				{
-					logger
-						.warn("Exception while loading source lists from sourceListsFile '" + sourceListsFile
-							.getAbsolutePath() + "'!", ex);
-				}
+				if(logger.isWarnEnabled()) logger.warn("Exception while loading source lists from sourceListsFile '" + sourceListsFile.getAbsolutePath() + "'!", ex);
 				sourceLists = new HashMap<String, Set<String>>();
 				IOUtilities.interruptIfNecessary(ex);
 			}
@@ -1226,10 +1322,7 @@ public class ApplicationPreferences
 		}
 		catch(MalformedURLException e)
 		{
-			if(logger.isWarnEnabled())
-			{
-				logger.warn("Exception while creating detailsViewRootUrl for '{}'!", detailsViewRoot.getAbsolutePath());
-			}
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating detailsViewRootUrl for '{}'!", detailsViewRoot.getAbsolutePath());
 			detailsViewRootUrl = null;
 		}
 
@@ -1275,10 +1368,7 @@ public class ApplicationPreferences
 			if(Arrays.equals(available, current))
 			{
 				// we are done already. The current version is the latest version.
-				if(logger.isDebugEnabled())
-				{
-					logger.debug("The current version of {} is also the latest version.", file.getAbsolutePath());
-				}
+				if(logger.isDebugEnabled()) logger.debug("The current version of {} is also the latest version.", file.getAbsolutePath());
 				return;
 			}
 
@@ -1302,20 +1392,14 @@ public class ApplicationPreferences
 								dis.readFully(checksum);
 								if(Arrays.equals(available, checksum))
 								{
-									if(logger.isInfoEnabled())
-									{
-										logger.info("Found old version of {}: {}", file.getAbsolutePath(), currentLine);
-									}
+									if(logger.isInfoEnabled()) logger.info("Found old version of {}: {}", file.getAbsolutePath(), currentLine);
 									delete = true;
 									break;
 								}
 							}
 							catch(IOException e)
 							{
-								if(logger.isWarnEnabled())
-								{
-									logger.warn("Exception while reading checksum of " + currentLine + "!", e);
-								}
+								if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of " + currentLine + "!", e);
 							}
 							finally
 							{
@@ -1360,10 +1444,7 @@ public class ApplicationPreferences
 				}
 				else
 				{
-					if(logger.isWarnEnabled())
-					{
-						logger.warn("Tried to delete {} but couldn't!", target.getAbsolutePath());
-					}
+					if(logger.isWarnEnabled()) logger.warn("Tried to delete {} but couldn't!", target.getAbsolutePath());
 				}
 			}
 		}
@@ -1377,18 +1458,11 @@ public class ApplicationPreferences
 				os = new FileOutputStream(target);
 				is = source.openStream();
 				IOUtils.copy(is, os);
-				if(logger.isInfoEnabled())
-				{
-					logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
-				}
+				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
 			}
 			catch(IOException e)
 			{
-				if(logger.isWarnEnabled())
-				{
-					logger.warn("Exception while initializing '" + target
-						.getAbsolutePath() + "' with data from '" + source + "'.!", e);
-				}
+				if(logger.isWarnEnabled()) logger.warn("Exception while initializing '" + target.getAbsolutePath() + "' with data from '" + source + "'.!", e);
 			}
 			finally
 			{
@@ -1656,22 +1730,15 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(
-					new BufferedInputStream(
-						new FileInputStream(conditionsFile)));
+				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(conditionsFile)));
 
-				//noinspection unchecked
-				conditions = (List<SavedCondition>) d.readObject();
+				conditions = transformToList(SavedCondition.class, d.readObject());
 				lastConditionsModified = lastModified;
 				if(logger.isDebugEnabled()) logger.debug("Loaded conditions {}.", conditions);
 			}
 			catch(Throwable ex)
 			{
-				if(logger.isWarnEnabled())
-				{
-					logger.warn("Exception while loading conditions from file '" + conditionsFile
-						.getAbsolutePath() + "'!", ex);
-				}
+				if(logger.isWarnEnabled()) logger.warn("Exception while loading conditions from file '" + conditionsFile.getAbsolutePath() + "'!", ex);
 				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
@@ -2518,10 +2585,7 @@ public class ApplicationPreferences
 		}
 		catch(IOException e)
 		{
-			if(logger.isWarnEnabled())
-			{
-				logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
-			}
+			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
 		}
 		finally
 		{
@@ -2599,10 +2663,7 @@ public class ApplicationPreferences
 		}
 		catch(IOException e)
 		{
-			if(logger.isWarnEnabled())
-			{
-				logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
-			}
+			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
 		}
 		finally
 		{
@@ -2680,10 +2741,7 @@ public class ApplicationPreferences
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			e = new XMLEncoder(bos);
 			e.writeObject(layoutInfos);
-			if(logger.isInfoEnabled())
-			{
-				logger.info("Wrote layouts {} to file '{}'.", layoutInfos, file.getAbsolutePath());
-			}
+			if(logger.isInfoEnabled()) logger.info("Wrote layouts {} to file '{}'.", layoutInfos, file.getAbsolutePath());
 		}
 		catch(FileNotFoundException ex)
 		{
@@ -2698,10 +2756,7 @@ public class ApplicationPreferences
 		}
 		if(error != null)
 		{
-			if(logger.isWarnEnabled())
-			{
-				logger.warn("Exception while writing layouts to file '" + file.getAbsolutePath() + "'!", error);
-			}
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing layouts to file '" + file.getAbsolutePath() + "'!", error);
 			return false;
 		}
 		return true;
@@ -2713,20 +2768,13 @@ public class ApplicationPreferences
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> result;
 		try
 		{
-			d = new XMLDecoder(
-				new BufferedInputStream(
-					new FileInputStream(file)));
+			d = new XMLDecoder(new BufferedInputStream(new FileInputStream(file)));
 
-			//noinspection unchecked
-			result = (List<PersistentTableColumnModel.TableColumnLayoutInfo>) d.readObject();
+			result = transformToList(PersistentTableColumnModel.TableColumnLayoutInfo.class, d.readObject());
 		}
 		catch(Throwable ex)
 		{
-			if(logger.isInfoEnabled())
-			{
-				logger
-					.info("Exception while loading layouts from file '{}'':", file.getAbsolutePath(), ex.getMessage());
-			}
+			if(logger.isInfoEnabled()) logger.info("Exception while loading layouts from file '{}'':", file.getAbsolutePath(), ex.getMessage());
 			result = null;
 			IOUtilities.interruptIfNecessary(ex);
 		}
