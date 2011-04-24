@@ -24,7 +24,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-public class GenericSortedListModel<T extends Comparable>
+public class GenericSortedListModel<T extends Comparable<? super T>>
 	extends AbstractListModel
 {
 	private final List<T> data;

@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.preferences;
 import java.io.Serializable;
 
 public class Source
-	implements Serializable, Comparable
+	implements Serializable, Comparable<Source>
 {
 	private static final long serialVersionUID = -1855258442029284033L;
 
@@ -66,9 +66,8 @@ public class Source
 		return result;
 	}
 
-	public int compareTo(Object o)
+	public int compareTo(Source other)
 	{
-		Source other = (Source) o;
 		//noinspection StringEquality
 		if(this.name == other.name)
 		{
@@ -84,4 +83,5 @@ public class Source
 		}
 		return this.name.compareToIgnoreCase(other.name);
 	}
+
 }
