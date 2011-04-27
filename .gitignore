@@ -10,4 +10,3 @@ buildNumber.properties
 *.idx
 *.log
 *.lilith
-/gradle/
