@@ -361,15 +361,19 @@ subprojects {
 
 project(':lilith') {
 
+	apply plugin: 'application'
+	
+	mainClassName = 'de.huxhorn.lilith.Lilith'
+
 	// added 'clean' because changed resources aren't picked up by jar etc.
 	compileJava.dependsOn clean
 
 	jar {
 		manifest.attributes(
-			'Main-Class': 'de.huxhorn.lilith.Lilith',
+			'Main-Class': "${mainClassName}",
 			// Class-Path must be evaluated at runtime not configuration time.
 			// see http://gradle.1045684.n5.nabble.com/Manifest-classpath-incomplete-and-distribution-ZIP-empty-td2635807.html
-			"Class-Path": "${ -> configurations.runtime.collect { File file -> file.name }.sort().join(' ')}"
+			'Class-Path': "${ -> configurations.runtime.collect { File file -> file.name }.sort().join(' ')}"
 		)
 
 	}
@@ -454,7 +458,7 @@ project(':lilith') {
 		classifier = 'all'
 
 		manifest.attributes(
-			'Main-Class': 'de.huxhorn.lilith.Lilith'
+			'Main-Class': "${mainClassName}"
 		)
 
 		from (sourceSets.main.classesDir)
@@ -471,13 +475,13 @@ project(':lilith') {
 		}
 	}
 
-	task distZip(dependsOn: configurations.default.buildArtifacts, type: Zip) {
+	task myDistZip(dependsOn: configurations.default.buildArtifacts, type: Zip) {
 		description = 'Creates a ZIP containing the Lilith distribution.'
 		classifier = 'bin'
 		with distSpec
 	}
 
-	task distTgz(dependsOn: configurations.default.buildArtifacts, type: Tar) {
+	task myDistTgz(dependsOn: configurations.default.buildArtifacts, type: Tar) {
 		description = 'Creates a TGZ containing the Lilith distribution.'
 		classifier = 'bin'
 		compression = Compression.GZIP
@@ -569,7 +573,7 @@ project(':lilith') {
 			javaMap=new TreeMap(javaMap)
 			plist.root.'Java'=javaMap
 		}
-		javaMap.'MainClass'='de.huxhorn.lilith.Lilith'
+		javaMap.'MainClass'="${mainClassName}"
 		javaMap.'JVMVersion'='1.5+'
 		javaMap.'ClassPath'=macClasspath
 		javaMap.'VMOptions'='-Dcom.apple.macos.useScreenMenuBar=true'
