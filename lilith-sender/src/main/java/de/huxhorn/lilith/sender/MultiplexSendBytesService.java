@@ -113,6 +113,14 @@ public class MultiplexSendBytesService
 			}
 			senderServices.clear();
 			eventBytes.clear();
+			try
+			{
+				dispatcherThread.join();
+			}
+			catch(InterruptedException e)
+			{
+				// this is ok.
+			}
 			dispatcherThread = null;
 		}
 	}

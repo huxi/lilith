@@ -232,11 +232,27 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	private void initialize()
 	{
+		if(multiplexSendBytes != null)
+		{
+			multiplexSendBytes.shutDown();
+		}
 		multiplexSendBytes = new MultiplexSendBytesService(name, remoteHostsList, port, writeByteStrategy, reconnectionDelay, queueSize);
 		multiplexSendBytes.setDebug(debug);
 		multiplexSendBytes.startUp();
 
 		// TODO: add support for ip.ip.ip.ip:port
+		if(heartbeatThread != null)
+		{
+			heartbeatThread.interrupt();
+			try
+			{
+				heartbeatThread.join();
+			}
+			catch(InterruptedException e)
+			{
+				// this is ok.
+			}
+		}
 		heartbeatThread = new Thread(new HeartbeatRunnable(multiplexSendBytes), name + " Heartbeat");
 		heartbeatThread.setDaemon(true);
 		heartbeatThread.start();
@@ -264,12 +280,25 @@ public abstract class MultiplexSocketAppenderBase<E>
 	{
 		addInfo("Cleaning up " + this + ".");
 		heartbeatThread.interrupt();
+		try
+		{
+			heartbeatThread.join();
+		}
+		catch(InterruptedException e)
+		{
+			// this is ok.
+		}
+		heartbeatThread = null;
 		multiplexSendBytes.shutDown();
+		multiplexSendBytes = null;
 	}
 
 	protected void sendBytes(byte[] bytes)
 	{
-		multiplexSendBytes.sendBytes(bytes);
+		if(multiplexSendBytes != null)
+		{
+			multiplexSendBytes.sendBytes(bytes);
+		}
 	}
 
 	protected void append(E e)
