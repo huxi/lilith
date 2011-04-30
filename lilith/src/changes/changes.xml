@@ -76,6 +76,22 @@
 		</release>
 
 		<release version="0.9.41" date="TBD" description="Future Release">
+			<action dev="jhux" type="update">
+				The NDC behavior has changed a bit since it does not inherit the NDC  of the parent threads
+				anymore. This is actually a better behavior. Inheriting does not make much sense for an NDC - in
+				contrast to MDC where it is very helpful - since it resembles a contextual "stacktrace".
+				I never documented the previous behavior, anyway. Problem? ;) 
+			</action>
+			<action dev="jhux" type="fix" issue="96">
+				Fixed two classloader-leak-issues that prevented proper unloading of webapps upon undeploy/redeploy.
+				1.) The threads startet by the Lilith multiplex appenders did stop but I didn't bother to wait until
+				    they finished doing so. This has been fixed now. All threads are destroyed before stop() returns.
+				2.) I had an issue in the NDC implementation that was very comparable to the one that caused LBCLASSIC-183.
+				    I was putting an instance of a class loaded by the webapp classloader into a ThreadLocal.
+				    I fixed this by using two ThreadLocals, a ThreadLocal&lt;String&gt; and a ThreadLocal&lt;String[]&gt;,
+				    instead of my own class.
+				This issue was discovered and reported by storm2000. Thank you very much!
+			</action>
 			<action dev="jhux" type="add" issue="91">
 				Minimize to system tray.
 				Added support for (optional, default is on) system tray icon. Double-clicking the icon hides/shows all

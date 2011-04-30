@@ -37,192 +37,133 @@ package de.huxhorn.lilith.logback.classic;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleNDCAdapter
 	implements NDCAdapter
 {
-	private CloningNdcStackThreadLocal ndcStackThreadLocal = new CloningNdcStackThreadLocal();
+	private ThreadLocal<List<String>> threadLocalMessagePatterns =new ThreadLocal<List<String>>();
+	private ThreadLocal<List<String[]>> threadLocalMessageArguments =new ThreadLocal<List<String[]>>();
 
 	public void push(String message)
 	{
-		getNdcStack().push(message);
+		List<String> messages = threadLocalMessagePatterns.get();
+		List<String[]> args = threadLocalMessageArguments.get();
+		if(messages == null)
+		{
+			messages = new LinkedList<String>();
+			args = new LinkedList<String[]>();
+			threadLocalMessagePatterns.set(messages);
+			threadLocalMessageArguments.set(args);
+		}
+		messages.add(message);
+		args.add(null);
 	}
 
 	public void push(String messagePattern, Object[] arguments)
 	{
-		getNdcStack().push(messagePattern, arguments);
+		if(arguments == null || arguments.length == 0)
+		{
+			push(messagePattern);
+			return;
+		}
+		MessageFormatter.ArgumentResult argumentResults = MessageFormatter.evaluateArguments(messagePattern, arguments);
+
+		if(argumentResults == null)
+		{
+			push(messagePattern);
+			return;
+		}
+
+		List<String> messages = threadLocalMessagePatterns.get();
+		List<String[]> args = threadLocalMessageArguments.get();
+		if(messages == null)
+		{
+			messages = new LinkedList<String>();
+			args = new LinkedList<String[]>();
+			threadLocalMessagePatterns.set(messages);
+			threadLocalMessageArguments.set(args);
+		}
+		messages.add(messagePattern);
+		args.add(argumentResults.getArguments());
 	}
 
 	public void pop()
 	{
-		getNdcStack().pop();
+		List<String> messages = threadLocalMessagePatterns.get();
+		if(messages == null)
+		{
+			return;
+		}
+		int count=messages.size();
+		if(count == 0 || count == 1)
+		{
+			clear();
+			return;
+		}
+		List<String[]> args = threadLocalMessageArguments.get();
+		messages.remove(count - 1);
+		args.remove(count -1);
 	}
 
 	public int getDepth()
 	{
-		return getNdcStack().getDepth();
+		List<String> messages = threadLocalMessagePatterns.get();
+		if(messages == null)
+		{
+			return 0;
+		}
+		int count=messages.size();
+		if(count == 0)
+		{
+			// should never happen
+			clear();
+		}
+		return count;
 	}
 
 	public void setMaximumDepth(int maximumDepth)
 	{
-		getNdcStack().setMaximumDepth(maximumDepth);
+		int overflow = getDepth() - maximumDepth;
+		for(int i = 0; i < overflow; i++)
+		{
+			pop();
+		}
 	}
 
 	public boolean isEmpty()
 	{
-		return getNdcStack().isEmpty();
+		return getDepth()==0;
 	}
 
 	public void clear()
 	{
-		getNdcStack().clear();
+		threadLocalMessagePatterns.remove();
+		threadLocalMessageArguments.remove();
 	}
 
 	public Message[] getContextStack()
 	{
-		return getNdcStack().getContextStack();
-	}
-
-	private NdcStack getNdcStack()
-	{
-		NdcStack result = ndcStackThreadLocal.get();
-		if(result == null)
+		List<String> messages = threadLocalMessagePatterns.get();
+		if(messages == null)
 		{
-			result = new NdcStack();
-			ndcStackThreadLocal.set(result);
+			return NO_MESSAGES;
+		}
+		int count=messages.size();
+		if(count == 0)
+		{
+			// should never happen
+			clear();
+			return NO_MESSAGES;
+		}
+		List<String[]> args = threadLocalMessageArguments.get();
+
+		Message[] result=new Message[count];
+		for(int i=0;i<count;i++)
+		{
+			result[i]=new Message(messages.get(i), args.get(i));
 		}
 		return result;
-	}
-
-	private static class CloningNdcStackThreadLocal
-		extends InheritableThreadLocal<NdcStack>
-	{
-		@Override
-		protected NdcStack childValue(NdcStack parentValue)
-		{
-			NdcStack result = null;
-			if(parentValue != null)
-			{
-				// this method seems to get called only if parent
-				// is not null but this isn't documented so I'll make sure...
-				try
-				{
-					result = parentValue.clone();
-				}
-				catch(CloneNotSupportedException e)
-				{
-					// can't happen, see above...
-				}
-			}
-			return result;
-		}
-	}
-
-	private static class NdcStack
-		implements Cloneable
-	{
-		private List<Message> stackList;
-
-		private NdcStack()
-		{
-			stackList = new ArrayList<Message>();
-		}
-
-		public int getDepth()
-		{
-			return stackList.size();
-		}
-
-		public void setMaximumDepth(int maximumDepth)
-		{
-			int overflow = stackList.size() - maximumDepth;
-			for(int i = 0; i < overflow; i++)
-			{
-				pop();
-			}
-		}
-
-		public void push(String message)
-		{
-			stackList.add(new Message(message));
-		}
-
-		public void push(String messagePattern, Object[] arguments)
-		{
-			if(arguments == null || arguments.length == 0)
-			{
-				push(messagePattern);
-				return;
-			}
-			MessageFormatter.ArgumentResult argumentResults = MessageFormatter
-				.evaluateArguments(messagePattern, arguments);
-			if(argumentResults == null)
-			{
-				// this should not be possible but I'm paranoid...
-				stackList.add(new Message(messagePattern, null));
-			}
-			else
-			{
-				stackList.add(new Message(messagePattern, argumentResults.getArguments()));
-			}
-		}
-
-		public void pop()
-		{
-			int size = stackList.size();
-			if(size > 0)
-			{
-				stackList.remove(size - 1);
-			}
-		}
-
-		public boolean isEmpty()
-		{
-			return stackList.isEmpty();
-		}
-
-		public void clear()
-		{
-			stackList.clear();
-		}
-
-		public Message[] getContextStack()
-		{
-			if(stackList.isEmpty())
-			{
-				return NO_MESSAGES;
-			}
-
-			Message[] result = new Message[stackList.size()];
-			try
-			{
-				for(int i = 0; i < stackList.size(); i++)
-				{
-					result[i] = stackList.get(i).clone();
-				}
-			}
-			catch(CloneNotSupportedException e)
-			{
-				// can't happen... yeah, I know... it *will* happen one day :p
-			}
-			return result;
-		}
-
-		public NdcStack clone()
-			throws CloneNotSupportedException
-		{
-			NdcStack result = (NdcStack) super.clone();
-
-			ArrayList<Message> clonedStackList = new ArrayList<Message>(stackList.size());
-			for(Message current : stackList)
-			{
-				clonedStackList.add(current.clone());
-			}
-			result.stackList = clonedStackList;
-
-			return result;
-		}
 	}
 }

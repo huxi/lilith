@@ -120,15 +120,6 @@ public class SimpleNDCAdapterTest
 	}
 
 	@Test
-	public void inheritance()
-		throws InterruptedException
-	{
-		Thread parent = new Thread(new Level1Runnable());
-		parent.start();
-		parent.join();
-	}
-
-	@Test
 	public void depth()
 	{
 		assertEquals(0, instance.getDepth());
@@ -161,43 +152,5 @@ public class SimpleNDCAdapterTest
 		instance.push("Bar");
 		instance.setMaximumDepth(3);
 		assertEquals(2, instance.getDepth());
-	}
-
-	public class Level1Runnable
-		implements Runnable
-	{
-
-		public void run()
-		{
-			instance.push("Foo");
-			assertFalse(instance.isEmpty());
-			Thread child = new Thread(new Level2Runnable());
-			child.start();
-			try
-			{
-				child.join();
-			}
-			catch(InterruptedException e)
-			{
-				// ignore
-			}
-			assertFalse(instance.isEmpty());
-			instance.pop();
-			assertTrue(instance.isEmpty());
-		}
-	}
-
-	public class Level2Runnable
-		implements Runnable
-	{
-
-		public void run()
-		{
-			instance.push("Bar");
-			Message[] contextStack = instance.getContextStack();
-			assertEquals(2, contextStack.length);
-			instance.pop();
-			instance.pop();
-		}
 	}
 }

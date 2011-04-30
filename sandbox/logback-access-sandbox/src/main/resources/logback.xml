@@ -12,6 +12,10 @@
 		<ApplicationIdentifier>Logback Access Sandbox</ApplicationIdentifier>
 	</appender>
 
+	<!--
+	SocketAppender below is still causing a classloader leak for 0.9.28
+	Comment out to validate that Lilith appender behaves properly.
+	-->
 	<appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
 		<RemoteHost>localhost</RemoteHost>
 		<Port>4560</Port>
