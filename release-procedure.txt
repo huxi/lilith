@@ -50,17 +50,20 @@ git tag -s vx.x.x -m "x.x.x release"
 #####
 
 rm -rf ~/local-gradle-repository/release
+mkdir ~/local-gradle-repository/release
 
 #####
 
 Change into sulky root.
-gradle -Drelease=true
+./gradlew -Drelease=true -C rebuild
+./gradlew -Drelease=true -C rebuild javadocZip sourceZip
 
 #####
 
 Change into lilith root.
-gradle -Drelease=true
-gradle syncStaging
+./gradlew -Drelease=true -C rebuild
+./gradlew -Drelease=true -C rebuild javadocZip sourceZip
+./gradlew syncStaging
 
 #####
 
@@ -73,7 +76,7 @@ Upload javadocs
 
 #####
 
-Write release notes and changes for sf.net upload.
+Write release notes and changes (README.txt) for sf.net upload.
 
 #####
 
@@ -83,6 +86,7 @@ gpg --local-user huxhorn@users.sf.net --armor --detach-sign <file>
 #####
 
 Upload lilith-files to sf.net
+Use SFTP, Luke. m(
 
 #####
 
