@@ -90,7 +90,7 @@
 				    I was putting an instance of a class loaded by the webapp classloader into a ThreadLocal.
 				    I fixed this by using two ThreadLocals, a ThreadLocal&lt;String&gt; and a ThreadLocal&lt;String[]&gt;,
 				    instead of my own class.
-				This issue was discovered and reported by storm2000. Thank you very much!
+				This issue was discovered and reported by Andy Goossens. Thank you very much!
 			</action>
 			<action dev="jhux" type="add" issue="91">
 				Minimize to system tray.
