@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.prefs</artifactId>
-	<version><!-- LV -->0.9.41</version>
+	<version><!-- LV -->0.9.42-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Lilith Preferences - Protobuf classes</name>
 	<description>This file is part of Lilith. It contains the Preferences Protobuf classes.</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.41</version>
+		<version><!-- LV -->0.9.42-SNAPSHOT</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
