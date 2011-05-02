@@ -63,6 +63,13 @@ Change into sulky root.
 Change into lilith root.
 ./gradlew -Drelease=true -C rebuild
 ./gradlew -Drelease=true -C rebuild javadocZip sourceZip
+
+rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/jul
+rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/lilith-data
+rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/log4j
+rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/logback
+(Until I find out how to prevent the creation of those artifacts)
+
 ./gradlew syncStaging
 
 #####
@@ -134,6 +141,6 @@ Create new version (and default) and milestone in Trac.
 #####
 
 Send mail to lilith-announce@lists.sourceforge.net with CC to lilith-user@lists.sourceforge.net (using joern@lilith.huxhorn.de as sender)
-Send mail to logback-user@qos.ch and slf4j-user@qos.ch (using jhuxhorn@googlemail.com as sender)
-Twitter about the release @Lilith
+Send mail to logback-user@qos.ch and slf4j-user@qos.ch and log4j-user@logging.apache.org (using jhuxhorn@googlemail.com as sender)
+Twitter about the release @LilithApp
 
