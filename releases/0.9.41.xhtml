@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 0.9.41 Release Notes</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 0.9.41</h1>
+
+		<div>
+		<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/0.9.41">Download Now!
+		<br />(Released: 2011-05-02)</a>
+		</div>
+
+		<p>
+		This is an interim release because of a rather critical bug discovered by
+		Andy Goossens.
+		<br/>Webapps using a ClassicMultiplexSocketAppender would not
+		undeploy properly because of a dangling classloader.
+		<br/>I originally wanted to wait for Logback 0.9.29 due to the issues with 0.9.28
+		described in "Known Issues" below but I was unable to get any ETA for the
+		next release.
+		</p>
+		
+		<h2>Changes</h2>
+		<ul>
+			<li>
+				The NDC behavior has changed a bit since it does not inherit the NDC  of the parent threads
+				anymore. This is actually a better behavior. Inheriting does not make much sense for an NDC - in
+				contrast to MDC where it is very helpful - since it resembles a contextual "stacktrace".
+				<br/>I never documented the previous behavior, anyway. Problem? ;) 
+			</li>
+			<li>
+				Fixed two classloader-leak-issues that prevented proper unloading of webapps upon undeploy/redeploy.
+				<ol>
+					<li>
+						The threads startet by the Lilith multiplex appenders did stop but I didn't bother to wait until
+						they finished doing so. This has been fixed now. All threads are destroyed before stop() returns.
+				    </li>
+				    <li>
+						I had an issue in the NDC implementation that was very comparable to the one that caused
+						<a title="Tomcat reports SEVERE ThreadLocal issues upon shutdown" href="http://jira.qos.ch/browse/LBCLASSIC-183">LBCLASSIC-183</a>.
+						<br/>I was putting an instance of a class loaded by the webapp classloader into a ThreadLocal.
+						I fixed this by using two ThreadLocals, a ThreadLocal&lt;String&gt; and a ThreadLocal&lt;String[]&gt;,
+						instead of my own class.
+				    </li>
+				</ol>
+				This issue was discovered and reported by Andy Goossens. Thank you very much!
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/96">Ticket #96</a>)
+			</li>
+			<li>
+				Minimize to system tray.
+				<br/>Added support for (optional, default is on) system tray icon. Double-clicking the icon hides/shows all
+				windows. The menu also contains a Quit action. If system tray icon is active (supported and enabled) then
+				closing the main frame does not exit the application. This will now hide all windows, instead.
+				<br/>This was requested by Adrien Sales and Joe.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/91">Ticket #91</a>)
+			</li>
+			<li>
+				Implemented custom "Copy to clipboard" functionality using <a href="http://groovy.codehaus.org/">Groovy</a>.
+				<br/>This was suggested by Joe.
+			</li>
+			<li>
+				Added support for cat/tail of Lilith AccessEvent files.
+			</li>
+			<li>
+				Better generation of message tooltip. Content is not tailed anymore.
+			</li>
+			<li>
+				Colors of logging level and access status type are now configurable.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/5">Ticket #5</a>)
+			</li>
+			<li>
+				Importing gzipped java.util.logging or log4j xml is now supported.
+			</li>
+			<li>
+				Using JComboBox &amp; CardLayout instead of JTabbedPane in Preferences Dialog.
+			</li>
+			<li>
+				"Go to Source" is now executed asynchronously.
+				<br/>Joe nagged me about this. ;)
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/12">Ticket #12</a>)
+			</li>
+			<li>
+				Detached windows were using the popup menu of the main frame.
+				<br/>They are now using the popup menu of the detached frame as originally intended.
+				<br/>This bug was found by Dimi.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/95">Ticket #95</a>)
+			</li>
+			<li>
+				Added messagePattern.contains condition and "Copy message pattern" action. Using message pattern for filtering is faster
+				than using message.
+			</li>
+			<li>
+				Using  <a href="http://robey.lag.net/2010/06/21/mensch-font.html"><code>Mensch</code></a>
+				font by <a href="http://twitter.com/robey/">@robey (Robey Pointer)</a> as the monospace font of the HTML View.
+			</li>
+			<li>
+				HTML View is now anti-aliasing the fonts.
+			</li>
+			<li>
+				Logback 0.9.28
+			</li>
+			<li>
+				Groovy 1.8.0
+			</li>
+			<li>
+				AspectJ 1.6.10, Jackson 1.7.1, JCommander 1.17,
+				JGoodies Looks 2.2.2, commons-lang 2.6, commons-io 2.0.1,
+				httpclient 4.1, httpcore 4.1
+			</li>
+		</ul>
+
+		<h2>Known Issues</h2>
+		<ul>
+			<li>
+				The Logback error message on startup is caused by <a href="http://jira.qos.ch/browse/LBCLASSIC-246">LBCLASSIC-246</a>
+				introduced in 0.9.28 and will be fixed in Logback 0.9.29.
+			</li>
+			<li>cat and tail are currently still experimental features.
+				<ul>
+					<!--
+					<li>AccessEvent isn't supported, yet.
+						<br/>See <a href="http://jira.qos.ch/browse/LBACCESS-12">LBACCESS-12</a>
+					</li>
+					-->
+					<li>LoggingEvent isn't fully supported, yet.
+						<br/>See <a href="http://jira.qos.ch/browse/LBCLASSIC-257">LBCLASSIC-257</a>
+					</li>
+				</ul>
+			</li>
+			<li>Flying Saucer related issues:
+				<ul>
+					<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+						<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>
+					</li>
+		
+					<li>The first line of the message in HTML view is not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
+						<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=125">Issue 125: &lt;pre&gt; ignores leading whitespace</a>
+					</li>
+		
+					<li>Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+						<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=105">Issue 105: URLs with anchors</a>
+					</li>
+				</ul>
+			</li>
+			<li>Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.<br/>
+				This is caused by <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182">bug #6995182</a>
+				and I can't do anything about it.<br/>
+				Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.<br/>
+				m(
+			</li>
+		</ul>
+		
+		<h2>Previous Versions</h2>
+		<ul>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.40.xhtml">0.9.40</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.39.xhtml">0.9.39</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.38.xhtml">0.9.38</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.37.xhtml">0.9.37</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.36.xhtml">0.9.36</a></li>
+		</ul>
+
+	</body>
+</html>
+
