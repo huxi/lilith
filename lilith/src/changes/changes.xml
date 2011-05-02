@@ -75,7 +75,10 @@
 			</action>
 		</release>
 
-		<release version="0.9.41" date="TBD" description="Future Release">
+		<release version="0.9.42" date="TBD" description="Future Release">
+		</release>
+
+		<release version="0.9.41" date="2011-05-02" description="Release">
 			<action dev="jhux" type="update">
 				The NDC behavior has changed a bit since it does not inherit the NDC  of the parent threads
 				anymore. This is actually a better behavior. Inheriting does not make much sense for an NDC - in

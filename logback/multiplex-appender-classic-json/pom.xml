@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic-json</artifactId>
-	<version><!-- LV -->0.9.41-SNAPSHOT</version>
+	<version><!-- LV -->0.9.41</version>
 	<packaging>jar</packaging>
 	<name>Logback Multiplex Appender Classic - XML</name>
 	<description>This file is part of Lilith. It contains the multiplexing logging appender (JSON).</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.41-SNAPSHOT</version>
+		<version><!-- LV -->0.9.41</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	

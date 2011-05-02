@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.sender</artifactId>
-	<version><!-- LV -->0.9.41-SNAPSHOT</version>
+	<version><!-- LV -->0.9.41</version>
 	<packaging>jar</packaging>
 	<name>Lilith Sender</name>
 	<description>This file is part of Lilith. It contains the event sender definition.</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.41-SNAPSHOT</version>
+		<version><!-- LV -->0.9.41</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
