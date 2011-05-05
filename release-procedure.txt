@@ -115,6 +115,12 @@ and replace with next snapshot version.
 
 #####
 
+Update allprojects.version in sulky/config.gradle to next sulky-version 
+Update allprojects.version in lilith/config.gradle to next lilith-version 
+Update sulkyBaseVersion in lilith/dependencyDefinitions.gradle to next sulky-version
+
+#####
+
 Commit sulky root with comment "Starting work on x.x.x+1"
 Commit lilith root with comment "Starting work on x.x.x+1"
 
