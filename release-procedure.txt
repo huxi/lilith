@@ -64,12 +64,6 @@ Change into lilith root.
 ./gradlew -Drelease=true -C rebuild
 ./gradlew -Drelease=true -C rebuild javadocZip sourceZip
 
-rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/jul
-rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/lilith-data
-rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/log4j
-rm -rf ~/local-gradle-repository/release/de/huxhorn/lilith/logback
-(Until I find out how to prevent the creation of those artifacts)
-
 ./gradlew syncStaging
 
 #####
