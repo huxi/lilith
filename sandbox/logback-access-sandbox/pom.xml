@@ -16,6 +16,12 @@
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
+	<!-- Override global versions -->
+	<properties>
+		<logbackVersion>0.9.28</logbackVersion>
+		<slf4jVersion>1.6.1</slf4jVersion>
+	</properties>
+
 	<build>
 		<finalName>lb-access-sandbox</finalName>
 		<plugins>
@@ -94,21 +100,25 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+			<version>${slf4jVersion}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
+			<version>${logbackVersion}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+			<version>${logbackVersion}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-access</artifactId>
+			<version>${logbackVersion}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
