@@ -35,9 +35,15 @@
 package de.huxhorn.lilith.logback.servlet;
 
 import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.status.Status;
+import ch.qos.logback.core.status.StatusManager;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -47,6 +53,10 @@ import javax.servlet.ServletContextListener;
 public class LogbackShutdownServletContextListener
 	implements ServletContextListener
 {
+	public static final String LOGBACK_SHUTDOWN_DEBUG = "LogbackShutdownDebug";
+
+	private boolean debug=false;
+
 	public void contextDestroyed(ServletContextEvent sce)
 	{
 		shutdownLogback();
@@ -54,13 +64,23 @@ public class LogbackShutdownServletContextListener
 
 	public void contextInitialized(ServletContextEvent sce)
 	{
-//		if(context != null)
-//		{
-//			System.err.println("There is a previous context.");
-//			shutdownLogback();
-//		}
-//		context = sce.getServletContext();
+		ServletContext c = sce.getServletContext();
+		if(c != null)
+		{
+			String debugString = c.getInitParameter(LOGBACK_SHUTDOWN_DEBUG);
+			if(debugString != null)
+			{
+				debug=Boolean.parseBoolean(debugString);
+			}
+		}
 	}
+
+	private static final String[] STATUS_TEXT=
+		{
+			"INFO : ",
+			"WARN : ",
+			"ERROR: "
+		};
 
 	private void shutdownLogback()
 	{
@@ -70,6 +90,58 @@ public class LogbackShutdownServletContextListener
 			LoggerContext loggerContext = (LoggerContext) loggerFactory;
 			loggerContext.stop();
 			System.err.println("Logback has been shut down.");
+			StatusManager statusManager = loggerContext.getStatusManager();
+			if(statusManager != null)
+			{
+				if(debug || statusManager.getLevel() > Status.INFO)
+				{
+					List<Status> statusList = statusManager.getCopyOfStatusList();
+					if(statusList != null)
+					{
+						System.err.println("Logback-Status:");
+						StringBuilder statusBuilder=new StringBuilder();
+						for(Status current : statusList)
+						{
+							appendStatus(statusBuilder, current, 0);
+						}
+						System.err.println(statusBuilder.toString());
+					}
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+	private void appendStatus(StringBuilder builder, Status status, int indent)
+	{
+		int levelCode = status.getLevel();
+		appendIndent(builder, indent);
+		if(levelCode >= 0 && levelCode < STATUS_TEXT.length)
+		{
+			builder.append(STATUS_TEXT[levelCode]);
+		}
+		builder.append(status.getMessage()).append("\n");
+		Throwable t = status.getThrowable();
+		if(t != null)
+		{
+			appendIndent(builder, indent+1);
+			builder.append(t.getMessage()).append("\n");
+		}
+		if(status.hasChildren())
+		{
+			Iterator<Status> children = status.iterator();
+			while(children.hasNext())
+			{
+				appendStatus(builder, children.next(), indent+1);
+			}
+		}
+	}
+
+	private void appendIndent(StringBuilder builder, int indent)
+	{
+		for(int i=0;i<indent;i++)
+		{
+			builder.append("       ");
 		}
 	}
 }

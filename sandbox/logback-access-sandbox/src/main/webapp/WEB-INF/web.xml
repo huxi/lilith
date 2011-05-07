@@ -3,7 +3,12 @@
 <web-app>
 	<display-name>hello-world</display-name>
 
-    <listener>
+	<context-param>
+		<param-name>LogbackShutdownDebug</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<listener>
 		<listener-class>
 			de.huxhorn.lilith.logback.servlet.LogbackShutdownServletContextListener
 		</listener-class>
