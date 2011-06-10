@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.tools.formatters;
 
 import ch.qos.logback.access.spi.AccessContext;
+import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.access.spi.ServerAdapter;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.status.Status;
@@ -72,7 +73,7 @@ public class AccessFormatter
 		return null;
 	}
 
-	private ch.qos.logback.access.spi.AccessEvent convert(AccessEvent event)
+	private IAccessEvent convert(AccessEvent event)
 	{
 		AccessEventFoo result = null;
 		if(event != null)
@@ -125,7 +126,8 @@ public class AccessFormatter
 		}
 	}
 
-	private static class AccessEventFoo extends ch.qos.logback.access.spi.AccessEvent
+	private static class AccessEventFoo
+		implements IAccessEvent
 	{
 		private static final long serialVersionUID = 7867225147256087602L;
 
@@ -146,16 +148,8 @@ public class AccessFormatter
 		private int localPort = SENTINEL;
 
 		private long timeStamp = 0;
-
-		public AccessEventFoo(HttpServletRequest httpRequest, HttpServletResponse httpResponse, ServerAdapter adapter)
-		{
-			super(httpRequest, httpResponse, adapter);
-		}
-
-		private AccessEventFoo()
-		{
-			this(null, null, null);
-		}
+		private static final String[] NA_STRING_ARRAY = new String[0];
+		private static final String EMPTY = "";
 
 		public HttpServletRequest getRequest()
 		{

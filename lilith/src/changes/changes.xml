@@ -76,6 +76,15 @@
 		</release>
 
 		<release version="0.9.42" date="TBD" description="Future Release">
+			<action dev="jhux" type="update">
+				Logback 0.9.29
+			</action>
+			<action dev="jhux" type="update">
+				tail and cat are now fully supporting both LoggingEvent and AccessEvent.
+			</action>
+			<action dev="jhux" type="update">
+				Restored Logback SocketAppender in Lilith logging configuration. It's now triggered during debug actions, again.
+			</action>
 		</release>
 
 		<release version="0.9.41" date="2011-05-02" description="Release">

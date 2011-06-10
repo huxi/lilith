@@ -111,8 +111,6 @@ public class LoggingFormatter
 	{
 		private LoggingEvent event;
 
-		// TODO: finish
-		
 		public LoggingFoo(LoggingEvent event)
 		{
 			this.event=event;
@@ -209,8 +207,7 @@ public class LoggingFormatter
 				de.huxhorn.lilith.data.eventsource.LoggerContext loggerContext = event.getLoggerContext();
 				if(loggerContext != null)
 				{
-					// TODO: result=new LoggerContextVO(loggerContext.getName(), loggerContext.getProperties(), loggerContext.getBirthTime());
-					// see http://jira.qos.ch/browse/LBCLASSIC-257
+					result=new LoggerContextVO(loggerContext.getName(), loggerContext.getProperties(), loggerContext.getBirthTime());
 				}
 			}
 			return result;

@@ -104,15 +104,12 @@
 	    <RemoteHost>localhost</RemoteHost>
     </appender>
 
-	<!--
-	Removed because of http://jira.qos.ch/browse/LBCLASSIC-156
     <appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
         <RemoteHost>localhost</RemoteHost>
         <Port>4560</Port>
         <ReconnectionDelay>170</ReconnectionDelay>
         <IncludeCallerData>true</IncludeCallerData>
     </appender>
-    -->
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
@@ -128,9 +125,7 @@
 		<appender-ref ref="MultiplexClassicJsonCompressed"/>
 		<appender-ref ref="MultiplexClassicJsonUncompressed"/>
 		<appender-ref ref="ZeroDelimitedMultiplexClassicJson"/>
-		<!--
         <appender-ref ref="LogbackClassic"/>
-        -->
     </logger>
 	<logger name="de.huxhorn.lilith" level="INFO"/>
 	<logger name="de.huxhorn.lilith.Lilith" level="INFO"/>
