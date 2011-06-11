@@ -8,11 +8,25 @@ public final class AccessProto {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
+  public interface EventWrapperOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;
+    boolean hasEventIdentifier();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder();
+    
+    // optional .de.huxhorn.lilith.access.AccessEvent event = 2;
+    boolean hasEvent();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent getEvent();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder getEventOrBuilder();
+  }
   public static final class EventWrapper extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements EventWrapperOrBuilder {
     // Use EventWrapper.newBuilder() to construct.
-    private EventWrapper() {
-      initFields();
+    private EventWrapper(Builder builder) {
+      super(builder);
     }
     private EventWrapper(boolean noInit) {}
     
@@ -35,39 +49,60 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_EventWrapper_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;
     public static final int EVENT_IDENTIFIER_FIELD_NUMBER = 1;
-    private boolean hasEventIdentifier;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier eventIdentifier_;
-    public boolean hasEventIdentifier() { return hasEventIdentifier; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier() { return eventIdentifier_; }
+    public boolean hasEventIdentifier() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier() {
+      return eventIdentifier_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder() {
+      return eventIdentifier_;
+    }
     
     // optional .de.huxhorn.lilith.access.AccessEvent event = 2;
     public static final int EVENT_FIELD_NUMBER = 2;
-    private boolean hasEvent;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent event_;
-    public boolean hasEvent() { return hasEvent; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent getEvent() { return event_; }
+    public boolean hasEvent() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent getEvent() {
+      return event_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder getEventOrBuilder() {
+      return event_;
+    }
     
     private void initFields() {
       eventIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance();
       event_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
       if (hasEvent()) {
-        if (!getEvent().isInitialized()) return false;
+        if (!getEvent().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasEventIdentifier()) {
-        output.writeMessage(1, getEventIdentifier());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, eventIdentifier_);
       }
-      if (hasEvent()) {
-        output.writeMessage(2, getEvent());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, event_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -78,17 +113,24 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasEventIdentifier()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getEventIdentifier());
+          .computeMessageSize(1, eventIdentifier_);
       }
-      if (hasEvent()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getEvent());
+          .computeMessageSize(2, event_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper parseFrom(
@@ -165,34 +207,63 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapperOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_EventWrapper_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_EventWrapper_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getEventIdentifierFieldBuilder();
+          getEventFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance();
+        } else {
+          eventIdentifierBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (eventBuilder_ == null) {
+          event_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance();
+        } else {
+          eventBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -204,33 +275,47 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper returnMe = result;
-        result = null;
-        return returnMe;
+        if (eventIdentifierBuilder_ == null) {
+          result.eventIdentifier_ = eventIdentifier_;
+        } else {
+          result.eventIdentifier_ = eventIdentifierBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (eventBuilder_ == null) {
+          result.event_ = event_;
+        } else {
+          result.event_ = eventBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -254,6 +339,16 @@ public final class AccessProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (hasEvent()) {
+          if (!getEvent().isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -266,11 +361,13 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
@@ -297,79 +394,186 @@ public final class AccessProto {
         }
       }
       
+      private int bitField0_;
       
       // optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier eventIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder> eventIdentifierBuilder_;
       public boolean hasEventIdentifier() {
-        return result.hasEventIdentifier();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier() {
-        return result.getEventIdentifier();
+        if (eventIdentifierBuilder_ == null) {
+          return eventIdentifier_;
+        } else {
+          return eventIdentifierBuilder_.getMessage();
+        }
       }
       public Builder setEventIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (eventIdentifierBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          eventIdentifier_ = value;
+          onChanged();
+        } else {
+          eventIdentifierBuilder_.setMessage(value);
         }
-        result.hasEventIdentifier = true;
-        result.eventIdentifier_ = value;
+        bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder setEventIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder builderForValue) {
-        result.hasEventIdentifier = true;
-        result.eventIdentifier_ = builderForValue.build();
+      public Builder setEventIdentifier(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder builderForValue) {
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifier_ = builderForValue.build();
+          onChanged();
+        } else {
+          eventIdentifierBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
         return this;
       }
       public Builder mergeEventIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier value) {
-        if (result.hasEventIdentifier() &&
-            result.eventIdentifier_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance()) {
-          result.eventIdentifier_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.newBuilder(result.eventIdentifier_).mergeFrom(value).buildPartial();
+        if (eventIdentifierBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              eventIdentifier_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance()) {
+            eventIdentifier_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.newBuilder(eventIdentifier_).mergeFrom(value).buildPartial();
+          } else {
+            eventIdentifier_ = value;
+          }
+          onChanged();
         } else {
-          result.eventIdentifier_ = value;
+          eventIdentifierBuilder_.mergeFrom(value);
         }
-        result.hasEventIdentifier = true;
+        bitField0_ |= 0x00000001;
         return this;
       }
       public Builder clearEventIdentifier() {
-        result.hasEventIdentifier = false;
-        result.eventIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance();
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance();
+          onChanged();
+        } else {
+          eventIdentifierBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder getEventIdentifierBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getEventIdentifierFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder() {
+        if (eventIdentifierBuilder_ != null) {
+          return eventIdentifierBuilder_.getMessageOrBuilder();
+        } else {
+          return eventIdentifier_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder> 
+          getEventIdentifierFieldBuilder() {
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder>(
+                  eventIdentifier_,
+                  getParentForChildren(),
+                  isClean());
+          eventIdentifier_ = null;
+        }
+        return eventIdentifierBuilder_;
       }
       
       // optional .de.huxhorn.lilith.access.AccessEvent event = 2;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent event_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder> eventBuilder_;
       public boolean hasEvent() {
-        return result.hasEvent();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent getEvent() {
-        return result.getEvent();
+        if (eventBuilder_ == null) {
+          return event_;
+        } else {
+          return eventBuilder_.getMessage();
+        }
       }
       public Builder setEvent(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (eventBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          event_ = value;
+          onChanged();
+        } else {
+          eventBuilder_.setMessage(value);
         }
-        result.hasEvent = true;
-        result.event_ = value;
+        bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder setEvent(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder builderForValue) {
-        result.hasEvent = true;
-        result.event_ = builderForValue.build();
+      public Builder setEvent(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder builderForValue) {
+        if (eventBuilder_ == null) {
+          event_ = builderForValue.build();
+          onChanged();
+        } else {
+          eventBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder mergeEvent(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent value) {
-        if (result.hasEvent() &&
-            result.event_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance()) {
-          result.event_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.newBuilder(result.event_).mergeFrom(value).buildPartial();
+        if (eventBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              event_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance()) {
+            event_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.newBuilder(event_).mergeFrom(value).buildPartial();
+          } else {
+            event_ = value;
+          }
+          onChanged();
         } else {
-          result.event_ = value;
+          eventBuilder_.mergeFrom(value);
         }
-        result.hasEvent = true;
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder clearEvent() {
-        result.hasEvent = false;
-        result.event_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance();
+        if (eventBuilder_ == null) {
+          event_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance();
+          onChanged();
+        } else {
+          eventBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder getEventBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getEventFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder getEventOrBuilder() {
+        if (eventBuilder_ != null) {
+          return eventBuilder_.getMessageOrBuilder();
+        } else {
+          return event_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder> 
+          getEventFieldBuilder() {
+        if (eventBuilder_ == null) {
+          eventBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder>(
+                  event_,
+                  getParentForChildren(),
+                  isClean());
+          event_ = null;
+        }
+        return eventBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.EventWrapper)
@@ -377,18 +581,30 @@ public final class AccessProto {
     
     static {
       defaultInstance = new EventWrapper(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.EventWrapper)
   }
   
+  public interface EventIdentifierOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional int64 local_id = 1;
+    boolean hasLocalId();
+    long getLocalId();
+    
+    // optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;
+    boolean hasSourceIdentifier();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier getSourceIdentifier();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder getSourceIdentifierOrBuilder();
+  }
   public static final class EventIdentifier extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements EventIdentifierOrBuilder {
     // Use EventIdentifier.newBuilder() to construct.
-    private EventIdentifier() {
-      initFields();
+    private EventIdentifier(Builder builder) {
+      super(builder);
     }
     private EventIdentifier(boolean noInit) {}
     
@@ -411,35 +627,51 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_EventIdentifier_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional int64 local_id = 1;
     public static final int LOCAL_ID_FIELD_NUMBER = 1;
-    private boolean hasLocalId;
-    private long localId_ = 0L;
-    public boolean hasLocalId() { return hasLocalId; }
-    public long getLocalId() { return localId_; }
+    private long localId_;
+    public boolean hasLocalId() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public long getLocalId() {
+      return localId_;
+    }
     
     // optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;
     public static final int SOURCE_IDENTIFIER_FIELD_NUMBER = 2;
-    private boolean hasSourceIdentifier;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier sourceIdentifier_;
-    public boolean hasSourceIdentifier() { return hasSourceIdentifier; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier getSourceIdentifier() { return sourceIdentifier_; }
+    public boolean hasSourceIdentifier() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier getSourceIdentifier() {
+      return sourceIdentifier_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder getSourceIdentifierOrBuilder() {
+      return sourceIdentifier_;
+    }
     
     private void initFields() {
+      localId_ = 0L;
       sourceIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasLocalId()) {
-        output.writeInt64(1, getLocalId());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt64(1, localId_);
       }
-      if (hasSourceIdentifier()) {
-        output.writeMessage(2, getSourceIdentifier());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, sourceIdentifier_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -450,17 +682,24 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasLocalId()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, getLocalId());
+          .computeInt64Size(1, localId_);
       }
-      if (hasSourceIdentifier()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getSourceIdentifier());
+          .computeMessageSize(2, sourceIdentifier_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier parseFrom(
@@ -537,34 +776,58 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_EventIdentifier_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_EventIdentifier_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getSourceIdentifierFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        localId_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance();
+        } else {
+          sourceIdentifierBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier();
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -576,33 +839,43 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier returnMe = result;
-        result = null;
-        return returnMe;
+        result.localId_ = localId_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (sourceIdentifierBuilder_ == null) {
+          result.sourceIdentifier_ = sourceIdentifier_;
+        } else {
+          result.sourceIdentifier_ = sourceIdentifierBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -626,6 +899,10 @@ public final class AccessProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -638,17 +915,20 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 8: {
-              setLocalId(input.readInt64());
+              bitField0_ |= 0x00000001;
+              localId_ = input.readInt64();
               break;
             }
             case 18: {
@@ -664,60 +944,117 @@ public final class AccessProto {
         }
       }
       
+      private int bitField0_;
       
       // optional int64 local_id = 1;
+      private long localId_ ;
       public boolean hasLocalId() {
-        return result.hasLocalId();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public long getLocalId() {
-        return result.getLocalId();
+        return localId_;
       }
       public Builder setLocalId(long value) {
-        result.hasLocalId = true;
-        result.localId_ = value;
+        bitField0_ |= 0x00000001;
+        localId_ = value;
+        onChanged();
         return this;
       }
       public Builder clearLocalId() {
-        result.hasLocalId = false;
-        result.localId_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        localId_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier sourceIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder> sourceIdentifierBuilder_;
       public boolean hasSourceIdentifier() {
-        return result.hasSourceIdentifier();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier getSourceIdentifier() {
-        return result.getSourceIdentifier();
+        if (sourceIdentifierBuilder_ == null) {
+          return sourceIdentifier_;
+        } else {
+          return sourceIdentifierBuilder_.getMessage();
+        }
       }
       public Builder setSourceIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (sourceIdentifierBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          sourceIdentifier_ = value;
+          onChanged();
+        } else {
+          sourceIdentifierBuilder_.setMessage(value);
         }
-        result.hasSourceIdentifier = true;
-        result.sourceIdentifier_ = value;
+        bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder setSourceIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder builderForValue) {
-        result.hasSourceIdentifier = true;
-        result.sourceIdentifier_ = builderForValue.build();
+      public Builder setSourceIdentifier(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder builderForValue) {
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifier_ = builderForValue.build();
+          onChanged();
+        } else {
+          sourceIdentifierBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder mergeSourceIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier value) {
-        if (result.hasSourceIdentifier() &&
-            result.sourceIdentifier_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance()) {
-          result.sourceIdentifier_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.newBuilder(result.sourceIdentifier_).mergeFrom(value).buildPartial();
+        if (sourceIdentifierBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              sourceIdentifier_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance()) {
+            sourceIdentifier_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.newBuilder(sourceIdentifier_).mergeFrom(value).buildPartial();
+          } else {
+            sourceIdentifier_ = value;
+          }
+          onChanged();
         } else {
-          result.sourceIdentifier_ = value;
+          sourceIdentifierBuilder_.mergeFrom(value);
         }
-        result.hasSourceIdentifier = true;
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder clearSourceIdentifier() {
-        result.hasSourceIdentifier = false;
-        result.sourceIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance();
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifier_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance();
+          onChanged();
+        } else {
+          sourceIdentifierBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder getSourceIdentifierBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getSourceIdentifierFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder getSourceIdentifierOrBuilder() {
+        if (sourceIdentifierBuilder_ != null) {
+          return sourceIdentifierBuilder_.getMessageOrBuilder();
+        } else {
+          return sourceIdentifier_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder> 
+          getSourceIdentifierFieldBuilder() {
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder>(
+                  sourceIdentifier_,
+                  getParentForChildren(),
+                  isClean());
+          sourceIdentifier_ = null;
+        }
+        return sourceIdentifierBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.EventIdentifier)
@@ -725,18 +1062,29 @@ public final class AccessProto {
     
     static {
       defaultInstance = new EventIdentifier(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.EventIdentifier)
   }
   
+  public interface SourceIdentifierOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string identifier = 1;
+    boolean hasIdentifier();
+    String getIdentifier();
+    
+    // optional string secondary_identifier = 2;
+    boolean hasSecondaryIdentifier();
+    String getSecondaryIdentifier();
+  }
   public static final class SourceIdentifier extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements SourceIdentifierOrBuilder {
     // Use SourceIdentifier.newBuilder() to construct.
-    private SourceIdentifier() {
-      initFields();
+    private SourceIdentifier(Builder builder) {
+      super(builder);
     }
     private SourceIdentifier(boolean noInit) {}
     
@@ -759,34 +1107,92 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_SourceIdentifier_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string identifier = 1;
     public static final int IDENTIFIER_FIELD_NUMBER = 1;
-    private boolean hasIdentifier;
-    private java.lang.String identifier_ = "";
-    public boolean hasIdentifier() { return hasIdentifier; }
-    public java.lang.String getIdentifier() { return identifier_; }
+    private java.lang.Object identifier_;
+    public boolean hasIdentifier() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getIdentifier() {
+      java.lang.Object ref = identifier_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          identifier_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getIdentifierBytes() {
+      java.lang.Object ref = identifier_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        identifier_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string secondary_identifier = 2;
     public static final int SECONDARY_IDENTIFIER_FIELD_NUMBER = 2;
-    private boolean hasSecondaryIdentifier;
-    private java.lang.String secondaryIdentifier_ = "";
-    public boolean hasSecondaryIdentifier() { return hasSecondaryIdentifier; }
-    public java.lang.String getSecondaryIdentifier() { return secondaryIdentifier_; }
+    private java.lang.Object secondaryIdentifier_;
+    public boolean hasSecondaryIdentifier() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getSecondaryIdentifier() {
+      java.lang.Object ref = secondaryIdentifier_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          secondaryIdentifier_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getSecondaryIdentifierBytes() {
+      java.lang.Object ref = secondaryIdentifier_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        secondaryIdentifier_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     private void initFields() {
+      identifier_ = "";
+      secondaryIdentifier_ = "";
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasIdentifier()) {
-        output.writeString(1, getIdentifier());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getIdentifierBytes());
       }
-      if (hasSecondaryIdentifier()) {
-        output.writeString(2, getSecondaryIdentifier());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getSecondaryIdentifierBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -797,17 +1203,24 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasIdentifier()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getIdentifier());
+          .computeBytesSize(1, getIdentifierBytes());
       }
-      if (hasSecondaryIdentifier()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getSecondaryIdentifier());
+          .computeBytesSize(2, getSecondaryIdentifierBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier parseFrom(
@@ -884,34 +1297,53 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_SourceIdentifier_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_SourceIdentifier_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier();
+        super.clear();
+        identifier_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        secondaryIdentifier_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -923,33 +1355,39 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier returnMe = result;
-        result = null;
-        return returnMe;
+        result.identifier_ = identifier_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.secondaryIdentifier_ = secondaryIdentifier_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -973,6 +1411,10 @@ public final class AccessProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -985,68 +1427,103 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setIdentifier(input.readString());
+              bitField0_ |= 0x00000001;
+              identifier_ = input.readBytes();
               break;
             }
             case 18: {
-              setSecondaryIdentifier(input.readString());
+              bitField0_ |= 0x00000002;
+              secondaryIdentifier_ = input.readBytes();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional string identifier = 1;
+      private java.lang.Object identifier_ = "";
       public boolean hasIdentifier() {
-        return result.hasIdentifier();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getIdentifier() {
-        return result.getIdentifier();
+      public String getIdentifier() {
+        java.lang.Object ref = identifier_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          identifier_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setIdentifier(java.lang.String value) {
+      public Builder setIdentifier(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasIdentifier = true;
-        result.identifier_ = value;
+  bitField0_ |= 0x00000001;
+        identifier_ = value;
+        onChanged();
         return this;
       }
       public Builder clearIdentifier() {
-        result.hasIdentifier = false;
-        result.identifier_ = getDefaultInstance().getIdentifier();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        identifier_ = getDefaultInstance().getIdentifier();
+        onChanged();
         return this;
+      }
+      void setIdentifier(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        identifier_ = value;
+        onChanged();
       }
       
       // optional string secondary_identifier = 2;
+      private java.lang.Object secondaryIdentifier_ = "";
       public boolean hasSecondaryIdentifier() {
-        return result.hasSecondaryIdentifier();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getSecondaryIdentifier() {
-        return result.getSecondaryIdentifier();
+      public String getSecondaryIdentifier() {
+        java.lang.Object ref = secondaryIdentifier_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          secondaryIdentifier_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setSecondaryIdentifier(java.lang.String value) {
+      public Builder setSecondaryIdentifier(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasSecondaryIdentifier = true;
-        result.secondaryIdentifier_ = value;
+  bitField0_ |= 0x00000002;
+        secondaryIdentifier_ = value;
+        onChanged();
         return this;
       }
       public Builder clearSecondaryIdentifier() {
-        result.hasSecondaryIdentifier = false;
-        result.secondaryIdentifier_ = getDefaultInstance().getSecondaryIdentifier();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        secondaryIdentifier_ = getDefaultInstance().getSecondaryIdentifier();
+        onChanged();
         return this;
+      }
+      void setSecondaryIdentifier(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        secondaryIdentifier_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.SourceIdentifier)
@@ -1054,18 +1531,85 @@ public final class AccessProto {
     
     static {
       defaultInstance = new SourceIdentifier(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.SourceIdentifier)
   }
   
+  public interface AccessEventOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string method = 1;
+    boolean hasMethod();
+    String getMethod();
+    
+    // optional string protocol = 2;
+    boolean hasProtocol();
+    String getProtocol();
+    
+    // optional string remote_address = 3;
+    boolean hasRemoteAddress();
+    String getRemoteAddress();
+    
+    // optional string remote_host = 4;
+    boolean hasRemoteHost();
+    String getRemoteHost();
+    
+    // optional string remote_user = 5;
+    boolean hasRemoteUser();
+    String getRemoteUser();
+    
+    // optional int64 time_stamp = 6;
+    boolean hasTimeStamp();
+    long getTimeStamp();
+    
+    // optional string request_uri = 7;
+    boolean hasRequestUri();
+    String getRequestUri();
+    
+    // optional string request_url = 8;
+    boolean hasRequestUrl();
+    String getRequestUrl();
+    
+    // optional int32 status_code = 9;
+    boolean hasStatusCode();
+    int getStatusCode();
+    
+    // optional int32 local_port = 10;
+    boolean hasLocalPort();
+    int getLocalPort();
+    
+    // optional string server_name = 11;
+    boolean hasServerName();
+    String getServerName();
+    
+    // optional .de.huxhorn.lilith.access.StringMap request_headers = 12;
+    boolean hasRequestHeaders();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getRequestHeadersOrBuilder();
+    
+    // optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;
+    boolean hasRequestParameters();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder getRequestParametersOrBuilder();
+    
+    // optional .de.huxhorn.lilith.access.StringMap response_headers = 14;
+    boolean hasResponseHeaders();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getResponseHeadersOrBuilder();
+    
+    // optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;
+    boolean hasLoggerContext();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder getLoggerContextOrBuilder();
+  }
   public static final class AccessEvent extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements AccessEventOrBuilder {
     // Use AccessEvent.newBuilder() to construct.
-    private AccessEvent() {
-      initFields();
+    private AccessEvent(Builder builder) {
+      super(builder);
     }
     private AccessEvent(boolean noInit) {}
     
@@ -1088,180 +1632,442 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_AccessEvent_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string method = 1;
     public static final int METHOD_FIELD_NUMBER = 1;
-    private boolean hasMethod;
-    private java.lang.String method_ = "";
-    public boolean hasMethod() { return hasMethod; }
-    public java.lang.String getMethod() { return method_; }
+    private java.lang.Object method_;
+    public boolean hasMethod() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getMethod() {
+      java.lang.Object ref = method_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          method_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getMethodBytes() {
+      java.lang.Object ref = method_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        method_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string protocol = 2;
     public static final int PROTOCOL_FIELD_NUMBER = 2;
-    private boolean hasProtocol;
-    private java.lang.String protocol_ = "";
-    public boolean hasProtocol() { return hasProtocol; }
-    public java.lang.String getProtocol() { return protocol_; }
+    private java.lang.Object protocol_;
+    public boolean hasProtocol() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getProtocol() {
+      java.lang.Object ref = protocol_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          protocol_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getProtocolBytes() {
+      java.lang.Object ref = protocol_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        protocol_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string remote_address = 3;
     public static final int REMOTE_ADDRESS_FIELD_NUMBER = 3;
-    private boolean hasRemoteAddress;
-    private java.lang.String remoteAddress_ = "";
-    public boolean hasRemoteAddress() { return hasRemoteAddress; }
-    public java.lang.String getRemoteAddress() { return remoteAddress_; }
+    private java.lang.Object remoteAddress_;
+    public boolean hasRemoteAddress() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public String getRemoteAddress() {
+      java.lang.Object ref = remoteAddress_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          remoteAddress_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getRemoteAddressBytes() {
+      java.lang.Object ref = remoteAddress_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        remoteAddress_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string remote_host = 4;
     public static final int REMOTE_HOST_FIELD_NUMBER = 4;
-    private boolean hasRemoteHost;
-    private java.lang.String remoteHost_ = "";
-    public boolean hasRemoteHost() { return hasRemoteHost; }
-    public java.lang.String getRemoteHost() { return remoteHost_; }
+    private java.lang.Object remoteHost_;
+    public boolean hasRemoteHost() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public String getRemoteHost() {
+      java.lang.Object ref = remoteHost_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          remoteHost_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getRemoteHostBytes() {
+      java.lang.Object ref = remoteHost_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        remoteHost_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string remote_user = 5;
     public static final int REMOTE_USER_FIELD_NUMBER = 5;
-    private boolean hasRemoteUser;
-    private java.lang.String remoteUser_ = "";
-    public boolean hasRemoteUser() { return hasRemoteUser; }
-    public java.lang.String getRemoteUser() { return remoteUser_; }
+    private java.lang.Object remoteUser_;
+    public boolean hasRemoteUser() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public String getRemoteUser() {
+      java.lang.Object ref = remoteUser_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          remoteUser_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getRemoteUserBytes() {
+      java.lang.Object ref = remoteUser_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        remoteUser_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional int64 time_stamp = 6;
     public static final int TIME_STAMP_FIELD_NUMBER = 6;
-    private boolean hasTimeStamp;
-    private long timeStamp_ = 0L;
-    public boolean hasTimeStamp() { return hasTimeStamp; }
-    public long getTimeStamp() { return timeStamp_; }
+    private long timeStamp_;
+    public boolean hasTimeStamp() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public long getTimeStamp() {
+      return timeStamp_;
+    }
     
     // optional string request_uri = 7;
     public static final int REQUEST_URI_FIELD_NUMBER = 7;
-    private boolean hasRequestUri;
-    private java.lang.String requestUri_ = "";
-    public boolean hasRequestUri() { return hasRequestUri; }
-    public java.lang.String getRequestUri() { return requestUri_; }
+    private java.lang.Object requestUri_;
+    public boolean hasRequestUri() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    public String getRequestUri() {
+      java.lang.Object ref = requestUri_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          requestUri_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getRequestUriBytes() {
+      java.lang.Object ref = requestUri_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        requestUri_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string request_url = 8;
     public static final int REQUEST_URL_FIELD_NUMBER = 8;
-    private boolean hasRequestUrl;
-    private java.lang.String requestUrl_ = "";
-    public boolean hasRequestUrl() { return hasRequestUrl; }
-    public java.lang.String getRequestUrl() { return requestUrl_; }
+    private java.lang.Object requestUrl_;
+    public boolean hasRequestUrl() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    public String getRequestUrl() {
+      java.lang.Object ref = requestUrl_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          requestUrl_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getRequestUrlBytes() {
+      java.lang.Object ref = requestUrl_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        requestUrl_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional int32 status_code = 9;
     public static final int STATUS_CODE_FIELD_NUMBER = 9;
-    private boolean hasStatusCode;
-    private int statusCode_ = 0;
-    public boolean hasStatusCode() { return hasStatusCode; }
-    public int getStatusCode() { return statusCode_; }
+    private int statusCode_;
+    public boolean hasStatusCode() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    public int getStatusCode() {
+      return statusCode_;
+    }
     
     // optional int32 local_port = 10;
     public static final int LOCAL_PORT_FIELD_NUMBER = 10;
-    private boolean hasLocalPort;
-    private int localPort_ = 0;
-    public boolean hasLocalPort() { return hasLocalPort; }
-    public int getLocalPort() { return localPort_; }
+    private int localPort_;
+    public boolean hasLocalPort() {
+      return ((bitField0_ & 0x00000200) == 0x00000200);
+    }
+    public int getLocalPort() {
+      return localPort_;
+    }
     
     // optional string server_name = 11;
     public static final int SERVER_NAME_FIELD_NUMBER = 11;
-    private boolean hasServerName;
-    private java.lang.String serverName_ = "";
-    public boolean hasServerName() { return hasServerName; }
-    public java.lang.String getServerName() { return serverName_; }
+    private java.lang.Object serverName_;
+    public boolean hasServerName() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    public String getServerName() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          serverName_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getServerNameBytes() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        serverName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional .de.huxhorn.lilith.access.StringMap request_headers = 12;
     public static final int REQUEST_HEADERS_FIELD_NUMBER = 12;
-    private boolean hasRequestHeaders;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap requestHeaders_;
-    public boolean hasRequestHeaders() { return hasRequestHeaders; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders() { return requestHeaders_; }
+    public boolean hasRequestHeaders() {
+      return ((bitField0_ & 0x00000800) == 0x00000800);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders() {
+      return requestHeaders_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getRequestHeadersOrBuilder() {
+      return requestHeaders_;
+    }
     
     // optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;
     public static final int REQUEST_PARAMETERS_FIELD_NUMBER = 13;
-    private boolean hasRequestParameters;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap requestParameters_;
-    public boolean hasRequestParameters() { return hasRequestParameters; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters() { return requestParameters_; }
+    public boolean hasRequestParameters() {
+      return ((bitField0_ & 0x00001000) == 0x00001000);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters() {
+      return requestParameters_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder getRequestParametersOrBuilder() {
+      return requestParameters_;
+    }
     
     // optional .de.huxhorn.lilith.access.StringMap response_headers = 14;
     public static final int RESPONSE_HEADERS_FIELD_NUMBER = 14;
-    private boolean hasResponseHeaders;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap responseHeaders_;
-    public boolean hasResponseHeaders() { return hasResponseHeaders; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders() { return responseHeaders_; }
+    public boolean hasResponseHeaders() {
+      return ((bitField0_ & 0x00002000) == 0x00002000);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders() {
+      return responseHeaders_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getResponseHeadersOrBuilder() {
+      return responseHeaders_;
+    }
     
     // optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;
     public static final int LOGGER_CONTEXT_FIELD_NUMBER = 15;
-    private boolean hasLoggerContext;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext loggerContext_;
-    public boolean hasLoggerContext() { return hasLoggerContext; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext() { return loggerContext_; }
+    public boolean hasLoggerContext() {
+      return ((bitField0_ & 0x00004000) == 0x00004000);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext() {
+      return loggerContext_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder getLoggerContextOrBuilder() {
+      return loggerContext_;
+    }
     
     private void initFields() {
+      method_ = "";
+      protocol_ = "";
+      remoteAddress_ = "";
+      remoteHost_ = "";
+      remoteUser_ = "";
+      timeStamp_ = 0L;
+      requestUri_ = "";
+      requestUrl_ = "";
+      statusCode_ = 0;
+      localPort_ = 0;
+      serverName_ = "";
       requestHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
       requestParameters_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
       responseHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
       loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
       if (hasRequestHeaders()) {
-        if (!getRequestHeaders().isInitialized()) return false;
+        if (!getRequestHeaders().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       if (hasRequestParameters()) {
-        if (!getRequestParameters().isInitialized()) return false;
+        if (!getRequestParameters().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       if (hasResponseHeaders()) {
-        if (!getResponseHeaders().isInitialized()) return false;
+        if (!getResponseHeaders().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       if (hasLoggerContext()) {
-        if (!getLoggerContext().isInitialized()) return false;
+        if (!getLoggerContext().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasMethod()) {
-        output.writeString(1, getMethod());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getMethodBytes());
       }
-      if (hasProtocol()) {
-        output.writeString(2, getProtocol());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getProtocolBytes());
       }
-      if (hasRemoteAddress()) {
-        output.writeString(3, getRemoteAddress());
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getRemoteAddressBytes());
       }
-      if (hasRemoteHost()) {
-        output.writeString(4, getRemoteHost());
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getRemoteHostBytes());
       }
-      if (hasRemoteUser()) {
-        output.writeString(5, getRemoteUser());
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getRemoteUserBytes());
       }
-      if (hasTimeStamp()) {
-        output.writeInt64(6, getTimeStamp());
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt64(6, timeStamp_);
       }
-      if (hasRequestUri()) {
-        output.writeString(7, getRequestUri());
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeBytes(7, getRequestUriBytes());
       }
-      if (hasRequestUrl()) {
-        output.writeString(8, getRequestUrl());
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeBytes(8, getRequestUrlBytes());
       }
-      if (hasStatusCode()) {
-        output.writeInt32(9, getStatusCode());
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeInt32(9, statusCode_);
       }
-      if (hasLocalPort()) {
-        output.writeInt32(10, getLocalPort());
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        output.writeInt32(10, localPort_);
       }
-      if (hasServerName()) {
-        output.writeString(11, getServerName());
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeBytes(11, getServerNameBytes());
       }
-      if (hasRequestHeaders()) {
-        output.writeMessage(12, getRequestHeaders());
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeMessage(12, requestHeaders_);
       }
-      if (hasRequestParameters()) {
-        output.writeMessage(13, getRequestParameters());
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeMessage(13, requestParameters_);
       }
-      if (hasResponseHeaders()) {
-        output.writeMessage(14, getResponseHeaders());
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+        output.writeMessage(14, responseHeaders_);
       }
-      if (hasLoggerContext()) {
-        output.writeMessage(15, getLoggerContext());
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        output.writeMessage(15, loggerContext_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1272,69 +2078,76 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasMethod()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getMethod());
+          .computeBytesSize(1, getMethodBytes());
       }
-      if (hasProtocol()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getProtocol());
+          .computeBytesSize(2, getProtocolBytes());
       }
-      if (hasRemoteAddress()) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getRemoteAddress());
+          .computeBytesSize(3, getRemoteAddressBytes());
       }
-      if (hasRemoteHost()) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(4, getRemoteHost());
+          .computeBytesSize(4, getRemoteHostBytes());
       }
-      if (hasRemoteUser()) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(5, getRemoteUser());
+          .computeBytesSize(5, getRemoteUserBytes());
       }
-      if (hasTimeStamp()) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(6, getTimeStamp());
+          .computeInt64Size(6, timeStamp_);
       }
-      if (hasRequestUri()) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(7, getRequestUri());
+          .computeBytesSize(7, getRequestUriBytes());
       }
-      if (hasRequestUrl()) {
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(8, getRequestUrl());
+          .computeBytesSize(8, getRequestUrlBytes());
       }
-      if (hasStatusCode()) {
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(9, getStatusCode());
+          .computeInt32Size(9, statusCode_);
       }
-      if (hasLocalPort()) {
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(10, getLocalPort());
+          .computeInt32Size(10, localPort_);
       }
-      if (hasServerName()) {
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(11, getServerName());
+          .computeBytesSize(11, getServerNameBytes());
       }
-      if (hasRequestHeaders()) {
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, getRequestHeaders());
+          .computeMessageSize(12, requestHeaders_);
       }
-      if (hasRequestParameters()) {
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(13, getRequestParameters());
+          .computeMessageSize(13, requestParameters_);
       }
-      if (hasResponseHeaders()) {
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(14, getResponseHeaders());
+          .computeMessageSize(14, responseHeaders_);
       }
-      if (hasLoggerContext()) {
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(15, getLoggerContext());
+          .computeMessageSize(15, loggerContext_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent parseFrom(
@@ -1411,34 +2224,99 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_AccessEvent_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_AccessEvent_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getRequestHeadersFieldBuilder();
+          getRequestParametersFieldBuilder();
+          getResponseHeadersFieldBuilder();
+          getLoggerContextFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        method_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        protocol_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        remoteAddress_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        remoteHost_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        remoteUser_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        timeStamp_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        requestUri_ = "";
+        bitField0_ = (bitField0_ & ~0x00000040);
+        requestUrl_ = "";
+        bitField0_ = (bitField0_ & ~0x00000080);
+        statusCode_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000100);
+        localPort_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        serverName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000400);
+        if (requestHeadersBuilder_ == null) {
+          requestHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+        } else {
+          requestHeadersBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent();
+        bitField0_ = (bitField0_ & ~0x00000800);
+        if (requestParametersBuilder_ == null) {
+          requestParameters_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
+        } else {
+          requestParametersBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00001000);
+        if (responseHeadersBuilder_ == null) {
+          responseHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+        } else {
+          responseHeadersBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00002000);
+        if (loggerContextBuilder_ == null) {
+          loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+        } else {
+          loggerContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00004000);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -1450,33 +2328,107 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent returnMe = result;
-        result = null;
-        return returnMe;
+        result.method_ = method_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.protocol_ = protocol_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.remoteAddress_ = remoteAddress_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.remoteHost_ = remoteHost_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.remoteUser_ = remoteUser_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.timeStamp_ = timeStamp_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.requestUri_ = requestUri_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        result.requestUrl_ = requestUrl_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.statusCode_ = statusCode_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        result.localPort_ = localPort_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        result.serverName_ = serverName_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
+        }
+        if (requestHeadersBuilder_ == null) {
+          result.requestHeaders_ = requestHeaders_;
+        } else {
+          result.requestHeaders_ = requestHeadersBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        if (requestParametersBuilder_ == null) {
+          result.requestParameters_ = requestParameters_;
+        } else {
+          result.requestParameters_ = requestParametersBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+          to_bitField0_ |= 0x00002000;
+        }
+        if (responseHeadersBuilder_ == null) {
+          result.responseHeaders_ = responseHeaders_;
+        } else {
+          result.responseHeaders_ = responseHeadersBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00004000;
+        }
+        if (loggerContextBuilder_ == null) {
+          result.loggerContext_ = loggerContext_;
+        } else {
+          result.loggerContext_ = loggerContextBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1539,6 +2491,34 @@ public final class AccessProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (hasRequestHeaders()) {
+          if (!getRequestHeaders().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasRequestParameters()) {
+          if (!getRequestParameters().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasResponseHeaders()) {
+          if (!getResponseHeaders().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasLoggerContext()) {
+          if (!getLoggerContext().isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1551,57 +2531,70 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setMethod(input.readString());
+              bitField0_ |= 0x00000001;
+              method_ = input.readBytes();
               break;
             }
             case 18: {
-              setProtocol(input.readString());
+              bitField0_ |= 0x00000002;
+              protocol_ = input.readBytes();
               break;
             }
             case 26: {
-              setRemoteAddress(input.readString());
+              bitField0_ |= 0x00000004;
+              remoteAddress_ = input.readBytes();
               break;
             }
             case 34: {
-              setRemoteHost(input.readString());
+              bitField0_ |= 0x00000008;
+              remoteHost_ = input.readBytes();
               break;
             }
             case 42: {
-              setRemoteUser(input.readString());
+              bitField0_ |= 0x00000010;
+              remoteUser_ = input.readBytes();
               break;
             }
             case 48: {
-              setTimeStamp(input.readInt64());
+              bitField0_ |= 0x00000020;
+              timeStamp_ = input.readInt64();
               break;
             }
             case 58: {
-              setRequestUri(input.readString());
+              bitField0_ |= 0x00000040;
+              requestUri_ = input.readBytes();
               break;
             }
             case 66: {
-              setRequestUrl(input.readString());
+              bitField0_ |= 0x00000080;
+              requestUrl_ = input.readBytes();
               break;
             }
             case 72: {
-              setStatusCode(input.readInt32());
+              bitField0_ |= 0x00000100;
+              statusCode_ = input.readInt32();
               break;
             }
             case 80: {
-              setLocalPort(input.readInt32());
+              bitField0_ |= 0x00000200;
+              localPort_ = input.readInt32();
               break;
             }
             case 90: {
-              setServerName(input.readString());
+              bitField0_ |= 0x00000400;
+              serverName_ = input.readBytes();
               break;
             }
             case 98: {
@@ -1644,375 +2637,717 @@ public final class AccessProto {
         }
       }
       
+      private int bitField0_;
       
       // optional string method = 1;
+      private java.lang.Object method_ = "";
       public boolean hasMethod() {
-        return result.hasMethod();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getMethod() {
-        return result.getMethod();
+      public String getMethod() {
+        java.lang.Object ref = method_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          method_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setMethod(java.lang.String value) {
+      public Builder setMethod(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasMethod = true;
-        result.method_ = value;
+  bitField0_ |= 0x00000001;
+        method_ = value;
+        onChanged();
         return this;
       }
       public Builder clearMethod() {
-        result.hasMethod = false;
-        result.method_ = getDefaultInstance().getMethod();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        method_ = getDefaultInstance().getMethod();
+        onChanged();
         return this;
+      }
+      void setMethod(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        method_ = value;
+        onChanged();
       }
       
       // optional string protocol = 2;
+      private java.lang.Object protocol_ = "";
       public boolean hasProtocol() {
-        return result.hasProtocol();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getProtocol() {
-        return result.getProtocol();
+      public String getProtocol() {
+        java.lang.Object ref = protocol_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          protocol_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setProtocol(java.lang.String value) {
+      public Builder setProtocol(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasProtocol = true;
-        result.protocol_ = value;
+  bitField0_ |= 0x00000002;
+        protocol_ = value;
+        onChanged();
         return this;
       }
       public Builder clearProtocol() {
-        result.hasProtocol = false;
-        result.protocol_ = getDefaultInstance().getProtocol();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        protocol_ = getDefaultInstance().getProtocol();
+        onChanged();
         return this;
+      }
+      void setProtocol(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        protocol_ = value;
+        onChanged();
       }
       
       // optional string remote_address = 3;
+      private java.lang.Object remoteAddress_ = "";
       public boolean hasRemoteAddress() {
-        return result.hasRemoteAddress();
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public java.lang.String getRemoteAddress() {
-        return result.getRemoteAddress();
+      public String getRemoteAddress() {
+        java.lang.Object ref = remoteAddress_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          remoteAddress_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setRemoteAddress(java.lang.String value) {
+      public Builder setRemoteAddress(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasRemoteAddress = true;
-        result.remoteAddress_ = value;
+  bitField0_ |= 0x00000004;
+        remoteAddress_ = value;
+        onChanged();
         return this;
       }
       public Builder clearRemoteAddress() {
-        result.hasRemoteAddress = false;
-        result.remoteAddress_ = getDefaultInstance().getRemoteAddress();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        remoteAddress_ = getDefaultInstance().getRemoteAddress();
+        onChanged();
         return this;
+      }
+      void setRemoteAddress(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000004;
+        remoteAddress_ = value;
+        onChanged();
       }
       
       // optional string remote_host = 4;
+      private java.lang.Object remoteHost_ = "";
       public boolean hasRemoteHost() {
-        return result.hasRemoteHost();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public java.lang.String getRemoteHost() {
-        return result.getRemoteHost();
+      public String getRemoteHost() {
+        java.lang.Object ref = remoteHost_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          remoteHost_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setRemoteHost(java.lang.String value) {
+      public Builder setRemoteHost(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasRemoteHost = true;
-        result.remoteHost_ = value;
+  bitField0_ |= 0x00000008;
+        remoteHost_ = value;
+        onChanged();
         return this;
       }
       public Builder clearRemoteHost() {
-        result.hasRemoteHost = false;
-        result.remoteHost_ = getDefaultInstance().getRemoteHost();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        remoteHost_ = getDefaultInstance().getRemoteHost();
+        onChanged();
         return this;
+      }
+      void setRemoteHost(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000008;
+        remoteHost_ = value;
+        onChanged();
       }
       
       // optional string remote_user = 5;
+      private java.lang.Object remoteUser_ = "";
       public boolean hasRemoteUser() {
-        return result.hasRemoteUser();
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
-      public java.lang.String getRemoteUser() {
-        return result.getRemoteUser();
+      public String getRemoteUser() {
+        java.lang.Object ref = remoteUser_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          remoteUser_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setRemoteUser(java.lang.String value) {
+      public Builder setRemoteUser(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasRemoteUser = true;
-        result.remoteUser_ = value;
+  bitField0_ |= 0x00000010;
+        remoteUser_ = value;
+        onChanged();
         return this;
       }
       public Builder clearRemoteUser() {
-        result.hasRemoteUser = false;
-        result.remoteUser_ = getDefaultInstance().getRemoteUser();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        remoteUser_ = getDefaultInstance().getRemoteUser();
+        onChanged();
         return this;
+      }
+      void setRemoteUser(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000010;
+        remoteUser_ = value;
+        onChanged();
       }
       
       // optional int64 time_stamp = 6;
+      private long timeStamp_ ;
       public boolean hasTimeStamp() {
-        return result.hasTimeStamp();
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       public long getTimeStamp() {
-        return result.getTimeStamp();
+        return timeStamp_;
       }
       public Builder setTimeStamp(long value) {
-        result.hasTimeStamp = true;
-        result.timeStamp_ = value;
+        bitField0_ |= 0x00000020;
+        timeStamp_ = value;
+        onChanged();
         return this;
       }
       public Builder clearTimeStamp() {
-        result.hasTimeStamp = false;
-        result.timeStamp_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        timeStamp_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional string request_uri = 7;
+      private java.lang.Object requestUri_ = "";
       public boolean hasRequestUri() {
-        return result.hasRequestUri();
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
-      public java.lang.String getRequestUri() {
-        return result.getRequestUri();
+      public String getRequestUri() {
+        java.lang.Object ref = requestUri_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          requestUri_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setRequestUri(java.lang.String value) {
+      public Builder setRequestUri(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasRequestUri = true;
-        result.requestUri_ = value;
+  bitField0_ |= 0x00000040;
+        requestUri_ = value;
+        onChanged();
         return this;
       }
       public Builder clearRequestUri() {
-        result.hasRequestUri = false;
-        result.requestUri_ = getDefaultInstance().getRequestUri();
+        bitField0_ = (bitField0_ & ~0x00000040);
+        requestUri_ = getDefaultInstance().getRequestUri();
+        onChanged();
         return this;
+      }
+      void setRequestUri(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000040;
+        requestUri_ = value;
+        onChanged();
       }
       
       // optional string request_url = 8;
+      private java.lang.Object requestUrl_ = "";
       public boolean hasRequestUrl() {
-        return result.hasRequestUrl();
+        return ((bitField0_ & 0x00000080) == 0x00000080);
       }
-      public java.lang.String getRequestUrl() {
-        return result.getRequestUrl();
+      public String getRequestUrl() {
+        java.lang.Object ref = requestUrl_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          requestUrl_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setRequestUrl(java.lang.String value) {
+      public Builder setRequestUrl(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasRequestUrl = true;
-        result.requestUrl_ = value;
+  bitField0_ |= 0x00000080;
+        requestUrl_ = value;
+        onChanged();
         return this;
       }
       public Builder clearRequestUrl() {
-        result.hasRequestUrl = false;
-        result.requestUrl_ = getDefaultInstance().getRequestUrl();
+        bitField0_ = (bitField0_ & ~0x00000080);
+        requestUrl_ = getDefaultInstance().getRequestUrl();
+        onChanged();
         return this;
+      }
+      void setRequestUrl(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000080;
+        requestUrl_ = value;
+        onChanged();
       }
       
       // optional int32 status_code = 9;
+      private int statusCode_ ;
       public boolean hasStatusCode() {
-        return result.hasStatusCode();
+        return ((bitField0_ & 0x00000100) == 0x00000100);
       }
       public int getStatusCode() {
-        return result.getStatusCode();
+        return statusCode_;
       }
       public Builder setStatusCode(int value) {
-        result.hasStatusCode = true;
-        result.statusCode_ = value;
+        bitField0_ |= 0x00000100;
+        statusCode_ = value;
+        onChanged();
         return this;
       }
       public Builder clearStatusCode() {
-        result.hasStatusCode = false;
-        result.statusCode_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000100);
+        statusCode_ = 0;
+        onChanged();
         return this;
       }
       
       // optional int32 local_port = 10;
+      private int localPort_ ;
       public boolean hasLocalPort() {
-        return result.hasLocalPort();
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
       public int getLocalPort() {
-        return result.getLocalPort();
+        return localPort_;
       }
       public Builder setLocalPort(int value) {
-        result.hasLocalPort = true;
-        result.localPort_ = value;
+        bitField0_ |= 0x00000200;
+        localPort_ = value;
+        onChanged();
         return this;
       }
       public Builder clearLocalPort() {
-        result.hasLocalPort = false;
-        result.localPort_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        localPort_ = 0;
+        onChanged();
         return this;
       }
       
       // optional string server_name = 11;
+      private java.lang.Object serverName_ = "";
       public boolean hasServerName() {
-        return result.hasServerName();
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
-      public java.lang.String getServerName() {
-        return result.getServerName();
+      public String getServerName() {
+        java.lang.Object ref = serverName_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          serverName_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setServerName(java.lang.String value) {
+      public Builder setServerName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasServerName = true;
-        result.serverName_ = value;
+  bitField0_ |= 0x00000400;
+        serverName_ = value;
+        onChanged();
         return this;
       }
       public Builder clearServerName() {
-        result.hasServerName = false;
-        result.serverName_ = getDefaultInstance().getServerName();
+        bitField0_ = (bitField0_ & ~0x00000400);
+        serverName_ = getDefaultInstance().getServerName();
+        onChanged();
         return this;
+      }
+      void setServerName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000400;
+        serverName_ = value;
+        onChanged();
       }
       
       // optional .de.huxhorn.lilith.access.StringMap request_headers = 12;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap requestHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> requestHeadersBuilder_;
       public boolean hasRequestHeaders() {
-        return result.hasRequestHeaders();
+        return ((bitField0_ & 0x00000800) == 0x00000800);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders() {
-        return result.getRequestHeaders();
+        if (requestHeadersBuilder_ == null) {
+          return requestHeaders_;
+        } else {
+          return requestHeadersBuilder_.getMessage();
+        }
       }
       public Builder setRequestHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (requestHeadersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          requestHeaders_ = value;
+          onChanged();
+        } else {
+          requestHeadersBuilder_.setMessage(value);
         }
-        result.hasRequestHeaders = true;
-        result.requestHeaders_ = value;
+        bitField0_ |= 0x00000800;
         return this;
       }
-      public Builder setRequestHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder builderForValue) {
-        result.hasRequestHeaders = true;
-        result.requestHeaders_ = builderForValue.build();
+      public Builder setRequestHeaders(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder builderForValue) {
+        if (requestHeadersBuilder_ == null) {
+          requestHeaders_ = builderForValue.build();
+          onChanged();
+        } else {
+          requestHeadersBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder mergeRequestHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
-        if (result.hasRequestHeaders() &&
-            result.requestHeaders_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
-          result.requestHeaders_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder(result.requestHeaders_).mergeFrom(value).buildPartial();
+        if (requestHeadersBuilder_ == null) {
+          if (((bitField0_ & 0x00000800) == 0x00000800) &&
+              requestHeaders_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
+            requestHeaders_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder(requestHeaders_).mergeFrom(value).buildPartial();
+          } else {
+            requestHeaders_ = value;
+          }
+          onChanged();
         } else {
-          result.requestHeaders_ = value;
+          requestHeadersBuilder_.mergeFrom(value);
         }
-        result.hasRequestHeaders = true;
+        bitField0_ |= 0x00000800;
         return this;
       }
       public Builder clearRequestHeaders() {
-        result.hasRequestHeaders = false;
-        result.requestHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+        if (requestHeadersBuilder_ == null) {
+          requestHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+          onChanged();
+        } else {
+          requestHeadersBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder getRequestHeadersBuilder() {
+        bitField0_ |= 0x00000800;
+        onChanged();
+        return getRequestHeadersFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getRequestHeadersOrBuilder() {
+        if (requestHeadersBuilder_ != null) {
+          return requestHeadersBuilder_.getMessageOrBuilder();
+        } else {
+          return requestHeaders_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> 
+          getRequestHeadersFieldBuilder() {
+        if (requestHeadersBuilder_ == null) {
+          requestHeadersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder>(
+                  requestHeaders_,
+                  getParentForChildren(),
+                  isClean());
+          requestHeaders_ = null;
+        }
+        return requestHeadersBuilder_;
       }
       
       // optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap requestParameters_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder> requestParametersBuilder_;
       public boolean hasRequestParameters() {
-        return result.hasRequestParameters();
+        return ((bitField0_ & 0x00001000) == 0x00001000);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters() {
-        return result.getRequestParameters();
+        if (requestParametersBuilder_ == null) {
+          return requestParameters_;
+        } else {
+          return requestParametersBuilder_.getMessage();
+        }
       }
       public Builder setRequestParameters(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (requestParametersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          requestParameters_ = value;
+          onChanged();
+        } else {
+          requestParametersBuilder_.setMessage(value);
         }
-        result.hasRequestParameters = true;
-        result.requestParameters_ = value;
+        bitField0_ |= 0x00001000;
         return this;
       }
-      public Builder setRequestParameters(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder builderForValue) {
-        result.hasRequestParameters = true;
-        result.requestParameters_ = builderForValue.build();
+      public Builder setRequestParameters(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder builderForValue) {
+        if (requestParametersBuilder_ == null) {
+          requestParameters_ = builderForValue.build();
+          onChanged();
+        } else {
+          requestParametersBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00001000;
         return this;
       }
       public Builder mergeRequestParameters(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap value) {
-        if (result.hasRequestParameters() &&
-            result.requestParameters_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance()) {
-          result.requestParameters_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.newBuilder(result.requestParameters_).mergeFrom(value).buildPartial();
+        if (requestParametersBuilder_ == null) {
+          if (((bitField0_ & 0x00001000) == 0x00001000) &&
+              requestParameters_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance()) {
+            requestParameters_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.newBuilder(requestParameters_).mergeFrom(value).buildPartial();
+          } else {
+            requestParameters_ = value;
+          }
+          onChanged();
         } else {
-          result.requestParameters_ = value;
+          requestParametersBuilder_.mergeFrom(value);
         }
-        result.hasRequestParameters = true;
+        bitField0_ |= 0x00001000;
         return this;
       }
       public Builder clearRequestParameters() {
-        result.hasRequestParameters = false;
-        result.requestParameters_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
+        if (requestParametersBuilder_ == null) {
+          requestParameters_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
+          onChanged();
+        } else {
+          requestParametersBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00001000);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder getRequestParametersBuilder() {
+        bitField0_ |= 0x00001000;
+        onChanged();
+        return getRequestParametersFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder getRequestParametersOrBuilder() {
+        if (requestParametersBuilder_ != null) {
+          return requestParametersBuilder_.getMessageOrBuilder();
+        } else {
+          return requestParameters_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder> 
+          getRequestParametersFieldBuilder() {
+        if (requestParametersBuilder_ == null) {
+          requestParametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder>(
+                  requestParameters_,
+                  getParentForChildren(),
+                  isClean());
+          requestParameters_ = null;
+        }
+        return requestParametersBuilder_;
       }
       
       // optional .de.huxhorn.lilith.access.StringMap response_headers = 14;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap responseHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> responseHeadersBuilder_;
       public boolean hasResponseHeaders() {
-        return result.hasResponseHeaders();
+        return ((bitField0_ & 0x00002000) == 0x00002000);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders() {
-        return result.getResponseHeaders();
+        if (responseHeadersBuilder_ == null) {
+          return responseHeaders_;
+        } else {
+          return responseHeadersBuilder_.getMessage();
+        }
       }
       public Builder setResponseHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (responseHeadersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          responseHeaders_ = value;
+          onChanged();
+        } else {
+          responseHeadersBuilder_.setMessage(value);
         }
-        result.hasResponseHeaders = true;
-        result.responseHeaders_ = value;
+        bitField0_ |= 0x00002000;
         return this;
       }
-      public Builder setResponseHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder builderForValue) {
-        result.hasResponseHeaders = true;
-        result.responseHeaders_ = builderForValue.build();
+      public Builder setResponseHeaders(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder builderForValue) {
+        if (responseHeadersBuilder_ == null) {
+          responseHeaders_ = builderForValue.build();
+          onChanged();
+        } else {
+          responseHeadersBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00002000;
         return this;
       }
       public Builder mergeResponseHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
-        if (result.hasResponseHeaders() &&
-            result.responseHeaders_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
-          result.responseHeaders_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder(result.responseHeaders_).mergeFrom(value).buildPartial();
+        if (responseHeadersBuilder_ == null) {
+          if (((bitField0_ & 0x00002000) == 0x00002000) &&
+              responseHeaders_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
+            responseHeaders_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder(responseHeaders_).mergeFrom(value).buildPartial();
+          } else {
+            responseHeaders_ = value;
+          }
+          onChanged();
         } else {
-          result.responseHeaders_ = value;
+          responseHeadersBuilder_.mergeFrom(value);
         }
-        result.hasResponseHeaders = true;
+        bitField0_ |= 0x00002000;
         return this;
       }
       public Builder clearResponseHeaders() {
-        result.hasResponseHeaders = false;
-        result.responseHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+        if (responseHeadersBuilder_ == null) {
+          responseHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+          onChanged();
+        } else {
+          responseHeadersBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00002000);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder getResponseHeadersBuilder() {
+        bitField0_ |= 0x00002000;
+        onChanged();
+        return getResponseHeadersFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getResponseHeadersOrBuilder() {
+        if (responseHeadersBuilder_ != null) {
+          return responseHeadersBuilder_.getMessageOrBuilder();
+        } else {
+          return responseHeaders_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> 
+          getResponseHeadersFieldBuilder() {
+        if (responseHeadersBuilder_ == null) {
+          responseHeadersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder>(
+                  responseHeaders_,
+                  getParentForChildren(),
+                  isClean());
+          responseHeaders_ = null;
+        }
+        return responseHeadersBuilder_;
       }
       
       // optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder> loggerContextBuilder_;
       public boolean hasLoggerContext() {
-        return result.hasLoggerContext();
+        return ((bitField0_ & 0x00004000) == 0x00004000);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext() {
-        return result.getLoggerContext();
+        if (loggerContextBuilder_ == null) {
+          return loggerContext_;
+        } else {
+          return loggerContextBuilder_.getMessage();
+        }
       }
       public Builder setLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (loggerContextBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          loggerContext_ = value;
+          onChanged();
+        } else {
+          loggerContextBuilder_.setMessage(value);
         }
-        result.hasLoggerContext = true;
-        result.loggerContext_ = value;
+        bitField0_ |= 0x00004000;
         return this;
       }
-      public Builder setLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder builderForValue) {
-        result.hasLoggerContext = true;
-        result.loggerContext_ = builderForValue.build();
+      public Builder setLoggerContext(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder builderForValue) {
+        if (loggerContextBuilder_ == null) {
+          loggerContext_ = builderForValue.build();
+          onChanged();
+        } else {
+          loggerContextBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00004000;
         return this;
       }
       public Builder mergeLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext value) {
-        if (result.hasLoggerContext() &&
-            result.loggerContext_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance()) {
-          result.loggerContext_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.newBuilder(result.loggerContext_).mergeFrom(value).buildPartial();
+        if (loggerContextBuilder_ == null) {
+          if (((bitField0_ & 0x00004000) == 0x00004000) &&
+              loggerContext_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance()) {
+            loggerContext_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.newBuilder(loggerContext_).mergeFrom(value).buildPartial();
+          } else {
+            loggerContext_ = value;
+          }
+          onChanged();
         } else {
-          result.loggerContext_ = value;
+          loggerContextBuilder_.mergeFrom(value);
         }
-        result.hasLoggerContext = true;
+        bitField0_ |= 0x00004000;
         return this;
       }
       public Builder clearLoggerContext() {
-        result.hasLoggerContext = false;
-        result.loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+        if (loggerContextBuilder_ == null) {
+          loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+          onChanged();
+        } else {
+          loggerContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00004000);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder getLoggerContextBuilder() {
+        bitField0_ |= 0x00004000;
+        onChanged();
+        return getLoggerContextFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder getLoggerContextOrBuilder() {
+        if (loggerContextBuilder_ != null) {
+          return loggerContextBuilder_.getMessageOrBuilder();
+        } else {
+          return loggerContext_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder> 
+          getLoggerContextFieldBuilder() {
+        if (loggerContextBuilder_ == null) {
+          loggerContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder>(
+                  loggerContext_,
+                  getParentForChildren(),
+                  isClean());
+          loggerContext_ = null;
+        }
+        return loggerContextBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.AccessEvent)
@@ -2020,18 +3355,34 @@ public final class AccessProto {
     
     static {
       defaultInstance = new AccessEvent(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.AccessEvent)
   }
   
+  public interface LoggerContextOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional int64 birth_time = 1;
+    boolean hasBirthTime();
+    long getBirthTime();
+    
+    // optional string name = 2;
+    boolean hasName();
+    String getName();
+    
+    // optional .de.huxhorn.lilith.access.StringMap properties = 3;
+    boolean hasProperties();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getPropertiesOrBuilder();
+  }
   public static final class LoggerContext extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements LoggerContextOrBuilder {
     // Use LoggerContext.newBuilder() to construct.
-    private LoggerContext() {
-      initFields();
+    private LoggerContext(Builder builder) {
+      super(builder);
     }
     private LoggerContext(boolean noInit) {}
     
@@ -2054,48 +3405,93 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_LoggerContext_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional int64 birth_time = 1;
     public static final int BIRTH_TIME_FIELD_NUMBER = 1;
-    private boolean hasBirthTime;
-    private long birthTime_ = 0L;
-    public boolean hasBirthTime() { return hasBirthTime; }
-    public long getBirthTime() { return birthTime_; }
+    private long birthTime_;
+    public boolean hasBirthTime() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public long getBirthTime() {
+      return birthTime_;
+    }
     
     // optional string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
-    private boolean hasName;
-    private java.lang.String name_ = "";
-    public boolean hasName() { return hasName; }
-    public java.lang.String getName() { return name_; }
+    private java.lang.Object name_;
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional .de.huxhorn.lilith.access.StringMap properties = 3;
     public static final int PROPERTIES_FIELD_NUMBER = 3;
-    private boolean hasProperties;
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap properties_;
-    public boolean hasProperties() { return hasProperties; }
-    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties() { return properties_; }
+    public boolean hasProperties() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties() {
+      return properties_;
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getPropertiesOrBuilder() {
+      return properties_;
+    }
     
     private void initFields() {
+      birthTime_ = 0L;
+      name_ = "";
       properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
       if (hasProperties()) {
-        if (!getProperties().isInitialized()) return false;
+        if (!getProperties().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasBirthTime()) {
-        output.writeInt64(1, getBirthTime());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt64(1, birthTime_);
       }
-      if (hasName()) {
-        output.writeString(2, getName());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getNameBytes());
       }
-      if (hasProperties()) {
-        output.writeMessage(3, getProperties());
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeMessage(3, properties_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -2106,21 +3502,28 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasBirthTime()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, getBirthTime());
+          .computeInt64Size(1, birthTime_);
       }
-      if (hasName()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getName());
+          .computeBytesSize(2, getNameBytes());
       }
-      if (hasProperties()) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getProperties());
+          .computeMessageSize(3, properties_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext parseFrom(
@@ -2197,34 +3600,60 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_LoggerContext_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_LoggerContext_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getPropertiesFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        birthTime_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        if (propertiesBuilder_ == null) {
+          properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+        } else {
+          propertiesBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext();
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -2236,33 +3665,47 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext returnMe = result;
-        result = null;
-        return returnMe;
+        result.birthTime_ = birthTime_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        if (propertiesBuilder_ == null) {
+          result.properties_ = properties_;
+        } else {
+          result.properties_ = propertiesBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2289,6 +3732,16 @@ public final class AccessProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (hasProperties()) {
+          if (!getProperties().isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2301,21 +3754,25 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 8: {
-              setBirthTime(input.readInt64());
+              bitField0_ |= 0x00000001;
+              birthTime_ = input.readInt64();
               break;
             }
             case 18: {
-              setName(input.readString());
+              bitField0_ |= 0x00000002;
+              name_ = input.readBytes();
               break;
             }
             case 26: {
@@ -2331,81 +3788,153 @@ public final class AccessProto {
         }
       }
       
+      private int bitField0_;
       
       // optional int64 birth_time = 1;
+      private long birthTime_ ;
       public boolean hasBirthTime() {
-        return result.hasBirthTime();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public long getBirthTime() {
-        return result.getBirthTime();
+        return birthTime_;
       }
       public Builder setBirthTime(long value) {
-        result.hasBirthTime = true;
-        result.birthTime_ = value;
+        bitField0_ |= 0x00000001;
+        birthTime_ = value;
+        onChanged();
         return this;
       }
       public Builder clearBirthTime() {
-        result.hasBirthTime = false;
-        result.birthTime_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        birthTime_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional string name = 2;
+      private java.lang.Object name_ = "";
       public boolean hasName() {
-        return result.hasName();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getName() {
-        return result.getName();
+      public String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setName(java.lang.String value) {
+      public Builder setName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasName = true;
-        result.name_ = value;
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
         return this;
       }
       public Builder clearName() {
-        result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        name_ = getDefaultInstance().getName();
+        onChanged();
         return this;
+      }
+      void setName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
       }
       
       // optional .de.huxhorn.lilith.access.StringMap properties = 3;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> propertiesBuilder_;
       public boolean hasProperties() {
-        return result.hasProperties();
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties() {
-        return result.getProperties();
+        if (propertiesBuilder_ == null) {
+          return properties_;
+        } else {
+          return propertiesBuilder_.getMessage();
+        }
       }
       public Builder setProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (propertiesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          properties_ = value;
+          onChanged();
+        } else {
+          propertiesBuilder_.setMessage(value);
         }
-        result.hasProperties = true;
-        result.properties_ = value;
+        bitField0_ |= 0x00000004;
         return this;
       }
-      public Builder setProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder builderForValue) {
-        result.hasProperties = true;
-        result.properties_ = builderForValue.build();
+      public Builder setProperties(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder builderForValue) {
+        if (propertiesBuilder_ == null) {
+          properties_ = builderForValue.build();
+          onChanged();
+        } else {
+          propertiesBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
         return this;
       }
       public Builder mergeProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
-        if (result.hasProperties() &&
-            result.properties_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
-          result.properties_ =
-            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder(result.properties_).mergeFrom(value).buildPartial();
+        if (propertiesBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              properties_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
+            properties_ =
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder(properties_).mergeFrom(value).buildPartial();
+          } else {
+            properties_ = value;
+          }
+          onChanged();
         } else {
-          result.properties_ = value;
+          propertiesBuilder_.mergeFrom(value);
         }
-        result.hasProperties = true;
+        bitField0_ |= 0x00000004;
         return this;
       }
       public Builder clearProperties() {
-        result.hasProperties = false;
-        result.properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+        if (propertiesBuilder_ == null) {
+          properties_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
+          onChanged();
+        } else {
+          propertiesBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder getPropertiesBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getPropertiesFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder getPropertiesOrBuilder() {
+        if (propertiesBuilder_ != null) {
+          return propertiesBuilder_.getMessageOrBuilder();
+        } else {
+          return properties_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> 
+          getPropertiesFieldBuilder() {
+        if (propertiesBuilder_ == null) {
+          propertiesBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder>(
+                  properties_,
+                  getParentForChildren(),
+                  isClean());
+          properties_ = null;
+        }
+        return propertiesBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.LoggerContext)
@@ -2413,18 +3942,31 @@ public final class AccessProto {
     
     static {
       defaultInstance = new LoggerContext(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.LoggerContext)
   }
   
+  public interface StringMapOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;
+    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> 
+        getEntryList();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry getEntry(int index);
+    int getEntryCount();
+    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+        getEntryOrBuilderList();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder getEntryOrBuilder(
+        int index);
+  }
   public static final class StringMap extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StringMapOrBuilder {
     // Use StringMap.newBuilder() to construct.
-    private StringMap() {
-      initFields();
+    private StringMap(Builder builder) {
+      super(builder);
     }
     private StringMap(boolean noInit) {}
     
@@ -2449,30 +3991,48 @@ public final class AccessProto {
     
     // repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;
     public static final int ENTRY_FIELD_NUMBER = 1;
-    private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> entry_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> entry_;
     public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> getEntryList() {
       return entry_;
     }
-    public int getEntryCount() { return entry_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+        getEntryOrBuilderList() {
+      return entry_;
+    }
+    public int getEntryCount() {
+      return entry_.size();
+    }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry getEntry(int index) {
+      return entry_.get(index);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder getEntryOrBuilder(
+        int index) {
       return entry_.get(index);
     }
     
     private void initFields() {
+      entry_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry element : getEntryList()) {
-        if (!element.isInitialized()) return false;
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      for (int i = 0; i < getEntryCount(); i++) {
+        if (!getEntry(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry element : getEntryList()) {
-        output.writeMessage(1, element);
+      for (int i = 0; i < entry_.size(); i++) {
+        output.writeMessage(1, entry_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -2483,13 +4043,20 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry element : getEntryList()) {
+      for (int i = 0; i < entry_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
+          .computeMessageSize(1, entry_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap parseFrom(
@@ -2566,34 +4133,56 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringMap_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringMap_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getEntryFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          entryBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap();
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -2605,37 +4194,38 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap(this);
+        int from_bitField0_ = bitField0_;
+        if (entryBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            entry_ = java.util.Collections.unmodifiableList(entry_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.entry_ = entry_;
+        } else {
+          result.entry_ = entryBuilder_.build();
         }
-        if (result.entry_ != java.util.Collections.EMPTY_LIST) {
-          result.entry_ =
-            java.util.Collections.unmodifiableList(result.entry_);
-        }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap returnMe = result;
-        result = null;
-        return returnMe;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2649,14 +4239,44 @@ public final class AccessProto {
       
       public Builder mergeFrom(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap other) {
         if (other == de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) return this;
-        if (!other.entry_.isEmpty()) {
-          if (result.entry_.isEmpty()) {
-            result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>();
+        if (entryBuilder_ == null) {
+          if (!other.entry_.isEmpty()) {
+            if (entry_.isEmpty()) {
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureEntryIsMutable();
+              entry_.addAll(other.entry_);
+            }
+            onChanged();
           }
-          result.entry_.addAll(other.entry_);
+        } else {
+          if (!other.entry_.isEmpty()) {
+            if (entryBuilder_.isEmpty()) {
+              entryBuilder_.dispose();
+              entryBuilder_ = null;
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              entryBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getEntryFieldBuilder() : null;
+            } else {
+              entryBuilder_.addAllMessages(other.entry_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        for (int i = 0; i < getEntryCount(); i++) {
+          if (!getEntry(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
       }
       
       public Builder mergeFrom(
@@ -2671,11 +4291,13 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
@@ -2690,56 +4312,192 @@ public final class AccessProto {
         }
       }
       
+      private int bitField0_;
       
       // repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;
+      private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> entry_ =
+        java.util.Collections.emptyList();
+      private void ensureEntryIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>(entry_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> entryBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> getEntryList() {
-        return java.util.Collections.unmodifiableList(result.entry_);
+        if (entryBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(entry_);
+        } else {
+          return entryBuilder_.getMessageList();
+        }
       }
       public int getEntryCount() {
-        return result.getEntryCount();
+        if (entryBuilder_ == null) {
+          return entry_.size();
+        } else {
+          return entryBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry getEntry(int index) {
-        return result.getEntry(index);
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          return entry_.get(index);
+        } else {
+          return entryBuilder_.getMessage(index);
         }
-        result.entry_.set(index, value);
+      }
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.set(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder builderForValue) {
-        result.entry_.set(index, builderForValue.build());
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addEntry(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(value);
         }
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>();
-        }
-        result.entry_.add(value);
         return this;
       }
-      public Builder addEntry(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder builderForValue) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>();
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, value);
         }
-        result.entry_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addEntry(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllEntry(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> values) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>();
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          super.addAll(values, entry_);
+          onChanged();
+        } else {
+          entryBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.entry_);
         return this;
       }
       public Builder clearEntry() {
-        result.entry_ = java.util.Collections.emptyList();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          entryBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeEntry(int index) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.remove(index);
+          onChanged();
+        } else {
+          entryBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder getEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder getEntryOrBuilder(
+          int index) {
+        if (entryBuilder_ == null) {
+          return entry_.get(index);  } else {
+          return entryBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+           getEntryOrBuilderList() {
+        if (entryBuilder_ != null) {
+          return entryBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(entry_);
+        }
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder addEntryBuilder() {
+        return getEntryFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder addEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder> 
+           getEntryBuilderList() {
+        return getEntryFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+          getEntryFieldBuilder() {
+        if (entryBuilder_ == null) {
+          entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder>(
+                  entry_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          entry_ = null;
+        }
+        return entryBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.StringMap)
@@ -2747,18 +4505,29 @@ public final class AccessProto {
     
     static {
       defaultInstance = new StringMap(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.StringMap)
   }
   
+  public interface StringMapEntryOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required string key = 1;
+    boolean hasKey();
+    String getKey();
+    
+    // optional string value = 2;
+    boolean hasValue();
+    String getValue();
+  }
   public static final class StringMapEntry extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StringMapEntryOrBuilder {
     // Use StringMapEntry.newBuilder() to construct.
-    private StringMapEntry() {
-      initFields();
+    private StringMapEntry(Builder builder) {
+      super(builder);
     }
     private StringMapEntry(boolean noInit) {}
     
@@ -2781,35 +4550,96 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringMapEntry_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // required string key = 1;
     public static final int KEY_FIELD_NUMBER = 1;
-    private boolean hasKey;
-    private java.lang.String key_ = "";
-    public boolean hasKey() { return hasKey; }
-    public java.lang.String getKey() { return key_; }
+    private java.lang.Object key_;
+    public boolean hasKey() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getKey() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          key_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getKeyBytes() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        key_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
-    private boolean hasValue;
-    private java.lang.String value_ = "";
-    public boolean hasValue() { return hasValue; }
-    public java.lang.String getValue() { return value_; }
+    private java.lang.Object value_;
+    public boolean hasValue() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getValue() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          value_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getValueBytes() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        value_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     private void initFields() {
+      key_ = "";
+      value_ = "";
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
-      if (!hasKey) return false;
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasKey()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasKey()) {
-        output.writeString(1, getKey());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getKeyBytes());
       }
-      if (hasValue()) {
-        output.writeString(2, getValue());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getValueBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -2820,17 +4650,24 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasKey()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getKey());
+          .computeBytesSize(1, getKeyBytes());
       }
-      if (hasValue()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getValue());
+          .computeBytesSize(2, getValueBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry parseFrom(
@@ -2907,34 +4744,53 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringMapEntry_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringMapEntry_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry();
+        super.clear();
+        key_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        value_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -2946,33 +4802,39 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry returnMe = result;
-        result = null;
-        return returnMe;
+        result.key_ = key_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.value_ = value_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2996,6 +4858,14 @@ public final class AccessProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (!hasKey()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3008,68 +4878,103 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setKey(input.readString());
+              bitField0_ |= 0x00000001;
+              key_ = input.readBytes();
               break;
             }
             case 18: {
-              setValue(input.readString());
+              bitField0_ |= 0x00000002;
+              value_ = input.readBytes();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // required string key = 1;
+      private java.lang.Object key_ = "";
       public boolean hasKey() {
-        return result.hasKey();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getKey() {
-        return result.getKey();
+      public String getKey() {
+        java.lang.Object ref = key_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          key_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setKey(java.lang.String value) {
+      public Builder setKey(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasKey = true;
-        result.key_ = value;
+  bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
         return this;
       }
       public Builder clearKey() {
-        result.hasKey = false;
-        result.key_ = getDefaultInstance().getKey();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        key_ = getDefaultInstance().getKey();
+        onChanged();
         return this;
+      }
+      void setKey(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
       }
       
       // optional string value = 2;
+      private java.lang.Object value_ = "";
       public boolean hasValue() {
-        return result.hasValue();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getValue() {
-        return result.getValue();
+      public String getValue() {
+        java.lang.Object ref = value_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          value_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setValue(java.lang.String value) {
+      public Builder setValue(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasValue = true;
-        result.value_ = value;
+  bitField0_ |= 0x00000002;
+        value_ = value;
+        onChanged();
         return this;
       }
       public Builder clearValue() {
-        result.hasValue = false;
-        result.value_ = getDefaultInstance().getValue();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        value_ = getDefaultInstance().getValue();
+        onChanged();
         return this;
+      }
+      void setValue(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        value_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.StringMapEntry)
@@ -3077,18 +4982,31 @@ public final class AccessProto {
     
     static {
       defaultInstance = new StringMapEntry(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.StringMapEntry)
   }
   
+  public interface StringArrayMapOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;
+    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> 
+        getEntryList();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry getEntry(int index);
+    int getEntryCount();
+    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+        getEntryOrBuilderList();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder getEntryOrBuilder(
+        int index);
+  }
   public static final class StringArrayMap extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StringArrayMapOrBuilder {
     // Use StringArrayMap.newBuilder() to construct.
-    private StringArrayMap() {
-      initFields();
+    private StringArrayMap(Builder builder) {
+      super(builder);
     }
     private StringArrayMap(boolean noInit) {}
     
@@ -3113,30 +5031,48 @@ public final class AccessProto {
     
     // repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;
     public static final int ENTRY_FIELD_NUMBER = 1;
-    private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> entry_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> entry_;
     public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> getEntryList() {
       return entry_;
     }
-    public int getEntryCount() { return entry_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+        getEntryOrBuilderList() {
+      return entry_;
+    }
+    public int getEntryCount() {
+      return entry_.size();
+    }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry getEntry(int index) {
+      return entry_.get(index);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder getEntryOrBuilder(
+        int index) {
       return entry_.get(index);
     }
     
     private void initFields() {
+      entry_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry element : getEntryList()) {
-        if (!element.isInitialized()) return false;
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      for (int i = 0; i < getEntryCount(); i++) {
+        if (!getEntry(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry element : getEntryList()) {
-        output.writeMessage(1, element);
+      for (int i = 0; i < entry_.size(); i++) {
+        output.writeMessage(1, entry_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -3147,13 +5083,20 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry element : getEntryList()) {
+      for (int i = 0; i < entry_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
+          .computeMessageSize(1, entry_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap parseFrom(
@@ -3230,34 +5173,56 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayMap_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayMap_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getEntryFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          entryBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap();
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -3269,37 +5234,38 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap(this);
+        int from_bitField0_ = bitField0_;
+        if (entryBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            entry_ = java.util.Collections.unmodifiableList(entry_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.entry_ = entry_;
+        } else {
+          result.entry_ = entryBuilder_.build();
         }
-        if (result.entry_ != java.util.Collections.EMPTY_LIST) {
-          result.entry_ =
-            java.util.Collections.unmodifiableList(result.entry_);
-        }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap returnMe = result;
-        result = null;
-        return returnMe;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3313,14 +5279,44 @@ public final class AccessProto {
       
       public Builder mergeFrom(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap other) {
         if (other == de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance()) return this;
-        if (!other.entry_.isEmpty()) {
-          if (result.entry_.isEmpty()) {
-            result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>();
+        if (entryBuilder_ == null) {
+          if (!other.entry_.isEmpty()) {
+            if (entry_.isEmpty()) {
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureEntryIsMutable();
+              entry_.addAll(other.entry_);
+            }
+            onChanged();
           }
-          result.entry_.addAll(other.entry_);
+        } else {
+          if (!other.entry_.isEmpty()) {
+            if (entryBuilder_.isEmpty()) {
+              entryBuilder_.dispose();
+              entryBuilder_ = null;
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              entryBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getEntryFieldBuilder() : null;
+            } else {
+              entryBuilder_.addAllMessages(other.entry_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        for (int i = 0; i < getEntryCount(); i++) {
+          if (!getEntry(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
       }
       
       public Builder mergeFrom(
@@ -3335,11 +5331,13 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
@@ -3354,56 +5352,192 @@ public final class AccessProto {
         }
       }
       
+      private int bitField0_;
       
       // repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;
+      private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> entry_ =
+        java.util.Collections.emptyList();
+      private void ensureEntryIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>(entry_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> entryBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> getEntryList() {
-        return java.util.Collections.unmodifiableList(result.entry_);
+        if (entryBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(entry_);
+        } else {
+          return entryBuilder_.getMessageList();
+        }
       }
       public int getEntryCount() {
-        return result.getEntryCount();
+        if (entryBuilder_ == null) {
+          return entry_.size();
+        } else {
+          return entryBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry getEntry(int index) {
-        return result.getEntry(index);
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          return entry_.get(index);
+        } else {
+          return entryBuilder_.getMessage(index);
         }
-        result.entry_.set(index, value);
+      }
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.set(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder builderForValue) {
-        result.entry_.set(index, builderForValue.build());
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addEntry(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(value);
         }
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>();
-        }
-        result.entry_.add(value);
         return this;
       }
-      public Builder addEntry(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder builderForValue) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>();
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, value);
         }
-        result.entry_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addEntry(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllEntry(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> values) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>();
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          super.addAll(values, entry_);
+          onChanged();
+        } else {
+          entryBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.entry_);
         return this;
       }
       public Builder clearEntry() {
-        result.entry_ = java.util.Collections.emptyList();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          entryBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeEntry(int index) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.remove(index);
+          onChanged();
+        } else {
+          entryBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder getEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder getEntryOrBuilder(
+          int index) {
+        if (entryBuilder_ == null) {
+          return entry_.get(index);  } else {
+          return entryBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+           getEntryOrBuilderList() {
+        if (entryBuilder_ != null) {
+          return entryBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(entry_);
+        }
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder addEntryBuilder() {
+        return getEntryFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder addEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder> 
+           getEntryBuilderList() {
+        return getEntryFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+          getEntryFieldBuilder() {
+        if (entryBuilder_ == null) {
+          entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder>(
+                  entry_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          entry_ = null;
+        }
+        return entryBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.StringArrayMap)
@@ -3411,18 +5545,35 @@ public final class AccessProto {
     
     static {
       defaultInstance = new StringArrayMap(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.StringArrayMap)
   }
   
+  public interface StringArrayMapEntryOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required string key = 1;
+    boolean hasKey();
+    String getKey();
+    
+    // repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;
+    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> 
+        getValueList();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue getValue(int index);
+    int getValueCount();
+    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+        getValueOrBuilderList();
+    de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder getValueOrBuilder(
+        int index);
+  }
   public static final class StringArrayMapEntry extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StringArrayMapEntryOrBuilder {
     // Use StringArrayMapEntry.newBuilder() to construct.
-    private StringArrayMapEntry() {
-      initFields();
+    private StringArrayMapEntry(Builder builder) {
+      super(builder);
     }
     private StringArrayMapEntry(boolean noInit) {}
     
@@ -3445,40 +5596,85 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayMapEntry_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // required string key = 1;
     public static final int KEY_FIELD_NUMBER = 1;
-    private boolean hasKey;
-    private java.lang.String key_ = "";
-    public boolean hasKey() { return hasKey; }
-    public java.lang.String getKey() { return key_; }
+    private java.lang.Object key_;
+    public boolean hasKey() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getKey() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          key_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getKeyBytes() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        key_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
-    private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> value_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> value_;
     public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> getValueList() {
       return value_;
     }
-    public int getValueCount() { return value_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+        getValueOrBuilderList() {
+      return value_;
+    }
+    public int getValueCount() {
+      return value_.size();
+    }
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue getValue(int index) {
+      return value_.get(index);
+    }
+    public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder getValueOrBuilder(
+        int index) {
       return value_.get(index);
     }
     
     private void initFields() {
+      key_ = "";
+      value_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
-      if (!hasKey) return false;
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasKey()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasKey()) {
-        output.writeString(1, getKey());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getKeyBytes());
       }
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue element : getValueList()) {
-        output.writeMessage(2, element);
+      for (int i = 0; i < value_.size(); i++) {
+        output.writeMessage(2, value_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -3489,17 +5685,24 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasKey()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getKey());
+          .computeBytesSize(1, getKeyBytes());
       }
-      for (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue element : getValueList()) {
+      for (int i = 0; i < value_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, element);
+          .computeMessageSize(2, value_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry parseFrom(
@@ -3576,34 +5779,58 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayMapEntry_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayMapEntry_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getValueFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        key_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (valueBuilder_ == null) {
+          value_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          valueBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry();
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -3615,37 +5842,44 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        if (result.value_ != java.util.Collections.EMPTY_LIST) {
-          result.value_ =
-            java.util.Collections.unmodifiableList(result.value_);
+        result.key_ = key_;
+        if (valueBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            value_ = java.util.Collections.unmodifiableList(value_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.value_ = value_;
+        } else {
+          result.value_ = valueBuilder_.build();
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry returnMe = result;
-        result = null;
-        return returnMe;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3662,14 +5896,42 @@ public final class AccessProto {
         if (other.hasKey()) {
           setKey(other.getKey());
         }
-        if (!other.value_.isEmpty()) {
-          if (result.value_.isEmpty()) {
-            result.value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>();
+        if (valueBuilder_ == null) {
+          if (!other.value_.isEmpty()) {
+            if (value_.isEmpty()) {
+              value_ = other.value_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureValueIsMutable();
+              value_.addAll(other.value_);
+            }
+            onChanged();
           }
-          result.value_.addAll(other.value_);
+        } else {
+          if (!other.value_.isEmpty()) {
+            if (valueBuilder_.isEmpty()) {
+              valueBuilder_.dispose();
+              valueBuilder_ = null;
+              value_ = other.value_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              valueBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getValueFieldBuilder() : null;
+            } else {
+              valueBuilder_.addAllMessages(other.value_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasKey()) {
+          
+          return false;
+        }
+        return true;
       }
       
       public Builder mergeFrom(
@@ -3684,17 +5946,20 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setKey(input.readString());
+              bitField0_ |= 0x00000001;
+              key_ = input.readBytes();
               break;
             }
             case 18: {
@@ -3707,77 +5972,228 @@ public final class AccessProto {
         }
       }
       
+      private int bitField0_;
       
       // required string key = 1;
+      private java.lang.Object key_ = "";
       public boolean hasKey() {
-        return result.hasKey();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getKey() {
-        return result.getKey();
+      public String getKey() {
+        java.lang.Object ref = key_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          key_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setKey(java.lang.String value) {
+      public Builder setKey(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasKey = true;
-        result.key_ = value;
+  bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
         return this;
       }
       public Builder clearKey() {
-        result.hasKey = false;
-        result.key_ = getDefaultInstance().getKey();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        key_ = getDefaultInstance().getKey();
+        onChanged();
         return this;
+      }
+      void setKey(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
       }
       
       // repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;
+      private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> value_ =
+        java.util.Collections.emptyList();
+      private void ensureValueIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>(value_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> valueBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> getValueList() {
-        return java.util.Collections.unmodifiableList(result.value_);
+        if (valueBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(value_);
+        } else {
+          return valueBuilder_.getMessageList();
+        }
       }
       public int getValueCount() {
-        return result.getValueCount();
+        if (valueBuilder_ == null) {
+          return value_.size();
+        } else {
+          return valueBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue getValue(int index) {
-        return result.getValue(index);
-      }
-      public Builder setValue(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (valueBuilder_ == null) {
+          return value_.get(index);
+        } else {
+          return valueBuilder_.getMessage(index);
         }
-        result.value_.set(index, value);
+      }
+      public Builder setValue(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue value) {
+        if (valueBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureValueIsMutable();
+          value_.set(index, value);
+          onChanged();
+        } else {
+          valueBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setValue(int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder builderForValue) {
-        result.value_.set(index, builderForValue.build());
+      public Builder setValue(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder builderForValue) {
+        if (valueBuilder_ == null) {
+          ensureValueIsMutable();
+          value_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          valueBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addValue(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (valueBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureValueIsMutable();
+          value_.add(value);
+          onChanged();
+        } else {
+          valueBuilder_.addMessage(value);
         }
-        if (result.value_.isEmpty()) {
-          result.value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>();
-        }
-        result.value_.add(value);
         return this;
       }
-      public Builder addValue(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder builderForValue) {
-        if (result.value_.isEmpty()) {
-          result.value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>();
+      public Builder addValue(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue value) {
+        if (valueBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureValueIsMutable();
+          value_.add(index, value);
+          onChanged();
+        } else {
+          valueBuilder_.addMessage(index, value);
         }
-        result.value_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addValue(
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder builderForValue) {
+        if (valueBuilder_ == null) {
+          ensureValueIsMutable();
+          value_.add(builderForValue.build());
+          onChanged();
+        } else {
+          valueBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addValue(
+          int index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder builderForValue) {
+        if (valueBuilder_ == null) {
+          ensureValueIsMutable();
+          value_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          valueBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllValue(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> values) {
-        if (result.value_.isEmpty()) {
-          result.value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>();
+        if (valueBuilder_ == null) {
+          ensureValueIsMutable();
+          super.addAll(values, value_);
+          onChanged();
+        } else {
+          valueBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.value_);
         return this;
       }
       public Builder clearValue() {
-        result.value_ = java.util.Collections.emptyList();
+        if (valueBuilder_ == null) {
+          value_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          valueBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeValue(int index) {
+        if (valueBuilder_ == null) {
+          ensureValueIsMutable();
+          value_.remove(index);
+          onChanged();
+        } else {
+          valueBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder getValueBuilder(
+          int index) {
+        return getValueFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder getValueOrBuilder(
+          int index) {
+        if (valueBuilder_ == null) {
+          return value_.get(index);  } else {
+          return valueBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+           getValueOrBuilderList() {
+        if (valueBuilder_ != null) {
+          return valueBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(value_);
+        }
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder addValueBuilder() {
+        return getValueFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder addValueBuilder(
+          int index) {
+        return getValueFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder> 
+           getValueBuilderList() {
+        return getValueFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+          getValueFieldBuilder() {
+        if (valueBuilder_ == null) {
+          valueBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder>(
+                  value_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          value_ = null;
+        }
+        return valueBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.StringArrayMapEntry)
@@ -3785,18 +6201,25 @@ public final class AccessProto {
     
     static {
       defaultInstance = new StringArrayMapEntry(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.access.StringArrayMapEntry)
   }
   
+  public interface StringArrayValueOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string value = 1;
+    boolean hasValue();
+    String getValue();
+  }
   public static final class StringArrayValue extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StringArrayValueOrBuilder {
     // Use StringArrayValue.newBuilder() to construct.
-    private StringArrayValue() {
-      initFields();
+    private StringArrayValue(Builder builder) {
+      super(builder);
     }
     private StringArrayValue(boolean noInit) {}
     
@@ -3819,24 +6242,56 @@ public final class AccessProto {
       return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayValue_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string value = 1;
     public static final int VALUE_FIELD_NUMBER = 1;
-    private boolean hasValue;
-    private java.lang.String value_ = "";
-    public boolean hasValue() { return hasValue; }
-    public java.lang.String getValue() { return value_; }
+    private java.lang.Object value_;
+    public boolean hasValue() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getValue() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          value_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getValueBytes() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        value_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     private void initFields() {
+      value_ = "";
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasValue()) {
-        output.writeString(1, getValue());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getValueBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3847,13 +6302,20 @@ public final class AccessProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasValue()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getValue());
+          .computeBytesSize(1, getValueBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue parseFrom(
@@ -3930,34 +6392,51 @@ public final class AccessProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue result;
-      
-      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayValue_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internal_static_de_huxhorn_lilith_access_StringArrayValue_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue();
+        super.clear();
+        value_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -3969,33 +6448,35 @@ public final class AccessProto {
         return de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue returnMe = result;
-        result = null;
-        return returnMe;
+        result.value_ = value_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -4016,6 +6497,10 @@ public final class AccessProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4028,43 +6513,62 @@ public final class AccessProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setValue(input.readString());
+              bitField0_ |= 0x00000001;
+              value_ = input.readBytes();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional string value = 1;
+      private java.lang.Object value_ = "";
       public boolean hasValue() {
-        return result.hasValue();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getValue() {
-        return result.getValue();
+      public String getValue() {
+        java.lang.Object ref = value_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          value_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setValue(java.lang.String value) {
+      public Builder setValue(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasValue = true;
-        result.value_ = value;
+  bitField0_ |= 0x00000001;
+        value_ = value;
+        onChanged();
         return this;
       }
       public Builder clearValue() {
-        result.hasValue = false;
-        result.value_ = getDefaultInstance().getValue();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        value_ = getDefaultInstance().getValue();
+        onChanged();
         return this;
+      }
+      void setValue(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        value_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.StringArrayValue)
@@ -4072,7 +6576,6 @@ public final class AccessProto {
     
     static {
       defaultInstance = new StringArrayValue(true);
-      de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.internalForceInit();
       defaultInstance.initFields();
     }
     
@@ -4267,8 +6770,6 @@ public final class AccessProto {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
-  public static void internalForceInit() {}
   
   // @@protoc_insertion_point(outer_class_scope)
 }

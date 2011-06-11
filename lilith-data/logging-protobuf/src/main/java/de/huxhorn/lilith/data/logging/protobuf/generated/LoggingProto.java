@@ -17,6 +17,12 @@ public final class LoggingProto {
     ERROR(4, 5),
     ;
     
+    public static final int TRACE_VALUE = 1;
+    public static final int DEBUG_VALUE = 2;
+    public static final int INFO_VALUE = 3;
+    public static final int WARN_VALUE = 4;
+    public static final int ERROR_VALUE = 5;
+    
     
     public final int getNumber() { return value; }
     
@@ -39,8 +45,8 @@ public final class LoggingProto {
         internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<Level>() {
             public Level findValueByNumber(int number) {
-              return Level.valueOf(number)
-    ;        }
+              return Level.valueOf(number);
+            }
           };
     
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
@@ -59,6 +65,7 @@ public final class LoggingProto {
     private static final Level[] VALUES = {
       TRACE, DEBUG, INFO, WARN, ERROR, 
     };
+    
     public static Level valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
@@ -67,25 +74,37 @@ public final class LoggingProto {
       }
       return VALUES[desc.getIndex()];
     }
+    
     private final int index;
     private final int value;
+    
     private Level(int index, int value) {
       this.index = index;
       this.value = value;
     }
     
-    static {
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.getDescriptor();
-    }
-    
     // @@protoc_insertion_point(enum_scope:de.huxhorn.lilith.logging.Level)
   }
   
+  public interface EventWrapperOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
+    boolean hasEventIdentifier();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder();
+    
+    // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
+    boolean hasEvent();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder getEventOrBuilder();
+  }
   public static final class EventWrapper extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements EventWrapperOrBuilder {
     // Use EventWrapper.newBuilder() to construct.
-    private EventWrapper() {
-      initFields();
+    private EventWrapper(Builder builder) {
+      super(builder);
     }
     private EventWrapper(boolean noInit) {}
     
@@ -108,39 +127,60 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
     public static final int EVENT_IDENTIFIER_FIELD_NUMBER = 1;
-    private boolean hasEventIdentifier;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier eventIdentifier_;
-    public boolean hasEventIdentifier() { return hasEventIdentifier; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() { return eventIdentifier_; }
+    public boolean hasEventIdentifier() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() {
+      return eventIdentifier_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder() {
+      return eventIdentifier_;
+    }
     
     // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
     public static final int EVENT_FIELD_NUMBER = 2;
-    private boolean hasEvent;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent event_;
-    public boolean hasEvent() { return hasEvent; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() { return event_; }
+    public boolean hasEvent() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() {
+      return event_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder getEventOrBuilder() {
+      return event_;
+    }
     
     private void initFields() {
       eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
       event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
       if (hasEvent()) {
-        if (!getEvent().isInitialized()) return false;
+        if (!getEvent().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasEventIdentifier()) {
-        output.writeMessage(1, getEventIdentifier());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, eventIdentifier_);
       }
-      if (hasEvent()) {
-        output.writeMessage(2, getEvent());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, event_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -151,17 +191,24 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasEventIdentifier()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getEventIdentifier());
+          .computeMessageSize(1, eventIdentifier_);
       }
-      if (hasEvent()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getEvent());
+          .computeMessageSize(2, event_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper parseFrom(
@@ -238,34 +285,63 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapperOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getEventIdentifierFieldBuilder();
+          getEventFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
+        } else {
+          eventIdentifierBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (eventBuilder_ == null) {
+          event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
+        } else {
+          eventBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -277,33 +353,47 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper returnMe = result;
-        result = null;
-        return returnMe;
+        if (eventIdentifierBuilder_ == null) {
+          result.eventIdentifier_ = eventIdentifier_;
+        } else {
+          result.eventIdentifier_ = eventIdentifierBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (eventBuilder_ == null) {
+          result.event_ = event_;
+        } else {
+          result.event_ = eventBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -327,6 +417,16 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (hasEvent()) {
+          if (!getEvent().isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -339,11 +439,13 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
@@ -370,79 +472,186 @@ public final class LoggingProto {
         }
       }
       
+      private int bitField0_;
       
       // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder> eventIdentifierBuilder_;
       public boolean hasEventIdentifier() {
-        return result.hasEventIdentifier();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() {
-        return result.getEventIdentifier();
+        if (eventIdentifierBuilder_ == null) {
+          return eventIdentifier_;
+        } else {
+          return eventIdentifierBuilder_.getMessage();
+        }
       }
       public Builder setEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (eventIdentifierBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          eventIdentifier_ = value;
+          onChanged();
+        } else {
+          eventIdentifierBuilder_.setMessage(value);
         }
-        result.hasEventIdentifier = true;
-        result.eventIdentifier_ = value;
+        bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder setEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder builderForValue) {
-        result.hasEventIdentifier = true;
-        result.eventIdentifier_ = builderForValue.build();
+      public Builder setEventIdentifier(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder builderForValue) {
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifier_ = builderForValue.build();
+          onChanged();
+        } else {
+          eventIdentifierBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
         return this;
       }
       public Builder mergeEventIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier value) {
-        if (result.hasEventIdentifier() &&
-            result.eventIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance()) {
-          result.eventIdentifier_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder(result.eventIdentifier_).mergeFrom(value).buildPartial();
+        if (eventIdentifierBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              eventIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance()) {
+            eventIdentifier_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder(eventIdentifier_).mergeFrom(value).buildPartial();
+          } else {
+            eventIdentifier_ = value;
+          }
+          onChanged();
         } else {
-          result.eventIdentifier_ = value;
+          eventIdentifierBuilder_.mergeFrom(value);
         }
-        result.hasEventIdentifier = true;
+        bitField0_ |= 0x00000001;
         return this;
       }
       public Builder clearEventIdentifier() {
-        result.hasEventIdentifier = false;
-        result.eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
+          onChanged();
+        } else {
+          eventIdentifierBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder getEventIdentifierBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getEventIdentifierFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder() {
+        if (eventIdentifierBuilder_ != null) {
+          return eventIdentifierBuilder_.getMessageOrBuilder();
+        } else {
+          return eventIdentifier_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder> 
+          getEventIdentifierFieldBuilder() {
+        if (eventIdentifierBuilder_ == null) {
+          eventIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder>(
+                  eventIdentifier_,
+                  getParentForChildren(),
+                  isClean());
+          eventIdentifier_ = null;
+        }
+        return eventIdentifierBuilder_;
       }
       
       // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder> eventBuilder_;
       public boolean hasEvent() {
-        return result.hasEvent();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() {
-        return result.getEvent();
+        if (eventBuilder_ == null) {
+          return event_;
+        } else {
+          return eventBuilder_.getMessage();
+        }
       }
       public Builder setEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (eventBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          event_ = value;
+          onChanged();
+        } else {
+          eventBuilder_.setMessage(value);
         }
-        result.hasEvent = true;
-        result.event_ = value;
+        bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder setEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder builderForValue) {
-        result.hasEvent = true;
-        result.event_ = builderForValue.build();
+      public Builder setEvent(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder builderForValue) {
+        if (eventBuilder_ == null) {
+          event_ = builderForValue.build();
+          onChanged();
+        } else {
+          eventBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder mergeEvent(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent value) {
-        if (result.hasEvent() &&
-            result.event_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance()) {
-          result.event_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder(result.event_).mergeFrom(value).buildPartial();
+        if (eventBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              event_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance()) {
+            event_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder(event_).mergeFrom(value).buildPartial();
+          } else {
+            event_ = value;
+          }
+          onChanged();
         } else {
-          result.event_ = value;
+          eventBuilder_.mergeFrom(value);
         }
-        result.hasEvent = true;
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder clearEvent() {
-        result.hasEvent = false;
-        result.event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
+        if (eventBuilder_ == null) {
+          event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
+          onChanged();
+        } else {
+          eventBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder getEventBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getEventFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder getEventOrBuilder() {
+        if (eventBuilder_ != null) {
+          return eventBuilder_.getMessageOrBuilder();
+        } else {
+          return event_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder> 
+          getEventFieldBuilder() {
+        if (eventBuilder_ == null) {
+          eventBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder>(
+                  event_,
+                  getParentForChildren(),
+                  isClean());
+          event_ = null;
+        }
+        return eventBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.EventWrapper)
@@ -450,18 +659,30 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new EventWrapper(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.EventWrapper)
   }
   
+  public interface EventIdentifierOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional int64 local_id = 1;
+    boolean hasLocalId();
+    long getLocalId();
+    
+    // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
+    boolean hasSourceIdentifier();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder getSourceIdentifierOrBuilder();
+  }
   public static final class EventIdentifier extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements EventIdentifierOrBuilder {
     // Use EventIdentifier.newBuilder() to construct.
-    private EventIdentifier() {
-      initFields();
+    private EventIdentifier(Builder builder) {
+      super(builder);
     }
     private EventIdentifier(boolean noInit) {}
     
@@ -484,35 +705,51 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional int64 local_id = 1;
     public static final int LOCAL_ID_FIELD_NUMBER = 1;
-    private boolean hasLocalId;
-    private long localId_ = 0L;
-    public boolean hasLocalId() { return hasLocalId; }
-    public long getLocalId() { return localId_; }
+    private long localId_;
+    public boolean hasLocalId() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public long getLocalId() {
+      return localId_;
+    }
     
     // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
     public static final int SOURCE_IDENTIFIER_FIELD_NUMBER = 2;
-    private boolean hasSourceIdentifier;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier sourceIdentifier_;
-    public boolean hasSourceIdentifier() { return hasSourceIdentifier; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() { return sourceIdentifier_; }
+    public boolean hasSourceIdentifier() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() {
+      return sourceIdentifier_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder getSourceIdentifierOrBuilder() {
+      return sourceIdentifier_;
+    }
     
     private void initFields() {
+      localId_ = 0L;
       sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasLocalId()) {
-        output.writeInt64(1, getLocalId());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt64(1, localId_);
       }
-      if (hasSourceIdentifier()) {
-        output.writeMessage(2, getSourceIdentifier());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, sourceIdentifier_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -523,17 +760,24 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasLocalId()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, getLocalId());
+          .computeInt64Size(1, localId_);
       }
-      if (hasSourceIdentifier()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getSourceIdentifier());
+          .computeMessageSize(2, sourceIdentifier_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier parseFrom(
@@ -610,34 +854,58 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getSourceIdentifierFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        localId_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
+        } else {
+          sourceIdentifierBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier();
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -649,33 +917,43 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier returnMe = result;
-        result = null;
-        return returnMe;
+        result.localId_ = localId_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (sourceIdentifierBuilder_ == null) {
+          result.sourceIdentifier_ = sourceIdentifier_;
+        } else {
+          result.sourceIdentifier_ = sourceIdentifierBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -699,6 +977,10 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -711,17 +993,20 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 8: {
-              setLocalId(input.readInt64());
+              bitField0_ |= 0x00000001;
+              localId_ = input.readInt64();
               break;
             }
             case 18: {
@@ -737,60 +1022,117 @@ public final class LoggingProto {
         }
       }
       
+      private int bitField0_;
       
       // optional int64 local_id = 1;
+      private long localId_ ;
       public boolean hasLocalId() {
-        return result.hasLocalId();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public long getLocalId() {
-        return result.getLocalId();
+        return localId_;
       }
       public Builder setLocalId(long value) {
-        result.hasLocalId = true;
-        result.localId_ = value;
+        bitField0_ |= 0x00000001;
+        localId_ = value;
+        onChanged();
         return this;
       }
       public Builder clearLocalId() {
-        result.hasLocalId = false;
-        result.localId_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        localId_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder> sourceIdentifierBuilder_;
       public boolean hasSourceIdentifier() {
-        return result.hasSourceIdentifier();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() {
-        return result.getSourceIdentifier();
+        if (sourceIdentifierBuilder_ == null) {
+          return sourceIdentifier_;
+        } else {
+          return sourceIdentifierBuilder_.getMessage();
+        }
       }
       public Builder setSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (sourceIdentifierBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          sourceIdentifier_ = value;
+          onChanged();
+        } else {
+          sourceIdentifierBuilder_.setMessage(value);
         }
-        result.hasSourceIdentifier = true;
-        result.sourceIdentifier_ = value;
+        bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder setSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder builderForValue) {
-        result.hasSourceIdentifier = true;
-        result.sourceIdentifier_ = builderForValue.build();
+      public Builder setSourceIdentifier(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder builderForValue) {
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifier_ = builderForValue.build();
+          onChanged();
+        } else {
+          sourceIdentifierBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder mergeSourceIdentifier(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier value) {
-        if (result.hasSourceIdentifier() &&
-            result.sourceIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance()) {
-          result.sourceIdentifier_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder(result.sourceIdentifier_).mergeFrom(value).buildPartial();
+        if (sourceIdentifierBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              sourceIdentifier_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance()) {
+            sourceIdentifier_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder(sourceIdentifier_).mergeFrom(value).buildPartial();
+          } else {
+            sourceIdentifier_ = value;
+          }
+          onChanged();
         } else {
-          result.sourceIdentifier_ = value;
+          sourceIdentifierBuilder_.mergeFrom(value);
         }
-        result.hasSourceIdentifier = true;
+        bitField0_ |= 0x00000002;
         return this;
       }
       public Builder clearSourceIdentifier() {
-        result.hasSourceIdentifier = false;
-        result.sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
+          onChanged();
+        } else {
+          sourceIdentifierBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder getSourceIdentifierBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getSourceIdentifierFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder getSourceIdentifierOrBuilder() {
+        if (sourceIdentifierBuilder_ != null) {
+          return sourceIdentifierBuilder_.getMessageOrBuilder();
+        } else {
+          return sourceIdentifier_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder> 
+          getSourceIdentifierFieldBuilder() {
+        if (sourceIdentifierBuilder_ == null) {
+          sourceIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder>(
+                  sourceIdentifier_,
+                  getParentForChildren(),
+                  isClean());
+          sourceIdentifier_ = null;
+        }
+        return sourceIdentifierBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.EventIdentifier)
@@ -798,18 +1140,29 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new EventIdentifier(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.EventIdentifier)
   }
   
+  public interface SourceIdentifierOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string identifier = 1;
+    boolean hasIdentifier();
+    String getIdentifier();
+    
+    // optional string secondary_identifier = 2;
+    boolean hasSecondaryIdentifier();
+    String getSecondaryIdentifier();
+  }
   public static final class SourceIdentifier extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements SourceIdentifierOrBuilder {
     // Use SourceIdentifier.newBuilder() to construct.
-    private SourceIdentifier() {
-      initFields();
+    private SourceIdentifier(Builder builder) {
+      super(builder);
     }
     private SourceIdentifier(boolean noInit) {}
     
@@ -832,34 +1185,92 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string identifier = 1;
     public static final int IDENTIFIER_FIELD_NUMBER = 1;
-    private boolean hasIdentifier;
-    private java.lang.String identifier_ = "";
-    public boolean hasIdentifier() { return hasIdentifier; }
-    public java.lang.String getIdentifier() { return identifier_; }
+    private java.lang.Object identifier_;
+    public boolean hasIdentifier() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getIdentifier() {
+      java.lang.Object ref = identifier_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          identifier_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getIdentifierBytes() {
+      java.lang.Object ref = identifier_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        identifier_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string secondary_identifier = 2;
     public static final int SECONDARY_IDENTIFIER_FIELD_NUMBER = 2;
-    private boolean hasSecondaryIdentifier;
-    private java.lang.String secondaryIdentifier_ = "";
-    public boolean hasSecondaryIdentifier() { return hasSecondaryIdentifier; }
-    public java.lang.String getSecondaryIdentifier() { return secondaryIdentifier_; }
+    private java.lang.Object secondaryIdentifier_;
+    public boolean hasSecondaryIdentifier() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getSecondaryIdentifier() {
+      java.lang.Object ref = secondaryIdentifier_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          secondaryIdentifier_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getSecondaryIdentifierBytes() {
+      java.lang.Object ref = secondaryIdentifier_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        secondaryIdentifier_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     private void initFields() {
+      identifier_ = "";
+      secondaryIdentifier_ = "";
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasIdentifier()) {
-        output.writeString(1, getIdentifier());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getIdentifierBytes());
       }
-      if (hasSecondaryIdentifier()) {
-        output.writeString(2, getSecondaryIdentifier());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getSecondaryIdentifierBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -870,17 +1281,24 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasIdentifier()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getIdentifier());
+          .computeBytesSize(1, getIdentifierBytes());
       }
-      if (hasSecondaryIdentifier()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getSecondaryIdentifier());
+          .computeBytesSize(2, getSecondaryIdentifierBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier parseFrom(
@@ -957,34 +1375,53 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier();
+        super.clear();
+        identifier_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        secondaryIdentifier_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -996,33 +1433,39 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier returnMe = result;
-        result = null;
-        return returnMe;
+        result.identifier_ = identifier_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.secondaryIdentifier_ = secondaryIdentifier_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1046,6 +1489,10 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1058,68 +1505,103 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setIdentifier(input.readString());
+              bitField0_ |= 0x00000001;
+              identifier_ = input.readBytes();
               break;
             }
             case 18: {
-              setSecondaryIdentifier(input.readString());
+              bitField0_ |= 0x00000002;
+              secondaryIdentifier_ = input.readBytes();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional string identifier = 1;
+      private java.lang.Object identifier_ = "";
       public boolean hasIdentifier() {
-        return result.hasIdentifier();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getIdentifier() {
-        return result.getIdentifier();
+      public String getIdentifier() {
+        java.lang.Object ref = identifier_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          identifier_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setIdentifier(java.lang.String value) {
+      public Builder setIdentifier(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasIdentifier = true;
-        result.identifier_ = value;
+  bitField0_ |= 0x00000001;
+        identifier_ = value;
+        onChanged();
         return this;
       }
       public Builder clearIdentifier() {
-        result.hasIdentifier = false;
-        result.identifier_ = getDefaultInstance().getIdentifier();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        identifier_ = getDefaultInstance().getIdentifier();
+        onChanged();
         return this;
+      }
+      void setIdentifier(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        identifier_ = value;
+        onChanged();
       }
       
       // optional string secondary_identifier = 2;
+      private java.lang.Object secondaryIdentifier_ = "";
       public boolean hasSecondaryIdentifier() {
-        return result.hasSecondaryIdentifier();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getSecondaryIdentifier() {
-        return result.getSecondaryIdentifier();
+      public String getSecondaryIdentifier() {
+        java.lang.Object ref = secondaryIdentifier_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          secondaryIdentifier_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setSecondaryIdentifier(java.lang.String value) {
+      public Builder setSecondaryIdentifier(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasSecondaryIdentifier = true;
-        result.secondaryIdentifier_ = value;
+  bitField0_ |= 0x00000002;
+        secondaryIdentifier_ = value;
+        onChanged();
         return this;
       }
       public Builder clearSecondaryIdentifier() {
-        result.hasSecondaryIdentifier = false;
-        result.secondaryIdentifier_ = getDefaultInstance().getSecondaryIdentifier();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        secondaryIdentifier_ = getDefaultInstance().getSecondaryIdentifier();
+        onChanged();
         return this;
+      }
+      void setSecondaryIdentifier(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        secondaryIdentifier_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.SourceIdentifier)
@@ -1127,18 +1609,82 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new SourceIdentifier(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.SourceIdentifier)
   }
   
+  public interface LoggingEventOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional int64 time_stamp = 1;
+    boolean hasTimeStamp();
+    long getTimeStamp();
+    
+    // optional string logger_name = 2;
+    boolean hasLoggerName();
+    String getLoggerName();
+    
+    // optional .de.huxhorn.lilith.logging.Level level = 3;
+    boolean hasLevel();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel();
+    
+    // optional .de.huxhorn.lilith.logging.Message message = 4;
+    boolean hasMessage();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getMessageOrBuilder();
+    
+    // optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
+    boolean hasThreadInfo();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder getThreadInfoOrBuilder();
+    
+    // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
+    java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> 
+        getCallStackElementList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index);
+    int getCallStackElementCount();
+    java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+        getCallStackElementOrBuilderList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getCallStackElementOrBuilder(
+        int index);
+    
+    // optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
+    boolean hasThrowable();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getThrowableOrBuilder();
+    
+    // optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;
+    boolean hasLoggerContext();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder getLoggerContextOrBuilder();
+    
+    // optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;
+    boolean hasMappedDiagnosticContext();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getMappedDiagnosticContextOrBuilder();
+    
+    // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
+    boolean hasNestedDiagnosticContext();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder getNestedDiagnosticContextOrBuilder();
+    
+    // optional .de.huxhorn.lilith.logging.Marker marker = 11;
+    boolean hasMarker();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getMarkerOrBuilder();
+    
+    // optional int64 sequence_number = 12;
+    boolean hasSequenceNumber();
+    long getSequenceNumber();
+  }
   public static final class LoggingEvent extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements LoggingEventOrBuilder {
     // Use LoggingEvent.newBuilder() to construct.
-    private LoggingEvent() {
-      initFields();
+    private LoggingEvent(Builder builder) {
+      super(builder);
     }
     private LoggingEvent(boolean noInit) {}
     
@@ -1161,156 +1707,260 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional int64 time_stamp = 1;
     public static final int TIME_STAMP_FIELD_NUMBER = 1;
-    private boolean hasTimeStamp;
-    private long timeStamp_ = 0L;
-    public boolean hasTimeStamp() { return hasTimeStamp; }
-    public long getTimeStamp() { return timeStamp_; }
+    private long timeStamp_;
+    public boolean hasTimeStamp() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public long getTimeStamp() {
+      return timeStamp_;
+    }
     
     // optional string logger_name = 2;
     public static final int LOGGER_NAME_FIELD_NUMBER = 2;
-    private boolean hasLoggerName;
-    private java.lang.String loggerName_ = "";
-    public boolean hasLoggerName() { return hasLoggerName; }
-    public java.lang.String getLoggerName() { return loggerName_; }
+    private java.lang.Object loggerName_;
+    public boolean hasLoggerName() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getLoggerName() {
+      java.lang.Object ref = loggerName_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          loggerName_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getLoggerNameBytes() {
+      java.lang.Object ref = loggerName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        loggerName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional .de.huxhorn.lilith.logging.Level level = 3;
     public static final int LEVEL_FIELD_NUMBER = 3;
-    private boolean hasLevel;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level level_;
-    public boolean hasLevel() { return hasLevel; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() { return level_; }
+    public boolean hasLevel() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
+      return level_;
+    }
     
     // optional .de.huxhorn.lilith.logging.Message message = 4;
     public static final int MESSAGE_FIELD_NUMBER = 4;
-    private boolean hasMessage;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message message_;
-    public boolean hasMessage() { return hasMessage; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() { return message_; }
+    public boolean hasMessage() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() {
+      return message_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getMessageOrBuilder() {
+      return message_;
+    }
     
     // optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
     public static final int THREAD_INFO_FIELD_NUMBER = 5;
-    private boolean hasThreadInfo;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo threadInfo_;
-    public boolean hasThreadInfo() { return hasThreadInfo; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo() { return threadInfo_; }
+    public boolean hasThreadInfo() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo() {
+      return threadInfo_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder getThreadInfoOrBuilder() {
+      return threadInfo_;
+    }
     
     // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
     public static final int CALL_STACK_ELEMENT_FIELD_NUMBER = 6;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> callStackElement_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> callStackElement_;
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getCallStackElementList() {
       return callStackElement_;
     }
-    public int getCallStackElementCount() { return callStackElement_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+        getCallStackElementOrBuilderList() {
+      return callStackElement_;
+    }
+    public int getCallStackElementCount() {
+      return callStackElement_.size();
+    }
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index) {
+      return callStackElement_.get(index);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getCallStackElementOrBuilder(
+        int index) {
       return callStackElement_.get(index);
     }
     
     // optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
     public static final int THROWABLE_FIELD_NUMBER = 7;
-    private boolean hasThrowable;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable throwable_;
-    public boolean hasThrowable() { return hasThrowable; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() { return throwable_; }
+    public boolean hasThrowable() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() {
+      return throwable_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getThrowableOrBuilder() {
+      return throwable_;
+    }
     
     // optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;
     public static final int LOGGER_CONTEXT_FIELD_NUMBER = 8;
-    private boolean hasLoggerContext;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext loggerContext_;
-    public boolean hasLoggerContext() { return hasLoggerContext; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext() { return loggerContext_; }
+    public boolean hasLoggerContext() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext() {
+      return loggerContext_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder getLoggerContextOrBuilder() {
+      return loggerContext_;
+    }
     
     // optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;
     public static final int MAPPED_DIAGNOSTIC_CONTEXT_FIELD_NUMBER = 9;
-    private boolean hasMappedDiagnosticContext;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap mappedDiagnosticContext_;
-    public boolean hasMappedDiagnosticContext() { return hasMappedDiagnosticContext; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext() { return mappedDiagnosticContext_; }
+    public boolean hasMappedDiagnosticContext() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext() {
+      return mappedDiagnosticContext_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getMappedDiagnosticContextOrBuilder() {
+      return mappedDiagnosticContext_;
+    }
     
     // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
     public static final int NESTED_DIAGNOSTIC_CONTEXT_FIELD_NUMBER = 10;
-    private boolean hasNestedDiagnosticContext;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext nestedDiagnosticContext_;
-    public boolean hasNestedDiagnosticContext() { return hasNestedDiagnosticContext; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() { return nestedDiagnosticContext_; }
+    public boolean hasNestedDiagnosticContext() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() {
+      return nestedDiagnosticContext_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder getNestedDiagnosticContextOrBuilder() {
+      return nestedDiagnosticContext_;
+    }
     
     // optional .de.huxhorn.lilith.logging.Marker marker = 11;
     public static final int MARKER_FIELD_NUMBER = 11;
-    private boolean hasMarker;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker marker_;
-    public boolean hasMarker() { return hasMarker; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() { return marker_; }
+    public boolean hasMarker() {
+      return ((bitField0_ & 0x00000200) == 0x00000200);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() {
+      return marker_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getMarkerOrBuilder() {
+      return marker_;
+    }
     
     // optional int64 sequence_number = 12;
     public static final int SEQUENCE_NUMBER_FIELD_NUMBER = 12;
-    private boolean hasSequenceNumber;
-    private long sequenceNumber_ = 0L;
-    public boolean hasSequenceNumber() { return hasSequenceNumber; }
-    public long getSequenceNumber() { return sequenceNumber_; }
+    private long sequenceNumber_;
+    public boolean hasSequenceNumber() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    public long getSequenceNumber() {
+      return sequenceNumber_;
+    }
     
     private void initFields() {
+      timeStamp_ = 0L;
+      loggerName_ = "";
       level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
       message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
       threadInfo_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
+      callStackElement_ = java.util.Collections.emptyList();
       throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
       loggerContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
       mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
       nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
       marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
+      sequenceNumber_ = 0L;
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
       if (hasLoggerContext()) {
-        if (!getLoggerContext().isInitialized()) return false;
+        if (!getLoggerContext().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       if (hasMappedDiagnosticContext()) {
-        if (!getMappedDiagnosticContext().isInitialized()) return false;
+        if (!getMappedDiagnosticContext().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       if (hasMarker()) {
-        if (!getMarker().isInitialized()) return false;
+        if (!getMarker().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasTimeStamp()) {
-        output.writeInt64(1, getTimeStamp());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt64(1, timeStamp_);
       }
-      if (hasLoggerName()) {
-        output.writeString(2, getLoggerName());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getLoggerNameBytes());
       }
-      if (hasLevel()) {
-        output.writeEnum(3, getLevel().getNumber());
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeEnum(3, level_.getNumber());
       }
-      if (hasMessage()) {
-        output.writeMessage(4, getMessage());
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeMessage(4, message_);
       }
-      if (hasThreadInfo()) {
-        output.writeMessage(5, getThreadInfo());
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeMessage(5, threadInfo_);
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getCallStackElementList()) {
-        output.writeMessage(6, element);
+      for (int i = 0; i < callStackElement_.size(); i++) {
+        output.writeMessage(6, callStackElement_.get(i));
       }
-      if (hasThrowable()) {
-        output.writeMessage(7, getThrowable());
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeMessage(7, throwable_);
       }
-      if (hasLoggerContext()) {
-        output.writeMessage(8, getLoggerContext());
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeMessage(8, loggerContext_);
       }
-      if (hasMappedDiagnosticContext()) {
-        output.writeMessage(9, getMappedDiagnosticContext());
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeMessage(9, mappedDiagnosticContext_);
       }
-      if (hasNestedDiagnosticContext()) {
-        output.writeMessage(10, getNestedDiagnosticContext());
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeMessage(10, nestedDiagnosticContext_);
       }
-      if (hasMarker()) {
-        output.writeMessage(11, getMarker());
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        output.writeMessage(11, marker_);
       }
-      if (hasSequenceNumber()) {
-        output.writeInt64(12, getSequenceNumber());
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeInt64(12, sequenceNumber_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1321,57 +1971,64 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasTimeStamp()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, getTimeStamp());
+          .computeInt64Size(1, timeStamp_);
       }
-      if (hasLoggerName()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getLoggerName());
+          .computeBytesSize(2, getLoggerNameBytes());
       }
-      if (hasLevel()) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, getLevel().getNumber());
+          .computeEnumSize(3, level_.getNumber());
       }
-      if (hasMessage()) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getMessage());
+          .computeMessageSize(4, message_);
       }
-      if (hasThreadInfo()) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getThreadInfo());
+          .computeMessageSize(5, threadInfo_);
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getCallStackElementList()) {
+      for (int i = 0; i < callStackElement_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, element);
+          .computeMessageSize(6, callStackElement_.get(i));
       }
-      if (hasThrowable()) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getThrowable());
+          .computeMessageSize(7, throwable_);
       }
-      if (hasLoggerContext()) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, getLoggerContext());
+          .computeMessageSize(8, loggerContext_);
       }
-      if (hasMappedDiagnosticContext()) {
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, getMappedDiagnosticContext());
+          .computeMessageSize(9, mappedDiagnosticContext_);
       }
-      if (hasNestedDiagnosticContext()) {
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, getNestedDiagnosticContext());
+          .computeMessageSize(10, nestedDiagnosticContext_);
       }
-      if (hasMarker()) {
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, getMarker());
+          .computeMessageSize(11, marker_);
       }
-      if (hasSequenceNumber()) {
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(12, getSequenceNumber());
+          .computeInt64Size(12, sequenceNumber_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent parseFrom(
@@ -1448,34 +2105,113 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getMessageFieldBuilder();
+          getThreadInfoFieldBuilder();
+          getCallStackElementFieldBuilder();
+          getThrowableFieldBuilder();
+          getLoggerContextFieldBuilder();
+          getMappedDiagnosticContextFieldBuilder();
+          getNestedDiagnosticContextFieldBuilder();
+          getMarkerFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        timeStamp_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        loggerName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        if (messageBuilder_ == null) {
+          message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
+        } else {
+          messageBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        if (threadInfoBuilder_ == null) {
+          threadInfo_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
+        } else {
+          threadInfoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
+        if (callStackElementBuilder_ == null) {
+          callStackElement_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+        } else {
+          callStackElementBuilder_.clear();
+        }
+        if (throwableBuilder_ == null) {
+          throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+        } else {
+          throwableBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000040);
+        if (loggerContextBuilder_ == null) {
+          loggerContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
+        } else {
+          loggerContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000080);
+        if (mappedDiagnosticContextBuilder_ == null) {
+          mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+        } else {
+          mappedDiagnosticContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000100);
+        if (nestedDiagnosticContextBuilder_ == null) {
+          nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
+        } else {
+          nestedDiagnosticContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000200);
+        if (markerBuilder_ == null) {
+          marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
+        } else {
+          markerBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000400);
+        sequenceNumber_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -1487,37 +2223,112 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        if (result.callStackElement_ != java.util.Collections.EMPTY_LIST) {
-          result.callStackElement_ =
-            java.util.Collections.unmodifiableList(result.callStackElement_);
+        result.timeStamp_ = timeStamp_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent returnMe = result;
-        result = null;
-        return returnMe;
+        result.loggerName_ = loggerName_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.level_ = level_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        if (messageBuilder_ == null) {
+          result.message_ = message_;
+        } else {
+          result.message_ = messageBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        if (threadInfoBuilder_ == null) {
+          result.threadInfo_ = threadInfo_;
+        } else {
+          result.threadInfo_ = threadInfoBuilder_.build();
+        }
+        if (callStackElementBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) == 0x00000020)) {
+            callStackElement_ = java.util.Collections.unmodifiableList(callStackElement_);
+            bitField0_ = (bitField0_ & ~0x00000020);
+          }
+          result.callStackElement_ = callStackElement_;
+        } else {
+          result.callStackElement_ = callStackElementBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        if (throwableBuilder_ == null) {
+          result.throwable_ = throwable_;
+        } else {
+          result.throwable_ = throwableBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        if (loggerContextBuilder_ == null) {
+          result.loggerContext_ = loggerContext_;
+        } else {
+          result.loggerContext_ = loggerContextBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        if (mappedDiagnosticContextBuilder_ == null) {
+          result.mappedDiagnosticContext_ = mappedDiagnosticContext_;
+        } else {
+          result.mappedDiagnosticContext_ = mappedDiagnosticContextBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        if (nestedDiagnosticContextBuilder_ == null) {
+          result.nestedDiagnosticContext_ = nestedDiagnosticContext_;
+        } else {
+          result.nestedDiagnosticContext_ = nestedDiagnosticContextBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        if (markerBuilder_ == null) {
+          result.marker_ = marker_;
+        } else {
+          result.marker_ = markerBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        result.sequenceNumber_ = sequenceNumber_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1546,11 +2357,31 @@ public final class LoggingProto {
         if (other.hasThreadInfo()) {
           mergeThreadInfo(other.getThreadInfo());
         }
-        if (!other.callStackElement_.isEmpty()) {
-          if (result.callStackElement_.isEmpty()) {
-            result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+        if (callStackElementBuilder_ == null) {
+          if (!other.callStackElement_.isEmpty()) {
+            if (callStackElement_.isEmpty()) {
+              callStackElement_ = other.callStackElement_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+            } else {
+              ensureCallStackElementIsMutable();
+              callStackElement_.addAll(other.callStackElement_);
+            }
+            onChanged();
           }
-          result.callStackElement_.addAll(other.callStackElement_);
+        } else {
+          if (!other.callStackElement_.isEmpty()) {
+            if (callStackElementBuilder_.isEmpty()) {
+              callStackElementBuilder_.dispose();
+              callStackElementBuilder_ = null;
+              callStackElement_ = other.callStackElement_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+              callStackElementBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getCallStackElementFieldBuilder() : null;
+            } else {
+              callStackElementBuilder_.addAllMessages(other.callStackElement_);
+            }
+          }
         }
         if (other.hasThrowable()) {
           mergeThrowable(other.getThrowable());
@@ -1574,6 +2405,28 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (hasLoggerContext()) {
+          if (!getLoggerContext().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasMappedDiagnosticContext()) {
+          if (!getMappedDiagnosticContext().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasMarker()) {
+          if (!getMarker().isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1586,21 +2439,25 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 8: {
-              setTimeStamp(input.readInt64());
+              bitField0_ |= 0x00000001;
+              timeStamp_ = input.readInt64();
               break;
             }
             case 18: {
-              setLoggerName(input.readString());
+              bitField0_ |= 0x00000002;
+              loggerName_ = input.readBytes();
               break;
             }
             case 24: {
@@ -1609,7 +2466,8 @@ public final class LoggingProto {
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
               } else {
-                setLevel(value);
+                bitField0_ |= 0x00000004;
+                level_ = value;
               }
               break;
             }
@@ -1683,399 +2541,931 @@ public final class LoggingProto {
               break;
             }
             case 96: {
-              setSequenceNumber(input.readInt64());
+              bitField0_ |= 0x00000800;
+              sequenceNumber_ = input.readInt64();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional int64 time_stamp = 1;
+      private long timeStamp_ ;
       public boolean hasTimeStamp() {
-        return result.hasTimeStamp();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public long getTimeStamp() {
-        return result.getTimeStamp();
+        return timeStamp_;
       }
       public Builder setTimeStamp(long value) {
-        result.hasTimeStamp = true;
-        result.timeStamp_ = value;
+        bitField0_ |= 0x00000001;
+        timeStamp_ = value;
+        onChanged();
         return this;
       }
       public Builder clearTimeStamp() {
-        result.hasTimeStamp = false;
-        result.timeStamp_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        timeStamp_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional string logger_name = 2;
+      private java.lang.Object loggerName_ = "";
       public boolean hasLoggerName() {
-        return result.hasLoggerName();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getLoggerName() {
-        return result.getLoggerName();
+      public String getLoggerName() {
+        java.lang.Object ref = loggerName_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          loggerName_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setLoggerName(java.lang.String value) {
+      public Builder setLoggerName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasLoggerName = true;
-        result.loggerName_ = value;
+  bitField0_ |= 0x00000002;
+        loggerName_ = value;
+        onChanged();
         return this;
       }
       public Builder clearLoggerName() {
-        result.hasLoggerName = false;
-        result.loggerName_ = getDefaultInstance().getLoggerName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        loggerName_ = getDefaultInstance().getLoggerName();
+        onChanged();
         return this;
+      }
+      void setLoggerName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        loggerName_ = value;
+        onChanged();
       }
       
       // optional .de.huxhorn.lilith.logging.Level level = 3;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
       public boolean hasLevel() {
-        return result.hasLevel();
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
-        return result.getLevel();
+        return level_;
       }
       public Builder setLevel(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level value) {
         if (value == null) {
           throw new NullPointerException();
         }
-        result.hasLevel = true;
-        result.level_ = value;
+        bitField0_ |= 0x00000004;
+        level_ = value;
+        onChanged();
         return this;
       }
       public Builder clearLevel() {
-        result.hasLevel = false;
-        result.level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
+        onChanged();
         return this;
       }
       
       // optional .de.huxhorn.lilith.logging.Message message = 4;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> messageBuilder_;
       public boolean hasMessage() {
-        return result.hasMessage();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() {
-        return result.getMessage();
+        if (messageBuilder_ == null) {
+          return message_;
+        } else {
+          return messageBuilder_.getMessage();
+        }
       }
       public Builder setMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (messageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          message_ = value;
+          onChanged();
+        } else {
+          messageBuilder_.setMessage(value);
         }
-        result.hasMessage = true;
-        result.message_ = value;
+        bitField0_ |= 0x00000008;
         return this;
       }
-      public Builder setMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
-        result.hasMessage = true;
-        result.message_ = builderForValue.build();
+      public Builder setMessage(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
+        if (messageBuilder_ == null) {
+          message_ = builderForValue.build();
+          onChanged();
+        } else {
+          messageBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000008;
         return this;
       }
       public Builder mergeMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        if (result.hasMessage() &&
-            result.message_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance()) {
-          result.message_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder(result.message_).mergeFrom(value).buildPartial();
+        if (messageBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+              message_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance()) {
+            message_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder(message_).mergeFrom(value).buildPartial();
+          } else {
+            message_ = value;
+          }
+          onChanged();
         } else {
-          result.message_ = value;
+          messageBuilder_.mergeFrom(value);
         }
-        result.hasMessage = true;
+        bitField0_ |= 0x00000008;
         return this;
       }
       public Builder clearMessage() {
-        result.hasMessage = false;
-        result.message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
+        if (messageBuilder_ == null) {
+          message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
+          onChanged();
+        } else {
+          messageBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder getMessageBuilder() {
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return getMessageFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getMessageOrBuilder() {
+        if (messageBuilder_ != null) {
+          return messageBuilder_.getMessageOrBuilder();
+        } else {
+          return message_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> 
+          getMessageFieldBuilder() {
+        if (messageBuilder_ == null) {
+          messageBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder>(
+                  message_,
+                  getParentForChildren(),
+                  isClean());
+          message_ = null;
+        }
+        return messageBuilder_;
       }
       
       // optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo threadInfo_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder> threadInfoBuilder_;
       public boolean hasThreadInfo() {
-        return result.hasThreadInfo();
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo() {
-        return result.getThreadInfo();
+        if (threadInfoBuilder_ == null) {
+          return threadInfo_;
+        } else {
+          return threadInfoBuilder_.getMessage();
+        }
       }
       public Builder setThreadInfo(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (threadInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          threadInfo_ = value;
+          onChanged();
+        } else {
+          threadInfoBuilder_.setMessage(value);
         }
-        result.hasThreadInfo = true;
-        result.threadInfo_ = value;
+        bitField0_ |= 0x00000010;
         return this;
       }
-      public Builder setThreadInfo(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder builderForValue) {
-        result.hasThreadInfo = true;
-        result.threadInfo_ = builderForValue.build();
+      public Builder setThreadInfo(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder builderForValue) {
+        if (threadInfoBuilder_ == null) {
+          threadInfo_ = builderForValue.build();
+          onChanged();
+        } else {
+          threadInfoBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000010;
         return this;
       }
       public Builder mergeThreadInfo(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo value) {
-        if (result.hasThreadInfo() &&
-            result.threadInfo_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance()) {
-          result.threadInfo_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.newBuilder(result.threadInfo_).mergeFrom(value).buildPartial();
+        if (threadInfoBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+              threadInfo_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance()) {
+            threadInfo_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.newBuilder(threadInfo_).mergeFrom(value).buildPartial();
+          } else {
+            threadInfo_ = value;
+          }
+          onChanged();
         } else {
-          result.threadInfo_ = value;
+          threadInfoBuilder_.mergeFrom(value);
         }
-        result.hasThreadInfo = true;
+        bitField0_ |= 0x00000010;
         return this;
       }
       public Builder clearThreadInfo() {
-        result.hasThreadInfo = false;
-        result.threadInfo_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
+        if (threadInfoBuilder_ == null) {
+          threadInfo_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
+          onChanged();
+        } else {
+          threadInfoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder getThreadInfoBuilder() {
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return getThreadInfoFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder getThreadInfoOrBuilder() {
+        if (threadInfoBuilder_ != null) {
+          return threadInfoBuilder_.getMessageOrBuilder();
+        } else {
+          return threadInfo_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder> 
+          getThreadInfoFieldBuilder() {
+        if (threadInfoBuilder_ == null) {
+          threadInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder>(
+                  threadInfo_,
+                  getParentForChildren(),
+                  isClean());
+          threadInfo_ = null;
+        }
+        return threadInfoBuilder_;
       }
       
       // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
+      private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> callStackElement_ =
+        java.util.Collections.emptyList();
+      private void ensureCallStackElementIsMutable() {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+          callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>(callStackElement_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> callStackElementBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getCallStackElementList() {
-        return java.util.Collections.unmodifiableList(result.callStackElement_);
+        if (callStackElementBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(callStackElement_);
+        } else {
+          return callStackElementBuilder_.getMessageList();
+        }
       }
       public int getCallStackElementCount() {
-        return result.getCallStackElementCount();
+        if (callStackElementBuilder_ == null) {
+          return callStackElement_.size();
+        } else {
+          return callStackElementBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index) {
-        return result.getCallStackElement(index);
-      }
-      public Builder setCallStackElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (callStackElementBuilder_ == null) {
+          return callStackElement_.get(index);
+        } else {
+          return callStackElementBuilder_.getMessage(index);
         }
-        result.callStackElement_.set(index, value);
+      }
+      public Builder setCallStackElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
+        if (callStackElementBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCallStackElementIsMutable();
+          callStackElement_.set(index, value);
+          onChanged();
+        } else {
+          callStackElementBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setCallStackElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        result.callStackElement_.set(index, builderForValue.build());
+      public Builder setCallStackElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
+        if (callStackElementBuilder_ == null) {
+          ensureCallStackElementIsMutable();
+          callStackElement_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          callStackElementBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addCallStackElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (callStackElementBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCallStackElementIsMutable();
+          callStackElement_.add(value);
+          onChanged();
+        } else {
+          callStackElementBuilder_.addMessage(value);
         }
-        if (result.callStackElement_.isEmpty()) {
-          result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        result.callStackElement_.add(value);
         return this;
       }
-      public Builder addCallStackElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        if (result.callStackElement_.isEmpty()) {
-          result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+      public Builder addCallStackElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
+        if (callStackElementBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCallStackElementIsMutable();
+          callStackElement_.add(index, value);
+          onChanged();
+        } else {
+          callStackElementBuilder_.addMessage(index, value);
         }
-        result.callStackElement_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addCallStackElement(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
+        if (callStackElementBuilder_ == null) {
+          ensureCallStackElementIsMutable();
+          callStackElement_.add(builderForValue.build());
+          onChanged();
+        } else {
+          callStackElementBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addCallStackElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
+        if (callStackElementBuilder_ == null) {
+          ensureCallStackElementIsMutable();
+          callStackElement_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          callStackElementBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllCallStackElement(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values) {
-        if (result.callStackElement_.isEmpty()) {
-          result.callStackElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+        if (callStackElementBuilder_ == null) {
+          ensureCallStackElementIsMutable();
+          super.addAll(values, callStackElement_);
+          onChanged();
+        } else {
+          callStackElementBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.callStackElement_);
         return this;
       }
       public Builder clearCallStackElement() {
-        result.callStackElement_ = java.util.Collections.emptyList();
+        if (callStackElementBuilder_ == null) {
+          callStackElement_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+          onChanged();
+        } else {
+          callStackElementBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeCallStackElement(int index) {
+        if (callStackElementBuilder_ == null) {
+          ensureCallStackElementIsMutable();
+          callStackElement_.remove(index);
+          onChanged();
+        } else {
+          callStackElementBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder getCallStackElementBuilder(
+          int index) {
+        return getCallStackElementFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getCallStackElementOrBuilder(
+          int index) {
+        if (callStackElementBuilder_ == null) {
+          return callStackElement_.get(index);  } else {
+          return callStackElementBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+           getCallStackElementOrBuilderList() {
+        if (callStackElementBuilder_ != null) {
+          return callStackElementBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(callStackElement_);
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder addCallStackElementBuilder() {
+        return getCallStackElementFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder addCallStackElementBuilder(
+          int index) {
+        return getCallStackElementFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder> 
+           getCallStackElementBuilderList() {
+        return getCallStackElementFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+          getCallStackElementFieldBuilder() {
+        if (callStackElementBuilder_ == null) {
+          callStackElementBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder>(
+                  callStackElement_,
+                  ((bitField0_ & 0x00000020) == 0x00000020),
+                  getParentForChildren(),
+                  isClean());
+          callStackElement_ = null;
+        }
+        return callStackElementBuilder_;
       }
       
       // optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> throwableBuilder_;
       public boolean hasThrowable() {
-        return result.hasThrowable();
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() {
-        return result.getThrowable();
+        if (throwableBuilder_ == null) {
+          return throwable_;
+        } else {
+          return throwableBuilder_.getMessage();
+        }
       }
       public Builder setThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (throwableBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          throwable_ = value;
+          onChanged();
+        } else {
+          throwableBuilder_.setMessage(value);
         }
-        result.hasThrowable = true;
-        result.throwable_ = value;
+        bitField0_ |= 0x00000040;
         return this;
       }
-      public Builder setThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
-        result.hasThrowable = true;
-        result.throwable_ = builderForValue.build();
+      public Builder setThrowable(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
+        if (throwableBuilder_ == null) {
+          throwable_ = builderForValue.build();
+          onChanged();
+        } else {
+          throwableBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000040;
         return this;
       }
       public Builder mergeThrowable(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        if (result.hasThrowable() &&
-            result.throwable_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance()) {
-          result.throwable_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder(result.throwable_).mergeFrom(value).buildPartial();
+        if (throwableBuilder_ == null) {
+          if (((bitField0_ & 0x00000040) == 0x00000040) &&
+              throwable_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance()) {
+            throwable_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder(throwable_).mergeFrom(value).buildPartial();
+          } else {
+            throwable_ = value;
+          }
+          onChanged();
         } else {
-          result.throwable_ = value;
+          throwableBuilder_.mergeFrom(value);
         }
-        result.hasThrowable = true;
+        bitField0_ |= 0x00000040;
         return this;
       }
       public Builder clearThrowable() {
-        result.hasThrowable = false;
-        result.throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+        if (throwableBuilder_ == null) {
+          throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+          onChanged();
+        } else {
+          throwableBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder getThrowableBuilder() {
+        bitField0_ |= 0x00000040;
+        onChanged();
+        return getThrowableFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getThrowableOrBuilder() {
+        if (throwableBuilder_ != null) {
+          return throwableBuilder_.getMessageOrBuilder();
+        } else {
+          return throwable_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> 
+          getThrowableFieldBuilder() {
+        if (throwableBuilder_ == null) {
+          throwableBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder>(
+                  throwable_,
+                  getParentForChildren(),
+                  isClean());
+          throwable_ = null;
+        }
+        return throwableBuilder_;
       }
       
       // optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext loggerContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder> loggerContextBuilder_;
       public boolean hasLoggerContext() {
-        return result.hasLoggerContext();
+        return ((bitField0_ & 0x00000080) == 0x00000080);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext() {
-        return result.getLoggerContext();
+        if (loggerContextBuilder_ == null) {
+          return loggerContext_;
+        } else {
+          return loggerContextBuilder_.getMessage();
+        }
       }
       public Builder setLoggerContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (loggerContextBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          loggerContext_ = value;
+          onChanged();
+        } else {
+          loggerContextBuilder_.setMessage(value);
         }
-        result.hasLoggerContext = true;
-        result.loggerContext_ = value;
+        bitField0_ |= 0x00000080;
         return this;
       }
-      public Builder setLoggerContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder builderForValue) {
-        result.hasLoggerContext = true;
-        result.loggerContext_ = builderForValue.build();
+      public Builder setLoggerContext(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder builderForValue) {
+        if (loggerContextBuilder_ == null) {
+          loggerContext_ = builderForValue.build();
+          onChanged();
+        } else {
+          loggerContextBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000080;
         return this;
       }
       public Builder mergeLoggerContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext value) {
-        if (result.hasLoggerContext() &&
-            result.loggerContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance()) {
-          result.loggerContext_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.newBuilder(result.loggerContext_).mergeFrom(value).buildPartial();
+        if (loggerContextBuilder_ == null) {
+          if (((bitField0_ & 0x00000080) == 0x00000080) &&
+              loggerContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance()) {
+            loggerContext_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.newBuilder(loggerContext_).mergeFrom(value).buildPartial();
+          } else {
+            loggerContext_ = value;
+          }
+          onChanged();
         } else {
-          result.loggerContext_ = value;
+          loggerContextBuilder_.mergeFrom(value);
         }
-        result.hasLoggerContext = true;
+        bitField0_ |= 0x00000080;
         return this;
       }
       public Builder clearLoggerContext() {
-        result.hasLoggerContext = false;
-        result.loggerContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
+        if (loggerContextBuilder_ == null) {
+          loggerContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
+          onChanged();
+        } else {
+          loggerContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000080);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder getLoggerContextBuilder() {
+        bitField0_ |= 0x00000080;
+        onChanged();
+        return getLoggerContextFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder getLoggerContextOrBuilder() {
+        if (loggerContextBuilder_ != null) {
+          return loggerContextBuilder_.getMessageOrBuilder();
+        } else {
+          return loggerContext_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder> 
+          getLoggerContextFieldBuilder() {
+        if (loggerContextBuilder_ == null) {
+          loggerContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder>(
+                  loggerContext_,
+                  getParentForChildren(),
+                  isClean());
+          loggerContext_ = null;
+        }
+        return loggerContextBuilder_;
       }
       
       // optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> mappedDiagnosticContextBuilder_;
       public boolean hasMappedDiagnosticContext() {
-        return result.hasMappedDiagnosticContext();
+        return ((bitField0_ & 0x00000100) == 0x00000100);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext() {
-        return result.getMappedDiagnosticContext();
+        if (mappedDiagnosticContextBuilder_ == null) {
+          return mappedDiagnosticContext_;
+        } else {
+          return mappedDiagnosticContextBuilder_.getMessage();
+        }
       }
       public Builder setMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (mappedDiagnosticContextBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          mappedDiagnosticContext_ = value;
+          onChanged();
+        } else {
+          mappedDiagnosticContextBuilder_.setMessage(value);
         }
-        result.hasMappedDiagnosticContext = true;
-        result.mappedDiagnosticContext_ = value;
+        bitField0_ |= 0x00000100;
         return this;
       }
-      public Builder setMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder builderForValue) {
-        result.hasMappedDiagnosticContext = true;
-        result.mappedDiagnosticContext_ = builderForValue.build();
+      public Builder setMappedDiagnosticContext(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder builderForValue) {
+        if (mappedDiagnosticContextBuilder_ == null) {
+          mappedDiagnosticContext_ = builderForValue.build();
+          onChanged();
+        } else {
+          mappedDiagnosticContextBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000100;
         return this;
       }
       public Builder mergeMappedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap value) {
-        if (result.hasMappedDiagnosticContext() &&
-            result.mappedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance()) {
-          result.mappedDiagnosticContext_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.newBuilder(result.mappedDiagnosticContext_).mergeFrom(value).buildPartial();
+        if (mappedDiagnosticContextBuilder_ == null) {
+          if (((bitField0_ & 0x00000100) == 0x00000100) &&
+              mappedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance()) {
+            mappedDiagnosticContext_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.newBuilder(mappedDiagnosticContext_).mergeFrom(value).buildPartial();
+          } else {
+            mappedDiagnosticContext_ = value;
+          }
+          onChanged();
         } else {
-          result.mappedDiagnosticContext_ = value;
+          mappedDiagnosticContextBuilder_.mergeFrom(value);
         }
-        result.hasMappedDiagnosticContext = true;
+        bitField0_ |= 0x00000100;
         return this;
       }
       public Builder clearMappedDiagnosticContext() {
-        result.hasMappedDiagnosticContext = false;
-        result.mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+        if (mappedDiagnosticContextBuilder_ == null) {
+          mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+          onChanged();
+        } else {
+          mappedDiagnosticContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000100);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder getMappedDiagnosticContextBuilder() {
+        bitField0_ |= 0x00000100;
+        onChanged();
+        return getMappedDiagnosticContextFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getMappedDiagnosticContextOrBuilder() {
+        if (mappedDiagnosticContextBuilder_ != null) {
+          return mappedDiagnosticContextBuilder_.getMessageOrBuilder();
+        } else {
+          return mappedDiagnosticContext_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> 
+          getMappedDiagnosticContextFieldBuilder() {
+        if (mappedDiagnosticContextBuilder_ == null) {
+          mappedDiagnosticContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder>(
+                  mappedDiagnosticContext_,
+                  getParentForChildren(),
+                  isClean());
+          mappedDiagnosticContext_ = null;
+        }
+        return mappedDiagnosticContextBuilder_;
       }
       
       // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder> nestedDiagnosticContextBuilder_;
       public boolean hasNestedDiagnosticContext() {
-        return result.hasNestedDiagnosticContext();
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() {
-        return result.getNestedDiagnosticContext();
+        if (nestedDiagnosticContextBuilder_ == null) {
+          return nestedDiagnosticContext_;
+        } else {
+          return nestedDiagnosticContextBuilder_.getMessage();
+        }
       }
       public Builder setNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (nestedDiagnosticContextBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          nestedDiagnosticContext_ = value;
+          onChanged();
+        } else {
+          nestedDiagnosticContextBuilder_.setMessage(value);
         }
-        result.hasNestedDiagnosticContext = true;
-        result.nestedDiagnosticContext_ = value;
+        bitField0_ |= 0x00000200;
         return this;
       }
-      public Builder setNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder builderForValue) {
-        result.hasNestedDiagnosticContext = true;
-        result.nestedDiagnosticContext_ = builderForValue.build();
+      public Builder setNestedDiagnosticContext(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder builderForValue) {
+        if (nestedDiagnosticContextBuilder_ == null) {
+          nestedDiagnosticContext_ = builderForValue.build();
+          onChanged();
+        } else {
+          nestedDiagnosticContextBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000200;
         return this;
       }
       public Builder mergeNestedDiagnosticContext(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext value) {
-        if (result.hasNestedDiagnosticContext() &&
-            result.nestedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance()) {
-          result.nestedDiagnosticContext_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder(result.nestedDiagnosticContext_).mergeFrom(value).buildPartial();
+        if (nestedDiagnosticContextBuilder_ == null) {
+          if (((bitField0_ & 0x00000200) == 0x00000200) &&
+              nestedDiagnosticContext_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance()) {
+            nestedDiagnosticContext_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder(nestedDiagnosticContext_).mergeFrom(value).buildPartial();
+          } else {
+            nestedDiagnosticContext_ = value;
+          }
+          onChanged();
         } else {
-          result.nestedDiagnosticContext_ = value;
+          nestedDiagnosticContextBuilder_.mergeFrom(value);
         }
-        result.hasNestedDiagnosticContext = true;
+        bitField0_ |= 0x00000200;
         return this;
       }
       public Builder clearNestedDiagnosticContext() {
-        result.hasNestedDiagnosticContext = false;
-        result.nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
+        if (nestedDiagnosticContextBuilder_ == null) {
+          nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
+          onChanged();
+        } else {
+          nestedDiagnosticContextBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000200);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder getNestedDiagnosticContextBuilder() {
+        bitField0_ |= 0x00000200;
+        onChanged();
+        return getNestedDiagnosticContextFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder getNestedDiagnosticContextOrBuilder() {
+        if (nestedDiagnosticContextBuilder_ != null) {
+          return nestedDiagnosticContextBuilder_.getMessageOrBuilder();
+        } else {
+          return nestedDiagnosticContext_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder> 
+          getNestedDiagnosticContextFieldBuilder() {
+        if (nestedDiagnosticContextBuilder_ == null) {
+          nestedDiagnosticContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder>(
+                  nestedDiagnosticContext_,
+                  getParentForChildren(),
+                  isClean());
+          nestedDiagnosticContext_ = null;
+        }
+        return nestedDiagnosticContextBuilder_;
       }
       
       // optional .de.huxhorn.lilith.logging.Marker marker = 11;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> markerBuilder_;
       public boolean hasMarker() {
-        return result.hasMarker();
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() {
-        return result.getMarker();
+        if (markerBuilder_ == null) {
+          return marker_;
+        } else {
+          return markerBuilder_.getMessage();
+        }
       }
       public Builder setMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (markerBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          marker_ = value;
+          onChanged();
+        } else {
+          markerBuilder_.setMessage(value);
         }
-        result.hasMarker = true;
-        result.marker_ = value;
+        bitField0_ |= 0x00000400;
         return this;
       }
-      public Builder setMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
-        result.hasMarker = true;
-        result.marker_ = builderForValue.build();
+      public Builder setMarker(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
+        if (markerBuilder_ == null) {
+          marker_ = builderForValue.build();
+          onChanged();
+        } else {
+          markerBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000400;
         return this;
       }
       public Builder mergeMarker(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        if (result.hasMarker() &&
-            result.marker_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance()) {
-          result.marker_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder(result.marker_).mergeFrom(value).buildPartial();
+        if (markerBuilder_ == null) {
+          if (((bitField0_ & 0x00000400) == 0x00000400) &&
+              marker_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance()) {
+            marker_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder(marker_).mergeFrom(value).buildPartial();
+          } else {
+            marker_ = value;
+          }
+          onChanged();
         } else {
-          result.marker_ = value;
+          markerBuilder_.mergeFrom(value);
         }
-        result.hasMarker = true;
+        bitField0_ |= 0x00000400;
         return this;
       }
       public Builder clearMarker() {
-        result.hasMarker = false;
-        result.marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
+        if (markerBuilder_ == null) {
+          marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
+          onChanged();
+        } else {
+          markerBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder getMarkerBuilder() {
+        bitField0_ |= 0x00000400;
+        onChanged();
+        return getMarkerFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getMarkerOrBuilder() {
+        if (markerBuilder_ != null) {
+          return markerBuilder_.getMessageOrBuilder();
+        } else {
+          return marker_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> 
+          getMarkerFieldBuilder() {
+        if (markerBuilder_ == null) {
+          markerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder>(
+                  marker_,
+                  getParentForChildren(),
+                  isClean());
+          marker_ = null;
+        }
+        return markerBuilder_;
       }
       
       // optional int64 sequence_number = 12;
+      private long sequenceNumber_ ;
       public boolean hasSequenceNumber() {
-        return result.hasSequenceNumber();
+        return ((bitField0_ & 0x00000800) == 0x00000800);
       }
       public long getSequenceNumber() {
-        return result.getSequenceNumber();
+        return sequenceNumber_;
       }
       public Builder setSequenceNumber(long value) {
-        result.hasSequenceNumber = true;
-        result.sequenceNumber_ = value;
+        bitField0_ |= 0x00000800;
+        sequenceNumber_ = value;
+        onChanged();
         return this;
       }
       public Builder clearSequenceNumber() {
-        result.hasSequenceNumber = false;
-        result.sequenceNumber_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000800);
+        sequenceNumber_ = 0L;
+        onChanged();
         return this;
       }
       
@@ -2084,18 +3474,34 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new LoggingEvent(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.LoggingEvent)
   }
   
+  public interface LoggerContextOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional int64 birth_time = 1;
+    boolean hasBirthTime();
+    long getBirthTime();
+    
+    // optional string name = 2;
+    boolean hasName();
+    String getName();
+    
+    // optional .de.huxhorn.lilith.logging.StringMap properties = 3;
+    boolean hasProperties();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getPropertiesOrBuilder();
+  }
   public static final class LoggerContext extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements LoggerContextOrBuilder {
     // Use LoggerContext.newBuilder() to construct.
-    private LoggerContext() {
-      initFields();
+    private LoggerContext(Builder builder) {
+      super(builder);
     }
     private LoggerContext(boolean noInit) {}
     
@@ -2118,48 +3524,93 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional int64 birth_time = 1;
     public static final int BIRTH_TIME_FIELD_NUMBER = 1;
-    private boolean hasBirthTime;
-    private long birthTime_ = 0L;
-    public boolean hasBirthTime() { return hasBirthTime; }
-    public long getBirthTime() { return birthTime_; }
+    private long birthTime_;
+    public boolean hasBirthTime() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public long getBirthTime() {
+      return birthTime_;
+    }
     
     // optional string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
-    private boolean hasName;
-    private java.lang.String name_ = "";
-    public boolean hasName() { return hasName; }
-    public java.lang.String getName() { return name_; }
+    private java.lang.Object name_;
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional .de.huxhorn.lilith.logging.StringMap properties = 3;
     public static final int PROPERTIES_FIELD_NUMBER = 3;
-    private boolean hasProperties;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap properties_;
-    public boolean hasProperties() { return hasProperties; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties() { return properties_; }
+    public boolean hasProperties() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties() {
+      return properties_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getPropertiesOrBuilder() {
+      return properties_;
+    }
     
     private void initFields() {
+      birthTime_ = 0L;
+      name_ = "";
       properties_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
       if (hasProperties()) {
-        if (!getProperties().isInitialized()) return false;
+        if (!getProperties().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasBirthTime()) {
-        output.writeInt64(1, getBirthTime());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt64(1, birthTime_);
       }
-      if (hasName()) {
-        output.writeString(2, getName());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getNameBytes());
       }
-      if (hasProperties()) {
-        output.writeMessage(3, getProperties());
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeMessage(3, properties_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -2170,21 +3621,28 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasBirthTime()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, getBirthTime());
+          .computeInt64Size(1, birthTime_);
       }
-      if (hasName()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getName());
+          .computeBytesSize(2, getNameBytes());
       }
-      if (hasProperties()) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getProperties());
+          .computeMessageSize(3, properties_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext parseFrom(
@@ -2261,34 +3719,60 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getPropertiesFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        birthTime_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        if (propertiesBuilder_ == null) {
+          properties_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+        } else {
+          propertiesBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext();
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -2300,33 +3784,47 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext returnMe = result;
-        result = null;
-        return returnMe;
+        result.birthTime_ = birthTime_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        if (propertiesBuilder_ == null) {
+          result.properties_ = properties_;
+        } else {
+          result.properties_ = propertiesBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2353,6 +3851,16 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (hasProperties()) {
+          if (!getProperties().isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2365,21 +3873,25 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 8: {
-              setBirthTime(input.readInt64());
+              bitField0_ |= 0x00000001;
+              birthTime_ = input.readInt64();
               break;
             }
             case 18: {
-              setName(input.readString());
+              bitField0_ |= 0x00000002;
+              name_ = input.readBytes();
               break;
             }
             case 26: {
@@ -2395,81 +3907,153 @@ public final class LoggingProto {
         }
       }
       
+      private int bitField0_;
       
       // optional int64 birth_time = 1;
+      private long birthTime_ ;
       public boolean hasBirthTime() {
-        return result.hasBirthTime();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public long getBirthTime() {
-        return result.getBirthTime();
+        return birthTime_;
       }
       public Builder setBirthTime(long value) {
-        result.hasBirthTime = true;
-        result.birthTime_ = value;
+        bitField0_ |= 0x00000001;
+        birthTime_ = value;
+        onChanged();
         return this;
       }
       public Builder clearBirthTime() {
-        result.hasBirthTime = false;
-        result.birthTime_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        birthTime_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional string name = 2;
+      private java.lang.Object name_ = "";
       public boolean hasName() {
-        return result.hasName();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getName() {
-        return result.getName();
+      public String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setName(java.lang.String value) {
+      public Builder setName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasName = true;
-        result.name_ = value;
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
         return this;
       }
       public Builder clearName() {
-        result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        name_ = getDefaultInstance().getName();
+        onChanged();
         return this;
+      }
+      void setName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
       }
       
       // optional .de.huxhorn.lilith.logging.StringMap properties = 3;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap properties_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> propertiesBuilder_;
       public boolean hasProperties() {
-        return result.hasProperties();
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties() {
-        return result.getProperties();
+        if (propertiesBuilder_ == null) {
+          return properties_;
+        } else {
+          return propertiesBuilder_.getMessage();
+        }
       }
       public Builder setProperties(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (propertiesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          properties_ = value;
+          onChanged();
+        } else {
+          propertiesBuilder_.setMessage(value);
         }
-        result.hasProperties = true;
-        result.properties_ = value;
+        bitField0_ |= 0x00000004;
         return this;
       }
-      public Builder setProperties(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder builderForValue) {
-        result.hasProperties = true;
-        result.properties_ = builderForValue.build();
+      public Builder setProperties(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder builderForValue) {
+        if (propertiesBuilder_ == null) {
+          properties_ = builderForValue.build();
+          onChanged();
+        } else {
+          propertiesBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
         return this;
       }
       public Builder mergeProperties(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap value) {
-        if (result.hasProperties() &&
-            result.properties_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance()) {
-          result.properties_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.newBuilder(result.properties_).mergeFrom(value).buildPartial();
+        if (propertiesBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              properties_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance()) {
+            properties_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.newBuilder(properties_).mergeFrom(value).buildPartial();
+          } else {
+            properties_ = value;
+          }
+          onChanged();
         } else {
-          result.properties_ = value;
+          propertiesBuilder_.mergeFrom(value);
         }
-        result.hasProperties = true;
+        bitField0_ |= 0x00000004;
         return this;
       }
       public Builder clearProperties() {
-        result.hasProperties = false;
-        result.properties_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+        if (propertiesBuilder_ == null) {
+          properties_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
+          onChanged();
+        } else {
+          propertiesBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder getPropertiesBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getPropertiesFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getPropertiesOrBuilder() {
+        if (propertiesBuilder_ != null) {
+          return propertiesBuilder_.getMessageOrBuilder();
+        } else {
+          return properties_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> 
+          getPropertiesFieldBuilder() {
+        if (propertiesBuilder_ == null) {
+          propertiesBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder>(
+                  properties_,
+                  getParentForChildren(),
+                  isClean());
+          properties_ = null;
+        }
+        return propertiesBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.LoggerContext)
@@ -2477,18 +4061,37 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new LoggerContext(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.LoggerContext)
   }
   
+  public interface ThreadInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional int64 id = 1;
+    boolean hasId();
+    long getId();
+    
+    // optional string name = 2;
+    boolean hasName();
+    String getName();
+    
+    // optional int64 group_id = 3;
+    boolean hasGroupId();
+    long getGroupId();
+    
+    // optional string group_name = 4;
+    boolean hasGroupName();
+    String getGroupName();
+  }
   public static final class ThreadInfo extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements ThreadInfoOrBuilder {
     // Use ThreadInfo.newBuilder() to construct.
-    private ThreadInfo() {
-      initFields();
+    private ThreadInfo(Builder builder) {
+      super(builder);
     }
     private ThreadInfo(boolean noInit) {}
     
@@ -2511,54 +4114,120 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional int64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
-    private boolean hasId;
-    private long id_ = 0L;
-    public boolean hasId() { return hasId; }
-    public long getId() { return id_; }
+    private long id_;
+    public boolean hasId() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public long getId() {
+      return id_;
+    }
     
     // optional string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
-    private boolean hasName;
-    private java.lang.String name_ = "";
-    public boolean hasName() { return hasName; }
-    public java.lang.String getName() { return name_; }
+    private java.lang.Object name_;
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional int64 group_id = 3;
     public static final int GROUP_ID_FIELD_NUMBER = 3;
-    private boolean hasGroupId;
-    private long groupId_ = 0L;
-    public boolean hasGroupId() { return hasGroupId; }
-    public long getGroupId() { return groupId_; }
+    private long groupId_;
+    public boolean hasGroupId() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public long getGroupId() {
+      return groupId_;
+    }
     
     // optional string group_name = 4;
     public static final int GROUP_NAME_FIELD_NUMBER = 4;
-    private boolean hasGroupName;
-    private java.lang.String groupName_ = "";
-    public boolean hasGroupName() { return hasGroupName; }
-    public java.lang.String getGroupName() { return groupName_; }
+    private java.lang.Object groupName_;
+    public boolean hasGroupName() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public String getGroupName() {
+      java.lang.Object ref = groupName_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          groupName_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getGroupNameBytes() {
+      java.lang.Object ref = groupName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        groupName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     private void initFields() {
+      id_ = 0L;
+      name_ = "";
+      groupId_ = 0L;
+      groupName_ = "";
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasId()) {
-        output.writeInt64(1, getId());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt64(1, id_);
       }
-      if (hasName()) {
-        output.writeString(2, getName());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getNameBytes());
       }
-      if (hasGroupId()) {
-        output.writeInt64(3, getGroupId());
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt64(3, groupId_);
       }
-      if (hasGroupName()) {
-        output.writeString(4, getGroupName());
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getGroupNameBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -2569,25 +4238,32 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasId()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, getId());
+          .computeInt64Size(1, id_);
       }
-      if (hasName()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getName());
+          .computeBytesSize(2, getNameBytes());
       }
-      if (hasGroupId()) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, getGroupId());
+          .computeInt64Size(3, groupId_);
       }
-      if (hasGroupName()) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(4, getGroupName());
+          .computeBytesSize(4, getGroupNameBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo parseFrom(
@@ -2664,34 +4340,57 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo();
+        super.clear();
+        id_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        groupId_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        groupName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -2703,33 +4402,47 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo returnMe = result;
-        result = null;
-        return returnMe;
+        result.id_ = id_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.name_ = name_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.groupId_ = groupId_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.groupName_ = groupName_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2759,6 +4472,10 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2771,112 +4488,155 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 8: {
-              setId(input.readInt64());
+              bitField0_ |= 0x00000001;
+              id_ = input.readInt64();
               break;
             }
             case 18: {
-              setName(input.readString());
+              bitField0_ |= 0x00000002;
+              name_ = input.readBytes();
               break;
             }
             case 24: {
-              setGroupId(input.readInt64());
+              bitField0_ |= 0x00000004;
+              groupId_ = input.readInt64();
               break;
             }
             case 34: {
-              setGroupName(input.readString());
+              bitField0_ |= 0x00000008;
+              groupName_ = input.readBytes();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional int64 id = 1;
+      private long id_ ;
       public boolean hasId() {
-        return result.hasId();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public long getId() {
-        return result.getId();
+        return id_;
       }
       public Builder setId(long value) {
-        result.hasId = true;
-        result.id_ = value;
+        bitField0_ |= 0x00000001;
+        id_ = value;
+        onChanged();
         return this;
       }
       public Builder clearId() {
-        result.hasId = false;
-        result.id_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        id_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional string name = 2;
+      private java.lang.Object name_ = "";
       public boolean hasName() {
-        return result.hasName();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getName() {
-        return result.getName();
+      public String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setName(java.lang.String value) {
+      public Builder setName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasName = true;
-        result.name_ = value;
+  bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
         return this;
       }
       public Builder clearName() {
-        result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        name_ = getDefaultInstance().getName();
+        onChanged();
         return this;
+      }
+      void setName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        name_ = value;
+        onChanged();
       }
       
       // optional int64 group_id = 3;
+      private long groupId_ ;
       public boolean hasGroupId() {
-        return result.hasGroupId();
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       public long getGroupId() {
-        return result.getGroupId();
+        return groupId_;
       }
       public Builder setGroupId(long value) {
-        result.hasGroupId = true;
-        result.groupId_ = value;
+        bitField0_ |= 0x00000004;
+        groupId_ = value;
+        onChanged();
         return this;
       }
       public Builder clearGroupId() {
-        result.hasGroupId = false;
-        result.groupId_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        groupId_ = 0L;
+        onChanged();
         return this;
       }
       
       // optional string group_name = 4;
+      private java.lang.Object groupName_ = "";
       public boolean hasGroupName() {
-        return result.hasGroupName();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public java.lang.String getGroupName() {
-        return result.getGroupName();
+      public String getGroupName() {
+        java.lang.Object ref = groupName_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          groupName_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setGroupName(java.lang.String value) {
+      public Builder setGroupName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasGroupName = true;
-        result.groupName_ = value;
+  bitField0_ |= 0x00000008;
+        groupName_ = value;
+        onChanged();
         return this;
       }
       public Builder clearGroupName() {
-        result.hasGroupName = false;
-        result.groupName_ = getDefaultInstance().getGroupName();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        groupName_ = getDefaultInstance().getGroupName();
+        onChanged();
         return this;
+      }
+      void setGroupName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000008;
+        groupName_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.ThreadInfo)
@@ -2884,18 +4644,35 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new ThreadInfo(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.ThreadInfo)
   }
   
+  public interface MessageOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string message_pattern = 1;
+    boolean hasMessagePattern();
+    String getMessagePattern();
+    
+    // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
+    java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> 
+        getArgumentList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index);
+    int getArgumentCount();
+    java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder> 
+        getArgumentOrBuilderList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder getArgumentOrBuilder(
+        int index);
+  }
   public static final class Message extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements MessageOrBuilder {
     // Use Message.newBuilder() to construct.
-    private Message() {
-      initFields();
+    private Message(Builder builder) {
+      super(builder);
     }
     private Message(boolean noInit) {}
     
@@ -2918,39 +4695,81 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string message_pattern = 1;
     public static final int MESSAGE_PATTERN_FIELD_NUMBER = 1;
-    private boolean hasMessagePattern;
-    private java.lang.String messagePattern_ = "";
-    public boolean hasMessagePattern() { return hasMessagePattern; }
-    public java.lang.String getMessagePattern() { return messagePattern_; }
+    private java.lang.Object messagePattern_;
+    public boolean hasMessagePattern() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getMessagePattern() {
+      java.lang.Object ref = messagePattern_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          messagePattern_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getMessagePatternBytes() {
+      java.lang.Object ref = messagePattern_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        messagePattern_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
     public static final int ARGUMENT_FIELD_NUMBER = 2;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> argument_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> argument_;
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> getArgumentList() {
       return argument_;
     }
-    public int getArgumentCount() { return argument_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder> 
+        getArgumentOrBuilderList() {
+      return argument_;
+    }
+    public int getArgumentCount() {
+      return argument_.size();
+    }
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index) {
+      return argument_.get(index);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder getArgumentOrBuilder(
+        int index) {
       return argument_.get(index);
     }
     
     private void initFields() {
+      messagePattern_ = "";
+      argument_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasMessagePattern()) {
-        output.writeString(1, getMessagePattern());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getMessagePatternBytes());
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument element : getArgumentList()) {
-        output.writeMessage(2, element);
+      for (int i = 0; i < argument_.size(); i++) {
+        output.writeMessage(2, argument_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -2961,17 +4780,24 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasMessagePattern()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getMessagePattern());
+          .computeBytesSize(1, getMessagePatternBytes());
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument element : getArgumentList()) {
+      for (int i = 0; i < argument_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, element);
+          .computeMessageSize(2, argument_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message parseFrom(
@@ -3048,34 +4874,58 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getArgumentFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        messagePattern_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (argumentBuilder_ == null) {
+          argument_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          argumentBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message();
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -3087,37 +4937,44 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        if (result.argument_ != java.util.Collections.EMPTY_LIST) {
-          result.argument_ =
-            java.util.Collections.unmodifiableList(result.argument_);
+        result.messagePattern_ = messagePattern_;
+        if (argumentBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            argument_ = java.util.Collections.unmodifiableList(argument_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.argument_ = argument_;
+        } else {
+          result.argument_ = argumentBuilder_.build();
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message returnMe = result;
-        result = null;
-        return returnMe;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3134,14 +4991,38 @@ public final class LoggingProto {
         if (other.hasMessagePattern()) {
           setMessagePattern(other.getMessagePattern());
         }
-        if (!other.argument_.isEmpty()) {
-          if (result.argument_.isEmpty()) {
-            result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
+        if (argumentBuilder_ == null) {
+          if (!other.argument_.isEmpty()) {
+            if (argument_.isEmpty()) {
+              argument_ = other.argument_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureArgumentIsMutable();
+              argument_.addAll(other.argument_);
+            }
+            onChanged();
           }
-          result.argument_.addAll(other.argument_);
+        } else {
+          if (!other.argument_.isEmpty()) {
+            if (argumentBuilder_.isEmpty()) {
+              argumentBuilder_.dispose();
+              argumentBuilder_ = null;
+              argument_ = other.argument_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              argumentBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getArgumentFieldBuilder() : null;
+            } else {
+              argumentBuilder_.addAllMessages(other.argument_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        return true;
       }
       
       public Builder mergeFrom(
@@ -3156,17 +5037,20 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setMessagePattern(input.readString());
+              bitField0_ |= 0x00000001;
+              messagePattern_ = input.readBytes();
               break;
             }
             case 18: {
@@ -3179,77 +5063,228 @@ public final class LoggingProto {
         }
       }
       
+      private int bitField0_;
       
       // optional string message_pattern = 1;
+      private java.lang.Object messagePattern_ = "";
       public boolean hasMessagePattern() {
-        return result.hasMessagePattern();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getMessagePattern() {
-        return result.getMessagePattern();
+      public String getMessagePattern() {
+        java.lang.Object ref = messagePattern_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          messagePattern_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setMessagePattern(java.lang.String value) {
+      public Builder setMessagePattern(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasMessagePattern = true;
-        result.messagePattern_ = value;
+  bitField0_ |= 0x00000001;
+        messagePattern_ = value;
+        onChanged();
         return this;
       }
       public Builder clearMessagePattern() {
-        result.hasMessagePattern = false;
-        result.messagePattern_ = getDefaultInstance().getMessagePattern();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        messagePattern_ = getDefaultInstance().getMessagePattern();
+        onChanged();
         return this;
+      }
+      void setMessagePattern(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        messagePattern_ = value;
+        onChanged();
       }
       
       // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
+      private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> argument_ =
+        java.util.Collections.emptyList();
+      private void ensureArgumentIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>(argument_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder> argumentBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> getArgumentList() {
-        return java.util.Collections.unmodifiableList(result.argument_);
+        if (argumentBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(argument_);
+        } else {
+          return argumentBuilder_.getMessageList();
+        }
       }
       public int getArgumentCount() {
-        return result.getArgumentCount();
+        if (argumentBuilder_ == null) {
+          return argument_.size();
+        } else {
+          return argumentBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index) {
-        return result.getArgument(index);
-      }
-      public Builder setArgument(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (argumentBuilder_ == null) {
+          return argument_.get(index);
+        } else {
+          return argumentBuilder_.getMessage(index);
         }
-        result.argument_.set(index, value);
+      }
+      public Builder setArgument(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value) {
+        if (argumentBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureArgumentIsMutable();
+          argument_.set(index, value);
+          onChanged();
+        } else {
+          argumentBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setArgument(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue) {
-        result.argument_.set(index, builderForValue.build());
+      public Builder setArgument(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue) {
+        if (argumentBuilder_ == null) {
+          ensureArgumentIsMutable();
+          argument_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          argumentBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addArgument(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (argumentBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureArgumentIsMutable();
+          argument_.add(value);
+          onChanged();
+        } else {
+          argumentBuilder_.addMessage(value);
         }
-        if (result.argument_.isEmpty()) {
-          result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
-        }
-        result.argument_.add(value);
         return this;
       }
-      public Builder addArgument(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue) {
-        if (result.argument_.isEmpty()) {
-          result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
+      public Builder addArgument(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument value) {
+        if (argumentBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureArgumentIsMutable();
+          argument_.add(index, value);
+          onChanged();
+        } else {
+          argumentBuilder_.addMessage(index, value);
         }
-        result.argument_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addArgument(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue) {
+        if (argumentBuilder_ == null) {
+          ensureArgumentIsMutable();
+          argument_.add(builderForValue.build());
+          onChanged();
+        } else {
+          argumentBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addArgument(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder builderForValue) {
+        if (argumentBuilder_ == null) {
+          ensureArgumentIsMutable();
+          argument_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          argumentBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllArgument(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> values) {
-        if (result.argument_.isEmpty()) {
-          result.argument_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument>();
+        if (argumentBuilder_ == null) {
+          ensureArgumentIsMutable();
+          super.addAll(values, argument_);
+          onChanged();
+        } else {
+          argumentBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.argument_);
         return this;
       }
       public Builder clearArgument() {
-        result.argument_ = java.util.Collections.emptyList();
+        if (argumentBuilder_ == null) {
+          argument_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          argumentBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeArgument(int index) {
+        if (argumentBuilder_ == null) {
+          ensureArgumentIsMutable();
+          argument_.remove(index);
+          onChanged();
+        } else {
+          argumentBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder getArgumentBuilder(
+          int index) {
+        return getArgumentFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder getArgumentOrBuilder(
+          int index) {
+        if (argumentBuilder_ == null) {
+          return argument_.get(index);  } else {
+          return argumentBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder> 
+           getArgumentOrBuilderList() {
+        if (argumentBuilder_ != null) {
+          return argumentBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(argument_);
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder addArgumentBuilder() {
+        return getArgumentFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder addArgumentBuilder(
+          int index) {
+        return getArgumentFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder> 
+           getArgumentBuilderList() {
+        return getArgumentFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder> 
+          getArgumentFieldBuilder() {
+        if (argumentBuilder_ == null) {
+          argumentBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder>(
+                  argument_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          argument_ = null;
+        }
+        return argumentBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.Message)
@@ -3257,18 +5292,25 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new Message(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.Message)
   }
   
+  public interface MessageArgumentOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string value = 1;
+    boolean hasValue();
+    String getValue();
+  }
   public static final class MessageArgument extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements MessageArgumentOrBuilder {
     // Use MessageArgument.newBuilder() to construct.
-    private MessageArgument() {
-      initFields();
+    private MessageArgument(Builder builder) {
+      super(builder);
     }
     private MessageArgument(boolean noInit) {}
     
@@ -3291,24 +5333,56 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string value = 1;
     public static final int VALUE_FIELD_NUMBER = 1;
-    private boolean hasValue;
-    private java.lang.String value_ = "";
-    public boolean hasValue() { return hasValue; }
-    public java.lang.String getValue() { return value_; }
+    private java.lang.Object value_;
+    public boolean hasValue() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getValue() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          value_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getValueBytes() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        value_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     private void initFields() {
+      value_ = "";
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasValue()) {
-        output.writeString(1, getValue());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getValueBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3319,13 +5393,20 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasValue()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getValue());
+          .computeBytesSize(1, getValueBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument parseFrom(
@@ -3402,34 +5483,51 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument();
+        super.clear();
+        value_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -3441,33 +5539,35 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument returnMe = result;
-        result = null;
-        return returnMe;
+        result.value_ = value_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3488,6 +5588,10 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3500,43 +5604,62 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setValue(input.readString());
+              bitField0_ |= 0x00000001;
+              value_ = input.readBytes();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional string value = 1;
+      private java.lang.Object value_ = "";
       public boolean hasValue() {
-        return result.hasValue();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getValue() {
-        return result.getValue();
+      public String getValue() {
+        java.lang.Object ref = value_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          value_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setValue(java.lang.String value) {
+      public Builder setValue(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasValue = true;
-        result.value_ = value;
+  bitField0_ |= 0x00000001;
+        value_ = value;
+        onChanged();
         return this;
       }
       public Builder clearValue() {
-        result.hasValue = false;
-        result.value_ = getDefaultInstance().getValue();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        value_ = getDefaultInstance().getValue();
+        onChanged();
         return this;
+      }
+      void setValue(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        value_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.MessageArgument)
@@ -3544,18 +5667,49 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new MessageArgument(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.MessageArgument)
   }
   
+  public interface StackTraceElementOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string method_name = 1;
+    boolean hasMethodName();
+    String getMethodName();
+    
+    // optional string class_name = 2;
+    boolean hasClassName();
+    String getClassName();
+    
+    // optional string file_name = 3;
+    boolean hasFileName();
+    String getFileName();
+    
+    // optional int32 line_number = 4;
+    boolean hasLineNumber();
+    int getLineNumber();
+    
+    // optional string code_location = 5;
+    boolean hasCodeLocation();
+    String getCodeLocation();
+    
+    // optional string version = 6;
+    boolean hasVersion();
+    String getVersion();
+    
+    // optional bool exact = 7;
+    boolean hasExact();
+    boolean getExact();
+  }
   public static final class StackTraceElement extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StackTraceElementOrBuilder {
     // Use StackTraceElement.newBuilder() to construct.
-    private StackTraceElement() {
-      initFields();
+    private StackTraceElement(Builder builder) {
+      super(builder);
     }
     private StackTraceElement(boolean noInit) {}
     
@@ -3578,84 +5732,228 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string method_name = 1;
     public static final int METHOD_NAME_FIELD_NUMBER = 1;
-    private boolean hasMethodName;
-    private java.lang.String methodName_ = "";
-    public boolean hasMethodName() { return hasMethodName; }
-    public java.lang.String getMethodName() { return methodName_; }
+    private java.lang.Object methodName_;
+    public boolean hasMethodName() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getMethodName() {
+      java.lang.Object ref = methodName_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          methodName_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getMethodNameBytes() {
+      java.lang.Object ref = methodName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        methodName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string class_name = 2;
     public static final int CLASS_NAME_FIELD_NUMBER = 2;
-    private boolean hasClassName;
-    private java.lang.String className_ = "";
-    public boolean hasClassName() { return hasClassName; }
-    public java.lang.String getClassName() { return className_; }
+    private java.lang.Object className_;
+    public boolean hasClassName() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getClassName() {
+      java.lang.Object ref = className_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          className_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getClassNameBytes() {
+      java.lang.Object ref = className_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        className_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string file_name = 3;
     public static final int FILE_NAME_FIELD_NUMBER = 3;
-    private boolean hasFileName;
-    private java.lang.String fileName_ = "";
-    public boolean hasFileName() { return hasFileName; }
-    public java.lang.String getFileName() { return fileName_; }
+    private java.lang.Object fileName_;
+    public boolean hasFileName() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public String getFileName() {
+      java.lang.Object ref = fileName_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          fileName_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getFileNameBytes() {
+      java.lang.Object ref = fileName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        fileName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional int32 line_number = 4;
     public static final int LINE_NUMBER_FIELD_NUMBER = 4;
-    private boolean hasLineNumber;
-    private int lineNumber_ = 0;
-    public boolean hasLineNumber() { return hasLineNumber; }
-    public int getLineNumber() { return lineNumber_; }
+    private int lineNumber_;
+    public boolean hasLineNumber() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public int getLineNumber() {
+      return lineNumber_;
+    }
     
     // optional string code_location = 5;
     public static final int CODE_LOCATION_FIELD_NUMBER = 5;
-    private boolean hasCodeLocation;
-    private java.lang.String codeLocation_ = "";
-    public boolean hasCodeLocation() { return hasCodeLocation; }
-    public java.lang.String getCodeLocation() { return codeLocation_; }
+    private java.lang.Object codeLocation_;
+    public boolean hasCodeLocation() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    public String getCodeLocation() {
+      java.lang.Object ref = codeLocation_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          codeLocation_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getCodeLocationBytes() {
+      java.lang.Object ref = codeLocation_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        codeLocation_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string version = 6;
     public static final int VERSION_FIELD_NUMBER = 6;
-    private boolean hasVersion;
-    private java.lang.String version_ = "";
-    public boolean hasVersion() { return hasVersion; }
-    public java.lang.String getVersion() { return version_; }
+    private java.lang.Object version_;
+    public boolean hasVersion() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    public String getVersion() {
+      java.lang.Object ref = version_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          version_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getVersionBytes() {
+      java.lang.Object ref = version_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        version_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional bool exact = 7;
     public static final int EXACT_FIELD_NUMBER = 7;
-    private boolean hasExact;
-    private boolean exact_ = false;
-    public boolean hasExact() { return hasExact; }
-    public boolean getExact() { return exact_; }
+    private boolean exact_;
+    public boolean hasExact() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    public boolean getExact() {
+      return exact_;
+    }
     
     private void initFields() {
+      methodName_ = "";
+      className_ = "";
+      fileName_ = "";
+      lineNumber_ = 0;
+      codeLocation_ = "";
+      version_ = "";
+      exact_ = false;
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasMethodName()) {
-        output.writeString(1, getMethodName());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getMethodNameBytes());
       }
-      if (hasClassName()) {
-        output.writeString(2, getClassName());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getClassNameBytes());
       }
-      if (hasFileName()) {
-        output.writeString(3, getFileName());
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getFileNameBytes());
       }
-      if (hasLineNumber()) {
-        output.writeInt32(4, getLineNumber());
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, lineNumber_);
       }
-      if (hasCodeLocation()) {
-        output.writeString(5, getCodeLocation());
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getCodeLocationBytes());
       }
-      if (hasVersion()) {
-        output.writeString(6, getVersion());
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeBytes(6, getVersionBytes());
       }
-      if (hasExact()) {
-        output.writeBool(7, getExact());
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeBool(7, exact_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -3666,37 +5964,44 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasMethodName()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getMethodName());
+          .computeBytesSize(1, getMethodNameBytes());
       }
-      if (hasClassName()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getClassName());
+          .computeBytesSize(2, getClassNameBytes());
       }
-      if (hasFileName()) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getFileName());
+          .computeBytesSize(3, getFileNameBytes());
       }
-      if (hasLineNumber()) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, getLineNumber());
+          .computeInt32Size(4, lineNumber_);
       }
-      if (hasCodeLocation()) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(5, getCodeLocation());
+          .computeBytesSize(5, getCodeLocationBytes());
       }
-      if (hasVersion()) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(6, getVersion());
+          .computeBytesSize(6, getVersionBytes());
       }
-      if (hasExact()) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(7, getExact());
+          .computeBoolSize(7, exact_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement parseFrom(
@@ -3773,34 +6078,63 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement();
+        super.clear();
+        methodName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        className_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        fileName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        lineNumber_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        codeLocation_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        version_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
+        exact_ = false;
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -3812,33 +6146,59 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement returnMe = result;
-        result = null;
-        return returnMe;
+        result.methodName_ = methodName_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.className_ = className_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.fileName_ = fileName_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.lineNumber_ = lineNumber_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.codeLocation_ = codeLocation_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.version_ = version_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.exact_ = exact_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3877,6 +6237,10 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3889,186 +6253,277 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setMethodName(input.readString());
+              bitField0_ |= 0x00000001;
+              methodName_ = input.readBytes();
               break;
             }
             case 18: {
-              setClassName(input.readString());
+              bitField0_ |= 0x00000002;
+              className_ = input.readBytes();
               break;
             }
             case 26: {
-              setFileName(input.readString());
+              bitField0_ |= 0x00000004;
+              fileName_ = input.readBytes();
               break;
             }
             case 32: {
-              setLineNumber(input.readInt32());
+              bitField0_ |= 0x00000008;
+              lineNumber_ = input.readInt32();
               break;
             }
             case 42: {
-              setCodeLocation(input.readString());
+              bitField0_ |= 0x00000010;
+              codeLocation_ = input.readBytes();
               break;
             }
             case 50: {
-              setVersion(input.readString());
+              bitField0_ |= 0x00000020;
+              version_ = input.readBytes();
               break;
             }
             case 56: {
-              setExact(input.readBool());
+              bitField0_ |= 0x00000040;
+              exact_ = input.readBool();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional string method_name = 1;
+      private java.lang.Object methodName_ = "";
       public boolean hasMethodName() {
-        return result.hasMethodName();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getMethodName() {
-        return result.getMethodName();
+      public String getMethodName() {
+        java.lang.Object ref = methodName_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          methodName_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setMethodName(java.lang.String value) {
+      public Builder setMethodName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasMethodName = true;
-        result.methodName_ = value;
+  bitField0_ |= 0x00000001;
+        methodName_ = value;
+        onChanged();
         return this;
       }
       public Builder clearMethodName() {
-        result.hasMethodName = false;
-        result.methodName_ = getDefaultInstance().getMethodName();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        methodName_ = getDefaultInstance().getMethodName();
+        onChanged();
         return this;
+      }
+      void setMethodName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        methodName_ = value;
+        onChanged();
       }
       
       // optional string class_name = 2;
+      private java.lang.Object className_ = "";
       public boolean hasClassName() {
-        return result.hasClassName();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getClassName() {
-        return result.getClassName();
+      public String getClassName() {
+        java.lang.Object ref = className_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          className_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setClassName(java.lang.String value) {
+      public Builder setClassName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasClassName = true;
-        result.className_ = value;
+  bitField0_ |= 0x00000002;
+        className_ = value;
+        onChanged();
         return this;
       }
       public Builder clearClassName() {
-        result.hasClassName = false;
-        result.className_ = getDefaultInstance().getClassName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        className_ = getDefaultInstance().getClassName();
+        onChanged();
         return this;
+      }
+      void setClassName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        className_ = value;
+        onChanged();
       }
       
       // optional string file_name = 3;
+      private java.lang.Object fileName_ = "";
       public boolean hasFileName() {
-        return result.hasFileName();
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public java.lang.String getFileName() {
-        return result.getFileName();
+      public String getFileName() {
+        java.lang.Object ref = fileName_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          fileName_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setFileName(java.lang.String value) {
+      public Builder setFileName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasFileName = true;
-        result.fileName_ = value;
+  bitField0_ |= 0x00000004;
+        fileName_ = value;
+        onChanged();
         return this;
       }
       public Builder clearFileName() {
-        result.hasFileName = false;
-        result.fileName_ = getDefaultInstance().getFileName();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        fileName_ = getDefaultInstance().getFileName();
+        onChanged();
         return this;
+      }
+      void setFileName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000004;
+        fileName_ = value;
+        onChanged();
       }
       
       // optional int32 line_number = 4;
+      private int lineNumber_ ;
       public boolean hasLineNumber() {
-        return result.hasLineNumber();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       public int getLineNumber() {
-        return result.getLineNumber();
+        return lineNumber_;
       }
       public Builder setLineNumber(int value) {
-        result.hasLineNumber = true;
-        result.lineNumber_ = value;
+        bitField0_ |= 0x00000008;
+        lineNumber_ = value;
+        onChanged();
         return this;
       }
       public Builder clearLineNumber() {
-        result.hasLineNumber = false;
-        result.lineNumber_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        lineNumber_ = 0;
+        onChanged();
         return this;
       }
       
       // optional string code_location = 5;
+      private java.lang.Object codeLocation_ = "";
       public boolean hasCodeLocation() {
-        return result.hasCodeLocation();
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
-      public java.lang.String getCodeLocation() {
-        return result.getCodeLocation();
+      public String getCodeLocation() {
+        java.lang.Object ref = codeLocation_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          codeLocation_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setCodeLocation(java.lang.String value) {
+      public Builder setCodeLocation(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasCodeLocation = true;
-        result.codeLocation_ = value;
+  bitField0_ |= 0x00000010;
+        codeLocation_ = value;
+        onChanged();
         return this;
       }
       public Builder clearCodeLocation() {
-        result.hasCodeLocation = false;
-        result.codeLocation_ = getDefaultInstance().getCodeLocation();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        codeLocation_ = getDefaultInstance().getCodeLocation();
+        onChanged();
         return this;
+      }
+      void setCodeLocation(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000010;
+        codeLocation_ = value;
+        onChanged();
       }
       
       // optional string version = 6;
+      private java.lang.Object version_ = "";
       public boolean hasVersion() {
-        return result.hasVersion();
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
-      public java.lang.String getVersion() {
-        return result.getVersion();
+      public String getVersion() {
+        java.lang.Object ref = version_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          version_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setVersion(java.lang.String value) {
+      public Builder setVersion(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasVersion = true;
-        result.version_ = value;
+  bitField0_ |= 0x00000020;
+        version_ = value;
+        onChanged();
         return this;
       }
       public Builder clearVersion() {
-        result.hasVersion = false;
-        result.version_ = getDefaultInstance().getVersion();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        version_ = getDefaultInstance().getVersion();
+        onChanged();
         return this;
+      }
+      void setVersion(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000020;
+        version_ = value;
+        onChanged();
       }
       
       // optional bool exact = 7;
+      private boolean exact_ ;
       public boolean hasExact() {
-        return result.hasExact();
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       public boolean getExact() {
-        return result.getExact();
+        return exact_;
       }
       public Builder setExact(boolean value) {
-        result.hasExact = true;
-        result.exact_ = value;
+        bitField0_ |= 0x00000040;
+        exact_ = value;
+        onChanged();
         return this;
       }
       public Builder clearExact() {
-        result.hasExact = false;
-        result.exact_ = false;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        exact_ = false;
+        onChanged();
         return this;
       }
       
@@ -4077,18 +6532,58 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new StackTraceElement(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.StackTraceElement)
   }
   
+  public interface ThrowableOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // optional string throwable_class = 1;
+    boolean hasThrowableClass();
+    String getThrowableClass();
+    
+    // optional string message = 2;
+    boolean hasMessage();
+    String getMessage();
+    
+    // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
+    java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> 
+        getStackTraceElementList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index);
+    int getStackTraceElementCount();
+    java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+        getStackTraceElementOrBuilderList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getStackTraceElementOrBuilder(
+        int index);
+    
+    // optional int32 omitted_elements = 4;
+    boolean hasOmittedElements();
+    int getOmittedElements();
+    
+    // optional .de.huxhorn.lilith.logging.Throwable cause = 5;
+    boolean hasCause();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getCauseOrBuilder();
+    
+    // repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;
+    java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> 
+        getSuppressedList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getSuppressed(int index);
+    int getSuppressedCount();
+    java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> 
+        getSuppressedOrBuilderList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getSuppressedOrBuilder(
+        int index);
+  }
   public static final class Throwable extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements ThrowableOrBuilder {
     // Use Throwable.newBuilder() to construct.
-    private Throwable() {
-      initFields();
+    private Throwable(Builder builder) {
+      super(builder);
     }
     private Throwable(boolean noInit) {}
     
@@ -4111,70 +6606,173 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // optional string throwable_class = 1;
     public static final int THROWABLE_CLASS_FIELD_NUMBER = 1;
-    private boolean hasThrowableClass;
-    private java.lang.String throwableClass_ = "";
-    public boolean hasThrowableClass() { return hasThrowableClass; }
-    public java.lang.String getThrowableClass() { return throwableClass_; }
+    private java.lang.Object throwableClass_;
+    public boolean hasThrowableClass() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getThrowableClass() {
+      java.lang.Object ref = throwableClass_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          throwableClass_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getThrowableClassBytes() {
+      java.lang.Object ref = throwableClass_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        throwableClass_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string message = 2;
     public static final int MESSAGE_FIELD_NUMBER = 2;
-    private boolean hasMessage;
-    private java.lang.String message_ = "";
-    public boolean hasMessage() { return hasMessage; }
-    public java.lang.String getMessage() { return message_; }
+    private java.lang.Object message_;
+    public boolean hasMessage() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getMessage() {
+      java.lang.Object ref = message_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          message_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
     public static final int STACK_TRACE_ELEMENT_FIELD_NUMBER = 3;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> stackTraceElement_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> stackTraceElement_;
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getStackTraceElementList() {
       return stackTraceElement_;
     }
-    public int getStackTraceElementCount() { return stackTraceElement_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+        getStackTraceElementOrBuilderList() {
+      return stackTraceElement_;
+    }
+    public int getStackTraceElementCount() {
+      return stackTraceElement_.size();
+    }
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index) {
+      return stackTraceElement_.get(index);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getStackTraceElementOrBuilder(
+        int index) {
       return stackTraceElement_.get(index);
     }
     
     // optional int32 omitted_elements = 4;
     public static final int OMITTED_ELEMENTS_FIELD_NUMBER = 4;
-    private boolean hasOmittedElements;
-    private int omittedElements_ = 0;
-    public boolean hasOmittedElements() { return hasOmittedElements; }
-    public int getOmittedElements() { return omittedElements_; }
+    private int omittedElements_;
+    public boolean hasOmittedElements() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public int getOmittedElements() {
+      return omittedElements_;
+    }
     
     // optional .de.huxhorn.lilith.logging.Throwable cause = 5;
     public static final int CAUSE_FIELD_NUMBER = 5;
-    private boolean hasCause;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable cause_;
-    public boolean hasCause() { return hasCause; }
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() { return cause_; }
+    public boolean hasCause() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() {
+      return cause_;
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getCauseOrBuilder() {
+      return cause_;
+    }
+    
+    // repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;
+    public static final int SUPPRESSED_FIELD_NUMBER = 6;
+    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> suppressed_;
+    public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> getSuppressedList() {
+      return suppressed_;
+    }
+    public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> 
+        getSuppressedOrBuilderList() {
+      return suppressed_;
+    }
+    public int getSuppressedCount() {
+      return suppressed_.size();
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getSuppressed(int index) {
+      return suppressed_.get(index);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getSuppressedOrBuilder(
+        int index) {
+      return suppressed_.get(index);
+    }
     
     private void initFields() {
+      throwableClass_ = "";
+      message_ = "";
+      stackTraceElement_ = java.util.Collections.emptyList();
+      omittedElements_ = 0;
       cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+      suppressed_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasThrowableClass()) {
-        output.writeString(1, getThrowableClass());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getThrowableClassBytes());
       }
-      if (hasMessage()) {
-        output.writeString(2, getMessage());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getMessageBytes());
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getStackTraceElementList()) {
-        output.writeMessage(3, element);
+      for (int i = 0; i < stackTraceElement_.size(); i++) {
+        output.writeMessage(3, stackTraceElement_.get(i));
       }
-      if (hasOmittedElements()) {
-        output.writeInt32(4, getOmittedElements());
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(4, omittedElements_);
       }
-      if (hasCause()) {
-        output.writeMessage(5, getCause());
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeMessage(5, cause_);
+      }
+      for (int i = 0; i < suppressed_.size(); i++) {
+        output.writeMessage(6, suppressed_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -4185,29 +6783,40 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasThrowableClass()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getThrowableClass());
+          .computeBytesSize(1, getThrowableClassBytes());
       }
-      if (hasMessage()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getMessage());
+          .computeBytesSize(2, getMessageBytes());
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement element : getStackTraceElementList()) {
+      for (int i = 0; i < stackTraceElement_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, element);
+          .computeMessageSize(3, stackTraceElement_.get(i));
       }
-      if (hasOmittedElements()) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, getOmittedElements());
+          .computeInt32Size(4, omittedElements_);
       }
-      if (hasCause()) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getCause());
+          .computeMessageSize(5, cause_);
+      }
+      for (int i = 0; i < suppressed_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, suppressed_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable parseFrom(
@@ -4284,34 +6893,76 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getStackTraceElementFieldBuilder();
+          getCauseFieldBuilder();
+          getSuppressedFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        throwableClass_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        message_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        if (stackTraceElementBuilder_ == null) {
+          stackTraceElement_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          stackTraceElementBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable();
+        omittedElements_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        if (causeBuilder_ == null) {
+          cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+        } else {
+          causeBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
+        if (suppressedBuilder_ == null) {
+          suppressed_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+        } else {
+          suppressedBuilder_.clear();
+        }
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -4323,37 +6974,69 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        if (result.stackTraceElement_ != java.util.Collections.EMPTY_LIST) {
-          result.stackTraceElement_ =
-            java.util.Collections.unmodifiableList(result.stackTraceElement_);
+        result.throwableClass_ = throwableClass_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable returnMe = result;
-        result = null;
-        return returnMe;
+        result.message_ = message_;
+        if (stackTraceElementBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            stackTraceElement_ = java.util.Collections.unmodifiableList(stackTraceElement_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.stackTraceElement_ = stackTraceElement_;
+        } else {
+          result.stackTraceElement_ = stackTraceElementBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.omittedElements_ = omittedElements_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        if (causeBuilder_ == null) {
+          result.cause_ = cause_;
+        } else {
+          result.cause_ = causeBuilder_.build();
+        }
+        if (suppressedBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) == 0x00000020)) {
+            suppressed_ = java.util.Collections.unmodifiableList(suppressed_);
+            bitField0_ = (bitField0_ & ~0x00000020);
+          }
+          result.suppressed_ = suppressed_;
+        } else {
+          result.suppressed_ = suppressedBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -4373,11 +7056,31 @@ public final class LoggingProto {
         if (other.hasMessage()) {
           setMessage(other.getMessage());
         }
-        if (!other.stackTraceElement_.isEmpty()) {
-          if (result.stackTraceElement_.isEmpty()) {
-            result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+        if (stackTraceElementBuilder_ == null) {
+          if (!other.stackTraceElement_.isEmpty()) {
+            if (stackTraceElement_.isEmpty()) {
+              stackTraceElement_ = other.stackTraceElement_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureStackTraceElementIsMutable();
+              stackTraceElement_.addAll(other.stackTraceElement_);
+            }
+            onChanged();
           }
-          result.stackTraceElement_.addAll(other.stackTraceElement_);
+        } else {
+          if (!other.stackTraceElement_.isEmpty()) {
+            if (stackTraceElementBuilder_.isEmpty()) {
+              stackTraceElementBuilder_.dispose();
+              stackTraceElementBuilder_ = null;
+              stackTraceElement_ = other.stackTraceElement_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              stackTraceElementBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getStackTraceElementFieldBuilder() : null;
+            } else {
+              stackTraceElementBuilder_.addAllMessages(other.stackTraceElement_);
+            }
+          }
         }
         if (other.hasOmittedElements()) {
           setOmittedElements(other.getOmittedElements());
@@ -4385,8 +7088,38 @@ public final class LoggingProto {
         if (other.hasCause()) {
           mergeCause(other.getCause());
         }
+        if (suppressedBuilder_ == null) {
+          if (!other.suppressed_.isEmpty()) {
+            if (suppressed_.isEmpty()) {
+              suppressed_ = other.suppressed_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+            } else {
+              ensureSuppressedIsMutable();
+              suppressed_.addAll(other.suppressed_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.suppressed_.isEmpty()) {
+            if (suppressedBuilder_.isEmpty()) {
+              suppressedBuilder_.dispose();
+              suppressedBuilder_ = null;
+              suppressed_ = other.suppressed_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+              suppressedBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getSuppressedFieldBuilder() : null;
+            } else {
+              suppressedBuilder_.addAllMessages(other.suppressed_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        return true;
       }
       
       public Builder mergeFrom(
@@ -4401,21 +7134,25 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setThrowableClass(input.readString());
+              bitField0_ |= 0x00000001;
+              throwableClass_ = input.readBytes();
               break;
             }
             case 18: {
-              setMessage(input.readString());
+              bitField0_ |= 0x00000002;
+              message_ = input.readBytes();
               break;
             }
             case 26: {
@@ -4425,7 +7162,8 @@ public final class LoggingProto {
               break;
             }
             case 32: {
-              setOmittedElements(input.readInt32());
+              bitField0_ |= 0x00000008;
+              omittedElements_ = input.readInt32();
               break;
             }
             case 42: {
@@ -4437,157 +7175,571 @@ public final class LoggingProto {
               setCause(subBuilder.buildPartial());
               break;
             }
+            case 50: {
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder subBuilder = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addSuppressed(subBuilder.buildPartial());
+              break;
+            }
           }
         }
       }
       
+      private int bitField0_;
       
       // optional string throwable_class = 1;
+      private java.lang.Object throwableClass_ = "";
       public boolean hasThrowableClass() {
-        return result.hasThrowableClass();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getThrowableClass() {
-        return result.getThrowableClass();
+      public String getThrowableClass() {
+        java.lang.Object ref = throwableClass_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          throwableClass_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setThrowableClass(java.lang.String value) {
+      public Builder setThrowableClass(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasThrowableClass = true;
-        result.throwableClass_ = value;
+  bitField0_ |= 0x00000001;
+        throwableClass_ = value;
+        onChanged();
         return this;
       }
       public Builder clearThrowableClass() {
-        result.hasThrowableClass = false;
-        result.throwableClass_ = getDefaultInstance().getThrowableClass();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        throwableClass_ = getDefaultInstance().getThrowableClass();
+        onChanged();
         return this;
+      }
+      void setThrowableClass(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        throwableClass_ = value;
+        onChanged();
       }
       
       // optional string message = 2;
+      private java.lang.Object message_ = "";
       public boolean hasMessage() {
-        return result.hasMessage();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getMessage() {
-        return result.getMessage();
+      public String getMessage() {
+        java.lang.Object ref = message_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          message_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setMessage(java.lang.String value) {
+      public Builder setMessage(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasMessage = true;
-        result.message_ = value;
+  bitField0_ |= 0x00000002;
+        message_ = value;
+        onChanged();
         return this;
       }
       public Builder clearMessage() {
-        result.hasMessage = false;
-        result.message_ = getDefaultInstance().getMessage();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        message_ = getDefaultInstance().getMessage();
+        onChanged();
         return this;
+      }
+      void setMessage(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        message_ = value;
+        onChanged();
       }
       
       // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
+      private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> stackTraceElement_ =
+        java.util.Collections.emptyList();
+      private void ensureStackTraceElementIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>(stackTraceElement_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> stackTraceElementBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getStackTraceElementList() {
-        return java.util.Collections.unmodifiableList(result.stackTraceElement_);
+        if (stackTraceElementBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(stackTraceElement_);
+        } else {
+          return stackTraceElementBuilder_.getMessageList();
+        }
       }
       public int getStackTraceElementCount() {
-        return result.getStackTraceElementCount();
+        if (stackTraceElementBuilder_ == null) {
+          return stackTraceElement_.size();
+        } else {
+          return stackTraceElementBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index) {
-        return result.getStackTraceElement(index);
-      }
-      public Builder setStackTraceElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (stackTraceElementBuilder_ == null) {
+          return stackTraceElement_.get(index);
+        } else {
+          return stackTraceElementBuilder_.getMessage(index);
         }
-        result.stackTraceElement_.set(index, value);
+      }
+      public Builder setStackTraceElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
+        if (stackTraceElementBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureStackTraceElementIsMutable();
+          stackTraceElement_.set(index, value);
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setStackTraceElement(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        result.stackTraceElement_.set(index, builderForValue.build());
+      public Builder setStackTraceElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
+        if (stackTraceElementBuilder_ == null) {
+          ensureStackTraceElementIsMutable();
+          stackTraceElement_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addStackTraceElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (stackTraceElementBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureStackTraceElementIsMutable();
+          stackTraceElement_.add(value);
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.addMessage(value);
         }
-        if (result.stackTraceElement_.isEmpty()) {
-          result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
-        }
-        result.stackTraceElement_.add(value);
         return this;
       }
-      public Builder addStackTraceElement(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
-        if (result.stackTraceElement_.isEmpty()) {
-          result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+      public Builder addStackTraceElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement value) {
+        if (stackTraceElementBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureStackTraceElementIsMutable();
+          stackTraceElement_.add(index, value);
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.addMessage(index, value);
         }
-        result.stackTraceElement_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addStackTraceElement(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
+        if (stackTraceElementBuilder_ == null) {
+          ensureStackTraceElementIsMutable();
+          stackTraceElement_.add(builderForValue.build());
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addStackTraceElement(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder builderForValue) {
+        if (stackTraceElementBuilder_ == null) {
+          ensureStackTraceElementIsMutable();
+          stackTraceElement_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllStackTraceElement(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values) {
-        if (result.stackTraceElement_.isEmpty()) {
-          result.stackTraceElement_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement>();
+        if (stackTraceElementBuilder_ == null) {
+          ensureStackTraceElementIsMutable();
+          super.addAll(values, stackTraceElement_);
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.stackTraceElement_);
         return this;
       }
       public Builder clearStackTraceElement() {
-        result.stackTraceElement_ = java.util.Collections.emptyList();
+        if (stackTraceElementBuilder_ == null) {
+          stackTraceElement_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeStackTraceElement(int index) {
+        if (stackTraceElementBuilder_ == null) {
+          ensureStackTraceElementIsMutable();
+          stackTraceElement_.remove(index);
+          onChanged();
+        } else {
+          stackTraceElementBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder getStackTraceElementBuilder(
+          int index) {
+        return getStackTraceElementFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getStackTraceElementOrBuilder(
+          int index) {
+        if (stackTraceElementBuilder_ == null) {
+          return stackTraceElement_.get(index);  } else {
+          return stackTraceElementBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+           getStackTraceElementOrBuilderList() {
+        if (stackTraceElementBuilder_ != null) {
+          return stackTraceElementBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(stackTraceElement_);
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder addStackTraceElementBuilder() {
+        return getStackTraceElementFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder addStackTraceElementBuilder(
+          int index) {
+        return getStackTraceElementFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder> 
+           getStackTraceElementBuilderList() {
+        return getStackTraceElementFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
+          getStackTraceElementFieldBuilder() {
+        if (stackTraceElementBuilder_ == null) {
+          stackTraceElementBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder>(
+                  stackTraceElement_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
+          stackTraceElement_ = null;
+        }
+        return stackTraceElementBuilder_;
       }
       
       // optional int32 omitted_elements = 4;
+      private int omittedElements_ ;
       public boolean hasOmittedElements() {
-        return result.hasOmittedElements();
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       public int getOmittedElements() {
-        return result.getOmittedElements();
+        return omittedElements_;
       }
       public Builder setOmittedElements(int value) {
-        result.hasOmittedElements = true;
-        result.omittedElements_ = value;
+        bitField0_ |= 0x00000008;
+        omittedElements_ = value;
+        onChanged();
         return this;
       }
       public Builder clearOmittedElements() {
-        result.hasOmittedElements = false;
-        result.omittedElements_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        omittedElements_ = 0;
+        onChanged();
         return this;
       }
       
       // optional .de.huxhorn.lilith.logging.Throwable cause = 5;
+      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> causeBuilder_;
       public boolean hasCause() {
-        return result.hasCause();
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() {
-        return result.getCause();
+        if (causeBuilder_ == null) {
+          return cause_;
+        } else {
+          return causeBuilder_.getMessage();
+        }
       }
       public Builder setCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (causeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          cause_ = value;
+          onChanged();
+        } else {
+          causeBuilder_.setMessage(value);
         }
-        result.hasCause = true;
-        result.cause_ = value;
+        bitField0_ |= 0x00000010;
         return this;
       }
-      public Builder setCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
-        result.hasCause = true;
-        result.cause_ = builderForValue.build();
+      public Builder setCause(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
+        if (causeBuilder_ == null) {
+          cause_ = builderForValue.build();
+          onChanged();
+        } else {
+          causeBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000010;
         return this;
       }
       public Builder mergeCause(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
-        if (result.hasCause() &&
-            result.cause_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance()) {
-          result.cause_ =
-            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder(result.cause_).mergeFrom(value).buildPartial();
+        if (causeBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+              cause_ != de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance()) {
+            cause_ =
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.newBuilder(cause_).mergeFrom(value).buildPartial();
+          } else {
+            cause_ = value;
+          }
+          onChanged();
         } else {
-          result.cause_ = value;
+          causeBuilder_.mergeFrom(value);
         }
-        result.hasCause = true;
+        bitField0_ |= 0x00000010;
         return this;
       }
       public Builder clearCause() {
-        result.hasCause = false;
-        result.cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+        if (causeBuilder_ == null) {
+          cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
+          onChanged();
+        } else {
+          causeBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder getCauseBuilder() {
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return getCauseFieldBuilder().getBuilder();
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getCauseOrBuilder() {
+        if (causeBuilder_ != null) {
+          return causeBuilder_.getMessageOrBuilder();
+        } else {
+          return cause_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> 
+          getCauseFieldBuilder() {
+        if (causeBuilder_ == null) {
+          causeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder>(
+                  cause_,
+                  getParentForChildren(),
+                  isClean());
+          cause_ = null;
+        }
+        return causeBuilder_;
+      }
+      
+      // repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;
+      private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> suppressed_ =
+        java.util.Collections.emptyList();
+      private void ensureSuppressedIsMutable() {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+          suppressed_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable>(suppressed_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> suppressedBuilder_;
+      
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> getSuppressedList() {
+        if (suppressedBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(suppressed_);
+        } else {
+          return suppressedBuilder_.getMessageList();
+        }
+      }
+      public int getSuppressedCount() {
+        if (suppressedBuilder_ == null) {
+          return suppressed_.size();
+        } else {
+          return suppressedBuilder_.getCount();
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getSuppressed(int index) {
+        if (suppressedBuilder_ == null) {
+          return suppressed_.get(index);
+        } else {
+          return suppressedBuilder_.getMessage(index);
+        }
+      }
+      public Builder setSuppressed(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
+        if (suppressedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSuppressedIsMutable();
+          suppressed_.set(index, value);
+          onChanged();
+        } else {
+          suppressedBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      public Builder setSuppressed(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
+        if (suppressedBuilder_ == null) {
+          ensureSuppressedIsMutable();
+          suppressed_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          suppressedBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addSuppressed(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
+        if (suppressedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSuppressedIsMutable();
+          suppressed_.add(value);
+          onChanged();
+        } else {
+          suppressedBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      public Builder addSuppressed(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable value) {
+        if (suppressedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSuppressedIsMutable();
+          suppressed_.add(index, value);
+          onChanged();
+        } else {
+          suppressedBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      public Builder addSuppressed(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
+        if (suppressedBuilder_ == null) {
+          ensureSuppressedIsMutable();
+          suppressed_.add(builderForValue.build());
+          onChanged();
+        } else {
+          suppressedBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addSuppressed(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder builderForValue) {
+        if (suppressedBuilder_ == null) {
+          ensureSuppressedIsMutable();
+          suppressed_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          suppressedBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAllSuppressed(
+          java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> values) {
+        if (suppressedBuilder_ == null) {
+          ensureSuppressedIsMutable();
+          super.addAll(values, suppressed_);
+          onChanged();
+        } else {
+          suppressedBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      public Builder clearSuppressed() {
+        if (suppressedBuilder_ == null) {
+          suppressed_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+          onChanged();
+        } else {
+          suppressedBuilder_.clear();
+        }
+        return this;
+      }
+      public Builder removeSuppressed(int index) {
+        if (suppressedBuilder_ == null) {
+          ensureSuppressedIsMutable();
+          suppressed_.remove(index);
+          onChanged();
+        } else {
+          suppressedBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder getSuppressedBuilder(
+          int index) {
+        return getSuppressedFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getSuppressedOrBuilder(
+          int index) {
+        if (suppressedBuilder_ == null) {
+          return suppressed_.get(index);  } else {
+          return suppressedBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> 
+           getSuppressedOrBuilderList() {
+        if (suppressedBuilder_ != null) {
+          return suppressedBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(suppressed_);
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder addSuppressedBuilder() {
+        return getSuppressedFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder addSuppressedBuilder(
+          int index) {
+        return getSuppressedFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder> 
+           getSuppressedBuilderList() {
+        return getSuppressedFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> 
+          getSuppressedFieldBuilder() {
+        if (suppressedBuilder_ == null) {
+          suppressedBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder>(
+                  suppressed_,
+                  ((bitField0_ & 0x00000020) == 0x00000020),
+                  getParentForChildren(),
+                  isClean());
+          suppressed_ = null;
+        }
+        return suppressedBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.Throwable)
@@ -4595,18 +7747,31 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new Throwable(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.Throwable)
   }
   
+  public interface NestedDiagnosticContextOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // repeated .de.huxhorn.lilith.logging.Message entry = 1;
+    java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> 
+        getEntryList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index);
+    int getEntryCount();
+    java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> 
+        getEntryOrBuilderList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getEntryOrBuilder(
+        int index);
+  }
   public static final class NestedDiagnosticContext extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements NestedDiagnosticContextOrBuilder {
     // Use NestedDiagnosticContext.newBuilder() to construct.
-    private NestedDiagnosticContext() {
-      initFields();
+    private NestedDiagnosticContext(Builder builder) {
+      super(builder);
     }
     private NestedDiagnosticContext(boolean noInit) {}
     
@@ -4631,27 +7796,42 @@ public final class LoggingProto {
     
     // repeated .de.huxhorn.lilith.logging.Message entry = 1;
     public static final int ENTRY_FIELD_NUMBER = 1;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> entry_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> entry_;
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> getEntryList() {
       return entry_;
     }
-    public int getEntryCount() { return entry_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> 
+        getEntryOrBuilderList() {
+      return entry_;
+    }
+    public int getEntryCount() {
+      return entry_.size();
+    }
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index) {
+      return entry_.get(index);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getEntryOrBuilder(
+        int index) {
       return entry_.get(index);
     }
     
     private void initFields() {
+      entry_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message element : getEntryList()) {
-        output.writeMessage(1, element);
+      for (int i = 0; i < entry_.size(); i++) {
+        output.writeMessage(1, entry_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -4662,13 +7842,20 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message element : getEntryList()) {
+      for (int i = 0; i < entry_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
+          .computeMessageSize(1, entry_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext parseFrom(
@@ -4745,34 +7932,56 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getEntryFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          entryBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext();
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -4784,37 +7993,38 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext(this);
+        int from_bitField0_ = bitField0_;
+        if (entryBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            entry_ = java.util.Collections.unmodifiableList(entry_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.entry_ = entry_;
+        } else {
+          result.entry_ = entryBuilder_.build();
         }
-        if (result.entry_ != java.util.Collections.EMPTY_LIST) {
-          result.entry_ =
-            java.util.Collections.unmodifiableList(result.entry_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext returnMe = result;
-        result = null;
-        return returnMe;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -4828,14 +8038,38 @@ public final class LoggingProto {
       
       public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext other) {
         if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance()) return this;
-        if (!other.entry_.isEmpty()) {
-          if (result.entry_.isEmpty()) {
-            result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
+        if (entryBuilder_ == null) {
+          if (!other.entry_.isEmpty()) {
+            if (entry_.isEmpty()) {
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureEntryIsMutable();
+              entry_.addAll(other.entry_);
+            }
+            onChanged();
           }
-          result.entry_.addAll(other.entry_);
+        } else {
+          if (!other.entry_.isEmpty()) {
+            if (entryBuilder_.isEmpty()) {
+              entryBuilder_.dispose();
+              entryBuilder_ = null;
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              entryBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getEntryFieldBuilder() : null;
+            } else {
+              entryBuilder_.addAllMessages(other.entry_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        return true;
       }
       
       public Builder mergeFrom(
@@ -4850,11 +8084,13 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
@@ -4869,56 +8105,192 @@ public final class LoggingProto {
         }
       }
       
+      private int bitField0_;
       
       // repeated .de.huxhorn.lilith.logging.Message entry = 1;
+      private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> entry_ =
+        java.util.Collections.emptyList();
+      private void ensureEntryIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>(entry_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> entryBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> getEntryList() {
-        return java.util.Collections.unmodifiableList(result.entry_);
+        if (entryBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(entry_);
+        } else {
+          return entryBuilder_.getMessageList();
+        }
       }
       public int getEntryCount() {
-        return result.getEntryCount();
+        if (entryBuilder_ == null) {
+          return entry_.size();
+        } else {
+          return entryBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index) {
-        return result.getEntry(index);
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          return entry_.get(index);
+        } else {
+          return entryBuilder_.getMessage(index);
         }
-        result.entry_.set(index, value);
+      }
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.set(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
-        result.entry_.set(index, builderForValue.build());
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(value);
         }
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
-        }
-        result.entry_.add(value);
         return this;
       }
-      public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, value);
         }
-        result.entry_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addEntry(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllEntry(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> values) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          super.addAll(values, entry_);
+          onChanged();
+        } else {
+          entryBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.entry_);
         return this;
       }
       public Builder clearEntry() {
-        result.entry_ = java.util.Collections.emptyList();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          entryBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeEntry(int index) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.remove(index);
+          onChanged();
+        } else {
+          entryBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder getEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getEntryOrBuilder(
+          int index) {
+        if (entryBuilder_ == null) {
+          return entry_.get(index);  } else {
+          return entryBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> 
+           getEntryOrBuilderList() {
+        if (entryBuilder_ != null) {
+          return entryBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(entry_);
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder addEntryBuilder() {
+        return getEntryFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder addEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder> 
+           getEntryBuilderList() {
+        return getEntryFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> 
+          getEntryFieldBuilder() {
+        if (entryBuilder_ == null) {
+          entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder>(
+                  entry_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          entry_ = null;
+        }
+        return entryBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.NestedDiagnosticContext)
@@ -4926,18 +8298,31 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new NestedDiagnosticContext(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.NestedDiagnosticContext)
   }
   
+  public interface StringMapOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;
+    java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> 
+        getEntryList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry getEntry(int index);
+    int getEntryCount();
+    java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder> 
+        getEntryOrBuilderList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder getEntryOrBuilder(
+        int index);
+  }
   public static final class StringMap extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StringMapOrBuilder {
     // Use StringMap.newBuilder() to construct.
-    private StringMap() {
-      initFields();
+    private StringMap(Builder builder) {
+      super(builder);
     }
     private StringMap(boolean noInit) {}
     
@@ -4962,30 +8347,48 @@ public final class LoggingProto {
     
     // repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;
     public static final int ENTRY_FIELD_NUMBER = 1;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> entry_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> entry_;
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> getEntryList() {
       return entry_;
     }
-    public int getEntryCount() { return entry_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder> 
+        getEntryOrBuilderList() {
+      return entry_;
+    }
+    public int getEntryCount() {
+      return entry_.size();
+    }
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry getEntry(int index) {
+      return entry_.get(index);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder getEntryOrBuilder(
+        int index) {
       return entry_.get(index);
     }
     
     private void initFields() {
+      entry_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry element : getEntryList()) {
-        if (!element.isInitialized()) return false;
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      for (int i = 0; i < getEntryCount(); i++) {
+        if (!getEntry(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry element : getEntryList()) {
-        output.writeMessage(1, element);
+      for (int i = 0; i < entry_.size(); i++) {
+        output.writeMessage(1, entry_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -4996,13 +8399,20 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry element : getEntryList()) {
+      for (int i = 0; i < entry_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
+          .computeMessageSize(1, entry_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap parseFrom(
@@ -5079,34 +8489,56 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getEntryFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          entryBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap();
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -5118,37 +8550,38 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap(this);
+        int from_bitField0_ = bitField0_;
+        if (entryBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            entry_ = java.util.Collections.unmodifiableList(entry_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.entry_ = entry_;
+        } else {
+          result.entry_ = entryBuilder_.build();
         }
-        if (result.entry_ != java.util.Collections.EMPTY_LIST) {
-          result.entry_ =
-            java.util.Collections.unmodifiableList(result.entry_);
-        }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap returnMe = result;
-        result = null;
-        return returnMe;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5162,14 +8595,44 @@ public final class LoggingProto {
       
       public Builder mergeFrom(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap other) {
         if (other == de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance()) return this;
-        if (!other.entry_.isEmpty()) {
-          if (result.entry_.isEmpty()) {
-            result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry>();
+        if (entryBuilder_ == null) {
+          if (!other.entry_.isEmpty()) {
+            if (entry_.isEmpty()) {
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureEntryIsMutable();
+              entry_.addAll(other.entry_);
+            }
+            onChanged();
           }
-          result.entry_.addAll(other.entry_);
+        } else {
+          if (!other.entry_.isEmpty()) {
+            if (entryBuilder_.isEmpty()) {
+              entryBuilder_.dispose();
+              entryBuilder_ = null;
+              entry_ = other.entry_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              entryBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getEntryFieldBuilder() : null;
+            } else {
+              entryBuilder_.addAllMessages(other.entry_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        for (int i = 0; i < getEntryCount(); i++) {
+          if (!getEntry(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
       }
       
       public Builder mergeFrom(
@@ -5184,11 +8647,13 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
@@ -5203,56 +8668,192 @@ public final class LoggingProto {
         }
       }
       
+      private int bitField0_;
       
       // repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;
+      private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> entry_ =
+        java.util.Collections.emptyList();
+      private void ensureEntryIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry>(entry_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder> entryBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> getEntryList() {
-        return java.util.Collections.unmodifiableList(result.entry_);
+        if (entryBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(entry_);
+        } else {
+          return entryBuilder_.getMessageList();
+        }
       }
       public int getEntryCount() {
-        return result.getEntryCount();
+        if (entryBuilder_ == null) {
+          return entry_.size();
+        } else {
+          return entryBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry getEntry(int index) {
-        return result.getEntry(index);
-      }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          return entry_.get(index);
+        } else {
+          return entryBuilder_.getMessage(index);
         }
-        result.entry_.set(index, value);
+      }
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.set(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setEntry(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder builderForValue) {
-        result.entry_.set(index, builderForValue.build());
+      public Builder setEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(value);
         }
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry>();
-        }
-        result.entry_.add(value);
         return this;
       }
-      public Builder addEntry(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder builderForValue) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry>();
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry value) {
+        if (entryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureEntryIsMutable();
+          entry_.add(index, value);
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, value);
         }
-        result.entry_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addEntry(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addEntry(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder builderForValue) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          entryBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllEntry(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> values) {
-        if (result.entry_.isEmpty()) {
-          result.entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry>();
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          super.addAll(values, entry_);
+          onChanged();
+        } else {
+          entryBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.entry_);
         return this;
       }
       public Builder clearEntry() {
-        result.entry_ = java.util.Collections.emptyList();
+        if (entryBuilder_ == null) {
+          entry_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          entryBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeEntry(int index) {
+        if (entryBuilder_ == null) {
+          ensureEntryIsMutable();
+          entry_.remove(index);
+          onChanged();
+        } else {
+          entryBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder getEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder getEntryOrBuilder(
+          int index) {
+        if (entryBuilder_ == null) {
+          return entry_.get(index);  } else {
+          return entryBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder> 
+           getEntryOrBuilderList() {
+        if (entryBuilder_ != null) {
+          return entryBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(entry_);
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder addEntryBuilder() {
+        return getEntryFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder addEntryBuilder(
+          int index) {
+        return getEntryFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder> 
+           getEntryBuilderList() {
+        return getEntryFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder> 
+          getEntryFieldBuilder() {
+        if (entryBuilder_ == null) {
+          entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder>(
+                  entry_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          entry_ = null;
+        }
+        return entryBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.StringMap)
@@ -5260,18 +8861,29 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new StringMap(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.StringMap)
   }
   
+  public interface StringMapEntryOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required string key = 1;
+    boolean hasKey();
+    String getKey();
+    
+    // optional string value = 2;
+    boolean hasValue();
+    String getValue();
+  }
   public static final class StringMapEntry extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements StringMapEntryOrBuilder {
     // Use StringMapEntry.newBuilder() to construct.
-    private StringMapEntry() {
-      initFields();
+    private StringMapEntry(Builder builder) {
+      super(builder);
     }
     private StringMapEntry(boolean noInit) {}
     
@@ -5294,35 +8906,96 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // required string key = 1;
     public static final int KEY_FIELD_NUMBER = 1;
-    private boolean hasKey;
-    private java.lang.String key_ = "";
-    public boolean hasKey() { return hasKey; }
-    public java.lang.String getKey() { return key_; }
+    private java.lang.Object key_;
+    public boolean hasKey() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getKey() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          key_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getKeyBytes() {
+      java.lang.Object ref = key_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        key_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // optional string value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
-    private boolean hasValue;
-    private java.lang.String value_ = "";
-    public boolean hasValue() { return hasValue; }
-    public java.lang.String getValue() { return value_; }
+    private java.lang.Object value_;
+    public boolean hasValue() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getValue() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          value_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getValueBytes() {
+      java.lang.Object ref = value_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        value_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     private void initFields() {
+      key_ = "";
+      value_ = "";
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
-      if (!hasKey) return false;
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasKey()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasKey()) {
-        output.writeString(1, getKey());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getKeyBytes());
       }
-      if (hasValue()) {
-        output.writeString(2, getValue());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getValueBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -5333,17 +9006,24 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasKey()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getKey());
+          .computeBytesSize(1, getKeyBytes());
       }
-      if (hasValue()) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getValue());
+          .computeBytesSize(2, getValueBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry parseFrom(
@@ -5420,34 +9100,53 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry();
+        super.clear();
+        key_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        value_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -5459,33 +9158,39 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry returnMe = result;
-        result = null;
-        return returnMe;
+        result.key_ = key_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.value_ = value_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5509,6 +9214,14 @@ public final class LoggingProto {
         return this;
       }
       
+      public final boolean isInitialized() {
+        if (!hasKey()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5521,68 +9234,103 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setKey(input.readString());
+              bitField0_ |= 0x00000001;
+              key_ = input.readBytes();
               break;
             }
             case 18: {
-              setValue(input.readString());
+              bitField0_ |= 0x00000002;
+              value_ = input.readBytes();
               break;
             }
           }
         }
       }
       
+      private int bitField0_;
       
       // required string key = 1;
+      private java.lang.Object key_ = "";
       public boolean hasKey() {
-        return result.hasKey();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getKey() {
-        return result.getKey();
+      public String getKey() {
+        java.lang.Object ref = key_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          key_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setKey(java.lang.String value) {
+      public Builder setKey(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasKey = true;
-        result.key_ = value;
+  bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
         return this;
       }
       public Builder clearKey() {
-        result.hasKey = false;
-        result.key_ = getDefaultInstance().getKey();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        key_ = getDefaultInstance().getKey();
+        onChanged();
         return this;
+      }
+      void setKey(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        key_ = value;
+        onChanged();
       }
       
       // optional string value = 2;
+      private java.lang.Object value_ = "";
       public boolean hasValue() {
-        return result.hasValue();
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public java.lang.String getValue() {
-        return result.getValue();
+      public String getValue() {
+        java.lang.Object ref = value_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          value_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setValue(java.lang.String value) {
+      public Builder setValue(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasValue = true;
-        result.value_ = value;
+  bitField0_ |= 0x00000002;
+        value_ = value;
+        onChanged();
         return this;
       }
       public Builder clearValue() {
-        result.hasValue = false;
-        result.value_ = getDefaultInstance().getValue();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        value_ = getDefaultInstance().getValue();
+        onChanged();
         return this;
+      }
+      void setValue(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        value_ = value;
+        onChanged();
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.StringMapEntry)
@@ -5590,18 +9338,35 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new StringMapEntry(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.StringMapEntry)
   }
   
+  public interface MarkerOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required string name = 1;
+    boolean hasName();
+    String getName();
+    
+    // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
+    java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> 
+        getReferenceList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index);
+    int getReferenceCount();
+    java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> 
+        getReferenceOrBuilderList();
+    de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getReferenceOrBuilder(
+        int index);
+  }
   public static final class Marker extends
-      com.google.protobuf.GeneratedMessage {
+      com.google.protobuf.GeneratedMessage
+      implements MarkerOrBuilder {
     // Use Marker.newBuilder() to construct.
-    private Marker() {
-      initFields();
+    private Marker(Builder builder) {
+      super(builder);
     }
     private Marker(boolean noInit) {}
     
@@ -5624,43 +9389,91 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable;
     }
     
+    private int bitField0_;
     // required string name = 1;
     public static final int NAME_FIELD_NUMBER = 1;
-    private boolean hasName;
-    private java.lang.String name_ = "";
-    public boolean hasName() { return hasName; }
-    public java.lang.String getName() { return name_; }
+    private java.lang.Object name_;
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
     
     // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
     public static final int REFERENCE_FIELD_NUMBER = 2;
-    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> reference_ =
-      java.util.Collections.emptyList();
+    private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> reference_;
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> getReferenceList() {
       return reference_;
     }
-    public int getReferenceCount() { return reference_.size(); }
+    public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> 
+        getReferenceOrBuilderList() {
+      return reference_;
+    }
+    public int getReferenceCount() {
+      return reference_.size();
+    }
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index) {
+      return reference_.get(index);
+    }
+    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getReferenceOrBuilder(
+        int index) {
       return reference_.get(index);
     }
     
     private void initFields() {
+      name_ = "";
+      reference_ = java.util.Collections.emptyList();
     }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
-      if (!hasName) return false;
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList()) {
-        if (!element.isInitialized()) return false;
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasName()) {
+        memoizedIsInitialized = 0;
+        return false;
       }
+      for (int i = 0; i < getReferenceCount(); i++) {
+        if (!getReference(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
       return true;
     }
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (hasName()) {
-        output.writeString(1, getName());
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getNameBytes());
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList()) {
-        output.writeMessage(2, element);
+      for (int i = 0; i < reference_.size(); i++) {
+        output.writeMessage(2, reference_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -5671,17 +9484,24 @@ public final class LoggingProto {
       if (size != -1) return size;
     
       size = 0;
-      if (hasName()) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
+          .computeBytesSize(1, getNameBytes());
       }
-      for (de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker element : getReferenceList()) {
+      for (int i = 0; i < reference_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, element);
+          .computeMessageSize(2, reference_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
     
     public static de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker parseFrom(
@@ -5758,34 +9578,58 @@ public final class LoggingProto {
     }
     public Builder toBuilder() { return newBuilder(this); }
     
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result;
-      
-      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker();
-        return builder;
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
       }
       
-      protected de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker internalGetResult() {
-        return result;
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable;
+      }
+      
+      // Construct using de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getReferenceFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
       }
       
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
+        super.clear();
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (referenceBuilder_ == null) {
+          reference_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          referenceBuilder_.clear();
         }
-        result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker();
         return this;
       }
       
       public Builder clone() {
-        return create().mergeFrom(result);
+        return create().mergeFrom(buildPartial());
       }
       
       public com.google.protobuf.Descriptors.Descriptor
@@ -5797,37 +9641,44 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker build() {
-        if (result != null && !isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
-        return buildPartial();
+        return result;
       }
       
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result = buildPartial();
+        if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
-        return buildPartial();
+        return result;
       }
       
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
         }
-        if (result.reference_ != java.util.Collections.EMPTY_LIST) {
-          result.reference_ =
-            java.util.Collections.unmodifiableList(result.reference_);
+        result.name_ = name_;
+        if (referenceBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            reference_ = java.util.Collections.unmodifiableList(reference_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.reference_ = reference_;
+        } else {
+          result.reference_ = referenceBuilder_.build();
         }
-        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker returnMe = result;
-        result = null;
-        return returnMe;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5844,14 +9695,48 @@ public final class LoggingProto {
         if (other.hasName()) {
           setName(other.getName());
         }
-        if (!other.reference_.isEmpty()) {
-          if (result.reference_.isEmpty()) {
-            result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
+        if (referenceBuilder_ == null) {
+          if (!other.reference_.isEmpty()) {
+            if (reference_.isEmpty()) {
+              reference_ = other.reference_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureReferenceIsMutable();
+              reference_.addAll(other.reference_);
+            }
+            onChanged();
           }
-          result.reference_.addAll(other.reference_);
+        } else {
+          if (!other.reference_.isEmpty()) {
+            if (referenceBuilder_.isEmpty()) {
+              referenceBuilder_.dispose();
+              referenceBuilder_ = null;
+              reference_ = other.reference_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              referenceBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getReferenceFieldBuilder() : null;
+            } else {
+              referenceBuilder_.addAllMessages(other.reference_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasName()) {
+          
+          return false;
+        }
+        for (int i = 0; i < getReferenceCount(); i++) {
+          if (!getReference(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
       }
       
       public Builder mergeFrom(
@@ -5866,17 +9751,20 @@ public final class LoggingProto {
           switch (tag) {
             case 0:
               this.setUnknownFields(unknownFields.build());
+              onChanged();
               return this;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
                 this.setUnknownFields(unknownFields.build());
+                onChanged();
                 return this;
               }
               break;
             }
             case 10: {
-              setName(input.readString());
+              bitField0_ |= 0x00000001;
+              name_ = input.readBytes();
               break;
             }
             case 18: {
@@ -5889,77 +9777,228 @@ public final class LoggingProto {
         }
       }
       
+      private int bitField0_;
       
       // required string name = 1;
+      private java.lang.Object name_ = "";
       public boolean hasName() {
-        return result.hasName();
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public java.lang.String getName() {
-        return result.getName();
+      public String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
       }
-      public Builder setName(java.lang.String value) {
+      public Builder setName(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  result.hasName = true;
-        result.name_ = value;
+  bitField0_ |= 0x00000001;
+        name_ = value;
+        onChanged();
         return this;
       }
       public Builder clearName() {
-        result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = getDefaultInstance().getName();
+        onChanged();
         return this;
+      }
+      void setName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        name_ = value;
+        onChanged();
       }
       
       // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
+      private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> reference_ =
+        java.util.Collections.emptyList();
+      private void ensureReferenceIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>(reference_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> referenceBuilder_;
+      
       public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> getReferenceList() {
-        return java.util.Collections.unmodifiableList(result.reference_);
+        if (referenceBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(reference_);
+        } else {
+          return referenceBuilder_.getMessageList();
+        }
       }
       public int getReferenceCount() {
-        return result.getReferenceCount();
+        if (referenceBuilder_ == null) {
+          return reference_.size();
+        } else {
+          return referenceBuilder_.getCount();
+        }
       }
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index) {
-        return result.getReference(index);
-      }
-      public Builder setReference(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (referenceBuilder_ == null) {
+          return reference_.get(index);
+        } else {
+          return referenceBuilder_.getMessage(index);
         }
-        result.reference_.set(index, value);
+      }
+      public Builder setReference(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
+        if (referenceBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureReferenceIsMutable();
+          reference_.set(index, value);
+          onChanged();
+        } else {
+          referenceBuilder_.setMessage(index, value);
+        }
         return this;
       }
-      public Builder setReference(int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
-        result.reference_.set(index, builderForValue.build());
+      public Builder setReference(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
+        if (referenceBuilder_ == null) {
+          ensureReferenceIsMutable();
+          reference_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          referenceBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addReference(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (referenceBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureReferenceIsMutable();
+          reference_.add(value);
+          onChanged();
+        } else {
+          referenceBuilder_.addMessage(value);
         }
-        if (result.reference_.isEmpty()) {
-          result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
-        }
-        result.reference_.add(value);
         return this;
       }
-      public Builder addReference(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
-        if (result.reference_.isEmpty()) {
-          result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
+      public Builder addReference(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker value) {
+        if (referenceBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureReferenceIsMutable();
+          reference_.add(index, value);
+          onChanged();
+        } else {
+          referenceBuilder_.addMessage(index, value);
         }
-        result.reference_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addReference(
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
+        if (referenceBuilder_ == null) {
+          ensureReferenceIsMutable();
+          reference_.add(builderForValue.build());
+          onChanged();
+        } else {
+          referenceBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addReference(
+          int index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder builderForValue) {
+        if (referenceBuilder_ == null) {
+          ensureReferenceIsMutable();
+          reference_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          referenceBuilder_.addMessage(index, builderForValue.build());
+        }
         return this;
       }
       public Builder addAllReference(
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> values) {
-        if (result.reference_.isEmpty()) {
-          result.reference_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker>();
+        if (referenceBuilder_ == null) {
+          ensureReferenceIsMutable();
+          super.addAll(values, reference_);
+          onChanged();
+        } else {
+          referenceBuilder_.addAllMessages(values);
         }
-        super.addAll(values, result.reference_);
         return this;
       }
       public Builder clearReference() {
-        result.reference_ = java.util.Collections.emptyList();
+        if (referenceBuilder_ == null) {
+          reference_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          referenceBuilder_.clear();
+        }
         return this;
+      }
+      public Builder removeReference(int index) {
+        if (referenceBuilder_ == null) {
+          ensureReferenceIsMutable();
+          reference_.remove(index);
+          onChanged();
+        } else {
+          referenceBuilder_.remove(index);
+        }
+        return this;
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder getReferenceBuilder(
+          int index) {
+        return getReferenceFieldBuilder().getBuilder(index);
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getReferenceOrBuilder(
+          int index) {
+        if (referenceBuilder_ == null) {
+          return reference_.get(index);  } else {
+          return referenceBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> 
+           getReferenceOrBuilderList() {
+        if (referenceBuilder_ != null) {
+          return referenceBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(reference_);
+        }
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder addReferenceBuilder() {
+        return getReferenceFieldBuilder().addBuilder(
+            de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance());
+      }
+      public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder addReferenceBuilder(
+          int index) {
+        return getReferenceFieldBuilder().addBuilder(
+            index, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance());
+      }
+      public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder> 
+           getReferenceBuilderList() {
+        return getReferenceFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> 
+          getReferenceFieldBuilder() {
+        if (referenceBuilder_ == null) {
+          referenceBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder>(
+                  reference_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          reference_ = null;
+        }
+        return referenceBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.logging.Marker)
@@ -5967,7 +10006,6 @@ public final class LoggingProto {
     
     static {
       defaultInstance = new Marker(true);
-      de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internalForceInit();
       defaultInstance.initFields();
     }
     
@@ -6090,22 +10128,24 @@ public final class LoggingProto {
       "\233\001\n\021StackTraceElement\022\023\n\013method_name\030\001 \001" +
       "(\t\022\022\n\nclass_name\030\002 \001(\t\022\021\n\tfile_name\030\003 \001(" +
       "\t\022\023\n\013line_number\030\004 \001(\005\022\025\n\rcode_location\030" +
-      "\005 \001(\t\022\017\n\007version\030\006 \001(\t\022\r\n\005exact\030\007 \001(\010\"\317\001" +
+      "\005 \001(\t\022\017\n\007version\030\006 \001(\t\022\r\n\005exact\030\007 \001(\010\"\211\002" +
       "\n\tThrowable\022\027\n\017throwable_class\030\001 \001(\t\022\017\n\007" +
       "message\030\002 \001(\t\022I\n\023stack_trace_element\030\003 \003",
       "(\0132,.de.huxhorn.lilith.logging.StackTrac" +
       "eElement\022\030\n\020omitted_elements\030\004 \001(\005\0223\n\005ca" +
       "use\030\005 \001(\0132$.de.huxhorn.lilith.logging.Th" +
-      "rowable\"L\n\027NestedDiagnosticContext\0221\n\005en" +
-      "try\030\001 \003(\0132\".de.huxhorn.lilith.logging.Me" +
-      "ssage\"E\n\tStringMap\0228\n\005entry\030\001 \003(\0132).de.h" +
-      "uxhorn.lilith.logging.StringMapEntry\",\n\016" +
-      "StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001" +
-      "(\t\"L\n\006Marker\022\014\n\004name\030\001 \002(\t\0224\n\treference\030" +
-      "\002 \003(\0132!.de.huxhorn.lilith.logging.Marker",
-      "*<\n\005Level\022\t\n\005TRACE\020\001\022\t\n\005DEBUG\020\002\022\010\n\004INFO\020" +
-      "\003\022\010\n\004WARN\020\004\022\t\n\005ERROR\020\005B5\n1de.huxhorn.lil" +
-      "ith.data.logging.protobuf.generatedH\001"
+      "rowable\0228\n\nsuppressed\030\006 \003(\0132$.de.huxhorn" +
+      ".lilith.logging.Throwable\"L\n\027NestedDiagn" +
+      "osticContext\0221\n\005entry\030\001 \003(\0132\".de.huxhorn" +
+      ".lilith.logging.Message\"E\n\tStringMap\0228\n\005" +
+      "entry\030\001 \003(\0132).de.huxhorn.lilith.logging." +
+      "StringMapEntry\",\n\016StringMapEntry\022\013\n\003key\030" +
+      "\001 \002(\t\022\r\n\005value\030\002 \001(\t\"L\n\006Marker\022\014\n\004name\030\001",
+      " \002(\t\0224\n\treference\030\002 \003(\0132!.de.huxhorn.lil" +
+      "ith.logging.Marker*<\n\005Level\022\t\n\005TRACE\020\001\022\t" +
+      "\n\005DEBUG\020\002\022\010\n\004INFO\020\003\022\010\n\004WARN\020\004\022\t\n\005ERROR\020\005" +
+      "B5\n1de.huxhorn.lilith.data.logging.proto" +
+      "buf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -6189,7 +10229,7 @@ public final class LoggingProto {
           internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_logging_Throwable_descriptor,
-              new java.lang.String[] { "ThrowableClass", "Message", "StackTraceElement", "OmittedElements", "Cause", },
+              new java.lang.String[] { "ThrowableClass", "Message", "StackTraceElement", "OmittedElements", "Cause", "Suppressed", },
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.class,
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder.class);
           internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor =
@@ -6232,8 +10272,6 @@ public final class LoggingProto {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
-  public static void internalForceInit() {}
   
   // @@protoc_insertion_point(outer_class_scope)
 }

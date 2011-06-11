@@ -64,15 +64,15 @@ writer << builder.bind {
 					buildLoggingEvent(it, eventWrapper, dateFormat, completeCallStack);
 				}
 				else if(event instanceof AccessEvent)
-					{
-						buildAccessEvent(it, eventWrapper, dateFormat);
-					}
-					else
-					{
-						it.mkp.yield 'Unsupported class.'
-						it.br()
-						it.mkp.yield event.toString()
-					}
+				{
+					buildAccessEvent(it, eventWrapper, dateFormat);
+				}
+				else
+				{
+					it.mkp.yield 'Unsupported class.'
+					it.br()
+					it.mkp.yield event.toString()
+				}
 			}
 			else
 			{
@@ -118,10 +118,10 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 				}
 		}
 
-		if(event.statusCode)
+		def code = event.statusCode;
+		if(code)
 		{
-			def code = event.statusCode;
-			def status = HttpStatus.getStatus(code)
+			def status = HttpStatus.getStatus((int)code)
 
 			evenOdd.toggle()
 			it.tr([class: "${evenOdd}"])
@@ -331,7 +331,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 					th('Throwable')
 					td([class: "throwableContainer"])
 						{
-							buildThrowable(it, event.throwable, null, true, showStackTrace)
+							buildThrowable(it, event.throwable, null, null, showStackTrace)
 						}
 				}
 		}
@@ -522,12 +522,12 @@ def buildEventWrapperSpecific(table, eventWrapper, evenOdd)
 		}
 }
 
-def buildThrowable(element, throwable, previousSTE, isFirst, showStackTrace)
+def buildThrowable(element, throwable, previousSTE, label, showStackTrace)
 {
-	if(!isFirst)
+	if(label)
 	{
 		element.br()
-		element.mkp.yield 'Caused by:'
+		element.mkp.yield label
 		element.br()
 	}
 	def stackTraceElement = null;
@@ -560,9 +560,17 @@ def buildThrowable(element, throwable, previousSTE, isFirst, showStackTrace)
 				}
 			}
 
+			if(throwable.suppressed)
+			{
+				throwable.suppressed.each {
+					value ->
+					buildThrowable(it, value, stackTraceElement, 'Suppressed: ', showStackTrace)
+				}
+			}
+
 			if(throwable.cause)
 			{
-				buildThrowable(it, throwable.cause, stackTraceElement, false, showStackTrace)
+				buildThrowable(it, throwable.cause, stackTraceElement, 'Caused by: ', showStackTrace)
 			}
 		}
 }

@@ -186,6 +186,7 @@ public class LogbackLoggingAdapter
 		result.setOmittedElements(ti.getCommonFrames());
 		result.setMessage(ti.getMessage());
 		result.setStackTrace(initFromStackTraceElementProxyArray(ti.getStackTraceElementProxyArray()));
+		// TODO: result.setSuppressed(..) once implmented in Logback...
 		result.setCause(initFromThrowableProxy(ti.getCause(), calculatePackagingData));
 		return result;
 	}

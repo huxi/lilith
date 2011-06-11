@@ -101,6 +101,7 @@ message Throwable {
 	repeated StackTraceElement stack_trace_element = 3;
 	optional int32             omitted_elements    = 4;
 	optional Throwable         cause               = 5;
+	repeated Throwable         suppressed          = 6;
 }
 
 message NestedDiagnosticContext {

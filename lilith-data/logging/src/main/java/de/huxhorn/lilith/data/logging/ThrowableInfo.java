@@ -45,6 +45,7 @@ public class ThrowableInfo
 	private String name;
 	private String message;
 	private ThrowableInfo cause;
+	private ThrowableInfo[] suppressed;
 	private ExtendedStackTraceElement[] stackTrace;
 	private int omittedElements;
 
@@ -78,6 +79,16 @@ public class ThrowableInfo
 		this.stackTrace = stackTrace;
 	}
 
+	public ThrowableInfo[] getSuppressed()
+	{
+		return suppressed;
+	}
+
+	public void setSuppressed(ThrowableInfo[] suppressed)
+	{
+		this.suppressed = suppressed;
+	}
+
 	public ThrowableInfo getCause()
 	{
 		return cause;
@@ -108,6 +119,7 @@ public class ThrowableInfo
 		if(name != null ? !name.equals(that.name) : that.name != null) return false;
 		if(message != null ? !message.equals(that.message) : that.message != null) return false;
 		if(!Arrays.equals(stackTrace, that.stackTrace)) return false;
+		if(!Arrays.equals(suppressed, that.suppressed)) return false;
 		return !(cause != null ? !cause.equals(that.cause) : that.cause != null);
 	}
 
@@ -116,6 +128,7 @@ public class ThrowableInfo
 		int result = omittedElements;
 		result = 29 * result + (name != null ? name.hashCode() : 0);
 		result = 29 * result + (message != null ? message.hashCode() : 0);
+		result = 29 * result + (suppressed != null ? Arrays.hashCode(suppressed) : 0);
 		result = 29 * result + (cause != null ? cause.hashCode() : 0);
 		return result;
 	}
@@ -148,6 +161,24 @@ public class ThrowableInfo
 		if(omittedElements>0)
 		{
 			result.append(", omittedElements=").append(omittedElements);
+		}
+		if(suppressed!=null)
+		{
+			result.append(", suppressed=[");
+			boolean first = true;
+			for(ThrowableInfo current : suppressed)
+			{
+				if(first)
+				{
+					first = false;
+				}
+				else
+				{
+					result.append(", ");
+				}
+				result.append(current.toString(verbose));
+			}
+			result.append("]");
 		}
 		if(cause!=null)
 		{

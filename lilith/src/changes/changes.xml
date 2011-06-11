@@ -85,6 +85,14 @@
 			<action dev="jhux" type="update">
 				Restored Logback SocketAppender in Lilith logging configuration. It's now triggered during debug actions, again.
 			</action>
+			<action dev="jhux" type="add">
+				Added support for new Java SE 7 try-with-resources statement suppressed Throwables.
+				See http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html
+				This is not sufficient, yet, since Logback (and my corresponding converter) needs to add support, too.
+			</action>
+			<action dev="jhux" type="update">
+				protobuf-java 2.4.0a
+			</action>
 		</release>
 
 		<release version="0.9.41" date="2011-05-02" description="Release">

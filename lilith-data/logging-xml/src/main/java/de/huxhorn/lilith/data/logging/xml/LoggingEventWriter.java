@@ -399,6 +399,18 @@ public class LoggingEventWriter
 			StaxUtilities
 				.writeSimpleTextNode(writer, prefix, NAMESPACE_URI, THROWABLE_MESSAGE_NODE, throwable.getMessage());
 			writeStackTraceNode(writer, throwable.getStackTrace(), STACK_TRACE_NODE);
+
+			ThrowableInfo[] suppressed = throwable.getSuppressed();
+			if(suppressed != null)
+			{
+				StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, SUPPRESSED_NODE);
+				for(ThrowableInfo current : suppressed)
+				{
+					writeThrowableNode(writer, current, THROWABLE_NODE);
+				}
+				writer.writeEndElement();
+			}
+
 			writeThrowableNode(writer, throwable.getCause(), CAUSE_NODE);
 			writer.writeEndElement();
 		}

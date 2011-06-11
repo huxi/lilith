@@ -215,6 +215,20 @@ public class LoggingEventProtobufDecoder
 			result.setOmittedElements(throwable.getOmittedElements());
 		}
 
+		{
+			int count = throwable.getSuppressedCount();
+			if(count > 0)
+			{
+				ThrowableInfo[] suppressed = new ThrowableInfo[count];
+				List<LoggingProto.Throwable> suppressedList = throwable.getSuppressedList();
+				for(int i = 0; i < count; i++)
+				{
+					suppressed[i] = convert(suppressedList.get(i));
+				}
+				result.setSuppressed(suppressed);
+			}
+		}
+
 		if(throwable.hasCause())
 		{
 			result.setCause(convert(throwable.getCause()));

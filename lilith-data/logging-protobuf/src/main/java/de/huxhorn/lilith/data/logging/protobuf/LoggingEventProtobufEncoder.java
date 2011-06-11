@@ -222,6 +222,20 @@ public class LoggingEventProtobufEncoder
 		}
 
 		{
+			ThrowableInfo[] suppressed = throwableInfo.getSuppressed();
+			if(suppressed != null)
+			{
+				for(ThrowableInfo current : suppressed)
+				{
+					if(current != null)
+					{
+						builder.addSuppressed(convert(current));
+					}
+				}
+			}
+		}
+
+		{
 			ThrowableInfo cause = throwableInfo.getCause();
 			if(cause != null)
 			{

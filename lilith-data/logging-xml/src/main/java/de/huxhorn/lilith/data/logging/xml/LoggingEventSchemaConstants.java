@@ -36,8 +36,8 @@ package de.huxhorn.lilith.data.logging.xml;
 
 public interface LoggingEventSchemaConstants
 {
-	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/13";
-	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/13/LoggingEvent.xsd";
+	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/14";
+	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/14/LoggingEvent.xsd";
 
 	String DEFAULT_NAMESPACE_PREFIX = "log";
 
@@ -64,6 +64,7 @@ public interface LoggingEventSchemaConstants
 	String NULL_ARGUMENT_NODE = "null";
 
 	String THROWABLE_MESSAGE_NODE = "Message";
+	String SUPPRESSED_NODE = "Suppressed";
 	String CAUSE_NODE = "Cause";
 	String THROWABLE_CLASS_NAME_ATTRIBUTE = "name";
 

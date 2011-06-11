@@ -445,8 +445,7 @@ public class LoggingEventReader
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()) && NAMESPACE_URI
-			.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
 		{
 			ThrowableInfo throwable = new ThrowableInfo();
 			String name = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, THROWABLE_CLASS_NAME_ATTRIBUTE);
@@ -467,10 +466,30 @@ public class LoggingEventReader
 			}
 			reader.nextTag();
 
-			throwable
-				.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_MESSAGE_NODE));
+			throwable.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_MESSAGE_NODE));
 			throwable.setStackTrace(readStackTraceNode(reader, STACK_TRACE_NODE));
 
+			type = reader.getEventType();
+			if(XMLStreamConstants.START_ELEMENT == type && SUPPRESSED_NODE.equals(reader.getLocalName()) && NAMESPACE_URI.equals(reader.getNamespaceURI()))
+			{
+				reader.nextTag();
+				List<ThrowableInfo> suppressedList = new ArrayList<ThrowableInfo>();
+				for(;;)
+				{
+					ThrowableInfo current = recursiveReadThrowable(reader, THROWABLE_NODE);
+					if(current == null)
+					{
+						break;
+					}
+					suppressedList.add(current);
+				}
+				ThrowableInfo[] suppressed=new ThrowableInfo[suppressedList.size()];
+
+				suppressed = suppressedList.toArray(suppressed);
+				throwable.setSuppressed(suppressed);
+				reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, SUPPRESSED_NODE);
+				reader.nextTag();
+			}
 			throwable.setCause(recursiveReadThrowable(reader, CAUSE_NODE));
 			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, nodeName);
 			reader.nextTag();

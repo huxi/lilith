@@ -127,6 +127,31 @@ public class ThrowableInfoTest
 	}
 
 	@Test
+	public void suppressed()
+		throws ClassNotFoundException, IOException
+	{
+		ThrowableInfo instance = new ThrowableInfo();
+
+
+		ThrowableInfo[] value = new ThrowableInfo[]{
+			new ThrowableInfo()
+		};
+
+		instance.setSuppressed(value);
+
+		{
+			ThrowableInfo obj = testSerialization(instance);
+			assertArrayEquals(value, obj.getSuppressed());
+			assertFalse(fresh.equals(obj));
+		}
+		{
+			ThrowableInfo obj = testXmlSerialization(instance);
+			assertArrayEquals(value, obj.getSuppressed());
+			assertFalse(fresh.equals(obj));
+		}
+	}
+
+	@Test
 	public void cause()
 		throws ClassNotFoundException, IOException
 	{

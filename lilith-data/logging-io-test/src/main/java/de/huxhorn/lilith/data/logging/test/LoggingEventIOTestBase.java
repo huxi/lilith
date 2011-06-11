@@ -251,6 +251,17 @@ public abstract class LoggingEventIOTestBase
 
 		ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
 		ThrowableInfo ti2 = createThrowableInfo("another.exception.class.Name", "Huhu! Exception Message");
+		{
+			ThrowableInfo sup1 = createThrowableInfo("yet.another.exception.class.Name", "Suppressed1");
+			ThrowableInfo sup2 = createThrowableInfo("yet.another.exception.class.Name", "Suppressed2");
+			ThrowableInfo sup3 = createThrowableInfo("yet.another.exception.class.Name", "Suppressed3");
+			ThrowableInfo[] sup = new ThrowableInfo[3];
+			sup[0] = sup1;
+			sup[1] = sup2;
+			sup[2] = sup3;
+			ti2.setSuppressed(sup);
+		}
+
 		ThrowableInfo ti3 = createThrowableInfo("yet.another.exception.class.Name", "Huhu! Exception Message");
 		ti.setCause(ti2);
 		ti2.setCause(ti3);
