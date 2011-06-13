@@ -340,6 +340,7 @@ public class LoggingFormatter
 		private StackTraceElementProxy[] stackTraceElementProxyArray;
 		private IThrowableProxy cause;
 		private int commonFrames;
+		private IThrowableProxy[] suppressed;
 
 		public String getMessage()
 		{
@@ -369,6 +370,16 @@ public class LoggingFormatter
 		public void setStackTraceElementProxyArray(StackTraceElementProxy[] stackTraceElementProxyArray)
 		{
 			this.stackTraceElementProxyArray = stackTraceElementProxyArray;
+		}
+
+		public IThrowableProxy[] getSuppressed()
+		{
+			return suppressed;
+		}
+
+		public void setSuppressed(IThrowableProxy[] suppressed)
+		{
+			this.suppressed = suppressed;
 		}
 
 		public IThrowableProxy getCause()
@@ -401,6 +412,16 @@ public class LoggingFormatter
 				result.setClassName(throwableInfo.getName());
 				result.setCommonFrames(throwableInfo.getOmittedElements());
 				result.setStackTraceElementProxyArray(convert(throwableInfo.getStackTrace()));
+				ThrowableInfo[] throwableInfoSuppressed = throwableInfo.getSuppressed();
+				if(throwableInfoSuppressed != null)
+				{
+					IThrowableProxy[] throwableProxySuppressed=new IThrowableProxy[throwableInfoSuppressed.length];
+					for(int i=0;i<throwableInfoSuppressed.length;i++)
+					{
+						throwableProxySuppressed[i] = convert(throwableInfoSuppressed[i]);
+					}
+					result.setSuppressed(throwableProxySuppressed);
+				}
 				result.setCause(convert(throwableInfo.getCause()));
 			}
 			return result;

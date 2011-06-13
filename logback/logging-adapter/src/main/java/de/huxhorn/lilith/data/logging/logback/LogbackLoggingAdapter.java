@@ -186,7 +186,19 @@ public class LogbackLoggingAdapter
 		result.setOmittedElements(ti.getCommonFrames());
 		result.setMessage(ti.getMessage());
 		result.setStackTrace(initFromStackTraceElementProxyArray(ti.getStackTraceElementProxyArray()));
-		// TODO: result.setSuppressed(..) once implmented in Logback...
+		// TODO: uncomment block below after https://github.com/ceki/logback/pull/16 has been merged.
+		/*
+		IThrowableProxy[] suppressedThrowableProxies = ti.getSuppressed();
+		if(suppressedThrowableProxies != null)
+		{
+			ThrowableInfo[] suppressed = new ThrowableInfo[suppressedThrowableProxies.length];
+			for(int i=0;i<suppressedThrowableProxies.length;i++)
+			{
+				suppressed[i] = initFromThrowableProxy(suppressedThrowableProxies[i], calculatePackagingData);
+			}
+			result.setSuppressed(suppressed);
+		}
+		*/
 		result.setCause(initFromThrowableProxy(ti.getCause(), calculatePackagingData));
 		return result;
 	}
