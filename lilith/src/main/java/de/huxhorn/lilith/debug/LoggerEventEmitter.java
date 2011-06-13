@@ -17,20 +17,41 @@
  */
 package de.huxhorn.lilith.debug;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 public class LoggerEventEmitter
 {
+	private final Logger logger = LoggerFactory.getLogger(LoggerEventEmitter.class);
+
 	private static final int DEFAULT_DELAY = 50;
 	private int delay = DEFAULT_DELAY;
 	private Marker marker;
 	private Marker fnordMarker;
 	private ExecutorService executor;
+	public static final Method ADD_SUPPRESSED_METHOD;
+
+	static
+	{
+	    Method method = null;
+		try
+		{
+			method = Throwable.class.getMethod("addSuppressed", Throwable.class);
+		}
+		catch(NoSuchMethodException e)
+		{
+			// ignore
+		}
+		ADD_SUPPRESSED_METHOD = method;
+	}
 
 	public LoggerEventEmitter()
 	{
@@ -104,9 +125,9 @@ public class LoggerEventEmitter
 		execute(new LogStuffRunnable(delay, marker));
 	}
 
+	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logException()
 	{
-		//noinspection ThrowableInstanceNeverThrown
 		Throwable ex = new RuntimeException("Test-Exception");
 		execute(new LogThrowableRunnable(delay, ex));
 	}
@@ -118,6 +139,28 @@ public class LoggerEventEmitter
 		Exception cause = new RuntimeException("Cause-Exception", causeCause);
 		Throwable ex = new RuntimeException("Another Test-Exception", cause);
 		execute(new LogThrowableRunnable(delay, ex));
+	}
+
+	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
+	public void logExceptionSuppressed()
+	{
+	    if(ADD_SUPPRESSED_METHOD != null)
+		{
+			Exception causeCause = new RuntimeException("Suppressed - CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
+			Exception cause = new RuntimeException("Suppressed - Cause-Exception", causeCause);
+			try
+			{
+				ADD_SUPPRESSED_METHOD.invoke(cause, new RuntimeException("Suppressed1"));
+				ADD_SUPPRESSED_METHOD.invoke(cause, new RuntimeException("Suppressed2"));
+				ADD_SUPPRESSED_METHOD.invoke(cause, new RuntimeException("Suppressed3"));
+			}
+			catch(Throwable e)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Exception while calling Throwable.addSuppressed!", e);
+			}
+			Throwable ex = new RuntimeException("Suppressed - Root-Exception", cause);
+			execute(new LogThrowableRunnable(delay, ex));
+		}
 	}
 
 	public void logParamException()

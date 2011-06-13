@@ -240,6 +240,7 @@ public class DebugDialog
 		{
 			loggerEventEmitter.logException();
 			loggerEventEmitter.logException2();
+			loggerEventEmitter.logExceptionSuppressed();
 		}
 	}
 
@@ -348,6 +349,7 @@ public class DebugDialog
 			loggerEventEmitter.logStuffWithMdcAndMarker();
 			loggerEventEmitter.logException();
 			loggerEventEmitter.logException2();
+			loggerEventEmitter.logExceptionSuppressed();
 			loggerEventEmitter.logParamException();
 			loggerEventEmitter.logParamException2();
 			loggerEventEmitter.logASCII();
