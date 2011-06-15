@@ -19,14 +19,18 @@ package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.SwingUtilities;
-import java.io.EOFException;
 import java.io.File;
+import java.io.IOException;
 
 public class CheckFileChangeCallable
 	extends AbstractProgressingCallable<Long>
 {
+	private final Logger logger = LoggerFactory.getLogger(CheckFileChangeCallable.class);
+
 	private File dataFile;
 	private File indexFile;
 	private static final int POLL_INTERVAL = 1000;
@@ -58,10 +62,13 @@ public class CheckFileChangeCallable
 					indexing.call();
 					SwingUtilities.invokeAndWait(flushRunnable);
 				}
-				catch(EOFException ex)
+				catch(IOException ex)
 				{
 					// this happens for example if the header hasn't been fully written, yet.
 					// this can be safely ignored.
+					// changed from EOFException to general IOException due to
+					// http://sourceforge.net/apps/trac/lilith/ticket/97
+					if(logger.isInfoEnabled()) logger.info("Exception while reindexing log file. Ignoring it...", ex);
 				}
 			}
 			try
