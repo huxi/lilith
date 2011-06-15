@@ -93,6 +93,10 @@
 			<action dev="jhux" type="update">
 				protobuf-java 2.4.0a
 			</action>
+			<action dev="jhux" type="fix" issue="97">
+				After many runs that replace opened log file, Updating task fails with "Negative seek offset"
+				This was reported by Jeff Jensen (jeffjensen).
+			</action>
 		</release>
 
 		<release version="0.9.41" date="2011-05-02" description="Release">
