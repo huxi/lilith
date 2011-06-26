@@ -42,6 +42,10 @@ public class LoggerStartsWithCondition
 
 	public void setSearchString(String searchString)
 	{
+		if(searchString != null)
+		{
+			searchString = searchString.replace('$','.');  // better handling of inner classes
+		}
 		this.searchString = searchString;
 	}
 
@@ -58,19 +62,23 @@ public class LoggerStartsWithCondition
 		}
 		if(value instanceof EventWrapper)
 		{
-			EventWrapper wrapper = (EventWrapper) value;
-			Object eventObj = wrapper.getEvent();
 			if(searchString.length() == 0)
 			{
 				return true;
 			}
+			EventWrapper wrapper = (EventWrapper) value;
+			Object eventObj = wrapper.getEvent();
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
 
 				String logger = event.getLogger();
-
-				return logger != null && logger.startsWith(searchString);
+				if(logger == null)
+				{
+					return false;
+				}
+				logger=logger.replace('$', '.'); // better handling of inner classes
+				return logger.startsWith(searchString);
 			}
 		}
 		return false;

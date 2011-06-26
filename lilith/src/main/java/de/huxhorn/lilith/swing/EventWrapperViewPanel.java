@@ -959,13 +959,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 	/**
-	 * @return the combination of the tables filter condition and the condition of a filtered buffer.
+	 * This method creates a new condition that is a combination of the current buffer condition and the given condition.
+	 * The conditions are combined using "and". Duplicate condition entries are prevented.
+	 *
+	 * @return the combination of the given condition and the previous buffer condition.
 	 */
-	public Condition getCombinedCondition()
+	public Condition getCombinedCondition(Condition currentFilter)
 	{
 		Condition previousCondition = getBufferCondition();
-
-		Condition currentFilter = table.getFilterCondition();
 
 		if(previousCondition == null)
 		{
@@ -1023,10 +1024,16 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	void createFilteredView()
 	{
 		ViewContainer<T> container = resolveContainer();
-		if(container != null)
+		if(container == null)
 		{
-			container.addFilteredView(this);
+			return;
 		}
+		Condition condition = resolveCombinedCondition();
+		if(condition == null)
+		{
+			return;
+		}
+		container.addFilteredView(this, condition);
 	}
 
 	/**
@@ -1482,6 +1489,30 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 	protected abstract void closeConnection(SourceIdentifier sourceIdentifier);
+
+	/**
+	 * Returns a new combined condition of this view and the current condition of its table if it differs and the table has a condition.
+	 * Otherwise, null is returned.
+	 *
+	 * @return the combined condition
+	 */
+	public Condition resolveCombinedCondition()
+	{
+		Condition currentFilter = getTable().getFilterCondition();
+		if (currentFilter == null)
+		{
+			return null;
+		}
+
+		Condition originalBufferCondition = getBufferCondition();
+
+		Condition filter = getCombinedCondition(currentFilter);
+		if (filter == null || filter.equals(originalBufferCondition))
+		{
+			return null;
+		}
+		return filter;
+	}
 
 	private class StatusTableModelListener
 		implements TableModelListener

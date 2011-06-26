@@ -175,38 +175,8 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	/**
-	 * Returns a new combined condition of the given view and its table if it differs from the current buffer condition.
-	 * Otherwise, null is returned.
-	 *
-	 * @param original the original view
-	 * @return the combined condition
-	 */
-	protected Condition resolveCombinedCondition(EventWrapperViewPanel<T> original)
+	public void addFilteredView(EventWrapperViewPanel<T> original, Condition filter)
 	{
-		Condition currentFilter = original.getTable().getFilterCondition();
-		if (currentFilter == null)
-		{
-			return null;
-		}
-
-		Condition previousClone = original.getBufferCondition();
-
-		Condition filter = original.getCombinedCondition();
-		if (filter == null || filter.equals(previousClone))
-		{
-			return null;
-		}
-		return filter;
-	}
-
-	public void addFilteredView(EventWrapperViewPanel<T> original)
-	{
-		Condition filter = resolveCombinedCondition(original);
-		if (filter == null)
-		{
-			return;
-		}
 		Buffer<EventWrapper<T>> originalBuffer = original.getSourceBuffer();
 		FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(originalBuffer, filter);
 		FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
@@ -222,14 +192,8 @@ public abstract class ViewContainer<T extends Serializable>
 				+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
 	}
 
-	public void replaceFilteredView(EventWrapperViewPanel<T> original)
+	public void replaceFilteredView(EventWrapperViewPanel<T> original, Condition filter)
 	{
-		Condition filter = resolveCombinedCondition(original);
-		if (filter == null)
-		{
-			return;
-		}
-
 		EventSource<T> eventSource = original.getEventSource();
 
 		Buffer<EventWrapper<T>> buffer = eventSource.getBuffer();
@@ -275,7 +239,7 @@ public abstract class ViewContainer<T extends Serializable>
 		else
 		{
 			// create new
-			addFilteredView(original);
+			addFilteredView(original, filter);
 		}
 
 	}

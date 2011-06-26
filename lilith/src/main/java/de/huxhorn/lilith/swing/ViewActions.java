@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
@@ -38,6 +39,7 @@ import de.huxhorn.lilith.services.clipboard.LoggingNdcFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableFormatter;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
+import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -63,6 +65,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import javax.swing.*;
@@ -598,7 +601,11 @@ public class ViewActions
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
 	private JPopupMenu popup;
 	private GotoSourceAction gotoSourceAction;
-	private JMenu sendToMenuItem;
+	private JMenu sendToPopupMenu;
+	private JMenu focusPopupMenu;
+	private JMenu excludePopupMenu;
+	private JMenu filterPopupMenu;
+	private JMenu copyPopupMenu;
 	private PropertyChangeListener containerPropertyChangeListener;
 	private EventWrapper eventWrapper;
 	private JMenuItem showTaskManagerItem;
@@ -985,10 +992,6 @@ public class ViewActions
 		// File
 		exportMenuAction.setView(eventWrapperViewPanel);
 
-		// Edit
-		editMenu.setEnabled(hasView);
-
-
 		// Search
 		searchMenu.setEnabled(hasView);
 		findMenuAction.setEnabled(hasView);
@@ -1006,20 +1009,15 @@ public class ViewActions
 		editSourceNameMenuAction.setEnabled(hasView);
 		saveLayoutAction.setEnabled(hasView);
 		resetLayoutAction.setEnabled(hasView);
-		//editConditionMenuAction.setEnabled(hasView);
 		pauseMenuAction.setEnabled(hasView);
 		clearMenuAction.setEnabled(hasView/* && !hasFilteredBuffer*/);
 		attachMenuAction.setEnabled(hasView);
 		disconnectMenuAction.setEnabled(isActive);
 		focusEventsAction.setEnabled(hasView);
 		focusMessageAction.setEnabled(hasView);
-		//statisticsMenuAction.setEnabled(hasView);
 		updateShowHideMenu();
 		previousTabAction.updateAction();
 		nextTabAction.updateAction();
-		closeFilterAction.setEnabled(hasView);
-		closeOtherFiltersAction.setEnabled(hasView);
-		closeAllFiltersAction.setEnabled(hasView);
 
 		disconnectToolBarAction.setEnabled(isActive);
 
@@ -1032,6 +1030,7 @@ public class ViewActions
 
 		pauseMenuAction.updateAction();
 		attachMenuAction.updateAction();
+
 		closeFilterAction.updateAction();
 		closeOtherFiltersAction.updateAction();
 		closeAllFiltersAction.updateAction();
@@ -1179,7 +1178,9 @@ public class ViewActions
 			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 			if(eventWrapperViewPanel != null)
 			{
-				Condition condition = eventWrapperViewPanel.getCombinedCondition();
+				Condition currentFilter = eventWrapperViewPanel.getTable().getFilterCondition();
+
+				Condition condition = eventWrapperViewPanel.getCombinedCondition(currentFilter);
 				if(condition != null)
 				{
 					mainFrame.getPreferencesDialog().editCondition(condition);
@@ -1443,35 +1444,39 @@ public class ViewActions
 
 		updateCustomCopyMenu(this.eventWrapper);
 
-		JMenu copyMenuItem = new JMenu("Copy...");
-		popup.add(copyMenuItem);
-		copyMenuItem.add(new JMenuItem(copySelectionAction));
-		copyMenuItem.addSeparator();
-		copyMenuItem.add(new JMenuItem(copyEventAction));
-		copyMenuItem.addSeparator();
-		copyMenuItem.add(new JMenuItem(copyLoggingMessageAction));
-		copyMenuItem.add(new JMenuItem(copyLoggingMessagePatternAction));
-		copyMenuItem.add(new JMenuItem(copyLoggerNameAction));
-		copyMenuItem.add(new JMenuItem(copyLoggingThrowableAction));
-		copyMenuItem.add(new JMenuItem(copyLoggingCallStackAction));
-		copyMenuItem.add(new JMenuItem(copyLoggingCallLocationAction));
-		copyMenuItem.add(new JMenuItem(copyLoggingMarkerAction));
-		copyMenuItem.add(new JMenuItem(copyLoggingMdcAction));
-		copyMenuItem.add(new JMenuItem(copyLoggingNdcAction));
-		copyMenuItem.addSeparator();
-		copyMenuItem.add(new JMenuItem(copyAccessUriAction));
-		copyMenuItem.addSeparator();
-		copyMenuItem.add(customCopyPopupMenu);
+		copyPopupMenu = new JMenu("Copy...");
+		popup.add(copyPopupMenu);
+		copyPopupMenu.add(new JMenuItem(copySelectionAction));
+		copyPopupMenu.addSeparator();
+		copyPopupMenu.add(new JMenuItem(copyEventAction));
+		copyPopupMenu.addSeparator();
+		copyPopupMenu.add(new JMenuItem(copyLoggingMessageAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingMessagePatternAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggerNameAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingThrowableAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingCallStackAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingCallLocationAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingMarkerAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingMdcAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingNdcAction));
+		copyPopupMenu.addSeparator();
+		copyPopupMenu.add(new JMenuItem(copyAccessUriAction));
+		copyPopupMenu.addSeparator();
+		copyPopupMenu.add(customCopyPopupMenu);
 
-		JMenu filterMenuItem = new JMenu("Filter...");
-		popup.add(filterMenuItem);
-		filterMenuItem.add(new JMenuItem(closeFilterAction));
-		filterMenuItem.add(new JMenuItem(closeOtherFiltersAction));
-		filterMenuItem.add(new JMenuItem(closeAllFiltersAction));
+		filterPopupMenu = new JMenu("Filter...");
+		popup.add(filterPopupMenu);
+		filterPopupMenu.add(new JMenuItem(closeFilterAction));
+		filterPopupMenu.add(new JMenuItem(closeOtherFiltersAction));
+		filterPopupMenu.add(new JMenuItem(closeAllFiltersAction));
 
-		sendToMenuItem = new JMenu("Send to...");
+		focusPopupMenu = new JMenu("Focus...");
+		popup.add(focusPopupMenu);
+		excludePopupMenu = new JMenu("Exclude...");
+		popup.add(excludePopupMenu);
 
-		popup.add(sendToMenuItem);
+		sendToPopupMenu = new JMenu("Send to...");
+		popup.add(sendToPopupMenu);
 
 		JMenuItem gotoSourceMenuItem = new JMenuItem(gotoSourceAction);
 		popup.add(gotoSourceMenuItem);
@@ -1493,7 +1498,107 @@ public class ViewActions
 		copyLoggingMdcAction.setEventWrapper(wrapper);
 		copyLoggingNdcAction.setEventWrapper(wrapper);
 		copyAccessUriAction.setEventWrapper(wrapper);
+		boolean enableEditMenu;
+		if(wrapper == null)
+		{
+			enableEditMenu = false;
+		}
+		else
+		{
+			Serializable event = wrapper.getEvent();
+			if(event instanceof LoggingEvent || event instanceof AccessEvent)
+			{
+				enableEditMenu = true;
+			}
+			else
+			{
+				enableEditMenu = false;
+			}
+		}
+		editMenu.setEnabled(enableEditMenu);
 		updateCustomCopyMenu(wrapper);
+	}
+
+	private void populateFocusExclude(EventWrapper wrapper)
+	{
+		if(wrapper == null)
+		{
+			focusPopupMenu.setEnabled(false);
+			excludePopupMenu.setEnabled(false);
+			return;
+		}
+
+		Serializable obj = wrapper.getEvent();
+		if(obj instanceof LoggingEvent)
+		{
+			LoggingEvent event = (LoggingEvent) obj;
+			String loggerName=event.getLogger();
+			List<String> preparedLoggerNames =  prepareLoggerNames(loggerName);
+			if(logger.isDebugEnabled()) logger.debug("preparedLoggerNames for input {}: {}", loggerName, preparedLoggerNames);
+			if(preparedLoggerNames.size() == 0)
+			{
+				focusPopupMenu.setEnabled(false);
+				excludePopupMenu.setEnabled(false);
+			}
+			else
+			{
+				focusPopupMenu.removeAll();
+				for(String current : preparedLoggerNames)
+				{
+					focusPopupMenu.add(new JMenuItem(new FocusAction(current)));
+				}
+				focusPopupMenu.setEnabled(true);
+
+				excludePopupMenu.removeAll();
+				for(String current : preparedLoggerNames)
+				{
+					excludePopupMenu.add(new JMenuItem(new ExcludeAction(current)));
+				}
+				excludePopupMenu.setEnabled(true);
+			}
+		}
+		else
+		{
+			focusPopupMenu.setEnabled(false);
+			excludePopupMenu.setEnabled(false);
+		}
+	}
+
+	private List<String> prepareLoggerNames(String loggerName)
+	{
+		if(loggerName == null)
+		{
+			return new ArrayList<String>();
+		}
+		List<String> tokens = new ArrayList<String>();
+		loggerName = loggerName.replace('$', '.'); // better handling of inner classes
+		StringTokenizer tok = new StringTokenizer(loggerName, ".", false);
+		while(tok.hasMoreTokens())
+		{
+			String current=tok.nextToken();
+			tokens.add(current);
+		}
+
+		List<String> result=new ArrayList<String>(tokens.size());
+		for(int i=tokens.size();i>0;i--)
+		{
+			StringBuilder builder=new StringBuilder();
+			boolean first=true;
+			for(int j=0;j<i;j++)
+			{
+				if(first)
+				{
+					first = false;
+				}
+				else
+				{
+					builder.append(".");
+				}
+				builder.append(tokens.get(j));
+			}
+			result.add(builder.toString());
+		}
+		return result;
 	}
 
 	private void updateCustomCopyMenu(EventWrapper wrapper)
@@ -1630,59 +1735,68 @@ public class ViewActions
 		{
 			initPopup();
 		}
-		sendToMenuItem.removeAll();
+		sendToPopupMenu.removeAll();
+		boolean enableCopyMenu;
 		if(eventWrapper == null)
 		{
-			sendToMenuItem.setEnabled(false);
+			sendToPopupMenu.setEnabled(false);
+			enableCopyMenu = false;
 		}
 		else
 		{
 			Serializable eventObj = eventWrapper.getEvent();
 			if(eventObj instanceof LoggingEvent)
 			{
+				enableCopyMenu = true;
 				Map<String, EventSender<LoggingEvent>> senders = mainFrame.getLoggingEventSenders();
 				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
 				if(senders.size() == 0)
 				{
-					sendToMenuItem.setEnabled(false);
+					sendToPopupMenu.setEnabled(false);
 				}
 				else
 				{
-					sendToMenuItem.setEnabled(true);
+					sendToPopupMenu.setEnabled(true);
 					for(Map.Entry<String, EventSender<LoggingEvent>> current : senders.entrySet())
 					{
 						@SuppressWarnings({"unchecked"})
 						SendAction<LoggingEvent> action = new SendAction<LoggingEvent>(current.getKey(), current.getValue(), eventWrapper);
 						JMenuItem menuItem = new JMenuItem(action);
-						sendToMenuItem.add(menuItem);
+						sendToPopupMenu.add(menuItem);
 					}
 				}
 			}
 			else if(eventObj instanceof AccessEvent)
 			{
+				enableCopyMenu = true;
 				Map<String, EventSender<AccessEvent>> senders = mainFrame.getAccessEventSenders();
 				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
 				if(senders.size() == 0)
 				{
-					sendToMenuItem.setEnabled(false);
+					sendToPopupMenu.setEnabled(false);
 				}
 				else
 				{
-					sendToMenuItem.setEnabled(true);
+					sendToPopupMenu.setEnabled(true);
 					for(Map.Entry<String, EventSender<AccessEvent>> current : senders.entrySet())
 					{
 						@SuppressWarnings({"unchecked"})
 						SendAction<AccessEvent> action = new SendAction<AccessEvent>(current.getKey(), current.getValue(), eventWrapper);
 						JMenuItem menuItem = new JMenuItem(action);
-						sendToMenuItem.add(menuItem);
+						sendToPopupMenu.add(menuItem);
 					}
 				}
 			}
 			else
 			{
-				sendToMenuItem.setEnabled(false);
+				enableCopyMenu = false;
+				sendToPopupMenu.setEnabled(false);
 			}
 		}
+		boolean enableFilterMenu = closeFilterAction.isEnabled() || closeOtherFiltersAction.isEnabled() || closeAllFiltersAction.isEnabled();
+		filterPopupMenu.setEnabled(enableFilterMenu);
+		copyPopupMenu.setEnabled(enableCopyMenu);
+		populateFocusExclude(eventWrapper);
 	}
 
 	public JPopupMenu getPopupMenu()
@@ -2086,7 +2200,9 @@ public class ViewActions
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					Condition condition = eventWrapperViewPanel.getCombinedCondition();
+					Condition currentFilter = eventWrapperViewPanel.getTable().getFilterCondition();
+
+					Condition condition = eventWrapperViewPanel.getCombinedCondition(currentFilter);
 					if(condition != null)
 					{
 						enable = true;
@@ -3846,6 +3962,82 @@ public class ViewActions
 			{
 				tableColumnModel.setColumnVisible(found, visible);
 			}
+		}
+	}
+
+	private class FocusAction
+		extends AbstractAction
+	{
+		private String loggerNamePart;
+
+		public FocusAction(String loggerNamePart)
+		{
+			super(loggerNamePart);
+			this.loggerNamePart = loggerNamePart;
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Focus '{}'.", loggerNamePart);
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new LoggerStartsWithCondition(loggerNamePart));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+	private class ExcludeAction
+		extends AbstractAction
+	{
+		private String loggerNamePart;
+
+		public ExcludeAction(String loggerNamePart)
+		{
+			super(loggerNamePart);
+			this.loggerNamePart = loggerNamePart;
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Exclude '{}'.", loggerNamePart);
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new Not(new LoggerStartsWithCondition(loggerNamePart)));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
 		}
 	}
 

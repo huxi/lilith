@@ -758,10 +758,17 @@ public class FindPanel<T extends Serializable>
 		{
 			if(logger.isInfoEnabled()) logger.info("Replace filter.");
 			ViewContainer<T> container = eventWrapperViewPanel.resolveContainer();
-			if(container != null)
+			if(container == null)
 			{
-				container.replaceFilteredView(eventWrapperViewPanel); // TODO: check!
+				return;
 			}
+			Condition filter = eventWrapperViewPanel.resolveCombinedCondition();
+			if (filter == null)
+			{
+				return;
+			}
+
+			container.replaceFilteredView(eventWrapperViewPanel, filter);
 		}
 	}
 
