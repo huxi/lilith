@@ -37,7 +37,7 @@ libraries = [
 'logback-classic':          "ch.qos.logback:logback-classic:${versions.logback}",
 'logback-core':             "ch.qos.logback:logback-core:${versions.logback}",
 'macify':                   'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.macify:1.4',
-'protobuf':                 'com.google.protobuf:protobuf-java:2.4.0a',
+'protobuf':                 'com.google.protobuf:protobuf-java:2.4.1',
 'rrd4j':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.rrd4j:2.0.5',
 'servlet-api':              'javax.servlet:servlet-api:2.5',
 'slf4j-api':                "org.slf4j:slf4j-api:${versions.slf4j}",

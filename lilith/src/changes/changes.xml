@@ -91,7 +91,7 @@
 				This is not sufficient, yet, since Logback (and my corresponding converter) needs to add support, too.
 			</action>
 			<action dev="jhux" type="update">
-				protobuf-java 2.4.0a
+				protobuf-java 2.4.1
 			</action>
 			<action dev="jhux" type="fix" issue="97">
 				After many runs that replace opened log file, Updating task fails with "Negative seek offset"
