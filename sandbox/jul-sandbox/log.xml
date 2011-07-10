@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2011-07-10T19:11:32</date>
+  <millis>1310317892812</millis>
+  <sequence>0</sequence>
+  <logger>de.huxhorn.lilith.sandbox.JulSandbox</logger>
+  <level>INFO</level>
+  <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Args Foobar</message>
+</record>
+<record>
+  <date>2011-07-10T19:11:32</date>
+  <millis>1310317892906</millis>
+  <sequence>1</sequence>
+  <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
+  <level>INFO</level>
+  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
+  <method>execute</method>
+  <thread>1</thread>
+  <message>Foo!</message>
+</record>
+<record>
+  <date>2011-07-10T19:11:32</date>
+  <millis>1310317892906</millis>
+  <sequence>2</sequence>
+  <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
+  <level>WARNING</level>
+  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
+  <method>execute</method>
+  <thread>1</thread>
+  <message>Foo!</message>
+  <exception>
+    <message>java.lang.RuntimeException: Exception</message>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
+      <method>createRuntimeException</method>
+      <line>66</line>
+    </frame>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
+      <method>access$000</method>
+      <line>7</line>
+    </frame>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
+      <method>execute</method>
+      <line>47</line>
+    </frame>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
+      <method>main</method>
+      <line>105</line>
+    </frame>
+  </exception>
+</record>
+<record>
+  <date>2011-07-10T19:11:32</date>
+  <millis>1310317892906</millis>
+  <sequence>3</sequence>
+  <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
+  <level>SEVERE</level>
+  <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
+  <method>execute</method>
+  <thread>1</thread>
+  <message>Foo with Suppressed!</message>
+  <exception>
+    <message>java.lang.RuntimeException: Exception</message>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
+      <method>createRuntimeException</method>
+      <line>66</line>
+    </frame>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
+      <method>access$000</method>
+      <line>7</line>
+    </frame>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
+      <method>execute</method>
+      <line>48</line>
+    </frame>
+    <frame>
+      <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
+      <method>main</method>
+      <line>105</line>
+    </frame>
+  </exception>
+</record>
+</log>

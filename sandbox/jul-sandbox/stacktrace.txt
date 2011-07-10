@@ -1,0 +1,16 @@
+printStackTrace:
+java.lang.RuntimeException: Exception
+        at de.huxhorn.lilith.sandbox.JulSandbox.createRuntimeException(JulSandbox.java:66)
+        at de.huxhorn.lilith.sandbox.JulSandbox.access$000(JulSandbox.java:7)
+        at de.huxhorn.lilith.sandbox.JulSandbox$InnerClass.execute(JulSandbox.java:48)
+        at de.huxhorn.lilith.sandbox.JulSandbox.main(JulSandbox.java:105)
+        Suppressed: java.lang.RuntimeException: Suppressed1
+                at de.huxhorn.lilith.sandbox.JulSandbox$InnerClass.execute(JulSandbox.java:49)
+                ... 1 more
+        Suppressed: java.lang.RuntimeException: Suppressed2
+                at de.huxhorn.lilith.sandbox.JulSandbox$InnerClass.execute(JulSandbox.java:50)
+                ... 1 more
+Caused by: java.lang.RuntimeException: Cause-Exception
+        at de.huxhorn.lilith.sandbox.JulSandbox.createRuntimeException(JulSandbox.java:62)
+        ... 3 more
+
