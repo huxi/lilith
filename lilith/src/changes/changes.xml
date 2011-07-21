@@ -103,6 +103,9 @@
 			<action dev="jhux" type="update">
 				"Edit", "Copy..." and "Filter..." menus are only enabled if it makes sense.
 			</action>
+			<action dev="jhux" type="update">
+				Groovy 1.8.1
+			</action>
 		</release>
 
 		<release version="0.9.41" date="2011-05-02" description="Release">
