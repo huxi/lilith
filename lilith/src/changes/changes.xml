@@ -106,6 +106,9 @@
 			<action dev="jhux" type="update">
 				Groovy 1.8.1
 			</action>
+			<action dev="jhux" type="update">
+				commons-lang 3.0
+			</action>
 		</release>
 
 		<release version="0.9.41" date="2011-05-02" description="Release">
