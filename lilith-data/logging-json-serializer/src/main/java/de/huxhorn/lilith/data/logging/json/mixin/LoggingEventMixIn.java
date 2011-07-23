@@ -34,8 +34,13 @@
 
 package de.huxhorn.lilith.data.logging.json.mixin;
 
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+@JsonPropertyOrder({
+	"level", "message", "logger", "throwable", "callStack",
+	"mdc", "ndc", "marker", "threadInfo", "loggerContext", "sequenceNumber", "timeStamp"
+})
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public abstract class LoggingEventMixIn
 {

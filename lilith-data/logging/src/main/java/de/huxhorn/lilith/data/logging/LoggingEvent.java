@@ -66,19 +66,18 @@ public class LoggingEvent
 		ERROR
 	}
 
-	private String logger;
 	private Level level;
-	private ThreadInfo threadInfo;
-	private LoggerContext loggerContext;
-	private Long timeStamp;
-	private Long sequenceNumber;
-
+	private Message message;
+	private String logger;
 	private ThrowableInfo throwable;
+	private ExtendedStackTraceElement[] callStack;
 	private Map<String, String> mdc;
 	private Message[] ndc;
 	private Marker marker;
-	private ExtendedStackTraceElement[] callStack;
-	private Message message;
+	private ThreadInfo threadInfo;
+	private LoggerContext loggerContext;
+	private Long sequenceNumber;
+	private Long timeStamp;
 
 	public LoggingEvent()
 	{
