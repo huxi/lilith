@@ -52,12 +52,41 @@ public class LoggingXmlEncoder
 {
 	private LoggingEventWriter loggingEventWriter;
 	private boolean compressing;
+	private boolean sortingMaps;
 
 	public LoggingXmlEncoder(boolean compressing)
+	{
+		this(compressing, false);
+	}
+
+	public LoggingXmlEncoder(boolean compressing, boolean sortingMaps)
 	{
 		this.compressing = compressing;
 		loggingEventWriter = new LoggingEventWriter();
 		loggingEventWriter.setWritingSchemaLocation(false);
+		setCompressing(compressing);
+		setSortingMaps(sortingMaps);
+	}
+
+	public boolean isCompressing()
+	{
+		return compressing;
+	}
+
+	public void setCompressing(boolean compressing)
+	{
+		this.compressing = compressing;
+	}
+
+	public boolean isSortingMaps()
+	{
+		return sortingMaps;
+	}
+
+	public void setSortingMaps(boolean sortingMaps)
+	{
+		this.sortingMaps = sortingMaps;
+		loggingEventWriter.setSortingMaps(sortingMaps);
 	}
 
 	public byte[] encode(LoggingEvent event)

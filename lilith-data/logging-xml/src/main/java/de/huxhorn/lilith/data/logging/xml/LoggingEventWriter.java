@@ -60,7 +60,7 @@ public class LoggingEventWriter
 {
 	private String preferredPrefix;
 	private String prefix;
-	private boolean sortingMdcValues;
+	private boolean sortingMaps;
 	private DateTimeFormatter dateTimeFormatter;
 	private boolean writingSchemaLocation;
 	private TimeStampType timeStampType;
@@ -89,14 +89,14 @@ public class LoggingEventWriter
 		this.timeStampType = timeStampType;
 	}
 
-	public boolean isSortingMdcValues()
+	public boolean isSortingMaps()
 	{
-		return sortingMdcValues;
+		return sortingMaps;
 	}
 
-	public void setSortingMdcValues(boolean sortingMdcValues)
+	public void setSortingMaps(boolean sortingMaps)
 	{
-		this.sortingMdcValues = sortingMdcValues;
+		this.sortingMaps = sortingMaps;
 	}
 
 	public boolean isWritingSchemaLocation()
@@ -313,7 +313,7 @@ public class LoggingEventWriter
 	{
 		if(map != null)
 		{
-			if(sortingMdcValues)
+			if(sortingMaps)
 			{
 				map = new TreeMap<String, String>(map);
 			}

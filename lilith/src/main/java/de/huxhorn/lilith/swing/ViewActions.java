@@ -23,6 +23,8 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
+import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.services.clipboard.AccessUriFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
@@ -55,6 +57,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -588,6 +591,8 @@ public class ViewActions
 	//private StatisticsToolBarAction statisticsToolBarAction;
 	private CopySelectionAction copySelectionAction;
 	private CopyToClipboardAction copyEventAction;
+	private CopyToClipboardAction copyLoggingJsonEventAction;
+	private CopyToClipboardAction copyLoggingXmlEventAction;
 	private CopyToClipboardAction copyLoggingMessageAction;
 	private CopyToClipboardAction copyLoggingMessagePatternAction;
 	private CopyToClipboardAction copyLoggingThrowableAction;
@@ -680,6 +685,8 @@ public class ViewActions
 		gotoSourceAction = new GotoSourceAction();
 		copySelectionAction = new CopySelectionAction();
 		copyEventAction = new CopyToClipboardAction(new EventFormatter());
+		copyLoggingJsonEventAction = new CopyToClipboardAction(new EventJsonFormatter());
+		copyLoggingXmlEventAction = new CopyToClipboardAction(new EventXmlFormatter());
 		copyLoggingMessageAction = new CopyToClipboardAction(new LoggingMessageFormatter());
 		copyLoggingMessagePatternAction = new CopyToClipboardAction(new LoggingMessagePatternFormatter());
 		copyLoggerNameAction = new CopyToClipboardAction(new LoggingLoggerNameFormatter());
@@ -824,6 +831,8 @@ public class ViewActions
 		editMenu.addSeparator();
 		editMenu.add(copyEventAction);
 		editMenu.addSeparator();
+		editMenu.add(copyLoggingJsonEventAction);
+		editMenu.add(copyLoggingXmlEventAction);
 		editMenu.add(copyLoggingMessageAction);
 		editMenu.add(copyLoggingMessagePatternAction);
 		editMenu.add(copyLoggerNameAction);
@@ -1450,6 +1459,8 @@ public class ViewActions
 		copyPopupMenu.addSeparator();
 		copyPopupMenu.add(new JMenuItem(copyEventAction));
 		copyPopupMenu.addSeparator();
+		copyPopupMenu.add(new JMenuItem(copyLoggingJsonEventAction));
+		copyPopupMenu.add(new JMenuItem(copyLoggingXmlEventAction));
 		copyPopupMenu.add(new JMenuItem(copyLoggingMessageAction));
 		copyPopupMenu.add(new JMenuItem(copyLoggingMessagePatternAction));
 		copyPopupMenu.add(new JMenuItem(copyLoggerNameAction));
@@ -1488,6 +1499,8 @@ public class ViewActions
 		this.eventWrapper = wrapper;
 		gotoSourceAction.setEventWrapper(wrapper);
 		copyEventAction.setEventWrapper(wrapper);
+		copyLoggingJsonEventAction.setEventWrapper(wrapper);
+		copyLoggingXmlEventAction.setEventWrapper(wrapper);
 		copyLoggingMessageAction.setEventWrapper(wrapper);
 		copyLoggingMessagePatternAction.setEventWrapper(wrapper);
 		copyLoggerNameAction.setEventWrapper(wrapper);
@@ -3735,7 +3748,7 @@ public class ViewActions
 
 		public String getDescription()
 		{
-			return "Copies the event to the clipboard.";
+			return "Copies the HTML code of this events details view to the clipboard.";
 		}
 
 		public String getAccelerator()
@@ -3765,6 +3778,119 @@ public class ViewActions
 		}
 	}
 
+	private class EventJsonFormatter
+		implements ClipboardFormatter
+	{
+		private static final long serialVersionUID = 2263706767713579277L;
+
+		private LoggingJsonEncoder encoder = new LoggingJsonEncoder(false, true);
+
+		public String getName()
+		{
+			return "Copy event as JSON";
+		}
+
+		public String getDescription()
+		{
+			return "Copies the JSON representation of the event to the clipboard.";
+		}
+
+		public String getAccelerator()
+		{
+			return null;
+		}
+
+		public boolean isCompatible(Object object)
+		{
+			if(object instanceof EventWrapper)
+			{
+				EventWrapper wrapper = (EventWrapper) object;
+				Object eventObj = wrapper.getEvent();
+				return eventObj instanceof LoggingEvent;
+			}
+			return false;
+		}
+
+		public String toString(Object object)
+		{
+			if(object instanceof EventWrapper)
+			{
+				EventWrapper wrapper = (EventWrapper) object;
+				Serializable ser = wrapper.getEvent();
+				if(ser instanceof LoggingEvent)
+				{
+					LoggingEvent event = (LoggingEvent) ser;
+					byte[] bytes = encoder.encode(event);
+					try
+					{
+						return new String(bytes, "UTF-8");
+					}
+					catch(UnsupportedEncodingException e)
+					{
+						if(logger.isErrorEnabled()) logger.error("Couldn't create UTF-8 string!", e);
+					}
+				}
+			}
+			return null;
+		}
+	}
+
+	private class EventXmlFormatter
+		implements ClipboardFormatter
+	{
+		private static final long serialVersionUID = 2263706767713579277L;
+
+		private LoggingXmlEncoder encoder = new LoggingXmlEncoder(false, true);
+
+		public String getName()
+		{
+			return "Copy event as XML";
+		}
+
+		public String getDescription()
+		{
+			return "Copies the XML representation of the event to the clipboard.";
+		}
+
+		public String getAccelerator()
+		{
+			return null;
+		}
+
+		public boolean isCompatible(Object object)
+		{
+			if(object instanceof EventWrapper)
+			{
+				EventWrapper wrapper = (EventWrapper) object;
+				Object eventObj = wrapper.getEvent();
+				return eventObj instanceof LoggingEvent;
+			}
+			return false;
+		}
+
+		public String toString(Object object)
+		{
+			if(object instanceof EventWrapper)
+			{
+				EventWrapper wrapper = (EventWrapper) object;
+				Serializable ser = wrapper.getEvent();
+				if(ser instanceof LoggingEvent)
+				{
+					LoggingEvent event = (LoggingEvent) ser;
+					byte[] bytes = encoder.encode(event);
+					try
+					{
+						return new String(bytes, "UTF-8");
+					}
+					catch(UnsupportedEncodingException e)
+					{
+						if(logger.isErrorEnabled()) logger.error("Couldn't create UTF-8 string!", e);
+					}
+				}
+			}
+			return null;
+		}
+	}
 
 	private class CopyToClipboardAction
 		extends AbstractAction

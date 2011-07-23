@@ -50,6 +50,7 @@ import de.huxhorn.lilith.data.logging.json.mixin.MessageMixIn;
 import de.huxhorn.lilith.data.logging.json.mixin.ThreadInfoMixIn;
 import de.huxhorn.sulky.codec.Encoder;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -59,19 +60,55 @@ public class LoggingJsonEncoder
 	implements Encoder<LoggingEvent>
 {
 	private boolean compressing;
+	private boolean indenting;
 	private ObjectMapper mapper;
 
 	public LoggingJsonEncoder(boolean compressing)
 	{
-		this.compressing = compressing;
+		this(compressing, false);
+	}
+
+	public LoggingJsonEncoder(boolean compressing, boolean indenting)
+	{
 		mapper = new ObjectMapper();
-		mapper.getSerializationConfig().addMixInAnnotations(Message.class, MessageMixIn.class);
-		mapper.getSerializationConfig().addMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
-		mapper.getSerializationConfig().addMixInAnnotations(LoggerContext.class, LoggerContextMixIn.class);
-		mapper.getSerializationConfig().addMixInAnnotations(Marker.class, MarkerMixIn.class);
-		mapper.getSerializationConfig().addMixInAnnotations(ThreadInfo.class, ThreadInfoMixIn.class);
-		mapper.getSerializationConfig().addMixInAnnotations(LoggingEvent.class, LoggingEventMixIn.class);
-		mapper.getSerializationConfig().addMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
+		SerializationConfig serializationConfig = mapper.getSerializationConfig();
+		serializationConfig.addMixInAnnotations(Message.class, MessageMixIn.class);
+		serializationConfig.addMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
+		serializationConfig.addMixInAnnotations(LoggerContext.class, LoggerContextMixIn.class);
+		serializationConfig.addMixInAnnotations(Marker.class, MarkerMixIn.class);
+		serializationConfig.addMixInAnnotations(ThreadInfo.class, ThreadInfoMixIn.class);
+		serializationConfig.addMixInAnnotations(LoggingEvent.class, LoggingEventMixIn.class);
+		serializationConfig.addMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
+		setCompressing(compressing);
+		setIndenting(indenting);
+	}
+
+	public boolean isCompressing()
+	{
+		return compressing;
+	}
+
+	public void setCompressing(boolean compressing)
+	{
+		this.compressing = compressing;
+	}
+
+	public boolean isIndenting()
+	{
+		return indenting;
+	}
+
+	public void setIndenting(boolean indenting)
+	{
+		this.indenting = indenting;
+		if(indenting)
+		{
+			mapper.getSerializationConfig().enable(SerializationConfig.Feature.INDENT_OUTPUT);
+		}
+		else
+		{
+			mapper.getSerializationConfig().disable(SerializationConfig.Feature.INDENT_OUTPUT);
+		}
 	}
 
 	public byte[] encode(LoggingEvent event)
@@ -92,7 +129,7 @@ public class LoggingJsonEncoder
 		}
 		catch(IOException ex)
 		{
-			ex.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			ex.printStackTrace();
 		}
 		return null;
 	}

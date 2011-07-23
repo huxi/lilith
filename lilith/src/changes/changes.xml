@@ -77,9 +77,6 @@
 
 		<release version="0.9.42" date="TBD" description="Future Release">
 			<action dev="jhux" type="update">
-				Logback 0.9.29
-			</action>
-			<action dev="jhux" type="update">
 				tail and cat are now fully supporting both LoggingEvent and AccessEvent.
 			</action>
 			<action dev="jhux" type="update">
@@ -89,9 +86,6 @@
 				Added support for new Java SE 7 try-with-resources statement suppressed Throwables.
 				See http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html
 				This is not sufficient, yet, since Logback (and my corresponding converter) needs to add support, too.
-			</action>
-			<action dev="jhux" type="update">
-				protobuf-java 2.4.1
 			</action>
 			<action dev="jhux" type="fix" issue="97">
 				After many runs that replace opened log file, Updating task fails with "Negative seek offset"
@@ -103,11 +97,12 @@
 			<action dev="jhux" type="update">
 				"Edit", "Copy..." and "Filter..." menus are only enabled if it makes sense.
 			</action>
-			<action dev="jhux" type="update">
-				Groovy 1.8.1
+			<action dev="jhux" type="add">
+				Added "Copy event as JSON" and "Copy event as XML".
+				This was requested by Joe.
 			</action>
 			<action dev="jhux" type="update">
-				commons-lang 3.0
+				Logback 0.9.29, Groovy 1.8.1, commons-lang 3.0, protobuf-java 2.4.1
 			</action>
 		</release>
 
