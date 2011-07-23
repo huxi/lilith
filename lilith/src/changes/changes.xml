@@ -101,6 +101,9 @@
 				Added "Copy event as JSON" and "Copy event as XML".
 				This was requested by Joe.
 			</action>
+			<action dev="jhux" type="add">
+				Added lilith.timestamp.milliseconds system property.
+			</action>
 			<action dev="jhux" type="update">
 				Logback 0.9.29, Groovy 1.8.1, commons-lang 3.0,
 				protobuf-java 2.4.1, jackson 1.8.3, jcommander 1.18,

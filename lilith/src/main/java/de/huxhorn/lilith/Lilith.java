@@ -179,6 +179,10 @@ public class Lilith
 		{
 			System.setProperty("lilith.version", APP_VERSION);
 		}
+		if(APP_TIMESTAMP > -1)
+		{
+			System.setProperty("lilith.timestamp.milliseconds", ""+APP_TIMESTAMP);
+		}
 		if(APP_TIMESTAMP_DATE != null)
 		{
 			System.setProperty("lilith.timestamp", APP_TIMESTAMP_DATE);
