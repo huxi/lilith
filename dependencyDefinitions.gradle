@@ -26,7 +26,7 @@ libraries = [
 'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
 'jackson-core':             "org.codehaus.jackson:jackson-core-lgpl:${versions.jackson}",
 'jackson-mapper':           "org.codehaus.jackson:jackson-mapper-lgpl:${versions.jackson}",
-'jcommander':               'com.beust:jcommander:1.17',
+'jcommander':               'com.beust:jcommander:1.18',
 'jgoodies-looks':           'com.jgoodies:looks:2.2.2',
 'joda-time':                'joda-time:joda-time:1.6.2',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
