@@ -3783,7 +3783,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 2263706767713579277L;
 
-		private LoggingJsonEncoder encoder = new LoggingJsonEncoder(false, true);
+		private LoggingJsonEncoder encoder = new LoggingJsonEncoder(false, true, true);
 
 		public String getName()
 		{

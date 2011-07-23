@@ -61,14 +61,15 @@ public class LoggingJsonEncoder
 {
 	private boolean compressing;
 	private boolean indenting;
+	private boolean sortingProperties;
 	private ObjectMapper mapper;
 
 	public LoggingJsonEncoder(boolean compressing)
 	{
-		this(compressing, false);
+		this(compressing, false, false);
 	}
 
-	public LoggingJsonEncoder(boolean compressing, boolean indenting)
+	public LoggingJsonEncoder(boolean compressing, boolean indenting, boolean sortingProperties)
 	{
 		mapper = new ObjectMapper();
 		SerializationConfig serializationConfig = mapper.getSerializationConfig();
@@ -81,6 +82,7 @@ public class LoggingJsonEncoder
 		serializationConfig.addMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
 		setCompressing(compressing);
 		setIndenting(indenting);
+		setSortingProperties(sortingProperties);
 	}
 
 	public boolean isCompressing()
@@ -108,6 +110,24 @@ public class LoggingJsonEncoder
 		else
 		{
 			mapper.getSerializationConfig().disable(SerializationConfig.Feature.INDENT_OUTPUT);
+		}
+	}
+
+	public boolean isSortingProperties()
+	{
+		return sortingProperties;
+	}
+
+	public void setSortingProperties(boolean sortingProperties)
+	{
+		this.sortingProperties = sortingProperties;
+		if(indenting)
+		{
+			mapper.getSerializationConfig().enable(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
+		}
+		else
+		{
+			mapper.getSerializationConfig().disable(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
 		}
 	}
 
