@@ -3850,11 +3850,20 @@ public class MainFrame
 		public void run()
 		{
 			VersionBundle releaseVersionBundle = retrieveVersion(RELEASE_VERSION_URL);
-
-			if(Lilith.APP_VERSION_BUNDLE.compareTo(releaseVersionBundle)<0)
+			int compare = Lilith.APP_VERSION_BUNDLE.compareTo(releaseVersionBundle);
+			if(compare<0)
 			{
 				String version = releaseVersionBundle.getVersion();
 				String message = "New release: " + version;
+				String changes = retrieveChanges(version);
+				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+				return;
+			}
+
+			if(!Lilith.APP_SNAPSHOT && compare>0)
+			{
+				String version = releaseVersionBundle.getVersion();
+				String message = "OH HAI! You can haz newzest release version!!1";
 				String changes = retrieveChanges(version);
 				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
 				return;
@@ -3864,7 +3873,7 @@ public class MainFrame
 			{
 				// check for snapshot if either checking is enabled or we are already using a snapshot
 				VersionBundle snapshotVersionBundle = retrieveVersion(SNAPSHOT_VERSION_URL);
-				int compare = Lilith.APP_VERSION_BUNDLE.compareTo(snapshotVersionBundle);
+				compare = Lilith.APP_VERSION_BUNDLE.compareTo(snapshotVersionBundle);
 				if(compare<0)
 				{
 					String version = snapshotVersionBundle.getVersion();
@@ -3876,13 +3885,15 @@ public class MainFrame
 					SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
 					return;
 				}
-				else if(compare>0)
+
+				if(compare>0)
 				{
 					String version = snapshotVersionBundle.getVersion();
 
-					String message = "OH HAI! You can haz newzest version!!1";
+					String message = "OH HAI! You can haz newzest snapshot version!!1";
 					String changes = retrieveChanges(version);
 					SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+					return;
 				}
 			}
 
