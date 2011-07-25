@@ -105,6 +105,14 @@
 				Added lilith.timestamp.milliseconds system property.
 			</action>
 			<action dev="jhux" type="update">
+				Preventing multiple warning log-entries in case of broken groovy files
+				(detailsView.groovy, Conditions, ClipboardFormatter).
+				Instead, a warning is only emitted once for every file change.
+				Instances aren't recreated in that case, either, so this
+				also enhances the performance and lowers the CPU usage during
+				general use.
+			</action>
+			<action dev="jhux" type="update">
 				Logback 0.9.29, Groovy 1.8.1, commons-lang 3.0,
 				protobuf-java 2.4.1, jackson 1.8.3, jcommander 1.18,
 				aspectj 1.6.11

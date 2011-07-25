@@ -44,12 +44,7 @@ public class GroovyFormatter
 
 	private ClipboardFormatter getFormatter()
 	{
-		Object instance = groovyInstance.getInstance();
-		if(instance instanceof ClipboardFormatter)
-		{
-			return (ClipboardFormatter) instance;
-		}
-		return null;
+		return groovyInstance.getInstanceAs(ClipboardFormatter.class);
 	}
 
 	public String getName()

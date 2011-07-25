@@ -2036,29 +2036,36 @@ public class MainFrame
 
 
 
+	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
 	public String createMessage(EventWrapper wrapper)
 	{
-		String message = "<html><body>detailsView Script returned null!</body></html>";
+		String message;
 
-		Object instance = detailsViewInstance.getInstance();
+		Script instance = detailsViewInstance.getInstanceAs(Script.class);
 		if(instance == null)
 		{
 			StringBuilder msg = new StringBuilder("<html><body>detailsView Script is broken!");
 			String errorMessage = detailsViewInstance.getErrorMessage();
 			if(errorMessage != null)
 			{
-				msg.append("<br/>").append(message);
+				errorMessage = SimpleXml.escape(errorMessage);
+
+				msg.append("<br/>").append(errorMessage);
 			}
 			Throwable errorCause = detailsViewInstance.getErrorCause();
 			if(errorCause != null)
 			{
-				msg.append("<br/>").append(errorCause);
+				String exceptionStr=errorCause.toString();
+
+				exceptionStr = SimpleXml.escape(exceptionStr);
+
+				msg.append("<br/>").append(exceptionStr);
 			}
 			msg.append("</body></html>");
+			message = msg.toString();
 		}
-		else if(instance instanceof Script)
+		else
 		{
-			Script detailsViewScript = (Script) instance;
 			try
 			{
 				Binding binding = new Binding();
@@ -2067,8 +2074,8 @@ public class MainFrame
 				binding.setVariable("completeCallStack", applicationPreferences.isShowingFullCallstack());
 				binding.setVariable("showStackTrace", applicationPreferences.isShowingStackTrace());
 
-				detailsViewScript.setBinding(binding);
-				Object result = detailsViewScript.run();
+				instance.setBinding(binding);
+				Object result = instance.run();
 				if(result instanceof String)
 				{
 					message = (String) result;
@@ -2077,22 +2084,23 @@ public class MainFrame
 				{
 					message = result.toString();
 				}
+				else
+				{
+					message = "<html><body>detailsView Script returned null!</body></html>";
+				}
 			}
 			catch(Throwable t)
 			{
 				StringBuilder msg = new StringBuilder("<html><body>Exception while executing detailsView Script!");
-				msg.append("<br/>").append(t);
+				String exceptionStr=t.toString();
+
+				exceptionStr = SimpleXml.escape(exceptionStr);
+
+				msg.append("<br/>").append(exceptionStr);
 				msg.append("</body></html>");
 				message = msg.toString();
 				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
 			}
-		}
-		else
-		{
-			StringBuilder msg = new StringBuilder("<html><body>Expected Script but got ").append(instance.getClass().getName()).append("!");
-			msg.append("</body></html>");
-			message = msg.toString();
-			if(logger.isWarnEnabled()) logger.warn("Expected a Script but got {}!", instance.getClass().getName());
 		}
 
 		if(logger.isDebugEnabled()) logger.debug("Message:\n{}", message);
