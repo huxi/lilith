@@ -457,7 +457,7 @@ project(':lilith') {
 			'Main-Class': "${mainClassName}"
 		)
 
-		from (sourceSets.main.classesDir)
+		from (sourceSets.main.output.classesDir)
 
 		doFirst {  // <- note the doFirst
 			// the following must be executed in doFirst since the configuration
