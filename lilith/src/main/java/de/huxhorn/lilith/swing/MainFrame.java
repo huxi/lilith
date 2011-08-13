@@ -2091,6 +2091,7 @@ public class MainFrame
 			}
 			catch(Throwable t)
 			{
+				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
 				StringBuilder msg = new StringBuilder("<html><body>Exception while executing detailsView Script!");
 				String exceptionStr=t.toString();
 
@@ -2099,7 +2100,6 @@ public class MainFrame
 				msg.append("<br/>").append(exceptionStr);
 				msg.append("</body></html>");
 				message = msg.toString();
-				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
 			}
 		}
 
