@@ -113,7 +113,7 @@
 				general use.
 			</action>
 			<action dev="jhux" type="update">
-				Logback 0.9.29, Groovy 1.8.1, commons-lang 3.0.1,
+				SLF4J 1.6.2, Logback 0.9.29, Groovy 1.8.1, commons-lang 3.0.1,
 				protobuf-java 2.4.1, jackson 1.8.5, jcommander 1.18,
 				aspectj 1.6.11, cglib 2.2.2, httpclient 4.1.2, httpcore 4.1.3,
 				commons-codec 1.5

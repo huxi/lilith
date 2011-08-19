@@ -5,7 +5,7 @@ versions = [
 'jackson':        '1.8.5',
 'log4j':          '1.2.16',
 'logback':        '0.9.29',
-'slf4j':          '1.6.1',
+'slf4j':          '1.6.2',
 'spring':         '3.0.5.RELEASE',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
