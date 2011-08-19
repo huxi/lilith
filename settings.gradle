@@ -10,8 +10,12 @@ include 'lilith-xml-logging'
 include 'slf4j'
 include 'tracing'
 
+def ignores = new HashSet<String>()
+ignores.add('xml-schema')
+ignores.add('target')
+
 new File(rootDir, "lilith-data").eachDir { dir ->
-	if(dir.name != 'xml-schema') {
+	if(!ignores.contains(dir.name)) {
 		def moduleName = "${dir.parentFile.name}-${dir.name}"
 		include "${moduleName}"
 		project(":${moduleName}").projectDir = dir
@@ -19,20 +23,26 @@ new File(rootDir, "lilith-data").eachDir { dir ->
 }
 
 new File(rootDir, 'jul').eachDir { dir ->
-	def moduleName = "${dir.name}"
-	include "${moduleName}"
-	project(":${moduleName}").projectDir = dir
+	if(!ignores.contains(dir.name)) {
+		def moduleName = "${dir.name}"
+		include "${moduleName}"
+		project(":${moduleName}").projectDir = dir
+	}
 }
 
 new File(rootDir, 'log4j').eachDir { dir ->
-	def moduleName = "${dir.name}"
-	include "${moduleName}"
-	project(":${moduleName}").projectDir = dir
+	if(!ignores.contains(dir.name)) {
+		def moduleName = "${dir.name}"
+		include "${moduleName}"
+		project(":${moduleName}").projectDir = dir
+	}
 }
 
 new File(rootDir, "logback").eachDir { dir ->
-	def moduleName = "${dir.parentFile.name}-${dir.name}"
-	include "${moduleName}"
-	project(":${moduleName}").projectDir = dir
+	if(!ignores.contains(dir.name)) {
+		def moduleName = "${dir.parentFile.name}-${dir.name}"
+		include "${moduleName}"
+		project(":${moduleName}").projectDir = dir
+	}
 }
 
