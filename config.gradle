@@ -340,6 +340,7 @@ project(':lilith') {
 	mainClassName = 'de.huxhorn.lilith.Lilith'
 
 	// added 'clean' because changed resources aren't picked up by jar etc.
+	// http://issues.gradle.org/browse/GRADLE-1298
 	compileJava.dependsOn clean
 
 	jar {
