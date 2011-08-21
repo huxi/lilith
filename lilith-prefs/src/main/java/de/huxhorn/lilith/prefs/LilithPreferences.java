@@ -71,6 +71,7 @@ public class LilithPreferences
 	private boolean usingInternalFrames = true;
 	private SourceFiltering sourceFiltering;
 	private String defaultConditionName;
+	private boolean usingWrappedExceptionStyle = false;
 
 	public Map<String, byte[]> getGroovyConditions()
 	{
@@ -400,6 +401,16 @@ public class LilithPreferences
 	public void setHidingOnClose(boolean hidingOnClose)
 	{
 		this.hidingOnClose = hidingOnClose;
+	}
+
+	public boolean isUsingWrappedExceptionStyle()
+	{
+		return usingWrappedExceptionStyle;
+	}
+
+	public void setUsingWrappedExceptionStyle(boolean usingWrappedExceptionStyle)
+	{
+		this.usingWrappedExceptionStyle = usingWrappedExceptionStyle;
 	}
 
 	public static enum SourceFiltering

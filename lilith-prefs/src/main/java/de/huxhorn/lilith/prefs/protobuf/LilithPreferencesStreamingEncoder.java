@@ -127,6 +127,7 @@ public class LilithPreferencesStreamingEncoder
 		prefs.setShowingIdentifier(p.isShowingIdentifier());
 		prefs.setShowingStatusbar(p.isShowingStatusbar());
 		prefs.setShowingStacktrace(p.isShowingStackTrace());
+		prefs.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());
 		prefs.setShowingTipOfTheDay(p.isShowingTipOfTheDay());
 		prefs.setShowingToolbar(p.isShowingToolbar());
 		prefs.setSplashScreenDisabled(p.isSplashScreenDisabled());

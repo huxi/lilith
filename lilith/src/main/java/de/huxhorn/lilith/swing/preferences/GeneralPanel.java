@@ -45,6 +45,7 @@ public class GeneralPanel
 	// Details view
 	private JCheckBox showFullCallstackCheckbox;
 	private JCheckBox showStackTraceCheckbox;
+	private JCheckBox usingWrappedExceptionStyleCheckbox;
 
 	// ???
 	private JFileChooser applicationPathFileChooser;
@@ -72,6 +73,7 @@ public class GeneralPanel
 
 		showFullCallstackCheckbox = new JCheckBox("Show full Callstack.");
 		showStackTraceCheckbox = new JCheckBox("Show stacktrace of Throwables");
+		usingWrappedExceptionStyleCheckbox = new JCheckBox("Use wrapped exception style.");
 
 		applicationPathFileChooser = new JFileChooser();
 		applicationPathFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -116,10 +118,11 @@ public class GeneralPanel
 		viewPanel.add(scrollingToBottomCheckbox);
 		viewPanel.add(coloringWholeRowCheckbox);
 
-		JPanel detailsPanel = new JPanel(new GridLayout(2, 1));
+		JPanel detailsPanel = new JPanel(new GridLayout(3, 1));
 		detailsPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Details View"));
 		detailsPanel.add(showFullCallstackCheckbox);
 		detailsPanel.add(showStackTraceCheckbox);
+		detailsPanel.add(usingWrappedExceptionStyleCheckbox);
 
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 		defaultConditionCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Default search condition"));
@@ -169,6 +172,7 @@ public class GeneralPanel
 		coloringWholeRowCheckbox.setSelected(applicationPreferences.isColoringWholeRow());
 		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
 		showStackTraceCheckbox.setSelected(applicationPreferences.isShowingStackTrace());
+		usingWrappedExceptionStyleCheckbox.setSelected(applicationPreferences.isUsingWrappedExceptionStyle());
 
 		// look and feel
 		{
@@ -232,6 +236,7 @@ public class GeneralPanel
 		applicationPreferences.setColoringWholeRow(coloringWholeRowCheckbox.isSelected());
 		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
 		applicationPreferences.setShowingStackTrace(showStackTraceCheckbox.isSelected());
+		applicationPreferences.setUsingWrappedExceptionStyle(usingWrappedExceptionStyleCheckbox.isSelected());
 
 		applicationPreferences.setLookAndFeel((String) lookAndFeelCombo.getSelectedItem());
 		applicationPreferences.setDefaultConditionName((String) defaultConditionCombo.getSelectedItem());

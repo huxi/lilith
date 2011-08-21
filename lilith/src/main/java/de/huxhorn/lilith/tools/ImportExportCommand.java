@@ -231,6 +231,7 @@ public class ImportExportCommand
 		p.setMute(prefs.isMute());
 		p.setScrollingToBottom(prefs.isScrollingToBottom());
 		p.setShowingFullCallstack(prefs.isShowingFullCallstack());
+		p.setUsingWrappedExceptionStyle(prefs.isUsingWrappedExceptionStyle());
 		p.setShowingFullRecentPath(prefs.isShowingFullRecentPath());
 		p.setShowingIdentifier(prefs.isShowingIdentifier());
 		p.setShowingStatusbar(prefs.isShowingStatusbar());
@@ -284,6 +285,7 @@ public class ImportExportCommand
 		prefs.setMute(p.isMute());
 		prefs.setScrollingToBottom(p.isScrollingToBottom());
 		prefs.setShowingFullCallstack(p.isShowingFullCallstack());
+		prefs.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());
 		prefs.setShowingFullRecentPath(p.isShowingFullRecentPath());
 		prefs.setShowingIdentifier(p.isShowingIdentifier());
 		prefs.setShowingStatusbar(p.isShowingStatusbar());

@@ -187,6 +187,10 @@ public class LilithPreferencesStreamingDecoder
 		{
 			prefs.setShowingStackTrace(p.getShowingStacktrace());
 		}
+		if(p.hasUsingWrappedExceptionStyle())
+		{
+			prefs.setUsingWrappedExceptionStyle(p.getUsingWrappedExceptionStyle());
+		}
 		if(p.hasShowingTipOfTheDay())
 		{
 			prefs.setShowingTipOfTheDay(p.getShowingTipOfTheDay());

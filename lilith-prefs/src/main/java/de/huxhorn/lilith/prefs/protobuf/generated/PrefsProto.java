@@ -218,6 +218,10 @@ public final class PrefsProto {
     // optional bool hiding_on_close = 34;
     boolean hasHidingOnClose();
     boolean getHidingOnClose();
+    
+    // optional bool using_wrapped_exception_style = 35;
+    boolean hasUsingWrappedExceptionStyle();
+    boolean getUsingWrappedExceptionStyle();
   }
   public static final class LilithPreferences extends
       com.google.protobuf.GeneratedMessage
@@ -679,6 +683,16 @@ public final class PrefsProto {
       return hidingOnClose_;
     }
     
+    // optional bool using_wrapped_exception_style = 35;
+    public static final int USING_WRAPPED_EXCEPTION_STYLE_FIELD_NUMBER = 35;
+    private boolean usingWrappedExceptionStyle_;
+    public boolean hasUsingWrappedExceptionStyle() {
+      return ((bitField1_ & 0x00000002) == 0x00000002);
+    }
+    public boolean getUsingWrappedExceptionStyle() {
+      return usingWrappedExceptionStyle_;
+    }
+    
     private void initFields() {
       groovyConditions_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
       detailsView_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
@@ -713,6 +727,7 @@ public final class PrefsProto {
       trayActive_ = false;
       showingFullRecentPath_ = false;
       hidingOnClose_ = false;
+      usingWrappedExceptionStyle_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -848,6 +863,9 @@ public final class PrefsProto {
       }
       if (((bitField1_ & 0x00000001) == 0x00000001)) {
         output.writeBool(34, hidingOnClose_);
+      }
+      if (((bitField1_ & 0x00000002) == 0x00000002)) {
+        output.writeBool(35, usingWrappedExceptionStyle_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -989,6 +1007,10 @@ public final class PrefsProto {
       if (((bitField1_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(34, hidingOnClose_);
+      }
+      if (((bitField1_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(35, usingWrappedExceptionStyle_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1200,6 +1222,8 @@ public final class PrefsProto {
         bitField0_ = (bitField0_ & ~0x80000000);
         hidingOnClose_ = false;
         bitField1_ = (bitField1_ & ~0x00000001);
+        usingWrappedExceptionStyle_ = false;
+        bitField1_ = (bitField1_ & ~0x00000002);
         return this;
       }
       
@@ -1388,6 +1412,10 @@ public final class PrefsProto {
           to_bitField1_ |= 0x00000001;
         }
         result.hidingOnClose_ = hidingOnClose_;
+        if (((from_bitField1_ & 0x00000002) == 0x00000002)) {
+          to_bitField1_ |= 0x00000002;
+        }
+        result.usingWrappedExceptionStyle_ = usingWrappedExceptionStyle_;
         result.bitField0_ = to_bitField0_;
         result.bitField1_ = to_bitField1_;
         onBuilt();
@@ -1503,6 +1531,9 @@ public final class PrefsProto {
         }
         if (other.hasHidingOnClose()) {
           setHidingOnClose(other.getHidingOnClose());
+        }
+        if (other.hasUsingWrappedExceptionStyle()) {
+          setUsingWrappedExceptionStyle(other.getUsingWrappedExceptionStyle());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1744,6 +1775,11 @@ public final class PrefsProto {
             case 272: {
               bitField1_ |= 0x00000001;
               hidingOnClose_ = input.readBool();
+              break;
+            }
+            case 280: {
+              bitField1_ |= 0x00000002;
+              usingWrappedExceptionStyle_ = input.readBool();
               break;
             }
           }
@@ -2781,6 +2817,27 @@ public final class PrefsProto {
       public Builder clearHidingOnClose() {
         bitField1_ = (bitField1_ & ~0x00000001);
         hidingOnClose_ = false;
+        onChanged();
+        return this;
+      }
+      
+      // optional bool using_wrapped_exception_style = 35;
+      private boolean usingWrappedExceptionStyle_ ;
+      public boolean hasUsingWrappedExceptionStyle() {
+        return ((bitField1_ & 0x00000002) == 0x00000002);
+      }
+      public boolean getUsingWrappedExceptionStyle() {
+        return usingWrappedExceptionStyle_;
+      }
+      public Builder setUsingWrappedExceptionStyle(boolean value) {
+        bitField1_ |= 0x00000002;
+        usingWrappedExceptionStyle_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearUsingWrappedExceptionStyle() {
+        bitField1_ = (bitField1_ & ~0x00000002);
+        usingWrappedExceptionStyle_ = false;
         onChanged();
         return this;
       }
@@ -6868,7 +6925,7 @@ public final class PrefsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\"src/main/protobuf/PrefsProto.proto\022\027de" +
-      ".huxhorn.lilith.prefs\"\376\010\n\021LilithPreferen" +
+      ".huxhorn.lilith.prefs\"\245\t\n\021LilithPreferen" +
       "ces\022D\n\021groovy_conditions\030\001 \001(\0132).de.huxh" +
       "orn.lilith.prefs.DirectoryContent\022?\n\014det" +
       "ails_view\030\002 \001(\0132).de.huxhorn.lilith.pref" +
@@ -6897,23 +6954,24 @@ public final class PrefsProto {
       "tters\030\037 \001(\0132).de.huxhorn.lilith.prefs.Di" +
       "rectoryContent\022\023\n\013tray_active\030  \001(\010\022 \n\030s" +
       "howing_full_recent_path\030! \001(\010\022\027\n\017hiding_",
-      "on_close\030\" \001(\010\"\231\001\n\020DirectoryContent\022\014\n\004n" +
-      "ame\030\001 \001(\t\0229\n\005entry\030\002 \003(\0132*.de.huxhorn.li" +
-      "lith.prefs.ByteArrayMapEntry\022<\n\tdirector" +
-      "y\030\003 \003(\0132).de.huxhorn.lilith.prefs.Direct" +
-      "oryContent\"/\n\021ByteArrayMapEntry\022\013\n\003key\030\001" +
-      " \002(\t\022\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n\005entr" +
-      "y\030\001 \003(\0132\'.de.huxhorn.lilith.prefs.String" +
-      "MapEntry\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022" +
-      "\r\n\005value\030\002 \001(\t\"M\n\016StringArrayMap\022;\n\005entr" +
-      "y\030\001 \003(\0132,.de.huxhorn.lilith.prefs.String",
-      "ArrayMapEntry\"\\\n\023StringArrayMapEntry\022\013\n\003" +
-      "key\030\001 \002(\t\0228\n\005value\030\002 \003(\0132).de.huxhorn.li" +
-      "lith.prefs.StringArrayValue\"!\n\020StringArr" +
-      "ayValue\022\r\n\005value\030\001 \001(\t*9\n\017SourceFilterin" +
-      "g\022\010\n\004NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020" +
-      "\002B.\n*de.huxhorn.lilith.prefs.protobuf.ge" +
-      "neratedH\001"
+      "on_close\030\" \001(\010\022%\n\035using_wrapped_exceptio" +
+      "n_style\030# \001(\010\"\231\001\n\020DirectoryContent\022\014\n\004na" +
+      "me\030\001 \001(\t\0229\n\005entry\030\002 \003(\0132*.de.huxhorn.lil" +
+      "ith.prefs.ByteArrayMapEntry\022<\n\tdirectory" +
+      "\030\003 \003(\0132).de.huxhorn.lilith.prefs.Directo" +
+      "ryContent\"/\n\021ByteArrayMapEntry\022\013\n\003key\030\001 " +
+      "\002(\t\022\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry" +
+      "\030\001 \003(\0132\'.de.huxhorn.lilith.prefs.StringM" +
+      "apEntry\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r" +
+      "\n\005value\030\002 \001(\t\"M\n\016StringArrayMap\022;\n\005entry",
+      "\030\001 \003(\0132,.de.huxhorn.lilith.prefs.StringA" +
+      "rrayMapEntry\"\\\n\023StringArrayMapEntry\022\013\n\003k" +
+      "ey\030\001 \002(\t\0228\n\005value\030\002 \003(\0132).de.huxhorn.lil" +
+      "ith.prefs.StringArrayValue\"!\n\020StringArra" +
+      "yValue\022\r\n\005value\030\001 \001(\t*9\n\017SourceFiltering" +
+      "\022\010\n\004NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020\002" +
+      "B.\n*de.huxhorn.lilith.prefs.protobuf.gen" +
+      "eratedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -6925,7 +6983,7 @@ public final class PrefsProto {
           internal_static_de_huxhorn_lilith_prefs_LilithPreferences_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_prefs_LilithPreferences_descriptor,
-              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", "TrayActive", "ShowingFullRecentPath", "HidingOnClose", },
+              new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", "TrayActive", "ShowingFullRecentPath", "HidingOnClose", "UsingWrappedExceptionStyle", },
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.class,
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences.Builder.class);
           internal_static_de_huxhorn_lilith_prefs_DirectoryContent_descriptor =

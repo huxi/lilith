@@ -24,45 +24,46 @@ option java_package = "de.huxhorn.lilith.prefs.protobuf.generated";
 //option java_multiple_files = true;
 
 message LilithPreferences {
-	optional DirectoryContent  groovy_conditions            =  1;
-	optional DirectoryContent  details_view                 =  2;
-	optional DirectoryContent  root_files                   =  3;
+	optional DirectoryContent  groovy_conditions             =  1;
+	optional DirectoryContent  details_view                  =  2;
+	optional DirectoryContent  root_files                    =  3;
 	
-	optional string            blacklist_name               =  4;
-	optional string            whitelist_name               =  5;
-	optional string            look_and_feel                =  6;
+	optional string            blacklist_name                =  4;
+	optional string            whitelist_name                =  5;
+	optional string            look_and_feel                 =  6;
 	
-	optional bool              asking_before_quit           =  7;
-	optional bool              auto_closing                 =  8;
-	optional bool              auto_focusing_window         =  9;
-	optional bool              auto_opening                 = 10;
-	optional bool              checking_for_update          = 11;
-	optional bool              cleaning_logs_on_exit        = 12;
-	optional bool              coloring_whole_row           = 13;
-	optional bool              global_logging_enabled       = 14;
-//	optional bool              licensed                     = 15;
-	optional bool              logging_statistic_enabled    = 16;
-	optional bool              maximizing_internal_frames   = 17;
-	optional bool              mute                         = 18;
-	optional bool              scrolling_to_bottom          = 19;
-	optional bool              showing_full_callstack       = 20;
-	optional bool              showing_identifier           = 21;
-	optional bool              showing_statusbar            = 22;
-	optional bool              showing_stacktrace           = 23;
-	optional bool              showing_tip_of_the_day       = 24;
-	optional bool              showing_toolbar              = 25;
-	optional bool              splash_screen_disabled       = 26;
-	optional bool              using_internal_frames        = 27;
+	optional bool              asking_before_quit            =  7;
+	optional bool              auto_closing                  =  8;
+	optional bool              auto_focusing_window          =  9;
+	optional bool              auto_opening                  = 10;
+	optional bool              checking_for_update           = 11;
+	optional bool              cleaning_logs_on_exit         = 12;
+	optional bool              coloring_whole_row            = 13;
+	optional bool              global_logging_enabled        = 14;
+//	optional bool              licensed                      = 15;
+	optional bool              logging_statistic_enabled     = 16;
+	optional bool              maximizing_internal_frames    = 17;
+	optional bool              mute                          = 18;
+	optional bool              scrolling_to_bottom           = 19;
+	optional bool              showing_full_callstack        = 20;
+	optional bool              showing_identifier            = 21;
+	optional bool              showing_statusbar             = 22;
+	optional bool              showing_stacktrace            = 23;
+	optional bool              showing_tip_of_the_day        = 24;
+	optional bool              showing_toolbar               = 25;
+	optional bool              splash_screen_disabled        = 26;
+	optional bool              using_internal_frames         = 27;
 	
-	optional SourceFiltering   source_filtering             = 28;
+	optional SourceFiltering   source_filtering              = 28;
 
-	optional string            default_condition_name       = 29;
-	optional bool              checking_for_snapshot        = 30;
+	optional string            default_condition_name        = 29;
+	optional bool              checking_for_snapshot         = 30;
 
-	optional DirectoryContent  groovy_clipboard_formatters  = 31;
-	optional bool              tray_active                  = 32;
-	optional bool              showing_full_recent_path     = 33;
-	optional bool              hiding_on_close              = 34;
+	optional DirectoryContent  groovy_clipboard_formatters   = 31;
+	optional bool              tray_active                   = 32;
+	optional bool              showing_full_recent_path      = 33;
+	optional bool              hiding_on_close               = 34;
+	optional bool              using_wrapped_exception_style = 35;
 }
 
 enum SourceFiltering {

@@ -107,6 +107,7 @@ public class ApplicationPreferences
 	public static final String SHOWING_STATUSBAR_PROPERTY = "showingStatusbar";
 	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
 	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
+	public static final String USING_WRAPPED_EXCEPTION_STYLE_PROPERTY = "usingWrappedExceptionStyle";
 	public static final String SHOWING_STACKTRACE_PROPERTY = "showingStackTrace";
 	public static final String CHECKING_FOR_UPDATE_PROPERTY = "checkingForUpdate";
 	public static final String CHECKING_FOR_SNAPSHOT_PROPERTY = "checkingForSnapshot";
@@ -1964,6 +1965,19 @@ public class ApplicationPreferences
 	public boolean isShowingFullCallstack()
 	{
 		return PREFERENCES.getBoolean(SHOWING_FULL_CALLSTACK_PROPERTY, DEFAULT_VALUES.isShowingFullCallstack());
+	}
+
+	public void setUsingWrappedExceptionStyle(boolean showingFullCallstack)
+	{
+		Object oldValue = isUsingWrappedExceptionStyle();
+		PREFERENCES.putBoolean(USING_WRAPPED_EXCEPTION_STYLE_PROPERTY, showingFullCallstack);
+		Object newValue = isUsingWrappedExceptionStyle();
+		propertyChangeSupport.firePropertyChange(USING_WRAPPED_EXCEPTION_STYLE_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isUsingWrappedExceptionStyle()
+	{
+		return PREFERENCES.getBoolean(USING_WRAPPED_EXCEPTION_STYLE_PROPERTY, DEFAULT_VALUES.isUsingWrappedExceptionStyle());
 	}
 
 	public void setShowingStackTrace(boolean showingStackTrace)

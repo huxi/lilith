@@ -2073,6 +2073,7 @@ public class MainFrame
 				binding.setVariable("logger", logger);
 				binding.setVariable("completeCallStack", applicationPreferences.isShowingFullCallstack());
 				binding.setVariable("showStackTrace", applicationPreferences.isShowingStackTrace());
+				binding.setVariable("wrappedExceptionStyle", applicationPreferences.isUsingWrappedExceptionStyle());
 
 				instance.setBinding(binding);
 				Object result = instance.run();
@@ -3037,6 +3038,12 @@ public class MainFrame
 			}
 
 			if(ApplicationPreferences.SHOWING_FULL_CALLSTACK_PROPERTY.equals(propName))
+			{
+				updateLoggingViews();
+				return;
+			}
+
+			if(ApplicationPreferences.USING_WRAPPED_EXCEPTION_STYLE_PROPERTY.equals(propName))
 			{
 				updateLoggingViews();
 				return;
