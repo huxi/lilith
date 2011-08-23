@@ -112,6 +112,9 @@
 				also enhances the performance and lowers the CPU usage during
 				general use.
 			</action>
+			<action dev="jhux" type="fix">
+				Views are now properly updated upon preferences change.
+			</action>
 			<action dev="jhux" type="update">
 				SLF4J 1.6.2, Logback 0.9.29, Groovy 1.8.1, commons-lang 3.0.1,
 				protobuf-java 2.4.1, jackson 1.8.5, jcommander 1.18,

@@ -222,6 +222,12 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		{
 			comboBoxPane.repaint();
 		}
+		for(int i=0;i<comboBoxModel.getSize();i++)
+		{
+			EventWrapperViewPanel<T> view = ((ViewHolder) comboBoxModel.getElementAt(i)).getView();
+			view.updateView();
+		}
+
 		contentPane.repaint();
 	}
 
