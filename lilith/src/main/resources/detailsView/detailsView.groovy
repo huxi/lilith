@@ -33,6 +33,10 @@ if(!binding.variables.containsKey('showStackTrace'))
 {
 	binding.setVariable('showStackTrace', true);
 }
+if(!binding.variables.containsKey('wrappedExceptionStyle'))
+{
+	binding.setVariable('wrappedExceptionStyle', false);
+}
 
 def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSSZ');
 def builder = new StreamingMarkupBuilder();
@@ -331,7 +335,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 					th('Throwable')
 					td([class: "throwableContainer"])
 						{
-							buildThrowable(it, event.throwable, null, null, showStackTrace)
+							buildThrowable(it, event.throwable, null, null, showStackTrace, wrappedExceptionStyle, null)
 						}
 				}
 		}
@@ -452,7 +456,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 						}
 						td
 						{
-							buildStackTrace(it, event.callStack)
+							buildStackTrace(it, event.callStack, null)
 						}
 					}
 			}
@@ -467,7 +471,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 						}
 						td
 						{
-							buildStackTrace(it, event.callStack, true)
+							buildStackTrace(it, event.callStack, null, true)
 						}
 					}
 			}
@@ -522,9 +526,9 @@ def buildEventWrapperSpecific(table, eventWrapper, evenOdd)
 		}
 }
 
-def buildThrowable(element, throwable, previousSTE, label, showStackTrace)
+def buildThrowable(element, throwable, previousSTE, label, showStackTrace, wrappedExceptionStyle, previousStackTrace)
 {
-	if(label)
+	if(label && !wrappedExceptionStyle)
 	{
 		element.br()
 		element.mkp.yield label
@@ -541,6 +545,20 @@ def buildThrowable(element, throwable, previousSTE, label, showStackTrace)
 	}
 	element.div([class: "throwable"])
 		{
+			if(throwable.cause && wrappedExceptionStyle)
+			{
+				buildThrowable(it, throwable.cause, stackTraceElement, null, showStackTrace, wrappedExceptionStyle, throwable.stackTrace)
+				if(label)
+				{
+					element.br()
+					element.mkp.yield label
+					element.br()
+				}
+				element.br()
+				element.mkp.yield 'Wrapped by: '
+				element.br()
+			}
+
 			if(stackTraceElement)
 			{
 				buildThrowableText(it, throwable, 'ste://' + stackTraceElement.toString());
@@ -549,28 +567,23 @@ def buildThrowable(element, throwable, previousSTE, label, showStackTrace)
 			{
 				buildThrowableText(it, throwable);
 			}
-			if(showStackTrace)
+			if(showStackTrace && throwable.stackTrace != previousStackTrace)
 			{
 				it.hr();
-				buildStackTrace(it, throwable.stackTrace)
-				if(throwable.omittedElements > 0)
-				{
-					it.mkp.yield("${throwable.omittedElements} common elements omitted.");
-					it.br();
-				}
+				buildStackTrace(it, throwable.stackTrace, previousStackTrace)
 			}
 
 			if(throwable.suppressed)
 			{
 				throwable.suppressed.each {
 					value ->
-					buildThrowable(it, value, stackTraceElement, 'Suppressed: ', showStackTrace)
+					buildThrowable(it, value, stackTraceElement, 'Suppressed: ', showStackTrace, wrappedExceptionStyle, throwable.stackTrace)
 				}
 			}
 
-			if(throwable.cause)
+			if(throwable.cause && !wrappedExceptionStyle)
 			{
-				buildThrowable(it, throwable.cause, stackTraceElement, 'Caused by: ', showStackTrace)
+				buildThrowable(it, throwable.cause, stackTraceElement, 'Caused by: ', showStackTrace, wrappedExceptionStyle, throwable.stackTrace)
 			}
 		}
 }
@@ -708,28 +721,30 @@ def buildStringArrayMap(element, Map<String, String[]> map)
 	}
 }
 
-def buildStackTrace(element, callerData, onlyFirst = false)
+def buildStackTrace(element, callerData, previousStackTrace, onlyFirst = false)
 {
 	if(!callerData)
 	{
-		return false;
+		return;
 	}
-	boolean isFirst = true;
-	callerData.each {
-		if(isFirst)
-		{
-			buildStackTraceElement(element, it, isFirst)
-			isFirst = false;
-		}
-		else if(!onlyFirst)
-		{
-			buildStackTraceElement(element, it)
+	
+	int m = callerData.length-1
+	if(previousStackTrace) {
+		int n = previousStackTrace.length-1;
+		while (m >= 0 && n >=0 && callerData[m].equals(previousStackTrace[n])) {
+			m--; n--;
 		}
 	}
-	return !isFirst;
+
+	for(int i=0;i<=m;i++) {
+		buildStackTraceElement(element, callerData[i])
+		if(onlyFirst) {
+			break
+		}
+	}
 }
 
-def buildStackTraceElement(element, ste, isFirst = false)
+def buildStackTraceElement(element, ste)
 {
 	def steStr = ste.toString();
 	def extendedStr = ste.getExtendedString();
