@@ -46,34 +46,16 @@ public class SimpleNDCAdapter
 	private ThreadLocal<List<String>> threadLocalMessagePatterns =new ThreadLocal<List<String>>();
 	private ThreadLocal<List<String[]>> threadLocalMessageArguments =new ThreadLocal<List<String[]>>();
 
-	public void push(String message)
+	public void push(String messagePattern, Object... arguments)
 	{
-		List<String> messages = threadLocalMessagePatterns.get();
-		List<String[]> args = threadLocalMessageArguments.get();
-		if(messages == null)
+		String[] processedArgs=null;
+		if(arguments != null && arguments.length > 0)
 		{
-			messages = new LinkedList<String>();
-			args = new LinkedList<String[]>();
-			threadLocalMessagePatterns.set(messages);
-			threadLocalMessageArguments.set(args);
-		}
-		messages.add(message);
-		args.add(null);
-	}
-
-	public void push(String messagePattern, Object[] arguments)
-	{
-		if(arguments == null || arguments.length == 0)
-		{
-			push(messagePattern);
-			return;
-		}
-		MessageFormatter.ArgumentResult argumentResults = MessageFormatter.evaluateArguments(messagePattern, arguments);
-
-		if(argumentResults == null)
-		{
-			push(messagePattern);
-			return;
+			MessageFormatter.ArgumentResult argumentResults = MessageFormatter.evaluateArguments(messagePattern, arguments);
+			if(argumentResults != null)
+			{
+				processedArgs = argumentResults.getArguments();
+			}
 		}
 
 		List<String> messages = threadLocalMessagePatterns.get();
@@ -86,7 +68,7 @@ public class SimpleNDCAdapter
 			threadLocalMessageArguments.set(args);
 		}
 		messages.add(messagePattern);
-		args.add(argumentResults.getArguments());
+		args.add(processedArgs);
 	}
 
 	public void pop()

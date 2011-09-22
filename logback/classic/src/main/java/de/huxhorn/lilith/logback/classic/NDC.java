@@ -51,13 +51,7 @@ public class NDC
 
 	}
 
-
-	public static void push(String message)
-	{
-		ndcAdapter.push(message);
-	}
-
-	public static void push(String messagePattern, Object[] arguments)
+	public static void push(String messagePattern, Object... arguments)
 	{
 		ndcAdapter.push(messagePattern, arguments);
 	}

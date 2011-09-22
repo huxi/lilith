@@ -21,11 +21,11 @@ public class LogNdcRunnable
 		if(logger.isInfoEnabled()) logger.info("Message before pushing to NDC.");
 		sleep();
 
-		NDC.push("Message with parameters: {} {}", new String[]{"foo", "bar"});
+		NDC.push("Message with parameters: {} {}", "foo", "bar");
 		if(logger.isInfoEnabled()) logger.info("Message after pushing to NDC.");
 		sleep();
 
-		NDC.push("Another message with parameters: {} {}", new String[]{"foo", "bar"});
+		NDC.push("Another message with parameters: {} {}", "foo", "bar");
 		if(logger.isInfoEnabled()) logger.info("Message after pushing to NDC again.");
 		sleep();
 

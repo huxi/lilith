@@ -39,9 +39,7 @@ import de.huxhorn.lilith.data.logging.Message;
 
 public interface NDCAdapter
 {
-	void push(String message);
-
-	void push(String messagePattern, Object[] arguments);
+	void push(String messagePattern, Object... arguments);
 
 	void pop();
 

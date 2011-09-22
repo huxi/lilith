@@ -67,7 +67,7 @@ public class SimpleNDCAdapterTest
 	@Test
 	public void pushMessagePatternUsingIsEmpty()
 	{
-		instance.push("messagePattern", new String[]{"foo", "bar"});
+		instance.push("messagePattern", "foo", "bar");
 		assertFalse(instance.isEmpty());
 	}
 
@@ -112,7 +112,7 @@ public class SimpleNDCAdapterTest
 
 		for(Message current : messages)
 		{
-			instance.push(current.getMessagePattern(), current.getArguments());
+			instance.push(current.getMessagePattern(), (Object[])current.getArguments());
 		}
 
 		Message[] stack = instance.getContextStack();

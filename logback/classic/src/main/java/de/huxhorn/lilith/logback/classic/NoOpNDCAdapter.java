@@ -39,11 +39,7 @@ import de.huxhorn.lilith.data.logging.Message;
 public class NoOpNDCAdapter
 	implements NDCAdapter
 {
-	public void push(String message)
-	{
-	}
-
-	public void push(String messagePattern, Object[] arguments)
+	public void push(String messagePattern, Object... arguments)
 	{
 	}
 
