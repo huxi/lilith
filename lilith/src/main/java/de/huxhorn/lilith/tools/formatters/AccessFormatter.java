@@ -22,6 +22,7 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.access.spi.ServerAdapter;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.status.Status;
+import ch.qos.logback.core.status.StatusChecker;
 import ch.qos.logback.core.status.StatusManager;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -116,7 +117,8 @@ public class AccessFormatter
 			}
 			layout.start();
 			StatusManager statusManager = context.getStatusManager();
-			if(statusManager.getLevel() == Status.ERROR)
+			StatusChecker sc = new StatusChecker(context);
+			if(sc.getHighestLevel(0L) > Status.INFO)
 			{
 				List<Status> stati = statusManager.getCopyOfStatusList();
 				String msg="Error while initializing layout! " + stati;

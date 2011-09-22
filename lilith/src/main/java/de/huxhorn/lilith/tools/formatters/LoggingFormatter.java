@@ -26,6 +26,7 @@ import ch.qos.logback.classic.spi.LoggerContextVO;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.status.Status;
+import ch.qos.logback.core.status.StatusChecker;
 import ch.qos.logback.core.status.StatusManager;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
@@ -95,7 +96,8 @@ public class LoggingFormatter
 			}
 			layout.start();
 			StatusManager statusManager = context.getStatusManager();
-			if(statusManager.getLevel() == Status.ERROR)
+			StatusChecker sc = new StatusChecker(context);
+			if(sc.getHighestLevel(0L) > Status.INFO)
 			{
 				List<Status> stati = statusManager.getCopyOfStatusList();
 				String msg="Error while initializing layout! " + stati;

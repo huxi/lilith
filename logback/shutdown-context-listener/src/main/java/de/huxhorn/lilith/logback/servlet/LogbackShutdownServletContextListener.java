@@ -36,7 +36,9 @@ package de.huxhorn.lilith.logback.servlet;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.status.Status;
+import ch.qos.logback.core.status.StatusChecker;
 import ch.qos.logback.core.status.StatusManager;
+import ch.qos.logback.core.status.StatusUtil;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
@@ -87,15 +89,18 @@ public class LogbackShutdownServletContextListener
 		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 		if(loggerFactory instanceof LoggerContext)
 		{
-			LoggerContext loggerContext = (LoggerContext) loggerFactory;
-			loggerContext.stop();
+			LoggerContext context = (LoggerContext) loggerFactory;
+			long threshold = System.currentTimeMillis();
+			context.stop();
 			System.err.println("Logback has been shut down.");
-			StatusManager statusManager = loggerContext.getStatusManager();
+			StatusManager statusManager = context.getStatusManager();
 			if(statusManager != null)
 			{
-				if(debug || statusManager.getLevel() > Status.INFO)
+				StatusChecker sc = new StatusChecker(context);
+				if(debug || sc.getHighestLevel(threshold) > Status.INFO)
 				{
-					List<Status> statusList = statusManager.getCopyOfStatusList();
+					// LBCLASSIC-273, only >INFO during shutdown
+					List<Status> statusList = StatusUtil.filterStatusListByTimeThreshold(statusManager.getCopyOfStatusList(), threshold);
 					if(statusList != null)
 					{
 						System.err.println("Logback-Status:");
