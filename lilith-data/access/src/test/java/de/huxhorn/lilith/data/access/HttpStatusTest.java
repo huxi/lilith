@@ -37,6 +37,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class HttpStatusTest
 {
@@ -49,5 +50,12 @@ public class HttpStatusTest
 		assertEquals(HttpStatus.NOT_FOUND, status);
 		assertEquals(HttpStatus.Type.CLIENT_ERROR, status.getType());
 		assertEquals(HttpStatus.Specification.RFC2616, status.getSpecification());
+	}
+
+	@Test
+	public void unknownStatus()
+	{
+		HttpStatus status = HttpStatus.getStatus(666);
+		assertNull(status);
 	}
 }

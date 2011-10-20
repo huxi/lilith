@@ -122,6 +122,10 @@
 			<action dev="jhux" type="update">
 				Changed NDC to use varargs.
 			</action>
+			<action dev="jhux" type="add">
+				Added nottingham-draft HTTP status codes.
+				See https://tools.ietf.org/html/draft-nottingham-http-new-status-02
+			</action>
 			<action dev="jhux" type="update">
 				SLF4J 1.6.2, Logback 0.9.30, Groovy 1.8.3, commons-lang 3.0.1,
 				protobuf-java 2.4.1, jackson 1.8.5, jcommander 1.18,
