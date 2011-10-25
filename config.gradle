@@ -58,8 +58,12 @@ buildscript {
 	localSnapshotRepo = localSnapshotRepoFile.toURL().toString()
 	repositories {
 		mavenCentral()
-		mavenRepo urls: localReleaseRepo
-		mavenRepo urls: localSnapshotRepo
+		maven {
+			url localReleaseRepo
+		}
+		maven {
+			url localSnapshotRepo
+		}
 	}
 	dependencies {
 		// needed for syncSnapshot and syncStaging
@@ -110,9 +114,9 @@ gradle.taskGraph.whenReady { taskGraph ->
 }
 
 if(!System.properties.'release') {
-	defaultTasks 'build', 'uploadPublished'	
+	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz'	
 } else {
-	defaultTasks 'build', 'uploadPublished', 'signJavadocZip', 'signSourceZip'	
+	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz', 'signJavadocZip', 'signSourceZip'	
 }
 
 allprojects {
@@ -133,7 +137,7 @@ subprojects {
     apply plugin: 'maven'
     apply plugin: 'signing'
 
-	defaultTasks 'build', 'uploadPublished'
+	//defaultTasks 'build', 'uploadPublished'
 
     sourceCompatibility = 1.5
     targetCompatibility = 1.5
@@ -249,10 +253,14 @@ subprojects {
     }
     archivesBaseName=mapped
 
-    repositories {
-       mavenCentral()
-       mavenRepo urls: localReleaseRepo
-       mavenRepo urls: localSnapshotRepo
+	repositories {
+		mavenCentral()
+		maven {
+			url localReleaseRepo
+		}
+		maven {
+			url localSnapshotRepo
+		}
     }
     
 	configurations {
@@ -420,7 +428,7 @@ project(':lilith') {
 			
 			into('lib') {
 				from configurations.default
-				from configurations.default.allArtifactFiles
+				from configurations.default.allArtifacts.files
 				exclude '*-sources.jar'
 				exclude '*-javadoc.jar'
 				rename 'de.huxhorn.lilith-(.*).jar', 'lilith.jar'
@@ -428,7 +436,7 @@ project(':lilith') {
 		}
 	}
 
-	task jarAll(dependsOn: configurations.default.buildArtifacts, type: Jar) {
+	task jarAll(dependsOn: configurations.default.allArtifacts.buildDependencies, type: Jar) {
 		description = 'Creates a shaded/uberjar/fatjar of the application.'
 		classifier = 'all'
 
@@ -451,20 +459,20 @@ project(':lilith') {
 		}
 	}
 
-	task myDistZip(dependsOn: configurations.default.buildArtifacts, type: Zip) {
+	task myDistZip(dependsOn: configurations.default.allArtifacts.buildDependencies, type: Zip) {
 		description = 'Creates a ZIP containing the Lilith distribution.'
 		classifier = 'bin'
 		with distSpec
 	}
 
-	task myDistTgz(dependsOn: configurations.default.buildArtifacts, type: Tar) {
+	task myDistTgz(dependsOn: configurations.default.allArtifacts.buildDependencies, type: Tar) {
 		description = 'Creates a TGZ containing the Lilith distribution.'
 		classifier = 'bin'
 		compression = Compression.GZIP
 		with distSpec
 	}
 	
-	task preparePropertyList(dependsOn: configurations.default.buildArtifacts) << {
+	task preparePropertyList(dependsOn: configurations.default.allArtifacts.buildDependencies) << {
 		File propFile=file('src/main/mac-resources/Info.plist')
 		PropertyList plist
 		if(propFile.isFile())
@@ -513,7 +521,7 @@ project(':lilith') {
 		}
 		//println "classpath 1 = ${macClasspath}"
 		//println configurations.default.allArtifactFiles
-		configurations.default.allArtifactFiles.collect { File file -> 
+		configurations.default.allArtifacts.files.collect { File file -> 
 			String currentName='$JAVAROOT/'+file.name
 			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
 				&& !macClasspath.contains(currentName))
@@ -580,7 +588,7 @@ project(':lilith') {
 			
 			into('Contents/Resources/Java') {
 				from configurations.default
-				from configurations.default.allArtifactFiles
+				from configurations.default.allArtifacts.files
 				exclude '*-sources.jar'
 				exclude '*-javadoc.jar'
 			}
