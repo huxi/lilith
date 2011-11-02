@@ -90,16 +90,15 @@ public class LogbackShutdownServletContextListener
 		if(loggerFactory instanceof LoggerContext)
 		{
 			LoggerContext context = (LoggerContext) loggerFactory;
-			long threshold = System.currentTimeMillis();
 			context.stop();
 			System.err.println("Logback has been shut down.");
 			StatusManager statusManager = context.getStatusManager();
 			if(statusManager != null)
 			{
 				StatusChecker sc = new StatusChecker(context);
+				long threshold = sc.timeOfLastReset();
 				if(debug || sc.getHighestLevel(threshold) > Status.INFO)
 				{
-					// LBCLASSIC-273, only >INFO during shutdown
 					List<Status> statusList = StatusUtil.filterStatusListByTimeThreshold(statusManager.getCopyOfStatusList(), threshold);
 					if(statusList != null)
 					{
