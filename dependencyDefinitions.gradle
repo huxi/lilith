@@ -2,7 +2,7 @@ sulkyBaseVersion = '0.9.15'
 
 versions = [
 'aspectj':        '1.6.11',
-'jackson':        '1.8.5',
+'jackson':        '1.9.2',
 'log4j':          '1.2.16',
 'logback':        '1.0.0',
 'slf4j':          '1.6.4',
