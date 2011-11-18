@@ -103,14 +103,16 @@ public class LoggingJsonEncoder
 	public void setIndenting(boolean indenting)
 	{
 		this.indenting = indenting;
+		SerializationConfig config = mapper.getSerializationConfig();
 		if(indenting)
 		{
-			mapper.getSerializationConfig().enable(SerializationConfig.Feature.INDENT_OUTPUT);
+			config = config.with(SerializationConfig.Feature.INDENT_OUTPUT);
 		}
 		else
 		{
-			mapper.getSerializationConfig().disable(SerializationConfig.Feature.INDENT_OUTPUT);
+			config = config.without(SerializationConfig.Feature.INDENT_OUTPUT);
 		}
+		mapper.setSerializationConfig(config);
 	}
 
 	public boolean isSortingProperties()
@@ -121,14 +123,16 @@ public class LoggingJsonEncoder
 	public void setSortingProperties(boolean sortingProperties)
 	{
 		this.sortingProperties = sortingProperties;
-		if(indenting)
+		SerializationConfig config = mapper.getSerializationConfig();
+		if(sortingProperties)
 		{
-			mapper.getSerializationConfig().enable(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
+			config = config.with(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
 		}
 		else
 		{
-			mapper.getSerializationConfig().disable(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
+			config = config.without(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
 		}
+		mapper.setSerializationConfig(config);
 	}
 
 	public byte[] encode(LoggingEvent event)
