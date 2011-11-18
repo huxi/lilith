@@ -108,6 +108,8 @@ public class LoggingFormatter
 
 	}
 
+	// suppress warning caused by implementing deprecated method
+	@SuppressWarnings("deprecation")
 	private static class LoggingFoo
 		implements ILoggingEvent
 	{
