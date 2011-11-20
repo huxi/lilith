@@ -1,4 +1,0 @@
-Lilith is a logging and access event viewer for the Logback logging framework.
-
-It's has features comparable to Chainsaw for log4j.
-This means that it can receive logging events from remote applications using Logback as their logging backend. 
