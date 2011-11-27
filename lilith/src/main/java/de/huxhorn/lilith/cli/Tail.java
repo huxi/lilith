@@ -31,7 +31,7 @@ public class Tail
 	@Parameter(names = { "-f", "--keep-running" }, description = "keep tailing the given Lilith logfile.")
 	public boolean keepRunning = false;
 
-	@Parameter(names = { "-n", "--number-of-lines" }, description = "number of entries printed by tail")
+	@Parameter(names = { "-n", "--number-of-lines" }, description = "number of entries printed by 'tail'.")
 	public Integer numberOfLines = 20;
 
 	@Parameter(names = { "-p", "--pattern" }, description = "pattern used by 'tail'. See http://logback.qos.ch/manual/layouts.html#ClassicPatternLayout and http://logback.qos.ch/manual/layouts.html#AccessPatternLayout")

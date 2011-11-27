@@ -28,7 +28,7 @@ public class Cat
 {
 	public static final String NAME = "cat";
 
-	@Parameter(names = { "-n", "--number-of-lines" }, description = "number of entries printed by tail")
+	@Parameter(names = { "-n", "--number-of-lines" }, description = "number of entries printed by 'cat'.")
 	public Integer numberOfLines = -1;
 
 	@Parameter(names = { "-p", "--pattern" }, description = "pattern used by 'cat'. See http://logback.qos.ch/manual/layouts.html#ClassicPatternLayout and http://logback.qos.ch/manual/layouts.html#AccessPatternLayout")
