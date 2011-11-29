@@ -1,7 +1,9 @@
 # Lilith
-Lilith is a logging and access event viewer for the [Logback][], [log4j][]™ or [java.util.logging][jul].
+Lilith ([@lilithapp](https://twitter.com/#!/lilithapp)) is a logging and access event viewer for [Logback][], [log4j][]™ and [java.util.logging][jul].
 
-It's has features roughly comparable to [Chainsaw][] for log4j™, but with an emphasis on stability, high performance and throughput. In contrast to Chainsaw, it is handling received logging events using the hard disk instead of keeping them in memory. Because of this, it is able to handle millions of events from several sources at the same time.
+![Lilith] [img-lilith]
+
+It has features roughly comparable to [Chainsaw][] for log4j™, but with an emphasis on stability, high performance and throughput. In contrast to Chainsaw, it is handling received logging events using the hard disk instead of keeping them in memory. Because of this, it is able to handle millions of events from several sources at the same time.
 
 ## Getting started...
 
@@ -305,10 +307,9 @@ The only missing feature that [java.util.logging][jul] has to offer are user-def
 
 The [java.util.logging][jul] `SocketHandler` does also have one major downside compared to all alternatives:
    
- > It will only send the top-most exception of an exception-hierarchy.
- > You won't be able to see the root-cause(s) of an exception.
- > Suppressed exceptions, as introduced in Java 7, are also ignored.
- > Bummer. 
+* It will only send the top-most exception of an exception-hierarchy.
+  You won't be able to see the root-cause(s) of an exception.
+* Suppressed exceptions, as introduced in Java 7, are also ignored.
 
 Check out this [list of reasons to prefer logback over log4j™][reasons] for a quite detailed overview of the advantages you'll get if you decide to take the dive. While this page isn't related to [java.util.logging][jul] it will still give you a very good summary of all the nice features you'll get.
 
@@ -423,3 +424,5 @@ All Your Base Are Belong To Us.
 [slf4j]: http://www.slf4j.org/ "Simple Logging Facade for Java (SLF4J)"
 [ste]: http://download.oracle.com/javase/7/docs/api/java/lang/StackTraceElement.html "java.lang.StackTraceElement"
 [tower]: http://www.git-tower.com/ "Tower - the most powerful Git client for Mac"
+
+[img-lilith]: images/lilith.png "Lilith - a logging and access event viewer for Logback, log4j™ and java.util.logging."
