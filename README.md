@@ -425,4 +425,4 @@ All Your Base Are Belong To Us.
 [ste]: http://download.oracle.com/javase/7/docs/api/java/lang/StackTraceElement.html "java.lang.StackTraceElement"
 [tower]: http://www.git-tower.com/ "Tower - the most powerful Git client for Mac"
 
-[img-lilith]: images/lilith.png "Lilith - a logging and access event viewer for Logback, log4j™ and java.util.logging."
+[img-lilith]: https://github.com/huxi/lilith/raw/master/images/lilith.png "Lilith - a logging and access event viewer for Logback, log4j™ and java.util.logging."
