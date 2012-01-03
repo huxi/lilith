@@ -161,8 +161,7 @@ public class LoggingEventReader
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && PROPERTIES_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
-			.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && PROPERTIES_NODE.equals(reader.getLocalName()))
 		{
 			Map<String, String> mdc = new HashMap<String, String>();
 			reader.nextTag();
@@ -186,8 +185,7 @@ public class LoggingEventReader
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && DATA_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
-			.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && DATA_NODE.equals(reader.getLocalName()))
 		{
 			MdcEntry entry = new MdcEntry();
 			entry.key = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, NAME_ATTRIBUTE);
@@ -205,8 +203,7 @@ public class LoggingEventReader
 	{
 		// <log4j:locationInfo class="de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass" method="execute" file="Log4jSandbox.java" line="18"/>
 		int type = reader.getEventType();
-		if(XMLStreamConstants.START_ELEMENT == type && LOCATION_INFO_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
-			.equals(reader.getNamespaceURI()))
+		if(XMLStreamConstants.START_ELEMENT == type && LOCATION_INFO_NODE.equals(reader.getLocalName()))
 		{
 			String className = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, CLASS_ATTRIBUTE);
 			String methodName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, METHOD_ATTRIBUTE);

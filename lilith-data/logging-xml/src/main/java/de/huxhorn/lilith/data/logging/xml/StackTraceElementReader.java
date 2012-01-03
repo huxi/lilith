@@ -72,8 +72,7 @@ public class StackTraceElementReader
 				lineNumber = Integer.valueOf(str);
 			}
 			type = reader.getEventType();
-			if(XMLStreamConstants.START_ELEMENT == type && ST_NATIVE_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
-				.equals(reader.getNamespaceURI()))
+			if(XMLStreamConstants.START_ELEMENT == type && ST_NATIVE_NODE.equals(reader.getLocalName()))
 			{
 				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
 				reader.nextTag(); // close native
@@ -84,8 +83,7 @@ public class StackTraceElementReader
 			String version = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_VERSION_NODE);
 			type = reader.getEventType();
 			boolean exact = false;
-			if(XMLStreamConstants.START_ELEMENT == type && ST_EXACT_NODE.equals(reader.getLocalName()) && NAMESPACE_URI
-				.equals(reader.getNamespaceURI()))
+			if(XMLStreamConstants.START_ELEMENT == type && ST_EXACT_NODE.equals(reader.getLocalName()))
 			{
 				exact = true;
 				reader.nextTag(); // close exact
