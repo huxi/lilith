@@ -92,7 +92,7 @@ public class StackTraceElementReader
 				reader.nextTag();
 			}
 
-			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, STACK_TRACE_ELEMENT_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, STACK_TRACE_ELEMENT_NODE);
 			return new ExtendedStackTraceElement(className, methodName, fileName, lineNumber, codeLocation, version, exact);
 		}
 		return null;

@@ -179,7 +179,7 @@ public class LoggingEventReader
 				}
 			}
 			result.setThrowable(readThrowableInfo(reader));
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, RECORD_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, RECORD_NODE);
 			for(; ;)
 			{
 				reader.next();
@@ -238,7 +238,7 @@ public class LoggingEventReader
 				stackTraceList.add(current);
 			}
 			result.setStackTrace(stackTraceList.toArray(new ExtendedStackTraceElement[stackTraceList.size()]));
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, EXCEPTION_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, EXCEPTION_NODE);
 			reader.nextTag();
 			return result;
 		}
@@ -267,7 +267,7 @@ public class LoggingEventReader
 					// ignore
 				}
 			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, FRAME_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, FRAME_NODE);
 			reader.nextTag();
 			return new ExtendedStackTraceElement(classStr, methodStr, null, line);
 		}

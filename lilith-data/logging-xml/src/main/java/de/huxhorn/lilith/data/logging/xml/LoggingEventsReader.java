@@ -89,8 +89,7 @@ public class LoggingEventsReader
 			if(sourceId != null)
 			{
 				result.setSource(sourceId);
-				reader
-					.require(XMLStreamConstants.END_ELEMENT, EventSourceSchemaConstants.NAMESPACE_URI, EventSourceSchemaConstants.SOURCE_IDENTIFIER_NODE);
+				reader.require(XMLStreamConstants.END_ELEMENT, null, EventSourceSchemaConstants.SOURCE_IDENTIFIER_NODE);
 				reader.nextTag();
 			}
 
@@ -102,7 +101,7 @@ public class LoggingEventsReader
 				{
 					break;
 				}
-				reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOGGING_EVENT_NODE);
+				reader.require(XMLStreamConstants.END_ELEMENT, null, LOGGING_EVENT_NODE);
 				reader.nextTag();
 				if(events == null)
 				{
@@ -111,7 +110,7 @@ public class LoggingEventsReader
 				events.add(event);
 			}
 			result.setEvents(events);
-			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, LOGGING_EVENTS_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, LOGGING_EVENTS_NODE);
 		}
 		return result;
 	}

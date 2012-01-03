@@ -102,10 +102,10 @@ public class SourceInfoReader
 			reader.nextTag();
 
 			result.setSource(sourceIdentifierReader.read(reader));
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, SOURCE_IDENTIFIER_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, SOURCE_IDENTIFIER_NODE);
 			reader.nextTag();
 
-			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, SOURCE_INFO_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, SOURCE_INFO_NODE);
 		}
 		return result;
 	}

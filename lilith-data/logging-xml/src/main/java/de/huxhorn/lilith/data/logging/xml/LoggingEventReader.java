@@ -167,7 +167,7 @@ public class LoggingEventReader
 			readMarker(reader, result);
 			readCallStack(reader, result);
 			result.setLoggerContext(readLoggerContext(reader));
-			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, LOGGING_EVENT_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, LOGGING_EVENT_NODE);
 		}
 		return result;
 	}
@@ -225,7 +225,7 @@ public class LoggingEventReader
 				.setBirthTime(readTimeStamp(reader, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, LOGGER_CONTEXT_BIRTH_TIME_ATTRIBUTE));
 			reader.nextTag();
 			result.setProperties(readLoggerContextProperties(reader));
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOGGER_CONTEXT_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, LOGGER_CONTEXT_NODE);
 			reader.nextTag();
 		}
 		return result;
@@ -250,7 +250,7 @@ public class LoggingEventReader
 				}
 				map.put(entry.key, entry.value);
 			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOGGER_CONTEXT_PROPERTIES_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, LOGGER_CONTEXT_PROPERTIES_NODE);
 			reader.nextTag();
 			return map;
 		}
@@ -282,7 +282,7 @@ public class LoggingEventReader
 				reader.nextTag();
 				ste.add(elem);
 			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, nodeName);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, nodeName);
 			reader.nextTag();
 			return ste.toArray(new ExtendedStackTraceElement[ste.size()]);
 		}
@@ -327,7 +327,7 @@ public class LoggingEventReader
 					break;
 				}
 			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MARKER_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, MARKER_NODE);
 			reader.nextTag();
 		}
 		else if(XMLStreamConstants.START_ELEMENT == type && MARKER_REFERENCE_NODE
@@ -336,7 +336,7 @@ public class LoggingEventReader
 			String ref = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, MARKER_REFERENCE_ATTRIBUTE);
 			marker = markers.get(ref);
 			reader.nextTag();
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MARKER_REFERENCE_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, MARKER_REFERENCE_NODE);
 			reader.nextTag();
 		}
 		return marker;
@@ -360,7 +360,7 @@ public class LoggingEventReader
 				}
 				mdc.put(entry.key, entry.value);
 			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, MDC_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, MDC_NODE);
 			reader.nextTag();
 			return mdc;
 		}
@@ -385,7 +385,7 @@ public class LoggingEventReader
 				}
 				ndc.add(entry);
 			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, NDC_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, NDC_NODE);
 			reader.nextTag();
 			return ndc.toArray(new Message[ndc.size()]);
 		}
@@ -403,7 +403,7 @@ public class LoggingEventReader
 			StringMapEntry entry = new StringMapEntry();
 			entry.key = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, STRING_MAP_ENTRY_KEY_ATTRIBUTE);
 			entry.value = StaxUtilities.readText(reader);
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, STRING_MAP_ENTRY_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, STRING_MAP_ENTRY_NODE);
 			reader.nextTag();
 			return entry;
 		}
@@ -428,7 +428,7 @@ public class LoggingEventReader
 				entry.setArguments(args.toArray(new String[args.size()]));
 			}
 
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, NDC_ENTRY_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, NDC_ENTRY_NODE);
 			reader.nextTag();
 			return entry;
 		}
@@ -487,11 +487,11 @@ public class LoggingEventReader
 
 				suppressed = suppressedList.toArray(suppressed);
 				throwable.setSuppressed(suppressed);
-				reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, SUPPRESSED_NODE);
+				reader.require(XMLStreamConstants.END_ELEMENT, null, SUPPRESSED_NODE);
 				reader.nextTag();
 			}
 			throwable.setCause(recursiveReadThrowable(reader, CAUSE_NODE));
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, nodeName);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, nodeName);
 			reader.nextTag();
 			return throwable;
 		}
@@ -532,7 +532,7 @@ public class LoggingEventReader
 			.equals(reader.getNamespaceURI()))
 		{
 			reader.nextTag();
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, NULL_ARGUMENT_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, NULL_ARGUMENT_NODE);
 			reader.nextTag();
 			return null;
 		}

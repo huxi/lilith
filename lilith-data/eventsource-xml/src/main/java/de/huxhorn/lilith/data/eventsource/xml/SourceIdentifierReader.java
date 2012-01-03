@@ -65,7 +65,7 @@ public class SourceIdentifierReader
 			result
 				.setSecondaryIdentifier(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, SECONDARY_IDENTIFIER_ATTRIBUTE));
 			reader.nextTag();
-			reader.require(XMLStreamConstants.END_ELEMENT, rootNamespace, SOURCE_IDENTIFIER_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, SOURCE_IDENTIFIER_NODE);
 		}
 		return result;
 	}

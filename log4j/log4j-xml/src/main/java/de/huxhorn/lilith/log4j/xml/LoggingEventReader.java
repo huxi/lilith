@@ -175,7 +175,7 @@ public class LoggingEventReader
 				}
 				mdc.put(entry.key, entry.value);
 			}
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, PROPERTIES_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, PROPERTIES_NODE);
 			reader.nextTag();
 			return mdc;
 		}
@@ -193,7 +193,7 @@ public class LoggingEventReader
 			entry.key = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, NAME_ATTRIBUTE);
 			entry.value = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, VALUE_ATTRIBUTE);
 			reader.nextTag();
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, DATA_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, DATA_NODE);
 			reader.nextTag();
 			return entry;
 		}
@@ -226,7 +226,7 @@ public class LoggingEventReader
 			}
 			ExtendedStackTraceElement ste = new ExtendedStackTraceElement(className, methodName, fileName, line);
 			reader.nextTag();
-			reader.require(XMLStreamConstants.END_ELEMENT, NAMESPACE_URI, LOCATION_INFO_NODE);
+			reader.require(XMLStreamConstants.END_ELEMENT, null, LOCATION_INFO_NODE);
 			reader.nextTag();
 			return new ExtendedStackTraceElement[]{ste};
 		}
