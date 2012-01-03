@@ -86,8 +86,8 @@ public class LoggingEventReader
 
 			result = new LoggingEvent();
 
-			String dateStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, DATE_NODE);
-			String millisStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MILLIS_NODE);
+			String dateStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, DATE_NODE);
+			String millisStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, MILLIS_NODE);
 			Long timeStamp = null;
 			if(millisStr != null)
 			{
@@ -110,7 +110,7 @@ public class LoggingEventReader
 			}
 			result.setTimeStamp(timeStamp);
 
-			String sequenceStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, SEQUENCE_NODE);
+			String sequenceStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, SEQUENCE_NODE);
 			try
 			{
 				result.setSequenceNumber(Long.parseLong(sequenceStr));
@@ -120,14 +120,13 @@ public class LoggingEventReader
 				// ignore
 			}
 
-			String loggerStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, LOGGER_NODE);
+			String loggerStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, LOGGER_NODE);
 			result.setLogger(loggerStr);
 
-			result
-				.setLevel(resolveLevel(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, LEVEL_NODE)));
+			result.setLevel(resolveLevel(StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, LEVEL_NODE)));
 
-			String classStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, CLASS_NODE);
-			String methodStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, METHOD_NODE);
+			String classStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, CLASS_NODE);
+			String methodStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, METHOD_NODE);
 			if(classStr != null || methodStr != null)
 			{
 				ExtendedStackTraceElement[] callStack = new ExtendedStackTraceElement[]
@@ -136,7 +135,7 @@ public class LoggingEventReader
 					};
 				result.setCallStack(callStack);
 			}
-			String threadStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THREAD_NODE);
+			String threadStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, THREAD_NODE);
 			if(threadStr != null)
 			{
 				try
@@ -150,19 +149,19 @@ public class LoggingEventReader
 				}
 
 			}
-			String messageStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
+			String messageStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, MESSAGE_NODE);
 			if(messageStr != null)
 			{
 				result.setMessage(new Message(messageStr));
 			}
 			// key?, catalog? param*
 			{
-				String keyStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, KEY_NODE);
-				String catalogStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, CATALOG_NODE);
+				String keyStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, KEY_NODE);
+				String catalogStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, CATALOG_NODE);
 				List<String> paramList = new ArrayList<String>();
 				for(; ;)
 				{
-					String paramStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, PARAM_NODE);
+					String paramStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, PARAM_NODE);
 					if(paramStr == null)
 					{
 						break;
@@ -207,7 +206,7 @@ public class LoggingEventReader
 		{
 			reader.nextTag();
 			ThrowableInfo result = new ThrowableInfo();
-			String messageStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
+			String messageStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, MESSAGE_NODE);
 			// parse message
 			if(messageStr != null)
 			{
@@ -252,9 +251,9 @@ public class LoggingEventReader
 		if(XMLStreamConstants.START_ELEMENT == type && FRAME_NODE.equals(reader.getLocalName()))
 		{
 			reader.nextTag();
-			String classStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, CLASS_NODE);
-			String methodStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, METHOD_NODE);
-			String lineStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, LINE_NODE);
+			String classStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, CLASS_NODE);
+			String methodStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, METHOD_NODE);
+			String lineStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, LINE_NODE);
 			int line = -1;
 			if(lineStr != null)
 			{

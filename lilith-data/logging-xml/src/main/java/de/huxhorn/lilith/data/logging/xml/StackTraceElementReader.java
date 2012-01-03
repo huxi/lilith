@@ -66,7 +66,7 @@ public class StackTraceElementReader
 			String fileName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE);
 			reader.nextTag();
 			int lineNumber = -1;
-			String str = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_LINE_NUMBER_NODE);
+			String str = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, ST_LINE_NUMBER_NODE);
 			if(str != null)
 			{
 				lineNumber = Integer.valueOf(str);
@@ -78,9 +78,8 @@ public class StackTraceElementReader
 				reader.nextTag(); // close native
 				reader.nextTag();
 			}
-			String codeLocation = StaxUtilities
-				.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_CODE_LOCATION_NODE);
-			String version = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ST_VERSION_NODE);
+			String codeLocation = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, ST_CODE_LOCATION_NODE);
+			String version = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, ST_VERSION_NODE);
 			type = reader.getEventType();
 			boolean exact = false;
 			if(XMLStreamConstants.START_ELEMENT == type && ST_EXACT_NODE.equals(reader.getLocalName()))

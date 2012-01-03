@@ -144,8 +144,7 @@ public class LoggingEventReader
 			reader.nextTag();
 			Message message = null;
 			{
-				String messagePattern = StaxUtilities
-					.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
+				String messagePattern = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, MESSAGE_NODE);
 				List<String> args = readArguments(reader);
 				if(messagePattern != null || args != null)
 				{
@@ -407,7 +406,7 @@ public class LoggingEventReader
 			reader.nextTag();
 
 			Message entry = new Message();
-			entry.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE));
+			entry.setMessagePattern(StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, MESSAGE_NODE));
 
 			List<String> args = readArguments(reader);
 			if(args != null)
@@ -453,7 +452,7 @@ public class LoggingEventReader
 			}
 			reader.nextTag();
 
-			throwable.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_MESSAGE_NODE));
+			throwable.setMessage(StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, THROWABLE_MESSAGE_NODE));
 			throwable.setStackTrace(readStackTraceNode(reader, STACK_TRACE_NODE));
 
 			type = reader.getEventType();
@@ -522,7 +521,7 @@ public class LoggingEventReader
 		}
 		else
 		{
-			return StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, ARGUMENT_NODE);
+			return StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, ARGUMENT_NODE);
 		}
 	}
 

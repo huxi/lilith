@@ -142,7 +142,7 @@ public class LoggingEventReader
 				// ignore
 			}
 			reader.nextTag();
-			String messagePattern = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, MESSAGE_NODE);
+			String messagePattern = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, MESSAGE_NODE);
 			if(messagePattern != null)
 			{
 				result.setMessage(new Message(messagePattern));
@@ -233,7 +233,7 @@ public class LoggingEventReader
 	private ThrowableInfo readThrowable(XMLStreamReader reader)
 		throws XMLStreamException
 	{
-		String throwableString = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, THROWABLE_NODE);
+		String throwableString = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, THROWABLE_NODE);
 		if(throwableString != null)
 		{
 			StringTokenizer tok = new StringTokenizer(throwableString, NEWLINE, true);
@@ -269,7 +269,7 @@ public class LoggingEventReader
 	private Message[] readNdc(XMLStreamReader reader)
 		throws XMLStreamException
 	{
-		String ndcString = StaxUtilities.readSimpleTextNodeIfAvailable(reader, NAMESPACE_URI, NDC_NODE);
+		String ndcString = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, NDC_NODE);
 		if(ndcString == null)
 		{
 			return null;
