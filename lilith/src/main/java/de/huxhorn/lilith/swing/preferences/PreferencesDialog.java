@@ -22,6 +22,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.lilith.swing.LilithKeyStrokes;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -406,8 +407,7 @@ public class PreferencesDialog
 		public OkAction()
 		{
 			super("Ok");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ENTER");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ENTER);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
 		}
@@ -461,8 +461,7 @@ public class PreferencesDialog
 		public CancelAction()
 		{
 			super("Cancel");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}

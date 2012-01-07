@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
-import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -225,8 +224,7 @@ public class HelpFrame
 		{
 			super("Copy selection");
 			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " C");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_SELECTION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 

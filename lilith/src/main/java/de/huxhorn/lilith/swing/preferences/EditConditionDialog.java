@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
+import de.huxhorn.lilith.swing.LilithKeyStrokes;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
@@ -256,8 +257,7 @@ public class EditConditionDialog
 		public CancelAction()
 		{
 			super("Cancel");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 

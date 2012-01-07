@@ -654,8 +654,7 @@ public class FindPanel<T extends Serializable>
 			}
 			putValue(Action.SMALL_ICON, icon);
 			putValue(Action.SHORT_DESCRIPTION, "Find next.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift G");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_NEXT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -690,8 +689,7 @@ public class FindPanel<T extends Serializable>
 			}
 			putValue(Action.SMALL_ICON, icon);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " G");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_PREVIOUS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -723,8 +721,7 @@ public class FindPanel<T extends Serializable>
 			}
 			putValue(Action.SMALL_ICON, icon);
 			putValue(Action.SHORT_DESCRIPTION, "Close");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -749,8 +746,7 @@ public class FindPanel<T extends Serializable>
 		{
 			super();
 			putValue(Action.SHORT_DESCRIPTION, "Replace filter.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("shift ENTER");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.REPLACE_FILTER_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 

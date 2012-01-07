@@ -171,8 +171,7 @@ public class OpenPreviousDialog
 		public OpenAction()
 		{
 			super("Open");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ENTER");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ENTER);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -189,8 +188,7 @@ public class OpenPreviousDialog
 		public CancelAction()
 		{
 			super("Cancel");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 

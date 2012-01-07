@@ -241,8 +241,7 @@ public class CheckForUpdateDialog
 		public OkAction()
 		{
 			super("Ok");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ENTER");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ENTER);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
 		}
@@ -268,8 +267,7 @@ public class CheckForUpdateDialog
 		public CancelAction()
 		{
 			super("Cancel");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}

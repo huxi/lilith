@@ -183,8 +183,7 @@ public class ProgressGlassPane
 			*/
 			putValue(Action.NAME, "Cancel");
 			putValue(Action.SHORT_DESCRIPTION, "Cancel search.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("ESCAPE");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			setTask(null);
 		}

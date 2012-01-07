@@ -1922,8 +1922,7 @@ public class ViewActions
 		{
 			super("Remove inactive");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " R");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.REMOVE_INACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('r'));
 		}
@@ -1965,8 +1964,7 @@ public class ViewActions
 		{
 			super("Close all");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift W");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLOSE_ALL_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			//putValue(Action.MNEMONIC_KEY, Integer.valueOf('r'));
 		}
@@ -2088,8 +2086,7 @@ public class ViewActions
 		public ZoomInMenuAction()
 		{
 			super("Zoom in");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " PERIOD");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ZOOM_IN_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Zoom in on the details view.");
@@ -2123,8 +2120,7 @@ public class ViewActions
 		public ZoomOutMenuAction()
 		{
 			super("Zoom out");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift PERIOD");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ZOOM_OUT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Zoom out on the details view.");
@@ -2193,8 +2189,7 @@ public class ViewActions
 		public EditConditionMenuAction()
 		{
 			super("Add condition...");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " I");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_CONDITION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Add the condition of the current view.");
@@ -2234,8 +2229,7 @@ public class ViewActions
 		public EditSourceNameMenuAction()
 		{
 			super("Edit source name...");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " B");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_SOURCE_NAME_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Edit the source name of the current view.");
@@ -2279,8 +2273,7 @@ public class ViewActions
 		public AttachMenuAction()
 		{
 			super();
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift A");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ATTACH_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			updateAction();
 		}
@@ -2370,8 +2363,7 @@ public class ViewActions
 		{
 			super();
 			updateAction();
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " P");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PAUSE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2409,8 +2401,7 @@ public class ViewActions
 		{
 			super();
 			updateAction();
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " P");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PAUSE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2446,8 +2437,7 @@ public class ViewActions
 			super("Find");
 			putValue(Action.SMALL_ICON, FIND_MENU_ITEM);
 			putValue(Action.SHORT_DESCRIPTION, "Opens the Find panel.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " F");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2467,8 +2457,7 @@ public class ViewActions
 			super();
 			putValue(Action.SMALL_ICON, FIND_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " F");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2540,8 +2529,7 @@ public class ViewActions
 		public DisconnectMenuAction()
 		{
 			super("Disconnect");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift D");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.DISCONNECT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, DISCONNECT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Terminates this connection");
@@ -2581,8 +2569,7 @@ public class ViewActions
 			super("Focus message");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Focus detailed message view.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " M");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FOCUS_MESSAGE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2602,8 +2589,7 @@ public class ViewActions
 			super("Focus events");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Focus the table containing the events.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " E");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FOCUS_EVENTS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2623,8 +2609,7 @@ public class ViewActions
 			super("Find next");
 			putValue(Action.SMALL_ICON, FIND_NEXT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find next match of the current filter.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift G");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_NEXT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2645,8 +2630,7 @@ public class ViewActions
 			super("Find previous");
 			putValue(Action.SMALL_ICON, FIND_PREV_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous match of the current filter.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " G");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_PREVIOUS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2666,8 +2650,7 @@ public class ViewActions
 			super("Find next active");
 			putValue(Action.SMALL_ICON, FIND_NEXT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find next match of any active condition.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift T");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_NEXT_ACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2688,8 +2671,7 @@ public class ViewActions
 			super("Find previous active");
 			putValue(Action.SMALL_ICON, FIND_PREV_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous match of any active condition.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " T");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_PREVIOUS_ACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2708,8 +2690,7 @@ public class ViewActions
 		{
 			super("Reset find");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift F");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.RESET_FIND_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2732,8 +2713,7 @@ public class ViewActions
 			super("Tail");
 			updateAction();
 			putValue(Action.SHORT_DESCRIPTION, "Tail (\"scroll to bottom\")");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " T");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.SCROLL_TO_BOTTOM_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2768,8 +2748,7 @@ public class ViewActions
 			super();
 			putValue(Action.SMALL_ICON, TAIL_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Tail (\"scroll to bottom\")");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " T");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.SCROLL_TO_BOTTOM_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2792,8 +2771,7 @@ public class ViewActions
 			super("Close this filter");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " W");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLOSE_FILTER_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2834,8 +2812,7 @@ public class ViewActions
 			super("Close all other filters");
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift W");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLOSE_OTHER_FILTERS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -2916,8 +2893,7 @@ public class ViewActions
 			this.eventSource = container.getEventSource();
 			if(eventSource.isGlobal())
 			{
-				KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 1");
-				if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+				KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.VIEW_GLOBAL_CLASSIC_LOGS_ACTION);
 				putValue(Action.ACCELERATOR_KEY, accelerator);
 			}
 			else
@@ -2926,8 +2902,7 @@ public class ViewActions
 				if(si != null && "Lilith".equals(si.getIdentifier()))
 				{
 					// internal Lilith log
-					KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 0");
-					if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+					KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.VIEW_LILITH_LOGS_ACTION);
 					putValue(Action.ACCELERATOR_KEY, accelerator);
 				}
 			}
@@ -2953,8 +2928,7 @@ public class ViewActions
 			this.eventSource = container.getEventSource();
 			if(eventSource.isGlobal())
 			{
-				KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " 2");
-				if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+				KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.VIEW_GLOBAL_ACCESS_LOGS_ACTION);
 				putValue(Action.ACCELERATOR_KEY, accelerator);
 			}
 		}
@@ -3400,8 +3374,7 @@ public class ViewActions
 		{
 			super("Help Topics");
 			putValue(Action.SMALL_ICON, HELP_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke("F1");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.HELP_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 
 		}
@@ -3438,8 +3411,7 @@ public class ViewActions
 		{
 			super("Preferences...");
 			putValue(Action.SMALL_ICON, PREFERENCES_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " COMMA");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREFERENCES_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('p'));
 		}
@@ -3460,8 +3432,7 @@ public class ViewActions
 			super();
 			putValue(Action.SMALL_ICON, PREFERENCES_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Preferences...");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " COMMA");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREFERENCES_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('p'));
 		}
@@ -3498,8 +3469,7 @@ public class ViewActions
 		{
 			super("Exit");
 			putValue(Action.SMALL_ICON, EXIT_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " Q");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EXIT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('x'));
 		}
@@ -3519,8 +3489,7 @@ public class ViewActions
 		{
 			super("Open inactive log...");
 			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift O");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.OPEN_INACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
 		}
@@ -3540,8 +3509,7 @@ public class ViewActions
 		{
 			super("Open...");
 			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " O");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.OPEN_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
 		}
@@ -3561,8 +3529,7 @@ public class ViewActions
 		{
 			super("Import...");
 			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift I");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.IMPORT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('i'));
 		}
@@ -3584,8 +3551,7 @@ public class ViewActions
 		{
 			super("Export...");
 			putValue(Action.SMALL_ICON, EXPORT_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift E");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EXPORT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('e'));
 		}
@@ -3611,8 +3577,7 @@ public class ViewActions
 		{
 			super("Clean all inactive logs");
 			putValue(Action.SMALL_ICON, CLEAR_MENU_ICON);
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift X");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLEAN_ALL_INACTIVE_LOGS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
 		}
@@ -3632,8 +3597,7 @@ public class ViewActions
 		public PreviousTabAction()
 		{
 			super("Previous tab");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " J");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREVIOUS_TAB_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 		}
@@ -3672,8 +3636,7 @@ public class ViewActions
 		public NextTabAction()
 		{
 			super("Next tab");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " K");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.NEXT_TAB_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
 		}
@@ -3716,8 +3679,7 @@ public class ViewActions
 		{
 			super("Copy selection");
 			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");
-			KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " C");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_SELECTION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
@@ -3899,10 +3861,6 @@ public class ViewActions
 
 		private ClipboardFormatter clipboardFormatter;
 		private transient EventWrapper wrapper;
-
-		public CopyToClipboardAction()
-		{
-		}
 
 		private CopyToClipboardAction(ClipboardFormatter clipboardFormatter)
 		{
