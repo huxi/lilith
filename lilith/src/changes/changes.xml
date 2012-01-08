@@ -131,6 +131,16 @@
 				This fixes a problem reported by Ekkehard Gentz.
 			</action>
 			<action dev="jhux" type="update">
+				All KeyStrokes are now managed globally. This includes validation of the used KeyStrokes which detected some mistakes:
+				- "Close all tabs." is now Ctrl+Alt+Shift+ W.
+				- "Find previous active match" is now Ctrl+L.
+				- "Find next active match" is now Ctrl+Shift+L.
+			</action>
+			<action dev="jhux" type="update" issue="101">
+				"Copy Throwable" does now have the shortcut "command shift alt T".
+				This was suggested by snstanton.
+			</action>
+			<action dev="jhux" type="update">
 				SLF4J 1.6.4, Logback 1.0.0, Groovy 1.8.5, commons-lang 3.0.1,
 				protobuf-java 2.4.1, jackson 1.9.2, jcommander 1.18,
 				aspectj 1.6.11, cglib 2.2.2, httpclient 4.1.2, httpcore 4.1.3,
