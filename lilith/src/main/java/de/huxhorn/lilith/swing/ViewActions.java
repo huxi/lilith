@@ -114,7 +114,6 @@ public class ViewActions
 	private static final Icon PAUSED_TOOLBAR_ICON;
 	private static final Icon UNPAUSED_TOOLBAR_ICON;
 	private static final Icon FIND_TOOLBAR_ICON;
-	//private static final Icon STATISTICS_TOOLBAR_ICON;
 	private static final Icon DISCONNECT_TOOLBAR_ICON;
 	private static final Icon TAIL_TOOLBAR_ICON;
 
@@ -311,21 +310,6 @@ public class ViewActions
 			}
 		}
 		STATISTICS_MENU_ICON = icon;
-
-/*
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/apps/utilities-system-monitor.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		STATISTICS_TOOLBAR_ICON = icon;
-*/
 
 		{
 			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-eject.png");
@@ -563,7 +547,6 @@ public class ViewActions
 	private CloseOtherFiltersAction closeOtherFiltersAction;
 	private CloseAllFiltersAction closeAllFiltersAction;
 
-	//private ClearAndRemoveInactiveAction clearAndRemoveInactiveAction;
 	private RemoveInactiveAction removeInactiveAction;
 	private CloseAllAction closeAllAction;
 	private CloseOtherAction closeOtherAction;
@@ -571,7 +554,6 @@ public class ViewActions
 	private MinimizeAllOtherAction minimizeAllOtherAction;
 
 	private JMenuItem removeInactiveItem;
-	//private JMenuItem clearAndRemoveInactiveItem;
 
 	private JMenu windowMenu;
 	private AboutAction aboutAction;
@@ -583,26 +565,12 @@ public class ViewActions
 	private ClearMenuAction clearMenuAction;
 	private FocusMessageAction focusMessageAction;
 	private FocusEventsAction focusEventsAction;
-	//private StatisticsMenuAction statisticsMenuAction;
 	private ChangeListener containerChangeListener;
 	private ScrollToBottomToolBarAction scrollToBottomToolBarAction;
 	private ClearToolBarAction clearToolBarAction;
 	private FindToolBarAction findToolBarAction;
-	//private StatisticsToolBarAction statisticsToolBarAction;
 	private CopySelectionAction copySelectionAction;
 	private CopyToClipboardAction copyEventAction;
-	private CopyToClipboardAction copyLoggingJsonEventAction;
-	private CopyToClipboardAction copyLoggingXmlEventAction;
-	private CopyToClipboardAction copyLoggingMessageAction;
-	private CopyToClipboardAction copyLoggingMessagePatternAction;
-	private CopyToClipboardAction copyLoggingThrowableAction;
-	private CopyToClipboardAction copyLoggingCallStackAction;
-	private CopyToClipboardAction copyLoggingCallLocationAction;
-	private CopyToClipboardAction copyLoggingMarkerAction;
-	private CopyToClipboardAction copyLoggingMdcAction;
-	private CopyToClipboardAction copyLoggingNdcAction;
-	private CopyToClipboardAction copyLoggerNameAction;
-	private CopyToClipboardAction copyAccessUriAction;
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
 	private JPopupMenu popup;
 	private GotoSourceAction gotoSourceAction;
@@ -623,8 +591,10 @@ public class ViewActions
 	private ClearRecentFilesAction clearRecentFilesAction;
 	private JMenu customCopyMenu;
 	private JMenu customCopyPopupMenu;
-	private HashMap<String, CopyToClipboardAction> groovyClipboardActions;
-	private HashMap<String, ClipboardFormatterData> groovyClipboardData;
+	private Map<String, CopyToClipboardAction> groovyClipboardActions;
+	private Map<String, ClipboardFormatterData> groovyClipboardData;
+	private List<CopyToClipboardAction> copyLoggingActions;
+	private List<CopyToClipboardAction> copyAccessActions;
 
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
@@ -685,18 +655,20 @@ public class ViewActions
 		gotoSourceAction = new GotoSourceAction();
 		copySelectionAction = new CopySelectionAction();
 		copyEventAction = new CopyToClipboardAction(new EventFormatter());
-		copyLoggingJsonEventAction = new CopyToClipboardAction(new EventJsonFormatter());
-		copyLoggingXmlEventAction = new CopyToClipboardAction(new EventXmlFormatter());
-		copyLoggingMessageAction = new CopyToClipboardAction(new LoggingMessageFormatter());
-		copyLoggingMessagePatternAction = new CopyToClipboardAction(new LoggingMessagePatternFormatter());
-		copyLoggerNameAction = new CopyToClipboardAction(new LoggingLoggerNameFormatter());
-		copyLoggingThrowableAction = new CopyToClipboardAction(new LoggingThrowableFormatter());
-		copyLoggingCallStackAction = new CopyToClipboardAction(new LoggingCallStackFormatter());
-		copyLoggingCallLocationAction = new CopyToClipboardAction(new LoggingCallLocationFormatter());
-		copyLoggingMarkerAction = new CopyToClipboardAction(new LoggingMarkerFormatter());
-		copyLoggingMdcAction = new CopyToClipboardAction(new LoggingMdcFormatter());
-		copyLoggingNdcAction = new CopyToClipboardAction(new LoggingNdcFormatter());
-		copyAccessUriAction = new CopyToClipboardAction(new AccessUriFormatter());
+		copyLoggingActions = new ArrayList<CopyToClipboardAction>();
+		copyLoggingActions.add(new CopyToClipboardAction(new EventJsonFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new EventXmlFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMessageFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMessagePatternFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingLoggerNameFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThrowableFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallStackFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallLocationFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMarkerFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMdcFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingNdcFormatter()));
+		copyAccessActions = new ArrayList<CopyToClipboardAction>();
+		copyAccessActions.add(new CopyToClipboardAction(new AccessUriFormatter()));
 
 
 		// Search
@@ -831,19 +803,15 @@ public class ViewActions
 		editMenu.addSeparator();
 		editMenu.add(copyEventAction);
 		editMenu.addSeparator();
-		editMenu.add(copyLoggingJsonEventAction);
-		editMenu.add(copyLoggingXmlEventAction);
-		editMenu.add(copyLoggingMessageAction);
-		editMenu.add(copyLoggingMessagePatternAction);
-		editMenu.add(copyLoggerNameAction);
-		editMenu.add(copyLoggingThrowableAction);
-		editMenu.add(copyLoggingCallStackAction);
-		editMenu.add(copyLoggingCallLocationAction);
-		editMenu.add(copyLoggingMarkerAction);
-		editMenu.add(copyLoggingMdcAction);
-		editMenu.add(copyLoggingNdcAction);
+		for(CopyToClipboardAction current : copyLoggingActions)
+		{
+			editMenu.add(current);
+		}
 		editMenu.addSeparator();
-		editMenu.add(copyAccessUriAction);
+		for(CopyToClipboardAction current : copyAccessActions)
+		{
+			editMenu.add(current);
+		}
 		editMenu.addSeparator();
 		customCopyMenu = new JMenu("Custom copy...");
 		customCopyPopupMenu = new JMenu("Custom copy...");
@@ -1459,19 +1427,17 @@ public class ViewActions
 		copyPopupMenu.addSeparator();
 		copyPopupMenu.add(new JMenuItem(copyEventAction));
 		copyPopupMenu.addSeparator();
-		copyPopupMenu.add(new JMenuItem(copyLoggingJsonEventAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingXmlEventAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingMessageAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingMessagePatternAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggerNameAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingThrowableAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingCallStackAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingCallLocationAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingMarkerAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingMdcAction));
-		copyPopupMenu.add(new JMenuItem(copyLoggingNdcAction));
+		for(CopyToClipboardAction current : copyLoggingActions)
+		{
+			copyPopupMenu.add(new JMenuItem(current));
+		}
+
 		copyPopupMenu.addSeparator();
-		copyPopupMenu.add(new JMenuItem(copyAccessUriAction));
+		for(CopyToClipboardAction current : copyAccessActions)
+		{
+			copyPopupMenu.add(new JMenuItem(current));
+		}
+
 		copyPopupMenu.addSeparator();
 		copyPopupMenu.add(customCopyPopupMenu);
 
@@ -1499,18 +1465,14 @@ public class ViewActions
 		this.eventWrapper = wrapper;
 		gotoSourceAction.setEventWrapper(wrapper);
 		copyEventAction.setEventWrapper(wrapper);
-		copyLoggingJsonEventAction.setEventWrapper(wrapper);
-		copyLoggingXmlEventAction.setEventWrapper(wrapper);
-		copyLoggingMessageAction.setEventWrapper(wrapper);
-		copyLoggingMessagePatternAction.setEventWrapper(wrapper);
-		copyLoggerNameAction.setEventWrapper(wrapper);
-		copyLoggingThrowableAction.setEventWrapper(wrapper);
-		copyLoggingCallStackAction.setEventWrapper(wrapper);
-		copyLoggingCallLocationAction.setEventWrapper(wrapper);
-		copyLoggingMarkerAction.setEventWrapper(wrapper);
-		copyLoggingMdcAction.setEventWrapper(wrapper);
-		copyLoggingNdcAction.setEventWrapper(wrapper);
-		copyAccessUriAction.setEventWrapper(wrapper);
+		for(CopyToClipboardAction current : copyLoggingActions)
+		{
+			current.setEventWrapper(wrapper);
+		}
+		for(CopyToClipboardAction current : copyAccessActions)
+		{
+			current.setEventWrapper(wrapper);
+		}
 		boolean enableEditMenu;
 		if(wrapper == null)
 		{
@@ -1692,20 +1654,12 @@ public class ViewActions
 		
 		if(changed)
 		{
-			if(groovyClipboardActions.size() == 0)
+			customCopyMenu.removeAll();
+			customCopyPopupMenu.removeAll();
+			boolean enabled = false;
+			if(groovyClipboardActions.size() > 0)
 			{
-				customCopyMenu.setEnabled(false);
-				customCopyPopupMenu.setEnabled(false);
-				customCopyMenu.removeAll();
-				customCopyPopupMenu.removeAll();
-			}
-			else
-			{
-				customCopyMenu.setEnabled(true);
-				customCopyPopupMenu.setEnabled(true);
-				customCopyMenu.removeAll();
-				customCopyPopupMenu.removeAll();
-
+				enabled = true;
 				SortedSet<CopyToClipboardAction> sorted = new TreeSet<CopyToClipboardAction>(CopyToClipboardByNameComparator.INSTANCE);
 				// sort the actions by name
 				for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
@@ -1720,12 +1674,23 @@ public class ViewActions
 					customCopyPopupMenu.add(new JMenuItem(current));
 				}
 			}
+			customCopyMenu.setEnabled(enabled);
+			customCopyPopupMenu.setEnabled(enabled);
 		}
 
+//		boolean enabled=false;
 		for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
 		{
-			current.getValue().setEventWrapper(wrapper);
+			CopyToClipboardAction value = current.getValue();
+			value.setEventWrapper(wrapper);
+//			if(value.isEnabled())
+//			{
+//				enabled = true;
+//			}
 		}
+//
+//		customCopyMenu.setEnabled(enabled);
+//		customCopyPopupMenu.setEnabled(enabled);
 	}
 
 	public void updateWindowMenu(JMenu windowMenu)
@@ -3681,6 +3646,7 @@ public class ViewActions
 			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_SELECTION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
+			setView(null);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3694,6 +3660,7 @@ public class ViewActions
 		public void setView(EventWrapperViewPanel view)
 		{
 			this.view = view;
+			setEnabled(view != null);
 		}
 	}
 
@@ -3865,6 +3832,7 @@ public class ViewActions
 		private CopyToClipboardAction(ClipboardFormatter clipboardFormatter)
 		{
 			setClipboardFormatter(clipboardFormatter);
+			setEventWrapper(null);
 		}
 
 		public ClipboardFormatter getClipboardFormatter()
