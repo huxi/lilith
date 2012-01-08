@@ -36,11 +36,22 @@ package de.huxhorn.lilith.data.logging;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ThrowableInfo
 	implements Serializable
 {
 	private static final long serialVersionUID = -6320441996003349426L;
+
+	private static final int REGULAR_EXCEPTION_INDENT = 1;
+	private static final int SUPPRESSED_EXCEPTION_INDENT = 2;
+	private static final String CAUSED_BY = "Caused by: ";
+	private static final String SUPPRESSED = "\tSuppressed: ";
+	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	private static final char TAB = '\t';
+
+	private static final String WRAPPED_BY = "Wrapped by: ";
 
 	private String name;
 	private String message;
@@ -187,5 +198,98 @@ public class ThrowableInfo
 
 		result.append("]");
 		return result.toString();
+	}
+
+	/**
+	 * Returns a string representation similar to printStackTrace.
+	 *
+	 * @param throwableInfo The ThrowableInfo to be transformed into a String.
+	 * @param extended whether or not extended StackTraceElement information should be appended.
+	 * @return the String representation of the given ThrowableInfo.
+	 */
+	public static String asString(ThrowableInfo throwableInfo, boolean extended)
+	{
+		StringBuilder sb = new StringBuilder();
+
+		Set<ThrowableInfo> dejaVu = new HashSet<ThrowableInfo>();
+		recursiveAppend(sb, dejaVu, null, REGULAR_EXCEPTION_INDENT, throwableInfo, extended);
+
+		return sb.toString();
+	}
+
+	private static void recursiveAppend(StringBuilder sb, Set<ThrowableInfo> dejaVu, String prefix, int indent, ThrowableInfo throwableInfo, boolean extended)
+	{
+		if(throwableInfo == null)
+		{
+			return;
+		}
+		if(dejaVu.contains(throwableInfo))
+		{
+			sb.append("[CIRCULAR REFERENCE]");
+			return;
+		}
+		dejaVu.add(throwableInfo);
+
+		if(prefix != null)
+		{
+			sb.append(prefix);
+		}
+		String name = throwableInfo.getName();
+		if(name != null)
+		{
+			sb.append(name);
+			String message = throwableInfo.getMessage();
+			if(message != null && !name.equals(message))
+			{
+				sb.append(": ").append(throwableInfo.getMessage());
+			}
+		}
+		else
+		{
+			sb.append(throwableInfo.getMessage());
+		}
+		sb.append(LINE_SEPARATOR);
+
+		appendSTEArray(sb, indent, throwableInfo, extended);
+
+		ThrowableInfo[] suppressed = throwableInfo.getSuppressed();
+		if(suppressed != null)
+		{
+			for(ThrowableInfo current : suppressed)
+			{
+				recursiveAppend(sb, dejaVu, SUPPRESSED, SUPPRESSED_EXCEPTION_INDENT, current, extended);
+			}
+		}
+		recursiveAppend(sb, dejaVu, CAUSED_BY, indent, throwableInfo.getCause(), extended);
+	}
+
+	private static void appendSTEArray(StringBuilder sb, int indentLevel, ThrowableInfo throwableInfo, boolean extended)
+	{
+		ExtendedStackTraceElement[] steArray = throwableInfo.getStackTrace();
+
+		int commonFrames = throwableInfo.getOmittedElements();
+
+		if(steArray != null)
+		{
+			for(int i = 0; i < steArray.length - commonFrames; i++)
+			{
+				ExtendedStackTraceElement ste = steArray[i];
+				for(int j = 0; j < indentLevel; j++)
+				{
+					sb.append(TAB);
+				}
+				sb.append(ste.toString(extended));
+				sb.append(LINE_SEPARATOR);
+			}
+		}
+
+		if(commonFrames > 0)
+		{
+			for(int j = 0; j < indentLevel; j++)
+			{
+				sb.append(TAB);
+			}
+			sb.append("... ").append(commonFrames).append(" more").append(LINE_SEPARATOR);
+		}
 	}
 }
