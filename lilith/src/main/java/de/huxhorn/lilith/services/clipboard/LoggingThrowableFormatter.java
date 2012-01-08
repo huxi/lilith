@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
@@ -74,32 +73,7 @@ public class LoggingThrowableFormatter
 					ThrowableInfo info = loggingEvent.getThrowable();
 					if(info != null)
 					{
-						StringBuilder throwableText = new StringBuilder();
-						for(; ;)
-						{
-							throwableText.append("Exception: ").append(info.getName()).append("\n");
-							String message = info.getMessage();
-							if(message != null && !message.equals(info.getName()))
-							{
-								throwableText.append("Message: ").append(message).append("\n");
-							}
-							ExtendedStackTraceElement[] st = info.getStackTrace();
-							if(st != null)
-							{
-								throwableText.append("StackTrace:\n");
-								for(ExtendedStackTraceElement current : st)
-								{
-									throwableText.append("\tat ").append(current.toString(true)).append("\n");
-								}
-							}
-							info = info.getCause();
-							if(info == null)
-							{
-								break;
-							}
-							throwableText.append("\nCaused by:\n");
-						}
-						return throwableText.toString();
+						return ThrowableInfo.asString(info, true);
 					}
 				}
 			}
