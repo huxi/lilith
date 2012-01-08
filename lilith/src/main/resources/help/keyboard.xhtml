@@ -15,6 +15,8 @@
 <p>^ represents the system dependent command key, e.g. "Ctrl" on Windows and
 	"cmd &#8984;" on Mac</p>
 
+<p>Alt represents "Alt" ("Option &#8997;" on Mac).</p>
+
 <p>&#8679; represents "Shift".</p>
 
 <p>&#8629; represents "Enter" or "Return".</p>
@@ -25,13 +27,13 @@
 	<dt>F1</dt>
 	<dd>Show help...</dd>
 
-	<dt>^&#8679; O</dt>
+	<dt>^+&#8679;+O</dt>
 	<dd>Open inactive log...</dd>
 
-	<dt>^&#8679; X</dt>
+	<dt>^+&#8679;+X</dt>
 	<dd>Remove all inactive logs</dd>
 
-	<dt>^ Q</dt>
+	<dt>^+Q</dt>
 	<dd>Exit. Quit. No, I won't ask you for permission. I will ask for permission if you make me do so, though. :p</dd>
 </dl>
 
@@ -39,25 +41,25 @@
 <h2>View related</h2>
 
 <dl>
-	<dt>^ 1</dt>
+	<dt>^+1</dt>
 	<dd>Opens the global logging view.</dd>
 
-	<dt>^ 2</dt>
+	<dt>^+2</dt>
 	<dd>Opens the global access view.</dd>
 
-	<dt>^ 0</dt>
+	<dt>^+0</dt>
 	<dd>Opens the internal Lilith logging view.</dd>
 
-	<dt>^ R</dt>
+	<dt>^+R</dt>
 	<dd>Remove inactive views.</dd>
 <!--
 	 <dt>^-&#8679;-R</dt>
 	 <dd>Clear and remove inactive views.</dd>
 -->
-	<dt>^ T</dt>
+	<dt>^+T</dt>
 	<dd>Toggles tailing ("scroll to bottom"-funtionality).</dd>
 
-	<dt>^ P</dt>
+	<dt>^+P</dt>
 	<dd>Pause/Unpause view.<br/>
 		If the view is paused, events are still received in the background,
 		i.e. no events are lost while the view is paused.
@@ -68,53 +70,53 @@
 	<dd>Clear view.</dd>
 -->
 
-	<dt>^&#8679; A</dt>
+	<dt>^+&#8679;+A</dt>
 	<dd>Attach/detach view.</dd>
 
-	<dt>^&#8679; D</dt>
+	<dt>^+&#8679;+D</dt>
 	<dd>Disconnect - terminates the connection.</dd>
 
-	<dt>^ M</dt>
+	<dt>^+M</dt>
 	<dd>Focus message.</dd>
 
-	<dt>^ E</dt>
+	<dt>^+E</dt>
 	<dd>Focus events.</dd>
 
-	<dt>^ B</dt>
+	<dt>^+B</dt>
 	<dd>Edit source name of the current view.</dd>
 
-	<dt>^ I</dt>
+	<dt>^+I</dt>
 	<dd>Add the current filter.</dd>
 
-	<dt>^ . (also ^ [mouse wheel up])</dt>
+	<dt>^+. (also ^+[mouse wheel up])</dt>
 	<dd>Zoom in</dd>
 
-	<dt>^&#8679; . (also ^ [mouse wheel down])</dt>
+	<dt>^+&#8679;+. (also ^+[mouse wheel down])</dt>
 	<dd>Zoom out</dd>
 </dl>
 
 <h2>Tab related</h2>
 
 <dl>
-	<dt>^ W</dt>
+	<dt>^+W</dt>
 	<dd>Close the current tab.<br/>
 		The unfiltered tab is not closeable.
 	</dd>
 
-	<dt>^&#8679; W</dt>
+	<dt>^+&#8679;+W</dt>
 	<dd>Close all but the current tab.<br/>
 		The unfiltered tab is not closeable.
 	</dd>
 
-	<dt>^&#8679;Alt W</dt>
+	<dt>^+Alt+&#8679;+W</dt>
 	<dd>Close all tabs.<br/>
 		The unfiltered tab is not closeable.
 	</dd>
 
-	<dt>^ J</dt>
+	<dt>^+J</dt>
 	<dd>Select previous tab.</dd>
 
-	<dt>^ K</dt>
+	<dt>^+K</dt>
 	<dd>Select next tab.</dd>
 </dl>
 
@@ -122,22 +124,22 @@
 <h2>Find related</h2>
 
 <dl>
-	<dt>^ F</dt>
+	<dt>^+F</dt>
 	<dd>Show find panel and focus find textfield.</dd>
 
-	<dt>^&#8679; F</dt>
+	<dt>^+&#8679;+F</dt>
 	<dd>Reset find.</dd>
 
-	<dt>^ G</dt>
+	<dt>^+G</dt>
 	<dd>Find previous match.</dd>
 
-	<dt>^&#8679; G</dt>
+	<dt>^+&#8679;+G</dt>
 	<dd>Find next match.</dd>
 
-	<dt>^ L</dt>
+	<dt>^+L</dt>
 	<dd>Find previous match of any active condition.</dd>
 
-	<dt>^&#8679; L</dt>
+	<dt>^+&#8679;+L</dt>
 	<dd>Find next match of any active condition.</dd>
 <!--
 	<dt>???</dt>
@@ -150,7 +152,7 @@
 	<dt>&#8629; (if in find textfield)</dt>
 	<dd>Create a new tab with the current filter.</dd>
 
-	<dt>&#8679; &#8629; (if in find textfield)</dt>
+	<dt>&#8679;+&#8629; (if in find textfield)</dt>
 	<dd>Replace filter of the current tab with the current filter.<br/>
 		Opens a new tab, too, if the current tab is the unfiltered tab.
 	</dd>
