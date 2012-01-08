@@ -87,7 +87,7 @@ public class LoggingCallStackFormatter
 							{
 								text.append("\n");
 							}
-							text.append("\tat ").append(current);
+							text.append("\tat ").append(current.toString(true));
 						}
 						return text.toString();
 					}

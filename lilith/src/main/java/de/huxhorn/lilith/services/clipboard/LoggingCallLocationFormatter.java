@@ -75,7 +75,7 @@ public class LoggingCallLocationFormatter
 					ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
 					if(callStack != null && callStack.length > 0)
 					{
-						return callStack[0].toString();
+						return callStack[0].toString(true);
 					}
 				}
 			}
