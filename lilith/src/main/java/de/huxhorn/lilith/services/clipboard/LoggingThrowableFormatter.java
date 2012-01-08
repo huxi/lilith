@@ -38,7 +38,7 @@ public class LoggingThrowableFormatter
 
 	public String getAccelerator()
 	{
-		return null;
+		return "command shift alt T";
 	}
 
 	public boolean isCompatible(Object object)
