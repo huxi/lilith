@@ -61,6 +61,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -595,6 +596,7 @@ public class ViewActions
 	private Map<String, ClipboardFormatterData> groovyClipboardData;
 	private List<CopyToClipboardAction> copyLoggingActions;
 	private List<CopyToClipboardAction> copyAccessActions;
+	private Map<KeyStroke, CopyToClipboardAction> keyStrokeActionMapping;
 
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
@@ -639,6 +641,8 @@ public class ViewActions
 
 			}
 		};
+
+		keyStrokeActionMapping = new HashMap<KeyStroke, CopyToClipboardAction>();
 		// ##### Menu Actions #####
 		// File
 		OpenMenuAction openMenuAction = new OpenMenuAction();
@@ -670,6 +674,8 @@ public class ViewActions
 		copyAccessActions = new ArrayList<CopyToClipboardAction>();
 		copyAccessActions.add(new CopyToClipboardAction(new AccessUriFormatter()));
 
+		prepareClipboardActions(copyLoggingActions, keyStrokeActionMapping);
+		prepareClipboardActions(copyAccessActions, keyStrokeActionMapping);
 
 		// Search
 		findMenuAction = new FindMenuAction();
@@ -1666,6 +1672,8 @@ public class ViewActions
 				{
 					sorted.add(current.getValue());
 				}
+				HashMap<KeyStroke, CopyToClipboardAction> freshMapping = new HashMap<KeyStroke, CopyToClipboardAction>(keyStrokeActionMapping);
+				prepareClipboardActions(sorted, freshMapping);
 
 				// add the sorted actions to the menus.
 				for(CopyToClipboardAction current : sorted)
@@ -1691,6 +1699,64 @@ public class ViewActions
 //
 //		customCopyMenu.setEnabled(enabled);
 //		customCopyPopupMenu.setEnabled(enabled);
+	}
+
+	private void prepareClipboardActions(Collection<CopyToClipboardAction> actions, Map<KeyStroke, CopyToClipboardAction> mapping)
+	{
+		if(actions == null)
+		{
+			throw new IllegalArgumentException("actions must not be null!");
+		}
+		if(mapping == null)
+		{
+			throw new IllegalArgumentException("mapping must not be null!");
+		}
+		for(CopyToClipboardAction current : actions)
+		{
+
+			Object obj = current.getValue(Action.ACCELERATOR_KEY);
+			if(!(obj instanceof KeyStroke))
+			{
+				continue;
+			}
+			ClipboardFormatter formatter = current.getClipboardFormatter();
+			if(formatter == null)
+			{
+				// oO?
+				continue;
+			}
+			boolean reset = false;
+			String name = formatter.getName();
+			KeyStroke currentKeyStroke = (KeyStroke) obj;
+			String existingActionName = LilithKeyStrokes.getActionName(currentKeyStroke);
+			if(existingActionName != null)
+			{
+				if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' of formatter '{}' would collide with native Lilith action '{}'. Ignoring...", new Object[]{currentKeyStroke, name, existingActionName});
+				reset = true;
+			}
+			CopyToClipboardAction existingAction = mapping.get(currentKeyStroke);
+			if(existingAction != null)
+			{
+				String existingFormatterName = null;
+				ClipboardFormatter existingFormatter = existingAction.getClipboardFormatter();
+				if(existingFormatter != null)
+				{
+					existingFormatterName = existingFormatter.getName();
+				}
+				if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' of formatter '{}' would collide with other formatter '{}'. Ignoring...", new Object[]{currentKeyStroke, name, existingFormatterName});
+				reset = true;
+			}
+
+			if(reset)
+			{
+				if(logger.isInfoEnabled()) logger.info("Resetting accelerator for formatter '{}'.", name);
+				current.putValue(Action.ACCELERATOR_KEY, null);
+			}
+			else
+			{
+				mapping.put(currentKeyStroke, current);
+			}
+		}
 	}
 
 	public void updateWindowMenu(JMenu windowMenu)
