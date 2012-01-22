@@ -50,12 +50,55 @@ import ch.qos.logback.classic.spi.LoggerContextVO;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.classic.spi.ThrowableProxy;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class LogbackLoggingAdapter
 {
+	private static final Method GET_SUPPRESSED_METHOD;
+
+	static
+	{
+		Method m = null;
+		try
+		{
+			m = IThrowableProxy.class.getMethod("getSuppressed");
+		}
+		catch(NoSuchMethodException e)
+		{
+			// ignore
+		}
+		GET_SUPPRESSED_METHOD = m;
+	}
+
+	private static IThrowableProxy[] getSuppressed(IThrowableProxy proxy)
+	{
+		if(GET_SUPPRESSED_METHOD == null || proxy == null)
+		{
+			return null;
+		}
+		try
+		{
+			Object result = GET_SUPPRESSED_METHOD.invoke(proxy);
+			if(result instanceof IThrowableProxy[])
+			{
+				return (IThrowableProxy[]) result;
+			}
+		}
+		catch(IllegalAccessException e)
+		{
+			// ignore
+		}
+		catch(InvocationTargetException e)
+		{
+			// ignore
+		}
+		return null;
+	}
+
 	public LoggingEvent convert(ch.qos.logback.classic.spi.ILoggingEvent event, boolean inSameThread)
 	{
 		if(event == null)
@@ -186,9 +229,8 @@ public class LogbackLoggingAdapter
 		result.setOmittedElements(ti.getCommonFrames());
 		result.setMessage(ti.getMessage());
 		result.setStackTrace(initFromStackTraceElementProxyArray(ti.getStackTraceElementProxyArray()));
-		// TODO: uncomment block below after https://github.com/ceki/logback/pull/16 has been merged.
-		/*
-		IThrowableProxy[] suppressedThrowableProxies = ti.getSuppressed();
+
+		IThrowableProxy[] suppressedThrowableProxies = getSuppressed(ti);
 		if(suppressedThrowableProxies != null)
 		{
 			ThrowableInfo[] suppressed = new ThrowableInfo[suppressedThrowableProxies.length];
@@ -198,7 +240,6 @@ public class LogbackLoggingAdapter
 			}
 			result.setSuppressed(suppressed);
 		}
-		*/
 		result.setCause(initFromThrowableProxy(ti.getCause(), calculatePackagingData));
 		return result;
 	}

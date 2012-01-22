@@ -85,7 +85,7 @@
 			<action dev="jhux" type="add">
 				Added support for new Java SE 7 try-with-resources statement suppressed Throwables.
 				See http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html
-				This is not sufficient, yet, since Logback (and my corresponding converter) needs to add support, too.
+				This is not sufficient, yet, since Logback needs to add support, too.
 			</action>
 			<action dev="jhux" type="fix" issue="97">
 				After many runs that replace opened log file, Updating task fails with "Negative seek offset"
