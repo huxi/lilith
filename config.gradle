@@ -57,14 +57,15 @@ buildscript {
 	localReleaseRepo = localReleaseRepoFile.toURL().toString()
 	localSnapshotRepo = localSnapshotRepoFile.toURL().toString()
 	repositories {
-		mavenCentral()
 		maven {
 			url localReleaseRepo
 		}
 		maven {
 			url localSnapshotRepo
 		}
+		mavenCentral()
 	}
+
 	dependencies {
 		// needed for syncSnapshot and syncStaging
 		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6',
@@ -254,13 +255,13 @@ subprojects {
     archivesBaseName=mapped
 
 	repositories {
-		mavenCentral()
 		maven {
 			url localReleaseRepo
 		}
 		maven {
 			url localSnapshotRepo
 		}
+		mavenCentral()
     }
     
 	configurations {
