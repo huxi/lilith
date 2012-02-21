@@ -2,8 +2,6 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import de.huxhorn.sulky.plist.*
 import org.gradle.plugins.signing.Sign
 
-apply from: 'GitHeadHash.gradle'
-
 artifactMapping = [
 'jul-slf4j-handler':                           'de.huxhorn.lilith.jul-slf4j-handler',
 'jul-xml':                                     'de.huxhorn.lilith.jul.xml',
@@ -69,7 +67,8 @@ buildscript {
 	dependencies {
 		// needed for syncSnapshot and syncStaging
 		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6',
-		"de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}"
+		"de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}",
+		'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.1'
 	}
 }
 
@@ -126,8 +125,7 @@ allprojects {
 
 	group = 'de.huxhorn.lilith'
 	version = '0.9.42'
-	if(!System.properties.'release')
-	{
+	if(!System.properties.'release') {
 		version = version + '-SNAPSHOT'
 	}
 }
@@ -341,6 +339,13 @@ subprojects {
 project(':lilith') {
 
 	apply plugin: 'application'
+	apply plugin: de.huxhorn.gradle.git.GitStatePlugin
+	//apply plugin: 'git-state'
+	
+	if(System.properties.'release') {
+		project.git.requireClean = true
+		processResources.dependsOn checkGitState
+	}
 	
 	mainClassName = 'de.huxhorn.lilith.Lilith'
 
@@ -373,7 +378,7 @@ project(':lilith') {
 				'lilithVersion': version,
 				'slf4jVersion': versions.slf4j,
 				'logbackVersion': versions.logback,
-				'gitRevision': git.getHeadHash(),
+				'gitRevision': project.gitHeadHash,
 				'timestamp': System.currentTimeMillis()
 			)
 		}
@@ -400,7 +405,7 @@ project(':lilith') {
 					'logbackVersion': versions.logback,
 					'log4jVersion': versions.log4j,
 					'commonsLoggingVersion': versions.commonsLogging,
-					'gitRevision': git.getHeadHash(),
+					'gitRevision': project.gitHeadHash,
 					'timestamp': System.currentTimeMillis()
 				)
 			}
