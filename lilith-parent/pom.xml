@@ -24,7 +24,7 @@
 		<log4jVersion>1.2.16</log4jVersion>
 		<logbackVersion>1.0.1</logbackVersion>
 		<slf4jVersion>1.6.4</slf4jVersion>
-		<springVersion>3.0.5.RELEASE</springVersion>
+		<springVersion>3.1.1.RELEASE</springVersion>
 		<sulkyVersion><!-- SV -->0.9.15-SNAPSHOT</sulkyVersion>
 		<lilithVersion>${project.version}</lilithVersion>
 		<!-- The following lines prevent "[WARNING] Using platform encoding[..]" messages -->
