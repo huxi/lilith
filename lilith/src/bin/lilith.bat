@@ -38,7 +38,7 @@
 
 @REM set %HOME% to equivalent of $HOME
 if "%HOME%" == "" (set HOME=%HOMEDRIVE%%HOMEPATH%)
-if "%JAVA_BIN%" == "" (set JAVA_BIN=javaw.exe)
+if "%JAVA_EXE%" == "" (set JAVA_EXE=javaw.exe)
 
 set ERROR_CODE=0
 
@@ -58,7 +58,7 @@ goto chkLHome
 @REM goto error
 
 :OkJHome
-if exist "%JAVA_HOME%\bin\%JAVA_BIN%" goto chkLHome
+if exist "%JAVA_HOME%\bin\%JAVA_EXE%" goto chkLHome
 
 echo.
 echo WARN: JAVA_HOME is set to an invalid directory.
@@ -136,8 +136,8 @@ goto Win9xApp
 
 @REM Reaching here means variables are defined and arguments have been captured
 :endInit
-SET LILITH_JAVA_EXE="%JAVA_HOME%\bin\%JAVA_BIN%"
-if "%JAVA_HOME%" == "" (set LILITH_JAVA_EXE="%JAVA_BIN%")
+SET LILITH_JAVA_EXE="%JAVA_HOME%\bin\%JAVA_EXE%"
+if "%JAVA_HOME%" == "" (set LILITH_JAVA_EXE="%JAVA_EXE%")
 
 :runm2
 %LILITH_JAVA_EXE% %LILITH_OPTS% "-Dlilith.home=%LILITH_HOME%" -jar "%LILITH_HOME%\lib\lilith.jar" %LILITH_CMD_LINE_ARGS%
