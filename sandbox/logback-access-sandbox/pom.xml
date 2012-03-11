@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.sandbox.logback.access</artifactId>
-	<version><!-- LV -->0.9.42-SNAPSHOT</version>
+	<version><!-- LV -->0.9.42</version>
 	<packaging>war</packaging>
 	<name>Logback Access Sandbox</name>
 	<description>This file is part of Lilith. It's a logback-access sandbox.</description>
@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.42-SNAPSHOT</version>
+		<version><!-- LV -->0.9.42</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.logback.logging-adapter</artifactId>
-	<version><!-- LV -->0.9.42-SNAPSHOT</version>
+	<version><!-- LV -->0.9.42</version>
 	<packaging>jar</packaging>
 	<name>Logback Logging Adapter</name>
 	<description>This file is part of Lilith. It contains the adapter to translate from logback to lilith logging events.</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.42-SNAPSHOT</version>
+		<version><!-- LV -->0.9.42</version>
 		<relativePath>../../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
