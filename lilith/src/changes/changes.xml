@@ -77,6 +77,12 @@
 
 		<release version="0.9.43" date="TBD" description="Future release">
 		</release>
+		
+		<release version="0.9.42.1" date="2012-03-12" description="Release">
+			<action dev="jhux">
+				Fixing broken dependencies in poms.
+			</action>
+		</release>
 
 		<release version="0.9.42" date="2012-03-12" description="Release">
 			<action dev="jhux" type="update">
