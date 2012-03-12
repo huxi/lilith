@@ -87,7 +87,7 @@
 				See http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html
 			</action>
 			<action dev="jhux" type="fix" issue="97">
-				After many runs that replace opened log file, Updating task fails with "Negative seek offset"
+				After many runs that replace opened log file, Updating task failed with "Negative seek offset"
 				This was reported by Jeff Jensen (jeffjensen).
 			</action>
 			<action dev="jhux" type="add" issue="52">
