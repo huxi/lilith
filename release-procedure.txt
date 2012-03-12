@@ -125,7 +125,7 @@ git push --tags bitbucket
 #####
 
 Submit info to Freshmeat
-http://freshmeat.net/projects/lilith-viewer/releases
+http://freecode.com/projects/lilith-viewer/releases
 Username: huxhorn
 
 #####
