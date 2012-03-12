@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 0.9.42 Release Notes</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 0.9.42</h1>
+
+		<div>
+		<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/0.9.42">Download Now!
+		<br />(Released: 2012-03-12)</a>
+		</div>
+		
+		<h2>Changes</h2>
+		<ul>
+			<li>
+				tail and cat are now fully supporting both LoggingEvent and AccessEvent.
+			</li>
+			<li>
+				Restored Logback SocketAppender in Lilith logging configuration. It's now triggered during debug actions, again.
+			</li>
+			<li>
+				Added support for new Java SE 7 try-with-resources statement suppressed Throwables.
+				<br/>See <a href="http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html">Better Resource Management with Java SE 7: Beyond Syntactic Sugar</a>.
+				<br/>This is not sufficient, yet, since Logback (and my corresponding converter) needs to add support, too.
+				<br/>See <a href="https://github.com/ceki/logback/pull/16">https://github.com/ceki/logback/pull/16</a> and
+				<a href="http://jira.qos.ch/browse/LBCLASSIC-276">LBCLASSIC-276</a>.
+			</li>
+			<li>
+				After many runs that replace opened log file, Updating task failed with "Negative seek offset"
+				<br/>This was reported by Jeff Jensen (jeffjensen).
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/97">Ticket #97</a>)
+			</li>
+			<li>
+				Added "Focus..." and "Exclude..." menus to popup.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/52">Ticket #52</a>)
+			</li>
+			<li>
+				"Edit", "Copy..." and "Filter..." menus are only enabled if it makes sense.
+			</li>
+			<li>
+				Added "Copy event as JSON" and "Copy event as XML".
+				<br/>This was requested by Joe.
+			</li>
+			<li>
+				Added lilith.timestamp.milliseconds system property.
+			</li>
+			<li>
+				Preventing multiple warning log-entries in case of broken groovy files
+				(detailsView.groovy, Conditions, ClipboardFormatter).
+				<br/>Instead, a warning is only emitted once for every file change.
+				<br/>Instances aren't recreated in that case, either, so this
+				also enhances the performance and lowers the CPU usage during
+				general use.
+			</li>
+			<li>
+				Views are now properly updated upon preferences change.
+			</li>
+			<li>
+				Added option for "wrapped exception style" in details view.
+				<br/>This was suggested by Tomasz Nurkiewicz in <a href="http://jira.qos.ch/browse/LBCLASSIC-217">LBCLASSIC-217</a>.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/100">Ticket #100</a>)
+			</li>
+			<li>
+				Changed NDC to use varargs.
+			</li>
+			<li>
+				Added nottingham-draft HTTP status codes.
+				<br/>See <a href="https://tools.ietf.org/html/draft-nottingham-http-new-status-04">https://tools.ietf.org/html/draft-nottingham-http-new-status-04</a>
+			</li>
+			<li>
+				Relaxed namespace handling of all XML readers. This enables retrieval of old (1.3) Lilith XML Events.
+				<br/>This fixes a problem reported by Ekkehard Gentz.
+			</li>
+			<li>
+				All KeyStrokes are now managed globally. This includes validation of the used KeyStrokes which detected some mistakes:
+				<ul>
+					<li>"Close all tabs." is now Ctrl+Alt+Shift+W.</li>
+					<li>"Find previous active match" is now Ctrl+L.</li>
+					<li>"Find next active match" is now Ctrl+Shift+L.</li>
+				</ul>
+			</li>
+			<li>
+				"Copy Throwable" does now have the shortcut "command shift alt T".
+				<br/>This was suggested by snstanton.
+				<br/>(<a href="http://sourceforge.net/apps/trac/lilith/ticket/101">Ticket #101</a>)
+			</li>
+			<li>
+				SLF4J 1.6.4, Logback 1.0.1, Groovy 1.8.6, commons-lang 3.0.1,
+				protobuf-java 2.4.1, jackson 1.9.2, jcommander 1.23,
+				aspectj 1.6.11, cglib 2.2.2, httpclient 4.1.2, httpcore 4.1.3,
+				commons-codec 1.5, JUnit 4.10, Spring 3.1.1.RELEASE
+			</li>
+		</ul>
+
+		<h2>Known Issues</h2>
+		<ul>
+			<li>Flying Saucer related issues:
+				<ul>
+					<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+						<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>
+					</li>
+		
+					<li>The first line of the message in HTML view is not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
+						<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=125">Issue 125: &lt;pre&gt; ignores leading whitespace</a>
+					</li>
+		
+					<li>Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+						<br/>See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=105">Issue 105: URLs with anchors</a>
+					</li>
+				</ul>
+			</li>
+			<li>Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.<br/>
+				This is caused by <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182">bug #6995182</a>
+				and I can't do anything about it.<br/>
+				Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.<br/>
+				m(
+			</li>
+		</ul>
+		
+		<h2>Attention</h2>
+		<p>This release changes detailsView.groovy in a way incompatible with previous versions!</p>
+		<p>If you switch back to a previous version, you must reset this file. Simply execute
+		"Preferences" =&gt; "Troubleshooting" =&gt; "Reinitialize details view files." in that case.</p>
+
+		<h2>Previous Versions</h2>
+		<ul>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.41.xhtml">0.9.41</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.40.xhtml">0.9.40</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.39.xhtml">0.9.39</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.38.xhtml">0.9.38</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.37.xhtml">0.9.37</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.36.xhtml">0.9.36</a></li>
+		</ul>
+
+	</body>
+</html>
+
