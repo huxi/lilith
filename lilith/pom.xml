@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith</artifactId>
-	<version><!-- LV -->0.9.42</version>
+	<version><!-- LV -->0.9.43-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Lilith</name>
 	<description>Lilith is a logging and access event viewer for the Logback logging framework. It has features comparable to Chainsaw, a logging event viewer for log4j. This means that it can receive logging events from remote applications using Logback as their logging backend. It uses files to buffer the received events locally, so it is possible to keep vast amounts of logging events at your fingertip while still being able to check only the ones you are really interested in by using filtering conditions.</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.42</version>
+		<version><!-- LV -->0.9.43-SNAPSHOT</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
 	

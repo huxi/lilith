@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.tracing</artifactId>
-	<version><!-- LV -->0.9.42</version>
+	<version><!-- LV -->0.9.43-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>TracingAspect</name>
 	<description>This module contains a tracing and profiling aspect.</description>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>de.huxhorn.lilith</groupId>
 		<artifactId>de.huxhorn.lilith.parent</artifactId>
-		<version><!-- LV -->0.9.42</version>
+		<version><!-- LV -->0.9.43-SNAPSHOT</version>
 		<relativePath>../lilith-parent/pom.xml</relativePath>
 	</parent>
 	
