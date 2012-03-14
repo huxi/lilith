@@ -1,6 +1,6 @@
-sulkyBaseVersion = '0.9.16'
+project.ext.sulkyBaseVersion = '0.9.16'
 
-versions = [
+project.ext.versions = [
 'aspectj':        '1.6.11',
 'jackson':        '1.9.2',
 'log4j':          '1.2.16',
@@ -10,7 +10,7 @@ versions = [
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
 
-libraries = [
+project.ext.libraries = [
 'aspectjrt':                "org.aspectj:aspectjrt:${versions.aspectj}",
 'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
 'cglib-nodep':              'cglib:cglib-nodep:2.2.2',
