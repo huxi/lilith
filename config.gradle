@@ -618,6 +618,7 @@ project(':lilith') {
 	
 	signing {
 		required = { !version.endsWith("SNAPSHOT") }
+		sign jarAll
 		sign distZip
 		sign myDistZip
 		sign myDistTgz
