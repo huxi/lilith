@@ -601,11 +601,6 @@ project(':lilith') {
 	task copyApp(dependsOn: preparePropertyList, type: Copy) {
 		with appSpec
 		into file('build/explodedApp')
-		doLast {
-			// due to http://jira.codehaus.org/browse/GRADLE-971
-			File f=file('build/explodedApp/Lilith.app/Contents/MacOS/JavaApplicationStub')
-			println 'setExecutable: '+f.setExecutable(true, true)
-		}
 	}
 
 	task appTgz(dependsOn: preparePropertyList, type: Tar) {
