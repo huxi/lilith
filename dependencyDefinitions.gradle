@@ -15,7 +15,7 @@ project.ext.libraries = [
 'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
 'cglib-nodep':              'cglib:cglib-nodep:2.2.2',
 'commons-io':               'commons-io:commons-io:2.3',
-'commons-lang':             'org.apache.commons:commons-lang3:3.0.1',
+'commons-lang':             'org.apache.commons:commons-lang3:3.1',
 'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
 'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.8.0',
 'groovy':                   'org.codehaus.groovy:groovy:1.8.6',
