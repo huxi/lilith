@@ -21,7 +21,7 @@
 	<properties>
 		<aspectjVersion>1.6.11</aspectjVersion>
 		<jacksonVersion>1.9.2</jacksonVersion>
-		<log4jVersion>1.2.16</log4jVersion>
+		<log4jVersion>1.2.17</log4jVersion>
 		<logbackVersion>1.0.4</logbackVersion>
 		<slf4jVersion>1.6.4</slf4jVersion>
 		<springVersion>3.1.1.RELEASE</springVersion>
