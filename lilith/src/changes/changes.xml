@@ -76,6 +76,9 @@
 		</release>
 
 		<release version="0.9.43" date="TBD" description="Future release">
+			<action dev="jhux" type="update">
+				Logback 1.0.4
+			</action>
 		</release>
 		
 		<release version="0.9.42.1" date="2012-03-12" description="Release">
