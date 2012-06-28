@@ -20,6 +20,7 @@
 	
 	<properties>
 		<aspectjVersion>1.6.12</aspectjVersion>
+		<groovyVersion>2.0.0</groovyVersion>
 		<jacksonVersion>1.9.7</jacksonVersion>
 		<log4jVersion>1.2.17</log4jVersion>
 		<logbackVersion>1.0.6</logbackVersion>
@@ -549,9 +550,19 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-                <version>1.8.6</version>
+				<version>${groovyVersion}</version>
 			</dependency>
-			
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-console</artifactId>
+				<version>${groovyVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-xml</artifactId>
+				<version>${groovyVersion}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjrt</artifactId>

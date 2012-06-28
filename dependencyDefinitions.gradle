@@ -7,6 +7,7 @@ project.ext.versions = [
 'logback':        '1.0.6',
 'slf4j':          '1.6.6',
 'spring':         '3.1.1.RELEASE',
+'groovy':         '2.0.0',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
 
@@ -18,7 +19,9 @@ project.ext.libraries = [
 'commons-lang':             'org.apache.commons:commons-lang3:3.1',
 'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
 'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.8.0',
-'groovy':                   'org.codehaus.groovy:groovy:1.8.6',
+'groovy':                   "org.codehaus.groovy:groovy:${versions.groovy}",
+'groovy-console':           "org.codehaus.groovy:groovy-console:${versions.groovy}",
+'groovy-xml':               "org.codehaus.groovy:groovy-xml:${versions.groovy}",
 'httpclient':               'org.apache.httpcomponents:httpclient:4.2',
 'httpcore':                 'org.apache.httpcomponents:httpcore:4.2',
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",

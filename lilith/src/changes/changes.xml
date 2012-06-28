@@ -77,9 +77,9 @@
 
 		<release version="0.9.43" date="TBD" description="Future release">
 			<action dev="jhux" type="update">
-				SLF4J 1.6.6, Logback 1.0.6, log4j 1.2.17, commons-io 2.3, commons-lang3 3.1,
-				httpclient 4.2, httpcore 4.2, aspectj 1.6.12, jackson 1.9.7,
-				jcommander 1.26
+				SLF4J 1.6.6, Logback 1.0.6, log4j 1.2.17, Groovy 2.0.0, 
+				commons-io 2.3, commons-lang3 3.1, httpclient 4.2, httpcore 4.2,
+				aspectj 1.6.12, jackson 1.9.7, jcommander 1.26
 			</action>
 		</release>
 		

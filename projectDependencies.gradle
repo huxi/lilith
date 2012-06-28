@@ -441,62 +441,64 @@ project(':lilith-conditions') {
 project(':lilith') {
 	description = 'Lilith is a logging and access event viewer for the Logback logging framework. It has features comparable to Chainsaw, a logging event viewer for log4j. This means that it can receive logging events from remote applications using Logback as their logging backend. It uses files to buffer the received events locally, so it is possible to keep vast amounts of logging events at your fingertip while still being able to check only the ones you are really interested in by using filtering conditions.'
 	dependencies {
-		compile libraries.'slf4j-api'
-		runtime libraries.'jcl-over-slf4j'
-		compile libraries.'logback-core'
-		compile libraries.'logback-classic'
-		compile libraries.'logback-access'
-		compile project(':lilith-conditions')
-		compile project(':logback-producer-classic')
-		compile project(':logback-producer-access')
-		compile project(':lilith-data-logging')
-		compile project(':lilith-data-logging-protobuf')
-		compile project(':lilith-data-access')
-		compile project(':lilith-engine')
-		compile project(':log4j-producer')
-		runtime libraries.'jgoodies-looks'
-		compile project(':jul-slf4j-handler')
-		compile project(':logback-multiplex-appender-classic')
-		compile project(':logback-multiplex-appender-classic-xml')
-		compile project(':logback-multiplex-appender-classic-json')
-		compile project(':logback-multiplex-appender-access')
-		compile project(':lilith-xml-logging')
-		compile project(':lilith-json-logging')
-		compile project(':logback-logging-adapter')
-		compile project(':log4j-xml')
-		compile project(':jul-xml')
-		compile project(':jul-xml-import')
-		compile project(':jul-xml-receiver')
-		compile project(':lilith-prefs')
-		compile libraries.'servlet-api'
+		compile libraries.'commons-io'
+		compile libraries.'commons-lang'
+		compile libraries.'flyingsaucer'
+		compile libraries.'glazedlists'
 		compile libraries.'groovy'
+		compile libraries.'groovy-console'
+		compile libraries.'groovy-xml'
+		compile libraries.'httpclient'
+		compile libraries.'httpcore'
+		compile libraries.'jcommander'
+		compile libraries.'jmdns'
+		compile libraries.'junique'
+		compile libraries.'logback-access'
+		compile libraries.'logback-classic'
+		compile libraries.'logback-core'
+		compile libraries.'macify'
+		compile libraries.'rrd4j'
+		compile libraries.'servlet-api'
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-buffers'
+		compile libraries.'sulky-buffers-filtering'
+		compile libraries.'sulky-buffers-table'
+		compile libraries.'sulky-codec'
+		compile libraries.'sulky-codec-filebuffer'
+		compile libraries.'sulky-conditions'
+		compile libraries.'sulky-formatting'
+		compile libraries.'sulky-groovy'
+		compile libraries.'sulky-io'
 		compile libraries.'sulky-logging'
 		compile libraries.'sulky-sounds-api'
 		compile libraries.'sulky-sounds-impl-jlayer'
-		compile libraries.'sulky-conditions'
-		compile libraries.'sulky-codec'
-		compile libraries.'sulky-codec-filebuffer'
-		compile libraries.'sulky-buffers'
-		compile libraries.'sulky-buffers-table'
-		compile libraries.'sulky-buffers-filtering'
-		compile libraries.'sulky-formatting'
 		compile libraries.'sulky-swing'
 		compile libraries.'sulky-tasks'
-		compile libraries.'sulky-io'
-		compile libraries.'sulky-groovy'
-		compile libraries.'jcommander'
-		compile libraries.'commons-lang'
-		compile libraries.'commons-io'
-		compile libraries.'httpclient'
-		compile libraries.'httpcore'
-		compile libraries.'glazedlists'
-		runtime project(':lilith-sounds')
+		compile project(':jul-slf4j-handler')
+		compile project(':jul-xml')
+		compile project(':jul-xml-import')
+		compile project(':jul-xml-receiver')
+		compile project(':lilith-conditions')
+		compile project(':lilith-data-access')
+		compile project(':lilith-data-logging')
+		compile project(':lilith-data-logging-protobuf')
+		compile project(':lilith-engine')
+		compile project(':lilith-json-logging')
+		compile project(':lilith-prefs')
+		compile project(':lilith-xml-logging')
+		compile project(':log4j-producer')
+		compile project(':log4j-xml')
+		compile project(':logback-logging-adapter')
+		compile project(':logback-multiplex-appender-access')
+		compile project(':logback-multiplex-appender-classic')
+		compile project(':logback-multiplex-appender-classic-json')
+		compile project(':logback-multiplex-appender-classic-xml')
+		compile project(':logback-producer-access')
+		compile project(':logback-producer-classic')
+		runtime libraries.'jcl-over-slf4j'
+		runtime libraries.'jgoodies-looks'
 		runtime libraries.'stax'
-		compile libraries.'flyingsaucer'
-		compile libraries.'jmdns'
-		compile libraries.'junique'
-		compile libraries.'macify'
-		compile libraries.'rrd4j'
+		runtime project(':lilith-sounds')
 	}
 }
 

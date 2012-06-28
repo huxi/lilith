@@ -312,6 +312,18 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-console</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-xml</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.logging</artifactId>
 			<scope>compile</scope>
