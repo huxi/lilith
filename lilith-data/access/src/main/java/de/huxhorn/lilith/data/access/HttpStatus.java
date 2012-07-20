@@ -58,13 +58,13 @@ public enum HttpStatus
 
 	// Redirection 3xx
 	MULTIPLE_CHOICES(300, Type.REDIRECTION, "Multiple Choices", Specification.RFC2616),
-	MOVED_PERMANENTLY(301, Type.REDIRECTION, " Moved Permanently", Specification.RFC2616),
-	FOUND(302, Type.REDIRECTION, " Found", Specification.RFC2616),
+	MOVED_PERMANENTLY(301, Type.REDIRECTION, "Moved Permanently", Specification.RFC2616),
+	FOUND(302, Type.REDIRECTION, "Found", Specification.RFC2616),
 	SEE_OTHER(303, Type.REDIRECTION, " See Other", Specification.RFC2616),
-	NOT_MODIFIED(304, Type.REDIRECTION, " Not Modified", Specification.RFC2616),
-	USE_PROXY(305, Type.REDIRECTION, " Use Proxy", Specification.RFC2616),
+	NOT_MODIFIED(304, Type.REDIRECTION, "Not Modified", Specification.RFC2616),
+	USE_PROXY(305, Type.REDIRECTION, "Use Proxy", Specification.RFC2616),
 	SWITCH_PROXY(306, Type.REDIRECTION, "Switch Proxy", Specification.RFC2616),
-	TEMPORARY_REDIRECT(307, Type.REDIRECTION, " Temporary Redirect", Specification.RFC2616),
+	TEMPORARY_REDIRECT(307, Type.REDIRECTION, "Temporary Redirect", Specification.RFC2616),
 
 
 	// Client Error 4xx
