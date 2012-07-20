@@ -54,6 +54,8 @@ public enum HttpStatus
 	RESET_CONTENT(205, Type.SUCCESSFUL, "Reset Content", Specification.RFC2616),
 	PARTIAL_CONTENT(206, Type.SUCCESSFUL, "Partial Content", Specification.RFC2616),
 	MULTI_STATUS(207, Type.SUCCESSFUL, "Multi-Status (WebDAV)", Specification.RFC4918),
+	ALREADY_REPORTED(208, Type.SUCCESSFUL, "Already Reported (WebDAV)", Specification.RFC5842),
+	IM_USED(226, Type.SUCCESSFUL, "IM Used", Specification.RFC3229),
 
 
 	// Redirection 3xx
@@ -65,6 +67,7 @@ public enum HttpStatus
 	USE_PROXY(305, Type.REDIRECTION, "Use Proxy", Specification.RFC2616),
 	SWITCH_PROXY(306, Type.REDIRECTION, "Switch Proxy", Specification.RFC2616),
 	TEMPORARY_REDIRECT(307, Type.REDIRECTION, "Temporary Redirect", Specification.RFC2616),
+	PERMANENT_REDIRECT(308, Type.REDIRECTION, "Permanent Redirect (draft)", null /* draft-reschke-http-status-308-07 */),
 
 
 	// Client Error 4xx
@@ -87,6 +90,7 @@ public enum HttpStatus
 	REQUESTED_RANGE_NOT_SATISFIABLE(416, Type.CLIENT_ERROR, "Requested Range Not Satisfiable", Specification.RFC2616),
 	EXPECTATION_FAILED(417, Type.CLIENT_ERROR, "Expectation Failed", Specification.RFC2616),
 	IM_A_TEAPOT(418, Type.CLIENT_ERROR, "I'm a teapot", Specification.RFC2324),
+	ENHANCE_YOUR_CALM(420, Type.CLIENT_ERROR, "Enhance Your Calm (Twitter)", null /* Twitter */),
 	UNPROCESSABLE_ENTITY(422, Type.CLIENT_ERROR, "Unprocessable Entity (WebDAV)", Specification.RFC4918),
 	LOCKED(423, Type.CLIENT_ERROR, "Locked (WebDAV)", Specification.RFC4918),
 	FAILED_DEPENDENCY(424, Type.CLIENT_ERROR, "Failed Dependency (WebDAV)", Specification.RFC4918),
@@ -98,6 +102,7 @@ public enum HttpStatus
 	NO_RESPONSE(444, Type.CLIENT_ERROR, "No Response (Nginx)", Specification.NGINX),
 	RETRY_WITH(449, Type.CLIENT_ERROR, "Retry With", Specification.MICROSOFT),
 	BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS(450, Type.CLIENT_ERROR, "Blocked by Windows Parental Controls", Specification.MICROSOFT),
+	UNAVAILABLE_FOR_LEGAL_REASONS(451, Type.CLIENT_ERROR, "Unavailable For Legal Reasons (draft)", null /* draft-tbray-http-legally-restricted-status-01 */),
 	CLIENT_CLOSED_REQUEST(499, Type.CLIENT_ERROR, "Client Closed Request (Nginx)", Specification.NGINX),
 
 
@@ -110,9 +115,12 @@ public enum HttpStatus
 	HTTP_VERSION_NOT_SUPPORTED(505, Type.SERVER_ERROR, "HTTP Version Not Supported", Specification.RFC2616),
 	VARIANT_ALSO_NEGOTIATES(506, Type.SERVER_ERROR, "Variant Also Negotiates", Specification.RFC2295),
 	INSUFFICIENT_STORAGE(507, Type.SERVER_ERROR, "Insufficient Storage (WebDAV)", Specification.RFC4918),
+	LOOP_DETECTED(508, Type.SERVER_ERROR, "Loop Detected (WebDAV)", Specification.RFC5842),
 	BANDWIDTH_LIMIT_EXCEEDED(509, Type.SERVER_ERROR, "Bandwidth Limit Exceeded", Specification.APACHE),
 	NOT_EXTENDED(510, Type.SERVER_ERROR, "Not Extended", Specification.RFC2774),
 	NETWORK_AUTHENTICATION_REQUIRED(511, Type.SERVER_ERROR, "Network Authentication Required", Specification.RFC6585),
+	NETWORK_READ_TIMEOUT_ERROR(598, Type.SERVER_ERROR, "Network read timeout error", Specification.MICROSOFT),
+	NETWORK_CONNECT_TIMEOUT_ERROR(599, Type.SERVER_ERROR, "Network connect timeout error", Specification.MICROSOFT);
 
 
 	private static final Map<Integer, HttpStatus> codeMap = new HashMap<Integer, HttpStatus>();
@@ -222,12 +230,24 @@ public enum HttpStatus
 		RFC2616("RFC 2616", "Hypertext Transfer Protocol -- HTTP/1.1"),
 		RFC2774("RFC 2774", "An HTTP Extension Framework"),
 		RFC2817("RFC 2817", "Upgrading to TLS Within HTTP/1.1"),
+		RFC3229("RFC 3229", "Delta encoding in HTTP"),
 		RFC3648("RFC 3648", "Web Distributed Authoring and Versioning (WebDAV) Ordered Collections Protocol"),
 		RFC4918("RFC 4918", "HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)"),
+		RFC5842("RFC 5842", "Binding Extensions to Web Distributed Authoring and Versioning (WebDAV)"),
 		RFC6585("RFC 6585", "Additional HTTP Status Codes"),
 		NGINX("Nginx", "Nginx HTTP server extensions"),
 		APACHE("Apache", "Apache extensions"),
 		MICROSOFT("Microsoft", "Microsoft extensions");
+
+		/*
+		http://tools.ietf.org/html/draft-tbray-http-legally-restricted-status-01
+		A New HTTP Status Code to Report Legal Obstacles
+		*/
+
+		/*
+		http://tools.ietf.org/html/draft-reschke-http-status-308-07
+		The Hypertext Transfer Protocol (HTTP) Status Code 308 (Permanent Redirect)
+		*/
 
 		private String identifier;
 		private String description;
