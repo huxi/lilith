@@ -92,9 +92,9 @@ public enum HttpStatus
 	FAILED_DEPENDENCY(424, Type.CLIENT_ERROR, "Failed Dependency (WebDAV)", Specification.RFC4918),
 	UNORDERED_COLLECTION(425, Type.CLIENT_ERROR, "Unordered Collection (WebDAV, draft)", Specification.RFC3648),
 	UPGRADE_REQUIRED(426, Type.CLIENT_ERROR, "Upgrade Required", Specification.RFC2817),
-	PRECONDITION_REQUIRED(428, Type.CLIENT_ERROR, "Precondition Required", null/* Specification.NOTTINGHAM_DRAFT */),
-	TOO_MANY_REQUESTS(429, Type.CLIENT_ERROR, "Too Many Requests", null/* Specification.NOTTINGHAM_DRAFT */),
-	REQUEST_HEADER_FIELDS_TOO_LARGE(431, Type.CLIENT_ERROR, "Request Header Fields Too Large", null/* Specification.NOTTINGHAM_DRAFT */),
+	PRECONDITION_REQUIRED(428, Type.CLIENT_ERROR, "Precondition Required", Specification.RFC6585),
+	TOO_MANY_REQUESTS(429, Type.CLIENT_ERROR, "Too Many Requests", Specification.RFC6585),
+	REQUEST_HEADER_FIELDS_TOO_LARGE(431, Type.CLIENT_ERROR, "Request Header Fields Too Large", Specification.RFC6585),
 	NO_RESPONSE(444, Type.CLIENT_ERROR, "No Response (Nginx)", Specification.NGINX),
 	RETRY_WITH(449, Type.CLIENT_ERROR, "Retry With", Specification.MICROSOFT),
 	BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS(450, Type.CLIENT_ERROR, "Blocked by Windows Parental Controls", Specification.MICROSOFT),
@@ -112,7 +112,7 @@ public enum HttpStatus
 	INSUFFICIENT_STORAGE(507, Type.SERVER_ERROR, "Insufficient Storage (WebDAV)", Specification.RFC4918),
 	BANDWIDTH_LIMIT_EXCEEDED(509, Type.SERVER_ERROR, "Bandwidth Limit Exceeded", Specification.APACHE),
 	NOT_EXTENDED(510, Type.SERVER_ERROR, "Not Extended", Specification.RFC2774),
-	NETWORK_AUTHENTICATION_REQUIRED(511, Type.SERVER_ERROR, "Network Authentication Required", null/* Specification.NOTTINGHAM_DRAFT */);
+	NETWORK_AUTHENTICATION_REQUIRED(511, Type.SERVER_ERROR, "Network Authentication Required", Specification.RFC6585),
 
 
 	private static final Map<Integer, HttpStatus> codeMap = new HashMap<Integer, HttpStatus>();
@@ -224,7 +224,7 @@ public enum HttpStatus
 		RFC2817("RFC 2817", "Upgrading to TLS Within HTTP/1.1"),
 		RFC3648("RFC 3648", "Web Distributed Authoring and Versioning (WebDAV) Ordered Collections Protocol"),
 		RFC4918("RFC 4918", "HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)"),
-		//NOTTINGHAM_DRAFT("draft-nottingham-http-new-status-02", "Additional HTTP Status Codes"),
+		RFC6585("RFC 6585", "Additional HTTP Status Codes"),
 		NGINX("Nginx", "Nginx HTTP server extensions"),
 		APACHE("Apache", "Apache extensions"),
 		MICROSOFT("Microsoft", "Microsoft extensions");
