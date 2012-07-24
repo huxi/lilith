@@ -6,6 +6,7 @@ subprojects {
 }
 
 project(':lilith-sender') {
+	archivesBaseName = 'de.huxhorn.lilith.sender'
 	description = 'This file is part of Lilith. It contains the event sender definition.'
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -14,6 +15,7 @@ project(':lilith-sender') {
 }
 
 project(':lilith-data-eventsource') {
+	archivesBaseName = 'de.huxhorn.lilith.data.eventsource'
 	description = 'This file is part of Lilith. It contains the EventSource datatype and related classes.'
 	dependencies {
 		testCompile libraries.'sulky-junit'
@@ -21,6 +23,7 @@ project(':lilith-data-eventsource') {
 }
 
 project(':lilith-data-eventsource-xml') {
+	archivesBaseName = 'de.huxhorn.lilith.data.eventsource-xml'
 	description = 'This file is part of Lilith. It contains XML I/O for EventSource.'
 	dependencies {
 		compile project(':lilith-data-eventsource')
@@ -31,6 +34,7 @@ project(':lilith-data-eventsource-xml') {
 }
 
 project(':lilith-data-logging') {
+	archivesBaseName = 'de.huxhorn.lilith.data.logging'
 	description = 'This file is part of Lilith. It contains the LoggingEvent datatype and related classes.'
 	dependencies {
 		compile project(':lilith-data-eventsource')
@@ -40,6 +44,7 @@ project(':lilith-data-logging') {
 }
 
 project(':lilith-data-logging-io-test') {
+	archivesBaseName = 'de.huxhorn.lilith.data.logging-io-test'
 	description = 'This file is part of Lilith. It contains a Baseclass for LoggingEvent-De/Serializer tests.'
 	dependencies {
 		compile project(':lilith-data-eventsource')
@@ -52,6 +57,7 @@ project(':lilith-data-logging-io-test') {
 }
 
 project(':lilith-data-logging-xml') {
+	archivesBaseName = 'de.huxhorn.lilith.data.logging-xml'
 	description = 'This file is part of Lilith. It contains XML I/O for LoggingEvent.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -64,6 +70,7 @@ project(':lilith-data-logging-xml') {
 }
 
 project(':lilith-data-logging-xml-serializer') {
+	archivesBaseName = 'de.huxhorn.lilith.data.logging-xml-serializer'
 	description = 'This file is part of Lilith. It contains XML De/Serializer for LoggingEvent.'
 	dependencies {
 		compile project(':lilith-data-logging-xml')
@@ -79,6 +86,7 @@ project(':lilith-data-logging-xml-serializer') {
 }
 
 project(':lilith-data-logging-protobuf') {
+	archivesBaseName = 'de.huxhorn.lilith.data.logging.protobuf'
 	description = 'This file is part of Lilith. It contains the Logging Protobuf classes.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -90,6 +98,7 @@ project(':lilith-data-logging-protobuf') {
 }
 
 project(':lilith-data-logging-json-serializer') {
+	archivesBaseName = 'de.huxhorn.lilith.data.logging-json-serializer'
 	description = 'This file is part of Lilith. It contains JSON De/Serializer for LoggingEvent.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -102,6 +111,7 @@ project(':lilith-data-logging-json-serializer') {
 }
 
 project(':lilith-data-access') {
+	archivesBaseName = 'de.huxhorn.lilith.data.access'
 	description = 'This file is part of Lilith. It contains the AccesEvent datatype and related classes.'
 	dependencies {
 		compile project(':lilith-data-eventsource')
@@ -110,6 +120,7 @@ project(':lilith-data-access') {
 }
 
 project(':lilith-data-access-protobuf') {
+	archivesBaseName = 'de.huxhorn.lilith.data.access.protobuf'
 	description = 'This file is part of Lilith. It contains the Access Protobuf classes.'
 	dependencies {
 		compile project(':lilith-data-access')
@@ -120,12 +131,14 @@ project(':lilith-data-access-protobuf') {
 }
 
 project(':lilith-constants') {
+	archivesBaseName = 'de.huxhorn.lilith.constants'
 	description = 'This file is part of Lilith. It contains part of the Lilith API (Constants).'
 	//dependencies {
 	//}
 }
 
 project(':lilith-engine') {
+	archivesBaseName = 'de.huxhorn.lilith.engine'
 	description = 'This file is part of Lilith. It contains the engine part of Lilith.'
 	dependencies {
 		compile project(':lilith-constants')
@@ -145,6 +158,7 @@ project(':lilith-engine') {
 }
 
 project(':lilith-xml-logging') {
+	archivesBaseName = 'de.huxhorn.lilith.xml-logging'
 	description = 'This file is part of Lilith. It contains XML logging classes.'
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -158,6 +172,7 @@ project(':lilith-xml-logging') {
 }
 
 project(':lilith-json-logging') {
+	archivesBaseName = 'de.huxhorn.lilith.json-logging'
 	description = 'This file is part of Lilith. It contains JSON logging classes.'
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -170,6 +185,7 @@ project(':lilith-json-logging') {
 }
 
 project(':logback-classic') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.classic'
 	description = 'This file is part of Lilith. It contains an NDC implementation that can be used in conjunction with the lilith appenders to get NDC functionality in Logback.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -177,6 +193,7 @@ project(':logback-classic') {
 }
 
 project(':logback-logging-adapter') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.logging-adapter'
 	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith logging events.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -188,6 +205,7 @@ project(':logback-logging-adapter') {
 }
 
 project(':logback-access-adapter') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.access-adapter'
 	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith access events.'
 	dependencies {
 		compile project(':lilith-data-access')
@@ -197,6 +215,7 @@ project(':logback-access-adapter') {
 }
 
 project(':logback-producer-classic') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.producer.classic'
 	description = 'This file is part of Lilith. It contains event producers.'
 	dependencies {
 		compile libraries.'logback-classic'
@@ -209,6 +228,7 @@ project(':logback-producer-classic') {
 }
 
 project(':logback-producer-access') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.producer.access'
 	description = 'This file is part of Lilith. It contains event producers.'
 	dependencies {
 		compile libraries.'logback-access'
@@ -221,6 +241,7 @@ project(':logback-producer-access') {
 }
 
 project(':logback-multiplex-appender-core') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.appender.multiplex-core'
 	description = 'This file is part of Lilith. It contains the multiplexing appender core classes.'
 	dependencies {
 		compile project(':lilith-sender')
@@ -230,6 +251,7 @@ project(':logback-multiplex-appender-core') {
 }
 
 project(':logback-multiplex-appender-classic') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.appender.multiplex-classic'
 	description = 'This file is part of Lilith. It contains the multiplexing logging appender.'
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -241,6 +263,7 @@ project(':logback-multiplex-appender-classic') {
 }
 
 project(':logback-multiplex-appender-access') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.appender.multiplex-access'
 	description = 'This file is part of Lilith. It contains the multiplexing access appender.'
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -253,6 +276,7 @@ project(':logback-multiplex-appender-access') {
 }
 
 project(':logback-multiplex-appender-classic-xml') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.appender.multiplex-classic-xml'
 	description = 'This file is part of Lilith. It contains the multiplexing logging appender (XML).'
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -264,6 +288,7 @@ project(':logback-multiplex-appender-classic-xml') {
 }
 
 project(':logback-multiplex-appender-classic-json') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.appender.multiplex-classic-json'
 	description = 'This file is part of Lilith. It contains the multiplexing logging appender (JSON).'
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -275,6 +300,7 @@ project(':logback-multiplex-appender-classic-json') {
 }
 
 project(':logback-shutdown-context-listener') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.servlet'
 	description = 'This file is part of Lilith. It contains a ServletContextListener that shuts down logback.'
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -284,6 +310,7 @@ project(':logback-shutdown-context-listener') {
 }
 
 project(':logback-encoder-core') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.encoder.core'
 	description = 'This file is part of Lilith. It contains the encoder base class.'
 	dependencies {
 		compile project(':lilith-constants')
@@ -294,6 +321,7 @@ project(':logback-encoder-core') {
 }
 
 project(':logback-encoder-classic') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.encoder.classic'
 	description = 'This file is part of Lilith. It contains the classic encoder.'
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -308,6 +336,7 @@ project(':logback-encoder-classic') {
 }
 
 project(':logback-encoder-access') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.encoder.access'
 	description = 'This file is part of Lilith. It contains the access encoder.'
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -320,6 +349,7 @@ project(':logback-encoder-access') {
 }
 
 project(':log4j-throwable-parser') {
+	archivesBaseName = 'de.huxhorn.lilith.log4j.throwable'
 	description = 'This file is part of Lilith. It contains the Log4j ThrowableInfo-Parser.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -328,6 +358,7 @@ project(':log4j-throwable-parser') {
 }
 
 project(':log4j-xml') {
+	archivesBaseName = 'de.huxhorn.lilith.log4j.xml'
 	description = 'This file is part of Lilith. It contains LOG4J XML I/O.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -345,6 +376,7 @@ project(':log4j-xml') {
 }
 
 project(':log4j-producer') {
+	archivesBaseName = 'de.huxhorn.lilith.log4j.producer'
 	description = 'This file is part of Lilith. It contains the LOG4J Producer.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -357,6 +389,7 @@ project(':log4j-producer') {
 }
 
 project(':jul-xml') {
+	archivesBaseName = 'de.huxhorn.lilith.jul.xml'
 	description = 'This file is part of Lilith. It contains java.util.logging XML I/O.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -371,6 +404,7 @@ project(':jul-xml') {
 }
 
 project(':jul-xml-import') {
+	archivesBaseName = 'de.huxhorn.lilith.jul.xml-import'
 	description = 'This file is part of Lilith. It contains java.util.logging XML-Import.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -388,6 +422,7 @@ project(':jul-xml-import') {
 }
 
 project(':jul-xml-receiver') {
+	archivesBaseName = 'de.huxhorn.lilith.jul.xml.receiver'
 	description = 'This file is part of Lilith. It contains java.util.logging XML I/O.'
 	dependencies {
 		compile project(':lilith-data-logging')
@@ -405,6 +440,7 @@ project(':jul-xml-receiver') {
 }
 
 project(':jul-slf4j-handler') {
+	archivesBaseName = 'de.huxhorn.lilith.jul-slf4j-handler'
 	description = 'This file is part of Lilith. It\'s a java.util.logging to slf4j bridge handler.'
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -412,12 +448,14 @@ project(':jul-slf4j-handler') {
 }
 
 project(':lilith-sounds') {
+	archivesBaseName = 'de.huxhorn.lilith.sounds'
 	description = 'This file is part of Lilith. It contains the sound files of Lilith.'
 	//dependencies {
 	//}
 }
 
 project(':lilith-prefs') {
+	archivesBaseName = 'de.huxhorn.lilith.prefs'
 	description = 'This file is part of Lilith. It contains the Preferences Protobuf classes.'
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -426,6 +464,7 @@ project(':lilith-prefs') {
 }
 
 project(':lilith-conditions') {
+	archivesBaseName = 'de.huxhorn.lilith.conditions'
 	description = 'This file is part of Lilith. It contains conditions.'
 	dependencies {
 		compile project(':lilith-data-eventsource')
@@ -439,6 +478,7 @@ project(':lilith-conditions') {
 }
 
 project(':lilith') {
+	archivesBaseName = 'de.huxhorn.lilith'
 	description = 'Lilith is a logging and access event viewer for the Logback logging framework. It has features comparable to Chainsaw, a logging event viewer for log4j. This means that it can receive logging events from remote applications using Logback as their logging backend. It uses files to buffer the received events locally, so it is possible to keep vast amounts of logging events at your fingertip while still being able to check only the ones you are really interested in by using filtering conditions.'
 	dependencies {
 		compile libraries.'commons-io'
@@ -503,6 +543,7 @@ project(':lilith') {
 }
 
 project(':slf4j') {
+	archivesBaseName = 'de.huxhorn.lilith.slf4j'
 	description = 'This is a concept how SLF4J could be redesigned for Java>=5'
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -511,6 +552,7 @@ project(':slf4j') {
 }
 
 project(':tracing') {
+	archivesBaseName = 'de.huxhorn.lilith.tracing'
 	description = 'This module contains a tracing and profiling aspect.'
 	dependencies {
 		compile libraries.'aspectjrt'

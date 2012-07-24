@@ -2,52 +2,6 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import de.huxhorn.sulky.plist.*
 import org.gradle.plugins.signing.Sign
 
-project.ext.artifactMapping = [
-'jul-slf4j-handler':                           'de.huxhorn.lilith.jul-slf4j-handler',
-'jul-xml':                                     'de.huxhorn.lilith.jul.xml',
-'jul-xml-import':                              'de.huxhorn.lilith.jul.xml-import',
-'jul-xml-receiver':                            'de.huxhorn.lilith.jul.xml.receiver',
-'lilith':                                      'de.huxhorn.lilith',
-'lilith-conditions':                           'de.huxhorn.lilith.conditions',
-'lilith-constants':                            'de.huxhorn.lilith.constants',
-'lilith-data-access':                          'de.huxhorn.lilith.data.access',
-'lilith-data-access-protobuf':                 'de.huxhorn.lilith.data.access.protobuf',
-'lilith-data-eventsource':                     'de.huxhorn.lilith.data.eventsource',
-'lilith-data-eventsource-xml':                 'de.huxhorn.lilith.data.eventsource-xml',
-'lilith-data-logging':                         'de.huxhorn.lilith.data.logging',
-'lilith-data-logging-io-test':                 'de.huxhorn.lilith.data.logging-io-test',
-'lilith-data-logging-json':                    'de.huxhorn.lilith.data.logging-json',
-'lilith-data-logging-json-serializer':         'de.huxhorn.lilith.data.logging-json-serializer',
-'lilith-data-logging-protobuf':                'de.huxhorn.lilith.data.logging.protobuf',
-'lilith-data-logging-xml':                     'de.huxhorn.lilith.data.logging-xml',
-'lilith-data-logging-xml-serializer':          'de.huxhorn.lilith.data.logging-xml-serializer',
-'lilith-engine':                               'de.huxhorn.lilith.engine',
-'lilith-json-logging':                         'de.huxhorn.lilith.json-logging',
-'lilith-prefs':                                'de.huxhorn.lilith.prefs',
-'lilith-sender':                               'de.huxhorn.lilith.sender',
-'lilith-sounds':                               'de.huxhorn.lilith.sounds',
-'lilith-xml-logging':                          'de.huxhorn.lilith.xml-logging',
-'log4j-producer':                              'de.huxhorn.lilith.log4j.producer',
-'log4j-throwable-parser':                      'de.huxhorn.lilith.log4j.throwable',
-'log4j-xml':                                   'de.huxhorn.lilith.log4j.xml',
-'logback-access-adapter':                      'de.huxhorn.lilith.logback.access-adapter',
-'logback-classic':                             'de.huxhorn.lilith.logback.classic',
-'logback-encoder-access':                      'de.huxhorn.lilith.logback.encoder.access',
-'logback-encoder-classic':                     'de.huxhorn.lilith.logback.encoder.classic',
-'logback-encoder-core':                        'de.huxhorn.lilith.logback.encoder.core',
-'logback-logging-adapter':                     'de.huxhorn.lilith.logback.logging-adapter',
-'logback-multiplex-appender-access':           'de.huxhorn.lilith.logback.appender.multiplex-access',
-'logback-multiplex-appender-classic':          'de.huxhorn.lilith.logback.appender.multiplex-classic',
-'logback-multiplex-appender-classic-json':     'de.huxhorn.lilith.logback.appender.multiplex-classic-json',
-'logback-multiplex-appender-classic-xml':      'de.huxhorn.lilith.logback.appender.multiplex-classic-xml',
-'logback-multiplex-appender-core':             'de.huxhorn.lilith.logback.appender.multiplex-core',
-'logback-producer-access':                     'de.huxhorn.lilith.logback.producer.access',
-'logback-producer-classic':                    'de.huxhorn.lilith.logback.producer.classic',
-'logback-shutdown-context-listener':           'de.huxhorn.lilith.logback.servlet',
-'slf4j':                                       'de.huxhorn.lilith.slf4j',
-'tracing':                                     'de.huxhorn.lilith.tracing'
-]
-
 buildscript {
 	apply from: 'dependencyDefinitions.gradle'
 	project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
@@ -242,13 +196,6 @@ subprojects {
 		}
 	}
 
-    def mapped=artifactMapping[project.name];
-    if(!mapped)
-    {
-    	throw new IllegalStateException("${project.name} does not have an entry in artifactMapping!");
-    }
-    archivesBaseName=mapped
-
 	repositories {
 		maven {
 			url localReleaseRepo
@@ -276,24 +223,10 @@ subprojects {
 
 	def deployer = null
 	
-	// the following is a workaround for http://jira.codehaus.org/browse/GRADLE-443
 	uploadPublished {
 		deployer = repositories.mavenDeployer {
 			repository(url: localReleaseRepo)
 			snapshotRepository(url: localSnapshotRepo)
-			pom.whenConfigured { pom ->
-				// dep is a native Maven dependency object (With properties artifactId, groupId, ...)
-				for(dep in pom.dependencies) {
-					//println(dep.artifactId)
-					if('de.huxhorn.lilith' == dep.groupId) {
-						def mapping=artifactMapping[dep.artifactId];
-						if(mapping) {
-							//println("Mapping ${dep.artifactId} to ${mapping}...")
-							dep.artifactId=mapping
-						}
-					}
-				}
-			}
 			beforeDeployment { MavenDeployment deployment ->
 				signing.signPom(deployment)
 			}
