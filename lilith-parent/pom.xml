@@ -20,7 +20,7 @@
 	
 	<properties>
 		<aspectjVersion>1.6.12</aspectjVersion>
-		<groovyVersion>2.0.0</groovyVersion>
+		<groovyVersion>2.0.1</groovyVersion>
 		<jacksonVersion>1.9.7</jacksonVersion>
 		<log4jVersion>1.2.17</log4jVersion>
 		<logbackVersion>1.0.6</logbackVersion>
