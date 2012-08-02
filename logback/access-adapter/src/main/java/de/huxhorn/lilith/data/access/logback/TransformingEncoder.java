@@ -45,11 +45,13 @@ import java.util.Map;
 public class TransformingEncoder
 		implements Encoder<AccessEvent>
 {
-	public static final String APPLICATION_IDENTIFIER_PROPERTY_NAME="applicationIdentifier";
+	public static final String APPLICATION_IDENTIFIER_PROPERTY_NAME = "applicationIdentifier";
+	public static final String APPLICATION_UUID_PROPERTY_NAME = "applicationUUID";
 
 	private LogbackAccessAdapter adapter = new LogbackAccessAdapter();
 	private Encoder<de.huxhorn.lilith.data.access.AccessEvent> lilithEncoder;
 	private String applicationIdentifier;
+	private String uuid;
 
 	public Encoder<de.huxhorn.lilith.data.access.AccessEvent> getLilithEncoder()
 	{
@@ -71,10 +73,20 @@ public class TransformingEncoder
 		this.applicationIdentifier = applicationIdentifier;
 	}
 
+	public String getUUID()
+	{
+		return uuid;
+	}
+
+	public void setUUID(String uuid)
+	{
+		this.uuid = uuid;
+	}
+
 	public byte[] encode(AccessEvent logbackEvent)
 	{
 		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = adapter.convert(logbackEvent);
-		if(applicationIdentifier !=null)
+		if(applicationIdentifier != null || uuid != null)
 		{
 			LoggerContext loggerContext = lilithEvent.getLoggerContext();
 			if(loggerContext == null)
@@ -82,11 +94,20 @@ public class TransformingEncoder
 				loggerContext=new LoggerContext();
 			}
 			Map<String, String> props = loggerContext.getProperties();
-			if(props ==null)
+			if(props == null)
 			{
-				props=new HashMap<String, String>();
+				props = new HashMap<String, String>();
 			}
-			props.put(APPLICATION_IDENTIFIER_PROPERTY_NAME, applicationIdentifier);
+
+			if(applicationIdentifier != null)
+			{
+				props.put(APPLICATION_IDENTIFIER_PROPERTY_NAME, applicationIdentifier);
+			}
+			if(uuid != null)
+			{
+				props.put(APPLICATION_UUID_PROPERTY_NAME, uuid);
+			}
+
 			loggerContext.setProperties(props);
 			lilithEvent.setLoggerContext(loggerContext);
 		}

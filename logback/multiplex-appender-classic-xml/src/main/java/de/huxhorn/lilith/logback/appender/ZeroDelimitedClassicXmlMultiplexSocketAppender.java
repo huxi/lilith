@@ -55,21 +55,26 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	public static final int DEFAULT_PORT = 11000;
 
 	private boolean includeCallerData;
-	private TransformingEncoder transforminEncoder;
+	private TransformingEncoder transformingEncoder;
 
 	public ZeroDelimitedClassicXmlMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
-		transforminEncoder=new TransformingEncoder(true);
-		transforminEncoder.setLilithEncoder(new LoggingXmlEncoder(false));
-		setEncoder(transforminEncoder);
+		transformingEncoder =new TransformingEncoder(true);
+		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(false));
+		setEncoder(transformingEncoder);
 		includeCallerData = true;
 		setPort(DEFAULT_PORT);
 	}
 
 	protected void applicationIdentifierChanged()
 	{
-		transforminEncoder.setApplicationIdentifier(getApplicationIdentifier());
+		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
+	}
+
+	protected void uuidChanged()
+	{
+		transformingEncoder.setUUID(getUUID());
 	}
 
 //	@Override

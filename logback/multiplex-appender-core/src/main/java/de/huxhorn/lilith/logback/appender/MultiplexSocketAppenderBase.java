@@ -47,6 +47,7 @@ import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.UUID;
 
 public abstract class MultiplexSocketAppenderBase<E>
 	extends UnsynchronizedAppenderBase<E>
@@ -63,6 +64,8 @@ public abstract class MultiplexSocketAppenderBase<E>
 	private int queueSize;
 	private MultiplexSendBytesService multiplexSendBytes;
 	private boolean debug;
+	private boolean creatingUUID=true;
+	private String uuid;
 
 	public MultiplexSocketAppenderBase()
 	{
@@ -80,6 +83,29 @@ public abstract class MultiplexSocketAppenderBase<E>
 		setQueueSize(queueSize);
 		remoteHostsList=new ArrayList<String>();
 	}
+
+	public boolean isCreatingUUID()
+	{
+		return creatingUUID;
+	}
+
+	public void setCreatingUUID(boolean creatingUUID)
+	{
+		this.creatingUUID = creatingUUID;
+	}
+
+	public String getUUID()
+	{
+		return uuid;
+	}
+
+	private void setUUID(String uuid)
+	{
+		this.uuid = uuid;
+		uuidChanged();
+	}
+
+	protected abstract void uuidChanged();
 
 	public boolean isDebug()
 	{
@@ -211,6 +237,16 @@ public abstract class MultiplexSocketAppenderBase<E>
 				errorCount++;
 				addError("Invalid queue size configured for appender" + name + ". Queue size must be at least 1!");
 			}
+
+			if(creatingUUID)
+			{
+				setUUID(UUID.randomUUID().toString());
+			}
+			else
+			{
+				setUUID(null);
+			}
+
 			if(errorCount == 0)
 			{
 				initialize();

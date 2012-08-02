@@ -45,11 +45,13 @@ import java.util.Map;
 public class TransformingEncoder
 		implements Encoder<LoggingEvent>
 {
-	public static final String APPLICATION_IDENTIFIER_PROPERTY_NAME="applicationIdentifier";
+	public static final String APPLICATION_IDENTIFIER_PROPERTY_NAME = "applicationIdentifier";
+	public static final String APPLICATION_UUID_PROPERTY_NAME = "applicationUUID";
 
 	private LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
 	private Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> lilithEncoder;
 	private String applicationIdentifier;
+	private String uuid;
 	private final boolean inSameThread;
 
 	public TransformingEncoder(boolean inSameThread)
@@ -77,6 +79,16 @@ public class TransformingEncoder
 		this.applicationIdentifier = applicationIdentifier;
 	}
 
+	public String getUUID()
+	{
+		return uuid;
+	}
+
+	public void setUUID(String uuid)
+	{
+		this.uuid = uuid;
+	}
+
 	public boolean isInSameThread()
 	{
 		return inSameThread;
@@ -85,7 +97,7 @@ public class TransformingEncoder
 	public byte[] encode(LoggingEvent logbackEvent)
 	{
 		de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = adapter.convert(logbackEvent, inSameThread);
-		if(applicationIdentifier !=null)
+		if(applicationIdentifier != null || uuid != null)
 		{
 			LoggerContext loggerContext = lilithEvent.getLoggerContext();
 			if(loggerContext == null)
@@ -93,11 +105,20 @@ public class TransformingEncoder
 				loggerContext=new LoggerContext();
 			}
 			Map<String, String> props = loggerContext.getProperties();
-			if(props ==null)
+			if(props == null)
 			{
-				props=new HashMap<String, String>();
+				props = new HashMap<String, String>();
 			}
-			props.put(APPLICATION_IDENTIFIER_PROPERTY_NAME, applicationIdentifier);
+
+			if(applicationIdentifier != null)
+			{
+				props.put(APPLICATION_IDENTIFIER_PROPERTY_NAME, applicationIdentifier);
+			}
+			if(uuid != null)
+			{
+				props.put(APPLICATION_UUID_PROPERTY_NAME, uuid);
+			}
+
 			loggerContext.setProperties(props);
 			lilithEvent.setLoggerContext(loggerContext);
 		}

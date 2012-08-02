@@ -75,6 +75,11 @@ public class AccessMultiplexSocketAppender
 		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
+	protected void uuidChanged()
+	{
+		transformingEncoder.setUUID(getUUID());
+	}
+
 	@Override
 	public void setPort(int port)
 	{

@@ -55,21 +55,26 @@ public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 	public static final int DEFAULT_PORT = 11010;
 
 	private boolean includeCallerData;
-	private TransformingEncoder transforminEncoder;
+	private TransformingEncoder transformingEncoder;
 
 	public ZeroDelimitedClassicJsonMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
-		transforminEncoder=new TransformingEncoder(true);
-		transforminEncoder.setLilithEncoder(new LoggingJsonEncoder(false));
-		setEncoder(transforminEncoder);
+		transformingEncoder =new TransformingEncoder(true);
+		transformingEncoder.setLilithEncoder(new LoggingJsonEncoder(false));
+		setEncoder(transformingEncoder);
 		includeCallerData = true;
 		setPort(DEFAULT_PORT);
 	}
 
 	protected void applicationIdentifierChanged()
 	{
-		transforminEncoder.setApplicationIdentifier(getApplicationIdentifier());
+		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
+	}
+
+	protected void uuidChanged()
+	{
+		transformingEncoder.setUUID(getUUID());
 	}
 
 	public boolean isIncludeCallerData()
