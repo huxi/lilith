@@ -29,7 +29,6 @@ import de.huxhorn.lilith.eventhandlers.AlarmSoundLoggingEventHandler;
 import de.huxhorn.lilith.eventhandlers.FileDumpEventHandler;
 import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
-import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.debug.DebugDialog;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler;
@@ -2563,7 +2562,7 @@ public class MainFrame
 				Map<String, String> props = context.getProperties();
 				if(props!= null)
 				{
-					appId=props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+					appId=props.get(LoggerContext.APPLICATION_IDENTIFIER_PROPERTY_NAME);
 				}
 
 				if(name != null)

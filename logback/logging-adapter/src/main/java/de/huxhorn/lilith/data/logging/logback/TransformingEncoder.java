@@ -45,9 +45,6 @@ import java.util.Map;
 public class TransformingEncoder
 		implements Encoder<LoggingEvent>
 {
-	public static final String APPLICATION_IDENTIFIER_PROPERTY_NAME = "applicationIdentifier";
-	public static final String APPLICATION_UUID_PROPERTY_NAME = "applicationUUID";
-
 	private LogbackLoggingAdapter adapter = new LogbackLoggingAdapter();
 	private Encoder<de.huxhorn.lilith.data.logging.LoggingEvent> lilithEncoder;
 	private String applicationIdentifier;
@@ -112,11 +109,11 @@ public class TransformingEncoder
 
 			if(applicationIdentifier != null)
 			{
-				props.put(APPLICATION_IDENTIFIER_PROPERTY_NAME, applicationIdentifier);
+				props.put(LoggerContext.APPLICATION_IDENTIFIER_PROPERTY_NAME, applicationIdentifier);
 			}
 			if(uuid != null)
 			{
-				props.put(APPLICATION_UUID_PROPERTY_NAME, uuid);
+				props.put(LoggerContext.APPLICATION_UUID_PROPERTY_NAME, uuid);
 			}
 
 			loggerContext.setProperties(props);

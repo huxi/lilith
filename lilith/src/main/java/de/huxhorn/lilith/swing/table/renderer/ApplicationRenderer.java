@@ -21,7 +21,6 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
@@ -80,7 +79,7 @@ public class ApplicationRenderer
 				Map<String, String> props = context.getProperties();
 				if(props!= null)
 				{
-					text=props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+					text=props.get(LoggerContext.APPLICATION_IDENTIFIER_PROPERTY_NAME);
 				}
 				if(text == null)
 				{

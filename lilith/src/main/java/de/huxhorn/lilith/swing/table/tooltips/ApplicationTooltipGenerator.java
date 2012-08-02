@@ -21,7 +21,6 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
 import java.util.Map;
@@ -47,7 +46,7 @@ public class ApplicationTooltipGenerator
 					Map<String, String> props = context.getProperties();
 					if(props != null)
 					{
-						return props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+						return props.get(LoggerContext.APPLICATION_IDENTIFIER_PROPERTY_NAME);
 					}
 					// using context name as a fallback
 					return context.getName();
@@ -62,7 +61,7 @@ public class ApplicationTooltipGenerator
 					Map<String, String> props = context.getProperties();
 					if(props!= null)
 					{
-						return props.get(TransformingEncoder.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+						return props.get(LoggerContext.APPLICATION_IDENTIFIER_PROPERTY_NAME);
 					}
 					// using context name as a fallback
 					return context.getName();

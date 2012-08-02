@@ -43,6 +43,9 @@ public class LoggerContext
 {
 	private static final long serialVersionUID = -1979182848053339299L;
 
+	public static final String APPLICATION_IDENTIFIER_PROPERTY_NAME = "applicationIdentifier";
+	public static final String APPLICATION_UUID_PROPERTY_NAME = "applicationUUID";
+
 	private String name;
 	private Long birthTime;
 	private Map<String, String> properties;
