@@ -2,27 +2,27 @@
 <configuration debug="true">
 	<contextName>Lilith</contextName>
 
-    <property name="foo" value="bar"/>
+	<property name="foo" value="bar"/>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%-5level - %msg%n</pattern>
-        </encoder>
-    </appender>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%-5level - %msg%n</pattern>
+		</encoder>
+	</appender>
 
-    <appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"/>
+	<appender name="Lilith" class="de.huxhorn.lilith.appender.InternalLilithAppender"/>
 
-    <appender name="MultiplexClassicCompressed"
-              class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-        <Compressing>true</Compressing>
-        <!-- will automatically use correct default port -->
-        <ApplicationIdentifier>MultiplexClassicCompressed</ApplicationIdentifier>
-        <ReconnectionDelay>30</ReconnectionDelay>
-        <IncludeCallerData>true</IncludeCallerData>
+	<appender name="MultiplexClassicCompressed"
+			  class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<!-- will automatically use correct default port -->
+		<ApplicationIdentifier>MultiplexClassicCompressed</ApplicationIdentifier>
+		<ReconnectionDelay>30</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
 
-	    <!-- <RemoteHosts>localhost</RemoteHosts> -->
-	    <RemoteHost>localhost</RemoteHost>
-    </appender>
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
 
 	<appender name="MultiplexClassicCompressed-noUUID"
 			  class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
@@ -37,73 +37,73 @@
 		<RemoteHost>localhost</RemoteHost>
 	</appender>
 
-    <appender name="MultiplexClassicUncompressed"
-              class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-        <Compressing>false</Compressing>
-        <!-- will automatically use correct default port -->
-        <ApplicationIdentifier>MultiplexClassicUncompressed</ApplicationIdentifier>
-        <ReconnectionDelay>290</ReconnectionDelay>
-        <IncludeCallerData>true</IncludeCallerData>
+	<appender name="MultiplexClassicUncompressed"
+			  class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+		<Compressing>false</Compressing>
+		<!-- will automatically use correct default port -->
+		<ApplicationIdentifier>MultiplexClassicUncompressed</ApplicationIdentifier>
+		<ReconnectionDelay>290</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
 
-	    <!-- <RemoteHosts>localhost</RemoteHosts> -->
-	    <RemoteHost>localhost</RemoteHost>
-    </appender>
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
 
-    <appender name="MultiplexClassicXmlCompressed"
-              class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
-        <Compressing>true</Compressing>
-        <!-- will automatically use correct default port -->
-        <ApplicationIdentifier>MultiplexClassicXmlCompressed</ApplicationIdentifier>
-        <ReconnectionDelay>290</ReconnectionDelay>
-        <IncludeCallerData>true</IncludeCallerData>
+	<appender name="MultiplexClassicXmlCompressed"
+			  class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<!-- will automatically use correct default port -->
+		<ApplicationIdentifier>MultiplexClassicXmlCompressed</ApplicationIdentifier>
+		<ReconnectionDelay>290</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
 
-	    <!-- <RemoteHosts>localhost</RemoteHosts> -->
-	    <RemoteHost>localhost</RemoteHost>
-    </appender>
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
 
-    <appender name="MultiplexClassicXmlUncompressed"
-              class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
-        <Compressing>false</Compressing>
-        <!-- will automatically use correct default port -->
-        <ApplicationIdentifier>MultiplexClassicXmlUncompressed</ApplicationIdentifier>
-        <ReconnectionDelay>290</ReconnectionDelay>
-        <IncludeCallerData>true</IncludeCallerData>
+	<appender name="MultiplexClassicXmlUncompressed"
+			  class="de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender">
+		<Compressing>false</Compressing>
+		<!-- will automatically use correct default port -->
+		<ApplicationIdentifier>MultiplexClassicXmlUncompressed</ApplicationIdentifier>
+		<ReconnectionDelay>290</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
 
-	    <!-- <RemoteHosts>localhost</RemoteHosts> -->
-	    <RemoteHost>localhost</RemoteHost>
-    </appender>
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
 
-    <appender name="ZeroDelimitedMultiplexClassicXml"
-              class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
-        <ApplicationIdentifier>ZeroDelimitedMultiplexClassicXml</ApplicationIdentifier>
-        <ReconnectionDelay>290</ReconnectionDelay>
-        <IncludeCallerData>true</IncludeCallerData>
+	<appender name="ZeroDelimitedMultiplexClassicXml"
+			  class="de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender">
+		<ApplicationIdentifier>ZeroDelimitedMultiplexClassicXml</ApplicationIdentifier>
+		<ReconnectionDelay>290</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
 
-	    <!-- <RemoteHosts>localhost</RemoteHosts> -->
-	    <RemoteHost>localhost</RemoteHost>
-    </appender>
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
 
-    <appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
-        <RemoteHost>localhost</RemoteHost>
-        <Port>4560</Port>
-        <ReconnectionDelay>170</ReconnectionDelay>
-        <IncludeCallerData>true</IncludeCallerData>
-    </appender>
+	<appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
+		<RemoteHost>localhost</RemoteHost>
+		<Port>4560</Port>
+		<ReconnectionDelay>170</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+	</appender>
 
-    <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="Lilith"/>
-    </root>
+	<root level="INFO">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="Lilith"/>
+	</root>
 
-    <logger name="de.huxhorn.lilith.debug" level="TRACE" additivity="false">
-        <appender-ref ref="MultiplexClassicCompressed"/>
-        <appender-ref ref="MultiplexClassicUncompressed"/>
-        <appender-ref ref="MultiplexClassicXmlCompressed"/>
-        <appender-ref ref="MultiplexClassicXmlUncompressed"/>
-        <appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
-        <appender-ref ref="LogbackClassic"/>
+	<logger name="de.huxhorn.lilith.debug" level="TRACE" additivity="false">
+		<appender-ref ref="MultiplexClassicCompressed"/>
+		<appender-ref ref="MultiplexClassicUncompressed"/>
+		<appender-ref ref="MultiplexClassicXmlCompressed"/>
+		<appender-ref ref="MultiplexClassicXmlUncompressed"/>
+		<appender-ref ref="ZeroDelimitedMultiplexClassicXml"/>
+		<appender-ref ref="LogbackClassic"/>
 		<appender-ref ref="MultiplexClassicCompressed-noUUID"/>
-    </logger>
+	</logger>
 
 	<logger name="de.huxhorn.lilith" level="INFO"/>
 	<logger name="de.huxhorn.lilith.Lilith" level="DEBUG"/>
@@ -129,7 +129,7 @@
 	<logger name="de.huxhorn.lilith.swing.TipOfTheDayDialog" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.ViewActions" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.ViewContainerFrame" level="DEBUG"/>
-	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame" level="DEBUG" />
+	<logger name="de.huxhorn.lilith.swing.ViewContainerInternalFrame" level="DEBUG"/>
 	<logger name="de.huxhorn.lilith.swing.ViewManager" level="INFO"/>
 	<logger name="de.huxhorn.lilith.swing.callables.IndexingCallable" level="DEBUG"/>
 	<logger name="de.huxhorn.lilith.swing.preferences" level="WARN"/>
