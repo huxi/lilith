@@ -24,7 +24,20 @@
 	    <RemoteHost>localhost</RemoteHost>
     </appender>
 
-    <appender name="MultiplexClassicUncompressed"
+	<appender name="MultiplexClassicCompressed-noUUID"
+			  class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<!-- will automatically use correct default port -->
+		<ApplicationIdentifier>MultiplexClassicCompressed-noUUID</ApplicationIdentifier>
+		<ReconnectionDelay>30</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+		<CreatingUUID>false</CreatingUUID>
+
+		<!-- <RemoteHosts>localhost</RemoteHosts> -->
+		<RemoteHost>localhost</RemoteHost>
+	</appender>
+
+	<appender name="MultiplexClassicUncompressed"
               class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
         <Compressing>false</Compressing>
         <!-- will automatically use correct default port -->
@@ -126,6 +139,7 @@
 		<appender-ref ref="MultiplexClassicJsonUncompressed"/>
 		<appender-ref ref="ZeroDelimitedMultiplexClassicJson"/>
         <appender-ref ref="LogbackClassic"/>
+		<appender-ref ref="MultiplexClassicCompressed-noUUID"/>
     </logger>
 	<logger name="de.huxhorn.lilith" level="INFO"/>
 	<logger name="de.huxhorn.lilith.Lilith" level="INFO"/>
