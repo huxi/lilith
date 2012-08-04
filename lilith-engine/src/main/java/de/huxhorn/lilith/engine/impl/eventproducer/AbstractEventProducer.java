@@ -34,18 +34,32 @@ public abstract class AbstractEventProducer<T extends Serializable>
 
 	private AppendOperation<EventWrapper<T>> eventQueue;
 	private SourceIdentifier sourceIdentifier;
+	private SourceIdentifierUpdater<T> sourceIdentifierUpdater;
 	private long localIdCounter;
 
-	protected AbstractEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue)
+	protected AbstractEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater)
 	{
 		this.sourceIdentifier = sourceIdentifier;
 		this.eventQueue = eventQueue;
+		this.sourceIdentifierUpdater = sourceIdentifierUpdater;
 		localIdCounter = 0;
 	}
 
 	public SourceIdentifier getSourceIdentifier()
 	{
-		return sourceIdentifier;
+		if(sourceIdentifier == null)
+		{
+			return null;
+		}
+		try
+		{
+			return sourceIdentifier.clone();
+		}
+		catch(CloneNotSupportedException e)
+		{
+			// shouldn't be possible, ignore it.
+			return sourceIdentifier;
+		}
 	}
 
 	public AppendOperation<EventWrapper<T>> getEventQueue()
@@ -65,6 +79,12 @@ public abstract class AbstractEventProducer<T extends Serializable>
 			return;
 		}
 		localIdCounter++;
+
+		if(sourceIdentifierUpdater != null)
+		{
+			sourceIdentifierUpdater.updateIdentifier(sourceIdentifier, event);
+		}
+
 		EventWrapper<T> wrapper = new EventWrapper<T>(getSourceIdentifier(), localIdCounter, event);
 		eventQueue.add(wrapper);
 		if(logger.isDebugEnabled()) logger.debug("Added event-wrapper for {}.", event);
