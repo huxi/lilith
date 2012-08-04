@@ -34,10 +34,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class SourceManagerImpl<T extends Serializable>
@@ -49,7 +47,7 @@ public class SourceManagerImpl<T extends Serializable>
 	private Set<EventSourceListener<T>> listeners;
 	private PropertyChangeSupport changeSupport;
 	private List<EventSource<T>> sources;
-	private Map<SourceIdentifier, EventProducer<T>> eventProducers;
+	private Set<EventProducer<T>> eventProducers;
 	private EventPoller<T> eventPoller;
 
 	private static final String NUMBER_OF_SOURCES = "numberOfSources";
@@ -60,7 +58,7 @@ public class SourceManagerImpl<T extends Serializable>
 		this.queue = queue;
 		this.eventPoller = new EventPoller<T>(queue);
 		this.eventPoller.setPollDelay(100);
-		eventProducers = new HashMap<SourceIdentifier, EventProducer<T>>();
+		eventProducers = new HashSet<EventProducer<T>>();
 		eventSourceProducers = new ArrayList<EventSourceProducer<T>>();
 		listeners = new HashSet<EventSourceListener<T>>();
 		changeSupport = new PropertyChangeSupport(this);
@@ -138,24 +136,44 @@ public class SourceManagerImpl<T extends Serializable>
 		eventSourceProducers.add(producer);
 	}
 
+	private EventProducer<T> findProducer(SourceIdentifier id)
+	{
+		if(id == null)
+		{
+			return null;
+		}
+
+		for(EventProducer<T> current : eventProducers)
+		{
+			if(id.equals(current.getSourceIdentifier()))
+			{
+				return current;
+			}
+		}
+		return null;
+	}
+
 	public void addEventProducer(EventProducer<T> producer)
 	{
 		SourceIdentifier id = producer.getSourceIdentifier();
-		EventProducer previous = eventProducers.put(id, producer);
+		EventProducer previous = findProducer(id);
 		if(previous != null)
 		{
 			previous.close();
+			eventProducers.remove(previous);
 		}
-		//producer.start();
+		eventProducers.add(producer);
+
 		if(logger.isDebugEnabled()) logger.debug("Started {}.", producer);
 	}
 
 	public void removeEventProducer(SourceIdentifier id)
 	{
-		EventProducer producer = eventProducers.remove(id);
-		if(producer != null)
+		EventProducer previous = findProducer(id);
+		if(previous != null)
 		{
-			producer.close();
+			previous.close();
+			eventProducers.remove(previous);
 		}
 	}
 
