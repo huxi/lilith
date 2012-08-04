@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.SerializingMessageBasedEventProducer;
+import de.huxhorn.lilith.engine.impl.eventproducer.SourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
 import java.io.IOException;
@@ -36,13 +37,15 @@ public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Se
 	extends AbstractServerSocketEventSourceProducer<T>
 {
 	private boolean compressing;
+	private SourceIdentifierUpdater<T> sourceIdentifierUpdater;
 
 
-	public SerializingMessageBasedServerSocketEventSourceProducer(int port, boolean compressing)
+	public SerializingMessageBasedServerSocketEventSourceProducer(int port, boolean compressing, SourceIdentifierUpdater<T> sourceIdentifierUpdater)
 		throws IOException
 	{
 		super(port);
 		this.compressing = compressing;
+		this.sourceIdentifierUpdater = sourceIdentifierUpdater;
 	}
 
 	public boolean isCompressing()
@@ -53,7 +56,7 @@ public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Se
 	protected EventProducer<T> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
-		return new SerializingMessageBasedEventProducer<T>(id, eventQueue, inputStream, compressing);
+		return new SerializingMessageBasedEventProducer<T>(id, eventQueue, sourceIdentifierUpdater, inputStream, compressing);
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class AccessEventProtobufMessageBasedEventProducer
 {
 	public AccessEventProtobufMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, inputStream, compressing);
+		super(sourceIdentifier, eventQueue, new AccessEventSourceIdentifierUpdater(), inputStream, compressing);
 	}
 
 	protected Decoder<AccessEvent> createDecoder()

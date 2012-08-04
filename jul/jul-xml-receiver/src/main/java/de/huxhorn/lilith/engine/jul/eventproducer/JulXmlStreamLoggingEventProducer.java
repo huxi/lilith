@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
+import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.lilith.jul.xml.LoggingEventReader;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
@@ -45,7 +46,7 @@ public class JulXmlStreamLoggingEventProducer
 
 	public JulXmlStreamLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 	{
-		super(sourceIdentifier, eventQueue);
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater());
 		this.loggingEventReader = new LoggingEventReader();
 		this.inputStream = new BufferedInputStream(inputStream);
 	}

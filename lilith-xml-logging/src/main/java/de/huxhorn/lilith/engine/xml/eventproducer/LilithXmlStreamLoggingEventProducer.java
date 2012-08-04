@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.xml.LoggingEventReader;
 import de.huxhorn.lilith.data.logging.xml.LoggingEventSchemaConstants;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
+import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
 import de.huxhorn.sulky.io.IOUtilities;
@@ -51,7 +52,7 @@ public class LilithXmlStreamLoggingEventProducer
 	public LilithXmlStreamLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 		throws XMLStreamException, UnsupportedEncodingException
 	{
-		super(sourceIdentifier, eventQueue);
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater());
 		loggingEventReader = new LoggingEventReader();
 
 		this.inputStream = new BufferedInputStream(inputStream);

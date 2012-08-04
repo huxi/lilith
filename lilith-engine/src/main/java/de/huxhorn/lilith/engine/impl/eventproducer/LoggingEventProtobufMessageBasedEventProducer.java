@@ -31,7 +31,7 @@ public class LoggingEventProtobufMessageBasedEventProducer
 {
 	public LoggingEventProtobufMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, inputStream, compressing);
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), inputStream, compressing);
 	}
 
 	protected Decoder<LoggingEvent> createDecoder()

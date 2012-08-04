@@ -39,6 +39,7 @@ import de.huxhorn.lilith.data.access.logback.LogbackAccessAdapter;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractStreamEventProducer;
+import de.huxhorn.lilith.engine.impl.eventproducer.AccessEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +57,7 @@ public class LogbackAccessStreamEventProducer
 	public LogbackAccessStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
-		super(sourceIdentifier, eventQueue, inputStream);
+		super(sourceIdentifier, eventQueue, new AccessEventSourceIdentifierUpdater(), inputStream);
 		adapter=new LogbackAccessAdapter();
 	}
 

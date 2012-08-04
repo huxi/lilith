@@ -55,10 +55,10 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 
 	private ObjectInputStream dataInput;
 
-	public AbstractStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
+	public AbstractStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream)
 		throws IOException
 	{
-		super(sourceIdentifier, eventQueue);
+		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
 		this.dataInput = new ObjectInputStream(new BufferedInputStream(inputStream));
 	}
 

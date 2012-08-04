@@ -22,6 +22,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.json.LoggingJsonDecoder;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer;
+import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
 
@@ -32,7 +33,7 @@ public class LilithJsonMessageLoggingEventProducer
 {
 	public LilithJsonMessageLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, inputStream, compressing);
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), inputStream, compressing);
 	}
 
 	protected Decoder<LoggingEvent> createDecoder()

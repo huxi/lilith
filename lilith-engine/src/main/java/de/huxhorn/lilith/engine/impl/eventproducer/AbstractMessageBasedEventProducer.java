@@ -45,9 +45,9 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	private boolean compressing;
 	private final AtomicLong heartbeatTimestamp;
 
-	public AbstractMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream, boolean compressing)
+	public AbstractMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue);
+		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
 		this.dataInput = new DataInputStream(new BufferedInputStream(inputStream));
 		this.compressing = compressing;
 		this.decoder = createDecoder();

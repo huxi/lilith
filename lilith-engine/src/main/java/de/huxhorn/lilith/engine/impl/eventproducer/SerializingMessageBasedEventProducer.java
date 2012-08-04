@@ -33,9 +33,9 @@ import java.io.Serializable;
 public class SerializingMessageBasedEventProducer<T extends Serializable>
 	extends AbstractMessageBasedEventProducer<T>
 {
-	public SerializingMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream, boolean compressing)
+	public SerializingMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, inputStream, compressing);
+		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater, inputStream, compressing);
 	}
 
 	protected Decoder<T> createDecoder()
