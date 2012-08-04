@@ -77,6 +77,16 @@
 
 		<release version="0.9.43" date="TBD" description="Future release">
 			<action dev="jhux" type="add">
+				Added ability to reconnect views after disconnect. All multiplex appenders
+				are now creating a UUID upon startup and add that id to the logger context.
+				To revert to the old behavior, i.e. one view for every single connection,
+				you can disable usage of UUID in the configuration of the appender.
+
+				&lt;CreatingUUID&gt;false&lt;/CreatingUUID&gt;
+
+				This was suggested by Joe.
+			</action>
+			<action dev="jhux" type="add">
 				Added HTTP status codes 208, 226, 308, 420, 451, 508, 598 &amp; 599.
 			</action>
 			<action dev="jhux" type="update">

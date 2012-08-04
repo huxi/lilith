@@ -66,6 +66,8 @@ This has several benefits:
   * The event receiver can find out that the event sender connection died if a heartbeat is missing.
   * The event sender can find out that the event receiver connection died by means of a timeout This means that an application won't stop (at least not for very long) in case of network problem.
 
+The multiplex appenders are now creating a UUID be default. This enables Lilith to reattach a connection to an existing view after the connection has been lost for some reason. It has the advantage that already executing filters won't have to be restarted for every new connection. The previous behavior can be enforced by disabling the creation of the UUID by means of `<CreatingUUID>false</CreatingUUID>` in the Logback configuration.
+  
 Add the following to your applications `logback.xml`:
 
 ```xml
@@ -79,6 +81,10 @@ Add the following to your applications `logback.xml`:
     <!-- Alternatively:
     <RemoteHost>localhost</RemoteHost>
     <RemoteHost>10.200.55.13</RemoteHost>
+    -->
+    <!--
+    Optional:
+    <CreatingUUID>false</CreatingUUID>
     -->
 </appender>
 ```

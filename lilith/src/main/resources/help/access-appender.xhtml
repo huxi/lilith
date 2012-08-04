@@ -32,6 +32,11 @@
 	</li>
 </ul>
 
+<p>The multiplex appenders are now creating a UUID be default. This enables Lilith to reattach a connection to an existing
+	view after the connection has been lost for some reason. It has the advantage that already executing filters won't have to be
+	restarted for every new connection. The previous behavior can be enforced by disabling the creation of the UUID
+	by means of <code>&lt;CreatingUUID&gt;false&lt;/CreatingUUID&gt;</code> in the Logback configuration.</p>
+
 <p>Add the following to your applications <code>pom.xml</code> file:</p>
 		<pre><code><![CDATA[<plugin>
   <groupId>org.mortbay.jetty</groupId>
@@ -107,6 +112,10 @@
     <!-- Default port for compressed is 10010 and uncompressed 10011 -->
     <ReconnectionDelay>30000</ReconnectionDelay>
     <RemoteHosts>localhost</RemoteHosts>
+    <!--
+    Optional:
+    <CreatingUUID>false</CreatingUUID>
+    -->
   </appender>
 
   <appender-ref ref="STDOUT" />

@@ -36,6 +36,11 @@
 	</li>
 </ul>
 
+<p>The multiplex appenders are now creating a UUID be default. This enables Lilith to reattach a connection to an existing
+	view after the connection has been lost for some reason. It has the advantage that already executing filters won't have to be
+	restarted for every new connection. The previous behavior can be enforced by disabling the creation of the UUID
+	by means of <code>&lt;CreatingUUID&gt;false&lt;/CreatingUUID&gt;</code> in the Logback configuration.</p>
+
 <p>Add the following dependency to your applications <code>pom.xml</code> file:</p>
 		<pre><code><![CDATA[<dependency>
   <groupId>de.huxhorn.lilith</groupId>
@@ -62,6 +67,10 @@
   Alternatively:
   <RemoteHost>localhost</RemoteHost>
   <RemoteHost>10.200.55.13</RemoteHost>
+  -->
+  <!--
+  Optional:
+  <CreatingUUID>false</CreatingUUID>
   -->
 </appender>]]></code></pre>
 
@@ -126,6 +135,10 @@
   <RemoteHost>localhost</RemoteHost>
   <RemoteHost>10.200.55.13</RemoteHost>
   -->
+  <!--
+  Optional:
+  <CreatingUUID>false</CreatingUUID>
+  -->
 </appender>]]></code></pre>
 
 <p>or, for zero-delimited events instead of "size, event-bytes" messages,</p>
@@ -139,6 +152,10 @@
   Alternatively:
   <RemoteHost>localhost</RemoteHost>
   <RemoteHost>10.200.55.13</RemoteHost>
+  -->
+  <!--
+  Optional:
+  <CreatingUUID>false</CreatingUUID>
   -->
 </appender>]]></code></pre>
 
@@ -185,6 +202,10 @@
   <RemoteHost>localhost</RemoteHost>
   <RemoteHost>10.200.55.13</RemoteHost>
   -->
+  <!--
+  Optional:
+  <CreatingUUID>false</CreatingUUID>
+  -->
 </appender>]]></code></pre>
 
 <p>or, for zero-delimited events instead of "size, event-bytes" messages,</p>
@@ -198,6 +219,10 @@
   Alternatively:
   <RemoteHost>localhost</RemoteHost>
   <RemoteHost>10.200.55.13</RemoteHost>
+  -->
+  <!--
+  Optional:
+  <CreatingUUID>false</CreatingUUID>
   -->
 </appender>]]></code></pre>
 
