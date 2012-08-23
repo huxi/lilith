@@ -23,6 +23,7 @@ buildscript {
 			url localSnapshotRepo
 		}
 		mavenCentral()
+		mavenLocal()
 	}
 
 	dependencies {
@@ -112,6 +113,7 @@ allprojects {
 			url localSnapshotRepo
 		}
 		mavenCentral()
+		mavenLocal()
     }
 }
 

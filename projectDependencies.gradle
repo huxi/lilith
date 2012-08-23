@@ -522,6 +522,7 @@ project(':lilith') {
 		runtime libraries.'jcl-over-slf4j'
 		runtime libraries.'jgoodies-looks'
 		runtime libraries.'stax'
+		runtime libraries.'log4j2-core'
 		runtime project(':lilith-sounds')
 	}
 }
