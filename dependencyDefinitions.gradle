@@ -1,7 +1,7 @@
 project.ext.sulkyBaseVersion = '0.9.16'
 
 project.ext.versions = [
-'aspectj':        '1.6.12',
+'aspectj':        '1.7.0',
 'jackson':        '1.9.7',
 'log4j':          '1.2.17',
 'logback':        '1.0.7',
