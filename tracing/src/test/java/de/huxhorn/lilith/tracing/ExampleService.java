@@ -107,7 +107,7 @@ public class ExampleService implements ExampleServiceIfc, Cloneable
 
 	public void argsWithVarargs(String arg1, String arg2, String... args)
 	{
-		if(logger.isInfoEnabled()) logger.info("Foo {}", args);
+		if(logger.isInfoEnabled()) logger.info("Foo {}", (Object) args);
 		if(logger.isInfoEnabled()) logger.info("Executing argsWithVarargs with {}, {} & {}", new Object[]{arg1, arg2, args});
 	}
 
