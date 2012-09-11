@@ -7,7 +7,7 @@ project.ext.versions = [
 'logback':        '1.0.7',
 'slf4j':          '1.7.0',
 'spring':         '3.1.2.RELEASE',
-'groovy':         '2.0.1',
+'groovy':         '2.0.2',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
 
