@@ -4,7 +4,7 @@ project.ext.versions = [
 'aspectj':        '1.7.0',
 'jackson':        '1.9.9',
 'log4j':          '1.2.17',
-'logback':        '1.0.7',
+'logback':        '1.0.9',
 'slf4j':          '1.7.2',
 'spring':         '3.1.2.RELEASE',
 'groovy':         '2.0.5',
