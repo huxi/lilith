@@ -1107,8 +1107,6 @@ public class AboutPanel
 	/**
 	 * This method requests a repaint of the scroll-area. The rest of the component
 	 * will not be repainted. It is called by <code>setScrollPosition()</code> .
-	 *
-	 * @see
 	 */
 	private void repaintScrollArea()
 	{
