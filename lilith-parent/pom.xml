@@ -19,7 +19,7 @@
 	</scm>
 	
 	<properties>
-		<aspectjVersion>1.7.0</aspectjVersion>
+		<aspectjVersion>1.7.1</aspectjVersion>
 		<groovyVersion>2.0.5</groovyVersion>
 		<jacksonVersion>1.9.9</jacksonVersion>
 		<log4jVersion>1.2.17</log4jVersion>
