@@ -32,7 +32,7 @@ project.ext.libraries = [
 'jcommander':               'com.beust:jcommander:1.29',
 'jgoodies-looks':           'com.jgoodies:looks:2.2.2',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
-'junit':                    'junit:junit:4.10',
+'junit':                    'junit:junit:4.11',
 'log4j':                    "log4j:log4j:${versions.log4j}",
 'log4j-over-slf4j':         "org.slf4j:log4j-over-slf4j:${versions.slf4j}",
 'logback-access':           "ch.qos.logback:logback-access:${versions.logback}",

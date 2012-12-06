@@ -34,7 +34,7 @@
 
 package de.huxhorn.lilith.data.logging;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import de.huxhorn.sulky.formatting.SafeString;
 import org.junit.Before;
