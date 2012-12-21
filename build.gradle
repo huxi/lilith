@@ -30,7 +30,7 @@ buildscript {
 		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6'
 		classpath "de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}"
 		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.2'
-		classpath 'com.github.ben-manes:gradle-versions-plugin:0.2'
+		classpath 'com.github.ben-manes:gradle-versions-plugin:0.3'
 	}
 }
 
