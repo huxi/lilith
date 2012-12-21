@@ -6,7 +6,7 @@ project.ext.versions = [
 'log4j':          '1.2.17',
 'logback':        '1.0.9',
 'slf4j':          '1.7.2',
-'spring':         '3.1.3.RELEASE',
+'spring':         '3.2.0.RELEASE',
 'groovy':         '2.0.6',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
@@ -30,7 +30,7 @@ project.ext.libraries = [
 'jackson-core':             "org.codehaus.jackson:jackson-core-lgpl:${versions.jackson}",
 'jackson-mapper':           "org.codehaus.jackson:jackson-mapper-lgpl:${versions.jackson}",
 'jcommander':               'com.beust:jcommander:1.30',
-'jgoodies-looks':           'com.jgoodies:looks:2.2.2',
+'jgoodies-looks':           'com.jgoodies:jgoodies-looks:2.5.2',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
 'junit':                    'junit:junit:4.11',
 'log4j':                    "log4j:log4j:${versions.log4j}",
