@@ -222,32 +222,6 @@ project(':logback-access-adapter') {
 	}
 }
 
-project(':logback-producer-classic') {
-	archivesBaseName = 'de.huxhorn.lilith.logback.producer.classic'
-	description = 'This file is part of Lilith. It contains event producers.'
-	dependencies {
-		compile libraries.'logback-classic'
-		compile project(':lilith-engine')
-		compile project(':lilith-data-logging')
-		compile project(':logback-logging-adapter')
-		compile libraries.'sulky-buffers'
-		compile libraries.'slf4j-api'
-	}
-}
-
-project(':logback-producer-access') {
-	archivesBaseName = 'de.huxhorn.lilith.logback.producer.access'
-	description = 'This file is part of Lilith. It contains event producers.'
-	dependencies {
-		compile libraries.'logback-access'
-		compile project(':lilith-engine')
-		compile project(':lilith-data-access')
-		compile project(':logback-access-adapter')
-		compile libraries.'sulky-buffers'
-		compile libraries.'slf4j-api'
-	}
-}
-
 project(':logback-multiplex-appender-core') {
 	archivesBaseName = 'de.huxhorn.lilith.logback.appender.multiplex-core'
 	description = 'This file is part of Lilith. It contains the multiplexing appender core classes.'
@@ -541,8 +515,6 @@ project(':lilith') {
 		compile project(':logback-multiplex-appender-classic')
 		compile project(':logback-multiplex-appender-classic-json')
 		compile project(':logback-multiplex-appender-classic-xml')
-		compile project(':logback-producer-access')
-		compile project(':logback-producer-classic')
 		runtime libraries.'jcl-over-slf4j'
 		runtime libraries.'jgoodies-looks'
 		runtime libraries.'stax'
