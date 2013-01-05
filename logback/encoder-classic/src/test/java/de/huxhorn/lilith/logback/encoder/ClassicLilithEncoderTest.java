@@ -37,9 +37,6 @@ package de.huxhorn.lilith.logback.encoder;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.recovery.ResilientFileOutputStream;
-import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.api.FileConstants;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -47,11 +44,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class ClassicLilithEncoderTest
