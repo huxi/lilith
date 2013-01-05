@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2013 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		t.start();
 	}
 
-	protected abstract T postprocessEvent(Object o);
+	protected abstract T postProcessEvent(Object o);
 
 	private class ReceiverRunnable
 		implements Runnable
@@ -82,7 +82,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 				{
 					Object object = dataInput.readObject();
 
-					T event = postprocessEvent(object);
+					T event = postProcessEvent(object);
 
 					if(object == null)
 					{
@@ -97,9 +97,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 				{
 					if(logger.isInfoEnabled())
 					{
-						logger
-							.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e
-								.getClass().getName(), e.getMessage());
+						logger.info("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage());
 					}
 					addEvent(null);
 					IOUtilities.interruptIfNecessary(e);

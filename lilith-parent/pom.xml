@@ -117,6 +117,12 @@
 
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.data.converter</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.data.access</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
