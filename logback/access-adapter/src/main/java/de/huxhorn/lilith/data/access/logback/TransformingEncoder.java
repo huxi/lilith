@@ -34,6 +34,7 @@
 
 package de.huxhorn.lilith.data.access.logback;
 
+import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.sulky.codec.Encoder;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 
@@ -45,7 +46,7 @@ import java.util.Map;
 public class TransformingEncoder
 		implements Encoder<AccessEvent>
 {
-	private LogbackAccessConverter converter = new LogbackAccessConverter();
+	private Converter<de.huxhorn.lilith.data.access.AccessEvent> converter = new LogbackAccessConverter();
 	private Encoder<de.huxhorn.lilith.data.access.AccessEvent> lilithEncoder;
 	private String applicationIdentifier;
 	private String uuid;
