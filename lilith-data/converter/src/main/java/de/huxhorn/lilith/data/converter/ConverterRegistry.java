@@ -39,7 +39,7 @@ import java.util.Map;
 
 public class ConverterRegistry<T>
 {
-	private final Map<Class, Converter<T>> converterMap = new HashMap<Class, Converter<T>>();
+	private final Map<Class<?>, Converter<T>> converterMap = new HashMap<Class<?>, Converter<T>>();
 	
 	public void addConverter(Converter<T> converter)
 	{
@@ -70,10 +70,10 @@ public class ConverterRegistry<T>
 		{
 			return null;
 		}
-		Class clazz;
+		Class<?> clazz;
 		if(object instanceof Class)
 		{
-			clazz = (Class) object;
+			clazz = (Class<?>) object;
 		}
 		else
 		{
@@ -81,7 +81,21 @@ public class ConverterRegistry<T>
 		}
 		synchronized(converterMap)
 		{
-			return converterMap.get(clazz);
+			Converter<T> converter = converterMap.get(clazz);
+			if(converter != null)
+			{
+				return converter;
+			}
+			// check inheritance
+			for(Map.Entry<Class<?>, Converter<T>> current : converterMap.entrySet())
+			{
+				Class<?> key = current.getKey();
+				if(key.isAssignableFrom(clazz))
+				{
+					return current.getValue();
+				}
+			}
+			return null;
 		}
 	}
 }

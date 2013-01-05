@@ -37,7 +37,6 @@ package de.huxhorn.lilith.data.converter;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -92,6 +91,15 @@ public class ConverterRegistryTest
 		assertEquals("FOOBAR", converter.convert("FooBar"));
 	}
 	
+	@Test
+	public void inheritance()
+	{
+		instance.addConverter(new AConverter());
+		B value = new B();
+		Converter<String> converter = instance.resolveConverter(value);
+		assertEquals("B", converter.convert(value));
+	}
+
 	private static class BrokenConverter
 		implements Converter<String>
 	{
@@ -141,6 +149,40 @@ public class ConverterRegistryTest
 		public Class getSourceClass()
 		{
 			return String.class;
+		}
+	}
+
+	private static class A
+	{
+		@Override
+		public String toString()
+		{
+			return "A";
+		}
+	}
+
+	private static class B
+		extends A
+	{
+		@Override
+		public String toString()
+		{
+			return "B";
+		}
+	}
+
+	private static class AConverter
+		implements Converter<String>
+	{
+
+		public String convert(Object o)
+		{
+			return ""+o;
+		}
+
+		public Class getSourceClass()
+		{
+			return A.class;
 		}
 	}
 }
