@@ -45,7 +45,7 @@ import java.util.Map;
 public class TransformingEncoder
 		implements Encoder<AccessEvent>
 {
-	private LogbackAccessAdapter adapter = new LogbackAccessAdapter();
+	private LogbackAccessConverter converter = new LogbackAccessConverter();
 	private Encoder<de.huxhorn.lilith.data.access.AccessEvent> lilithEncoder;
 	private String applicationIdentifier;
 	private String uuid;
@@ -82,7 +82,7 @@ public class TransformingEncoder
 
 	public byte[] encode(AccessEvent logbackEvent)
 	{
-		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = adapter.convert(logbackEvent);
+		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = converter.convert(logbackEvent);
 		if(applicationIdentifier != null || uuid != null)
 		{
 			LoggerContext loggerContext = lilithEvent.getLoggerContext();

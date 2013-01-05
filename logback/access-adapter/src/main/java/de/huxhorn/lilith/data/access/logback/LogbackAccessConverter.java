@@ -35,21 +35,23 @@
 package de.huxhorn.lilith.data.access.logback;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.eventsource.LoggerContext;
+import de.huxhorn.lilith.data.converter.Converter;
 
-import java.util.Map;
-import java.util.HashMap;
-
-public class LogbackAccessAdapter
+public class LogbackAccessConverter
+	implements Converter<AccessEvent>
 {
-	public AccessEvent convert(ch.qos.logback.access.spi.AccessEvent event)
+	public AccessEvent convert(Object o)
 	{
-		if(event == null)
+		if(o == null)
 		{
 			return null;
 		}
 		AccessEvent result = new AccessEvent();
-
+		if(!(o instanceof ch.qos.logback.access.spi.AccessEvent))
+		{
+			throw new IllegalArgumentException(""+o+" is not a "+getSourceClass()+"!");
+		}
+		ch.qos.logback.access.spi.AccessEvent event = (ch.qos.logback.access.spi.AccessEvent) o;
 		// TODO: add support for LoggerContext once available
 		/*
 		LoggerContextVO lcv = event.getLoggerContextVO();
@@ -85,5 +87,10 @@ public class LogbackAccessAdapter
 		result.setStatusCode(event.getStatusCode());
 		result.setTimeStamp(event.getTimeStamp());
 		return result;
+	}
+
+	public Class getSourceClass()
+	{
+		return ch.qos.logback.access.spi.AccessEvent.class;
 	}
 }
