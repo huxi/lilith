@@ -60,7 +60,7 @@ public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 	public ZeroDelimitedClassicJsonMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
-		transformingEncoder =new TransformingEncoder(true);
+		transformingEncoder =new TransformingEncoder();
 		transformingEncoder.setLilithEncoder(new LoggingJsonEncoder(false));
 		setEncoder(transformingEncoder);
 		includeCallerData = true;

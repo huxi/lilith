@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2013 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
 
 package de.huxhorn.lilith.data.logging.logback;
 
+import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
@@ -42,7 +43,6 @@ import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
-import de.huxhorn.lilith.logback.classic.NDC;
 
 import ch.qos.logback.classic.spi.ClassPackagingData;
 import ch.qos.logback.classic.spi.IThrowableProxy;
@@ -56,7 +56,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class LogbackLoggingAdapter
+public class LogbackLoggingConverter
+	implements Converter<LoggingEvent>
 {
 	private static final Method GET_SUPPRESSED_METHOD;
 
@@ -98,104 +99,6 @@ public class LogbackLoggingAdapter
 		}
 		return null;
 	}
-
-	public LoggingEvent convert(ch.qos.logback.classic.spi.ILoggingEvent event, boolean inSameThread)
-	{
-		if(event == null)
-		{
-			return null;
-		}
-		LoggingEvent result = new LoggingEvent();
-		String messagePattern = event.getMessage();
-
-		Object[] originalArguments = event.getArgumentArray();
-		MessageFormatter.ArgumentResult argumentResult =
-			MessageFormatter.evaluateArguments(messagePattern, originalArguments);
-
-		String[] arguments = null;
-		if(argumentResult != null)
-		{
-			arguments = argumentResult.getArguments();
-			Throwable t = argumentResult.getThrowable();
-			if(t != null && event
-				.getThrowableProxy() == null && event instanceof ch.qos.logback.classic.spi.LoggingEvent)
-			{
-				ch.qos.logback.classic.spi.LoggingEvent le = (ch.qos.logback.classic.spi.LoggingEvent) event;
-				le.setThrowableProxy(new ThrowableProxy(t));
-			}
-		}
-		if(messagePattern != null || arguments != null)
-		{
-			Message message = new Message(messagePattern, arguments);
-			result.setMessage(message);
-		}
-		event.prepareForDeferredProcessing();
-		// TODO: configurable calculation of packaging data?
-		result.setThrowable(initFromThrowableProxy(event.getThrowableProxy(), true));
-
-
-		// TODO: configurable init of call stack, i.e. don't execute next line.
-		result.setCallStack(convert(event.getCallerData()));
-
-		result.setLogger(event.getLoggerName());
-
-		result.setLevel(LoggingEvent.Level.valueOf(event.getLevel().toString()));
-		LoggerContextVO lcv = event.getLoggerContextVO();
-		if(lcv != null)
-		{
-			String name = lcv.getName();
-			Map<String, String> props = lcv.getPropertyMap();
-			if(props != null)
-			{
-				// lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
-				props = new HashMap<String, String>(props);
-			}
-			LoggerContext loggerContext = new LoggerContext();
-			loggerContext.setName(name);
-			loggerContext.setProperties(props);
-			loggerContext.setBirthTime(lcv.getBirthTime());
-			result.setLoggerContext(loggerContext);
-		}
-		initMarker(event, result);
-		result.setMdc(event.getMDCPropertyMap());
-		String threadName = event.getThreadName();
-
-		if(threadName != null)
-		{
-			Long threadId = null;
-			String threadGroupName = null;
-			Long threadGroupId = null;
-
-			if(inSameThread)
-			{
-				// assuming this code is executed synchronously
-				Thread t = Thread.currentThread();
-				threadId = t.getId();
-
-				ThreadGroup tg = t.getThreadGroup();
-				if(tg != null)
-				{
-					threadGroupName = tg.getName();
-					threadGroupId = (long) System.identityHashCode(tg);
-				}
-			}
-			ThreadInfo threadInfo = new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName);
-			result.setThreadInfo(threadInfo);
-		}
-		result.setTimeStamp(event.getTimeStamp());
-
-		if(inSameThread)
-		{
-			if(!NDC.isEmpty())
-			{
-				// TODO: configurable NDC evaluation
-				result.setNdc(NDC.getContextStack());
-			}
-		}
-
-		return result;
-	}
-
 
 	private ExtendedStackTraceElement[] convert(StackTraceElement[] stackTrace)
 	{
@@ -305,5 +208,88 @@ public class LogbackLoggingAdapter
 			}
 		}
 		return newMarker;
+	}
+
+	public LoggingEvent convert(Object o)
+	{
+		if(o == null)
+		{
+			return null;
+		}
+		if(!(o instanceof ch.qos.logback.classic.spi.ILoggingEvent))
+		{
+			throw new IllegalArgumentException(""+o+" is not a "+getSourceClass()+"!");
+		}
+		ch.qos.logback.classic.spi.ILoggingEvent event = (ch.qos.logback.classic.spi.ILoggingEvent) o;
+
+		LoggingEvent result = new LoggingEvent();
+		String messagePattern = event.getMessage();
+
+		Object[] originalArguments = event.getArgumentArray();
+		MessageFormatter.ArgumentResult argumentResult = MessageFormatter.evaluateArguments(messagePattern, originalArguments);
+
+		String[] arguments = null;
+		if(argumentResult != null)
+		{
+			arguments = argumentResult.getArguments();
+			Throwable t = argumentResult.getThrowable();
+			if(t != null
+					&& event.getThrowableProxy() == null
+					&& event instanceof ch.qos.logback.classic.spi.LoggingEvent)
+			{
+				ch.qos.logback.classic.spi.LoggingEvent le = (ch.qos.logback.classic.spi.LoggingEvent) event;
+				le.setThrowableProxy(new ThrowableProxy(t));
+			}
+		}
+		if(messagePattern != null || arguments != null)
+		{
+			Message message = new Message(messagePattern, arguments);
+			result.setMessage(message);
+		}
+		event.prepareForDeferredProcessing();
+		// TODO: configurable calculation of packaging data?
+		result.setThrowable(initFromThrowableProxy(event.getThrowableProxy(), true));
+
+
+		// TODO: configurable init of call stack, i.e. don't execute next line.
+		result.setCallStack(convert(event.getCallerData()));
+
+		result.setLogger(event.getLoggerName());
+
+		result.setLevel(LoggingEvent.Level.valueOf(event.getLevel().toString()));
+		LoggerContextVO lcv = event.getLoggerContextVO();
+		if(lcv != null)
+		{
+			String name = lcv.getName();
+			Map<String, String> props = lcv.getPropertyMap();
+			if(props != null)
+			{
+				// lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
+				props = new HashMap<String, String>(props);
+			}
+			LoggerContext loggerContext = new LoggerContext();
+			loggerContext.setName(name);
+			loggerContext.setProperties(props);
+			loggerContext.setBirthTime(lcv.getBirthTime());
+			result.setLoggerContext(loggerContext);
+		}
+		initMarker(event, result);
+		result.setMdc(event.getMDCPropertyMap());
+		String threadName = event.getThreadName();
+
+		if(threadName != null)
+		{
+			ThreadInfo threadInfo = new ThreadInfo();
+			threadInfo.setName(threadName);
+			result.setThreadInfo(threadInfo);
+		}
+		result.setTimeStamp(event.getTimeStamp());
+
+		return result;
+	}
+
+	public Class getSourceClass()
+	{
+		return ch.qos.logback.classic.spi.ILoggingEvent.class;
 	}
 }

@@ -60,7 +60,7 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	public ZeroDelimitedClassicXmlMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
-		transformingEncoder =new TransformingEncoder(true);
+		transformingEncoder =new TransformingEncoder();
 		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(false));
 		setEncoder(transformingEncoder);
 		includeCallerData = true;

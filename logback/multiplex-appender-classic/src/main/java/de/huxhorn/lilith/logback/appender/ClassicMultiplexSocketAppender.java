@@ -66,7 +66,7 @@ public class ClassicMultiplexSocketAppender
 	{
 		super();
 		usingDefaultPort = true;
-		transformingEncoder = new TransformingEncoder(true);
+		transformingEncoder = new TransformingEncoder();
 		setEncoder(transformingEncoder);
 		setCompressing(compressing);
 		includeCallerData = false;

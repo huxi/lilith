@@ -17,10 +17,11 @@
  */
 package de.huxhorn.lilith.appender;
 
+import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapter;
+import de.huxhorn.lilith.data.logging.logback.SameThreadLogbackLoggingConverter;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
@@ -83,13 +84,12 @@ public class InternalLilithAppender
 		}
 	}
 
-	private LogbackLoggingAdapter adapter;
+	private Converter<LoggingEvent> converter = new SameThreadLogbackLoggingConverter();
 	private long localId;
 
 
 	public InternalLilithAppender()
 	{
-		adapter = new LogbackLoggingAdapter();
 		localId = 0;
 	}
 
@@ -99,7 +99,7 @@ public class InternalLilithAppender
 		{
 			localId++;
 			event.getCallerData();
-			LoggingEvent lilithEvent = adapter.convert(event, true);
+			LoggingEvent lilithEvent = converter.convert(event);
 			EventWrapper<LoggingEvent> wrapper = new EventWrapper<LoggingEvent>(sourceIdentifier, localId, lilithEvent);
 			fileBuffer.add(wrapper);
 		}

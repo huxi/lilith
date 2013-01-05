@@ -33,6 +33,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.data.converter</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
 			<scope>compile</scope>
 		</dependency>

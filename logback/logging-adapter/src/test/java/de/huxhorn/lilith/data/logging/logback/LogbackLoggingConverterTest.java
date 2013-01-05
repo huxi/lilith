@@ -48,19 +48,19 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class LogbackLoggingAdapterTest
+public class LogbackLoggingConverterTest
 	extends TestCase
 {
-	private final Logger logger = LoggerFactory.getLogger(LogbackLoggingAdapterTest.class);
+	private final Logger logger = LoggerFactory.getLogger(LogbackLoggingConverterTest.class);
 
-	private LogbackLoggingAdapter instance;
+	private LogbackLoggingConverter instance;
 
 	@Override
 	protected void setUp()
 		throws Exception
 	{
 		super.setUp();
-		instance = new LogbackLoggingAdapter();
+		instance = new LogbackLoggingConverter();
 	}
 
 	public void testThrowableProxy()
@@ -109,7 +109,7 @@ public class LogbackLoggingAdapterTest
 		@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
 		ch.qos.logback.classic.spi.LoggingEvent logbackEvent =
 			new ch.qos.logback.classic.spi.LoggingEvent(
-				"de.huxhorn.lilith.data.logging.logback.LogbackLoggingAdapterTest",
+				"de.huxhorn.lilith.data.logging.logback.LogbackLoggingConverterTest",
 				(ch.qos.logback.classic.Logger) logger,
 				Level.INFO,
 				"Message",
@@ -117,7 +117,7 @@ public class LogbackLoggingAdapterTest
 				new String[]{"First", null, "Third"}
 
 			);
-		LoggingEvent lilithEvent = instance.convert(logbackEvent, false);
+		LoggingEvent lilithEvent = instance.convert(logbackEvent);
 		if(logger.isInfoEnabled()) logger.info("lilithEvent: {}", lilithEvent);
 		prettyPrint(lilithEvent);
 	}
