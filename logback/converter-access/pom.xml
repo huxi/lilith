@@ -3,11 +3,11 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
-	<artifactId>de.huxhorn.lilith.logback.logging-adapter</artifactId>
+	<artifactId>de.huxhorn.lilith.logback.converter-access</artifactId>
 	<version><!-- LV -->0.9.43-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>Logback Logging Adapter</name>
-	<description>This file is part of Lilith. It contains the adapter to translate from logback to lilith logging events.</description>
+	<name>Logback Access Converter</name>
+	<description>This file is part of Lilith. It contains the converter to translate from logback to lilith access events.</description>
 	<url>http://lilith.huxhorn.de/projects/${project.artifactId}/</url>
 	
 	<parent>
@@ -39,13 +39,21 @@
 
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.data.logging</artifactId>
+			<artifactId>de.huxhorn.lilith.data.access</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		
+		<!--
 		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.logback.classic</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		-->
+		
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		
@@ -55,16 +63,11 @@
 			<scope>compile</scope>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		
+		<!--
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>compile</scope>
+			<artifactId>logback-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
@@ -72,6 +75,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		-->
 	</dependencies>
 </project>
 

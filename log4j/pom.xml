@@ -20,7 +20,7 @@
 	<modules>
 		<module>log4j-throwable-parser</module>
 		<module>log4j-xml</module>
-		<module>log4j-producer</module>
+		<module>converter-log4j</module>
 	</modules>
 
 </project>

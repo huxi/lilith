@@ -19,8 +19,8 @@
 	
 	<modules>
 		<module>classic</module>
-		<module>logging-adapter</module>
-		<module>access-adapter</module>
+		<module>converter-classic</module>
+		<module>converter-access</module>
 		<module>multiplex-appender-core</module>
 		<module>multiplex-appender-classic</module>
 		<module>multiplex-appender-access</module>

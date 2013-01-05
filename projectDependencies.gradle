@@ -201,9 +201,9 @@ project(':logback-classic') {
 	}
 }
 
-project(':logback-logging-adapter') {
-	archivesBaseName = 'de.huxhorn.lilith.logback.logging-adapter'
-	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith logging events.'
+project(':logback-converter-classic') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.converter-classic'
+	description = 'This file is part of Lilith. It contains the converter to translate from logback to lilith logging events.'
 	dependencies {
 		compile project(':lilith-data-converter')
 		compile project(':lilith-data-logging')
@@ -214,9 +214,9 @@ project(':logback-logging-adapter') {
 	}
 }
 
-project(':logback-access-adapter') {
-	archivesBaseName = 'de.huxhorn.lilith.logback.access-adapter'
-	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith access events.'
+project(':logback-converter-access') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.converter-access'
+	description = 'This file is part of Lilith. It contains the converter to translate from logback to lilith access events.'
 	dependencies {
 		compile project(':lilith-data-converter')
 		compile project(':lilith-data-access')
@@ -242,7 +242,7 @@ project(':logback-multiplex-appender-classic') {
 		compile libraries.'sulky-codec'
 		compile project(':lilith-data-logging-protobuf')
 		compile project(':logback-multiplex-appender-core')
-		compile project(':logback-logging-adapter')
+		compile project(':logback-converter-classic')
 		compile libraries.'logback-classic'
 	}
 }
@@ -255,7 +255,7 @@ project(':logback-multiplex-appender-access') {
 		compile project(':logback-multiplex-appender-core')
 		compile project(':lilith-data-access')
 		compile project(':lilith-data-access-protobuf')
-		compile project(':logback-access-adapter')
+		compile project(':logback-converter-access')
 		compile libraries.'logback-access'
 	}
 }
@@ -267,7 +267,7 @@ project(':logback-multiplex-appender-classic-xml') {
 		compile libraries.'sulky-codec'
 		compile project(':lilith-data-logging-xml-serializer')
 		compile project(':logback-multiplex-appender-core')
-		compile project(':logback-logging-adapter')
+		compile project(':logback-converter-classic')
 		compile libraries.'logback-classic'
 	}
 }
@@ -279,7 +279,7 @@ project(':logback-multiplex-appender-classic-json') {
 		compile libraries.'sulky-codec'
 		compile project(':lilith-data-logging-json-serializer')
 		compile project(':logback-multiplex-appender-core')
-		compile project(':logback-logging-adapter')
+		compile project(':logback-converter-classic')
 		compile libraries.'logback-classic'
 	}
 }
@@ -312,7 +312,7 @@ project(':logback-encoder-classic') {
 		compile libraries.'slf4j-api'
 		compile libraries.'sulky-codec'
 		compile project(':logback-encoder-core')
-		compile project(':logback-logging-adapter')
+		compile project(':logback-converter-classic')
 		compile project(':lilith-data-logging-protobuf')
 		compile libraries.'logback-core'
 		compile libraries.'logback-classic'
@@ -327,7 +327,7 @@ project(':logback-encoder-access') {
 		compile libraries.'sulky-codec'
 		compile project(':logback-encoder-core')
 		compile project(':lilith-data-access-protobuf')
-		compile project(':logback-access-adapter')
+		compile project(':logback-converter-access')
 		compile libraries.'logback-core'
 		compile libraries.'logback-access'
 	}
@@ -360,9 +360,9 @@ project(':log4j-xml') {
 	}
 }
 
-project(':log4j-producer') {
-	archivesBaseName = 'de.huxhorn.lilith.log4j.producer'
-	description = 'This file is part of Lilith. It contains the LOG4J Producer.'
+project(':converter-log4j') {
+	archivesBaseName = 'de.huxhorn.lilith.log4j.converter'
+	description = 'This file is part of Lilith. It contains the LOG4J Converter.'
 	dependencies {
 		compile project(':lilith-data-converter')
 		compile project(':lilith-data-logging')
@@ -512,9 +512,9 @@ project(':lilith') {
 		compile project(':lilith-json-logging')
 		compile project(':lilith-prefs')
 		compile project(':lilith-xml-logging')
-		compile project(':log4j-producer')
+		compile project(':converter-log4j')
 		compile project(':log4j-xml')
-		compile project(':logback-logging-adapter')
+		compile project(':logback-converter-classic')
 		compile project(':logback-multiplex-appender-access')
 		compile project(':logback-multiplex-appender-classic')
 		compile project(':logback-multiplex-appender-classic-json')

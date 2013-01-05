@@ -52,7 +52,7 @@
 		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.logback.logging-adapter</artifactId>
+			<artifactId>de.huxhorn.lilith.logback.converter-classic</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		

@@ -57,7 +57,7 @@
 		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.logback.access-adapter</artifactId>
+			<artifactId>de.huxhorn.lilith.logback.converter-access</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

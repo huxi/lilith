@@ -3,11 +3,11 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
-	<artifactId>de.huxhorn.lilith.log4j.producer</artifactId>
+	<artifactId>de.huxhorn.lilith.logback.converter-classic</artifactId>
 	<version><!-- LV -->0.9.43-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>Lilith - LOG4J - Producer</name>
-	<description>This file is part of Lilith. It contains the LOG4J Producer.</description>
+	<name>Logback Classic Converter</name>
+	<description>This file is part of Lilith. It contains the converter to translate from logback to lilith logging events.</description>
 	<url>http://lilith.huxhorn.de/projects/${project.artifactId}/</url>
 	
 	<parent>
@@ -45,22 +45,16 @@
 		
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.log4j.throwable</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>de.huxhorn.sulky</groupId>
-			<artifactId>de.huxhorn.sulky.buffers</artifactId>
+			<artifactId>de.huxhorn.lilith.logback.classic</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
-			<groupId>de.huxhorn.lilith</groupId>
-			<artifactId>de.huxhorn.lilith.engine</artifactId>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.codec</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -68,21 +62,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
