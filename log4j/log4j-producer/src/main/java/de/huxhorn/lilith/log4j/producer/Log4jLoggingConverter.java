@@ -1,5 +1,6 @@
 package de.huxhorn.lilith.log4j.producer;
 
+import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -13,18 +14,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Log4jLoggingAdapter
+public class Log4jLoggingConverter
+	implements Converter<LoggingEvent>
 {
 	public static final String LOG4J_LEVEL_KEY="log4j.level";
 	public static final String LOG4J_LEVEL_VALUE_FATAL = "FATAL";
 	private static final String APPLICATION_MDC_KEY = "application";
 
-	public LoggingEvent convert(org.apache.log4j.spi.LoggingEvent log4jEvent)
+	public LoggingEvent convert(Object o)
 	{
-		if(log4jEvent == null)
+		if(o == null)
 		{
 			return null;
 		}
+		if(!(o instanceof org.apache.log4j.spi.LoggingEvent))
+		{
+			throw new IllegalArgumentException(""+o+" is not a "+getSourceClass()+"!");
+		}
+		org.apache.log4j.spi.LoggingEvent log4jEvent = (org.apache.log4j.spi.LoggingEvent) o;
 		LoggingEvent result=new LoggingEvent();
 		Map<String, String> mdc=new HashMap<String, String>();
 
@@ -180,4 +187,8 @@ public class Log4jLoggingAdapter
 		return result;
 	}
 
+	public Class getSourceClass()
+	{
+		return org.apache.log4j.spi.LoggingEvent.class;
+	}
 }
