@@ -14,6 +14,14 @@ project(':lilith-sender') {
 	}
 }
 
+project(':lilith-data-converter') {
+	archivesBaseName = 'de.huxhorn.lilith.data.converter'
+	description = 'This file is part of Lilith. It contains the Converter interface and registry.'
+	dependencies {
+		testCompile libraries.'sulky-junit'
+	}
+}
+
 project(':lilith-data-eventsource') {
 	archivesBaseName = 'de.huxhorn.lilith.data.eventsource'
 	description = 'This file is part of Lilith. It contains the EventSource datatype and related classes.'

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.huxhorn.lilith</groupId>
+	<artifactId>de.huxhorn.lilith.data.converter</artifactId>
+	<version><!-- LV -->0.9.43-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Lilith Data Types - Converter</name>
+	<description>This file is part of Lilith. It contains the Converter interface and registry.</description>
+	<url>http://lilith.huxhorn.de/projects/${project.artifactId}/</url>
+	
+	<parent>
+		<groupId>de.huxhorn.lilith</groupId>
+		<artifactId>de.huxhorn.lilith.parent</artifactId>
+		<version><!-- LV -->0.9.43-SNAPSHOT</version>
+		<relativePath>../../lilith-parent/pom.xml</relativePath>
+	</parent>
+	
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License v3 (LGPL)</name>
+			<url>http://www.gnu.org/copyleft/lesser.html</url>
+			<distribution>repo</distribution>
+		</license>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<dependencies>
+		<!--
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>test</scope>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
+

@@ -18,6 +18,7 @@
 	</parent>
 	
 	<modules>
+		<module>converter</module>
 		<module>eventsource</module>
 		<module>eventsource-xml</module>
 		<module>logging</module>
