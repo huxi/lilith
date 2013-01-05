@@ -151,6 +151,7 @@ project(':lilith-engine') {
 	dependencies {
 		compile project(':lilith-constants')
 		compile project(':lilith-sender')
+		compile project(':lilith-data-converter')
 		compile project(':lilith-data-eventsource')
 		compile project(':lilith-data-logging')
 		compile project(':lilith-data-logging-protobuf')
@@ -204,6 +205,7 @@ project(':logback-logging-adapter') {
 	archivesBaseName = 'de.huxhorn.lilith.logback.logging-adapter'
 	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith logging events.'
 	dependencies {
+		compile project(':lilith-data-converter')
 		compile project(':lilith-data-logging')
 		compile project(':logback-classic')
 		compile libraries.'sulky-codec'
@@ -216,6 +218,7 @@ project(':logback-access-adapter') {
 	archivesBaseName = 'de.huxhorn.lilith.logback.access-adapter'
 	description = 'This file is part of Lilith. It contains the adapter to translate from logback to lilith access events.'
 	dependencies {
+		compile project(':lilith-data-converter')
 		compile project(':lilith-data-access')
 		compile libraries.'sulky-codec'
 		compile libraries.'logback-access'
@@ -361,6 +364,7 @@ project(':log4j-producer') {
 	archivesBaseName = 'de.huxhorn.lilith.log4j.producer'
 	description = 'This file is part of Lilith. It contains the LOG4J Producer.'
 	dependencies {
+		compile project(':lilith-data-converter')
 		compile project(':lilith-data-logging')
 		compile project(':log4j-throwable-parser')
 		compile libraries.'sulky-buffers'
