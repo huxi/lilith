@@ -21,6 +21,11 @@ import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.VersionBundle;
+import de.huxhorn.lilith.data.access.logback.LogbackAccessConverter;
+import de.huxhorn.lilith.data.converter.ConverterRegistry;
+import de.huxhorn.lilith.data.logging.logback.LogbackLoggingConverter;
+import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
+import de.huxhorn.lilith.engine.impl.sourceproducer.ConvertingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.jul.sourceproducer.JulXmlStreamLoggingServerSocketEventSourceProducer;
@@ -54,7 +59,7 @@ import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSo
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.jul.xml.JulImportCallable;
-import de.huxhorn.lilith.log4j.producer.Log4jLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.log4j.producer.Log4jLoggingConverter;
 import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
 import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender;
@@ -62,8 +67,6 @@ import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender;
-import de.huxhorn.lilith.logback.producer.LogbackAccessServerSocketEventSourceProducer;
-import de.huxhorn.lilith.logback.producer.LogbackLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.services.gotosrc.GoToSource;
 import de.huxhorn.lilith.services.gotosrc.SerializingGoToSource;
@@ -577,25 +580,37 @@ public class MainFrame
 		asm.addSource(globalAccessEventSource);
 		setAccessEventSourceManager(asm);
 
-		try
-		{
-			loggingEventSourceManager.addEventSourceProducer(new LogbackLoggingServerSocketEventSourceProducer(4560));
-		}
-		catch(IOException ex)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
-		}
+		ConverterRegistry<LoggingEvent> loggingConverterRegistry = new ConverterRegistry<LoggingEvent>();
+		loggingConverterRegistry.addConverter(new LogbackLoggingConverter());
+		loggingConverterRegistry.addConverter(new Log4jLoggingConverter());
 
-		try
-		{
-			loggingEventSourceManager.addEventSourceProducer(new Log4jLoggingServerSocketEventSourceProducer(4445));
-		}
-		catch(IOException ex)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
-		}
+		ConverterRegistry<AccessEvent> accessConverterRegistry = new ConverterRegistry<AccessEvent>();
+		accessConverterRegistry.addConverter(new LogbackAccessConverter());
 
 		setSplashStatusText("Starting event receivers.");
+
+		try
+		{
+			ConvertingServerSocketEventSourceProducer<LoggingEvent> producer
+					= new ConvertingServerSocketEventSourceProducer<LoggingEvent>(4560, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
+			loggingEventSourceManager.addEventSourceProducer(producer);
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+		}
+
+		try
+		{
+			ConvertingServerSocketEventSourceProducer<LoggingEvent> producer
+					= new ConvertingServerSocketEventSourceProducer<LoggingEvent>(4445, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
+			loggingEventSourceManager.addEventSourceProducer(producer);
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+		}
+
 		try
 		{
 			LoggingEventProtobufServerSocketEventSourceProducer producer
@@ -677,7 +692,7 @@ public class MainFrame
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
-//
+
 		try
 		{
 			LilithXmlStreamLoggingServerSocketEventSourceProducer producer
@@ -718,7 +733,9 @@ public class MainFrame
 
 		try
 		{
-			accessEventSourceManager.addEventSourceProducer(new LogbackAccessServerSocketEventSourceProducer(4570));
+			ConvertingServerSocketEventSourceProducer<AccessEvent> producer
+					= new ConvertingServerSocketEventSourceProducer<AccessEvent>(4570, accessConverterRegistry, null);
+			accessEventSourceManager.addEventSourceProducer(producer);
 		}
 		catch(IOException ex)
 		{
