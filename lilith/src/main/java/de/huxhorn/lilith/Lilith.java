@@ -451,7 +451,7 @@ public class Lilith
 		{
 			public void uncaughtException(Thread t, Throwable e)
 			{
-				if(logger.isErrorEnabled()) logger.error("Caught an uncaught exception from thread "+t+"!", e);
+				if(logger.isErrorEnabled()) logger.error("Caught an uncaught exception from thread {}!", t, e);
 				System.err.println("\n-----\nThread " + t.getName() + " threw an exception!");
 				e.printStackTrace(System.err);
 			}
