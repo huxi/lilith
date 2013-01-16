@@ -139,7 +139,7 @@ public class GroovyCondition
 		}
 		catch(Throwable t)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while executing '" + scriptFileName + "'!", t);
+			if(logger.isWarnEnabled()) logger.warn("Exception while executing '{}'!", scriptFileName, t);
 			return false;
 		}
 	}

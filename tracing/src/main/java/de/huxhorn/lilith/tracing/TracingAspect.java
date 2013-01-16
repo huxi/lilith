@@ -192,7 +192,7 @@ public class TracingAspect
 		long nanos=0;
 		try
 		{
-			if(logger.isInfoEnabled(ENTRY_MARKER)) logger.info(ENTRY_MARKER, message+" entered.");
+			if(logger.isInfoEnabled(ENTRY_MARKER)) logger.info(ENTRY_MARKER, "{} entered.", message);
 			Object result;
 			if(logger.isInfoEnabled(PROFILE_MARKER))
 			{
@@ -207,11 +207,11 @@ public class TracingAspect
 			}
 			if(result == null || !showingParameterValues)
 			{
-				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, message+" returned.");
+				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned.", message);
 			}
 			else
 			{
-				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, message+" returned "+result+".");
+				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned {}.", message, result);
 			}
 			return result;
 		}
@@ -222,7 +222,7 @@ public class TracingAspect
 				nanos=System.nanoTime()-nanos;
 				profile(logger, message, nanos);
 			}
-			if(logger.isInfoEnabled(THROWING_MARKER)) logger.info(THROWING_MARKER, message+" failed.", t);
+			if(logger.isInfoEnabled(THROWING_MARKER)) logger.info(THROWING_MARKER, "{} failed.", message, t);
 			throw t; // rethrow
 		}
 	}

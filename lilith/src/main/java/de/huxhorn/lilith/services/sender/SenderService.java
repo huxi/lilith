@@ -561,10 +561,7 @@ public class SenderService
 					}
 					catch(IOException ex)
 					{
-						if(logger.isWarnEnabled())
-						{
-							logger.warn("Exception while creating new JmDNS instance for address " + current + "!", ex);
-						}
+						if(logger.isWarnEnabled()) logger.warn("Exception while creating new JmDNS instance for address {}!", current, ex);
 					}
 				}
 				if(newDns.size() > 0)

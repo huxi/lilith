@@ -189,15 +189,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	protected boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition, boolean pressed)
 	{
-		if(logger.isDebugEnabled())
-		{
-			Object[] args = new Object[]{ks, e, condition, pressed};
-			logger.debug("Processing KeyBinding:\n" +
-				"\tKeyStroke: {}\n" +
-				"\nEvent    : {}\n" +
-				"\tcondition: {}\n" +
-				"\tpressed  : {}\n", args);
-		}
+		if(logger.isDebugEnabled()) logger.debug("Processing KeyBinding:\n\tKeyStroke: {}\n\nEvent    : {}\n\tcondition: {}\n\tpressed  : {}", ks, e, condition, pressed);
 		InputMap inputMap = getInputMap(condition);
 		Object key = inputMap.get(ks);
 		if(key != null)

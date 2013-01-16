@@ -738,7 +738,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		catch(Throwable t)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while setting message " + message + "!", t);
+			if(logger.isWarnEnabled()) logger.warn("Exception while setting message {}!", message, t);
 			writeErrorMessage(message);
 		}
 	}
@@ -1016,7 +1016,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		catch(CloneNotSupportedException ex)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while cloning "+previousCondition+"!", ex);
+			if(logger.isWarnEnabled()) logger.warn("Exception while cloning {}!", previousCondition, ex);
 		}
 		return null;
 	}

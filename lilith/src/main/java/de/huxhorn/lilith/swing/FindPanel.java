@@ -208,7 +208,7 @@ public class FindPanel<T extends Serializable>
 		catch (CloneNotSupportedException e)
 		{
 			this.condition = null;
-			if(logger.isWarnEnabled()) logger.warn("Condition "+condition+" does not support cloning!", e);
+			if(logger.isWarnEnabled()) logger.warn("Condition {} does not support cloning!", condition, e);
 		}
 		Object newValue=getCondition();
 		findPrevAction.setEnabled(this.condition != null);
@@ -228,7 +228,7 @@ public class FindPanel<T extends Serializable>
 		}
 		catch (CloneNotSupportedException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Condition "+condition+" does not support cloning!", e);
+			if(logger.isWarnEnabled()) logger.warn("Condition {} does not support cloning!", condition, e);
 		}
 		return null;
 	}

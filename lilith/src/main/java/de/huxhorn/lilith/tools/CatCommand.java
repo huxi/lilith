@@ -51,12 +51,12 @@ public class CatCommand
 		String logFileStr = dataFile.getAbsolutePath();
 		if (!dataFile.isFile())
 		{
-			if (logger.isErrorEnabled()) logger.error("'" + logFileStr + "' is not a file!");
+			if (logger.isErrorEnabled()) logger.error("'{}' is not a file!", logFileStr);
 			return false;
 		}
 		if (!dataFile.canRead())
 		{
-			if (logger.isErrorEnabled()) logger.error("Can't read '" + logFileStr + "'!");
+			if (logger.isErrorEnabled()) logger.error("Can't read '{}'!", logFileStr);
 			return false;
 		}
 

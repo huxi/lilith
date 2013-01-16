@@ -353,7 +353,7 @@ public class AboutPanel
 //		if(result==null)
 //		{
 //			result=defaultValue;
-//			if(logger.isDebugEnabled()) logger.debug("Using default-value '"+defaultValue+"' for text-resource '"+resourceName+"'.");
+//			if(logger.isDebugEnabled()) logger.debug("Using default-value '{}' for text-resource '{}'.", defaultValue, resourceName);
 //		}
 //
 //		return result;
@@ -362,11 +362,8 @@ public class AboutPanel
 	private void init(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight)
 		throws IOException
 	{
-		if(logger.isDebugEnabled())
-		{
-			logger.debug("init called with following arguments: backgroundImageUrl=" + backgroundImageUrl + ", " +
-				"scrollArea=" + scrollArea + ", scrollText=" + scrollText + ", imageUrl=" + imageUrl + ", versionText=" + versionText + ", versionHeight=" + versionHeight);
-		}
+		if(logger.isDebugEnabled()) logger.debug("init called with following arguments: backgroundImageUrl={}, scrollArea={}, scrollText={}, imageUrl={}, versionText={}, versionHeight={}",
+				backgroundImageUrl, scrollArea, scrollText, imageUrl, versionText, versionHeight);
 		setBackgroundImage(backgroundImageUrl);
 		setScrollArea(scrollArea);
 		setAboutImage(imageUrl);

@@ -728,10 +728,7 @@ public class Lilith
 			}
 			catch(Throwable t)
 			{
-				if(logger.isErrorEnabled())
-				{
-					logger.error("Exception while setting look & feel '" + lookAndFeel + "'!", t);
-				}
+				if(logger.isErrorEnabled()) logger.error("Exception while setting look & feel '{}'!", lookAndFeel, t);
 			}
 
 			// this is part 2 of Mac Menu for all PLAFs.

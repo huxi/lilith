@@ -79,7 +79,7 @@ public class VersionBundle
 			}
 			catch(NumberFormatException ex)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Retrieved version with invalid timestamp! '"+input+"'", ex);
+				if(logger.isWarnEnabled()) logger.warn("Retrieved version with invalid timestamp! '{}'", input, ex);
 				result=new VersionBundle(input);
 			}
 		}

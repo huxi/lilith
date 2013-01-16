@@ -81,7 +81,7 @@ public abstract class TraySupport
 				}
 				else
 				{
-					if(logger.isErrorEnabled()) logger.error("Invalid TraySupport instance! "+o);
+					if(logger.isErrorEnabled()) logger.error("Invalid TraySupport instance! {}", o);
 				}
 			}
 			catch(Exception e)

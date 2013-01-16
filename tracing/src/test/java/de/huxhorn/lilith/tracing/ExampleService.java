@@ -77,18 +77,18 @@ public class ExampleService implements ExampleServiceIfc, Cloneable
 
 	public void singleArg(String arg)
 	{
-		if(logger.isInfoEnabled()) logger.info("Executing singleArg with "+arg);
+		if(logger.isInfoEnabled()) logger.info("Executing singleArg with {}", arg);
 	}
 
 	public String singleArgResult(String arg)
 	{
-		if(logger.isInfoEnabled()) logger.info("Executing singleArgResult with "+arg);
+		if(logger.isInfoEnabled()) logger.info("Executing singleArgResult with {}", arg);
 		return "singleArgResult "+arg;
 	}
 
 	public String singleArgResultTakingTime(String arg)
 	{
-		if(logger.isInfoEnabled()) logger.info("Executing singleArgResultTakingTime with "+arg);
+		if(logger.isInfoEnabled()) logger.info("Executing singleArgResultTakingTime with {}", arg);
 		try
 		{
 			Thread.sleep(2000);
@@ -102,7 +102,7 @@ public class ExampleService implements ExampleServiceIfc, Cloneable
 
 	public void args(String arg1, String arg2)
 	{
-		if(logger.isInfoEnabled()) logger.info("Executing args with "+arg1+" and "+arg2);
+		if(logger.isInfoEnabled()) logger.info("Executing args with {} and {}", arg1, arg2);
 	}
 
 	public void argsWithVarargs(String arg1, String arg2, String... args)
@@ -113,7 +113,7 @@ public class ExampleService implements ExampleServiceIfc, Cloneable
 
 	public String argsResult(String arg1, String arg2)
 	{
-		if(logger.isInfoEnabled()) logger.info("Executing argsResult with "+arg1+" and "+arg2);
+		if(logger.isInfoEnabled()) logger.info("Executing argsResult with {} and {}", arg1, arg2);
 
 		return "argsResult[arg1="+arg1+", arg2="+arg2+"]";
 	}

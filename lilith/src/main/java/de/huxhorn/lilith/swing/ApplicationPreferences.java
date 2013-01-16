@@ -938,7 +938,7 @@ public class ApplicationPreferences
 		URL url = ApplicationPreferences.class.getResource(path);
 		if(url == null)
 		{
-			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
+			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at {}!", path);
 		}
 		else
 		{
@@ -949,7 +949,7 @@ public class ApplicationPreferences
 				url = ApplicationPreferences.class.getResource(path);
 				if(url == null)
 				{
-					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
+					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at {}!", path);
 					continue;
 				}
 				File target = new File(groovyConditionsPath, current);
@@ -964,7 +964,7 @@ public class ApplicationPreferences
 		URL url = ApplicationPreferences.class.getResource(path);
 		if(url == null)
 		{
-			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
+			if(logger.isErrorEnabled()) logger.error("Couldn't find resource at {}!", path);
 		}
 		else
 		{
@@ -975,7 +975,7 @@ public class ApplicationPreferences
 				url = ApplicationPreferences.class.getResource(path);
 				if(url == null)
 				{
-					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at " + path + "!");
+					if(logger.isErrorEnabled()) logger.error("Couldn't find resource at {}!", path);
 					continue;
 				}
 				File target = new File(groovyClipboardFormattersPath, current);
@@ -1400,7 +1400,7 @@ public class ApplicationPreferences
 							}
 							catch(IOException e)
 							{
-								if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of " + currentLine + "!", e);
+								if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of {}!", currentLine, e);
 							}
 							finally
 							{
@@ -1507,7 +1507,7 @@ public class ApplicationPreferences
 		}
 		catch(IOException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while reading lines from " + url + "!", e);
+			if(logger.isWarnEnabled()) logger.warn("Exception while reading lines from {}!", url, e);
 		}
 		finally
 		{

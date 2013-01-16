@@ -38,8 +38,8 @@ public class ConceptTest
 		}
 		catch(RuntimeException ex)
 		{
-			logger.log(Logger.Level.DEBUG, "Params with Throwable+Cause {}{}", "Arg1", "Arg2", ex);
-			slf4jLogger.debug("SLF4J-Message with Throwable+Cause", ex);
+			logger.log(Logger.Level.DEBUG, "Params with Throwable & Cause {}{}", "Arg1", "Arg2", ex);
+			slf4jLogger.debug("SLF4J-Message with Throwable & Cause", ex);
 		}
 	}
 

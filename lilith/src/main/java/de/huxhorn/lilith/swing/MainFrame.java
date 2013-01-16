@@ -2613,7 +2613,7 @@ public class MainFrame
 			}
 			catch(IOException e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while trying to open URL " + url + "!", e);
+				if(logger.isWarnEnabled()) logger.warn("Exception while trying to open URL {}!", url, e);
 			}
 		}
 		else
@@ -3833,7 +3833,7 @@ public class MainFrame
 		}
 		catch(IOException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while retrieving '" + url + "'!", e);
+			if(logger.isWarnEnabled()) logger.warn("Exception while retrieving '{}'!", url, e);
 			return null;
 		}
 		finally

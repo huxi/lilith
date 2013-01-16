@@ -206,7 +206,7 @@
 //			}
 //			catch(IOException e)
 //			{
-//				if(logger.isDebugEnabled()) logger.debug("Exception while creating connection to " + address + ".", e);
+//				if(logger.isDebugEnabled()) logger.debug("Exception while creating connection to {}.", address, e);
 //				IOUtilities.closeQuietly(output);
 //				output = null;
 //				failTime = current;

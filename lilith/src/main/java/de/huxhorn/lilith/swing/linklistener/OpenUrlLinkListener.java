@@ -65,7 +65,7 @@ public class OpenUrlLinkListener
 			}
 			catch(MalformedURLException e)
 			{
-				if(logger.isInfoEnabled()) logger.info("Couldn't create URL for uri-string " + uri + "!", e);
+				if(logger.isInfoEnabled()) logger.info("Couldn't create URL for uri-string {}!", uri, e);
 			}
 		}
 		else if(originalLinkListener != null)
