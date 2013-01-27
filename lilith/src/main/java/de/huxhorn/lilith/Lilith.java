@@ -26,12 +26,14 @@ import com.beust.jcommander.ParameterException;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.cli.Cat;
 import de.huxhorn.lilith.cli.CommandLineArgs;
+import de.huxhorn.lilith.cli.Filter;
 import de.huxhorn.lilith.cli.Help;
 import de.huxhorn.lilith.cli.Index;
 import de.huxhorn.lilith.cli.Md5;
 import de.huxhorn.lilith.cli.Tail;
 import de.huxhorn.lilith.handler.Slf4JHandler;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.lilith.tools.FilterCommand;
 import de.huxhorn.lilith.tools.ImportExportCommand;
 import de.huxhorn.lilith.swing.LicenseAgreementDialog;
 import de.huxhorn.lilith.swing.MainFrame;
@@ -218,6 +220,8 @@ public class Lilith
 		commander.addCommand(Cat.NAME, cat);
 		Tail tail = new Tail();
 		commander.addCommand(Tail.NAME, tail);
+		Filter filter = new Filter();
+		commander.addCommand(Filter.NAME, filter);
 		Index index = new Index();
 		commander.addCommand(Index.NAME, index);
 		Md5 md5 = new Md5();
@@ -253,7 +257,7 @@ public class Lilith
 		}
 
 		String command = commander.getParsedCommand();
-		if(!Tail.NAME.equals(command) && !Cat.NAME.equals(command)) // don't print info in case of cat or tail
+		if(!Tail.NAME.equals(command) && !Cat.NAME.equals(command) && !Filter.NAME.equals(command)) // don't print info in case of cat, tail or filter
 		{
 			printAppInfo(appTitle, true);
 		}
@@ -330,7 +334,7 @@ public class Lilith
 			boolean error=false;
 			for(String current:files)
 			{
-				if(!IndexCommand.indexLogFile(current, null))
+				if(!IndexCommand.indexLogFile(new File(current)))
 				{
 					error=true;
 				}
@@ -366,6 +370,15 @@ public class Lilith
 				System.exit(-1);
 			}
 			if(TailCommand.tailFile(new File(files.get(0)), tail.pattern, tail.numberOfLines, tail.keepRunning))
+			{
+				System.exit(0);
+			}
+			System.exit(-1);
+		}
+
+		if(Filter.NAME.equals(command))
+		{
+			if(FilterCommand.filterFile(new File(filter.input), new File(filter.output), new File(filter.condition), filter.searchString, filter.pattern, filter.overwrite, filter.keepRunning))
 			{
 				System.exit(0);
 			}

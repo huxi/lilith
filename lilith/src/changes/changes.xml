@@ -89,6 +89,14 @@
 			<action dev="jhux" type="add">
 				Added HTTP status codes 208, 226, 308, 420, 451, 508, 598 &amp; 599.
 			</action>
+			<action dev="jhux" type="add">
+				Added 'filter' command that filters all events of an input file
+				that match a given condition into an output file. This is faster
+				than filtering in Lilith itself since the UI isn't eating up CPU
+				while filtering.
+
+				This was suggested by Joe.
+			</action>
 			<action dev="jhux" type="update">
 				SLF4J 1.7.2, Logback 1.0.9, log4j 1.2.17, Groovy 2.1.0, 
 				commons-io 2.4, commons-lang3 3.1, httpclient 4.2.2, httpcore 4.2.3,
