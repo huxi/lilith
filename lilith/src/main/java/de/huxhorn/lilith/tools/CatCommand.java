@@ -44,62 +44,55 @@ import java.util.Map;
 
 public class CatCommand
 {
-	public static boolean catFile(File dataFile, String pattern, int amount)
+	public static boolean catFile(File inputFile, String pattern, int amount)
 	{
 		final Logger logger = LoggerFactory.getLogger(CatCommand.class);
 
-		String logFileStr = dataFile.getAbsolutePath();
-		if (!dataFile.isFile())
+		File inputDataFile = FileHelper.resolveDataFile(inputFile);
+		String inputDataFileStr = inputDataFile.getAbsolutePath();
+
+		if (!inputDataFile.isFile())
 		{
-			if (logger.isErrorEnabled()) logger.error("'{}' is not a file!", logFileStr);
+			if (logger.isErrorEnabled()) logger.error("'{}' is not a file!", inputDataFileStr);
 			return false;
 		}
-		if (!dataFile.canRead())
+		if (!inputDataFile.canRead())
 		{
-			if (logger.isErrorEnabled()) logger.error("Can't read '{}'!", logFileStr);
+			if (logger.isErrorEnabled()) logger.error("Can't read '{}'!", inputDataFileStr);
 			return false;
 		}
 
-		String indexFileStr;
-		if (logFileStr.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
-		{
-			indexFileStr = logFileStr.substring(0, logFileStr.length() - FileConstants.FILE_EXTENSION.length());
-		}
-		else
-		{
-			indexFileStr = logFileStr;
-		}
-		indexFileStr = indexFileStr + FileConstants.INDEX_FILE_EXTENSION;
+		File inputIndexFile = FileHelper.resolveIndexFile(inputFile);
 
-		long dataModified = dataFile.lastModified();
+		//String inputIndexFileStr = inputIndexFile.getAbsolutePath();
 
-		File indexFile = new File(indexFileStr);
-		if (!indexFile.isFile())
+		long dataModified = inputDataFile.lastModified();
+
+		if (!inputIndexFile.isFile())
 		{
 			// Index file does not exist.
-			IndexCommand.indexLogFile(logFileStr, indexFileStr);
+			IndexCommand.indexLogFile(inputDataFile);
 		}
 		else
 		{
 			// Previous index file was found
-			long indexModified = indexFile.lastModified();
+			long indexModified = inputIndexFile.lastModified();
 			if (indexModified < dataModified)
 			{
 				// Index file is outdated.
-				IndexCommand.indexLogFile(logFileStr, indexFileStr);
+				IndexCommand.indexLogFile(inputDataFile);
 			}
 		}
 
-		boolean isAccess = false;
 		FileHeaderStrategy fileHeaderStrategy = new DefaultFileHeaderStrategy();
 		try
 		{
-			FileHeader header = fileHeaderStrategy.readFileHeader(dataFile);
+			FileHeader header = fileHeaderStrategy.readFileHeader(inputDataFile);
 			if (header == null)
 			{
 				if (logger.isWarnEnabled())
 				{
-					logger.warn("Couldn't read file header from '{}'!", dataFile.getAbsolutePath());
+					logger.warn("Couldn't read file header from '{}'!", inputDataFileStr);
 				}
 				return false;
 			}
@@ -116,7 +109,7 @@ public class CatCommand
 			{
 				if (logger.isWarnEnabled())
 				{
-					logger.warn("Couldn't read meta data from '{}'!", dataFile.getAbsolutePath());
+					logger.warn("Couldn't read meta data from '{}'!", inputDataFileStr);
 				}
 				return false;
 			}
@@ -125,35 +118,30 @@ public class CatCommand
 
 			LogFileFactory logFileFactory = new LogFileFactoryImpl(new File("."));
 
-
 			if (FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
 			{
-				isAccess = false;
 				Map<String, String> loggingMetaData = new HashMap<String, String>();
 				loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 				loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 				loggingMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
-				// TODO: configurable format and compressed
 
 				LoggingFileBufferFactory fileBufferFactory = new LoggingFileBufferFactory(logFileFactory, loggingMetaData);
-				FileBuffer<EventWrapper<LoggingEvent>> buffer = fileBufferFactory.createBuffer(dataFile, indexFile, data);
+				FileBuffer<EventWrapper<LoggingEvent>> inputBuffer = fileBufferFactory.createBuffer(inputDataFile, inputIndexFile, data);
 				LoggingFormatter formatter = new LoggingFormatter();
 				formatter.setPattern(pattern);
 
-				printContent(buffer, formatter, amount);
+				printContent(inputBuffer, formatter, amount);
 				return true;
 			}
 			else if (FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
 			{
-				isAccess = true;
 				Map<String, String> accessMetaData = new HashMap<String, String>();
 				accessMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
 				accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 				accessMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
-				// TODO: configurable format and compressed
 
 				AccessFileBufferFactory fileBufferFactory = new AccessFileBufferFactory(logFileFactory, accessMetaData);
-				FileBuffer<EventWrapper<AccessEvent>> buffer = fileBufferFactory.createBuffer(dataFile, indexFile, data);
+				FileBuffer<EventWrapper<AccessEvent>> buffer = fileBufferFactory.createBuffer(inputDataFile, inputIndexFile, data);
 				AccessFormatter formatter = new AccessFormatter();
 				formatter.setPattern(pattern);
 
@@ -170,7 +158,7 @@ public class CatCommand
 		{
 			if (logger.isWarnEnabled())
 			{
-				logger.warn("Exception while reading from file '" + dataFile.getAbsolutePath() + "'!", ex);
+				logger.warn("Exception while reading from file '{}'!", inputDataFileStr, ex);
 			}
 		}
 		return false;

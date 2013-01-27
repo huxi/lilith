@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.tools;
 
-import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
 import org.slf4j.Logger;
@@ -29,34 +28,36 @@ import java.io.File;
 
 public class IndexCommand
 {
-	public static boolean indexLogFile(String logFileStr, String indexFileStr)
+	public static boolean indexLogFile(File inputFile)
 	{
 		final Logger logger = LoggerFactory.getLogger(IndexCommand.class);
 
-		if(indexFileStr == null)
+		File inputDataFile = FileHelper.resolveDataFile(inputFile);
+		String inputDataFileStr = inputDataFile.getAbsolutePath();
+
+		if (!inputDataFile.isFile())
 		{
-			if(logFileStr.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
-			{
-				indexFileStr = logFileStr.substring(0, logFileStr.length() - FileConstants.FILE_EXTENSION.length());
-			}
-			else
-			{
-				indexFileStr = logFileStr;
-			}
-			indexFileStr = indexFileStr + FileConstants.INDEX_FILE_EXTENSION;
+			if (logger.isErrorEnabled()) logger.error("'{}' is not a file!", inputDataFileStr);
+			return false;
+		}
+		if (!inputDataFile.canRead())
+		{
+			if (logger.isErrorEnabled()) logger.error("Can't read '{}'!", inputDataFileStr);
+			return false;
 		}
 
-		File logFile=new File(logFileStr);
-		File indexFile=new File(indexFileStr);
+		File inputIndexFile = FileHelper.resolveIndexFile(inputFile);
 
-		IndexingCallable callable = new IndexingCallable(logFile, indexFile);
+		String inputIndexFileStr = inputIndexFile.getAbsolutePath();
+
+		IndexingCallable callable = new IndexingCallable(inputDataFile, inputIndexFile);
 		callable.addPropertyChangeListener(new IndexingChangeListener());
 		try
 		{
 			long count = callable.call();
 			if(logger.isInfoEnabled())
 			{
-				logger.info("Finished indexing {}. Number of events: {}", logFile.getAbsolutePath(), count);
+				logger.info("Finished indexing {}. Number of events: {}", inputDataFileStr, count);
 			}
 			return true;
 		}
@@ -64,7 +65,7 @@ public class IndexCommand
 		{
 			if(logger.isErrorEnabled())
 			{
-				logger.error("Exception while indexing '" + logFile.getAbsolutePath() + "'!", e);
+				logger.error("Exception while indexing '" + inputDataFileStr + "'!", e);
 			}
 		}
 		return false;
