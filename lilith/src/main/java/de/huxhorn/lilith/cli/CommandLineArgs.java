@@ -24,6 +24,9 @@ public class CommandLineArgs
 	@Parameter(names = { "-v", "--verbose" }, description = "print verbose log messages.")
 	public boolean verbose = false;
 
+	@Parameter(names = { "-l", "--logback-config" }, description = "use given logback configuration.")
+	public String logbackConfig;
+
 	@Parameter(names = { "-h", "-?", "--help" }, description = "show this help.")
 	public boolean showHelp = false;
 

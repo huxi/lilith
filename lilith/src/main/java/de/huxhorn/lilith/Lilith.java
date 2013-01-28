@@ -59,6 +59,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -262,7 +263,25 @@ public class Lilith
 			printAppInfo(appTitle, true);
 		}
 
-		if(cl.verbose)
+		if(cl.logbackConfig != null)
+		{
+			File logbackFile = new File(cl.logbackConfig);
+			if(!logbackFile.isFile())
+			{
+				System.out.println(logbackFile.getAbsolutePath() + " is not a valid file.");
+				System.exit(-1);
+			}
+			try
+			{
+				initLogbackConfig(logbackFile.toURI().toURL());
+			}
+			catch(MalformedURLException e)
+			{
+				System.out.println("Failed to convert "+logbackFile.getAbsolutePath()+" to URL. "+e);
+				System.exit(-1);
+			}
+		}
+		else if(cl.verbose)
 		{
 			initVerboseLogging();
 		}
@@ -325,6 +344,10 @@ public class Lilith
 
 		if(Index.NAME.equals(command))
 		{
+			if(!cl.verbose && cl.logbackConfig == null)
+			{
+				initCLILogging();
+			}
 			List<String> files = index.files;
 			if(files == null || files.size()==0)
 			{
@@ -348,6 +371,10 @@ public class Lilith
 
 		if(Cat.NAME.equals(command))
 		{
+			if(!cl.verbose && cl.logbackConfig == null)
+			{
+				initCLILogging();
+			}
 			List<String> files = cat.files;
 			if(files == null || files.size()!=1)
 			{
@@ -363,6 +390,10 @@ public class Lilith
 
 		if(Tail.NAME.equals(command))
 		{
+			if(!cl.verbose && cl.logbackConfig == null)
+			{
+				initCLILogging();
+			}
 			List<String> files = tail.files;
 			if(files == null || files.size()!=1)
 			{
@@ -378,6 +409,10 @@ public class Lilith
 
 		if(Filter.NAME.equals(command))
 		{
+			if(!cl.verbose && cl.logbackConfig == null)
+			{
+				initCLILogging();
+			}
 			if(FilterCommand.filterFile(new File(filter.input), new File(filter.output), new File(filter.condition), filter.searchString, filter.pattern, filter.overwrite, filter.keepRunning))
 			{
 				System.exit(0);
@@ -503,7 +538,17 @@ public class Lilith
 		startUI(appTitle, enableBonjour);
 	}
 
+	private static void initCLILogging()
+	{
+		initLogbackConfig(Lilith.class.getResource("/logbackCLI.xml"));
+	}
+
 	private static void initVerboseLogging()
+	{
+		initLogbackConfig(Lilith.class.getResource("/logbackVerbose.xml"));
+	}
+
+	private static void initLogbackConfig(URL configUrl)
 	{
 		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 		if(loggerFactory instanceof LoggerContext)
@@ -513,8 +558,6 @@ public class Lilith
 			loggerContext.reset();
 			JoranConfigurator configurator = new JoranConfigurator();
 			configurator.setContext(loggerContext);
-			URL configUrl;
-			configUrl = Lilith.class.getResource("/logbackVerbose.xml");
 			try
 			{
 				configurator.doConfigure(configUrl);
@@ -532,7 +575,6 @@ public class Lilith
 			}
 		}
 	}
-
 
 	private static void flushLicensed()
 	{
