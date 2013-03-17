@@ -31,6 +31,9 @@ public class Filter
 	@Parameter(names = { "-f", "--keep-running" }, description = "keep filtering the given Lilith logfile.")
 	public boolean keepRunning = false;
 
+	@Parameter(names = { "-e", "--exclusive" }, description = "open input in exclusive read mode.")
+	public boolean exclusive = false;
+
 	@Parameter(names = { "-o", "--overwrite" }, description = "overwrite existing output files.")
 	public boolean overwrite = false;
 

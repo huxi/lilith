@@ -37,6 +37,7 @@ import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
+import de.huxhorn.sulky.codec.filebuffer.ReadOnlyExclusiveCodecFileBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,7 @@ import java.util.Map;
 
 public class FilterCommand
 {
-	public static boolean filterFile(File inputFile, File outputFile, File conditionFile, String searchString, String pattern, boolean overwrite, boolean keepRunning)
+	public static boolean filterFile(File inputFile, File outputFile, File conditionFile, String searchString, String pattern, boolean overwrite, boolean keepRunning, boolean exclusive)
 	{
 		final Logger logger = LoggerFactory.getLogger(FilterCommand.class);
 
@@ -65,7 +66,10 @@ public class FilterCommand
 			if (logger.isErrorEnabled()) logger.error("Can't read '{}'!", inputDataFileStr);
 			return false;
 		}
-
+		if(exclusive)
+		{
+			keepRunning = false;
+		}
 		File inputIndexFile = FileHelper.resolveIndexFile(inputFile);
 		//String inputIndexFileStr = inputIndexFile.getAbsolutePath();
 
@@ -175,7 +179,17 @@ public class FilterCommand
 				loggingMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 
 				LoggingFileBufferFactory fileBufferFactory = new LoggingFileBufferFactory(logFileFactory, loggingMetaData);
-				FileBuffer<EventWrapper<LoggingEvent>> inputBuffer = fileBufferFactory.createBuffer(inputDataFile, inputIndexFile, data);
+				Buffer<EventWrapper<LoggingEvent>> inputBuffer;
+				if(exclusive)
+				{
+					ReadOnlyExclusiveCodecFileBuffer<EventWrapper<LoggingEvent>> input = new ReadOnlyExclusiveCodecFileBuffer<EventWrapper<LoggingEvent>>(inputDataFile, inputIndexFile);
+					input.setCodec(fileBufferFactory.resolveCodec(metaData));
+					inputBuffer = input;
+				}
+				else
+				{
+					inputBuffer = fileBufferFactory.createBuffer(inputDataFile, inputIndexFile, data);
+				}
 				FileBuffer<EventWrapper<LoggingEvent>> outputBuffer = fileBufferFactory.createBuffer(outputDataFile, outputIndexFile, data);
 
 				LoggingFormatter formatter = null;
@@ -200,7 +214,17 @@ public class FilterCommand
 				accessMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
 
 				AccessFileBufferFactory fileBufferFactory = new AccessFileBufferFactory(logFileFactory, accessMetaData);
-				FileBuffer<EventWrapper<AccessEvent>> inputBuffer = fileBufferFactory.createBuffer(inputDataFile, inputIndexFile, data);
+				Buffer<EventWrapper<AccessEvent>> inputBuffer;
+				if(exclusive)
+				{
+					ReadOnlyExclusiveCodecFileBuffer<EventWrapper<AccessEvent>> input = new ReadOnlyExclusiveCodecFileBuffer<EventWrapper<AccessEvent>>(inputDataFile, inputIndexFile);
+					input.setCodec(fileBufferFactory.resolveCodec(metaData));
+					inputBuffer = input;
+				}
+				else
+				{
+					inputBuffer = fileBufferFactory.createBuffer(inputDataFile, inputIndexFile, data);
+				}
 				FileBuffer<EventWrapper<AccessEvent>> outputBuffer = fileBufferFactory.createBuffer(outputDataFile, outputIndexFile, data);
 
 				AccessFormatter formatter = null;
@@ -236,7 +260,6 @@ public class FilterCommand
 	private static <T extends Serializable> long filterContent(Buffer<EventWrapper<T>> inputBuffer, AppendOperation<EventWrapper<T>> outputBuffer, GroovyCondition groovyCondition, Formatter<EventWrapper<T>>  formatter)
 	{
 		long bufferSize=inputBuffer.getSize();
-
 		long i;
 		for (i = 0; i < bufferSize; i++)
 		{

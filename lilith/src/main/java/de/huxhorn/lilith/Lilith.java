@@ -413,7 +413,7 @@ public class Lilith
 			{
 				initCLILogging();
 			}
-			if(FilterCommand.filterFile(new File(filter.input), new File(filter.output), new File(filter.condition), filter.searchString, filter.pattern, filter.overwrite, filter.keepRunning))
+			if(FilterCommand.filterFile(new File(filter.input), new File(filter.output), new File(filter.condition), filter.searchString, filter.pattern, filter.overwrite, filter.keepRunning, filter.exclusive))
 			{
 				System.exit(0);
 			}
