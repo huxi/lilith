@@ -61,6 +61,7 @@ import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerS
 import de.huxhorn.lilith.jul.xml.JulImportCallable;
 import de.huxhorn.lilith.log4j.producer.Log4jLoggingConverter;
 import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
+import de.huxhorn.lilith.log4j2.producer.Log4j2LoggingConverter;
 import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
@@ -583,6 +584,7 @@ public class MainFrame
 		ConverterRegistry<LoggingEvent> loggingConverterRegistry = new ConverterRegistry<LoggingEvent>();
 		loggingConverterRegistry.addConverter(new LogbackLoggingConverter());
 		loggingConverterRegistry.addConverter(new Log4jLoggingConverter());
+		loggingConverterRegistry.addConverter(new Log4j2LoggingConverter());
 
 		ConverterRegistry<AccessEvent> accessConverterRegistry = new ConverterRegistry<AccessEvent>();
 		accessConverterRegistry.addConverter(new LogbackAccessConverter());

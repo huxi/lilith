@@ -374,6 +374,19 @@ project(':converter-log4j') {
 	}
 }
 
+project(':converter-log4j2') {
+	archivesBaseName = 'de.huxhorn.lilith.log4j2.converter'
+	description = 'This file is part of Lilith. It contains the LOG4J 2 Converter.'
+	dependencies {
+		compile project(':lilith-data-converter')
+		compile project(':lilith-data-logging')
+		compile libraries.'sulky-buffers'
+		compile project(':lilith-engine')
+		compile libraries.'slf4j-api'
+		compile libraries.'log4j2-core'
+	}
+}
+
 project(':jul-xml') {
 	archivesBaseName = 'de.huxhorn.lilith.jul.xml'
 	description = 'This file is part of Lilith. It contains java.util.logging XML I/O.'
@@ -513,6 +526,7 @@ project(':lilith') {
 		compile project(':lilith-prefs')
 		compile project(':lilith-xml-logging')
 		compile project(':converter-log4j')
+		compile project(':converter-log4j2')
 		compile project(':log4j-xml')
 		compile project(':logback-converter-classic')
 		compile project(':logback-multiplex-appender-access')

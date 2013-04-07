@@ -207,6 +207,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.log4j2.converter</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>com.jgoodies</groupId>
 			<artifactId>jgoodies-looks</artifactId>
 			<scope>runtime</scope>
@@ -510,6 +516,12 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- End of 3rd party jars -->
+		
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>junit</groupId>
