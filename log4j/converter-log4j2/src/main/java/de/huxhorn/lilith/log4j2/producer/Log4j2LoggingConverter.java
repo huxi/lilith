@@ -134,13 +134,15 @@ public class Log4j2LoggingConverter
 		// location information
 		{
 			StackTraceElement location = log4jEvent.getSource();
-			if (location != null) {
+			if (location != null)
+			{
 				ExtendedStackTraceElement ste = new ExtendedStackTraceElement();
 				ste.setClassName(location.getClassName());
 				ste.setMethodName(location.getMethodName());
 				ste.setFileName(location.getFileName());
 				int line = location.getLineNumber();
-				if (line < 0) {
+				if (line < 0)
+				{
 					ste.setLineNumber(line);
 				}
 				result.setCallStack(new ExtendedStackTraceElement[]{ste});
