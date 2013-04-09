@@ -21,6 +21,7 @@
 		<module>log4j-throwable-parser</module>
 		<module>log4j-xml</module>
 		<module>converter-log4j</module>
+		<module>converter-log4j2</module>
 	</modules>
 
 </project>

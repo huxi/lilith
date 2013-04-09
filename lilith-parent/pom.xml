@@ -280,6 +280,12 @@
 
 			<dependency>
 				<groupId>de.huxhorn.lilith</groupId>
+				<artifactId>de.huxhorn.lilith.log4j2.converter</artifactId>
+				<version>${lilithVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.huxhorn.lilith</groupId>
 				<artifactId>de.huxhorn.lilith.jul-slf4j-handler</artifactId>
 				<version>${lilithVersion}</version>
 			</dependency>
