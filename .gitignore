@@ -10,3 +10,4 @@ buildNumber.properties
 *.idx
 *.log
 *.lilith
+/out/
