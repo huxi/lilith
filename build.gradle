@@ -118,21 +118,32 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-    apply plugin: 'signing'
-
+	apply plugin: 'groovy'
+	apply plugin: 'maven'
+	apply plugin: 'signing'
+	
 	//defaultTasks 'build', 'uploadPublished'
+	
+	sourceCompatibility = 1.5
+	targetCompatibility = 1.5
+	
+	// -Xlint:-options disables the
+	// "warning: [options] bootstrap class path not set in conjunction with -source 1.x"
+	// for now
+	def compilerArgs = ['-Xlint:unchecked', '-Xlint:-options', '-Xlint:deprecation', '-g']
+	
+	compileJava.options.compilerArgs = compilerArgs
+	compileTestJava.options.compilerArgs = compilerArgs
+	compileGroovy.options.compilerArgs = compilerArgs
+	compileTestGroovy.options.compilerArgs = compilerArgs
 
-    sourceCompatibility = 1.5
-    targetCompatibility = 1.5
-
-    // -Xlint:-options disables the
-    // "warning: [options] bootstrap class path not set in conjunction with -source 1.x"
-    // for now
-    def compilerArgs = ['-Xlint:unchecked', '-Xlint:-options', '-Xlint:deprecation', '-g']
-    compileJava.options.compilerArgs = compilerArgs
-    compileTestJava.options.compilerArgs = compilerArgs
+	def sourceEncoding = 'UTF-8'
+	
+	compileJava.options.encoding = sourceEncoding
+	compileTestJava.options.encoding = sourceEncoding
+	compileGroovy.options.encoding = sourceEncoding
+	compileTestGroovy.options.encoding = sourceEncoding
+	javadoc.options.encoding = sourceEncoding
 
 	signing {
 		required = { !version.endsWith("SNAPSHOT") }
