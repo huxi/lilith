@@ -32,7 +32,7 @@ public class Log4j2Sandbox
 		
 		public static void foobar()
 		{
-			throw new RuntimeException("Hi.");
+			throw new FooException("Hi.");
 		}
 	}
 
@@ -65,6 +65,15 @@ public class Log4j2Sandbox
 			{
 				break;
 			}
+		}
+	}
+	
+	public static class FooException
+		extends RuntimeException
+	{
+		public FooException(String msg)
+		{
+			super(msg);
 		}
 	}
 }

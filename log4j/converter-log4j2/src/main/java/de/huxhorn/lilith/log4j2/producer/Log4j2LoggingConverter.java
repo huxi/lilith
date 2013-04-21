@@ -163,10 +163,13 @@ public class Log4j2LoggingConverter
 		{
 			return null;
 		}
+		// https://issues.apache.org/jira/browse/LOG4J2-216
 		ThrowableInfo result = new ThrowableInfo();
 		result.setCause(convert(thrown.getCause()));
 		result.setMessage(thrown.getMessage());
-		result.setName(thrown.toString()); // TODO: data is missing
+		//result.setName(thrown.toString()); // TODO: data is missing
+		result.setName(thrown.getClass().getName()); // TODO: data is missing
+
 		StackTraceElement[] st = thrown.getStackTrace();
 		if (st != null && st.length > 0)
 		{
