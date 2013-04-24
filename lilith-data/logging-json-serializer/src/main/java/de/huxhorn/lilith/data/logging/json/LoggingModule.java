@@ -32,11 +32,32 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.json.mixin;
+package de.huxhorn.lilith.data.logging.json;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
+import de.huxhorn.lilith.data.logging.*;
+import de.huxhorn.lilith.data.logging.json.mixin.*;
 
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public abstract class ThrowableInfoMixIn
+public class LoggingModule
+	extends SimpleModule
 {
+	public LoggingModule()
+	{
+		super("LilithLogging", new Version(1, 0, 0, null, "de.huxhorn.lilith", "de.huxhorn.lilith.data.logging-json-serializer"));
+	}
+
+	@Override
+	public void setupModule(SetupContext context)
+	{
+		context.setMixInAnnotations(Message.class, MessageMixIn.class);
+		context.setMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
+		context.setMixInAnnotations(LoggerContext.class, LoggerContextMixIn.class);
+		context.setMixInAnnotations(Marker.class, MarkerMixIn.class);
+		context.setMixInAnnotations(ThreadInfo.class, ThreadInfoMixIn.class);
+		context.setMixInAnnotations(LoggingEvent.class, LoggingEventMixIn.class);
+		context.setMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
+	}
+
 }

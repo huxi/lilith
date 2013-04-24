@@ -112,7 +112,7 @@ project(':lilith-data-logging-json-serializer') {
 		compile project(':lilith-data-logging')
 		compile libraries.'sulky-codec'
 		compile libraries.'sulky-io'
-		compile libraries.'jackson-mapper'
+		compile libraries.'jackson-databind'
 		testCompile project(':lilith-data-logging-io-test')
 		testCompile project(':lilith-data-eventsource')
 	}

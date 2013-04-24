@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2013 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,23 +34,11 @@
 
 package de.huxhorn.lilith.data.logging.json;
 
-import de.huxhorn.lilith.data.eventsource.LoggerContext;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.Message;
-import de.huxhorn.lilith.data.logging.ThreadInfo;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.json.mixin.ExtendedStackTraceElementMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.LoggerContextMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.LoggingEventMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.MarkerMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.MessageMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.ThreadInfoMixIn;
 import de.huxhorn.sulky.codec.Encoder;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -72,14 +60,7 @@ public class LoggingJsonEncoder
 	public LoggingJsonEncoder(boolean compressing, boolean indenting, boolean sortingProperties)
 	{
 		mapper = new ObjectMapper();
-		SerializationConfig serializationConfig = mapper.getSerializationConfig();
-		serializationConfig.addMixInAnnotations(Message.class, MessageMixIn.class);
-		serializationConfig.addMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
-		serializationConfig.addMixInAnnotations(LoggerContext.class, LoggerContextMixIn.class);
-		serializationConfig.addMixInAnnotations(Marker.class, MarkerMixIn.class);
-		serializationConfig.addMixInAnnotations(ThreadInfo.class, ThreadInfoMixIn.class);
-		serializationConfig.addMixInAnnotations(LoggingEvent.class, LoggingEventMixIn.class);
-		serializationConfig.addMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
+		mapper.registerModule(new LoggingModule());
 		setCompressing(compressing);
 		setIndenting(indenting);
 		setSortingProperties(sortingProperties);
@@ -103,16 +84,7 @@ public class LoggingJsonEncoder
 	public void setIndenting(boolean indenting)
 	{
 		this.indenting = indenting;
-		SerializationConfig config = mapper.getSerializationConfig();
-		if(indenting)
-		{
-			config = config.with(SerializationConfig.Feature.INDENT_OUTPUT);
-		}
-		else
-		{
-			config = config.without(SerializationConfig.Feature.INDENT_OUTPUT);
-		}
-		mapper.setSerializationConfig(config);
+		mapper.configure(SerializationFeature.INDENT_OUTPUT, indenting);
 	}
 
 	public boolean isSortingProperties()
@@ -123,16 +95,7 @@ public class LoggingJsonEncoder
 	public void setSortingProperties(boolean sortingProperties)
 	{
 		this.sortingProperties = sortingProperties;
-		SerializationConfig config = mapper.getSerializationConfig();
-		if(sortingProperties)
-		{
-			config = config.with(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
-		}
-		else
-		{
-			config = config.without(SerializationConfig.Feature.SORT_PROPERTIES_ALPHABETICALLY);
-		}
-		mapper.setSerializationConfig(config);
+		mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, sortingProperties);
 	}
 
 	public byte[] encode(LoggingEvent event)

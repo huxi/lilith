@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2013 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,22 +34,11 @@
 
 package de.huxhorn.lilith.data.logging.json;
 
-import de.huxhorn.lilith.data.eventsource.LoggerContext;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.data.logging.Message;
-import de.huxhorn.lilith.data.logging.ThreadInfo;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.logging.json.mixin.ExtendedStackTraceElementMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.LoggerContextMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.LoggingEventMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.MarkerMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.MessageMixIn;
-import de.huxhorn.lilith.data.logging.json.mixin.ThreadInfoMixIn;
 import de.huxhorn.sulky.codec.Decoder;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -65,13 +54,7 @@ public class LoggingJsonDecoder
 	{
 		this.compressing = compressing;
 		mapper = new ObjectMapper();
-		mapper.getDeserializationConfig().addMixInAnnotations(Message.class, MessageMixIn.class);
-		mapper.getDeserializationConfig().addMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
-		mapper.getDeserializationConfig().addMixInAnnotations(LoggerContext.class, LoggerContextMixIn.class);
-		mapper.getDeserializationConfig().addMixInAnnotations(Marker.class, MarkerMixIn.class);
-		mapper.getDeserializationConfig().addMixInAnnotations(ThreadInfo.class, ThreadInfoMixIn.class);
-		mapper.getDeserializationConfig().addMixInAnnotations(LoggingEvent.class, LoggingEventMixIn.class);
-		mapper.getDeserializationConfig().addMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
+		mapper.registerModule(new LoggingModule());
 	}
 
 	public LoggingEvent decode(byte[] bytes)
@@ -86,7 +69,7 @@ public class LoggingJsonDecoder
 		}
 		catch(IOException ex)
 		{
-			ex.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			ex.printStackTrace();
 		}
 		return null;
 	}

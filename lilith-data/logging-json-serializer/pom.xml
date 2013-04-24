@@ -51,8 +51,8 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-lgpl</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
