@@ -46,18 +46,12 @@ public class LoggingModule
 	public LoggingModule()
 	{
 		super("LilithLogging", new Version(1, 0, 0, null, "de.huxhorn.lilith", "de.huxhorn.lilith.data.logging-json-serializer"));
+		setMixInAnnotation(Message.class, MessageMixIn.class);
+		setMixInAnnotation(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
+		setMixInAnnotation(LoggerContext.class, LoggerContextMixIn.class);
+		setMixInAnnotation(Marker.class, MarkerMixIn.class);
+		setMixInAnnotation(ThreadInfo.class, ThreadInfoMixIn.class);
+		setMixInAnnotation(LoggingEvent.class, LoggingEventMixIn.class);
+		setMixInAnnotation(ThrowableInfo.class, ThreadInfoMixIn.class);
 	}
-
-	@Override
-	public void setupModule(SetupContext context)
-	{
-		context.setMixInAnnotations(Message.class, MessageMixIn.class);
-		context.setMixInAnnotations(ExtendedStackTraceElement.class, ExtendedStackTraceElementMixIn.class);
-		context.setMixInAnnotations(LoggerContext.class, LoggerContextMixIn.class);
-		context.setMixInAnnotations(Marker.class, MarkerMixIn.class);
-		context.setMixInAnnotations(ThreadInfo.class, ThreadInfoMixIn.class);
-		context.setMixInAnnotations(LoggingEvent.class, LoggingEventMixIn.class);
-		context.setMixInAnnotations(ThrowableInfo.class, ThreadInfoMixIn.class);
-	}
-
 }
