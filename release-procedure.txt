@@ -3,40 +3,17 @@ Check that lilith logback.xml does not include debug="true"
 
 #####
 
-Search pom.xml for
-<!-- SV -->
-and replace with release version.
-Don't forget <sulkyVersion>!
-
-#####
-
-Search pom.xml for
-<!-- LV -->
-and replace with release version.
-
-#####
-
 Remember to update changes.xml.
 
 #####
 
-Change into sulky root.
-mvn3 clean install
-
-#####
-
-Change into lilith root.
-mvn3 clean install
-
-#####
-
-Commit sulky with comment "x.x.x release"
+//Commit sulky with comment "x.x.x release"
 Tag sulky with comment "x.x.x release".
 git tag -s vx.x.x -m "x.x.x release"
 
 #####
 
-Commit lilith with comment "x.x.x release"
+//Commit lilith with comment "x.x.x release"
 Tag lilith with comment "x.x.x release".
 git tag -s vx.x.x -m "x.x.x release"
 
@@ -49,12 +26,12 @@ in either sulky or lilith.
 #####
 
 Change into sulky root.
-gradlew -Drelease=true -C rebuild
+gradlew -D pgpPassword=... -Drelease=true -C rebuild
 
 #####
 
 Change into lilith root.
-gradlew -Drelease=true -C rebuild
+gradlew -D pgpPassword=... -Drelease=true -C rebuild
 
 gradlew syncStaging
 
@@ -85,19 +62,6 @@ Use SFTP, Luke. m(
 
 Upload /releases/x.x.x.xhtml
 Update current-version.txt
-
-#####
-
-Search pom.xml for
-<!-- SV -->
-and replace with next snapshot version.
-Don't forget <sulkyVersion>!
-
-#####
-
-Search pom.xml for
-<!-- LV -->
-and replace with next snapshot version.
 
 #####
 
