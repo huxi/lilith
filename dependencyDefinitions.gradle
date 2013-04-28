@@ -1,4 +1,4 @@
-project.ext.sulkyBaseVersion = '0.9.16'
+project.ext.sulkyBaseVersion = '0.9.17'
 
 project.ext.versions = [
 'aspectj':        '1.7.2',

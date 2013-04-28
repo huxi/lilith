@@ -26,14 +26,14 @@ in either sulky or lilith.
 #####
 
 Change into sulky root.
-gradlew -D pgpPassword=... -Drelease=true -C rebuild
+gradlew -DpgpPassword=... -Drelease=true -C rebuild
 
 #####
 
 Change into lilith root.
-gradlew -D pgpPassword=... -Drelease=true -C rebuild
+gradlew -DpgpPassword=... -Drelease=true -C rebuild
 
-gradlew syncStaging
+gradlew -PremoteUsername=huxi -PremotePassword=... syncStaging
 
 #####
 
@@ -50,12 +50,9 @@ Write release notes and changes (README.txt) for sf.net upload.
 
 #####
 
-Sign dists
-gpg --local-user huxhorn@users.sf.net --armor --detach-sign <file>
-
-#####
-
 Upload lilith-files to sf.net
+frs.sourceforge.net
+/home/frs/project/lilith/lilith
 Use SFTP, Luke. m(
 
 #####
@@ -65,8 +62,8 @@ Update current-version.txt
 
 #####
 
-Update allprojects.version in sulky/config.gradle to next sulky-version 
-Update allprojects.version in lilith/config.gradle to next lilith-version 
+Update allprojects.version in sulky/build.gradle to next sulky-version 
+Update allprojects.version in lilith/build.gradle to next lilith-version 
 Update sulkyBaseVersion in lilith/dependencyDefinitions.gradle to next sulky-version
 
 #####
