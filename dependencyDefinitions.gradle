@@ -16,7 +16,7 @@ project.ext.versions = [
 project.ext.libraries = [
 'aspectjrt':                "org.aspectj:aspectjrt:${versions.aspectj}",
 'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
-'cglib-nodep':              'cglib:cglib-nodep:2.2.2',
+'cglib-nodep':              'cglib:cglib-nodep:3.0',
 'commons-io':               'commons-io:commons-io:2.4',
 'commons-lang':             'org.apache.commons:commons-lang3:3.1',
 'flyingsaucer':             'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer:8RC1',
