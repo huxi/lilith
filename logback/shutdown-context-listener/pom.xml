@@ -50,6 +50,11 @@
 			<scope>compile</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>de.huxhorn.lilith</groupId>
+			<artifactId>de.huxhorn.lilith.logback.tools</artifactId>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>
 

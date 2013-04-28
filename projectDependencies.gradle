@@ -291,6 +291,16 @@ project(':logback-shutdown-context-listener') {
 		compile libraries.'slf4j-api'
 		compile libraries.'servlet-api'
 		compile libraries.'logback-classic'
+		compile project(':logback-tools')
+	}
+}
+
+project(':logback-tools') {
+	archivesBaseName = 'de.huxhorn.lilith.logback.tools'
+	description = 'This file is part of Lilith. It contains tools for working with logback.'
+	dependencies {
+		compile libraries.'slf4j-api'
+		compile libraries.'logback-core'
 	}
 }
 
@@ -528,6 +538,7 @@ project(':lilith') {
 		compile project(':converter-log4j')
 		compile project(':converter-log4j2')
 		compile project(':log4j-xml')
+		compile project(':logback-tools')
 		compile project(':logback-converter-classic')
 		compile project(':logback-multiplex-appender-access')
 		compile project(':logback-multiplex-appender-classic')

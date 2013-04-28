@@ -36,9 +36,9 @@ package de.huxhorn.lilith.logback.servlet;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.status.Status;
-import ch.qos.logback.core.status.StatusChecker;
 import ch.qos.logback.core.status.StatusManager;
 import ch.qos.logback.core.status.StatusUtil;
+import de.huxhorn.lilith.logback.tools.ContextHelper;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
@@ -92,31 +92,42 @@ public class LogbackShutdownServletContextListener
 			LoggerContext context = (LoggerContext) loggerFactory;
 			context.stop();
 			System.err.println("Logback has been shut down.");
-			StatusManager statusManager = context.getStatusManager();
-			if(statusManager != null)
+			String message = retrieveLogbackStatus(context);
+			if(message != null)
 			{
-				StatusChecker sc = new StatusChecker(context);
-				long threshold = sc.timeOfLastReset();
-				if(debug || sc.getHighestLevel(threshold) > Status.INFO)
-				{
-					List<Status> statusList = StatusUtil.filterStatusListByTimeThreshold(statusManager.getCopyOfStatusList(), threshold);
-					if(statusList != null)
-					{
-						System.err.println("Logback-Status:");
-						StringBuilder statusBuilder=new StringBuilder();
-						for(Status current : statusList)
-						{
-							appendStatus(statusBuilder, current, 0);
-						}
-						System.err.println(statusBuilder.toString());
-					}
-				}
+				System.err.println(message);
 			}
 		}
 	}
 
+	private String retrieveLogbackStatus(LoggerContext context)
+	{
+		StatusManager statusManager = context.getStatusManager();
+		if(statusManager == null)
+		{
+			return null;
+		}
+		int statusLevel = ContextHelper.getHighestLevel(context);
+		long threshold = ContextHelper.getTimeOfLastReset(context);
+		if(debug || statusLevel > Status.INFO)
+		{
+			List<Status> statusList = StatusUtil.filterStatusListByTimeThreshold(statusManager.getCopyOfStatusList(), threshold);
+			if(statusList != null)
+			{
+				System.err.println("Logback-Status:");
+				StringBuilder statusBuilder=new StringBuilder();
+				for(Status current : statusList)
+				{
+					appendStatus(statusBuilder, current, 0);
+				}
+				return statusBuilder.toString();
+			}
+		}
+		return null;
+	}
+
 	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
-	private void appendStatus(StringBuilder builder, Status status, int indent)
+	private static void appendStatus(StringBuilder builder, Status status, int indent)
 	{
 		int levelCode = status.getLevel();
 		appendIndent(builder, indent);
@@ -141,11 +152,12 @@ public class LogbackShutdownServletContextListener
 		}
 	}
 
-	private void appendIndent(StringBuilder builder, int indent)
+	private static void appendIndent(StringBuilder builder, int indent)
 	{
 		for(int i=0;i<indent;i++)
 		{
 			builder.append("       ");
 		}
 	}
+
 }

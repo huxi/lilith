@@ -22,10 +22,10 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.access.spi.ServerAdapter;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.status.Status;
-import ch.qos.logback.core.status.StatusChecker;
 import ch.qos.logback.core.status.StatusManager;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.logback.tools.ContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,9 +116,10 @@ public class AccessFormatter
 				layout.setPattern(DEFAULT_PATTERN);
 			}
 			layout.start();
+
+			int statusLevel = ContextHelper.getHighestLevel(context);
 			StatusManager statusManager = context.getStatusManager();
-			StatusChecker sc = new StatusChecker(context);
-			if(sc.getHighestLevel(0L) > Status.INFO)
+			if(statusLevel > Status.INFO)
 			{
 				List<Status> stati = statusManager.getCopyOfStatusList();
 				String msg="Error while initializing layout! " + stati;

@@ -18,6 +18,7 @@
 	</parent>
 	
 	<modules>
+		<module>tools</module>
 		<module>classic</module>
 		<module>converter-classic</module>
 		<module>converter-access</module>
