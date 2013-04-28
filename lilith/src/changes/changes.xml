@@ -75,7 +75,10 @@
 			</action>
 		</release>
 
-		<release version="0.9.43" date="TBD" description="Future release">
+        <release version="0.9.44" date="TBD" description="Future release">
+        </release>
+
+		<release version="0.9.43" date="2013-04-29" description="Release">
 			<action dev="jhux" type="add">
 				Added ability to reconnect views after disconnect. All multiplex appenders
 				are now creating a UUID upon startup and add that id to the logger context.

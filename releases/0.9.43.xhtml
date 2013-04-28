@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 0.9.43 Release Notes</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 0.9.43</h1>
+
+		<div>
+		<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/0.9.43">Download Now!
+		<br />(Released: 2013-04-29)</a>
+		</div>
+		
+		<h2>Changes</h2>
+		<ul>
+			<li>
+				Added ability to reconnect views after disconnect. All multiplex appenders
+				are now creating a UUID upon startup and add that id to the logger context.
+				<br />To revert to the old behavior, i.e. one view for every single connection,
+				you can disable usage of UUID in the configuration of the appender.
+
+				<br /><br /><code>&lt;CreatingUUID&gt;false&lt;/CreatingUUID&gt;</code>
+
+				<br /><br />This was suggested by Joe.
+			</li>
+			<li>
+				Added HTTP status codes 208, 226, 308, 420, 451, 508, 598 &amp; 599.
+			</li>
+			<li>
+				Added 'filter' command that filters all events of an input file
+				that match a given condition into an output file. This is faster
+				than filtering in Lilith itself since the UI isn't eating up CPU
+				while filtering.
+
+				<br /><br />This was suggested by Joe.
+			</li>
+			<li>
+				Added command line option to specify a custom logback configuration.
+			</li>
+			<li>
+				Added minimal logback configuration for command line commands.
+			</li>
+			<li>
+				Added support for log4j2.
+			</li>
+			<li>
+				Logback 1.0.12 introduced a change that broke LogbackShutdownServletContextListener.
+				<br />Implemented ContextHelper to be compatible with both 1.0.12 and lower.
+			</li>
+			<li>
+				SLF4J 1.7.5, Logback 1.0.12, log4j 1.2.17, log4j2 2.0-beta5, Groovy 2.1.3, 
+				commons-io 2.4, commons-lang3 3.1, httpcore 4.2.4, httpclient 4.2.5,
+				aspectj 1.7.2, jackson 2.2.0, jcommander 1.30, Spring 3.2.2.RELEASE,
+				protobuf-java 2.5.0, jgoodies-looks 2.5.2, glazedlists 1.9.0, cglib 3.0,
+				junit 4.11
+			</li>
+		</ul>
+
+		<h2>Known Issues</h2>
+		<ul>
+			<li>Flying Saucer related issues:
+				<ul>
+					<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>
+					</li>
+		
+					<li>The first line of the message in HTML view is not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=125">Issue 125: &lt;pre&gt; ignores leading whitespace</a>
+					</li>
+		
+					<li>Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=105">Issue 105: URLs with anchors</a>
+					</li>
+				</ul>
+			</li>
+			<li>Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.<br />
+				This is caused by <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182">bug #6995182</a>
+				and I can't do anything about it.<br />
+				Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.<br />
+				m(
+			</li>
+		</ul>
+		
+		<h2>Attention</h2>
+		<p>This release changes detailsView.groovy in a way incompatible with previous versions!</p>
+		<p>If you switch back to a previous version, you must reset this file. Simply execute
+		"Preferences" =&gt; "Troubleshooting" =&gt; "Reinitialize details view files." in that case.</p>
+
+		<h2>Previous Versions</h2>
+		<ul>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.42.1.xhtml">0.9.42.1</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.42.xhtml">0.9.42</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.41.xhtml">0.9.41</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.40.xhtml">0.9.40</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.39.xhtml">0.9.39</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.38.xhtml">0.9.38</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.37.xhtml">0.9.37</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.36.xhtml">0.9.36</a></li>
+		</ul>
+
+	</body>
+</html>
+
