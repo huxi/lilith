@@ -23,7 +23,7 @@
 		<groovyVersion>2.1.3</groovyVersion>
 		<jacksonVersion>2.2.0</jacksonVersion>
 		<log4jVersion>1.2.17</log4jVersion>
-		<log4j2Version>2.0-beta4</log4j2Version>
+		<log4j2Version>2.0-beta5</log4j2Version>
 		<logbackVersion>1.0.12</logbackVersion>
 		<slf4jVersion>1.7.5</slf4jVersion>
 		<springVersion>3.2.2.RELEASE</springVersion>
