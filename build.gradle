@@ -254,13 +254,13 @@ subprojects {
 		published.extendsFrom archives, signatures
 	}
 	
-    dependencies {
+	dependencies {
 		testCompile libraries.'groovy'
 		testCompile libraries.'spock-core'
 		testCompile libraries.junit
 		testCompile libraries.'slf4j-api'
 		testRuntime libraries.'logback-classic'
-    }
+	}
 
 	jar {
 		manifest.attributes provider: 'gradle'
