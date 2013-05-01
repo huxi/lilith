@@ -249,12 +249,12 @@ subprojects {
 
 	configurations {
 		all*.exclude group: 'commons-logging', module: 'commons-logging'
+		all*.exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+
 		published.extendsFrom archives, signatures
 	}
 	
     dependencies {
-		groovy libraries.'groovy'
-		
 		testCompile libraries.'groovy'
 		testCompile libraries.'spock-core'
 		testCompile libraries.junit
