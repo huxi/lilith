@@ -4053,6 +4053,7 @@ public class ViewActions
 		public FocusMdcAction(String key, String value)
 		{
 			super(key);
+			putValue(Action.SHORT_DESCRIPTION, value);
 			this.key = key;
 			this.value = value;
 		}
@@ -4098,6 +4099,7 @@ public class ViewActions
 		public ExcludeMdcAction(String key, String value)
 		{
 			super(key);
+			putValue(Action.SHORT_DESCRIPTION, value);
 			this.key = key;
 			this.value = value;
 		}
