@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,6 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -90,427 +89,6 @@ public class ViewActions
 	 */
 	//private static final String SELECTED_KEY = "SwingSelectedKey";
 
-	private static final Icon EMPTY_16_ICON;
-
-	private static final Icon CLEAR_MENU_ICON;
-	private static final Icon ATTACH_MENU_ICON;
-	private static final Icon DETACH_MENU_ICON;
-	private static final Icon PAUSED_MENU_ICON;
-	private static final Icon UNPAUSED_MENU_ICON;
-	private static final Icon FIND_MENU_ITEM;
-	private static final Icon STATISTICS_MENU_ICON;
-	private static final Icon DISCONNECT_MENU_ICON;
-	private static final Icon TAIL_MENU_ICON;
-	private static final Icon FIND_NEXT_MENU_ICON;
-	private static final Icon FIND_PREV_MENU_ICON;
-	private static final Icon HELP_MENU_ICON;
-	private static final Icon OPEN_INACTIVE_MENU_ICON;
-	private static final Icon EXPORT_MENU_ICON;
-	private static final Icon EXIT_MENU_ICON;
-	private static final Icon PREFERENCES_MENU_ICON;
-
-	private static final Icon CLEAR_TOOLBAR_ICON;
-	private static final Icon ATTACH_TOOLBAR_ICON;
-	private static final Icon DETACH_TOOLBAR_ICON;
-	private static final Icon PAUSED_TOOLBAR_ICON;
-	private static final Icon UNPAUSED_TOOLBAR_ICON;
-	private static final Icon FIND_TOOLBAR_ICON;
-	private static final Icon DISCONNECT_TOOLBAR_ICON;
-	private static final Icon TAIL_TOOLBAR_ICON;
-
-	private static final Icon PREFERENCES_TOOLBAR_ICON;
-
-	private static final Icon CHECK_UPDATE_ICON;
-	private static final Icon TOTD_ICON;
-	private static final Icon WINDOW_16_ICON;
-
-	// TODO: Resource classes
-	// TODO: Separate Toolbar and Menu creation.
-	// TODO: toolbar action, menu action => same action
-	static
-	{
-		Icon icon;
-		{
-			URL url = ViewActions.class.getResource("/otherGraphics/empty16.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		EMPTY_16_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-clear.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		CLEAR_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-clear.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		CLEAR_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-undo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		ATTACH_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-redo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DETACH_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-undo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		ATTACH_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-redo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DETACH_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-playback-start.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PAUSED_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-playback-pause.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		UNPAUSED_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-playback-start.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PAUSED_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-playback-pause.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		UNPAUSED_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-find.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_MENU_ITEM = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-find.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		STATISTICS_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-eject.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DISCONNECT_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-eject.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DISCONNECT_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-down.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_NEXT_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-up.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_PREV_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-bottom.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-
-		}
-		TAIL_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/go-bottom.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-
-		}
-		TAIL_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/apps/help-browser.png");
-
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		HELP_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/document-open.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		OPEN_INACTIVE_MENU_ICON = icon;
-
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/document-save.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		EXPORT_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/system-log-out.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		EXIT_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/categories/preferences-system.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PREFERENCES_MENU_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/categories/preferences-system.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PREFERENCES_TOOLBAR_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/status/software-update-available.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		CHECK_UPDATE_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/status/dialog-information.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		TOTD_ICON = icon;
-
-		{
-			URL url = ViewActions.class.getResource("/tango/16x16/mimetypes/text-x-generic.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		WINDOW_16_ICON = icon;
-	}
 
 
 	private JToolBar toolbar;
@@ -1894,7 +1472,7 @@ public class ViewActions
 				name=f.getName();
 			}
 			putValue(Action.NAME, name);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, absoluteName);
 		}
 
@@ -1912,7 +1490,7 @@ public class ViewActions
 		public ClearRecentFilesAction()
 		{
 			super("Clear Recent Files");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
 		}
 
@@ -1952,7 +1530,7 @@ public class ViewActions
 		public RemoveInactiveAction()
 		{
 			super("Remove inactive");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.REMOVE_INACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('r'));
@@ -1973,7 +1551,7 @@ public class ViewActions
 		public ShowTaskManagerAction()
 		{
 			super("Task Manager");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			//KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" R");
 			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			//putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -1994,7 +1572,7 @@ public class ViewActions
 		public CloseAllAction()
 		{
 			super("Close all");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLOSE_ALL_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			//putValue(Action.MNEMONIC_KEY, Integer.valueOf('r'));
@@ -2015,7 +1593,7 @@ public class ViewActions
 		public CloseOtherAction()
 		{
 			super("Close all other");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			//KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" R");
 			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			//putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2037,7 +1615,7 @@ public class ViewActions
 		public MinimizeAllAction()
 		{
 			super("Minimize all");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			//KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" R");
 			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			//putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2059,7 +1637,7 @@ public class ViewActions
 		public MinimizeAllOtherAction()
 		{
 			super("Minimize all other");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			//KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" R");
 			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			//putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2081,7 +1659,7 @@ public class ViewActions
 		public ClearToolBarAction()
 		{
 			super();
-			putValue(Action.SMALL_ICON, CLEAR_TOOLBAR_ICON);
+			putValue(Action.SMALL_ICON, Icons.CLEAR_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Clear");
 		}
 
@@ -2099,7 +1677,7 @@ public class ViewActions
 		public ClearMenuAction()
 		{
 			super("Clear");
-			putValue(Action.SMALL_ICON, CLEAR_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.CLEAR_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Clear this view.");
 		}
 
@@ -2119,7 +1697,7 @@ public class ViewActions
 			super("Zoom in");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ZOOM_IN_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Zoom in on the details view.");
 		}
 
@@ -2153,7 +1731,7 @@ public class ViewActions
 			super("Zoom out");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ZOOM_OUT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Zoom out on the details view.");
 		}
 
@@ -2188,7 +1766,7 @@ public class ViewActions
 			//KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " +");
 			//if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
 			//putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Reset Zoom of the details view.");
 		}
 
@@ -2222,7 +1800,7 @@ public class ViewActions
 			super("Add condition...");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_CONDITION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Add the condition of the current view.");
 		}
 
@@ -2262,7 +1840,7 @@ public class ViewActions
 			super("Edit source name...");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_SOURCE_NAME_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Edit the source name of the current view.");
 		}
 
@@ -2298,8 +1876,8 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -6686061036755515933L;
 
-		private Icon attachIcon = ATTACH_MENU_ICON;
-		private Icon detachIcon = DETACH_MENU_ICON;
+		private Icon attachIcon = Icons.ATTACH_MENU_ICON;
+		private Icon detachIcon = Icons.DETACH_MENU_ICON;
 
 		public AttachMenuAction()
 		{
@@ -2342,8 +1920,8 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -6338324258055926639L;
 
-		private Icon attachIcon = ATTACH_TOOLBAR_ICON;
-		private Icon detachIcon = DETACH_TOOLBAR_ICON;
+		private Icon attachIcon = Icons.ATTACH_TOOLBAR_ICON;
+		private Icon detachIcon = Icons.DETACH_TOOLBAR_ICON;
 
 		public AttachToolBarAction()
 		{
@@ -2387,8 +1965,8 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -5242236903640590549L;
 
-		private Icon pausedIcon = PAUSED_MENU_ICON;
-		private Icon unpausedIcon = UNPAUSED_MENU_ICON;
+		private Icon pausedIcon = Icons.PAUSED_MENU_ICON;
+		private Icon unpausedIcon = Icons.UNPAUSED_MENU_ICON;
 
 		public PauseMenuAction()
 		{
@@ -2425,8 +2003,8 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -5118623805829814815L;
 
-		private Icon pausedIcon = PAUSED_TOOLBAR_ICON;
-		private Icon unpausedIcon = UNPAUSED_TOOLBAR_ICON;
+		private Icon pausedIcon = Icons.PAUSED_TOOLBAR_ICON;
+		private Icon unpausedIcon = Icons.UNPAUSED_TOOLBAR_ICON;
 
 		public PauseToolBarAction()
 		{
@@ -2466,7 +2044,7 @@ public class ViewActions
 		public FindMenuAction()
 		{
 			super("Find");
-			putValue(Action.SMALL_ICON, FIND_MENU_ITEM);
+			putValue(Action.SMALL_ICON, Icons.FIND_MENU_ITEM);
 			putValue(Action.SHORT_DESCRIPTION, "Opens the Find panel.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2486,7 +2064,7 @@ public class ViewActions
 		public FindToolBarAction()
 		{
 			super();
-			putValue(Action.SMALL_ICON, FIND_TOOLBAR_ICON);
+			putValue(Action.SMALL_ICON, Icons.FIND_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2506,7 +2084,7 @@ public class ViewActions
 		public StatisticsMenuAction()
 		{
 			super("Statistics");
-			putValue(Action.SMALL_ICON, STATISTICS_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.STATISTICS_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Statistics");
 		}
 
@@ -2562,7 +2140,7 @@ public class ViewActions
 			super("Disconnect");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.DISCONNECT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, DISCONNECT_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.DISCONNECT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Terminates this connection");
 		}
 
@@ -2580,7 +2158,7 @@ public class ViewActions
 		public DisconnectToolBarAction()
 		{
 			super();
-			putValue(Action.SMALL_ICON, DISCONNECT_TOOLBAR_ICON);
+			putValue(Action.SMALL_ICON, Icons.DISCONNECT_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Disconnect");
 		}
 
@@ -2598,7 +2176,7 @@ public class ViewActions
 		public FocusMessageAction()
 		{
 			super("Focus message");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Focus detailed message view.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FOCUS_MESSAGE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2618,7 +2196,7 @@ public class ViewActions
 		public FocusEventsAction()
 		{
 			super("Focus events");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Focus the table containing the events.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FOCUS_EVENTS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2638,7 +2216,7 @@ public class ViewActions
 		public FindNextAction()
 		{
 			super("Find next");
-			putValue(Action.SMALL_ICON, FIND_NEXT_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find next match of the current filter.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_NEXT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2659,7 +2237,7 @@ public class ViewActions
 		public FindPreviousAction()
 		{
 			super("Find previous");
-			putValue(Action.SMALL_ICON, FIND_PREV_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous match of the current filter.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_PREVIOUS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2679,7 +2257,7 @@ public class ViewActions
 		public FindNextActiveAction()
 		{
 			super("Find next active");
-			putValue(Action.SMALL_ICON, FIND_NEXT_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find next match of any active condition.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_NEXT_ACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2700,7 +2278,7 @@ public class ViewActions
 		public FindPreviousActiveAction()
 		{
 			super("Find previous active");
-			putValue(Action.SMALL_ICON, FIND_PREV_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous match of any active condition.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_PREVIOUS_ACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2720,7 +2298,7 @@ public class ViewActions
 		public ResetFindAction()
 		{
 			super("Reset find");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.RESET_FIND_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
@@ -2736,8 +2314,8 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -6698886479454486019L;
 
-		private Icon selectedIcon = TAIL_MENU_ICON;
-		private Icon unselectedIcon = EMPTY_16_ICON;
+		private Icon selectedIcon = Icons.TAIL_MENU_ICON;
+		private Icon unselectedIcon = Icons.EMPTY_16_ICON;
 
 		public ScrollToBottomMenuAction()
 		{
@@ -2777,7 +2355,7 @@ public class ViewActions
 		public ScrollToBottomToolBarAction()
 		{
 			super();
-			putValue(Action.SMALL_ICON, TAIL_TOOLBAR_ICON);
+			putValue(Action.SMALL_ICON, Icons.TAIL_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Tail (\"scroll to bottom\")");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.SCROLL_TO_BOTTOM_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2800,7 +2378,7 @@ public class ViewActions
 		public CloseFilterAction()
 		{
 			super("Close this filter");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLOSE_FILTER_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2841,7 +2419,7 @@ public class ViewActions
 		public CloseOtherFiltersAction()
 		{
 			super("Close all other filters");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLOSE_OTHER_FILTERS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2883,7 +2461,7 @@ public class ViewActions
 		public CloseAllFiltersAction()
 		{
 			super("Close all filters");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('a'));
 		}
 
@@ -3240,11 +2818,11 @@ public class ViewActions
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
 			if(compParent == null)
 			{
-				result.setIcon(EMPTY_16_ICON);
+				result.setIcon(Icons.EMPTY_16_ICON);
 			}
 			else
 			{
-				result.setIcon(WINDOW_16_ICON);
+				result.setIcon(Icons.WINDOW_16_ICON);
 			}
 			return result;
 		}
@@ -3256,11 +2834,11 @@ public class ViewActions
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
 			if(compParent == null)
 			{
-				result.setIcon(EMPTY_16_ICON);
+				result.setIcon(Icons.EMPTY_16_ICON);
 			}
 			else
 			{
-				result.setIcon(WINDOW_16_ICON);
+				result.setIcon(Icons.WINDOW_16_ICON);
 			}
 			return result;
 		}
@@ -3297,7 +2875,7 @@ public class ViewActions
 		public AboutAction()
 		{
 			super("About...");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3314,7 +2892,7 @@ public class ViewActions
 		public SaveLayoutAction()
 		{
 			super("Save layout");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3342,7 +2920,7 @@ public class ViewActions
 		public ResetLayoutAction()
 		{
 			super("Reset layout");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3370,7 +2948,7 @@ public class ViewActions
 		public CheckForUpdateAction()
 		{
 			super("Check for Update...");
-			putValue(Action.SMALL_ICON, CHECK_UPDATE_ICON);
+			putValue(Action.SMALL_ICON, Icons.CHECK_UPDATE_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3387,7 +2965,7 @@ public class ViewActions
 		public TroubleshootingAction()
 		{
 			super("Troubleshooting...");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3404,7 +2982,7 @@ public class ViewActions
 		public KeyboardHelpAction()
 		{
 			super("Help Topics");
-			putValue(Action.SMALL_ICON, HELP_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.HELP_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.HELP_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 
@@ -3424,7 +3002,7 @@ public class ViewActions
 		public TipOfTheDayAction()
 		{
 			super("Tip of the Day...");
-			putValue(Action.SMALL_ICON, TOTD_ICON);
+			putValue(Action.SMALL_ICON, Icons.TOTD_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3441,7 +3019,7 @@ public class ViewActions
 		public PreferencesMenuAction()
 		{
 			super("Preferences...");
-			putValue(Action.SMALL_ICON, PREFERENCES_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.PREFERENCES_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREFERENCES_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('p'));
@@ -3461,7 +3039,7 @@ public class ViewActions
 		public PreferencesToolBarAction()
 		{
 			super();
-			putValue(Action.SMALL_ICON, PREFERENCES_TOOLBAR_ICON);
+			putValue(Action.SMALL_ICON, Icons.PREFERENCES_TOOLBAR_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Preferences...");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREFERENCES_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -3482,7 +3060,7 @@ public class ViewActions
 		public DebugAction()
 		{
 			super("Debug");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3499,7 +3077,7 @@ public class ViewActions
 		public ExitMenuAction()
 		{
 			super("Exit");
-			putValue(Action.SMALL_ICON, EXIT_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.EXIT_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EXIT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('x'));
@@ -3519,7 +3097,7 @@ public class ViewActions
 		public OpenInactiveLogMenuAction()
 		{
 			super("Open inactive log...");
-			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.OPEN_INACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
@@ -3539,7 +3117,7 @@ public class ViewActions
 		public OpenMenuAction()
 		{
 			super("Open...");
-			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.OPEN_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('o'));
@@ -3559,7 +3137,7 @@ public class ViewActions
 		public ImportMenuAction()
 		{
 			super("Import...");
-			putValue(Action.SMALL_ICON, OPEN_INACTIVE_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.IMPORT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('i'));
@@ -3581,7 +3159,7 @@ public class ViewActions
 		public ExportMenuAction()
 		{
 			super("Export...");
-			putValue(Action.SMALL_ICON, EXPORT_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.EXPORT_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EXPORT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('e'));
@@ -3607,7 +3185,7 @@ public class ViewActions
 		public CleanAllInactiveLogsMenuAction()
 		{
 			super("Clean all inactive logs");
-			putValue(Action.SMALL_ICON, CLEAR_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.CLEAR_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLEAN_ALL_INACTIVE_LOGS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
@@ -3630,7 +3208,7 @@ public class ViewActions
 			super("Previous tab");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREVIOUS_TAB_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
 		public void updateAction()
@@ -3669,7 +3247,7 @@ public class ViewActions
 			super("Next tab");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.NEXT_TAB_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
 		public void updateAction()
