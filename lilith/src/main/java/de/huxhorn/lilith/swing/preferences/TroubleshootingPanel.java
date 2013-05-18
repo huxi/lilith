@@ -227,7 +227,7 @@ public class TroubleshootingPanel
 			{
 				builder.append(current.getKey()).append("=").append(current.getValue()).append("\n");
 			}
-			preferencesDialog.getMainFrame().copyText(builder.toString());
+			MainFrame.copyText(builder.toString());
 		}
 	}
 
@@ -308,7 +308,7 @@ public class TroubleshootingPanel
 				}
 			}
 
-			preferencesDialog.getMainFrame().copyText(builder.toString());
+			MainFrame.copyText(builder.toString());
 		}
 
 		private void appendGroup(int indent, StringBuilder builder, ThreadGroup group, Map<ThreadGroup, List<ThreadGroup>> threadGroups, Map<ThreadGroup, List<ThreadHolder>> threadGroupMapping)

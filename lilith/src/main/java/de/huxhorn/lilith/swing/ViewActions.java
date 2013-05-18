@@ -3543,10 +3543,12 @@ public class ViewActions
 		}
 	}
 
-	private class CopyToClipboardAction
+	private static class CopyToClipboardAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = 7832452126107208925L;
+
+		private final Logger logger = LoggerFactory.getLogger(CopyToClipboardAction.class);
 
 		private ClipboardFormatter clipboardFormatter;
 		private transient EventWrapper wrapper;
@@ -3608,7 +3610,7 @@ public class ViewActions
 			String text = clipboardFormatter.toString(this.wrapper);
 			if(text != null)
 			{
-				mainFrame.copyText(text);
+				MainFrame.copyText(text);
 			}
 		}
 	}

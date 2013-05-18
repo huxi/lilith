@@ -3489,7 +3489,7 @@ public class MainFrame
 		}
 	}
 
-	public void copyText(String text)
+	public static void copyText(String text)
 	{
 		Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		Transferable transferableText = new StringSelection(text);
