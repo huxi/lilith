@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.conditions.CallLocationCondition;
 import de.huxhorn.lilith.conditions.FormattedMessageEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.lilith.conditions.MDCContainsCondition;
@@ -187,11 +188,15 @@ public class ViewActions
 	private ExcludeMessagePatternAction excludeMessagePatternAction;
 	private FocusFormattedMessageAction focusFormattedMessageAction;
 	private ExcludeFormattedMessageAction excludeFormattedMessageAction;
+	private FocusCallLocationAction focusCallLocationAction;
+	private ExcludeCallLocationAction excludeCallLocationAction;
+
 	private JMenuItem focusMessagePatternItem;
 	private JMenuItem excludeMessagePatternItem;
 	private JMenuItem focusFormattedMessageItem;
 	private JMenuItem excludeFormattedMessageItem;
-
+	private JMenuItem focusCallLocationItem;
+	private JMenuItem excludeCallLocationItem;
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
 	{
@@ -493,11 +498,15 @@ public class ViewActions
 		excludeMessagePatternAction = new ExcludeMessagePatternAction();
 		focusFormattedMessageAction = new FocusFormattedMessageAction();
 		excludeFormattedMessageAction = new ExcludeFormattedMessageAction();
+		focusCallLocationAction = new FocusCallLocationAction();
+		excludeCallLocationAction = new ExcludeCallLocationAction();
 
 		focusMessagePatternItem = new JMenuItem(focusMessagePatternAction);
 		excludeMessagePatternItem = new JMenuItem(excludeMessagePatternAction);
 		focusFormattedMessageItem = new JMenuItem(focusFormattedMessageAction);
 		excludeFormattedMessageItem = new JMenuItem(excludeFormattedMessageAction);
+		focusCallLocationItem = new JMenuItem(focusCallLocationAction);
+		excludeCallLocationItem = new JMenuItem(excludeCallLocationAction);
 
 		updateWindowMenu();
 		updateRecentFiles();
@@ -1143,21 +1152,10 @@ public class ViewActions
 				focusFormattedMessageAction.setFormattedMessage(formattedMessage);
 				excludeFormattedMessageAction.setFormattedMessage(formattedMessage);
 
-				focusPopupMenu.add(focusMessagePatternItem);
-				focusPopupMenu.add(focusFormattedMessageItem);
-				focusPopupMenu.addSeparator();
-				focusPopupMenu.add(focusMdcPopupMenu);
-				focusPopupMenu.addSeparator();
-
-				excludePopupMenu.add(excludeMessagePatternItem);
-				excludePopupMenu.add(excludeFormattedMessageItem);
-				excludePopupMenu.addSeparator();
-				excludePopupMenu.add(excludeMdcPopupMenu);
-				excludePopupMenu.addSeparator();
-
+				// MDC actions
+				boolean enabledMdc = false;
 				focusMdcPopupMenu.removeAll();
 				excludeMdcPopupMenu.removeAll();
-				boolean enabledMdc = false;
 
 				Map<String, String> mdc = event.getMdc();
 				if(mdc != null && !mdc.isEmpty())
@@ -1176,6 +1174,38 @@ public class ViewActions
 
 				focusMdcPopupMenu.setEnabled(enabledMdc);
 				excludeMdcPopupMenu.setEnabled(enabledMdc);
+
+				// call location
+				String callLocationString = null;
+				ExtendedStackTraceElement[] callStack = event.getCallStack();
+				if(callStack != null && callStack.length > 0)
+				{
+					ExtendedStackTraceElement callLocation = callStack[0];
+					if(callLocation != null)
+					{
+						enabled=true;
+						callLocationString = callLocation.toString();
+					}
+				}
+				focusCallLocationAction.setCallLocation(callLocationString);
+				excludeCallLocationAction.setCallLocation(callLocationString);
+
+				// add standard items
+				focusPopupMenu.add(focusMessagePatternItem);
+				focusPopupMenu.add(focusFormattedMessageItem);
+				focusPopupMenu.addSeparator();
+				focusPopupMenu.add(focusCallLocationItem);
+				focusPopupMenu.addSeparator();
+				focusPopupMenu.add(focusMdcPopupMenu);
+				focusPopupMenu.addSeparator();
+
+				excludePopupMenu.add(excludeMessagePatternItem);
+				excludePopupMenu.add(excludeFormattedMessageItem);
+				excludePopupMenu.addSeparator();
+				excludePopupMenu.add(excludeCallLocationItem);
+				excludePopupMenu.addSeparator();
+				excludePopupMenu.add(excludeMdcPopupMenu);
+				excludePopupMenu.addSeparator();
 
 				// logger names
 				String loggerName=event.getLogger();
@@ -4101,6 +4131,105 @@ public class ViewActions
 
 			viewContainer.replaceFilteredView(selectedView, filter);
 		}
+	}
+
+	private class FocusCallLocationAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -6474847259452644716L;
+		private String callLocation;
+
+		public FocusCallLocationAction()
+		{
+			super("Call location");
+		}
+
+		private void setCallLocation(String callLocation)
+		{
+			this.callLocation = callLocation;
+			setEnabled(callLocation != null);
+			putValue(Action.SHORT_DESCRIPTION, callLocation);
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Exclude call location '{}'.", callLocation);
+			if(callLocation == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new CallLocationCondition(callLocation));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+	private class ExcludeCallLocationAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = 159410237166246224L;
+		private String callLocation;
+
+		public ExcludeCallLocationAction()
+		{
+			super("Call location");
+		}
+
+		private void setCallLocation(String callLocation)
+		{
+			this.callLocation = callLocation;
+			setEnabled(callLocation != null);
+			putValue(Action.SHORT_DESCRIPTION, callLocation);
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Exclude call location '{}'.", callLocation);
+			if(callLocation == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new Not(new CallLocationCondition(callLocation)));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+
 	}
 
 	private static class CopyToClipboardByNameComparator
