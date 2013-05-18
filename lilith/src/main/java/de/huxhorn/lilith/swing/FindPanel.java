@@ -430,7 +430,7 @@ public class FindPanel<T extends Serializable>
 	{
 		String selectedType = (String) findTypeCombo.getSelectedItem();
 
-		if(ApplicationPreferences.LEVEL_CONDITION.equals(selectedType))
+		if(LevelCondition.DESCRIPTION.equals(selectedType))
 		{
 			findTextEventList.clear();
 			findTextEventList.addAll(applicationPreferences.retrieveLevelValues());
@@ -602,7 +602,7 @@ public class FindPanel<T extends Serializable>
 			}
 			String selectedType = (String) findTypeCombo.getSelectedItem();
 
-			if(!ApplicationPreferences.LEVEL_CONDITION.equals(selectedType)
+			if(!LevelCondition.DESCRIPTION.equals(selectedType)
 				&& !ApplicationPreferences.NAMED_CONDITION.equals(selectedType))
 			{
 				if(condition instanceof SearchStringCondition)

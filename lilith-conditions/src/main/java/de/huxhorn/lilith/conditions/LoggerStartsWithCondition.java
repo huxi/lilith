@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ public class LoggerStartsWithCondition
 	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -9144937393832722541L;
+
+	public static final String DESCRIPTION = "logger.startsWith";
 
 	private String searchString;
 
@@ -134,6 +136,6 @@ public class LoggerStartsWithCondition
 
 	public String getDescription()
 	{
-		return "logger.startsWith";
+		return DESCRIPTION;
 	}
 }

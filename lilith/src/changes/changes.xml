@@ -76,6 +76,9 @@
 		</release>
 
 		<release version="0.9.44" date="TBD" description="Future release">
+            <action dev="jhux" type="update">
+                Enhanced "Focus..." and "Exclude..." popup menu.
+            </action>
 			<action dev="jhux" type="update">
 				Logback 1.0.13 
 			</action>

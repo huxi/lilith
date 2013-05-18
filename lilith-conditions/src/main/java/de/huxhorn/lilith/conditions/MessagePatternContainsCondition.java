@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,12 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 public class MessagePatternContainsCondition
 	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -4701718332615561032L;
+
+	public static final String DESCRIPTION="messagePattern.contains";
 
 	private String searchString;
 
@@ -38,7 +37,7 @@ public class MessagePatternContainsCondition
 
 	public MessagePatternContainsCondition(String searchString)
 	{
-		setSearchString(searchString);
+		this.searchString = searchString;
 	}
 
 	public void setSearchString(String searchString)
@@ -99,13 +98,6 @@ public class MessagePatternContainsCondition
 		return result;
 	}
 
-	private void readObject(ObjectInputStream in)
-		throws IOException, ClassNotFoundException
-	{
-		in.defaultReadObject();
-		setSearchString(this.searchString);
-	}
-
 	public MessagePatternContainsCondition clone()
 		throws CloneNotSupportedException
 	{
@@ -132,6 +124,6 @@ public class MessagePatternContainsCondition
 
 	public String getDescription()
 	{
-		return "messagePattern.contains";
+		return DESCRIPTION;
 	}
 }

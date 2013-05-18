@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,15 @@ import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.conditions.CallLocationCondition;
 import de.huxhorn.lilith.conditions.EventContainsCondition;
+import de.huxhorn.lilith.conditions.FormattedMessageContainsCondition;
+import de.huxhorn.lilith.conditions.FormattedMessageEqualsCondition;
 import de.huxhorn.lilith.conditions.GroovyCondition;
 import de.huxhorn.lilith.conditions.LevelCondition;
+import de.huxhorn.lilith.conditions.LilithCondition;
 import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
-import de.huxhorn.lilith.conditions.MessageContainsCondition;
 import de.huxhorn.lilith.conditions.MessagePatternContainsCondition;
+import de.huxhorn.lilith.conditions.MessagePatternEqualsCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.prefs.LilithPreferences;
@@ -175,23 +178,18 @@ public class ApplicationPreferences
 	private static final String EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE = "/clipboardFormatters/";
 	private static final String GROOVY_EXAMPLE_LIST = "list.txt";
 
-	public static final String EVENT_CONTAINS_CONDITION = "event.contains";
-	public static final String MESSAGE_CONTAINS_CONDITION = "message.contains";
-	public static final String MESSAGE_PATTERN_CONTAINS_CONDITION = "messagePattern.contains";
-	public static final String LOGGER_STARTS_WITH_CONDITION = "logger.startsWith";
-	public static final String LOGGER_EQUALS_CONDITION = "logger.equals";
-	public static final String LEVEL_CONDITION = "Level>=";
-	public static final String CALL_LOCATION_CONDITION = "CallLocation";
 	public static final String NAMED_CONDITION = "Named";
 
 	private static final String[] DEFAULT_CONDITIONS = new String[]{
-		EVENT_CONTAINS_CONDITION,
-		MESSAGE_CONTAINS_CONDITION,
-		MESSAGE_PATTERN_CONTAINS_CONDITION,
-		LOGGER_STARTS_WITH_CONDITION,
-		LOGGER_EQUALS_CONDITION,
-		LEVEL_CONDITION,
-		CALL_LOCATION_CONDITION,
+		EventContainsCondition.DESCRIPTION,
+		LevelCondition.DESCRIPTION,
+		FormattedMessageContainsCondition.DESCRIPTION,
+		FormattedMessageEqualsCondition.DESCRIPTION,
+		MessagePatternContainsCondition.DESCRIPTION,
+		MessagePatternEqualsCondition.DESCRIPTION,
+		LoggerStartsWithCondition.DESCRIPTION,
+		LoggerEqualsCondition.DESCRIPTION,
+		CallLocationCondition.DESCRIPTION,
 		NAMED_CONDITION,
 	};
 
@@ -266,37 +264,12 @@ public class ApplicationPreferences
 			throw new NullPointerException("conditionName must not be null!");
 		}
 
-		if(EVENT_CONTAINS_CONDITION.equals(conditionName))
+		if(EventContainsCondition.DESCRIPTION.equals(conditionName))
 		{
 			return new EventContainsCondition(value);
 		}
 
-		if(MESSAGE_CONTAINS_CONDITION.equals(conditionName))
-		{
-			return new MessageContainsCondition(value);
-		}
-
-		if(MESSAGE_PATTERN_CONTAINS_CONDITION.equals(conditionName))
-		{
-			return new MessagePatternContainsCondition(value);
-		}
-
-		if(LOGGER_STARTS_WITH_CONDITION.equals(conditionName))
-		{
-			return new LoggerStartsWithCondition(value);
-		}
-
-		if(LOGGER_EQUALS_CONDITION.equals(conditionName))
-		{
-			return new LoggerEqualsCondition(value);
-		}
-
-		if(CALL_LOCATION_CONDITION.equals(conditionName))
-		{
-			return new CallLocationCondition(value);
-		}
-
-		if(LEVEL_CONDITION.equals(conditionName))
+		if(LevelCondition.DESCRIPTION.equals(conditionName))
 		{
 			boolean found = false;
 			for(String current : LEVEL_VALUES)
@@ -313,6 +286,42 @@ public class ApplicationPreferences
 			}
 			throw new IllegalArgumentException("Unknown level value '"+value+"'!");
 		}
+
+		if(FormattedMessageContainsCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new FormattedMessageContainsCondition(value);
+		}
+
+		if(FormattedMessageEqualsCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new FormattedMessageEqualsCondition(value);
+		}
+
+		if(MessagePatternContainsCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new MessagePatternContainsCondition(value);
+		}
+
+		if(MessagePatternEqualsCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new MessagePatternEqualsCondition(value);
+		}
+
+		if(LoggerStartsWithCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new LoggerStartsWithCondition(value);
+		}
+
+		if(LoggerEqualsCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new LoggerEqualsCondition(value);
+		}
+
+		if(CallLocationCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new CallLocationCondition(value);
+		}
+
 
 		if(NAMED_CONDITION.equals(conditionName))
 		{
@@ -336,48 +345,25 @@ public class ApplicationPreferences
 
 	public String resolveConditionName(Condition condition)
 	{
-
-		if(condition instanceof EventContainsCondition)
-		{
-			return EVENT_CONTAINS_CONDITION;
-		}
-
-		if(condition instanceof MessageContainsCondition)
-		{
-			return MESSAGE_CONTAINS_CONDITION;
-		}
-
-		if(condition instanceof MessagePatternContainsCondition)
-		{
-			return MESSAGE_PATTERN_CONTAINS_CONDITION;
-		}
-
-		if(condition instanceof LoggerStartsWithCondition)
-		{
-			return LOGGER_STARTS_WITH_CONDITION;
-		}
-
-		if(condition instanceof LoggerEqualsCondition)
-		{
-			return LOGGER_EQUALS_CONDITION;
-		}
-
-		if(condition instanceof LevelCondition)
-		{
-			return LEVEL_CONDITION;
-		}
-
-		// TODO? Special handling of NAMED_CONDITION
 		if(condition instanceof GroovyCondition)
 		{
+			// special handling of script files, even though it's also a LilithCondition
 			GroovyCondition groovyCondition = (GroovyCondition) condition;
 			String scriptFileName = groovyCondition.getScriptFileName();
 			if(scriptFileName != null)
 			{
 				File scriptFile = new File(scriptFileName);
+				// return the pure filename without the path
 				return scriptFile.getName();
 			}
+			return null;
 		}
+
+		if(condition instanceof LilithCondition)
+		{
+			return ((LilithCondition)condition).getDescription();
+		}
+		// TODO? Special handling of NAMED_CONDITION
 
 		return null;
 	}
@@ -2256,7 +2242,7 @@ public class ApplicationPreferences
 
 	public String getDefaultConditionName()
 	{
-		return PREFERENCES.get(DEFAULT_CONDITION_NAME_PROPERTY, EVENT_CONTAINS_CONDITION);
+		return PREFERENCES.get(DEFAULT_CONDITION_NAME_PROPERTY, EventContainsCondition.DESCRIPTION);
 	}
 
 	/**

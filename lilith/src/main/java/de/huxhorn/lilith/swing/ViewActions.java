@@ -17,12 +17,16 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.conditions.FormattedMessageEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
+import de.huxhorn.lilith.conditions.MDCContainsCondition;
+import de.huxhorn.lilith.conditions.MessagePatternEqualsCondition;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
 import de.huxhorn.lilith.engine.EventSource;
@@ -69,6 +73,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.swing.*;
@@ -155,7 +160,9 @@ public class ViewActions
 	private GotoSourceAction gotoSourceAction;
 	private JMenu sendToPopupMenu;
 	private JMenu focusPopupMenu;
+	private JMenu focusMdcPopupMenu;
 	private JMenu excludePopupMenu;
+	private JMenu excludeMdcPopupMenu;
 	private JMenu filterPopupMenu;
 	private JMenu copyPopupMenu;
 	private PropertyChangeListener containerPropertyChangeListener;
@@ -175,6 +182,15 @@ public class ViewActions
 	private List<CopyToClipboardAction> copyLoggingActions;
 	private List<CopyToClipboardAction> copyAccessActions;
 	private Map<KeyStroke, CopyToClipboardAction> keyStrokeActionMapping;
+
+	private FocusMessagePatternAction focusMessagePatternAction;
+	private ExcludeMessagePatternAction excludeMessagePatternAction;
+	private FocusFormattedMessageAction focusFormattedMessageAction;
+	private ExcludeFormattedMessageAction excludeFormattedMessageAction;
+	private JMenuItem focusMessagePatternItem;
+	private JMenuItem excludeMessagePatternItem;
+	private JMenuItem focusFormattedMessageItem;
+	private JMenuItem excludeFormattedMessageItem;
 
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
@@ -472,6 +488,16 @@ public class ViewActions
 		menubar.add(viewMenu);
 		menubar.add(windowMenu);
 		menubar.add(helpMenu);
+
+		focusMessagePatternAction = new FocusMessagePatternAction();
+		excludeMessagePatternAction = new ExcludeMessagePatternAction();
+		focusFormattedMessageAction = new FocusFormattedMessageAction();
+		excludeFormattedMessageAction = new ExcludeFormattedMessageAction();
+
+		focusMessagePatternItem = new JMenuItem(focusMessagePatternAction);
+		excludeMessagePatternItem = new JMenuItem(excludeMessagePatternAction);
+		focusFormattedMessageItem = new JMenuItem(focusFormattedMessageAction);
+		excludeFormattedMessageItem = new JMenuItem(excludeFormattedMessageAction);
 
 		updateWindowMenu();
 		updateRecentFiles();
@@ -1036,6 +1062,9 @@ public class ViewActions
 		excludePopupMenu = new JMenu("Exclude...");
 		popup.add(excludePopupMenu);
 
+		focusMdcPopupMenu = new JMenu("MDC...");
+		excludeMdcPopupMenu = new JMenu("MDC...");
+
 		sendToPopupMenu = new JMenu("Send to...");
 		popup.add(sendToPopupMenu);
 
@@ -1073,47 +1102,103 @@ public class ViewActions
 
 	private void populateFocusExclude(EventWrapper wrapper)
 	{
-		if(wrapper == null)
+		focusPopupMenu.removeAll();
+		excludePopupMenu.removeAll();
+
+		boolean enabled = false;
+		if(wrapper != null)
 		{
-			focusPopupMenu.setEnabled(false);
-			excludePopupMenu.setEnabled(false);
-			return;
+			Serializable obj = wrapper.getEvent();
+			if(obj instanceof LoggingEvent)
+			{
+				LoggingEvent event = (LoggingEvent) obj;
+
+				// formattedMessage / messagePattern
+				Message message = event.getMessage();
+				String formattedMessage = null;
+				String messagePattern = null;
+				if(message != null)
+				{
+					formattedMessage = message.getMessage();
+					messagePattern = message.getMessagePattern();
+					if(formattedMessage != null)
+					{
+						enabled = true;
+						if(formattedMessage.equals(messagePattern))
+						{
+							messagePattern = null;
+						}
+					}
+					if(messagePattern != null)
+					{
+						// not strictly necessary - just to make sure.
+						enabled = true;
+					}
+
+				}
+
+
+				focusMessagePatternAction.setMessagePattern(messagePattern);
+				excludeMessagePatternAction.setMessagePattern(messagePattern);
+				focusFormattedMessageAction.setFormattedMessage(formattedMessage);
+				excludeFormattedMessageAction.setFormattedMessage(formattedMessage);
+
+				focusPopupMenu.add(focusMessagePatternItem);
+				focusPopupMenu.add(focusFormattedMessageItem);
+				focusPopupMenu.addSeparator();
+				focusPopupMenu.add(focusMdcPopupMenu);
+				focusPopupMenu.addSeparator();
+
+				excludePopupMenu.add(excludeMessagePatternItem);
+				excludePopupMenu.add(excludeFormattedMessageItem);
+				excludePopupMenu.addSeparator();
+				excludePopupMenu.add(excludeMdcPopupMenu);
+				excludePopupMenu.addSeparator();
+
+				focusMdcPopupMenu.removeAll();
+				excludeMdcPopupMenu.removeAll();
+				boolean enabledMdc = false;
+
+				Map<String, String> mdc = event.getMdc();
+				if(mdc != null && !mdc.isEmpty())
+				{
+					enabled = true;
+					enabledMdc = true;
+					SortedMap<String, String> sorted = new TreeMap<String, String>(mdc);
+					for (Map.Entry<String, String> entry : sorted.entrySet())
+					{
+						String key = entry.getKey();
+						String value = entry.getValue();
+						focusMdcPopupMenu.add(new JMenuItem(new FocusMdcAction(key, value)));
+						excludeMdcPopupMenu.add(new JMenuItem(new ExcludeMdcAction(key, value)));
+					}
+				}
+
+				focusMdcPopupMenu.setEnabled(enabledMdc);
+				excludeMdcPopupMenu.setEnabled(enabledMdc);
+
+				// logger names
+				String loggerName=event.getLogger();
+				List<String> preparedLoggerNames =  prepareLoggerNames(loggerName);
+				if(logger.isDebugEnabled()) logger.debug("preparedLoggerNames for input {}: {}", loggerName, preparedLoggerNames);
+				if(!preparedLoggerNames.isEmpty())
+				{
+					enabled = true;
+					for(String current : preparedLoggerNames)
+					{
+						focusPopupMenu.add(new JMenuItem(new FocusLoggerAction(current)));
+					}
+
+					for(String current : preparedLoggerNames)
+					{
+						excludePopupMenu.add(new JMenuItem(new ExcludeLoggerAction(current)));
+					}
+				}
+			}
 		}
 
-		Serializable obj = wrapper.getEvent();
-		if(obj instanceof LoggingEvent)
-		{
-			LoggingEvent event = (LoggingEvent) obj;
-			String loggerName=event.getLogger();
-			List<String> preparedLoggerNames =  prepareLoggerNames(loggerName);
-			if(logger.isDebugEnabled()) logger.debug("preparedLoggerNames for input {}: {}", loggerName, preparedLoggerNames);
-			if(preparedLoggerNames.size() == 0)
-			{
-				focusPopupMenu.setEnabled(false);
-				excludePopupMenu.setEnabled(false);
-			}
-			else
-			{
-				focusPopupMenu.removeAll();
-				for(String current : preparedLoggerNames)
-				{
-					focusPopupMenu.add(new JMenuItem(new FocusAction(current)));
-				}
-				focusPopupMenu.setEnabled(true);
-
-				excludePopupMenu.removeAll();
-				for(String current : preparedLoggerNames)
-				{
-					excludePopupMenu.add(new JMenuItem(new ExcludeAction(current)));
-				}
-				excludePopupMenu.setEnabled(true);
-			}
-		}
-		else
-		{
-			focusPopupMenu.setEnabled(false);
-			excludePopupMenu.setEnabled(false);
-		}
+		focusPopupMenu.setEnabled(enabled);
+		excludePopupMenu.setEnabled(enabled);
 	}
 
 	private List<String> prepareLoggerNames(String loggerName)
@@ -3654,12 +3739,13 @@ public class ViewActions
 		}
 	}
 
-	private class FocusAction
+	private class FocusLoggerAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3622344773840737330L;
 		private String loggerNamePart;
 
-		public FocusAction(String loggerNamePart)
+		public FocusLoggerAction(String loggerNamePart)
 		{
 			super(loggerNamePart);
 			this.loggerNamePart = loggerNamePart;
@@ -3668,7 +3754,7 @@ public class ViewActions
 		@SuppressWarnings({"unchecked"})
 		public void actionPerformed(ActionEvent e)
 		{
-			if(logger.isInfoEnabled()) logger.info("Focus '{}'.", loggerNamePart);
+			if(logger.isInfoEnabled()) logger.info("Focus logger '{}'.", loggerNamePart);
 			if(viewContainer == null)
 			{
 				return;
@@ -3692,12 +3778,14 @@ public class ViewActions
 		}
 	}
 
-	private class ExcludeAction
+	private class ExcludeLoggerAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -1036871342374202881L;
+
 		private String loggerNamePart;
 
-		public ExcludeAction(String loggerNamePart)
+		public ExcludeLoggerAction(String loggerNamePart)
 		{
 			super(loggerNamePart);
 			this.loggerNamePart = loggerNamePart;
@@ -3706,7 +3794,7 @@ public class ViewActions
 		@SuppressWarnings({"unchecked"})
 		public void actionPerformed(ActionEvent e)
 		{
-			if(logger.isInfoEnabled()) logger.info("Exclude '{}'.", loggerNamePart);
+			if(logger.isInfoEnabled()) logger.info("Exclude logger '{}'.", loggerNamePart);
 			if(viewContainer == null)
 			{
 				return;
@@ -3721,6 +3809,289 @@ public class ViewActions
 			Condition previousCondition = selectedView.getBufferCondition();
 
 			Condition filter = selectedView.getCombinedCondition(new Not(new LoggerStartsWithCondition(loggerNamePart)));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+	private class FocusMessagePatternAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -4237035769242851225L;
+		private String messagePattern;
+
+		public FocusMessagePatternAction()
+		{
+			super("Message pattern");
+		}
+
+		private void setMessagePattern(String messagePattern)
+		{
+			this.messagePattern = messagePattern;
+			setEnabled(messagePattern != null);
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Focus message pattern '{}'.", messagePattern);
+			if(messagePattern == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new MessagePatternEqualsCondition(messagePattern));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+	private class ExcludeMessagePatternAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -1155701082711603492L;
+		private String messagePattern;
+
+		public ExcludeMessagePatternAction()
+		{
+			super("Message pattern");
+		}
+
+		private void setMessagePattern(String messagePattern)
+		{
+			this.messagePattern = messagePattern;
+			setEnabled(messagePattern != null);
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Exclude message pattern '{}'.", messagePattern);
+			if(messagePattern == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new Not(new MessagePatternEqualsCondition(messagePattern)));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+	private class FocusFormattedMessageAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = 6498527197619158749L;
+		private String formattedMessage;
+
+		public FocusFormattedMessageAction()
+		{
+			super("Formatted message");
+		}
+
+		private void setFormattedMessage(String formattedMessage)
+		{
+			this.formattedMessage = formattedMessage;
+			setEnabled(formattedMessage != null);
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Focus formatted message '{}'.", formattedMessage);
+			if(formattedMessage == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new FormattedMessageEqualsCondition(formattedMessage));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+	private class ExcludeFormattedMessageAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = 4947456228013372164L;
+		private String formattedMessage;
+
+		public ExcludeFormattedMessageAction()
+		{
+			super("Formatted message");
+		}
+
+		private void setFormattedMessage(String formattedMessage)
+		{
+			this.formattedMessage = formattedMessage;
+			setEnabled(formattedMessage != null);
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Exclude formatted message '{}'.", formattedMessage);
+			if(formattedMessage == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new Not(new FormattedMessageEqualsCondition(formattedMessage)));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+
+	private class FocusMdcAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -401225092914923514L;
+		private String key;
+		private String value;
+
+		public FocusMdcAction(String key, String value)
+		{
+			super(key);
+			this.key = key;
+			this.value = value;
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Focus MDC {}={}.", key, value);
+			if(key == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new MDCContainsCondition(key, value));
+			if (filter == null || filter.equals(previousCondition))
+			{
+				return;
+			}
+
+			viewContainer.replaceFilteredView(selectedView, filter);
+		}
+	}
+
+	private class ExcludeMdcAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -9212164960257081706L;
+		private String key;
+		private String value;
+
+		public ExcludeMdcAction(String key, String value)
+		{
+			super(key);
+			this.key = key;
+			this.value = value;
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public void actionPerformed(ActionEvent e)
+		{
+			if(logger.isInfoEnabled()) logger.info("Exclude MDC {}={}.", key, value);
+			if(key == null)
+			{
+				return;
+			}
+			if(viewContainer == null)
+			{
+				return;
+			}
+
+			EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
+			if(selectedView == null)
+			{
+				return;
+			}
+
+			Condition previousCondition = selectedView.getBufferCondition();
+
+			Condition filter = selectedView.getCombinedCondition(new Not(new MDCContainsCondition(key, value)));
 			if (filter == null || filter.equals(previousCondition))
 			{
 				return;

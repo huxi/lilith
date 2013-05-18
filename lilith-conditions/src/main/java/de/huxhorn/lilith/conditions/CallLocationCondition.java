@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ public class CallLocationCondition
 	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -3772942542557888560L;
+
+	public static final String DESCRIPTION = "CallLocation";
 
 	private String searchString;
 	private transient StackTraceElement stackTraceElement;
@@ -107,8 +109,7 @@ public class CallLocationCondition
 
 		CallLocationCondition that = (CallLocationCondition) o;
 
-		return !(stackTraceElement != null ? !stackTraceElement
-			.equals(that.stackTraceElement) : that.stackTraceElement != null);
+		return !(stackTraceElement != null ? !stackTraceElement.equals(that.stackTraceElement) : that.stackTraceElement != null);
 	}
 
 	@Override
@@ -126,7 +127,7 @@ public class CallLocationCondition
 
 	public String getDescription()
 	{
-		return "CallLocation";
+		return DESCRIPTION;
 	}
 
 	@Override
