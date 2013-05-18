@@ -1065,14 +1065,7 @@ public class ViewActions
 		else
 		{
 			Serializable event = wrapper.getEvent();
-			if(event instanceof LoggingEvent || event instanceof AccessEvent)
-			{
-				enableEditMenu = true;
-			}
-			else
-			{
-				enableEditMenu = false;
-			}
+			enableEditMenu = event instanceof LoggingEvent || event instanceof AccessEvent;
 		}
 		editMenu.setEnabled(enableEditMenu);
 		updateCustomCopyMenu(wrapper);
