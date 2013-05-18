@@ -1302,7 +1302,7 @@ public class ViewActions
 			String existingActionName = LilithKeyStrokes.getActionName(currentKeyStroke);
 			if(existingActionName != null)
 			{
-				if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' of formatter '{}' would collide with native Lilith action '{}'. Ignoring...", new Object[]{currentKeyStroke, name, existingActionName});
+				if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' of formatter '{}' would collide with native Lilith action '{}'. Ignoring...", currentKeyStroke, name, existingActionName);
 				reset = true;
 			}
 			CopyToClipboardAction existingAction = mapping.get(currentKeyStroke);
@@ -1314,7 +1314,7 @@ public class ViewActions
 				{
 					existingFormatterName = existingFormatter.getName();
 				}
-				if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' of formatter '{}' would collide with other formatter '{}'. Ignoring...", new Object[]{currentKeyStroke, name, existingFormatterName});
+				if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' of formatter '{}' would collide with other formatter '{}'. Ignoring...", currentKeyStroke, name, existingFormatterName);
 				reset = true;
 			}
 
