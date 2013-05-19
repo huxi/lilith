@@ -3864,6 +3864,7 @@ public class ViewActions
 		private void setMessagePattern(String messagePattern)
 		{
 			this.messagePattern = messagePattern;
+			putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(messagePattern)));
 			setEnabled(messagePattern != null);
 		}
 
@@ -3912,6 +3913,7 @@ public class ViewActions
 		private void setMessagePattern(String messagePattern)
 		{
 			this.messagePattern = messagePattern;
+			putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(messagePattern)));
 			setEnabled(messagePattern != null);
 		}
 
@@ -3960,6 +3962,7 @@ public class ViewActions
 		private void setFormattedMessage(String formattedMessage)
 		{
 			this.formattedMessage = formattedMessage;
+			putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(formattedMessage)));
 			setEnabled(formattedMessage != null);
 		}
 
@@ -4008,6 +4011,7 @@ public class ViewActions
 		private void setFormattedMessage(String formattedMessage)
 		{
 			this.formattedMessage = formattedMessage;
+			putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(formattedMessage)));
 			setEnabled(formattedMessage != null);
 		}
 
@@ -4053,7 +4057,7 @@ public class ViewActions
 		public FocusMdcAction(String key, String value)
 		{
 			super(key);
-			putValue(Action.SHORT_DESCRIPTION, value);
+			putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(value)));
 			this.key = key;
 			this.value = value;
 		}
@@ -4099,7 +4103,7 @@ public class ViewActions
 		public ExcludeMdcAction(String key, String value)
 		{
 			super(key);
-			putValue(Action.SHORT_DESCRIPTION, value);
+			putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(value)));
 			this.key = key;
 			this.value = value;
 		}

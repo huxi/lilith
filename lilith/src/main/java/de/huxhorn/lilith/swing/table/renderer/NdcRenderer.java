@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.table.renderer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
@@ -77,27 +78,7 @@ public class NdcRenderer
 						}
 					}
 				}
-				if(text != null)
-				{
-					int newlineIndex = text.indexOf("\n");
-					if(newlineIndex > -1)
-					{
-						int newlineCounter = 0;
-						for(int i = 0; i < text.length(); i++)
-						{
-							if(text.charAt(i) == '\n')
-							{
-								newlineCounter++;
-							}
-						}
-						text = text.substring(0, newlineIndex);
-						newlineCounter--;
-						if(newlineCounter > 0)
-						{
-							text = text + " [+" + newlineCounter + " lines]";
-						}
-					}
-				}
+				text = TextPreprocessor.cropLine(text);
 			}
 		}
 		renderer.setText(text);
