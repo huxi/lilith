@@ -82,7 +82,7 @@ public class DialogBug
 			JMenuBar menuBar=new JMenuBar();
 			JMenu fileMenu=new JMenu("File");
 			menuBar.add(fileMenu);
-			fileMenu.add(new JMenuItem(new OpenAction()));
+			fileMenu.add(new OpenAction());
 			setJMenuBar(menuBar);
 			setSize(200,200);
 		}
