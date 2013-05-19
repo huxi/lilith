@@ -161,9 +161,9 @@ public class ViewActions
 	private GotoSourceAction gotoSourceAction;
 	private JMenu sendToPopupMenu;
 	private JMenu focusPopupMenu;
-	private JMenu focusMdcPopupMenu;
+	private JMenu focusMenu;
 	private JMenu excludePopupMenu;
-	private JMenu excludeMdcPopupMenu;
+	private JMenu excludeMenu;
 	private JMenu filterPopupMenu;
 	private JMenu copyPopupMenu;
 	private PropertyChangeListener containerPropertyChangeListener;
@@ -190,13 +190,6 @@ public class ViewActions
 	private ExcludeFormattedMessageAction excludeFormattedMessageAction;
 	private FocusCallLocationAction focusCallLocationAction;
 	private ExcludeCallLocationAction excludeCallLocationAction;
-
-	private JMenuItem focusMessagePatternItem;
-	private JMenuItem excludeMessagePatternItem;
-	private JMenuItem focusFormattedMessageItem;
-	private JMenuItem excludeFormattedMessageItem;
-	private JMenuItem focusCallLocationItem;
-	private JMenuItem excludeCallLocationItem;
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
 	{
@@ -387,18 +380,18 @@ public class ViewActions
 		// File
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setMnemonic('f');
-		fileMenu.add(new JMenuItem(openMenuAction));
+		fileMenu.add(openMenuAction);
 		fileMenu.add(recentFilesMenu);
-		fileMenu.add(new JMenuItem(openInactiveLogMenuAction));
-		fileMenu.add(new JMenuItem(cleanAllInactiveLogsMenuAction));
-		fileMenu.add(new JMenuItem(importMenuAction));
-		fileMenu.add(new JMenuItem(exportMenuAction));
+		fileMenu.add(openInactiveLogMenuAction);
+		fileMenu.add(cleanAllInactiveLogsMenuAction);
+		fileMenu.add(importMenuAction);
+		fileMenu.add(exportMenuAction);
 		if(!app.isMac())
 		{
 			fileMenu.addSeparator();
-			fileMenu.add(new JMenuItem(preferencesMenuAction));
+			fileMenu.add(preferencesMenuAction);
 			fileMenu.addSeparator();
-			fileMenu.add(new JMenuItem(exitMenuAction));
+			fileMenu.add(exitMenuAction);
 		}
 
 		// Edit
@@ -431,12 +424,17 @@ public class ViewActions
 		searchMenu.add(findNextAction);
 		searchMenu.add(findPreviousActiveAction);
 		searchMenu.add(findNextActiveAction);
+		searchMenu.addSeparator();
+
+		focusMenu = new JMenu("Focus...");
+		excludeMenu = new JMenu("Exclude...");
+		searchMenu.add(focusMenu);
+		searchMenu.add(excludeMenu);
 
 		// View
 		viewMenu = new JMenu("View");
 		viewMenu.setMnemonic('v');
-		JMenuItem scrollToBottomMenuItem = new JMenuItem(scrollToBottomMenuAction);
-		viewMenu.add(scrollToBottomMenuItem);
+		viewMenu.add(scrollToBottomMenuAction);
 		viewMenu.add(pauseMenuAction);
 		viewMenu.add(clearMenuAction);
 		viewMenu.add(attachMenuAction);
@@ -474,16 +472,16 @@ public class ViewActions
 		JMenu helpMenu = new JMenu("Help");
 		helpMenu.setMnemonic('h');
 
-		helpMenu.add(new JMenuItem(keyboardHelpAction));
-		helpMenu.add(new JMenuItem(tipOfTheDayAction));
-		helpMenu.add(new JMenuItem(checkForUpdateAction));
-		helpMenu.add(new JMenuItem(troubleshootingAction));
+		helpMenu.add(keyboardHelpAction);
+		helpMenu.add(tipOfTheDayAction);
+		helpMenu.add(checkForUpdateAction);
+		helpMenu.add(troubleshootingAction);
 		helpMenu.addSeparator();
-		helpMenu.add(new JMenuItem(debugAction));
+		helpMenu.add(debugAction);
 		if(!app.isMac())
 		{
 			helpMenu.addSeparator();
-			helpMenu.add(new JMenuItem(aboutAction));
+			helpMenu.add(aboutAction);
 		}
 
 
@@ -500,13 +498,6 @@ public class ViewActions
 		excludeFormattedMessageAction = new ExcludeFormattedMessageAction();
 		focusCallLocationAction = new FocusCallLocationAction();
 		excludeCallLocationAction = new ExcludeCallLocationAction();
-
-		focusMessagePatternItem = new JMenuItem(focusMessagePatternAction);
-		excludeMessagePatternItem = new JMenuItem(excludeMessagePatternAction);
-		focusFormattedMessageItem = new JMenuItem(focusFormattedMessageAction);
-		excludeFormattedMessageItem = new JMenuItem(excludeFormattedMessageAction);
-		focusCallLocationItem = new JMenuItem(focusCallLocationAction);
-		excludeCallLocationItem = new JMenuItem(excludeCallLocationAction);
 
 		updateWindowMenu();
 		updateRecentFiles();
@@ -1042,19 +1033,19 @@ public class ViewActions
 
 		copyPopupMenu = new JMenu("Copy...");
 		popup.add(copyPopupMenu);
-		copyPopupMenu.add(new JMenuItem(copySelectionAction));
+		copyPopupMenu.add(copySelectionAction);
 		copyPopupMenu.addSeparator();
-		copyPopupMenu.add(new JMenuItem(copyEventAction));
+		copyPopupMenu.add(copyEventAction);
 		copyPopupMenu.addSeparator();
 		for(CopyToClipboardAction current : copyLoggingActions)
 		{
-			copyPopupMenu.add(new JMenuItem(current));
+			copyPopupMenu.add(current);
 		}
 
 		copyPopupMenu.addSeparator();
 		for(CopyToClipboardAction current : copyAccessActions)
 		{
-			copyPopupMenu.add(new JMenuItem(current));
+			copyPopupMenu.add(current);
 		}
 
 		copyPopupMenu.addSeparator();
@@ -1062,57 +1053,55 @@ public class ViewActions
 
 		filterPopupMenu = new JMenu("Filter...");
 		popup.add(filterPopupMenu);
-		filterPopupMenu.add(new JMenuItem(closeFilterAction));
-		filterPopupMenu.add(new JMenuItem(closeOtherFiltersAction));
-		filterPopupMenu.add(new JMenuItem(closeAllFiltersAction));
+		filterPopupMenu.add(closeFilterAction);
+		filterPopupMenu.add(closeOtherFiltersAction);
+		filterPopupMenu.add(closeAllFiltersAction);
 
 		focusPopupMenu = new JMenu("Focus...");
-		popup.add(focusPopupMenu);
 		excludePopupMenu = new JMenu("Exclude...");
-		popup.add(excludePopupMenu);
 
-		focusMdcPopupMenu = new JMenu("MDC...");
-		excludeMdcPopupMenu = new JMenu("MDC...");
+		popup.add(focusPopupMenu);
+		popup.add(excludePopupMenu);
 
 		sendToPopupMenu = new JMenu("Send to...");
 		popup.add(sendToPopupMenu);
 
-		JMenuItem gotoSourceMenuItem = new JMenuItem(gotoSourceAction);
-		popup.add(gotoSourceMenuItem);
+		popup.add(gotoSourceAction);
 	}
 
 	private void setEventWrapper(EventWrapper wrapper)
 	{
 		if(logger.isDebugEnabled()) logger.debug("setEventWrapper: {}", wrapper);
 		this.eventWrapper = wrapper;
-		gotoSourceAction.setEventWrapper(wrapper);
-		copyEventAction.setEventWrapper(wrapper);
+		gotoSourceAction.setEventWrapper(eventWrapper);
+		copyEventAction.setEventWrapper(eventWrapper);
 		for(CopyToClipboardAction current : copyLoggingActions)
 		{
-			current.setEventWrapper(wrapper);
+			current.setEventWrapper(eventWrapper);
 		}
 		for(CopyToClipboardAction current : copyAccessActions)
 		{
-			current.setEventWrapper(wrapper);
+			current.setEventWrapper(eventWrapper);
 		}
 		boolean enableEditMenu;
-		if(wrapper == null)
+		if(eventWrapper == null)
 		{
 			enableEditMenu = false;
 		}
 		else
 		{
-			Serializable event = wrapper.getEvent();
+			Serializable event = eventWrapper.getEvent();
 			enableEditMenu = event instanceof LoggingEvent || event instanceof AccessEvent;
 		}
 		editMenu.setEnabled(enableEditMenu);
-		updateCustomCopyMenu(wrapper);
+		updateCustomCopyMenu(eventWrapper);
+		populateFocusExclude(eventWrapper, focusMenu, excludeMenu);
 	}
 
-	private void populateFocusExclude(EventWrapper wrapper)
+	private void populateFocusExclude(EventWrapper wrapper, JMenu focusMenu, JMenu excludeMenu)
 	{
-		focusPopupMenu.removeAll();
-		excludePopupMenu.removeAll();
+		focusMenu.removeAll();
+		excludeMenu.removeAll();
 
 		boolean enabled = false;
 		if(wrapper != null)
@@ -1146,7 +1135,6 @@ public class ViewActions
 
 				}
 
-
 				focusMessagePatternAction.setMessagePattern(messagePattern);
 				excludeMessagePatternAction.setMessagePattern(messagePattern);
 				focusFormattedMessageAction.setFormattedMessage(formattedMessage);
@@ -1154,8 +1142,8 @@ public class ViewActions
 
 				// MDC actions
 				boolean enabledMdc = false;
-				focusMdcPopupMenu.removeAll();
-				excludeMdcPopupMenu.removeAll();
+				JMenu focusMdcMenu = new JMenu("MDC...");
+				JMenu excludeMdcMenu = new JMenu("MDC...");
 
 				Map<String, String> mdc = event.getMdc();
 				if(mdc != null && !mdc.isEmpty())
@@ -1167,13 +1155,13 @@ public class ViewActions
 					{
 						String key = entry.getKey();
 						String value = entry.getValue();
-						focusMdcPopupMenu.add(new JMenuItem(new FocusMdcAction(key, value)));
-						excludeMdcPopupMenu.add(new JMenuItem(new ExcludeMdcAction(key, value)));
+						focusMdcMenu.add(new FocusMdcAction(key, value));
+						excludeMdcMenu.add(new ExcludeMdcAction(key, value));
 					}
 				}
 
-				focusMdcPopupMenu.setEnabled(enabledMdc);
-				excludeMdcPopupMenu.setEnabled(enabledMdc);
+				focusMdcMenu.setEnabled(enabledMdc);
+				excludeMdcMenu.setEnabled(enabledMdc);
 
 				// call location
 				String callLocationString = null;
@@ -1191,21 +1179,21 @@ public class ViewActions
 				excludeCallLocationAction.setCallLocation(callLocationString);
 
 				// add standard items
-				focusPopupMenu.add(focusMessagePatternItem);
-				focusPopupMenu.add(focusFormattedMessageItem);
-				focusPopupMenu.addSeparator();
-				focusPopupMenu.add(focusCallLocationItem);
-				focusPopupMenu.addSeparator();
-				focusPopupMenu.add(focusMdcPopupMenu);
-				focusPopupMenu.addSeparator();
+				focusMenu.add(focusMessagePatternAction);
+				focusMenu.add(focusFormattedMessageAction);
+				focusMenu.addSeparator();
+				focusMenu.add(focusCallLocationAction);
+				focusMenu.addSeparator();
+				focusMenu.add(focusMdcMenu);
+				focusMenu.addSeparator();
 
-				excludePopupMenu.add(excludeMessagePatternItem);
-				excludePopupMenu.add(excludeFormattedMessageItem);
-				excludePopupMenu.addSeparator();
-				excludePopupMenu.add(excludeCallLocationItem);
-				excludePopupMenu.addSeparator();
-				excludePopupMenu.add(excludeMdcPopupMenu);
-				excludePopupMenu.addSeparator();
+				excludeMenu.add(excludeMessagePatternAction);
+				excludeMenu.add(excludeFormattedMessageAction);
+				excludeMenu.addSeparator();
+				excludeMenu.add(excludeCallLocationAction);
+				excludeMenu.addSeparator();
+				excludeMenu.add(excludeMdcMenu);
+				excludeMenu.addSeparator();
 
 				// logger names
 				String loggerName=event.getLogger();
@@ -1216,19 +1204,15 @@ public class ViewActions
 					enabled = true;
 					for(String current : preparedLoggerNames)
 					{
-						focusPopupMenu.add(new JMenuItem(new FocusLoggerAction(current)));
-					}
-
-					for(String current : preparedLoggerNames)
-					{
-						excludePopupMenu.add(new JMenuItem(new ExcludeLoggerAction(current)));
+						focusMenu.add(new FocusLoggerAction(current));
+						excludeMenu.add(new ExcludeLoggerAction(current));
 					}
 				}
 			}
 		}
 
-		focusPopupMenu.setEnabled(enabled);
-		excludePopupMenu.setEnabled(enabled);
+		focusMenu.setEnabled(enabled);
+		excludeMenu.setEnabled(enabled);
 	}
 
 	private List<String> prepareLoggerNames(String loggerName)
@@ -1364,8 +1348,8 @@ public class ViewActions
 				// add the sorted actions to the menus.
 				for(CopyToClipboardAction current : sorted)
 				{
-					customCopyMenu.add(new JMenuItem(current));
-					customCopyPopupMenu.add(new JMenuItem(current));
+					customCopyMenu.add(current);
+					customCopyPopupMenu.add(current);
 				}
 			}
 			customCopyMenu.setEnabled(enabled);
@@ -1489,10 +1473,8 @@ public class ViewActions
 					sendToPopupMenu.setEnabled(true);
 					for(Map.Entry<String, EventSender<LoggingEvent>> current : senders.entrySet())
 					{
-						@SuppressWarnings({"unchecked"})
-						SendAction<LoggingEvent> action = new SendAction<LoggingEvent>(current.getKey(), current.getValue(), eventWrapper);
-						JMenuItem menuItem = new JMenuItem(action);
-						sendToPopupMenu.add(menuItem);
+						//noinspection unchecked
+						sendToPopupMenu.add(new SendAction<LoggingEvent>(current.getKey(), current.getValue(), eventWrapper));
 					}
 				}
 			}
@@ -1510,10 +1492,8 @@ public class ViewActions
 					sendToPopupMenu.setEnabled(true);
 					for(Map.Entry<String, EventSender<AccessEvent>> current : senders.entrySet())
 					{
-						@SuppressWarnings({"unchecked"})
-						SendAction<AccessEvent> action = new SendAction<AccessEvent>(current.getKey(), current.getValue(), eventWrapper);
-						JMenuItem menuItem = new JMenuItem(action);
-						sendToPopupMenu.add(menuItem);
+						//noinspection unchecked
+						sendToPopupMenu.add(new SendAction<AccessEvent>(current.getKey(), current.getValue(), eventWrapper));
 					}
 				}
 			}
@@ -1526,7 +1506,7 @@ public class ViewActions
 		boolean enableFilterMenu = closeFilterAction.isEnabled() || closeOtherFiltersAction.isEnabled() || closeAllFiltersAction.isEnabled();
 		filterPopupMenu.setEnabled(enableFilterMenu);
 		copyPopupMenu.setEnabled(enableCopyMenu);
-		populateFocusExclude(eventWrapper);
+		populateFocusExclude(eventWrapper, focusPopupMenu, excludePopupMenu);
 	}
 
 	public JPopupMenu getPopupMenu()
@@ -2730,11 +2710,11 @@ public class ViewActions
 
 			boolean first;
 
-			SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> sortedLoggingViews = mainFrame
-				.getSortedLoggingViews();
+			SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> sortedLoggingViews =
+					mainFrame.getSortedLoggingViews();
 
-			SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews = mainFrame
-				.getSortedAccessViews();
+			SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews =
+					mainFrame.getSortedAccessViews();
 
 			first = true;
 			// Lilith logging
