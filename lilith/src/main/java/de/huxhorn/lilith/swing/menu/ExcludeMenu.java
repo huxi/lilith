@@ -44,6 +44,7 @@ public class ExcludeMenu
 	private JMenuItem formattedMessageItem;
 	private JMenuItem callLocationItem;
 	private ExcludeMDCMenu mdcMenu;
+	private ExcludeMarkerMenu markerMenu;
 	private ExcludeLoggerMenu loggerMenu;
 
 	public ExcludeMenu() {
@@ -62,6 +63,7 @@ public class ExcludeMenu
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
 		callLocationItem = new JMenuItem(callLocationAction);
 		mdcMenu = new ExcludeMDCMenu();
+		markerMenu = new ExcludeMarkerMenu();
 		loggerMenu = new ExcludeLoggerMenu();
 	}
 
@@ -72,6 +74,7 @@ public class ExcludeMenu
 		formattedMessageAction.setEventWrapper(eventWrapper);
 		callLocationAction.setEventWrapper(eventWrapper);
 		mdcMenu.setEventWrapper(eventWrapper);
+		markerMenu.setEventWrapper(eventWrapper);
 		loggerMenu.setEventWrapper(eventWrapper);
 		updateState();
 	}
@@ -82,6 +85,7 @@ public class ExcludeMenu
 		formattedMessageAction.setViewContainer(viewContainer);
 		callLocationAction.setViewContainer(viewContainer);
 		mdcMenu.setViewContainer(viewContainer);
+		markerMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
 		updateState();
 	}
@@ -100,6 +104,7 @@ public class ExcludeMenu
 			add(callLocationItem);
 			addSeparator();
 			add(mdcMenu);
+			add(markerMenu);
 			addSeparator();
 			add(loggerMenu);
 			setEnabled(
@@ -107,6 +112,7 @@ public class ExcludeMenu
 					formattedMessageItem.isEnabled() ||
 					callLocationItem.isEnabled() ||
 					mdcMenu.isEnabled() ||
+					markerMenu.isEnabled() ||
 					loggerMenu.isEnabled()
 				);
 			return;

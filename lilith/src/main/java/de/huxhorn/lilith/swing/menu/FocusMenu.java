@@ -44,6 +44,7 @@ public class FocusMenu
 	private JMenuItem formattedMessageItem;
 	private JMenuItem callLocationItem;
 	private FocusMDCMenu mdcMenu;
+	private FocusMarkerMenu markerMenu;
 	private FocusLoggerMenu loggerMenu;
 
 	public FocusMenu() {
@@ -62,6 +63,7 @@ public class FocusMenu
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
 		callLocationItem = new JMenuItem(callLocationAction);
 		mdcMenu = new FocusMDCMenu();
+		markerMenu = new FocusMarkerMenu();
 		loggerMenu = new FocusLoggerMenu();
 	}
 
@@ -72,6 +74,7 @@ public class FocusMenu
 		formattedMessageAction.setEventWrapper(eventWrapper);
 		callLocationAction.setEventWrapper(eventWrapper);
 		mdcMenu.setEventWrapper(eventWrapper);
+		markerMenu.setEventWrapper(eventWrapper);
 		loggerMenu.setEventWrapper(eventWrapper);
 		updateState();
 	}
@@ -82,6 +85,7 @@ public class FocusMenu
 		formattedMessageAction.setViewContainer(viewContainer);
 		callLocationAction.setViewContainer(viewContainer);
 		mdcMenu.setViewContainer(viewContainer);
+		markerMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
 		updateState();
 	}
@@ -100,6 +104,7 @@ public class FocusMenu
 			add(callLocationItem);
 			addSeparator();
 			add(mdcMenu);
+			add(markerMenu);
 			addSeparator();
 			add(loggerMenu);
 			setEnabled(
@@ -107,6 +112,7 @@ public class FocusMenu
 					formattedMessageItem.isEnabled() ||
 					callLocationItem.isEnabled() ||
 					mdcMenu.isEnabled() ||
+					markerMenu.isEnabled() ||
 					loggerMenu.isEnabled()
 				);
 			return;

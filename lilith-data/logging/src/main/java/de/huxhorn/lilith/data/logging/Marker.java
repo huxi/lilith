@@ -126,7 +126,7 @@ public class Marker
 
 		if(hasReferences())
 		{
-			Set<String> collectedMarkers = collectReferencedMarkerNames(this, null);
+			Set<String> collectedMarkers = collectMarkerNames(this, null);
 			return collectedMarkers.contains(other.getName());
 		}
 		return false;
@@ -146,13 +146,17 @@ public class Marker
 
 		if(hasReferences())
 		{
-			Set<String> collectedMarkerNames = collectReferencedMarkerNames(this, null);
-			return collectedMarkerNames.contains(name);
+			return collectMarkerNames().contains(name);
 		}
 		return false;
 	}
 
-	private Set<String> collectReferencedMarkerNames(Marker marker, Set<String> collectedMarkerNames)
+	public Set<String> collectMarkerNames()
+	{
+		return collectMarkerNames(this, null);
+	}
+
+	private static Set<String> collectMarkerNames(Marker marker, Set<String> collectedMarkerNames)
 	{
 		if(collectedMarkerNames == null)
 		{
@@ -168,7 +172,7 @@ public class Marker
 					Marker child = current.getValue();
 					if(!collectedMarkerNames.contains(child.getName()))
 					{
-						collectReferencedMarkerNames(child, collectedMarkerNames);
+						collectMarkerNames(child, collectedMarkerNames);
 					}
 				}
 			}
