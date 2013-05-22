@@ -17,9 +17,12 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.ViewContainer;
+import de.huxhorn.lilith.swing.actions.AccessFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.ExcludeCallLocationAction;
 import de.huxhorn.lilith.swing.actions.ExcludeFormattedMessageAction;
@@ -28,12 +31,15 @@ import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
 import javax.swing.*;
+import java.util.List;
 
 public class ExcludeMenu
 	extends JMenu
 	implements ViewContainerRelated, EventWrapperRelated
 {
 	private static final long serialVersionUID = -663125573199455498L;
+
+	private final ApplicationPreferences applicationPreferences;
 
 	private EventWrapper eventWrapper;
 
@@ -46,9 +52,12 @@ public class ExcludeMenu
 	private ExcludeMDCMenu mdcMenu;
 	private ExcludeMarkerMenu markerMenu;
 	private ExcludeLoggerMenu loggerMenu;
+	private ExcludeSavedMenu savedMenu;
 
-	public ExcludeMenu() {
+	public ExcludeMenu(ApplicationPreferences applicationPreferences)
+	{
 		super("Exclude...");
+		this.applicationPreferences = applicationPreferences;
 		createUI();
 		setViewContainer(null);
 		setEventWrapper(null);
@@ -65,6 +74,7 @@ public class ExcludeMenu
 		mdcMenu = new ExcludeMDCMenu();
 		markerMenu = new ExcludeMarkerMenu();
 		loggerMenu = new ExcludeLoggerMenu();
+		savedMenu = new ExcludeSavedMenu(applicationPreferences);
 	}
 
 	public void setEventWrapper(EventWrapper eventWrapper)
@@ -87,6 +97,7 @@ public class ExcludeMenu
 		mdcMenu.setViewContainer(viewContainer);
 		markerMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
+		savedMenu.setViewContainer(viewContainer);
 		updateState();
 	}
 
@@ -107,16 +118,37 @@ public class ExcludeMenu
 			add(markerMenu);
 			addSeparator();
 			add(loggerMenu);
+			addSeparator();
+			add(savedMenu);
+
 			setEnabled(
 					messagePatternItem.isEnabled() ||
 					formattedMessageItem.isEnabled() ||
 					callLocationItem.isEnabled() ||
 					mdcMenu.isEnabled() ||
 					markerMenu.isEnabled() ||
-					loggerMenu.isEnabled()
+					loggerMenu.isEnabled() ||
+					savedMenu.isEnabled()
 				);
 			return;
 		}
+
+		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
+		if(accessEvent != null)
+		{
+			add(savedMenu);
+
+			setEnabled(
+					savedMenu.isEnabled()
+			);
+			return;
+		}
+
 		setEnabled(false);
+	}
+
+	public void setConditionNames(List<String> conditionNames)
+	{
+		savedMenu.setConditionNames(conditionNames);
 	}
 }

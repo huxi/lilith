@@ -410,8 +410,8 @@ public class ViewActions
 		searchMenu.add(findNextActiveAction);
 		searchMenu.addSeparator();
 
-		focusMenu = new FocusMenu();
-		excludeMenu = new ExcludeMenu();
+		focusMenu = new FocusMenu(mainFrame.getApplicationPreferences());
+		excludeMenu = new ExcludeMenu(mainFrame.getApplicationPreferences());
 		searchMenu.add(focusMenu);
 		searchMenu.add(excludeMenu);
 
@@ -1013,8 +1013,9 @@ public class ViewActions
 		filterPopupMenu.add(closeAllFiltersAction);
 
 		popup.addSeparator();
-		focusPopupMenu = new FocusMenu();
-		excludePopupMenu = new ExcludeMenu();
+
+		focusPopupMenu = new FocusMenu(mainFrame.getApplicationPreferences());
+		excludePopupMenu = new ExcludeMenu(mainFrame.getApplicationPreferences());
 
 		popup.add(focusPopupMenu);
 		popup.add(excludePopupMenu);
@@ -1370,6 +1371,14 @@ public class ViewActions
 			recentFilesMenu.add(clearRecentFilesAction);
 			recentFilesMenu.setEnabled(true);
 		}
+	}
+
+	public void setConditionNames(List<String> conditionNames)
+	{
+		focusMenu.setConditionNames(conditionNames);
+		focusPopupMenu.setConditionNames(conditionNames);
+		excludeMenu.setConditionNames(conditionNames);
+		excludePopupMenu.setConditionNames(conditionNames);
 	}
 
 	private class OpenFileAction

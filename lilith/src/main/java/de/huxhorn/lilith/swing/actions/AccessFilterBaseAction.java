@@ -18,29 +18,29 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.access.AccessEvent;
 
 import javax.swing.*;
 import java.io.Serializable;
 
-public abstract class LoggingFilterBaseAction
+public abstract class AccessFilterBaseAction
 	extends FilterBaseAction
 	implements EventWrapperRelated
 {
-	private static final long serialVersionUID = -2521087800102653740L;
+	private static final long serialVersionUID = -4293055398325177424L;
 
-	protected LoggingEvent loggingEvent;
+	protected AccessEvent accessEvent;
 
-	protected LoggingFilterBaseAction()
+	protected AccessFilterBaseAction()
 	{
 	}
 
-	protected LoggingFilterBaseAction(String name)
+	protected AccessFilterBaseAction(String name)
 	{
 		super(name);
 	}
 
-	protected LoggingFilterBaseAction(String name, Icon icon)
+	protected AccessFilterBaseAction(String name, Icon icon)
 	{
 		super(name, icon);
 	}
@@ -48,16 +48,16 @@ public abstract class LoggingFilterBaseAction
 	@Override
 	public void setEventWrapper(EventWrapper eventWrapper)
 	{
-		setLoggingEvent(resolveLoggingEvent(eventWrapper));
+		setAccessEvent(resolveAccessEvent(eventWrapper));
 	}
 
-	public void setLoggingEvent(LoggingEvent loggingEvent)
+	public void setAccessEvent(AccessEvent accessEvent)
 	{
-		this.loggingEvent = loggingEvent;
+		this.accessEvent = accessEvent;
 		updateState();
 	}
 
-	public static LoggingEvent resolveLoggingEvent(EventWrapper eventWrapper)
+	public static AccessEvent resolveAccessEvent(EventWrapper eventWrapper)
 	{
 		if(eventWrapper == null)
 		{
@@ -68,9 +68,9 @@ public abstract class LoggingFilterBaseAction
 		{
 			return null;
 		}
-		if(event instanceof LoggingEvent)
+		if(event instanceof AccessEvent)
 		{
-			return (LoggingEvent) event;
+			return (AccessEvent) event;
 		}
 		return null;
 	}

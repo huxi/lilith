@@ -3363,6 +3363,7 @@ public class MainFrame
 			}
 
 		}
+		viewActions.setConditionNames(conditionNames);
 	}
 
 	private void updateViewScale(double scale)
