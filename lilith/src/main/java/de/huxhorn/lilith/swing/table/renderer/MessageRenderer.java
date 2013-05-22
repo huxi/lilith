@@ -69,7 +69,7 @@ public class MessageRenderer
 				{
 					text = messageObj.getMessage();
 				}
-				text = TextPreprocessor.cropLine(text);
+				text = TextPreprocessor.cropToSingleLine(text);
 			}
 		}
 		renderer.setText(text);

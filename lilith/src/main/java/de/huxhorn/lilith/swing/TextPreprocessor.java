@@ -31,6 +31,11 @@ public class TextPreprocessor
 		return cropLine(text, MAX_LINE_LENGTH, LINE_TRUNCATION);
 	}
 
+	public static String cropToSingleLine(String text)
+	{
+		return cropLine(text, 0, null);
+	}
+
 	private static String cropLine(String text, int maxLineLength, String lineTruncationMarker)
 	{
 		if(text == null)
