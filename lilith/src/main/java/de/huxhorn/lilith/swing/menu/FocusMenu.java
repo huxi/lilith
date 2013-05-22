@@ -53,6 +53,7 @@ public class FocusMenu
 	private FocusMarkerMenu markerMenu;
 	private FocusLoggerMenu loggerMenu;
 	private FocusSavedMenu savedMenu;
+	private FocusLevelMenu levelMenu;
 
 	public FocusMenu(ApplicationPreferences applicationPreferences)
 	{
@@ -75,6 +76,7 @@ public class FocusMenu
 		markerMenu = new FocusMarkerMenu();
 		loggerMenu = new FocusLoggerMenu();
 		savedMenu = new FocusSavedMenu(applicationPreferences);
+		levelMenu = new FocusLevelMenu();
 	}
 
 	public void setEventWrapper(EventWrapper eventWrapper)
@@ -98,6 +100,7 @@ public class FocusMenu
 		markerMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
 		savedMenu.setViewContainer(viewContainer);
+		levelMenu.setViewContainer(viewContainer);
 		updateState();
 	}
 
@@ -112,6 +115,8 @@ public class FocusMenu
 			add(messagePatternItem);
 			add(formattedMessageItem);
 			addSeparator();
+			add(levelMenu);
+			addSeparator();
 			add(callLocationItem);
 			addSeparator();
 			add(mdcMenu);
@@ -121,15 +126,8 @@ public class FocusMenu
 			addSeparator();
 			add(savedMenu);
 
-			setEnabled(
-					messagePatternItem.isEnabled() ||
-					formattedMessageItem.isEnabled() ||
-					callLocationItem.isEnabled() ||
-					mdcMenu.isEnabled() ||
-					markerMenu.isEnabled() ||
-					loggerMenu.isEnabled() ||
-					savedMenu.isEnabled()
-				);
+			// levelMenu will always be enabled if an event exists at all
+			setEnabled(true);
 			return;
 		}
 

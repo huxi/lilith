@@ -53,6 +53,8 @@ public class ExcludeMenu
 	private ExcludeMarkerMenu markerMenu;
 	private ExcludeLoggerMenu loggerMenu;
 	private ExcludeSavedMenu savedMenu;
+	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
+	// not make sense.
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences)
 	{
