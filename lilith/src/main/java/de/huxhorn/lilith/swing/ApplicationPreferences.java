@@ -26,6 +26,7 @@ import de.huxhorn.lilith.conditions.FormattedMessageEqualsCondition;
 import de.huxhorn.lilith.conditions.GroovyCondition;
 import de.huxhorn.lilith.conditions.LevelCondition;
 import de.huxhorn.lilith.conditions.LilithCondition;
+import de.huxhorn.lilith.conditions.LoggerContainsCondition;
 import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.lilith.conditions.MessagePatternContainsCondition;
@@ -188,6 +189,7 @@ public class ApplicationPreferences
 		MessagePatternContainsCondition.DESCRIPTION,
 		MessagePatternEqualsCondition.DESCRIPTION,
 		LoggerStartsWithCondition.DESCRIPTION,
+		LoggerContainsCondition.DESCRIPTION,
 		LoggerEqualsCondition.DESCRIPTION,
 		CallLocationCondition.DESCRIPTION,
 		NAMED_CONDITION,
@@ -310,6 +312,11 @@ public class ApplicationPreferences
 		if(LoggerStartsWithCondition.DESCRIPTION.equals(conditionName))
 		{
 			return new LoggerStartsWithCondition(value);
+		}
+
+		if(LoggerContainsCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new LoggerContainsCondition(value);
 		}
 
 		if(LoggerEqualsCondition.DESCRIPTION.equals(conditionName))

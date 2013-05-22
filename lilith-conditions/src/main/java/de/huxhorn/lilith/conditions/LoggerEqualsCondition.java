@@ -20,9 +20,6 @@ package de.huxhorn.lilith.conditions;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 public class LoggerEqualsCondition
 	implements LilithCondition, SearchStringCondition
 {
@@ -89,13 +86,6 @@ public class LoggerEqualsCondition
 		int result;
 		result = (searchString != null ? searchString.hashCode() : 0);
 		return result;
-	}
-
-	private void readObject(ObjectInputStream in)
-		throws IOException, ClassNotFoundException
-	{
-		in.defaultReadObject();
-		setSearchString(this.searchString);
 	}
 
 	public LoggerEqualsCondition clone()
