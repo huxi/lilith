@@ -202,17 +202,24 @@ public enum HttpStatus
 
 	public enum Type
 	{
-		INFORMATIONAL("Informational"),
-		SUCCESSFUL("Successful"),
-		REDIRECTION("Redirection"),
-		CLIENT_ERROR("Client Error"),
-		SERVER_ERROR("Server Error");
+		INFORMATIONAL("Informational", "1xx"),
+		SUCCESSFUL("Successful", "2xx"),
+		REDIRECTION("Redirection", "3xx"),
+		CLIENT_ERROR("Client Error", "4xx"),
+		SERVER_ERROR("Server Error", "5xx");
 
-		private String description;
+		private final String description;
+		private final String range;
 
-		Type(String description)
+		Type(String description, String range)
 		{
 			this.description = description;
+			this.range = range;
+		}
+
+		public String getRange()
+		{
+			return range;
 		}
 
 		@Override
