@@ -25,6 +25,7 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FocusSavedMenu
@@ -34,7 +35,7 @@ public class FocusSavedMenu
 	private static final long serialVersionUID = 5642118791633046024L;
 	private final ApplicationPreferences applicationPreferences;
 
-	private List<SavedCondition> savedConditions;
+	private List<FocusSavedAction> savedConditionActions;
 	private ViewContainer viewContainer;
 
 	public FocusSavedMenu(ApplicationPreferences applicationPreferences)
@@ -57,11 +58,13 @@ public class FocusSavedMenu
 		removeAll();
 		if(conditionNames == null)
 		{
-			savedConditions = null;
+			savedConditionActions = null;
 		}
 		else
 		{
-			savedConditions = new ArrayList<SavedCondition>(conditionNames.size());
+			conditionNames = new ArrayList<String>(conditionNames);
+			Collections.sort(conditionNames, String.CASE_INSENSITIVE_ORDER);
+			savedConditionActions = new ArrayList<FocusSavedAction>(conditionNames.size());
 			for(String current : conditionNames)
 			{
 				SavedCondition savedCondition = applicationPreferences.resolveSavedCondition(current);
@@ -74,7 +77,7 @@ public class FocusSavedMenu
 					// something went wrong, ignore.
 					continue;
 				}
-				savedConditions.add(savedCondition);
+				savedConditionActions.add(createAction(viewContainer, savedCondition));
 			}
 		}
 		updateState();
@@ -82,23 +85,31 @@ public class FocusSavedMenu
 
 	private void updateState()
 	{
-		if(viewContainer == null || savedConditions == null || savedConditions.isEmpty())
+		if(viewContainer == null || savedConditionActions == null || savedConditionActions.isEmpty())
 		{
 			setEnabled(false);
 			return;
 		}
+
 		if(getMenuComponentCount() == 0)
 		{
-			// only reinitialize if empty
-			for(SavedCondition current : savedConditions)
+			// this indicates that the conditions have changed.
+			for(FocusSavedAction current : savedConditionActions)
 			{
-				add(createAction(viewContainer, current));
+				add(current);
 			}
 		}
+
+		// update viewContainer of all actions
+		for(FocusSavedAction current : savedConditionActions)
+		{
+			current.setViewContainer(viewContainer);
+		}
+
 		setEnabled(true);
 	}
 
-	protected Action createAction(ViewContainer viewContainer, SavedCondition savedCondition)
+	protected FocusSavedAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
 		return new FocusSavedAction(viewContainer, savedCondition);
 	}

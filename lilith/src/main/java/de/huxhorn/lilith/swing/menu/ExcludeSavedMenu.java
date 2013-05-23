@@ -22,8 +22,6 @@ import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.ExcludeSavedAction;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-import javax.swing.*;
-
 public class ExcludeSavedMenu
 	extends FocusSavedMenu
 {
@@ -35,7 +33,7 @@ public class ExcludeSavedMenu
 	}
 
 	@Override
-	protected Action createAction(ViewContainer viewContainer, SavedCondition savedCondition)
+	protected ExcludeSavedAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
 		return new ExcludeSavedAction(viewContainer, savedCondition);
 	}
