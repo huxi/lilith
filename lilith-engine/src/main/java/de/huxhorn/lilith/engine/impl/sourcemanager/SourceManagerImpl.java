@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class SourceManagerImpl<T extends Serializable>
 	implements SourceManager<T>
@@ -47,7 +49,8 @@ public class SourceManagerImpl<T extends Serializable>
 	private Set<EventSourceListener<T>> listeners;
 	private PropertyChangeSupport changeSupport;
 	private List<EventSource<T>> sources;
-	private Set<EventProducer<T>> eventProducers;
+	private final Set<EventProducer<T>> eventProducers;
+	private final Lock eventProducersLock;
 	private EventPoller<T> eventPoller;
 
 	private static final String NUMBER_OF_SOURCES = "numberOfSources";
@@ -56,8 +59,9 @@ public class SourceManagerImpl<T extends Serializable>
 	public SourceManagerImpl(BlockingCircularBuffer<EventWrapper<T>> queue)
 	{
 		this.queue = queue;
-		this.eventPoller = new EventPoller<T>(queue);
-		this.eventPoller.setPollDelay(100);
+		eventPoller = new EventPoller<T>(queue);
+		eventPoller.setPollDelay(100);
+		eventProducersLock = new ReentrantLock();
 		eventProducers = new HashSet<EventProducer<T>>();
 		eventSourceProducers = new ArrayList<EventSourceProducer<T>>();
 		listeners = new HashSet<EventSourceListener<T>>();
@@ -136,21 +140,29 @@ public class SourceManagerImpl<T extends Serializable>
 		eventSourceProducers.add(producer);
 	}
 
+	// SourceIdentifiers can change so they are not suitable as the key of a Map.
 	private EventProducer<T> findProducer(SourceIdentifier id)
 	{
 		if(id == null)
 		{
 			return null;
 		}
-
-		for(EventProducer<T> current : eventProducers)
+		eventProducersLock.lock();
+		try
 		{
-			if(id.equals(current.getSourceIdentifier()))
+			for(EventProducer<T> current : eventProducers)
 			{
-				return current;
+				if(id.equals(current.getSourceIdentifier()))
+				{
+					return current;
+				}
 			}
+			return null;
 		}
-		return null;
+		finally
+		{
+			eventProducersLock.unlock();
+		}
 	}
 
 	public void addEventProducer(EventProducer<T> producer)
@@ -160,9 +172,25 @@ public class SourceManagerImpl<T extends Serializable>
 		if(previous != null)
 		{
 			previous.close();
-			eventProducers.remove(previous);
+			eventProducersLock.lock();
+			try
+			{
+				eventProducers.remove(previous);
+			}
+			finally
+			{
+				eventProducersLock.unlock();
+			}
 		}
-		eventProducers.add(producer);
+		eventProducersLock.lock();
+		try
+		{
+			eventProducers.add(producer);
+		}
+		finally
+		{
+			eventProducersLock.unlock();
+		}
 
 		if(logger.isDebugEnabled()) logger.debug("Started {}.", producer);
 	}
@@ -173,7 +201,15 @@ public class SourceManagerImpl<T extends Serializable>
 		if(previous != null)
 		{
 			previous.close();
-			eventProducers.remove(previous);
+			eventProducersLock.lock();
+			try
+			{
+				eventProducers.remove(previous);
+			}
+			finally
+			{
+				eventProducersLock.unlock();
+			}
 		}
 	}
 
