@@ -51,6 +51,7 @@ public class ExcludeMenu
 	private JMenuItem callLocationItem;
 	private ExcludeMDCMenu mdcMenu;
 	private ExcludeMarkerMenu markerMenu;
+	private ExcludeNDCMenu ndcMenu;
 	private ExcludeLoggerMenu loggerMenu;
 	private ExcludeSavedMenu savedMenu;
 	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
@@ -75,6 +76,7 @@ public class ExcludeMenu
 		callLocationItem = new JMenuItem(callLocationAction);
 		mdcMenu = new ExcludeMDCMenu();
 		markerMenu = new ExcludeMarkerMenu();
+		ndcMenu = new ExcludeNDCMenu();
 		loggerMenu = new ExcludeLoggerMenu();
 		savedMenu = new ExcludeSavedMenu(applicationPreferences);
 	}
@@ -87,6 +89,7 @@ public class ExcludeMenu
 		callLocationAction.setEventWrapper(eventWrapper);
 		mdcMenu.setEventWrapper(eventWrapper);
 		markerMenu.setEventWrapper(eventWrapper);
+		ndcMenu.setEventWrapper(eventWrapper);
 		loggerMenu.setEventWrapper(eventWrapper);
 		updateState();
 	}
@@ -98,6 +101,7 @@ public class ExcludeMenu
 		callLocationAction.setViewContainer(viewContainer);
 		mdcMenu.setViewContainer(viewContainer);
 		markerMenu.setViewContainer(viewContainer);
+		ndcMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
 		savedMenu.setViewContainer(viewContainer);
 		updateState();
@@ -118,6 +122,7 @@ public class ExcludeMenu
 			addSeparator();
 			add(mdcMenu);
 			add(markerMenu);
+			add(ndcMenu);
 			addSeparator();
 			add(loggerMenu);
 			addSeparator();
