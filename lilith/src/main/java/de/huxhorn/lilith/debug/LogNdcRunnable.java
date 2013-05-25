@@ -29,12 +29,20 @@ public class LogNdcRunnable
 		if(logger.isInfoEnabled()) logger.info("Message after pushing to NDC again.");
 		sleep();
 
+		NDC.push("Simple message without parameters.");
+		if(logger.isInfoEnabled()) logger.info("Message after pushing to NDC a third time.");
+		sleep();
+
 		NDC.pop();
 		if(logger.isInfoEnabled()) logger.info("Message after popping the NDC once.");
 		sleep();
 
 		NDC.pop();
 		if(logger.isInfoEnabled()) logger.info("Message after popping the NDC twice.");
+		sleep();
+
+		NDC.pop();
+		if(logger.isInfoEnabled()) logger.info("Message after popping the NDC thrice.");
 		sleep();
 	}
 }
