@@ -26,6 +26,7 @@ import de.huxhorn.lilith.swing.actions.AccessFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
 import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
@@ -44,10 +45,10 @@ public class FocusMenu
 	private EventWrapper eventWrapper;
 
 	private FocusMessagePatternAction messagePatternAction;
-	private FocusFormattedMessageAction formattedMessageAction;
-	private FocusCallLocationAction callLocationAction;
 	private JMenuItem messagePatternItem;
+	private FocusFormattedMessageAction formattedMessageAction;
 	private JMenuItem formattedMessageItem;
+	private FocusCallLocationAction callLocationAction;
 	private JMenuItem callLocationItem;
 	private FocusMDCMenu mdcMenu;
 	private FocusMarkerMenu markerMenu;
@@ -56,6 +57,8 @@ public class FocusMenu
 	private FocusSavedMenu savedMenu;
 	private FocusLevelMenu levelMenu;
 
+	private FocusHttpStatusCodeAction statusCodeAction;
+	private JMenuItem statusCodeItem;
 	private FocusHttpStatusTypeMenu statusTypeMenu;
 
 	public FocusMenu(ApplicationPreferences applicationPreferences)
@@ -82,6 +85,8 @@ public class FocusMenu
 		savedMenu = new FocusSavedMenu(applicationPreferences);
 		levelMenu = new FocusLevelMenu();
 
+		statusCodeAction = new FocusHttpStatusCodeAction();
+		statusCodeItem = new JMenuItem(statusCodeAction);
 		statusTypeMenu = new FocusHttpStatusTypeMenu();
 	}
 
@@ -95,6 +100,8 @@ public class FocusMenu
 		markerMenu.setEventWrapper(eventWrapper);
 		ndcMenu.setEventWrapper(eventWrapper);
 		loggerMenu.setEventWrapper(eventWrapper);
+
+		statusCodeAction.setEventWrapper(eventWrapper);
 		updateState();
 	}
 
@@ -110,6 +117,7 @@ public class FocusMenu
 		savedMenu.setViewContainer(viewContainer);
 		levelMenu.setViewContainer(viewContainer);
 
+		statusCodeAction.setViewContainer(viewContainer);
 		statusTypeMenu.setViewContainer(viewContainer);
 		updateState();
 	}
@@ -145,6 +153,7 @@ public class FocusMenu
 		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
+			add(statusCodeItem);
 			add(statusTypeMenu);
 			addSeparator();
 			add(savedMenu);

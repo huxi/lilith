@@ -26,6 +26,7 @@ import de.huxhorn.lilith.swing.actions.AccessFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.ExcludeCallLocationAction;
 import de.huxhorn.lilith.swing.actions.ExcludeFormattedMessageAction;
+import de.huxhorn.lilith.swing.actions.ExcludeHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.ExcludeMessagePatternAction;
 import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
@@ -44,10 +45,10 @@ public class ExcludeMenu
 	private EventWrapper eventWrapper;
 
 	private ExcludeMessagePatternAction messagePatternAction;
-	private ExcludeFormattedMessageAction formattedMessageAction;
-	private ExcludeCallLocationAction callLocationAction;
 	private JMenuItem messagePatternItem;
+	private ExcludeFormattedMessageAction formattedMessageAction;
 	private JMenuItem formattedMessageItem;
+	private ExcludeCallLocationAction callLocationAction;
 	private JMenuItem callLocationItem;
 	private ExcludeMDCMenu mdcMenu;
 	private ExcludeMarkerMenu markerMenu;
@@ -57,6 +58,8 @@ public class ExcludeMenu
 	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
 	// not make sense.
 
+	private ExcludeHttpStatusCodeAction statusCodeAction;
+	private JMenuItem statusCodeItem;
 	private ExcludeHttpStatusTypeMenu statusTypeMenu;
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences)
@@ -82,6 +85,8 @@ public class ExcludeMenu
 		loggerMenu = new ExcludeLoggerMenu();
 		savedMenu = new ExcludeSavedMenu(applicationPreferences);
 
+		statusCodeAction = new ExcludeHttpStatusCodeAction();
+		statusCodeItem = new JMenuItem(statusCodeAction);
 		statusTypeMenu = new ExcludeHttpStatusTypeMenu();
 	}
 
@@ -95,6 +100,8 @@ public class ExcludeMenu
 		markerMenu.setEventWrapper(eventWrapper);
 		ndcMenu.setEventWrapper(eventWrapper);
 		loggerMenu.setEventWrapper(eventWrapper);
+
+		statusCodeAction.setEventWrapper(eventWrapper);
 		updateState();
 	}
 
@@ -109,6 +116,7 @@ public class ExcludeMenu
 		loggerMenu.setViewContainer(viewContainer);
 		savedMenu.setViewContainer(viewContainer);
 
+		statusCodeAction.setViewContainer(viewContainer);
 		statusTypeMenu.setViewContainer(viewContainer);
 		updateState();
 	}
@@ -149,6 +157,7 @@ public class ExcludeMenu
 		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
+			add(statusCodeItem);
 			add(statusTypeMenu);
 			addSeparator();
 			add(savedMenu);
