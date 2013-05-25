@@ -56,6 +56,8 @@ public class FocusMenu
 	private FocusSavedMenu savedMenu;
 	private FocusLevelMenu levelMenu;
 
+	private FocusHttpStatusTypeMenu statusTypeMenu;
+
 	public FocusMenu(ApplicationPreferences applicationPreferences)
 	{
 		super("Focus...");
@@ -79,6 +81,8 @@ public class FocusMenu
 		loggerMenu = new FocusLoggerMenu();
 		savedMenu = new FocusSavedMenu(applicationPreferences);
 		levelMenu = new FocusLevelMenu();
+
+		statusTypeMenu = new FocusHttpStatusTypeMenu();
 	}
 
 	public void setEventWrapper(EventWrapper eventWrapper)
@@ -105,6 +109,8 @@ public class FocusMenu
 		loggerMenu.setViewContainer(viewContainer);
 		savedMenu.setViewContainer(viewContainer);
 		levelMenu.setViewContainer(viewContainer);
+
+		statusTypeMenu.setViewContainer(viewContainer);
 		updateState();
 	}
 
@@ -139,11 +145,12 @@ public class FocusMenu
 		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
+			add(statusTypeMenu);
+			addSeparator();
 			add(savedMenu);
 
-			setEnabled(
-					savedMenu.isEnabled()
-			);
+			// statusTypeMenu will always be enabled if an event exists at all
+			setEnabled(true);
 			return;
 		}
 

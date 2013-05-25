@@ -57,6 +57,8 @@ public class ExcludeMenu
 	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
 	// not make sense.
 
+	private ExcludeHttpStatusTypeMenu statusTypeMenu;
+
 	public ExcludeMenu(ApplicationPreferences applicationPreferences)
 	{
 		super("Exclude...");
@@ -79,6 +81,8 @@ public class ExcludeMenu
 		ndcMenu = new ExcludeNDCMenu();
 		loggerMenu = new ExcludeLoggerMenu();
 		savedMenu = new ExcludeSavedMenu(applicationPreferences);
+
+		statusTypeMenu = new ExcludeHttpStatusTypeMenu();
 	}
 
 	public void setEventWrapper(EventWrapper eventWrapper)
@@ -104,6 +108,8 @@ public class ExcludeMenu
 		ndcMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
 		savedMenu.setViewContainer(viewContainer);
+
+		statusTypeMenu.setViewContainer(viewContainer);
 		updateState();
 	}
 
@@ -143,11 +149,12 @@ public class ExcludeMenu
 		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
+			add(statusTypeMenu);
+			addSeparator();
 			add(savedMenu);
 
-			setEnabled(
-					savedMenu.isEnabled()
-			);
+			// statusTypeMenu will always be enabled if an event exists at all
+			setEnabled(true);
 			return;
 		}
 
