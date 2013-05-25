@@ -42,6 +42,7 @@ public class FocusMDCMenu
 	public FocusMDCMenu()
 	{
 		super("MDC...");
+		setToolTipText("Mapped Diagnostic Context");
 		setViewContainer(null);
 		setEventWrapper(null);
 	}

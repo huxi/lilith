@@ -41,6 +41,7 @@ public class FocusNDCMenu
 	public FocusNDCMenu()
 	{
 		super("NDC...");
+		setToolTipText("Nested Diagnostic Context");
 		setViewContainer(null);
 		setEventWrapper(null);
 	}
