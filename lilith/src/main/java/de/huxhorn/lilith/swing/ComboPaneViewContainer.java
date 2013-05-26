@@ -43,12 +43,16 @@ import javax.swing.*;
 public abstract class ComboPaneViewContainer<T extends Serializable>
 	extends ViewContainer<T>
 {
+	private static final long serialVersionUID = -399179541035021703L;
+
+	public static final String UNFILTERED = "Unfiltered";
 	private final Logger logger = LoggerFactory.getLogger(ComboPaneViewContainer.class);
 
 	private SourceChangeListener sourceChangeListener;
 	private boolean disposed;
 	private EventWrapper<T> selectedEvent;
 	private JPanel contentPane;
+	private final JComboBox comboBox;
 	private DefaultComboBoxModel comboBoxModel;
 	private int comboCounter;
 	private CardLayout cardLayout;
@@ -62,10 +66,10 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		comboBoxPane = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		comboBoxModel = new DefaultComboBoxModel();
-		JComboBox cb = new JComboBox(comboBoxModel);
-		cb.setRenderer(new MyComboBoxRenderer());
-		cb.setEditable(false);
-		cb.addItemListener(new ComboItemListener());
+		comboBox = new JComboBox(comboBoxModel);
+		comboBox.setRenderer(new MyComboBoxRenderer());
+		comboBox.setEditable(false);
+		comboBox.addItemListener(new ComboItemListener());
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -83,7 +87,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
 
-		comboBoxPane.add(cb, gbc);
+		comboBoxPane.add(comboBox, gbc);
 		cardLayout = new CardLayout();
 		contentPane = new JPanel(cardLayout);
 		setLayout(new BorderLayout());
@@ -128,20 +132,38 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	{
 		public void itemStateChanged(ItemEvent e)
 		{
-			ViewHolder holder = (ViewHolder) comboBoxModel.getSelectedItem();
-			if(holder != null)
+			Object item = comboBoxModel.getSelectedItem();
+			if(item == null)
 			{
-				cardLayout.show(contentPane, holder.getId());
-				if(getViewIndex() > 0)
-				{
-					closeAction.setEnabled(true);
-				}
-				else
-				{
-					closeAction.setEnabled(false);
-				}
-				selectedViewChanged();
+				// being paranoid
+				return;
 			}
+			ViewHolder holder = (ViewHolder) item;
+			Condition filter = null;
+			EventWrapperViewPanel<T> view = holder.getView();
+			if(view != null)
+			{
+				EventSource source = view.getEventSource();
+				filter = source.getFilter();
+			}
+			if(filter == null)
+			{
+				comboBox.setToolTipText(UNFILTERED);
+			}
+			else
+			{
+				comboBox.setToolTipText(TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(TextPreprocessor.formatCondition(filter))));
+			}
+			cardLayout.show(contentPane, holder.getId());
+			if(getViewIndex() > 0)
+			{
+				closeAction.setEnabled(true);
+			}
+			else
+			{
+				closeAction.setEnabled(false);
+			}
+			selectedViewChanged();
 		}
 	}
 
@@ -536,24 +558,21 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 					if(filter == null)
 					{
-						title = "Unfiltered";
+						title = UNFILTERED;
 						toolTip = title;
 					}
 					else
 					{
-						SavedCondition savedCondition = getMainFrame().getApplicationPreferences()
-							.resolveSavedCondition(filter);
+						SavedCondition savedCondition = getMainFrame().getApplicationPreferences().resolveSavedCondition(filter);
 						if(savedCondition != null)
 						{
 							title = savedCondition.getName();
-							toolTip = filter.toString();
 						}
 						else
 						{
-							String text = filter.toString();
-							title = text;
-							toolTip = text;
+							title = filter.toString();
 						}
+						toolTip = TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(TextPreprocessor.formatCondition(filter)));
 					}
 				}
 

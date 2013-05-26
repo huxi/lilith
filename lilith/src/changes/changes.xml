@@ -76,6 +76,10 @@
 		</release>
 
 		<release version="0.9.44" date="TBD" description="Future release">
+            <action dev="jhux" type="update">
+                Significantly enhanced tooltips of the filtered view combo.
+                They now show a pretty-printed string representation of the active condition.
+            </action>
 			<action dev="jhux" type="update">
 				Enhanced "Focus..." and "Exclude..." popup menus.
 			</action>

@@ -17,14 +17,23 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.sulky.conditions.And;
+import de.huxhorn.sulky.conditions.Condition;
+import de.huxhorn.sulky.conditions.ConditionGroup;
+import de.huxhorn.sulky.conditions.ConditionWrapper;
+import de.huxhorn.sulky.conditions.Not;
+import de.huxhorn.sulky.conditions.Or;
 import de.huxhorn.sulky.formatting.SimpleXml;
+
+import java.util.List;
 
 public class TextPreprocessor
 {
-	private static final int MAX_LINE_LENGTH = 80;
+	private static final int MAX_LINE_LENGTH = 100;
 	private static final int MAX_LINES = 25;
 	private static final String TAB_REPLACEMENT = "    ";
 	private static final String LINE_TRUNCATION = "[..]";
+	private static final String INDENT = "  ";
 
 	public static String cropLine(String text)
 	{
@@ -153,5 +162,118 @@ public class TextPreprocessor
 		text = text.replace("\n", "<br>");
 		return "<html><tt><pre>" + text + "</pre></tt></html>";
 
+	}
+
+	public static String formatCondition(Condition condition)
+	{
+		if(condition == null)
+		{
+			return null;
+		}
+		StringBuilder result = new StringBuilder();
+
+		formatCondition(condition, result, 0);
+
+		return result.toString();
+	}
+
+	private static void formatCondition(Condition condition, StringBuilder result, int indent) {
+		if(condition == null)
+		{
+			appendIndent(result, indent);
+			result.append("null");
+		}
+		else if(condition instanceof ConditionWrapper)
+		{
+			ConditionWrapper wrapper = (ConditionWrapper)condition;
+			String operator;
+			if(wrapper instanceof Not)
+			{
+				operator = "!";
+			}
+			else
+			{
+				// Unknown wrapper. Improvise.
+				operator = wrapper.getClass().getSimpleName();
+			}
+			Condition c = wrapper.getCondition();
+			appendIndent(result, indent);
+			result.append(operator).append("(");
+			if(c == null)
+			{
+				result.append("null");
+			}
+			else
+			{
+				result.append("\n");
+				formatCondition(c, result, indent+1);
+				appendIndent(result, indent);
+			}
+			result.append(")");
+		}
+		else if(condition instanceof ConditionGroup)
+		{
+			ConditionGroup group = (ConditionGroup) condition;
+			String operator;
+			if(group instanceof And)
+			{
+				operator = "&&";
+			}
+			else if(group instanceof Or)
+			{
+				operator = "||";
+			}
+			else
+			{
+				// Unknown group. Improvise.
+				operator = group.getClass().getSimpleName();
+			}
+			List<Condition> conditions = group.getConditions();
+			appendIndent(result, indent);
+			result.append("(");
+			if(conditions == null || conditions.isEmpty())
+			{
+				result.append("[").append(operator).append(" without conditions.]");
+			}
+			else
+			{
+				result.append("\n");
+				boolean first = true;
+				for(Condition current : conditions)
+				{
+					if(first)
+					{
+						first = false;
+					}
+					else
+					{
+						appendIndent(result, indent);
+						result.append(operator).append("\n");
+					}
+					formatCondition(current, result, indent+1);
+				}
+				appendIndent(result, indent);
+			}
+			result.append(")");
+		}
+		else
+		{
+			// an "ordinary" condition.
+			appendIndent(result, indent);
+			result.append(condition);
+		}
+
+		if(indent > 0)
+		{
+			result.append("\n");
+		}
+	}
+
+	private static void appendIndent(StringBuilder result, int indent)
+	{
+		for(int i=0;i<indent;i++)
+		{
+			result.append(INDENT);
+		}
 	}
 }
