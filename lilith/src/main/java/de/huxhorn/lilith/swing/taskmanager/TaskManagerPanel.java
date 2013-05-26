@@ -141,6 +141,7 @@ public class TaskManagerPanel<T>
 		if(task != null && task.getDescription() != null)
 		{
 			details.setText(task.getDescription());
+			details.setCaretPosition(0);
 		}
 		else
 		{
