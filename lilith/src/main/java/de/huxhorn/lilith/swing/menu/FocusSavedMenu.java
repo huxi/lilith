@@ -40,7 +40,7 @@ public class FocusSavedMenu
 
 	public FocusSavedMenu(ApplicationPreferences applicationPreferences)
 	{
-		super("Saved...");
+		super("Saved");
 		this.applicationPreferences = applicationPreferences;
 		setViewContainer(null);
 		setConditionNames(applicationPreferences.getConditionNames());

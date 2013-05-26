@@ -42,7 +42,7 @@ public class FocusMarkerMenu
 
 	public FocusMarkerMenu()
 	{
-		super("Marker...");
+		super("Marker");
 		setViewContainer(null);
 		setEventWrapper(null);
 	}

@@ -35,7 +35,7 @@ public class FocusLevelMenu
 
 	public FocusLevelMenu()
 	{
-		super("Level...");
+		super("Level");
 		setViewContainer(null);
 		LoggingEvent.Level[] values = LoggingEvent.Level.values();
 		levelActions = new FocusLevelAction[values.length-1];

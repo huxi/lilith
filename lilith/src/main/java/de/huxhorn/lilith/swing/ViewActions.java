@@ -111,7 +111,7 @@ public class ViewActions
 	private EditSourceNameMenuAction editSourceNameMenuAction;
 	private SaveLayoutAction saveLayoutAction;
 	private ResetLayoutAction resetLayoutAction;
-	private EditConditionMenuAction editConditionMenuAction;
+	private SaveConditionMenuAction saveConditionMenuAction;
 
 	private ZoomInMenuAction zoomInMenuAction;
 	private ZoomOutMenuAction zoomOutMenuAction;
@@ -275,7 +275,7 @@ public class ViewActions
 		editSourceNameMenuAction = new EditSourceNameMenuAction();
 		saveLayoutAction = new SaveLayoutAction();
 		resetLayoutAction = new ResetLayoutAction();
-		editConditionMenuAction = new EditConditionMenuAction();
+		saveConditionMenuAction = new SaveConditionMenuAction();
 
 		zoomInMenuAction = new ZoomInMenuAction();
 		zoomOutMenuAction = new ZoomOutMenuAction();
@@ -395,8 +395,8 @@ public class ViewActions
 			editMenu.add(current);
 		}
 		editMenu.addSeparator();
-		customCopyMenu = new JMenu("Custom copy...");
-		customCopyPopupMenu = new JMenu("Custom copy...");
+		customCopyMenu = new JMenu("Custom copy");
+		customCopyPopupMenu = new JMenu("Custom copy");
 		editMenu.add(customCopyMenu);
 
 		// Search
@@ -408,6 +408,8 @@ public class ViewActions
 		searchMenu.add(findNextAction);
 		searchMenu.add(findPreviousActiveAction);
 		searchMenu.add(findNextActiveAction);
+		searchMenu.addSeparator();
+		searchMenu.add(saveConditionMenuAction);
 		searchMenu.addSeparator();
 
 		focusMenu = new FocusMenu(mainFrame.getApplicationPreferences());
@@ -427,7 +429,6 @@ public class ViewActions
 		viewMenu.add(focusMessageAction);
 		//viewMenu.add(statisticsMenuAction);
 		viewMenu.add(editSourceNameMenuAction);
-		viewMenu.add(editConditionMenuAction);
 		viewMenu.addSeparator();
 		viewMenu.add(zoomInMenuAction);
 		viewMenu.add(zoomOutMenuAction);
@@ -587,7 +588,7 @@ public class ViewActions
 
 		scrollToBottomMenuAction.updateAction();
 		editSourceNameMenuAction.updateAction();
-		editConditionMenuAction.updateAction();
+		saveConditionMenuAction.updateAction();
 		zoomInMenuAction.updateAction();
 		zoomOutMenuAction.updateAction();
 		resetZoomMenuAction.updateAction();
@@ -1006,7 +1007,7 @@ public class ViewActions
 
 		popup.add(showUnfilteredMenuItem);
 
-		filterPopupMenu = new JMenu("Filter...");
+		filterPopupMenu = new JMenu("Filter");
 		popup.add(filterPopupMenu);
 		filterPopupMenu.add(closeFilterAction);
 		filterPopupMenu.add(closeOtherFiltersAction);
@@ -1023,7 +1024,7 @@ public class ViewActions
 
 		updateCustomCopyMenu(this.eventWrapper);
 
-		copyPopupMenu = new JMenu("Copy...");
+		copyPopupMenu = new JMenu("Copy");
 		popup.add(copyPopupMenu);
 		copyPopupMenu.add(copySelectionAction);
 		copyPopupMenu.addSeparator();
@@ -1043,7 +1044,7 @@ public class ViewActions
 		copyPopupMenu.addSeparator();
 		copyPopupMenu.add(customCopyPopupMenu);
 
-		sendToPopupMenu = new JMenu("Send to...");
+		sendToPopupMenu = new JMenu("Send to");
 		popup.add(sendToPopupMenu);
 
 		popup.add(gotoSourceAction);
@@ -1718,14 +1719,14 @@ public class ViewActions
 		}
 	}
 
-	private class EditConditionMenuAction
+	private class SaveConditionMenuAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = -8380709624103338783L;
 
-		public EditConditionMenuAction()
+		public SaveConditionMenuAction()
 		{
-			super("Add condition...");
+			super("Save condition...");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_CONDITION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1740,6 +1741,7 @@ public class ViewActions
 		public void updateAction()
 		{
 			boolean enable = false;
+			String tooltip = null;
 			if(viewContainer != null)
 			{
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
@@ -1750,10 +1752,12 @@ public class ViewActions
 					Condition condition = eventWrapperViewPanel.getCombinedCondition(currentFilter);
 					if(condition != null)
 					{
+						tooltip = TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(TextPreprocessor.formatCondition(condition)));
 						enable = true;
 					}
 				}
 			}
+			putValue(Action.SHORT_DESCRIPTION, tooltip);
 			setEnabled(enable);
 		}
 	}

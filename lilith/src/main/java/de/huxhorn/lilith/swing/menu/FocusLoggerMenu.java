@@ -41,7 +41,7 @@ public class FocusLoggerMenu
 
 	public FocusLoggerMenu()
 	{
-		super("Logger...");
+		super("Logger");
 		setViewContainer(null);
 		setEventWrapper(null);
 	}

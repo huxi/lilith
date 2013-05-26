@@ -64,7 +64,7 @@ public class ExcludeMenu
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences)
 	{
-		super("Exclude...");
+		super("Exclude");
 		this.applicationPreferences = applicationPreferences;
 		createUI();
 		setViewContainer(null);

@@ -36,7 +36,7 @@ public class FocusHttpStatusTypeMenu
 
 	public FocusHttpStatusTypeMenu()
 	{
-		super("Status Type...");
+		super("Status Type");
 		setViewContainer(null);
 		HttpStatus.Type[] values = HttpStatus.Type.values();
 		statusTypeActions = new FocusHttpStatusTypeAction[values.length];

@@ -63,7 +63,7 @@ public class FocusMenu
 
 	public FocusMenu(ApplicationPreferences applicationPreferences)
 	{
-		super("Focus...");
+		super("Focus");
 		this.applicationPreferences = applicationPreferences;
 		createUI();
 		setViewContainer(null);
