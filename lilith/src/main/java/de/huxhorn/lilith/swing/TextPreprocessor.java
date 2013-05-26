@@ -152,7 +152,7 @@ public class TextPreprocessor
 		}
 	}
 
-	public static String preformattedTooltip(String text)
+	public static String wrapWithPre(String text)
 	{
 		if(text == null)
 		{
@@ -160,8 +160,16 @@ public class TextPreprocessor
 		}
 		text = SimpleXml.escape(text);
 		text = text.replace("\n", "<br>");
-		return "<html><tt><pre>" + text + "</pre></tt></html>";
+		return "<tt><pre>" + text + "</pre></tt>";
+	}
 
+	public static String preformattedTooltip(String text)
+	{
+		if(text == null)
+		{
+			return null;
+		}
+		return "<html>" + wrapWithPre(text) + "</html>";
 	}
 
 	public static String formatCondition(Condition condition)
