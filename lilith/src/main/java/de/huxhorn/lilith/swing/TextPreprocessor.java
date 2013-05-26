@@ -255,7 +255,7 @@ public class TextPreprocessor
 					}
 					else
 					{
-						appendIndent(result, indent);
+						appendIndent(result, indent+1);
 						result.append(operator).append("\n");
 					}
 					formatCondition(current, result, indent+1);
