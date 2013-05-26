@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.taskmanager.table;
 
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskManager;
@@ -35,6 +36,8 @@ import javax.swing.event.TableModelListener;
 public class TaskTable<T>
 	extends JTable
 {
+	private static final long serialVersionUID = -7788744990458100395L;
+
 	private final Logger logger = LoggerFactory.getLogger(TaskTable.class);
 	private TaskTableModel<T> taskTableModel;
 
@@ -116,32 +119,32 @@ public class TaskTable<T>
 		{
 			StringBuilder result = new StringBuilder();
 
-			result.append("<HTML><BODY>");
-			result.append("<P>").append(task.getName()).append(" (ID=").append(task.getId()).append(")</P>");
+			result.append("<html><body>");
+			result.append("<p>").append(task.getName()).append(" (ID=").append(task.getId()).append(")</p>");
 			String description = task.getDescription();
 			if(description != null)
 			{
-				result.append("<P>").append(description).append("</P>");
+				result.append("<p>").append(TextPreprocessor.wrapWithPre(TextPreprocessor.cropTextBlock(description))).append("</p>");
 			}
 			Map<String, String> metaData = task.getMetaData();
 			if(metaData != null && metaData.size() > 0)
 			{
-				result.append("<TABLE border=\"1\">");
-				result.append("<TR><TH>Key</TH><TH>Value</TH></TR>");
+				result.append("<table border=\"1\">");
+				result.append("<tr><th>Key</th><th>Value</th></tr>");
 				for(Map.Entry<String, String> current : metaData.entrySet())
 				{
-					result.append("<TR>");
-					result.append("<TD>");
-					result.append(current.getKey());
-					result.append("</TD>");
-					result.append("<TD>");
-					result.append(current.getValue());
-					result.append("</TD>");
-					result.append("</TR>");
+					result.append("<tr>");
+					result.append("<td>");
+					result.append(TextPreprocessor.cropToSingleLine(current.getKey()));
+					result.append("</td>");
+					result.append("<td>");
+					result.append(TextPreprocessor.cropToSingleLine(current.getValue()));
+					result.append("</td>");
+					result.append("</tr>");
 				}
-				result.append("</TABLE>");
+				result.append("</table>");
 			}
-			result.append("</BODY></HTML>");
+			result.append("</body></html>");
 
 			return result.toString();
 		}

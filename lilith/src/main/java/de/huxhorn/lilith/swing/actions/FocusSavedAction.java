@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.conditions.Condition;
@@ -39,7 +40,7 @@ public class FocusSavedAction
 		{
 			throw new IllegalArgumentException("Condition of "+savedCondition+" is null!");
 		}
-		putValue(Action.SHORT_DESCRIPTION, condition.toString());
+		putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(TextPreprocessor.formatCondition(condition))));
 		setViewContainer(viewContainer);
 	}
 

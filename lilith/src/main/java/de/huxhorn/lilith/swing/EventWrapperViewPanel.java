@@ -1372,10 +1372,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		Map<String, String> metaData = CallableMetaData.createFindMetaData(condition, eventSource, currentRow);
 
-		String description = "Executing '" + name + "' for condition " + metaData
-			.get(CallableMetaData.FIND_TASK_META_CONDITION)
-			+ " on " + metaData
-			.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER) + " starting at row " + currentRow + ".";
+		String description = "Executing '" + name + "'  on " +
+				metaData.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER) +
+				" starting at row " + currentRow + ".\n\n" +
+				metaData.get(CallableMetaData.FIND_TASK_META_CONDITION);
 
 		findPanel.enableFindComponents(false, condition);
 		findResultListener.setCallable(callable);

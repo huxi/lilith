@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableColumnModel;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableModel;
 import de.huxhorn.sulky.conditions.Condition;
@@ -43,6 +44,8 @@ import javax.swing.event.ListSelectionListener;
 public class ConditionsPanel
 	extends JPanel
 {
+	private static final long serialVersionUID = -2757940105037104853L;
+
 	private final Logger logger = LoggerFactory.getLogger(ConditionsPanel.class);
 
 	private PreferencesDialog preferencesDialog;
@@ -142,7 +145,7 @@ public class ConditionsPanel
 		String description = "";
 		if(condition != null)
 		{
-			description = "" + condition.getCondition();
+			description = TextPreprocessor.formatCondition(condition.getCondition());
 		}
 		conditionTextArea.setText(description);
 	}

@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.callables;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.buffers.filtering.FilteringBuffer;
@@ -42,7 +43,7 @@ public class CallableMetaData
 		String conditionStr = null;
 		if(condition != null)
 		{
-			conditionStr = condition.toString();
+			conditionStr = TextPreprocessor.formatCondition(condition);
 		}
 		Buffer<EventWrapper<T>> buffer = null;
 		String sourceIdentifierStr = null;
@@ -71,7 +72,7 @@ public class CallableMetaData
 		String conditionStr = null;
 		if(condition != null)
 		{
-			conditionStr = condition.toString();
+			conditionStr = TextPreprocessor.formatCondition(condition);
 		}
 		Buffer<EventWrapper<T>> buffer = null;
 		String sourceIdentifierStr = null;

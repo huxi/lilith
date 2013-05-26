@@ -187,9 +187,7 @@ public abstract class ViewContainer<T extends Serializable>
 		EventWrapperViewPanel<T> newViewPanel = createViewPanel(newEventSource);
 		filterMapping.put(callable, newViewPanel);
 		addView(newViewPanel);
-		taskManager.startTask(callable, "Filtering", "Filtering " + metaData
-				.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
-				+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
+		taskManager.startTask(callable, "Filtering", createFilteringMessage(metaData), metaData);
 	}
 
 	public void replaceFilteredView(EventWrapperViewPanel<T> original, Condition filter)
@@ -231,9 +229,7 @@ public abstract class ViewContainer<T extends Serializable>
 				// restore mapping of original view, this time with the new callable
 				filterMapping.put(callable, original);
 				// start the new task.
-				taskManager.startTask(callable, "Filtering", "Filtering " + metaData
-						.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER)
-						+ " on condition " + metaData.get(CallableMetaData.FIND_TASK_META_CONDITION) + ".", metaData);
+				taskManager.startTask(callable, "Filtering", createFilteringMessage(metaData) , metaData);
 			}
 		}
 		else
@@ -244,6 +240,11 @@ public abstract class ViewContainer<T extends Serializable>
 
 	}
 
+	private static String createFilteringMessage(Map<String, String> metaData)
+	{
+		return "Filtering " + metaData.get(CallableMetaData.FIND_TASK_META_SOURCE_IDENTIFIER) + ".\n\n" +
+				metaData.get(CallableMetaData.FIND_TASK_META_CONDITION);
+	}
 	public ViewWindow resolveViewWindow()
 	{
 		Container parent = getParent();
