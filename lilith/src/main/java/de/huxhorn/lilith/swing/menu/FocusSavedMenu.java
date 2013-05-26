@@ -91,6 +91,12 @@ public class FocusSavedMenu
 			return;
 		}
 
+		// update viewContainer of all actions
+		for(FocusSavedAction current : savedConditionActions)
+		{
+			current.setViewContainer(viewContainer);
+		}
+
 		if(getMenuComponentCount() == 0)
 		{
 			// this indicates that the conditions have changed.
@@ -98,12 +104,6 @@ public class FocusSavedMenu
 			{
 				add(current);
 			}
-		}
-
-		// update viewContainer of all actions
-		for(FocusSavedAction current : savedConditionActions)
-		{
-			current.setViewContainer(viewContainer);
 		}
 
 		setEnabled(true);
