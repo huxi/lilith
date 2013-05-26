@@ -1014,6 +1014,8 @@ public class ViewActions
 		filterPopupMenu.add(closeAllFiltersAction);
 
 		popup.addSeparator();
+		popup.add(saveConditionMenuAction);
+		popup.addSeparator();
 
 		focusPopupMenu = new FocusMenu(mainFrame.getApplicationPreferences());
 		excludePopupMenu = new ExcludeMenu(mainFrame.getApplicationPreferences());
