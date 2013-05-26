@@ -21,10 +21,30 @@
 		While being the most general, it's also the one with the poorest performance, for the same reason.<br/>
 		This condition is the default condition of the search panel.
 	</li>
+	<li>Level&gt;=<br/>
+		Checks only if the level of the logging event is higher or equal than given string. Valid values are TRACE (useless, shows all events), DEBUG, INFO, WARN &amp; ERROR (shows only errors).<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a level.
+	</li>
 	<li>message.contains<br/>
 		Checks only if the message of the logging event contains the given string.<br/>
 		It will only return a positive result in case of logging events because access events don't have
 		a message.
+	</li>
+	<li>message.equals<br/>
+		Checks only if the message of the logging event equals the given string.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a message.
+	</li>
+	<li>messagePattern.contains<br/>
+		Checks only if the message pattern of the logging event contains the given string.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a message pattern.
+	</li>
+	<li>messagePattern.equals<br/>
+		Checks only if the message pattern of the logging event equals the given string.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a message pattern.
 	</li>
 	<li>logger.startsWith<br/>
 		Checks only if the logger name of the logging event starts with the given string.<br/>
@@ -32,15 +52,17 @@
 		It will only return a positive result in case of logging events because access events don't have
 		a logger name.
 	</li>
+	<li>logger.contains<br/>
+		Checks only if the logger name of the logging event contains the given string.<br/>
+		This condition is useful to select a subset of events based on the package name of the logging class.
+		It is less strict than logger.startsWith.<br/>
+		It will only return a positive result in case of logging events because access events don't have
+		a logger name.
+	</li>
 	<li>logger.equals<br/>
 		Checks only if the logger name of the logging event equals the given string.<br/>
 		It will only return a positive result in case of logging events because access events don't have
 		a logger name.
-	</li>
-	<li>Level&gt;=<br/>
-		Checks only if the level of the logging event is higher or equal than given string. Valid values are TRACE (useless, shows all events), DEBUG, INFO, WARN &amp; ERROR (shows only errors).<br/>
-		It will only return a positive result in case of logging events because access events don't have
-		a level.
 	</li>
 	<li>CallLocation<br/>
 		Checks only if the call location, i.e. the first element of a logging events call stack, is exactly the same as the StackTraceElement given as the search string. Format is required to be the same as StackTraceElement.toString(). Use "Copy call location" for ease of use.<br/>
@@ -54,14 +76,44 @@
 
 <h2><a name="saved">Saved conditions</a></h2>
 
-<p>It's possible to save conditions using "View" =&gt; "Add condition...".
-	The shortcut for this functionality is *command*-I.<br/>
-	Such saved conditions can be (re)used by entering "#condition#&lt;conditionName&gt;" into the search box.</p>
-
-<p>Beside that, saved conditions also have the effect that their name is used as the title of a
-	filtered views tab instead of the (most likely much longer) string representation of the condition.</p>
-
+<p>You can save conditions using "Search" =&gt; "Save condition..." or the
+	respective entry in the popup menu.<br/>
+	The shortcut for this functionality is *command*-I.</p>
 <p>Saved conditions can be configured in the <a href="prefs://Conditions">Conditions preferences</a>.</p>
+<p>They have various uses:</p>
+	<ul>
+		<li>
+			they show up in the "Focus"/"Exclude" sub-menus of the "Search" and the popup menu.<br/>
+			This is the quickest way to use one of them.
+		</li>
+		<li>
+			they can be used by entering "#condition#&lt;conditionName&gt;" into the search box.
+		</li>
+		<li>
+			if a view is filtered by a condition that matches a saved condition then the title of that
+			view is changed to the condition name.
+		</li>
+		<li>
+			they can be set to "Active" in the condition pane of the preferences.
+			<ul>
+				<li>
+					You can quickly jump to the previous (*command*-L) and next (*command* shift-L) event
+					that is matching any of the active conditions.
+				</li>
+				<li>
+					Active conditions are always evaluated for every single row of the table.<br/>
+					Because of that, too many or too complex active conditions can negatively
+					influence performance.
+				</li>
+				<li>
+					They can influence the color of a row by means of text-, background- or
+					border-color separately. This is configurable by editing the saved condition.<br/>
+					Since changes to the colors can be partial, the order of active conditions is relevant.
+				</li>
+			</ul>
+		</li>
+	</ul>
+
 
 <p><a href="#top">Back to top.</a></p>
 

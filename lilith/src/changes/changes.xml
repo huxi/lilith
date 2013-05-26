@@ -76,18 +76,25 @@
 		</release>
 
 		<release version="0.9.44" date="TBD" description="Future release">
-            <action dev="jhux" type="update">
-                Significantly enhanced tooltips of the filtered view combo.
-                They now show a pretty-printed string representation of the active condition.
-            </action>
 			<action dev="jhux" type="update">
-				Enhanced "Focus..." and "Exclude..." popup menus.
+				Renamed "Named" in the find combo to "Saved".
 			</action>
 			<action dev="jhux" type="update">
-				Added corresponding "Focus..." and "Exclude..." menus to the Search menu.
+				Renamed "Add condition..." to "Save condition..." and moved it from
+				the "View" to the "Search" menu. Also added it to the popup menu.
 			</action>
 			<action dev="jhux" type="update">
-				Logback 1.0.13 
+				Significantly enhanced tooltips of various condition-related components.
+				They now show a pretty-printed string representation of the condition.
+			</action>
+			<action dev="jhux" type="update">
+				Enhanced "Focus" and "Exclude" popup menus.
+			</action>
+			<action dev="jhux" type="add">
+				Added corresponding "Focus" and "Exclude" menus to the Search menu.
+			</action>
+			<action dev="jhux" type="update">
+				Logback 1.0.13
 			</action>
 		</release>
 

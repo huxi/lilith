@@ -15,8 +15,8 @@
 <p>Lilith starts the following event producers:</p>
 
 <ul>
-	<li>a standard LoggingEvent server socket on port 4560, as used by LogBACK.</li>
-	<li>a standard AccessEvent server socket on port 4570, as used by LogBACK.</li>
+	<li>standard LoggingEvent server sockets on port 4445 and 4560 that consume serialized LogBACK, log4j or log4j2 logging events.</li>
+	<li>a standard AccessEvent server socket on port 4570 that consumes serialized LogBACK access events.</li>
 	<li>a multiplex Lilith LoggingEvent server socket on ports 10000 (compressed)
 		and 10001 (uncompressed).
 	</li>
