@@ -179,7 +179,7 @@ public class ApplicationPreferences
 	private static final String EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE = "/clipboardFormatters/";
 	private static final String GROOVY_EXAMPLE_LIST = "list.txt";
 
-	public static final String NAMED_CONDITION = "Named";
+	public static final String SAVED_CONDITION = "Saved";
 
 	private static final String[] DEFAULT_CONDITIONS = new String[]{
 		EventContainsCondition.DESCRIPTION,
@@ -192,7 +192,7 @@ public class ApplicationPreferences
 		LoggerContainsCondition.DESCRIPTION,
 		LoggerEqualsCondition.DESCRIPTION,
 		CallLocationCondition.DESCRIPTION,
-		NAMED_CONDITION,
+		SAVED_CONDITION,
 	};
 
 	private static final String[] LEVEL_VALUES = {
@@ -330,14 +330,14 @@ public class ApplicationPreferences
 		}
 
 
-		if(NAMED_CONDITION.equals(conditionName))
+		if(SAVED_CONDITION.equals(conditionName))
 		{
 			SavedCondition savedCondition = resolveSavedCondition(value);
 			if(savedCondition != null)
 			{
 				return savedCondition.getCondition();
 			}
-			throw new IllegalArgumentException("Couldn't find condition named '" + value + "'.");
+			throw new IllegalArgumentException("Couldn't find saved condition named '" + value + "'.");
 		}
 
 		// we assume a groovy condition...
@@ -370,7 +370,7 @@ public class ApplicationPreferences
 		{
 			return ((LilithCondition)condition).getDescription();
 		}
-		// TODO? Special handling of NAMED_CONDITION
+		// TODO? Special handling of SAVED_CONDITION
 
 		return null;
 	}

@@ -301,7 +301,7 @@ public class FindPanel<T extends Serializable>
 			}
 			else
 			{
-				errorMessage = "Couldn't find condition named '" + conditionName + "'.";
+				errorMessage = "Couldn't find saved condition named '" + conditionName + "'.";
 				condition = null;
 			}
 		}
@@ -435,7 +435,7 @@ public class FindPanel<T extends Serializable>
 			findTextEventList.clear();
 			findTextEventList.addAll(applicationPreferences.retrieveLevelValues());
 		}
-		else if(ApplicationPreferences.NAMED_CONDITION.equals(selectedType))
+		else if(ApplicationPreferences.SAVED_CONDITION.equals(selectedType))
 		{
 			findTextEventList.clear();
 			findTextEventList.addAll(conditionNames);
@@ -603,7 +603,7 @@ public class FindPanel<T extends Serializable>
 			String selectedType = (String) findTypeCombo.getSelectedItem();
 
 			if(!LevelCondition.DESCRIPTION.equals(selectedType)
-				&& !ApplicationPreferences.NAMED_CONDITION.equals(selectedType))
+				&& !ApplicationPreferences.SAVED_CONDITION.equals(selectedType))
 			{
 				if(condition instanceof SearchStringCondition)
 				{
