@@ -44,6 +44,7 @@ public class ExcludeMenu
 
 	private EventWrapper eventWrapper;
 
+	private ExcludeSavedMenu savedMenu;
 	private ExcludeMessagePatternAction messagePatternAction;
 	private JMenuItem messagePatternItem;
 	private ExcludeFormattedMessageAction formattedMessageAction;
@@ -54,7 +55,6 @@ public class ExcludeMenu
 	private ExcludeMarkerMenu markerMenu;
 	private ExcludeNDCMenu ndcMenu;
 	private ExcludeLoggerMenu loggerMenu;
-	private ExcludeSavedMenu savedMenu;
 	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
 	// not make sense.
 
@@ -73,6 +73,8 @@ public class ExcludeMenu
 
 	private void createUI()
 	{
+		savedMenu = new ExcludeSavedMenu(applicationPreferences);
+
 		messagePatternAction = new ExcludeMessagePatternAction();
 		formattedMessageAction=new ExcludeFormattedMessageAction();
 		callLocationAction=new ExcludeCallLocationAction();
@@ -83,7 +85,6 @@ public class ExcludeMenu
 		markerMenu = new ExcludeMarkerMenu();
 		ndcMenu = new ExcludeNDCMenu();
 		loggerMenu = new ExcludeLoggerMenu();
-		savedMenu = new ExcludeSavedMenu(applicationPreferences);
 
 		statusCodeAction = new ExcludeHttpStatusCodeAction();
 		statusCodeItem = new JMenuItem(statusCodeAction);
@@ -107,6 +108,8 @@ public class ExcludeMenu
 
 	public void setViewContainer(ViewContainer viewContainer)
 	{
+		savedMenu.setViewContainer(viewContainer);
+
 		messagePatternAction.setViewContainer(viewContainer);
 		formattedMessageAction.setViewContainer(viewContainer);
 		callLocationAction.setViewContainer(viewContainer);
@@ -114,7 +117,6 @@ public class ExcludeMenu
 		markerMenu.setViewContainer(viewContainer);
 		ndcMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
-		savedMenu.setViewContainer(viewContainer);
 
 		statusCodeAction.setViewContainer(viewContainer);
 		statusTypeMenu.setViewContainer(viewContainer);
@@ -129,6 +131,8 @@ public class ExcludeMenu
 		LoggingEvent loggingEvent = LoggingFilterBaseAction.resolveLoggingEvent(wrapper);
 		if(loggingEvent != null)
 		{
+			add(savedMenu);
+			addSeparator();
 			add(messagePatternItem);
 			add(formattedMessageItem);
 			addSeparator();
@@ -139,8 +143,6 @@ public class ExcludeMenu
 			add(ndcMenu);
 			addSeparator();
 			add(loggerMenu);
-			addSeparator();
-			add(savedMenu);
 
 			setEnabled(
 					messagePatternItem.isEnabled() ||
@@ -157,10 +159,10 @@ public class ExcludeMenu
 		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
+			add(savedMenu);
+			addSeparator();
 			add(statusCodeItem);
 			add(statusTypeMenu);
-			addSeparator();
-			add(savedMenu);
 
 			// statusTypeMenu will always be enabled if an event exists at all
 			setEnabled(true);

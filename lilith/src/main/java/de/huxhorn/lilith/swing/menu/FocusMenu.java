@@ -44,6 +44,7 @@ public class FocusMenu
 
 	private EventWrapper eventWrapper;
 
+	private FocusSavedMenu savedMenu;
 	private FocusMessagePatternAction messagePatternAction;
 	private JMenuItem messagePatternItem;
 	private FocusFormattedMessageAction formattedMessageAction;
@@ -54,7 +55,6 @@ public class FocusMenu
 	private FocusMarkerMenu markerMenu;
 	private FocusNDCMenu ndcMenu;
 	private FocusLoggerMenu loggerMenu;
-	private FocusSavedMenu savedMenu;
 	private FocusLevelMenu levelMenu;
 
 	private FocusHttpStatusCodeAction statusCodeAction;
@@ -72,6 +72,8 @@ public class FocusMenu
 
 	private void createUI()
 	{
+		savedMenu = new FocusSavedMenu(applicationPreferences);
+
 		messagePatternAction = new FocusMessagePatternAction();
 		formattedMessageAction=new FocusFormattedMessageAction();
 		callLocationAction=new FocusCallLocationAction();
@@ -82,7 +84,6 @@ public class FocusMenu
 		markerMenu = new FocusMarkerMenu();
 		ndcMenu = new FocusNDCMenu();
 		loggerMenu = new FocusLoggerMenu();
-		savedMenu = new FocusSavedMenu(applicationPreferences);
 		levelMenu = new FocusLevelMenu();
 
 		statusCodeAction = new FocusHttpStatusCodeAction();
@@ -107,6 +108,8 @@ public class FocusMenu
 
 	public void setViewContainer(ViewContainer viewContainer)
 	{
+		savedMenu.setViewContainer(viewContainer);
+
 		messagePatternAction.setViewContainer(viewContainer);
 		formattedMessageAction.setViewContainer(viewContainer);
 		callLocationAction.setViewContainer(viewContainer);
@@ -114,7 +117,6 @@ public class FocusMenu
 		markerMenu.setViewContainer(viewContainer);
 		ndcMenu.setViewContainer(viewContainer);
 		loggerMenu.setViewContainer(viewContainer);
-		savedMenu.setViewContainer(viewContainer);
 		levelMenu.setViewContainer(viewContainer);
 
 		statusCodeAction.setViewContainer(viewContainer);
@@ -130,6 +132,8 @@ public class FocusMenu
 		LoggingEvent loggingEvent = LoggingFilterBaseAction.resolveLoggingEvent(wrapper);
 		if(loggingEvent != null)
 		{
+			add(savedMenu);
+			addSeparator();
 			add(messagePatternItem);
 			add(formattedMessageItem);
 			addSeparator();
@@ -142,8 +146,6 @@ public class FocusMenu
 			add(ndcMenu);
 			addSeparator();
 			add(loggerMenu);
-			addSeparator();
-			add(savedMenu);
 
 			// levelMenu will always be enabled if an event exists at all
 			setEnabled(true);
@@ -153,10 +155,10 @@ public class FocusMenu
 		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
+			add(savedMenu);
+			addSeparator();
 			add(statusCodeItem);
 			add(statusTypeMenu);
-			addSeparator();
-			add(savedMenu);
 
 			// statusTypeMenu will always be enabled if an event exists at all
 			setEnabled(true);
