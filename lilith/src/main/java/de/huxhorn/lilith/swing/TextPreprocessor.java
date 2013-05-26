@@ -30,10 +30,10 @@ import java.util.List;
 public class TextPreprocessor
 {
 	private static final int MAX_LINE_LENGTH = 100;
-	private static final int MAX_LINES = 25;
+	private static final int MAX_LINES = 40;
 	private static final String TAB_REPLACEMENT = "    ";
 	private static final String LINE_TRUNCATION = "[..]";
-	private static final String INDENT = "  ";
+	private static final String INDENT = "    ";
 
 	public static String cropLine(String text)
 	{
