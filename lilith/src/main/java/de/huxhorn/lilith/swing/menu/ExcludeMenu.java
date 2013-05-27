@@ -44,7 +44,7 @@ public class ExcludeMenu
 
 	private EventWrapper eventWrapper;
 
-	private ExcludeSavedMenu savedMenu;
+	private ExcludeSavedConditionsMenu savedMenu;
 	private ExcludeMessagePatternAction messagePatternAction;
 	private JMenuItem messagePatternItem;
 	private ExcludeFormattedMessageAction formattedMessageAction;
@@ -73,7 +73,7 @@ public class ExcludeMenu
 
 	private void createUI()
 	{
-		savedMenu = new ExcludeSavedMenu(applicationPreferences);
+		savedMenu = new ExcludeSavedConditionsMenu(applicationPreferences);
 
 		messagePatternAction = new ExcludeMessagePatternAction();
 		formattedMessageAction=new ExcludeFormattedMessageAction();

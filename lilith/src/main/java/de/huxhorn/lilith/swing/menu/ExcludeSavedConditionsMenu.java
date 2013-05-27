@@ -19,22 +19,22 @@ package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.ExcludeSavedAction;
+import de.huxhorn.lilith.swing.actions.ExcludeSavedConditionAction;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-public class ExcludeSavedMenu
-	extends FocusSavedMenu
+public class ExcludeSavedConditionsMenu
+	extends FocusSavedConditionsMenu
 {
 	private static final long serialVersionUID = 6995608490657897758L;
 
-	public ExcludeSavedMenu(ApplicationPreferences applicationPreferences)
+	public ExcludeSavedConditionsMenu(ApplicationPreferences applicationPreferences)
 	{
 		super(applicationPreferences);
 	}
 
 	@Override
-	protected ExcludeSavedAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
+	protected ExcludeSavedConditionAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
-		return new ExcludeSavedAction(viewContainer, savedCondition);
+		return new ExcludeSavedConditionAction(viewContainer, savedCondition);
 	}
 }

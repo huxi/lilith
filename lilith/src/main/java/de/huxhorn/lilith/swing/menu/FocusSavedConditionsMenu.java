@@ -19,7 +19,7 @@ package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.FocusSavedAction;
+import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
@@ -28,17 +28,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FocusSavedMenu
+public class FocusSavedConditionsMenu
 	extends JMenu
 	implements ViewContainerRelated
 {
 	private static final long serialVersionUID = 5642118791633046024L;
 	private final ApplicationPreferences applicationPreferences;
 
-	private List<FocusSavedAction> savedConditionActions;
+	private List<FocusSavedConditionAction> savedConditionActions;
 	private ViewContainer viewContainer;
 
-	public FocusSavedMenu(ApplicationPreferences applicationPreferences)
+	public FocusSavedConditionsMenu(ApplicationPreferences applicationPreferences)
 	{
 		super("Saved conditions");
 		this.applicationPreferences = applicationPreferences;
@@ -64,7 +64,7 @@ public class FocusSavedMenu
 		{
 			conditionNames = new ArrayList<String>(conditionNames);
 			Collections.sort(conditionNames, String.CASE_INSENSITIVE_ORDER);
-			savedConditionActions = new ArrayList<FocusSavedAction>(conditionNames.size());
+			savedConditionActions = new ArrayList<FocusSavedConditionAction>(conditionNames.size());
 			for(String current : conditionNames)
 			{
 				SavedCondition savedCondition = applicationPreferences.resolveSavedCondition(current);
@@ -92,7 +92,7 @@ public class FocusSavedMenu
 		}
 
 		// update viewContainer of all actions
-		for(FocusSavedAction current : savedConditionActions)
+		for(FocusSavedConditionAction current : savedConditionActions)
 		{
 			current.setViewContainer(viewContainer);
 		}
@@ -100,7 +100,7 @@ public class FocusSavedMenu
 		if(getMenuComponentCount() == 0)
 		{
 			// this indicates that the conditions have changed.
-			for(FocusSavedAction current : savedConditionActions)
+			for(FocusSavedConditionAction current : savedConditionActions)
 			{
 				add(current);
 			}
@@ -109,8 +109,8 @@ public class FocusSavedMenu
 		setEnabled(true);
 	}
 
-	protected FocusSavedAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
+	protected FocusSavedConditionAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
-		return new FocusSavedAction(viewContainer, savedCondition);
+		return new FocusSavedConditionAction(viewContainer, savedCondition);
 	}
 }

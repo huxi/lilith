@@ -17,25 +17,47 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.conditions.Condition;
-import de.huxhorn.sulky.conditions.Not;
 
-public class ExcludeSavedAction
-	extends FocusSavedAction
+import javax.swing.*;
+
+public class FocusSavedConditionAction
+		extends FilterBaseAction
 {
+	private static final long serialVersionUID = -1245643497938628684L;
 
-	private static final long serialVersionUID = 3102850203546278843L;
+	private final SavedCondition savedCondition;
 
-	public ExcludeSavedAction(ViewContainer viewContainer, SavedCondition savedCondition)
+	public FocusSavedConditionAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
-		super(viewContainer, savedCondition);
+		super(savedCondition.getName());
+		this.savedCondition = savedCondition;
+		Condition condition = savedCondition.getCondition();
+		if(condition == null)
+		{
+			throw new IllegalArgumentException("Condition of "+savedCondition+" is null!");
+		}
+		putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(TextPreprocessor.formatCondition(condition))));
+		setViewContainer(viewContainer);
+	}
+
+	@Override
+	protected void updateState()
+	{
+		if(viewContainer == null)
+		{
+			setEnabled(false);
+			return;
+		}
+		setEnabled(true);
 	}
 
 	@Override
 	protected Condition resolveCondition()
 	{
-		return new Not(super.resolveCondition());
+		return savedCondition.getCondition();
 	}
 }

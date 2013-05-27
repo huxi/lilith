@@ -44,7 +44,7 @@ public class FocusMenu
 
 	private EventWrapper eventWrapper;
 
-	private FocusSavedMenu savedMenu;
+	private FocusSavedConditionsMenu savedMenu;
 	private FocusMessagePatternAction messagePatternAction;
 	private JMenuItem messagePatternItem;
 	private FocusFormattedMessageAction formattedMessageAction;
@@ -72,7 +72,7 @@ public class FocusMenu
 
 	private void createUI()
 	{
-		savedMenu = new FocusSavedMenu(applicationPreferences);
+		savedMenu = new FocusSavedConditionsMenu(applicationPreferences);
 
 		messagePatternAction = new FocusMessagePatternAction();
 		formattedMessageAction=new FocusFormattedMessageAction();
