@@ -60,6 +60,8 @@ import java.util.ArrayList;
 public class TipOfTheDayDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = -1068053167252606619L;
+
 	private final Logger logger = LoggerFactory.getLogger(TipOfTheDayDialog.class);
 
 	private List<URL> tipsOfTheDay;
@@ -170,7 +172,7 @@ public class TipOfTheDayDialog
 
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane helpScrollPane = new FSScrollPane(helpPane);
-		helpScrollPane.setPreferredSize(new Dimension(400, 200));
+		helpScrollPane.setPreferredSize(new Dimension(600, 300));
 
 		gbc.gridy = 1;
 		gbc.weightx = 1.0;
