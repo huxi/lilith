@@ -34,7 +34,7 @@ public class FocusMDCAction
 
 	public FocusMDCAction(ViewContainer viewContainer, String key, String value)
 	{
-		super(key);
+		super(TextPreprocessor.cropToSingleLine(key));
 		this.key = key;
 		this.value = value;
 		putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(value)));
