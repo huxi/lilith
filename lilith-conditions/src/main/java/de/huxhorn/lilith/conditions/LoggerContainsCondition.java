@@ -55,6 +55,10 @@ public class LoggerContainsCondition
 		{
 			return false;
 		}
+		if(searchString.length() == 0)
+		{
+			return true;
+		}
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;

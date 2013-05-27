@@ -22,38 +22,45 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 
 public class MarkerContainsCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -4925872725394540757L;
 
 	public static final String DESCRIPTION = "Marker.contains";
 
-	private String markerName;
+	private String searchString;
 
 	public MarkerContainsCondition()
 	{
 		this(null);
 	}
 
-	public MarkerContainsCondition(String markerName)
+	public MarkerContainsCondition(String searchString)
 	{
-		this.markerName = markerName;
+		this.searchString = searchString;
 	}
 
-	public String getMarkerName() {
-		return markerName;
+	@Override
+	public String getSearchString()
+	{
+		return searchString;
 	}
 
-	public void setMarkerName(String markerName) {
-		this.markerName = markerName;
+	public void setSearchString(String searchString)
+	{
+		this.searchString = searchString;
 	}
 
 	@Override
 	public boolean isTrue(Object element)
 	{
-		if(markerName == null)
+		if(searchString == null)
 		{
 			return false;
+		}
+		if(searchString.length() == 0)
+		{
+			return true;
 		}
 		if(element instanceof EventWrapper)
 		{
@@ -68,14 +75,15 @@ public class MarkerContainsCondition
 				{
 					return false;
 				}
-				return marker.contains(markerName);
+				return marker.contains(searchString);
 			}
 		}
 		return false;
 	}
 
 	@Override
-	public MarkerContainsCondition clone() throws CloneNotSupportedException {
+	public MarkerContainsCondition clone() throws CloneNotSupportedException
+	{
 		return (MarkerContainsCondition) super.clone();
 	}
 
@@ -83,10 +91,10 @@ public class MarkerContainsCondition
 	{
 		StringBuilder result = new StringBuilder();
 		result.append(getDescription()).append("(");
-		if(markerName != null)
+		if(searchString != null)
 		{
 			result.append("\"");
-			result.append(markerName);
+			result.append(searchString);
 			result.append("\"");
 		}
 		else
@@ -104,14 +112,14 @@ public class MarkerContainsCondition
 
 		MarkerContainsCondition that = (MarkerContainsCondition) o;
 
-		if (markerName != null ? !markerName.equals(that.markerName) : that.markerName != null) return false;
+		if (searchString != null ? !searchString.equals(that.searchString) : that.searchString != null) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return markerName != null ? markerName.hashCode() : 0;
+		return searchString != null ? searchString.hashCode() : 0;
 	}
 
 	public String getDescription()

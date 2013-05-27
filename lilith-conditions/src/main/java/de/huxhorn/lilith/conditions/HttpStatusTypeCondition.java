@@ -24,7 +24,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import java.io.ObjectStreamException;
 
 public class HttpStatusTypeCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -3335718950761221210L;
 
@@ -68,6 +68,14 @@ public class HttpStatusTypeCondition
 
 	public boolean isTrue(Object value)
 	{
+		if(searchString == null)
+		{
+			return false;
+		}
+		if(searchString.length() == 0)
+		{
+			return true;
+		}
 		if(type == null)
 		{
 			return false;

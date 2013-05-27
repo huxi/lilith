@@ -23,7 +23,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import java.io.ObjectStreamException;
 
 public class LevelCondition
-	implements LilithCondition
+	implements LilithCondition, SearchStringCondition
 {
 	private static final long serialVersionUID = -5498023202272568557L;
 
@@ -67,6 +67,14 @@ public class LevelCondition
 
 	public boolean isTrue(Object value)
 	{
+		if(searchString == null)
+		{
+			return false;
+		}
+		if(searchString.length() == 0)
+		{
+			return true;
+		}
 		if(level == null)
 		{
 			return false;

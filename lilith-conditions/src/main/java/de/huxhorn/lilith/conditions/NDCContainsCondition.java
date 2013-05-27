@@ -56,12 +56,12 @@ public class NDCContainsCondition
 		{
 			return false;
 		}
+		if(searchString.length() == 0)
+		{
+			return true;
+		}
 		if(value instanceof EventWrapper)
 		{
-			if(searchString.length() == 0)
-			{
-				return true;
-			}
 			EventWrapper wrapper = (EventWrapper) value;
 			Object eventObj = wrapper.getEvent();
 			if(eventObj instanceof LoggingEvent)

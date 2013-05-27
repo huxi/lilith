@@ -71,6 +71,14 @@ public class CallLocationCondition
 
 	public boolean isTrue(Object value)
 	{
+		if(searchString == null)
+		{
+			return false;
+		}
+		if(searchString.length() == 0)
+		{
+			return true;
+		}
 		if(stackTraceElement == null)
 		{
 			return false;

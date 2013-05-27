@@ -83,14 +83,14 @@ public class EventContainsCondition
 		{
 			return false;
 		}
+		if(searchString.length() == 0)
+		{
+			return true;
+		}
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;
 			Object eventObj = wrapper.getEvent();
-			if(searchString.length() == 0)
-			{
-				return true;
-			}
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
