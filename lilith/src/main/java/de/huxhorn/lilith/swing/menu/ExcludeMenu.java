@@ -26,6 +26,10 @@ import de.huxhorn.lilith.swing.actions.AccessFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.ExcludeCallLocationAction;
 import de.huxhorn.lilith.swing.actions.ExcludeFormattedMessageAction;
+import de.huxhorn.lilith.swing.actions.ExcludeHttpMethodAction;
+import de.huxhorn.lilith.swing.actions.ExcludeHttpRemoteUserAction;
+import de.huxhorn.lilith.swing.actions.ExcludeHttpRequestUriAction;
+import de.huxhorn.lilith.swing.actions.ExcludeHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.ExcludeHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.ExcludeMessagePatternAction;
 import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
@@ -61,6 +65,14 @@ public class ExcludeMenu
 	private ExcludeHttpStatusCodeAction statusCodeAction;
 	private JMenuItem statusCodeItem;
 	private ExcludeHttpStatusTypeMenu statusTypeMenu;
+	private ExcludeHttpMethodAction methodAction;
+	private JMenuItem methodItem;
+	private ExcludeHttpRequestUriAction requestUriAction;
+	private JMenuItem requestUriItem;
+	private ExcludeHttpRequestUrlAction requestUrlAction;
+	private JMenuItem requestUrlItem;
+	private ExcludeHttpRemoteUserAction remoteUserAction;
+	private JMenuItem remoteUserItem;
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences)
 	{
@@ -89,6 +101,14 @@ public class ExcludeMenu
 		statusCodeAction = new ExcludeHttpStatusCodeAction();
 		statusCodeItem = new JMenuItem(statusCodeAction);
 		statusTypeMenu = new ExcludeHttpStatusTypeMenu();
+		methodAction = new ExcludeHttpMethodAction();
+		methodItem = new JMenuItem(methodAction);
+		requestUriAction = new ExcludeHttpRequestUriAction();
+		requestUriItem = new JMenuItem(requestUriAction);
+		requestUrlAction = new ExcludeHttpRequestUrlAction();
+		requestUrlItem = new JMenuItem(requestUrlAction);
+		remoteUserAction = new ExcludeHttpRemoteUserAction();
+		remoteUserItem = new JMenuItem(remoteUserAction);
 	}
 
 	public void setEventWrapper(EventWrapper eventWrapper)
@@ -103,6 +123,10 @@ public class ExcludeMenu
 		loggerMenu.setEventWrapper(eventWrapper);
 
 		statusCodeAction.setEventWrapper(eventWrapper);
+		methodAction.setEventWrapper(eventWrapper);
+		requestUriAction.setEventWrapper(eventWrapper);
+		requestUrlAction.setEventWrapper(eventWrapper);
+		remoteUserAction.setEventWrapper(eventWrapper);
 		updateState();
 	}
 
@@ -120,6 +144,10 @@ public class ExcludeMenu
 
 		statusCodeAction.setViewContainer(viewContainer);
 		statusTypeMenu.setViewContainer(viewContainer);
+		methodAction.setViewContainer(viewContainer);
+		requestUriAction.setViewContainer(viewContainer);
+		requestUrlAction.setViewContainer(viewContainer);
+		remoteUserAction.setViewContainer(viewContainer);
 		updateState();
 	}
 
@@ -163,6 +191,13 @@ public class ExcludeMenu
 			addSeparator();
 			add(statusCodeItem);
 			add(statusTypeMenu);
+			addSeparator();
+			add(methodItem);
+			addSeparator();
+			add(requestUriItem);
+			add(requestUrlItem);
+			addSeparator();
+			add(remoteUserItem);
 
 			// statusTypeMenu will always be enabled if an event exists at all
 			setEnabled(true);

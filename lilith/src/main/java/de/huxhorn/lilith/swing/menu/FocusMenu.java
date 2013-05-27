@@ -26,6 +26,10 @@ import de.huxhorn.lilith.swing.actions.AccessFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpMethodAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRemoteUserAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
 import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
@@ -60,6 +64,14 @@ public class FocusMenu
 	private FocusHttpStatusCodeAction statusCodeAction;
 	private JMenuItem statusCodeItem;
 	private FocusHttpStatusTypeMenu statusTypeMenu;
+	private FocusHttpMethodAction methodAction;
+	private JMenuItem methodItem;
+	private FocusHttpRequestUriAction requestUriAction;
+	private JMenuItem requestUriItem;
+	private FocusHttpRequestUrlAction requestUrlAction;
+	private JMenuItem requestUrlItem;
+	private FocusHttpRemoteUserAction remoteUserAction;
+	private JMenuItem remoteUserItem;
 
 	public FocusMenu(ApplicationPreferences applicationPreferences)
 	{
@@ -89,6 +101,14 @@ public class FocusMenu
 		statusCodeAction = new FocusHttpStatusCodeAction();
 		statusCodeItem = new JMenuItem(statusCodeAction);
 		statusTypeMenu = new FocusHttpStatusTypeMenu();
+		methodAction = new FocusHttpMethodAction();
+		methodItem = new JMenuItem(methodAction);
+		requestUriAction = new FocusHttpRequestUriAction();
+		requestUriItem = new JMenuItem(requestUriAction);
+		requestUrlAction = new FocusHttpRequestUrlAction();
+		requestUrlItem = new JMenuItem(requestUrlAction);
+		remoteUserAction = new FocusHttpRemoteUserAction();
+		remoteUserItem = new JMenuItem(remoteUserAction);
 	}
 
 	public void setEventWrapper(EventWrapper eventWrapper)
@@ -103,6 +123,10 @@ public class FocusMenu
 		loggerMenu.setEventWrapper(eventWrapper);
 
 		statusCodeAction.setEventWrapper(eventWrapper);
+		methodAction.setEventWrapper(eventWrapper);
+		requestUriAction.setEventWrapper(eventWrapper);
+		requestUrlAction.setEventWrapper(eventWrapper);
+		remoteUserAction.setEventWrapper(eventWrapper);
 		updateState();
 	}
 
@@ -121,6 +145,10 @@ public class FocusMenu
 
 		statusCodeAction.setViewContainer(viewContainer);
 		statusTypeMenu.setViewContainer(viewContainer);
+		methodAction.setViewContainer(viewContainer);
+		requestUriAction.setViewContainer(viewContainer);
+		requestUrlAction.setViewContainer(viewContainer);
+		remoteUserAction.setViewContainer(viewContainer);
 		updateState();
 	}
 
@@ -159,6 +187,13 @@ public class FocusMenu
 			addSeparator();
 			add(statusCodeItem);
 			add(statusTypeMenu);
+			addSeparator();
+			add(methodItem);
+			addSeparator();
+			add(requestUriItem);
+			add(requestUrlItem);
+			addSeparator();
+			add(remoteUserItem);
 
 			// statusTypeMenu will always be enabled if an event exists at all
 			setEnabled(true);
