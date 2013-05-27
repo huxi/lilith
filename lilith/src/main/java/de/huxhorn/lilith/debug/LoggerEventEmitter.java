@@ -185,9 +185,7 @@ public class LoggerEventEmitter
 
 	public void logASCII()
 	{
-		execute(new LogSkullRunnable(delay));
-		execute(new LogPinupRunnable(delay));
-		execute(new LogPinupLargeRunnable(delay));
+		execute(new LogASCIIRunnable(delay));
 	}
 
 
