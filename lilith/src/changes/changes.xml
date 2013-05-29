@@ -76,6 +76,10 @@
 		</release>
 
 		<release version="0.9.44" date="TBD" description="Future release">
+			<action dev="jhux" type="fix">
+				Status text is now properly updated in case of a replaced filter.
+				This was a bug in the sulky BufferTableModel.
+			</action>
 			<action dev="jhux" type="update">
 				Renamed "Named" in the find combo to "Saved".
 			</action>
