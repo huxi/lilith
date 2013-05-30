@@ -171,6 +171,8 @@ import javax.swing.border.EtchedBorder;
 public class MainFrame
 	extends JFrame
 {
+	private static final long serialVersionUID = 6138189654024239738L;
+
 	private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
 	private final File startupApplicationPath;
@@ -3985,13 +3987,13 @@ public class MainFrame
 
 		public void taskCreated(Task<Long> longTask)
 		{
-			if(logger.isInfoEnabled()) logger.info("Task "+longTask.getName()+" created.");
+			if(logger.isInfoEnabled()) logger.info("Task {} created.", longTask.getName());
 			updateTaskStatus();
 		}
 
 		public void executionFailed(Task<Long> longTask, ExecutionException exception)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Execution of task "+longTask.getName()+" failed!", exception);
+			if(logger.isWarnEnabled()) logger.warn("Execution of task {} failed!", longTask.getName(), exception);
 			String message="Execution of task "+longTask.getName()+" failed!";
 			Throwable cause=exception.getCause();
 			if(cause==null)
@@ -4011,7 +4013,7 @@ public class MainFrame
 
 		public void executionFinished(Task<Long> longTask, Long result)
 		{
-			if(logger.isInfoEnabled()) logger.info("Execution of task "+longTask.getName()+" finished!");
+			if(logger.isInfoEnabled()) logger.info("Execution of task {} finished!", longTask.getName());
 			updateTaskStatus();
 			Callable<Long> callable = longTask.getCallable();
 
@@ -4054,7 +4056,7 @@ public class MainFrame
 
 		public void executionCanceled(Task<Long> longTask)
 		{
-			if(logger.isInfoEnabled()) logger.info("Execution of task "+longTask.getName()+" canceled!");
+			if(logger.isInfoEnabled()) logger.info("Execution of task {} canceled!", longTask.getName());
 			Callable<Long> c = longTask.getCallable();
 			if(c instanceof ExportCallable)
 			{
@@ -4092,7 +4094,7 @@ public class MainFrame
 
 		public void progressUpdated(Task<Long> longTask, int progress)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Progress of task "+longTask.getName()+" updated to "+progress+".");
+			if(logger.isDebugEnabled()) logger.debug("Progress of task {} updated to {}.", longTask.getName(), progress);
 			updateTaskStatus();
 		}
 	}
