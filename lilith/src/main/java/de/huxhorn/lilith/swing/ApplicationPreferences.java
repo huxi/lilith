@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.beans.Encoder;
 import java.beans.Expression;
 import java.beans.PersistenceDelegate;
@@ -2854,6 +2855,17 @@ public class ApplicationPreferences
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while flushing preferences!", e);
 		}
+	}
+
+	public boolean isReplacingOnApply(ActionEvent event)
+	{
+		// TODO make default behavior configurable.
+		boolean result = false;
+		if(event == null || (ActionEvent.SHIFT_MASK & event.getModifiers()) == 0)
+		{
+			result = true;
+		}
+		return result;
 	}
 
 	/**

@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -57,6 +58,8 @@ public abstract class ViewContainer<T extends Serializable>
 		extends JPanel
 		implements DisposeOperation, FlushOperation
 {
+	private static final long serialVersionUID = 4834209079953596930L;
+
 	// TODO: property change instead of change?
 	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
 
@@ -99,7 +102,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 	private final List<ChangeListener> changeListeners = new LinkedList<ChangeListener>();
 	private EventWrapperViewPanel<T> defaultView;
-	private MainFrame mainFrame;
+	private final MainFrame mainFrame;
 	private TaskManager<Long> taskManager;
 	private Map<Callable<Long>, EventWrapperViewPanel<T>> filterMapping;
 	private FilterTaskListener filterTaskListener;
@@ -111,6 +114,10 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public ViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
+		if(mainFrame == null)
+		{
+			throw new IllegalArgumentException("mainFrame must not be null!");
+		}
 		this.mainFrame = mainFrame;
 		this.eventSource = eventSource;
 		taskManager = mainFrame.getLongWorkManager();
@@ -175,7 +182,7 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	public void applyCondition(Condition condition)
+	public void applyCondition(Condition condition, ActionEvent e)
 	{
 		if(condition == null)
 		{
@@ -197,7 +204,15 @@ public abstract class ViewContainer<T extends Serializable>
 			return;
 		}
 
-		replaceFilteredView(selectedView, filter);
+		ApplicationPreferences applicationPreferences = getMainFrame().getApplicationPreferences();
+		if(applicationPreferences.isReplacingOnApply(e))
+		{
+			replaceFilteredView(selectedView, filter);
+		}
+		else
+		{
+			addFilteredView(selectedView, filter);
+		}
 	}
 
 	public void addFilteredView(EventWrapperViewPanel<T> original, Condition filter)

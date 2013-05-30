@@ -76,6 +76,12 @@
 		</release>
 
 		<release version="0.9.44" date="TBD" description="Future release">
+			<action dev="jhux" type="add">
+				Added alternative behavior for Focus/Exclude actions.
+				By default, those actions are replacing the current views filter,
+				if available, with the new combined filter.
+				Hold shift to create a new view instead.
+			</action>
 			<action dev="jhux" type="fix">
 				Status text is now properly updated in case of a replaced filter.
 				This was a bug in the sulky BufferTableModel.

@@ -68,7 +68,7 @@ public abstract class AbstractFilterAction
 		{
 			return;
 		}
-		viewContainer.applyCondition(resolveCondition());
+		viewContainer.applyCondition(resolveCondition(), e);
 	}
 
 
