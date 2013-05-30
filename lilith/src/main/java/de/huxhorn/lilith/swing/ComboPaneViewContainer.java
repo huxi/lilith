@@ -354,6 +354,10 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		{
 			comboBoxPane.setVisible(false);
 		}
+		if(selectedView != null)
+		{
+			selectedView.focusTable();
+		}
 		fireChange();
 	}
 

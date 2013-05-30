@@ -76,6 +76,10 @@
 		</release>
 
 		<release version="0.9.44" date="TBD" description="Future release">
+			<action dev="jhux" type="fix">
+				The table of the view will now always receive the focus
+				if the selected view changes.
+			</action>
 			<action dev="jhux" type="add">
 				Added alternative behavior for Focus/Exclude actions.
 				By default, those actions are replacing the current views filter,
