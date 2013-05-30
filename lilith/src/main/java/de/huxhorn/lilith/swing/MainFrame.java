@@ -2912,7 +2912,6 @@ public class MainFrame
 		public void run()
 		{
 			boolean isNew = false;
-			boolean isInternal = false;
 			if(container.getParent() == null)
 			{
 				isNew = true;
@@ -2927,10 +2926,6 @@ public class MainFrame
 			}
 			updateWindowMenus();
 			ViewWindow window = container.resolveViewWindow();
-			if(window instanceof ViewContainerInternalFrame)
-			{
-				isInternal = true;
-			}
 
 			if(!isNew || applicationPreferences.isAutoFocusingWindow())
 			{
