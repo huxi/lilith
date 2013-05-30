@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.NDCContainsPatternCondition;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
@@ -25,7 +26,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusNDCPatternAction
-		extends FilterBaseAction
+		extends AbstractFilterAction
 {
 	private static final long serialVersionUID = -4802481730349145765L;
 
@@ -51,7 +52,13 @@ public class FocusNDCPatternAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		// ignore
+	}
+
+	@Override
+	public Condition resolveCondition()
 	{
 		if(pattern == null)
 		{

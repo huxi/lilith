@@ -24,7 +24,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusCallLocationAction
-		extends LoggingFilterBaseAction
+		extends AbstractLoggingFilterAction
 {
 	private static final long serialVersionUID = 1459610752807978322L;
 	private String callLocationString;
@@ -69,7 +69,7 @@ public class FocusCallLocationAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public Condition resolveCondition()
 	{
 		if(callLocationString == null)
 		{

@@ -18,10 +18,10 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.ExcludeNDCAction;
-import de.huxhorn.lilith.swing.actions.ExcludeNDCPatternAction;
-
-import javax.swing.*;
+import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.FocusNDCAction;
+import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
+import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
 public class ExcludeNDCMenu
 	extends FocusNDCMenu
@@ -29,14 +29,14 @@ public class ExcludeNDCMenu
 	private static final long serialVersionUID = 1051797757745679700L;
 
 	@Override
-	protected Action createMessageAction(ViewContainer viewContainer, String message)
+	protected FilterAction createMessageAction(ViewContainer viewContainer, String message)
 	{
-		return new ExcludeNDCAction(viewContainer, message);
+		return new NegateFilterAction(new FocusNDCAction(viewContainer, message));
 	}
 
 	@Override
-	protected Action createMessagePatternAction(ViewContainer viewContainer, String pattern)
+	protected FilterAction createMessagePatternAction(ViewContainer viewContainer, String pattern)
 	{
-		return new ExcludeNDCPatternAction(viewContainer, pattern);
+		return new NegateFilterAction(new FocusNDCPatternAction(viewContainer, pattern));
 	}
 }

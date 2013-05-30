@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.swing.ViewContainer;
+import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusTypeAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
@@ -30,7 +31,7 @@ public class FocusHttpStatusTypeMenu
 {
 	private static final long serialVersionUID = -6987929141687901690L;
 
-	private final FocusHttpStatusTypeAction[] statusTypeActions;
+	private final FilterAction[] statusTypeActions;
 
 	private ViewContainer viewContainer;
 
@@ -39,7 +40,7 @@ public class FocusHttpStatusTypeMenu
 		super("Status Type");
 		setViewContainer(null);
 		HttpStatus.Type[] values = HttpStatus.Type.values();
-		statusTypeActions = new FocusHttpStatusTypeAction[values.length];
+		statusTypeActions = new FilterAction[values.length];
 		for(int i=0;i<values.length;i++)
 		{
 			statusTypeActions[i]=createAction(values[i]);
@@ -47,7 +48,7 @@ public class FocusHttpStatusTypeMenu
 		}
 	}
 
-	protected FocusHttpStatusTypeAction createAction(HttpStatus.Type type)
+	protected FilterAction createAction(HttpStatus.Type type)
 	{
 		return new FocusHttpStatusTypeAction(type);
 	}
@@ -56,6 +57,11 @@ public class FocusHttpStatusTypeMenu
 	{
 		this.viewContainer = viewContainer;
 		updateState();
+	}
+
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
 	}
 
 	private void updateState()
@@ -67,7 +73,7 @@ public class FocusHttpStatusTypeMenu
 		}
 		setEnabled(true);
 
-		for(FocusHttpStatusTypeAction current : statusTypeActions)
+		for(FilterAction current : statusTypeActions)
 		{
 			current.setViewContainer(viewContainer);
 		}

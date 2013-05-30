@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.conditions.HttpMethodCondition;
 import de.huxhorn.lilith.conditions.HttpRequestUriCondition;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.conditions.Condition;
@@ -25,7 +24,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusHttpRequestUriAction
-		extends AccessFilterBaseAction
+		extends AbstractAccessFilterAction
 {
 	private static final long serialVersionUID = -5114706063267599039L;
 
@@ -64,7 +63,7 @@ public class FocusHttpRequestUriAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public Condition resolveCondition()
 	{
 		if(searchString == null)
 		{

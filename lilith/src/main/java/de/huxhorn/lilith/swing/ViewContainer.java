@@ -175,6 +175,31 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
+	public void applyCondition(Condition condition)
+	{
+		if(condition == null)
+		{
+			// simply do nothing
+			return;
+		}
+		EventWrapperViewPanel<T> selectedView = getSelectedView();
+		if(selectedView == null)
+		{
+			// simply do nothing
+			return;
+		}
+
+		Condition previousCondition = selectedView.getBufferCondition();
+
+		Condition filter = selectedView.getCombinedCondition(condition);
+		if (filter == null || filter.equals(previousCondition))
+		{
+			return;
+		}
+
+		replaceFilteredView(selectedView, filter);
+	}
+
 	public void addFilteredView(EventWrapperViewPanel<T> original, Condition filter)
 	{
 		Buffer<EventWrapper<T>> originalBuffer = original.getSourceBuffer();

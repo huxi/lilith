@@ -25,7 +25,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusMessagePatternAction
-		extends LoggingFilterBaseAction
+		extends AbstractLoggingFilterAction
 {
 	private static final long serialVersionUID = -4237035769242851225L;
 	private String messagePattern;
@@ -75,7 +75,7 @@ public class FocusMessagePatternAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public Condition resolveCondition()
 	{
 		if(messagePattern == null)
 		{

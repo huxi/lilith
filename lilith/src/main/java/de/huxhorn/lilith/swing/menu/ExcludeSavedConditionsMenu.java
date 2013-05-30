@@ -19,7 +19,9 @@ package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.ExcludeSavedConditionAction;
+import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
+import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
 public class ExcludeSavedConditionsMenu
@@ -33,8 +35,8 @@ public class ExcludeSavedConditionsMenu
 	}
 
 	@Override
-	protected ExcludeSavedConditionAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
+	protected FilterAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
-		return new ExcludeSavedConditionAction(viewContainer, savedCondition);
+		return new NegateFilterAction(new FocusSavedConditionAction(viewContainer, savedCondition));
 	}
 }

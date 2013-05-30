@@ -21,10 +21,11 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.ViewContainer;
+import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
+import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
-import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
 import javax.swing.*;
@@ -52,10 +53,15 @@ public class FocusNDCMenu
 		updateState();
 	}
 
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
 	public void setEventWrapper(EventWrapper eventWrapper)
 	{
 		Message[] ndc = null;
-		LoggingEvent loggingEvent = LoggingFilterBaseAction.resolveLoggingEvent(eventWrapper);
+		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
 		if (loggingEvent != null)
 		{
 			ndc = loggingEvent.getNdc();
@@ -103,12 +109,12 @@ public class FocusNDCMenu
 		setEnabled(true);
 	}
 
-	protected Action createMessageAction(ViewContainer viewContainer, String message)
+	protected FilterAction createMessageAction(ViewContainer viewContainer, String message)
 	{
 		return new FocusNDCAction(viewContainer, message);
 	}
 
-	protected Action createMessagePatternAction(ViewContainer viewContainer, String pattern)
+	protected FilterAction createMessagePatternAction(ViewContainer viewContainer, String pattern)
 	{
 		return new FocusNDCPatternAction(viewContainer, pattern);
 	}

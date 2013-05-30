@@ -17,31 +17,31 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public abstract class FilterBaseAction
+public abstract class AbstractFilterAction
 	extends AbstractAction
-	implements ViewContainerRelated
+	implements FilterAction
 {
 	private static final long serialVersionUID = -8702163293653882073L;
 
 	protected transient ViewContainer viewContainer;
 
-	protected FilterBaseAction()
+	protected AbstractFilterAction()
 	{
 	}
 
-	protected FilterBaseAction(String name)
+	protected AbstractFilterAction(String name)
 	{
 		super(name);
 	}
 
-	protected FilterBaseAction(String name, Icon icon)
+	protected AbstractFilterAction(String name, Icon icon)
 	{
 		super(name, icon);
 	}
@@ -56,41 +56,26 @@ public abstract class FilterBaseAction
 	}
 
 	@Override
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if(this.viewContainer == null)
 		{
 			return;
 		}
-		applyCondition(resolveCondition());
+		viewContainer.applyCondition(resolveCondition());
 	}
 
-	protected void applyCondition(Condition condition)
-	{
-		EventWrapperViewPanel selectedView = viewContainer.getSelectedView();
-		if(selectedView == null)
-		{
-			return;
-		}
-		if(condition == null)
-		{
-			return;
-		}
-
-		Condition previousCondition = selectedView.getBufferCondition();
-
-		Condition filter = selectedView.getCombinedCondition(condition);
-		if (filter == null || filter.equals(previousCondition))
-		{
-			return;
-		}
-
-		//noinspection unchecked
-		viewContainer.replaceFilteredView(selectedView, filter);
-	}
 
 	protected abstract void updateState();
 
-	protected abstract Condition resolveCondition();
+	public abstract void setEventWrapper(EventWrapper eventWrapper);
+
+	public abstract Condition resolveCondition();
 
 }

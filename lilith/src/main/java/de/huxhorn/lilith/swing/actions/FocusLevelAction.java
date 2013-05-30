@@ -18,13 +18,14 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.LevelCondition;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.conditions.Condition;
 
 import javax.swing.*;
 
 public class FocusLevelAction
-		extends FilterBaseAction
+		extends AbstractFilterAction
 {
 	private static final long serialVersionUID = -7615646386307125745L;
 
@@ -50,7 +51,13 @@ public class FocusLevelAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		// ignore
+	}
+
+	@Override
+	public Condition resolveCondition()
 	{
 		return new LevelCondition(level.name());
 	}

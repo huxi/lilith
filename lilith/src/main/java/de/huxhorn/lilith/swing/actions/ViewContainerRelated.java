@@ -22,4 +22,5 @@ import de.huxhorn.lilith.swing.ViewContainer;
 public interface ViewContainerRelated
 {
 	void setViewContainer(ViewContainer viewContainer);
+	ViewContainer getViewContainer();
 }

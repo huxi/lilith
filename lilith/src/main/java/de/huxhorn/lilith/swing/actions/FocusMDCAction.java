@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.MDCContainsCondition;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
@@ -25,7 +26,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusMDCAction
-		extends FilterBaseAction
+		extends AbstractFilterAction
 {
 	private static final long serialVersionUID = -1245643497938628684L;
 
@@ -53,7 +54,13 @@ public class FocusMDCAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		// ignore
+	}
+
+	@Override
+	public Condition resolveCondition()
 	{
 		if(key == null)
 		{

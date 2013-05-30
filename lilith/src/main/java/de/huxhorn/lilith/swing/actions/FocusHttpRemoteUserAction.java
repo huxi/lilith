@@ -24,7 +24,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusHttpRemoteUserAction
-		extends AccessFilterBaseAction
+		extends AbstractAccessFilterAction
 {
 	private static final long serialVersionUID = -6112185413862260091L;
 
@@ -71,7 +71,7 @@ public class FocusHttpRemoteUserAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public Condition resolveCondition()
 	{
 		if(searchString == null)
 		{

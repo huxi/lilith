@@ -17,28 +17,12 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.sulky.conditions.Condition;
-import de.huxhorn.sulky.conditions.Not;
 
-public class ExcludeHttpStatusTypeAction
-		extends FocusHttpStatusTypeAction
+import javax.swing.*;
+
+public interface FilterAction
+	extends ViewContainerRelated, EventWrapperRelated, Action
 {
-	private static final long serialVersionUID = 1616122950154365821L;
-
-	public ExcludeHttpStatusTypeAction(HttpStatus.Type type)
-	{
-		super(type);
-	}
-
-	@Override
-	protected Condition resolveCondition()
-	{
-		Condition condition = super.resolveCondition();
-		if(condition == null)
-		{
-			return null;
-		}
-		return new Not(condition);
-	}
+	Condition resolveCondition();
 }

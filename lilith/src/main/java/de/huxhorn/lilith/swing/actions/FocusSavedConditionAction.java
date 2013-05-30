@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
@@ -25,11 +26,12 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusSavedConditionAction
-		extends FilterBaseAction
+		extends AbstractFilterAction
 {
 	private static final long serialVersionUID = -1245643497938628684L;
 
 	private final SavedCondition savedCondition;
+	//private EventWrapper eventWrapper;
 
 	public FocusSavedConditionAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
@@ -47,16 +49,24 @@ public class FocusSavedConditionAction
 	@Override
 	protected void updateState()
 	{
-		if(viewContainer == null)
+		if(viewContainer == null) // || eventWrapper == null)
 		{
 			setEnabled(false);
 			return;
 		}
+		//setEnabled(eventWrapper.getEvent() != null);
 		setEnabled(true);
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		// ignore
+		// this.eventWrapper = eventWrapper;
+	}
+
+	@Override
+	public Condition resolveCondition()
 	{
 		return savedCondition.getCondition();
 	}

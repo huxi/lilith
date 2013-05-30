@@ -20,9 +20,10 @@ package de.huxhorn.lilith.swing.menu;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.ViewContainer;
+import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
+import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMDCAction;
-import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
 import javax.swing.*;
@@ -53,10 +54,15 @@ public class FocusMDCMenu
 		updateState();
 	}
 
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
 	public void setEventWrapper(EventWrapper eventWrapper)
 	{
 		SortedMap<String, String> sorted = null;
-		LoggingEvent loggingEvent = LoggingFilterBaseAction.resolveLoggingEvent(eventWrapper);
+		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
 		if (loggingEvent != null)
 		{
 			Map<String, String> mdc = loggingEvent.getMdc();
@@ -89,7 +95,7 @@ public class FocusMDCMenu
 		setEnabled(true);
 	}
 
-	protected Action createAction(ViewContainer viewContainer, String key, String value)
+	protected FilterAction createAction(ViewContainer viewContainer, String key, String value)
 	{
 		return new FocusMDCAction(viewContainer, key, value);
 	}

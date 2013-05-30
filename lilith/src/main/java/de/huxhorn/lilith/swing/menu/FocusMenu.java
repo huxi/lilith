@@ -22,7 +22,8 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.AccessFilterBaseAction;
+import de.huxhorn.lilith.swing.actions.AbstractAccessFilterAction;
+import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
@@ -32,7 +33,6 @@ import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
-import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
 import javax.swing.*;
@@ -72,6 +72,7 @@ public class FocusMenu
 	private JMenuItem requestUrlItem;
 	private FocusHttpRemoteUserAction remoteUserAction;
 	private JMenuItem remoteUserItem;
+	private ViewContainer viewContainer;
 
 	public FocusMenu(ApplicationPreferences applicationPreferences)
 	{
@@ -130,8 +131,14 @@ public class FocusMenu
 		updateState();
 	}
 
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
 	public void setViewContainer(ViewContainer viewContainer)
 	{
+		this.viewContainer = viewContainer;
 		savedMenu.setViewContainer(viewContainer);
 
 		messagePatternAction.setViewContainer(viewContainer);
@@ -157,7 +164,7 @@ public class FocusMenu
 		EventWrapper wrapper = this.eventWrapper;
 		removeAll();
 
-		LoggingEvent loggingEvent = LoggingFilterBaseAction.resolveLoggingEvent(wrapper);
+		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(wrapper);
 		if(loggingEvent != null)
 		{
 			add(savedMenu);
@@ -180,7 +187,7 @@ public class FocusMenu
 			return;
 		}
 
-		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
+		AccessEvent accessEvent = AbstractAccessFilterAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
 			add(savedMenu);

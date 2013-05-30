@@ -20,13 +20,14 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.HttpStatusTypeCondition;
 import de.huxhorn.lilith.conditions.LevelCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.conditions.Condition;
 
 import javax.swing.*;
 
 public class FocusHttpStatusTypeAction
-		extends FilterBaseAction
+		extends AbstractFilterAction
 {
 	private static final long serialVersionUID = -285766419031200234L;
 
@@ -52,7 +53,13 @@ public class FocusHttpStatusTypeAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		// ignore
+	}
+
+	@Override
+	public Condition resolveCondition()
 	{
 		return new HttpStatusTypeCondition(type.name());
 	}

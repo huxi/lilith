@@ -22,17 +22,19 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.AccessFilterBaseAction;
+import de.huxhorn.lilith.swing.actions.AbstractAccessFilterAction;
+import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
-import de.huxhorn.lilith.swing.actions.ExcludeCallLocationAction;
-import de.huxhorn.lilith.swing.actions.ExcludeFormattedMessageAction;
-import de.huxhorn.lilith.swing.actions.ExcludeHttpMethodAction;
-import de.huxhorn.lilith.swing.actions.ExcludeHttpRemoteUserAction;
-import de.huxhorn.lilith.swing.actions.ExcludeHttpRequestUriAction;
-import de.huxhorn.lilith.swing.actions.ExcludeHttpRequestUrlAction;
-import de.huxhorn.lilith.swing.actions.ExcludeHttpStatusCodeAction;
-import de.huxhorn.lilith.swing.actions.ExcludeMessagePatternAction;
-import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
+import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
+import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpMethodAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRemoteUserAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
+import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
+import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
 import javax.swing.*;
@@ -49,11 +51,11 @@ public class ExcludeMenu
 	private EventWrapper eventWrapper;
 
 	private ExcludeSavedConditionsMenu savedMenu;
-	private ExcludeMessagePatternAction messagePatternAction;
+	private FilterAction messagePatternAction;
 	private JMenuItem messagePatternItem;
-	private ExcludeFormattedMessageAction formattedMessageAction;
+	private FilterAction formattedMessageAction;
 	private JMenuItem formattedMessageItem;
-	private ExcludeCallLocationAction callLocationAction;
+	private FilterAction callLocationAction;
 	private JMenuItem callLocationItem;
 	private ExcludeMDCMenu mdcMenu;
 	private ExcludeMarkerMenu markerMenu;
@@ -62,17 +64,18 @@ public class ExcludeMenu
 	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
 	// not make sense.
 
-	private ExcludeHttpStatusCodeAction statusCodeAction;
+	private FilterAction statusCodeAction;
 	private JMenuItem statusCodeItem;
 	private ExcludeHttpStatusTypeMenu statusTypeMenu;
-	private ExcludeHttpMethodAction methodAction;
+	private FilterAction methodAction;
 	private JMenuItem methodItem;
-	private ExcludeHttpRequestUriAction requestUriAction;
+	private FilterAction requestUriAction;
 	private JMenuItem requestUriItem;
-	private ExcludeHttpRequestUrlAction requestUrlAction;
+	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
-	private ExcludeHttpRemoteUserAction remoteUserAction;
+	private FilterAction remoteUserAction;
 	private JMenuItem remoteUserItem;
+	private ViewContainer viewContainer;
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences)
 	{
@@ -87,9 +90,9 @@ public class ExcludeMenu
 	{
 		savedMenu = new ExcludeSavedConditionsMenu(applicationPreferences);
 
-		messagePatternAction = new ExcludeMessagePatternAction();
-		formattedMessageAction=new ExcludeFormattedMessageAction();
-		callLocationAction=new ExcludeCallLocationAction();
+		messagePatternAction = new NegateFilterAction(new FocusMessagePatternAction());
+		formattedMessageAction = new NegateFilterAction(new FocusFormattedMessageAction());
+		callLocationAction = new NegateFilterAction(new FocusCallLocationAction());
 		messagePatternItem = new JMenuItem(messagePatternAction);
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
 		callLocationItem = new JMenuItem(callLocationAction);
@@ -98,16 +101,16 @@ public class ExcludeMenu
 		ndcMenu = new ExcludeNDCMenu();
 		loggerMenu = new ExcludeLoggerMenu();
 
-		statusCodeAction = new ExcludeHttpStatusCodeAction();
+		statusCodeAction = new NegateFilterAction(new FocusHttpStatusCodeAction());
 		statusCodeItem = new JMenuItem(statusCodeAction);
 		statusTypeMenu = new ExcludeHttpStatusTypeMenu();
-		methodAction = new ExcludeHttpMethodAction();
+		methodAction = new NegateFilterAction(new FocusHttpMethodAction());
 		methodItem = new JMenuItem(methodAction);
-		requestUriAction = new ExcludeHttpRequestUriAction();
+		requestUriAction = new NegateFilterAction(new FocusHttpRequestUriAction());
 		requestUriItem = new JMenuItem(requestUriAction);
-		requestUrlAction = new ExcludeHttpRequestUrlAction();
+		requestUrlAction = new NegateFilterAction(new FocusHttpRequestUrlAction());
 		requestUrlItem = new JMenuItem(requestUrlAction);
-		remoteUserAction = new ExcludeHttpRemoteUserAction();
+		remoteUserAction = new NegateFilterAction(new FocusHttpRemoteUserAction());
 		remoteUserItem = new JMenuItem(remoteUserAction);
 	}
 
@@ -132,6 +135,7 @@ public class ExcludeMenu
 
 	public void setViewContainer(ViewContainer viewContainer)
 	{
+		this.viewContainer = viewContainer;
 		savedMenu.setViewContainer(viewContainer);
 
 		messagePatternAction.setViewContainer(viewContainer);
@@ -151,12 +155,17 @@ public class ExcludeMenu
 		updateState();
 	}
 
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
 	private void updateState()
 	{
 		EventWrapper wrapper = this.eventWrapper;
 		removeAll();
 
-		LoggingEvent loggingEvent = LoggingFilterBaseAction.resolveLoggingEvent(wrapper);
+		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(wrapper);
 		if(loggingEvent != null)
 		{
 			add(savedMenu);
@@ -184,7 +193,7 @@ public class ExcludeMenu
 			return;
 		}
 
-		AccessEvent accessEvent = AccessFilterBaseAction.resolveAccessEvent(eventWrapper);
+		AccessEvent accessEvent = AbstractAccessFilterAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
 			add(savedMenu);

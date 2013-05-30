@@ -24,7 +24,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.*;
 
 public class FocusHttpStatusCodeAction
-		extends AccessFilterBaseAction
+		extends AbstractAccessFilterAction
 {
 	private static final long serialVersionUID = -4237035769242851225L;
 	private Integer statusCode;
@@ -83,7 +83,7 @@ public class FocusHttpStatusCodeAction
 	}
 
 	@Override
-	protected Condition resolveCondition()
+	public Condition resolveCondition()
 	{
 		if(statusCode == null)
 		{

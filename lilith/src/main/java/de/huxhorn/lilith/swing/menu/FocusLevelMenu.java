@@ -52,6 +52,11 @@ public class FocusLevelMenu
 		updateState();
 	}
 
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
 	private void updateState()
 	{
 		if(viewContainer == null)

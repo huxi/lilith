@@ -18,8 +18,9 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.ExcludeLoggerAction;
-import javax.swing.*;
+import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.FocusLoggerAction;
+import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
 public class ExcludeLoggerMenu
 	extends FocusLoggerMenu
@@ -27,7 +28,8 @@ public class ExcludeLoggerMenu
 	private static final long serialVersionUID = 6738151200076340278L;
 
 	@Override
-	protected Action createAction(ViewContainer viewContainer, String loggerName) {
-		return new ExcludeLoggerAction(viewContainer, loggerName);
+	protected FilterAction createAction(ViewContainer viewContainer, String loggerName)
+	{
+		return new NegateFilterAction(new FocusLoggerAction(viewContainer, loggerName));
 	}
 }

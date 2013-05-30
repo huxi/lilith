@@ -21,9 +21,10 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.swing.ViewContainer;
+import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
+import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMarkerAction;
-import de.huxhorn.lilith.swing.actions.LoggingFilterBaseAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
 import javax.swing.*;
@@ -53,9 +54,14 @@ public class FocusMarkerMenu
 		updateState();
 	}
 
+	public ViewContainer getViewContainer()
+	{
+		return viewContainer;
+	}
+
 	public void setEventWrapper(EventWrapper eventWrapper)
 	{
-		LoggingEvent loggingEvent = LoggingFilterBaseAction.resolveLoggingEvent(eventWrapper);
+		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
 		Marker marker=null;
 		if (loggingEvent != null)
 		{
@@ -92,7 +98,7 @@ public class FocusMarkerMenu
 		setEnabled(true);
 	}
 
-	protected Action createAction(ViewContainer viewContainer, String markerName)
+	protected FilterAction createAction(ViewContainer viewContainer, String markerName)
 	{
 		return new FocusMarkerAction(viewContainer, markerName);
 	}

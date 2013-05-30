@@ -18,9 +18,9 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.ExcludeMDCAction;
-
-import javax.swing.*;
+import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.FocusMDCAction;
+import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
 public class ExcludeMDCMenu
 	extends FocusMDCMenu
@@ -28,7 +28,8 @@ public class ExcludeMDCMenu
 	private static final long serialVersionUID = 6995608490657897758L;
 
 	@Override
-	protected Action createAction(ViewContainer viewContainer, String key, String value) {
-		return new ExcludeMDCAction(viewContainer, key, value);
+	protected FilterAction createAction(ViewContainer viewContainer, String key, String value)
+	{
+		return new NegateFilterAction(new FocusMDCAction(viewContainer, key, value));
 	}
 }

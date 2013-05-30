@@ -18,15 +18,17 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
-import de.huxhorn.lilith.swing.actions.ExcludeHttpStatusTypeAction;
+import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpStatusTypeAction;
+import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
 public class ExcludeHttpStatusTypeMenu
 	extends FocusHttpStatusTypeMenu
 {
 	private static final long serialVersionUID = 4925999851649779333L;
 
-	protected ExcludeHttpStatusTypeAction createAction(HttpStatus.Type type)
+	protected FilterAction createAction(HttpStatus.Type type)
 	{
-		return new ExcludeHttpStatusTypeAction(type);
+		return new NegateFilterAction(new FocusHttpStatusTypeAction(type));
 	}
 }
