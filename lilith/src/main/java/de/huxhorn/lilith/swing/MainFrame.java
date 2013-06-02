@@ -177,7 +177,6 @@ public class MainFrame
 
 	private final File startupApplicationPath;
 
-
 	private GoToSource gotoSource;
 	private LogFileFactory loggingFileFactory;
 	private SourceManager<LoggingEvent> loggingEventSourceManager;
@@ -210,8 +209,8 @@ public class MainFrame
 	private List<AutostartRunnable> autostartProcesses;
 	private SenderService senderService;
 	private boolean enableBonjour;
-	private final boolean isMac;
-	private final boolean isWindows;
+	private static final boolean isMac;
+	private static final boolean isWindows;
 	private List<SavedCondition> activeConditions;
 	private Map<LoggingEvent.Level, Colors> levelColors;
 	private Map<HttpStatus.Type, Colors> statusColors;
@@ -241,6 +240,20 @@ public class MainFrame
 	private GroovyInstance detailsViewInstance;
 	private TraySupport traySupport; // may be null
 
+	static
+	{
+		DefaultApplication app = new DefaultApplication();
+		isMac = app.isMac();
+		if(!isMac)
+		{
+			String osName = System.getProperty("os.name").toLowerCase();
+			isWindows = osName.startsWith("windows");
+		}
+		else
+		{
+			isWindows = false;
+		}
+	}
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 	 */
@@ -285,16 +298,6 @@ public class MainFrame
 		//colorsReferenceQueue=new ReferenceQueue<Colors>();
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application = new DefaultApplication();
-		isMac = application.isMac();
-		if(!isMac)
-		{
-			String osName = System.getProperty("os.name").toLowerCase();
-			isWindows = osName.startsWith("windows");
-		}
-		else
-		{
-			isWindows = false;
-		}
 		autostartProcesses = new ArrayList<AutostartRunnable>();
 
 		addWindowListener(new MainWindowListener());
@@ -2600,8 +2603,10 @@ public class MainFrame
 		return null;
 	}
 
-	public void openUrl(URL url)
+	public static void openUrl(URL url)
 	{
+		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
+
 		if(logger.isInfoEnabled()) logger.info("Opening URL {}. ", url);
 		Runtime runtime = Runtime.getRuntime();
 		String[] cmdArray = getOpenUrlCommandArray(url);
@@ -2646,7 +2651,7 @@ public class MainFrame
 			null
 		};
 
-	private String[] getOpenUrlCommandArray(URL url)
+	private static String[] getOpenUrlCommandArray(URL url)
 	{
 		String[] result = null;
 		if(isWindows)
