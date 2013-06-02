@@ -53,11 +53,14 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -87,6 +90,22 @@ public class ViewActions
 	 * Does not work with 1.5 :( I was really sure that there was some selected event...
 	 */
 	//private static final String SELECTED_KEY = "SwingSelectedKey";
+
+	private static final char ALT_SYMBOL = '\u2325';
+	private static final char COMMAND_SYMBOL = '\u2318';
+
+	static
+	{
+		final Logger logger = LoggerFactory.getLogger(ViewActions.class);
+
+		JMenuItem item = new JMenuItem();
+		Font font = item.getFont();
+		if(logger.isDebugEnabled()) logger.debug("Can display '{}': {}", ALT_SYMBOL, font.canDisplay(ALT_SYMBOL));
+		if(logger.isDebugEnabled()) logger.debug("Can display '{}': {}", COMMAND_SYMBOL, font.canDisplay(COMMAND_SYMBOL));
+
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		manager.addKeyEventDispatcher(new EggListener());
+	}
 
 	private JToolBar toolbar;
 	private JMenuBar menubar;
@@ -3647,6 +3666,67 @@ public class ViewActions
 			}
 
 			return n1.compareTo(n2);
+		}
+	}
+
+	private static class EggListener
+			implements KeyEventDispatcher
+	{
+		private final Logger logger = LoggerFactory.getLogger(EggListener.class);
+
+		private int step = 0;
+
+		public boolean dispatchKeyEvent(KeyEvent e)
+		{
+			if (e.getID() == KeyEvent.KEY_RELEASED)
+			{
+				if ((this.step == 2 || this.step == 3) && e.getKeyCode() == KeyEvent.VK_DOWN)
+				{
+					step++;
+				}
+				else if ((this.step == 4 || this.step == 6) && e.getKeyCode() == KeyEvent.VK_LEFT)
+				{
+					step++;
+				}
+				else if ((this.step == 5 || this.step == 7) && e.getKeyCode() == KeyEvent.VK_RIGHT)
+				{
+					step++;
+				}
+				else if (this.step == 8 && e.getKeyCode() == KeyEvent.VK_B)
+				{
+					step++;
+				}
+				else if (this.step == 9 && e.getKeyCode() == KeyEvent.VK_A)
+				{
+					step=0;
+					try
+					{
+						MainFrame.openUrl(new URL("http://z0r.de"));
+						// I could have used http://z0r.de/1148 - so don't complain.
+						if(logger.isInfoEnabled()) logger.info("Yay!");
+					}
+					catch (MalformedURLException ex)
+					{
+						if(logger.isWarnEnabled()) logger.warn("lolwut?", ex);
+					}
+				}
+				else if ((this.step == 0 || this.step == 1) && e.getKeyCode() == KeyEvent.VK_UP)
+				{
+					step++;
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_UP)
+				{
+					if(step != 2)
+					{
+						step=1;
+					}
+				}
+				else
+				{
+					step = 0;
+				}
+			}
+			return false;
 		}
 	}
 }
