@@ -4,7 +4,11 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} --- %msg%n"/>
 		</Console>
+		<!--
 		<Socket name="Socket" host="localhost" port="4560">
+		Not working in beta7 because of LOG4J2-139
+		-->
+		<Socket name="Socket" host="localhost" port="4560" protocol="TCP">
 			<SerializedLayout />
 		</Socket>
 	</appenders>
