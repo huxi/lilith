@@ -10,6 +10,7 @@ project.ext.versions = [
 'spock':          '0.7-groovy-2.0',
 'spring':         '3.2.3.RELEASE',
 'groovy':         '2.1.5',
+'substance':      '7.2.1',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
 
@@ -54,6 +55,7 @@ project.ext.libraries = [
 'spring-instrument':        "org.springframework:spring-instrument:${versions.spring}",
 'stax':                     'stax:stax:1.2.0',
 'stax-api':                 'stax:stax-api:1.0.1',
+'substance':                "com.github.insubstantial:substance:${versions.substance}",
 'sulky-buffers':            "de.huxhorn.sulky:de.huxhorn.sulky.buffers:${versions.sulky}",
 'sulky-buffers-filtering':  "de.huxhorn.sulky:de.huxhorn.sulky.buffers.filtering:${versions.sulky}",
 'sulky-buffers-table':      "de.huxhorn.sulky:de.huxhorn.sulky.buffers.table:${versions.sulky}",

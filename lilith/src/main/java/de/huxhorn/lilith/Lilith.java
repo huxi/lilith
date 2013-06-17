@@ -664,6 +664,24 @@ public class Lilith
 		}
 	}
 
+	public static boolean isJava16()
+	{
+		String specVersionString = System.getProperty("java.specification.version");
+		if(specVersionString == null)
+		{
+			return false;
+		}
+		try
+		{
+			float specVersionFloat = Float.parseFloat(specVersionString);
+			return Float.compare(specVersionFloat, 1.6f) >= 0;
+		}
+		catch(NumberFormatException ex)
+		{
+			return false;
+		}
+	}
+
 	public static void startUI(final String appTitle, boolean enableBonjour)
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
@@ -671,6 +689,13 @@ public class Lilith
 		UIManager.installLookAndFeel("JGoodies Plastic", "com.jgoodies.looks.plastic.PlasticLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic 3D", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic XP", "com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
+		if(isJava16())
+		{
+			// Substance requires 1.6
+			UIManager.installLookAndFeel("Substance Dark - Twilight", "org.pushingpixels.substance.api.skin.SubstanceTwilightLookAndFeel");
+			UIManager.installLookAndFeel("Substance Light - Business", "org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel");
+		}
+
 		//UIManager.installLookAndFeel("Napkin", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
 		Application application = new DefaultApplication();
 		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
