@@ -144,7 +144,7 @@ public class Lilith
 		APP_VERSION = p.getProperty("application.version");
 		boolean snapshot=false;
 		String plainVersion=APP_VERSION;
-		if(plainVersion.endsWith(SNAPSHOT_POSTFIX))
+		if(plainVersion != null && plainVersion.endsWith(SNAPSHOT_POSTFIX))
 		{
 			snapshot = true;
 			plainVersion = plainVersion.substring(0, plainVersion.length()-SNAPSHOT_POSTFIX.length());
