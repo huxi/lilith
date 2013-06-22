@@ -50,6 +50,7 @@ import it.sauronsoftware.junique.MessageHandler;
 import org.apache.commons.io.FileUtils;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.ILoggerFactory;
@@ -664,23 +665,6 @@ public class Lilith
 		}
 	}
 
-	public static boolean isJava16()
-	{
-		String specVersionString = System.getProperty("java.specification.version");
-		if(specVersionString == null)
-		{
-			return false;
-		}
-		try
-		{
-			float specVersionFloat = Float.parseFloat(specVersionString);
-			return Float.compare(specVersionFloat, 1.6f) >= 0;
-		}
-		catch(NumberFormatException ex)
-		{
-			return false;
-		}
-	}
 
 	public static void startUI(final String appTitle, boolean enableBonjour)
 	{
@@ -689,7 +673,7 @@ public class Lilith
 		UIManager.installLookAndFeel("JGoodies Plastic", "com.jgoodies.looks.plastic.PlasticLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic 3D", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic XP", "com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
-		if(isJava16())
+		if(SystemUtils.IS_JAVA_1_6)
 		{
 			// Substance requires 1.6
 			UIManager.installLookAndFeel("Substance Dark - Twilight", "org.pushingpixels.substance.api.skin.SubstanceTwilightLookAndFeel");
