@@ -114,6 +114,7 @@ import de.huxhorn.sulky.tasks.TaskManager;
 import groovy.lang.Binding;
 import groovy.lang.Script;
 import de.huxhorn.sulky.io.IOUtilities;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -417,10 +418,13 @@ public class MainFrame
 		add(desktop, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
 
-		setSplashStatusText("Creating statistics dialog.");
-		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
-		statisticsDialog = new StatisticsDialog(this);
-		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
+		if(SystemUtils.IS_JAVA_1_6)
+		{
+			setSplashStatusText("Creating statistics dialog.");
+			if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
+			statisticsDialog = new StatisticsDialog(this);
+			if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
+		}
 
 		setSplashStatusText("Creating about dialog.");
 		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);
@@ -1950,8 +1954,11 @@ public class MainFrame
 
 	public void showStatistics(SourceIdentifier sourceIdentifier)
 	{
-		statisticsDialog.setSourceIdentifier(sourceIdentifier);
-		Windows.showWindow(statisticsDialog, MainFrame.this, true);
+		if(statisticsDialog != null)
+		{
+			statisticsDialog.setSourceIdentifier(sourceIdentifier);
+			Windows.showWindow(statisticsDialog, MainFrame.this, true);
+		}
 	}
 
 	public TaskManager<Long> getLongWorkManager()

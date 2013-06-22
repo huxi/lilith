@@ -46,6 +46,7 @@ import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.simplericity.macify.eawt.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2798,22 +2799,30 @@ public class ViewActions
 
 		private JMenu createStatisticsMenu()
 		{
-			JMenu result = new JMenu(new StatisticsMenuAction());
-			SortedMap<String, SourceIdentifier> sources = mainFrame.getAvailableStatistics();
-
+			StatisticsMenuAction statisticsMenuAction = new StatisticsMenuAction();
+			JMenu result = new JMenu(statisticsMenuAction);
+			if(!SystemUtils.IS_JAVA_1_6)
 			{
-				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction("Global", new SourceIdentifier("global")));
-				result.add(menuItem);
-				result.addSeparator();
+				statisticsMenuAction.setEnabled(false);
 			}
-
-			for(Map.Entry<String, SourceIdentifier> current : sources.entrySet())
+			else
 			{
-				String key = current.getKey();
-				SourceIdentifier value = current.getValue();
+				SortedMap<String, SourceIdentifier> sources = mainFrame.getAvailableStatistics();
 
-				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction(key, value));
-				result.add(menuItem);
+				{
+					JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction("Global", new SourceIdentifier("global")));
+					result.add(menuItem);
+					result.addSeparator();
+				}
+
+				for(Map.Entry<String, SourceIdentifier> current : sources.entrySet())
+				{
+					String key = current.getKey();
+					SourceIdentifier value = current.getValue();
+
+					JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction(key, value));
+					result.add(menuItem);
+				}
 			}
 			return result;
 		}
