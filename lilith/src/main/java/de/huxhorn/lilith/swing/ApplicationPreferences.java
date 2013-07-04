@@ -1204,15 +1204,6 @@ public class ApplicationPreferences
 		return cloneStatusColors(statusColors);
 	}
 
-	public void setSourceFiltering(LilithPreferences.SourceFiltering sourceFiltering)
-	{
-		Object oldValue = getSourceFiltering();
-		PREFERENCES.put(SOURCE_FILTERING_PROPERTY, sourceFiltering.toString());
-		this.sourceFiltering = sourceFiltering;
-		propertyChangeSupport.firePropertyChange(SOURCE_FILTERING_PROPERTY, oldValue, sourceFiltering);
-		if(logger.isInfoEnabled()) logger.info("SourceFiltering set to {}.", this.sourceFiltering);
-	}
-
 	private void initSourceLists()
 	{
 		File appPath = getStartupApplicationPath();
@@ -1284,6 +1275,43 @@ public class ApplicationPreferences
 		blackList = null;
 		whiteList = null;
 		propertyChangeSupport.firePropertyChange(SOURCE_LISTS_PROPERTY, oldValue, newValue);
+		if(sourceLists == null)
+		{
+			setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
+			setWhiteListName("");
+			setBlackListName("");
+		}
+		else
+		{
+			String blackListName = getBlackListName();
+			if(sourceLists.get(blackListName) == null)
+			{
+				setBlackListName("");
+				if(getSourceFiltering() == LilithPreferences.SourceFiltering.BLACKLIST)
+				{
+					setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
+				}
+			}
+
+			String whiteListName = getWhiteListName();
+			if(sourceLists.get(whiteListName) == null)
+			{
+				setWhiteListName("");
+				if(getSourceFiltering() == LilithPreferences.SourceFiltering.WHITELIST)
+				{
+					setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
+				}
+			}
+		}
+	}
+
+	public void setSourceFiltering(LilithPreferences.SourceFiltering sourceFiltering)
+	{
+		Object oldValue = getSourceFiltering();
+		PREFERENCES.put(SOURCE_FILTERING_PROPERTY, sourceFiltering.toString());
+		this.sourceFiltering = sourceFiltering;
+		propertyChangeSupport.firePropertyChange(SOURCE_FILTERING_PROPERTY, oldValue, sourceFiltering);
+		if(logger.isInfoEnabled()) logger.info("SourceFiltering set to {}.", this.sourceFiltering);
 	}
 
 	public LilithPreferences.SourceFiltering getSourceFiltering()
@@ -1566,8 +1594,8 @@ public class ApplicationPreferences
 			blackList = sourceLists.get(listName);
 			if(blackList == null)
 			{
-				// meaning there was no list of the given blacklist name.
-				if(logger.isInfoEnabled()) logger.info("Couldn't find blacklist '{}'!", listName);
+				// meaning there was no list of the given name.
+				if(logger.isInfoEnabled()) logger.info("Couldn't find source list '{}'!", listName);
 				setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 				setBlackListName("");
 				return true;
@@ -1599,8 +1627,8 @@ public class ApplicationPreferences
 			whiteList = sourceLists.get(listName);
 			if(whiteList == null)
 			{
-				// meaning there was no list of the given blacklist name.
-				if(logger.isInfoEnabled()) logger.info("Couldn't find whitelist '{}'!", listName);
+				// meaning there was no source list of the given name.
+				if(logger.isInfoEnabled()) logger.info("Couldn't find source list '{}'!", listName);
 				setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 				setWhiteListName("");
 				return true;

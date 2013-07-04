@@ -2980,6 +2980,18 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.BLACK_LIST_NAME_PROPERTY.equals(propName))
+			{
+				updateStatus();
+				return;
+			}
+
+			if(ApplicationPreferences.WHITE_LIST_NAME_PROPERTY.equals(propName))
+			{
+				updateStatus();
+				return;
+			}
+
 			if(ApplicationPreferences.MUTE_PROPERTY.equals(propName))
 			{
 				if(sounds != null)
