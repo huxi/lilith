@@ -330,10 +330,6 @@ project(':lilith') {
 	
 	mainClassName = 'de.huxhorn.lilith.Lilith'
 
-	// added 'clean' because changed resources aren't picked up by jar etc.
-	// http://issues.gradle.org/browse/GRADLE-1298
-	compileJava.dependsOn clean
-
 	jar {
 		manifest.attributes(
 			'Main-Class': "${mainClassName}",
@@ -344,27 +340,29 @@ project(':lilith') {
 
 	}
 	
-	processResources {
-		outputs.upToDateWhen { false } // Workaround for http://jira.codehaus.org/browse/GRADLE-1276
-		from(sourceSets.main.resources.srcDirs) {
-			exclude '**/*.properties'
-			exclude '**/*.xhtml'
-			}
+	processResources { 
+		def props = [ 
+			'lilithVersion': version, 
+			'slf4jVersion': versions.slf4j, 
+			'logbackVersion': versions.logback, 
+			'gitRevision': project.gitHeadHash, 
+			'timestamp': "${System.currentTimeMillis()}" 
+		]
+		
+		// props is manually added as input to circumvent the following issues:
+		// - Change in filtered resource not picked up by archive tasks
+		//   http://issues.gradle.org/browse/GRADLE-1298
+		// - processResources task considered up-to-date although its spec has changed
+		//   http://jira.codehaus.org/browse/GRADLE-1276
+		// - Copy tasks do not consider filter/expansion properties in up-to-date checks
+		//   http://issues.gradle.org/browse/GRADLE-1646
+		inputs.properties props 
+		// See also:
+		// http://forums.gradle.org/gradle/topics/1_7_rc_1_probably_erroneous_including_duplicate_file_warnings
 
-		from(sourceSets.main.resources.srcDirs) {
-			include '**/*.properties'
-			include '**/*.xhtml'
-			expand(
-				'pom': [name: 'Lilith', version: version],
-				'lilithVersion': version,
-				'slf4jVersion': versions.slf4j,
-				'logbackVersion': versions.logback,
-				'gitRevision': project.gitHeadHash,
-				'timestamp': System.currentTimeMillis()
-			)
-		}
-	}
-	
+		filesMatching '**/*.properties', { expand props } 
+		filesMatching '**/*.xhtml', { expand props } 
+	} 
 
 	project.ext.distSpec = copySpec {
 		into("lilith-${version}") {
@@ -380,14 +378,11 @@ project(':lilith') {
 			from(projectDir) {
 				include 'readme.txt'
 				expand(
-					'pom': [name: 'Lilith', version: version],
 					'lilithVersion': version,
 					'slf4jVersion': versions.slf4j,
 					'logbackVersion': versions.logback,
 					'log4jVersion': versions.log4j,
 					'commonsLoggingVersion': versions.commonsLogging,
-					'gitRevision': project.gitHeadHash,
-					'timestamp': System.currentTimeMillis()
 				)
 			}
 

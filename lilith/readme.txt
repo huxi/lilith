@@ -38,7 +38,7 @@ multiplex-appender-classic Example configuration:
 <dependency>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.logback.appender.multiplex-classic</artifactId>
-	<version>${pom.version}</version>
+	<version>${lilithVersion}</version>
 	<scope>runtime</scope>
 </dependency>
 
@@ -138,7 +138,7 @@ In pom.xml:
 		<dependency>
 			<groupId>de.huxhorn.lilith</groupId>
 			<artifactId>de.huxhorn.lilith.logback.appender.multiplex-access</artifactId>
-			<version>${pom.version}</version>
+			<version>${lilithVersion}</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
