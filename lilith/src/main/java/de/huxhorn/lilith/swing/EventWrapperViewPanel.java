@@ -171,7 +171,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			SharedContext sharedContext = messagePane.getSharedContext();
 			TextRenderer textRenderer = sharedContext.getTextRenderer();
-			textRenderer.setSmoothingLevel(TextRenderer.MEDIUM); // anything != TextRenderer.NONE
 			textRenderer.setSmoothingThreshold(RendererConstants.SMOOTHING_THRESHOLD);
 			FontResolver fontResolver = sharedContext.getFontResolver();
 			if(fontResolver instanceof AWTFontResolver && RendererConstants.MENSCH_FONT != null)
