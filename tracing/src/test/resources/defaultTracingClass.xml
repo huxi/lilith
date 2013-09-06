@@ -27,7 +27,9 @@
 			<aop:pointcut id="testServicePointcut"
 					expression="execution(* de.huxhorn.lilith.tracing.ExampleService.*(..))"/>
 			<aop:around pointcut-ref="testServicePointcut" method="trace"/>
+		</aop:aspect>
 
+		<aop:aspect ref="tracingAspect">
 			<aop:pointcut id="testOtherPointcut"
 					expression="execution(* de.huxhorn.lilith.tracing.Other.*(..))"/>
 			<aop:around pointcut-ref="testOtherPointcut" method="trace"/>

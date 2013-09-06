@@ -52,17 +52,21 @@ public class TracingAspect
 	private static final Marker EXIT_MARKER = MarkerFactory.getDetachedMarker("EXIT");
 	private static final Marker THROWING_MARKER = MarkerFactory.getDetachedMarker("THROWING");
 	private static final Marker PROFILE_MARKER = MarkerFactory.getDetachedMarker("PROFILE");
+	private static final int DEFAULT_WARN_THRESHOLD_IN_SECONDS = 3;
 
 	private String loggerName;
 	private boolean showingParameterValues;
 	private boolean usingShortClassName;
 	private boolean showingModifiers;
 
+	private int warnThresholdInSeconds;
+
 	public TracingAspect()
 	{
 		showingParameterValues = true;
 		usingShortClassName = false;
 		showingModifiers = false;
+		warnThresholdInSeconds = DEFAULT_WARN_THRESHOLD_IN_SECONDS;
 	}
 
 	public boolean isShowingParameterValues()
@@ -105,11 +109,21 @@ public class TracingAspect
 		this.loggerName = loggerName;
 	}
 
+	public int getWarnThresholdInSeconds()
+	{
+		return warnThresholdInSeconds;
+	}
+
+	public void setWarnThresholdInSeconds(int warnThresholdInSeconds)
+	{
+		this.warnThresholdInSeconds = warnThresholdInSeconds;
+	}
+
 	public String toString()
 	{
-		return "TracingAspect{loggerName="+loggerName+", showingParameterValues="+ showingParameterValues +", usingShortClassName="+ usingShortClassName +", showingModifiers="+showingModifiers+"}";
+		return "TracingAspect{loggerName="+loggerName+", showingParameterValues="+ showingParameterValues +", usingShortClassName="+ usingShortClassName +", showingModifiers="+showingModifiers+", warnThresholdInSeconds=" + warnThresholdInSeconds + "}";
 	}
-	
+
 	public Object trace(ProceedingJoinPoint call) throws Throwable
 	{
 		final Logger logger;
@@ -122,113 +136,122 @@ public class TracingAspect
 			logger = LoggerFactory.getLogger(TracingAspect.class);
 		}
 
-		String message = null;
-		if(logger.isInfoEnabled())
+		Signature signature=call.getSignature();
+		String methodName;
+		Class<?> clazz = signature.getDeclaringType();
+		Object theTarget = call.getTarget();
+		if(theTarget != null)
 		{
-			Signature signature=call.getSignature();
-			String methodName;
-			if(usingShortClassName)
+			clazz = theTarget.getClass();
+		}
+		if(usingShortClassName)
+		{
+			methodName=clazz.getSimpleName()+"."+signature.getName();
+		}
+		else
+		{
+			methodName=clazz.getName()+"."+signature.getName();
+		}
+		if(showingModifiers)
+		{
+			methodName=Modifier.toString(signature.getModifiers()) + " " + methodName;
+		}
+		StringBuilder msg=new StringBuilder(methodName);
+		if(signature instanceof MethodSignature)
+		{
+			MethodSignature methodSignature=(MethodSignature)signature;
+			msg.append("(");
+			if(showingParameterValues)
 			{
-				methodName=signature.getDeclaringType().getSimpleName()+"."+signature.getName();
+				Object[] args=call.getArgs();
+				boolean first=true;
+				for(Object arg:args)
+				{
+					if(first)
+					{
+						first=false;
+					}
+					else
+					{
+						msg.append(", ");
+					}
+					msg.append(SafeString.toString(arg));
+				}
 			}
 			else
 			{
-				methodName=signature.getDeclaringType().getName()+"."+signature.getName();
-			}
-			if(showingModifiers)
-			{
-				methodName=Modifier.toString(signature.getModifiers()) + " " + methodName;
-			}
-			StringBuilder msg=new StringBuilder(methodName);
-			if(signature instanceof MethodSignature)
-			{
-				MethodSignature methodSignature=(MethodSignature)signature;
-				msg.append("(");
-				if(showingParameterValues)
+				Method method=methodSignature.getMethod();
+				Class<?>[] parameterTypes = method.getParameterTypes();
+				boolean first=true;
+				for(Class<?> param : parameterTypes)
 				{
-					Object[] args=call.getArgs();
-					boolean first=true;
-					for(Object arg:args)
+					if(first)
 					{
-						if(first)
-						{
-							first=false;
-						}
-						else
-						{
-							msg.append(", ");
-						}
-						msg.append(SafeString.toString(arg));
+						first=false;
 					}
+					else
+					{
+						msg.append(", ");
+					}
+					msg.append(param.getSimpleName());
 				}
-				else
+				if(method.isVarArgs())
 				{
-					Method method=methodSignature.getMethod();
-					Class<?>[] parameterTypes = method.getParameterTypes();
-					boolean first=true;
-					for(Class<?> param : parameterTypes)
-					{
-						if(first)
-						{
-							first=false;
-						}
-						else
-						{
-							msg.append(", ");
-						}
-						msg.append(param.getSimpleName());
-					}
-					if(method.isVarArgs())
-					{
-						int length=msg.length();
-						msg.delete(length-2, length); // cut of existing []
-						msg.append("...");
-					}
+					int length=msg.length();
+					msg.delete(length-2, length); // cut of existing []
+					msg.append("...");
 				}
-				msg.append(")");
 			}
-			message=msg.toString();
+			msg.append(")");
 		}
-		long nanos=0;
+		String methodSignatureString=msg.toString();
+
+		long nanoSeconds=0;
 		try
 		{
-			if(logger.isInfoEnabled(ENTRY_MARKER)) logger.info(ENTRY_MARKER, "{} entered.", message);
+			if(logger.isInfoEnabled(ENTRY_MARKER)) logger.info(ENTRY_MARKER, "{} entered.", methodSignatureString);
 			Object result;
-			if(logger.isInfoEnabled(PROFILE_MARKER))
-			{
-				nanos=System.nanoTime();
-				result=call.proceed();
-				nanos=System.nanoTime()-nanos;
-				profile(logger, message, nanos);
-			}
-			else
-			{
-				result=call.proceed();
-			}
+			nanoSeconds=System.nanoTime();
+			result=call.proceed();
+			nanoSeconds=System.nanoTime()-nanoSeconds;
+			profile(logger, methodSignatureString, nanoSeconds);
 			if(result == null || !showingParameterValues)
 			{
-				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned.", message);
+				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned.", methodSignatureString);
 			}
 			else
 			{
-				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned {}.", message, result);
+				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned {}.", methodSignatureString, result);
 			}
 			return result;
 		}
 		catch(Throwable t)
 		{
-			if(logger.isInfoEnabled(PROFILE_MARKER))
-			{
-				nanos=System.nanoTime()-nanos;
-				profile(logger, message, nanos);
-			}
-			if(logger.isInfoEnabled(THROWING_MARKER)) logger.info(THROWING_MARKER, "{} failed.", message, t);
+			nanoSeconds=System.nanoTime()-nanoSeconds;
+			profile(logger, methodSignatureString, nanoSeconds);
+			if(logger.isInfoEnabled(THROWING_MARKER)) logger.info(THROWING_MARKER, "{} failed.", methodSignatureString, t);
 			throw t; // rethrow
 		}
 	}
 
-	private void profile(Logger logger, String message, long nanos)
+	private void profile(Logger logger, String message, long nanoSeconds)
 	{
-		logger.info(PROFILE_MARKER, "{} took {}ns.", message, nanos);
+		if(nanoSeconds < 1000000)
+		{
+			if(logger.isTraceEnabled(PROFILE_MARKER)) logger.trace(PROFILE_MARKER, "{}ns - {}", nanoSeconds, message);
+			return;
+		}
+		long milliSeconds = nanoSeconds / 1000000;
+		if(milliSeconds < 1000)
+		{
+			if(logger.isDebugEnabled(PROFILE_MARKER)) logger.debug(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
+			return;
+		}
+		if(milliSeconds > 1000 * warnThresholdInSeconds)
+		{
+			if(logger.isWarnEnabled(PROFILE_MARKER)) logger.warn(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
+			return;
+		}
+		if(logger.isInfoEnabled(PROFILE_MARKER)) logger.info(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
 	}
 }
