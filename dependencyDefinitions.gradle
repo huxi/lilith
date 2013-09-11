@@ -25,7 +25,7 @@ project.ext.libraries = [
 'groovy':                   "org.codehaus.groovy:groovy:${versions.groovy}",
 'groovy-console':           "org.codehaus.groovy:groovy-console:${versions.groovy}",
 'groovy-xml':               "org.codehaus.groovy:groovy-xml:${versions.groovy}",
-'httpclient':               'org.apache.httpcomponents:httpclient:4.2.5',
+'httpclient':               'org.apache.httpcomponents:httpclient:4.3',
 'httpcore':                 'org.apache.httpcomponents:httpcore:4.3',
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
 //'jgroups':                  'org.jgroups:jgroups:3.3.3.Final',

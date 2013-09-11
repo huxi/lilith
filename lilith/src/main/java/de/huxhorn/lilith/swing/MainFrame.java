@@ -118,8 +118,9 @@ import org.apache.commons.lang3.SystemUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
@@ -3838,7 +3839,7 @@ public class MainFrame
 		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
 		// Create an instance of HttpClient.
-		DefaultHttpClient client = new DefaultHttpClient();
+		HttpClient client = HttpClientBuilder.create().build();
 		HttpContext localContext = new BasicHttpContext();
 		HttpGet httpget = new HttpGet(url);
 		try
