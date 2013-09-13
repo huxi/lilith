@@ -40,6 +40,7 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.MDC;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
@@ -48,11 +49,24 @@ import java.lang.reflect.Modifier;
 
 public class TracingAspect
 {
-	private static final Marker ENTRY_MARKER = MarkerFactory.getDetachedMarker("ENTRY");
-	private static final Marker EXIT_MARKER = MarkerFactory.getDetachedMarker("EXIT");
+	public static final int DEFAULT_WARN_THRESHOLD_IN_SECONDS = 3;
+	public static final int DEFAULT_ERROR_THRESHOLD_IN_SECONDS = 30;
+
+	public static final String TRACED_CLASS_MDC_KEY = "tracedClass";
+	public static final String TRACED_METHOD_MDC_KEY = "tracedMethod";
+
+	private static final Marker ENTERING_MARKER = MarkerFactory.getDetachedMarker("ENTERING");
+	private static final Marker EXITING_MARKER = MarkerFactory.getDetachedMarker("EXITING");
 	private static final Marker THROWING_MARKER = MarkerFactory.getDetachedMarker("THROWING");
+	private static final Marker TRACE_MARKER = MarkerFactory.getDetachedMarker("TRACE");
 	private static final Marker PROFILE_MARKER = MarkerFactory.getDetachedMarker("PROFILE");
-	private static final int DEFAULT_WARN_THRESHOLD_IN_SECONDS = 3;
+
+	static
+	{
+		ENTERING_MARKER.add(TRACE_MARKER);
+		EXITING_MARKER.add(TRACE_MARKER);
+		THROWING_MARKER.add(TRACE_MARKER);
+	}
 
 	private String loggerName;
 	private boolean showingParameterValues;
@@ -60,6 +74,7 @@ public class TracingAspect
 	private boolean showingModifiers;
 
 	private int warnThresholdInSeconds;
+	private int errorThresholdInSeconds;
 
 	public TracingAspect()
 	{
@@ -67,6 +82,7 @@ public class TracingAspect
 		usingShortClassName = false;
 		showingModifiers = false;
 		warnThresholdInSeconds = DEFAULT_WARN_THRESHOLD_IN_SECONDS;
+		errorThresholdInSeconds = DEFAULT_ERROR_THRESHOLD_IN_SECONDS;
 	}
 
 	public boolean isShowingParameterValues()
@@ -119,9 +135,19 @@ public class TracingAspect
 		this.warnThresholdInSeconds = warnThresholdInSeconds;
 	}
 
+	public int getErrorThresholdInSeconds()
+	{
+		return errorThresholdInSeconds;
+	}
+
+	public void setErrorThresholdInSeconds(int errorThresholdInSeconds)
+	{
+		this.errorThresholdInSeconds = errorThresholdInSeconds;
+	}
+
 	public String toString()
 	{
-		return "TracingAspect{loggerName="+loggerName+", showingParameterValues="+ showingParameterValues +", usingShortClassName="+ usingShortClassName +", showingModifiers="+showingModifiers+", warnThresholdInSeconds=" + warnThresholdInSeconds + "}";
+		return "TracingAspect{loggerName="+loggerName+", showingParameterValues="+ showingParameterValues +", usingShortClassName="+ usingShortClassName +", showingModifiers="+showingModifiers+", warnThresholdInSeconds=" + warnThresholdInSeconds + ", errorThresholdInSeconds=" + errorThresholdInSeconds + "}";
 	}
 
 	public Object trace(ProceedingJoinPoint call) throws Throwable
@@ -137,26 +163,28 @@ public class TracingAspect
 		}
 
 		Signature signature=call.getSignature();
-		String methodName;
 		Class<?> clazz = signature.getDeclaringType();
 		Object theTarget = call.getTarget();
 		if(theTarget != null)
 		{
 			clazz = theTarget.getClass();
 		}
+		String fullClassName = clazz.getName();
+		String methodName = signature.getName();
+		StringBuilder msg=new StringBuilder();
+		if(showingModifiers)
+		{
+			msg.append(Modifier.toString(signature.getModifiers())).append(" ");
+		}
 		if(usingShortClassName)
 		{
-			methodName=clazz.getSimpleName()+"."+signature.getName();
+			msg.append(clazz.getSimpleName());
 		}
 		else
 		{
-			methodName=clazz.getName()+"."+signature.getName();
+			msg.append(fullClassName);
 		}
-		if(showingModifiers)
-		{
-			methodName=Modifier.toString(signature.getModifiers()) + " " + methodName;
-		}
-		StringBuilder msg=new StringBuilder(methodName);
+		msg.append(".").append(methodName);
 		if(signature instanceof MethodSignature)
 		{
 			MethodSignature methodSignature=(MethodSignature)signature;
@@ -206,10 +234,14 @@ public class TracingAspect
 		}
 		String methodSignatureString=msg.toString();
 
+		String previousClass = MDC.get(TRACED_CLASS_MDC_KEY);
+		String previousMethod = MDC.get(TRACED_METHOD_MDC_KEY);
 		long nanoSeconds=0;
 		try
 		{
-			if(logger.isInfoEnabled(ENTRY_MARKER)) logger.info(ENTRY_MARKER, "{} entered.", methodSignatureString);
+			MDC.put(TRACED_CLASS_MDC_KEY, fullClassName);
+			MDC.put(TRACED_METHOD_MDC_KEY, methodName);
+			if(logger.isInfoEnabled(ENTERING_MARKER)) logger.info(ENTERING_MARKER, "{} entered.", methodSignatureString);
 			Object result;
 			nanoSeconds=System.nanoTime();
 			result=call.proceed();
@@ -217,11 +249,11 @@ public class TracingAspect
 			profile(logger, methodSignatureString, nanoSeconds);
 			if(result == null || !showingParameterValues)
 			{
-				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned.", methodSignatureString);
+				if(logger.isInfoEnabled(EXITING_MARKER)) logger.info(EXITING_MARKER, "{} returned.", methodSignatureString);
 			}
 			else
 			{
-				if(logger.isInfoEnabled(EXIT_MARKER)) logger.info(EXIT_MARKER, "{} returned {}.", methodSignatureString, result);
+				if(logger.isInfoEnabled(EXITING_MARKER)) logger.info(EXITING_MARKER, "{} returned {}.", methodSignatureString, result);
 			}
 			return result;
 		}
@@ -231,6 +263,25 @@ public class TracingAspect
 			profile(logger, methodSignatureString, nanoSeconds);
 			if(logger.isInfoEnabled(THROWING_MARKER)) logger.info(THROWING_MARKER, "{} failed.", methodSignatureString, t);
 			throw t; // rethrow
+		}
+		finally
+		{
+			if(previousClass == null)
+			{
+				MDC.remove(TRACED_CLASS_MDC_KEY);
+			}
+			else
+			{
+				MDC.put(TRACED_CLASS_MDC_KEY, previousClass);
+			}
+			if(previousMethod == null)
+			{
+				MDC.remove(TRACED_METHOD_MDC_KEY);
+			}
+			else
+			{
+				MDC.put(TRACED_METHOD_MDC_KEY, previousMethod);
+			}
 		}
 	}
 
@@ -247,7 +298,13 @@ public class TracingAspect
 			if(logger.isDebugEnabled(PROFILE_MARKER)) logger.debug(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
 			return;
 		}
-		if(milliSeconds > 1000 * warnThresholdInSeconds)
+		long seconds = milliSeconds / 1000;
+		if(seconds > errorThresholdInSeconds)
+		{
+			if(logger.isErrorEnabled(PROFILE_MARKER)) logger.error(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
+			return;
+		}
+		if(seconds > warnThresholdInSeconds)
 		{
 			if(logger.isWarnEnabled(PROFILE_MARKER)) logger.warn(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
 			return;

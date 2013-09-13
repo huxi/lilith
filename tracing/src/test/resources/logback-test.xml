@@ -16,7 +16,7 @@
 
 	<logger name="org.springframework" level="WARN"/>
 
-	<root level="DEBUG">
+	<root level="TRACE">
 		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="Localhorst"/>
 		<!--
