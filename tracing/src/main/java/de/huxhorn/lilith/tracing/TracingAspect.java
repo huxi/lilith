@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2013 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,9 +49,6 @@ import java.lang.reflect.Modifier;
 
 public class TracingAspect
 {
-	public static final int DEFAULT_WARN_THRESHOLD_IN_SECONDS = 3;
-	public static final int DEFAULT_ERROR_THRESHOLD_IN_SECONDS = 30;
-
 	public static final String TRACED_CLASS_MDC_KEY = "tracedClass";
 	public static final String TRACED_METHOD_MDC_KEY = "tracedMethod";
 
@@ -59,7 +56,6 @@ public class TracingAspect
 	private static final Marker EXITING_MARKER = MarkerFactory.getDetachedMarker("EXITING");
 	private static final Marker THROWING_MARKER = MarkerFactory.getDetachedMarker("THROWING");
 	private static final Marker TRACE_MARKER = MarkerFactory.getDetachedMarker("TRACE");
-	private static final Marker PROFILE_MARKER = MarkerFactory.getDetachedMarker("PROFILE");
 
 	static
 	{
@@ -69,20 +65,18 @@ public class TracingAspect
 	}
 
 	private String loggerName;
+	private Logger logger;
 	private boolean showingParameterValues;
 	private boolean usingShortClassName;
 	private boolean showingModifiers;
-
-	private int warnThresholdInSeconds;
-	private int errorThresholdInSeconds;
+	private ProfilingHandler profilingHandler;
 
 	public TracingAspect()
 	{
 		showingParameterValues = true;
 		usingShortClassName = false;
 		showingModifiers = false;
-		warnThresholdInSeconds = DEFAULT_WARN_THRESHOLD_IN_SECONDS;
-		errorThresholdInSeconds = DEFAULT_ERROR_THRESHOLD_IN_SECONDS;
+		profilingHandler = new DefaultProfilingHandler();
 	}
 
 	public boolean isShowingParameterValues()
@@ -115,6 +109,16 @@ public class TracingAspect
 		this.showingModifiers = showingModifiers;
 	}
 
+	public ProfilingHandler getProfilingHandler()
+	{
+		return profilingHandler;
+	}
+
+	public void setProfilingHandler(ProfilingHandler profilingHandler)
+	{
+		this.profilingHandler = profilingHandler;
+	}
+
 	public String getLoggerName()
 	{
 		return loggerName;
@@ -123,36 +127,6 @@ public class TracingAspect
 	public void setLoggerName(String loggerName)
 	{
 		this.loggerName = loggerName;
-	}
-
-	public int getWarnThresholdInSeconds()
-	{
-		return warnThresholdInSeconds;
-	}
-
-	public void setWarnThresholdInSeconds(int warnThresholdInSeconds)
-	{
-		this.warnThresholdInSeconds = warnThresholdInSeconds;
-	}
-
-	public int getErrorThresholdInSeconds()
-	{
-		return errorThresholdInSeconds;
-	}
-
-	public void setErrorThresholdInSeconds(int errorThresholdInSeconds)
-	{
-		this.errorThresholdInSeconds = errorThresholdInSeconds;
-	}
-
-	public String toString()
-	{
-		return "TracingAspect{loggerName="+loggerName+", showingParameterValues="+ showingParameterValues +", usingShortClassName="+ usingShortClassName +", showingModifiers="+showingModifiers+", warnThresholdInSeconds=" + warnThresholdInSeconds + ", errorThresholdInSeconds=" + errorThresholdInSeconds + "}";
-	}
-
-	public Object trace(ProceedingJoinPoint call) throws Throwable
-	{
-		final Logger logger;
 		if(loggerName != null)
 		{
 			logger = LoggerFactory.getLogger(loggerName);
@@ -161,7 +135,20 @@ public class TracingAspect
 		{
 			logger = LoggerFactory.getLogger(TracingAspect.class);
 		}
+	}
 
+	public String toString()
+	{
+		return "TracingAspect{loggerName="+loggerName+", showingParameterValues="+ showingParameterValues +", usingShortClassName="+ usingShortClassName +", showingModifiers="+showingModifiers+", profilingHandler="+profilingHandler+"}";
+	}
+
+	public Object trace(ProceedingJoinPoint call) throws Throwable
+	{
+		if(logger == null)
+		{
+			setLoggerName(null);
+			// this initializes the logger
+		}
 		Signature signature=call.getSignature();
 		Class<?> clazz = signature.getDeclaringType();
 		Object theTarget = call.getTarget();
@@ -185,6 +172,7 @@ public class TracingAspect
 			msg.append(fullClassName);
 		}
 		msg.append(".").append(methodName);
+		String methodBaseName = msg.toString();
 		if(signature instanceof MethodSignature)
 		{
 			MethodSignature methodSignature=(MethodSignature)signature;
@@ -246,7 +234,7 @@ public class TracingAspect
 			nanoSeconds=System.nanoTime();
 			result=call.proceed();
 			nanoSeconds=System.nanoTime()-nanoSeconds;
-			profile(logger, methodSignatureString, nanoSeconds);
+			profile(methodBaseName, methodSignatureString, nanoSeconds);
 			if(result == null || !showingParameterValues)
 			{
 				if(logger.isInfoEnabled(EXITING_MARKER)) logger.info(EXITING_MARKER, "{} returned.", methodSignatureString);
@@ -260,7 +248,7 @@ public class TracingAspect
 		catch(Throwable t)
 		{
 			nanoSeconds=System.nanoTime()-nanoSeconds;
-			profile(logger, methodSignatureString, nanoSeconds);
+			profile(methodBaseName, methodSignatureString, nanoSeconds);
 			if(logger.isInfoEnabled(THROWING_MARKER)) logger.info(THROWING_MARKER, "{} failed.", methodSignatureString, t);
 			throw t; // rethrow
 		}
@@ -285,30 +273,12 @@ public class TracingAspect
 		}
 	}
 
-	private void profile(Logger logger, String message, long nanoSeconds)
+	private void profile(String methodBaseName, String fullMethodSignature, long nanoSeconds)
 	{
-		if(nanoSeconds < 1000000)
+		if(profilingHandler != null)
 		{
-			if(logger.isTraceEnabled(PROFILE_MARKER)) logger.trace(PROFILE_MARKER, "{}ns - {}", nanoSeconds, message);
-			return;
+			logger.info("{}", profilingHandler);
+			profilingHandler.profile(logger, methodBaseName, fullMethodSignature, nanoSeconds);
 		}
-		long milliSeconds = nanoSeconds / 1000000;
-		if(milliSeconds < 1000)
-		{
-			if(logger.isDebugEnabled(PROFILE_MARKER)) logger.debug(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
-			return;
-		}
-		long seconds = milliSeconds / 1000;
-		if(seconds > errorThresholdInSeconds)
-		{
-			if(logger.isErrorEnabled(PROFILE_MARKER)) logger.error(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
-			return;
-		}
-		if(seconds > warnThresholdInSeconds)
-		{
-			if(logger.isWarnEnabled(PROFILE_MARKER)) logger.warn(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
-			return;
-		}
-		if(logger.isInfoEnabled(PROFILE_MARKER)) logger.info(PROFILE_MARKER, "{}ms - {}", milliSeconds, message);
 	}
 }
