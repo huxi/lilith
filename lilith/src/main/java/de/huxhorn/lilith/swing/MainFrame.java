@@ -118,8 +118,8 @@ import org.apache.commons.lang3.SystemUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
@@ -3839,7 +3839,7 @@ public class MainFrame
 		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
 		// Create an instance of HttpClient.
-		HttpClient client = HttpClientBuilder.create().build();
+		CloseableHttpClient client = HttpClientBuilder.create().build();
 		HttpContext localContext = new BasicHttpContext();
 		HttpGet httpget = new HttpGet(url);
 		try
@@ -3863,7 +3863,14 @@ public class MainFrame
 		}
 		finally
 		{
-			client.getConnectionManager().shutdown();
+			try
+			{
+				client.close();
+			}
+			catch (IOException e)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Exception while closing down HttpClient!", e);
+			}
 		}
 	}
 
