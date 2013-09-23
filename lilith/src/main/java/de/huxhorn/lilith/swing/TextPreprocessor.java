@@ -64,8 +64,11 @@ public class TextPreprocessor
 				}
 			}
 			appendTruncated(text.subSequence(0, newlineIndex), result, maxLineLength, lineTruncationMarker);
-			newlineCounter--;
-			if(newlineCounter > 0)
+			if(newlineCounter == 1)
+			{
+				result.append(" [+1 line]");
+			}
+			else if(newlineCounter > 1)
 			{
 				result.append(" [+").append(newlineCounter).append(" lines]");
 			}
