@@ -52,10 +52,15 @@ public class TracingAspect
 	public static final String TRACED_CLASS_MDC_KEY = "tracedClass";
 	public static final String TRACED_METHOD_MDC_KEY = "tracedMethod";
 
-	private static final Marker ENTERING_MARKER = MarkerFactory.getDetachedMarker("ENTERING");
-	private static final Marker EXITING_MARKER = MarkerFactory.getDetachedMarker("EXITING");
-	private static final Marker THROWING_MARKER = MarkerFactory.getDetachedMarker("THROWING");
-	private static final Marker TRACE_MARKER = MarkerFactory.getDetachedMarker("TRACE");
+	public static final String ENTERING_MARKER_NAME = "ENTERING";
+	public static final String EXITING_MARKER_NAME = "EXITING";
+	public static final String THROWING_MARKER_NAME = "THROWING";
+	public static final String TRACE_MARKER_NAME = "TRACE";
+
+	private static final Marker ENTERING_MARKER = MarkerFactory.getDetachedMarker(ENTERING_MARKER_NAME);
+	private static final Marker EXITING_MARKER = MarkerFactory.getDetachedMarker(EXITING_MARKER_NAME);
+	private static final Marker THROWING_MARKER = MarkerFactory.getDetachedMarker(THROWING_MARKER_NAME);
+	private static final Marker TRACE_MARKER = MarkerFactory.getDetachedMarker(TRACE_MARKER_NAME);
 
 	static
 	{
@@ -76,7 +81,7 @@ public class TracingAspect
 		showingParameterValues = true;
 		usingShortClassName = false;
 		showingModifiers = false;
-		profilingHandler = new DefaultProfilingHandler();
+		profilingHandler = new BasicProfilingHandler();
 	}
 
 	public boolean isShowingParameterValues()

@@ -38,5 +38,7 @@ import org.slf4j.Logger;
 
 public interface ProfilingHandler
 {
+	String PROFILE_MARKER_NAME = "PROFILE";
+
 	void profile(Logger logger, String methodBaseName, String fullMethodSignature, long nanoSeconds);
 }

@@ -38,10 +38,10 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-public class DefaultProfilingHandler
+public class BasicProfilingHandler
 	implements ProfilingHandler
 {
-	private static final Marker PROFILE_MARKER = MarkerFactory.getDetachedMarker("PROFILE");
+	protected static final Marker PROFILE_MARKER = MarkerFactory.getDetachedMarker(PROFILE_MARKER_NAME);
 
 	public static final int DEFAULT_WARN_THRESHOLD_IN_SECONDS = 3;
 	public static final int DEFAULT_ERROR_THRESHOLD_IN_SECONDS = 30;
@@ -49,7 +49,7 @@ public class DefaultProfilingHandler
 	private int warnThresholdInSeconds;
 	private int errorThresholdInSeconds;
 
-	public DefaultProfilingHandler()
+	public BasicProfilingHandler()
 	{
 		warnThresholdInSeconds = DEFAULT_WARN_THRESHOLD_IN_SECONDS;
 		errorThresholdInSeconds = DEFAULT_ERROR_THRESHOLD_IN_SECONDS;
@@ -105,7 +105,7 @@ public class DefaultProfilingHandler
 	@Override
 	public String toString()
 	{
-		return "DefaultProfilingHandler{" +
+		return "BasicProfilingHandler{" +
 				"warnThresholdInSeconds=" + warnThresholdInSeconds +
 				", errorThresholdInSeconds=" + errorThresholdInSeconds +
 				'}';

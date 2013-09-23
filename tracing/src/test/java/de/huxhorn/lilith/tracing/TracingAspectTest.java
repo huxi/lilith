@@ -183,4 +183,21 @@ public class TracingAspectTest
 		ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
 		callExampleService(exampleService);
 	}
+
+	@Test
+	public void statisticTracing()
+	{
+		ApplicationContext context
+				= new ClassPathXmlApplicationContext(new String[]{"statisticTracing.xml"});
+
+		TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
+		if(logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
+
+		ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
+		for(int i=0;i<3;i++)
+		{
+			callExampleService(exampleService);
+		}
+	}
+
 }
