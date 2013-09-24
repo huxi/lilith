@@ -43,6 +43,8 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class StatisticProfilingHandler
 	extends BasicProfilingHandler
@@ -120,8 +122,10 @@ public class StatisticProfilingHandler
 			StringBuilder msg = new StringBuilder();
 			msg.append("methodName").append(SEPARATOR)
 					.append("counter").append(SEPARATOR)
+					.append("minimumNanoSeconds").append(SEPARATOR)
+					.append("maximumNanoSeconds").append(SEPARATOR)
 					.append("totalNanoSeconds").append(SEPARATOR)
-					.append("avgNanoSeconds");
+					.append("averageNanoSeconds");
 			for(Entry current : entrySet)
 			{
 				if(msg.length() != 0)
@@ -129,14 +133,16 @@ public class StatisticProfilingHandler
 					msg.append("\n");
 				}
 				long counter = current.getCounter();
-				long nanoSeconds = current.getNanoSeconds();
+				long totalNanoSeconds = current.getTotalNanoSeconds();
 				msg.append(current.getMethodBaseName()).append(SEPARATOR)
 						.append(counter).append(SEPARATOR)
-						.append(nanoSeconds).append(SEPARATOR);
+						.append(current.getMinimumNanoSeconds()).append(SEPARATOR)
+						.append(current.getMaximumNanoSeconds()).append(SEPARATOR)
+						.append(totalNanoSeconds).append(SEPARATOR);
 
 				if(counter != 0)
 				{
-					msg.append((double)nanoSeconds / counter);
+					msg.append((double)totalNanoSeconds / counter);
 				}
 			}
 			logger.info(STATISTICS_MARKER, "{}", msg);
@@ -160,9 +166,12 @@ public class StatisticProfilingHandler
 	private static class Entry
 		implements Cloneable, Comparable<Entry>
 	{
+		private final Lock lock = new ReentrantLock(true);
 		private String methodBaseName;
 		private long counter;
-		private long nanoSeconds;
+		private long totalNanoSeconds;
+		private long minimumNanoSeconds=Long.MAX_VALUE;
+		private long maximumNanoSeconds;
 
 		public Entry(String methodBaseName)
 		{
@@ -174,16 +183,40 @@ public class StatisticProfilingHandler
 			return methodBaseName;
 		}
 
-		public synchronized Entry clone()
+		public Entry clone()
 				throws CloneNotSupportedException
 		{
-			return (Entry) super.clone();
+			lock.lock();
+			try
+			{
+				return (Entry) super.clone();
+			}
+			finally
+			{
+				lock.unlock();
+			}
 		}
 
-		public synchronized void addNanoSeconds(long nanoSeconds)
+		public void addNanoSeconds(long nanoSeconds)
 		{
-			this.counter++;
-			this.nanoSeconds = this.nanoSeconds + nanoSeconds;
+			lock.lock();
+			try
+			{
+				counter++;
+				totalNanoSeconds = totalNanoSeconds + nanoSeconds;
+				if(nanoSeconds < minimumNanoSeconds)
+				{
+					minimumNanoSeconds = nanoSeconds;
+				}
+				if(nanoSeconds > maximumNanoSeconds)
+				{
+					maximumNanoSeconds = nanoSeconds;
+				}
+			}
+			finally
+			{
+				lock.unlock();
+			}
 		}
 
 		// only call on cloned instance
@@ -193,9 +226,21 @@ public class StatisticProfilingHandler
 		}
 
 		// only call on cloned instance
-		public long getNanoSeconds()
+		public long getTotalNanoSeconds()
 		{
-			return nanoSeconds;
+			return totalNanoSeconds;
+		}
+
+		// only call on cloned instance
+		private long getMinimumNanoSeconds()
+		{
+			return minimumNanoSeconds;
+		}
+
+		// only call on cloned instance
+		private long getMaximumNanoSeconds()
+		{
+			return maximumNanoSeconds;
 		}
 
 		@Override
@@ -205,7 +250,7 @@ public class StatisticProfilingHandler
 			{
 				throw new NullPointerException("other must not be null!");
 			}
-			long difference = nanoSeconds - other.nanoSeconds;
+			long difference = totalNanoSeconds - other.totalNanoSeconds;
 			if(difference == 0)
 			{
 				return 0;
