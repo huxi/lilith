@@ -9,7 +9,8 @@ project.ext.versions = [
 'slf4j':          '1.7.5',
 'spock':          '0.7-groovy-2.0',
 'spring':         '3.2.4.RELEASE',
-'groovy':         '2.1.7',
+'groovy':         '2.1.8',
+// 'groovy':         '2.2.0-rc-1',
 'substance':      '7.2.1',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
 ]
