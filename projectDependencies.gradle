@@ -285,11 +285,17 @@ project(':logback-multiplex-appender-classic-json') {
 }
 
 project(':logback-shutdown-context-listener') {
+	// workaround for http://issues.gradle.org/browse/GRADLE-784
+	apply plugin: 'propdeps'
+	apply plugin: 'propdeps-maven'
+	apply plugin: 'propdeps-idea'
+	apply plugin: 'propdeps-eclipse'
+	
 	archivesBaseName = 'de.huxhorn.lilith.logback.servlet'
 	description = 'This file is part of Lilith. It contains a ServletContextListener that shuts down logback.'
 	dependencies {
 		compile libraries.'slf4j-api'
-		compile libraries.'servlet-api'
+		provided libraries.'servlet-api'
 		compile libraries.'logback-classic'
 		compile project(':logback-tools')
 	}
