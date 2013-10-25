@@ -1,0 +1,16 @@
+project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
+project.ext.localSnapshotRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot")
+project.ext.localReleaseRepo = localReleaseRepoFile.toURL().toString()
+project.ext.localSnapshotRepo = localSnapshotRepoFile.toURL().toString()
+project.ext.lilithVersion = '0.9.44-SNAPSHOT'
+
+repositories {
+	maven {
+		url localReleaseRepo
+	}
+	maven {
+		url localSnapshotRepo
+	}
+	mavenCentral()
+	mavenLocal()
+}

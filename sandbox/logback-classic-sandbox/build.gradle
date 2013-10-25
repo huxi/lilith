@@ -1,0 +1,13 @@
+apply from: '../../dependencyDefinitions.gradle'
+apply from: '../sandboxDefaults.gradle'
+
+apply plugin: 'application'
+
+mainClassName = 'de.huxhorn.lilith.sandbox.LogbackClassicSandbox'
+
+dependencies {
+	compile libraries.'logback-classic'
+	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic:${lilithVersion}"
+	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:${lilithVersion}"
+}
+

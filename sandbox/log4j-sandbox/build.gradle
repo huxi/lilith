@@ -1,0 +1,11 @@
+apply from: '../../dependencyDefinitions.gradle'
+apply from: '../sandboxDefaults.gradle'
+
+apply plugin: 'application'
+
+mainClassName = 'de.huxhorn.lilith.sandbox.Log4jSandbox'
+
+dependencies {
+	compile libraries.'log4j'
+}
+
