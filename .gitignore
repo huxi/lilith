@@ -9,5 +9,6 @@ buildNumber.properties
 *.class
 *.idx
 *.log
+*.log.*
 *.lilith
 /out/
