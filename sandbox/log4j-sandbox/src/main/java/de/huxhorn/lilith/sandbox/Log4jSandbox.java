@@ -10,6 +10,16 @@ public class Log4jSandbox
 		public static void execute()
 		{
 			final Logger logger = Logger.getLogger(InnerClass.class);
+			
+			try
+			{
+				foobar();
+			}
+			catch(RuntimeException ex)
+			{
+				if(logger.isDebugEnabled()) logger.debug("Just an exception!", ex);
+			}
+
 			try
 			{
 				foobar();
@@ -17,8 +27,9 @@ public class Log4jSandbox
 			catch(RuntimeException ex)
 			{
 				RuntimeException newEx = new RuntimeException("Hello", ex);
-				if(logger.isDebugEnabled()) logger.debug("Foo!",newEx);
+				if(logger.isDebugEnabled()) logger.debug("Exception with simple message!", newEx);
 			}
+			
 			try
 			{
 				foobar();
@@ -26,13 +37,29 @@ public class Log4jSandbox
 			catch(RuntimeException ex)
 			{
 				RuntimeException newEx = new RuntimeException("Multi\nline\nmessage", ex);
-				if(logger.isDebugEnabled()) logger.debug("Foo!",newEx);
+				if(logger.isDebugEnabled()) logger.debug("Exception with multiline message!", newEx);
 			}
+			
+			try
+			{
+				foobar();
+			}
+			catch(RuntimeException ex)
+			{
+				RuntimeException newEx = new RuntimeException(ex);
+				if(logger.isDebugEnabled()) logger.debug("Exception with no message!", newEx);
+			}
+
+			if(logger.isDebugEnabled()) logger.debug("Plain exception!", new RuntimeException());
 		}
 		
 		public static void foobar()
 		{
-			throw new RuntimeException("Hi.");
+			RuntimeException t = new RuntimeException("Hi.");
+			t.addSuppressed(new RuntimeException());
+			t.addSuppressed(new RuntimeException("Single line"));
+			t.addSuppressed(new RuntimeException("Multi\nline"));
+			throw t;
 		}
 	}
 

@@ -47,6 +47,15 @@
 		</encoder>
 	</appender>
 	
+	<appender name="FILE5" class="ch.qos.logback.core.FileAppender">
+		<file>file5.log</file>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="ch.qos.logback.classic.log4j.XMLLayout">
+				<locationInfo>true</locationInfo>
+			</layout>
+		</encoder> 
+	</appender>
+ 	
 	<appender name="MultiplexClassicCompressed" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
 		<Compressing>true</Compressing>
 		<ApplicationIdentifier>Lilith-Compressed</ApplicationIdentifier>
@@ -68,6 +77,7 @@
 		<appender-ref ref="FILE2"/>
 		<appender-ref ref="FILE3"/>
 		<appender-ref ref="FILE4"/>
+		<appender-ref ref="FILE5"/>
 		<appender-ref ref="MultiplexClassicCompressed"/>
 		<appender-ref ref="LogbackClassic"/>
 	</root>
