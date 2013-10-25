@@ -681,6 +681,8 @@ public class Lilith
 		}
 
 		//UIManager.installLookAndFeel("Napkin", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
+
+		// This instance of application is only used to query some info. The real one is in MainFrame.
 		Application application = new DefaultApplication();
 		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
 

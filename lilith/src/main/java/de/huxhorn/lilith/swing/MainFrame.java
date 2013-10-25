@@ -1806,31 +1806,36 @@ public class MainFrame
 	public class MyApplicationListener
 		implements ApplicationListener
 	{
-		public void handleAbout(ApplicationEvent event)
+		private final Logger logger = LoggerFactory.getLogger(MyApplicationListener.class);
+
+		public void handleAbout(ApplicationEvent applicationEvent)
 		{
 			//application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
+			if(logger.isDebugEnabled()) logger.debug("handleAbout: {}", applicationEvent);
 			viewActions.getAboutAction().actionPerformed(null);
-			event.setHandled(true);
+			applicationEvent.setHandled(true);
 		}
 
 		public void handleOpenApplication(ApplicationEvent applicationEvent)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Open Application: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("handleOpenApplication: {}", applicationEvent);
 		}
 
 		public void handleOpenFile(ApplicationEvent applicationEvent)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Open File: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("handleOpenFile: {}\n\tfilename: {}", applicationEvent, applicationEvent.getFilename());
+			open(new File(applicationEvent.getFilename()));
 		}
 
 		public void handlePreferences(ApplicationEvent applicationEvent)
 		{
+			if(logger.isDebugEnabled()) logger.debug("handlePreferences: {}", applicationEvent);
 			viewActions.getPreferencesAction().actionPerformed(null);
 		}
 
 		public void handlePrintFile(ApplicationEvent applicationEvent)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Print: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("handlePrintFile: {}", applicationEvent);
 		}
 
 		public void handleQuit(ApplicationEvent applicationEvent)
@@ -1840,7 +1845,7 @@ public class MainFrame
 
 		public void handleReOpenApplication(ApplicationEvent applicationEvent)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Reopen Application: {}", applicationEvent);
+			if(logger.isDebugEnabled()) logger.debug("handleReOpenApplication: {}", applicationEvent);
 			setVisible(true);
 		}
 	}
