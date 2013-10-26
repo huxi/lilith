@@ -44,12 +44,9 @@ public class ThrowableInfo
 {
 	private static final long serialVersionUID = -6320441996003349426L;
 
-	private static final int REGULAR_EXCEPTION_INDENT = 1;
-	private static final int SUPPRESSED_EXCEPTION_INDENT = 2;
 	private static final String CAUSED_BY = "Caused by: ";
-	private static final String SUPPRESSED = "\tSuppressed: ";
+	private static final String SUPPRESSED = "Suppressed: ";
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-	private static final char TAB = '\t';
 
 	private static final String WRAPPED_BY = "Wrapped by: ";
 
@@ -147,57 +144,7 @@ public class ThrowableInfo
 	@Override
 	public String toString()
 	{
-		return toString(false);
-	}
-	public String toString(boolean verbose)
-	{
-		StringBuilder result=new StringBuilder();
-		result.append("ThrowableInfo[");
-		result.append("name=").append(name);
-		if(message != null)
-		{
-			result.append(", message=\"").append(message).append("\"");
-		}
-		if(stackTrace != null)
-		{
-			if(verbose)
-			{
-				result.append(", stackTrace=").append(Arrays.toString(stackTrace));
-			}
-			else
-			{
-				result.append(", stackTrace.length=").append(stackTrace.length);
-			}
-		}
-		if(omittedElements>0)
-		{
-			result.append(", omittedElements=").append(omittedElements);
-		}
-		if(suppressed!=null)
-		{
-			result.append(", suppressed=[");
-			boolean first = true;
-			for(ThrowableInfo current : suppressed)
-			{
-				if(first)
-				{
-					first = false;
-				}
-				else
-				{
-					result.append(", ");
-				}
-				result.append(current.toString(verbose));
-			}
-			result.append("]");
-		}
-		if(cause!=null)
-		{
-			result.append(", cause=").append(cause.toString(verbose));
-		}
-
-		result.append("]");
-		return result.toString();
+		return asString(this, true);
 	}
 
 	/**
@@ -210,9 +157,8 @@ public class ThrowableInfo
 	public static String asString(ThrowableInfo throwableInfo, boolean extended)
 	{
 		StringBuilder sb = new StringBuilder();
-
 		Set<ThrowableInfo> dejaVu = new HashSet<ThrowableInfo>();
-		recursiveAppend(sb, dejaVu, null, REGULAR_EXCEPTION_INDENT, throwableInfo, extended);
+		recursiveAppend(sb, dejaVu, null, 0, throwableInfo, extended);
 
 		return sb.toString();
 	}
@@ -223,6 +169,12 @@ public class ThrowableInfo
 		{
 			return;
 		}
+
+		appendIndent(sb, indent);
+		if(prefix != null)
+		{
+			sb.append(prefix);
+		}
 		if(dejaVu.contains(throwableInfo))
 		{
 			sb.append("[CIRCULAR REFERENCE]");
@@ -230,10 +182,6 @@ public class ThrowableInfo
 		}
 		dejaVu.add(throwableInfo);
 
-		if(prefix != null)
-		{
-			sb.append(prefix);
-		}
 		String name = throwableInfo.getName();
 		if(name != null)
 		{
@@ -250,17 +198,25 @@ public class ThrowableInfo
 		}
 		sb.append(LINE_SEPARATOR);
 
-		appendSTEArray(sb, indent, throwableInfo, extended);
+		appendSTEArray(sb, indent + 1, throwableInfo, extended);
 
 		ThrowableInfo[] suppressed = throwableInfo.getSuppressed();
 		if(suppressed != null)
 		{
 			for(ThrowableInfo current : suppressed)
 			{
-				recursiveAppend(sb, dejaVu, SUPPRESSED, SUPPRESSED_EXCEPTION_INDENT, current, extended);
+				recursiveAppend(sb, dejaVu, SUPPRESSED, indent + 1, current, extended);
 			}
 		}
 		recursiveAppend(sb, dejaVu, CAUSED_BY, indent, throwableInfo.getCause(), extended);
+	}
+
+	private static void appendIndent(StringBuilder sb, int indent)
+	{
+		for(int i=0;i<indent;i++)
+		{
+			sb.append("\t");
+		}
 	}
 
 	private static void appendSTEArray(StringBuilder sb, int indentLevel, ThrowableInfo throwableInfo, boolean extended)
@@ -271,13 +227,11 @@ public class ThrowableInfo
 
 		if(steArray != null)
 		{
-			for(int i = 0; i < steArray.length - commonFrames; i++)
+			for(int i = 0; i < steArray.length; i++)
 			{
 				ExtendedStackTraceElement ste = steArray[i];
-				for(int j = 0; j < indentLevel; j++)
-				{
-					sb.append(TAB);
-				}
+				appendIndent(sb, indentLevel);
+				sb.append("at ");
 				sb.append(ste.toString(extended));
 				sb.append(LINE_SEPARATOR);
 			}
@@ -285,10 +239,7 @@ public class ThrowableInfo
 
 		if(commonFrames > 0)
 		{
-			for(int j = 0; j < indentLevel; j++)
-			{
-				sb.append(TAB);
-			}
+			appendIndent(sb, indentLevel);
 			sb.append("... ").append(commonFrames).append(" more").append(LINE_SEPARATOR);
 		}
 	}

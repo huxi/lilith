@@ -151,8 +151,8 @@ public class LoggingEventReaderTest
 			});
 
 			ThrowableInfo actual = readEvent.getThrowable();
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, readEvent.getThrowable());
 		}
 	}
@@ -239,8 +239,8 @@ public class LoggingEventReaderTest
 			});
 
 			ThrowableInfo actual = readEvent.getThrowable();
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, readEvent.getThrowable());
 		}
 	}
@@ -326,8 +326,8 @@ public class LoggingEventReaderTest
 			});
 
 			ThrowableInfo actual = readEvent.getThrowable();
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, readEvent.getThrowable());
 		}
 	}
@@ -418,8 +418,8 @@ public class LoggingEventReaderTest
 			});
 
 			ThrowableInfo actual = readEvent.getThrowable();
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, readEvent.getThrowable());
 		}
 	}

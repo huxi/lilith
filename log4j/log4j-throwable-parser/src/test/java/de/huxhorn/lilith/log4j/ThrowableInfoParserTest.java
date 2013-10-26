@@ -82,8 +82,8 @@ public class ThrowableInfoParserTest
 			cause.setOmittedElements(1);
 
 			throwableInfo.setCause(cause);
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, actual);
 		}
 	}
@@ -107,8 +107,8 @@ public class ThrowableInfoParserTest
 				new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 37),
 			});
 
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, actual);
 		}
 	}
@@ -151,8 +151,8 @@ public class ThrowableInfoParserTest
 
 			throwableInfo.setCause(cause);
 
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, actual);
 		}
 	}
@@ -197,8 +197,8 @@ public class ThrowableInfoParserTest
 
 			throwableInfo.setCause(cause);
 
-			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString(true));
-			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString(true));
+			if(logger.isInfoEnabled()) logger.info("Expected: {}", throwableInfo.toString());
+			if(logger.isInfoEnabled()) logger.info("Actual  : {}", actual.toString());
 			assertEquals(throwableInfo, actual);
 		}
 	}
