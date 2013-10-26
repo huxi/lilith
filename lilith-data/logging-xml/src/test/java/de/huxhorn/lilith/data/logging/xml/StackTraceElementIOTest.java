@@ -101,7 +101,7 @@ public class StackTraceElementIOTest
 		throws XMLStreamException, UnsupportedEncodingException
 	{
 		ExtendedStackTraceElement elem = createSTE();
-		elem.setLineNumber(ExtendedStackTraceElement.NATIVE_METHOD);
+		elem.setLineNumber(ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER);
 		check(elem, true);
 	}
 

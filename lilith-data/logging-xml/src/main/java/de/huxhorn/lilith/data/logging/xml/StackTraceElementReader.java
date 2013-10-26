@@ -74,7 +74,7 @@ public class StackTraceElementReader
 			type = reader.getEventType();
 			if(XMLStreamConstants.START_ELEMENT == type && ST_NATIVE_NODE.equals(reader.getLocalName()))
 			{
-				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
+				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER;
 				reader.nextTag(); // close native
 				reader.nextTag();
 			}

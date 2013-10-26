@@ -37,19 +37,19 @@ package de.huxhorn.lilith.data.logging;
 import java.io.Serializable;
 
 /**
- * Replacement for java.lang.StackTraceElement containing additional infos about
- * version and code location of the given class/package of the class.
+ * Replacement for java.lang.StackTraceElement containing additional info about
+ * version and code location of the given class.
  */
 public class ExtendedStackTraceElement
 	implements Serializable, Cloneable
 {
 	private static final long serialVersionUID = 4907919529165316605L;
 
-	public static final int UNKNOWN_SOURCE = -1;
-	public static final int NATIVE_METHOD = -2;
+	public static final int UNKNOWN_SOURCE_LINE_NUMBER = -1;
+	public static final int NATIVE_METHOD_LINE_NUMBER = -2;
 
-	public static final String NATIVE_METHOD_STRING = "Native Method";
-	public static final String UNKNOWN_SOURCE_STRING = "Unknown Source";
+	private static final String NATIVE_METHOD_STRING = "Native Method";
+	private static final String UNKNOWN_SOURCE_STRING = "Unknown Source";
 
 	private String className;
 	private String methodName;
@@ -58,11 +58,10 @@ public class ExtendedStackTraceElement
 	private String codeLocation;
 	private String version;
 	private boolean exact;
-	private static final String AT_PREFIX = "\tat ";
 
 	public ExtendedStackTraceElement()
 	{
-		lineNumber = -1;
+		lineNumber = UNKNOWN_SOURCE_LINE_NUMBER;
 	}
 
 	public ExtendedStackTraceElement(StackTraceElement ste)
@@ -88,7 +87,7 @@ public class ExtendedStackTraceElement
 
 	public boolean isNativeMethod()
 	{
-		return lineNumber == NATIVE_METHOD;
+		return lineNumber == NATIVE_METHOD_LINE_NUMBER;
 	}
 
 	public String getClassName()
@@ -203,49 +202,81 @@ public class ExtendedStackTraceElement
 		return (ExtendedStackTraceElement) super.clone();
 	}
 
+	public String getExtendedString()
+	{
+		if(codeLocation != null || version != null)
+		{
+			return appendExtended(null).toString();
+		}
+		return null;
+	}
+
+	public StringBuilder appendExtended(StringBuilder result)
+	{
+		if(result == null)
+		{
+			result = new StringBuilder();
+		}
+
+		if(exact)
+		{
+			result.append("[");
+		}
+		else
+		{
+			result.append("~[");
+		}
+		if(codeLocation != null)
+		{
+			result.append(codeLocation);
+		}
+		result.append(":");
+		if(version != null)
+		{
+			result.append(version);
+		}
+		result.append("]");
+
+		return result;
+	}
+
+	/**
+	 * Returns the string representation of this instance, but without extended info.
+	 *
+	 * Shortcut for toString(false).
+	 *
+	 * @return String representation of this instance, but without extended info.
+	 */
 	public String toString()
 	{
 		return toString(false);
 	}
 
-	public String getExtendedString()
-	{
-		if(codeLocation != null || version != null)
-		{
-			StringBuilder result = new StringBuilder();
-			if(exact)
-			{
-				result.append("[");
-			}
-			else
-			{
-				result.append("~[");
-			}
-			if(codeLocation != null)
-			{
-				result.append(codeLocation);
-			}
-			result.append(":");
-			if(version != null)
-			{
-				result.append(version);
-			}
-			result.append("]");
-			return result.toString();
-		}
-		return null;
-	}
-
+	/**
+	 * Returns the string representation of this instance.
+	 * Extended info will be included if the parameter extended is true and info is available.
+	 *
+	 * @param extended Whether or not extended info should be included, if available.
+	 * @return String representation of this instance.
+	 */
 	public String toString(boolean extended)
 	{
-		StringBuilder result = new StringBuilder();
+		return appendTo(null, extended).toString();
+	}
+
+	public StringBuilder appendTo(StringBuilder result, boolean extended)
+	{
+		if(result == null)
+		{
+			result = new StringBuilder();
+		}
 
 		result.append(className).append(".").append(methodName);
 		if(isNativeMethod())
 		{
-			result.append("(Native Method)");
+			result.append("(").append(NATIVE_METHOD_STRING).append(")");
 		}
-		if(fileName != null)
+		else if(fileName != null)
 		{
 			result.append("(").append(fileName);
 			if(lineNumber >= 0)
@@ -256,29 +287,26 @@ public class ExtendedStackTraceElement
 		}
 		else
 		{
-			result.append("(Unknown Source)");
+			result.append("(").append(UNKNOWN_SOURCE_STRING).append(")");
 		}
 		if(extended)
 		{
-			String extendedStr = getExtendedString();
-			// same as logback
-			if(extendedStr != null)
+			if(codeLocation != null || version != null)
 			{
-				result.append(" ").append(extendedStr);
+				result.append(' ');
+				appendExtended(result);
 			}
 		}
-		return result.toString();
+		return result;
 	}
+
+
 
 	public static ExtendedStackTraceElement parseStackTraceElement(String ste)
 	{
 		if(ste == null)
 		{
 			return null;
-		}
-		if(ste.startsWith(AT_PREFIX))
-		{
-			ste = ste.substring(AT_PREFIX.length());
 		}
 		int idx = ste.lastIndexOf('(');
 		if(idx < 0)
@@ -299,7 +327,7 @@ public class ExtendedStackTraceElement
 		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
 		idx = source.lastIndexOf(':');
 		String file = null;
-		int lineNumber = UNKNOWN_SOURCE;
+		int lineNumber = UNKNOWN_SOURCE_LINE_NUMBER;
 		if(idx != -1)
 		{
 			file = source.substring(0, idx);
@@ -309,7 +337,7 @@ public class ExtendedStackTraceElement
 		{
 			if(source.equals(NATIVE_METHOD_STRING))
 			{
-				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD;
+				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER;
 			}
 			else if(!source.equals(UNKNOWN_SOURCE_STRING))
 			{

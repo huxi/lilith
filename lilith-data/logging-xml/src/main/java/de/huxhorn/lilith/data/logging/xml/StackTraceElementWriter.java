@@ -110,7 +110,7 @@ public class StackTraceElementWriter
 		StaxUtilities
 			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE, elem.getFileName());
 		int lineNumber = elem.getLineNumber();
-		if(lineNumber == ExtendedStackTraceElement.NATIVE_METHOD)
+		if(lineNumber == ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER)
 		{
 			StaxUtilities.writeEmptyElement(writer, prefix, NAMESPACE_URI, ST_NATIVE_NODE);
 		}

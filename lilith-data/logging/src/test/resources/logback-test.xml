@@ -23,7 +23,7 @@
 		-->
 	</root>
 
-	<logger name="de.huxhorn.lilith.data.logging.ExtendedStackTraceElementTest" level="WARN"/>
+	<logger name="de.huxhorn.lilith.data.logging.ExtendedStackTraceElementSpec" level="WARN"/>
 	<logger name="de.huxhorn.lilith.data.logging.MessageFormatterTest" level="WARN"/>
 
 </configuration>
