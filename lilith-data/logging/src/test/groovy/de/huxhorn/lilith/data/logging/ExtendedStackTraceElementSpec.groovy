@@ -221,6 +221,33 @@ class ExtendedStackTraceElementSpec extends Specification {
         inputValue << inputValues()
     }
 
+    def 'Serialization of default constructor'() {
+        when: 'serialization works'
+        def inputValue = new ExtendedStackTraceElement()
+        def other = JUnitTools.testSerialization(inputValue)
+
+        then:
+        compare(inputValue, other)
+    }
+
+    def 'XML-Serialization of default constructor'() {
+        when: 'xml serialization works'
+        def inputValue = new ExtendedStackTraceElement()
+        def other = JUnitTools.testXmlSerialization(inputValue)
+
+        then:
+        compare(inputValue, other)
+    }
+
+    def 'Cloning of default constructor'() {
+        when: 'cloning works'
+        def inputValue = new ExtendedStackTraceElement()
+        def other = JUnitTools.testClone(inputValue)
+
+        then:
+        compare(inputValue, other)
+    }
+
     /**
      * StackTraceElement requires at least className and methodName.
      *
