@@ -73,7 +73,7 @@ public class LoggingThrowableFormatter
 					ThrowableInfo info = loggingEvent.getThrowable();
 					if(info != null)
 					{
-						return ThrowableInfo.asString(info, true);
+						return info.toString();
 					}
 				}
 			}

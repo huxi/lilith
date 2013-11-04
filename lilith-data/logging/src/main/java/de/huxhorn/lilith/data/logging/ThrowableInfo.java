@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2013 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2013 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,22 +40,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ThrowableInfo
-	implements Serializable
+	implements Serializable, Cloneable
 {
 	private static final long serialVersionUID = -6320441996003349426L;
 
-	private static final String CAUSED_BY = "Caused by: ";
-	private static final String SUPPRESSED = "Suppressed: ";
+	public static final String CAUSED_BY_PREFIX = "Caused by: ";
+	public static final String SUPPRESSED_PREFIX = "Suppressed: ";
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-
-	private static final String WRAPPED_BY = "Wrapped by: ";
 
 	private String name;
 	private String message;
-	private ThrowableInfo cause;
-	private ThrowableInfo[] suppressed;
 	private ExtendedStackTraceElement[] stackTrace;
 	private int omittedElements;
+	private ThrowableInfo[] suppressed;
+	private ThrowableInfo cause;
 
 	public String getName()
 	{
@@ -142,25 +140,71 @@ public class ThrowableInfo
 	}
 
 	@Override
+	public ThrowableInfo clone() throws CloneNotSupportedException
+	{
+		ThrowableInfo result = (ThrowableInfo) super.clone();
+
+		if(stackTrace != null)
+		{
+			result.stackTrace = new ExtendedStackTraceElement[stackTrace.length];
+			for(int i=0 ; i<stackTrace.length ; i++)
+			{
+				ExtendedStackTraceElement current = stackTrace[i];
+				if(current != null)
+				{
+					result.stackTrace[i] = current.clone();
+				}
+			}
+		}
+
+		if(suppressed != null)
+		{
+			result.suppressed = new ThrowableInfo[suppressed.length];
+			for(int i=0 ; i<suppressed.length ; i++)
+			{
+				ThrowableInfo current = suppressed[i];
+				if(current != null)
+				{
+					result.suppressed[i] = current.clone();
+				}
+			}
+		}
+
+		if(cause != null)
+		{
+			result.cause = cause.clone();
+		}
+
+		return result;
+	}
+
+	@Override
 	public String toString()
 	{
-		return asString(this, true);
+		return toString(true);
 	}
 
 	/**
 	 * Returns a string representation similar to printStackTrace.
 	 *
-	 * @param throwableInfo The ThrowableInfo to be transformed into a String.
 	 * @param extended whether or not extended StackTraceElement information should be appended.
-	 * @return the String representation of the given ThrowableInfo.
+	 * @return the String representation of this ThrowableInfo.
 	 */
-	public static String asString(ThrowableInfo throwableInfo, boolean extended)
+	public String toString(boolean extended)
 	{
-		StringBuilder sb = new StringBuilder();
-		Set<ThrowableInfo> dejaVu = new HashSet<ThrowableInfo>();
-		recursiveAppend(sb, dejaVu, null, 0, throwableInfo, extended);
+		return appendTo(null, extended).toString();
+	}
 
-		return sb.toString();
+	public StringBuilder appendTo(StringBuilder result, boolean extended)
+	{
+		if(result == null)
+		{
+			result = new StringBuilder();
+		}
+		Set<ThrowableInfo> dejaVu = new HashSet<ThrowableInfo>();
+		recursiveAppend(result, dejaVu, null, 0, this, extended);
+
+		return result;
 	}
 
 	private static void recursiveAppend(StringBuilder sb, Set<ThrowableInfo> dejaVu, String prefix, int indent, ThrowableInfo throwableInfo, boolean extended)
@@ -175,12 +219,6 @@ public class ThrowableInfo
 		{
 			sb.append(prefix);
 		}
-		if(dejaVu.contains(throwableInfo))
-		{
-			sb.append("[CIRCULAR REFERENCE]");
-			return;
-		}
-		dejaVu.add(throwableInfo);
 
 		String name = throwableInfo.getName();
 		if(name != null)
@@ -196,6 +234,13 @@ public class ThrowableInfo
 		{
 			sb.append(throwableInfo.getMessage());
 		}
+
+		if(dejaVu.contains(throwableInfo))
+		{
+			sb.append("[CIRCULAR REFERENCE]");
+			return;
+		}
+		dejaVu.add(throwableInfo);
 		sb.append(LINE_SEPARATOR);
 
 		appendSTEArray(sb, indent + 1, throwableInfo, extended);
@@ -205,10 +250,10 @@ public class ThrowableInfo
 		{
 			for(ThrowableInfo current : suppressed)
 			{
-				recursiveAppend(sb, dejaVu, SUPPRESSED, indent + 1, current, extended);
+				recursiveAppend(sb, dejaVu, SUPPRESSED_PREFIX, indent + 1, current, extended);
 			}
 		}
-		recursiveAppend(sb, dejaVu, CAUSED_BY, indent, throwableInfo.getCause(), extended);
+		recursiveAppend(sb, dejaVu, CAUSED_BY_PREFIX, indent, throwableInfo.getCause(), extended);
 	}
 
 	private static void appendIndent(StringBuilder sb, int indent)
@@ -230,10 +275,13 @@ public class ThrowableInfo
 			for(int i = 0; i < steArray.length; i++)
 			{
 				ExtendedStackTraceElement ste = steArray[i];
-				appendIndent(sb, indentLevel);
-				sb.append("at ");
-				sb.append(ste.toString(extended));
-				sb.append(LINE_SEPARATOR);
+				if(ste != null)
+				{
+					appendIndent(sb, indentLevel);
+					sb.append("at ");
+					ste.appendTo(sb, extended);
+					sb.append(LINE_SEPARATOR);
+				}
 			}
 		}
 
@@ -243,4 +291,5 @@ public class ThrowableInfo
 			sb.append("... ").append(commonFrames).append(" more").append(LINE_SEPARATOR);
 		}
 	}
+
 }
