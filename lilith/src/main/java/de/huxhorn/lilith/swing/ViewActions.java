@@ -52,12 +52,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -167,6 +174,7 @@ public class ViewActions
 	private FindToolBarAction findToolBarAction;
 	private CopySelectionAction copySelectionAction;
 	private CopyToClipboardAction copyEventAction;
+	private PasteStackTraceElementAction pasteStackTraceElementAction;
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
 	private JPopupMenu popup;
 	private GotoSourceAction gotoSourceAction;
@@ -255,6 +263,7 @@ public class ViewActions
 		gotoSourceAction = new GotoSourceAction();
 		copySelectionAction = new CopySelectionAction();
 		copyEventAction = new CopyToClipboardAction(new EventFormatter());
+		pasteStackTraceElementAction = new PasteStackTraceElementAction();
 		copyLoggingActions = new ArrayList<CopyToClipboardAction>();
 		copyLoggingActions.add(new CopyToClipboardAction(new EventJsonFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new EventXmlFormatter()));
@@ -418,6 +427,8 @@ public class ViewActions
 		customCopyMenu = new JMenu("Custom copy");
 		customCopyPopupMenu = new JMenu("Custom copy");
 		editMenu.add(customCopyMenu);
+		editMenu.addSeparator();
+		editMenu.add(pasteStackTraceElementAction);
 
 		// Search
 		searchMenu = new JMenu("Search");
@@ -3270,6 +3281,109 @@ public class ViewActions
 		}
 	}
 
+	private class PasteStackTraceElementAction
+		extends AbstractAction
+	{
+		private static final long serialVersionUID = -7630719409103575849L;
+		private static final String AT_PREFIX="at ";
+		private final Logger logger = LoggerFactory.getLogger(PasteStackTraceElementAction.class);
+
+		private Clipboard clipboard;
+
+		private PasteStackTraceElementAction()
+		{
+			super("Paste StackTraceElement");
+			putValue(Action.SHORT_DESCRIPTION, "Paste StackTraceElement from clipboard and open code in IDE if available.");
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PASTE_STACK_TRACE_ELEMENT_ACTION);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
+			boolean enable = true;
+			try
+			{
+				Toolkit toolkit = Toolkit.getDefaultToolkit();
+				clipboard = toolkit.getSystemClipboard();
+			}
+			catch(AWTError ex)
+			{
+				enable = false;
+			}
+			catch(HeadlessException ex)
+			{
+				enable = false;
+			}
+			catch(SecurityException ex)
+			{
+				enable = false;
+			}
+			setEnabled(enable);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			String text = null;
+			BufferedReader reader = null;
+			try
+			{
+				Transferable transferable = clipboard.getContents(null /*unused*/);
+				if(transferable != null)
+				{
+					reader = new BufferedReader(DataFlavor.getTextPlainUnicodeFlavor().getReaderForText(transferable));
+					text = reader.readLine();
+					if(text != null)
+					{
+						text = text.trim();
+						if(text.startsWith(AT_PREFIX))
+						{
+							text = text.substring(AT_PREFIX.length());
+						}
+					}
+				}
+			}
+			catch(IllegalStateException ex)
+			{
+				// ignore
+			}
+			catch(IllegalArgumentException ex)
+			{
+				// ignore
+			}
+			catch (UnsupportedFlavorException ex)
+			{
+				// ignore
+			}
+			catch (IOException ex)
+			{
+				// ignore
+			}
+			finally
+			{
+				if(reader != null)
+				{
+					try
+					{
+						reader.close();
+					}
+					catch (IOException e1)
+					{
+						// ignore
+					}
+				}
+			}
+			// wtf? :D
+
+			if(logger.isDebugEnabled()) logger.debug("Line from clipboard: {}", text);
+			if(text != null)
+			{
+				ExtendedStackTraceElement xste = ExtendedStackTraceElement.parseStackTraceElement(text);
+				if(xste != null)
+				{
+					StackTraceElement ste = xste.getStackTraceElement();
+					if(logger.isDebugEnabled()) logger.debug("Parsed StackTraceElement: {}", ste);
+					mainFrame.goToSource(ste);
+				}
+			}
+		}
+	}
 
 	private class EventFormatter
 		implements ClipboardFormatter

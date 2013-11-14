@@ -122,6 +122,10 @@
 			<action dev="jhux" type="fix">
 				servlet-api dependency of de.huxhorn.lilith.logback.servlet is now "provided".
 			</action>
+			<action dev="jhux" type="add">
+				Added "Paste StackTraceElement" (Cmd-shift V) which opens the respective source code
+				in the IDE, if a proper plugin is installed.
+			</action>
 			<action dev="jhux" type="update">
 				Groovy 2.1.9, Logback 1.0.13, Jackson 2.2.3, log4j2 2.0-beta8, rrd4j 2.2, aspectj 1.7.4,
 				flying-saucer 9.0.4, Spring 3.2.5, macify 1.6, httpcore 4.3, httpclient 4.3.1, JCommander 1.32,

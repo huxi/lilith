@@ -64,6 +64,7 @@ public class LilithKeyStrokes
 	public static final String NEXT_TAB_ACTION = "NEXT_TAB_ACTION";
 	public static final String OPEN_ACTION = "OPEN_ACTION";
 	public static final String OPEN_INACTIVE_ACTION = "OPEN_INACTIVE_ACTION";
+	public static final String PASTE_STACK_TRACE_ELEMENT_ACTION = "PASTE_STACK_TRACE_ELEMENT_ACTION";
 	public static final String PAUSE_ACTION = "PAUSE_ACTION";
 	public static final String PREFERENCES_ACTION = "PREFERENCES_ACTION";
 	public static final String PREVIOUS_TAB_ACTION = "PREVIOUS_TAB_ACTION";
@@ -104,6 +105,7 @@ public class LilithKeyStrokes
 		addKeyStroke(NEXT_TAB_ACTION, KeyStrokes.COMMAND_ALIAS + " K");
 		addKeyStroke(OPEN_ACTION, KeyStrokes.COMMAND_ALIAS + " O");
 		addKeyStroke(OPEN_INACTIVE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift O");
+		addKeyStroke(PASTE_STACK_TRACE_ELEMENT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift V");
 		addKeyStroke(PAUSE_ACTION, KeyStrokes.COMMAND_ALIAS + " P");
 		addKeyStroke(PREFERENCES_ACTION, KeyStrokes.COMMAND_ALIAS + " COMMA");
 		addKeyStroke(PREVIOUS_TAB_ACTION, KeyStrokes.COMMAND_ALIAS + " J");
