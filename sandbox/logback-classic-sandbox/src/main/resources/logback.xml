@@ -50,6 +50,7 @@
 	<appender name="FILE5" class="ch.qos.logback.core.FileAppender">
 		<file>file5.log</file>
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<!-- http://jira.qos.ch/browse/LOGBACK-328 -->
 			<layout class="ch.qos.logback.classic.log4j.XMLLayout">
 				<locationInfo>true</locationInfo>
 			</layout>
@@ -71,6 +72,8 @@
 		<IncludeCallerData>true</IncludeCallerData>
 	</appender>
 	
+	<appender name="Foo" class="de.huxhorn.lilith.sandbox.FooAppender"/>
+	
 	<root level="ALL">
 		<appender-ref ref="CONSOLE"/>
 		<appender-ref ref="FILE1"/>
@@ -80,6 +83,9 @@
 		<appender-ref ref="FILE5"/>
 		<appender-ref ref="MultiplexClassicCompressed"/>
 		<appender-ref ref="LogbackClassic"/>
+		<!--
+		<appender-ref ref="Foo"/>
+		-->
 	</root>
 	
 	<logger name="de.huxhorn.lilith.slf4j" level="ALL"/>

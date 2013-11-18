@@ -3,6 +3,8 @@ package de.huxhorn.lilith.sandbox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import ch.qos.logback.classic.LoggerContext;
+
 
 public class LogbackClassicSandbox
 {
@@ -70,6 +72,13 @@ public class LogbackClassicSandbox
 		throws Exception
 	{
 		final Logger logger = LoggerFactory.getLogger(LogbackClassicSandbox.class);
+		
+		int count = 50;
+		
+		if(args != null && args.length > 0)
+		{
+			count = Integer.parseInt(args[0]);
+		}
 
 		if(logger.isDebugEnabled()) logger.debug("args: {}", (Object[])args);
 
@@ -77,7 +86,28 @@ public class LogbackClassicSandbox
 		MDC.put("key2", "value2");
 		if(logger.isDebugEnabled()) logger.debug("Foobar!", new Throwable());
 
-		for(;;)
+		for(int i=0;i<count;i++)
+		{
+			InnerClass.execute();
+			logger.trace("Trace!");
+			logger.debug("Debug!");
+			logger.info("Info!");
+			logger.warn("Warn!");
+			logger.error("Error!");
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch(InterruptedException ex)
+			{
+				break;
+			}
+		}
+
+		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+		loggerContext.reset();
+
+		for(int i=0;i<count;i++)
 		{
 			InnerClass.execute();
 			logger.trace("Trace!");
