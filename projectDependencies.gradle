@@ -350,21 +350,11 @@ project(':logback-encoder-access') {
 	}
 }
 
-project(':log4j-throwable-parser') {
-	archivesBaseName = 'de.huxhorn.lilith.log4j.throwable'
-	description = 'This file is part of Lilith. It contains the Log4j ThrowableInfo-Parser.'
-	dependencies {
-		compile project(':lilith-data-logging')
-		compile libraries.'slf4j-api'
-	}
-}
-
 project(':log4j-xml') {
 	archivesBaseName = 'de.huxhorn.lilith.log4j.xml'
 	description = 'This file is part of Lilith. It contains LOG4J XML I/O.'
 	dependencies {
 		compile project(':lilith-data-logging')
-		compile project(':log4j-throwable-parser')
 		compile libraries.'sulky-stax'
 		compile libraries.'sulky-tasks'
 		compile libraries.'sulky-buffers'
@@ -383,7 +373,6 @@ project(':converter-log4j') {
 	dependencies {
 		compile project(':lilith-data-converter')
 		compile project(':lilith-data-logging')
-		compile project(':log4j-throwable-parser')
 		compile libraries.'sulky-buffers'
 		compile project(':lilith-engine')
 		compile libraries.'slf4j-api'

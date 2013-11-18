@@ -65,6 +65,9 @@
 		<RemoteHosts>localhost</RemoteHosts>
 	</appender>
 	
+	<!--
+	http://jira.qos.ch/browse/LOGBACK-929
+	-->
 	<appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
 		<RemoteHost>localhost</RemoteHost>
 		<Port>4560</Port>

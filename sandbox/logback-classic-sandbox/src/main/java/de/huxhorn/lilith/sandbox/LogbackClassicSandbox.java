@@ -124,5 +124,8 @@ public class LogbackClassicSandbox
 				break;
 			}
 		}
+		System.out.println("before context.stop()");
+		loggerContext.stop();
+		System.out.println("End of main()");
 	}
 }
