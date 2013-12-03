@@ -197,14 +197,14 @@ public class MessageFormatter
 	/**
 	 * <p>This method returns a MessageFormatter.ArgumentResult which contains the arguments converted to String
 	 * as well as an optional Throwable.</p>
-	 * <p/>
+	 *
 	 * <p>If the last argument is a Throwable and is NOT used up by a placeholder in the message pattern it is returned
-	 * in MessageFormatter.ArgumentResult.getThrowable() and won't be contained in the created String[].<br/>
-	 * If it is used up getThrowable will return null even if the last argument was a Throwable!</p>
+	 * in MessageFormatter.ArgumentResult.getThrowable() and won't be contained in the created String[].</p>
+	 * <p>If it is used up getThrowable will return null even if the last argument was a Throwable!</p>
 	 *
 	 * @param messagePattern the message pattern that to be checked for placeholders.
 	 * @param arguments      the argument array to be converted.
-	 * @return a MessageFormatter.ArgumentResult containing the converted arformatted message and optionally a Throwable.
+	 * @return a MessageFormatter.ArgumentResult containing the converted formatted message and optionally a Throwable.
 	 */
 	public static ArgumentResult evaluateArguments(String messagePattern, Object[] arguments)
 	{
@@ -245,7 +245,7 @@ public class MessageFormatter
 	/**
 	 * <p>This is just a simple class containing the result of an evaluateArgument call. It's necessary because we need to
 	 * return two results, i.e. the resulting String[] and the optional Throwable.</p>
-	 * <p/>
+	 *
 	 * <p>This class is not Serializable because serializing a Throwable is generally a bad idea if the data is supposed
 	 * to leave the current VM since it may result in ClassNotFoundExceptions if the given Throwable is not
 	 * available/different in the deserializing VM.</p>

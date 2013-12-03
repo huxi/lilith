@@ -43,7 +43,7 @@ import ch.qos.logback.classic.spi.LoggingEvent;
 /**
  * This appender should not be used and is only implemented for symmetric reasons so both an appender
  * and a producer is available. It's only used to debug Lilith.
- * <p/>
+ *
  * The producer is only used for programming languages that are unable to count bytes, i.e. ActionScript... ;)
  */
 public class ZeroDelimitedClassicXmlMultiplexSocketAppender

@@ -58,7 +58,7 @@ public class NDC
 
 	/**
 	 * Pops the last message from the stack.
-	 * <p/>
+	 *
 	 * This method does not return the popped message to discourage it's usage in application logic.
 	 */
 	public static void pop()
@@ -88,7 +88,7 @@ public class NDC
 
 	/**
 	 * Returns an array containing all messages of the stack.
-	 * <p/>
+	 *
 	 * The messages from the NDC stack should not be used in application logic.
 	 *
 	 * @return an array containing all messages of the stack.

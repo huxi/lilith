@@ -37,10 +37,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class will always write into <user.home>/.lilith/sources/logs/Lilith.xxx. This s done so logging events during
+ * This class will always write into &lt;user.home&gt;/.lilith/sources/logs/Lilith.xxx. This s done so logging events during
  * movement of home directory can be handled. It's also quite handy because no instance of ApplicationPreferences
  * is actually needed.
- * <p/>
+ *
  * Attention: If SerializingFileBuffer is logging then SomethingBad(TM) will happen :)
  */
 public class InternalLilithAppender

@@ -89,7 +89,7 @@ public class AccessMultiplexSocketAppender
 
 	/**
 	 * GZIPs the event if set to true.
-	 * <p/>
+	 *
 	 * Automatically chooses the correct default port if it was not previously set manually.
 	 *
 	 * @param compressing if events will be gzipped or not.

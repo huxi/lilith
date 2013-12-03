@@ -2286,7 +2286,7 @@ public class ApplicationPreferences
 	 * If a part of the application needs the application path it should *always* use this method instead of
 	 * getApplicationPath() since the application path might change while this one will always stay
 	 * the same.
-	 * <p/>
+	 *
 	 * A switch of the application path while the application is running isn't safe so it's changed for real
 	 * upon next restart.
 	 *
@@ -2825,7 +2825,7 @@ public class ApplicationPreferences
 	}
 
 	/**
-	 * Quick & dirty MD5 checksum function.
+	 * Quick &amp; dirty MD5 checksum function.
 	 * Returns null in case of error.
 	 *
 	 * @param input the input

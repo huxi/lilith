@@ -45,9 +45,9 @@ import java.util.logging.LogRecord;
 /**
  * <p>A java.util.logging.Handler that simply forwards LogRecords to the respective
  * org.slf4j.Logger.</p>
- * <p/>
- * <p>Usage example:<br />
- * <tt><pre>
+ *
+ * <p>Usage example:</p>
+ * <pre><tt>
  * {
  * // initialize java.util.logging to use slf4j...
  * Handler handler = new Slf4JHandler();
@@ -55,22 +55,22 @@ import java.util.logging.LogRecord;
  * rootLogger.addHandler(handler);
  * rootLogger.setLevel(java.util.logging.Level.ALL);
  * }
- * </pre></tt></p>
- * <p/>
+ * </tt></pre>
+ *
  * <p><b>Keep in mind that the above code enables all logging, even for <tt>java.*</tt>, <tt>javax.*</tt>
  * and <tt>sun.*</tt>!</b></p>
- * <p/>
+ *
  * <p>This means that you will most likely have to set the log level of those three packages to a sane value
  * like <tt>INFO</tt> or <tt>WARN</tt>.</p>
- * <p/>
- * <p>It's also possible to set those levels before the LogRecord reaches the Handler:<br/>
- * <tt><pre>
+ *
+ * <p>It's also possible to set those levels before the LogRecord reaches the Handler:</p>
+ * <pre><tt>
  * {
  * java.util.logging.Logger.getLogger("java").setLevel(java.util.logging.Level.WARNING);
  * java.util.logging.Logger.getLogger("javax").setLevel(java.util.logging.Level.WARNING);
  * java.util.logging.Logger.getLogger("sun").setLevel(java.util.logging.Level.WARNING);
  * }
- * </pre></tt></p>
+ * </tt></pre>
  */
 public class Slf4JHandler
 	extends Handler
@@ -86,12 +86,12 @@ public class Slf4JHandler
 
 	/**
 	 * Publish a <tt>LogRecord</tt>.
-	 * <p/>
+	 * <p>
 	 * The logging request was made initially to a <tt>Logger</tt> object,
 	 * which initialized the <tt>LogRecord</tt> and forwarded it here.
-	 * <p/>
-	 * The <tt>Handler</tt>  is responsible for formatting the message, when and
-	 * if necessary.  The formatting should include localization.
+	 * </p>
+	 * <p>The <tt>Handler</tt>  is responsible for formatting the message, when and
+	 * if necessary.  The formatting should include localization.</p>
 	 *
 	 * @param record description of the log event. A null record is
 	 *               silently ignored and is not published
@@ -113,12 +113,12 @@ public class Slf4JHandler
 	}
 
 	/**
-	 * Close the <tt>Handler</tt> and free all associated resources.
-	 * <p/>
-	 * The close method will perform a <tt>flush</tt> and then close the
+	 * <p>Close the <tt>Handler</tt> and free all associated resources.</p>
+	 *
+	 * <p>The close method will perform a <tt>flush</tt> and then close the
 	 * <tt>Handler</tt>.   After close has been called this <tt>Handler</tt>
 	 * should no longer be used.  Method calls may either be silently
-	 * ignored or may throw runtime exceptions.
+	 * ignored or may throw runtime exceptions.</p>
 	 *
 	 * @throws SecurityException if a security manager exists and if
 	 *                           the caller does not have <tt>LoggingPermission("control")</tt>.

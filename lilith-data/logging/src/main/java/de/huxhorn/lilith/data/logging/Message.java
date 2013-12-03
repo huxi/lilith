@@ -39,7 +39,7 @@ import java.util.Arrays;
 
 /**
  * This class encapsulates a parameterized message as used by LoggingEvent and NDC.
- * <p/>
+ *
  * The message is formatted lazily the first time it is actually retrieved using getMessage().
  */
 public final class Message

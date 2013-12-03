@@ -597,9 +597,9 @@ public class AboutPanel
 
 	/**
 	 * This method returns ScrollAreaToolTipText if the point of the <code>MouseEvent</code>
-	 * is inside the scroll-area and <code>null</code> otherwise.<p />
-	 * <p/>
-	 * It's needed by the <code>ToolTipManager</code> .
+	 * is inside the scroll-area and <code>null</code> otherwise.
+	 *
+	 * It's needed by the <code>ToolTipManager</code>.
 	 *
 	 * @param evt a <code>MouseEvent</code>.
 	 * @return The toolTipText value for the <code>ToolTipManager</code>.
@@ -965,8 +965,8 @@ public class AboutPanel
 	 * Sets the font attribute of the <code>AboutPanel</code> object. Setting it
 	 * will result in the recreation of all buffers. The font can even be safely
 	 * changed while the component is visible. It will be used for the version- and
-	 * scroll-text.<p />
-	 * <p/>
+	 * scroll-text.
+	 *
 	 * If the parameter is <code>null</code> then <code>UIManager.getFont( "Label.font" )</code>
 	 * will be used.
 	 *

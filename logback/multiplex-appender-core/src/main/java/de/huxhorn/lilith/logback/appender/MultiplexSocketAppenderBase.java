@@ -188,7 +188,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	/**
 	 * Sets the list of remote hosts.
-	 * <p/>
+	 *
 	 * This method should also be called setRemoteHosts but Joran explodes if it has the same name as the String version.
 	 *
 	 * @param remoteHostsList the list of remote hosts.
@@ -296,7 +296,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	/**
 	 * Stop this appender.
-	 * <p/>
+	 *
 	 * This will mark the appender as closed and calls the {@link #cleanUp}
 	 * method.
 	 */
