@@ -240,6 +240,16 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 				}
 		}
 
+        if(event.elapsedTime)
+        {
+            evenOdd.toggle()
+            it.tr([class: "${evenOdd}"])
+                    {
+                        th('Elapsed Time')
+                        td(event.elapsedTime)
+                    }
+        }
+
 		if(event.loggerContext instanceof LoggerContext)
 		{
 			LoggerContext loggerContext=event.loggerContext;
