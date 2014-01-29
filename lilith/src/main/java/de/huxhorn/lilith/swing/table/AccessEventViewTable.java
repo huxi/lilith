@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,11 @@ import javax.swing.table.TableColumn;
 public class AccessEventViewTable
 	extends EventWrapperViewTable<AccessEvent>
 {
+	private static final long serialVersionUID = -5675168001393911040L;
+
 	public static final String DEFAULT_COLUMN_NAME_ID = "ID";
 	public static final String DEFAULT_COLUMN_NAME_TIMESTAMP = "Timestamp";
+	public static final String DEFAULT_COLUMN_NAME_ELAPSED_TIME = "Elapsed Time";
 	public static final String DEFAULT_COLUMN_NAME_STATUS_CODE = "Status";
 	public static final String DEFAULT_COLUMN_NAME_METHOD = "Method";
 	public static final String DEFAULT_COLUMN_NAME_REQUEST_URI = "Request URI";
@@ -63,6 +66,8 @@ public class AccessEventViewTable
 			new ApplicationTooltipGenerator());
 //		tooltipGenerators.put(DEFAULT_COLUMN_NAME_CONTEXT,
 //			new ContextTooltipGenerator());
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_ELAPSED_TIME,
+			new ElapsedTimeTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_SOURCE,
 			new SourceTooltipGenerator());
 	}
@@ -128,6 +133,13 @@ public class AccessEventViewTable
 */
 		{
 			TableColumn col = new TableColumn(0);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_ELAPSED_TIME);
+			col.setCellRenderer(new ElapsedTimeRenderer());
+			tableColumns.put(col.getHeaderValue(), col);
+		}
+
+		{
+			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_SOURCE);
 			col.setCellRenderer(new SourceRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
@@ -148,6 +160,7 @@ public class AccessEventViewTable
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REMOTE_ADDR, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATIION, 75, true));
 //		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_CONTEXT, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_ELAPSED_TIME, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_SOURCE, 75, isGlobal()));
 
 		return result;

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,16 @@ public class AccessFormatter
 		if(event != null)
 		{
 			result=new AccessEventFoo();
-			result.setTimeStamp(event.getTimeStamp());
+			Long ts = event.getTimeStamp();
+			if(ts != null)
+			{
+				result.setTimeStamp(ts);
+			}
+			Long et = event.getElapsedTime();
+			if(et != null)
+			{
+				result.setElapsedTime(et);
+			}
 			// loggerContext
 			result.setRequestURI(event.getRequestURI());
 			result.setRequestURL(event.getRequestURL());
@@ -132,8 +141,6 @@ public class AccessFormatter
 	private static class AccessEventFoo
 		implements IAccessEvent
 	{
-		private static final long serialVersionUID = 7867225147256087602L;
-
 		private String requestURI;
 		private String requestURL;
 		private String remoteHost;
@@ -151,6 +158,7 @@ public class AccessFormatter
 		private int localPort = SENTINEL;
 
 		private long timeStamp = 0;
+		private long elapsedTime;
 		private static final String[] NA_STRING_ARRAY = new String[0];
 		private static final String EMPTY = "";
 
@@ -167,6 +175,16 @@ public class AccessFormatter
 		public long getTimeStamp()
 		{
 			return timeStamp;
+		}
+
+		private void setElapsedTime(long elapsedTime)
+		{
+			this.elapsedTime = elapsedTime;
+		}
+
+		public long getElapsedTime()
+		{
+			return elapsedTime;
 		}
 
 		public void setTimeStamp(long timeStamp)
@@ -324,14 +342,6 @@ public class AccessFormatter
 				requestHeaderMap = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
 			}
 			return requestHeaderMap;
-		}
-
-		public void buildRequestHeaderMap()
-		{
-		}
-
-		public void buildRequestParameterMap()
-		{
 		}
 
 		public void setRequestParameterMap(Map<String, String[]> requestParameterMap)

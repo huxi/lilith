@@ -2142,6 +2142,16 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder getLoggerContextOrBuilder();
+
+    // optional int64 elapsed_time = 16;
+    /**
+     * <code>optional int64 elapsed_time = 16;</code>
+     */
+    boolean hasElapsedTime();
+    /**
+     * <code>optional int64 elapsed_time = 16;</code>
+     */
+    long getElapsedTime();
   }
   /**
    * Protobuf type {@code de.huxhorn.lilith.access.AccessEvent}
@@ -2299,6 +2309,11 @@ public final class AccessProto {
                 loggerContext_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00004000;
+              break;
+            }
+            case 128: {
+              bitField0_ |= 0x00008000;
+              elapsedTime_ = input.readInt64();
               break;
             }
           }
@@ -2821,6 +2836,22 @@ public final class AccessProto {
       return loggerContext_;
     }
 
+    // optional int64 elapsed_time = 16;
+    public static final int ELAPSED_TIME_FIELD_NUMBER = 16;
+    private long elapsedTime_;
+    /**
+     * <code>optional int64 elapsed_time = 16;</code>
+     */
+    public boolean hasElapsedTime() {
+      return ((bitField0_ & 0x00008000) == 0x00008000);
+    }
+    /**
+     * <code>optional int64 elapsed_time = 16;</code>
+     */
+    public long getElapsedTime() {
+      return elapsedTime_;
+    }
+
     private void initFields() {
       method_ = "";
       protocol_ = "";
@@ -2837,6 +2868,7 @@ public final class AccessProto {
       requestParameters_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance();
       responseHeaders_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance();
       loggerContext_ = de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance();
+      elapsedTime_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2919,6 +2951,9 @@ public final class AccessProto {
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         output.writeMessage(15, loggerContext_);
       }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        output.writeInt64(16, elapsedTime_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2987,6 +3022,10 @@ public final class AccessProto {
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(15, loggerContext_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(16, elapsedTime_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3154,6 +3193,8 @@ public final class AccessProto {
           loggerContextBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00004000);
+        elapsedTime_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00008000);
         return this;
       }
 
@@ -3258,6 +3299,10 @@ public final class AccessProto {
         } else {
           result.loggerContext_ = loggerContextBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+          to_bitField0_ |= 0x00008000;
+        }
+        result.elapsedTime_ = elapsedTime_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3334,6 +3379,9 @@ public final class AccessProto {
         }
         if (other.hasLoggerContext()) {
           mergeLoggerContext(other.getLoggerContext());
+        }
+        if (other.hasElapsedTime()) {
+          setElapsedTime(other.getElapsedTime());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -4543,6 +4591,39 @@ public final class AccessProto {
           loggerContext_ = null;
         }
         return loggerContextBuilder_;
+      }
+
+      // optional int64 elapsed_time = 16;
+      private long elapsedTime_ ;
+      /**
+       * <code>optional int64 elapsed_time = 16;</code>
+       */
+      public boolean hasElapsedTime() {
+        return ((bitField0_ & 0x00008000) == 0x00008000);
+      }
+      /**
+       * <code>optional int64 elapsed_time = 16;</code>
+       */
+      public long getElapsedTime() {
+        return elapsedTime_;
+      }
+      /**
+       * <code>optional int64 elapsed_time = 16;</code>
+       */
+      public Builder setElapsedTime(long value) {
+        bitField0_ |= 0x00008000;
+        elapsedTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 elapsed_time = 16;</code>
+       */
+      public Builder clearElapsedTime() {
+        bitField0_ = (bitField0_ & ~0x00008000);
+        elapsedTime_ = 0L;
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:de.huxhorn.lilith.access.AccessEvent)
@@ -8707,7 +8788,7 @@ public final class AccessProto {
       "\022E\n\021source_identifier\030\002 \001(\0132*.de.huxhorn" +
       ".lilith.access.SourceIdentifier\"D\n\020Sourc" +
       "eIdentifier\022\022\n\nidentifier\030\001 \001(\t\022\034\n\024secon" +
-      "dary_identifier\030\002 \001(\t\"\361\003\n\013AccessEvent\022\016\n",
+      "dary_identifier\030\002 \001(\t\"\207\004\n\013AccessEvent\022\016\n",
       "\006method\030\001 \001(\t\022\020\n\010protocol\030\002 \001(\t\022\026\n\016remot" +
       "e_address\030\003 \001(\t\022\023\n\013remote_host\030\004 \001(\t\022\023\n\013" +
       "remote_user\030\005 \001(\t\022\022\n\ntime_stamp\030\006 \001(\003\022\023\n" +
@@ -8720,19 +8801,19 @@ public final class AccessProto {
       "ponse_headers\030\016 \001(\0132#.de.huxhorn.lilith.",
       "access.StringMap\022?\n\016logger_context\030\017 \001(\013" +
       "2\'.de.huxhorn.lilith.access.LoggerContex" +
-      "t\"j\n\rLoggerContext\022\022\n\nbirth_time\030\001 \001(\003\022\014" +
-      "\n\004name\030\002 \001(\t\0227\n\nproperties\030\003 \001(\0132#.de.hu" +
-      "xhorn.lilith.access.StringMap\"D\n\tStringM" +
-      "ap\0227\n\005entry\030\001 \003(\0132(.de.huxhorn.lilith.ac" +
-      "cess.StringMapEntry\",\n\016StringMapEntry\022\013\n" +
-      "\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"N\n\016StringArray" +
-      "Map\022<\n\005entry\030\001 \003(\0132-.de.huxhorn.lilith.a" +
-      "ccess.StringArrayMapEntry\"]\n\023StringArray",
-      "MapEntry\022\013\n\003key\030\001 \002(\t\0229\n\005value\030\002 \003(\0132*.d" +
-      "e.huxhorn.lilith.access.StringArrayValue" +
-      "\"!\n\020StringArrayValue\022\r\n\005value\030\001 \001(\tB4\n0d" +
-      "e.huxhorn.lilith.data.access.protobuf.ge" +
-      "neratedH\001"
+      "t\022\024\n\014elapsed_time\030\020 \001(\003\"j\n\rLoggerContext" +
+      "\022\022\n\nbirth_time\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\0227\n\npr" +
+      "operties\030\003 \001(\0132#.de.huxhorn.lilith.acces" +
+      "s.StringMap\"D\n\tStringMap\0227\n\005entry\030\001 \003(\0132" +
+      "(.de.huxhorn.lilith.access.StringMapEntr" +
+      "y\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005valu" +
+      "e\030\002 \001(\t\"N\n\016StringArrayMap\022<\n\005entry\030\001 \003(\013" +
+      "2-.de.huxhorn.lilith.access.StringArrayM",
+      "apEntry\"]\n\023StringArrayMapEntry\022\013\n\003key\030\001 " +
+      "\002(\t\0229\n\005value\030\002 \003(\0132*.de.huxhorn.lilith.a" +
+      "ccess.StringArrayValue\"!\n\020StringArrayVal" +
+      "ue\022\r\n\005value\030\001 \001(\tB4\n0de.huxhorn.lilith.d" +
+      "ata.access.protobuf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -8762,7 +8843,7 @@ public final class AccessProto {
           internal_static_de_huxhorn_lilith_access_AccessEvent_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_de_huxhorn_lilith_access_AccessEvent_descriptor,
-              new java.lang.String[] { "Method", "Protocol", "RemoteAddress", "RemoteHost", "RemoteUser", "TimeStamp", "RequestUri", "RequestUrl", "StatusCode", "LocalPort", "ServerName", "RequestHeaders", "RequestParameters", "ResponseHeaders", "LoggerContext", });
+              new java.lang.String[] { "Method", "Protocol", "RemoteAddress", "RemoteHost", "RemoteUser", "TimeStamp", "RequestUri", "RequestUrl", "StatusCode", "LocalPort", "ServerName", "RequestHeaders", "RequestParameters", "ResponseHeaders", "LoggerContext", "ElapsedTime", });
           internal_static_de_huxhorn_lilith_access_LoggerContext_descriptor =
             getDescriptor().getMessageTypes().get(4);
           internal_static_de_huxhorn_lilith_access_LoggerContext_fieldAccessorTable = new

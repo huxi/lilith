@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2014 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,9 +42,10 @@ import java.util.Map;
 public class AccessEvent
 	implements Serializable
 {
-	private static final long serialVersionUID = 4290137484866338570L;
+	private static final long serialVersionUID = -942687545417047646L;
 
 	private Long timeStamp;
+	private Long elapsedTime;
 	private LoggerContext loggerContext;
 	private String requestURI;
 	private String requestURL;
@@ -68,6 +69,16 @@ public class AccessEvent
 	public void setTimeStamp(Long timeStamp)
 	{
 		this.timeStamp = timeStamp;
+	}
+
+	public Long getElapsedTime()
+	{
+		return elapsedTime;
+	}
+
+	public void setElapsedTime(Long elapsedTime)
+	{
+		this.elapsedTime = elapsedTime;
 	}
 
 	public LoggerContext getLoggerContext()
@@ -210,49 +221,43 @@ public class AccessEvent
 		this.statusCode = statusCode;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-		AccessEvent event = (AccessEvent) o;
+		AccessEvent that = (AccessEvent) o;
 
-		if(localPort != event.localPort) return false;
-		if(statusCode != event.statusCode) return false;
-		if(loggerContext != null ? !loggerContext
-			.equals(event.loggerContext) : event.loggerContext != null)
-		{
+		if (localPort != that.localPort) return false;
+		if (statusCode != that.statusCode) return false;
+		if (elapsedTime != null ? !elapsedTime.equals(that.elapsedTime) : that.elapsedTime != null) return false;
+		if (loggerContext != null ? !loggerContext.equals(that.loggerContext) : that.loggerContext != null)
 			return false;
-		}
-		if(method != null ? !method.equals(event.method) : event.method != null) return false;
-		if(protocol != null ? !protocol.equals(event.protocol) : event.protocol != null) return false;
-		if(remoteAddress != null ? !remoteAddress.equals(event.remoteAddress) : event.remoteAddress != null)
-		{
+		if (method != null ? !method.equals(that.method) : that.method != null) return false;
+		if (protocol != null ? !protocol.equals(that.protocol) : that.protocol != null) return false;
+		if (remoteAddress != null ? !remoteAddress.equals(that.remoteAddress) : that.remoteAddress != null)
 			return false;
-		}
-		if(remoteHost != null ? !remoteHost.equals(event.remoteHost) : event.remoteHost != null) return false;
-		if(remoteUser != null ? !remoteUser.equals(event.remoteUser) : event.remoteUser != null) return false;
-		if(requestHeaders != null ? !requestHeaders.equals(event.requestHeaders) : event.requestHeaders != null)
-		{
+		if (remoteHost != null ? !remoteHost.equals(that.remoteHost) : that.remoteHost != null) return false;
+		if (remoteUser != null ? !remoteUser.equals(that.remoteUser) : that.remoteUser != null) return false;
+		if (requestHeaders != null ? !requestHeaders.equals(that.requestHeaders) : that.requestHeaders != null)
 			return false;
-		}
-//		if (requestParameters != null ? !requestParameters.equals(event.requestParameters) : event.requestParameters != null)
-//			return false;
-		if(requestURI != null ? !requestURI.equals(event.requestURI) : event.requestURI != null) return false;
-		if(requestURL != null ? !requestURL.equals(event.requestURL) : event.requestURL != null) return false;
-		if(responseHeaders != null ? !responseHeaders.equals(event.responseHeaders) : event.responseHeaders != null)
-		{
+		// unusable, map.equals does not work with array values.
+		//if (requestParameters != null ? !requestParameters.equals(that.requestParameters) : that.requestParameters != null) return false;
+		if (requestURI != null ? !requestURI.equals(that.requestURI) : that.requestURI != null) return false;
+		if (requestURL != null ? !requestURL.equals(that.requestURL) : that.requestURL != null) return false;
+		if (responseHeaders != null ? !responseHeaders.equals(that.responseHeaders) : that.responseHeaders != null)
 			return false;
-		}
-		if(serverName != null ? !serverName.equals(event.serverName) : event.serverName != null) return false;
+		if (serverName != null ? !serverName.equals(that.serverName) : that.serverName != null) return false;
 
-		return !(timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null);
+		return !(timeStamp != null ? !timeStamp.equals(that.timeStamp) : that.timeStamp != null);
 	}
 
+	@Override
 	public int hashCode()
 	{
-		int result;
-		result = (timeStamp != null ? timeStamp.hashCode() : 0);
+		int result = timeStamp != null ? timeStamp.hashCode() : 0;
+		result = 31 * result + (elapsedTime != null ? elapsedTime.hashCode() : 0);
 		result = 31 * result + (loggerContext != null ? loggerContext.hashCode() : 0);
 		result = 31 * result + (requestURI != null ? requestURI.hashCode() : 0);
 		result = 31 * result + (requestURL != null ? requestURL.hashCode() : 0);
@@ -270,14 +275,23 @@ public class AccessEvent
 	@Override
 	public String toString()
 	{
-		StringBuilder result = new StringBuilder();
-		result.append("AccessEvent[");
-		result.append("loggerContext=").append(loggerContext).append(", ");
-		result.append("timeStamp=").append(timeStamp);
-
-		result.append("]");
-		return result.toString();
+		return "AccessEvent{" +
+				"timeStamp=" + timeStamp +
+				", elapsedTime=" + elapsedTime +
+				", loggerContext=" + loggerContext +
+				", requestURI='" + requestURI + '\'' +
+				", requestURL='" + requestURL + '\'' +
+				", remoteHost='" + remoteHost + '\'' +
+				", remoteUser='" + remoteUser + '\'' +
+				", protocol='" + protocol + '\'' +
+				", method='" + method + '\'' +
+				", serverName='" + serverName + '\'' +
+				", remoteAddress='" + remoteAddress + '\'' +
+				", requestHeaders=" + requestHeaders +
+				", responseHeaders=" + responseHeaders +
+				", requestParameters=" + requestParameters +
+				", localPort=" + localPort +
+				", statusCode=" + statusCode +
+				'}';
 	}
-
-
 }

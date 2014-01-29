@@ -11,9 +11,64 @@
 	
 	<properties>
 		<slf4jVersion>1.7.5</slf4jVersion>
-		<logbackVersion>1.0.13</logbackVersion>
-		<lilithVersion>0.9.43</lilithVersion>
+		<logbackVersion>1.1.0</logbackVersion>
+		<lilithVersion>0.9.44-SNAPSHOT</lilithVersion>
 	</properties>
+	<repositories>
+		<repository>
+			<id>local-snapshot</id>
+			<name>your custom repo</name>
+			<url>${localSnapshot}</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>local-release</id>
+			<name>your custom repo</name>
+			<url>${localRelease}</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>local-snapshot</id>
+			<name>your custom repo</name>
+			<url>${localSnapshot}</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>local-release</id>
+			<name>your custom repo</name>
+			<url>${localRelease}</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	
 	<build>
 		<finalName>lb-access-sandbox</finalName>
