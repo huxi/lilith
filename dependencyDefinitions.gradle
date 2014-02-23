@@ -31,7 +31,7 @@ project.ext.libraries = [
 //'jgroups':                  'org.jgroups:jgroups:3.3.3.Final',
 'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
 'jackson-databind':         "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
-'jcommander':               'com.beust:jcommander:1.32',
+'jcommander':               'com.beust:jcommander:1.35',
 'jgoodies-looks':           'com.jgoodies:jgoodies-looks:2.5.3',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
 'junit':                    'junit:junit:4.11',
