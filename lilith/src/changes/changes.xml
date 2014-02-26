@@ -128,7 +128,7 @@
 			</action>
 			<action dev="jhux" type="update">
 				Groovy 2.2.2, Logback 1.1.1, SLF4J 1.7.6, Jackson 2.3.1, log4j2 2.0-beta8, rrd4j 2.2, aspectj 1.7.4,
-				flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.1, httpclient 4.3.3, JCommander 1.35,
+				flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.2, httpclient 4.3.3, JCommander 1.35,
 				servlet-api 3.1.0, jgoodies-looks 2.5.3, commons-lang3 3.2.1
 			</action>
 		</release>
