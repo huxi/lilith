@@ -30,6 +30,7 @@ project.ext.libraries = [
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
 //'jgroups':                  'org.jgroups:jgroups:3.3.3.Final',
 'jmdns':                    'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.jmdns:3.0',
+'jackson-afterburner':      "com.fasterxml.jackson.module:jackson-module-afterburner:${versions.jackson}",
 'jackson-databind':         "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
 'jcommander':               'com.beust:jcommander:1.35',
 'jgoodies-looks':           'com.jgoodies:jgoodies-looks:2.5.3',

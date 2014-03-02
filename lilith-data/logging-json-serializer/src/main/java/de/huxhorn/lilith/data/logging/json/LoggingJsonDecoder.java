@@ -36,6 +36,7 @@ package de.huxhorn.lilith.data.logging.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
 import de.huxhorn.sulky.codec.Decoder;
@@ -55,6 +56,7 @@ public class LoggingJsonDecoder
 		this.compressing = compressing;
 		mapper = new ObjectMapper();
 		mapper.registerModule(new LoggingModule());
+		mapper.registerModule(new AfterburnerModule());
 	}
 
 	public LoggingEvent decode(byte[] bytes)
