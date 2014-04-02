@@ -34,7 +34,7 @@
 
 package de.huxhorn.lilith.logback.encoder;
 
-import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.recovery.ResilientFileOutputStream;
 import de.huxhorn.lilith.api.FileConstants;
 
@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClassicLilithEncoder
-	extends LilithEncoderBase<LoggingEvent>
+	extends LilithEncoderBase<ILoggingEvent>
 {
 	private boolean includeCallerData;
 	private WrappingClassicEncoder wrappingEncoder;
@@ -92,7 +92,7 @@ public class ClassicLilithEncoder
 	}
 
 	@Override
-	protected void preProcess(LoggingEvent event)
+	protected void preProcess(ILoggingEvent event)
 	{
 		if(event != null)
 		{

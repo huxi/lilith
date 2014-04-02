@@ -126,6 +126,9 @@
 				Added "Paste StackTraceElement" (Cmd-shift V) which opens the respective source code
 				in the IDE, if a proper plugin is installed.
 			</action>
+			<action dev="jhux" type="fix" issue="16">
+				ClassicLilithEncoder is now Encoder&lt;ILoggingEvent&gt; instead of Enocder&lt;LoggingEvent&gt;.
+			</action>
 			<action dev="jhux" type="update">
 				Groovy 2.2.2, Logback 1.1.1, SLF4J 1.7.6, Jackson 2.3.2, log4j2 2.0-beta8, rrd4j 2.2, aspectj 1.7.4,
 				flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.2, httpclient 4.3.3, JCommander 1.35,
