@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,6 +151,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -2621,29 +2622,57 @@ public class MainFrame
 		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
 		if(logger.isInfoEnabled()) logger.info("Opening URL {}. ", url);
-		Runtime runtime = Runtime.getRuntime();
-		String[] cmdArray = getOpenUrlCommandArray(url);
-		if(cmdArray != null)
+		if(url == null)
 		{
-			try
-			{
-				Process process = runtime.exec(cmdArray);
-				ProcessConsumerRunnable consumer = new ProcessConsumerRunnable(process);
-				Thread t = new Thread(consumer, "Open URL: " + url);
-				t.setDaemon(true);
-				t.start();
-			}
-			catch(IOException e)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while trying to open URL {}!", url, e);
-			}
+			return;
 		}
-		else
+		String[] cmdArray = resolveOpenCommandArray(url.toString());
+		if(cmdArray == null)
 		{
-			if(logger.isInfoEnabled())
-			{
-				logger.info("Can't open url {} because no command is defined for the current system.", url);
-			}
+			if(logger.isInfoEnabled()) logger.info("Can't open URL {} because no open command is defined for the current system.", url);
+			return;
+		}
+		executeCommand(cmdArray);
+	}
+
+	public static void openUri(URI uri)
+	{
+		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
+
+		if(logger.isInfoEnabled()) logger.info("Opening URI {}. ", uri);
+		if(uri == null)
+		{
+			return;
+		}
+		String[] cmdArray = resolveOpenCommandArray(uri.toString());
+		if(cmdArray == null)
+		{
+			if(logger.isInfoEnabled()) logger.info("Can't open URI {} because no open command is defined for the current system.", uri);
+			return;
+		}
+		executeCommand(cmdArray);
+	}
+
+	private static void executeCommand(String[] cmdArray)
+	{
+		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
+		if(cmdArray == null)
+		{
+			return;
+		}
+		Runtime runtime = Runtime.getRuntime();
+		String commandString = Arrays.asList(cmdArray).toString();
+		try
+		{
+			Process process = runtime.exec(cmdArray);
+			ProcessConsumerRunnable consumer = new ProcessConsumerRunnable(process);
+			Thread t = new Thread(consumer, "Consuming command: " + commandString);
+			t.setDaemon(true);
+			t.start();
+		}
+		catch(IOException e)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while trying to execute command {}!", commandString, e);
 		}
 	}
 
@@ -2664,8 +2693,12 @@ public class MainFrame
 			null
 		};
 
-	private static String[] getOpenUrlCommandArray(URL url)
+	private static String[] resolveOpenCommandArray(String value)
 	{
+		if(value == null)
+		{
+			return null;
+		}
 		String[] result = null;
 		if(isWindows)
 		{
@@ -2677,15 +2710,13 @@ public class MainFrame
 			result = new String[MAC_OPEN_URL_ARRAY.length];
 			System.arraycopy(MAC_OPEN_URL_ARRAY, 0, result, 0, MAC_OPEN_URL_ARRAY.length);
 		}
-
 		if(result != null)
 		{
-			String urlStr = url.toString();
 			for(int i = 0; i < result.length; i++)
 			{
 				if(result[i] == null)
 				{
-					result[i] = urlStr;
+					result[i] = value;
 				}
 			}
 		}

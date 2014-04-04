@@ -29,7 +29,7 @@ import org.xhtmlrenderer.swing.LinkListener;
 public class StackTraceElementLinkListener
 	extends LinkListener
 {
-	private final Logger logger = LoggerFactory.getLogger(OpenUrlLinkListener.class);
+	private final Logger logger = LoggerFactory.getLogger(StackTraceElementLinkListener.class);
 	public static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
 
 	private MainFrame mainFrame;

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,14 @@ import org.xhtmlrenderer.swing.BasicPanel;
 import org.xhtmlrenderer.swing.LinkListener;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class OpenUrlLinkListener
 	extends LinkListener
 {
 	private final Logger logger = LoggerFactory.getLogger(OpenUrlLinkListener.class);
-	public static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
 	public static final String HELP_URI_PREFIX = "help://";
 	public static final String PREFS_URI_PREFIX = "prefs://";
 
@@ -61,11 +62,22 @@ public class OpenUrlLinkListener
 		{
 			try
 			{
-				mainFrame.openUrl(new URL(uri));
+				MainFrame.openUrl(new URL(uri));
 			}
 			catch(MalformedURLException e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Couldn't create URL for uri-string {}!", uri, e);
+			}
+		}
+		else if(uri.contains("coin:"))
+		{
+			try
+			{
+				MainFrame.openUri(new URI(uri));
+			}
+			catch(URISyntaxException e)
+			{
+				if(logger.isInfoEnabled()) logger.info("Couldn't create URI for uri-string {}!", uri, e);
 			}
 		}
 		else if(originalLinkListener != null)
