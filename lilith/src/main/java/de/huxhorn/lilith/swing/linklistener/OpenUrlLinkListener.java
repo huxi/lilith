@@ -69,7 +69,7 @@ public class OpenUrlLinkListener
 				if(logger.isInfoEnabled()) logger.info("Couldn't create URL for uri-string {}!", uri, e);
 			}
 		}
-		else if(uri.contains("coin:"))
+		else if(uri.contains("coin:") || uri.startsWith("mailto:"))
 		{
 			try
 			{
