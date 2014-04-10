@@ -2288,17 +2288,6 @@ public class MainFrame
 	public void showHelp()
 	{
 		openHelp("index.xhtml");
-		/*
-		if(helpUrl != null)
-		{
-			helpFrame.setHelpUrl("index.xhtml");
-		}
-		if(!helpFrame.isVisible())
-		{
-			Windows.showWindow(helpFrame, MainFrame.this, false);
-		}
-		helpFrame.toFront();
-		*/
 	}
 
 	public void showAboutDialog()

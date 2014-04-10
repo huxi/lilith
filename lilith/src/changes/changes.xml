@@ -133,6 +133,9 @@
 				Fixed suppressed handling while parsing Throwables.
 				This is also a partial workaround for http://jira.qos.ch/browse/LOGBACK-328
 			</action>
+			<action dev="jhux" type="add">
+				Added fishing-for-compliments technology.
+			</action>
 			<action dev="jhux" type="update">
 				Groovy 2.2.2, Logback 1.1.2, SLF4J 1.7.6, Jackson 2.3.2, log4j2 2.0-beta8, rrd4j 2.2, aspectj 1.7.4,
 				flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.2, httpclient 4.3.3, JCommander 1.35,

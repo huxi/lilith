@@ -64,7 +64,6 @@ import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -174,7 +173,6 @@ public class ViewActions
 	private FindToolBarAction findToolBarAction;
 	private CopySelectionAction copySelectionAction;
 	private CopyToClipboardAction copyEventAction;
-	private PasteStackTraceElementAction pasteStackTraceElementAction;
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
 	private JPopupMenu popup;
 	private GotoSourceAction gotoSourceAction;
@@ -263,7 +261,6 @@ public class ViewActions
 		gotoSourceAction = new GotoSourceAction();
 		copySelectionAction = new CopySelectionAction();
 		copyEventAction = new CopyToClipboardAction(new EventFormatter());
-		pasteStackTraceElementAction = new PasteStackTraceElementAction();
 		copyLoggingActions = new ArrayList<CopyToClipboardAction>();
 		copyLoggingActions.add(new CopyToClipboardAction(new EventJsonFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new EventXmlFormatter()));
@@ -327,6 +324,7 @@ public class ViewActions
 
 		// Help
 		KeyboardHelpAction keyboardHelpAction = new KeyboardHelpAction();
+		ShowLoveMenuAction showLoveMenuAction = new ShowLoveMenuAction();
 		TipOfTheDayAction tipOfTheDayAction = new TipOfTheDayAction();
 		DebugAction debugAction = new DebugAction();
 		aboutAction = new AboutAction();
@@ -340,7 +338,6 @@ public class ViewActions
 		findToolBarAction = new FindToolBarAction();
 		//statisticsToolBarAction = new StatisticsToolBarAction();
 		attachToolBarAction = new AttachToolBarAction();
-		PreferencesToolBarAction preferencesToolBarAction = new PreferencesToolBarAction();
 		disconnectToolBarAction = new DisconnectToolBarAction();
 
 		showTaskManagerItem = new JMenuItem(showTaskManagerAction);
@@ -381,8 +378,15 @@ public class ViewActions
 
 		toolbar.addSeparator();
 
+		PreferencesToolBarAction preferencesToolBarAction = new PreferencesToolBarAction();
 		JButton preferencesButton = new JButton(preferencesToolBarAction);
 		toolbar.add(preferencesButton);
+
+		toolbar.addSeparator();
+
+		ShowLoveToolbarAction showLoveToolbarAction = new ShowLoveToolbarAction();
+		JButton showLoveButton = new JButton(showLoveToolbarAction);
+		toolbar.add(showLoveButton);
 
 		recentFilesMenu=new JMenu("Recent Files");
 
@@ -428,6 +432,7 @@ public class ViewActions
 		customCopyPopupMenu = new JMenu("Custom copy");
 		editMenu.add(customCopyMenu);
 		editMenu.addSeparator();
+		PasteStackTraceElementAction pasteStackTraceElementAction = new PasteStackTraceElementAction();
 		editMenu.add(pasteStackTraceElementAction);
 
 		// Search
@@ -489,6 +494,7 @@ public class ViewActions
 		helpMenu.setMnemonic('h');
 
 		helpMenu.add(keyboardHelpAction);
+		helpMenu.add(showLoveMenuAction);
 		helpMenu.add(tipOfTheDayAction);
 		helpMenu.add(checkForUpdateAction);
 		helpMenu.add(troubleshootingAction);
@@ -3022,6 +3028,41 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showPreferencesDialog();
+		}
+	}
+
+	class ShowLoveMenuAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = 7535022992770523208L;
+
+		public ShowLoveMenuAction()
+		{
+			super("Show some Love...");
+			putValue(Action.SMALL_ICON, Icons.LOVE_MENU_ICON);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.openHelp("love.xhtml");
+		}
+	}
+
+	class ShowLoveToolbarAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -8956952034828513214L;
+
+		public ShowLoveToolbarAction()
+		{
+			super();
+			putValue(Action.SMALL_ICON, Icons.LOVE_TOOLBAR_ICON);
+			putValue(Action.SHORT_DESCRIPTION, "Show some Love...");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.openHelp("love.xhtml");
 		}
 	}
 

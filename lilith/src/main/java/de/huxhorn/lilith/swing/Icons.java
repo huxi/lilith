@@ -40,6 +40,7 @@ public class Icons
 	public static final Icon EXPORT_MENU_ICON;
 	public static final Icon EXIT_MENU_ICON;
 	public static final Icon PREFERENCES_MENU_ICON;
+	public static final Icon LOVE_MENU_ICON;
 
 	public static final Icon CLEAR_TOOLBAR_ICON;
 	public static final Icon ATTACH_TOOLBAR_ICON;
@@ -49,6 +50,7 @@ public class Icons
 	public static final Icon FIND_TOOLBAR_ICON;
 	public static final Icon DISCONNECT_TOOLBAR_ICON;
 	public static final Icon TAIL_TOOLBAR_ICON;
+	public static final Icon LOVE_TOOLBAR_ICON;
 
 	public static final Icon PREFERENCES_TOOLBAR_ICON;
 
@@ -403,6 +405,32 @@ public class Icons
 			}
 		}
 		PREFERENCES_TOOLBAR_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/16x16/emblems/emblem-favorite.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		LOVE_MENU_ICON = icon;
+
+		{
+			URL url = ViewActions.class.getResource("/tango/32x32/emblems/emblem-favorite.png");
+			if(url != null)
+			{
+				icon = new ImageIcon(url);
+			}
+			else
+			{
+				icon = null;
+			}
+		}
+		LOVE_TOOLBAR_ICON = icon;
 
 		{
 			URL url = ViewActions.class.getResource("/tango/16x16/status/software-update-available.png");
