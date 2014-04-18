@@ -1,7 +1,7 @@
 project.ext.sulkyBaseVersion = '0.9.17'
 
 project.ext.versions = [
-'aspectj':        '1.7.4',
+'aspectj':        '1.8.0',
 'jackson':        '2.3.3',
 'log4j':          '1.2.17',
 'log4j2':         '2.0-beta9', // '2.0-rc1' is broken. https://issues.apache.org/jira/browse/LOG4J2-542
