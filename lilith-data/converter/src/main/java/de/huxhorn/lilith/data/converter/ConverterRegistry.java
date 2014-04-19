@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2013 Joern Huxhorn
+ * Copyright 2007-2014 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,9 @@ public class ConverterRegistry<T>
 	/**
 	 * Returns a converter for the given object/class or null if no such converter
 	 * could be resolved.
-	 * 
+	 *
+	 * @param object the object for which a converter should be resolved.
+	 * @return a converter for the given object.
 	 */
 	public Converter<T> resolveConverter(Object object)
 	{

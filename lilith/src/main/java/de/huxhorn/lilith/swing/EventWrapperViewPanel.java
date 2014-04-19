@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,6 +94,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	extends JPanel
 	implements DisposeOperation, FlushOperation
 {
+	private static final long serialVersionUID = 7987088820464790207L;
+
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
 
 	public static final String STATE_PROPERTY = "state";
@@ -961,22 +963,23 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	 * This method creates a new condition that is a combination of the current buffer condition and the given condition.
 	 * The conditions are combined using "and". Duplicate condition entries are prevented.
 	 *
+	 * @param condition the condition to be combined with the current buffer condition.
 	 * @return the combination of the given condition and the previous buffer condition.
 	 */
-	public Condition getCombinedCondition(Condition currentFilter)
+	public Condition getCombinedCondition(Condition condition)
 	{
 		Condition previousCondition = getBufferCondition();
 
 		if(previousCondition == null)
 		{
-			return currentFilter;
+			return condition;
 		}
 
 		try
 		{
 			// clone the previous condition so we don't change it while active
 			Condition previousClone = previousCondition.clone();
-			if(currentFilter == null)
+			if(condition == null)
 			{
 				return previousClone;
 			}
@@ -997,10 +1000,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				conditions = new ArrayList<Condition>();
 			}
-			if(!conditions.contains(currentFilter))
+			if(!conditions.contains(condition))
 			{
 				// don't add duplicates
-				conditions.add(currentFilter);
+				conditions.add(condition);
 			}
 			if(conditions.size() > 1)
 			{
@@ -1010,7 +1013,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 			else
 			{
-				return currentFilter;
+				return condition;
 			}
 		}
 		catch(CloneNotSupportedException ex)
@@ -1566,6 +1569,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void mouseWheelMoved(MouseWheelEvent e)
 		{
+			//noinspection MagicConstant
 			if(e.getModifiers() == KeyStrokes.COMMAND_KEYMASK)
 			{
 				// special handling, i.e. zoom in, zoomm out

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -184,12 +184,14 @@ public class AboutPanel
 	 *                           scrolling should take place. This parameter is optional. If it's null
 	 *                           then the scroll-area is set to (0, 0, background.width,
 	 *                           background.height).
+	 * @param scrollText         The text to be scrolled.
 	 * @param versionText        The String describing the version of the program.
 	 *                           It is painted centered to the scroll-rectangle at the specified height.
 	 *                           This parameter is optional.
 	 * @param versionHeight      The height at which the version-string is
 	 *                           supposed to be painted. This parameter is optional but should be given
 	 *                           a correct value if versionText!=null..
+	 * @throws IOException       if loading the images failed.
 	 */
 	public AboutPanel(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, String versionText, int versionHeight)
 		throws IOException
@@ -207,6 +209,7 @@ public class AboutPanel
 	 *                           scrolling should take place. This parameter is optional. If it's null
 	 *                           then the scroll-area is set to (0, 0, background.width,
 	 *                           background.height).
+	 * @param scrollText         The text to be scrolled.
 	 * @param imageUrl           The URL to the Image that will be painted at the
 	 *                           start of the scroll-area. This parameter is optional.
 	 * @param versionText        The String describing the version of the program.
@@ -215,6 +218,7 @@ public class AboutPanel
 	 * @param versionHeight      The height at which the version-string is
 	 *                           supposed to be painted. This parameter is optional but should be given
 	 *                           a correct value if versionText!=null..
+	 * @throws IOException       if loading the images failed.
 	 */
 	public AboutPanel(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight)
 		throws IOException
@@ -452,6 +456,9 @@ public class AboutPanel
 
 	/**
 	 * Sets the backgroundImage attribute of the <code>AboutPanel</code> object
+	 *
+	 * @param imageUrl the image to be used as background.
+	 * @throws IOException if loading of image fails.
 	 */
 	public void setBackgroundImage(URL imageUrl)
 		throws IOException
