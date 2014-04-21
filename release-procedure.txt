@@ -4,6 +4,8 @@ Check that lilith logback.xml does not include debug="true"
 #####
 
 Remember to update changes.xml.
+Write release notes and put them into lilith/releases/x.x.x.xhtml
+Write release notes and changes (README.txt) for sf.net upload.
 
 #####
 
@@ -45,10 +47,6 @@ https://oss.sonatype.org
 #####
 
 Upload javadocs
-
-#####
-
-Write release notes and changes (README.txt) for sf.net upload.
 
 #####
 

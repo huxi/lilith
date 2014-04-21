@@ -75,7 +75,10 @@
 			</action>
 		</release>
 
-		<release version="0.9.44" date="TBD" description="Future release">
+		<release version="0.9.45" date="TBD" description="Future release">
+		</release>
+
+		<release version="0.9.44" date="2014-04-21" description="Release">
 			<action dev="jhux" type="fix">
 				The table of the view will now always receive the focus
 				if the selected view changes.
@@ -105,7 +108,7 @@
 				Enhanced "Focus" and "Exclude" popup menus.
 			</action>
 			<action dev="jhux" type="add">
-				Added corresponding "Focus" and "Exclude" menus to the Search menu.
+				Added corresponding "Focus" and "Exclude" menus to the "Search" menu.
 			</action>
 			<action dev="jhux" type="add">
 				Added two Substance look&amp;feels to the mix.
@@ -127,7 +130,7 @@
 				in the IDE, if a proper plugin is installed.
 			</action>
 			<action dev="jhux" type="fix" issue="16">
-				ClassicLilithEncoder is now Encoder&lt;ILoggingEvent&gt; instead of Enocder&lt;LoggingEvent&gt;.
+				ClassicLilithEncoder is now Encoder&lt;ILoggingEvent&gt; instead of Encoder&lt;LoggingEvent&gt;.
 			</action>
 			<action dev="jhux" type="fix">
 				Fixed suppressed handling while parsing Throwables.
@@ -137,9 +140,9 @@
 				Added fishing-for-compliments technology.
 			</action>
 			<action dev="jhux" type="update">
-				Groovy 2.2.2, Logback 1.1.2, SLF4J 1.7.7, Jackson 2.3.3, log4j2 2.0-beta8, rrd4j 2.2, aspectj 1.8.0,
+				Groovy 2.2.2, Logback 1.1.2, SLF4J 1.7.7, Jackson 2.3.3, log4j2 2.0-beta9, rrd4j 2.2, aspectj 1.8.0,
 				flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.2, httpclient 4.3.3, JCommander 1.35,
-				servlet-api 3.1.0, jgoodies-looks 2.5.3, commons-lang3 3.3.2
+				servlet-api 3.0.1, jgoodies-looks 2.5.3, commons-lang3 3.3.2
 			</action>
 		</release>
 

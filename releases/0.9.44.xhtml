@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 0.9.44 Release Notes</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 0.9.44</h1>
+
+		<div>
+		<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/0.9.44">Download Now!
+		<br />(Released: 2014-04-21)</a>
+		</div>
+		
+		<p>This release brings huge improvements to the usage of conditions. Take a look at "Focus" and "Exclude" in the popup and "Search" menu.</p>
+		<p>Remember that you can save conditions using Cmd/Ctrl-I. Those will show up in the "Saved conditions" section of "Focus" and "Exclude".</p>
+		<p>It will also most likely be the last Java 5 compatible version. Development will continue on Java 8.</p>
+		
+		<h2>Changes</h2>
+		<ul>
+			<li>
+				The table of the view will now always receive the focus if the selected view changes.
+			</li>
+			<li>
+				Added alternative behavior for Focus/Exclude actions.
+				<br/>
+				By default, those actions are replacing the current views filter, if available, with the new combined filter.
+				<br/>
+				Hold shift to create a new view instead.
+			</li>
+			<li>
+				Status text is now properly updated in case of a replaced filter.
+			</li>
+			<li>
+				Renamed "Named" in the find combo to "Saved".
+			</li>
+			<li>
+				Renamed "Add condition..." to "Save condition..." and moved it from
+				the "View" to the "Search" menu. Also added it to the popup menu.
+			</li>
+			<li>
+				Significantly enhanced tooltips of various condition-related components.
+				They now show a pretty-printed string representation of the condition.
+			</li>
+			<li>
+				Enhanced "Focus" and "Exclude" popup menus.
+			</li>
+			<li>
+				Added corresponding "Focus" and "Exclude" menus to the "Search" menu.
+			</li>
+			<li>
+				Added two Substance look&amp;feels to the mix.
+			</li>
+			<li>
+				Status text of main window is now properly updated on change of white/blacklisted list name.
+			</li>
+			<li>
+				Enhanced profiling output of TracingAspect.
+			</li>
+			<li>
+				Fixed of-by-one error in message renderer [+x lines]. Again.
+			</li>
+			<li>
+				servlet-api dependency of de.huxhorn.lilith.logback.servlet is now "provided".
+			</li>
+			<li>
+				Added "Paste StackTraceElement" (Cmd-shift V) which opens the respective source code
+				in the IDE, if a proper plugin is installed.
+			</li>
+			<li>
+				ClassicLilithEncoder is now Encoder&lt;ILoggingEvent&gt; instead of Encoder&lt;LoggingEvent&gt;.
+			</li>
+			<li>
+				Fixed suppressed handling while parsing Throwables.
+				This is also a partial workaround for <a href="http://jira.qos.ch/browse/LOGBACK-328">LOGBACK-328</a>.
+			</li>
+			<li>
+				Added fishing-for-compliments technology.
+			</li>
+			<li>
+				Groovy 2.2.2, Logback 1.1.2, SLF4J 1.7.7, Jackson 2.3.3, log4j2 2.0-beta9, rrd4j 2.2, aspectj 1.8.0,
+				flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.2, httpclient 4.3.3, JCommander 1.35,
+				servlet-api 3.0.1, jgoodies-looks 2.5.3, commons-lang3 3.3.2
+			</li>
+		</ul>
+
+		<h2>Known Issues</h2>
+		<ul>
+			<li>
+			Lilith is built with log4j2 2.0-beta9 and won't work with log4j2 2.0-rc1.
+			The reason for this is that SocketAppender isn't working properly in that version.
+			<br />See <a href="https://issues.apache.org/jira/browse/LOG4J2-542">LOG4J2-542</a>.
+			</li>
+			<li>
+			HTML tooltips are not working with the native Mac OS X menu bar so some tooltips, 
+			especially the nice condition tooltips, will look garbled. Use a different
+			look&amp;feel to circumvent this problem.
+			<br />Unfortunately, I can't do anything about it.
+			</li>
+			<li>Flying Saucer related issues:
+				<ul>
+					<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>
+					</li>
+		
+					<li>The first line of the message in HTML view is not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=125">Issue 125: &lt;pre&gt; ignores leading whitespace</a>
+					</li>
+		
+					<li>Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=105">Issue 105: URLs with anchors</a>
+					</li>
+				</ul>
+			</li>
+			<li>Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.<br />
+				This is caused by <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182">bug #6995182</a>
+				and I can't do anything about it.<br />
+				Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.<br />
+				m(
+			</li>
+		</ul>
+		
+		<h2>Attention</h2>
+		<p>This release changes detailsView.groovy in a way incompatible with previous versions!</p>
+		<p>If you switch back to a previous version, you must reset this file. Simply execute
+		"Preferences" =&gt; "Troubleshooting" =&gt; "Reinitialize details view files." in that case.</p>
+
+		<h2>Previous Versions</h2>
+		<ul>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.43.xhtml">0.9.43</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.42.1.xhtml">0.9.42.1</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.42.xhtml">0.9.42</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.41.xhtml">0.9.41</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.40.xhtml">0.9.40</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.39.xhtml">0.9.39</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.38.xhtml">0.9.38</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.37.xhtml">0.9.37</a></li>
+			<li><a href="http://lilith.huxhorn.de/releases/0.9.36.xhtml">0.9.36</a></li>
+		</ul>
+
+		<hr/>
+		<p>
+		bitcoin: 19UjvmrDJMBcGDYQoFcrjYPqLRFPSwznZn<br />
+		litecoin: LU6WM3nmGJy3N5PEE8yQwsAyenJs8dtbmV<br />
+		dogecoin: DJC1R683hfD4VSEDAJrvNpv6GsCg8ewvhm<br />
+		</p>
+	</body>
+</html>
+
