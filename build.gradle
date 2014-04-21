@@ -111,7 +111,7 @@ allprojects {
 	apply plugin: 'idea'
 
 	group = 'de.huxhorn.lilith'
-	version = '0.9.44'
+	version = '0.9.45'
 	if(!System.properties.'release') {
 		version = version + '-SNAPSHOT'
 	}
