@@ -79,9 +79,9 @@ public abstract class LoggingEventIOTestBase
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
 		value.setBirthTime(1234567890000L);
-		Map<String, String> propperties = new HashMap<String, String>();
-		propperties.put("foo", "bar");
-		value.setProperties(propperties);
+		Map<String, String> properties = new HashMap<String, String>();
+		properties.put("foo", "bar");
+		value.setProperties(properties);
 		event.setLoggerContext(value);
 		check(event);
 	}
