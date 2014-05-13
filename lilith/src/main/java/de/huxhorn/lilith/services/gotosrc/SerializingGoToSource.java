@@ -117,7 +117,7 @@ public class SerializingGoToSource
 		{
 			try
 			{
-				socket = new Socket("localhost", port);
+				socket = new Socket("127.0.0.1", port);
 				oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			}
 			catch(IOException e)
