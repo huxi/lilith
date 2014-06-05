@@ -1,4 +1,4 @@
-# Lilith
+# Lilith [![Build Status](https://travis-ci.org/huxi/lilith.png?branch=master)](https://travis-ci.org/huxi/lilith)
 Lilith ([@lilithapp](https://twitter.com/#!/lilithapp)) is a logging and access event viewer for [Logback][], [log4j][]™ and [java.util.logging][jul].
 
 ![Lilith] [img-lilith]
