@@ -39,7 +39,7 @@ buildscript {
 		classpath 'com.github.ben-manes:gradle-versions-plugin:0.4'
 		// workaround for http://issues.gradle.org/browse/GRADLE-784
 		// propdep => provided, optional
-		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.5' 
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.6' 
 	}
 }
 
