@@ -49,7 +49,7 @@ public class HttpStatusTest
 		assertNotNull(status);
 		assertEquals(HttpStatus.NOT_FOUND, status);
 		assertEquals(HttpStatus.Type.CLIENT_ERROR, status.getType());
-		assertEquals(HttpStatus.Specification.RFC2616, status.getSpecification());
+		assertEquals(HttpStatus.Specification.RFC7231, status.getSpecification());
 	}
 
 	@Test

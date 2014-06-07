@@ -77,6 +77,9 @@
 
 		<release version="0.9.45" date="TBD" description="Future release">
 			<!-- Foo -->
+			<action dev="jhux" type="update">
+				Updated HttpStatus enum to RFC 7231/7232/7233/7235/7238. Some enum values have been renamed in the process.
+			</action>
 			<action dev="jhux" type="fix">
 				sulky SafeString is now always printing a Date as an ISO8601-DateTime with timezone UTC.
 			</action>
