@@ -6,6 +6,10 @@ jdk:
   - openjdk7
   - openjdk6
 
+cache:
+  directories:
+  - $HOME/.gradle
+
 before_install: 
   - git clone https://github.com/huxi/sulky.git ~/builds/sulky 
   - pushd ~/builds/sulky 
