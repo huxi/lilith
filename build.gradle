@@ -9,6 +9,10 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import de.huxhorn.sulky.plist.*
 import org.gradle.plugins.signing.Sign
 
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.0-rc-1'
+}
+
 buildscript {
 	apply from: 'dependencyDefinitions.gradle'
 	project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
@@ -29,6 +33,11 @@ buildscript {
 			// propdep => provided, optional
 			url 'http://repo.springsource.org/plugins-release'
 		}
+		maven {
+			// workaround for http://issues.gradle.org/browse/GRADLE-784
+			// propdep => provided, optional
+			url 'http://repo.spring.io/plugins-snapshot-local'
+		}
 	}
 
 	dependencies {
@@ -40,7 +49,7 @@ buildscript {
 		// workaround for http://issues.gradle.org/browse/GRADLE-784
 		// propdep => provided, optional
 		// http://repo.spring.io/plugins-release/org/springframework/build/gradle/propdeps-plugin/
-		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.6' 
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7-SNAPSHOT' 
 	}
 }
 
@@ -55,10 +64,6 @@ compareGradleBuilds {
 		gradleVersion "1.4"
 		// tasks = ['clean', 'install']
 	}
-}
-
-task wrapper(type: Wrapper) {
-	gradleVersion = '1.12'
 }
 
 task javadoc(type: Javadoc) {
