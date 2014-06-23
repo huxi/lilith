@@ -10,7 +10,7 @@ import de.huxhorn.sulky.plist.*
 import org.gradle.plugins.signing.Sign
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.0-rc-1'
+	gradleVersion = '2.0-rc-2'
 }
 
 buildscript {
