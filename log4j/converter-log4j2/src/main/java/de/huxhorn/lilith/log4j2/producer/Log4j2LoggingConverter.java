@@ -2,9 +2,12 @@ package de.huxhorn.lilith.log4j2.producer;
 
 import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
-import de.huxhorn.lilith.data.logging.*;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.ThreadContext;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +68,7 @@ public class Log4j2LoggingConverter
 		}
 
 		// timeStamp
-		result.setTimeStamp(log4jEvent.getMillis());
+		result.setTimeStamp(log4jEvent.getTimeMillis());
 
 		// Message
 		{
@@ -111,7 +114,7 @@ public class Log4j2LoggingConverter
 
 		// NDC
 		{
-			ThreadContext.ContextStack ndc = log4jEvent.getContextStack();
+			org.apache.logging.log4j.ThreadContext.ContextStack ndc = log4jEvent.getContextStack();
 			if (ndc != null)
 			{
 				List<String> list = ndc.asList();
@@ -140,64 +143,83 @@ public class Log4j2LoggingConverter
 				ste.setClassName(location.getClassName());
 				ste.setMethodName(location.getMethodName());
 				ste.setFileName(location.getFileName());
-				int line = location.getLineNumber();
-				if (line < 0)
-				{
-					ste.setLineNumber(line);
-				}
+				ste.setLineNumber(location.getLineNumber());
 				result.setCallStack(new ExtendedStackTraceElement[]{ste});
 			}
 		}
 
 		// throwable information
 		{
-			result.setThrowable(convert(log4jEvent.getThrown()));
+			result.setThrowable(convert(log4jEvent.getThrownProxy()));
 		}
 
 		return result;
 	}
 
-	private ThrowableInfo convert(Throwable thrown)
+	private ThrowableInfo convert(org.apache.logging.log4j.core.impl.ThrowableProxy thrown)
 	{
 		if (thrown == null)
 		{
 			return null;
 		}
-		// https://issues.apache.org/jira/browse/LOG4J2-216
-		ThrowableInfo result = new ThrowableInfo();
-		result.setCause(convert(thrown.getCause()));
-		result.setMessage(thrown.getMessage());
-		//result.setName(thrown.toString()); // TODO: data is missing
-		result.setName(thrown.getClass().getName()); // TODO: data is missing
 
-		StackTraceElement[] st = thrown.getStackTrace();
-		if (st != null && st.length > 0)
-		{
-			ExtendedStackTraceElement[] stResult = new ExtendedStackTraceElement[st.length];
-			for (int i = 0; i < st.length; i++)
-			{
-				stResult[i] = convert(st[i]);
-			}
-			result.setStackTrace(stResult);
-		}
-		// TODO: missing data for result.setOmittedElements();
-		// TODO: missing data for result.setSuppressed()
+		ThrowableInfo result = new ThrowableInfo();
+		result.setCause(convert(thrown.getCauseProxy()));
+		result.setMessage(thrown.getMessage());
+		result.setName(thrown.getName());
+		result.setStackTrace(convert(thrown.getExtendedStackTrace()));
+		result.setOmittedElements(thrown.getCommonElementCount());
+		result.setSuppressed(convert(thrown.getSuppressedProxies()));
 
 		return result;
 	}
 
-	private ExtendedStackTraceElement convert(StackTraceElement ste)
+	private ThrowableInfo[] convert(org.apache.logging.log4j.core.impl.ThrowableProxy[] array)
+	{
+	    if (array == null)
+	    {
+		    return null;
+	    }
+
+		ThrowableInfo[] result = new ThrowableInfo[array.length];
+		for (int i=0 ; i<result.length ; i++)
+		{
+			result[i]=convert(array[i]);
+		}
+		return result;
+	}
+
+	private ExtendedStackTraceElement[] convert(org.apache.logging.log4j.core.impl.ExtendedStackTraceElement[] array)
+	{
+		if(array == null)
+		{
+			return null;
+		}
+
+		ExtendedStackTraceElement[] result = new ExtendedStackTraceElement[array.length];
+		for(int i=0 ; i<result.length ; i++)
+		{
+			result[i] = convert(array[i]);
+		}
+
+		return result;
+	}
+
+	private ExtendedStackTraceElement convert(org.apache.logging.log4j.core.impl.ExtendedStackTraceElement ste)
 	{
 		if (ste == null)
 		{
 			return null;
 		}
-		ExtendedStackTraceElement result = new ExtendedStackTraceElement();
 
+		ExtendedStackTraceElement result = new ExtendedStackTraceElement();
 		result.setClassName(ste.getClassName());
 		result.setFileName(ste.getFileName());
 		result.setLineNumber(ste.getLineNumber());
 		result.setMethodName(ste.getMethodName());
+		result.setExact(ste.getExact());
+		result.setVersion(ste.getVersion());
+		result.setCodeLocation(ste.getLocation());
 
 		return result;
 	}

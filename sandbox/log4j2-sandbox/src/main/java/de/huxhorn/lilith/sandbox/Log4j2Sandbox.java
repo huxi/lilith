@@ -32,7 +32,12 @@ public class Log4j2Sandbox
 		
 		public static void foobar()
 		{
-			throw new FooException("Hi.");
+			FooException ex = new FooException("Hi.");
+			
+			ex.addSuppressed(new RuntimeException("Suppressed1"));
+			ex.addSuppressed(new RuntimeException("Suppressed2"));
+			
+			throw ex;
 		}
 	}
 
