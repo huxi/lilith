@@ -13,7 +13,8 @@ project.ext.versions = [
 'spock':          '0.7-groovy-2.0',
 'spring':         '4.0.6.RELEASE',
 'substance':      '7.2.1',
-'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}"
+'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}",
+'thymeleaf':      '2.1.3.RELEASE'
 ]
 
 project.ext.libraries = [
@@ -75,6 +76,7 @@ project.ext.libraries = [
 'sulky-swing':              "de.huxhorn.sulky:de.huxhorn.sulky.swing:${versions.sulky}",
 'sulky-tasks':              "de.huxhorn.sulky:de.huxhorn.sulky.tasks:${versions.sulky}",
 'sulky-plist':              "de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}",
-'sulky-groovy':             "de.huxhorn.sulky:de.huxhorn.sulky.groovy:${versions.sulky}"
+'sulky-groovy':             "de.huxhorn.sulky:de.huxhorn.sulky.groovy:${versions.sulky}",
+'thymeleaf':                "org.thymeleaf:thymeleaf:${versions.thymeleaf}"
 ]
 
