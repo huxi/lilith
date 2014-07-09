@@ -197,5 +197,6 @@
 	<logger name="javax.jmdns" level="TRACE"/>
 	<logger name="org.apache.commons.httpclient" level="WARN"/>
 	<logger name="org.springframework" level="INFO"/>
+	<logger name="org.thymeleaf" level="WARN"/>
 	<logger name="sun" level="WARN"/>
 </configuration>
