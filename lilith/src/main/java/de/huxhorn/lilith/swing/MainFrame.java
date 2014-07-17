@@ -69,6 +69,8 @@ import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.prefs.LilithPreferences;
+import de.huxhorn.lilith.services.details.GroovyEventWrapperHtmlFormatter;
+import de.huxhorn.lilith.services.details.ThymeleafEventWrapperHtmlFormatter;
 import de.huxhorn.lilith.services.gotosrc.GoToSource;
 import de.huxhorn.lilith.services.gotosrc.SerializingGoToSource;
 import de.huxhorn.lilith.services.sender.EventSender;
@@ -102,8 +104,6 @@ import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Or;
-import de.huxhorn.sulky.formatting.SimpleXml;
-import de.huxhorn.sulky.groovy.GroovyInstance;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
@@ -111,8 +111,6 @@ import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
-import groovy.lang.Binding;
-import groovy.lang.Script;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.http.HttpEntity;
@@ -179,6 +177,8 @@ public class MainFrame
 	private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
 	private final File startupApplicationPath;
+	private final GroovyEventWrapperHtmlFormatter groovyFormatter;
+	private final ThymeleafEventWrapperHtmlFormatter thymeleafFormatter;
 
 	private GoToSource gotoSource;
 	private LogFileFactory loggingFileFactory;
@@ -240,7 +240,6 @@ public class MainFrame
 	private RrdLoggingEventHandler rrdLoggingEventHandler;
 	private static final int EXPORT_WARNING_SIZE = 20000;
 	private Condition findActiveCondition;
-	private GroovyInstance detailsViewInstance;
 	private TraySupport traySupport; // may be null
 
 	static
@@ -257,6 +256,8 @@ public class MainFrame
 			isWindows = false;
 		}
 	}
+
+	private boolean usingThymeleaf;
 	/*
 	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
 	 */
@@ -295,6 +296,10 @@ public class MainFrame
 		this.coloringWholeRow = this.applicationPreferences.isColoringWholeRow();
 		this.splashScreen = splashScreen;
 		setSplashStatusText("Creating main frame.");
+
+		groovyFormatter = new GroovyEventWrapperHtmlFormatter(applicationPreferences);
+		thymeleafFormatter = new ThymeleafEventWrapperHtmlFormatter(applicationPreferences);
+
 		smallProgressIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Progress16.gif"));
 		ImageIcon frameIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Lilith16.jpg"));
 		setIconImage(frameIcon.getImage());
@@ -499,11 +504,16 @@ public class MainFrame
 
 		setShowingToolbar(applicationPreferences.isShowingToolbar());
 		setShowingStatusbar(applicationPreferences.isShowingStatusbar());
+	}
 
-		File detailsViewRoot = getApplicationPreferences().getDetailsViewRoot();
-		File scriptFile = new File(detailsViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
-		detailsViewInstance = new GroovyInstance();
-		detailsViewInstance.setGroovyFileName(scriptFile.getAbsolutePath());
+	public boolean isUsingThymeleaf()
+	{
+		return usingThymeleaf;
+	}
+
+	public void setUsingThymeleaf(boolean usingThymeleaf)
+	{
+		this.usingThymeleaf = usingThymeleaf;
 	}
 
 	/**
@@ -2072,91 +2082,23 @@ public class MainFrame
 	}
 
 
-
-	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
 	public String createMessage(EventWrapper wrapper)
 	{
-		String message;
-
-		Script instance = detailsViewInstance.getInstanceAs(Script.class);
-		if(instance == null)
+		String result;
+		if(usingThymeleaf)
 		{
-			StringBuilder msg = new StringBuilder("<html><body>detailsView Script is broken!");
-			String errorMessage = detailsViewInstance.getErrorMessage();
-			if(errorMessage != null)
-			{
-				errorMessage = SimpleXml.escape(errorMessage);
-
-				msg.append("<br/>").append(errorMessage);
-			}
-			Throwable errorCause = detailsViewInstance.getErrorCause();
-			if(errorCause != null)
-			{
-				String exceptionStr=errorCause.toString();
-
-				exceptionStr = SimpleXml.escape(exceptionStr);
-
-				msg.append("<br/>").append(exceptionStr);
-			}
-			msg.append("</body></html>");
-			message = msg.toString();
+			result = thymeleafFormatter.toString(wrapper);
 		}
 		else
 		{
-			try
-			{
-				Binding binding = new Binding();
-				binding.setVariable("eventWrapper", wrapper);
-				binding.setVariable("logger", logger);
-				binding.setVariable("completeCallStack", applicationPreferences.isShowingFullCallstack());
-				binding.setVariable("showStackTrace", applicationPreferences.isShowingStackTrace());
-				binding.setVariable("wrappedExceptionStyle", applicationPreferences.isUsingWrappedExceptionStyle());
-
-				instance.setBinding(binding);
-				Object result = instance.run();
-				if(result instanceof String)
-				{
-					message = (String) result;
-				}
-				else if(result != null)
-				{
-					message = result.toString();
-				}
-				else
-				{
-					message = "<html><body>detailsView Script returned null!</body></html>";
-				}
-			}
-			catch(Throwable t)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while executing detailsView Script!", t);
-				StringBuilder msg = new StringBuilder("<html><body>Exception while executing detailsView Script!");
-				String exceptionStr=t.toString();
-
-				exceptionStr = SimpleXml.escape(exceptionStr);
-
-				msg.append("<br/>").append(exceptionStr);
-				msg.append("</body></html>");
-				message = msg.toString();
-			}
+			result = groovyFormatter.toString(wrapper);
 		}
-
-		if(logger.isDebugEnabled()) logger.debug("Message:\n{}", message);
-		// I'm not sure who is to blame for the following line of code...
-		// One could argue that it's a bug in the application logging the event but I think
-		// that it shouldn't be possible to cause a problem logging something weird.
-		// One could also argue that logback should prevent/fix logging events that contain a zero
-		// byte but this would result in a serious performance impact even though the problem is rather rare.
-		// On the other hand, zero bytes can cause all kind of weird followup problems, e.g. cut off log files or,
-		// as in this case, a malformed XML.
-		// The third and last one to blame is the groovy XML builder. It shouldn't be possible to write a malformed
-		// XML document using the builder but what would be an acceptable behaviour? Throwing an exception
-		// would be a bad idea, imho. It would probably be best to replace the zero byte with a space.
-		// This is very acceptable in my special case but I'm not sure if this is a general use case...
-		//
-		// http://cse-mjmcl.cse.bris.ac.uk/blog/2007/02/14/1171465494443.html
-		message = SimpleXml.replaceNonValidXMLCharacters(message, ' ');
-		return message;
+		if(result == null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("createMessage with usingThymeleaf={} failed for {}!", usingThymeleaf, wrapper);
+			return "<html><body>Failed to create message!</body></html>";
+		}
+		return result;
 	}
 
 	public SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> getSortedLoggingViews()

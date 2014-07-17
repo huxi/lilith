@@ -38,6 +38,7 @@ import javax.swing.border.TitledBorder;
 public class DebugDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = 2056161561781289686L;
 	private final Logger logger = LoggerFactory.getLogger(DebugDialog.class);
 
 	LoggerEventEmitter loggerEventEmitter;
@@ -155,6 +156,13 @@ public class DebugDialog
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		miscPanel.add(button, gbc);
+
+		action = new UsingThymeleafAction();
+		JCheckBox checkBox =new JCheckBox(action);
+		checkBox.setSelected(mainFrame.isUsingThymeleaf());
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		miscPanel.add(checkBox, gbc);
 
 		JPanel centerPanel = new JPanel(new GridBagLayout());
 		gbc.gridwidth = 1;
@@ -451,6 +459,23 @@ public class DebugDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			throw new RuntimeException("Uncaught Exception!");
+		}
+	}
+
+	private class UsingThymeleafAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -2547578555283622327L;
+
+		public UsingThymeleafAction()
+		{
+			super("Using Thymeleaf");
+			putValue(Action.SHORT_DESCRIPTION, "Using Thymeleaf instead of Groovy for DetailsView.");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			mainFrame.setUsingThymeleaf(!mainFrame.isUsingThymeleaf());
 		}
 	}
 }

@@ -155,6 +155,7 @@
 	<logger name="de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler" level="WARN"/>
 	<logger name="de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler" level="INFO"/>
 	<logger name="de.huxhorn.lilith.services.sender" level="WARN"/>
+	<logger name="de.huxhorn.lilith.services.details" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.AboutPanel" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.ApplicationPreferences" level="WARN"/>
 	<logger name="de.huxhorn.lilith.swing.CheckForUpdateDialog" level="WARN"/>
@@ -198,5 +199,6 @@
 	<logger name="org.apache.commons.httpclient" level="WARN"/>
 	<logger name="org.springframework" level="INFO"/>
 	<logger name="org.thymeleaf" level="WARN"/>
+	<logger name="org.thymeleaf.TemplateEngine.cache.TEMPLATE_CACHE" level="TRACE"/>
 	<logger name="sun" level="WARN"/>
 </configuration>

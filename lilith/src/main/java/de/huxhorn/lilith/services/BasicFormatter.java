@@ -15,34 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.services.clipboard;
+package de.huxhorn.lilith.services;
 
-import de.huxhorn.lilith.services.BasicFormatter;
-
-import java.io.Serializable;
-
-public interface ClipboardFormatter
-	extends BasicFormatter,Serializable
+public interface BasicFormatter
 {
 	/**
-	 * The name of this formatter.
-	 * It is used as the name of the menu item.
+	 * Returns true, if this formatter is able to format the given object into a String.
 	 *
-	 * @return the name of this formatter.
+	 * @param object the input to both isCompatible(...) and toString(...).
+	 * @return true, if this formatter is able to format the given object.
 	 */
-	String getName();
+	boolean isCompatible(Object object);
 
 	/**
-	 * The description of this formatter.
-	 * It is used as the tooltip in the menu.
+	 * Returns the object formatted into a String or null if this formatter is unable to format the object.
 	 *
-	 * @return the description of this formatter.
+	 * @param object the input to both isCompatible(...) and toString(...).
+	 * @return object formatted into a String or null if this formatter is unable to format the object.
 	 */
-	String getDescription();
-
-	/**
-	 *
-	 * @return the accelerator of this formatter, can be null.
-	 */
-	String getAccelerator();
+	String toString(Object object);
 }
