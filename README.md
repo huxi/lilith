@@ -385,7 +385,7 @@ I'd also appreciate any help documenting Lilith.
 And I'm always eager to hear your opinion.
 
 ## Thanks
-Thanks to Ceki Gülcü ([@ceki](https://twitter.com/#!/ceki)) for developing [Logback][], the [Gradle][] ([@GradleOrg](https://twitter.com/#!/GradleOrg)) community and all persons that have been involved with Lilith development.
+Thanks to Ceki Gülcü ([@ceki](https://twitter.com/#!/ceki)) for developing [Logback][], the [Gradle][] ([@Gradleware](https://twitter.com/Gradleware)) community and all persons that have been involved with Lilith development.
 
 I'd also like to thank the developers of [Marked][] ([@MarkedApp](https://twitter.com/#!/MarkedApp)) for a really helpful, awesome and reasonably priced product.
 
