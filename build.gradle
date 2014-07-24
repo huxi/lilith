@@ -4,6 +4,7 @@ apply from: 'projectDependencies.gradle'
 apply plugin: 'versions'
 apply plugin: 'base'
 apply plugin: 'signing'
+apply plugin: 'com.github.kt3k.coveralls' // see https://github.com/kt3k/coveralls-gradle-plugin
 
 import org.apache.tools.ant.filters.FixCrLfFilter
 import de.huxhorn.sulky.plist.*
@@ -50,6 +51,7 @@ buildscript {
 		// propdep => provided, optional
 		// http://repo.spring.io/plugins-release/org/springframework/build/gradle/propdeps-plugin/
 		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7' 
+		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
 	}
 }
 
@@ -115,6 +117,7 @@ allprojects {
 	apply plugin: 'project-reports'
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
+	apply plugin: 'jacoco'
 
 	group = 'de.huxhorn.lilith'
 	version = '0.9.45'
@@ -131,7 +134,11 @@ allprojects {
 		}
 		mavenCentral()
 		mavenLocal()
-    }
+	}
+
+	jacoco {
+		toolVersion = '0.7.1.201405082137'
+	}	
 }
 
 subprojects {
@@ -139,6 +146,16 @@ subprojects {
 	apply plugin: 'maven'
 	apply plugin: 'signing'
 	
+	jacocoTestReport {
+		additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+		sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+		classDirectories = files(sourceSets.main.output)
+		reports {
+			html.enabled = true
+			xml.enabled = true
+			csv.enabled = false
+		}
+	}
 	//defaultTasks 'build', 'uploadPublished'
 	
 	sourceCompatibility = 1.5
@@ -607,6 +624,34 @@ project(':lilith') {
 		sign myDistTgz
 		sign appTgz
 	}
+}
+
+// source: https://gist.github.com/aalmiray/e6f54aa4b3803be0bcac
+task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+	dependsOn = subprojects.jacocoTestReport
+	dependsOn = subprojects.test
+	additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+	sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+	classDirectories = files(subprojects.sourceSets.main.output)
+	executionData = files(subprojects.jacocoTestReport.executionData)
+	reports {
+		html.enabled = true
+		xml.enabled = true
+		csv.enabled = false
+	}
+	onlyIf = {
+		true
+	}
+	doFirst {
+		executionData = files(executionData.findAll {
+			it.exists()
+		})
+	}
+}
+
+coveralls {
+	jacocoReportPath = 'build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml'
+	sourceDirs += jacocoRootReport.sourceDirectories
 }
 
 project.ext.deleteClosure = {

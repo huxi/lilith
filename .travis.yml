@@ -16,3 +16,10 @@ before_install:
   - ./gradlew install 
   - popd 
 
+env:
+- TERM=dumb
+
+after_success:
+- ./gradlew cleanTest
+- ./gradlew jacocoRootReport
+- ./gradlew --info coveralls
