@@ -86,7 +86,7 @@
 				Using "127.0.0.1" instead of "localhost" in SerializingGoToSource to prevent IPv6 SNAFU.
 			</action>
 			<action dev="jhux" type="update">
-				Spring 4.0.6, Groovy 2.3.6, commons-codec 1.9, joda-time 2.4, httpclient 4.3.4, jackson 2.4.1,
+				Spring 4.0.6, Groovy 2.3.6, commons-codec 1.9, joda-time 2.4, httpclient 4.3.5, jackson 2.4.1,
 				log4j2 2.0, aspectj 1.8.1, Thymeleaf 2.1.3
 			</action>
 		</release>
