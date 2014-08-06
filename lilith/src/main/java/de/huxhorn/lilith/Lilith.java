@@ -50,6 +50,7 @@ import it.sauronsoftware.junique.MessageHandler;
 import org.apache.commons.io.FileUtils;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.DefaultApplication;
@@ -673,7 +674,7 @@ public class Lilith
 		UIManager.installLookAndFeel("JGoodies Plastic", "com.jgoodies.looks.plastic.PlasticLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic 3D", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic XP", "com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
-		if(SystemUtils.IS_JAVA_1_6)
+		if(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_6))
 		{
 			// Substance requires 1.6
 			UIManager.installLookAndFeel("Substance Dark - Twilight", "org.pushingpixels.substance.api.skin.SubstanceTwilightLookAndFeel");
