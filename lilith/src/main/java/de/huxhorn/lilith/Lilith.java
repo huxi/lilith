@@ -52,6 +52,8 @@ import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.ILoggerFactory;
@@ -63,8 +65,6 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,6 +118,8 @@ public class Lilith
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 	private static MainFrame mainFrame;
+	private static DateTimeFormatter isoDateTimeFormat = ISODateTimeFormat.dateTime().withZoneUTC();
+	private static DateTimeFormatter isoDateTimeFormatLocal = ISODateTimeFormat.dateTime();
 
 	static
 	{
@@ -163,9 +165,7 @@ public class Lilith
 			try
 			{
 				ts = Long.parseLong(tsStr);
-				Date d=new Date(ts);
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-				dateStr = format.format(d);
+				dateStr = isoDateTimeFormat.print(ts);
 			}
 			catch(NumberFormatException ex)
 			{
@@ -211,10 +211,12 @@ public class Lilith
 			rootLogger.setLevel(java.util.logging.Level.WARNING);
 		}
 
-		String appTitle = APP_NAME + " V" + APP_VERSION;
+		StringBuilder appTitle = new StringBuilder();
+		appTitle.append(APP_NAME).append(" V").append(APP_VERSION);
 		if(APP_SNAPSHOT)
 		{
-			appTitle = appTitle + " ("+APP_TIMESTAMP_DATE+")";
+			// always append timestamp for SNAPSHOT
+			appTitle.append(" (").append(APP_TIMESTAMP_DATE).append(")");
 		}
 
 		CommandLineArgs cl=new CommandLineArgs();
@@ -238,23 +240,26 @@ public class Lilith
 		}
 		catch(ParameterException ex)
 		{
-			printAppInfo(appTitle, false);
+			printAppInfo(appTitle.toString(), false);
 			System.out.println(ex.getMessage()+"\n");
 			printHelp(commander);
 			System.exit(-1);
 		}
 		if(cl.verbose)
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-			Date d = new Date(APP_TIMESTAMP);
-
-			appTitle += " - " + sdf.format(d);
-			appTitle += " - " + APP_REVISION;
+			if(!APP_SNAPSHOT)
+			{
+				// timestamp is always appended for SNAPSHOT
+				// don't append it twice
+				appTitle.append(" (").append(APP_TIMESTAMP_DATE).append(")");
+			}
+			appTitle.append(" - ").append(APP_REVISION);
 		}
 
+		String appTitleString = appTitle.toString();
 		if(cl.showHelp)
 		{
-			printAppInfo(appTitle, false);
+			printAppInfo(appTitleString, false);
 			printHelp(commander);
 			System.exit(0);
 		}
@@ -262,7 +267,7 @@ public class Lilith
 		String command = commander.getParsedCommand();
 		if(!Tail.NAME.equals(command) && !Cat.NAME.equals(command) && !Filter.NAME.equals(command)) // don't print info in case of cat, tail or filter
 		{
-			printAppInfo(appTitle, true);
+			printAppInfo(appTitleString, true);
 		}
 
 		if(cl.logbackConfig != null)
@@ -447,7 +452,7 @@ public class Lilith
 			flushLicensed();
 		}
 
-		startLilith(appTitle, cl.enableBonjour);
+		startLilith(appTitleString, cl.enableBonjour);
 	}
 
 	private static void printHelp(JCommander commander)
@@ -842,8 +847,7 @@ public class Lilith
 					{
 						ps.println("----------------------------------------");
 					}
-					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
-					ps.println("Started " + APP_NAME + " V" + APP_VERSION + " at " + format.format(new Date()));
+					ps.println("Started " + APP_NAME + " V" + APP_VERSION + " at " + isoDateTimeFormatLocal.print(System.currentTimeMillis()));
 					System.setErr(ps);
 					if(logger.isInfoEnabled()) logger.info("Writing System.err to '{}'.", errorLog.getAbsolutePath());
 				}
