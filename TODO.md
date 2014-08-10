@@ -1,9 +1,6 @@
 # TODO
 This file contains a rough list about stuff that needs to be done.
 
-## Bugs
-- Conditions-Focus/Exclude menu of detached windows not updated on saved condition change.
-
 ## Bundling
 It's critical that Lilith switches from the old Java6-Mac bundling to the proper new one with embedded VM. This prevents a switch to Java8 and fancy stuff like JavaFX (especially [WebView](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebView.html) & [WebEngine](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebEngine.html))
 

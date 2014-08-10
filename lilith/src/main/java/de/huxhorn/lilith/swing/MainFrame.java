@@ -92,6 +92,17 @@ import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
 import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler;
 import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler16;
+import de.huxhorn.lilith.swing.uiprocessors.ConditionNamesActionsProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.ConditionNamesContainerProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.PreviousSearchStringsContainerProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.ResetContainerProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.UpdateRecentFilesProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.UpdateScaleContainerProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.UpdateViewsContainerProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.UpdateWindowMenuProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.ViewActionsProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.ViewContainerProcessor;
+import de.huxhorn.lilith.swing.uiprocessors.VisibleContainerProcessor;
 import de.huxhorn.lilith.tray.TraySupport;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
@@ -256,6 +267,12 @@ public class MainFrame
 			isWindows = false;
 		}
 	}
+
+	private static final ViewContainerProcessor UPDATE_VIEWS_CONTAINER_PROCESSOR = new UpdateViewsContainerProcessor();
+	private static final ViewActionsProcessor UPDATE_RECENT_FILES_ACTIONS_PROCESSOR = new UpdateRecentFilesProcessor();
+	private static final ViewActionsProcessor UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR = new UpdateWindowMenuProcessor();
+	private static final ViewContainerProcessor RESET_CONTAINER_PROCESSOR = new ResetContainerProcessor();
+	private final ViewContainerProcessor sourceTitleContainerProcessor=new SourceTitleContainerProcessor();
 
 	private boolean usingThymeleaf;
 	/*
@@ -966,28 +983,8 @@ public class MainFrame
 
 	public void updateWindowMenus()
 	{
-		viewActions.updateWindowMenu();
-		// update other frames
-		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-		{
-			ViewContainer<LoggingEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
-			{
-				window.getViewActions().updateWindowMenu();
-			}
-		}
-		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-		{
-			ViewContainer<AccessEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
-			{
-				window.getViewActions().updateWindowMenu();
-			}
-		}
+		processViewActions(UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR);
+
 		JInternalFrame selected = desktop.getSelectedFrame();
 		if(logger.isDebugEnabled()) logger.debug("Selected IFrame: {}", selected);
 		if(selected instanceof ViewContainerInternalFrame)
@@ -1608,6 +1605,12 @@ public class MainFrame
 		}
 	}
 
+	public void deleteAllLogs()
+	{
+		processViewContainers(RESET_CONTAINER_PROCESSOR);
+		cleanAllInactiveLogs();
+	}
+
 	public enum ImportType
 	{
 		LOG4J, JUL
@@ -2186,28 +2189,8 @@ public class MainFrame
 	public void setFramesVisible(boolean visible)
 	{
 		setVisible(visible);
-		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-		{
-			ViewContainer<LoggingEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof ViewContainerFrame)
-			{
-				ViewContainerFrame frame = (ViewContainerFrame) window;
-				frame.setVisible(visible);
-			}
-		}
-		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-		{
-			ViewContainer<AccessEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof ViewContainerFrame)
-			{
-				ViewContainerFrame frame = (ViewContainerFrame) window;
-				frame.setVisible(visible);
-			}
-		}
+
+		processViewContainers(new VisibleContainerProcessor(visible));
 	}
 
 	public void openInactiveLogs()
@@ -2504,7 +2487,7 @@ public class MainFrame
 		return title;
 	}
 
-	private String resolveName(Object eventWrapperObj)
+	private static String resolveName(Object eventWrapperObj)
 	{
 		String name;
 		String appId=null;
@@ -3033,32 +3016,32 @@ public class MainFrame
 			if(ApplicationPreferences.LEVEL_COLORS_PROPERTY.equals(propName))
 			{
 				levelColors = null;
-				updateLoggingViews();
+				processViewContainers(UPDATE_VIEWS_CONTAINER_PROCESSOR);
 				return;
 			}
 
 			if(ApplicationPreferences.STATUS_COLORS_PROPERTY.equals(propName))
 			{
 				statusColors = null;
-				updateAccessViews();
+				processViewContainers(UPDATE_VIEWS_CONTAINER_PROCESSOR);
 				return;
 			}
 
 			if(ApplicationPreferences.SHOWING_FULL_CALLSTACK_PROPERTY.equals(propName))
 			{
-				updateLoggingViews();
+				processViewContainers(UPDATE_VIEWS_CONTAINER_PROCESSOR);
 				return;
 			}
 
 			if(ApplicationPreferences.USING_WRAPPED_EXCEPTION_STYLE_PROPERTY.equals(propName))
 			{
-				updateLoggingViews();
+				processViewContainers(UPDATE_VIEWS_CONTAINER_PROCESSOR);
 				return;
 			}
 
 			if(ApplicationPreferences.SHOWING_STACKTRACE_PROPERTY.equals(propName))
 			{
-				updateLoggingViews();
+				processViewContainers(UPDATE_VIEWS_CONTAINER_PROCESSOR);
 				return;
 			}
 
@@ -3121,36 +3104,16 @@ public class MainFrame
 			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
 				coloringWholeRow = applicationPreferences.isColoringWholeRow();
-				updateLoggingViews();
+				processViewContainers(UPDATE_VIEWS_CONTAINER_PROCESSOR);
 				//return;
 			}
 		}
 
+
 		private void updateSourceTitles()
 		{
 			updateWindowMenus();
-			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-			{
-				ViewContainer<LoggingEvent> value = current.getValue();
-				ViewWindow window = value.resolveViewWindow();
-				if(window != null)
-				{
-					String title = resolveSourceTitle(value);
-					window.setTitle(title);
-				}
-			}
-			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-			{
-				ViewContainer<AccessEvent> value = current.getValue();
-				ViewWindow window = value.resolveViewWindow();
-				if(window != null)
-				{
-					String title = resolveSourceTitle(value);
-					window.setTitle(title);
-				}
-			}
+			processViewContainers(sourceTitleContainerProcessor);
 		}
 	}
 
@@ -3246,49 +3209,13 @@ public class MainFrame
 	private void updatePreviousSearchStrings()
 	{
 		List<String> previousSearchStrings = applicationPreferences.getPreviousSearchStrings();
-		{
-			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-			{
-				ViewContainer<LoggingEvent> value = current.getValue();
-				value.setPreviousSearchStrings(previousSearchStrings);
-			}
-		}
-		{
-			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-			{
-				ViewContainer<AccessEvent> value = current.getValue();
-				value.setPreviousSearchStrings(previousSearchStrings);
-			}
 
-		}
+		processViewContainers(new PreviousSearchStringsContainerProcessor(previousSearchStrings));
 	}
 
 	private void updateRecentFiles()
 	{
-		viewActions.updateRecentFiles();
-		// update other frames
-		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-		{
-			ViewContainer<LoggingEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
-			{
-				window.getViewActions().updateRecentFiles();
-			}
-		}
-		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-		{
-			ViewContainer<AccessEvent> value = current.getValue();
-			ViewWindow window = value.resolveViewWindow();
-			if(window instanceof JFrame)
-			{
-				window.getViewActions().updateRecentFiles();
-			}
-		}
+		processViewActions(UPDATE_RECENT_FILES_ACTIONS_PROCESSOR);
 	}
 
 	public Condition getFindActiveCondition()
@@ -3333,73 +3260,73 @@ public class MainFrame
 		}
 		//flushCachedConditionResults();
 
-		updateAllViews();
+		processViewContainers(UPDATE_VIEWS_CONTAINER_PROCESSOR);
+
 		List<String> conditionNames = applicationPreferences.getConditionNames();
-		{
-			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
-			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-			{
-				ViewContainer<LoggingEvent> value = current.getValue();
-				value.setConditionNames(conditionNames);
-			}
-		}
-		{
-			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-			{
-				ViewContainer<AccessEvent> value = current.getValue();
-				value.setConditionNames(conditionNames);
-			}
 
-		}
-		viewActions.setConditionNames(conditionNames);
+		processViewContainers(new ConditionNamesContainerProcessor(conditionNames));
+		processViewActions(new ConditionNamesActionsProcessor(conditionNames));
 	}
 
-	private void updateViewScale(double scale)
-	{
-		{
-			Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager
-				.getViews();
-			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
-			{
-				ViewContainer<LoggingEvent> value = current.getValue();
-				value.updateViewScale(scale);
-			}
-		}
-		{
-			Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
-			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
-			{
-				ViewContainer<AccessEvent> value = current.getValue();
-				value.updateViewScale(scale);
-			}
-		}
-	}
-
-	private void updateLoggingViews()
+	private void processViewContainers(ViewContainerProcessor processor)
 	{
 		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
 		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
 		{
-			ViewContainer<LoggingEvent> value = current.getValue();
-			value.updateViews();
+			processor.process(current.getValue());
+		}
+		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
+		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
+		{
+			processor.process(current.getValue());
 		}
 	}
 
-	private void updateAccessViews()
+	private void processViewActions(ViewActionsProcessor processor)
 	{
+		processor.process(viewActions);
+		// process other frames
+		Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> loggingViews = loggingEventViewManager.getViews();
+		for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : loggingViews.entrySet())
+		{
+			ViewContainer<LoggingEvent> value = current.getValue();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof JFrame)
+			{
+				processor.process(window.getViewActions());
+			}
+		}
 		Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> accessViews = accessEventViewManager.getViews();
 		for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : accessViews.entrySet())
 		{
 			ViewContainer<AccessEvent> value = current.getValue();
-			value.updateViews();
+			ViewWindow window = value.resolveViewWindow();
+			if(window instanceof JFrame)
+			{
+				processor.process(window.getViewActions());
+			}
 		}
 	}
 
-	private void updateAllViews()
+	private class SourceTitleContainerProcessor
+			implements ViewContainerProcessor
 	{
-		updateLoggingViews();
-		updateAccessViews();
+
+		@Override
+		public void process(ViewContainer<?> container)
+		{
+			ViewWindow window = container.resolveViewWindow();
+			if(window != null)
+			{
+				String title = resolveSourceTitle(container);
+				window.setTitle(title);
+			}
+		}
+	}
+
+	private void updateViewScale(double scale)
+	{
+		processViewContainers(new UpdateScaleContainerProcessor(scale));
 	}
 
 	/*

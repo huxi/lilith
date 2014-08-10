@@ -17,16 +17,8 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.engine.EventSource;
-import de.huxhorn.lilith.swing.AccessEventViewManager;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.LoggingEventViewManager;
 import de.huxhorn.lilith.swing.MainFrame;
-import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.sulky.buffers.Buffer;
-import de.huxhorn.sulky.buffers.Reset;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +40,8 @@ import javax.swing.*;
 public class TroubleshootingPanel
 	extends JPanel
 {
+	private static final long serialVersionUID = 5589305263321629687L;
+
 	private final Logger logger = LoggerFactory.getLogger(TroubleshootingPanel.class);
 	private PreferencesDialog preferencesDialog;
 
@@ -172,25 +166,7 @@ public class TroubleshootingPanel
 			}
 
 			MainFrame mainFrame = preferencesDialog.getMainFrame();
-			{ // Logging
-				LoggingEventViewManager levm = mainFrame.getLoggingEventViewManager();
-				Map<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> views = levm.getViews();
-				for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : views.entrySet())
-				{
-					reset(current.getValue());
-				}
-			}
-
-			{ // Access
-				AccessEventViewManager levm = mainFrame.getAccessEventViewManager();
-				Map<EventSource<AccessEvent>, ViewContainer<AccessEvent>> views = levm.getViews();
-				for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : views.entrySet())
-				{
-					reset(current.getValue());
-				}
-			}
-
-			mainFrame.cleanAllInactiveLogs();
+			mainFrame.deleteAllLogs();
 		}
 	}
 
@@ -464,9 +440,8 @@ public class TroubleshootingPanel
 
 			ThreadHolder that = (ThreadHolder) o;
 
-			if(thread != null ? !thread.equals(that.thread) : that.thread != null) return false;
+			return !(thread != null ? !thread.equals(that.thread) : that.thread != null);
 
-			return true;
 		}
 
 		public int hashCode()
@@ -525,19 +500,4 @@ public class TroubleshootingPanel
 		}
 	}
 
-	public static void reset(ViewContainer<?> container)
-	{
-		if(container == null)
-		{
-			return;
-		}
-		EventSource eventSource = container.getEventSource();
-		if(eventSource == null)
-		{
-			return;
-		}
-		Buffer<?> buffer = eventSource.getBuffer();
-		Reset.reset(buffer);
-
-	}
 }
