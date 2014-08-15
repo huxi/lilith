@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file.
 - sulky `SafeString` is now always printing a Date as an ISO8601-DateTime with timezone UTC.
 - Using "127.0.0.1" instead of "localhost" in `SerializingGoToSource` to prevent IPv6 SNAFU.
 - Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.
-- Spring 4.0.6, Groovy 2.3.6, commons-codec 1.9, joda-time 2.4, httpclient 4.3.5, jackson 2.4.1, log4j2 2.0.1, aspectj 1.8.1, Thymeleaf 2.1.3, substance 7.3
+- Spring 4.0.6, Groovy 2.3.6, commons-codec 1.9, joda-time 2.4, httpclient 4.3.5, jackson 2.4.2, log4j2 2.0.1, aspectj 1.8.1, Thymeleaf 2.1.3, substance 7.3
 
 
 ---
