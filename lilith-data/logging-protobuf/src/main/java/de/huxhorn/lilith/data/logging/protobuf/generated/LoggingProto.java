@@ -117,10 +117,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(enum_scope:de.huxhorn.lilith.logging.Level)
   }
 
-  public interface EventWrapperOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface EventWrapperOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.EventWrapper)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
     /**
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
      */
@@ -134,7 +134,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder();
 
-    // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
      */
@@ -152,8 +151,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.EventWrapper}
    */
   public static final class EventWrapper extends
-      com.google.protobuf.GeneratedMessage
-      implements EventWrapperOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.EventWrapper)
+      EventWrapperOrBuilder {
     // Use EventWrapper.newBuilder() to construct.
     private EventWrapper(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -265,7 +265,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
     public static final int EVENT_IDENTIFIER_FIELD_NUMBER = 1;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier eventIdentifier_;
     /**
@@ -287,7 +286,6 @@ public final class LoggingProto {
       return eventIdentifier_;
     }
 
-    // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
     public static final int EVENT_FIELD_NUMBER = 2;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent event_;
     /**
@@ -316,7 +314,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (hasEvent()) {
         if (!getEvent().isInitialized()) {
@@ -436,8 +435,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.EventWrapper}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapperOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.EventWrapper)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapperOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
@@ -583,7 +583,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier eventIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder> eventIdentifierBuilder_;
@@ -692,7 +691,7 @@ public final class LoggingProto {
         if (eventIdentifierBuilder_ == null) {
           eventIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder>(
-                  eventIdentifier_,
+                  getEventIdentifier(),
                   getParentForChildren(),
                   isClean());
           eventIdentifier_ = null;
@@ -700,7 +699,6 @@ public final class LoggingProto {
         return eventIdentifierBuilder_;
       }
 
-      // optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent event_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder> eventBuilder_;
@@ -809,7 +807,7 @@ public final class LoggingProto {
         if (eventBuilder_ == null) {
           eventBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder>(
-                  event_,
+                  getEvent(),
                   getParentForChildren(),
                   isClean());
           event_ = null;
@@ -828,10 +826,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.EventWrapper)
   }
 
-  public interface EventIdentifierOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface EventIdentifierOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.EventIdentifier)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int64 local_id = 1;
     /**
      * <code>optional int64 local_id = 1;</code>
      */
@@ -841,7 +839,6 @@ public final class LoggingProto {
      */
     long getLocalId();
 
-    // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
     /**
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
      */
@@ -859,8 +856,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.EventIdentifier}
    */
   public static final class EventIdentifier extends
-      com.google.protobuf.GeneratedMessage
-      implements EventIdentifierOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.EventIdentifier)
+      EventIdentifierOrBuilder {
     // Use EventIdentifier.newBuilder() to construct.
     private EventIdentifier(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -964,7 +962,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional int64 local_id = 1;
     public static final int LOCAL_ID_FIELD_NUMBER = 1;
     private long localId_;
     /**
@@ -980,7 +977,6 @@ public final class LoggingProto {
       return localId_;
     }
 
-    // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
     public static final int SOURCE_IDENTIFIER_FIELD_NUMBER = 2;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier sourceIdentifier_;
     /**
@@ -1009,7 +1005,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1123,8 +1120,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.EventIdentifier}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.EventIdentifier)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
@@ -1255,7 +1253,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional int64 local_id = 1;
       private long localId_ ;
       /**
        * <code>optional int64 local_id = 1;</code>
@@ -1288,7 +1285,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier sourceIdentifier_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder> sourceIdentifierBuilder_;
@@ -1397,7 +1393,7 @@ public final class LoggingProto {
         if (sourceIdentifierBuilder_ == null) {
           sourceIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder>(
-                  sourceIdentifier_,
+                  getSourceIdentifier(),
                   getParentForChildren(),
                   isClean());
           sourceIdentifier_ = null;
@@ -1416,10 +1412,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.EventIdentifier)
   }
 
-  public interface SourceIdentifierOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface SourceIdentifierOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.SourceIdentifier)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string identifier = 1;
     /**
      * <code>optional string identifier = 1;</code>
      */
@@ -1434,7 +1430,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getIdentifierBytes();
 
-    // optional string secondary_identifier = 2;
     /**
      * <code>optional string secondary_identifier = 2;</code>
      */
@@ -1453,8 +1448,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.SourceIdentifier}
    */
   public static final class SourceIdentifier extends
-      com.google.protobuf.GeneratedMessage
-      implements SourceIdentifierOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.SourceIdentifier)
+      SourceIdentifierOrBuilder {
     // Use SourceIdentifier.newBuilder() to construct.
     private SourceIdentifier(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1501,13 +1497,15 @@ public final class LoggingProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              identifier_ = input.readBytes();
+              identifier_ = bs;
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              secondaryIdentifier_ = input.readBytes();
+              secondaryIdentifier_ = bs;
               break;
             }
           }
@@ -1550,7 +1548,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional string identifier = 1;
     public static final int IDENTIFIER_FIELD_NUMBER = 1;
     private java.lang.Object identifier_;
     /**
@@ -1593,7 +1590,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional string secondary_identifier = 2;
     public static final int SECONDARY_IDENTIFIER_FIELD_NUMBER = 2;
     private java.lang.Object secondaryIdentifier_;
     /**
@@ -1643,7 +1639,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1757,8 +1754,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.SourceIdentifier}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.SourceIdentifier)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
@@ -1884,7 +1882,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional string identifier = 1;
       private java.lang.Object identifier_ = "";
       /**
        * <code>optional string identifier = 1;</code>
@@ -1898,9 +1895,12 @@ public final class LoggingProto {
       public java.lang.String getIdentifier() {
         java.lang.Object ref = identifier_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          identifier_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            identifier_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1958,7 +1958,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string secondary_identifier = 2;
       private java.lang.Object secondaryIdentifier_ = "";
       /**
        * <code>optional string secondary_identifier = 2;</code>
@@ -1972,9 +1971,12 @@ public final class LoggingProto {
       public java.lang.String getSecondaryIdentifier() {
         java.lang.Object ref = secondaryIdentifier_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          secondaryIdentifier_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            secondaryIdentifier_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2043,10 +2045,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.SourceIdentifier)
   }
 
-  public interface LoggingEventOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface LoggingEventOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.LoggingEvent)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int64 time_stamp = 1;
     /**
      * <code>optional int64 time_stamp = 1;</code>
      */
@@ -2056,7 +2058,6 @@ public final class LoggingProto {
      */
     long getTimeStamp();
 
-    // optional string logger_name = 2;
     /**
      * <code>optional string logger_name = 2;</code>
      */
@@ -2071,7 +2072,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getLoggerNameBytes();
 
-    // optional .de.huxhorn.lilith.logging.Level level = 3;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
      */
@@ -2081,7 +2081,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel();
 
-    // optional .de.huxhorn.lilith.logging.Message message = 4;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
      */
@@ -2095,7 +2094,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getMessageOrBuilder();
 
-    // optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
     /**
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
      */
@@ -2109,7 +2107,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder getThreadInfoOrBuilder();
 
-    // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;</code>
      */
@@ -2134,7 +2131,6 @@ public final class LoggingProto {
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getCallStackElementOrBuilder(
         int index);
 
-    // optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
      */
@@ -2148,7 +2144,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getThrowableOrBuilder();
 
-    // optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
      */
@@ -2162,7 +2157,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder getLoggerContextOrBuilder();
 
-    // optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
      */
@@ -2176,7 +2170,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getMappedDiagnosticContextOrBuilder();
 
-    // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
     /**
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
      */
@@ -2190,7 +2183,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder getNestedDiagnosticContextOrBuilder();
 
-    // optional .de.huxhorn.lilith.logging.Marker marker = 11;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
      */
@@ -2204,7 +2196,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getMarkerOrBuilder();
 
-    // optional int64 sequence_number = 12;
     /**
      * <code>optional int64 sequence_number = 12;</code>
      */
@@ -2218,8 +2209,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.LoggingEvent}
    */
   public static final class LoggingEvent extends
-      com.google.protobuf.GeneratedMessage
-      implements LoggingEventOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.LoggingEvent)
+      LoggingEventOrBuilder {
     // Use LoggingEvent.newBuilder() to construct.
     private LoggingEvent(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2271,8 +2263,9 @@ public final class LoggingProto {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              loggerName_ = input.readBytes();
+              loggerName_ = bs;
               break;
             }
             case 24: {
@@ -2433,7 +2426,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional int64 time_stamp = 1;
     public static final int TIME_STAMP_FIELD_NUMBER = 1;
     private long timeStamp_;
     /**
@@ -2449,7 +2441,6 @@ public final class LoggingProto {
       return timeStamp_;
     }
 
-    // optional string logger_name = 2;
     public static final int LOGGER_NAME_FIELD_NUMBER = 2;
     private java.lang.Object loggerName_;
     /**
@@ -2492,7 +2483,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional .de.huxhorn.lilith.logging.Level level = 3;
     public static final int LEVEL_FIELD_NUMBER = 3;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level level_;
     /**
@@ -2508,7 +2498,6 @@ public final class LoggingProto {
       return level_;
     }
 
-    // optional .de.huxhorn.lilith.logging.Message message = 4;
     public static final int MESSAGE_FIELD_NUMBER = 4;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message message_;
     /**
@@ -2530,7 +2519,6 @@ public final class LoggingProto {
       return message_;
     }
 
-    // optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
     public static final int THREAD_INFO_FIELD_NUMBER = 5;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo threadInfo_;
     /**
@@ -2552,7 +2540,6 @@ public final class LoggingProto {
       return threadInfo_;
     }
 
-    // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
     public static final int CALL_STACK_ELEMENT_FIELD_NUMBER = 6;
     private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> callStackElement_;
     /**
@@ -2588,7 +2575,6 @@ public final class LoggingProto {
       return callStackElement_.get(index);
     }
 
-    // optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
     public static final int THROWABLE_FIELD_NUMBER = 7;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable throwable_;
     /**
@@ -2610,7 +2596,6 @@ public final class LoggingProto {
       return throwable_;
     }
 
-    // optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;
     public static final int LOGGER_CONTEXT_FIELD_NUMBER = 8;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext loggerContext_;
     /**
@@ -2632,7 +2617,6 @@ public final class LoggingProto {
       return loggerContext_;
     }
 
-    // optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;
     public static final int MAPPED_DIAGNOSTIC_CONTEXT_FIELD_NUMBER = 9;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap mappedDiagnosticContext_;
     /**
@@ -2654,7 +2638,6 @@ public final class LoggingProto {
       return mappedDiagnosticContext_;
     }
 
-    // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
     public static final int NESTED_DIAGNOSTIC_CONTEXT_FIELD_NUMBER = 10;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext nestedDiagnosticContext_;
     /**
@@ -2676,7 +2659,6 @@ public final class LoggingProto {
       return nestedDiagnosticContext_;
     }
 
-    // optional .de.huxhorn.lilith.logging.Marker marker = 11;
     public static final int MARKER_FIELD_NUMBER = 11;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker marker_;
     /**
@@ -2698,7 +2680,6 @@ public final class LoggingProto {
       return marker_;
     }
 
-    // optional int64 sequence_number = 12;
     public static final int SEQUENCE_NUMBER_FIELD_NUMBER = 12;
     private long sequenceNumber_;
     /**
@@ -2731,7 +2712,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (hasLoggerContext()) {
         if (!getLoggerContext().isInitialized()) {
@@ -2933,8 +2915,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.LoggingEvent}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.LoggingEvent)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
@@ -3262,7 +3245,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional int64 time_stamp = 1;
       private long timeStamp_ ;
       /**
        * <code>optional int64 time_stamp = 1;</code>
@@ -3295,7 +3277,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string logger_name = 2;
       private java.lang.Object loggerName_ = "";
       /**
        * <code>optional string logger_name = 2;</code>
@@ -3309,9 +3290,12 @@ public final class LoggingProto {
       public java.lang.String getLoggerName() {
         java.lang.Object ref = loggerName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          loggerName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            loggerName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3369,7 +3353,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional .de.huxhorn.lilith.logging.Level level = 3;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level level_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE;
       /**
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
@@ -3405,7 +3388,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional .de.huxhorn.lilith.logging.Message message = 4;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message message_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> messageBuilder_;
@@ -3514,7 +3496,7 @@ public final class LoggingProto {
         if (messageBuilder_ == null) {
           messageBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder>(
-                  message_,
+                  getMessage(),
                   getParentForChildren(),
                   isClean());
           message_ = null;
@@ -3522,7 +3504,6 @@ public final class LoggingProto {
         return messageBuilder_;
       }
 
-      // optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo threadInfo_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder> threadInfoBuilder_;
@@ -3631,7 +3612,7 @@ public final class LoggingProto {
         if (threadInfoBuilder_ == null) {
           threadInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder>(
-                  threadInfo_,
+                  getThreadInfo(),
                   getParentForChildren(),
                   isClean());
           threadInfo_ = null;
@@ -3639,7 +3620,6 @@ public final class LoggingProto {
         return threadInfoBuilder_;
       }
 
-      // repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;
       private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> callStackElement_ =
         java.util.Collections.emptyList();
       private void ensureCallStackElementIsMutable() {
@@ -3781,7 +3761,8 @@ public final class LoggingProto {
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values) {
         if (callStackElementBuilder_ == null) {
           ensureCallStackElementIsMutable();
-          super.addAll(values, callStackElement_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, callStackElement_);
           onChanged();
         } else {
           callStackElementBuilder_.addAllMessages(values);
@@ -3879,7 +3860,6 @@ public final class LoggingProto {
         return callStackElementBuilder_;
       }
 
-      // optional .de.huxhorn.lilith.logging.Throwable throwable = 7;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable throwable_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> throwableBuilder_;
@@ -3988,7 +3968,7 @@ public final class LoggingProto {
         if (throwableBuilder_ == null) {
           throwableBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder>(
-                  throwable_,
+                  getThrowable(),
                   getParentForChildren(),
                   isClean());
           throwable_ = null;
@@ -3996,7 +3976,6 @@ public final class LoggingProto {
         return throwableBuilder_;
       }
 
-      // optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext loggerContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder> loggerContextBuilder_;
@@ -4105,7 +4084,7 @@ public final class LoggingProto {
         if (loggerContextBuilder_ == null) {
           loggerContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder>(
-                  loggerContext_,
+                  getLoggerContext(),
                   getParentForChildren(),
                   isClean());
           loggerContext_ = null;
@@ -4113,7 +4092,6 @@ public final class LoggingProto {
         return loggerContextBuilder_;
       }
 
-      // optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap mappedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> mappedDiagnosticContextBuilder_;
@@ -4222,7 +4200,7 @@ public final class LoggingProto {
         if (mappedDiagnosticContextBuilder_ == null) {
           mappedDiagnosticContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder>(
-                  mappedDiagnosticContext_,
+                  getMappedDiagnosticContext(),
                   getParentForChildren(),
                   isClean());
           mappedDiagnosticContext_ = null;
@@ -4230,7 +4208,6 @@ public final class LoggingProto {
         return mappedDiagnosticContextBuilder_;
       }
 
-      // optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext nestedDiagnosticContext_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder> nestedDiagnosticContextBuilder_;
@@ -4339,7 +4316,7 @@ public final class LoggingProto {
         if (nestedDiagnosticContextBuilder_ == null) {
           nestedDiagnosticContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder>(
-                  nestedDiagnosticContext_,
+                  getNestedDiagnosticContext(),
                   getParentForChildren(),
                   isClean());
           nestedDiagnosticContext_ = null;
@@ -4347,7 +4324,6 @@ public final class LoggingProto {
         return nestedDiagnosticContextBuilder_;
       }
 
-      // optional .de.huxhorn.lilith.logging.Marker marker = 11;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker marker_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> markerBuilder_;
@@ -4456,7 +4432,7 @@ public final class LoggingProto {
         if (markerBuilder_ == null) {
           markerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder>(
-                  marker_,
+                  getMarker(),
                   getParentForChildren(),
                   isClean());
           marker_ = null;
@@ -4464,7 +4440,6 @@ public final class LoggingProto {
         return markerBuilder_;
       }
 
-      // optional int64 sequence_number = 12;
       private long sequenceNumber_ ;
       /**
        * <code>optional int64 sequence_number = 12;</code>
@@ -4508,10 +4483,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.LoggingEvent)
   }
 
-  public interface LoggerContextOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface LoggerContextOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.LoggerContext)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int64 birth_time = 1;
     /**
      * <code>optional int64 birth_time = 1;</code>
      */
@@ -4521,7 +4496,6 @@ public final class LoggingProto {
      */
     long getBirthTime();
 
-    // optional string name = 2;
     /**
      * <code>optional string name = 2;</code>
      */
@@ -4536,7 +4510,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getNameBytes();
 
-    // optional .de.huxhorn.lilith.logging.StringMap properties = 3;
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
      */
@@ -4554,8 +4527,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.LoggerContext}
    */
   public static final class LoggerContext extends
-      com.google.protobuf.GeneratedMessage
-      implements LoggerContextOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.LoggerContext)
+      LoggerContextOrBuilder {
     // Use LoggerContext.newBuilder() to construct.
     private LoggerContext(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -4607,8 +4581,9 @@ public final class LoggingProto {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              name_ = input.readBytes();
+              name_ = bs;
               break;
             }
             case 26: {
@@ -4664,7 +4639,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional int64 birth_time = 1;
     public static final int BIRTH_TIME_FIELD_NUMBER = 1;
     private long birthTime_;
     /**
@@ -4680,7 +4654,6 @@ public final class LoggingProto {
       return birthTime_;
     }
 
-    // optional string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
     private java.lang.Object name_;
     /**
@@ -4723,7 +4696,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional .de.huxhorn.lilith.logging.StringMap properties = 3;
     public static final int PROPERTIES_FIELD_NUMBER = 3;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap properties_;
     /**
@@ -4753,7 +4725,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (hasProperties()) {
         if (!getProperties().isInitialized()) {
@@ -4880,8 +4853,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.LoggerContext}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.LoggerContext)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor;
@@ -5029,7 +5003,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional int64 birth_time = 1;
       private long birthTime_ ;
       /**
        * <code>optional int64 birth_time = 1;</code>
@@ -5062,7 +5035,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string name = 2;
       private java.lang.Object name_ = "";
       /**
        * <code>optional string name = 2;</code>
@@ -5076,9 +5048,12 @@ public final class LoggingProto {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          name_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -5136,7 +5111,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional .de.huxhorn.lilith.logging.StringMap properties = 3;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap properties_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> propertiesBuilder_;
@@ -5245,7 +5219,7 @@ public final class LoggingProto {
         if (propertiesBuilder_ == null) {
           propertiesBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder>(
-                  properties_,
+                  getProperties(),
                   getParentForChildren(),
                   isClean());
           properties_ = null;
@@ -5264,10 +5238,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.LoggerContext)
   }
 
-  public interface ThreadInfoOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ThreadInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.ThreadInfo)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional int64 id = 1;
     /**
      * <code>optional int64 id = 1;</code>
      */
@@ -5277,7 +5251,6 @@ public final class LoggingProto {
      */
     long getId();
 
-    // optional string name = 2;
     /**
      * <code>optional string name = 2;</code>
      */
@@ -5292,7 +5265,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getNameBytes();
 
-    // optional int64 group_id = 3;
     /**
      * <code>optional int64 group_id = 3;</code>
      */
@@ -5302,7 +5274,6 @@ public final class LoggingProto {
      */
     long getGroupId();
 
-    // optional string group_name = 4;
     /**
      * <code>optional string group_name = 4;</code>
      */
@@ -5321,8 +5292,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.ThreadInfo}
    */
   public static final class ThreadInfo extends
-      com.google.protobuf.GeneratedMessage
-      implements ThreadInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.ThreadInfo)
+      ThreadInfoOrBuilder {
     // Use ThreadInfo.newBuilder() to construct.
     private ThreadInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -5374,8 +5346,9 @@ public final class LoggingProto {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              name_ = input.readBytes();
+              name_ = bs;
               break;
             }
             case 24: {
@@ -5384,8 +5357,9 @@ public final class LoggingProto {
               break;
             }
             case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              groupName_ = input.readBytes();
+              groupName_ = bs;
               break;
             }
           }
@@ -5428,7 +5402,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional int64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private long id_;
     /**
@@ -5444,7 +5417,6 @@ public final class LoggingProto {
       return id_;
     }
 
-    // optional string name = 2;
     public static final int NAME_FIELD_NUMBER = 2;
     private java.lang.Object name_;
     /**
@@ -5487,7 +5459,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional int64 group_id = 3;
     public static final int GROUP_ID_FIELD_NUMBER = 3;
     private long groupId_;
     /**
@@ -5503,7 +5474,6 @@ public final class LoggingProto {
       return groupId_;
     }
 
-    // optional string group_name = 4;
     public static final int GROUP_NAME_FIELD_NUMBER = 4;
     private java.lang.Object groupName_;
     /**
@@ -5555,7 +5525,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -5683,8 +5654,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.ThreadInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.ThreadInfo)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
@@ -5828,7 +5800,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional int64 id = 1;
       private long id_ ;
       /**
        * <code>optional int64 id = 1;</code>
@@ -5861,7 +5832,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string name = 2;
       private java.lang.Object name_ = "";
       /**
        * <code>optional string name = 2;</code>
@@ -5875,9 +5845,12 @@ public final class LoggingProto {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          name_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -5935,7 +5908,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional int64 group_id = 3;
       private long groupId_ ;
       /**
        * <code>optional int64 group_id = 3;</code>
@@ -5968,7 +5940,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string group_name = 4;
       private java.lang.Object groupName_ = "";
       /**
        * <code>optional string group_name = 4;</code>
@@ -5982,9 +5953,12 @@ public final class LoggingProto {
       public java.lang.String getGroupName() {
         java.lang.Object ref = groupName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          groupName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            groupName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -6053,10 +6027,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.ThreadInfo)
   }
 
-  public interface MessageOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface MessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.Message)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string message_pattern = 1;
     /**
      * <code>optional string message_pattern = 1;</code>
      */
@@ -6071,7 +6045,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getMessagePatternBytes();
 
-    // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
     /**
      * <code>repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;</code>
      */
@@ -6100,8 +6073,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.Message}
    */
   public static final class Message extends
-      com.google.protobuf.GeneratedMessage
-      implements MessageOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.Message)
+      MessageOrBuilder {
     // Use Message.newBuilder() to construct.
     private Message(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -6148,8 +6122,9 @@ public final class LoggingProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              messagePattern_ = input.readBytes();
+              messagePattern_ = bs;
               break;
             }
             case 18: {
@@ -6203,7 +6178,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional string message_pattern = 1;
     public static final int MESSAGE_PATTERN_FIELD_NUMBER = 1;
     private java.lang.Object messagePattern_;
     /**
@@ -6246,7 +6220,6 @@ public final class LoggingProto {
       }
     }
 
-    // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
     public static final int ARGUMENT_FIELD_NUMBER = 2;
     private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> argument_;
     /**
@@ -6289,7 +6262,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -6403,8 +6377,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.Message}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.Message)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_descriptor;
@@ -6561,7 +6536,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional string message_pattern = 1;
       private java.lang.Object messagePattern_ = "";
       /**
        * <code>optional string message_pattern = 1;</code>
@@ -6575,9 +6549,12 @@ public final class LoggingProto {
       public java.lang.String getMessagePattern() {
         java.lang.Object ref = messagePattern_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          messagePattern_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            messagePattern_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -6635,7 +6612,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;
       private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> argument_ =
         java.util.Collections.emptyList();
       private void ensureArgumentIsMutable() {
@@ -6777,7 +6753,8 @@ public final class LoggingProto {
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> values) {
         if (argumentBuilder_ == null) {
           ensureArgumentIsMutable();
-          super.addAll(values, argument_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, argument_);
           onChanged();
         } else {
           argumentBuilder_.addAllMessages(values);
@@ -6886,10 +6863,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.Message)
   }
 
-  public interface MessageArgumentOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface MessageArgumentOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.MessageArgument)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string value = 1;
     /**
      * <code>optional string value = 1;</code>
      */
@@ -6912,8 +6889,9 @@ public final class LoggingProto {
    * </pre>
    */
   public static final class MessageArgument extends
-      com.google.protobuf.GeneratedMessage
-      implements MessageArgumentOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.MessageArgument)
+      MessageArgumentOrBuilder {
     // Use MessageArgument.newBuilder() to construct.
     private MessageArgument(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -6960,8 +6938,9 @@ public final class LoggingProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              value_ = input.readBytes();
+              value_ = bs;
               break;
             }
           }
@@ -7004,7 +6983,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional string value = 1;
     public static final int VALUE_FIELD_NUMBER = 1;
     private java.lang.Object value_;
     /**
@@ -7053,7 +7031,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -7164,8 +7143,9 @@ public final class LoggingProto {
      * </pre>
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.MessageArgument)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
@@ -7280,7 +7260,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional string value = 1;
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 1;</code>
@@ -7294,9 +7273,12 @@ public final class LoggingProto {
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          value_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            value_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -7365,10 +7347,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.MessageArgument)
   }
 
-  public interface StackTraceElementOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface StackTraceElementOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.StackTraceElement)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string method_name = 1;
     /**
      * <code>optional string method_name = 1;</code>
      */
@@ -7383,7 +7365,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getMethodNameBytes();
 
-    // optional string class_name = 2;
     /**
      * <code>optional string class_name = 2;</code>
      */
@@ -7398,7 +7379,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getClassNameBytes();
 
-    // optional string file_name = 3;
     /**
      * <code>optional string file_name = 3;</code>
      */
@@ -7413,7 +7393,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getFileNameBytes();
 
-    // optional int32 line_number = 4;
     /**
      * <code>optional int32 line_number = 4;</code>
      */
@@ -7423,7 +7402,6 @@ public final class LoggingProto {
      */
     int getLineNumber();
 
-    // optional string code_location = 5;
     /**
      * <code>optional string code_location = 5;</code>
      */
@@ -7438,7 +7416,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getCodeLocationBytes();
 
-    // optional string version = 6;
     /**
      * <code>optional string version = 6;</code>
      */
@@ -7453,7 +7430,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getVersionBytes();
 
-    // optional bool exact = 7;
     /**
      * <code>optional bool exact = 7;</code>
      */
@@ -7467,8 +7443,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.StackTraceElement}
    */
   public static final class StackTraceElement extends
-      com.google.protobuf.GeneratedMessage
-      implements StackTraceElementOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.StackTraceElement)
+      StackTraceElementOrBuilder {
     // Use StackTraceElement.newBuilder() to construct.
     private StackTraceElement(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -7515,18 +7492,21 @@ public final class LoggingProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              methodName_ = input.readBytes();
+              methodName_ = bs;
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              className_ = input.readBytes();
+              className_ = bs;
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              fileName_ = input.readBytes();
+              fileName_ = bs;
               break;
             }
             case 32: {
@@ -7535,13 +7515,15 @@ public final class LoggingProto {
               break;
             }
             case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              codeLocation_ = input.readBytes();
+              codeLocation_ = bs;
               break;
             }
             case 50: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000020;
-              version_ = input.readBytes();
+              version_ = bs;
               break;
             }
             case 56: {
@@ -7589,7 +7571,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional string method_name = 1;
     public static final int METHOD_NAME_FIELD_NUMBER = 1;
     private java.lang.Object methodName_;
     /**
@@ -7632,7 +7613,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional string class_name = 2;
     public static final int CLASS_NAME_FIELD_NUMBER = 2;
     private java.lang.Object className_;
     /**
@@ -7675,7 +7655,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional string file_name = 3;
     public static final int FILE_NAME_FIELD_NUMBER = 3;
     private java.lang.Object fileName_;
     /**
@@ -7718,7 +7697,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional int32 line_number = 4;
     public static final int LINE_NUMBER_FIELD_NUMBER = 4;
     private int lineNumber_;
     /**
@@ -7734,7 +7712,6 @@ public final class LoggingProto {
       return lineNumber_;
     }
 
-    // optional string code_location = 5;
     public static final int CODE_LOCATION_FIELD_NUMBER = 5;
     private java.lang.Object codeLocation_;
     /**
@@ -7777,7 +7754,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional string version = 6;
     public static final int VERSION_FIELD_NUMBER = 6;
     private java.lang.Object version_;
     /**
@@ -7820,7 +7796,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional bool exact = 7;
     public static final int EXACT_FIELD_NUMBER = 7;
     private boolean exact_;
     /**
@@ -7848,7 +7823,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -7997,8 +7973,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.StackTraceElement}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.StackTraceElement)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
@@ -8175,7 +8152,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional string method_name = 1;
       private java.lang.Object methodName_ = "";
       /**
        * <code>optional string method_name = 1;</code>
@@ -8189,9 +8165,12 @@ public final class LoggingProto {
       public java.lang.String getMethodName() {
         java.lang.Object ref = methodName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          methodName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            methodName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8249,7 +8228,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string class_name = 2;
       private java.lang.Object className_ = "";
       /**
        * <code>optional string class_name = 2;</code>
@@ -8263,9 +8241,12 @@ public final class LoggingProto {
       public java.lang.String getClassName() {
         java.lang.Object ref = className_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          className_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            className_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8323,7 +8304,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string file_name = 3;
       private java.lang.Object fileName_ = "";
       /**
        * <code>optional string file_name = 3;</code>
@@ -8337,9 +8317,12 @@ public final class LoggingProto {
       public java.lang.String getFileName() {
         java.lang.Object ref = fileName_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          fileName_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            fileName_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8397,7 +8380,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional int32 line_number = 4;
       private int lineNumber_ ;
       /**
        * <code>optional int32 line_number = 4;</code>
@@ -8430,7 +8412,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string code_location = 5;
       private java.lang.Object codeLocation_ = "";
       /**
        * <code>optional string code_location = 5;</code>
@@ -8444,9 +8425,12 @@ public final class LoggingProto {
       public java.lang.String getCodeLocation() {
         java.lang.Object ref = codeLocation_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          codeLocation_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            codeLocation_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8504,7 +8488,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string version = 6;
       private java.lang.Object version_ = "";
       /**
        * <code>optional string version = 6;</code>
@@ -8518,9 +8501,12 @@ public final class LoggingProto {
       public java.lang.String getVersion() {
         java.lang.Object ref = version_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          version_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            version_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -8578,7 +8564,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional bool exact = 7;
       private boolean exact_ ;
       /**
        * <code>optional bool exact = 7;</code>
@@ -8622,10 +8607,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.StackTraceElement)
   }
 
-  public interface ThrowableOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ThrowableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.Throwable)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string throwable_class = 1;
     /**
      * <code>optional string throwable_class = 1;</code>
      */
@@ -8640,7 +8625,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getThrowableClassBytes();
 
-    // optional string message = 2;
     /**
      * <code>optional string message = 2;</code>
      */
@@ -8655,7 +8639,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getMessageBytes();
 
-    // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;</code>
      */
@@ -8680,7 +8663,6 @@ public final class LoggingProto {
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getStackTraceElementOrBuilder(
         int index);
 
-    // optional int32 omitted_elements = 4;
     /**
      * <code>optional int32 omitted_elements = 4;</code>
      */
@@ -8690,7 +8672,6 @@ public final class LoggingProto {
      */
     int getOmittedElements();
 
-    // optional .de.huxhorn.lilith.logging.Throwable cause = 5;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
      */
@@ -8704,7 +8685,6 @@ public final class LoggingProto {
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getCauseOrBuilder();
 
-    // repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;</code>
      */
@@ -8733,8 +8713,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.Throwable}
    */
   public static final class Throwable extends
-      com.google.protobuf.GeneratedMessage
-      implements ThrowableOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.Throwable)
+      ThrowableOrBuilder {
     // Use Throwable.newBuilder() to construct.
     private Throwable(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -8781,13 +8762,15 @@ public final class LoggingProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              throwableClass_ = input.readBytes();
+              throwableClass_ = bs;
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              message_ = input.readBytes();
+              message_ = bs;
               break;
             }
             case 26: {
@@ -8870,7 +8853,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // optional string throwable_class = 1;
     public static final int THROWABLE_CLASS_FIELD_NUMBER = 1;
     private java.lang.Object throwableClass_;
     /**
@@ -8913,7 +8895,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional string message = 2;
     public static final int MESSAGE_FIELD_NUMBER = 2;
     private java.lang.Object message_;
     /**
@@ -8956,7 +8937,6 @@ public final class LoggingProto {
       }
     }
 
-    // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
     public static final int STACK_TRACE_ELEMENT_FIELD_NUMBER = 3;
     private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> stackTraceElement_;
     /**
@@ -8992,7 +8972,6 @@ public final class LoggingProto {
       return stackTraceElement_.get(index);
     }
 
-    // optional int32 omitted_elements = 4;
     public static final int OMITTED_ELEMENTS_FIELD_NUMBER = 4;
     private int omittedElements_;
     /**
@@ -9008,7 +8987,6 @@ public final class LoggingProto {
       return omittedElements_;
     }
 
-    // optional .de.huxhorn.lilith.logging.Throwable cause = 5;
     public static final int CAUSE_FIELD_NUMBER = 5;
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable cause_;
     /**
@@ -9030,7 +9008,6 @@ public final class LoggingProto {
       return cause_;
     }
 
-    // repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;
     public static final int SUPPRESSED_FIELD_NUMBER = 6;
     private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> suppressed_;
     /**
@@ -9077,7 +9054,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -9219,8 +9197,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.Throwable}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.Throwable)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
@@ -9457,7 +9436,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // optional string throwable_class = 1;
       private java.lang.Object throwableClass_ = "";
       /**
        * <code>optional string throwable_class = 1;</code>
@@ -9471,9 +9449,12 @@ public final class LoggingProto {
       public java.lang.String getThrowableClass() {
         java.lang.Object ref = throwableClass_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          throwableClass_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            throwableClass_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -9531,7 +9512,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string message = 2;
       private java.lang.Object message_ = "";
       /**
        * <code>optional string message = 2;</code>
@@ -9545,9 +9525,12 @@ public final class LoggingProto {
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          message_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            message_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -9605,7 +9588,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;
       private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> stackTraceElement_ =
         java.util.Collections.emptyList();
       private void ensureStackTraceElementIsMutable() {
@@ -9747,7 +9729,8 @@ public final class LoggingProto {
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> values) {
         if (stackTraceElementBuilder_ == null) {
           ensureStackTraceElementIsMutable();
-          super.addAll(values, stackTraceElement_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, stackTraceElement_);
           onChanged();
         } else {
           stackTraceElementBuilder_.addAllMessages(values);
@@ -9845,7 +9828,6 @@ public final class LoggingProto {
         return stackTraceElementBuilder_;
       }
 
-      // optional int32 omitted_elements = 4;
       private int omittedElements_ ;
       /**
        * <code>optional int32 omitted_elements = 4;</code>
@@ -9878,7 +9860,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional .de.huxhorn.lilith.logging.Throwable cause = 5;
       private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable cause_ = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> causeBuilder_;
@@ -9987,7 +9968,7 @@ public final class LoggingProto {
         if (causeBuilder_ == null) {
           causeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder>(
-                  cause_,
+                  getCause(),
                   getParentForChildren(),
                   isClean());
           cause_ = null;
@@ -9995,7 +9976,6 @@ public final class LoggingProto {
         return causeBuilder_;
       }
 
-      // repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;
       private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> suppressed_ =
         java.util.Collections.emptyList();
       private void ensureSuppressedIsMutable() {
@@ -10137,7 +10117,8 @@ public final class LoggingProto {
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> values) {
         if (suppressedBuilder_ == null) {
           ensureSuppressedIsMutable();
-          super.addAll(values, suppressed_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, suppressed_);
           onChanged();
         } else {
           suppressedBuilder_.addAllMessages(values);
@@ -10246,10 +10227,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.Throwable)
   }
 
-  public interface NestedDiagnosticContextOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface NestedDiagnosticContextOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.NestedDiagnosticContext)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .de.huxhorn.lilith.logging.Message entry = 1;
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Message entry = 1;</code>
      */
@@ -10278,8 +10259,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.NestedDiagnosticContext}
    */
   public static final class NestedDiagnosticContext extends
-      com.google.protobuf.GeneratedMessage
-      implements NestedDiagnosticContextOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.NestedDiagnosticContext)
+      NestedDiagnosticContextOrBuilder {
     // Use NestedDiagnosticContext.newBuilder() to construct.
     private NestedDiagnosticContext(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -10375,7 +10357,6 @@ public final class LoggingProto {
       return PARSER;
     }
 
-    // repeated .de.huxhorn.lilith.logging.Message entry = 1;
     public static final int ENTRY_FIELD_NUMBER = 1;
     private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> entry_;
     /**
@@ -10417,7 +10398,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -10524,8 +10506,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.NestedDiagnosticContext}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.NestedDiagnosticContext)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
@@ -10669,7 +10652,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // repeated .de.huxhorn.lilith.logging.Message entry = 1;
       private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> entry_ =
         java.util.Collections.emptyList();
       private void ensureEntryIsMutable() {
@@ -10811,7 +10793,8 @@ public final class LoggingProto {
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> values) {
         if (entryBuilder_ == null) {
           ensureEntryIsMutable();
-          super.addAll(values, entry_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, entry_);
           onChanged();
         } else {
           entryBuilder_.addAllMessages(values);
@@ -10920,10 +10903,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.NestedDiagnosticContext)
   }
 
-  public interface StringMapOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface StringMapOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.StringMap)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;</code>
      */
@@ -10952,8 +10935,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.StringMap}
    */
   public static final class StringMap extends
-      com.google.protobuf.GeneratedMessage
-      implements StringMapOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.StringMap)
+      StringMapOrBuilder {
     // Use StringMap.newBuilder() to construct.
     private StringMap(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11049,7 +11033,6 @@ public final class LoggingProto {
       return PARSER;
     }
 
-    // repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;
     public static final int ENTRY_FIELD_NUMBER = 1;
     private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> entry_;
     /**
@@ -11091,7 +11074,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       for (int i = 0; i < getEntryCount(); i++) {
         if (!getEntry(i).isInitialized()) {
@@ -11204,8 +11188,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.StringMap}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.StringMap)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_descriptor;
@@ -11355,7 +11340,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;
       private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> entry_ =
         java.util.Collections.emptyList();
       private void ensureEntryIsMutable() {
@@ -11497,7 +11481,8 @@ public final class LoggingProto {
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> values) {
         if (entryBuilder_ == null) {
           ensureEntryIsMutable();
-          super.addAll(values, entry_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, entry_);
           onChanged();
         } else {
           entryBuilder_.addAllMessages(values);
@@ -11606,10 +11591,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.StringMap)
   }
 
-  public interface StringMapEntryOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface StringMapEntryOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.StringMapEntry)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string key = 1;
     /**
      * <code>required string key = 1;</code>
      */
@@ -11624,7 +11609,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getKeyBytes();
 
-    // optional string value = 2;
     /**
      * <code>optional string value = 2;</code>
      */
@@ -11643,8 +11627,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.StringMapEntry}
    */
   public static final class StringMapEntry extends
-      com.google.protobuf.GeneratedMessage
-      implements StringMapEntryOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.StringMapEntry)
+      StringMapEntryOrBuilder {
     // Use StringMapEntry.newBuilder() to construct.
     private StringMapEntry(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -11691,13 +11676,15 @@ public final class LoggingProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              key_ = input.readBytes();
+              key_ = bs;
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              value_ = input.readBytes();
+              value_ = bs;
               break;
             }
           }
@@ -11740,7 +11727,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // required string key = 1;
     public static final int KEY_FIELD_NUMBER = 1;
     private java.lang.Object key_;
     /**
@@ -11783,7 +11769,6 @@ public final class LoggingProto {
       }
     }
 
-    // optional string value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
     private java.lang.Object value_;
     /**
@@ -11833,7 +11818,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasKey()) {
         memoizedIsInitialized = 0;
@@ -11951,8 +11937,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.StringMapEntry}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.StringMapEntry)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor;
@@ -12082,7 +12069,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // required string key = 1;
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
@@ -12096,9 +12082,12 @@ public final class LoggingProto {
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          key_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            key_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -12156,7 +12145,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // optional string value = 2;
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 2;</code>
@@ -12170,9 +12158,12 @@ public final class LoggingProto {
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          value_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            value_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -12241,10 +12232,10 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.StringMapEntry)
   }
 
-  public interface MarkerOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface MarkerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.huxhorn.lilith.logging.Marker)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string name = 1;
     /**
      * <code>required string name = 1;</code>
      */
@@ -12259,7 +12250,6 @@ public final class LoggingProto {
     com.google.protobuf.ByteString
         getNameBytes();
 
-    // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Marker reference = 2;</code>
      */
@@ -12288,8 +12278,9 @@ public final class LoggingProto {
    * Protobuf type {@code de.huxhorn.lilith.logging.Marker}
    */
   public static final class Marker extends
-      com.google.protobuf.GeneratedMessage
-      implements MarkerOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.Marker)
+      MarkerOrBuilder {
     // Use Marker.newBuilder() to construct.
     private Marker(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -12336,8 +12327,9 @@ public final class LoggingProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              name_ = input.readBytes();
+              name_ = bs;
               break;
             }
             case 18: {
@@ -12391,7 +12383,6 @@ public final class LoggingProto {
     }
 
     private int bitField0_;
-    // required string name = 1;
     public static final int NAME_FIELD_NUMBER = 1;
     private java.lang.Object name_;
     /**
@@ -12434,7 +12425,6 @@ public final class LoggingProto {
       }
     }
 
-    // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
     public static final int REFERENCE_FIELD_NUMBER = 2;
     private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> reference_;
     /**
@@ -12477,7 +12467,8 @@ public final class LoggingProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasName()) {
         memoizedIsInitialized = 0;
@@ -12601,8 +12592,9 @@ public final class LoggingProto {
      * Protobuf type {@code de.huxhorn.lilith.logging.Marker}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.huxhorn.lilith.logging.Marker)
+        de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
@@ -12769,7 +12761,6 @@ public final class LoggingProto {
       }
       private int bitField0_;
 
-      // required string name = 1;
       private java.lang.Object name_ = "";
       /**
        * <code>required string name = 1;</code>
@@ -12783,9 +12774,12 @@ public final class LoggingProto {
       public java.lang.String getName() {
         java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          name_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            name_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -12843,7 +12837,6 @@ public final class LoggingProto {
         return this;
       }
 
-      // repeated .de.huxhorn.lilith.logging.Marker reference = 2;
       private java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> reference_ =
         java.util.Collections.emptyList();
       private void ensureReferenceIsMutable() {
@@ -12985,7 +12978,8 @@ public final class LoggingProto {
           java.lang.Iterable<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> values) {
         if (referenceBuilder_ == null) {
           ensureReferenceIsMutable();
-          super.addAll(values, reference_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, reference_);
           onChanged();
         } else {
           referenceBuilder_.addAllMessages(values);
@@ -13094,72 +13088,72 @@ public final class LoggingProto {
     // @@protoc_insertion_point(class_scope:de.huxhorn.lilith.logging.Marker)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_LoggerContext_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_Message_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_StringMap_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_StringMap_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_huxhorn_lilith_logging_StringMapEntry_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -13230,101 +13224,101 @@ public final class LoggingProto {
       "buf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor,
-              new java.lang.String[] { "EventIdentifier", "Event", });
-          internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor,
-              new java.lang.String[] { "LocalId", "SourceIdentifier", });
-          internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor,
-              new java.lang.String[] { "Identifier", "SecondaryIdentifier", });
-          internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor,
-              new java.lang.String[] { "TimeStamp", "LoggerName", "Level", "Message", "ThreadInfo", "CallStackElement", "Throwable", "LoggerContext", "MappedDiagnosticContext", "NestedDiagnosticContext", "Marker", "SequenceNumber", });
-          internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_de_huxhorn_lilith_logging_LoggerContext_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor,
-              new java.lang.String[] { "BirthTime", "Name", "Properties", });
-          internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor =
-            getDescriptor().getMessageTypes().get(5);
-          internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor,
-              new java.lang.String[] { "Id", "Name", "GroupId", "GroupName", });
-          internal_static_de_huxhorn_lilith_logging_Message_descriptor =
-            getDescriptor().getMessageTypes().get(6);
-          internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_Message_descriptor,
-              new java.lang.String[] { "MessagePattern", "Argument", });
-          internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor =
-            getDescriptor().getMessageTypes().get(7);
-          internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor,
-              new java.lang.String[] { "Value", });
-          internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor =
-            getDescriptor().getMessageTypes().get(8);
-          internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor,
-              new java.lang.String[] { "MethodName", "ClassName", "FileName", "LineNumber", "CodeLocation", "Version", "Exact", });
-          internal_static_de_huxhorn_lilith_logging_Throwable_descriptor =
-            getDescriptor().getMessageTypes().get(9);
-          internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_Throwable_descriptor,
-              new java.lang.String[] { "ThrowableClass", "Message", "StackTraceElement", "OmittedElements", "Cause", "Suppressed", });
-          internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor =
-            getDescriptor().getMessageTypes().get(10);
-          internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor,
-              new java.lang.String[] { "Entry", });
-          internal_static_de_huxhorn_lilith_logging_StringMap_descriptor =
-            getDescriptor().getMessageTypes().get(11);
-          internal_static_de_huxhorn_lilith_logging_StringMap_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_StringMap_descriptor,
-              new java.lang.String[] { "Entry", });
-          internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor =
-            getDescriptor().getMessageTypes().get(12);
-          internal_static_de_huxhorn_lilith_logging_StringMapEntry_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor,
-              new java.lang.String[] { "Key", "Value", });
-          internal_static_de_huxhorn_lilith_logging_Marker_descriptor =
-            getDescriptor().getMessageTypes().get(13);
-          internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_de_huxhorn_lilith_logging_Marker_descriptor,
-              new java.lang.String[] { "Name", "Reference", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor,
+        new java.lang.String[] { "EventIdentifier", "Event", });
+    internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor,
+        new java.lang.String[] { "LocalId", "SourceIdentifier", });
+    internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor,
+        new java.lang.String[] { "Identifier", "SecondaryIdentifier", });
+    internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor,
+        new java.lang.String[] { "TimeStamp", "LoggerName", "Level", "Message", "ThreadInfo", "CallStackElement", "Throwable", "LoggerContext", "MappedDiagnosticContext", "NestedDiagnosticContext", "Marker", "SequenceNumber", });
+    internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_de_huxhorn_lilith_logging_LoggerContext_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor,
+        new java.lang.String[] { "BirthTime", "Name", "Properties", });
+    internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor,
+        new java.lang.String[] { "Id", "Name", "GroupId", "GroupName", });
+    internal_static_de_huxhorn_lilith_logging_Message_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_Message_descriptor,
+        new java.lang.String[] { "MessagePattern", "Argument", });
+    internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor,
+        new java.lang.String[] { "Value", });
+    internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor,
+        new java.lang.String[] { "MethodName", "ClassName", "FileName", "LineNumber", "CodeLocation", "Version", "Exact", });
+    internal_static_de_huxhorn_lilith_logging_Throwable_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_Throwable_descriptor,
+        new java.lang.String[] { "ThrowableClass", "Message", "StackTraceElement", "OmittedElements", "Cause", "Suppressed", });
+    internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor,
+        new java.lang.String[] { "Entry", });
+    internal_static_de_huxhorn_lilith_logging_StringMap_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_de_huxhorn_lilith_logging_StringMap_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_StringMap_descriptor,
+        new java.lang.String[] { "Entry", });
+    internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_de_huxhorn_lilith_logging_StringMapEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_de_huxhorn_lilith_logging_Marker_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_huxhorn_lilith_logging_Marker_descriptor,
+        new java.lang.String[] { "Name", "Reference", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
