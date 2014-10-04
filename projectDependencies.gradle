@@ -497,6 +497,7 @@ project(':lilith') {
 		compile libraries.'httpcore'
 		compile libraries.'jcommander'
 		compile libraries.'jmdns'
+		compile libraries.'joda-time'
 		compile libraries.'junique'
 		compile libraries.'logback-access'
 		compile libraries.'logback-classic'
