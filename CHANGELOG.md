@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - `CHANGELOG.md` in the spirit of [Keep a CHANGELOG](http://keepachangelog.com/).
 - Rough `TODO.md` listing some things that should be done.
 - Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
+- Using Java 7 or above on Mac vs. the old Java 6.
 
 ### Deprecated
 - Nothing.

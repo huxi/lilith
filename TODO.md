@@ -4,11 +4,6 @@ This file contains a rough list about stuff that needs to be done.
 ## Bundling
 It's critical that Lilith switches from the old Java6-Mac bundling to the proper new one with embedded VM. This prevents a switch to Java8 and fancy stuff like JavaFX (especially [WebView](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebView.html) & [WebEngine](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebEngine.html))
 
-### macappbundle
-- [Gradle Plugin Homepage](https://code.google.com/p/gradle-macappbundle/)
-- [MacAppBundlePluginExtension](https://code.google.com/p/gradle-macappbundle/source/browse/src/main/groovy/edu/sc/seis/gradle/macAppBundle/MacAppBundlePluginExtension.groovy)
-- Artifact: `'edu.sc.seis.gradle:macappbundle:2.0.0'`
-
 ### izpack
 - [Homepage](http://izpack.org/)
 - [gradle-izpack-plugin](https://github.com/bmuschko/gradle-izpack-plugin)

@@ -14,6 +14,8 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '2.2-rc-1'
 }
 
+def copyright = "Copyright \u00a9 2007-2014 J\u00f6rn Huxhorn"
+
 buildscript {
 	apply from: 'dependencyDefinitions.gradle'
 	project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
@@ -27,6 +29,7 @@ buildscript {
 		maven {
 			url localSnapshotRepo
 		}
+		jcenter()
 		mavenCentral()
 		mavenLocal()
 		maven {
@@ -52,6 +55,8 @@ buildscript {
 		// http://repo.spring.io/plugins-release/org/springframework/build/gradle/propdeps-plugin/
 		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7' 
 		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
+		// https://code.google.com/p/gradle-macappbundle/
+		classpath 'edu.sc.seis.gradle:macappbundle:2.0.0'
 	}
 }
 
@@ -349,17 +354,49 @@ subprojects {
 }
 
 project(':lilith') {
-
 	apply plugin: 'application'
 	apply plugin: de.huxhorn.gradle.git.GitStatePlugin
-	//apply plugin: 'git-state'
+	apply plugin: 'macAppBundle'
+
+/*
+### macappbundle
+- [Gradle Plugin Homepage](https://code.google.com/p/gradle-macappbundle/)
+- [MacAppBundlePluginExtension](https://code.google.com/p/gradle-macappbundle/source/browse/src/main/groovy/edu/sc/seis/gradle/macAppBundle/MacAppBundlePluginExtension.groovy)
+- Artifact: `'edu.sc.seis.gradle:macappbundle:2.0.0'`
+- http://kovuthehusky.com/blog/running-minecraft-on-os-x-using-java-7/
+- https://bugs.mojang.com/browse/MCL-1049
+- https://bugs.mojang.com/browse/MCL-2628
+- https://gist.github.com/pudquick/7518753
+- http://docs.oracle.com/javase/8/docs/technotes/guides/deploy/package_for_mac.html
+*/
 	
 	if(System.properties.'release') {
 		project.git.requireClean = true
 		processResources.dependsOn checkGitState
 	}
 	
-	mainClassName = 'de.huxhorn.lilith.Lilith'
+	def theMainClassName = 'de.huxhorn.lilith.Lilith'
+	
+	mainClassName = theMainClassName
+
+	macAppBundle {
+		mainClassName = theMainClassName
+		appName = 'Lilith'
+		creatorCode = 'Llth'
+		//jvmVersion = '1.8+'
+		//jvmVersion is AppleJava only
+		icon = "${projectDir}/src/main/mac-resources/Lilith.icns"
+		bundleExtras = [
+			'CFBundleShortVersionString': version,
+			//'CFBundleGetInfoString': copyright,
+			'NSHumanReadableCopyright': copyright,
+			//'CFBundleIdentifier': 'de.huxhorn.lilith'
+			// not possible to override CFBundleIdentifier
+		]
+		javaProperties = [
+			'apple.laf.useScreenMenuBar': 'true'
+		]
+	}
 
 	jar {
 		manifest.attributes(
@@ -481,6 +518,7 @@ project(':lilith') {
 		with distSpec
 	}
 	
+	/*
 	task preparePropertyList(dependsOn: configurations.default.allArtifacts.buildDependencies) << {
 		File propFile=file('src/main/mac-resources/Info.plist')
 		PropertyList plist
@@ -507,7 +545,7 @@ project(':lilith') {
 		plist.root.'CFBundleName'="${bundleName}"
 		plist.root.'CFBundleIdentifier'='de.huxhorn.lilith'
 		plist.root.'CFBundleVersion'="${version}"
-		plist.root.'CFBundleGetInfoString'="${bundleName} ${version}, Copyright \u00a9 2007-2012 J\u00f6rn Huxhorn"
+		plist.root.'CFBundleGetInfoString'="${bundleName} ${version}, ${copyright}"
 		plist.root.'CFBundleShortVersionString'="${version}"
 		plist.root.'CFBundleAllowMixedLocalizations'='true'
 		plist.root.'CFBundleExecutable'='JavaApplicationStub'
@@ -615,7 +653,15 @@ project(':lilith') {
 		compression = Compression.GZIP
 		with appSpec
 	}
+	*/
 	
+	task appTgz(dependsOn: createApp, type: Tar) {
+		description = 'Creates a TGZ containing the Lilith Mac OS X app.'
+		classifier = 'app'
+		compression = Compression.GZIP
+		from "${projectDir}/build/macApp"
+	}
+
 	signing {
 		required = { !version.endsWith("SNAPSHOT") }
 		sign jarAll
