@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2588,8 +2588,6 @@ public class ViewActions
 			int activeCounter = 0;
 			int inactiveCounter = 0;
 			int viewCounter = 0;
-			Font inactiveFont = windowMenu.getFont();
-			inactiveFont = inactiveFont.deriveFont(Font.PLAIN);
 
 			boolean first;
 
@@ -2706,7 +2704,6 @@ public class ViewActions
 							windowMenu.addSeparator();
 						}
 						JMenuItem menuItem = createLoggingMenuItem(key, value);
-						menuItem.setFont(inactiveFont);
 						windowMenu.add(menuItem);
 						inactiveCounter++;
 					}
@@ -2746,7 +2743,6 @@ public class ViewActions
 						windowMenu.addSeparator();
 					}
 					JMenuItem menuItem = createAccessMenuItem(key, value);
-					menuItem.setFont(inactiveFont);
 					windowMenu.add(menuItem);
 					inactiveCounter++;
 				}
@@ -2787,14 +2783,14 @@ public class ViewActions
 			JMenuItem result = new JMenuItem(new ViewLoggingAction(viewContainer));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
+
+			boolean disabled = false;
 			if(compParent == null)
 			{
-				result.setIcon(Icons.EMPTY_16_ICON);
+				disabled = true;
 			}
-			else
-			{
-				result.setIcon(Icons.WINDOW_16_ICON);
-			}
+			LoggingViewState state = viewContainer.getState();
+			result.setIcon(LoggingViewStateIcons.resolveIconForState(state, disabled));
 			return result;
 		}
 
@@ -2803,14 +2799,14 @@ public class ViewActions
 			JMenuItem result = new JMenuItem(new ViewAccessAction(viewContainer));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
+
+			boolean disabled = false;
 			if(compParent == null)
 			{
-				result.setIcon(Icons.EMPTY_16_ICON);
+				disabled = true;
 			}
-			else
-			{
-				result.setIcon(Icons.WINDOW_16_ICON);
-			}
+			LoggingViewState state = viewContainer.getState();
+			result.setIcon(LoggingViewStateIcons.resolveIconForState(state, disabled));
 			return result;
 		}
 

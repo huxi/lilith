@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -41,7 +42,6 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -63,42 +63,6 @@ public abstract class ViewContainer<T extends Serializable>
 	// TODO: property change instead of change?
 	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
 
-	private static final ImageIcon globalFrameImageIcon;
-	private static final Map<LoggingViewState, ImageIcon> frameIconImages;
-
-	static
-	{
-		URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/categories/applications-internet.png");
-		if (url != null)
-		{
-			globalFrameImageIcon = new ImageIcon(url);
-		}
-		else
-		{
-			globalFrameImageIcon = null;
-		}
-		frameIconImages = new HashMap<LoggingViewState, ImageIcon>();
-		url = EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-receive.png");
-		if (url != null)
-		{
-			frameIconImages.put(LoggingViewState.ACTIVE, new ImageIcon(url));
-		}
-		url = EventWrapperViewPanel.class.getResource("/tango/16x16/status/network-offline.png");
-		if (url != null)
-		{
-			frameIconImages.put(LoggingViewState.INACTIVE, new ImageIcon(url));
-		}
-		url = EventWrapperViewPanel.class.getResource("/tango/16x16/emotes/face-grin.png");
-		if (url != null)
-		{
-			frameIconImages.put(LoggingViewState.UPDATING_FILE, new ImageIcon(url));
-		}
-		url = EventWrapperViewPanel.class.getResource("/tango/16x16/emotes/face-plain.png");
-		if (url != null)
-		{
-			frameIconImages.put(LoggingViewState.STALE_FILE, new ImageIcon(url));
-		}
-	}
 
 	private final List<ChangeListener> changeListeners = new LinkedList<ChangeListener>();
 	private EventWrapperViewPanel<T> defaultView;
@@ -166,6 +130,15 @@ public abstract class ViewContainer<T extends Serializable>
 	public EventWrapperViewPanel<T> getDefaultView()
 	{
 		return defaultView;
+	}
+
+	public LoggingViewState getState()
+	{
+		if(defaultView != null)
+		{
+			return defaultView.getState();
+		}
+		return null;
 	}
 
 	public void dispose()
@@ -310,19 +283,10 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	private static ImageIcon resolveIconForState(LoggingViewState state)
-	{
-		ImageIcon result = globalFrameImageIcon;
-		if (state != null)
-		{
-			result = frameIconImages.get(state);
-		}
-		return result;
-	}
 
 	private void updateFrameIcon(JFrame frame)
 	{
-		ImageIcon frameImageIcon = resolveIconForState(defaultView.getState());
+		ImageIcon frameImageIcon = LoggingViewStateIcons.resolveIconForState(defaultView.getState());
 
 		if (frameImageIcon != null)
 		{
@@ -332,7 +296,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 	private void updateInternalFrameIcon(JInternalFrame iframe)
 	{
-		ImageIcon frameImageIcon = resolveIconForState(defaultView.getState());
+		ImageIcon frameImageIcon = LoggingViewStateIcons.resolveIconForState(defaultView.getState());
 
 		if (frameImageIcon != null)
 		{
