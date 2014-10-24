@@ -23,7 +23,7 @@ All notable changes to this project will be documented in this file.
 - Using "127.0.0.1" instead of "localhost" in `SerializingGoToSource` to prevent IPv6 SNAFU.
 - Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.
 - Preventing useless focus traversal warnings in EventWrapperViewPanel and FindPanel.
-- Spring 4.1.1, Groovy 2.3.7, commons-codec 1.9, joda-time 2.5, httpclient 4.3.5, jackson 2.4.3, log4j2 2.0.2, aspectj 1.8.3, Thymeleaf 2.1.3, substance 7.3, protobuf 2.6.0 
+- Spring 4.1.1, Groovy 2.3.7, commons-codec 1.9, joda-time 2.5, httpclient 4.3.5, jackson 2.4.3, log4j2 2.1, aspectj 1.8.3, Thymeleaf 2.1.3, substance 7.3, protobuf 2.6.0 
 
 
 ---
