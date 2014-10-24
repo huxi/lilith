@@ -398,6 +398,10 @@ project(':lilith') {
 		]
 	}
 
+	createDmg {
+		enabled false
+	}
+
 	jar {
 		manifest.attributes(
 			'Main-Class': "${mainClassName}",
