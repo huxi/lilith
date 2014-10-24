@@ -4,7 +4,9 @@
 	<appender name="Localhorst" class="ch.qos.logback.classic.net.SocketAppender">
 		<RemoteHost>localhost</RemoteHost>
 		<Port>4560</Port>
-		<ReconnectionDelay>1</ReconnectionDelay>
+		<ReconnectionDelay>10000</ReconnectionDelay>
+		<queueSize>0</queueSize>
+		<eventDelayLimit>0</eventDelayLimit>
 		<IncludeCallerData>false</IncludeCallerData>
 	</appender>
 
