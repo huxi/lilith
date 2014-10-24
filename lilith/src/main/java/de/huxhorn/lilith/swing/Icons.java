@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,55 +17,55 @@
  */
 package de.huxhorn.lilith.swing;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.net.URL;
 
 public class Icons
 {
-	public static final Icon EMPTY_16_ICON;
+	public static final ImageIcon EMPTY_16_ICON;
 
-	public static final Icon CLEAR_MENU_ICON;
-	public static final Icon ATTACH_MENU_ICON;
-	public static final Icon DETACH_MENU_ICON;
-	public static final Icon PAUSED_MENU_ICON;
-	public static final Icon UNPAUSED_MENU_ICON;
-	public static final Icon FIND_MENU_ITEM;
-	public static final Icon STATISTICS_MENU_ICON;
-	public static final Icon DISCONNECT_MENU_ICON;
-	public static final Icon TAIL_MENU_ICON;
-	public static final Icon FIND_NEXT_MENU_ICON;
-	public static final Icon FIND_PREV_MENU_ICON;
-	public static final Icon HELP_MENU_ICON;
-	public static final Icon OPEN_INACTIVE_MENU_ICON;
-	public static final Icon EXPORT_MENU_ICON;
-	public static final Icon EXIT_MENU_ICON;
-	public static final Icon PREFERENCES_MENU_ICON;
-	public static final Icon LOVE_MENU_ICON;
+	public static final ImageIcon CLEAR_MENU_ICON;
+	public static final ImageIcon ATTACH_MENU_ICON;
+	public static final ImageIcon DETACH_MENU_ICON;
+	public static final ImageIcon PAUSED_MENU_ICON;
+	public static final ImageIcon UNPAUSED_MENU_ICON;
+	public static final ImageIcon FIND_MENU_ITEM;
+	public static final ImageIcon STATISTICS_MENU_ICON;
+	public static final ImageIcon DISCONNECT_MENU_ICON;
+	public static final ImageIcon TAIL_MENU_ICON;
+	public static final ImageIcon FIND_NEXT_MENU_ICON;
+	public static final ImageIcon FIND_PREV_MENU_ICON;
+	public static final ImageIcon HELP_MENU_ICON;
+	public static final ImageIcon OPEN_INACTIVE_MENU_ICON;
+	public static final ImageIcon EXPORT_MENU_ICON;
+	public static final ImageIcon EXIT_MENU_ICON;
+	public static final ImageIcon PREFERENCES_MENU_ICON;
+	public static final ImageIcon LOVE_MENU_ICON;
 
-	public static final Icon CLEAR_TOOLBAR_ICON;
-	public static final Icon ATTACH_TOOLBAR_ICON;
-	public static final Icon DETACH_TOOLBAR_ICON;
-	public static final Icon PAUSED_TOOLBAR_ICON;
-	public static final Icon UNPAUSED_TOOLBAR_ICON;
-	public static final Icon FIND_TOOLBAR_ICON;
-	public static final Icon DISCONNECT_TOOLBAR_ICON;
-	public static final Icon TAIL_TOOLBAR_ICON;
-	public static final Icon LOVE_TOOLBAR_ICON;
+	public static final ImageIcon CLEAR_TOOLBAR_ICON;
+	public static final ImageIcon ATTACH_TOOLBAR_ICON;
+	public static final ImageIcon DETACH_TOOLBAR_ICON;
+	public static final ImageIcon PAUSED_TOOLBAR_ICON;
+	public static final ImageIcon UNPAUSED_TOOLBAR_ICON;
+	public static final ImageIcon FIND_TOOLBAR_ICON;
+	public static final ImageIcon DISCONNECT_TOOLBAR_ICON;
+	public static final ImageIcon TAIL_TOOLBAR_ICON;
+	public static final ImageIcon LOVE_TOOLBAR_ICON;
 
-	public static final Icon PREFERENCES_TOOLBAR_ICON;
+	public static final ImageIcon PREFERENCES_TOOLBAR_ICON;
 
-	public static final Icon CHECK_UPDATE_ICON;
-	public static final Icon TOTD_ICON;
-	public static final Icon WINDOW_16_ICON;
+	public static final ImageIcon CHECK_UPDATE_ICON;
+	public static final ImageIcon TOTD_ICON;
+	public static final ImageIcon WINDOW_16_ICON; // TODO change
 
 	// TODO: Resource classes
 	// TODO: Separate Toolbar and Menu creation.
 	// TODO: toolbar action, menu action => same action
 	static
 	{
-		Icon icon;
+		ImageIcon icon;
 		{
-			URL url = ViewActions.class.getResource("/otherGraphics/empty16.png");
+			URL url = Icons.class.getResource("/otherGraphics/empty16.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -78,7 +78,7 @@ public class Icons
 		EMPTY_16_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-clear.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/edit-clear.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -91,7 +91,7 @@ public class Icons
 		CLEAR_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-clear.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/edit-clear.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -104,7 +104,7 @@ public class Icons
 		CLEAR_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-undo.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/edit-undo.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -117,7 +117,7 @@ public class Icons
 		ATTACH_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-redo.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/edit-redo.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -130,7 +130,7 @@ public class Icons
 		DETACH_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-undo.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/edit-undo.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -143,7 +143,7 @@ public class Icons
 		ATTACH_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-redo.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/edit-redo.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -156,7 +156,7 @@ public class Icons
 		DETACH_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-playback-start.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/media-playback-start.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -169,7 +169,7 @@ public class Icons
 		PAUSED_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-playback-pause.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/media-playback-pause.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -182,7 +182,7 @@ public class Icons
 		UNPAUSED_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-playback-start.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/media-playback-start.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -195,7 +195,7 @@ public class Icons
 		PAUSED_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-playback-pause.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/media-playback-pause.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -208,7 +208,7 @@ public class Icons
 		UNPAUSED_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/edit-find.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/edit-find.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -221,7 +221,7 @@ public class Icons
 		FIND_MENU_ITEM = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/edit-find.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/edit-find.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -234,7 +234,7 @@ public class Icons
 		FIND_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
+			URL url = Icons.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -247,7 +247,7 @@ public class Icons
 		STATISTICS_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/media-eject.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/media-eject.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -260,7 +260,7 @@ public class Icons
 		DISCONNECT_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/media-eject.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/media-eject.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -273,7 +273,7 @@ public class Icons
 		DISCONNECT_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-down.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/go-down.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -286,7 +286,7 @@ public class Icons
 		FIND_NEXT_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-up.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/go-up.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -299,7 +299,7 @@ public class Icons
 		FIND_PREV_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/go-bottom.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/go-bottom.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -313,7 +313,7 @@ public class Icons
 		TAIL_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/actions/go-bottom.png");
+			URL url = Icons.class.getResource("/tango/32x32/actions/go-bottom.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -327,7 +327,7 @@ public class Icons
 		TAIL_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/apps/help-browser.png");
+			URL url = Icons.class.getResource("/tango/16x16/apps/help-browser.png");
 
 			if(url != null)
 			{
@@ -341,7 +341,7 @@ public class Icons
 		HELP_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/document-open.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/document-open.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -355,7 +355,7 @@ public class Icons
 
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/document-save.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/document-save.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -368,7 +368,7 @@ public class Icons
 		EXPORT_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/actions/system-log-out.png");
+			URL url = Icons.class.getResource("/tango/16x16/actions/system-log-out.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -381,7 +381,7 @@ public class Icons
 		EXIT_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/categories/preferences-system.png");
+			URL url = Icons.class.getResource("/tango/16x16/categories/preferences-system.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -394,7 +394,7 @@ public class Icons
 		PREFERENCES_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/categories/preferences-system.png");
+			URL url = Icons.class.getResource("/tango/32x32/categories/preferences-system.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -407,7 +407,7 @@ public class Icons
 		PREFERENCES_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/emblems/emblem-favorite.png");
+			URL url = Icons.class.getResource("/tango/16x16/emblems/emblem-favorite.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -420,7 +420,7 @@ public class Icons
 		LOVE_MENU_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/32x32/emblems/emblem-favorite.png");
+			URL url = Icons.class.getResource("/tango/32x32/emblems/emblem-favorite.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -433,7 +433,7 @@ public class Icons
 		LOVE_TOOLBAR_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/status/software-update-available.png");
+			URL url = Icons.class.getResource("/tango/16x16/status/software-update-available.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -446,7 +446,7 @@ public class Icons
 		CHECK_UPDATE_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/status/dialog-information.png");
+			URL url = Icons.class.getResource("/tango/16x16/status/dialog-information.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
@@ -459,7 +459,7 @@ public class Icons
 		TOTD_ICON = icon;
 
 		{
-			URL url = ViewActions.class.getResource("/tango/16x16/mimetypes/text-x-generic.png");
+			URL url = Icons.class.getResource("/tango/16x16/mimetypes/text-x-generic.png");
 			if(url != null)
 			{
 				icon = new ImageIcon(url);
