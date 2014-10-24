@@ -631,6 +631,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			{
 				return result;
 			}
+
+			if(aContainer == aComponent)
+			{
+				// prevent useless warning
+				return null;
+			}
 			/*
 			Attention, sucking code above!
 			*/
@@ -696,6 +702,12 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			else if (result != null)
 			{
 				return result;
+			}
+
+			if(aContainer == aComponent)
+			{
+				// prevent useless warning
+				return null;
 			}
 			/*
 			Attention, sucking code above!

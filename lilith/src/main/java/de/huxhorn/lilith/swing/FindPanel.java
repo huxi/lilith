@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2014 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,8 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 public class FindPanel<T extends Serializable>
 	extends JPanel
 {
+	private static final long serialVersionUID = -2647531824717123615L;
+
 	private final Logger logger = LoggerFactory.getLogger(FindPanel.class);
 
 	private static final String GROOVY_IDENTIFIER = "#groovy#";
@@ -523,6 +525,12 @@ public class FindPanel<T extends Serializable>
 				return findPrevButton;
 			}
 
+			if(aContainer == aComponent)
+			{
+				// prevent useless warning
+				return null;
+			}
+
 			if(logger.isWarnEnabled()) logger.warn("Moving focus forward was not explicitly handled.\ncontainer={}\ncomponent={}", aContainer, aComponent);
 
 			return null;
@@ -564,6 +572,12 @@ public class FindPanel<T extends Serializable>
 			if(findTextCombo.equals(c))
 			{
 				return findTypeCombo;
+			}
+
+			if(aContainer == aComponent)
+			{
+				// prevent useless warning
+				return null;
 			}
 
 			if(logger.isWarnEnabled()) logger.warn("Moving focus backward was not explicitly handled.\ncontainer={}\ncomponent={}", aContainer, aComponent);
