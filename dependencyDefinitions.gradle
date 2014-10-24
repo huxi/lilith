@@ -50,7 +50,7 @@ project.ext.libraries = [
 'logback-classic':          "ch.qos.logback:logback-classic:${versions.logback}",
 'logback-core':             "ch.qos.logback:logback-core:${versions.logback}",
 'macify':                   'org.simplericity.macify:macify:1.6',
-'protobuf':                 'com.google.protobuf:protobuf-java:2.6.0',
+'protobuf':                 'com.google.protobuf:protobuf-java:2.6.1',
 'rrd4j':                    'org.rrd4j:rrd4j:2.2',
 'servlet-api':              'javax.servlet:javax.servlet-api:3.0.1', // 3.1.0 requires Java 7
 'slf4j-api':                "org.slf4j:slf4j-api:${versions.slf4j}",
