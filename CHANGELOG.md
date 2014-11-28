@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 - Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.
 - Preventing useless focus traversal warnings in EventWrapperViewPanel and FindPanel.
 - Reduced log level of broken stream message in event producers.
-- Spring 4.1.2, Groovy 2.3.7, commons-codec 1.9, joda-time 2.5, httpclient 4.3.6, httpcore 4.3.3, jackson 2.4.3, log4j2 2.1, aspectj 1.8.4, Thymeleaf 2.1.3, substance 7.3, protobuf 2.6.1 
+- Spring 4.1.2, Groovy 2.3.8, commons-codec 1.9, joda-time 2.5, httpclient 4.3.6, httpcore 4.3.3, jackson 2.4.4, log4j2 2.1, aspectj 1.8.4, Thymeleaf 2.1.3, substance 7.3, protobuf 2.6.1 
 
 
 ---
@@ -59,7 +59,7 @@ All notable changes to this project will be documented in this file.
 - `servlet-api` dependency of `de.huxhorn.lilith.logback.servlet` is now "provided".
 - `ClassicLilithEncoder` is now `Encoder<ILoggingEvent>` instead of `Encoder<LoggingEvent>`.
 - Fixed suppressed handling while parsing Throwables. This is also a partial workaround for [LOGBACK-328 - XMLLayout has several inconsistencies as compared to the log4j XMLLayout it emulates](http://jira.qos.ch/browse/LOGBACK-328).
-- Groovy 2.2.2, Logback 1.1.2, SLF4J 1.7.7, Jackson 2.4.4, log4j2 2.0-beta9, rrd4j 2.2, aspectj 1.8.0, flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.2, httpclient 4.3.3, JCommander 1.35, servlet-api 3.0.1, jgoodies-looks 2.5.3, commons-lang3 3.3.2
+- Groovy 2.2.2, Logback 1.1.2, SLF4J 1.7.7, Jackson 2.3.3, log4j2 2.0-beta9, rrd4j 2.2, aspectj 1.8.0, flying-saucer 9.0.4, Spring 4.0.2, macify 1.6, httpcore 4.3.2, httpclient 4.3.3, JCommander 1.35, servlet-api 3.0.1, jgoodies-looks 2.5.3, commons-lang3 3.3.2
 
 
 ---
