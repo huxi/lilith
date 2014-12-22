@@ -15,7 +15,7 @@ project.ext.versions = [
 'spring':         '4.1.3.RELEASE',
 'substance':      '7.3',
 'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}",
-'thymeleaf':      '2.1.3.RELEASE'
+'thymeleaf':      '2.1.4.RELEASE'
 ]
 
 project.ext.libraries = [
