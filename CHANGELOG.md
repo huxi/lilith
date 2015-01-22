@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 - Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.
 - Preventing useless focus traversal warnings in EventWrapperViewPanel and FindPanel.
 - Reduced log level of broken stream message in event producers.
-- SLF4J 1.7.10, Spring 4.1.4, Groovy 2.3.9, commons-codec 1.9, joda-time 2.7, httpclient 4.3.6, httpcore 4.3.3, jackson 2.4.4, log4j2 2.1, aspectj 1.8.4, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.47 
+- SLF4J 1.7.10, Spring 4.1.4, Groovy 2.4.0, commons-codec 1.9, joda-time 2.7, httpclient 4.3.6, httpcore 4.3.3, jackson 2.4.4, log4j2 2.1, aspectj 1.8.4, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.47 
 
 
 ---
