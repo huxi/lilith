@@ -11,7 +11,7 @@ import de.huxhorn.sulky.plist.*
 import org.gradle.plugins.signing.Sign
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.3-rc-3'
+	gradleVersion = '2.3'
 }
 
 def copyright = "Copyright \u00a9 2007-2014 J\u00f6rn Huxhorn"
