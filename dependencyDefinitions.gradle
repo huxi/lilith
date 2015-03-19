@@ -2,7 +2,7 @@ project.ext.sulkyBaseVersion = '0.9.18'
 
 project.ext.versions = [
 'aspectj':        '1.8.5',
-'groovy':         '2.4.1',
+'groovy':         '2.4.2',
 'httpClient':     '4.4',
 'httpCore':       '4.4',
 'jackson':        '2.5.1',
