@@ -54,7 +54,7 @@ buildscript {
 		// propdep => provided, optional
 		// http://repo.spring.io/plugins-release/org/springframework/build/gradle/propdeps-plugin/
 		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7' 
-		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
+		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
 		// https://code.google.com/p/gradle-macappbundle/
 		classpath 'edu.sc.seis.gradle:macappbundle:2.0.0'
 	}
