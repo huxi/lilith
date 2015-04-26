@@ -96,6 +96,16 @@ project(':lilith-data-logging-xml-serializer') {
 project(':lilith-data-logging-protobuf') {
 	archivesBaseName = 'de.huxhorn.lilith.data.logging.protobuf'
 	description = 'This file is part of Lilith. It contains the Logging Protobuf classes.'
+
+	javadoc {
+		// disable doclint for protobuf
+		// http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
+		// https://github.com/google/protobuf/issues/304
+		if (JavaVersion.current().isJava8Compatible()) {
+			options.addStringOption('Xdoclint:none', '-quiet')
+		}
+	}
+
 	dependencies {
 		compile project(':lilith-data-logging')
 		compile libraries.'protobuf'
@@ -131,6 +141,16 @@ project(':lilith-data-access') {
 project(':lilith-data-access-protobuf') {
 	archivesBaseName = 'de.huxhorn.lilith.data.access.protobuf'
 	description = 'This file is part of Lilith. It contains the Access Protobuf classes.'
+
+	javadoc {
+		// disable doclint for protobuf
+		// http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
+		// https://github.com/google/protobuf/issues/304
+		if (JavaVersion.current().isJava8Compatible()) {
+			options.addStringOption('Xdoclint:none', '-quiet')
+		}
+	}
+
 	dependencies {
 		compile project(':lilith-data-access')
 		compile libraries.'protobuf'
@@ -462,6 +482,16 @@ project(':lilith-sounds') {
 project(':lilith-prefs') {
 	archivesBaseName = 'de.huxhorn.lilith.prefs'
 	description = 'This file is part of Lilith. It contains the Preferences Protobuf classes.'
+
+	javadoc {
+		// disable doclint for protobuf
+		// http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
+		// https://github.com/google/protobuf/issues/304
+		if (JavaVersion.current().isJava8Compatible()) {
+			options.addStringOption('Xdoclint:none', '-quiet')
+		}
+	}
+
 	dependencies {
 		compile libraries.'sulky-codec'
 		compile libraries.'protobuf'
