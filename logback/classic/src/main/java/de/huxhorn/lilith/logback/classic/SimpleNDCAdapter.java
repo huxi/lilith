@@ -43,8 +43,8 @@ import java.util.List;
 public class SimpleNDCAdapter
 	implements NDCAdapter
 {
-	private ThreadLocal<List<String>> threadLocalMessagePatterns =new ThreadLocal<List<String>>();
-	private ThreadLocal<List<String[]>> threadLocalMessageArguments =new ThreadLocal<List<String[]>>();
+	private ThreadLocal<List<String>> threadLocalMessagePatterns =new ThreadLocal<>();
+	private ThreadLocal<List<String[]>> threadLocalMessageArguments =new ThreadLocal<>();
 
 	public void push(String messagePattern, Object... arguments)
 	{
@@ -62,8 +62,8 @@ public class SimpleNDCAdapter
 		List<String[]> args = threadLocalMessageArguments.get();
 		if(messages == null)
 		{
-			messages = new LinkedList<String>();
-			args = new LinkedList<String[]>();
+			messages = new LinkedList<>();
+			args = new LinkedList<>();
 			threadLocalMessagePatterns.set(messages);
 			threadLocalMessageArguments.set(args);
 		}

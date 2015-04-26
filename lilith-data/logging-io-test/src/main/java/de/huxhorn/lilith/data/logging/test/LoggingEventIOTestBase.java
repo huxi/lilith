@@ -79,7 +79,7 @@ public abstract class LoggingEventIOTestBase
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
 		value.setBirthTime(1234567890000L);
-		Map<String, String> properties = new HashMap<String, String>();
+		Map<String, String> properties = new HashMap<>();
 		properties.put("foo", "bar");
 		value.setProperties(properties);
 		event.setLoggerContext(value);
@@ -155,7 +155,7 @@ public abstract class LoggingEventIOTestBase
 		throws Throwable
 	{
 		LoggingEvent event = createMinimalEvent();
-		Map<String, String> mdc = new HashMap<String, String>();
+		Map<String, String> mdc = new HashMap<>();
 		mdc.put("key1", "value1");
 		mdc.put("key2", "value2");
 		mdc.put("key3", "value3");
@@ -241,7 +241,7 @@ public abstract class LoggingEventIOTestBase
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
 		value.setBirthTime(1234567890000L);
-		Map<String, String> propperties = new HashMap<String, String>();
+		Map<String, String> propperties = new HashMap<>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
 		event.setLoggerContext(value);
@@ -267,7 +267,7 @@ public abstract class LoggingEventIOTestBase
 		ti2.setCause(ti3);
 		event.setThrowable(ti);
 
-		Map<String, String> mdc = new HashMap<String, String>();
+		Map<String, String> mdc = new HashMap<>();
 		mdc.put("key1", "value1");
 		mdc.put("key2", "value2");
 		mdc.put("key3", "value3");
@@ -373,7 +373,7 @@ public abstract class LoggingEventIOTestBase
 			return null;
 		}
 		StringBuilder result = new StringBuilder();
-		Map<String, Marker> processedMarkers = new HashMap<String, Marker>();
+		Map<String, Marker> processedMarkers = new HashMap<>();
 		recursiveToString(result, processedMarkers, marker);
 		return result.toString();
 	}

@@ -39,7 +39,7 @@ import java.util.Map;
 
 public class ConverterRegistry<T>
 {
-	private final Map<Class<?>, Converter<T>> converterMap = new HashMap<Class<?>, Converter<T>>();
+	private final Map<Class<?>, Converter<T>> converterMap = new HashMap<>();
 	
 	public void addConverter(Converter<T> converter)
 	{

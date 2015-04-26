@@ -63,7 +63,7 @@ public class MarkerTooltipGenerator
 		{
 			if(processedMarkers == null)
 			{
-				processedMarkers = new ArrayList<String>();
+				processedMarkers = new ArrayList<>();
 			}
 			String markerName = marker.getName();
 			buffer.append(SimpleXml.escape(markerName));

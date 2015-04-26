@@ -109,7 +109,7 @@ public class AccessEventWrapperProtobufDecoder
 			return null;
 		}
 
-		EventWrapper<AccessEvent> result = new EventWrapper<AccessEvent>();
+		EventWrapper<AccessEvent> result = new EventWrapper<>();
 		if(parsedEvent.hasEventIdentifier())
 		{
 			result.setEventIdentifier(convert(parsedEvent.getEventIdentifier()));

@@ -59,14 +59,14 @@ public class SourceManagerImpl<T extends Serializable>
 	public SourceManagerImpl(BlockingCircularBuffer<EventWrapper<T>> queue)
 	{
 		this.queue = queue;
-		eventPoller = new EventPoller<T>(queue);
+		eventPoller = new EventPoller<>(queue);
 		eventPoller.setPollDelay(100);
 		eventProducersLock = new ReentrantLock();
-		eventProducers = new HashSet<EventProducer<T>>();
-		eventSourceProducers = new ArrayList<EventSourceProducer<T>>();
-		listeners = new HashSet<EventSourceListener<T>>();
+		eventProducers = new HashSet<>();
+		eventSourceProducers = new ArrayList<>();
+		listeners = new HashSet<>();
 		changeSupport = new PropertyChangeSupport(this);
-		sources = new ArrayList<EventSource<T>>();
+		sources = new ArrayList<>();
 	}
 
 	public void addSource(EventSource<T> source)
@@ -87,7 +87,7 @@ public class SourceManagerImpl<T extends Serializable>
 	public void removeSource(SourceIdentifier source)
 	{
 		int oldSize = sources.size();
-		List<EventSource<T>> removedSources = new ArrayList<EventSource<T>>();
+		List<EventSource<T>> removedSources = new ArrayList<>();
 		for(EventSource<T> src : sources)
 		{
 			if(source.equals(src.getSourceIdentifier()))
@@ -124,7 +124,7 @@ public class SourceManagerImpl<T extends Serializable>
 
 	public List<EventSource<T>> getSources()
 	{
-		return new ArrayList<EventSource<T>>(sources);
+		return new ArrayList<>(sources);
 	}
 
 

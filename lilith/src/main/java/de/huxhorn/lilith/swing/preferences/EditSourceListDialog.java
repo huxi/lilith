@@ -75,8 +75,8 @@ public class EditSourceListDialog
 
 		ListCellRenderer sourceCellRenderer = new SourceCellRenderer();
 
-		sourcesListModel = new GenericSortedListModel<Source>();
-		listModel = new GenericSortedListModel<Source>();
+		sourcesListModel = new GenericSortedListModel<>();
+		listModel = new GenericSortedListModel<>();
 		sourceList = new JList(sourcesListModel);
 		listList = new JList(listModel);
 		sourceList.setCellRenderer(sourceCellRenderer);
@@ -203,8 +203,8 @@ public class EditSourceListDialog
 
 	private void initUI()
 	{
-		Map<String, String> sourceNames = new HashMap<String, String>(preferencesDialog.getSourceNames());
-		List<Source> sourcesList = new ArrayList<Source>();
+		Map<String, String> sourceNames = new HashMap<>(preferencesDialog.getSourceNames());
+		List<Source> sourcesList = new ArrayList<>();
 		for(Map.Entry<String, String> current : sourceNames.entrySet())
 		{
 			Source source = new Source();

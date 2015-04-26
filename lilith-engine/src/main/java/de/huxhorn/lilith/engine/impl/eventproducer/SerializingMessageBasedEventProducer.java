@@ -40,6 +40,6 @@ public class SerializingMessageBasedEventProducer<T extends Serializable>
 
 	protected Decoder<T> createDecoder()
 	{
-		return new SerializableDecoder<T>(isCompressing());
+		return new SerializableDecoder<>(isCompressing());
 	}
 }

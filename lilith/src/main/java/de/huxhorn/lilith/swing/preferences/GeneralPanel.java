@@ -176,7 +176,7 @@ public class GeneralPanel
 
 		// look and feel
 		{
-			ArrayList<String> lookAndFeels = new ArrayList<String>();
+			ArrayList<String> lookAndFeels = new ArrayList<>();
 			for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 			{
 				lookAndFeels.add(info.getName());

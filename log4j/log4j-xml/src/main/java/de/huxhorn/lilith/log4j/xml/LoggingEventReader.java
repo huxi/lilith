@@ -163,7 +163,7 @@ public class LoggingEventReader
 		int type = reader.getEventType();
 		if(XMLStreamConstants.START_ELEMENT == type && PROPERTIES_NODE.equals(reader.getLocalName()))
 		{
-			Map<String, String> mdc = new HashMap<String, String>();
+			Map<String, String> mdc = new HashMap<>();
 			reader.nextTag();
 			for(; ;)
 			{
@@ -237,7 +237,7 @@ public class LoggingEventReader
 		if(throwableString != null)
 		{
 			StringTokenizer tok = new StringTokenizer(throwableString, NEWLINE, true);
-			List<String> lines = new ArrayList<String>();
+			List<String> lines = new ArrayList<>();
 			boolean wasNewline=false;
 			while(tok.hasMoreTokens())
 			{
@@ -274,7 +274,7 @@ public class LoggingEventReader
 		{
 			return null;
 		}
-		ArrayList<Message> ndcs = new ArrayList<Message>();
+		ArrayList<Message> ndcs = new ArrayList<>();
 		StringTokenizer tok = new StringTokenizer(ndcString, " ", false); // *sigh*
 		while(tok.hasMoreTokens())
 		{

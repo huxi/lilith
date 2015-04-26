@@ -64,7 +64,7 @@ public abstract class ViewContainer<T extends Serializable>
 	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
 
 
-	private final List<ChangeListener> changeListeners = new LinkedList<ChangeListener>();
+	private final List<ChangeListener> changeListeners = new LinkedList<>();
 	private EventWrapperViewPanel<T> defaultView;
 	private final MainFrame mainFrame;
 	private TaskManager<Long> taskManager;
@@ -86,7 +86,7 @@ public abstract class ViewContainer<T extends Serializable>
 		this.eventSource = eventSource;
 		taskManager = mainFrame.getLongWorkManager();
 		progressPanel = new ProgressGlassPane();
-		filterMapping = new HashMap<Callable<Long>, EventWrapperViewPanel<T>>();
+		filterMapping = new HashMap<>();
 		filterTaskListener = new FilterTaskListener();
 		taskManager.addTaskListener(filterTaskListener);
 		this.defaultView = createViewPanel(eventSource);
@@ -191,12 +191,12 @@ public abstract class ViewContainer<T extends Serializable>
 	public void addFilteredView(EventWrapperViewPanel<T> original, Condition filter)
 	{
 		Buffer<EventWrapper<T>> originalBuffer = original.getSourceBuffer();
-		FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(originalBuffer, filter);
-		FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
+		FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<>(originalBuffer, filter);
+		FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<>(filteredBuffer, 500);
 		EventSource<T> originalEventSource = original.getEventSource();
 		Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, originalEventSource);
 
-		EventSourceImpl<T> newEventSource = new EventSourceImpl<T>(originalEventSource.getSourceIdentifier(), filteredBuffer, filter, originalEventSource.isGlobal());
+		EventSourceImpl<T> newEventSource = new EventSourceImpl<>(originalEventSource.getSourceIdentifier(), filteredBuffer, filter, originalEventSource.isGlobal());
 		EventWrapperViewPanel<T> newViewPanel = createViewPanel(newEventSource);
 		filterMapping.put(callable, newViewPanel);
 		addView(newViewPanel);
@@ -232,12 +232,12 @@ public abstract class ViewContainer<T extends Serializable>
 				}
 				// create new EventSource
 				Buffer<EventWrapper<T>> originalBuffer = original.getSourceBuffer();
-				FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<EventWrapper<T>>(originalBuffer, filter);
-				FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<EventWrapper<T>>(filteredBuffer, 500);
+				FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<>(originalBuffer, filter);
+				FilteringCallable<EventWrapper<T>> callable = new FilteringCallable<>(filteredBuffer, 500);
 				EventSource<T> originalEventSource = original.getEventSource();
 				Map<String, String> metaData = CallableMetaData.createFilteringMetaData(filter, originalEventSource);
 
-				EventSourceImpl<T> newEventSource = new EventSourceImpl<T>(originalEventSource.getSourceIdentifier(), filteredBuffer, filter, originalEventSource.isGlobal());
+				EventSourceImpl<T> newEventSource = new EventSourceImpl<>(originalEventSource.getSourceIdentifier(), filteredBuffer, filter, originalEventSource.isGlobal());
 				original.setEventSource(newEventSource);
 				// restore mapping of original view, this time with the new callable
 				filterMapping.put(callable, original);
@@ -350,7 +350,7 @@ public abstract class ViewContainer<T extends Serializable>
 		ArrayList<ChangeListener> clone;
 		synchronized (changeListeners)
 		{
-			clone = new ArrayList<ChangeListener>(changeListeners);
+			clone = new ArrayList<>(changeListeners);
 		}
 		ChangeEvent event = new ChangeEvent(this);
 		for (ChangeListener listener : clone)

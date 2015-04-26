@@ -244,7 +244,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		JPanel statusPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		findPanel = new FindPanel<T>(this);
+		findPanel = new FindPanel<>(this);
 		findPanel.addPropertyChangeListener(new FindPanelChangeListener());
 		bottomPanel.add(findPanel, BorderLayout.CENTER);
 		bottomPanel.add(statusPanel, BorderLayout.SOUTH);
@@ -422,7 +422,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	private SoftReferenceCachingBuffer<EventWrapper<T>> createCachedBuffer(Buffer<EventWrapper<T>> buffer)
 	{
-		return new SoftReferenceCachingBuffer<EventWrapper<T>>(buffer);
+		return new SoftReferenceCachingBuffer<>(buffer);
 	}
 
 	void setEventSource(EventSource<T> eventSource)
@@ -862,7 +862,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(condition != null)
 		{
-			ProgressingCallable<Long> callable = new FindPreviousCallable<T>(this, currentRow, condition);
+			ProgressingCallable<Long> callable = new FindPreviousCallable<>(this, currentRow, condition);
 			executeFind(callable, "Find previous", currentRow, condition);
 		}
 	}
@@ -876,7 +876,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(condition != null)
 		{
-			ProgressingCallable<Long> callable = new FindNextCallable<T>(this, currentRow, condition);
+			ProgressingCallable<Long> callable = new FindNextCallable<>(this, currentRow, condition);
 			executeFind(callable, "Find next", currentRow, condition);
 		}
 	}
@@ -1003,14 +1003,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			else
 			{
 				and = new And();
-				ArrayList<Condition> conditions = new ArrayList<Condition>();
+				ArrayList<Condition> conditions = new ArrayList<>();
 				conditions.add(previousClone);
 				and.setConditions(conditions);
 			}
 			List<Condition> conditions = and.getConditions();
 			if(conditions == null)
 			{
-				conditions = new ArrayList<Condition>();
+				conditions = new ArrayList<>();
 			}
 			if(!conditions.contains(condition))
 			{

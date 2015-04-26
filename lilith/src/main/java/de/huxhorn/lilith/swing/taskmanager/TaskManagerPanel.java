@@ -68,7 +68,7 @@ public class TaskManagerPanel<T>
 	public TaskManagerPanel(TaskManager<T> taskManager)
 	{
 		setLayout(new BorderLayout());
-		table = new TaskTable<T>(taskManager);
+		table = new TaskTable<>(taskManager);
 		ListSelectionModel rowSM = table.getSelectionModel();
 		rowSM.addListSelectionListener(new TaskSelectionListener());
 

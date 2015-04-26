@@ -73,7 +73,7 @@ public class ContextTooltipGenerator
 				if(props != null && props.size() > 0)
 				{
 					msg.append("<h4>Properties</h4>");
-					SortedMap<String, String> sortedProps = new TreeMap<String, String>(props);
+					SortedMap<String, String> sortedProps = new TreeMap<>(props);
 					msg.append("<table>");
 					msg.append("<tr>");
 					msg.append("<th>Key</th><th>Value</th>");

@@ -108,7 +108,7 @@ public class LoggingEventReaderTest
 
 		// MDC
 		{
-			Map<String, String> expectedMdc = new HashMap<String, String>();
+			Map<String, String> expectedMdc = new HashMap<>();
 			expectedMdc.put("key1", "value1");
 			expectedMdc.put("key2", "value2");
 			assertEquals(expectedMdc, readEvent.getMdc());
@@ -201,7 +201,7 @@ public class LoggingEventReaderTest
 
 		// MDC
 		{
-			Map<String, String> expectedMdc = new HashMap<String, String>();
+			Map<String, String> expectedMdc = new HashMap<>();
 			expectedMdc.put("key1", "value1");
 			expectedMdc.put("key2", "value2");
 			assertEquals(expectedMdc, readEvent.getMdc());
@@ -293,7 +293,7 @@ public class LoggingEventReaderTest
 
 		// MDC
 		{
-			Map<String, String> expectedMdc = new HashMap<String, String>();
+			Map<String, String> expectedMdc = new HashMap<>();
 			expectedMdc.put("key1", "value1");
 			expectedMdc.put("key2", "value2");
 			assertEquals(expectedMdc, readEvent.getMdc());
@@ -398,7 +398,7 @@ public class LoggingEventReaderTest
 
 		// MDC
 		{
-			Map<String, String> expectedMdc = new HashMap<String, String>();
+			Map<String, String> expectedMdc = new HashMap<>();
 			expectedMdc.put("key1", "value1");
 			expectedMdc.put("key2", "value2");
 			assertEquals(expectedMdc, readEvent.getMdc());

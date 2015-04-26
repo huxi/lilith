@@ -75,7 +75,7 @@ public class LoggingEventTest
 		LoggerContext value = new LoggerContext();
 		value.setBirthTime(1234567890000L);
 		value.setName("contextName");
-		Map<String, String> properties = new HashMap<String, String>();
+		Map<String, String> properties = new HashMap<>();
 		properties.put("foo", "bar");
 		value.setProperties(properties);
 		instance.setLoggerContext(value);
@@ -289,7 +289,7 @@ public class LoggingEventTest
 	{
 		LoggingEvent instance = new LoggingEvent();
 
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		value.put("foo", "bar");
 
 		instance.setMdc(value);

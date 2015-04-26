@@ -60,7 +60,7 @@ public class SourcesPanel
 	{
 		setLayout(new BorderLayout());
 		editSourceNameDialog = new EditSourceNameDialog(preferencesDialog);
-		Map<String, String> sourceNames = new HashMap<String, String>();
+		Map<String, String> sourceNames = new HashMap<>();
 		sourceNameTableModel = new SourceNameTableModel(sourceNames);
 		sourceNameTable = new JTable(sourceNameTableModel);
 		Tables.setAutoCreateRowSorter(sourceNameTable, true);

@@ -82,7 +82,7 @@ public class LilithXmlStreamLoggingEventProducer
 
 			try
 			{
-				ArrayList<Byte> bytes = new ArrayList<Byte>();
+				ArrayList<Byte> bytes = new ArrayList<>();
 				for(; ;)
 				{
 					for(; ;)

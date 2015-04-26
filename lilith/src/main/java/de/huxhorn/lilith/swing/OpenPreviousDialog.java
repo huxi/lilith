@@ -273,14 +273,14 @@ public class OpenPreviousDialog
 		public void initUI()
 		{
 			List<SourceIdentifier> inactives = mainFrame.collectInactiveLogs(fileFactory);
-			SortedMap<String, List<SourceIdentifier>> inactiveMap = new TreeMap<String, List<SourceIdentifier>>();
+			SortedMap<String, List<SourceIdentifier>> inactiveMap = new TreeMap<>();
 			for(SourceIdentifier current : inactives)
 			{
 				String primary = mainFrame.getPrimarySourceTitle(current);
 				List<SourceIdentifier> sourceList = inactiveMap.get(primary);
 				if(sourceList == null)
 				{
-					sourceList = new ArrayList<SourceIdentifier>();
+					sourceList = new ArrayList<>();
 					inactiveMap.put(primary, sourceList);
 				}
 				sourceList.add(current);
@@ -289,8 +289,8 @@ public class OpenPreviousDialog
 			int primaryCount = inactiveMap.size();
 			if(primaryCount > 0)
 			{
-				ArrayList<String> primaries = new ArrayList<String>(primaryCount);
-				secondaries = new ArrayList<List<SourceIdentifier>>(primaryCount);
+				ArrayList<String> primaries = new ArrayList<>(primaryCount);
+				secondaries = new ArrayList<>(primaryCount);
 				for(Map.Entry<String, List<SourceIdentifier>> current : inactiveMap.entrySet())
 				{
 					primaries.add(current.getKey());

@@ -87,7 +87,7 @@ public class LoggingEventsIOTest
 	{
 		LoggingEvents events = createMinimalEvents();
 		events.setStartIndex(17);
-		List<LoggingEvent> eventsList = new ArrayList<LoggingEvent>();
+		List<LoggingEvent> eventsList = new ArrayList<>();
 		eventsList.add(createMinimalEvent());
 		eventsList.add(createMinimalEvent());
 		eventsList.add(createMinimalEvent());
@@ -102,7 +102,7 @@ public class LoggingEventsIOTest
 		loggingEventWriter.setPreferredPrefix("foo");
 		LoggingEvents events = createMinimalEvents();
 		events.setStartIndex(17);
-		List<LoggingEvent> eventsList = new ArrayList<LoggingEvent>();
+		List<LoggingEvent> eventsList = new ArrayList<>();
 		eventsList.add(createMinimalEvent());
 		eventsList.add(createMinimalEvent());
 		eventsList.add(createMinimalEvent());
@@ -118,7 +118,7 @@ public class LoggingEventsIOTest
 		loggingEventWriter.setEventSourcePrefix(null);
 		LoggingEvents events = createMinimalEvents();
 		events.setStartIndex(17);
-		List<LoggingEvent> eventsList = new ArrayList<LoggingEvent>();
+		List<LoggingEvent> eventsList = new ArrayList<>();
 		eventsList.add(createMinimalEvent());
 		eventsList.add(createMinimalEvent());
 		eventsList.add(createMinimalEvent());

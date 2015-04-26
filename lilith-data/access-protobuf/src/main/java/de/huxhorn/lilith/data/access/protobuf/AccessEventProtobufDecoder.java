@@ -239,7 +239,7 @@ public class AccessEventProtobufDecoder
 		{
 			return null;
 		}
-		Map<String, String> result = new HashMap<String, String>();
+		Map<String, String> result = new HashMap<>();
 		List<AccessProto.StringMapEntry> entries = data.getEntryList();
 		for(AccessProto.StringMapEntry current : entries)
 		{
@@ -267,7 +267,7 @@ public class AccessEventProtobufDecoder
 		{
 			return null;
 		}
-		Map<String, String[]> result = new HashMap<String, String[]>();
+		Map<String, String[]> result = new HashMap<>();
 		List<AccessProto.StringArrayMapEntry> entries = data.getEntryList();
 		for(AccessProto.StringArrayMapEntry current : entries)
 		{
@@ -280,7 +280,7 @@ public class AccessEventProtobufDecoder
 			int count = current.getValueCount();
 			if(count > 0)
 			{
-				List<String> valueList = new ArrayList<String>(count);
+				List<String> valueList = new ArrayList<>(count);
 				for(AccessProto.StringArrayValue curVal : current.getValueList())
 				{
 					if(curVal.hasValue())

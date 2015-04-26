@@ -114,7 +114,7 @@ public class LoggingEventProtobufDecoder
 		{
 			return null;
 		}
-		Map<String, Marker> markers = new HashMap<String, Marker>();
+		Map<String, Marker> markers = new HashMap<>();
 		return convert(marker, markers);
 	}
 
@@ -338,7 +338,7 @@ public class LoggingEventProtobufDecoder
 		}
 		if(stringMap.getEntryCount() > 0)
 		{
-			Map<String, String> result = new HashMap<String, String>();
+			Map<String, String> result = new HashMap<>();
 			List<LoggingProto.StringMapEntry> mdcList = stringMap.getEntryList();
 			for(LoggingProto.StringMapEntry current : mdcList)
 			{

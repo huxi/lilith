@@ -181,7 +181,7 @@ public class LogbackLoggingConverter
 		{
 			return;
 		}
-		Map<String, Marker> markers = new HashMap<String, Marker>();
+		Map<String, Marker> markers = new HashMap<>();
 		dst.setMarker(initMarkerRecursive(origMarker, markers));
 	}
 
@@ -265,7 +265,7 @@ public class LogbackLoggingConverter
 			if(props != null)
 			{
 				// lcv property map leak? yes, indeed. See http://jira.qos.ch/browse/LBCLASSIC-115
-				props = new HashMap<String, String>(props);
+				props = new HashMap<>(props);
 			}
 			LoggerContext loggerContext = new LoggerContext();
 			loggerContext.setName(name);

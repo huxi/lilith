@@ -55,7 +55,7 @@ public class AccessEventViewTable
 
 	protected void initTooltipGenerators()
 	{
-		tooltipGenerators = new HashMap<Object, TooltipGenerator>();
+		tooltipGenerators = new HashMap<>();
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_TIMESTAMP,
 			new TimestampTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_REQUEST_URI,
@@ -74,7 +74,7 @@ public class AccessEventViewTable
 
 	protected void initTableColumns()
 	{
-		tableColumns = new HashMap<Object, TableColumn>();
+		tableColumns = new HashMap<>();
 		{
 			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_ID);
@@ -149,7 +149,7 @@ public class AccessEventViewTable
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout()
 	{
 		ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo> result =
-			new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
+			new ArrayList<>();
 
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_ID, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_TIMESTAMP, 75, true));

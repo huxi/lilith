@@ -90,7 +90,7 @@ public class RrdLoggingEventHandler
 		EventCounter globalCounter;
 		if(eventCounters == null)
 		{
-			eventCounters = new HashMap<String, EventCounter>();
+			eventCounters = new HashMap<>();
 			globalCounter = new EventCounter();
 			eventCounters.put("global", globalCounter);
 		}
@@ -283,7 +283,7 @@ public class RrdLoggingEventHandler
 
 		public EventCounter()
 		{
-			counters = new HashMap<String, Counter>(6);
+			counters = new HashMap<>(6);
 			counters.put(TRACE_DS_NAME, new Counter());
 			counters.put(DEBUG_DS_NAME, new Counter());
 			counters.put(INFO_DS_NAME, new Counter());

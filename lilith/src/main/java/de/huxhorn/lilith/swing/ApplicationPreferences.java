@@ -212,18 +212,18 @@ public class ApplicationPreferences
 		File defaultAppPath = new File(USER_HOME, ".lilith");
 		DEFAULT_APPLICATION_PATH = defaultAppPath.getAbsolutePath();
 
-		Map<String, String> defaultSoundLocations = new HashMap<String, String>();
+		Map<String, String> defaultSoundLocations = new HashMap<>();
 		defaultSoundLocations.put(LilithSounds.SOURCE_ADDED, "/events/SourceAdded.mp3");
 		defaultSoundLocations.put(LilithSounds.SOURCE_REMOVED, "/events/SourceRemoved.mp3");
 		defaultSoundLocations.put(LilithSounds.ERROR_EVENT_ALARM, "/events/ErrorEventAlarm.mp3");
 		defaultSoundLocations.put(LilithSounds.WARN_EVENT_ALARM, "/events/WarnEventAlarm.mp3");
 		DEFAULT_SOUND_LOCATIONS = Collections.unmodifiableMap(defaultSoundLocations);
 
-		Map<String, String> defaultSourceNames = new HashMap<String, String>();
+		Map<String, String> defaultSourceNames = new HashMap<>();
 		defaultSourceNames.put("127.0.0.1", "Localhost");
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
 
-		HashMap<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<LoggingEvent.Level, ColorScheme>();
+		HashMap<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<>();
 		defaultLevelColors.put(LoggingEvent.Level.TRACE,
 			new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9), new Color(0x80, 0xBA, 0xD9)));
 		defaultLevelColors.put(LoggingEvent.Level.DEBUG,
@@ -236,7 +236,7 @@ public class ApplicationPreferences
 			new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
 		DEFAULT_LEVEL_COLOR_SCHEMES = Collections.unmodifiableMap(defaultLevelColors);
 
-		HashMap<HttpStatus.Type, ColorScheme> defaultStatusColors = new HashMap<HttpStatus.Type, ColorScheme>();
+		HashMap<HttpStatus.Type, ColorScheme> defaultStatusColors = new HashMap<>();
 		defaultStatusColors.put(HttpStatus.Type.SUCCESSFUL,
 			new ColorScheme(Color.BLACK, Color.GREEN, Color.GREEN));
 		defaultStatusColors.put(HttpStatus.Type.INFORMATIONAL,
@@ -383,7 +383,7 @@ public class ApplicationPreferences
 
 	public List<String> retrieveAllConditions()
 	{
-		List<String> itemsVector = new ArrayList<String>();
+		List<String> itemsVector = new ArrayList<>();
 
 		itemsVector.addAll(Arrays.asList(DEFAULT_CONDITIONS));
 
@@ -445,7 +445,7 @@ public class ApplicationPreferences
 		propertyChangeSupport = new PropertyChangeSupport(this);
 		startupApplicationPath = getApplicationPath();
 
-		installedLookAndFeels = new ArrayList<String>();
+		installedLookAndFeels = new ArrayList<>();
 		for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 		{
 			installedLookAndFeels.add(info.getName());
@@ -513,11 +513,11 @@ public class ApplicationPreferences
 		List<String> copy;
 		if(recents == null)
 		{
-			copy=new ArrayList<String>();
+			copy=new ArrayList<>();
 		}
 		else
 		{
-			copy=new ArrayList<String>(recents);
+			copy=new ArrayList<>(recents);
 		}
 		Iterator<String> iter = copy.iterator();
 		while(iter.hasNext())
@@ -543,18 +543,18 @@ public class ApplicationPreferences
 
 	public void clearRecentFiles()
 	{
-		setRecentFiles(new ArrayList<String>());
+		setRecentFiles(new ArrayList<>());
 	}
 
 	public List<String> getRecentFiles()
 	{
 		initRecentFiles();
-		return new ArrayList<String>(recentFiles);
+		return new ArrayList<>(recentFiles);
 	}
 
 	public void clearPreviousSearchStrings()
 	{
-		setPreviousSearchStrings(new ArrayList<String>());
+		setPreviousSearchStrings(new ArrayList<>());
 	}
 
 	/**
@@ -572,7 +572,7 @@ public class ApplicationPreferences
 		if(obj instanceof List)
 		{
 			List list = (List) obj;
-			resultList = new ArrayList<T>(list.size());
+			resultList = new ArrayList<>(list.size());
 			for(Object current:list)
 			{
 				if(iface.isInstance(current))
@@ -607,7 +607,7 @@ public class ApplicationPreferences
 		if(obj instanceof Set)
 		{
 			Set set = (Set) obj;
-			resultSet = new HashSet<T>(set.size());
+			resultSet = new HashSet<>(set.size());
 			for(Object current:set)
 			{
 				if(iface.isInstance(current))
@@ -643,7 +643,7 @@ public class ApplicationPreferences
 		if(obj instanceof Map)
 		{
 			Map map = (Map) obj;
-			resultMap = new HashMap<K,V>(map.size());
+			resultMap = new HashMap<>(map.size());
 			for(Object c:map.entrySet())
 			{
 				Map.Entry current = (Map.Entry) c;
@@ -700,7 +700,7 @@ public class ApplicationPreferences
 
 		if(this.recentFiles == null)
 		{
-			this.recentFiles = new ArrayList<String>();
+			this.recentFiles = new ArrayList<>();
 		}
 	}
 
@@ -774,7 +774,7 @@ public class ApplicationPreferences
 	public List<String> getPreviousSearchStrings()
 	{
 		initPreviousSearchStrings();
-		return new ArrayList<String>(previousSearchStrings);
+		return new ArrayList<>(previousSearchStrings);
 	}
 
 	private void initPreviousSearchStrings()
@@ -807,7 +807,7 @@ public class ApplicationPreferences
 
 		if(this.previousSearchStrings == null)
 		{
-			this.previousSearchStrings = new ArrayList<String>();
+			this.previousSearchStrings = new ArrayList<>();
 		}
 	}
 
@@ -1035,7 +1035,7 @@ public class ApplicationPreferences
 			input = DEFAULT_LEVEL_COLOR_SCHEMES;
 		}
 
-		Map<LoggingEvent.Level, ColorScheme> result = new HashMap<LoggingEvent.Level, ColorScheme>();
+		Map<LoggingEvent.Level, ColorScheme> result = new HashMap<>();
 
 		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : input.entrySet())
 		{
@@ -1148,7 +1148,7 @@ public class ApplicationPreferences
 			input = DEFAULT_STATUS_COLOR_SCHEMES;
 		}
 
-		Map<HttpStatus.Type, ColorScheme> result = new HashMap<HttpStatus.Type, ColorScheme>();
+		Map<HttpStatus.Type, ColorScheme> result = new HashMap<>();
 
 		for(Map.Entry<HttpStatus.Type, ColorScheme> current : input.entrySet())
 		{
@@ -1227,7 +1227,7 @@ public class ApplicationPreferences
 				HashMap<String, Set<String>> resultMap = null;
 				if(interimMap != null)
 				{
-					resultMap = new HashMap<String, Set<String>>();
+					resultMap = new HashMap<>();
 					for(Map.Entry<String, Set> current : interimMap.entrySet())
 					{
 						Set<String> value = transformToSet(String.class, current.getValue());
@@ -1244,7 +1244,7 @@ public class ApplicationPreferences
 			catch(Throwable ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading source lists from sourceListsFile '" + sourceListsFile.getAbsolutePath() + "'!", ex);
-				sourceLists = new HashMap<String, Set<String>>();
+				sourceLists = new HashMap<>();
 				IOUtilities.interruptIfNecessary(ex);
 			}
 			finally
@@ -1257,14 +1257,14 @@ public class ApplicationPreferences
 		}
 		else if(sourceLists == null)
 		{
-			sourceLists = new HashMap<String, Set<String>>();
+			sourceLists = new HashMap<>();
 		}
 	}
 
 	public Map<String, Set<String>> getSourceLists()
 	{
 		initSourceLists();
-		return new HashMap<String, Set<String>>(sourceLists);
+		return new HashMap<>(sourceLists);
 	}
 
 	public void setSourceLists(Map<String, Set<String>> sourceLists)
@@ -1508,7 +1508,7 @@ public class ApplicationPreferences
 	 */
 	private List<String> readLines(URL url)
 	{
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		BufferedReader reader = null;
 		try
 		{
@@ -1775,7 +1775,7 @@ public class ApplicationPreferences
 
 		if(conditions == null)
 		{
-			conditions = new ArrayList<SavedCondition>();
+			conditions = new ArrayList<>();
 		}
 	}
 
@@ -1833,7 +1833,7 @@ public class ApplicationPreferences
 		initConditions();
 
 		// perform deep clone... otherwise no propchange would be fired.
-		ArrayList<SavedCondition> result = new ArrayList<SavedCondition>(conditions.size());
+		ArrayList<SavedCondition> result = new ArrayList<>(conditions.size());
 		for(SavedCondition current : conditions)
 		{
 			try
@@ -1854,7 +1854,7 @@ public class ApplicationPreferences
 		initConditions();
 
 		// perform deep clone... otherwise no propchange would be fired.
-		ArrayList<String> result = new ArrayList<String>(conditions.size());
+		ArrayList<String> result = new ArrayList<>(conditions.size());
 		for(SavedCondition current : conditions)
 		{
 			result.add(current.getName());
@@ -2367,7 +2367,7 @@ public class ApplicationPreferences
 		{
 			if(loadSourceNamesXml(sourceNamesFile))
 			{
-				return new HashMap<String, String>(sourceNames);
+				return new HashMap<>(sourceNames);
 			}
 		}
 
@@ -2376,10 +2376,10 @@ public class ApplicationPreferences
 		{
 			if(loadSourceNamesProperties(sourceNamesFile))
 			{
-				return new HashMap<String, String>(sourceNames);
+				return new HashMap<>(sourceNames);
 			}
 		}
-		return new HashMap<String, String>(DEFAULT_SOURCE_NAMES);
+		return new HashMap<>(DEFAULT_SOURCE_NAMES);
 	}
 
 
@@ -2392,11 +2392,11 @@ public class ApplicationPreferences
 		{
 			if(loadSoundLocationsXml(file))
 			{
-				return new HashMap<String, String>(soundLocations);
+				return new HashMap<>(soundLocations);
 			}
 		}
 
-		return new HashMap<String, String>(DEFAULT_SOUND_LOCATIONS);
+		return new HashMap<>(DEFAULT_SOUND_LOCATIONS);
 	}
 
 	public void setSoundLocations(Map<String, String> soundLocations)
@@ -2607,7 +2607,7 @@ public class ApplicationPreferences
 			is = new BufferedInputStream(new FileInputStream(file));
 			Properties props = new Properties();
 			props.loadFromXML(is);
-			Map<String, String> result = new HashMap<String, String>();
+			Map<String, String> result = new HashMap<>();
 			for(Object keyObj : props.keySet())
 			{
 				String key = (String) keyObj;
@@ -2685,7 +2685,7 @@ public class ApplicationPreferences
 			is = new BufferedInputStream(new FileInputStream(file));
 			Properties props = new Properties();
 			props.load(is);
-			Map<String, String> result = new HashMap<String, String>();
+			Map<String, String> result = new HashMap<>();
 			for(Object keyObj : props.keySet())
 			{
 				String key = (String) keyObj;

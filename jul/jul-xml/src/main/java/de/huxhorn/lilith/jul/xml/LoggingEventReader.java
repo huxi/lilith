@@ -158,7 +158,7 @@ public class LoggingEventReader
 			{
 				String keyStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, KEY_NODE);
 				String catalogStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, CATALOG_NODE);
-				List<String> paramList = new ArrayList<String>();
+				List<String> paramList = new ArrayList<>();
 				for(; ;)
 				{
 					String paramStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, PARAM_NODE);
@@ -226,7 +226,7 @@ public class LoggingEventReader
 				result.setMessage(messageStr);
 				result.setName(className);
 			}
-			List<ExtendedStackTraceElement> stackTraceList = new ArrayList<ExtendedStackTraceElement>();
+			List<ExtendedStackTraceElement> stackTraceList = new ArrayList<>();
 			for(; ;)
 			{
 				ExtendedStackTraceElement current = parseFrame(reader);

@@ -259,7 +259,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 		else
 		{
-			infos = new ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo>();
+			infos = new ArrayList<>();
 
 			// lets make sure that all columns exist.
 			for(PersistentTableColumnModel.TableColumnLayoutInfo current : loadedInfos)

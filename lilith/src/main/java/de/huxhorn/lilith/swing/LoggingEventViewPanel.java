@@ -36,7 +36,7 @@ public class LoggingEventViewPanel
 
 	protected EventWrapperTableModel<LoggingEvent> createTableModel(Buffer<EventWrapper<LoggingEvent>> buffer)
 	{
-		return new EventWrapperTableModel<LoggingEvent>(buffer);
+		return new EventWrapperTableModel<>(buffer);
 	}
 
 	protected EventWrapperViewTable<LoggingEvent> createTable(EventWrapperTableModel<LoggingEvent> tableModel)

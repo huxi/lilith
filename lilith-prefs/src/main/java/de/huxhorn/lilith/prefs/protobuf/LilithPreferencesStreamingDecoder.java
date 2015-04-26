@@ -60,7 +60,7 @@ public class LilithPreferencesStreamingDecoder
 			return null;
 		}
 
-		Map<String,byte[]> result=new HashMap<String,byte[]>();
+		Map<String,byte[]> result=new HashMap<>();
 
 		List<PrefsProto.ByteArrayMapEntry> entries = dir.getEntryList();
 		for(PrefsProto.ByteArrayMapEntry current:entries)

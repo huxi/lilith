@@ -31,7 +31,7 @@ public class LoggingEventSender
 	public LoggingEventSender(JmDNS jmDns, String serviceName, String hostName, int port, boolean compressing)
 	{
 		super(jmDns, serviceName, hostName, port, compressing);
-		encoder = new SerializableEncoder<LoggingEvent>(compressing);
+		encoder = new SerializableEncoder<>(compressing);
 	}
 
 	public void send(LoggingEvent event)

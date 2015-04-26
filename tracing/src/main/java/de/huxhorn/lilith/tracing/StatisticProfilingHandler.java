@@ -61,7 +61,7 @@ public class StatisticProfilingHandler
 
 	private static final char SEPARATOR = ';';
 
-	private final ConcurrentMap<String, Entry> entries = new ConcurrentHashMap<String, Entry>();
+	private final ConcurrentMap<String, Entry> entries = new ConcurrentHashMap<>();
 	private final AtomicInteger counter = new AtomicInteger();
 	private int stepSize = DEFAULT_STEP_SIZE;
 
@@ -114,7 +114,7 @@ public class StatisticProfilingHandler
 		}
 		try
 		{
-			SortedSet<Entry> entrySet = new TreeSet<Entry>();
+			SortedSet<Entry> entrySet = new TreeSet<>();
 			for(Entry current : entries.values())
 			{
 				entrySet.add(current.clone());

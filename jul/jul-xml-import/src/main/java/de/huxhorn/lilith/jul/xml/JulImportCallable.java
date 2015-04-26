@@ -123,7 +123,7 @@ public class JulImportCallable
 					break;
 				}
 				result++;
-				EventWrapper<LoggingEvent> wrapper = new EventWrapper<LoggingEvent>();
+				EventWrapper<LoggingEvent> wrapper = new EventWrapper<>();
 				wrapper.setEvent(event);
 				SourceIdentifier sourceIdentifier = new SourceIdentifier(inputFile.getAbsolutePath());
 				EventIdentifier eventId = new EventIdentifier(sourceIdentifier, result);

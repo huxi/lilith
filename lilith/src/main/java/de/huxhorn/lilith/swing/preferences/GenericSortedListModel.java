@@ -37,7 +37,7 @@ public class GenericSortedListModel<T extends Comparable<? super T>>
 
 	public GenericSortedListModel(Comparator<T> comparator)
 	{
-		this.data = new ArrayList<T>();
+		this.data = new ArrayList<>();
 		this.comparator = comparator;
 	}
 
@@ -70,7 +70,7 @@ public class GenericSortedListModel<T extends Comparable<? super T>>
 
 	public List<T> getData()
 	{
-		return new ArrayList<T>(data);
+		return new ArrayList<>(data);
 	}
 
 	public void add(T element)

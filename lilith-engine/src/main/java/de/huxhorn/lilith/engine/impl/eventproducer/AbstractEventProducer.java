@@ -85,7 +85,7 @@ public abstract class AbstractEventProducer<T extends Serializable>
 			sourceIdentifierUpdater.updateIdentifier(sourceIdentifier, event);
 		}
 
-		EventWrapper<T> wrapper = new EventWrapper<T>(getSourceIdentifier(), localIdCounter, event);
+		EventWrapper<T> wrapper = new EventWrapper<>(getSourceIdentifier(), localIdCounter, event);
 		eventQueue.add(wrapper);
 		if(logger.isDebugEnabled()) logger.debug("Added event-wrapper for {}.", event);
 	}

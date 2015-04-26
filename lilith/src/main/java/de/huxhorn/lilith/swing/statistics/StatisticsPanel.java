@@ -154,7 +154,7 @@ public class StatisticsPanel
 	{
 		SortedMap<String, SourceIdentifier> stats = mainFrame.getAvailableStatistics();
 
-		List<WrappedSourceIdentifier> wrappedSources = new ArrayList<WrappedSourceIdentifier>(stats.size() + 1);
+		List<WrappedSourceIdentifier> wrappedSources = new ArrayList<>(stats.size() + 1);
 		wrappedSources.add(new WrappedSourceIdentifier("Global", new SourceIdentifier("global")));
 		for(Map.Entry<String, SourceIdentifier> current : stats.entrySet())
 		{

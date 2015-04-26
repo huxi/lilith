@@ -244,7 +244,7 @@ public class ViewActions
 			}
 		};
 
-		keyStrokeActionMapping = new HashMap<KeyStroke, CopyToClipboardAction>();
+		keyStrokeActionMapping = new HashMap<>();
 		// ##### Menu Actions #####
 		// File
 		OpenMenuAction openMenuAction = new OpenMenuAction();
@@ -261,7 +261,7 @@ public class ViewActions
 		gotoSourceAction = new GotoSourceAction();
 		copySelectionAction = new CopySelectionAction();
 		copyEventAction = new CopyToClipboardAction(new EventFormatter());
-		copyLoggingActions = new ArrayList<CopyToClipboardAction>();
+		copyLoggingActions = new ArrayList<>();
 		copyLoggingActions.add(new CopyToClipboardAction(new EventJsonFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new EventXmlFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMessageFormatter()));
@@ -273,7 +273,7 @@ public class ViewActions
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMarkerFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMdcFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingNdcFormatter()));
-		copyAccessActions = new ArrayList<CopyToClipboardAction>();
+		copyAccessActions = new ArrayList<>();
 		copyAccessActions.add(new CopyToClipboardAction(new AccessUriFormatter()));
 
 		prepareClipboardActions(copyLoggingActions, keyStrokeActionMapping);
@@ -1128,12 +1128,12 @@ public class ViewActions
 		boolean changed = false;
 		if(groovyClipboardActions == null)
 		{
-			groovyClipboardActions = new HashMap<String, CopyToClipboardAction>();
+			groovyClipboardActions = new HashMap<>();
 			changed = true;
 		}
 		if(groovyClipboardData == null)
 		{
-			groovyClipboardData = new HashMap<String, ClipboardFormatterData>();
+			groovyClipboardData = new HashMap<>();
 			changed = true;
 		}
 		if(scripts == null || scripts.length == 0)
@@ -1162,7 +1162,7 @@ public class ViewActions
 			}
 
 			// find deleted formatters
-			List<String> deletedList = new ArrayList<String>();
+			List<String> deletedList = new ArrayList<>();
 			for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
 			{
 				if(!scriptsList.contains(current.getKey()))
@@ -1205,13 +1205,13 @@ public class ViewActions
 			if(groovyClipboardActions.size() > 0)
 			{
 				enabled = true;
-				SortedSet<CopyToClipboardAction> sorted = new TreeSet<CopyToClipboardAction>(CopyToClipboardByNameComparator.INSTANCE);
+				SortedSet<CopyToClipboardAction> sorted = new TreeSet<>(CopyToClipboardByNameComparator.INSTANCE);
 				// sort the actions by name
 				for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
 				{
 					sorted.add(current.getValue());
 				}
-				HashMap<KeyStroke, CopyToClipboardAction> freshMapping = new HashMap<KeyStroke, CopyToClipboardAction>(keyStrokeActionMapping);
+				HashMap<KeyStroke, CopyToClipboardAction> freshMapping = new HashMap<>(keyStrokeActionMapping);
 				prepareClipboardActions(sorted, freshMapping);
 
 				// add the sorted actions to the menus.
@@ -1343,7 +1343,7 @@ public class ViewActions
 					for(Map.Entry<String, EventSender<LoggingEvent>> current : senders.entrySet())
 					{
 						//noinspection unchecked
-						sendToPopupMenu.add(new SendAction<LoggingEvent>(current.getKey(), current.getValue(), eventWrapper));
+						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), eventWrapper));
 					}
 				}
 			}
@@ -1362,7 +1362,7 @@ public class ViewActions
 					for(Map.Entry<String, EventSender<AccessEvent>> current : senders.entrySet())
 					{
 						//noinspection unchecked
-						sendToPopupMenu.add(new SendAction<AccessEvent>(current.getKey(), current.getValue(), eventWrapper));
+						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), eventWrapper));
 					}
 				}
 			}

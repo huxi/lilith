@@ -38,5 +38,5 @@ public class Tail
 	public String pattern;
 
 	@Parameter(description = "'tail' the given Lilith logfile.")
-	public List<String> files=new ArrayList<String>();
+	public List<String> files=new ArrayList<>();
 }

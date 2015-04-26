@@ -63,7 +63,7 @@ public class AccessEventIOTest
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
 		value.setBirthTime(1234567890000L);
-		Map<String, String> propperties = new HashMap<String, String>();
+		Map<String, String> propperties = new HashMap<>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
 		event.setLoggerContext(value);
@@ -182,7 +182,7 @@ public class AccessEventIOTest
 	public void requestHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		value.put("foo", "bar");
 		event.setRequestHeaders(value);
 		check(event);
@@ -192,7 +192,7 @@ public class AccessEventIOTest
 	public void emptyRequestHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		event.setRequestHeaders(value);
 		check(event);
 	}
@@ -201,7 +201,7 @@ public class AccessEventIOTest
 	public void responseHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		value.put("foo", "bar");
 		event.setResponseHeaders(value);
 		check(event);
@@ -211,7 +211,7 @@ public class AccessEventIOTest
 	public void emptyResponseHeaders()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		event.setResponseHeaders(value);
 		check(event);
 	}
@@ -220,7 +220,7 @@ public class AccessEventIOTest
 	public void requestParameters()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String[]> value = new HashMap<String, String[]>();
+		Map<String, String[]> value = new HashMap<>();
 		value.put("foo", new String[]{"val1", "val2"});
 		event.setRequestParameters(value);
 		check(event);
@@ -230,7 +230,7 @@ public class AccessEventIOTest
 	public void emptyRequestParameters()
 	{
 		AccessEvent event = createMinimalEvent();
-		Map<String, String[]> value = new HashMap<String, String[]>();
+		Map<String, String[]> value = new HashMap<>();
 		event.setRequestParameters(value);
 		check(event);
 	}

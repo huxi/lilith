@@ -47,7 +47,7 @@ public class ConverterRegistryTest
 	@Before
 	public void setUp()
 	{
-		instance = new ConverterRegistry<String>();
+		instance = new ConverterRegistry<>();
 	}
 	
 	@Test

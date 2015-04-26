@@ -116,7 +116,7 @@ public class LoggingEventsTest
 		LoggingEvents instance = new LoggingEvents();
 
 
-		List<LoggingEvent> value = new ArrayList<LoggingEvent>();
+		List<LoggingEvent> value = new ArrayList<>();
 		value.add(new LoggingEvent());
 		instance.setEvents(value);
 

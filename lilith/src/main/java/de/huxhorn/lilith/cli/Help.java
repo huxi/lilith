@@ -29,5 +29,5 @@ public class Help
 	public static final String NAME = "help";
 
 	@Parameter(description = "List of commands.")
-	public List<String> commands=new ArrayList<String>();
+	public List<String> commands=new ArrayList<>();
 }

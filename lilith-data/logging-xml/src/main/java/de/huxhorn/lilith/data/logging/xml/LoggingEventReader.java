@@ -234,7 +234,7 @@ public class LoggingEventReader
 		int type = reader.getEventType();
 		if(XMLStreamConstants.START_ELEMENT == type && LOGGER_CONTEXT_PROPERTIES_NODE.equals(reader.getLocalName()))
 		{
-			Map<String, String> map = new HashMap<String, String>();
+			Map<String, String> map = new HashMap<>();
 			reader.nextTag();
 			for(; ;)
 			{
@@ -262,7 +262,7 @@ public class LoggingEventReader
 		throws XMLStreamException
 	{
 		int type = reader.getEventType();
-		ArrayList<ExtendedStackTraceElement> ste = new ArrayList<ExtendedStackTraceElement>();
+		ArrayList<ExtendedStackTraceElement> ste = new ArrayList<>();
 		if(XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()))
 		{
 			reader.nextTag();
@@ -289,7 +289,7 @@ public class LoggingEventReader
 		int type = reader.getEventType();
 		if(XMLStreamConstants.START_ELEMENT == type && MARKER_NODE.equals(reader.getLocalName()))
 		{
-			Map<String, Marker> markers = new HashMap<String, Marker>();
+			Map<String, Marker> markers = new HashMap<>();
 			Marker marker = recursiveReadMarker(reader, markers);
 			event.setMarker(marker);
 		}
@@ -339,7 +339,7 @@ public class LoggingEventReader
 		int type = reader.getEventType();
 		if(XMLStreamConstants.START_ELEMENT == type && MDC_NODE.equals(reader.getLocalName()))
 		{
-			Map<String, String> mdc = new HashMap<String, String>();
+			Map<String, String> mdc = new HashMap<>();
 			reader.nextTag();
 			for(; ;)
 			{
@@ -363,7 +363,7 @@ public class LoggingEventReader
 		int type = reader.getEventType();
 		if(XMLStreamConstants.START_ELEMENT == type && NDC_NODE.equals(reader.getLocalName()))
 		{
-			List<Message> ndc = new ArrayList<Message>();
+			List<Message> ndc = new ArrayList<>();
 			reader.nextTag();
 			for(; ;)
 			{
@@ -459,7 +459,7 @@ public class LoggingEventReader
 			if(XMLStreamConstants.START_ELEMENT == type && SUPPRESSED_NODE.equals(reader.getLocalName()))
 			{
 				reader.nextTag();
-				List<ThrowableInfo> suppressedList = new ArrayList<ThrowableInfo>();
+				List<ThrowableInfo> suppressedList = new ArrayList<>();
 				for(;;)
 				{
 					ThrowableInfo current = recursiveReadThrowable(reader, THROWABLE_NODE);
@@ -491,7 +491,7 @@ public class LoggingEventReader
 		if(XMLStreamConstants.START_ELEMENT == type && ARGUMENTS_NODE.equals(reader.getLocalName()))
 		{
 			reader.nextTag();
-			List<String> args = new ArrayList<String>();
+			List<String> args = new ArrayList<>();
 			for(; ;)
 			{
 				type = reader.getEventType();

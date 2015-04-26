@@ -50,8 +50,8 @@ public class LoggingViewStateIcons
 			activeGlobalIcon = null;
 			inactiveGlobalIcon = null;
 		}
-		activeIcons = new HashMap<LoggingViewState, ImageIcon>();
-		inactiveIcons = new HashMap<LoggingViewState, ImageIcon>();
+		activeIcons = new HashMap<>();
+		inactiveIcons = new HashMap<>();
 
 		url = LoggingViewStateIcons.class.getResource("/tango/16x16/status/network-receive.png");
 		if (url != null)

@@ -110,7 +110,7 @@ public class FindPanel<T extends Serializable>
 		ActionListener findTypeModifiedListener = new FindTypeSelectionActionListener();
 		findTypeCombo = new JComboBox();
 		// AUTO-COMPLETION
-		findTypeEventList = new BasicEventList<String>();
+		findTypeEventList = new BasicEventList<>();
 		AutoCompleteSupport<String> findTypeComboAutoSupport = AutoCompleteSupport.install(findTypeCombo, findTypeEventList);
 		findTypeComboAutoSupport.setFirstItem("");
 		findTypeComboAutoSupport.setStrict(true);
@@ -126,7 +126,7 @@ public class FindPanel<T extends Serializable>
 
 		// AUTO-COMPLETION
 		findTextCombo = new JComboBox();
-		findTextEventList = new BasicEventList<String>();
+		findTextEventList = new BasicEventList<>();
 		AutoCompleteSupport<String> findTextComboAutoSupport = AutoCompleteSupport.install(findTextCombo, findTextEventList);
 		findTextComboAutoSupport.setFirstItem("");
 		findTextComboAutoSupport.setStrict(false);
@@ -453,7 +453,7 @@ public class FindPanel<T extends Serializable>
 
 	public void setPreviousSearchStrings(List<String> previousSearchStrings)
 	{
-		this.previousSearchStrings=new ArrayList<String>(previousSearchStrings);
+		this.previousSearchStrings=new ArrayList<>(previousSearchStrings);
 		this.previousSearchStrings.add(0, ""); // always add an empty string as first
 		updateFindCombo();
 	}

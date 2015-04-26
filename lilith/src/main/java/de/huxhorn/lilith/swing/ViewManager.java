@@ -38,7 +38,7 @@ public abstract class ViewManager<T extends Serializable>
 	public ViewManager(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
-		this.views = new HashMap<EventSource<T>, ViewContainer<T>>();
+		this.views = new HashMap<>();
 	}
 
 	public MainFrame getMainFrame()
@@ -66,7 +66,7 @@ public abstract class ViewManager<T extends Serializable>
 	{
 		synchronized (views)
 		{
-			return new HashMap<EventSource<T>, ViewContainer<T>>(views);
+			return new HashMap<>(views);
 		}
 
 	}
@@ -75,7 +75,7 @@ public abstract class ViewManager<T extends Serializable>
 
 	List<ViewContainer<T>> minimizeAllViews(ViewContainer beside)
 	{
-		List<ViewContainer<T>> result = new ArrayList<ViewContainer<T>>();
+		List<ViewContainer<T>> result = new ArrayList<>();
 		synchronized (views)
 		{
 			for (Map.Entry<EventSource<T>, ViewContainer<T>> entry : views.entrySet())
@@ -97,10 +97,10 @@ public abstract class ViewManager<T extends Serializable>
 
 	List<ViewContainer<T>> closeAllViews(ViewContainer beside)
 	{
-		List<ViewContainer<T>> result = new ArrayList<ViewContainer<T>>();
+		List<ViewContainer<T>> result = new ArrayList<>();
 		synchronized (views)
 		{
-			List<EventSource<T>> inactiveKeys = new ArrayList<EventSource<T>>();
+			List<EventSource<T>> inactiveKeys = new ArrayList<>();
 			for (Map.Entry<EventSource<T>, ViewContainer<T>> entry : views.entrySet())
 			{
 				EventSource<T> key = entry.getKey();
@@ -130,8 +130,8 @@ public abstract class ViewManager<T extends Serializable>
 
 	List<ViewContainer<T>> removeInactiveViews(boolean onlyClosed)
 	{
-		List<ViewContainer<T>> result = new ArrayList<ViewContainer<T>>();
-		List<EventSource<T>> inactiveKeys = new ArrayList<EventSource<T>>();
+		List<ViewContainer<T>> result = new ArrayList<>();
+		List<EventSource<T>> inactiveKeys = new ArrayList<>();
 		synchronized (views)
 		{
 			for (Map.Entry<EventSource<T>, ViewContainer<T>> entry : views.entrySet())

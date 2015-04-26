@@ -68,9 +68,9 @@ public class FocusSavedConditionsMenu
 		}
 		else
 		{
-			conditionNames = new ArrayList<String>(conditionNames);
+			conditionNames = new ArrayList<>(conditionNames);
 			Collections.sort(conditionNames, String.CASE_INSENSITIVE_ORDER);
-			savedConditionActions = new ArrayList<FilterAction>(conditionNames.size());
+			savedConditionActions = new ArrayList<>(conditionNames.size());
 			for(String current : conditionNames)
 			{
 				SavedCondition savedCondition = applicationPreferences.resolveSavedCondition(current);

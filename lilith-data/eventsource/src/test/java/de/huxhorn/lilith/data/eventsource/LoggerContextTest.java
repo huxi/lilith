@@ -124,7 +124,7 @@ public class LoggerContextTest
 	{
 		LoggerContext instance = new LoggerContext();
 
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		value.put("foo", "bar");
 		instance.setProperties(value);
 

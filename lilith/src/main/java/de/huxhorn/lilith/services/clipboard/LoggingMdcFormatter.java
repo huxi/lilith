@@ -78,7 +78,7 @@ public class LoggingMdcFormatter
 					if(mdc != null && mdc.size()>0)
 					{
 						StringBuilder text = new StringBuilder();
-						SortedMap<String, String> sorted = new TreeMap<String, String>(mdc);
+						SortedMap<String, String> sorted = new TreeMap<>(mdc);
 						for(Map.Entry<String, String> current : sorted.entrySet())
 						{
 							text.append(current.getKey()).append("\t").append(current.getValue()).append("\n");

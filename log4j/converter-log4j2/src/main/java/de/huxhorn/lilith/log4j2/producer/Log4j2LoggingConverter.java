@@ -32,7 +32,7 @@ public class Log4j2LoggingConverter
 		}
 		org.apache.logging.log4j.core.LogEvent log4jEvent = (org.apache.logging.log4j.core.LogEvent) o;
 		LoggingEvent result = new LoggingEvent();
-		Map<String, String> mdc = new HashMap<String, String>();
+		Map<String, String> mdc = new HashMap<>();
 
 		// loggerName
 		result.setLogger(log4jEvent.getLoggerName());

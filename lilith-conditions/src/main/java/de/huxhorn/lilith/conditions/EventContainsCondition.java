@@ -277,7 +277,7 @@ public class EventContainsCondition
 		{
 			if(processedMarkers == null)
 			{
-				processedMarkers = new ArrayList<String>();
+				processedMarkers = new ArrayList<>();
 			}
 			if(checkString(marker.getName()))
 			{

@@ -105,7 +105,7 @@ public class LoggingEventsReader
 				reader.nextTag();
 				if(events == null)
 				{
-					events = new ArrayList<LoggingEvent>();
+					events = new ArrayList<>();
 				}
 				events.add(event);
 			}

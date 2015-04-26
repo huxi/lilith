@@ -39,7 +39,7 @@ public class TaskManagerInternalFrame
 	{
 		super("Task Manager", true, true, true, true);
 		this.mainFrame=mainFrame;
-		TaskManagerPanel<Long> taskManagerPanel = new TaskManagerPanel<Long>(mainFrame.getLongWorkManager());
+		TaskManagerPanel<Long> taskManagerPanel = new TaskManagerPanel<>(mainFrame.getLongWorkManager());
 		setLayout(new GridLayout(1, 1));
 		add(taskManagerPanel);
 		taskManagerPanel.setPaused(false);

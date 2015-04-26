@@ -60,8 +60,8 @@ public class MultiplexSendBytesService
 		this.name = name;
 		this.queueSize = queueSize;
 		this.remoteHostsList = remoteHostsList;
-		this.senderServices = new HashSet<SimpleSendBytesService>();
-		this.eventBytes = new ArrayBlockingQueue<byte[]>(queueSize, true);
+		this.senderServices = new HashSet<>();
+		this.eventBytes = new ArrayBlockingQueue<>(queueSize, true);
 		this.writeByteStrategy = writeByteStrategy;
 		this.port = port;
 		this.reconnectionDelay = reconnectionDelay;

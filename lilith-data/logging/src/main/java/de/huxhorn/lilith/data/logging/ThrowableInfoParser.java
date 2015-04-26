@@ -118,7 +118,7 @@ public class ThrowableInfoParser
 				{
 					if(stackTraceElements == null)
 					{
-						stackTraceElements = new ArrayList<ExtendedStackTraceElement>();
+						stackTraceElements = new ArrayList<>();
 					}
 					stackTraceElements.add(este);
 				}
@@ -176,7 +176,7 @@ public class ThrowableInfoParser
 						{
 							if(suppressedInfos == null)
 							{
-								suppressedInfos = new ArrayList<ThrowableInfo>();
+								suppressedInfos = new ArrayList<>();
 							}
 							suppressedInfos.add(parsed.throwableInfo);
 						}
@@ -257,7 +257,7 @@ public class ThrowableInfoParser
 		}
 
 		StringTokenizer tok = new StringTokenizer(input, NEWLINE+CARRIAGE_RETURN, true);
-		List<String> lines = new ArrayList<String>();
+		List<String> lines = new ArrayList<>();
 		boolean foundAnything=false;
 		boolean hadContent=false;
 		while(tok.hasMoreTokens())

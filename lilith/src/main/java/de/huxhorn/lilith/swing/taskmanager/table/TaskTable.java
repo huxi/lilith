@@ -44,7 +44,7 @@ public class TaskTable<T>
 	public TaskTable(TaskManager<T> taskManager)
 	{
 		super();
-		taskTableModel = new TaskTableModel<T>(taskManager);
+		taskTableModel = new TaskTableModel<>(taskManager);
 		// must be added before setting model to table
 		taskTableModel.addTableModelListener(new SelectFirstListener());
 		setModel(taskTableModel);

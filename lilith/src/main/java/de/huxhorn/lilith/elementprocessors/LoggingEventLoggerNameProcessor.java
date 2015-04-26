@@ -33,7 +33,7 @@ public class LoggingEventLoggerNameProcessor
 
 	public LoggingEventLoggerNameProcessor()
 	{
-		loggerNames = new HashSet<String>();
+		loggerNames = new HashSet<>();
 	}
 
 	public void processElement(EventWrapper<LoggingEvent> element)

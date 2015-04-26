@@ -88,13 +88,13 @@ public class SenderService
 
 		this.mainFrame = mainFrame;
 
-		loggingEventSenders = new HashMap<String, EventSender<LoggingEvent>>();
-		accessEventSenders = new HashMap<String, EventSender<AccessEvent>>();
+		loggingEventSenders = new HashMap<>();
+		accessEventSenders = new HashMap<>();
 
-		registries = new HashMap<String, JmDNS>();
+		registries = new HashMap<>();
 		//serviceInfos=new ArrayList<ServiceInfo>();
-		accessProducers = new HashSet<SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent>>();
-		loggingProducers = new HashSet<SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent>>();
+		accessProducers = new HashSet<>();
+		loggingProducers = new HashSet<>();
 		bonjourListener = new BonjourListener();
 	}
 
@@ -153,7 +153,7 @@ public class SenderService
 	{
 		synchronized(loggingEventSenders)
 		{
-			List<String> obsoleteSenders = new ArrayList<String>();
+			List<String> obsoleteSenders = new ArrayList<>();
 			for(Map.Entry<String, EventSender<LoggingEvent>> current : loggingEventSenders.entrySet())
 			{
 				EventSender<LoggingEvent> sender = current.getValue();
@@ -172,7 +172,7 @@ public class SenderService
 
 		synchronized(accessEventSenders)
 		{
-			List<String> obsoleteSenders = new ArrayList<String>();
+			List<String> obsoleteSenders = new ArrayList<>();
 			for(Map.Entry<String, EventSender<AccessEvent>> current : accessEventSenders.entrySet())
 			{
 				EventSender<AccessEvent> sender = current.getValue();
@@ -203,10 +203,10 @@ public class SenderService
 		Map<String, EventSender<T>> serviceNameSenderMapping;
 		synchronized(senders)
 		{
-			serviceNameSenderMapping = new HashMap<String, EventSender<T>>(senders);
+			serviceNameSenderMapping = new HashMap<>(senders);
 		}
 
-		SortedMap<String, EventSender<T>> result = new TreeMap<String, EventSender<T>>();
+		SortedMap<String, EventSender<T>> result = new TreeMap<>();
 		for(Map.Entry<String, EventSender<T>> current : serviceNameSenderMapping.entrySet())
 		{
 			EventSender<T> value = current.getValue();
@@ -248,7 +248,7 @@ public class SenderService
 	{
 		final Logger logger = LoggerFactory.getLogger(SenderService.class);
 
-		Set<InetAddress> inetAddresses = new HashSet<InetAddress>();
+		Set<InetAddress> inetAddresses = new HashSet<>();
 		try
 		{
 			Enumeration<NetworkInterface> netIfcs = NetworkInterface.getNetworkInterfaces();
@@ -288,10 +288,10 @@ public class SenderService
 
 	public List<ServiceInfo> createServiceInfos()
 	{
-		List<ServiceInfo> result = new ArrayList<ServiceInfo>();
+		List<ServiceInfo> result = new ArrayList<>();
 		for(SerializingMessageBasedServerSocketEventSourceProducer<LoggingEvent> current : loggingProducers)
 		{
-			Hashtable<String, String> props = new Hashtable<String, String>();
+			Hashtable<String, String> props = new Hashtable<>();
 			int port = current.getPort();
 
 			props.put(AbstractEventSender.COMPRESSED_MDNS_PROPERTY_NAME, "" + current.isCompressing());
@@ -311,7 +311,7 @@ public class SenderService
 		}
 		for(SerializingMessageBasedServerSocketEventSourceProducer<AccessEvent> current : accessProducers)
 		{
-			Hashtable<String, String> props = new Hashtable<String, String>();
+			Hashtable<String, String> props = new Hashtable<>();
 			int port = current.getPort();
 
 			props.put(AbstractEventSender.COMPRESSED_MDNS_PROPERTY_NAME, "" + current.isCompressing());
@@ -502,11 +502,11 @@ public class SenderService
 					break;
 				}
 				Set<InetAddress> inetAddresses = resolveInetAddresses();
-				Set<InetAddress> newAddresses = new HashSet<InetAddress>();
-				Set<JmDNS> obsoleteDns = new HashSet<JmDNS>();
+				Set<InetAddress> newAddresses = new HashSet<>();
+				Set<JmDNS> obsoleteDns = new HashSet<>();
 				synchronized(registries)
 				{
-					Set<String> obsoleteAddresses = new HashSet<String>();
+					Set<String> obsoleteAddresses = new HashSet<>();
 					for(Map.Entry<String, JmDNS> current : registries.entrySet())
 					{
 						String key = current.getKey();
@@ -551,7 +551,7 @@ public class SenderService
 					current.close();
 				}
 
-				Set<JmDNS> newDns = new HashSet<JmDNS>();
+				Set<JmDNS> newDns = new HashSet<>();
 				for(InetAddress current : newAddresses)
 				{
 					try

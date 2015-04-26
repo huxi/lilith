@@ -123,7 +123,7 @@ public enum HttpStatus
 	NETWORK_CONNECT_TIMEOUT_ERROR(599, Type.SERVER_ERROR, "Network connect timeout error", Specification.MICROSOFT);
 
 
-	private static final Map<Integer, HttpStatus> codeMap = new HashMap<Integer, HttpStatus>();
+	private static final Map<Integer, HttpStatus> codeMap = new HashMap<>();
 
 	static
 	{

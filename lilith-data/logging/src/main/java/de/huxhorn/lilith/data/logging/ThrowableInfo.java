@@ -201,7 +201,7 @@ public class ThrowableInfo
 		{
 			result = new StringBuilder();
 		}
-		Set<ThrowableInfo> dejaVu = new HashSet<ThrowableInfo>();
+		Set<ThrowableInfo> dejaVu = new HashSet<>();
 		recursiveAppend(result, dejaVu, null, 0, this, extended);
 
 		return result;

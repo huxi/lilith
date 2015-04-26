@@ -365,7 +365,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	{
 		super.dispose();
 		disposed = true;
-		List<ViewHolder> removedPanes = new ArrayList<ViewHolder>();
+		List<ViewHolder> removedPanes = new ArrayList<>();
 		for(int i = 0; i < comboBoxModel.getSize(); i++)
 		{
 			removedPanes.add((ViewHolder) comboBoxModel.getElementAt(i));
@@ -450,7 +450,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		int index = comboBoxModel.getIndexOf(holder);
 
 		int tabCount = comboBoxModel.getSize();
-		List<ViewHolder> removedPanes = new ArrayList<ViewHolder>();
+		List<ViewHolder> removedPanes = new ArrayList<>();
 		for(int i = 1; i < tabCount; i++)
 		{
 			if(i != index)
@@ -468,7 +468,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 
 	public void closeAllFilters()
 	{
-		List<ViewHolder> removedPanes = new ArrayList<ViewHolder>();
+		List<ViewHolder> removedPanes = new ArrayList<>();
 		for(int i = 1; i < comboBoxModel.getSize(); i++)
 		{
 			removedPanes.add((ViewHolder) comboBoxModel.getElementAt(i));

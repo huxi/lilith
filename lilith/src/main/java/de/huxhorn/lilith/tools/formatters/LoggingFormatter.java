@@ -259,7 +259,7 @@ public class LoggingFormatter
 		{
 			if(event != null)
 			{
-				Map<String, Marker> markerMap = new HashMap<String, Marker>();
+				Map<String, Marker> markerMap = new HashMap<>();
 				return convert(event.getMarker(), markerMap);
 			}
 			return null;

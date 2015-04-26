@@ -67,7 +67,7 @@ public class Log4jLoggingConverter
 		}
 		org.apache.log4j.spi.LoggingEvent log4jEvent = (org.apache.log4j.spi.LoggingEvent) o;
 		LoggingEvent result=new LoggingEvent();
-		Map<String, String> mdc=new HashMap<String, String>();
+		Map<String, String> mdc=new HashMap<>();
 
 		// loggerName
 		result.setLogger(log4jEvent.getLoggerName());

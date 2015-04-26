@@ -62,7 +62,7 @@ public class SourceListsPanel
 	{
 		editSourceListDialog = new EditSourceListDialog(preferencesDialog);
 		setLayout(new BorderLayout());
-		sourceListListModel = new GenericSortedListModel<String>();
+		sourceListListModel = new GenericSortedListModel<>();
 		sourceListList = new JList(sourceListListModel);
 		sourceListList.addMouseListener(new SourceListMouseListener());
 		JScrollPane sourceListScrollPane = new JScrollPane(sourceListList);
@@ -73,7 +73,7 @@ public class SourceListsPanel
 
 		ListCellRenderer sourceCellRenderer = new SourceCellRenderer();
 
-		listModel = new GenericSortedListModel<Source>();
+		listModel = new GenericSortedListModel<>();
 		JList listList = new JList(listModel);
 		listList.setEnabled(false);
 		listList.setCellRenderer(sourceCellRenderer);
@@ -162,7 +162,7 @@ public class SourceListsPanel
 
 	private void updateSourceLists()
 	{
-		sourceListListModel.setData(new ArrayList<String>(preferencesDialog.getSourceListNames()));
+		sourceListListModel.setData(new ArrayList<>(preferencesDialog.getSourceListNames()));
 	}
 
 	private void updateListContents()
@@ -176,7 +176,7 @@ public class SourceListsPanel
 		}
 		if(list == null)
 		{
-			list = new ArrayList<Source>();
+			list = new ArrayList<>();
 		}
 		listModel.setData(list);
 	}
@@ -204,11 +204,11 @@ public class SourceListsPanel
 		*/
 		if(data == null)
 		{
-			data = new ArrayList<Source>();
+			data = new ArrayList<>();
 		}
 		else
 		{
-			data = new ArrayList<Source>(data);
+			data = new ArrayList<>(data);
 		}
 		editSourceListDialog.setAdding(add);
 		editSourceListDialog.setSources(data);

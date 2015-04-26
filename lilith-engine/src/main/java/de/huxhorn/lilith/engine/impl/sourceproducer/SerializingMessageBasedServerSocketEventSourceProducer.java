@@ -56,7 +56,7 @@ public class SerializingMessageBasedServerSocketEventSourceProducer<T extends Se
 	protected EventProducer<T> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
-		return new SerializingMessageBasedEventProducer<T>(id, eventQueue, sourceIdentifierUpdater, inputStream, compressing);
+		return new SerializingMessageBasedEventProducer<>(id, eventQueue, sourceIdentifierUpdater, inputStream, compressing);
 	}
 
 	@Override

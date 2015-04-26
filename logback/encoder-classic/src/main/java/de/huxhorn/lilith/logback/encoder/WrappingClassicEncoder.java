@@ -23,7 +23,7 @@ public class WrappingClassicEncoder
 	public byte[] encode(ILoggingEvent event)
 	{
 		de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = converter.convert(event);
-		EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent> wrapped=new EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent>();
+		EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent> wrapped=new EventWrapper<>();
 		wrapped.setEvent(lilithEvent);
 		//wrapped.setEventIdentifier();
 		id++;

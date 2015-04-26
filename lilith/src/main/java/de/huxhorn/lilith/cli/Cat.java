@@ -35,5 +35,5 @@ public class Cat
 	public String pattern;
 
 	@Parameter(description = "'cat' the given Lilith logfile.")
-	public List<String> files=new ArrayList<String>();
+	public List<String> files=new ArrayList<>();
 }

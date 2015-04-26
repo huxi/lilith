@@ -323,7 +323,7 @@ public class MainFrame
 		//colorsReferenceQueue=new ReferenceQueue<Colors>();
 		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
 		application = new DefaultApplication();
-		autostartProcesses = new ArrayList<AutostartRunnable>();
+		autostartProcesses = new ArrayList<>();
 
 		addWindowListener(new MainWindowListener());
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // fixes ticket #79 
@@ -344,7 +344,7 @@ public class MainFrame
 		}
         */
 
-		longTaskManager = new TaskManager<Long>();
+		longTaskManager = new TaskManager<>();
 		longTaskManager.setUsingEventQueue(true);
 		longTaskManager.startUp();
 		longTaskManager.addTaskListener(new MainTaskListener());
@@ -354,7 +354,7 @@ public class MainFrame
 		loggingFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, LOGGING_FILE_SUBDIRECTORY));
 		accessFileFactory = new LogFileFactoryImpl(new File(startupApplicationPath, ACCESS_FILE_SUBDIRECTORY));
 
-		Map<String, String> loggingMetaData = new HashMap<String, String>();
+		Map<String, String> loggingMetaData = new HashMap<>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		loggingMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
@@ -362,7 +362,7 @@ public class MainFrame
 
 		loggingFileBufferFactory = new LoggingFileBufferFactory(loggingFileFactory, loggingMetaData);
 
-		Map<String, String> accessMetaData = new HashMap<String, String>();
+		Map<String, String> accessMetaData = new HashMap<>();
 		accessMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
 		accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		accessMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
@@ -594,37 +594,37 @@ public class MainFrame
 		setSplashStatusText("Creating global views.");
 		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
 
-		loggingFileDump = new FileDumpEventHandler<LoggingEvent>(globalSourceIdentifier, loggingFileBufferFactory);
-		accessFileDump = new FileDumpEventHandler<AccessEvent>(globalSourceIdentifier, accessFileBufferFactory);
+		loggingFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, loggingFileBufferFactory);
+		accessFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, accessFileBufferFactory);
 		setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
 
-		BlockingCircularBuffer<EventWrapper<LoggingEvent>> loggingEventQueue = new LilithBuffer<LoggingEvent>(applicationPreferences, 1000);
-		BlockingCircularBuffer<EventWrapper<AccessEvent>> accessEventQueue = new LilithBuffer<AccessEvent>(applicationPreferences, 1000);
+		BlockingCircularBuffer<EventWrapper<LoggingEvent>> loggingEventQueue = new LilithBuffer<>(applicationPreferences, 1000);
+		BlockingCircularBuffer<EventWrapper<AccessEvent>> accessEventQueue = new LilithBuffer<>(applicationPreferences, 1000);
 
-		SourceManagerImpl<LoggingEvent> lsm = new SourceManagerImpl<LoggingEvent>(loggingEventQueue);
+		SourceManagerImpl<LoggingEvent> lsm = new SourceManagerImpl<>(loggingEventQueue);
 		// add global view
-		EventSource<LoggingEvent> globalLoggingEventSource = new EventSourceImpl<LoggingEvent>(globalSourceIdentifier, loggingFileDump.getBuffer(), true);
+		EventSource<LoggingEvent> globalLoggingEventSource = new EventSourceImpl<>(globalSourceIdentifier, loggingFileDump.getBuffer(), true);
 		lsm.addSource(globalLoggingEventSource);
 
 		setSplashStatusText("Creating internal view.");
 		// add internal lilith logging
-		EventSource<LoggingEvent> lilithLoggingEventSource = new EventSourceImpl<LoggingEvent>(InternalLilithAppender.getSourceIdentifier(), InternalLilithAppender.getBuffer(), false);
+		EventSource<LoggingEvent> lilithLoggingEventSource = new EventSourceImpl<>(InternalLilithAppender.getSourceIdentifier(), InternalLilithAppender.getBuffer(), false);
 		lsm.addSource(lilithLoggingEventSource);
 
 		setLoggingEventSourceManager(lsm);
 
-		SourceManagerImpl<AccessEvent> asm = new SourceManagerImpl<AccessEvent>(accessEventQueue);
+		SourceManagerImpl<AccessEvent> asm = new SourceManagerImpl<>(accessEventQueue);
 		// add global view
-		EventSource<AccessEvent> globalAccessEventSource = new EventSourceImpl<AccessEvent>(globalSourceIdentifier, accessFileDump.getBuffer(), true);
+		EventSource<AccessEvent> globalAccessEventSource = new EventSourceImpl<>(globalSourceIdentifier, accessFileDump.getBuffer(), true);
 		asm.addSource(globalAccessEventSource);
 		setAccessEventSourceManager(asm);
 
-		ConverterRegistry<LoggingEvent> loggingConverterRegistry = new ConverterRegistry<LoggingEvent>();
+		ConverterRegistry<LoggingEvent> loggingConverterRegistry = new ConverterRegistry<>();
 		loggingConverterRegistry.addConverter(new LogbackLoggingConverter());
 		loggingConverterRegistry.addConverter(new Log4jLoggingConverter());
 		loggingConverterRegistry.addConverter(new Log4j2LoggingConverter());
 
-		ConverterRegistry<AccessEvent> accessConverterRegistry = new ConverterRegistry<AccessEvent>();
+		ConverterRegistry<AccessEvent> accessConverterRegistry = new ConverterRegistry<>();
 		accessConverterRegistry.addConverter(new LogbackAccessConverter());
 
 		setSplashStatusText("Starting event receivers.");
@@ -632,7 +632,7 @@ public class MainFrame
 		try
 		{
 			ConvertingServerSocketEventSourceProducer<LoggingEvent> producer
-					= new ConvertingServerSocketEventSourceProducer<LoggingEvent>(4560, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
+					= new ConvertingServerSocketEventSourceProducer<>(4560, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
 		catch(IOException ex)
@@ -643,7 +643,7 @@ public class MainFrame
 		try
 		{
 			ConvertingServerSocketEventSourceProducer<LoggingEvent> producer
-					= new ConvertingServerSocketEventSourceProducer<LoggingEvent>(4445, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
+					= new ConvertingServerSocketEventSourceProducer<>(4445, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
 		catch(IOException ex)
@@ -774,7 +774,7 @@ public class MainFrame
 		try
 		{
 			ConvertingServerSocketEventSourceProducer<AccessEvent> producer
-					= new ConvertingServerSocketEventSourceProducer<AccessEvent>(4570, accessConverterRegistry, null);
+					= new ConvertingServerSocketEventSourceProducer<>(4570, accessConverterRegistry, null);
 			accessEventSourceManager.addEventSourceProducer(producer);
 		}
 		catch(IOException ex)
@@ -818,9 +818,9 @@ public class MainFrame
 		loggingEventAlarmSound.setSounds(sounds);
 
 		FileSplitterEventHandler<LoggingEvent> fileSplitterLoggingEventHandler =
-			new FileSplitterEventHandler<LoggingEvent>(loggingFileBufferFactory, loggingEventSourceManager);
+			new FileSplitterEventHandler<>(loggingFileBufferFactory, loggingEventSourceManager);
 
-		List<EventHandler<LoggingEvent>> loggingHandlers = new ArrayList<EventHandler<LoggingEvent>>();
+		List<EventHandler<LoggingEvent>> loggingHandlers = new ArrayList<>();
 
 		loggingHandlers.add(rrdLoggingEventHandler);
 		loggingHandlers.add(loggingEventAlarmSound);
@@ -836,10 +836,10 @@ public class MainFrame
 		loggingEventSourceManager.setEventHandlers(loggingHandlers);
 		loggingEventSourceManager.start();
 
-		List<EventHandler<AccessEvent>> accessHandlers = new ArrayList<EventHandler<AccessEvent>>();
+		List<EventHandler<AccessEvent>> accessHandlers = new ArrayList<>();
 
 		FileSplitterEventHandler<AccessEvent> fileSplitterAccessEventHandler =
-			new FileSplitterEventHandler<AccessEvent>(accessFileBufferFactory, accessEventSourceManager);
+			new FileSplitterEventHandler<>(accessFileBufferFactory, accessEventSourceManager);
 		AlarmSoundAccessEventHandler accessEventAlarmSound = new AlarmSoundAccessEventHandler();
 		accessEventAlarmSound.setSounds(sounds);
 		accessHandlers.add(accessEventAlarmSound);
@@ -1260,7 +1260,7 @@ public class MainFrame
 
 	private void exportFile(File dataFile, File indexFile, AccessEventViewPanel viewPanel)
 	{
-		Map<String, String> metaData = new HashMap<String, String>();
+		Map<String, String> metaData = new HashMap<>();
 		metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		metaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
 		metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
@@ -1272,13 +1272,13 @@ public class MainFrame
 
 		String name="Export to "+dataFile.getName();
 		String description="Exporting "+inputBuffer.getSize()+" access events into file '"+dataFile.getAbsolutePath()+"'.";
-		Task<Long> task = longTaskManager.startTask(new ExportCallable<AccessEvent>(inputBuffer, outputBuffer), name, description);
+		Task<Long> task = longTaskManager.startTask(new ExportCallable<>(inputBuffer, outputBuffer), name, description);
 		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 	}
 
 	private void exportFile(File dataFile, File indexFile, LoggingEventViewPanel viewPanel)
 	{
-		Map<String, String> metaData = new HashMap<String, String>();
+		Map<String, String> metaData = new HashMap<>();
 		metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		metaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 		metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
@@ -1290,7 +1290,7 @@ public class MainFrame
 
 		String name="Export to "+dataFile.getName();
 		String description="Exporting "+inputBuffer.getSize()+" logging events into file '"+dataFile.getAbsolutePath()+"'.";
-		Task<Long> task = longTaskManager.startTask(new ExportCallable<LoggingEvent>(inputBuffer, outputBuffer), name, description);
+		Task<Long> task = longTaskManager.startTask(new ExportCallable<>(inputBuffer, outputBuffer), name, description);
 		if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 	}
 
@@ -1437,7 +1437,7 @@ public class MainFrame
 			}
 		}
 
-		Map<String, String> metaData = new HashMap<String, String>();
+		Map<String, String> metaData = new HashMap<>();
 		metaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		metaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 		metaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
@@ -1707,14 +1707,14 @@ public class MainFrame
 			}
 			Map<String, String> data = metaData.getData();
 			String contentType = data.get(FileConstants.CONTENT_TYPE_KEY);
-			Map<String, String> usedMetaData = new HashMap<String, String>();
+			Map<String, String> usedMetaData = new HashMap<>();
 			SourceIdentifier si = new SourceIdentifier(dataFile.getAbsolutePath());
 
 			if(FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
 			{
 				FileBuffer<EventWrapper<LoggingEvent>> buffer =
 					loggingFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
-				EventSource<LoggingEvent> eventSource = new EventSourceImpl<LoggingEvent>(si, buffer, false);
+				EventSource<LoggingEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
 				ViewContainer<LoggingEvent> viewContainer = loggingEventViewManager.retrieveViewContainer(eventSource);
 				EventWrapperViewPanel<LoggingEvent> panel = viewContainer.getDefaultView();
 				if(keepUpdating)
@@ -1733,7 +1733,7 @@ public class MainFrame
 			{
 				FileBuffer<EventWrapper<AccessEvent>> buffer =
 					accessFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
-				EventSource<AccessEvent> eventSource = new EventSourceImpl<AccessEvent>(si, buffer, false);
+				EventSource<AccessEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
 				ViewContainer<AccessEvent> viewContainer = accessEventViewManager.retrieveViewContainer(eventSource);
 				EventWrapperViewPanel<AccessEvent> panel = viewContainer.getDefaultView();
 				if(keepUpdating)
@@ -1797,7 +1797,7 @@ public class MainFrame
 	private void initStatusColors()
 	{
 		Map<HttpStatus.Type, ColorScheme> prefValue = applicationPreferences.getStatusColors();
-		Map<HttpStatus.Type, Colors> colors = new HashMap<HttpStatus.Type, Colors>();
+		Map<HttpStatus.Type, Colors> colors = new HashMap<>();
 		for(Map.Entry<HttpStatus.Type, ColorScheme> current : prefValue.entrySet())
 		{
 			colors.put(current.getKey(), new Colors(current.getValue(), false));
@@ -1809,7 +1809,7 @@ public class MainFrame
 	private void initLevelColors()
 	{
 		Map<LoggingEvent.Level, ColorScheme> prefValue = applicationPreferences.getLevelColors();
-		Map<LoggingEvent.Level, Colors> colors = new HashMap<LoggingEvent.Level, Colors>();
+		Map<LoggingEvent.Level, Colors> colors = new HashMap<>();
 		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : prefValue.entrySet())
 		{
 			colors.put(current.getKey(), new Colors(current.getValue(), false));
@@ -1955,7 +1955,7 @@ public class MainFrame
 	{
 		File statisticsPath = new File(applicationPreferences.getStartupApplicationPath(), "statistics");
 		File[] files = statisticsPath.listFiles(rrdFileFilter);
-		SortedMap<String, SourceIdentifier> sources = new TreeMap<String, SourceIdentifier>();
+		SortedMap<String, SourceIdentifier> sources = new TreeMap<>();
 		if(files != null)
 		{
 			for(File f : files)
@@ -2025,7 +2025,7 @@ public class MainFrame
 	public void openPreviousLogging(SourceIdentifier si)
 	{
 		FileBuffer<EventWrapper<LoggingEvent>> buffer = loggingFileBufferFactory.createBuffer(si);
-		EventSource<LoggingEvent> eventSource = new EventSourceImpl<LoggingEvent>(si, buffer, false);
+		EventSource<LoggingEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
 
 		ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
 		EventWrapperViewPanel<LoggingEvent> panel = container.getDefaultView();
@@ -2036,7 +2036,7 @@ public class MainFrame
 	public void openPreviousAccess(SourceIdentifier si)
 	{
 		FileBuffer<EventWrapper<AccessEvent>> buffer = accessFileBufferFactory.createBuffer(si);
-		EventSource<AccessEvent> eventSource = new EventSourceImpl<AccessEvent>(si, buffer, false);
+		EventSource<AccessEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
 
 		ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
 		EventWrapperViewPanel<AccessEvent> panel = container.getDefaultView();
@@ -2106,9 +2106,9 @@ public class MainFrame
 
 	public SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> getSortedLoggingViews()
 	{
-		EventSourceComparator<LoggingEvent> loggingComparator = new EventSourceComparator<LoggingEvent>();
+		EventSourceComparator<LoggingEvent> loggingComparator = new EventSourceComparator<>();
 		SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> sortedLoggingViews;
-		sortedLoggingViews = new TreeMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>>(loggingComparator);
+		sortedLoggingViews = new TreeMap<>(loggingComparator);
 		if(loggingEventViewManager != null)
 		{
 			sortedLoggingViews.putAll(loggingEventViewManager.getViews());
@@ -2118,9 +2118,9 @@ public class MainFrame
 
 	public SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> getSortedAccessViews()
 	{
-		EventSourceComparator<AccessEvent> accessComparator = new EventSourceComparator<AccessEvent>();
+		EventSourceComparator<AccessEvent> accessComparator = new EventSourceComparator<>();
 		SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews;
-		sortedAccessViews = new TreeMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>>(accessComparator);
+		sortedAccessViews = new TreeMap<>(accessComparator);
 		if(accessEventViewManager != null)
 		{
 			sortedAccessViews.putAll(accessEventViewManager.getViews());
@@ -2270,7 +2270,7 @@ public class MainFrame
 
 				if(!sourceNames.containsKey(primary))
 				{
-					sourceNames = new HashMap<String, String>(sourceNames);
+					sourceNames = new HashMap<>(sourceNames);
 					sourceNames.put(primary, primary);
 					applicationPreferences.setSourceNames(sourceNames);
 				}
@@ -2353,7 +2353,7 @@ public class MainFrame
 
 				if(!sourceNames.containsKey(primary))
 				{
-					sourceNames = new HashMap<String, String>(sourceNames);
+					sourceNames = new HashMap<>(sourceNames);
 					sourceNames.put(primary, primary);
 					applicationPreferences.setSourceNames(sourceNames);
 				}
@@ -3226,7 +3226,7 @@ public class MainFrame
 	private void updateConditions()
 	{
 		List<SavedCondition> conditions = applicationPreferences.getConditions();
-		List<SavedCondition> active = new ArrayList<SavedCondition>();
+		List<SavedCondition> active = new ArrayList<>();
 		if(conditions != null)
 		{
 			for(SavedCondition current : conditions)
@@ -3249,7 +3249,7 @@ public class MainFrame
 			{
 				Or or=new Or();
 
-				List<Condition> cond=new ArrayList<Condition>(activeCount);
+				List<Condition> cond=new ArrayList<>(activeCount);
 				for(SavedCondition current:active)
 				{
 					cond.add(current.getCondition());
@@ -3372,7 +3372,7 @@ public class MainFrame
 
 	public List<SourceIdentifier> collectInactiveLogs(LogFileFactory fileFactory)
 	{
-		List<SourceIdentifier> result = new ArrayList<SourceIdentifier>();
+		List<SourceIdentifier> result = new ArrayList<>();
 		File logsRoot = fileFactory.getBaseDir();
 		File[] sources = logsRoot.listFiles(new DirectoryFilter());
 		if(sources != null)

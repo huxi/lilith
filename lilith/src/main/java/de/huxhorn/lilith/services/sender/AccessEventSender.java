@@ -32,7 +32,7 @@ public class AccessEventSender
 	public AccessEventSender(JmDNS jmDns, String serviceName, String hostName, int port, boolean compressing)
 	{
 		super(jmDns, serviceName, hostName, port, compressing);
-		encoder = new SerializableEncoder<AccessEvent>(compressing);
+		encoder = new SerializableEncoder<>(compressing);
 	}
 
 	public void send(AccessEvent event)

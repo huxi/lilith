@@ -56,7 +56,7 @@ public class InternalLilithAppender
 		LogFileFactoryImpl logFileFactory =
 			new LogFileFactoryImpl(new File(ApplicationPreferences.DEFAULT_APPLICATION_PATH, "logs/logging"));
 
-		Map<String, String> loggingMetaData = new HashMap<String, String>();
+		Map<String, String> loggingMetaData = new HashMap<>();
 		loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 		loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 		loggingMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
@@ -100,7 +100,7 @@ public class InternalLilithAppender
 			localId++;
 			event.getCallerData();
 			LoggingEvent lilithEvent = converter.convert(event);
-			EventWrapper<LoggingEvent> wrapper = new EventWrapper<LoggingEvent>(sourceIdentifier, localId, lilithEvent);
+			EventWrapper<LoggingEvent> wrapper = new EventWrapper<>(sourceIdentifier, localId, lilithEvent);
 			fileBuffer.add(wrapper);
 		}
 	}

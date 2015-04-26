@@ -72,7 +72,7 @@ public class JulImportCallableTest
 
 		private AppendOpStub()
 		{
-			list = new ArrayList<EventWrapper<LoggingEvent>>();
+			list = new ArrayList<>();
 		}
 
 		public List<EventWrapper<LoggingEvent>> getList()

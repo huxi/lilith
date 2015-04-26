@@ -98,9 +98,9 @@ public class FocusLoggerMenu
 	{
 		if(loggerName == null)
 		{
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
-		List<String> tokens = new ArrayList<String>();
+		List<String> tokens = new ArrayList<>();
 		loggerName = loggerName.replace('$', '.'); // better handling of inner classes
 		StringTokenizer tok = new StringTokenizer(loggerName, ".", false);
 		while(tok.hasMoreTokens())
@@ -109,7 +109,7 @@ public class FocusLoggerMenu
 			tokens.add(current);
 		}
 
-		List<String> result=new ArrayList<String>(tokens.size());
+		List<String> result=new ArrayList<>(tokens.size());
 		for(int i=tokens.size();i>0;i--)
 		{
 			StringBuilder builder=new StringBuilder();

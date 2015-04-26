@@ -56,7 +56,7 @@ public class CallableMetaData
 				sourceIdentifierStr = si.toString();
 			}
 		}
-		Map<String, String> metaData = new HashMap<String, String>();
+		Map<String, String> metaData = new HashMap<>();
 		metaData.put(FIND_TASK_META_CONDITION, conditionStr);
 		metaData.put(FIND_TASK_META_START_ROW, "" + startRow);
 		if(sourceIdentifierStr != null)
@@ -85,7 +85,7 @@ public class CallableMetaData
 				sourceIdentifierStr = si.toString();
 			}
 		}
-		Map<String, String> metaData = new HashMap<String, String>();
+		Map<String, String> metaData = new HashMap<>();
 		metaData.put(FIND_TASK_META_CONDITION, conditionStr);
 		if(sourceIdentifierStr != null)
 		{

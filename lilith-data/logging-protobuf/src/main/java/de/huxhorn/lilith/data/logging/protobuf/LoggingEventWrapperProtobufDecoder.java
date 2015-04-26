@@ -109,7 +109,7 @@ public class LoggingEventWrapperProtobufDecoder
 			return null;
 		}
 
-		EventWrapper<LoggingEvent> result = new EventWrapper<LoggingEvent>();
+		EventWrapper<LoggingEvent> result = new EventWrapper<>();
 		if(parsedEvent.hasEventIdentifier())
 		{
 			result.setEventIdentifier(convert(parsedEvent.getEventIdentifier()));

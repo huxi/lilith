@@ -78,7 +78,7 @@ public class LoggingMarkerFormatter
 					if(marker != null)
 					{
 						StringBuilder text = new StringBuilder();
-						buildMarker(text, 0, marker, new ArrayList<String>());
+						buildMarker(text, 0, marker, new ArrayList<>());
 						return text.toString();
 					}
 				}

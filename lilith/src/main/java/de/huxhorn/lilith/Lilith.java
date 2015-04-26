@@ -694,7 +694,7 @@ public class Lilith
 
 		//final String[] defaultNames={"MenuBarUI", "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI"};
 
-		HashMap<String, Object> storedDefaults = new HashMap<String, Object>();
+		HashMap<String, Object> storedDefaults = new HashMap<>();
 		if(application.isMac())
 		{
 			// Use Apple Aqua L&F screen menu bar if available; set property before any frames created

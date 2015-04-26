@@ -87,6 +87,6 @@ public class ConvertingServerSocketEventSourceProducer<T extends Serializable>
 	@Override
 	protected EventProducer<T> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<T>> eventQueue, InputStream inputStream) throws IOException
 	{
-		return new ConvertingStreamEventProducer<T>(id, eventQueue, sourceIdentifierUpdater, inputStream, converterRegistry);
+		return new ConvertingStreamEventProducer<>(id, eventQueue, sourceIdentifierUpdater, inputStream, converterRegistry);
 	}
 }

@@ -49,7 +49,7 @@ public class FileSplitterEventHandler<T extends Serializable>
 	public FileSplitterEventHandler(FileBufferFactory<T> fileBufferFactory, SourceManager<T> sourceManager)
 	{
 		this.fileBufferFactory = fileBufferFactory;
-		fileBuffers = new ConcurrentHashMap<SourceIdentifier, FileBuffer<EventWrapper<T>>>();
+		fileBuffers = new ConcurrentHashMap<>();
 		this.sourceManager = sourceManager;
 	}
 
@@ -57,14 +57,14 @@ public class FileSplitterEventHandler<T extends Serializable>
 	{
 		if(events != null && events.size() > 0)
 		{
-			Map<SourceIdentifier, List<EventWrapper<T>>> splittedEvents = new HashMap<SourceIdentifier, List<EventWrapper<T>>>();
+			Map<SourceIdentifier, List<EventWrapper<T>>> splittedEvents = new HashMap<>();
 			for(EventWrapper<T> wrapper : events)
 			{
 				SourceIdentifier si = wrapper.getSourceIdentifier();
 				List<EventWrapper<T>> sourceList = splittedEvents.get(si);
 				if(sourceList == null)
 				{
-					sourceList = new ArrayList<EventWrapper<T>>();
+					sourceList = new ArrayList<>();
 					splittedEvents.put(si, sourceList);
 				}
 				sourceList.add(wrapper);
@@ -127,7 +127,7 @@ public class FileSplitterEventHandler<T extends Serializable>
 			}
 			else if(sourceManager != null)
 			{
-				sourceManager.addSource(new EventSourceImpl<T>(si, result, false));
+				sourceManager.addSource(new EventSourceImpl<>(si, result, false));
 			}
 		}
 		return result;

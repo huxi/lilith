@@ -34,7 +34,7 @@ public class LoggingEventThreadNameProcessor
 
 	public LoggingEventThreadNameProcessor()
 	{
-		threadNames = new HashSet<String>();
+		threadNames = new HashSet<>();
 	}
 
 	public void processElement(EventWrapper<LoggingEvent> element)

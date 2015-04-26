@@ -96,7 +96,7 @@ public class ImportExportCommand
 	{
 		final Logger logger = LoggerFactory.getLogger(ImportExportCommand.class);
 
-		Map<String,byte[]> result=new HashMap<String,byte[]>();
+		Map<String,byte[]> result=new HashMap<>();
 
 		for(String current : files)
 		{
@@ -147,7 +147,7 @@ public class ImportExportCommand
 
 		if(logger.isInfoEnabled())
 		{
-			SortedMap<String, byte[]> sortedResult=new TreeMap<String,byte[]>(result);
+			SortedMap<String, byte[]> sortedResult=new TreeMap<>(result);
 			StringBuilder msg=new StringBuilder();
 			msg.append("Exported files:\n");
 			for(Map.Entry<String, byte[]> current: sortedResult.entrySet())

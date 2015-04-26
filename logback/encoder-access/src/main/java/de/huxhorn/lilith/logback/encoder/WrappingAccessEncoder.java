@@ -22,7 +22,7 @@ public class WrappingAccessEncoder
 	public byte[] encode(AccessEvent event)
 	{
 		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = converter.convert(event);
-		EventWrapper<de.huxhorn.lilith.data.access.AccessEvent> wrapped=new EventWrapper<de.huxhorn.lilith.data.access.AccessEvent>();
+		EventWrapper<de.huxhorn.lilith.data.access.AccessEvent> wrapped=new EventWrapper<>();
 		wrapped.setEvent(lilithEvent);
 		//wrapped.setEventIdentifier();
 		id++;

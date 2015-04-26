@@ -268,7 +268,7 @@ public class LoggingEventWriter
 		Marker marker = event.getMarker();
 		if(marker != null)
 		{
-			List<String> handledMarkers = new ArrayList<String>();
+			List<String> handledMarkers = new ArrayList<>();
 			writeMarkerNode(writer, marker, handledMarkers);
 		}
 	}
@@ -315,7 +315,7 @@ public class LoggingEventWriter
 		{
 			if(sortingMaps)
 			{
-				map = new TreeMap<String, String>(map);
+				map = new TreeMap<>(map);
 			}
 
 			StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, nodeName);

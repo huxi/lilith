@@ -204,11 +204,11 @@ public class PreferencesDialog
 		sourceNames = applicationPreferences.getSourceNames();
 		if(sourceNames == null)
 		{
-			sourceNames = new HashMap<String, String>();
+			sourceNames = new HashMap<>();
 		}
 		else
 		{
-			sourceNames = new HashMap<String, String>(sourceNames);
+			sourceNames = new HashMap<>(sourceNames);
 		}
 		sourceLists = applicationPreferences.getSourceLists();
 		conditionsPanel.initUI();
@@ -248,7 +248,7 @@ public class PreferencesDialog
 		{
 			sourceLists.remove(oldName);
 		}
-		Set<String> newList = new HashSet<String>();
+		Set<String> newList = new HashSet<>();
 		for(Source s : sourceList)
 		{
 			newList.add(s.getIdentifier());
@@ -268,7 +268,7 @@ public class PreferencesDialog
 		Set<String> srcList = sourceLists.get(name);
 		if(srcList != null)
 		{
-			List<Source> result = new ArrayList<Source>();
+			List<Source> result = new ArrayList<>();
 			for(String current : srcList)
 			{
 				Source s = new Source();
@@ -279,7 +279,7 @@ public class PreferencesDialog
 			Collections.sort(result);
 			return result;
 		}
-		return new ArrayList<Source>();
+		return new ArrayList<>();
 	}
 
 	private String getSourceName(String identifier)
@@ -329,7 +329,7 @@ public class PreferencesDialog
 
 	public List<String> getSourceListNames()
 	{
-		return new ArrayList<String>(sourceLists.keySet());
+		return new ArrayList<>(sourceLists.keySet());
 	}
 
 	public void removeSourceList(String sourceListName)
@@ -500,7 +500,7 @@ public class PreferencesDialog
 		File messageViewRoot = applicationPreferences.getDetailsViewRoot();
 		File messageViewGroovyFile = new File(messageViewRoot, ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME);
 
-		EventWrapper<LoggingEvent> eventWrapper = new EventWrapper<LoggingEvent>(new SourceIdentifier("identifier", "secondaryIdentifier"), 17, new LoggingEvent());
+		EventWrapper<LoggingEvent> eventWrapper = new EventWrapper<>(new SourceIdentifier("identifier", "secondaryIdentifier"), 17, new LoggingEvent());
 		console.setVariable("eventWrapper", eventWrapper);
 
 		console.setCurrentFileChooserDir(messageViewRoot);

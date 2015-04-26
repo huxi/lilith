@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class LilithKeyStrokes
 {
-	private static final Map<String, KeyStroke> actionKeyStrokes=new HashMap<String, KeyStroke>();
-	private static final Map<KeyStroke, String> keyStrokeActions=new HashMap<KeyStroke, String>();
+	private static final Map<String, KeyStroke> actionKeyStrokes=new HashMap<>();
+	private static final Map<KeyStroke, String> keyStrokeActions=new HashMap<>();
 
 	private static void addKeyStroke(String actionName, String keyStrokeString)
 	{

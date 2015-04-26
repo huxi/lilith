@@ -74,7 +74,7 @@ public class SoundsPanel
 		soundFileChooser.setFileFilter(mp3FileFilter);
 		//JPanel soundsPanel = new JPanel(new BorderLayout());
 		//soundsPanel.add(muteCheckbox, BorderLayout.NORTH);
-		Map<String, String> soundLocations = new HashMap<String, String>();
+		Map<String, String> soundLocations = new HashMap<>();
 		soundLocationTableModel = new SoundLocationTableModel(soundLocations);
 		soundLocationTable = new JTable(soundLocationTableModel);
 		soundLocationTable.setRowSelectionAllowed(true);
@@ -111,7 +111,7 @@ public class SoundsPanel
 		Map<String, String> soundLocations = applicationPreferences.getSoundLocations();
 		if(soundLocations == null)
 		{
-			soundLocations = new HashMap<String, String>();
+			soundLocations = new HashMap<>();
 		}
 		soundLocationTableModel.setData(soundLocations);
 		sounds.setSoundLocations(soundLocations);

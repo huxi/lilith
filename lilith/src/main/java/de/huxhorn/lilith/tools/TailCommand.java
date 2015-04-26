@@ -123,7 +123,7 @@ public class TailCommand
 
 			if (FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
 			{
-				Map<String, String> loggingMetaData = new HashMap<String, String>();
+				Map<String, String> loggingMetaData = new HashMap<>();
 				loggingMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 				loggingMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 				loggingMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
@@ -143,7 +143,7 @@ public class TailCommand
 			}
 			else if (FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
 			{
-				Map<String, String> accessMetaData = new HashMap<String, String>();
+				Map<String, String> accessMetaData = new HashMap<>();
 				accessMetaData.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
 				accessMetaData.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 				accessMetaData.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);

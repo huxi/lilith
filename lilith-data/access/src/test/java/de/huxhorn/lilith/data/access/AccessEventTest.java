@@ -74,7 +74,7 @@ public class AccessEventTest
 		LoggerContext value = new LoggerContext();
 		value.setBirthTime(1234567890000L);
 		value.setName("contextName");
-		Map<String, String> properties = new HashMap<String, String>();
+		Map<String, String> properties = new HashMap<>();
 		properties.put("foo", "bar");
 		value.setProperties(properties);
 		instance.setLoggerContext(value);
@@ -266,7 +266,7 @@ public class AccessEventTest
 	{
 		AccessEvent instance = new AccessEvent();
 
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		value.put("foo", "bar");
 		instance.setRequestHeaders(value);
 
@@ -288,7 +288,7 @@ public class AccessEventTest
 	{
 		AccessEvent instance = new AccessEvent();
 
-		Map<String, String[]> value = new HashMap<String, String[]>();
+		Map<String, String[]> value = new HashMap<>();
 		String[] array = new String[]{"bar"};
 		value.put("foo", array);
 		instance.setRequestParameters(value);
@@ -313,7 +313,7 @@ public class AccessEventTest
 	{
 		AccessEvent instance = new AccessEvent();
 
-		Map<String, String> value = new HashMap<String, String>();
+		Map<String, String> value = new HashMap<>();
 		value.put("foo", "bar");
 		instance.setResponseHeaders(value);
 

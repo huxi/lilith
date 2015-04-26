@@ -81,7 +81,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 	{
 		this.writeByteStrategy = writeByteStrategy;
 		setQueueSize(queueSize);
-		remoteHostsList=new ArrayList<String>();
+		remoteHostsList=new ArrayList<>();
 	}
 
 	public boolean isCreatingUUID()
@@ -162,7 +162,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	public List<String> getRemoteHostsList()
 	{
-		return new ArrayList<String>(remoteHostsList);
+		return new ArrayList<>(remoteHostsList);
 	}
 
 	/**
@@ -173,7 +173,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 	public void setRemoteHosts(String remoteHosts)
 	{
 		StringTokenizer tok = new StringTokenizer(remoteHosts, ",", false);
-		List<String> hosts = new ArrayList<String>();
+		List<String> hosts = new ArrayList<>();
 		while(tok.hasMoreTokens())
 		{
 			String current = tok.nextToken();

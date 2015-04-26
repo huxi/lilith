@@ -77,7 +77,7 @@ public class TaskTableModel<T>
 
 	public TaskTableModel(TaskManager<T> taskManager)
 	{
-		this.tasks = new ArrayList<Task<T>>();
+		this.tasks = new ArrayList<>();
 		this.paused = true;
 		this.eventListenerList = new EventListenerList();
 		this.taskListener = new UpdateViewTaskListener();

@@ -68,7 +68,7 @@ public class LilithJsonStreamLoggingEventProducer
 		{
 			try
 			{
-				ArrayList<Byte> bytes = new ArrayList<Byte>();
+				ArrayList<Byte> bytes = new ArrayList<>();
 				for(; ;)
 				{
 					for(; ;)

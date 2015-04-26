@@ -116,7 +116,7 @@ public class AccessEventsTest
 		AccessEvents instance = new AccessEvents();
 
 
-		List<AccessEvent> value = new ArrayList<AccessEvent>();
+		List<AccessEvent> value = new ArrayList<>();
 		value.add(new AccessEvent());
 		instance.setEvents(value);
 

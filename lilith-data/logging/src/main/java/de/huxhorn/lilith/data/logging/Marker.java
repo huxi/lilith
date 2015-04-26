@@ -78,7 +78,7 @@ public class Marker
 		{
 			return null;
 		}
-		return new HashMap<String, Marker>(references);
+		return new HashMap<>(references);
 	}
 
 	public void remove(Marker marker)
@@ -93,7 +93,7 @@ public class Marker
 	{
 		if(references == null)
 		{
-			references = new HashMap<String, Marker>();
+			references = new HashMap<>();
 		}
 		if(!references.containsKey(marker.getName()))
 		{
@@ -160,7 +160,7 @@ public class Marker
 	{
 		if(collectedMarkerNames == null)
 		{
-			collectedMarkerNames = new HashSet<String>();
+			collectedMarkerNames = new HashSet<>();
 		}
 		if(!collectedMarkerNames.contains(marker.getName()))
 		{

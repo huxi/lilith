@@ -49,11 +49,11 @@ public abstract class FileBufferFactory<T extends Serializable>
 		this.magicValue = FileConstants.MAGIC_VALUE;
 		if(metaData == null)
 		{
-			metaData = new HashMap<String, String>();
+			metaData = new HashMap<>();
 		}
 		else
 		{
-			metaData = new HashMap<String, String>(metaData);
+			metaData = new HashMap<>(metaData);
 		}
 
 		this.metaData = metaData;
@@ -71,7 +71,7 @@ public abstract class FileBufferFactory<T extends Serializable>
 		File dataFile = logFileFactory.getDataFile(si);
 		File indexFile = logFileFactory.getIndexFile(si);
 
-		Map<String, String> usedMetaData = new HashMap<String, String>(metaData);
+		Map<String, String> usedMetaData = new HashMap<>(metaData);
 		usedMetaData.put(FileConstants.IDENTIFIER_KEY, si.getIdentifier());
 		if(si.getSecondaryIdentifier() != null)
 		{
@@ -85,7 +85,7 @@ public abstract class FileBufferFactory<T extends Serializable>
 	{
 		if(logger.isInfoEnabled()) logger.info("Creating buffer for dataFile '{}'.", dataFile.getAbsolutePath());
 
-		CodecFileBuffer<EventWrapper<T>> result = new CodecFileBuffer<EventWrapper<T>>(magicValue, false, usedMetaData, null, dataFile, indexFile);
+		CodecFileBuffer<EventWrapper<T>> result = new CodecFileBuffer<>(magicValue, false, usedMetaData, null, dataFile, indexFile);
 
 		FileHeader fileHeader = result.getFileHeader();
 		MetaData actualMetaData = fileHeader.getMetaData();

@@ -382,7 +382,7 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			Set<InetAddress> inetAddresses = new HashSet<InetAddress>();
+			Set<InetAddress> inetAddresses = new HashSet<>();
 			try
 			{
 				Enumeration<NetworkInterface> netIfcs = NetworkInterface.getNetworkInterfaces();

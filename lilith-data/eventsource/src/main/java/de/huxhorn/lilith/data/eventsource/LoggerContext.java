@@ -117,7 +117,7 @@ public class LoggerContext
 		LoggerContext result = (LoggerContext) super.clone();
 		if(properties != null)
 		{
-			result.properties=new HashMap<String, String>(properties);
+			result.properties=new HashMap<>(properties);
 		}
 		return result;
 	}

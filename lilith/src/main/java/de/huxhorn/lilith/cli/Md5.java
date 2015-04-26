@@ -12,5 +12,5 @@ public class Md5
 	public static final String NAME = "md5";
 
 	@Parameter(description = "Files to checksum.")
-	public List<String> files=new ArrayList<String>();
+	public List<String> files=new ArrayList<>();
 }

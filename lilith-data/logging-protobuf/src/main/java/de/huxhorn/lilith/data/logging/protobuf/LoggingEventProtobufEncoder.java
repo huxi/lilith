@@ -105,7 +105,7 @@ public class LoggingEventProtobufEncoder
 		{
 			return null;
 		}
-		List<String> handledMarkers = new ArrayList<String>();
+		List<String> handledMarkers = new ArrayList<>();
 		return convert(marker, handledMarkers);
 	}
 

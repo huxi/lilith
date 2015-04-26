@@ -329,9 +329,9 @@ public class AccessFormatter
 		{
 			if(requestHeaderMap == null)
 			{
-				requestHeaderMap = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+				requestHeaderMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 			}
-			Vector<String> list = new Vector<String>(requestHeaderMap.keySet());
+			Vector<String> list = new Vector<>(requestHeaderMap.keySet());
 			return list.elements();
 		}
 
@@ -339,7 +339,7 @@ public class AccessFormatter
 		{
 			if(requestHeaderMap == null)
 			{
-				requestHeaderMap = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+				requestHeaderMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 			}
 			return requestHeaderMap;
 		}
@@ -353,7 +353,7 @@ public class AccessFormatter
 		{
 			if(requestParameterMap == null)
 			{
-				requestParameterMap = new HashMap<String, String[]>();
+				requestParameterMap = new HashMap<>();
 			}
 			return requestParameterMap;
 		}
@@ -367,7 +367,7 @@ public class AccessFormatter
 		{
 			if(requestParameterMap == null)
 			{
-				requestParameterMap = new HashMap<String, String[]>();
+				requestParameterMap = new HashMap<>();
 			}
 			String[] value = requestParameterMap.get(key);
 			if(value == null)
@@ -434,7 +434,7 @@ public class AccessFormatter
 		{
 			if(responseHeaderMap == null)
 			{
-				responseHeaderMap = new HashMap<String, String>();
+				responseHeaderMap = new HashMap<>();
 			}
 			return responseHeaderMap.get(key);
 		}
@@ -443,7 +443,7 @@ public class AccessFormatter
 		{
 			if(responseHeaderMap == null)
 			{
-				responseHeaderMap = new HashMap<String, String>();
+				responseHeaderMap = new HashMap<>();
 			}
 			return responseHeaderMap;
 		}
@@ -452,9 +452,9 @@ public class AccessFormatter
 		{
 			if(responseHeaderMap == null)
 			{
-				responseHeaderMap = new HashMap<String, String>();
+				responseHeaderMap = new HashMap<>();
 			}
-			return new ArrayList<String>(responseHeaderMap.keySet());
+			return new ArrayList<>(responseHeaderMap.keySet());
 		}
 
 		public void prepareForDeferredProcessing()

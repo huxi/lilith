@@ -410,7 +410,7 @@ public class AboutPanel
 	{
 		StringTokenizer st = new StringTokenizer(scrollText, "\n", true);
 
-		List<String> lines = new ArrayList<String>(st.countTokens() / 2);
+		List<String> lines = new ArrayList<>(st.countTokens() / 2);
 		String prevToken = null;
 		while(st.hasMoreTokens())
 		{

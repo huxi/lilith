@@ -184,7 +184,7 @@ public class TroubleshootingPanel
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			Properties props = System.getProperties();
-			SortedMap<String, String> sortedProps = new TreeMap<String, String>();
+			SortedMap<String, String> sortedProps = new TreeMap<>();
 			Enumeration<?> keys = props.propertyNames();
 			while(keys.hasMoreElements())
 			{
@@ -223,8 +223,8 @@ public class TroubleshootingPanel
 			Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
 
 			StringBuilder builder = new StringBuilder();
-			Map<ThreadGroup, List<ThreadHolder>> threadGroupMapping = new Hashtable<ThreadGroup, List<ThreadHolder>>();
-			List<ThreadHolder> nullList = new ArrayList<ThreadHolder>();
+			Map<ThreadGroup, List<ThreadHolder>> threadGroupMapping = new Hashtable<>();
+			List<ThreadHolder> nullList = new ArrayList<>();
 			for(Map.Entry<Thread, StackTraceElement[]> current : allStackTraces.entrySet())
 			{
 				Thread key = current.getKey();
@@ -240,7 +240,7 @@ public class TroubleshootingPanel
 					List<ThreadHolder> list = threadGroupMapping.get(group);
 					if(list == null)
 					{
-						list = new ArrayList<ThreadHolder>();
+						list = new ArrayList<>();
 						threadGroupMapping.put(group, list);
 					}
 					list.add(holder);
@@ -249,7 +249,7 @@ public class TroubleshootingPanel
 			}
 
 			ThreadGroup rootGroup = null;
-			Map<ThreadGroup, List<ThreadGroup>> threadGroups = new Hashtable<ThreadGroup, List<ThreadGroup>>();
+			Map<ThreadGroup, List<ThreadGroup>> threadGroups = new Hashtable<>();
 
 			for(Map.Entry<ThreadGroup, List<ThreadHolder>> current : threadGroupMapping.entrySet())
 			{
@@ -363,7 +363,7 @@ public class TroubleshootingPanel
 			List<ThreadGroup> list = threadGroups.get(parentGroup);
 			if(list == null)
 			{
-				list = new ArrayList<ThreadGroup>();
+				list = new ArrayList<>();
 				threadGroups.put(parentGroup, list);
 			}
 			if(!list.contains(group))

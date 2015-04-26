@@ -36,7 +36,7 @@ public class AccessEventViewPanel
 
 	protected EventWrapperTableModel<AccessEvent> createTableModel(Buffer<EventWrapper<AccessEvent>> buffer)
 	{
-		return new EventWrapperTableModel<AccessEvent>(buffer);
+		return new EventWrapperTableModel<>(buffer);
 	}
 
 	protected EventWrapperViewTable<AccessEvent> createTable(EventWrapperTableModel<AccessEvent> tableModel)

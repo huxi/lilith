@@ -93,7 +93,7 @@ public class MarkerTest
 	{
 		Marker instance = new Marker();
 
-		Map<String, Marker> value = new HashMap<String, Marker>();
+		Map<String, Marker> value = new HashMap<>();
 		value.put("foo", new Marker());
 		instance.setReferences(value);
 

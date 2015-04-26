@@ -94,7 +94,7 @@ public class TransformingEncoder
 			Map<String, String> props = loggerContext.getProperties();
 			if(props == null)
 			{
-				props = new HashMap<String, String>();
+				props = new HashMap<>();
 			}
 
 			if(applicationIdentifier != null)

@@ -37,7 +37,7 @@ public class SerializingGoToSource
 {
 	public static final int DEFAULT_PORT = 11111;
 
-	private final BlockingQueue<StackTraceElement> queue=new LinkedBlockingQueue<StackTraceElement>();
+	private final BlockingQueue<StackTraceElement> queue=new LinkedBlockingQueue<>();
 	private final GoToSourceRunnable goToSourceRunnable;
 	private Thread goToSourceThread=null;
 

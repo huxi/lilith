@@ -67,7 +67,7 @@ public class SimpleSendBytesService
 	private final int queueSize;
 	private final int pollIntervall;
 
-	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<ConnectionState>(ConnectionState.Offline);
+	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<>(ConnectionState.Offline);
 	private final AtomicBoolean shutdown=new AtomicBoolean(false);
 	private SendBytesThread sendBytesThread;
 	private boolean debug;
@@ -99,7 +99,7 @@ public class SimpleSendBytesService
 		{
 			throw new IllegalArgumentException("pollIntervall must be greater than zero!");
 		}
-		this.localEventBytes = new ArrayBlockingQueue<byte[]>(queueSize, true);
+		this.localEventBytes = new ArrayBlockingQueue<>(queueSize, true);
 		this.dataOutputStreamFactory = dataOutputStreamFactory;
 		this.writeByteStrategy = writeByteStrategy;
 		this.queueSize = queueSize;
@@ -220,7 +220,7 @@ public class SimpleSendBytesService
 			Thread reconnectionThread = new ReconnectionThread();
 			reconnectionThread.start();
 
-			List<byte[]> copy = new ArrayList<byte[]>(queueSize);
+			List<byte[]> copy = new ArrayList<>(queueSize);
 			for(; ;)
 			{
 				try

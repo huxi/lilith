@@ -77,7 +77,7 @@ public class ClassicLilithEncoder
 			if(file.length() == 0)
 			{
 				// write header
-				Map<String, String> metaDataMap = new HashMap<String, String>();
+				Map<String, String> metaDataMap = new HashMap<>();
 				metaDataMap.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_LOGGING);
 				metaDataMap.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
 				metaDataMap.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);

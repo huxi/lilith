@@ -54,7 +54,7 @@ public class SoundLocationTableModel
 		this.data = data;
 		if(data != null)
 		{
-			this.keys = new ArrayList<String>(data.keySet());
+			this.keys = new ArrayList<>(data.keySet());
 			Collections.sort(this.keys);
 		}
 		else

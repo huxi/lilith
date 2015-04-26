@@ -68,7 +68,7 @@ public class FocusMDCMenu
 			Map<String, String> mdc = loggingEvent.getMdc();
 			if (mdc != null && !mdc.isEmpty())
 			{
-				sorted = new TreeMap<String, String>(mdc);
+				sorted = new TreeMap<>(mdc);
 			}
 		}
 		setMdc(sorted);

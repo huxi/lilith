@@ -86,7 +86,7 @@ public class Log4jImportCallableTest
 
 		private AppendOpStub()
 		{
-			list = new ArrayList<EventWrapper<LoggingEvent>>();
+			list = new ArrayList<>();
 		}
 
 		public List<EventWrapper<LoggingEvent>> getList()

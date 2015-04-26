@@ -90,7 +90,7 @@ public class FocusMarkerMenu
 			setEnabled(false);
 			return;
 		}
-		SortedSet<String> sorted = new TreeSet<String>(collected);
+		SortedSet<String> sorted = new TreeSet<>(collected);
 		for (String current : sorted)
 		{
 			add(createAction(viewContainer, current));
