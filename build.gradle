@@ -60,19 +60,6 @@ buildscript {
 	}
 }
 
-apply plugin: 'compare-gradle-builds'
-
-compareGradleBuilds {
-	sourceBuild {
-		gradleVersion "1.3"
-		// tasks = ['clean', 'install']
-	}
-	targetBuild {
-		gradleVersion "1.4"
-		// tasks = ['clean', 'install']
-	}
-}
-
 task javadoc(type: Javadoc) {
 	destinationDir = file("$buildDir/javadoc")
 	source = files { subprojects.collect { it.sourceSets.main.java } }
@@ -125,7 +112,7 @@ allprojects {
 	apply plugin: 'jacoco'
 
 	group = 'de.huxhorn.lilith'
-	version = '0.9.45'
+	version = '8.0.0'
 	if(!System.properties.'release') {
 		version = version + '-SNAPSHOT'
 	}
@@ -163,8 +150,8 @@ subprojects {
 	}
 	//defaultTasks 'build', 'uploadPublished'
 	
-	sourceCompatibility = 1.5
-	targetCompatibility = 1.5
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
 	
 	// -Xlint:-options disables the
 	// "warning: [options] bootstrap class path not set in conjunction with -source 1.x"
