@@ -14,7 +14,7 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '2.4-rc-1'
 }
 
-def copyright = "Copyright \u00a9 2007-2014 J\u00f6rn Huxhorn"
+def copyright = "Copyright \u00a9 2007-2015 J\u00f6rn Huxhorn"
 
 buildscript {
 	apply from: 'dependencyDefinitions.gradle'
