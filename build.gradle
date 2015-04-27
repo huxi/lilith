@@ -190,7 +190,7 @@ subprojects {
 	artifacts { archives sourceJar, javadocJar }
 
     project.ext.defaultProject= {
-    	url 'http://lilith.huxhorn.de'
+    	url 'http://lilithapp.com'
     	name project.name
     	description project.description
     	inceptionYear '2007'
@@ -263,7 +263,7 @@ subprojects {
 				email 'huxhorn@users.sourceforge.net'
 				name 'Joern Huxhorn'
 				organization = 'Joern Huxhorn'
-				organizationUrl 'http://lilith.huxhorn.de'
+				organizationUrl 'http://lilithapp.com'
 				roles {
 					role 'Developer'
 				}

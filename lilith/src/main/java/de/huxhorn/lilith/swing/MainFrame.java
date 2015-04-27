@@ -3771,8 +3771,8 @@ public class MainFrame
 	private class CheckForUpdateRunnable
 		implements Runnable
 	{
-		private static final String RELEASE_VERSION_URL = "http://lilith.huxhorn.de/release-version.txt";
-		private static final String SNAPSHOT_VERSION_URL = "http://lilith.huxhorn.de/snapshot-version.txt";
+		private static final String RELEASE_VERSION_URL = "http://lilithapp.com/release-version.txt";
+		private static final String SNAPSHOT_VERSION_URL = "http://lilithapp.com/snapshot-version.txt";
 
 		private boolean showAlways;
 		private boolean checkSnapshot;
@@ -3791,7 +3791,7 @@ public class MainFrame
 
 		public String retrieveChanges(String currentVersion)
 		{
-			final String url = "http://lilith.huxhorn.de/releases/" + currentVersion + ".xhtml";
+			final String url = "http://lilithapp.com/releases/" + currentVersion + ".xhtml";
 
 			return readUrl(url);
 		}

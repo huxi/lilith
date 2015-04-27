@@ -402,12 +402,12 @@ All parts of Lilith that can be embedded into an application are [LGPL][]/[ASL][
 
 All Your Base Are Belong To Us.
 
-[ale]: http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/logback/encoder/AccessLilithEncoder.html "de.huxhorn.lilith.logback.encoder.AccessLilithEncoder"
-[amsa]: http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/logback/appender/AccessMultiplexSocketAppender.html "de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender"
+[ale]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/encoder/AccessLilithEncoder.html "de.huxhorn.lilith.logback.encoder.AccessLilithEncoder"
+[amsa]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/appender/AccessMultiplexSocketAppender.html "de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender"
 [asl]: http://www.apache.org/licenses/LICENSE-2.0.html "Apache License, Version 2.0"
 [chainsaw]: http://logging.apache.org/chainsaw/ "Chainsaw"
-[cle]: http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/logback/encoder/ClassicLilithEncoder.html "de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder"
-[cmsa]: http://lilith.huxhorn.de/javadoc/de/huxhorn/lilith/logback/appender/ClassicMultiplexSocketAppender.html "de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender"
+[cle]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/encoder/ClassicLilithEncoder.html "de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder"
+[cmsa]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/appender/ClassicMultiplexSocketAppender.html "de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender"
 [eclipse]: http://eclipse.org/ "Eclipse IDE"
 [gpl]: http://www.gnu.org/licenses/gpl.html "The GNU General Public License v3.0"
 [gradle]: http://gradle.org/ "Gradle - A better way to build."
