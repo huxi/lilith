@@ -56,7 +56,7 @@ buildscript {
 		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7' 
 		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
 		// https://code.google.com/p/gradle-macappbundle/
-		classpath 'edu.sc.seis.gradle:macappbundle:2.0.0'
+		classpath 'edu.sc.seis.gradle:macappbundle:2.1.0'
 	}
 }
 
@@ -349,7 +349,7 @@ subprojects {
 project(':lilith') {
 	apply plugin: 'application'
 	apply plugin: de.huxhorn.gradle.git.GitStatePlugin
-	apply plugin: 'macAppBundle'
+	apply plugin: 'edu.sc.seis.macAppBundle'
 
 /*
 ### macappbundle
