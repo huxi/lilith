@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Removed
-- Some `HttpStatus` enum values have been renamed. Code explicitely using them would need to be changed.
+- Some `HttpStatus` enum values have been renamed. Code explicitly using them would need to be changed.
 - `TroubleshootingPanel.reset(ViewContainer<?> container)`
 
 ### Fixed
