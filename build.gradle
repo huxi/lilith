@@ -15,6 +15,25 @@ task wrapper(type: Wrapper) {
 }
 
 def copyright = "Copyright \u00a9 2007-2015 J\u00f6rn Huxhorn"
+def globalSourceCompatibility = 1.8
+def globalTargetCompatibility = 1.8
+
+apply plugin: 'idea'
+
+idea {
+	project {
+		jdkName = globalSourceCompatibility
+		languageLevel = globalSourceCompatibility
+
+		ipr {
+			withXml {
+				def node = it.asNode()
+				def vcsConfig = node.component.find { it.'@name' == 'VcsDirectoryMappings' }
+				vcsConfig.mapping[0].'@vcs' = 'Git'
+			}
+		}
+	}
+}
 
 buildscript {
 	apply from: 'dependencyDefinitions.gradle'
@@ -156,8 +175,8 @@ subprojects {
 	}
 	//defaultTasks 'build', 'uploadPublished'
 	
-	sourceCompatibility = 1.8
-	targetCompatibility = 1.8
+	sourceCompatibility = globalSourceCompatibility
+	targetCompatibility = globalTargetCompatibility
 	
 	// -Xlint:-options disables the
 	// "warning: [options] bootstrap class path not set in conjunction with -source 1.x"
