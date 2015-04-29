@@ -387,7 +387,8 @@ project(':lilith') {
 		processResources.dependsOn checkGitState
 	}
 	
-	def theMainClassName = 'de.huxhorn.lilith.Lilith'
+	//def theMainClassName = 'de.huxhorn.lilith.Lilith'
+	def theMainClassName = 'de.huxhorn.sulky.version.Main'
 	
 	mainClassName = theMainClassName
 

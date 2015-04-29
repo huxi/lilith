@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Rough `TODO.md` listing some things that should be done.
 - Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
 - Requires Java 8.
+- Added error dialog if Lilith is started with Java prior to 1.8.0_45.
 
 ### Deprecated
 - Nothing.

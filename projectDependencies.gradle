@@ -551,6 +551,7 @@ project(':lilith') {
 		compile libraries.'sulky-sounds-impl-jlayer'
 		compile libraries.'sulky-swing'
 		compile libraries.'sulky-tasks'
+		compile libraries.'sulky-version'
 		compile libraries.'thymeleaf'
 		compile project(':jul-slf4j-handler')
 		compile project(':jul-xml')
