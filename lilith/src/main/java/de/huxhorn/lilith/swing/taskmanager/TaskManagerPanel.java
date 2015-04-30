@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.taskmanager;
 
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.taskmanager.table.TaskTable;
 import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.tasks.Task;
@@ -25,40 +26,31 @@ import de.huxhorn.sulky.tasks.TaskManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class TaskManagerPanel<T>
 	extends JPanel
 {
+	private static final long serialVersionUID = 4514870616761988724L;
+
 	private final Logger logger = LoggerFactory.getLogger(TaskManagerPanel.class);
-
-	private static final Icon CANCEL_TOOLBAR_ICON;
-
-	static
-	{
-		ImageIcon icon;
-		{
-			URL url = TaskManagerPanel.class.getResource("/tango/16x16/actions/process-stop.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		CANCEL_TOOLBAR_ICON = icon;
-
-	}
 
 	private CancelTaskAction cancelAction;
 	private TaskTable<T> table;
@@ -105,10 +97,10 @@ public class TaskManagerPanel<T>
 		table.setPaused(paused);
 	}
 
-	public boolean isPaused()
-	{
-		return table.isPaused();
-	}
+//	public boolean isPaused()
+//	{
+//		return table.isPaused();
+//	}
 
 	private class TaskSelectionListener
 		implements ListSelectionListener
@@ -159,7 +151,7 @@ public class TaskManagerPanel<T>
 		public CancelTaskAction()
 		{
 			super("Cancel task");
-			putValue(Action.SMALL_ICON, CANCEL_TOOLBAR_ICON);
+			putValue(Action.SMALL_ICON, Icons.STOP_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Cancels the selected task.");
 			//putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
 			setEnabled(false);

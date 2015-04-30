@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,7 +176,18 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.zip.GZIPInputStream;
 
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 
@@ -232,7 +243,6 @@ public class MainFrame
 	private TaskManagerInternalFrame taskManagerFrame;
 	private JLabel taskStatusLabel;
 	private int previousNumberOfTasks;
-	private ImageIcon smallProgressIcon;
 	public static final String LOGS_SUBDIRECTORY = "logs";
 	public static final String LOGGING_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/logging";
 	public static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
@@ -317,11 +327,10 @@ public class MainFrame
 		groovyFormatter = new GroovyEventWrapperHtmlFormatter(applicationPreferences);
 		thymeleafFormatter = new ThymeleafEventWrapperHtmlFormatter(applicationPreferences);
 
-		smallProgressIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Progress16.gif"));
-		ImageIcon frameIcon = new ImageIcon(MainFrame.class.getResource("/otherGraphics/Lilith16.jpg"));
-		setIconImage(frameIcon.getImage());
-		//colorsReferenceQueue=new ReferenceQueue<Colors>();
-		//colorsCache=new ConcurrentHashMap<EventIdentifier, SoftColorsReference>();
+		if(Icons.FRAME_ICON != null)
+		{
+			setIconImage(Icons.FRAME_ICON.getImage());
+		}
 		application = new DefaultApplication();
 		autostartProcesses = new ArrayList<>();
 
@@ -904,12 +913,12 @@ public class MainFrame
 			if(numberOfTasks == 1)
 			{
 				text = "1 active task.";
-				icon = smallProgressIcon;
+				icon = Icons.PROGRESS_ICON;
 			}
 			else if(numberOfTasks > 1)
 			{
 				text = "" + numberOfTasks + " active tasks.";
-				icon = smallProgressIcon;
+				icon = Icons.PROGRESS_ICON;
 			}
 			taskStatusLabel.setText(text);
 			taskStatusLabel.setIcon(icon);
@@ -2777,14 +2786,6 @@ public class MainFrame
 	{
 		if(logger.isInfoEnabled()) logger.info("showApplicationPathChangedDialog()");
 		final Object[] options = {"Exit", "Cancel"};
-		Icon icon = null;
-		{
-			URL url = MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-		}
 		int result = JOptionPane.showOptionDialog(this,
 			"You have changed the application path.\n" +
 				"You need to restart for this change to take effect.\n\n" +
@@ -2792,7 +2793,7 @@ public class MainFrame
 			"Exit now?",
 			JOptionPane.DEFAULT_OPTION,
 			JOptionPane.WARNING_MESSAGE,
-			icon,
+			Icons.DIALOG_WARNING_ICON,
 			options,
 			options[0]);
 		if(result == 0)
@@ -2805,14 +2806,6 @@ public class MainFrame
 	{
 		if(logger.isInfoEnabled()) logger.info("showLookAndFeelChangedDialog()");
 		final Object[] options = {"Exit", "Cancel"};
-		Icon icon = null;
-		{
-			URL url = MainFrame.class.getResource("/tango/32x32/status/dialog-warning.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-		}
 		int result = JOptionPane.showOptionDialog(this,
 			"You have changed the look & feel.\n" +
 				"You need to restart for this change to take effect.\n\n" +
@@ -2820,7 +2813,7 @@ public class MainFrame
 			"Exit now?",
 			JOptionPane.DEFAULT_OPTION,
 			JOptionPane.WARNING_MESSAGE,
-			icon,
+			Icons.DIALOG_WARNING_ICON,
 			options,
 			options[0]);
 		if(result == 0)

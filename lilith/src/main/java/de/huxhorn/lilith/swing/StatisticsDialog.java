@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,14 @@ import de.huxhorn.sulky.swing.Windows;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.net.URL;
 
 import javax.swing.*;
 
 public class StatisticsDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = -6745606522649465902L;
+
 	private StatisticsPanel statisticsPanel;
 	private MainFrame mainFrame;
 
@@ -40,11 +41,9 @@ public class StatisticsDialog
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(false);
 		setResizable(false);
-		URL url = StatisticsDialog.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
-		if(url != null)
+		if(Icons.STATISTICS_MENU_ICON != null)
 		{
-			ImageIcon icon = new ImageIcon(url);
-			Windows.setIconImage(this, icon.getImage());
+			Windows.setIconImage(this, Icons.STATISTICS_MENU_ICON.getImage());
 		}
 
 		statisticsPanel = new StatisticsPanel(owner);

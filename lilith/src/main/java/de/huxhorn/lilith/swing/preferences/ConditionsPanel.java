@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableColumnModel;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableModel;
@@ -28,14 +28,24 @@ import de.huxhorn.sulky.swing.Windows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -102,14 +112,12 @@ public class ConditionsPanel
 		moveUpAction = new MoveUpAction();
 		moveDownAction = new MoveDownAction();
 
-		//JButton addConditionButton = new JButton(addConditionAction);
 		JButton editConditionButton = new JButton(editConditionAction);
 		JButton removeConditionButton = new JButton(removeConditionAction);
 		JButton moveUpButton = new JButton(moveUpAction);
 		JButton moveDownButton = new JButton(moveDownAction);
 
 
-		//toolBar.add(addConditionButton);
 		toolBar.add(editConditionButton);
 		toolBar.add(removeConditionButton);
 		toolBar.add(moveUpButton);
@@ -268,38 +276,6 @@ public class ConditionsPanel
 		}
 	}
 
-	/*
-	private class AddConditionAction
-		extends AbstractAction
-	{
-		public AddConditionAction()
-		{
-			super("Add");
-			Icon icon;
-			{
-				URL url= EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url!=null)
-				{
-					icon =new ImageIcon(url);
-				}
-				else
-				{
-					icon =null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
-			putValue(Action.SHORT_DESCRIPTION, "Add a new Condition. Not yet implemented!");
-			setEnabled(false);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			if(logger.isDebugEnabled()) logger.debug("Add");
-			// TODO: implement
-		}
-	}
-	*/
-
 	private class EditConditionAction
 		extends AbstractAction
 	{
@@ -308,19 +284,7 @@ public class ConditionsPanel
 		public EditConditionAction()
 		{
 			super("Edit");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Edit a Condition.");
 		}
 
@@ -348,19 +312,7 @@ public class ConditionsPanel
 		public RemoveConditionAction()
 		{
 			super("Remove");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.REMOVE_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Remove the selected Condition.");
 		}
 
@@ -401,19 +353,7 @@ public class ConditionsPanel
 		public MoveUpAction()
 		{
 			super("Move up");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-up.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition up.");
 		}
 
@@ -443,19 +383,7 @@ public class ConditionsPanel
 		public MoveDownAction()
 		{
 			super("Move down");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-down.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition down.");
 		}
 

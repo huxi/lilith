@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +23,30 @@ import ca.odell.glazedlists.swing.AutoCompleteSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.KeyStroke;
 import javax.swing.text.JTextComponent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FocusTraversalPolicy;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.net.URL;
 import java.io.File;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -432,22 +445,23 @@ public class FindPanel<T extends Serializable>
 	{
 		String selectedType = (String) findTypeCombo.getSelectedItem();
 
-		if(LevelCondition.DESCRIPTION.equals(selectedType))
-		{
-			findTextEventList.clear();
-			findTextEventList.addAll(applicationPreferences.retrieveLevelValues());
-		}
-		else if(ApplicationPreferences.SAVED_CONDITION.equals(selectedType))
-		{
-			findTextEventList.clear();
-			findTextEventList.addAll(conditionNames);
-		}
-		else
-		{
-			String prev=(String)findTextCombo.getSelectedItem(); // save...
-			findTextEventList.clear();
-			findTextEventList.addAll(previousSearchStrings);
-			findTextCombo.setSelectedItem(prev); // ...and restore
+		switch (selectedType) {
+			case LevelCondition.DESCRIPTION:
+				findTextEventList.clear();
+				findTextEventList.addAll(applicationPreferences.retrieveLevelValues());
+				break;
+			case ApplicationPreferences.SAVED_CONDITION:
+				findTextEventList.clear();
+				findTextEventList.addAll(conditionNames);
+				break;
+			default:
+				String prev = (String) findTextCombo.getSelectedItem(); // save...
+
+				findTextEventList.clear();
+				findTextEventList.addAll(previousSearchStrings);
+				findTextCombo.setSelectedItem(prev); // ...and restore
+
+				break;
 		}
 	}
 
@@ -654,19 +668,7 @@ public class FindPanel<T extends Serializable>
 		public FindNextAction()
 		{
 			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-down.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find next.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_NEXT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -689,19 +691,7 @@ public class FindPanel<T extends Serializable>
 		public FindPreviousAction()
 		{
 			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/go-up.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Find previous.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_PREVIOUS_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -721,19 +711,7 @@ public class FindPanel<T extends Serializable>
 		public CloseFindAction()
 		{
 			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/emblems/emblem-unreadable.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.CLOSE_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Close");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
 			putValue(Action.ACCELERATOR_KEY, accelerator);

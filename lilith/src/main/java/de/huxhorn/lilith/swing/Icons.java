@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,458 +17,65 @@
  */
 package de.huxhorn.lilith.swing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.ImageIcon;
 import java.net.URL;
 
 public class Icons
 {
-	public static final ImageIcon EMPTY_16_ICON;
+	public static final ImageIcon EMPTY_16_ICON = resolveImageIcon("/otherGraphics/empty16.png");
+	public static final ImageIcon CLEAR_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-clear.png");
+	public static final ImageIcon CLEAR_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-clear.png");
+	public static final ImageIcon ATTACH_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-undo.png");
+	public static final ImageIcon DETACH_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-redo.png");
+	public static final ImageIcon ATTACH_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-undo.png");
+	public static final ImageIcon DETACH_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-redo.png");
+	public static final ImageIcon PAUSED_MENU_ICON = resolveImageIcon("/tango/16x16/actions/media-playback-start.png");
+	public static final ImageIcon UNPAUSED_MENU_ICON = resolveImageIcon("/tango/16x16/actions/media-playback-pause.png");
+	public static final ImageIcon PAUSED_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-playback-start.png");
+	public static final ImageIcon UNPAUSED_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-playback-pause.png");
+	public static final ImageIcon FIND_MENU_ITEM = resolveImageIcon("/tango/16x16/actions/edit-find.png");
+	public static final ImageIcon FIND_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-find.png");
+	public static final ImageIcon STATISTICS_MENU_ICON = resolveImageIcon("/tango/16x16/apps/utilities-system-monitor.png");
+	public static final ImageIcon DISCONNECT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/media-eject.png");
+	public static final ImageIcon DISCONNECT_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-eject.png");
+	public static final ImageIcon FIND_NEXT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-down.png");
+	public static final ImageIcon FIND_PREV_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-up.png");
+	public static final ImageIcon TAIL_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-bottom.png");
+	public static final ImageIcon TAIL_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-bottom.png");
+	public static final ImageIcon HELP_MENU_ICON = resolveImageIcon("/tango/16x16/apps/help-browser.png");
+	public static final ImageIcon OPEN_INACTIVE_MENU_ICON = resolveImageIcon("/tango/16x16/actions/document-open.png");
+	public static final ImageIcon EXPORT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/document-save.png");
+	public static final ImageIcon EXIT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/system-log-out.png");
+	public static final ImageIcon PREFERENCES_MENU_ICON = resolveImageIcon("/tango/16x16/categories/preferences-system.png");
+	public static final ImageIcon PREFERENCES_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/categories/preferences-system.png");
+	public static final ImageIcon LOVE_MENU_ICON = resolveImageIcon("/tango/16x16/emblems/emblem-favorite.png");
+	public static final ImageIcon LOVE_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/emblems/emblem-favorite.png");
+	public static final ImageIcon CHECK_UPDATE_ICON = resolveImageIcon("/tango/16x16/status/software-update-available.png");
+	public static final ImageIcon TOTD_ICON = resolveImageIcon("/tango/16x16/status/dialog-information.png");
+	public static final ImageIcon DIALOG_WARNING_ICON = resolveImageIcon("/tango/32x32/status/dialog-warning.png");
+	public static final ImageIcon DIALOG_INFO_ICON = resolveImageIcon("/tango/32x32/status/dialog-information.png");
+	public static final ImageIcon ADD_16_ICON = resolveImageIcon("/tango/16x16/actions/list-add.png");
+	public static final ImageIcon REMOVE_16_ICON = resolveImageIcon("/tango/16x16/actions/list-remove.png");
+	public static final ImageIcon SAVE_AS_32_ICON = resolveImageIcon("/tango/32x32/actions/document-save-as.png");
+	public static final ImageIcon STOP_16_ICON = resolveImageIcon("/tango/16x16/actions/process-stop.png");
+	public static final ImageIcon CLOSE_16_ICON = resolveImageIcon("/tango/16x16/emblems/emblem-unreadable.png");
+	public static final ImageIcon UPDATE_AVAILABLE_32_ICON = resolveImageIcon("/tango/32x32/status/software-update-available.png");
+	public static final ImageIcon PROGRESS_ICON = resolveImageIcon("/otherGraphics/Progress16.gif");
+	public static final ImageIcon FRAME_ICON = resolveImageIcon("/otherGraphics/Lilith16.jpg");
 
-	public static final ImageIcon CLEAR_MENU_ICON;
-	public static final ImageIcon ATTACH_MENU_ICON;
-	public static final ImageIcon DETACH_MENU_ICON;
-	public static final ImageIcon PAUSED_MENU_ICON;
-	public static final ImageIcon UNPAUSED_MENU_ICON;
-	public static final ImageIcon FIND_MENU_ITEM;
-	public static final ImageIcon STATISTICS_MENU_ICON;
-	public static final ImageIcon DISCONNECT_MENU_ICON;
-	public static final ImageIcon TAIL_MENU_ICON;
-	public static final ImageIcon FIND_NEXT_MENU_ICON;
-	public static final ImageIcon FIND_PREV_MENU_ICON;
-	public static final ImageIcon HELP_MENU_ICON;
-	public static final ImageIcon OPEN_INACTIVE_MENU_ICON;
-	public static final ImageIcon EXPORT_MENU_ICON;
-	public static final ImageIcon EXIT_MENU_ICON;
-	public static final ImageIcon PREFERENCES_MENU_ICON;
-	public static final ImageIcon LOVE_MENU_ICON;
+	private static final Logger logger = LoggerFactory.getLogger(Icons.class);
 
-	public static final ImageIcon CLEAR_TOOLBAR_ICON;
-	public static final ImageIcon ATTACH_TOOLBAR_ICON;
-	public static final ImageIcon DETACH_TOOLBAR_ICON;
-	public static final ImageIcon PAUSED_TOOLBAR_ICON;
-	public static final ImageIcon UNPAUSED_TOOLBAR_ICON;
-	public static final ImageIcon FIND_TOOLBAR_ICON;
-	public static final ImageIcon DISCONNECT_TOOLBAR_ICON;
-	public static final ImageIcon TAIL_TOOLBAR_ICON;
-	public static final ImageIcon LOVE_TOOLBAR_ICON;
-
-	public static final ImageIcon PREFERENCES_TOOLBAR_ICON;
-
-	public static final ImageIcon CHECK_UPDATE_ICON;
-	public static final ImageIcon TOTD_ICON;
-	public static final ImageIcon WINDOW_16_ICON; // TODO change
-
-	// TODO: Resource classes
-	// TODO: Separate Toolbar and Menu creation.
-	// TODO: toolbar action, menu action => same action
-	static
+	private static ImageIcon resolveImageIcon(String resourcePath)
 	{
-		ImageIcon icon;
+		URL url = Icons.class.getResource(resourcePath);
+		if (url != null)
 		{
-			URL url = Icons.class.getResource("/otherGraphics/empty16.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
+			return new ImageIcon(url);
 		}
-		EMPTY_16_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/edit-clear.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		CLEAR_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/edit-clear.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		CLEAR_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/edit-undo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		ATTACH_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/edit-redo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DETACH_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/edit-undo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		ATTACH_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/edit-redo.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DETACH_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/media-playback-start.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PAUSED_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/media-playback-pause.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		UNPAUSED_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/media-playback-start.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PAUSED_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/media-playback-pause.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		UNPAUSED_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/edit-find.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_MENU_ITEM = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/edit-find.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/apps/utilities-system-monitor.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		STATISTICS_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/media-eject.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DISCONNECT_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/media-eject.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		DISCONNECT_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/go-down.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_NEXT_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/go-up.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		FIND_PREV_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/go-bottom.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-
-		}
-		TAIL_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/actions/go-bottom.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-
-		}
-		TAIL_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/apps/help-browser.png");
-
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		HELP_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/document-open.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		OPEN_INACTIVE_MENU_ICON = icon;
-
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/document-save.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		EXPORT_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/actions/system-log-out.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		EXIT_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/categories/preferences-system.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PREFERENCES_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/categories/preferences-system.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		PREFERENCES_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/emblems/emblem-favorite.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		LOVE_MENU_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/32x32/emblems/emblem-favorite.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		LOVE_TOOLBAR_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/status/software-update-available.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		CHECK_UPDATE_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/status/dialog-information.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		TOTD_ICON = icon;
-
-		{
-			URL url = Icons.class.getResource("/tango/16x16/mimetypes/text-x-generic.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		WINDOW_16_ICON = icon;
+		if(logger.isWarnEnabled()) logger.warn("Failed to create ImageIcon from resource '{}'!", resourcePath);
+		return null;
 	}
 }

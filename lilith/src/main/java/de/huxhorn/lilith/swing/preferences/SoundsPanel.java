@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.filefilters.Mp3FileFilter;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
@@ -26,15 +26,24 @@ import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
@@ -42,6 +51,8 @@ import javax.swing.filechooser.FileFilter;
 public class SoundsPanel
 	extends JPanel
 {
+	private static final long serialVersionUID = 4941824789717300256L;
+
 	final Logger logger = LoggerFactory.getLogger(SoundsPanel.class);
 
 	private BrowseSoundAction browseSoundAction;
@@ -158,22 +169,12 @@ public class SoundsPanel
 	private class PlaySoundAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 5777380069273022677L;
+
 		public PlaySoundAction()
 		{
 			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/media-playback-start.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.PAUSED_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Play the selected sound.");
 		}
 
@@ -195,22 +196,12 @@ public class SoundsPanel
 	private class BrowseSoundAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 4433633396782474246L;
+
 		public BrowseSoundAction()
 		{
 			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/document-open.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Browse for a sound file.");
 		}
 

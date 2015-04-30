@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,6 @@ package de.huxhorn.lilith.swing;
 import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.tasks.Task;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
@@ -37,10 +34,9 @@ import javax.swing.*;
 public class ProgressGlassPane
 	extends JPanel
 {
-	private final Logger logger = LoggerFactory.getLogger(ProgressGlassPane.class);
+	private static final long serialVersionUID = -7692063970775627702L;
 
 	private CancelAction cancelAction;
-	//private JPanel searchingPanel;
 	private JProgressBar progressBar;
 	private JButton cancelButton;
 
@@ -89,53 +85,6 @@ public class ProgressGlassPane
 		addMouseMotionListener(eater);
 	}
 
-	/*
-	void requestFocusInternal()
-	{
-		if(searching)
-		{
-			cancelButton.requestFocusInWindow();
-		}
-		else
-		{
-			requestFocusInWindow();
-		}
-	}
-    */
-	public JInternalFrame resolveInternalFrame()
-	{
-		Container parent = getParent();
-		while(parent != null && !(parent instanceof JInternalFrame))
-		{
-			parent = parent.getParent();
-		}
-		return (JInternalFrame) parent;
-	}
-
-	/*
-	public boolean isSearching()
-	{
-		return searching;
-	}
-
-	public void setSearching(boolean searching)
-	{
-		if(this.searching != searching)
-		{
-			this.searching = searching;
-			if(this.searching)
-			{
-				addMouseListener(eater);
-				addMouseMotionListener(eater);
-			}
-			else
-			{
-				removeMouseListener(eater);
-				removeMouseMotionListener(eater);
-			}
-		}
-	}
-	*/
 	@Override
 	protected void paintComponent(Graphics g)
 	{
@@ -162,25 +111,12 @@ public class ProgressGlassPane
 	public class CancelAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 3356495903301831775L;
 		private Task<Long> task;
 
 		public CancelAction()
 		{
 			super();
-			/*
-			Icon icon;
-			{
-				URL url = ProgressGlassPane.class.getResource("/tango/16x16/actions/process-stop.png");
-				if (url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			*/
 			putValue(Action.NAME, "Cancel");
 			putValue(Action.SHORT_DESCRIPTION, "Cancel search.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
@@ -213,14 +149,6 @@ public class ProgressGlassPane
 			cancelSearch();
 		}
 	}
-
-//	@Override
-//	public void setVisible(boolean visible)
-//	{
-//		super.setVisible(visible);
-//		if(logger.isInfoEnabled()) logger.info("Visible!", new Throwable());
-
-	//	}
 
 	private static class MouseEventEater
 		implements MouseListener, MouseMotionListener

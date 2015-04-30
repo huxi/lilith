@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,18 +31,28 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
-import java.awt.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPopupMenu;
+import javax.swing.KeyStroke;
+import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.List;
 
-import javax.swing.*;
-
 public class HelpFrame
 	extends JFrame
 {
+	private static final long serialVersionUID = 8050028149955107404L;
+
 	private final Logger logger = LoggerFactory.getLogger(HelpFrame.class);
 
 	//private EnhancedXHTMLPanel helpPane;
@@ -66,7 +76,6 @@ public class HelpFrame
 
 	private void initUI()
 	{
-		//helpPane = new EnhancedXHTMLPanel();
 		helpPane = new XHTMLPanel();
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 
@@ -119,14 +128,9 @@ public class HelpFrame
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Rectangle maxBounds = ge.getMaximumWindowBounds();
 		setSize(maxBounds.width / 2, maxBounds.height / 2);
+		if(Icons.HELP_MENU_ICON != null)
 		{
-			URL url = HelpFrame.class.getResource("/tango/16x16/apps/help-browser.png");
-
-			if(url != null)
-			{
-				ImageIcon icon = new ImageIcon(url);
-				setIconImage(icon.getImage());
-			}
+			setIconImage(Icons.HELP_MENU_ICON.getImage());
 		}
 
 		CopySelectionAction copySelectionAction = new CopySelectionAction();

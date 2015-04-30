@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.preferences.table.AccessStatusTypeColumnModel;
 import de.huxhorn.lilith.swing.preferences.table.AccessStatusTypeTableModel;
 import de.huxhorn.lilith.swing.table.ColorScheme;
@@ -29,8 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -45,13 +43,13 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 public class AccessStatusTypePanel
 	extends JPanel
 {
+	private static final long serialVersionUID = -2356865948513043440L;
 	private final Logger logger = LoggerFactory.getLogger(AccessStatusTypePanel.class);
 
 	private PreferencesDialog preferencesDialog;
@@ -173,19 +171,7 @@ public class AccessStatusTypePanel
 		public EditConditionAction()
 		{
 			super("Edit");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Edit colors.");
 		}
 

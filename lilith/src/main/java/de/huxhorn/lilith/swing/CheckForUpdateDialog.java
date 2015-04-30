@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,20 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
-import java.awt.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -40,39 +53,18 @@ import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.List;
 
-import javax.swing.*;
-
 public class CheckForUpdateDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = 7361745831253216248L;
 	private final Logger logger = LoggerFactory.getLogger(CheckForUpdateDialog.class);
 	private XHTMLPanel helpPane;
-	private SelectionHighlighter.CopyAction copyAction;
 	private JLabel messageLabel;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private String docRoot;
 	private ApplicationPreferences applicationPreferences;
 	private JCheckBox checkForUpdateCheckbox;
 	private static final int INSET = 10;
-
-	private static final Icon UPDATE_ICON;
-
-	static
-	{
-		Icon icon;
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/status/software-update-available.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		UPDATE_ICON = icon;
-	}
 
 	public CheckForUpdateDialog(MainFrame mainFrame)
 	{
@@ -118,7 +110,7 @@ public class CheckForUpdateDialog
 		SelectionHighlighter helpPaneCaret = new SelectionHighlighter();
 		helpPaneCaret.install(helpPane);
 
-		copyAction = new SelectionHighlighter.CopyAction();
+		SelectionHighlighter.CopyAction copyAction = new SelectionHighlighter.CopyAction();
 		copyAction.install(helpPaneCaret);
 
 		checkForUpdateCheckbox = new JCheckBox("Check for updates on startup.");
@@ -196,7 +188,7 @@ public class CheckForUpdateDialog
 		else
 		{
 			messageLabel.setText(message);
-			messageLabel.setIcon(UPDATE_ICON);
+			messageLabel.setIcon(Icons.UPDATE_AVAILABLE_32_ICON);
 		}
 	}
 

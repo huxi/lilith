@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,41 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
+import javax.swing.ListCellRenderer;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -44,6 +59,8 @@ import javax.swing.event.ListSelectionListener;
 public class EditSourceListDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = -2838685275609729547L;
+
 	private final Logger logger = LoggerFactory.getLogger(EditSourceListDialog.class);
 
 	private JList sourceList;
@@ -85,15 +102,9 @@ public class EditSourceListDialog
 		listList.addMouseListener(new ListListMouseListener());
 
 		JScrollPane sourceListScrollPane = new JScrollPane(sourceList);
-//		JPanel sourcePanel = new JPanel(new GridLayout(1,1));
-//		sourcePanel.add(sourceListScrollPane);
-//		sourcePanel.setBorder(new TitledBorder("Sources"));
 		sourceListScrollPane.setBorder(new TitledBorder("Sources"));
 
 		JScrollPane listScrollPane = new JScrollPane(listList);
-//		JPanel listPanel = new JPanel(new GridLayout(1,1));
-//		listPanel.add(listScrollPane);
-//		listPanel.setBorder(new TitledBorder("List content"));
 		listScrollPane.setBorder(new TitledBorder("List content"));
 
 		addSourceAction = new AddSourceAction();
@@ -133,10 +144,6 @@ public class EditSourceListDialog
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		centerPanel.add(listsPanel, gbc);
-//		centerPanel.add(sourcePanel, gbc);
-//
-//		gbc.gridx = 1;
-//		centerPanel.add(listPanel, gbc);
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridBagLayout());
@@ -182,12 +189,10 @@ public class EditSourceListDialog
 		if(adding)
 		{
 			setTitle("Add a source list...");
-			//sourceListName.setEditable(true);
 		}
 		else
 		{
 			setTitle("Edit a source list...");
-			//sourceListName.setEditable(false);
 		}
 	}
 
@@ -238,7 +243,7 @@ public class EditSourceListDialog
 		this.sourceListName.setText(sourceName);
 	}
 
-	public String getSourcListeName()
+	public String getSourceListName()
 	{
 		return sourceListName.getText();
 	}
@@ -256,6 +261,8 @@ public class EditSourceListDialog
 	private class OkAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7574735536007230958L;
+
 		public OkAction()
 		{
 			super("Ok");
@@ -288,6 +295,8 @@ public class EditSourceListDialog
 	private class CancelAction
 		extends AbstractAction
 	{
+
+		private static final long serialVersionUID = -3939426044729482353L;
 
 		public CancelAction()
 		{
@@ -348,22 +357,12 @@ public class EditSourceListDialog
 	private class AddSourceAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6614323545779829613L;
+
 		public AddSourceAction()
 		{
 			super("Add");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Add the selected source(s).");
 		}
 
@@ -390,22 +389,12 @@ public class EditSourceListDialog
 	private class RemoveSourceAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -2018151037420314725L;
+
 		public RemoveSourceAction()
 		{
 			super("Remove");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.REMOVE_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Remove the selected source(s).");
 		}
 

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,38 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.swing.Windows;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class SourcesPanel
 	extends JPanel
 {
+	private static final long serialVersionUID = -1430756927138063766L;
+
 	final Logger logger = LoggerFactory.getLogger(SourcesPanel.class);
 
 	private JTable sourceNameTable;
@@ -47,12 +57,10 @@ public class SourcesPanel
 	private RemoveSourceNameAction removeSourceNameAction;
 	private EditSourceNameDialog editSourceNameDialog;
 	private PreferencesDialog preferencesDialog;
-	//private ApplicationPreferences applicationPreferences;
 
 	public SourcesPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
-		//applicationPreferences=preferencesDialog.getApplicationPreferences();
 		createUI();
 	}
 
@@ -95,14 +103,6 @@ public class SourcesPanel
 	public void initUI()
 	{
 		Map<String, String> sourceNames = preferencesDialog.getSourceNames();
-//		if(sourceNames==null)
-//		{
-//			sourceNames=new HashMap<String, String>();
-//		}
-//		else
-//		{
-//			sourceNames=new HashMap<String, String>(sourceNames);
-//		}
 		sourceNameTableModel.setData(sourceNames);
 		updateSourceNames();
 	}
@@ -147,26 +147,9 @@ public class SourcesPanel
 			newIdentifier = newIdentifier.trim();
 			sourceName = editSourceNameDialog.getSourceName();
 			sourceName = sourceName.trim();
-			/*
-			if(data.containsKey(sourceIdentifier))
-			{
-				data.remove(sourceIdentifier);
-			}
-
-			data.put(newIdentifier, sourceName);
-
-			sourceNameTableModel.setData(data);
-			*/
 			preferencesDialog.setSourceName(sourceIdentifier, newIdentifier, sourceName);
 		}
 	}
-
-/*
-	public void saveSettings()
-	{
-		applicationPreferences.setSourceNames(sourceNameTableModel.getData());
-	}
-*/
 
 	private int convertSourceNameRow(int row)
 	{
@@ -185,22 +168,12 @@ public class SourcesPanel
 	private class AddSourceNameAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 2159800920473132058L;
+
 		public AddSourceNameAction()
 		{
 			super("Add");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Add a new Source Name.");
 		}
 
@@ -214,22 +187,12 @@ public class SourcesPanel
 	private class EditSourceNameAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -6686916429941183752L;
+
 		public EditSourceNameAction()
 		{
 			super("Edit");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Edit a Source Name.");
 		}
 
@@ -250,22 +213,12 @@ public class SourcesPanel
 	private class RemoveSourceNameAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -4376772972629739348L;
+
 		public RemoveSourceNameAction()
 		{
 			super("Remove");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.REMOVE_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Remove the selected Source Name.");
 		}
 

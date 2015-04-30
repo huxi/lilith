@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,6 @@ import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -69,29 +67,10 @@ public class TipOfTheDayDialog
 	private ApplicationPreferences applicationPreferences;
 	private XHTMLPanel helpPane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
-	private SelectionHighlighter.CopyAction copyAction;
 	private JCheckBox showTipOfTheDayCheckbox;
 
 	private static final int INSET = 10;
 
-	private static final Icon INFO_ICON;
-
-	static
-	{
-		Icon icon;
-		{
-			URL url = ViewActions.class.getResource("/tango/32x32/status/dialog-information.png");
-			if(url != null)
-			{
-				icon = new ImageIcon(url);
-			}
-			else
-			{
-				icon = null;
-			}
-		}
-		INFO_ICON = icon;
-	}
 
 	public TipOfTheDayDialog(MainFrame owner)
 	{
@@ -123,7 +102,7 @@ public class TipOfTheDayDialog
 		Font labelFont = didYouKnowLabel.getFont();
 		labelFont=labelFont.deriveFont(2.0f*labelFont.getSize2D());
 		didYouKnowLabel.setFont(labelFont);
-		didYouKnowLabel.setIcon(INFO_ICON);
+		didYouKnowLabel.setIcon(Icons.DIALOG_INFO_ICON);
 
 		content.add(didYouKnowLabel, gbc);
 
@@ -165,7 +144,7 @@ public class TipOfTheDayDialog
 		SelectionHighlighter helpPaneCaret = new SelectionHighlighter();
 		helpPaneCaret.install(helpPane);
 
-		copyAction = new SelectionHighlighter.CopyAction();
+		SelectionHighlighter.CopyAction copyAction = new SelectionHighlighter.CopyAction();
 		copyAction.install(helpPaneCaret);
 
 
@@ -275,10 +254,10 @@ public class TipOfTheDayDialog
 		if(logger.isInfoEnabled()) logger.info("Found {} Tips of the Day.", tipsOfTheDay.size());
 	}
 
-	public void copySelection()
-	{
-		copyAction.actionPerformed(null);
-	}
+//	public void copySelection()
+//	{
+//		copyAction.actionPerformed(null);
+//	}
 
 	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
 	{

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,30 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.sulky.swing.Windows;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -39,6 +48,8 @@ import javax.swing.event.ListSelectionListener;
 public class SourceListsPanel
 	extends JPanel
 {
+	private static final long serialVersionUID = -4847362143627827385L;
+
 	final Logger logger = LoggerFactory.getLogger(SourceListsPanel.class);
 
 	private JList sourceListList;
@@ -46,15 +57,12 @@ public class SourceListsPanel
 	private EditSourceListAction editSourceListAction;
 	private RemoveSourceListAction removeSourceListAction;
 	private PreferencesDialog preferencesDialog;
-	//private ApplicationPreferences applicationPreferences;
 	private EditSourceListDialog editSourceListDialog;
-	//private Map<String, List<Source>> sourceLists;
 	private GenericSortedListModel<Source> listModel;
 
 	public SourceListsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
-		//applicationPreferences=preferencesDialog.getApplicationPreferences();
 		createUI();
 	}
 
@@ -66,9 +74,6 @@ public class SourceListsPanel
 		sourceListList = new JList(sourceListListModel);
 		sourceListList.addMouseListener(new SourceListMouseListener());
 		JScrollPane sourceListScrollPane = new JScrollPane(sourceListList);
-		//JPanel sourceListsListPanel = new JPanel(new GridLayout(1,1));
-		//sourceListsListPanel.add(sourceListScrollPane);
-		//sourceListsListPanel.setBorder(new TitledBorder("Source Lists"));
 		sourceListScrollPane.setBorder(new TitledBorder("Source Lists"));
 
 		ListCellRenderer sourceCellRenderer = new SourceCellRenderer();
@@ -81,23 +86,8 @@ public class SourceListsPanel
 
 
 		JScrollPane listScrollPane = new JScrollPane(listList);
-		//JPanel listPanel = new JPanel(new GridLayout(1,1));
-		//listPanel.add(listScrollPane);
-		//listPanel.setBorder(new TitledBorder("List content"));
 		listScrollPane.setBorder(new TitledBorder("List content"));
 
-//		JPanel listsPanel = new JPanel(new GridBagLayout());
-//		GridBagConstraints gbc = new GridBagConstraints();
-//		gbc.weightx = 0.5;
-//		gbc.weighty = 0.5;
-//		gbc.gridx = 0;
-//		gbc.gridy = 0;
-//		gbc.gridwidth = 1;
-//		gbc.fill = GridBagConstraints.BOTH;
-//
-//		listsPanel.add(sourceListsListPanel, gbc);
-//		gbc.gridx = 1;
-//		listsPanel.add(listPanel, gbc);
 		JPanel listsPanel = new JPanel(new GridLayout(1, 2));
 		listsPanel.add(sourceListScrollPane);
 		listsPanel.add(listScrollPane);
@@ -126,13 +116,6 @@ public class SourceListsPanel
 		add(listsPanel, BorderLayout.CENTER);
 	}
 
-/*
-	public void saveSettings()
-	{
-		applicationPreferences.setSourceLists(this.sourceLists);
-	}
-*/
-
 	private class SourceListSelectionListener
 		implements ListSelectionListener
 	{
@@ -144,17 +127,6 @@ public class SourceListsPanel
 
 	public void initUI()
 	{
-		/*
-		Map<String, List<Source>> sourceLists = applicationPreferences.getSourceLists();
-		if(sourceLists == null)
-		{
-			this.sourceLists = new HashMap<String, List<Source>>();
-		}
-		else
-		{
-			this.sourceLists = new HashMap<String, List<Source>>(sourceLists);
-		}
-		*/
 		updateSourceLists();
 		updateListContents();
 		updateActions();
@@ -193,15 +165,6 @@ public class SourceListsPanel
 	{
 		editSourceListDialog.setSourceListName(sourceListName);
 		List<Source> data = preferencesDialog.getSourceList(sourceListName);
-		/*
-		if(sourceListName!=null)
-		{
-			if(sourceLists.containsKey(sourceListName))
-			{
-				data=new ArrayList<Source>(sourceLists.get(sourceListName));
-			}
-		}
-		*/
 		if(data == null)
 		{
 			data = new ArrayList<>();
@@ -215,18 +178,9 @@ public class SourceListsPanel
 		Windows.showWindow(editSourceListDialog, preferencesDialog, true);
 		if(!editSourceListDialog.isCanceled())
 		{
-			String newSourceListName = editSourceListDialog.getSourcListeName();
+			String newSourceListName = editSourceListDialog.getSourceListName();
 			List<Source> sources = editSourceListDialog.getSources();
 			preferencesDialog.setSourceList(sourceListName, newSourceListName, sources);
-			/*
-			if(sourceListName != null && sourceLists.containsKey(sourceListName))
-			{
-				sourceLists.remove(sourceListName);
-			}
-			sourceLists.put(newSourceListName, sources);
-			updateSourceLists();
-			updateListContents();
-			*/
 		}
 		if(logger.isDebugEnabled()) logger.debug("After show of editSourceListDialog...");
 	}
@@ -239,19 +193,7 @@ public class SourceListsPanel
 		public AddSourceListAction()
 		{
 			super("Add");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Add a new Source List.");
 		}
 
@@ -271,19 +213,7 @@ public class SourceListsPanel
 		public EditSourceListAction()
 		{
 			super("Edit");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-add.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Edit a Source List.");
 		}
 
@@ -307,19 +237,7 @@ public class SourceListsPanel
 		public RemoveSourceListAction()
 		{
 			super("Remove");
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/16x16/actions/list-remove.png");
-				if(url != null)
-				{
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.REMOVE_16_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Remove the selected Source List.");
 		}
 

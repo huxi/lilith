@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.swing.statistics;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.swing.EventWrapperViewPanel;
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.filefilters.PngFileFilter;
 
@@ -27,7 +27,8 @@ import org.rrd4j.core.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -35,7 +36,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,12 +43,26 @@ import java.util.Map;
 import java.util.SortedMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 
 public class StatisticsPanel
 	extends JPanel
 {
+	private static final long serialVersionUID = -3688674213817154931L;
+
 	private final Logger logger = LoggerFactory.getLogger(StatisticsPanel.class);
 
 	private static final long REFRESH_DELAY = 10000;
@@ -58,7 +72,7 @@ public class StatisticsPanel
 	private boolean running;
 	private GraphImageProducer[] graphImageFactories;
 	private int selectedGraph;
-	private JComboBox timerangeComboBox;
+	private JComboBox timeRangeComboBox;
 	private JFileChooser saveFileChooser;
 	private BufferedImage[] imageToggle;
 	private int imageIndex;
@@ -121,7 +135,7 @@ public class StatisticsPanel
 
 		setLayout(new BorderLayout());
 		add(graphPanel, BorderLayout.CENTER);
-		timerangeComboBox = new JComboBox(new Object[]{
+		timeRangeComboBox = new JComboBox(new Object[]{
 			"20 minutes",
 			"2 hours",
 			"10 hours",
@@ -131,7 +145,7 @@ public class StatisticsPanel
 			"90 days",
 			"1 year",
 		});
-		timerangeComboBox.addActionListener(new TimerangeActionListener());
+		timeRangeComboBox.addActionListener(new TimeRangeActionListener());
 
 		sourcesComboBox = new JComboBox();
 		sourcesComboBox.addActionListener(new SourcesActionListener());
@@ -142,7 +156,7 @@ public class StatisticsPanel
 		toolbar.add(sourcesComboBox);
 		toolbar.addSeparator();
 		toolbar.add(new JLabel("Timerange: "));
-		toolbar.add(timerangeComboBox);
+		toolbar.add(timeRangeComboBox);
 		toolbar.add(showMaxCheckBox);
 		toolbar.addSeparator();
 		toolbar.add(new JButton(new SaveAction()));
@@ -284,10 +298,7 @@ public class StatisticsPanel
 	private synchronized void setRunning(boolean running)
 	{
 		this.running = running;
-		if(running)
-		{
-		}
-		else
+		if(!running)
 		{
 			graphLabel.setIcon(null);
 			for(int i = 0; i < imageToggle.length; i++)
@@ -391,13 +402,13 @@ public class StatisticsPanel
 		}
 	}
 
-	private class TimerangeActionListener
+	private class TimeRangeActionListener
 		implements ActionListener
 	{
 
 		public void actionPerformed(ActionEvent e)
 		{
-			int index = timerangeComboBox.getSelectedIndex();
+			int index = timeRangeComboBox.getSelectedIndex();
 			setSelectedGraph(index);
 		}
 	}
@@ -427,43 +438,12 @@ public class StatisticsPanel
 	private class SaveAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = 2578860563978207116L;
+
 		public SaveAction()
 		{
 			super();
-			Icon icon;
-			{
-				URL url = EventWrapperViewPanel.class.getResource("/tango/32x32/actions/document-save-as.png");
-				//URL url=EventWrapperViewPanel.class.getResource("/tango/scalable/actions/document-save-as.svg");
-				if(url != null)
-				{
-//					try
-//					{
-//						//InputStreamReader reader = new InputStreamReader(url.openStream(), "utf-8");
-//						String svg=IOUtils.toString(url.openStream(), "utf-8");
-//						if(logger.isInfoEnabled()) logger.info("SVG: {}", svg);
-//						StringReader reader=new StringReader(svg);
-//						URI uri = SVGCache.getSVGUniverse().loadSVG(reader, "document-save-as");
-//						SVGIcon svgIcon = new SVGIcon();
-//						svgIcon.setSvgURI(uri);
-//						svgIcon.setAntiAlias(true);
-//						svgIcon.setPreferredSize(new Dimension(80, 80));
-//						svgIcon.setScaleToFit(true);
-//						icon = svgIcon;
-//					}
-//					catch (IOException e)
-//					{
-//						e.printStackTrace();
-//					}
-//					//svgIcon.setSvgURI(uri);
-//					if(logger.isInfoEnabled()) logger.info("icon: {}",icon);
-					icon = new ImageIcon(url);
-				}
-				else
-				{
-					icon = null;
-				}
-			}
-			putValue(Action.SMALL_ICON, icon);
+			putValue(Action.SMALL_ICON, Icons.SAVE_AS_32_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Save as...");
 
 		}
@@ -502,6 +482,8 @@ public class StatisticsPanel
 	private class ShowMaxAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -577021651355332547L;
+
 		public ShowMaxAction()
 		{
 			super("Show Max");
