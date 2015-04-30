@@ -2096,6 +2096,11 @@ public class MainFrame
 
 	public String createMessage(EventWrapper wrapper)
 	{
+		if(wrapper == null)
+		{
+			return "<html><body></body></html>";
+		}
+
 		String result;
 		if(usingThymeleaf)
 		{
