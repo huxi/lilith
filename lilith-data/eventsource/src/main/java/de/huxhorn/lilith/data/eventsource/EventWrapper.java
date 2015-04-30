@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2015 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,16 +39,10 @@ import java.io.Serializable;
 public class EventWrapper<T extends Serializable>
 	implements Serializable
 {
+	private static final long serialVersionUID = 6302031645772429174L;
 
 	private EventIdentifier eventIdentifier;
 	private T event;
-
-	/**
-	 * This attribute is ignored in equals and hashCode.
-	 * It's transient and won't survive serialization.
-	 */
-	private transient TransferSizeInfo transferSizeInfo;
-	private static final long serialVersionUID = 6302031645772429174L;
 
 	public EventWrapper()
 	{
@@ -112,16 +106,6 @@ public class EventWrapper<T extends Serializable>
 		this.eventIdentifier = eventIdentifier;
 	}
 
-	public TransferSizeInfo getTransferSizeInfo()
-	{
-		return transferSizeInfo;
-	}
-
-	public void setTransferSizeInfo(TransferSizeInfo transferSizeInfo)
-	{
-		this.transferSizeInfo = transferSizeInfo;
-	}
-
 	public T getEvent()
 	{
 		return event;
@@ -144,9 +128,8 @@ public class EventWrapper<T extends Serializable>
 		{
 			return false;
 		}
-		if(event != null ? !event.equals(that.event) : that.event != null) return false;
+		return !(event != null ? !event.equals(that.event) : that.event != null);
 
-		return true;
 	}
 
 	@Override
@@ -161,11 +144,6 @@ public class EventWrapper<T extends Serializable>
 
 	public String toString()
 	{
-		StringBuilder result = new StringBuilder();
-		result.append("eventWrapper[");
-		result.append("eventIdentifier=").append(eventIdentifier);
-		result.append(", event=").append(event);
-		result.append("]");
-		return result.toString();
+		return "eventWrapper[" + "eventIdentifier=" + eventIdentifier + ", event=" + event + "]";
 	}
 }
