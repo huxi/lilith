@@ -72,13 +72,13 @@ public class StatisticsPanel
 	private boolean running;
 	private GraphImageProducer[] graphImageFactories;
 	private int selectedGraph;
-	private JComboBox timeRangeComboBox;
+	private JComboBox<String> timeRangeComboBox;
 	private JFileChooser saveFileChooser;
 	private BufferedImage[] imageToggle;
 	private int imageIndex;
 	private JLabel graphLabel;
 	private JCheckBox showMaxCheckBox;
-	private JComboBox sourcesComboBox;
+	private JComboBox<WrappedSourceIdentifier> sourcesComboBox;
 	private Thread updateThread;
 	public static final String SOURCE_IDENTIFIER_PROPERTY = "sourceIdentifier";
 	private Object[] previousSourcesArray;
@@ -135,7 +135,7 @@ public class StatisticsPanel
 
 		setLayout(new BorderLayout());
 		add(graphPanel, BorderLayout.CENTER);
-		timeRangeComboBox = new JComboBox(new Object[]{
+		timeRangeComboBox = new JComboBox<>(new String[]{
 			"20 minutes",
 			"2 hours",
 			"10 hours",
@@ -147,7 +147,7 @@ public class StatisticsPanel
 		});
 		timeRangeComboBox.addActionListener(new TimeRangeActionListener());
 
-		sourcesComboBox = new JComboBox();
+		sourcesComboBox = new JComboBox<>();
 		sourcesComboBox.addActionListener(new SourcesActionListener());
 
 		JToolBar toolbar = new JToolBar();
@@ -175,11 +175,11 @@ public class StatisticsPanel
 			WrappedSourceIdentifier wrapped = new WrappedSourceIdentifier(current.getKey(), current.getValue());
 			wrappedSources.add(wrapped);
 		}
-		Object[] newSourcesArray = wrappedSources.toArray();
+		WrappedSourceIdentifier[] newSourcesArray = wrappedSources.toArray(new WrappedSourceIdentifier[wrappedSources.size()]);
 		if(!Arrays.equals(previousSourcesArray, newSourcesArray))
 		{
 			previousSourcesArray = newSourcesArray;
-			DefaultComboBoxModel model = new DefaultComboBoxModel(newSourcesArray);
+			DefaultComboBoxModel<WrappedSourceIdentifier> model = new DefaultComboBoxModel<>(newSourcesArray);
 			sourcesComboBox.setModel(model);
 		}
 		int index = 0;

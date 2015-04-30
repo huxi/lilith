@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@ import javax.swing.event.ListSelectionListener;
 public class OpenPreviousDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = 8731011406364451059L;
+
 	private final Logger logger = LoggerFactory.getLogger(OpenPreviousDialog.class);
 
 	private enum EventType
@@ -66,7 +68,9 @@ public class OpenPreviousDialog
 		}
 	}
 
-	public static final Object[] EMPTY_OBJECT_ARRAY = new Object[]{};
+	private static final String[] EMPTY_STRING_ARRAY = new String[]{};
+	private static final SourceIdentifier[] EMPTY_SECONDARY_ARRAY = new SourceIdentifier[]{};
+
 	private MainFrame mainFrame;
 	private OpenAction openAction;
 	private JTabbedPane tabbedPane;
@@ -168,6 +172,8 @@ public class OpenPreviousDialog
 	private class OpenAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -7076284393995744935L;
+
 		public OpenAction()
 		{
 			super("Open");
@@ -185,6 +191,8 @@ public class OpenPreviousDialog
 	private class CancelAction
 		extends AbstractAction
 	{
+		private static final long serialVersionUID = -3717298306270939316L;
+
 		public CancelAction()
 		{
 			super("Cancel");
@@ -201,9 +209,11 @@ public class OpenPreviousDialog
 	private class OpenPreviousPanel
 		extends JPanel
 	{
+		private static final long serialVersionUID = 1635486188020609000L;
+
 		private List<List<SourceIdentifier>> secondaries;
-		private JList primaryList;
-		private JList secondaryList;
+		private JList<String> primaryList;
+		private JList<SourceIdentifier> secondaryList;
 		private JTextArea infoArea;
 		private DecimalFormat eventCountFormat;
 		private LogFileFactory fileFactory;
@@ -243,8 +253,8 @@ public class OpenPreviousDialog
 
 		private void createUI()
 		{
-			primaryList = new JList();
-			secondaryList = new JList();
+			primaryList = new JList<>();
+			secondaryList = new JList<>();
 
 			primaryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			primaryList.addListSelectionListener(new PrimaryListSelectionListener());
@@ -298,14 +308,24 @@ public class OpenPreviousDialog
 					Collections.reverse(value); // newest first
 					secondaries.add(value);
 				}
-				primaryList.setListData(primaries.toArray());
-				secondaryList.setListData(secondaries.toArray());
+
+				primaryList.setListData(primaries.toArray(new String[primaries.size()]));
+				SourceIdentifier[] currentSecondary = EMPTY_SECONDARY_ARRAY;
+				if(!secondaries.isEmpty())
+				{
+					List<SourceIdentifier> zero = secondaries.get(0);
+					if(!zero.isEmpty())
+					{
+						currentSecondary = zero.toArray(new SourceIdentifier[zero.size()]);
+					}
+				}
+				secondaryList.setListData(currentSecondary);
 				primaryList.setSelectedIndex(0);
 			}
 			else
 			{
-				primaryList.setListData(EMPTY_OBJECT_ARRAY);
-				secondaryList.setListData(EMPTY_OBJECT_ARRAY);
+				primaryList.setListData(EMPTY_STRING_ARRAY);
+				secondaryList.setListData(EMPTY_SECONDARY_ARRAY);
 			}
 
 		}
@@ -353,12 +373,12 @@ public class OpenPreviousDialog
 				if(selectedIndex >= 0 && selectedIndex < secondaries.size())
 				{
 					List<SourceIdentifier> sources = secondaries.get(selectedIndex);
-					secondaryList.setListData(sources.toArray());
+					secondaryList.setListData(sources.toArray(new SourceIdentifier[sources.size()]));
 					secondaryList.setSelectedIndex(0);
 				}
 				else
 				{
-					secondaryList.setListData(EMPTY_OBJECT_ARRAY);
+					secondaryList.setListData(EMPTY_SECONDARY_ARRAY);
 				}
 			}
 		}
@@ -366,10 +386,9 @@ public class OpenPreviousDialog
 		private class SecondaryListSelectionListener
 			implements ListSelectionListener
 		{
-
 			public void valueChanged(ListSelectionEvent e)
 			{
-				SourceIdentifier selected = (SourceIdentifier) secondaryList.getSelectedValue();
+				SourceIdentifier selected = secondaryList.getSelectedValue();
 				int selectedIndex = secondaryList.getSelectedIndex();
 				if(selectedIndex != -1)
 				{

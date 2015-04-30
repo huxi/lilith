@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import javax.swing.UIManager;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.Encoder;
 import java.beans.Expression;
@@ -81,8 +82,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-
-import javax.swing.*;
+import java.util.stream.Collectors;
 
 public class ApplicationPreferences
 {
@@ -1855,10 +1855,9 @@ public class ApplicationPreferences
 
 		// perform deep clone... otherwise no propchange would be fired.
 		ArrayList<String> result = new ArrayList<>(conditions.size());
-		for(SavedCondition current : conditions)
-		{
-			result.add(current.getName());
-		}
+		result.addAll(conditions.stream()
+				.map(SavedCondition::getName)
+				.collect(Collectors.toList()));
 
 		return result;
 	}
@@ -1910,10 +1909,10 @@ public class ApplicationPreferences
 		return PREFERENCES.getBoolean(HIDING_ON_CLOSE_PROPERTY, DEFAULT_VALUES.isHidingOnClose());
 	}
 
-	public void setShowingToolbar(boolean showingToolbarName)
+	public void setShowingToolbar(boolean showingToolbar)
 	{
 		Object oldValue = isShowingToolbar();
-		PREFERENCES.putBoolean(SHOWING_TOOLBAR_PROPERTY, showingToolbarName);
+		PREFERENCES.putBoolean(SHOWING_TOOLBAR_PROPERTY, showingToolbar);
 		Object newValue = isShowingToolbar();
 		propertyChangeSupport.firePropertyChange(SHOWING_TOOLBAR_PROPERTY, oldValue, newValue);
 	}
@@ -1923,16 +1922,16 @@ public class ApplicationPreferences
 		return PREFERENCES.getBoolean(SHOWING_TOOLBAR_PROPERTY, DEFAULT_VALUES.isShowingToolbar());
 	}
 
-	public boolean isShowingStatusbar()
+	public boolean isShowingStatusBar()
 	{
 		return PREFERENCES.getBoolean(SHOWING_STATUSBAR_PROPERTY, DEFAULT_VALUES.isShowingStatusbar());
 	}
 
-	public void setShowingStatusbar(boolean showingStatusbarName)
+	public void setShowingStatusBar(boolean showingStatusBar)
 	{
-		Object oldValue = isShowingStatusbar();
-		PREFERENCES.putBoolean(SHOWING_STATUSBAR_PROPERTY, showingStatusbarName);
-		Object newValue = isShowingStatusbar();
+		Object oldValue = isShowingStatusBar();
+		PREFERENCES.putBoolean(SHOWING_STATUSBAR_PROPERTY, showingStatusBar);
+		Object newValue = isShowingStatusBar();
 		propertyChangeSupport.firePropertyChange(SHOWING_STATUSBAR_PROPERTY, oldValue, newValue);
 	}
 
@@ -2467,13 +2466,10 @@ public class ApplicationPreferences
 		{
 			lastSoundLocationsModified = lastModified;
 			// correct values, i.e. add missing keys
-			for(Map.Entry<String, String> current : DEFAULT_SOUND_LOCATIONS.entrySet())
-			{
-				if(!props.containsKey(current.getKey()))
-				{
-					props.put(current.getKey(), "");
-				}
-			}
+			DEFAULT_SOUND_LOCATIONS.entrySet().stream()
+					.filter(current -> !props.containsKey(current.getKey()))
+					.forEach(current -> props.put(current.getKey(), ""));
+
 			soundLocations = props;
 			return true;
 		}
@@ -2655,10 +2651,6 @@ public class ApplicationPreferences
 		{
 			os = new BufferedOutputStream(new FileOutputStream(file));
 			output.storeToXML(os, comment, "UTF-8");
-		}
-		catch(FileNotFoundException e)
-		{
-			error = e;
 		}
 		catch(IOException e)
 		{

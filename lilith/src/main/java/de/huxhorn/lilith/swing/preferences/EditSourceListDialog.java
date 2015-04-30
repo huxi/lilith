@@ -63,12 +63,12 @@ public class EditSourceListDialog
 
 	private final Logger logger = LoggerFactory.getLogger(EditSourceListDialog.class);
 
-	private JList sourceList;
-	private JList listList;
-	private boolean adding;
+//	private boolean adding;
 	private boolean canceled;
 	private JTextField sourceListName;
+	private JList<Source> sourceList;
 	private GenericSortedListModel<Source> sourcesListModel;
+	private JList<Source> listList;
 	private GenericSortedListModel<Source> listModel;
 	private PreferencesDialog preferencesDialog;
 	private AddSourceAction addSourceAction;
@@ -90,12 +90,12 @@ public class EditSourceListDialog
 		sourceListName = new JTextField(25);
 		sourceListName.addKeyListener(new NameKeyListener());
 
-		ListCellRenderer sourceCellRenderer = new SourceCellRenderer();
+		ListCellRenderer<Source> sourceCellRenderer = new SourceCellRenderer();
 
 		sourcesListModel = new GenericSortedListModel<>();
 		listModel = new GenericSortedListModel<>();
-		sourceList = new JList(sourcesListModel);
-		listList = new JList(listModel);
+		sourceList = new JList<>(sourcesListModel);
+		listList = new JList<>(listModel);
 		sourceList.setCellRenderer(sourceCellRenderer);
 		listList.setCellRenderer(sourceCellRenderer);
 		sourceList.addMouseListener(new SourcesListMouseListener());
@@ -185,7 +185,7 @@ public class EditSourceListDialog
 
 	public void setAdding(boolean adding)
 	{
-		this.adding = adding;
+//		this.adding = adding;
 		if(adding)
 		{
 			setTitle("Add a source list...");
@@ -228,10 +228,10 @@ public class EditSourceListDialog
 		removeSourceAction.update();
 	}
 
-	public boolean isAdding()
-	{
-		return adding;
-	}
+//	public boolean isAdding()
+//	{
+//		return adding;
+//	}
 
 	public boolean isCanceled()
 	{
@@ -374,10 +374,10 @@ public class EditSourceListDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Add");
-			Object[] selected = sourceList.getSelectedValues();
-			if(selected != null && selected.length > 0)
+			List<Source> selectedList = sourceList.getSelectedValuesList();
+			if(selectedList != null)
 			{
-				for(Object o : selected)
+				for(Object o : selectedList)
 				{
 					listModel.add((Source) o);
 				}
@@ -406,10 +406,10 @@ public class EditSourceListDialog
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Remove");
-			Object[] selected = listList.getSelectedValues();
-			if(selected != null && selected.length > 0)
+			List<Source> selectedList = listList.getSelectedValuesList();
+			if(selectedList != null)
 			{
-				for(Object o : selected)
+				for(Object o : selectedList)
 				{
 					listModel.remove((Source) o);
 				}

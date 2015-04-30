@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,10 +37,9 @@ import de.huxhorn.sulky.tasks.TaskManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +49,10 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -90,14 +92,10 @@ public abstract class ViewContainer<T extends Serializable>
 		filterTaskListener = new FilterTaskListener();
 		taskManager.addTaskListener(filterTaskListener);
 		this.defaultView = createViewPanel(eventSource);
-		defaultView.addPropertyChangeListener(new PropertyChangeListener()
-		{
-			public void propertyChange(PropertyChangeEvent evt)
+		defaultView.addPropertyChangeListener(evt -> {
+			if (EventWrapperViewPanel.STATE_PROPERTY.equals(evt.getPropertyName()))
 			{
-				if (EventWrapperViewPanel.STATE_PROPERTY.equals(evt.getPropertyName()))
-				{
-					updateContainerIcon();
-				}
+				updateContainerIcon();
 			}
 		});
 
@@ -379,7 +377,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract void updateViewScale(double scale);
 
-	public abstract void setShowingStatusbar(boolean showingStatusbar);
+	public abstract void setShowingStatusBar(boolean showingStatusBar);
 
 	public void setUpdateCallable(ProgressingCallable<Long> updateCallable)
 	{

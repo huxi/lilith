@@ -59,7 +59,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.File;
@@ -79,9 +78,24 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableColumn;
 
@@ -211,37 +225,14 @@ public class ViewActions
 	{
 		this.mainFrame = mainFrame;
 
-		containerChangeListener = new ChangeListener()
-		{
-			/**
-			 * Invoked when the target of the listener has changed its state.
-			 *
-			 * @param e a ChangeEvent object
-			 */
-			public void stateChanged(ChangeEvent e)
+		containerChangeListener = e -> updateActions();
+
+		containerPropertyChangeListener = evt -> {
+			if(ViewContainer.SELECTED_EVENT_PROPERTY_NAME.equals(evt.getPropertyName()))
 			{
-				updateActions();
+				setEventWrapper((EventWrapper) evt.getNewValue());
 			}
-		};
 
-		containerPropertyChangeListener = new PropertyChangeListener()
-		{
-
-			/**
-			 * This method gets called when a bound property is changed.
-			 *
-			 * @param evt A PropertyChangeEvent object describing the event source
-			 *            and the property that has changed.
-			 */
-
-			public void propertyChange(PropertyChangeEvent evt)
-			{
-				if(ViewContainer.SELECTED_EVENT_PROPERTY_NAME.equals(evt.getPropertyName()))
-				{
-					setEventWrapper((EventWrapper) evt.getNewValue());
-				}
-
-			}
 		};
 
 		keyStrokeActionMapping = new HashMap<>();
@@ -418,15 +409,13 @@ public class ViewActions
 		editMenu.addSeparator();
 		editMenu.add(copyEventAction);
 		editMenu.addSeparator();
-		for(CopyToClipboardAction current : copyLoggingActions)
-		{
-			editMenu.add(current);
-		}
+
+		copyLoggingActions.forEach(editMenu::add);
+
 		editMenu.addSeparator();
-		for(CopyToClipboardAction current : copyAccessActions)
-		{
-			editMenu.add(current);
-		}
+
+		copyAccessActions.forEach(editMenu::add);
+
 		editMenu.addSeparator();
 		customCopyMenu = new JMenu("Custom copy");
 		customCopyPopupMenu = new JMenu("Custom copy");
@@ -1068,17 +1057,14 @@ public class ViewActions
 		copyPopupMenu.add(copySelectionAction);
 		copyPopupMenu.addSeparator();
 		copyPopupMenu.add(copyEventAction);
-		copyPopupMenu.addSeparator();
-		for(CopyToClipboardAction current : copyLoggingActions)
-		{
-			copyPopupMenu.add(current);
-		}
 
 		copyPopupMenu.addSeparator();
-		for(CopyToClipboardAction current : copyAccessActions)
-		{
-			copyPopupMenu.add(current);
-		}
+
+		copyLoggingActions.forEach(copyPopupMenu::add);
+
+		copyPopupMenu.addSeparator();
+
+		copyAccessActions.forEach(copyPopupMenu::add);
 
 		copyPopupMenu.addSeparator();
 		copyPopupMenu.add(customCopyPopupMenu);
@@ -1162,14 +1148,10 @@ public class ViewActions
 			}
 
 			// find deleted formatters
-			List<String> deletedList = new ArrayList<>();
-			for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
-			{
-				if(!scriptsList.contains(current.getKey()))
-				{
-					deletedList.add(current.getKey());
-				}
-			}
+			List<String> deletedList = groovyClipboardActions.entrySet().stream()
+					.filter(current -> !scriptsList.contains(current.getKey()))
+					.map(Map.Entry::getKey)
+					.collect(Collectors.toList());
 
 			// remove deleted formatters
 			for(String current : deletedList)
@@ -1207,10 +1189,10 @@ public class ViewActions
 				enabled = true;
 				SortedSet<CopyToClipboardAction> sorted = new TreeSet<>(CopyToClipboardByNameComparator.INSTANCE);
 				// sort the actions by name
-				for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
-				{
-					sorted.add(current.getValue());
-				}
+				sorted.addAll(groovyClipboardActions.entrySet().stream()
+						.map(Map.Entry::getValue)
+						.collect(Collectors.toList()));
+
 				HashMap<KeyStroke, CopyToClipboardAction> freshMapping = new HashMap<>(keyStrokeActionMapping);
 				prepareClipboardActions(sorted, freshMapping);
 
@@ -1327,8 +1309,9 @@ public class ViewActions
 		}
 		else
 		{
-			Serializable eventObj = eventWrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
+			EventWrapper<LoggingEvent> loggingEventWrapper = asLoggingEventWrapper(eventWrapper);
+			EventWrapper<AccessEvent> accessEventWrapper = asAccessEventWrapper(eventWrapper);
+			if(loggingEventWrapper != null)
 			{
 				enableCopyMenu = true;
 				Map<String, EventSender<LoggingEvent>> senders = mainFrame.getLoggingEventSenders();
@@ -1342,12 +1325,11 @@ public class ViewActions
 					sendToPopupMenu.setEnabled(true);
 					for(Map.Entry<String, EventSender<LoggingEvent>> current : senders.entrySet())
 					{
-						//noinspection unchecked
-						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), eventWrapper));
+						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), loggingEventWrapper));
 					}
 				}
 			}
-			else if(eventObj instanceof AccessEvent)
+			else if(accessEventWrapper != null)
 			{
 				enableCopyMenu = true;
 				Map<String, EventSender<AccessEvent>> senders = mainFrame.getAccessEventSenders();
@@ -1361,8 +1343,7 @@ public class ViewActions
 					sendToPopupMenu.setEnabled(true);
 					for(Map.Entry<String, EventSender<AccessEvent>> current : senders.entrySet())
 					{
-						//noinspection unchecked
-						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), eventWrapper));
+						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), accessEventWrapper));
 					}
 				}
 			}
@@ -3376,19 +3357,7 @@ public class ViewActions
 					}
 				}
 			}
-			catch(IllegalStateException ex)
-			{
-				// ignore
-			}
-			catch(IllegalArgumentException ex)
-			{
-				// ignore
-			}
-			catch (UnsupportedFlavorException ex)
-			{
-				// ignore
-			}
-			catch (IOException ex)
+			catch(IllegalStateException | IllegalArgumentException | UnsupportedFlavorException | IOException ex)
 			{
 				// ignore
 			}
@@ -3888,5 +3857,35 @@ public class ViewActions
 			}
 			return false;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private static EventWrapper<LoggingEvent> asLoggingEventWrapper(EventWrapper original)
+	{
+		if(original == null)
+		{
+			return null;
+		}
+		Serializable wrapped = original.getEvent();
+		if(wrapped instanceof LoggingEvent)
+		{
+			return (EventWrapper<LoggingEvent>) original;
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static EventWrapper<AccessEvent> asAccessEventWrapper(EventWrapper original)
+	{
+		if(original == null)
+		{
+			return null;
+		}
+		Serializable wrapped = original.getEvent();
+		if(wrapped instanceof AccessEvent)
+		{
+			return (EventWrapper<AccessEvent>) original;
+		}
+		return null;
 	}
 }

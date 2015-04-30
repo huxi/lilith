@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,13 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Frame;
 import java.beans.PropertyVetoException;
 
-import javax.swing.*;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
@@ -31,6 +34,8 @@ public class ViewContainerInternalFrame
 	extends JInternalFrame
 	implements ViewWindow
 {
+	private static final long serialVersionUID = 4881227991504896068L;
+
 	private final Logger logger = LoggerFactory.getLogger(ViewContainerInternalFrame.class);
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
@@ -57,11 +62,11 @@ public class ViewContainerInternalFrame
 		if(logger.isDebugEnabled()) logger.debug("Glasspane\nprev: {}\n new: {}", prev, glassPane);
 	}
 
-	public void setShowingStatusbar(boolean showingStatusbar)
+	public void setShowingStatusBar(boolean showingStatusBar)
 	{
 		if(viewContainer != null)
 		{
-			viewContainer.setShowingStatusbar(showingStatusbar);
+			viewContainer.setShowingStatusBar(showingStatusBar);
 		}
 	}
 

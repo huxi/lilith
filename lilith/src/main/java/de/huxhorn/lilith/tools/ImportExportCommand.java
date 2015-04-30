@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -234,7 +234,7 @@ public class ImportExportCommand
 		p.setUsingWrappedExceptionStyle(prefs.isUsingWrappedExceptionStyle());
 		p.setShowingFullRecentPath(prefs.isShowingFullRecentPath());
 		p.setShowingIdentifier(prefs.isShowingIdentifier());
-		p.setShowingStatusbar(prefs.isShowingStatusbar());
+		p.setShowingStatusbar(prefs.isShowingStatusBar());
 		p.setShowingStackTrace(prefs.isShowingStackTrace());
 		p.setShowingTipOfTheDay(prefs.isShowingTipOfTheDay());
 		p.setShowingToolbar(prefs.isShowingToolbar());
@@ -288,7 +288,7 @@ public class ImportExportCommand
 		prefs.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());
 		prefs.setShowingFullRecentPath(p.isShowingFullRecentPath());
 		prefs.setShowingIdentifier(p.isShowingIdentifier());
-		prefs.setShowingStatusbar(p.isShowingStatusbar());
+		prefs.setShowingStatusBar(p.isShowingStatusbar());
 		prefs.setShowingStackTrace(p.isShowingStackTrace());
 		prefs.setShowingTipOfTheDay(p.isShowingTipOfTheDay());
 		prefs.setShowingToolbar(p.isShowingToolbar());

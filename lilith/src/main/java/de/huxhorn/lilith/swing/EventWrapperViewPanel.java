@@ -286,7 +286,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		updateStatusText();
 
 		splitPane.setDividerLocation(0.5d);
-		setShowingStatusBar(mainFrame.getApplicationPreferences().isShowingStatusbar());
+		setShowingStatusBar(mainFrame.getApplicationPreferences().isShowingStatusBar());
 	}
 
 	public EventWrapperViewTable<T> getTable()
@@ -467,6 +467,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		firePropertyChange(PAUSED_PROPERTY, oldValue, newValue);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ViewContainer<T> resolveContainer()
 	{
 		Container parent = getParent();
@@ -474,8 +475,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			parent = parent.getParent();
 		}
-		// not 100% typesafe
-		//noinspection unchecked
+		// not 100% type-safe
 		return (ViewContainer<T>) parent;
 	}
 

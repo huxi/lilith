@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,16 +20,21 @@ package de.huxhorn.lilith.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JToolBar;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Frame;
+import java.awt.HeadlessException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
-import javax.swing.*;
 
 public class ViewContainerFrame
 	extends JFrame
 	implements ViewWindow
 {
+	private static final long serialVersionUID = -3456616135178330081L;
+
 	private final Logger logger = LoggerFactory.getLogger(ViewContainerFrame.class);
 
 	private ViewActions viewActions;
@@ -95,11 +100,11 @@ public class ViewContainerFrame
 		if(logger.isDebugEnabled()) logger.debug("Glasspane\nprev: {}\n new: {}", prev, glassPane);
 	}
 
-	public void setShowingStatusbar(boolean showingStatusbar)
+	public void setShowingStatusBar(boolean showingStatusBar)
 	{
 		if(viewContainer != null)
 		{
-			viewContainer.setShowingStatusbar(showingStatusbar);
+			viewContainer.setShowingStatusBar(showingStatusBar);
 		}
 	}
 
@@ -108,10 +113,10 @@ public class ViewContainerFrame
 		toolbar.setVisible(showingToolbar);
 	}
 
-	public boolean isShowingToolbar()
-	{
-		return toolbar.isVisible();
-	}
+//	public boolean isShowingToolbar()
+//	{
+//		return toolbar.isVisible();
+//	}
 
 	class CleanupWindowChangeListener
 		implements WindowListener

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +19,21 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 
-import java.awt.*;
-
-import javax.swing.*;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 public class WindowsPanel
 	extends JPanel
 {
+	private static final long serialVersionUID = -2493318827216879146L;
+
 	private ApplicationPreferences applicationPreferences;
 
 	// Windows
 	private JCheckBox showingToolbarCheckbox;
-	private JCheckBox showingStatusbarCheckbox;
+	private JCheckBox showingStatusBarCheckbox;
 	private JCheckBox internalFramesCheckbox;
 	private JCheckBox maximizeInternalFramesCheckbox;
 	private JCheckBox autoOpenCheckbox;
@@ -47,7 +50,7 @@ public class WindowsPanel
 	private void createUI()
 	{
 		showingToolbarCheckbox = new JCheckBox("Show toolbar.");
-		showingStatusbarCheckbox = new JCheckBox("Show statusbar.");
+		showingStatusBarCheckbox = new JCheckBox("Show status bar.");
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
 		maximizeInternalFramesCheckbox = new JCheckBox("Maximize internal frames.");
 		showIdentifierCheckbox = new JCheckBox("Show identifier for named sources.");
@@ -65,7 +68,7 @@ public class WindowsPanel
 		add(showingToolbarCheckbox, gbc);
 
 		gbc.gridy++;
-		add(showingStatusbarCheckbox, gbc);
+		add(showingStatusBarCheckbox, gbc);
 
 		gbc.gridy++;
 		add(internalFramesCheckbox, gbc);
@@ -90,7 +93,7 @@ public class WindowsPanel
 	public void initUI()
 	{
 		showingToolbarCheckbox.setSelected(applicationPreferences.isShowingToolbar());
-		showingStatusbarCheckbox.setSelected(applicationPreferences.isShowingStatusbar());
+		showingStatusBarCheckbox.setSelected(applicationPreferences.isShowingStatusBar());
 		internalFramesCheckbox.setSelected(applicationPreferences.isUsingInternalFrames());
 		maximizeInternalFramesCheckbox.setSelected(applicationPreferences.isMaximizingInternalFrames());
 		autoOpenCheckbox.setSelected(applicationPreferences.isAutoOpening());
@@ -102,7 +105,7 @@ public class WindowsPanel
 	public void saveSettings()
 	{
 		applicationPreferences.setShowingToolbar(showingToolbarCheckbox.isSelected());
-		applicationPreferences.setShowingStatusbar(showingStatusbarCheckbox.isSelected());
+		applicationPreferences.setShowingStatusBar(showingStatusBarCheckbox.isSelected());
 		applicationPreferences.setUsingInternalFrames(internalFramesCheckbox.isSelected());
 		applicationPreferences.setMaximizingInternalFrames(maximizeInternalFramesCheckbox.isSelected());
 		applicationPreferences.setAutoOpening(autoOpenCheckbox.isSelected());

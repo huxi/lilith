@@ -529,7 +529,7 @@ public class MainFrame
 		setJMenuBar(menuBar);
 
 		setShowingToolbar(applicationPreferences.isShowingToolbar());
-		setShowingStatusbar(applicationPreferences.isShowingStatusbar());
+		setShowingStatusBar(applicationPreferences.isShowingStatusBar());
 	}
 
 	public boolean isUsingThymeleaf()
@@ -2656,7 +2656,7 @@ public class MainFrame
 		String title = resolveSourceTitle(container);
 		ViewContainerFrame frame = new ViewContainerFrame(this, container);
 		frame.setShowingToolbar(applicationPreferences.isShowingToolbar());
-		frame.setShowingStatusbar(applicationPreferences.isShowingStatusbar());
+		frame.setShowingStatusBar(applicationPreferences.isShowingStatusBar());
 		frame.setTitle(title);
 		frame.setSize(800, 600);
 		Windows.showWindow(frame, null, false);
@@ -2668,7 +2668,7 @@ public class MainFrame
 	{
 		String title = resolveSourceTitle(container);
 		ViewContainerInternalFrame frame = new ViewContainerInternalFrame(this, container);
-		frame.setShowingStatusbar(applicationPreferences.isShowingStatusbar());
+		frame.setShowingStatusBar(applicationPreferences.isShowingStatusBar());
 		frame.setTitle(title);
 
 		int count = desktop.getComponentCount();
@@ -3057,7 +3057,7 @@ public class MainFrame
 
 			if(ApplicationPreferences.SHOWING_STATUSBAR_PROPERTY.equals(propName))
 			{
-				setShowingStatusbar(applicationPreferences.isShowingStatusbar());
+				setShowingStatusBar(applicationPreferences.isShowingStatusBar());
 				return;
 			}
 
@@ -3138,22 +3138,22 @@ public class MainFrame
 //		checkForUpdateDialog.setCheckingForSnapshot(checkingForSnapshot);
 	}
 
-	private void setShowingStatusbar(boolean showingStatusbar)
+	private void setShowingStatusBar(boolean showingStatusBar)
 	{
-		statusBar.setVisible(showingStatusbar);
+		statusBar.setVisible(showingStatusBar);
 		// change for all other open windows
 		{
 			SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> views = getSortedLoggingViews();
 			for(Map.Entry<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> current : views.entrySet())
 			{
-				setShowingStatusbar(current.getValue(), showingStatusbar);
+				setShowingStatusBar(current.getValue(), showingStatusBar);
 			}
 		}
 		{
 			SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> views = getSortedAccessViews();
 			for(Map.Entry<EventSource<AccessEvent>, ViewContainer<AccessEvent>> current : views.entrySet())
 			{
-				setShowingStatusbar(current.getValue(), showingStatusbar);
+				setShowingStatusBar(current.getValue(), showingStatusBar);
 			}
 		}
 	}
@@ -3195,12 +3195,12 @@ public class MainFrame
 		}
 	}
 
-	private void setShowingStatusbar(ViewContainer container, boolean showingStatusbar)
+	private void setShowingStatusBar(ViewContainer container, boolean showingStatusBar)
 	{
 		ViewWindow viewWindow = container.resolveViewWindow();
 		if(viewWindow != null)
 		{
-			viewWindow.setShowingStatusbar(showingStatusbar);
+			viewWindow.setShowingStatusBar(showingStatusBar);
 		}
 	}
 

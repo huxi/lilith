@@ -63,8 +63,8 @@ public class GeneralPanel
 	// ???
 	private JFileChooser applicationPathFileChooser;
 	private JTextField appPathTextField;
-	private JComboBox lookAndFeelCombo;
-	private JComboBox defaultConditionCombo;
+	private JComboBox<String> lookAndFeelCombo;
+	private JComboBox<String> defaultConditionCombo;
 
 	private JCheckBox globalLoggingEnabledCheckbox;
 	private JCheckBox loggingStatsEnabledCheckbox;
@@ -116,8 +116,8 @@ public class GeneralPanel
 			gbc.weightx = 0;
 			appPathPanel.add(browseAppPathButton, gbc);
 		}
-		lookAndFeelCombo = new JComboBox();
-		defaultConditionCombo = new JComboBox();
+		lookAndFeelCombo = new JComboBox<>();
+		defaultConditionCombo = new JComboBox<>();
 
 		globalLoggingEnabledCheckbox = new JCheckBox("Enable global logs.");
 		loggingStatsEnabledCheckbox = new JCheckBox("Enable logging statistics.");
@@ -214,7 +214,7 @@ public class GeneralPanel
 					selectedIndex = idx;
 				}
 			}
-			lookAndFeelCombo.setModel(new DefaultComboBoxModel(lookAndFeels.toArray()));
+			lookAndFeelCombo.setModel(new DefaultComboBoxModel<>(lookAndFeels.toArray(new String[lookAndFeels.size()])));
 			lookAndFeelCombo.setSelectedIndex(selectedIndex);
 		}
 
@@ -228,7 +228,7 @@ public class GeneralPanel
 				idx=0;
 			}
 
-			defaultConditionCombo.setModel(new DefaultComboBoxModel(conditionNames.toArray()));
+			defaultConditionCombo.setModel(new DefaultComboBoxModel<>(conditionNames.toArray(new String[conditionNames.size()])));
 			defaultConditionCombo.setSelectedIndex(idx);
 		}
 		String appPath = applicationPreferences.getApplicationPath().getAbsolutePath();

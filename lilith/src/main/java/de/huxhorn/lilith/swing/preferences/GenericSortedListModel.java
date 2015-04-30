@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,10 @@ import java.util.List;
 import javax.swing.*;
 
 public class GenericSortedListModel<T extends Comparable<? super T>>
-	extends AbstractListModel
+	extends AbstractListModel<T>
 {
+	private static final long serialVersionUID = 7811612633556606661L;
+
 	private final List<T> data;
 	private final Comparator<T> comparator;
 

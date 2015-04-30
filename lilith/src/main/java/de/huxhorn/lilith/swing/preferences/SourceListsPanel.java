@@ -52,7 +52,7 @@ public class SourceListsPanel
 
 	final Logger logger = LoggerFactory.getLogger(SourceListsPanel.class);
 
-	private JList sourceListList;
+	private JList<String> sourceListList;
 	private GenericSortedListModel<String> sourceListListModel;
 	private EditSourceListAction editSourceListAction;
 	private RemoveSourceListAction removeSourceListAction;
@@ -71,15 +71,15 @@ public class SourceListsPanel
 		editSourceListDialog = new EditSourceListDialog(preferencesDialog);
 		setLayout(new BorderLayout());
 		sourceListListModel = new GenericSortedListModel<>();
-		sourceListList = new JList(sourceListListModel);
+		sourceListList = new JList<>(sourceListListModel);
 		sourceListList.addMouseListener(new SourceListMouseListener());
 		JScrollPane sourceListScrollPane = new JScrollPane(sourceListList);
 		sourceListScrollPane.setBorder(new TitledBorder("Source Lists"));
 
-		ListCellRenderer sourceCellRenderer = new SourceCellRenderer();
+		ListCellRenderer<Source> sourceCellRenderer = new SourceCellRenderer();
 
 		listModel = new GenericSortedListModel<>();
-		JList listList = new JList(listModel);
+		JList<Source> listList = new JList<>(listModel);
 		listList.setEnabled(false);
 		listList.setCellRenderer(sourceCellRenderer);
 		sourceListList.addListSelectionListener(new SourceListListSelectionListener());
@@ -139,7 +139,7 @@ public class SourceListsPanel
 
 	private void updateListContents()
 	{
-		String selected = (String) sourceListList.getSelectedValue();
+		String selected = sourceListList.getSelectedValue();
 
 		List<Source> list = null;
 		if(selected != null)

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,6 +73,8 @@ import javax.swing.text.Document;
 public class PreferencesDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = 8313102215860746241L;
+
 	public enum Panes
 	{
 		General,
@@ -93,8 +95,8 @@ public class PreferencesDialog
 	private ApplicationPreferences applicationPreferences;
 	private MainFrame mainFrame;
 
-	private JComboBox comboBox;
-	private DefaultComboBoxModel comboBoxModel;
+	private JComboBox<Panes> comboBox;
+	private DefaultComboBoxModel<Panes> comboBoxModel;
 	private CardLayout cardLayout;
 	private JPanel content;
 
@@ -147,12 +149,12 @@ public class PreferencesDialog
 		accessStatusTypePanel = new AccessStatusTypePanel(this);
 		TroubleshootingPanel troubleshootingPanel = new TroubleshootingPanel(this);
 
-		comboBoxModel = new DefaultComboBoxModel();
+		comboBoxModel = new DefaultComboBoxModel<>();
 		for(Panes current : Panes.values())
 		{
 			comboBoxModel.addElement(current);
 		}
-		comboBox = new JComboBox(comboBoxModel);
+		comboBox = new JComboBox<>(comboBoxModel);
 		comboBox.setRenderer(new MyComboBoxRenderer());
 		comboBox.setEditable(false);
 		comboBox.addItemListener(new ComboItemListener());
@@ -575,7 +577,7 @@ public class PreferencesDialog
 	}
 
 	private static class MyComboBoxRenderer
-		implements ListCellRenderer
+		implements ListCellRenderer<Panes>
 	{
 		private JLabel label;
 
@@ -587,7 +589,8 @@ public class PreferencesDialog
 			label.setVerticalAlignment(SwingConstants.CENTER);
 		}
 
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+		@Override
+		public Component getListCellRendererComponent(JList<? extends Panes> list, Panes value, int index, boolean isSelected, boolean cellHasFocus)
 		{
 			if(isSelected)
 			{
@@ -603,11 +606,9 @@ public class PreferencesDialog
 			String title = null;
 			String toolTip = null;
 
-			if(value != null && value.getClass() == Panes.class)
+			if(value != null)
 			{
-				Panes panes = (Panes) value;
-
-				switch(panes)
+				switch(value)
 				{
 					case General:
 						title="General";

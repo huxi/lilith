@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,7 +114,6 @@ public class GroovyCondition
 			if(instance instanceof Condition)
 			{
 				Condition condition = (Condition) instance;
-				//noinspection unchecked
 				return condition.isTrue(o);
 			}
 
@@ -163,9 +162,8 @@ public class GroovyCondition
 		{
 			return false;
 		}
-		if(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null) return false;
+		return !(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null);
 
-		return true;
 	}
 
 	@Override
