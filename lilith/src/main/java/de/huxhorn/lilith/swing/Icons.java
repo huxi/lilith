@@ -25,6 +25,8 @@ import java.net.URL;
 
 public class Icons
 {
+	private static final Logger logger = LoggerFactory.getLogger(Icons.class);
+
 	public static final ImageIcon EMPTY_16_ICON = resolveImageIcon("/otherGraphics/empty16.png");
 	public static final ImageIcon CLEAR_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-clear.png");
 	public static final ImageIcon CLEAR_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-clear.png");
@@ -65,8 +67,6 @@ public class Icons
 	public static final ImageIcon UPDATE_AVAILABLE_32_ICON = resolveImageIcon("/tango/32x32/status/software-update-available.png");
 	public static final ImageIcon PROGRESS_ICON = resolveImageIcon("/otherGraphics/Progress16.gif");
 	public static final ImageIcon FRAME_ICON = resolveImageIcon("/otherGraphics/Lilith16.jpg");
-
-	private static final Logger logger = LoggerFactory.getLogger(Icons.class);
 
 	private static ImageIcon resolveImageIcon(String resourcePath)
 	{
