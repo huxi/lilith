@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@ import org.slf4j.LoggerFactory;
 public class LogAnonymousRunnable
 	extends AbstractDebugRunnable
 {
-	private final Logger logger = LoggerFactory.getLogger(LogAnonymousRunnable.class);
-
 	public LogAnonymousRunnable(int delay)
 	{
 		super(delay);
@@ -42,6 +40,8 @@ public class LogAnonymousRunnable
 		{
 			public void logStuff()
 			{
+				final Logger logger = LoggerFactory.getLogger(MethodInternal.class);
+
 				if(logger.isErrorEnabled()) logger.error("MethodInternalClass");
 
 			}
@@ -54,6 +54,8 @@ public class LogAnonymousRunnable
 			{
 				public void logStuff()
 				{
+					final Logger logger = LoggerFactory.getLogger(AnonymousInternalClass.class);
+
 					if(logger.isErrorEnabled()) logger.error("AnonymousInternalClass");
 
 				}
@@ -63,12 +65,15 @@ public class LogAnonymousRunnable
 			{
 				public void logStuff()
 				{
+					final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 					if(logger.isWarnEnabled()) logger.warn("SecondLevelAnonymous");
 				}
 			};
 
 			public void logStuff()
 			{
+				final Logger logger = LoggerFactory.getLogger(this.getClass());
 				if(logger.isInfoEnabled()) logger.info("FirstLevelAnonymous");
 				stuffLogger.logStuff();
 				new AnonymousInternalClass().logStuff();
