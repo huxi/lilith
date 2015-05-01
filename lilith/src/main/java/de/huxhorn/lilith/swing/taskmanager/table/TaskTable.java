@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,18 @@
 package de.huxhorn.lilith.swing.taskmanager.table;
 
 import de.huxhorn.lilith.swing.TextPreprocessor;
-import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -50,8 +50,7 @@ public class TaskTable<T>
 		setModel(taskTableModel);
 		setColumnModel(new TaskTableColumnModel());
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		Tables.setAutoCreateRowSorter(this, true);
-
+		setAutoCreateRowSorter(true);
 	}
 
 	public void setPaused(boolean paused)
@@ -74,10 +73,10 @@ public class TaskTable<T>
 		}
 	}
 
-	public boolean isPaused()
-	{
-		return taskTableModel.isPaused();
-	}
+//	public boolean isPaused()
+//	{
+//		return taskTableModel.isPaused();
+//	}
 
 	public TaskTableModel<T> getTaskTableModel()
 	{
@@ -89,7 +88,7 @@ public class TaskTable<T>
 		int row = rowAtPoint(p);
 		if(row > -1)
 		{
-			row = Tables.convertRowIndexToModel(this, row);
+			row = convertRowIndexToModel(row);
 
 			Task<T> result = taskTableModel.getValueAt(row);
 			if(result != null && select)
@@ -112,8 +111,14 @@ public class TaskTable<T>
 		}
 	}
 
+	@SuppressWarnings("NullableProblems")
+	@Override
 	public String getToolTipText(MouseEvent event)
 	{
+		if(event == null)
+		{
+			return null;
+		}
 		Task<T> task = getTaskAt(event.getPoint(), false);
 		if(task != null)
 		{

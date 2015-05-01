@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -89,11 +89,7 @@ public class LogbackLoggingConverter
 				return (IThrowableProxy[]) result;
 			}
 		}
-		catch(IllegalAccessException e)
-		{
-			// ignore
-		}
-		catch(InvocationTargetException e)
+		catch(IllegalAccessException | InvocationTargetException e)
 		{
 			// ignore
 		}

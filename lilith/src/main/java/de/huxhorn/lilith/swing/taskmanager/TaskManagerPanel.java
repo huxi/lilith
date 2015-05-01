@@ -19,7 +19,6 @@ package de.huxhorn.lilith.swing.taskmanager;
 
 import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.taskmanager.table.TaskTable;
-import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskManager;
 
@@ -119,7 +118,7 @@ public class TaskManagerPanel<T>
 			{
 				int selectedRow = lsm.getMinSelectionIndex();
 
-				selectedRow = Tables.convertRowIndexToModel(table, selectedRow);
+				selectedRow = table.convertRowIndexToModel(selectedRow);
 				Task<T> task = table.getTaskTableModel().getValueAt(selectedRow);
 				setSelectedTask(task);
 			}

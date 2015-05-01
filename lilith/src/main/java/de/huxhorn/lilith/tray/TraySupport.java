@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,16 +20,14 @@ package de.huxhorn.lilith.tray;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.huxhorn.lilith.tray.impl.SystemTrayImpl;
 
-import java.awt.*;
-import java.lang.reflect.Method;
+import java.awt.Image;
+import java.awt.SystemTray;
+
 
 public abstract class TraySupport
 {
-	private static final boolean AVAILABLE;
-
 	private static final TraySupport INSTANCE;
 	protected MainFrame mainFrame;
 
@@ -45,56 +43,21 @@ public abstract class TraySupport
 	    INFO,
 	    /** Simple message */
 	    NONE
-	};
+	}
 
 	static
 	{
-		final Logger logger = LoggerFactory.getLogger(TraySupport.class);
-
-		boolean support = false;
-		try
-		{
-			Class<?> clazz = Class.forName("java.awt.SystemTray");
-			Method method = clazz.getMethod("isSupported");
-			Object result = method.invoke(null);
-			if(result instanceof Boolean)
-			{
-				support = (Boolean) result;
-			}
-		}
-		catch(Exception e)
-		{
-			if(logger.isInfoEnabled()) logger.info("Exception while checking for SystemTray support. => not available", e);
-		}
-		AVAILABLE = support;
-
 		TraySupport instance = null;
-		if(AVAILABLE)
+		if(SystemTray.isSupported())
 		{
-			try
-			{
-				Class<?> clazz = Class.forName("de.huxhorn.lilith.tray.impl.SystemTrayImpl");
-				Object o = clazz.newInstance();
-				if(o instanceof TraySupport)
-				{
-					instance = (TraySupport) o;
-				}
-				else
-				{
-					if(logger.isErrorEnabled()) logger.error("Invalid TraySupport instance! {}", o);
-				}
-			}
-			catch(Exception e)
-			{
-				if(logger.isErrorEnabled()) logger.error("Exception while checking for SystemTray support. => not available", e);
-			}
+			instance = new SystemTrayImpl();
 		}
 		INSTANCE = instance;
 	}
 
 	public static boolean isAvailable()
 	{
-		return AVAILABLE;
+		return SystemTray.isSupported();
 	}
 
 	public static TraySupport getInstance()

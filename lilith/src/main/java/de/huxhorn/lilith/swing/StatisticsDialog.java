@@ -19,12 +19,10 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.statistics.StatisticsPanel;
-import de.huxhorn.sulky.swing.Windows;
 
+import javax.swing.JDialog;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.*;
 
 public class StatisticsDialog
 	extends JDialog
@@ -43,7 +41,7 @@ public class StatisticsDialog
 		setResizable(false);
 		if(Icons.STATISTICS_MENU_ICON != null)
 		{
-			Windows.setIconImage(this, Icons.STATISTICS_MENU_ICON.getImage());
+			setIconImage(Icons.STATISTICS_MENU_ICON.getImage());
 		}
 
 		statisticsPanel = new StatisticsPanel(owner);

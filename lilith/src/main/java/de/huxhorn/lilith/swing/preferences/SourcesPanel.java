@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.Icons;
-import de.huxhorn.sulky.swing.Tables;
 import de.huxhorn.sulky.swing.Windows;
 
 import org.slf4j.Logger;
@@ -71,7 +70,7 @@ public class SourcesPanel
 		Map<String, String> sourceNames = new HashMap<>();
 		sourceNameTableModel = new SourceNameTableModel(sourceNames);
 		sourceNameTable = new JTable(sourceNameTableModel);
-		Tables.setAutoCreateRowSorter(sourceNameTable, true);
+		sourceNameTable.setAutoCreateRowSorter(true);
 		sourceNameTable.addMouseListener(new SourceNameTableMouseListener());
 		JScrollPane sourceNameTableScrollPane = new JScrollPane(sourceNameTable);
 
@@ -153,7 +152,7 @@ public class SourcesPanel
 
 	private int convertSourceNameRow(int row)
 	{
-		return Tables.convertRowIndexToModel(sourceNameTable, row);
+		return sourceNameTable.convertRowIndexToModel(row);
 	}
 
 	private class SourceNameTableRowSelectionListener
