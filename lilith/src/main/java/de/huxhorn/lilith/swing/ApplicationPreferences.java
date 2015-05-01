@@ -252,6 +252,8 @@ public class ApplicationPreferences
 		STARTUP_LOOK_AND_FEEL = UIManager.getLookAndFeel().getName();
 	}
 
+	private boolean usingScreenMenuBar;
+
 	/**
 	 * Creates a condition of the given name and value.
 	 *
@@ -2886,6 +2888,16 @@ public class ApplicationPreferences
 			result = true;
 		}
 		return result;
+	}
+
+	public void setUsingScreenMenuBar(boolean usingScreenMenuBar)
+	{
+		this.usingScreenMenuBar = usingScreenMenuBar;
+	}
+
+	public boolean isUsingScreenMenuBar()
+	{
+		return usingScreenMenuBar;
 	}
 
 	/**
