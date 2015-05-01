@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.debug;
 
+import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
@@ -151,6 +152,12 @@ public class LoggerEventEmitter
 	public void logAnonymous()
 	{
 		execute(new LogAnonymousRunnable(delay));
+		logLambda();
+	}
+
+	private void logLambda()
+	{
+		execute(() -> LoggerFactory.getLogger(this.getClass()).info("Info from Lambda"));
 	}
 
 	public void logASCII()
