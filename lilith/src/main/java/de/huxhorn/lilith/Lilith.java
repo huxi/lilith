@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,12 +46,9 @@ import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
 import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
-import it.sauronsoftware.junique.MessageHandler;
 import org.apache.commons.io.FileUtils;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.JavaVersion;
-import org.apache.commons.lang3.SystemUtils;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.simplericity.macify.eawt.Application;
@@ -60,12 +57,18 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-import java.io.*;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -116,10 +119,26 @@ public class Lilith
 	private static final String JUNIQUE_REPLY_OK = "OK";
 	private static final String JUNIQUE_REPLY_UNKNOWN = "Unknown";
 
+	private static final String APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY = "apple.laf.useScreenMenuBar";
+
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 	private static MainFrame mainFrame;
 	private static DateTimeFormatter isoDateTimeFormat = ISODateTimeFormat.dateTime().withZoneUTC();
 	private static DateTimeFormatter isoDateTimeFormatLocal = ISODateTimeFormat.dateTime();
+
+	private static class UncaughtExceptionHandler
+		implements Thread.UncaughtExceptionHandler
+	{
+		private final Logger logger = LoggerFactory.getLogger(UncaughtExceptionHandler.class);
+
+		@Override
+		public void uncaughtException(Thread t, Throwable e)
+		{
+			if(logger.isErrorEnabled()) logger.error("Caught an uncaught exception from thread {}!", t, e);
+			System.err.println("\n-----\nThread " + t.getName() + " threw an exception!");
+			e.printStackTrace();
+		}
+	}
 
 	static
 	{
@@ -502,28 +521,14 @@ public class Lilith
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
-		uncaughtExceptionHandler = new Thread.UncaughtExceptionHandler()
-		{
-			public void uncaughtException(Thread t, Throwable e)
-			{
-				if(logger.isErrorEnabled()) logger.error("Caught an uncaught exception from thread {}!", t, e);
-				System.err.println("\n-----\nThread " + t.getName() + " threw an exception!");
-				e.printStackTrace(System.err);
-			}
-		};
+		uncaughtExceptionHandler = new UncaughtExceptionHandler();
 
 		Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
 
 		// preventing duplicate instances...
 		try
 		{
-			JUnique.acquireLock(Lilith.class.getName(), new MessageHandler()
-			{
-				public String handle(String message)
-				{
-					return handleJUniqueMessage(message);
-				}
-			});
+			JUnique.acquireLock(Lilith.class.getName(), Lilith::handleJUniqueMessage);
 		}
 		catch(AlreadyLockedException e)
 		{
@@ -534,14 +539,9 @@ public class Lilith
 		}
 		// ok, we are the first instance this user has started...
 
-		SwingUtilities.invokeLater(new Runnable()
-		{
+		// install uncaught exception handler on event thread.
+		SwingUtilities.invokeLater(() -> Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler));
 
-			public void run()
-			{
-				Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler);
-			}
-		});
 		startUI(appTitle, enableBonjour);
 	}
 
@@ -618,19 +618,14 @@ public class Lilith
 		if(mainFrame != null)
 		{
 			final MainFrame frame = mainFrame;
-			SwingUtilities.invokeLater(new Runnable()
-			{
+			SwingUtilities.invokeLater(() -> {
 
-				public void run()
+				if(frame.isVisible())
 				{
-
-					if(frame.isVisible())
-					{
-						frame.setVisible(false);
-					}
-					Windows.showWindow(frame, null, false);
-					frame.toFront();
+					frame.setVisible(false);
 				}
+				Windows.showWindow(frame, null, false);
+				frame.toFront();
 			});
 		}
 	}
@@ -640,18 +635,13 @@ public class Lilith
 	{
 		if(splashScreen != null)
 		{
-			SwingUtilities.invokeAndWait(new Runnable()
-			{
-
-				public void run()
+			SwingUtilities.invokeAndWait(() -> {
+				if(!splashScreen.isVisible())
 				{
-					if(!splashScreen.isVisible())
-					{
-						Windows.showWindow(splashScreen, null, true);
-					}
-					splashScreen.toFront();
-					splashScreen.setStatusText(status);
+					Windows.showWindow(splashScreen, null, true);
 				}
+				splashScreen.toFront();
+				splashScreen.setStatusText(status);
 			});
 		}
 	}
@@ -661,13 +651,7 @@ public class Lilith
 	{
 		if(splashScreen != null)
 		{
-			SwingUtilities.invokeAndWait(new Runnable()
-			{
-				public void run()
-				{
-					splashScreen.setVisible(false);
-				}
-			});
+			SwingUtilities.invokeAndWait(() -> splashScreen.setVisible(false));
 		}
 	}
 
@@ -675,142 +659,87 @@ public class Lilith
 	public static void startUI(final String appTitle, boolean enableBonjour)
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
 		UIManager.installLookAndFeel("JGoodies Windows", "com.jgoodies.looks.windows.WindowsLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic", "com.jgoodies.looks.plastic.PlasticLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic 3D", "com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
 		UIManager.installLookAndFeel("JGoodies Plastic XP", "com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
-		if(SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_6))
-		{
-			// Substance requires 1.6
-			UIManager.installLookAndFeel("Substance Dark - Twilight", "org.pushingpixels.substance.api.skin.SubstanceTwilightLookAndFeel");
-			UIManager.installLookAndFeel("Substance Light - Business", "org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel");
-		}
+		// Substance requires 1.6
+		UIManager.installLookAndFeel("Substance Dark - Twilight", "org.pushingpixels.substance.api.skin.SubstanceTwilightLookAndFeel");
+		UIManager.installLookAndFeel("Substance Light - Business", "org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel");
 
 		//UIManager.installLookAndFeel("Napkin", "net.sourceforge.napkinlaf.NapkinLookAndFeel");
 
-		// This instance of application is only used to query some info. The real one is in MainFrame.
-		Application application = new DefaultApplication();
+		// look & feels must be installed before creation of ApplicationPreferences.
 		ApplicationPreferences applicationPreferences = new ApplicationPreferences();
 
-		//final String[] defaultNames={"MenuBarUI", "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI"};
-
-		HashMap<String, Object> storedDefaults = new HashMap<>();
-		if(application.isMac())
+		// init look & feel
+		String lookAndFeelName = applicationPreferences.getLookAndFeel();
+		String systemLookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+		String lookAndFeelClassName = systemLookAndFeelClassName;
+		if(lookAndFeelName != null)
 		{
-			// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
-			try
+			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
 			{
-				//System.setProperty("apple.awt.brushMetalLook", "true");
-				System.setProperty("apple.laf.useScreenMenuBar", "true");
-			}
-			catch(Exception e)
-			{
-				// try the older menu bar property
-				System.setProperty("com.apple.macos.useScreenMenuBar", "true");
-				// this shouldn't happen since we only run on 1.5+
-			}
-
-			// this is part 1 of Mac Menu for all PLAFs.
-			// Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
-			/*
-			Does not work, exception while displaying popup menu:
-			java.lang.NullPointerException
-				at com.apple.laf.AquaMenuPainter.paintSelectedMenuItemBackground(AquaMenuPainter.java:147)
-				at com.apple.laf.AquaMenuItemUI.paintBackground(AquaMenuItemUI.java:93)
-				at com.apple.laf.AquaMenuPainter.paintMenuItem(AquaMenuPainter.java:192)
-				at com.apple.laf.AquaMenuItemUI.paintMenuItem(AquaMenuItemUI.java:66)
-				at javax.swing.plaf.basic.BasicMenuItemUI.paint(BasicMenuItemUI.java:594)
-				at com.apple.laf.AquaMenuItemUI.update(AquaMenuItemUI.java:82)
-				at javax.swing.JComponent.paintComponent(JComponent.java:763)
-				at javax.swing.JComponent.paint(JComponent.java:1027)
-				at javax.swing.JComponent.paintChildren(JComponent.java:864)
-				at javax.swing.JComponent.paint(JComponent.java:1036)
-				at javax.swing.JComponent.paintChildren(JComponent.java:864)
-				at javax.swing.JComponent.paint(JComponent.java:1036)
-				at javax.swing.JComponent.paintChildren(JComponent.java:864)
-				at javax.swing.JComponent.paint(JComponent.java:1036)
-				at javax.swing.JLayeredPane.paint(JLayeredPane.java:564)
-				at javax.swing.JComponent.paintChildren(JComponent.java:864)
-				at javax.swing.JComponent.paint(JComponent.java:1036)
-				at javax.swing.JComponent._paintImmediately(JComponent.java:5096)
-				at javax.swing.JComponent.paintImmediately(JComponent.java:4880)
-				at javax.swing.RepaintManager.paintDirtyRegions(RepaintManager.java:829)
-				at javax.swing.RepaintManager.paintDirtyRegions(RepaintManager.java:714)
-				at javax.swing.RepaintManager.seqPaintDirtyRegions(RepaintManager.java:694)
-				at javax.swing.SystemEventQueueUtilities$ComponentWorkRequest.run(SystemEventQueueUtilities.java:128)
-				at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:209)
-				at java.awt.EventQueue.dispatchEvent(EventQueue.java:633)
-				at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:296)
-				at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:211)
-				at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:201)
-				at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:196)
-				at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:188)
-				at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
-			*/
-			/*
-			try
-			{
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-				for(String current : defaultNames)
+				if (lookAndFeelName.equals(info.getName()))
 				{
-					storedDefaults.put(current, UIManager.get(current));
+					lookAndFeelClassName = info.getClassName();
+					break;
 				}
 			}
-			catch(Throwable t)
-			{
-				if(logger.isErrorEnabled()) logger.error("Exception while setting SystemLookAndFeel!!", t);
-			}
-			*/
 		}
 
-		// init look & feel
-		String lookAndFeel = applicationPreferences.getLookAndFeel();
-		if(lookAndFeel != null)
+		try
 		{
-			try
+			UIManager.setLookAndFeel(lookAndFeelClassName);
+		}
+		catch (Throwable e)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Failed to set look&feel to '{}'.", lookAndFeelClassName, e);
+			if(!lookAndFeelClassName.equals(systemLookAndFeelClassName))
 			{
-				for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+				try
 				{
-					if(lookAndFeel.equals(info.getName()))
+					UIManager.setLookAndFeel(systemLookAndFeelClassName);
+					lookAndFeelClassName = systemLookAndFeelClassName;
+				}
+				catch (Throwable e2)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Failed to set look&feel to '{}'.", systemLookAndFeelClassName, e);
+					lookAndFeelClassName = null;
+				}
+			}
+		}
+
+		boolean screenMenuBar = false;
+		if(systemLookAndFeelClassName.equals(lookAndFeelClassName))
+		{
+			// This instance of application is only used to query some info. The real one is in MainFrame.
+			Application application = new DefaultApplication();
+
+			if(application.isMac())
+			{
+				// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
+				try
+				{
+					System.setProperty(APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY, "true");
+					screenMenuBar = true;
+				}
+				catch(Throwable e)
+				{
+					try
 					{
-						String lafClassName = info.getClassName();
-						if(logger.isDebugEnabled()) logger.debug("Setting look&feel to {}.", lafClassName);
-						UIManager.setLookAndFeel(lafClassName);
-
-						if(application.isMac() && lafClassName.equals(UIManager.getSystemLookAndFeelClassName()))
-						{
-							// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
-							try
-							{
-								System.setProperty("apple.laf.useScreenMenuBar", "true");
-							}
-							catch(Exception e)
-							{
-								// try the older menu bar property
-								System.setProperty("com.apple.macos.useScreenMenuBar", "true");
-								// this shouldn't happen since we only run on 1.5+
-							}
-						}
-
-
-						break;
+						screenMenuBar = Boolean.parseBoolean(System.getProperty(APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY, "false"));
+					}
+					catch(Throwable e2)
+					{
+						// ignore
 					}
 				}
 			}
-			catch(Throwable t)
-			{
-				if(logger.isErrorEnabled()) logger.error("Exception while setting look & feel '{}'!", lookAndFeel, t);
-			}
-
-			// this is part 2 of Mac Menu for all PLAFs.
-			// Thanks to Kirill Grouchnikov - http://www.pushing-pixels.org/?p=366
-			if(logger.isDebugEnabled()) logger.debug("storedDefaults: {}", storedDefaults);
-			for(Map.Entry<String, Object> current : storedDefaults.entrySet())
-			{
-				UIManager.put(current.getKey(), current.getValue());
-			}
 		}
+
+		applicationPreferences.setUsingScreenMenuBar(screenMenuBar);
 
 		boolean splashScreenDisabled = applicationPreferences.isSplashScreenDisabled();
 		try
@@ -886,14 +815,7 @@ public class Lilith
 			final MainFrame frame = createMain.getMainFrame();
 			if(logger.isDebugEnabled()) logger.debug("After show...");
 			updateSplashStatus(splashScreen, "Initializing application...");
-			SwingUtilities.invokeAndWait(new Runnable()
-			{
-
-				public void run()
-				{
-					frame.startUp();
-				}
-			});
+			SwingUtilities.invokeAndWait(frame::startUp);
 			hideSplashScreen(splashScreen);
 			mainFrame=frame;
 
