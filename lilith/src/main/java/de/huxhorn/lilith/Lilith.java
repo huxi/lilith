@@ -201,7 +201,7 @@ public class Lilith
 	// TODO: - Shortcut in tooltip of toolbars...?
 	// TODO: - check termination of every started thread
 
-	public static void main(String[] argv)
+	public static void main(String[] args)
 	{
 		{
 			// initialize java.util.logging to use slf4j...
@@ -236,7 +236,7 @@ public class Lilith
 
 		try
 		{
-			commander.parse(argv);
+			commander.parse(args);
 		}
 		catch(ParameterException ex)
 		{
