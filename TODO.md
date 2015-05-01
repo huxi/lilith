@@ -18,11 +18,8 @@ It's critical that Lilith switches from the old Java6-Mac bundling to the proper
 ## Enhancements
 - Replace SimpleDateFormat with Joda.
 - Use Woodstox for all things StaX.
-- Cleanup of duplicated code in actions, e.g. the new layout actions.
 - Ability to add/remove/configure event receivers
 - Plugin interfaces (EventSender (e.g. Bonjour etc.), EventReceiver, EventHandler (?, stuff like the fart on error, RRD statistics, anything that's working directly on received events), GoToSource).
-- Option to left-align Thread name in table (Suggested by Lilianne)
-- Option to left-align Logger name in table (Suggested by Lilianne)
 - Option to show full Logger name in table (Suggested by Lilianne)
 - add SSL option to multiplexers
 - Send message (not event) over Bonjour, i.e. a simple IM.

@@ -37,7 +37,7 @@ public class ThreadRenderer
 	{
 		super();
 		renderer = new LabelCellRenderer();
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		renderer.setHorizontalAlignment(SwingConstants.LEFT);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
 	}

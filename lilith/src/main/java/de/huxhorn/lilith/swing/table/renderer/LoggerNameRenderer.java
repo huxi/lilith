@@ -36,7 +36,7 @@ public class LoggerNameRenderer
 	{
 		super();
 		renderer = new LabelCellRenderer();
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		renderer.setHorizontalAlignment(SwingConstants.LEFT);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
 	}
@@ -55,35 +55,19 @@ public class LoggerNameRenderer
 		renderer.setFocused(hasFocus);
 		Color foreground = Color.BLACK;
 		String text = "";
-		//String tooltip="";
+		String tooltip="";
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;
 			Object eventObj = wrapper.getEvent();
 			if(eventObj instanceof LoggingEvent)
 			{
-				LoggingEvent event = (LoggingEvent) eventObj;
-				String fullName = event.getLogger();
-				if(fullName == null)
-				{
-					text="";
-				}
-				else
-				{
-					int lastDot = fullName.lastIndexOf('.');
-					if(lastDot == -1 || lastDot == fullName.length() - 1)
-					{
-						text = fullName;
-					}
-					else
-					{
-						lastDot++;
-						text = fullName.substring(lastDot);
-					}
-				}
+				tooltip = ((LoggingEvent)(eventObj)).getLogger();
+				text = getShortNameString(tooltip);
 			}
 		}
 		renderer.setText(text);
+		renderer.setToolTipText(tooltip);
 
 		boolean colorsInitialized = false;
 		if(!hasFocus && !isSelected)
@@ -107,5 +91,23 @@ public class LoggerNameRenderer
 		renderer.correctRowHeight(table);
 
 		return renderer;
+	}
+
+	private static String getShortNameString(String fullName)
+	{
+		String result="";
+		if(fullName != null)
+		{
+			int lastDot = fullName.lastIndexOf('.');
+			if(lastDot == -1 || lastDot == fullName.length() - 1)
+			{
+				result = fullName;
+			}
+			else
+			{
+				result = fullName.substring(lastDot+1);
+			}
+		}
+		return result;
 	}
 }

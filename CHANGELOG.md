@@ -7,9 +7,12 @@ All notable changes to this project will be documented in this file.
 ### Added
 - `CHANGELOG.md` in the spirit of [Keep a CHANGELOG](http://keepachangelog.com/).
 - Rough `TODO.md` listing some things that should be done.
-- Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
+- Error dialog if Lilith is started with Java prior to 1.8.0_45.
+
+### Changed
 - Requires Java 8.
-- Added error dialog if Lilith is started with Java prior to 1.8.0_45.
+- left-align logger name and thread name in table.
+- Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
 
 ### Deprecated
 - Nothing.
