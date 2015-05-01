@@ -57,8 +57,8 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -540,7 +540,7 @@ public class Lilith
 		// ok, we are the first instance this user has started...
 
 		// install uncaught exception handler on event thread.
-		SwingUtilities.invokeLater(() -> Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler));
+		EventQueue.invokeLater(() -> Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler));
 
 		startUI(appTitle, enableBonjour);
 	}
@@ -618,9 +618,9 @@ public class Lilith
 		if(mainFrame != null)
 		{
 			final MainFrame frame = mainFrame;
-			SwingUtilities.invokeLater(() -> {
+			EventQueue.invokeLater(() -> {
 
-				if(frame.isVisible())
+				if (frame.isVisible())
 				{
 					frame.setVisible(false);
 				}
@@ -635,7 +635,7 @@ public class Lilith
 	{
 		if(splashScreen != null)
 		{
-			SwingUtilities.invokeAndWait(() -> {
+			EventQueue.invokeAndWait(() -> {
 				if(!splashScreen.isVisible())
 				{
 					Windows.showWindow(splashScreen, null, true);
@@ -651,7 +651,7 @@ public class Lilith
 	{
 		if(splashScreen != null)
 		{
-			SwingUtilities.invokeAndWait(() -> splashScreen.setVisible(false));
+			EventQueue.invokeAndWait(() -> splashScreen.setVisible(false));
 		}
 	}
 
@@ -748,7 +748,7 @@ public class Lilith
 			if(!splashScreenDisabled)
 			{
 				CreateSplashRunnable createRunnable = new CreateSplashRunnable(appTitle);
-				SwingUtilities.invokeAndWait(createRunnable);
+				EventQueue.invokeAndWait(createRunnable);
 				splashScreen = createRunnable.getSplashScreen();
 				Thread.sleep(500); // so the splash gets the chance to get displayed :(
 				updateSplashStatus(splashScreen, "Initialized application preferences...");
@@ -811,11 +811,11 @@ public class Lilith
 
 			updateSplashStatus(splashScreen, "Creating main window...");
 			CreateMainFrameRunnable createMain = new CreateMainFrameRunnable(applicationPreferences, splashScreen, appTitle, enableBonjour);
-			SwingUtilities.invokeAndWait(createMain);
+			EventQueue.invokeAndWait(createMain);
 			final MainFrame frame = createMain.getMainFrame();
 			if(logger.isDebugEnabled()) logger.debug("After show...");
 			updateSplashStatus(splashScreen, "Initializing application...");
-			SwingUtilities.invokeAndWait(frame::startUp);
+			EventQueue.invokeAndWait(frame::startUp);
 			hideSplashScreen(splashScreen);
 			mainFrame=frame;
 

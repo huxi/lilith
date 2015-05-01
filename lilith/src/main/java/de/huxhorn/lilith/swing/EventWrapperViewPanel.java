@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,13 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -349,11 +355,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(table.isScrollingToBottom())
 		{
-			SwingUtilities.invokeLater(new ScrollToBottomRunnable());
+			EventQueue.invokeLater(new ScrollToBottomRunnable());
 		}
 		else if(table.getSelectedRow() < 0)
 		{
-			SwingUtilities.invokeLater(new SelectFirstEventRunnable());
+			EventQueue.invokeLater(new SelectFirstEventRunnable());
 		}
 	}
 

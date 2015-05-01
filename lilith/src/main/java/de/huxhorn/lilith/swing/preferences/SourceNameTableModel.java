@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@ import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -190,13 +190,13 @@ public class SourceNameTableModel
 	private void fireTableChange(TableModelEvent evt)
 	{
 		Runnable r = new FireTableChangeRunnable(evt);
-		if(SwingUtilities.isEventDispatchThread())
+		if(EventQueue.isDispatchThread())
 		{
 			r.run();
 		}
 		else
 		{
-			SwingUtilities.invokeLater(r);
+			EventQueue.invokeLater(r);
 		}
 	}
 

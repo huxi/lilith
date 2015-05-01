@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,7 +56,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 
 public class StatisticsPanel
@@ -344,7 +344,7 @@ public class StatisticsPanel
 						}
 					}
 				}
-				SwingUtilities.invokeLater(new SwingUpdateRunnable());
+				EventQueue.invokeLater(new SwingUpdateRunnable());
 				try
 				{
 					Thread.sleep(REFRESH_DELAY);

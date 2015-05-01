@@ -32,7 +32,7 @@ public class DialogBug
 			AWTEvent.WINDOW_EVENT_MASK |
 			AWTEvent.WINDOW_STATE_EVENT_MASK);
 
-		SwingUtilities.invokeLater(new StartupRunnable(args.length == 0));
+		EventQueue.invokeLater(new StartupRunnable(args.length == 0));
 	}
 
 	public static class MyAwtListener

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.SwingUtilities;
+import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
 
@@ -60,7 +60,7 @@ public class CheckFileChangeCallable
 				{
 					IndexingCallable indexing=new IndexingCallable(dataFile, indexFile, true);
 					indexing.call();
-					SwingUtilities.invokeAndWait(flushRunnable);
+					EventQueue.invokeAndWait(flushRunnable);
 				}
 				catch(IOException ex)
 				{
@@ -68,7 +68,7 @@ public class CheckFileChangeCallable
 					// this can be safely ignored.
 					// changed from EOFException to general IOException due to
 					// http://sourceforge.net/apps/trac/lilith/ticket/97
-					if(logger.isInfoEnabled()) logger.info("Exception while reindexing log file. Ignoring it...", ex);
+					if(logger.isInfoEnabled()) logger.info("Exception while re-indexing log file. Ignoring it...", ex);
 				}
 			}
 			try

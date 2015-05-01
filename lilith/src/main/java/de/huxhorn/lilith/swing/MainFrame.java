@@ -140,7 +140,13 @@ import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -187,7 +193,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 
@@ -1099,7 +1104,7 @@ public class MainFrame
 
 	public Colors getColors(EventWrapper eventWrapper)
 	{
-		if(!SwingUtilities.isEventDispatchThread())
+		if(!EventQueue.isDispatchThread())
 		{
 			if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
 		}
@@ -2021,13 +2026,13 @@ public class MainFrame
 	{
 		// we need this since this method might also be called by a different thread
 		ShowViewRunnable runnable = new ShowViewRunnable(container);
-		if(SwingUtilities.isEventDispatchThread())
+		if(EventQueue.isDispatchThread())
 		{
 			runnable.run();
 		}
 		else
 		{
-			SwingUtilities.invokeLater(runnable);
+			EventQueue.invokeLater(runnable);
 		}
 	}
 
@@ -2252,12 +2257,12 @@ public class MainFrame
 	{
 		public void eventSourceAdded(EventSource<LoggingEvent> eventSource)
 		{
-			SwingUtilities.invokeLater(new LoggingSourceAddedRunnable(eventSource));
+			EventQueue.invokeLater(new LoggingSourceAddedRunnable(eventSource));
 		}
 
 		public void eventSourceRemoved(EventSource<LoggingEvent> eventSource)
 		{
-			SwingUtilities.invokeLater(new LoggingSourceRemovedRunnable(eventSource));
+			EventQueue.invokeLater(new LoggingSourceRemovedRunnable(eventSource));
 		}
 
 		private class LoggingSourceAddedRunnable
@@ -2334,12 +2339,12 @@ public class MainFrame
 	{
 		public void eventSourceAdded(EventSource<AccessEvent> eventSource)
 		{
-			SwingUtilities.invokeLater(new AccessSourceAddedRunnable(eventSource));
+			EventQueue.invokeLater(new AccessSourceAddedRunnable(eventSource));
 		}
 
 		public void eventSourceRemoved(EventSource<AccessEvent> eventSource)
 		{
-			SwingUtilities.invokeLater(new AccessSourceRemovedRunnable(eventSource));
+			EventQueue.invokeLater(new AccessSourceRemovedRunnable(eventSource));
 		}
 
 		private class AccessSourceAddedRunnable
@@ -2742,7 +2747,7 @@ public class MainFrame
 		if(window != null)
 		{
 			ScrollToBottomRunnable runnable = new ScrollToBottomRunnable(window);
-			SwingUtilities.invokeLater(runnable);
+			EventQueue.invokeLater(runnable);
 		}
 	}
 
@@ -3803,7 +3808,7 @@ public class MainFrame
 				String version = releaseVersionBundle.getVersion();
 				String message = "New release: " + version;
 				String changes = retrieveChanges(version);
-				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+				EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
 				return;
 			}
 
@@ -3812,7 +3817,7 @@ public class MainFrame
 				String version = releaseVersionBundle.getVersion();
 				String message = "OH HAI! You can haz newzest release version!!1";
 				String changes = retrieveChanges(version);
-				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+				EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
 				return;
 			}
 
@@ -3829,7 +3834,7 @@ public class MainFrame
 
 					String message = "New snapshot: " + version + "-" + format.format(d);
 					String changes = retrieveChanges(version);
-					SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+					EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
 					return;
 				}
 
@@ -3839,7 +3844,7 @@ public class MainFrame
 
 					String message = "OH HAI! You can haz newzest snapshot version!!1";
 					String changes = retrieveChanges(version);
-					SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+					EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
 					return;
 				}
 			}
@@ -3848,7 +3853,7 @@ public class MainFrame
 			{
 				String message=null; // up to date
 				String changes = retrieveChanges(Lilith.APP_VERSION_BUNDLE.getVersion());
-				SwingUtilities.invokeLater(new ShowUpdateDialog(message, changes));
+				EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
 			}
 		}
 	}

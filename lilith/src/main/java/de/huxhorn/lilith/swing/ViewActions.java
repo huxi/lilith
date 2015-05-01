@@ -95,7 +95,6 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableColumn;
 
@@ -1285,7 +1284,7 @@ public class ViewActions
 		// must be executed later because the ancestor-change-event is fired
 		// while parent is still != null...
 		// see JComponent.removeNotify source for comment.
-		SwingUtilities.invokeLater(new UpdateWindowMenuRunnable(windowMenu));
+		EventQueue.invokeLater(new UpdateWindowMenuRunnable(windowMenu));
 	}
 
 	public ActionListener getAboutAction()
