@@ -45,6 +45,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -249,7 +250,13 @@ public class ApplicationPreferences
 			new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
 		DEFAULT_STATUS_COLOR_SCHEMES = Collections.unmodifiableMap(defaultStatusColors);
 
-		STARTUP_LOOK_AND_FEEL = UIManager.getLookAndFeel().getName();
+		String lafName = null;
+		LookAndFeel laf = UIManager.getLookAndFeel();
+		if(laf != null)
+		{
+			lafName = laf.getName();
+		}
+		STARTUP_LOOK_AND_FEEL = lafName;
 	}
 
 	private boolean usingScreenMenuBar;
