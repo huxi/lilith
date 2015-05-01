@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 
-import java.awt.*;
-
-import javax.swing.*;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
+import java.awt.Color;
+import java.awt.Component;
 
 public class IdRenderer
 	implements TableCellRenderer
@@ -35,7 +36,6 @@ public class IdRenderer
 	{
 		super();
 		renderer = new LabelCellRenderer();
-		renderer.setHorizontalAlignment(SwingConstants.RIGHT);
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 

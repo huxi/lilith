@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Requires Java 8.
-- left-align logger name and thread name in table.
+- left-aligned most table cells.
 - Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
 
 ### Deprecated

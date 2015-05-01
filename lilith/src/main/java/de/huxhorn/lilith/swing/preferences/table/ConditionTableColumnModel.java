@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ import javax.swing.table.TableColumn;
 public class ConditionTableColumnModel
 	extends DefaultTableColumnModel
 {
+	private static final long serialVersionUID = 7750077138244538054L;
+
 	public static final int DEFAULT_COLUMN_INDEX_INDEX = 0;
 	public static final int DEFAULT_COLUMN_INDEX_NAME = 1;
 	public static final int DEFAULT_COLUMN_INDEX_PREVIEW = 2;
