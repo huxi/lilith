@@ -1852,18 +1852,16 @@ public class ViewActions
 			if(container != null)
 			{
 				ViewWindow window = container.resolveViewWindow();
-				if(window instanceof JInternalFrame)
-				{
-					putValue(Action.SMALL_ICON, detachIcon);
-					putValue(Action.NAME, "Detach");
-				}
-				else if(window instanceof JFrame)
+				if(window instanceof JFrame)
 				{
 					putValue(Action.SMALL_ICON, attachIcon);
 					putValue(Action.NAME, "Attach");
+					return;
 				}
 			}
-
+			// default/init to Detach
+			putValue(Action.SMALL_ICON, detachIcon);
+			putValue(Action.NAME, "Detach");
 		}
 	}
 
