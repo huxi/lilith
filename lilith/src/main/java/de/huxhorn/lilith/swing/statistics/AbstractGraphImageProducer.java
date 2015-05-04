@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.statistics;
 
+import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.MainFrame;
 
@@ -26,12 +27,11 @@ import org.rrd4j.graph.RrdGraphInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
 
 public abstract class AbstractGraphImageProducer
 	implements GraphImageProducer
@@ -39,7 +39,6 @@ public abstract class AbstractGraphImageProducer
 	private final Logger logger = LoggerFactory.getLogger(AbstractGraphImageProducer.class);
 
 	protected MainFrame mainFrame;
-	protected SimpleDateFormat dateFormat;
 	protected Dimension graphSize;
 
 	public AbstractGraphImageProducer(MainFrame mainFrame)
@@ -47,7 +46,6 @@ public abstract class AbstractGraphImageProducer
 		super();
 		this.graphSize = new Dimension(600, 400);
 		this.mainFrame = mainFrame;
-		this.dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	}
 
 	protected File getRrdFile(SourceIdentifier sourceIdentifier)
@@ -59,15 +57,16 @@ public abstract class AbstractGraphImageProducer
 
 	protected String createGraphTitle(SourceIdentifier sourceIdentifier)
 	{
-		return mainFrame.getPrimarySourceTitle(sourceIdentifier) + " @ " + dateFormat.format(new Date());
+		return mainFrame.getPrimarySourceTitle(sourceIdentifier) + " @ "
+				+ DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.now());
 	}
 
 	public BufferedImage createGraphImage(long nowInSeconds, SourceIdentifier sourceIdentifier, BufferedImage result, boolean showMax)
 	{
 		RrdGraphDef graphDef = getGraphDef(nowInSeconds, sourceIdentifier, showMax);
+		//noinspection SynchronizationOnLocalVariableOrMethodParameter
 		synchronized(graphDef)
 		{
-
 			RrdGraph graph;
 			try
 			{

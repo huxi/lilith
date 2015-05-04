@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
+import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -25,8 +26,7 @@ import de.huxhorn.lilith.swing.table.ColorsProvider;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -36,7 +36,6 @@ public class TimestampRenderer
 	implements TableCellRenderer
 {
 	private LabelCellRenderer renderer;
-	private SimpleDateFormat timeFormat;
 
 	public TimestampRenderer()
 	{
@@ -45,8 +44,6 @@ public class TimestampRenderer
 		renderer.setHorizontalAlignment(SwingConstants.LEFT);
 		renderer.setToolTipText(null);
 		renderer.setIcon(null);
-
-		timeFormat = new SimpleDateFormat("HH:mm:ss.SSS");
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
@@ -64,6 +61,7 @@ public class TimestampRenderer
 
 		Color foreground = Color.BLACK;
 		String text = "";
+		Instant instant = null;
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;
@@ -74,7 +72,7 @@ public class TimestampRenderer
 				Long timestamp = event.getTimeStamp();
 				if(timestamp != null)
 				{
-					text = timeFormat.format(new Date(timestamp));
+					instant = Instant.ofEpochMilli(timestamp);
 				}
 			}
 			else if(eventObj instanceof AccessEvent)
@@ -83,9 +81,13 @@ public class TimestampRenderer
 				Long timestamp = event.getTimeStamp();
 				if(timestamp != null)
 				{
-					text = timeFormat.format(new Date(timestamp));
+					instant = Instant.ofEpochMilli(timestamp);
 				}
 			}
+		}
+		if(instant != null)
+		{
+			text = DateTimeFormatters.TIME_IN_SYSTEM_ZONE.format(instant);
 		}
 		renderer.setText(text);
 		boolean colorsInitialized = false;

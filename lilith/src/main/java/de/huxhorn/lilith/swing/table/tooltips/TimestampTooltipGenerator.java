@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,24 @@
  */
 package de.huxhorn.lilith.swing.table.tooltips;
 
+import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.swing.*;
+import javax.swing.JTable;
+import java.time.Instant;
 
 public class TimestampTooltipGenerator
 	implements TooltipGenerator
 {
-	private SimpleDateFormat fullFormat;
-
-	public TimestampTooltipGenerator()
-	{
-		fullFormat = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS");
-	}
 
 	public String createTooltipText(JTable table, int row)
 	{
 		String tooltip = null;
 		Object value = table.getValueAt(row, 0);
+		Instant instant = null;
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;
@@ -51,7 +45,7 @@ public class TimestampTooltipGenerator
 				Long timestamp = event.getTimeStamp();
 				if(timestamp != null)
 				{
-					tooltip = fullFormat.format(new Date(timestamp));
+					instant = Instant.ofEpochMilli(timestamp);
 				}
 
 			}
@@ -61,9 +55,13 @@ public class TimestampTooltipGenerator
 				Long timestamp = event.getTimeStamp();
 				if(timestamp != null)
 				{
-					tooltip = fullFormat.format(new Date(timestamp));
+					instant = Instant.ofEpochMilli(timestamp);
 				}
 			}
+		}
+		if(instant != null)
+		{
+			tooltip = DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(instant);
 		}
 		return tooltip;
 	}

@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - left-aligned most table cells.
 - Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
 - Using EventQueue instead of SwingUtilities.
+- Using java.time.format instead of SimpleDateFormat or joda-time.
 
 ### Deprecated
 - Nothing.

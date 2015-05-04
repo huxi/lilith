@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2014 Joern Huxhorn
+ * Copyright (C) 2014-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.services.details;
 
+import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -30,6 +31,7 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 import java.io.File;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.Locale;
 
 public class ThymeleafEventWrapperHtmlFormatter
@@ -88,6 +90,8 @@ public class ThymeleafEventWrapperHtmlFormatter
 		String message;
 		try
 		{
+			URL messageViewRootUrl = applicationPreferences.getDetailsViewRootUrl();
+
 			Context context=new Context(Locale.US);
 
 			context.setVariable(LOGGER_VARIABLE, logger);
@@ -100,6 +104,9 @@ public class ThymeleafEventWrapperHtmlFormatter
 			context.setVariable(SHOW_STACK_TRACE_OPTION_VARIABLE, applicationPreferences.isShowingStackTrace());
 			context.setVariable(WRAPPED_EXCEPTION_STYLE_OPTION_VARIABLE, applicationPreferences.isUsingWrappedExceptionStyle());
 
+			context.setVariable(DOCUMENT_ROOT_VARIABLE, messageViewRootUrl.toExternalForm());
+
+			context.setVariable(DATETIME_FORMATTER_VARIABLE, DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE);
 
 			message = templateEngine.process("detailsView", context);
 		}

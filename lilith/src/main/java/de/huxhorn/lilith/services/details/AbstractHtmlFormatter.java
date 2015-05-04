@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2014 Joern Huxhorn
+ * Copyright (C) 2014-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,9 @@ public abstract class AbstractHtmlFormatter
 	public static final String COMPLETE_CALL_STACK_OPTION_VARIABLE = "completeCallStack";
 	public static final String SHOW_STACK_TRACE_OPTION_VARIABLE = "showStackTrace";
 	public static final String WRAPPED_EXCEPTION_STYLE_OPTION_VARIABLE = "wrappedExceptionStyle";
+
+	public static final String DOCUMENT_ROOT_VARIABLE = "documentRoot";
+	public static final String DATETIME_FORMATTER_VARIABLE = "dateTimeFormatter";
 
 
 	public static String createErrorHtml(String message, String additionalInfo, Throwable throwable)

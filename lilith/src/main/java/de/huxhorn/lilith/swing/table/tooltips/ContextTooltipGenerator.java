@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,22 @@
  */
 package de.huxhorn.lilith.swing.table.tooltips;
 
+import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.swing.JTable;
+import java.time.Instant;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.swing.*;
-
 public class ContextTooltipGenerator
 	implements TooltipGenerator
 {
-	private SimpleDateFormat fullFormat;
-
-	public ContextTooltipGenerator()
-	{
-		fullFormat = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS");
-	}
-
 	public String createTooltipText(JTable table, int row)
 	{
 		String tooltip = null;
@@ -67,7 +59,7 @@ public class ContextTooltipGenerator
 				if(timestamp != null)
 				{
 					msg.append("<h4>Birthtime</h4>");
-					msg.append(fullFormat.format(new Date(timestamp)));
+					msg.append(DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(timestamp)));
 				}
 				Map<String, String> props = context.getProperties();
 				if(props != null && props.size() > 0)

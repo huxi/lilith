@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,9 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 // TODO: ServerSocket
 
@@ -48,9 +49,12 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 {
 	final Logger logger = LoggerFactory.getLogger(AbstractServerSocketEventSourceProducer.class);
 
+	private static final DateTimeFormatter FORMAT = DateTimeFormatter
+			.ofPattern("yyyyMMdd'T'HHmmssSSS")
+			.withZone(ZoneId.systemDefault());
+
 	private ServerSocket serverSocket;
 	private AppendOperation<EventWrapper<T>> queue;
-	private SimpleDateFormat dateFormat;
 	private SourceManager<T> sourceManager;
 	private int port;
 
@@ -67,8 +71,6 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 			if(logger.isErrorEnabled()) logger.error("Couldn't start ServerSocket on port {}!", port);
 			throw ex;
 		}
-
-		dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmssSSS");
 	}
 
 	public AppendOperation<EventWrapper<T>> getQueue()
@@ -151,7 +153,7 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 		{
 			primary = "" + address;
 		}
-		String secondary = dateFormat.format(new Date());
+		String secondary = FORMAT.format(Instant.now());
 
 
 		return new SourceIdentifier(primary, secondary);
