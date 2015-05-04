@@ -1,8 +1,8 @@
 # TODO
 This file contains a rough list about stuff that needs to be done.
 
-## Bundling
-It's critical that Lilith switches from the old Java6-Mac bundling to the proper new one with embedded VM. This prevents a switch to Java8 and fancy stuff like JavaFX (especially [WebView](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebView.html) & [WebEngine](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebEngine.html))
+## HTML-View
+Use [WebView](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebView.html) & [WebEngine](http://docs.oracle.com/javafx/2/api/javafx/scene/web/WebEngine.html) instead of FS.
 
 ### izpack
 - [Homepage](http://izpack.org/)
@@ -16,7 +16,6 @@ It's critical that Lilith switches from the old Java6-Mac bundling to the proper
 
 
 ## Enhancements
-- Replace SimpleDateFormat with Joda.
 - Use Woodstox for all things StaX.
 - Ability to add/remove/configure event receivers
 - Plugin interfaces (EventSender (e.g. Bonjour etc.), EventReceiver, EventHandler (?, stuff like the fart on error, RRD statistics, anything that's working directly on received events), GoToSource).
