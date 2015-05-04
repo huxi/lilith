@@ -41,6 +41,7 @@ public class LilithKeyStrokes
 
 	public static final String ATTACH_ACTION = "ATTACH_ACTION";
 	public static final String CLEAN_ALL_INACTIVE_LOGS_ACTION = "CLEAN_ALL_INACTIVE_LOGS_ACTION";
+	public static final String CLEAR_ACTION = "CLEAR_ACTION";
 	public static final String CLOSE_ALL_ACTION = "CLOSE_ALL_ACTION";
 	public static final String CLOSE_FILTER_ACTION = "CLOSE_FILTER_ACTION";
 	public static final String CLOSE_OTHER_FILTERS_ACTION = "CLOSE_OTHER_FILTERS_ACTION";
@@ -82,6 +83,7 @@ public class LilithKeyStrokes
 	{
 		addKeyStroke(ATTACH_ACTION, KeyStrokes.COMMAND_ALIAS + " shift A");
 		addKeyStroke(CLEAN_ALL_INACTIVE_LOGS_ACTION, KeyStrokes.COMMAND_ALIAS + " shift X");
+		addKeyStroke(CLEAR_ACTION, KeyStrokes.COMMAND_ALIAS + " K");
 		addKeyStroke(CLOSE_ALL_ACTION, KeyStrokes.COMMAND_ALIAS+" shift alt W");
 		addKeyStroke(CLOSE_FILTER_ACTION, KeyStrokes.COMMAND_ALIAS + " W");
 		addKeyStroke(CLOSE_OTHER_FILTERS_ACTION, KeyStrokes.COMMAND_ALIAS + " shift W");

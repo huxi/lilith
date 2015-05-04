@@ -1608,7 +1608,7 @@ public class ViewActions
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.CLEAR_TOOLBAR_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Clear");
+			putValue(Action.SHORT_DESCRIPTION, "Clear this view.");
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -1625,6 +1625,8 @@ public class ViewActions
 		public ClearMenuAction()
 		{
 			super("Clear");
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLEAR_ACTION);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, Icons.CLEAR_MENU_ICON);
 			putValue(Action.SHORT_DESCRIPTION, "Clear this view.");
 		}
