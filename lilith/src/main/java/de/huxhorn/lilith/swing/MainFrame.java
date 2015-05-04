@@ -123,7 +123,6 @@ import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
 import de.huxhorn.sulky.io.IOUtilities;
-import org.apache.commons.lang3.SystemUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -456,13 +455,10 @@ public class MainFrame
 		add(desktop, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
 
-		if(SystemUtils.IS_JAVA_1_6)
-		{
-			setSplashStatusText("Creating statistics dialog.");
-			if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
-			statisticsDialog = new StatisticsDialog(this);
-			if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
-		}
+		setSplashStatusText("Creating statistics dialog.");
+		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
+		statisticsDialog = new StatisticsDialog(this);
+		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
 
 		setSplashStatusText("Creating about dialog.");
 		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);

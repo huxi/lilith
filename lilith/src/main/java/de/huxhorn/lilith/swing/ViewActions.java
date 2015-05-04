@@ -46,12 +46,18 @@ import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
-import org.apache.commons.lang3.SystemUtils;
 import org.simplericity.macify.eawt.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.AWTError;
+import java.awt.Container;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.HeadlessException;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -287,7 +293,6 @@ public class ViewActions
 		focusMessageAction = new FocusMessageAction();
 		focusEventsAction = new FocusEventsAction();
 
-		//statisticsMenuAction = new StatisticsMenuAction();
 		editSourceNameMenuAction = new EditSourceNameMenuAction();
 		saveLayoutAction = new SaveLayoutAction();
 		resetLayoutAction = new ResetLayoutAction();
@@ -326,7 +331,6 @@ public class ViewActions
 		pauseToolBarAction = new PauseToolBarAction();
 		clearToolBarAction = new ClearToolBarAction();
 		findToolBarAction = new FindToolBarAction();
-		//statisticsToolBarAction = new StatisticsToolBarAction();
 		attachToolBarAction = new AttachToolBarAction();
 		disconnectToolBarAction = new DisconnectToolBarAction();
 
@@ -821,20 +825,6 @@ public class ViewActions
 	public void requestMenuBarFocus()
 	{
 		menubar.getComponent().requestFocusInWindow();
-	}
-*/
-/*
-	private void showStatistics()
-	{
-		if(viewContainer != null)
-		{
-			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel != null)
-			{
-				MainFrame mainFrame = viewContainer.getMainFrame();
-				mainFrame.showStatistics(eventWrapperViewPanel.getEventSource().getSourceIdentifier());
-			}
-		}
 	}
 */
 
@@ -2043,43 +2033,6 @@ public class ViewActions
 		{
 		}
 	}
-/*
-	private class StatisticsMenuAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -6336357605789928345L;
-
-		public StatisticsMenuAction()
-		{
-			super("Statistics");
-			putValue(Action.SMALL_ICON, STATISTICS_MENU_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Statistics");
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			showStatistics();
-		}
-	}
-
-	private class StatisticsToolBarAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 2394035359331601001L;
-
-		public StatisticsToolBarAction()
-		{
-			super();
-			putValue(Action.SMALL_ICON, STATISTICS_TOOLBAR_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Statistics");
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			showStatistics();
-		}
-	}
-*/
 
 	private class DisconnectMenuAction
 		extends AbstractAction
@@ -2505,37 +2458,19 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 4453230971326526165L;
 
-		private SourceIdentifier sourceIentifier;
+		private SourceIdentifier sourceIdentifier;
 
 		public ViewStatisticsAction(String name, SourceIdentifier sourceIdentifier)
 		{
 			super(name);
-			this.sourceIentifier = sourceIdentifier;
+			this.sourceIdentifier = sourceIdentifier;
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			mainFrame.showStatistics(sourceIentifier);
+			mainFrame.showStatistics(sourceIdentifier);
 		}
 	}
-
-/*
-	static class StatisticsSubMenuAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -8180660223848656769L;
-
-		public StatisticsSubMenuAction()
-		{
-			super("Statistics");
-			putValue(Action.SMALL_ICON, STATISTICS_MENU_ICON);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-		}
-	}
-*/
 
 	class UpdateWindowMenuRunnable
 		implements Runnable
@@ -2563,7 +2498,6 @@ public class ViewActions
 			windowMenu.add(minimizeAllItem);
 			windowMenu.add(minimizeAllOtherItem);
 			windowMenu.add(removeInactiveItem);
-//			windowMenu.add(clearAndRemoveInactiveItem);
 
 			int activeCounter = 0;
 			int inactiveCounter = 0;
@@ -2794,28 +2728,22 @@ public class ViewActions
 		{
 			StatisticsMenuAction statisticsMenuAction = new StatisticsMenuAction();
 			JMenu result = new JMenu(statisticsMenuAction);
-			if(!SystemUtils.IS_JAVA_1_6)
+
+			SortedMap<String, SourceIdentifier> sources = mainFrame.getAvailableStatistics();
+
 			{
-				statisticsMenuAction.setEnabled(false);
+				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction("Global", new SourceIdentifier("global")));
+				result.add(menuItem);
+				result.addSeparator();
 			}
-			else
+
+			for(Map.Entry<String, SourceIdentifier> current : sources.entrySet())
 			{
-				SortedMap<String, SourceIdentifier> sources = mainFrame.getAvailableStatistics();
+				String key = current.getKey();
+				SourceIdentifier value = current.getValue();
 
-				{
-					JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction("Global", new SourceIdentifier("global")));
-					result.add(menuItem);
-					result.addSeparator();
-				}
-
-				for(Map.Entry<String, SourceIdentifier> current : sources.entrySet())
-				{
-					String key = current.getKey();
-					SourceIdentifier value = current.getValue();
-
-					JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction(key, value));
-					result.add(menuItem);
-				}
+				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction(key, value));
+				result.add(menuItem);
 			}
 			return result;
 		}
