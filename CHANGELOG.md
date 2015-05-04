@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file.
 - Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
 - Using EventQueue instead of SwingUtilities.
 - Using java.time.format instead of SimpleDateFormat or joda-time.
+- Changed "Next tab" shortcut from Cmd-K to Cmd-J.
+- Changed "Previous tab" shortcut from Cmd-J to Cmd-shift-J.
+- Switched "Next tab" and "Previous tab" in "View" menu.
 
 ### Deprecated
 - Nothing.

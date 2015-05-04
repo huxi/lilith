@@ -466,8 +466,8 @@ public class ViewActions
 		layoutMenu.add(resetLayoutAction);
 		viewMenu.add(layoutMenu);
 		viewMenu.addSeparator();
-		viewMenu.add(previousTabAction);
 		viewMenu.add(nextTabAction);
+		viewMenu.add(previousTabAction);
 		viewMenu.addSeparator();
 		viewMenu.add(closeFilterAction);
 		viewMenu.add(closeOtherFiltersAction);

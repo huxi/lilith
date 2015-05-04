@@ -26,13 +26,13 @@ public class LilithKeyStrokes
 		String existingActionName = keyStrokeActions.get(keyStroke);
 		if(existingActionName != null)
 		{
-			if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' is already used for '{}'! Ignoring '{}'.", new Object[]{keyStrokeString, existingActionName, actionName});
+			if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' is already used for '{}'! Ignoring '{}'.", keyStrokeString, existingActionName, actionName);
 			return;
 		}
 		KeyStroke existingKeyStroke = actionKeyStrokes.get(actionName);
 		if(existingKeyStroke != null)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Duplicate entry for '{}'! Won't overwrite '{}' with '{}'.", new Object[]{actionName, existingKeyStroke, keyStroke});
+			if(logger.isWarnEnabled()) logger.warn("Duplicate entry for '{}'! Won't overwrite '{}' with '{}'.", actionName, existingKeyStroke, keyStroke);
 			return;
 		}
 		actionKeyStrokes.put(actionName, keyStroke);
@@ -102,13 +102,13 @@ public class LilithKeyStrokes
 		addKeyStroke(FOCUS_MESSAGE_ACTION, KeyStrokes.COMMAND_ALIAS + " M");
 		addKeyStroke(HELP_ACTION, "F1");
 		addKeyStroke(IMPORT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift I");
-		addKeyStroke(NEXT_TAB_ACTION, KeyStrokes.COMMAND_ALIAS + " K");
+		addKeyStroke(NEXT_TAB_ACTION, KeyStrokes.COMMAND_ALIAS + " J");
 		addKeyStroke(OPEN_ACTION, KeyStrokes.COMMAND_ALIAS + " O");
 		addKeyStroke(OPEN_INACTIVE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift O");
 		addKeyStroke(PASTE_STACK_TRACE_ELEMENT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift V");
 		addKeyStroke(PAUSE_ACTION, KeyStrokes.COMMAND_ALIAS + " P");
 		addKeyStroke(PREFERENCES_ACTION, KeyStrokes.COMMAND_ALIAS + " COMMA");
-		addKeyStroke(PREVIOUS_TAB_ACTION, KeyStrokes.COMMAND_ALIAS + " J");
+		addKeyStroke(PREVIOUS_TAB_ACTION, KeyStrokes.COMMAND_ALIAS + " shift J");
 		addKeyStroke(REMOVE_INACTIVE_ACTION, KeyStrokes.COMMAND_ALIAS + " R");
 		addKeyStroke(REPLACE_FILTER_ACTION, "shift ENTER");
 		addKeyStroke(RESET_FIND_ACTION, KeyStrokes.COMMAND_ALIAS + " shift F");
