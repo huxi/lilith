@@ -42,6 +42,7 @@ import de.huxhorn.lilith.tools.CatCommand;
 import de.huxhorn.lilith.tools.CreateMd5Command;
 import de.huxhorn.lilith.tools.IndexCommand;
 import de.huxhorn.lilith.tools.TailCommand;
+import de.huxhorn.sulky.formatting.SafeString;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
 import it.sauronsoftware.junique.AlreadyLockedException;
@@ -49,8 +50,6 @@ import it.sauronsoftware.junique.JUnique;
 import org.apache.commons.io.FileUtils;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.simplericity.macify.eawt.Application;
 import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.ILoggerFactory;
@@ -69,6 +68,10 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -123,8 +126,6 @@ public class Lilith
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 	private static MainFrame mainFrame;
-	private static DateTimeFormatter isoDateTimeFormat = ISODateTimeFormat.dateTime().withZoneUTC();
-	private static DateTimeFormatter isoDateTimeFormatLocal = ISODateTimeFormat.dateTime();
 
 	private static class UncaughtExceptionHandler
 		implements Thread.UncaughtExceptionHandler
@@ -184,7 +185,7 @@ public class Lilith
 			try
 			{
 				ts = Long.parseLong(tsStr);
-				dateStr = isoDateTimeFormat.print(ts);
+				dateStr = SafeString.toString(new Date(ts));
 			}
 			catch(NumberFormatException ex)
 			{
@@ -776,7 +777,8 @@ public class Lilith
 					{
 						ps.println("----------------------------------------");
 					}
-					ps.println("Started " + APP_NAME + " V" + APP_VERSION + " at " + isoDateTimeFormatLocal.print(System.currentTimeMillis()));
+					String currentDateTime = DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.systemDefault()).format(Instant.now());
+					ps.println("Started " + APP_NAME + " V" + APP_VERSION + " at " + currentDateTime);
 					System.setErr(ps);
 					if(logger.isInfoEnabled()) logger.info("Writing System.err to '{}'.", errorLog.getAbsolutePath());
 				}

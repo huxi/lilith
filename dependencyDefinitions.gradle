@@ -39,7 +39,6 @@ project.ext.libraries = [
 'jackson-databind':         "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
 'jcommander':               'com.beust:jcommander:1.48',
 'jgoodies-looks':           'com.jgoodies:jgoodies-looks:2.5.3',
-'joda-time':                'joda-time:joda-time:2.7',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
 'junit':                    'junit:junit:4.12',
 'log4j':                    "log4j:log4j:${versions.log4j}",
