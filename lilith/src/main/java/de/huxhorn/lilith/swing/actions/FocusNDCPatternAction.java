@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@ import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
 
-import javax.swing.*;
-
 public class FocusNDCPatternAction
 		extends AbstractFilterAction
 {
@@ -32,11 +30,11 @@ public class FocusNDCPatternAction
 
 	private final String pattern;
 
-	public FocusNDCPatternAction(ViewContainer viewContainer, String pattern)
+	public FocusNDCPatternAction(ViewContainer viewContainer, String pattern, boolean htmlTooltip)
 	{
-		super(TextPreprocessor.cropToSingleLine(pattern));
+		super(TextPreprocessor.cropToSingleLine(pattern), htmlTooltip);
 		this.pattern = pattern;
-		putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(pattern)));
+		initializeCroppedTooltip(pattern);
 		setViewContainer(viewContainer);
 	}
 

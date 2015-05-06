@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ import de.huxhorn.lilith.conditions.HttpStatusCodeCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.sulky.conditions.Condition;
 
-import javax.swing.*;
+import javax.swing.Action;
 
 public class FocusHttpStatusCodeAction
 		extends AbstractAccessFilterAction
@@ -31,7 +31,7 @@ public class FocusHttpStatusCodeAction
 
 	public FocusHttpStatusCodeAction()
 	{
-		super("Status code");
+		super("Status code", false);
 	}
 
 	protected void setStatusCode(Integer statusCode)

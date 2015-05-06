@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-import javax.swing.*;
+import javax.swing.JMenu;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,14 +35,16 @@ public class FocusSavedConditionsMenu
 {
 	private static final long serialVersionUID = 5642118791633046024L;
 	private final ApplicationPreferences applicationPreferences;
+	protected final boolean htmlTooltip;
 
 	private List<FilterAction> savedConditionActions;
 	private ViewContainer viewContainer;
 
-	public FocusSavedConditionsMenu(ApplicationPreferences applicationPreferences)
+	public FocusSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super("Saved conditions");
 		this.applicationPreferences = applicationPreferences;
+		this.htmlTooltip = htmlTooltip;
 		setViewContainer(null);
 		setConditionNames(applicationPreferences.getConditionNames());
 	}
@@ -117,6 +119,6 @@ public class FocusSavedConditionsMenu
 
 	protected FilterAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
 	{
-		return new FocusSavedConditionAction(viewContainer, savedCondition);
+		return new FocusSavedConditionAction(viewContainer, savedCondition, htmlTooltip);
 	}
 }

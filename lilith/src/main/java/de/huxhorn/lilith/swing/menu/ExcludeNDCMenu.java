@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,15 +28,20 @@ public class ExcludeNDCMenu
 {
 	private static final long serialVersionUID = 1051797757745679700L;
 
+	public ExcludeNDCMenu(boolean htmlTooltip)
+	{
+		super(htmlTooltip);
+	}
+
 	@Override
 	protected FilterAction createMessageAction(ViewContainer viewContainer, String message)
 	{
-		return new NegateFilterAction(new FocusNDCAction(viewContainer, message));
+		return new NegateFilterAction(new FocusNDCAction(viewContainer, message, htmlTooltip));
 	}
 
 	@Override
 	protected FilterAction createMessagePatternAction(ViewContainer viewContainer, String pattern)
 	{
-		return new NegateFilterAction(new FocusNDCPatternAction(viewContainer, pattern));
+		return new NegateFilterAction(new FocusNDCPatternAction(viewContainer, pattern, htmlTooltip));
 	}
 }

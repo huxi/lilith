@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ public class FocusLoggerAction
 
 	public FocusLoggerAction(ViewContainer viewContainer, String loggerName)
 	{
-		super(loggerName);
+		super(loggerName, false);
 		this.loggerName = loggerName;
 		setViewContainer(viewContainer);
 	}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,6 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
 
-import javax.swing.*;
-
 public class FocusMarkerAction
 		extends AbstractFilterAction
 {
@@ -33,7 +31,7 @@ public class FocusMarkerAction
 
 	public FocusMarkerAction(ViewContainer viewContainer, String markerName)
 	{
-		super(markerName);
+		super(markerName, false);
 		this.markerName = markerName;
 		setViewContainer(viewContainer);
 	}

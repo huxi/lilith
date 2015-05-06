@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,7 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.FormattedMessageEqualsCondition;
 import de.huxhorn.lilith.data.logging.Message;
-import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.conditions.Condition;
-
-import javax.swing.*;
 
 public class FocusFormattedMessageAction
 		extends AbstractLoggingFilterAction
@@ -30,16 +27,16 @@ public class FocusFormattedMessageAction
 	private static final long serialVersionUID = -1245643497938628684L;
 	private String formattedMessage;
 
-	public FocusFormattedMessageAction()
+	public FocusFormattedMessageAction(boolean htmlTooltip)
 	{
-		super("Formatted message");
+		super("Formatted message", htmlTooltip);
 	}
 
 	protected void setFormattedMessage(String formattedMessage)
 	{
 		this.formattedMessage = formattedMessage;
 
-		putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(formattedMessage)));
+		initializeCroppedTooltip(formattedMessage);
 
 		setEnabled(formattedMessage != null);
 	}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,13 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
 import java.awt.event.ActionEvent;
 
 public abstract class AbstractFilterAction
@@ -31,19 +34,24 @@ public abstract class AbstractFilterAction
 	private static final long serialVersionUID = -8702163293653882073L;
 
 	protected transient ViewContainer viewContainer;
+	private final boolean htmlTooltip;
 
-	protected AbstractFilterAction()
+
+	protected AbstractFilterAction(boolean htmlTooltip)
 	{
+		this.htmlTooltip = htmlTooltip;
 	}
 
-	protected AbstractFilterAction(String name)
+	protected AbstractFilterAction(String name, boolean htmlTooltip)
 	{
 		super(name);
+		this.htmlTooltip = htmlTooltip;
 	}
 
-	protected AbstractFilterAction(String name, Icon icon)
+	protected AbstractFilterAction(String name, Icon icon, boolean htmlTooltip)
 	{
 		super(name, icon);
+		this.htmlTooltip = htmlTooltip;
 	}
 
 	@Override
@@ -74,8 +82,32 @@ public abstract class AbstractFilterAction
 
 	protected abstract void updateState();
 
+	protected void initializeCroppedTooltip(String tooltip)
+	{
+		initializeCroppedTooltip(tooltip, this, htmlTooltip);
+	}
+
+	protected void initializeConditionTooltip(Condition condition)
+	{
+		initializeConditionTooltip(condition, this, htmlTooltip);
+	}
+
 	public abstract void setEventWrapper(EventWrapper eventWrapper);
 
 	public abstract Condition resolveCondition();
 
+	public static  void initializeConditionTooltip(Condition condition, Action action, boolean htmlTooltip)
+	{
+		initializeCroppedTooltip(TextPreprocessor.formatCondition(condition), action, htmlTooltip);
+	}
+
+	public static  void initializeCroppedTooltip(String tooltip, Action action, boolean htmlTooltip)
+	{
+		tooltip = TextPreprocessor.cropTextBlock(tooltip);
+		if(htmlTooltip)
+		{
+			tooltip = TextPreprocessor.preformattedTooltip(tooltip);
+		}
+		action.putValue(Action.SHORT_DESCRIPTION, tooltip);
+	}
 }

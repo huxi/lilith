@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,9 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.HttpRemoteUserCondition;
-import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.conditions.Condition;
 
-import javax.swing.*;
+import javax.swing.Action;
 
 public class FocusHttpRemoteUserAction
 		extends AbstractAccessFilterAction
@@ -34,13 +33,13 @@ public class FocusHttpRemoteUserAction
 
 	public FocusHttpRemoteUserAction()
 	{
-		super("Remote User");
+		super("Remote User", false);
 	}
 
 	protected void setSearchString(String searchString)
 	{
 		this.searchString = searchString;
-		putValue(Action.SHORT_DESCRIPTION, TextPreprocessor.cropLine(searchString));
+		putValue(Action.SHORT_DESCRIPTION, searchString);
 
 		setEnabled(searchString != null);
 	}

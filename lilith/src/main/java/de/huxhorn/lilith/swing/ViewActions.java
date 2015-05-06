@@ -39,6 +39,7 @@ import de.huxhorn.lilith.services.clipboard.LoggingMessagePatternFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingNdcFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableFormatter;
 import de.huxhorn.lilith.services.sender.EventSender;
+import de.huxhorn.lilith.swing.actions.AbstractFilterAction;
 import de.huxhorn.lilith.swing.menu.ExcludeMenu;
 import de.huxhorn.lilith.swing.menu.FocusMenu;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
@@ -230,6 +231,9 @@ public class ViewActions
 	{
 		this.mainFrame = mainFrame;
 
+		final ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+		final boolean usingScreenMenuBar = applicationPreferences != null && applicationPreferences.isUsingScreenMenuBar();
+
 		containerChangeListener = e -> updateActions();
 
 		containerPropertyChangeListener = evt -> {
@@ -296,7 +300,7 @@ public class ViewActions
 		editSourceNameMenuAction = new EditSourceNameMenuAction();
 		saveLayoutAction = new SaveLayoutAction();
 		resetLayoutAction = new ResetLayoutAction();
-		saveConditionMenuAction = new SaveConditionMenuAction();
+		saveConditionMenuAction = new SaveConditionMenuAction(!usingScreenMenuBar);
 
 		zoomInMenuAction = new ZoomInMenuAction();
 		zoomOutMenuAction = new ZoomOutMenuAction();
@@ -440,8 +444,8 @@ public class ViewActions
 		searchMenu.add(saveConditionMenuAction);
 		searchMenu.addSeparator();
 
-		focusMenu = new FocusMenu(mainFrame.getApplicationPreferences());
-		excludeMenu = new ExcludeMenu(mainFrame.getApplicationPreferences());
+		focusMenu = new FocusMenu(applicationPreferences, !usingScreenMenuBar);
+		excludeMenu = new ExcludeMenu(applicationPreferences, !usingScreenMenuBar);
 		searchMenu.add(focusMenu);
 		searchMenu.add(excludeMenu);
 
@@ -1032,8 +1036,8 @@ public class ViewActions
 		popup.add(saveConditionMenuAction);
 		popup.addSeparator();
 
-		focusPopupMenu = new FocusMenu(mainFrame.getApplicationPreferences());
-		excludePopupMenu = new ExcludeMenu(mainFrame.getApplicationPreferences());
+		focusPopupMenu = new FocusMenu(mainFrame.getApplicationPreferences(), true);
+		excludePopupMenu = new ExcludeMenu(mainFrame.getApplicationPreferences(), true);
 
 		popup.add(focusPopupMenu);
 		popup.add(excludePopupMenu);
@@ -1734,14 +1738,17 @@ public class ViewActions
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = -8380709624103338783L;
+		private static final String DEFAULT_TOOLTIP = "Add the condition of the current view.";
+		private final boolean htmlTooltip;
 
-		public SaveConditionMenuAction()
+		public SaveConditionMenuAction(boolean htmlTooltip)
 		{
 			super("Save condition...");
+			this.htmlTooltip = htmlTooltip;
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_CONDITION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Add the condition of the current view.");
+			putValue(Action.SHORT_DESCRIPTION, DEFAULT_TOOLTIP);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -1751,8 +1758,6 @@ public class ViewActions
 
 		public void updateAction()
 		{
-			boolean enable = false;
-			String tooltip = null;
 			if(viewContainer != null)
 			{
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
@@ -1763,13 +1768,14 @@ public class ViewActions
 					Condition condition = eventWrapperViewPanel.getCombinedCondition(currentFilter);
 					if(condition != null)
 					{
-						tooltip = TextPreprocessor.preformattedTooltip(TextPreprocessor.cropTextBlock(TextPreprocessor.formatCondition(condition)));
-						enable = true;
+						AbstractFilterAction.initializeConditionTooltip(condition, this, htmlTooltip);
+						setEnabled(true);
+						return;
 					}
 				}
 			}
-			putValue(Action.SHORT_DESCRIPTION, tooltip);
-			setEnabled(enable);
+			putValue(Action.SHORT_DESCRIPTION, DEFAULT_TOOLTIP);
+			setEnabled(false);
 		}
 	}
 

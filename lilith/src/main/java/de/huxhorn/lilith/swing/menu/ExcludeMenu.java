@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.*;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import java.util.List;
 
 public class ExcludeMenu
@@ -47,6 +48,7 @@ public class ExcludeMenu
 	private static final long serialVersionUID = -663125573199455498L;
 
 	private final ApplicationPreferences applicationPreferences;
+	private final boolean htmlTooltip;
 
 	private EventWrapper eventWrapper;
 
@@ -77,10 +79,11 @@ public class ExcludeMenu
 	private JMenuItem remoteUserItem;
 	private ViewContainer viewContainer;
 
-	public ExcludeMenu(ApplicationPreferences applicationPreferences)
+	public ExcludeMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super("Exclude");
 		this.applicationPreferences = applicationPreferences;
+		this.htmlTooltip = htmlTooltip;
 		createUI();
 		setViewContainer(null);
 		setEventWrapper(null);
@@ -88,17 +91,17 @@ public class ExcludeMenu
 
 	private void createUI()
 	{
-		savedMenu = new ExcludeSavedConditionsMenu(applicationPreferences);
+		savedMenu = new ExcludeSavedConditionsMenu(applicationPreferences, htmlTooltip);
 
-		messagePatternAction = new NegateFilterAction(new FocusMessagePatternAction());
-		formattedMessageAction = new NegateFilterAction(new FocusFormattedMessageAction());
+		messagePatternAction = new NegateFilterAction(new FocusMessagePatternAction(htmlTooltip));
+		formattedMessageAction = new NegateFilterAction(new FocusFormattedMessageAction(htmlTooltip));
 		callLocationAction = new NegateFilterAction(new FocusCallLocationAction());
 		messagePatternItem = new JMenuItem(messagePatternAction);
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
 		callLocationItem = new JMenuItem(callLocationAction);
 		mdcMenu = new ExcludeMDCMenu();
 		markerMenu = new ExcludeMarkerMenu();
-		ndcMenu = new ExcludeNDCMenu();
+		ndcMenu = new ExcludeNDCMenu(htmlTooltip);
 		loggerMenu = new ExcludeLoggerMenu();
 
 		statusCodeAction = new NegateFilterAction(new FocusHttpStatusCodeAction());

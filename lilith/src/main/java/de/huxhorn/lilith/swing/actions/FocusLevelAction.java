@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.conditions.Condition;
 
-import javax.swing.*;
+import javax.swing.Action;
 
 public class FocusLevelAction
 		extends AbstractFilterAction
@@ -33,7 +33,7 @@ public class FocusLevelAction
 
 	public FocusLevelAction(LoggingEvent.Level level)
 	{
-		super(level.name());
+		super(level.name(), false);
 		this.level = level;
 		putValue(Action.SHORT_DESCRIPTION, resolveCondition().toString());
 		setViewContainer(null);

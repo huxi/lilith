@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,20 +28,22 @@ import de.huxhorn.lilith.swing.actions.FocusNDCAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.*;
+import javax.swing.JMenu;
 
 public class FocusNDCMenu
 	extends JMenu
 	implements ViewContainerRelated, EventWrapperRelated
 {
 	private static final long serialVersionUID = 2934068317229029302L;
+	protected final boolean htmlTooltip;
 
 	private ViewContainer viewContainer;
 	private Message[] ndc;
 
-	public FocusNDCMenu()
+	public FocusNDCMenu(boolean htmlTooltip)
 	{
 		super("NDC");
+		this.htmlTooltip = htmlTooltip;
 		setToolTipText("Nested Diagnostic Context");
 		setViewContainer(null);
 		setEventWrapper(null);
@@ -111,11 +113,11 @@ public class FocusNDCMenu
 
 	protected FilterAction createMessageAction(ViewContainer viewContainer, String message)
 	{
-		return new FocusNDCAction(viewContainer, message);
+		return new FocusNDCAction(viewContainer, message, htmlTooltip);
 	}
 
 	protected FilterAction createMessagePatternAction(ViewContainer viewContainer, String pattern)
 	{
-		return new FocusNDCPatternAction(viewContainer, pattern);
+		return new FocusNDCPatternAction(viewContainer, pattern, htmlTooltip);
 	}
 }
