@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Some `HttpStatus` enum values have been renamed. Code explicitly using them would need to be changed.
 - `TroubleshootingPanel.reset(ViewContainer<?> container)`
+- joda-time dependency.
 
 ### Fixed
 - Updated `HttpStatus` enum to RFC 7231/7232/7233/7235/7238. Some enum values have been renamed in the process.
@@ -36,8 +37,8 @@ All notable changes to this project will be documented in this file.
 - Reduced log level of broken stream message in event producers.
 - Fixed initialization of "Attach/Detach" action.
 - Fixed statistics in case of Java != 1.6
-- SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.6, Groovy 2.4.3, commons-codec 1.9, commons-lang3 3.4, joda-time 2.7, httpclient 4.4.1, httpcore 4.4.1, jackson 2.5.3, log4j2 2.2, aspectj 1.8.5, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1 
 - Fixed "Focus" and "Exclude" menu tooltips on Mac. Those displayed HTML source if system menu bar was used. 
+- SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.6, Groovy 2.4.3, commons-codec 1.9, commons-lang3 3.4, httpclient 4.4.1, httpcore 4.4.1, jackson 2.5.3, log4j2 2.2, aspectj 1.8.5, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1 
 
 
 ---
