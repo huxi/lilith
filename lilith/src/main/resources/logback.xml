@@ -183,6 +183,7 @@
 	<logger name="de.huxhorn.lilith.swing.xhtml" level="DEBUG"/>
 	<logger name="de.huxhorn.lilith.tools" level="WARN"/>
 	<logger name="de.huxhorn.lilith.tools.ImportExportCommand" level="INFO"/>
+	<logger name="de.huxhorn.lilith.tools.CreateMd5Command" level="INFO"/>
 	<logger name="de.huxhorn.lilith.tray" level="WARN"/>
 	<logger name="de.huxhorn.sulky" level="INFO"/>
 	<logger name="de.huxhorn.sulky.buffers.filtering.FilteringBuffer" level="INFO"/>

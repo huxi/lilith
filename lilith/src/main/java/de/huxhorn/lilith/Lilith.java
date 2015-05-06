@@ -349,9 +349,10 @@ public class Lilith
 		if(Md5.NAME.equals(command))
 		{
 			List<String> files = md5.files;
-			if(files == null || files.size()==0)
+			if(files == null || files.isEmpty())
 			{
 				printHelp(commander);
+				System.out.println("Missing files!");
 				System.exit(-1);
 			}
 			boolean error=false;

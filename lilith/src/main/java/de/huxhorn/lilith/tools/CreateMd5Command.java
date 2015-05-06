@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.tools;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +59,7 @@ public class CreateMd5Command
 			if(logger.isInfoEnabled())
 			{
 				logger.info("Wrote checksum of {} to {}.", input.getAbsolutePath(), output.getAbsolutePath());
+				logger.info("MD5: {}", Hex.encodeHexString(md5));
 			}
 		}
 		catch(IOException e)
