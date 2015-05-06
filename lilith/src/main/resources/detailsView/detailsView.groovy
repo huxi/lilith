@@ -1,15 +1,6 @@
-import de.huxhorn.lilith.data.eventsource.LoggerContext;
-import de.huxhorn.lilith.data.access.AccessEvent
-import de.huxhorn.lilith.data.access.HttpStatus
-import de.huxhorn.lilith.data.logging.LoggingEvent
-import de.huxhorn.lilith.data.logging.Message
-import de.huxhorn.lilith.data.logging.ThreadInfo
-import groovy.xml.StreamingMarkupBuilder
-import java.text.SimpleDateFormat
-
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2009 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +16,17 @@ import java.text.SimpleDateFormat
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import de.huxhorn.lilith.data.eventsource.LoggerContext
+import de.huxhorn.lilith.data.access.AccessEvent
+import de.huxhorn.lilith.data.access.HttpStatus
+import de.huxhorn.lilith.data.logging.LoggingEvent
+import de.huxhorn.lilith.data.logging.Message
+import de.huxhorn.lilith.data.logging.ThreadInfo
+import groovy.xml.StreamingMarkupBuilder
+import java.time.format.DateTimeFormatter
+import java.time.Instant
+import java.time.ZoneId
+
 if(!binding.variables.containsKey('completeCallStack'))
 {
 	binding.setVariable('completeCallStack', false);
@@ -37,8 +39,17 @@ if(!binding.variables.containsKey('wrappedExceptionStyle'))
 {
 	binding.setVariable('wrappedExceptionStyle', false);
 }
+if(!binding.variables.containsKey('documentRoot'))
+{
+	binding.setVariable('documentRoot', '');
+}
+if(!binding.variables.containsKey('dateTimeFormatter'))
+{
+	binding.setVariable('dateTimeFormatter',
+		DateTimeFormatter.ofPattern("yyyy-MM-dd'FUUU'HH:mm:ss.SSS")
+			.withZone(ZoneId.systemDefault()));
+}
 
-def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSSZ');
 def builder = new StreamingMarkupBuilder();
 builder.encoding = "UTF-8";
 
@@ -49,7 +60,9 @@ writer << builder.bind {
 	namespaces << ['': 'http://www.w3.org/1999/xhtml']
 	html {
 		head {
-
+			if(documentRoot) {
+				it.base(href: documentRoot)
+			}
 			title('Title')
 			link(href: 'detailsView.css', rel: 'stylesheet', type: 'text/css')
 		}
@@ -65,11 +78,11 @@ writer << builder.bind {
 				}
 				else if(event instanceof LoggingEvent)
 				{
-					buildLoggingEvent(it, eventWrapper, dateFormat, completeCallStack);
+					buildLoggingEvent(it, eventWrapper, dateTimeFormatter, completeCallStack);
 				}
 				else if(event instanceof AccessEvent)
 				{
-					buildAccessEvent(it, eventWrapper, dateFormat);
+					buildAccessEvent(it, eventWrapper, dateTimeFormatter);
 				}
 				else
 				{
@@ -99,7 +112,7 @@ writer.toString()
 
 // functions below
 
-def buildAccessEvent(element, eventWrapper, dateFormat)
+def buildAccessEvent(element, eventWrapper, dateTimeFormatter)
 {
 	def event = eventWrapper.event;
 
@@ -236,7 +249,7 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 			it.tr([class: "${evenOdd}"])
 				{
 					th('Timestamp')
-					td(dateFormat.format(event.timeStamp))
+					td(dateTimeFormatter.format(Instant.ofEpochMilli(event.timeStamp)))
 				}
 		}
 
@@ -262,7 +275,7 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 					}
 					td
 					{
-						buildLoggerContext(it, loggerContext, dateFormat);
+						buildLoggerContext(it, loggerContext, dateTimeFormatter);
 					}
 				}
 		}
@@ -272,7 +285,7 @@ def buildAccessEvent(element, eventWrapper, dateFormat)
 }
 
 
-def buildLoggerContext(element, LoggerContext loggerContext, dateFormat)
+def buildLoggerContext(element, LoggerContext loggerContext, dateTimeFormatter)
 {
 	if(loggerContext)
 	{
@@ -294,7 +307,7 @@ def buildLoggerContext(element, LoggerContext loggerContext, dateFormat)
 					tr
 					{
 						th('Birthtime')
-						td(dateFormat.format(d))
+						td(dateTimeFormatter.format(Instant.ofEpochMilli(loggerContext.birthTime)))
 					}
 				}
 				if(loggerContext.properties)
@@ -313,7 +326,7 @@ def buildLoggerContext(element, LoggerContext loggerContext, dateFormat)
 	}
 }
 
-def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
+def buildLoggingEvent(element, eventWrapper, dateTimeFormatter, completeCallStack)
 {
 	def event = eventWrapper.event;
 
@@ -423,7 +436,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 			it.tr([class: "${evenOdd}"])
 				{
 					th('Timestamp')
-					td(dateFormat.format(event.timeStamp))
+					td(dateTimeFormatter.format(Instant.ofEpochMilli(event.timeStamp)))
 				}
 		}
 
@@ -499,7 +512,7 @@ def buildLoggingEvent(element, eventWrapper, dateFormat, completeCallStack)
 					}
 					td
 					{
-						buildLoggerContext(it, loggerContext, dateFormat);
+						buildLoggerContext(it, loggerContext, dateTimeFormatter);
 					}
 				}
 		}
