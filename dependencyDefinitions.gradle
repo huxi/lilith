@@ -25,7 +25,10 @@ project.ext.libraries = [
 'commons-io':               'commons-io:commons-io:2.4',
 'commons-lang':             'org.apache.commons:commons-lang3:3.4',
 //'disruptor':                'com.lmax:disruptor:3.3.0',
-'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.0.4',
+//'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.0.7',
+// regression in 9.0.7:
+// https://code.google.com/p/flying-saucer/issues/detail?id=262
+'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.0.6',
 'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.9.1',
 'groovy':                   "org.codehaus.groovy:groovy:${versions.groovy}",
 'groovy-console':           "org.codehaus.groovy:groovy-console:${versions.groovy}",
