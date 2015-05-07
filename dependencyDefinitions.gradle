@@ -21,7 +21,7 @@ project.ext.versions = [
 project.ext.libraries = [
 'aspectjrt':                "org.aspectj:aspectjrt:${versions.aspectj}",
 'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
-'cglib-nodep':              'cglib:cglib-nodep:3.0',
+'cglib-nodep':              'cglib:cglib-nodep:3.1',
 'commons-io':               'commons-io:commons-io:2.4',
 'commons-lang':             'org.apache.commons:commons-lang3:3.4',
 //'disruptor':                'com.lmax:disruptor:3.3.0',

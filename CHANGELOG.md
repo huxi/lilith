@@ -38,7 +38,7 @@ All notable changes to this project will be documented in this file.
 - Fixed initialization of "Attach/Detach" action.
 - Fixed statistics in case of Java != 1.6
 - Fixed "Focus" and "Exclude" menu tooltips on Mac. Those displayed HTML source if system menu bar was used. 
-- SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.6, Groovy 2.4.3, commons-codec 1.9, commons-lang3 3.4, httpclient 4.4.1, httpcore 4.4.1, jackson 2.5.3, log4j2 2.2, aspectj 1.8.5, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1, servlet-api 3.1.0, flying-saucer 9.0.6 
+- SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.6, Groovy 2.4.3, commons-codec 1.9, commons-lang3 3.4, httpclient 4.4.1, httpcore 4.4.1, jackson 2.5.3, log4j2 2.2, aspectj 1.8.5, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1, servlet-api 3.1.0, flying-saucer 9.0.6, cglib 3.1 
 
 
 ---
