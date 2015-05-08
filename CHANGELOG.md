@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 - `CHANGELOG.md` in the spirit of [Keep a CHANGELOG](http://keepachangelog.com/).
 - Rough `TODO.md` listing some things that should be done.
 - Error dialog if Lilith is started with Java prior to 1.8.0_45.
-- Added "Clear view" shortcut Cmd-K. K like clear.
+- Added "Clear view" shortcut Cmd-K. K for clear.
 - Added lilith.version.bundle to system properties.
 - Displaying release notes of "newzest version" if already available.
 
@@ -18,9 +18,9 @@ All notable changes to this project will be documented in this file.
 - Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
 - Using EventQueue instead of SwingUtilities.
 - Using java.time.format instead of SimpleDateFormat or joda-time.
-- Changed "Next tab" shortcut from Cmd-K to Cmd-J.
-- Changed "Previous tab" shortcut from Cmd-J to Cmd-shift-J.
-- Switched "Next tab" and "Previous tab" in "View" menu.
+- Renamed "Previous tab" to "Previous view" and "Next tab" to "Next view".
+- Changed "Next view" shortcut from Cmd-K to Cmd-J and "Previous view" shortcut from Cmd-J to Cmd-shift-J.
+- Switched "Next view" and "Previous view" in "View" menu.
 
 ### Deprecated
 - Nothing.
@@ -32,7 +32,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - Updated `HttpStatus` enum to RFC 7231/7232/7233/7235/7238. Some enum values have been renamed in the process.
-- sulky `SafeString` is now always printing a Date as an ISO8601-DateTime with timezone UTC.
+- sulky `SafeString` is now always printing a `Date` as an ISO8601-DateTime with timezone UTC.
 - Using "127.0.0.1" instead of "localhost" in `SerializingGoToSource` to prevent IPv6 SNAFU.
 - Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.
 - Preventing useless focus traversal warnings in EventWrapperViewPanel and FindPanel.

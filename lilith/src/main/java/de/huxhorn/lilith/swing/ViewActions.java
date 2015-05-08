@@ -163,8 +163,8 @@ public class ViewActions
 	private ZoomOutMenuAction zoomOutMenuAction;
 	private ResetZoomMenuAction resetZoomMenuAction;
 
-	private NextTabAction nextTabAction;
-	private PreviousTabAction previousTabAction;
+	private NextViewAction nextViewAction;
+	private PreviousViewAction previousViewAction;
 	private CloseFilterAction closeFilterAction;
 	private CloseOtherFiltersAction closeOtherFiltersAction;
 	private CloseAllFiltersAction closeAllFiltersAction;
@@ -306,8 +306,8 @@ public class ViewActions
 		zoomOutMenuAction = new ZoomOutMenuAction();
 		resetZoomMenuAction = new ResetZoomMenuAction();
 
-		previousTabAction = new PreviousTabAction();
-		nextTabAction = new NextTabAction();
+		previousViewAction = new PreviousViewAction();
+		nextViewAction = new NextViewAction();
 		closeFilterAction = new CloseFilterAction();
 		closeOtherFiltersAction = new CloseOtherFiltersAction();
 		closeAllFiltersAction = new CloseAllFiltersAction();
@@ -474,8 +474,8 @@ public class ViewActions
 		layoutMenu.add(resetLayoutAction);
 		viewMenu.add(layoutMenu);
 		viewMenu.addSeparator();
-		viewMenu.add(nextTabAction);
-		viewMenu.add(previousTabAction);
+		viewMenu.add(nextViewAction);
+		viewMenu.add(previousViewAction);
 		viewMenu.addSeparator();
 		viewMenu.add(closeFilterAction);
 		viewMenu.add(closeOtherFiltersAction);
@@ -614,8 +614,8 @@ public class ViewActions
 		focusEventsAction.setEnabled(hasView);
 		focusMessageAction.setEnabled(hasView);
 		updateShowHideMenu();
-		previousTabAction.updateAction();
-		nextTabAction.updateAction();
+		previousViewAction.updateAction();
+		nextViewAction.updateAction();
 
 		disconnectToolBarAction.setEnabled(isActive);
 
@@ -3122,15 +3122,15 @@ public class ViewActions
 		}
 	}
 
-	private class PreviousTabAction
+	private class PreviousViewAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = 3841435361964210123L;
 
-		public PreviousTabAction()
+		public PreviousViewAction()
 		{
-			super("Previous tab");
-			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREVIOUS_TAB_ACTION);
+			super("Previous view");
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREVIOUS_VIEW_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
@@ -3161,15 +3161,15 @@ public class ViewActions
 		}
 	}
 
-	private class NextTabAction
+	private class NextViewAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = 6997026628818486446L;
 
-		public NextTabAction()
+		public NextViewAction()
 		{
-			super("Next tab");
-			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.NEXT_TAB_ACTION);
+			super("Next view");
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.NEXT_VIEW_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
