@@ -3816,10 +3816,7 @@ public class MainFrame
 
 			if(!Lilith.APP_SNAPSHOT && compare>0)
 			{
-				String version = releaseVersionBundle.getVersion();
-				String message = "OH HAI! You can haz newzest release version!!1";
-				String changes = retrieveChanges(version);
-				EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
+				showNewzestVersion("release", releaseVersionBundle);
 				return;
 			}
 
@@ -3842,11 +3839,7 @@ public class MainFrame
 
 				if(compare>0)
 				{
-					String version = snapshotVersionBundle.getVersion();
-
-					String message = "OH HAI! You can haz newzest snapshot version!!1";
-					String changes = retrieveChanges(version);
-					EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
+					showNewzestVersion("snapshot", snapshotVersionBundle);
 					return;
 				}
 			}
@@ -3857,6 +3850,19 @@ public class MainFrame
 				String changes = retrieveChanges(Lilith.APP_VERSION_BUNDLE.getVersion());
 				EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
 			}
+		}
+
+		private void showNewzestVersion(String versionType, VersionBundle versionBundle)
+		{
+			String message = "OH HAI! You can haz newzest "+versionType+" version!!1";
+			String changes = retrieveChanges(Lilith.APP_VERSION_BUNDLE.getVersion());
+			if(changes == null)
+			{
+				String version = versionBundle.getVersion();
+
+				changes = retrieveChanges(version);
+			}
+			EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
 		}
 	}
 
