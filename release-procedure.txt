@@ -3,8 +3,10 @@ Check that lilith logback.xml does not include debug="true"
 
 #####
 
-Remember to update changes.xml.
+Remember to update CHANGELOG.md.
 Write release notes and put them into lilith/releases/x.x.x.xhtml
+	Use http://daringfireball.net/projects/markdown/dingus to generate part of it from CHANGELOG.md.
+Validate it using https://validator.w3.org/
 Write release notes and changes (README.txt) for sf.net upload.
 
 #####
