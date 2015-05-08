@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Lilith 8.0.0 Release Notes</title>
+		<link href="help.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Lilith 8.0.0</h1>
+		
+		<div>
+			<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/8.0.0">Download Now!
+		<br />(Released: 2015-05-xx)</a>
+		</div>
+		
+		<p>This version requires Java 8 update 45 or higher and will says so if you try to start it with an older version.</p>
+		<p>You can still receive event from previous versions so if your application is still running Java 7 or lower just keep using the 0.9.44 artifacts.</p>
+		
+		<h2>Changelog</h2>
+		<h3>Added</h3>
+
+		<ul>
+			<li>
+				<code>CHANGELOG.md</code> in the spirit of <a href="http://keepachangelog.com/">Keep a CHANGELOG</a>.</li>
+			<li>Rough <code>TODO.md</code> listing some things that should be done.</li>
+			<li>Error dialog if Lilith is started with Java prior to 1.8.0_45.</li>
+			<li>Added "Clear view" shortcut Cmd-K. K for clear.</li>
+			<li>Added lilith.version.bundle to system properties.</li>
+			<li>Displaying release notes of "newzest version" if already available.</li>
+		</ul>
+
+		<h3>Changed</h3>
+
+		<ul>
+			<li>Requires Java 8.</li>
+			<li>left-aligned most table cells.</li>
+			<li>Better view icons in <code>Window</code> menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.</li>
+			<li>Using EventQueue instead of SwingUtilities.</li>
+			<li>Using java.time.format instead of SimpleDateFormat or joda-time.</li>
+			<li>Renamed "Previous tab" to "Previous view" and "Next tab" to "Next view".</li>
+			<li>Changed "Next view" shortcut from Cmd-K to Cmd-J and "Previous view" shortcut from Cmd-J to Cmd-shift-J.</li>
+			<li>Switched "Next view" and "Previous view" in "View" menu.</li>
+		</ul>
+
+		<h3>Deprecated</h3>
+
+		<ul>
+			<li>Nothing.</li>
+		</ul>
+
+		<h3>Removed</h3>
+
+		<ul>
+			<li>Some <code>HttpStatus</code> enum values have been renamed. Code explicitly using them would need to be changed.</li>
+			<li>
+				<code>TroubleshootingPanel.reset(ViewContainer&lt;?&gt; container)</code>
+			</li>
+			<li>joda-time dependency.</li>
+		</ul>
+
+		<h3>Fixed</h3>
+
+		<ul>
+			<li>Updated <code>HttpStatus</code> enum to RFC 7231/7232/7233/7235/7238. Some enum values have been renamed in the process.</li>
+			<li>sulky <code>SafeString</code> is now always printing a <code>Date</code> as an ISO8601-DateTime with timezone UTC.</li>
+			<li>Using "127.0.0.1" instead of "localhost" in <code>SerializingGoToSource</code> to prevent IPv6 SNAFU.</li>
+			<li>Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.</li>
+			<li>Preventing useless focus traversal warnings in EventWrapperViewPanel and FindPanel.</li>
+			<li>Reduced log level of broken stream message in event producers.</li>
+			<li>Fixed initialization of "Attach/Detach" action.</li>
+			<li>Fixed statistics in case of Java != 1.6</li>
+			<li>Fixed "Focus" and "Exclude" menu tooltips on Mac. Those displayed HTML source if system menu bar was used. </li>
+			<li>SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.6, Groovy 2.4.3, commons-codec 1.9, commons-lang3 3.4, httpclient 4.4.1, httpcore 4.4.1, jackson 2.5.3, log4j2 2.2, aspectj 1.8.5, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1, servlet-api 3.1.0, flying-saucer 9.0.6, cglib 3.1 </li>
+		</ul>
+
+		
+		
+		<h2>Known Issues</h2>
+		<ul>
+			<li>Flying Saucer related issues:
+				<ul>
+					<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>
+					</li>
+					
+					<li>The first line of the message in HTML view is not properly indented if it starts with whitespace. You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII"). The HTML created is actually correct.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=125">Issue 125: &lt;pre&gt; ignores leading whitespace</a>
+					</li>
+					
+					<li>Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+						<br />See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=105">Issue 105: URLs with anchors</a>
+					</li>
+				</ul>
+			</li>
+			<li>Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.<br />
+				This is caused by <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182">bug #6995182</a>
+				and I can't do anything about it.<br />
+				Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.<br />
+				m(
+			</li>
+		</ul>
+		
+		<h2>Attention</h2>
+		<p>This release changes detailsView.groovy in a way incompatible with previous versions!</p>
+		<p>If you switch back to a previous version, you must reset this file. Simply execute
+		"Preferences" =&gt; "Troubleshooting" =&gt; "Reinitialize details view files." in that case.</p>
+		
+		<h2>Previous Versions</h2>
+		<ul>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.44.xhtml">0.9.44</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.43.xhtml">0.9.43</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.42.1.xhtml">0.9.42.1</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.42.xhtml">0.9.42</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.41.xhtml">0.9.41</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.40.xhtml">0.9.40</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.39.xhtml">0.9.39</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.38.xhtml">0.9.38</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.37.xhtml">0.9.37</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.36.xhtml">0.9.36</a>
+			</li>
+		</ul>
+		
+		<hr/>
+		<p>
+		bitcoin: 19UjvmrDJMBcGDYQoFcrjYPqLRFPSwznZn<br />
+		litecoin: LU6WM3nmGJy3N5PEE8yQwsAyenJs8dtbmV<br />
+		dogecoin: DJC1R683hfD4VSEDAJrvNpv6GsCg8ewvhm<br />
+		</p>
+	</body>
+</html>
