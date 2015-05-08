@@ -3739,6 +3739,12 @@ public class MainFrame
 		{
 			HttpResponse response = client.execute(httpget, localContext);
 			StatusLine status = response.getStatusLine();
+			int statusCode = status.getStatusCode();
+			if(statusCode == HttpStatus.NOT_FOUND.getCode())
+			{
+				if(logger.isInfoEnabled()) logger.info("'{}' not found.", url);
+				return null;
+			}
 			if(status.getStatusCode() != HttpStatus.OK.getCode())
 			{
 				if(logger.isWarnEnabled()) logger.warn("Status while retrieving '{}': {}", url, status);
