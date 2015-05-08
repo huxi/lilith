@@ -200,9 +200,11 @@ public class Lilith
 		APP_TIMESTAMP = ts;
 		APP_TIMESTAMP_DATE = dateStr;
 		APP_VERSION_BUNDLE = new VersionBundle(APP_PLAIN_VERSION, APP_TIMESTAMP);
+
 		if(APP_VERSION != null)
 		{
 			System.setProperty("lilith.version", APP_VERSION);
+			System.setProperty("lilith.version.bundle", APP_VERSION_BUNDLE.toString());
 		}
 		if(APP_TIMESTAMP > -1)
 		{

@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Rough `TODO.md` listing some things that should be done.
 - Error dialog if Lilith is started with Java prior to 1.8.0_45.
 - Added "Clear view" shortcut Cmd-K. K like clear.
+- Added lilith.version.bundle to system properties.
 
 ### Changed
 - Requires Java 8.
