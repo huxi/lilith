@@ -43,30 +43,32 @@ public abstract class AbstractHtmlFormatter
 	public static String createErrorHtml(String message, String additionalInfo, Throwable throwable)
 	{
 		StringBuilder msg = new StringBuilder();
-		msg.append("<html><body>");
-		msg.append(message);
+		msg.append("<html><head><title></title><style type=\"text/css\">body {color: black; background-color: white; border-style: solid; border-width: 5px; border-color: red; padding: 5px; margin: 5px; font-family: Arial, Helvetica, sans-serif;}</style></head><body>")
+			.append("<h1>")
+			.append(SimpleXml.escape(message))
+			.append("</h1>");
 
-		if(additionalInfo != null)
+		msg.append("<p>You can initialize the detailsView to a safe state using ")
+			.append("\"Reinitialize details view files.\" in ")
+			.append("<a href=\"prefs://Troubleshooting\">Troubleshooting preferences</a>.")
+			.append("</p>");
+
+		if(additionalInfo != null && !additionalInfo.isEmpty())
 		{
-			msg.append("<br/>");
-			msg.append(additionalInfo);
-
+			msg.append("<p>")
+				.append(SimpleXml.escape(additionalInfo))
+				.append("</p>");
 		}
 
 		if(throwable != null)
 		{
-			msg.append("<br/>");
-			msg.append("<pre>");
-
 			StringWriter sw = new StringWriter();
 			throwable.printStackTrace(new PrintWriter(sw));
-			String exceptionStr = sw.toString();
+			String exceptionStr = SimpleXml.escape(sw.toString());
 
-
-			exceptionStr = SimpleXml.escape(exceptionStr);
-
-			msg.append(exceptionStr);
-			msg.append("</pre>");
+			msg.append("<pre>")
+				.append(exceptionStr)
+				.append("</pre>");
 		}
 		msg.append("</body></html>");
 

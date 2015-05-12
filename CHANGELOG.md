@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Renamed "Previous tab" to "Previous view" and "Next tab" to "Next view".
 - Changed "Next view" shortcut from Cmd-K to Cmd-J and "Previous view" shortcut from Cmd-J to Cmd-shift-J.
 - Switched "Next view" and "Previous view" in "View" menu.
+- Better error message in case of broken detailsView.
 
 ### Deprecated
 - Nothing.

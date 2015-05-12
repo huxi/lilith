@@ -69,6 +69,7 @@ import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.prefs.LilithPreferences;
+import de.huxhorn.lilith.services.details.AbstractHtmlFormatter;
 import de.huxhorn.lilith.services.details.GroovyEventWrapperHtmlFormatter;
 import de.huxhorn.lilith.services.details.ThymeleafEventWrapperHtmlFormatter;
 import de.huxhorn.lilith.services.gotosrc.GoToSource;
@@ -2114,7 +2115,7 @@ public class MainFrame
 		if(result == null)
 		{
 			if(logger.isWarnEnabled()) logger.warn("createMessage with usingThymeleaf={} failed for {}!", usingThymeleaf, wrapper);
-			return "<html><body>Failed to create message!</body></html>";
+			return AbstractHtmlFormatter.createErrorHtml("Failed to create details view!", "Formatter returned null.", null);
 		}
 		return result;
 	}
