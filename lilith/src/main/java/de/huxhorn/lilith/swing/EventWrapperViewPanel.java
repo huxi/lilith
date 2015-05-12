@@ -25,7 +25,7 @@ import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.swing.callables.CallableMetaData;
 import de.huxhorn.lilith.swing.callables.FindNextCallable;
 import de.huxhorn.lilith.swing.callables.FindPreviousCallable;
-import de.huxhorn.lilith.swing.linklistener.StackTraceElementLinkListener;
+import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.buffers.Buffer;
@@ -57,7 +57,18 @@ import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FocusTraversalPolicy;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.KeyboardFocusManager;
+import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
@@ -189,6 +200,24 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		{
+			LinkListener originalLinkListener = null;
+			List mouseTrackingList = messagePane.getMouseTrackingListeners();
+			if(mouseTrackingList != null)
+			{
+				for(Object o : mouseTrackingList)
+				{
+					if(logger.isDebugEnabled()) logger.debug("Before MTL {}", o);
+					if(o instanceof LinkListener)
+					{
+						messagePane.removeMouseTrackingListener((LinkListener) o);
+						originalLinkListener = (LinkListener) o;
+					}
+				}
+			}
+			messagePane.addMouseTrackingListener(new OpenUrlLinkListener(mainFrame, originalLinkListener));
+		}
+
 		messagePane.setScale(mainFrame.getApplicationPreferences().getScaleFactor());
 		SelectionHighlighter messagePaneCaret = new SelectionHighlighter();
 		messagePaneCaret.install(messagePane);
@@ -201,23 +230,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		messagePane.addFocusListener(new MessageFocusListener());
 		messagePane.setBorder(unfocusedBorder);
-
-		{
-			List mouseTrackingList = messagePane.getMouseTrackingListeners();
-			if(mouseTrackingList != null)
-			{
-				for(Object o : mouseTrackingList)
-				{
-					if(logger.isDebugEnabled()) logger.debug("Before MTL {}", o);
-					if(o instanceof LinkListener)
-					{
-						messagePane.removeMouseTrackingListener((LinkListener) o);
-					}
-				}
-			}
-		}
-
-		messagePane.addMouseTrackingListener(new StackTraceElementLinkListener(mainFrame));
 
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 		FSScrollPane messageScrollPane = new FSScrollPane(messagePane);

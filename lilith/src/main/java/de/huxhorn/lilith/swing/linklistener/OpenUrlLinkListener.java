@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,10 @@
  */
 package de.huxhorn.lilith.swing.linklistener;
 
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.swing.MainFrame;
 
+import de.huxhorn.sulky.formatting.SimpleXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.swing.BasicPanel;
@@ -35,6 +37,7 @@ public class OpenUrlLinkListener
 	private final Logger logger = LoggerFactory.getLogger(OpenUrlLinkListener.class);
 	public static final String HELP_URI_PREFIX = "help://";
 	public static final String PREFS_URI_PREFIX = "prefs://";
+	public static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
 
 	private MainFrame mainFrame;
 	private LinkListener originalLinkListener;
@@ -52,11 +55,21 @@ public class OpenUrlLinkListener
 
 		if(uri.startsWith(HELP_URI_PREFIX))
 		{
-			mainFrame.openHelp(uri.substring(HELP_URI_PREFIX.length()));
+			String value = uri.substring(HELP_URI_PREFIX.length());
+			mainFrame.openHelp(value);
 		}
 		else if(uri.startsWith(PREFS_URI_PREFIX))
 		{
-			mainFrame.openPreferences(uri.substring(PREFS_URI_PREFIX.length()));
+			String value = uri.substring(PREFS_URI_PREFIX.length());
+			mainFrame.openPreferences(value);
+		}
+		else if(uri.startsWith(STACK_TRACE_ELEMENT_URI_PREFIX))
+		{
+			String steStr = uri.substring(STACK_TRACE_ELEMENT_URI_PREFIX.length());
+			steStr = SimpleXml.unescape(steStr);
+			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(steStr);
+			if(logger.isDebugEnabled()) logger.debug("STE: {}", ste);
+			mainFrame.goToSource(ste.getStackTraceElement());
 		}
 		else if(uri.contains("://"))
 		{
