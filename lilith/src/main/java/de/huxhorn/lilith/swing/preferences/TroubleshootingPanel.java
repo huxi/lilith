@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,14 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +36,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import javax.swing.*;
 
 public class TroubleshootingPanel
 	extends JPanel
@@ -74,18 +74,7 @@ public class TroubleshootingPanel
 
 		public void actionPerformed(ActionEvent actionEvent)
 		{
-			String dialogTitle = "Reinitialize details view files?";
-			String message = "This resets all details view related files, all manual changes will be lost!\nReinitialize details view right now?";
-			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
-			if(JOptionPane.OK_OPTION != result)
-			{
-				return;
-			}
-
-			ApplicationPreferences prefs = preferencesDialog.getApplicationPreferences();
-			prefs.initDetailsViewRoot(true);
+			preferencesDialog.reinitializeDetailsViewFiles();
 		}
 	}
 
@@ -101,18 +90,7 @@ public class TroubleshootingPanel
 
 		public void actionPerformed(ActionEvent actionEvent)
 		{
-			String dialogTitle = "Reinitialize example groovy conditions?";
-			String message = "This overwrites all example groovy conditions. Other conditions are not changed!\nReinitialize example groovy conditions right now?";
-			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
-			if(JOptionPane.OK_OPTION != result)
-			{
-				return;
-			}
-
-			ApplicationPreferences prefs = preferencesDialog.getApplicationPreferences();
-			prefs.installExampleConditions();
+			preferencesDialog.reinitializeGroovyConditions();
 		}
 	}
 
@@ -128,18 +106,7 @@ public class TroubleshootingPanel
 
 		public void actionPerformed(ActionEvent actionEvent)
 		{
-			String dialogTitle = "Reinitialize example groovy clipboard formatters?";
-			String message = "This overwrites all example groovy clipboard formatters. Other clipboard formatters are not changed!\nReinitialize example groovy clipboard formatters right now?";
-			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
-			if(JOptionPane.OK_OPTION != result)
-			{
-				return;
-			}
-
-			ApplicationPreferences prefs = preferencesDialog.getApplicationPreferences();
-			prefs.installExampleClipboardFormatters();
+			preferencesDialog.reinitializeGroovyClipboardFormatters();
 		}
 	}
 
@@ -155,18 +122,7 @@ public class TroubleshootingPanel
 
 		public void actionPerformed(ActionEvent actionEvent)
 		{
-			String dialogTitle = "Delete all log files?";
-			String message = "This deletes *all* log files, even the Lilith logs and the global logs!\nDelete all log files right now?";
-			int result = JOptionPane.showConfirmDialog(preferencesDialog, message, dialogTitle,
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
-			if(JOptionPane.OK_OPTION != result)
-			{
-				return;
-			}
-
-			MainFrame mainFrame = preferencesDialog.getMainFrame();
-			mainFrame.deleteAllLogs();
+			preferencesDialog.deleteAllLogs();
 		}
 	}
 
@@ -449,6 +405,7 @@ public class TroubleshootingPanel
 			return (thread != null ? thread.hashCode() : 0);
 		}
 
+		@SuppressWarnings("NullableProblems")
 		public int compareTo(ThreadHolder other)
 		{
 			if(other == null)

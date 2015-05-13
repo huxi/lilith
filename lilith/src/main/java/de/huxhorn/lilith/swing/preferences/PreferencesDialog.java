@@ -62,6 +62,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
@@ -494,6 +495,66 @@ public class PreferencesDialog
 		{
 			mainFrame.showPreferencesDialog();
 		}
+	}
+
+	public void reinitializeDetailsViewFiles()
+	{
+		String dialogTitle = "Reinitialize details view files?";
+		String message = "This resets all details view related files, all manual changes will be lost!\nReinitialize details view right now?";
+		int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
+		if(JOptionPane.OK_OPTION != result)
+		{
+			return;
+		}
+
+		applicationPreferences.initDetailsViewRoot(true);
+	}
+
+	public void reinitializeGroovyConditions()
+	{
+		String dialogTitle = "Reinitialize example groovy conditions?";
+		String message = "This overwrites all example groovy conditions. Other conditions are not changed!\nReinitialize example groovy conditions right now?";
+		int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
+		if(JOptionPane.OK_OPTION != result)
+		{
+			return;
+		}
+
+		applicationPreferences.installExampleConditions();
+	}
+
+	public void reinitializeGroovyClipboardFormatters()
+	{
+		String dialogTitle = "Reinitialize example groovy clipboard formatters?";
+		String message = "This overwrites all example groovy clipboard formatters. Other clipboard formatters are not changed!\nReinitialize example groovy clipboard formatters right now?";
+		int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
+		if(JOptionPane.OK_OPTION != result)
+		{
+			return;
+		}
+
+		applicationPreferences.installExampleClipboardFormatters();
+	}
+
+	public void deleteAllLogs()
+	{
+		String dialogTitle = "Delete all log files?";
+		String message = "This deletes *all* log files, even the Lilith logs and the global logs!\nDelete all log files right now?";
+		int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
+		if(JOptionPane.OK_OPTION != result)
+		{
+			return;
+		}
+
+		mainFrame.deleteAllLogs();
 	}
 
 	public void editDetailsFormatter()
