@@ -48,7 +48,7 @@ public abstract class AbstractHtmlFormatter
 			.append(SimpleXml.escape(message))
 			.append("</h1>");
 
-		msg.append("<p>You can initialize the detailsView to a safe state using ")
+		msg.append("<p>You can <a href=\"prefs://Troubleshooting#reinitializeDetailsViewFiles\">initialize the detailsView</a> to a safe state using ")
 			.append("\"Reinitialize details view files.\" in ")
 			.append("<a href=\"prefs://Troubleshooting\">Troubleshooting preferences</a>.")
 			.append("</p>");

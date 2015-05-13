@@ -91,6 +91,11 @@ public class PreferencesDialog
 		Troubleshooting
 	}
 
+	public enum Actions
+	{
+		reinitializeDetailsViewFiles
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
 
 	private ApplicationPreferences applicationPreferences;
@@ -481,15 +486,31 @@ public class PreferencesDialog
 		sourcesPanel.editSourceName(sourceIdentifier);
 	}
 
+	public void executeAction(Actions action)
+	{
+		if(logger.isInfoEnabled()) logger.info("Execute action {}.", action);
+		if(action == null)
+		{
+			return;
+		}
+		switch(action)
+		{
+			case reinitializeDetailsViewFiles:
+				reinitializeDetailsViewFiles();
+			break;
+		}
+	}
+
 	public void showPane(Panes pane)
 	{
-		if(pane != null)
+		if(pane == null)
 		{
-			cardLayout.show(content, pane.toString());
-			if(!pane.equals(comboBox.getSelectedItem()))
-			{
-				comboBox.setSelectedItem(pane);
-			}
+			return;
+		}
+		cardLayout.show(content, pane.toString());
+		if(!pane.equals(comboBox.getSelectedItem()))
+		{
+			comboBox.setSelectedItem(pane);
 		}
 		if(!isVisible())
 		{

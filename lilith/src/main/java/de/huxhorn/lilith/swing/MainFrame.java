@@ -1561,18 +1561,6 @@ public class MainFrame
 		helpFrame.toFront();
 	}
 
-	public void openPreferences(String panelName)
-	{
-		try
-		{
-			PreferencesDialog.Panes pane = PreferencesDialog.Panes.valueOf(panelName);
-			preferencesDialog.showPane(pane);
-		}
-		catch(IllegalArgumentException ex)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Couldn't resolve preferences pane '{}'!", panelName);
-		}
-	}
 
 	public void deleteAllLogs()
 	{
@@ -1596,7 +1584,40 @@ public class MainFrame
 		if(uri.startsWith(PREFS_URI_PREFIX))
 		{
 			String value = uri.substring(PREFS_URI_PREFIX.length());
-			openPreferences(value);
+			int hashIndex = value.indexOf('#');
+			String paneName;
+			String actionName;
+			if(hashIndex >= 0)
+			{
+				paneName = value.substring(0, hashIndex);
+				actionName = value.substring(hashIndex+1);
+			}
+			else
+			{
+				paneName = value;
+				actionName = null;
+			}
+			if(actionName != null)
+			{
+				try
+				{
+					preferencesDialog.executeAction(PreferencesDialog.Actions.valueOf(actionName));
+					return true;
+				}
+				catch(IllegalArgumentException ex)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Couldn't resolve preferences action '{}'!", actionName);
+				}
+			}
+			try
+			{
+				PreferencesDialog.Panes pane = PreferencesDialog.Panes.valueOf(paneName);
+				preferencesDialog.showPane(pane);
+			}
+			catch(IllegalArgumentException ex)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Couldn't resolve preferences pane '{}'!", paneName);
+			}
 			return true;
 		}
 
