@@ -686,7 +686,6 @@ public class PreferencesDialog
 			}
 
 			String title = null;
-			String toolTip = null;
 
 			if(value != null)
 			{
@@ -694,52 +693,41 @@ public class PreferencesDialog
 				{
 					case General:
 						title="General";
-						toolTip=null;
 						break;
 					case StartupShutdown:
 						title="Startup & Shutdown";
-						toolTip=null;
 						break;
 					case Windows:
 						title="Windows";
-						toolTip=null;
 						break;
 					case Sounds:
 						title="Sounds";
-						toolTip=null;
 						break;
 					case Sources:
 						title="Sources";
-						toolTip=null;
 						break;
 					case SourceLists:
 						title="Source Lists";
-						toolTip=null;
 						break;
 					case SourceFiltering:
 						title="Source Filtering";
-						toolTip=null;
 						break;
 					case Conditions:
 						title="Conditions";
-						toolTip=null;
 						break;
 					case LoggingLevels:
 						title="Logging levels";
-						toolTip=null;
 						break;
 					case AccessStatus:
 						title="Access status types";
-						toolTip=null;
 						break;
 					case Troubleshooting:
 						title="Troubleshooting";
-						toolTip=null;
 						break;
 				}
 			}
 			label.setText(title);
-			label.setToolTipText(toolTip);
+			label.setToolTipText(title);
 
 			return label;
 		}
