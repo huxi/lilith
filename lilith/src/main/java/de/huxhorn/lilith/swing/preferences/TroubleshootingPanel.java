@@ -449,9 +449,13 @@ public class TroubleshootingPanel
 			return (thread != null ? thread.hashCode() : 0);
 		}
 
-		public int compareTo(ThreadHolder o)
+		public int compareTo(ThreadHolder other)
 		{
-			if(thread == o.thread)
+			if(other == null)
+			{
+				throw new NullPointerException("other must not be null!");
+			}
+			if(thread == other.thread)
 			{
 				return 0;
 			}
@@ -459,12 +463,12 @@ public class TroubleshootingPanel
 			{
 				return -1;
 			}
-			if(o.thread == null)
+			if(other.thread == null)
 			{
 				return 1;
 			}
 			String name = thread.getName();
-			String otherName = o.thread.getName();
+			String otherName = other.thread.getName();
 			//noinspection StringEquality
 			if(name == otherName)
 			{
