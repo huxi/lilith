@@ -1552,39 +1552,6 @@ public class MainFrame
 
 	public void openHelp(String help)
 	{
-
-		/*
-		String helpFile=help;
-		String helpAnchor=null;
-		int hashIndex = helpFile.indexOf('#');
-		if(hashIndex > -1)
-		{
-			helpFile=help.substring(0, hashIndex);
-			helpAnchor = help.substring(hashIndex);
-		}
-		String resourceName="/help/"+helpFile;
-		URL url = MainFrame.class.getResource(resourceName);
-		if(url == null)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Couldn't find help resource '{}'!", resourceName);
-			return;
-		}
-
-		if(helpAnchor != null)
-		{
-			String urlString = url.toString()+helpAnchor;
-			try
-			{
-				url=new URL(urlString);
-			}
-			catch(MalformedURLException e)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Couldn't create help URL for '{}'!", urlString);
-			}
-		}
-		if(logger.isInfoEnabled()) logger.info("Opening help: {}", url);
-		helpFrame.setHelpUrl(url);
-		*/
 		if(logger.isInfoEnabled()) logger.info("Opening help: {}", help);
 		helpFrame.setHelpUrl(help);
 		if(!helpFrame.isVisible())
