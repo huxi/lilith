@@ -161,7 +161,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -184,6 +183,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 
 import javax.swing.Icon;
@@ -299,15 +299,15 @@ public class MainFrame
 	//private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
 	//private ReferenceQueue<Colors> colorsReferenceQueue;
 
-	public AccessEventViewManager getAccessEventViewManager()
-	{
-		return accessEventViewManager;
-	}
-
-	public LoggingEventViewManager getLoggingEventViewManager()
-	{
-		return loggingEventViewManager;
-	}
+//	public AccessEventViewManager getAccessEventViewManager()
+//	{
+//		return accessEventViewManager;
+//	}
+//
+//	public LoggingEventViewManager getLoggingEventViewManager()
+//	{
+//		return loggingEventViewManager;
+//	}
 
 	public PreferencesDialog getPreferencesDialog()
 	{
@@ -564,23 +564,11 @@ public class MainFrame
 			{
 				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", autostartDir.getAbsolutePath());
 			}
-			File[] autoFiles = autostartDir.listFiles(new FileFilter()
-			{
-				public boolean accept(File file)
-				{
-					return file.isFile();
-				}
-			});
+			File[] autoFiles = autostartDir.listFiles(File::isFile);
 
 			if(autoFiles != null && autoFiles.length > 0)
 			{
-				Arrays.sort(autoFiles, new Comparator<File>()
-				{
-					public int compare(File o1, File o2)
-					{
-						return o1.getAbsolutePath().compareTo(o2.getAbsolutePath());
-					}
-				});
+				Arrays.sort(autoFiles, (o1, o2) -> o1.getAbsolutePath().compareTo(o2.getAbsolutePath()));
 				for(File current : autoFiles)
 				{
 					AutostartRunnable r = new AutostartRunnable(current);
@@ -1047,12 +1035,12 @@ public class MainFrame
 		updateStatus();
 	}
 
-	public void copyHtml(String html)
-	{
-		Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		Transferable transferableText = new HtmlTransferable(html);
-		systemClipboard.setContents(transferableText, null);
-	}
+//	private static void copyHtml(String html)
+//	{
+//		Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//		Transferable transferableText = new HtmlTransferable(html);
+//		systemClipboard.setContents(transferableText, null);
+//	}
 
 	public void checkForUpdate(boolean showAlways)
 	{
@@ -1782,48 +1770,50 @@ public class MainFrame
 			Map<String, String> usedMetaData = new HashMap<>();
 			SourceIdentifier si = new SourceIdentifier(dataFile.getAbsolutePath());
 
-			if(FileConstants.CONTENT_TYPE_VALUE_LOGGING.equals(contentType))
+			switch (contentType)
 			{
-				FileBuffer<EventWrapper<LoggingEvent>> buffer =
-					loggingFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
-				EventSource<LoggingEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
-				ViewContainer<LoggingEvent> viewContainer = loggingEventViewManager.retrieveViewContainer(eventSource);
-				EventWrapperViewPanel<LoggingEvent> panel = viewContainer.getDefaultView();
-				if(keepUpdating)
+				case FileConstants.CONTENT_TYPE_VALUE_LOGGING:
 				{
-					panel.setState(LoggingViewState.UPDATING_FILE);
-					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile, viewContainer));
+					FileBuffer<EventWrapper<LoggingEvent>> buffer = loggingFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
+					EventSource<LoggingEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
+					ViewContainer<LoggingEvent> viewContainer = loggingEventViewManager.retrieveViewContainer(eventSource);
+					EventWrapperViewPanel<LoggingEvent> panel = viewContainer.getDefaultView();
+					if (keepUpdating)
+					{
+						panel.setState(LoggingViewState.UPDATING_FILE);
+						viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile, viewContainer));
+					}
+					else
+					{
+						panel.setState(LoggingViewState.STALE_FILE);
+					}
+					showLoggingView(eventSource);
+					applicationPreferences.addRecentFile(dataFile);
+					break;
 				}
-				else
+				case FileConstants.CONTENT_TYPE_VALUE_ACCESS:
 				{
-					panel.setState(LoggingViewState.STALE_FILE);
+					FileBuffer<EventWrapper<AccessEvent>> buffer = accessFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
+					EventSource<AccessEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
+					ViewContainer<AccessEvent> viewContainer = accessEventViewManager.retrieveViewContainer(eventSource);
+					EventWrapperViewPanel<AccessEvent> panel = viewContainer.getDefaultView();
+					if (keepUpdating)
+					{
+						panel.setState(LoggingViewState.UPDATING_FILE);
+						viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile, viewContainer));
+					}
+					else
+					{
+						panel.setState(LoggingViewState.STALE_FILE);
+					}
+					showAccessView(eventSource);
+					applicationPreferences.addRecentFile(dataFile);
+					break;
 				}
-				showLoggingView(eventSource);
-				applicationPreferences.addRecentFile(dataFile);
-			}
-			else if(FileConstants.CONTENT_TYPE_VALUE_ACCESS.equals(contentType))
-			{
-				FileBuffer<EventWrapper<AccessEvent>> buffer =
-					accessFileBufferFactory.createBuffer(dataFile, indexFile, usedMetaData);
-				EventSource<AccessEvent> eventSource = new EventSourceImpl<>(si, buffer, false);
-				ViewContainer<AccessEvent> viewContainer = accessEventViewManager.retrieveViewContainer(eventSource);
-				EventWrapperViewPanel<AccessEvent> panel = viewContainer.getDefaultView();
-				if(keepUpdating)
-				{
-					panel.setState(LoggingViewState.UPDATING_FILE);
-					viewContainer.setUpdateCallable(new CheckFileChangeCallable(dataFile, indexFile, viewContainer));
-				}
-				else
-				{
-					panel.setState(LoggingViewState.STALE_FILE);
-				}
-				showAccessView(eventSource);
-				applicationPreferences.addRecentFile(dataFile);
-			}
-			else
-			{
-				if(logger.isWarnEnabled()) logger.warn("Unexpected content type {}.", contentType);
-				applicationPreferences.removeRecentFile(dataFile);
+				default:
+					if (logger.isWarnEnabled()) logger.warn("Unexpected content type {}.", contentType);
+					applicationPreferences.removeRecentFile(dataFile);
+					break;
 			}
 		}
 		catch(IOException e)
@@ -1948,17 +1938,14 @@ public class MainFrame
 			this.loggingEventSourceManager.addEventSourceListener(loggingSourceListener);
 
 			List<EventSource<LoggingEvent>> sources = this.loggingEventSourceManager.getSources();
-			for(EventSource<LoggingEvent> source : sources)
-			{
-				loggingEventViewManager.retrieveViewContainer(source);
-			}
+			sources.forEach(loggingEventViewManager::retrieveViewContainer);
 		}
 	}
 
-	public SourceManager<LoggingEvent> getLoggingEventSourceManager()
-	{
-		return loggingEventSourceManager;
-	}
+//	public SourceManager<LoggingEvent> getLoggingEventSourceManager()
+//	{
+//		return loggingEventSourceManager;
+//	}
 
 	private void setAccessEventSourceManager(SourceManager<AccessEvent> accessEventSourceManager)
 	{
@@ -1972,22 +1959,19 @@ public class MainFrame
 			this.accessEventSourceManager.addEventSourceListener(accessSourceListener);
 
 			List<EventSource<AccessEvent>> sources = this.accessEventSourceManager.getSources();
-			for(EventSource<AccessEvent> source : sources)
-			{
-				accessEventViewManager.retrieveViewContainer(source);
-			}
+			sources.forEach(accessEventViewManager::retrieveViewContainer);
 		}
 	}
 
-	public SourceManager<AccessEvent> getAccessEventSourceManager()
-	{
-		return accessEventSourceManager;
-	}
+//	public SourceManager<AccessEvent> getAccessEventSourceManager()
+//	{
+//		return accessEventSourceManager;
+//	}
 
-	public Sounds getSounds()
-	{
-		return sounds;
-	}
+//	public Sounds getSounds()
+//	{
+//		return sounds;
+//	}
 
 	public void setSounds(Sounds sounds)
 	{
@@ -3290,13 +3274,7 @@ public class MainFrame
 		List<SavedCondition> active = new ArrayList<>();
 		if(conditions != null)
 		{
-			for(SavedCondition current : conditions)
-			{
-				if(current.isActive())
-				{
-					active.add(current);
-				}
-			}
+			active.addAll(conditions.stream().filter(SavedCondition::isActive).collect(Collectors.toList()));
 		}
 		activeConditions = active;
 		int activeCount = active.size();
@@ -3311,10 +3289,7 @@ public class MainFrame
 				Or or=new Or();
 
 				List<Condition> cond=new ArrayList<>(activeCount);
-				for(SavedCondition current:active)
-				{
-					cond.add(current.getCondition());
-				}
+				cond.addAll(active.stream().map(SavedCondition::getCondition).collect(Collectors.toList()));
 				or.setConditions(cond);
 				findActiveCondition=or;
 			}
@@ -3695,13 +3670,13 @@ public class MainFrame
 			this.process = process;
 		}
 
-		public void destroyProcess()
-		{
-			if(process != null)
-			{
-				process.destroy();
-			}
-		}
+//		public void destroyProcess()
+//		{
+//			if(process != null)
+//			{
+//				process.destroy();
+//			}
+//		}
 
 		public void run()
 		{
@@ -3752,7 +3727,7 @@ public class MainFrame
 				}
 				catch(IOException e)
 				{
-					if(logger.isDebugEnabled()) logger.debug("Exception while reading from openUrl process.", e);
+					if(logger.isDebugEnabled()) logger.debug("Exception while reading next line.", e);
 				}
 			}
 
@@ -3783,7 +3758,7 @@ public class MainFrame
 
 			public void processLine(String line)
 			{
-				System.err.println("openUrl: " + line);
+				System.err.println("Process: " + line);
 			}
 		}
 
@@ -3908,9 +3883,8 @@ public class MainFrame
 
 			if(showAlways)
 			{
-				String message=null; // up to date
 				String changes = retrieveChanges(Lilith.APP_VERSION_BUNDLE.getVersion());
-				EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
+				EventQueue.invokeLater(new ShowUpdateDialog(null /* i.e. up to date */, changes));
 			}
 		}
 
