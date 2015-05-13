@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ public class SourceManagerImpl<T extends Serializable>
 	private BlockingCircularBuffer<EventWrapper<T>> queue;
 	private Set<EventSourceListener<T>> listeners;
 	private PropertyChangeSupport changeSupport;
-	private List<EventSource<T>> sources;
+	private final List<EventSource<T>> sources;
 	private final Set<EventProducer<T>> eventProducers;
 	private final Lock eventProducersLock;
 	private EventPoller<T> eventPoller;
