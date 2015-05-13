@@ -23,6 +23,7 @@ import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.VersionBundle;
 import de.huxhorn.lilith.data.access.logback.LogbackAccessConverter;
 import de.huxhorn.lilith.data.converter.ConverterRegistry;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.logback.LogbackLoggingConverter;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.lilith.engine.impl.sourceproducer.ConvertingServerSocketEventSourceProducer;
@@ -116,6 +117,7 @@ import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Or;
+import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
@@ -166,7 +168,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -194,7 +198,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.border.EtchedBorder;
-
 
 public class MainFrame
 	extends JFrame
@@ -1620,6 +1623,64 @@ public class MainFrame
 	{
 		processViewContainers(RESET_CONTAINER_PROCESSOR);
 		cleanAllInactiveLogs();
+	}
+
+	private static final String HELP_URI_PREFIX = "help://";
+	private static final String PREFS_URI_PREFIX = "prefs://";
+	private static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
+
+	public boolean openUriString(String uri)
+	{
+		if(uri.startsWith(HELP_URI_PREFIX))
+		{
+			String value = uri.substring(HELP_URI_PREFIX.length());
+			openHelp(value);
+			return true;
+		}
+
+		if(uri.startsWith(PREFS_URI_PREFIX))
+		{
+			String value = uri.substring(PREFS_URI_PREFIX.length());
+			openPreferences(value);
+			return true;
+		}
+
+		if(uri.startsWith(STACK_TRACE_ELEMENT_URI_PREFIX))
+		{
+			String steStr = uri.substring(STACK_TRACE_ELEMENT_URI_PREFIX.length());
+			steStr = SimpleXml.unescape(steStr);
+			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(steStr);
+			if(logger.isDebugEnabled()) logger.debug("STE: {}", ste);
+			goToSource(ste.getStackTraceElement());
+			return true;
+		}
+
+		if(uri.contains("://"))
+		{
+			try
+			{
+				openUrl(new URL(uri));
+			}
+			catch(MalformedURLException e)
+			{
+				if(logger.isInfoEnabled()) logger.info("Couldn't create URL for uri-string {}!", uri, e);
+			}
+			return true;
+		}
+
+		if(uri.contains("coin:") || uri.startsWith("mailto:"))
+		{
+			try
+			{
+				openUri(new URI(uri));
+			}
+			catch(URISyntaxException e)
+			{
+				if(logger.isInfoEnabled()) logger.info("Couldn't create URI for uri-string {}!", uri, e);
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public enum ImportType
