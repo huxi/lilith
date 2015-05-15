@@ -4,7 +4,7 @@ apply plugin: 'application'
 apply plugin: 'idea'
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.1'
+	gradleVersion = '2.4'
 }
 
 project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
