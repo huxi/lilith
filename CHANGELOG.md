@@ -2,7 +2,30 @@
 All notable changes to this project will be documented in this file.
 
 
-## 8.0.0 - TBD
+## [8.1.0][unreleased] - TBD
+
+### Added
+- Nothing.
+
+### Changed
+- Nothing.
+
+### Deprecated
+- Nothing.
+
+### Removed
+- Nothing.
+
+### Fixed
+- Nothing.
+
+### Security
+- Nothing.
+
+
+---
+
+## [8.0.0] - 2015-05-xx
 
 ### Added
 - `CHANGELOG.md` in the spirit of [Keep a CHANGELOG](http://keepachangelog.com/).
@@ -43,10 +66,13 @@ All notable changes to this project will be documented in this file.
 - Fixed "Focus" and "Exclude" menu tooltips on Mac. Those displayed HTML source if system menu bar was used. 
 - SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.6, Groovy 2.4.3, commons-codec 1.9, commons-lang3 3.4, httpclient 4.4.1, httpcore 4.4.1, jackson 2.5.3, log4j2 2.3, aspectj 1.8.5, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1, servlet-api 3.1.0, flying-saucer 9.0.6, cglib 3.1 
 
+### Security
+- Keep your Java version up-to-date.
+
 
 ---
 
-## 0.9.44 - 2014-04-21
+## [0.9.44] - 2014-04-21
 
 ### Added
 - Added alternative behavior for Focus/Exclude actions.  
@@ -55,7 +81,6 @@ All notable changes to this project will be documented in this file.
 - Added two Substance look&feels to the mix.
 - Added "Paste StackTraceElement" (Cmd-shift V) which opens the respective source code in the IDE, if a proper plugin is installed.
 - Added fishing-for-compliments technology.
-
 
 ### Deprecated
 - Nothing.
@@ -81,7 +106,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.43 - 2013-04-29
+## [0.9.43] - 2013-04-29
 
 ### Added
 - Added ability to reconnect views after disconnect. All multiplex appenders are now creating a `UUID` upon startup and add that id to the logger context.  
@@ -107,7 +132,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.42.1 - 2012-03-12
+## [0.9.42.1] - 2012-03-12
 
 ### Added
 - Nothing.
@@ -124,7 +149,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.42 - 2012-03-12
+## [0.9.42] - 2012-03-12
 
 ### Added
 - Added support for new Java SE 7 try-with-resources statement suppressed Throwables. See [Better Resource Management with Java SE 7: Beyond Syntactic Sugar](http://www.oracle.com/technetwork/articles/java/trywithresources-401775.html).
@@ -155,11 +180,11 @@ All notable changes to this project will be documented in this file.
     - "Find next active match" is now Ctrl+Shift+L.
 - "Copy Throwable" does now have the shortcut "command shift alt T". This was suggested by snstanton.
 - SLF4J 1.6.4, Logback 1.0.1, Groovy 1.8.6, commons-lang 3.0.1, protobuf-java 2.4.1, jackson 1.9.2, jcommander 1.23, aspectj 1.6.11, cglib 2.2.2, httpclient 4.1.2, httpcore 4.1.3, commons-codec 1.5, JUnit 4.10, Spring 3.1.1.RELEASE
-			
+
 
 ---
 
-## 0.9.41 - 2011-05-02
+## [0.9.41] - 2011-05-02
 
 ### Added
 - Minimize to system tray.  
@@ -193,7 +218,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.40 - 2010-11-11
+## [0.9.40] - 2010-11-11
 
 ### Added
 - Color-Schemes (as used by saved conditions, for example) can now be defined partially, i.e. one condition can set a border while the text-color might be defined by a different condition.
@@ -237,9 +262,10 @@ All notable changes to this project will be documented in this file.
 - SLF4J 1.6.1
 - Logback 0.9.26
 
+
 ---
 
-## 0.9.39 - 2010-05-12
+## [0.9.39] - 2010-05-12
 
 ### Added
 - Added some error messages.
@@ -277,7 +303,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.38 - 2010-03-26
+## [0.9.38] - 2010-03-26
 
 ### Added
 - Added help about using Lilith encoders in FileAppender.
@@ -310,7 +336,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.37 - 2009-11-11
+## [0.9.37] - 2009-11-11
 
 ### Added
 - Prevented duplicate start of application by the same user.  
@@ -360,9 +386,10 @@ All notable changes to this project will be documented in this file.
 - Updated Logback to 0.9.17.  
   This fixes an issue that was caused by a Logback bug. Thanks for the fast fix, Ceki!
 
+
 ---
 
-## 0.9.36 - 2009-07-20
+## [0.9.36] - 2009-07-20
 
 ### Added
 - Added new messageRegex example groovy condition.
@@ -392,7 +419,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.35 - 2009-05-01
+## [0.9.35] - 2009-05-01
 
 ### Added
 - Added header to Lilith file format.
@@ -446,9 +473,10 @@ All notable changes to this project will be documented in this file.
   Added some missing license infos.
 - Groovy 1.6.2
 
+
 ---
 
-## 0.9.34 - 2009-01-04
+## [0.9.34] - 2009-01-04
 
 ### Added
 - Added unit-tests for all datatypes.
@@ -465,7 +493,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.33 - 2009-01-03
+## [0.9.33] - 2009-01-03
 
 ### Added
 - Added help about groovy filters.
@@ -522,7 +550,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.32 - 2008-10-21
+## [0.9.32] - 2008-10-21
 
 ### Added
 - Added documentation about `java.lang.OutOfMemoryError: PermGen space` problem and implemented `LogbackShutdownServletContextListener` for proper shut down of logback.
@@ -557,7 +585,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.31 - 2008-08-11
+## [0.9.31] - 2008-08-11
 
 ### Added
 - Implemented internal Lilith logging.
@@ -580,7 +608,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.30 - 2008-08-01
+## [0.9.30] - 2008-08-01
 
 ### Added
 - Added support for Exceptions in case of parameter array, i.e. `log.debug("{} {}", new Object[]{"One", "Two", new Throwable())` will both evaluate the parameters in the message and the additional `Throwable` as the `Throwable` of the `LoggingEvent`.  
@@ -605,7 +633,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## 0.9.29 - 2008-07-02
+## [0.9.29] - 2008-07-02
 
 ### Added
 - Added SCM and distribution info to pom files. Source is now available in SVN repository at sourceforge.net.
@@ -654,6 +682,7 @@ All notable changes to this project will be documented in this file.
 - JmDNS for multiple interfaces
 - Don't play sounds etc. if source is not in whitelist/blacklisted. Black/whitelisting is now handled on global queue level. This is more efficient anyway. (Reported by Alfred.)
 - Changed all artifactIds - again! Closed beta is something beautiful :)
+
 
 ---
 
@@ -852,6 +881,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - UI-Change: Removed Progress and Cancel of search from search panel. Using glasspane overlay instead.
 
+
 ---
 
 ## 0.9.19.1 - 2007-10-25
@@ -903,6 +933,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Fixed xml-escaping of exceptions in both message and tooltip.
 
+
 ---
 
 ## 0.9.17 - 2007-10-09
@@ -918,6 +949,9 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - Fixed critical bug in RrdEventConsumer.
+
+
+---
 
 ## 0.9.16 - 2007-10-05
 
@@ -954,6 +988,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Fixed SoftReferenceCachingBuffer.
 - Removed unnecessary initialization in OpenPreviousDialog c'tor
+
 
 ---
 
@@ -1126,3 +1161,24 @@ All notable changes to this project will be documented in this file.
 - Finished switch to Tango icons.
 - Use default scrollToBottom for filtered views.
 - Prevented icon-change in case of filtered view.
+
+[unreleased]: https://github.com/huxi/lilith/compare/v8.0.0...HEAD
+[8.0.0]: https://github.com/huxi/lilith/compare/v0.9.44...v8.0.0
+[0.9.44]: https://github.com/huxi/lilith/compare/v0.9.43...v0.9.44
+[0.9.43]: https://github.com/huxi/lilith/compare/v0.9.42.1...v0.9.43
+[0.9.42.1]: https://github.com/huxi/lilith/compare/v0.9.42...v0.9.42.1
+[0.9.42]: https://github.com/huxi/lilith/compare/v0.9.41...v0.9.42
+[0.9.41]: https://github.com/huxi/lilith/compare/v0.9.40...v0.9.41
+[0.9.40]: https://github.com/huxi/lilith/compare/v0.9.39...v0.9.40
+[0.9.39]: https://github.com/huxi/lilith/compare/v0.9.38...v0.9.39
+[0.9.38]: https://github.com/huxi/lilith/compare/v0.9.37...v0.9.38
+[0.9.37]: https://github.com/huxi/lilith/compare/v0.9.36...v0.9.37
+[0.9.36]: https://github.com/huxi/lilith/compare/v0.9.35...v0.9.36
+[0.9.35]: https://github.com/huxi/lilith/compare/v0.9.34...v0.9.35
+[0.9.34]: https://github.com/huxi/lilith/compare/v0.9.33...v0.9.34
+[0.9.33]: https://github.com/huxi/lilith/compare/v0.9.32...v0.9.33
+[0.9.32]: https://github.com/huxi/lilith/compare/v0.9.31...v0.9.32
+[0.9.31]: https://github.com/huxi/lilith/compare/v0.9.30...v0.9.31
+[0.9.30]: https://github.com/huxi/lilith/compare/v0.9.29...v0.9.30
+[0.9.29]: https://github.com/huxi/lilith/compare/init...v0.9.29
+
