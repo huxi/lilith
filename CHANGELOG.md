@@ -55,7 +55,7 @@ All notable changes to this project will be documented in this file.
 - joda-time dependency.
 
 ### Fixed
-- Updated `HttpStatus` enum to RFC 7231/7232/7233/7235/7238. Some enum values have been renamed in the process.
+- Updated `HttpStatus` enum to [RFC 7231](https://tools.ietf.org/html/rfc7231), [RFC 7232](https://tools.ietf.org/html/rfc7232), [RFC 7233](https://tools.ietf.org/html/rfc7233), [RFC 7235](https://tools.ietf.org/html/rfc7235) and [RFC 7238](https://tools.ietf.org/html/rfc7238). Some enum values have been renamed in the process.
 - sulky `SafeString` is now always printing a `Date` as an ISO8601-DateTime with timezone UTC.
 - Using "127.0.0.1" instead of "localhost" in `SerializingGoToSource` to prevent IPv6 SNAFU.
 - Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.
