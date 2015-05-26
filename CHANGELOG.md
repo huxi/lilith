@@ -257,10 +257,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could lead to exception while checking for update of files that are recreated by `<append>false</append>`. This issue was raised by Jeff Jensen (jeffjensen).
 - Fixed the regression that the internal Lilith log wouldn't show up in the menu anymore.
 - Changed update interval of opened files from 5 seconds to 1 second.
-- Spring 3.0.5.RELEASE
-- Groovy 1.7.5
-- SLF4J 1.6.1
-- Logback 0.9.26
+- Spring 3.0.5.RELEASE, Groovy 1.7.5, SLF4J 1.6.1, 0.9.26
 
 
 ---
