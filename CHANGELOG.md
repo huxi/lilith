@@ -45,6 +45,7 @@ All notable changes to this project will be documented in this file.
 - Changed "Next view" shortcut from Cmd-K to Cmd-J and "Previous view" shortcut from Cmd-J to Cmd-shift-J.
 - Switched "Next view" and "Previous view" in "View" menu.
 - Better error message in case of broken detailsView.
+- SimpleSendBytesService.DEFAULT_POLL_INTERVALL renamed to SimpleSendBytesService.DEFAULT_POLL_INTERVAL.
 
 ### Deprecated
 - Nothing.

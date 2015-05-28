@@ -90,7 +90,7 @@ public class MultiplexSendBytesService
 					writeByteStrategy,
 					queueSize,
 					reconnectionDelay,
-					SimpleSendBytesService.DEFAULT_POLL_INTERVALL);
+					SimpleSendBytesService.DEFAULT_POLL_INTERVAL);
 				service.setDebug(debug);
 				senderServices.add(service);
 				service.startUp();

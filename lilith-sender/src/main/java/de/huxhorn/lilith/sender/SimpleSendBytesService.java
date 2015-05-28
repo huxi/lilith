@@ -55,7 +55,7 @@ public class SimpleSendBytesService
 
 	public static final int DEFAULT_QUEUE_SIZE = 1000;
 
-	public static final int DEFAULT_POLL_INTERVALL = 100;
+	public static final int DEFAULT_POLL_INTERVAL = 100;
 
 	private final Object lock = new Object();
 	private final BlockingQueue<byte[]> localEventBytes;
@@ -65,7 +65,7 @@ public class SimpleSendBytesService
 	//private boolean shutdown;
 	private final int reconnectionDelay;
 	private final int queueSize;
-	private final int pollIntervall;
+	private final int pollInterval;
 
 	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<>(ConnectionState.Offline);
 	private final AtomicBoolean shutdown=new AtomicBoolean(false);
@@ -74,10 +74,10 @@ public class SimpleSendBytesService
 
 	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy)
 	{
-		this(dataOutputStreamFactory, writeByteStrategy, DEFAULT_QUEUE_SIZE, DEFAULT_RECONNECTION_DELAY, DEFAULT_POLL_INTERVALL);
+		this(dataOutputStreamFactory, writeByteStrategy, DEFAULT_QUEUE_SIZE, DEFAULT_RECONNECTION_DELAY, DEFAULT_POLL_INTERVAL);
 	}
 
-	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, int reconnectionDelay, int pollIntervall)
+	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, int reconnectionDelay, int pollInterval)
 	{
 		if(dataOutputStreamFactory == null)
 		{
@@ -95,16 +95,16 @@ public class SimpleSendBytesService
 		{
 			throw new IllegalArgumentException("reconnectionDelay must be greater than zero!");
 		}
-		if(pollIntervall <= 0)
+		if(pollInterval <= 0)
 		{
-			throw new IllegalArgumentException("pollIntervall must be greater than zero!");
+			throw new IllegalArgumentException("pollInterval must be greater than zero!");
 		}
 		this.localEventBytes = new ArrayBlockingQueue<>(queueSize, true);
 		this.dataOutputStreamFactory = dataOutputStreamFactory;
 		this.writeByteStrategy = writeByteStrategy;
 		this.queueSize = queueSize;
 		this.reconnectionDelay = reconnectionDelay;
-		this.pollIntervall = pollIntervall;
+		this.pollInterval = pollInterval;
 	}
 
 	public boolean isDebug()
@@ -261,7 +261,7 @@ public class SimpleSendBytesService
 					{
 						break;
 					}
-					Thread.sleep(pollIntervall);
+					Thread.sleep(pollInterval);
 				}
 				catch(InterruptedException e)
 				{
