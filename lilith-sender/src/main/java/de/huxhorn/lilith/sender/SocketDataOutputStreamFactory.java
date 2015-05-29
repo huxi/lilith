@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2015 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,6 @@ package de.huxhorn.lilith.sender;
 
 import de.huxhorn.sulky.io.TimeoutOutputStream;
 
-import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -82,8 +81,16 @@ public class SocketDataOutputStreamFactory
 
 		OutputStream os = socket.getOutputStream();
 
-		BufferedOutputStream bos = new BufferedOutputStream(os);
-		TimeoutOutputStream tos = new TimeoutOutputStream(bos, writeTimeout);
+		// BufferedOutputStream bos = new BufferedOutputStream(os);
+
+		// We must not put SocketOutputStream into BufferedOutputStream since its close() method
+		// (inherited from FilterOutputStream) calls flush() before actually closing the underlying
+		// stream. While this is fine in most cases, it can cause a livelock in this case and prevents
+		// the timeout of TimeoutOutputStream from working reliably.
+		//
+		// DataOutputStream is also a FilterOutputStream (calling flush() in close()) but since
+		// SocketOutputStream extends FileOutputStream extends OutputStream, the flush() call is actually a no-op.
+		TimeoutOutputStream tos = new TimeoutOutputStream(os, writeTimeout);
 		return new DataOutputStream(tos);
 	}
 
