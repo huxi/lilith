@@ -46,7 +46,8 @@ All notable changes to this project will be documented in this file.
 - Switched "Next view" and "Previous view" in "View" menu.
 - Better error message in case of broken detailsView.
 - `SimpleSendBytesService.DEFAULT_POLL_INTERVALL` renamed to `SimpleSendBytesService.DEFAULT_POLL_INTERVAL`.
-- Removed `BufferedOutputStream` wrapper in `SocketDataOutputStreamFactory`. `BufferedOutputStream` prevented `TimeoutOutputStream` from working reliably.  
+- Removed `BufferedOutputStream` wrapper in `SocketDataOutputStreamFactory`. `BufferedOutputStream` prevented `TimeoutOutputStream` from working reliably.
+- Recompressed images with latest [ImageOptim](https://imageoptim.com/) version.
 
 ### Deprecated
 - Nothing.
