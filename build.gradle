@@ -380,6 +380,7 @@ project(':lilith') {
 - https://bugs.mojang.com/browse/MCL-2628
 - https://gist.github.com/pudquick/7518753
 - http://docs.oracle.com/javase/8/docs/technotes/guides/deploy/package_for_mac.html
+- https://developer.apple.com/library/mac/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Optimizing/Optimizing.html
 */
 	
 	if(System.properties.'release') {
