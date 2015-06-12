@@ -214,7 +214,7 @@ subprojects {
     	description project.description
     	inceptionYear '2007'
     	//packaging 'jar' // does not work, fixed below
-    	// See http://jira.codehaus.org/browse/GRADLE-1200
+    	// See https://issues.gradle.org/browse/GRADLE-1200
 
     	scm {
     		connection 'scm:git:git://github.com/huxi/lilith.git'
@@ -333,7 +333,7 @@ subprojects {
 	deployer.pom.project defaultProject
 
 	// The following fixes the broken packaging
-	// See http://jira.codehaus.org/browse/GRADLE-1200
+	// See https://issues.gradle.org/browse/GRADLE-1200
 	// Thanks xlson
 	/*
 	installer.pom.withXml { XmlProvider xmlProvider ->
@@ -438,9 +438,9 @@ project(':lilith') {
 		// - Change in filtered resource not picked up by archive tasks
 		//   http://issues.gradle.org/browse/GRADLE-1298
 		// - processResources task considered up-to-date although its spec has changed
-		//   http://jira.codehaus.org/browse/GRADLE-1276
+		//   https://issues.gradle.org/browse/GRADLE-1276
 		// - Copy tasks do not consider filter/expansion properties in up-to-date checks
-		//   http://issues.gradle.org/browse/GRADLE-1646
+		//   https://issues.gradle.org/browse/GRADLE-1646
 		inputs.properties props 
 		// See also:
 		// http://forums.gradle.org/gradle/topics/1_7_rc_1_probably_erroneous_including_duplicate_file_warnings
