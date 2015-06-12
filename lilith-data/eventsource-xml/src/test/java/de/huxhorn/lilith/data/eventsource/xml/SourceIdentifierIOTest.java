@@ -108,10 +108,6 @@ public class SourceIdentifierIOTest
 	{
 		if(logger.isDebugEnabled()) logger.debug("Processing:\n{}", original);
 		byte[] bytes = write(original, indent);
-		if(bytes == null)
-		{
-			return; // skip this test because of http://jira.codehaus.org/browse/STAX-50
-		}
 		String originalStr = new String(bytes, "UTF-8");
 		if(logger.isDebugEnabled()) logger.debug("Marshalled to:\n{}", originalStr);
 		SourceIdentifier read = read(bytes);
@@ -131,11 +127,6 @@ public class SourceIdentifierIOTest
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
-		if(writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
-		{
-			if(logger.isInfoEnabled()) logger.info("Skipping test because of http://jira.codehaus.org/browse/STAX-50");
-			return null;
-		}
 		if(logger.isDebugEnabled()) logger.debug("XMLStreamWriter class: {}", writer.getClass().getName());
 		if(indent)
 		{

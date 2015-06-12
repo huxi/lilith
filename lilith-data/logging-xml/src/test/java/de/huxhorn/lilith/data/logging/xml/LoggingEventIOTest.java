@@ -463,12 +463,6 @@ public class LoggingEventIOTest
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
-		if(indent && writer.getClass().getName().equals("com.bea.xml.stream.XMLWriterBase"))
-		{
-
-			if(logger.isInfoEnabled()) logger.info("Won't indent because of http://jira.codehaus.org/browse/STAX-42");
-			indent = false;
-		}
 		if(indent)
 		{
 			writer = new IndentingXMLStreamWriter(writer);
