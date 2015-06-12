@@ -374,7 +374,7 @@ project(':lilith') {
 ### macappbundle
 - [Gradle Plugin Homepage](https://code.google.com/p/gradle-macappbundle/)
 - [MacAppBundlePluginExtension](https://code.google.com/p/gradle-macappbundle/source/browse/src/main/groovy/edu/sc/seis/gradle/macAppBundle/MacAppBundlePluginExtension.groovy)
-- Artifact: `'edu.sc.seis.gradle:macappbundle:2.0.0'`
+- Artifact: `'edu.sc.seis.gradle:macappbundle:2.1.0'`
 - http://kovuthehusky.com/blog/running-minecraft-on-os-x-using-java-7/
 - https://bugs.mojang.com/browse/MCL-1049
 - https://bugs.mojang.com/browse/MCL-2628
@@ -394,7 +394,7 @@ project(':lilith') {
 
 	macAppBundle {
 		mainClassName = theMainClassName
-		appName = 'Lilith'
+		appName = 'Lilith' // ends up in CFBundleName
 		creatorCode = 'Llth'
 		//jvmVersion = '1.8+'
 		//jvmVersion is AppleJava only
@@ -405,9 +405,13 @@ project(':lilith') {
 			'NSHumanReadableCopyright': copyright,
 			//'CFBundleIdentifier': 'de.huxhorn.lilith'
 			// not possible to override CFBundleIdentifier
+			// https://github.com/crotwell/gradle-macappbundle/issues/29
 		]
 		javaProperties = [
 			'apple.laf.useScreenMenuBar': 'true'
+		]
+		javaExtras = [
+			'-Xdock:name': appName // About name
 		]
 	}
 
