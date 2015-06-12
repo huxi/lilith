@@ -36,8 +36,6 @@ project(':lilith-data-eventsource-xml') {
 	dependencies {
 		compile project(':lilith-data-eventsource')
 		compile libraries.'sulky-stax'
-		compile libraries.'stax-api'
-		testCompile libraries.'stax'
 	}
 }
 
@@ -71,8 +69,6 @@ project(':lilith-data-logging-xml') {
 		compile project(':lilith-data-logging')
 		compile project(':lilith-data-eventsource-xml')
 		compile libraries.'sulky-stax'
-		compile libraries.'stax-api'
-		testCompile libraries.'stax'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -85,8 +81,6 @@ project(':lilith-data-logging-xml-serializer') {
 		compile libraries.'sulky-codec'
 		compile libraries.'sulky-io'
 		compile libraries.'sulky-stax'
-		compile libraries.'stax-api'
-		testCompile libraries.'stax'
 		testCompile project(':lilith-data-logging')
 		testCompile project(':lilith-data-logging-io-test')
 		testCompile project(':lilith-data-eventsource')
@@ -193,7 +187,6 @@ project(':lilith-xml-logging') {
 	dependencies {
 		compile libraries.'slf4j-api'
 		compile libraries.'sulky-io'
-		compile libraries.'stax-api'
 		compile libraries.'sulky-buffers'
 		compile libraries.'sulky-codec'
 		compile project(':lilith-engine')
@@ -381,8 +374,6 @@ project(':log4j-xml') {
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
 		compile libraries.'sulky-io'
-		compile libraries.'stax-api'
-		testRuntime libraries.'stax'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -422,8 +413,6 @@ project(':jul-xml') {
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
 		compile libraries.'sulky-io'
-		compile libraries.'stax-api'
-		testRuntime libraries.'stax'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -440,8 +429,6 @@ project(':jul-xml-import') {
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
 		compile libraries.'sulky-io'
-		compile libraries.'stax-api'
-		testRuntime libraries.'stax'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -458,8 +445,6 @@ project(':jul-xml-receiver') {
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
 		compile libraries.'sulky-io'
-		compile libraries.'stax-api'
-		testRuntime libraries.'stax'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -575,7 +560,6 @@ project(':lilith') {
 		compile project(':logback-multiplex-appender-classic-xml')
 		runtime libraries.'jcl-over-slf4j'
 		runtime libraries.'jgoodies-looks'
-		runtime libraries.'stax'
 		runtime libraries.'log4j2-core'
 		runtime project(':lilith-sounds')
 	}

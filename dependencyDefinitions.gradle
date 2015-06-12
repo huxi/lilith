@@ -62,8 +62,6 @@ project.ext.libraries = [
 'spring-context':           "org.springframework:spring-context:${versions.spring}",
 'spring-core':              "org.springframework:spring-core:${versions.spring}",
 'spring-instrument':        "org.springframework:spring-instrument:${versions.spring}",
-'stax':                     'stax:stax:1.2.0',
-'stax-api':                 'stax:stax-api:1.0.1',
 'substance':                "com.github.insubstantial:substance:${versions.substance}",
 'sulky-buffers':            "de.huxhorn.sulky:de.huxhorn.sulky.buffers:${versions.sulky}",
 'sulky-buffers-filtering':  "de.huxhorn.sulky:de.huxhorn.sulky.buffers.filtering:${versions.sulky}",

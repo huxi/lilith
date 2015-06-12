@@ -56,6 +56,7 @@ All notable changes to this project will be documented in this file.
 - Some `HttpStatus` enum values have been renamed. Code explicitly using them would need to be changed.
 - `TroubleshootingPanel.reset(ViewContainer<?> container)`
 - joda-time dependency.
+- stax-api and stax dependencies.
 
 ### Fixed
 - Updated `HttpStatus` enum to [RFC 7231](https://tools.ietf.org/html/rfc7231), [RFC 7232](https://tools.ietf.org/html/rfc7232), [RFC 7233](https://tools.ietf.org/html/rfc7233), [RFC 7235](https://tools.ietf.org/html/rfc7235) and [RFC 7238](https://tools.ietf.org/html/rfc7238). Some enum values have been renamed in the process.
