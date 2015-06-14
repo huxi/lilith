@@ -52,10 +52,10 @@ public class MultiplexSendBytesService
 	private String name;
 	private WriteByteStrategy writeByteStrategy;
 	private int port;
-	private int reconnectionDelay;
+	private long reconnectionDelay;
 	private boolean debug;
 
-	public MultiplexSendBytesService(String name, List<String> remoteHostsList, int port, WriteByteStrategy writeByteStrategy, int reconnectionDelay, int queueSize)
+	public MultiplexSendBytesService(String name, List<String> remoteHostsList, int port, WriteByteStrategy writeByteStrategy, long reconnectionDelay, int queueSize)
 	{
 		this.name = name;
 		this.queueSize = queueSize;

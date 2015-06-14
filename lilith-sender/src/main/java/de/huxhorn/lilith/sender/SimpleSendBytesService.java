@@ -40,6 +40,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -63,7 +64,7 @@ public class SimpleSendBytesService
 	private WriteByteStrategy writeByteStrategy;
 	private DataOutputStreamFactory dataOutputStreamFactory;
 	//private boolean shutdown;
-	private final int reconnectionDelay;
+	private final long reconnectionDelay;
 	private final int queueSize;
 	private final int pollInterval;
 
@@ -77,27 +78,21 @@ public class SimpleSendBytesService
 		this(dataOutputStreamFactory, writeByteStrategy, DEFAULT_QUEUE_SIZE, DEFAULT_RECONNECTION_DELAY, DEFAULT_POLL_INTERVAL);
 	}
 
-	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, int reconnectionDelay, int pollInterval)
+	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, long reconnectionDelay, int pollInterval)
 	{
-		if(dataOutputStreamFactory == null)
-		{
-			throw new IllegalArgumentException("dataOutputStreamFactory must not be null!");
-		}
-		if(writeByteStrategy == null)
-		{
-			throw new IllegalArgumentException("writeByteStrategy must not be null!");
-		}
+		Objects.requireNonNull(dataOutputStreamFactory, "dataOutputStreamFactory must not be null!");
+		Objects.requireNonNull(writeByteStrategy, "writeByteStrategy must not be null!");
 		if(queueSize <= 0)
 		{
-			throw new IllegalArgumentException("queueSize must be greater than zero!");
+			throw new IllegalArgumentException("queueSize must be greater than zero but was "+queueSize+"!");
 		}
 		if(reconnectionDelay <= 0)
 		{
-			throw new IllegalArgumentException("reconnectionDelay must be greater than zero!");
+			throw new IllegalArgumentException("reconnectionDelay must be greater than zero but was "+reconnectionDelay+"!");
 		}
 		if(pollInterval <= 0)
 		{
-			throw new IllegalArgumentException("pollInterval must be greater than zero!");
+			throw new IllegalArgumentException("pollInterval must be greater than zero but was "+pollInterval+"!");
 		}
 		this.localEventBytes = new ArrayBlockingQueue<>(queueSize, true);
 		this.dataOutputStreamFactory = dataOutputStreamFactory;

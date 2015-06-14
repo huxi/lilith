@@ -59,7 +59,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 	private final List<String> remoteHostsList;
 	private String applicationIdentifier;
 	private Thread heartbeatThread;
-	private int reconnectionDelay;
+	private long reconnectionDelay;
 	private WriteByteStrategy writeByteStrategy;
 	private int queueSize;
 	private MultiplexSendBytesService multiplexSendBytes;
@@ -140,12 +140,12 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 	protected abstract void applicationIdentifierChanged(); 
 
-	public int getReconnectionDelay()
+	public long getReconnectionDelay()
 	{
 		return reconnectionDelay;
 	}
 
-	public void setReconnectionDelay(int reconnectionDelay)
+	public void setReconnectionDelay(long reconnectionDelay)
 	{
 		this.reconnectionDelay = reconnectionDelay;
 	}
@@ -251,17 +251,17 @@ public abstract class MultiplexSocketAppenderBase<E>
 			{
 				initialize();
 				this.started = true;
+				addInfo("Waiting 1s to establish connections.");
+				try
+				{
+					Thread.sleep(1000);
+				}
+				catch(InterruptedException e)
+				{
+					// ignore
+				}
+				addInfo("Started " + this);
 			}
-			addInfo("Waiting 1s to establish connections.");
-			try
-			{
-				Thread.sleep(1000);
-			}
-			catch(InterruptedException e)
-			{
-				// ignore
-			}
-			addInfo("Started " + this);
 		}
 	}
 

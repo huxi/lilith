@@ -47,6 +47,7 @@ All notable changes to this project will be documented in this file.
 - Better error message in case of broken detailsView.
 - `SimpleSendBytesService.DEFAULT_POLL_INTERVALL` renamed to `SimpleSendBytesService.DEFAULT_POLL_INTERVAL`.
 - Removed `BufferedOutputStream` wrapper in `SocketDataOutputStreamFactory`. `BufferedOutputStream` prevented `TimeoutOutputStream` from working reliably.
+- `reconnectionDelay` in multiplex appenders is now `long` instead of `int`.
 - Recompressed images with latest [ImageOptim](https://imageoptim.com/) version.
 - Better app icon on Mac. Thanks to Christian Balog!
 
