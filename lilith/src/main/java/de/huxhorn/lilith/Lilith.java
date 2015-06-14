@@ -18,8 +18,13 @@
 package de.huxhorn.lilith;
 
 import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.gaffer.GafferConfigurator;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
+import ch.qos.logback.core.status.ErrorStatus;
+import ch.qos.logback.core.status.Status;
+import ch.qos.logback.core.status.StatusManager;
+import ch.qos.logback.core.status.StatusUtil;
 import ch.qos.logback.core.util.StatusPrinter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
@@ -32,6 +37,7 @@ import de.huxhorn.lilith.cli.Index;
 import de.huxhorn.lilith.cli.Md5;
 import de.huxhorn.lilith.cli.Tail;
 import de.huxhorn.lilith.handler.Slf4JHandler;
+import de.huxhorn.lilith.logback.tools.ContextHelper;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.tools.FilterCommand;
 import de.huxhorn.lilith.tools.ImportExportCommand;
@@ -72,6 +78,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -123,6 +130,7 @@ public class Lilith
 	private static final String JUNIQUE_REPLY_UNKNOWN = "Unknown";
 
 	private static final String APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY = "apple.laf.useScreenMenuBar";
+	private static final String GROOVY_EXTENSION = ".groovy";
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 	private static MainFrame mainFrame;
@@ -551,12 +559,12 @@ public class Lilith
 
 	private static void initCLILogging()
 	{
-		initLogbackConfig(Lilith.class.getResource("/logbackCLI.xml"));
+		initLogbackConfig(Lilith.class.getResource("/logbackCLI.groovy"));
 	}
 
 	private static void initVerboseLogging()
 	{
-		initLogbackConfig(Lilith.class.getResource("/logbackVerbose.xml"));
+		initLogbackConfig(Lilith.class.getResource("/logbackVerbose.groovy"));
 	}
 
 	private static void initLogbackConfig(URL configUrl)
@@ -564,26 +572,113 @@ public class Lilith
 		ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 		if(loggerFactory instanceof LoggerContext)
 		{
-			LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-			// reset previous configuration initially loaded from logback.xml
+			LoggerContext loggerContext = (LoggerContext) loggerFactory;
+
+			StatusManager sm = loggerContext.getStatusManager();
+			sm.clear();
+
+			// reset previous configuration initially loaded from logback.groovy
 			loggerContext.reset();
-			JoranConfigurator configurator = new JoranConfigurator();
-			configurator.setContext(loggerContext);
-			try
-			{
-				configurator.doConfigure(configUrl);
-				final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
-				if(logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
-				StatusPrinter.print(loggerContext);
-			}
-			catch(JoranException ex)
+			if(configUrl.toString().endsWith(GROOVY_EXTENSION))
 			{
-				final Logger logger = LoggerFactory.getLogger(Lilith.class);
-
-				if(logger.isErrorEnabled()) logger.error("Error configuring logging framework!", ex);
-				StatusPrinter.print(loggerContext);
+				GafferConfigurator configurator = new GafferConfigurator(loggerContext);
+				try
+				{
+					configurator.run(configUrl);
+				}
+				catch (RuntimeException ex)
+				{
+					sm.add(new ErrorStatus("Exception while configuring Logback!", configUrl, ex));
+				}
 			}
+			else
+			{
+				JoranConfigurator configurator = new JoranConfigurator();
+				configurator.setContext(loggerContext);
+				try
+				{
+					configurator.doConfigure(configUrl);
+					final Logger logger = LoggerFactory.getLogger(Lilith.class);
+
+					if (logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
+					StatusPrinter.print(loggerContext);
+				}
+				catch (JoranException ex)
+				{
+					sm.add(new ErrorStatus("Exception while configuring Logback!", configUrl, ex));
+				}
+			}
+
+			int level = ContextHelper.getHighestLevel(loggerContext);
+			long lastReset = ContextHelper.getTimeOfLastReset(loggerContext);
+			if (level > Status.INFO)
+			{
+				List<Status> statusList = StatusUtil.filterStatusListByTimeThreshold(sm.getCopyOfStatusList(), lastReset);
+				if (statusList != null)
+				{
+					System.err.println("############################################################");
+					System.err.println("## Logback Status                                         ##");
+					System.err.println("############################################################");
+					StringBuilder statusBuilder = new StringBuilder();
+					for (Status current : statusList)
+					{
+						appendStatus(statusBuilder, current, 0);
+					}
+					System.err.println(statusBuilder.toString());
+					System.err.println("############################################################");
+				}
+			}
+
+		}
+	}
+
+	private static final String[] STATUS_TEXT=
+			{
+					"INFO : ",
+					"WARN : ",
+					"ERROR: "
+			};
+
+	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+	private static void appendStatus(StringBuilder builder, Status status, int indent)
+	{
+		int levelCode = status.getLevel();
+		appendIndent(builder, indent);
+		if(levelCode >= 0 && levelCode < STATUS_TEXT.length)
+		{
+			builder.append(STATUS_TEXT[levelCode]);
+		}
+		builder.append(status.getMessage()).append('\n');
+		Throwable t = status.getThrowable();
+		while(t != null)
+		{
+			appendIndent(builder, indent+1);
+			builder.append(t.getClass().getName());
+			String message = t.getMessage();
+			if(message != null)
+			{
+				builder.append(": ").append(message);
+			}
+			builder.append('\n');
+			// probably check for causes, too
+			t=t.getCause();
+		}
+		if(status.hasChildren())
+		{
+			Iterator<Status> children = status.iterator();
+			while(children.hasNext())
+			{
+				appendStatus(builder, children.next(), indent+1);
+			}
+		}
+	}
+
+	private static void appendIndent(StringBuilder builder, int indent)
+	{
+		for(int i=0;i<indent;i++)
+		{
+			builder.append('\t');
 		}
 	}
 
