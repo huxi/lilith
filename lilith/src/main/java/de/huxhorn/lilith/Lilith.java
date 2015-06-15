@@ -25,7 +25,6 @@ import ch.qos.logback.core.status.ErrorStatus;
 import ch.qos.logback.core.status.Status;
 import ch.qos.logback.core.status.StatusManager;
 import ch.qos.logback.core.status.StatusUtil;
-import ch.qos.logback.core.util.StatusPrinter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
@@ -582,10 +581,14 @@ public class Lilith
 
 			if(configUrl.toString().endsWith(GROOVY_EXTENSION))
 			{
+				// http://jira.qos.ch/browse/LOGBACK-1079
 				GafferConfigurator configurator = new GafferConfigurator(loggerContext);
 				try
 				{
 					configurator.run(configUrl);
+
+					final Logger logger = LoggerFactory.getLogger(Lilith.class);
+					if (logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
 				}
 				catch (RuntimeException ex)
 				{
@@ -599,10 +602,9 @@ public class Lilith
 				try
 				{
 					configurator.doConfigure(configUrl);
-					final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
+					final Logger logger = LoggerFactory.getLogger(Lilith.class);
 					if (logger.isDebugEnabled()) logger.debug("Configured logging with {}.", configUrl);
-					StatusPrinter.print(loggerContext);
 				}
 				catch (JoranException ex)
 				{
