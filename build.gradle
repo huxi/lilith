@@ -1,8 +1,47 @@
+buildscript {
+	apply from: 'dependencyDefinitions.gradle'
+	project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
+	project.ext.localSnapshotRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot")
+	project.ext.localReleaseRepo = localReleaseRepoFile.toURL().toString()
+	project.ext.localSnapshotRepo = localSnapshotRepoFile.toURL().toString()
+	repositories {
+		maven {
+			url localReleaseRepo
+		}
+		maven {
+			url localSnapshotRepo
+		}
+		jcenter()
+		mavenCentral()
+		mavenLocal()
+		maven {
+			url 'https://plugins.gradle.org/m2/'
+		}
+		maven {
+			// workaround for http://issues.gradle.org/browse/GRADLE-784
+			// propdep => provided, optional
+			url 'http://repo.springsource.org/plugins-release'
+		}
+	}
+
+	dependencies {
+		// needed for syncSnapshot and syncStaging
+		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6'
+		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.2'
+		classpath 'com.github.ben-manes:gradle-versions-plugin:0.9'
+		// workaround for http://issues.gradle.org/browse/GRADLE-784
+		// propdep => provided, optional
+		// http://repo.spring.io/plugins-release/org/springframework/build/gradle/propdeps-plugin/
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
+		classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.1.1'
+	}
+}
+
 apply from: 'dependencyDefinitions.gradle'
 apply from: 'projectDependencies.gradle'
 
 import org.apache.tools.ant.filters.FixCrLfFilter
-import de.huxhorn.sulky.plist.*
 import org.gradle.plugins.signing.Sign
 
 task wrapper(type: Wrapper) {
@@ -27,50 +66,6 @@ idea {
 				vcsConfig.mapping[0].'@vcs' = 'Git'
 			}
 		}
-	}
-}
-
-buildscript {
-	apply from: 'dependencyDefinitions.gradle'
-	project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
-	project.ext.localSnapshotRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot")
-	project.ext.localReleaseRepo = localReleaseRepoFile.toURL().toString()
-	project.ext.localSnapshotRepo = localSnapshotRepoFile.toURL().toString()
-	repositories {
-		maven {
-			url localReleaseRepo
-		}
-		maven {
-			url localSnapshotRepo
-		}
-		jcenter()
-		mavenCentral()
-		mavenLocal()
-		maven {
-			// workaround for http://issues.gradle.org/browse/GRADLE-784
-			// propdep => provided, optional
-			url 'http://repo.springsource.org/plugins-release'
-		}
-		maven {
-			// workaround for http://issues.gradle.org/browse/GRADLE-784
-			// propdep => provided, optional
-			url 'http://repo.spring.io/plugins-snapshot-local'
-		}
-	}
-
-	dependencies {
-		// needed for syncSnapshot and syncStaging
-		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6'
-		classpath "de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}"
-		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.2'
-		classpath 'com.github.ben-manes:gradle-versions-plugin:0.9'
-		// workaround for http://issues.gradle.org/browse/GRADLE-784
-		// propdep => provided, optional
-		// http://repo.spring.io/plugins-release/org/springframework/build/gradle/propdeps-plugin/
-		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7' 
-		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
-		// https://code.google.com/p/gradle-macappbundle/
-		classpath 'edu.sc.seis.gradle:macappbundle:2.1.0'
 	}
 }
 
@@ -372,9 +367,9 @@ project(':lilith') {
 
 /*
 ### macappbundle
-- [Gradle Plugin Homepage](https://code.google.com/p/gradle-macappbundle/)
-- [MacAppBundlePluginExtension](https://code.google.com/p/gradle-macappbundle/source/browse/src/main/groovy/edu/sc/seis/gradle/macAppBundle/MacAppBundlePluginExtension.groovy)
-- Artifact: `'edu.sc.seis.gradle:macappbundle:2.1.0'`
+- [Gradle Plugin Homepage](https://github.com/crotwell/gradle-macappbundle/)
+- [MacAppBundlePluginExtension](https://github.com/crotwell/gradle-macappbundle/blob/master/src/main/groovy/edu/sc/seis/macAppBundle/MacAppBundlePluginExtension.groovy)
+- Artifact: `'gradle.plugin.edu.sc.seis:macAppBundle:2.1.1'`
 - http://kovuthehusky.com/blog/running-minecraft-on-os-x-using-java-7/
 - https://bugs.mojang.com/browse/MCL-1049
 - https://bugs.mojang.com/browse/MCL-2628
@@ -396,6 +391,7 @@ project(':lilith') {
 	macAppBundle {
 		mainClassName = theMainClassName
 		appName = 'Lilith' // ends up in CFBundleName
+		bundleIdentifier = 'de.huxhorn.lilith'
 		creatorCode = 'Llth'
 		//jvmVersion = '1.8+'
 		//jvmVersion is AppleJava only
@@ -404,9 +400,6 @@ project(':lilith') {
 			'CFBundleShortVersionString': version,
 			//'CFBundleGetInfoString': copyright,
 			'NSHumanReadableCopyright': copyright,
-			//'CFBundleIdentifier': 'de.huxhorn.lilith'
-			// not possible to override CFBundleIdentifier
-			// https://github.com/crotwell/gradle-macappbundle/issues/29
 		]
 		javaProperties = [
 			'apple.laf.useScreenMenuBar': 'true'
@@ -539,144 +532,7 @@ project(':lilith') {
 		compression = Compression.GZIP
 		with distSpec
 	}
-	
-	/*
-	task preparePropertyList(dependsOn: configurations.default.allArtifacts.buildDependencies) << {
-		File propFile=file('src/main/mac-resources/Info.plist')
-		PropertyList plist
-		if(propFile.isFile())
-		{
-			PropertyListDecoder decoder=new PropertyListDecoder()
-			plist=decoder.decode(new FileInputStream(propFile))
-		}
-		//println("PropertyList before: ${plist}")
-		if(!plist)
-		{
-			plist=new PropertyList()
-		}
-		if(!plist.root)
-		{
-			plist.root=new TreeMap()
-		}
-		else
-		{
-			plist.root=new TreeMap(plist.root)
-		}
-		String bundleName='Lilith'
-		
-		plist.root.'CFBundleName'="${bundleName}"
-		plist.root.'CFBundleIdentifier'='de.huxhorn.lilith'
-		plist.root.'CFBundleVersion'="${version}"
-		plist.root.'CFBundleGetInfoString'="${bundleName} ${version}, ${copyright}"
-		plist.root.'CFBundleShortVersionString'="${version}"
-		plist.root.'CFBundleAllowMixedLocalizations'='true'
-		plist.root.'CFBundleExecutable'='JavaApplicationStub'
-		plist.root.'CFBundleDevelopmentRegion'='English'
-		plist.root.'CFBundlePackageType'='APPL'
-		//plist.root.'CFBundleSignature'='Llth'
-		plist.root.'CFBundleInfoDictionaryVersion'='6.0'
-		plist.root.'CFBundleIconFile'='Lilith.icns'
-		
-		List macClasspath=new ArrayList()
-		//println configurations.default
-		configurations.default.collect  { File file -> 
-			String currentName='$JAVAROOT/'+file.name
-			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
-				&& !macClasspath.contains(currentName))
-			{
-				macClasspath.add(currentName)
-				//println "Added ${currentName}"
-			}
-		}
-		//println "classpath 1 = ${macClasspath}"
-		//println configurations.default.allArtifactFiles
-		configurations.default.allArtifacts.files.collect { File file -> 
-			String currentName='$JAVAROOT/'+file.name
-			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
-				&& !macClasspath.contains(currentName))
-			{
-				macClasspath.add(currentName)
-				//println "Added ${currentName}"
-			}
-		}
-		//println "classpath 2 = ${macClasspath}"
 
-		//String foo = "${ -> configurations.runtime.collect { File file -> file.name }.sort().join(' ')}"
-		//println foo
-		configurations.runtime.collect { File file -> 
-			String currentName='$JAVAROOT/'+file.name
-			if(!currentName.endsWith('-sources.jar') && !currentName.endsWith('-javadoc.jar')
-				&& !macClasspath.contains(currentName))
-			{
-				macClasspath.add(currentName)
-				//println "Added ${currentName}"
-			}
-		}
-		//println "classpath 3 = ${macClasspath}"
-		Collections.sort(macClasspath)
-		
-		Map javaMap=plist.root.'Java'
-		if(!javaMap)
-		{
-			javaMap=new TreeMap()
-			plist.root.'Java'=javaMap
-		}
-		else
-		{
-			javaMap=new TreeMap(javaMap)
-			plist.root.'Java'=javaMap
-		}
-		javaMap.'MainClass'="${mainClassName}"
-		javaMap.'JVMVersion'='1.5+'
-		javaMap.'ClassPath'=macClasspath
-		javaMap.'VMOptions'='-Dcom.apple.macos.useScreenMenuBar=true'
-		
-		
-		//println("PropertyList after: ${plist}")
-		File propOutFile=file('build/Info.plist')
-		propOutFile.parentFile.mkdirs()
-		PropertyListEncoder encoder=new PropertyListEncoder()
-		plist=encoder.encode(plist, new FileOutputStream(propOutFile))
-	}
-	
-	project.ext.appSpec = copySpec {
-		into("Lilith.app") {
-			
-			into('Contents') {
-				from("${projectDir}/build/Info.plist")
-			}
-
-			into('Contents/Resources') {
-				from("${projectDir}/src/main/mac-resources/Lilith.icns")
-			}
-			
-			into('Contents/MacOS') {
-				from("${projectDir}/src/main/mac-resources/JavaApplicationStub")
-				fileMode = 0755
-			}
-			
-			into('Contents/Resources/Java') {
-				from configurations.default
-				from configurations.default.allArtifacts.files
-				exclude '*-sources.jar'
-				exclude '*-javadoc.jar'
-			}
-		}
-	}
-	
-	task copyApp(dependsOn: preparePropertyList, type: Copy) {
-		with appSpec
-		into file('build/explodedApp')
-	}
-
-	task appTgz(dependsOn: preparePropertyList, type: Tar) {
-		description = 'Creates a TGZ containing the Lilith Mac OS X app.'
-		classifier = 'app'
-		compression = Compression.GZIP
-		with appSpec
-	}
-	*/
-	
 	task appTgz(dependsOn: createApp, type: Tar) {
 		description = 'Creates a TGZ containing the Lilith Mac OS X app.'
 		classifier = 'app'

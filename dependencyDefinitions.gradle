@@ -74,7 +74,6 @@ project.ext.libraries = [
 'sulky-io':                 "de.huxhorn.sulky:de.huxhorn.sulky.io:${versions.sulky}",
 'sulky-junit':              "de.huxhorn.sulky:de.huxhorn.sulky.junit:${versions.sulky}",
 'sulky-logging':            "de.huxhorn.sulky:de.huxhorn.sulky.logging:${versions.sulky}",
-'sulky-plist':              "de.huxhorn.sulky:de.huxhorn.sulky.plist:${versions.sulky}",
 'sulky-sounds-api':         "de.huxhorn.sulky:de.huxhorn.sulky.sounds-api:${versions.sulky}",
 'sulky-sounds-impl-jlayer': "de.huxhorn.sulky:de.huxhorn.sulky.sounds-impl-jlayer:${versions.sulky}",
 'sulky-stax':               "de.huxhorn.sulky:de.huxhorn.sulky.stax:${versions.sulky}",
