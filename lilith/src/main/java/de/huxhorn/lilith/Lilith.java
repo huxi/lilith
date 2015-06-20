@@ -732,11 +732,10 @@ public class Lilith
 	}
 
 	private static void updateSplashStatus(final SplashScreen splashScreen, final String status)
-		throws InvocationTargetException, InterruptedException
 	{
 		if(splashScreen != null)
 		{
-			EventQueue.invokeAndWait(() -> {
+			EventQueue.invokeLater(() -> {
 				if(!splashScreen.isVisible())
 				{
 					Windows.showWindow(splashScreen, null, true);
@@ -925,6 +924,7 @@ public class Lilith
 		catch(InterruptedException ex)
 		{
 			if(logger.isInfoEnabled()) logger.info("Interrupted...", ex);
+			IOUtilities.interruptIfNecessary(ex);
 		}
 		catch(InvocationTargetException ex)
 		{

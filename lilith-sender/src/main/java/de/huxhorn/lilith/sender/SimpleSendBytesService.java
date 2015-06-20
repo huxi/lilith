@@ -127,7 +127,7 @@ public class SimpleSendBytesService
 			}
 			catch(InterruptedException e)
 			{
-				// ignore
+				IOUtilities.interruptIfNecessary(e);
 			}
 		}
 	}
@@ -260,8 +260,8 @@ public class SimpleSendBytesService
 				}
 				catch(InterruptedException e)
 				{
+					IOUtilities.interruptIfNecessary(e);
 					break;
-					//e.printStackTrace();
 				}
 			}
 			reconnectionThread.interrupt();
@@ -269,7 +269,7 @@ public class SimpleSendBytesService
 			{
 				reconnectionThread.join();
 			}
-			catch(InterruptedException e1)
+			catch(InterruptedException e)
 			{
 				// this is ok.
 			}
@@ -346,6 +346,7 @@ public class SimpleSendBytesService
 						}
 						catch(InterruptedException e)
 						{
+							IOUtilities.interruptIfNecessary(e);
 							return;
 						}
 					}

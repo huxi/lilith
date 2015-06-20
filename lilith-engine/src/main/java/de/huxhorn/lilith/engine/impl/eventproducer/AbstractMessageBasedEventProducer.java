@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,6 +107,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 				catch(InterruptedException e)
 				{
 					if(logger.isInfoEnabled()) logger.info("Interrupted...", e);
+					IOUtilities.interruptIfNecessary(e);
 					close();
 					return;
 				}
@@ -168,8 +169,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 						{
 							if(logger.isWarnEnabled())
 							{
-								logger
-									.warn("Out of memory while trying to allocate {} bytes! Skipping them instead...", size);
+								logger.warn("Out of memory while trying to allocate {} bytes! Skipping them instead...", size);
 							}
 							skipBytes(size, dataInput);
 						}

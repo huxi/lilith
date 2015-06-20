@@ -335,6 +335,7 @@ public class StatisticsPanel
 							catch(InterruptedException ex)
 							{
 								if(logger.isInfoEnabled()) logger.info("Interrupted...", ex);
+								IOUtilities.interruptIfNecessary(ex);
 								return;
 							}
 						}
@@ -352,6 +353,7 @@ public class StatisticsPanel
 				catch(InterruptedException ex)
 				{
 					if(logger.isInfoEnabled()) logger.info("Interrupted...", ex);
+					IOUtilities.interruptIfNecessary(ex);
 					return;
 				}
 			}

@@ -581,6 +581,7 @@ project(':tracing') {
 		compile libraries.'aspectjrt'
 		compile libraries.'slf4j-api'
 		compile libraries.'sulky-formatting'
+		testCompile libraries.'sulky-io'
 		testCompile libraries.'spring-beans'
 		testCompile libraries.'spring-context'
 		testCompile libraries.'spring-core'

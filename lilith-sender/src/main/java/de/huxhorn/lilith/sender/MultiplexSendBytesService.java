@@ -34,6 +34,8 @@
 
 package de.huxhorn.lilith.sender;
 
+import de.huxhorn.sulky.io.IOUtilities;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -133,7 +135,7 @@ public class MultiplexSendBytesService
 		}
 		catch(InterruptedException e)
 		{
-			// ignore
+			IOUtilities.interruptIfNecessary(e);
 		}
 	}
 
@@ -154,6 +156,7 @@ public class MultiplexSendBytesService
 				}
 				catch(InterruptedException e)
 				{
+					IOUtilities.interruptIfNecessary(e);
 					return;
 				}
 			}

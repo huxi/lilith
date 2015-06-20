@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.IndexStrategy;
 import de.huxhorn.sulky.codec.filebuffer.SparseDataStrategy;
+import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
 import org.slf4j.Logger;
@@ -156,11 +157,7 @@ public class IndexingCallable
 					setCurrentStep(offset);
 				}
 			}
-			catch(IOException e)
-			{
-				ex = e;
-			}
-			catch(InterruptedException e)
+			catch(IOException | InterruptedException e)
 			{
 				ex = e;
 			}
@@ -178,6 +175,7 @@ public class IndexingCallable
 						logger.warn("Failed to delete index file '{}'!", indexFile.getAbsolutePath());
 					}
 				}
+				IOUtilities.interruptIfNecessary(ex);
 				throw ex; // rethrow
 			}
 			if(logger.isInfoEnabled()) logger.info("File '{}' has {} entries.", dataFile.getAbsolutePath(), counter);

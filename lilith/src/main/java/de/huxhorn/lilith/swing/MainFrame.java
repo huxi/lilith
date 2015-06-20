@@ -3564,17 +3564,12 @@ public class MainFrame
 			}
 			catch(IOException e)
 			{
-				if(logger.isWarnEnabled())
-				{
-					logger.warn("Exception while executing '" + file.getAbsolutePath() + "'!", e);
-				}
+				if(logger.isWarnEnabled()) logger.warn("Exception while executing '" + file.getAbsolutePath() + "'!", e);
 			}
 			catch(InterruptedException e)
 			{
-				if(logger.isDebugEnabled())
-				{
-					logger.debug("Execution of '" + file.getAbsolutePath() + "' was interrupted.", e);
-				}
+				if(logger.isDebugEnabled()) logger.debug("Execution of '" + file.getAbsolutePath() + "' was interrupted.", e);
+				IOUtilities.interruptIfNecessary(e);
 			}
 		}
 
@@ -3684,6 +3679,7 @@ public class MainFrame
 			catch(InterruptedException e)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Execution of openUrl process was interrupted.", e);
+				IOUtilities.interruptIfNecessary(e);
 			}
 		}
 
@@ -3916,31 +3912,6 @@ public class MainFrame
 		Windows.showWindow(checkForUpdateDialog, this, true);
 	}
 
-	/*
-		private class ColorsCollectionRunnable
-			implements Runnable
-		{
-			private final Logger logger = LoggerFactory.getLogger(ColorsCollectionRunnable.class);
-
-			public void run()
-			{
-				for(;;)
-				{
-					try
-					{
-						SoftColorsReference ref= (SoftColorsReference) colorsReferenceQueue.remove();
-						EventIdentifier id = ref.getId();
-						colorsCache.remove(id);
-						if(logger.isDebugEnabled()) logger.debug("Removed cached color for {}.", id);
-					}
-					catch (InterruptedException e)
-					{
-						break;
-					}
-				}
-			}
-		}
-		*/
 	private class MainTaskListener
 		implements TaskListener<Long>
 	{

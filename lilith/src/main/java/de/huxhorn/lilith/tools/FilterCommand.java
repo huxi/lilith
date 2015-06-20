@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.codec.filebuffer.ReadOnlyExclusiveCodecFileBuffer;
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -333,6 +334,7 @@ public class FilterCommand
 			catch(InterruptedException e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Interrupted...");
+				IOUtilities.interruptIfNecessary(e);
 				break;
 			}
 		}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.impl.sourceproducer.SerializingMessageBasedServerSocketEventSourceProducer;
 import de.huxhorn.lilith.swing.MainFrame;
 
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -596,10 +597,8 @@ public class SenderService
 				}
 				catch(InterruptedException e)
 				{
-					if(logger.isInfoEnabled())
-					{
-						logger.info("Exiting network watchdog thread because of interruption.", e);
-					}
+					if(logger.isInfoEnabled()) logger.info("Exiting network watchdog thread because of interruption.", e);
+					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 			}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.debug;
 
+import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +51,7 @@ public abstract class AbstractDebugRunnable
 		catch(InterruptedException e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Execution of DebugRunnable was interrupted!");
+			IOUtilities.interruptIfNecessary(e);
 		}
 	}
 
