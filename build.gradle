@@ -26,7 +26,7 @@ buildscript {
 
 	dependencies {
 		// needed for syncSnapshot and syncStaging
-		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-6'
+		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:2.9'
 		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.2'
 		classpath 'com.github.ben-manes:gradle-versions-plugin:0.10.1'
 		// workaround for http://issues.gradle.org/browse/GRADLE-784
