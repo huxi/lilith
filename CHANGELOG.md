@@ -51,6 +51,7 @@ All notable changes to this project will be documented in this file.
 - Using Groovy for Lilith logging configuration.
 - Recompressed images with latest [ImageOptim](https://imageoptim.com/) version.
 - Better app icon on Mac. Thanks to Christian Balog!
+- Tried to ensure that license dialog is always visible.
 
 ### Deprecated
 - Nothing.

@@ -898,6 +898,8 @@ public class Lilith
 				hideSplashScreen(splashScreen);
 
 				LicenseAgreementDialog licenseDialog = new LicenseAgreementDialog();
+				licenseDialog.setAlwaysOnTop(true);
+				licenseDialog.setAutoRequestFocus(true);
 				Windows.showWindow(licenseDialog, null, true);
 				if(licenseDialog.isLicenseAgreed())
 				{
