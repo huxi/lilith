@@ -46,7 +46,7 @@ if(!binding.variables.containsKey('documentRoot'))
 if(!binding.variables.containsKey('dateTimeFormatter'))
 {
 	binding.setVariable('dateTimeFormatter',
-		DateTimeFormatter.ofPattern("yyyy-MM-dd'FUUU'HH:mm:ss.SSS")
+		DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm:ss.SSS")
 			.withZone(ZoneId.systemDefault()));
 }
 
