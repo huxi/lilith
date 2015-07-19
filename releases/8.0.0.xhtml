@@ -12,11 +12,13 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		
 		<div>
 			<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/8.0.0">Download Now!
-		<br />(Released: 2015-05-xx)</a>
+		<br />(Released: 2015-08-xx)</a>
 		</div>
 		
 		<p>This version requires Java 8 update 45 or higher and will says so if you try to start it with an older version.</p>
-		<p>You can still receive event from previous versions so if your application is still running Java 7 or lower just keep using the 0.9.44 artifacts.</p>
+		<p>You can still receive event from previous versions so if your application is still running Java 7 or lower just keep using the 0.9.44 artifacts.<br />
+		Keep in mind that <a href="http://www.oracle.com/technetwork/java/eol-135779.html">Java SE 7 End of Public Updates</a> has already been reached.</p>
+		<p>This is a "Happy Birthday, Lilith!" release. Lilith 0.9.8 was released on 2007-08-01 and is therefore 8 years old.</p>
 		
 		<h2>Changelog</h2>
 		<h3>Added</h3>
@@ -25,7 +27,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>
 				<code>CHANGELOG.md</code> in the spirit of <a href="http://keepachangelog.com/">Keep a CHANGELOG</a>.</li>
 			<li>Rough <code>TODO.md</code> listing some things that should be done.</li>
-			<li>Error dialog if Lilith is started with Java prior to 1.8.0_45.</li>
+			<li>Error dialog if Lilith is started with Java prior to 1.8.0_51.</li>
 			<li>Added "Clear view" shortcut Cmd-K. K for clear.</li>
 			<li>Added lilith.version.bundle to system properties.</li>
 			<li>Displaying release notes of "newzest version" if already available.</li>
@@ -42,6 +44,16 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Renamed "Previous tab" to "Previous view" and "Next tab" to "Next view".</li>
 			<li>Changed "Next view" shortcut from Cmd-K to Cmd-J and "Previous view" shortcut from Cmd-J to Cmd-shift-J.</li>
 			<li>Switched "Next view" and "Previous view" in "View" menu.</li>
+			<li>Better error message in case of broken detailsView.</li>
+			<li>
+				<code>SimpleSendBytesService.DEFAULT_POLL_INTERVALL</code> renamed to <code>SimpleSendBytesService.DEFAULT_POLL_INTERVAL</code>.</li>
+			<li>Removed <code>BufferedOutputStream</code> wrapper in <code>SocketDataOutputStreamFactory</code>. <code>BufferedOutputStream</code> prevented <code>TimeoutOutputStream</code> from working reliably.</li>
+			<li>
+				<code>reconnectionDelay</code> in multiplex appenders is now <code>long</code> instead of <code>int</code>.</li>
+			<li>Using Groovy for Lilith logging configuration.</li>
+			<li>Recompressed images with latest <a href="https://imageoptim.com/">ImageOptim</a> version.</li>
+			<li>Better app icon on Mac. Thanks to Christian Balog!</li>
+			<li>Tried to ensure that license dialog is always visible.</li>
 		</ul>
 
 		<h3>Deprecated</h3>
@@ -58,12 +70,13 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 				<code>TroubleshootingPanel.reset(ViewContainer&lt;?&gt; container)</code>
 			</li>
 			<li>joda-time dependency.</li>
+			<li>stax-api and stax dependencies.</li>
 		</ul>
 
 		<h3>Fixed</h3>
 
 		<ul>
-			<li>Updated <code>HttpStatus</code> enum to RFC 7231/7232/7233/7235/7238. Some enum values have been renamed in the process.</li>
+			<li>Updated <code>HttpStatus</code> enum to <a href="https://tools.ietf.org/html/rfc7231">RFC 7231</a>, <a href="https://tools.ietf.org/html/rfc7232">RFC 7232</a>, <a href="https://tools.ietf.org/html/rfc7233">RFC 7233</a>, <a href="https://tools.ietf.org/html/rfc7235">RFC 7235</a> and <a href="https://tools.ietf.org/html/rfc7238">RFC 7238</a>. Some enum values have been renamed in the process.</li>
 			<li>sulky <code>SafeString</code> is now always printing a <code>Date</code> as an ISO8601-DateTime with timezone UTC.</li>
 			<li>Using "127.0.0.1" instead of "localhost" in <code>SerializingGoToSource</code> to prevent IPv6 SNAFU.</li>
 			<li>Conditions-Focus/Exclude menu of detached windows are now updated on saved condition change.</li>
@@ -71,10 +84,16 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Reduced log level of broken stream message in event producers.</li>
 			<li>Fixed initialization of "Attach/Detach" action.</li>
 			<li>Fixed statistics in case of Java != 1.6</li>
-			<li>Fixed "Focus" and "Exclude" menu tooltips on Mac. Those displayed HTML source if system menu bar was used. </li>
-			<li>SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.6, Groovy 2.4.3, commons-codec 1.9, commons-lang3 3.4, httpclient 4.4.1, httpcore 4.4.1, jackson 2.5.3, log4j2 2.2, aspectj 1.8.5, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1, servlet-api 3.1.0, flying-saucer 9.0.6, cglib 3.1 </li>
+			<li>Fixed "Focus" and "Exclude" menu tooltips on Mac. Those displayed HTML source if system menu bar was used.</li>
+			<li>Fixed <a href="http://groovy-lang.org/">Groovy</a> links in help.</li>
+			<li>SLF4J 1.7.12, Logback 1.1.3, Spring 4.1.7, Groovy 2.4.4, commons-codec 1.9, commons-lang3 3.4, httpclient 4.5, httpcore 4.4.1, jackson 2.5.4, log4j2 2.3, aspectj 1.8.6, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1, servlet-api 3.1.0, flying-saucer 9.0.6, cglib 3.1, rrd4j 2.2.1 </li>
 		</ul>
 
+		<h3>Security</h3>
+
+		<ul>
+			<li>Keep your Java version up-to-date.</li>
+		</ul>
 		
 		
 		<h2>Known Issues</h2>
