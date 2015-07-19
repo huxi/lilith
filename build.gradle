@@ -119,7 +119,7 @@ gradle.taskGraph.whenReady { taskGraph ->
 	}
 }
 
-if(!System.properties.'release') {
+if(!System.properties.'release' && !System.properties.'prerelease') {
 	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz'	
 } else {
 	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz', 'signJavadocZip', 'signSourceZip'	
@@ -133,7 +133,10 @@ allprojects {
 
 	group = 'de.huxhorn.lilith'
 	version = '8.0.0'
-	if(!System.properties.'release') {
+	def prereleaseIdentifier = System.properties.'prerelease'
+	if(prereleaseIdentifier) {
+		version = version + '-' + prereleaseIdentifier
+	} else if(!System.properties.'release') {
 		version = version + '-SNAPSHOT'
 	}
 
@@ -378,7 +381,7 @@ project(':lilith') {
 - https://developer.apple.com/library/mac/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Optimizing/Optimizing.html
 */
 	
-	if(System.properties.'release') {
+	if(System.properties.'release' || System.properties.'prerelease') {
 		project.git.requireClean = true
 		processResources.dependsOn checkGitState
 	}

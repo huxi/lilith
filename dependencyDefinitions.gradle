@@ -1,4 +1,11 @@
-project.ext.sulkyBaseVersion = '8.0.0'
+def sulkyVersion = '8.0.0'
+
+def prereleaseIdentifier = System.properties.'prerelease'
+if(prereleaseIdentifier) {
+	sulkyVersion = sulkyVersion + '-' + prereleaseIdentifier
+} else if(!System.properties.'release') {
+	sulkyVersion = sulkyVersion + '-SNAPSHOT'
+}
 
 project.ext.versions = [
 'aspectj':        '1.8.6',
@@ -14,7 +21,7 @@ project.ext.versions = [
 'spock':          '1.0-groovy-2.4',
 'spring':         '4.1.7.RELEASE',
 'substance':      '7.3',
-'sulky':          "${System.properties.'release' ? sulkyBaseVersion : sulkyBaseVersion+'-SNAPSHOT'}",
+'sulky':          sulkyVersion,
 'thymeleaf':      '2.1.4.RELEASE'
 ]
 
