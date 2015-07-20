@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2013 Joern Huxhorn
+ * Copyright 2007-2015 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,25 @@ package de.huxhorn.lilith.data.logging.json;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
-import de.huxhorn.lilith.data.logging.*;
-import de.huxhorn.lilith.data.logging.json.mixin.*;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.Marker;
+import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.data.logging.json.mixin.ExtendedStackTraceElementMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.LoggerContextMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.LoggingEventMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.MarkerMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.MessageMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.ThreadInfoMixIn;
+import de.huxhorn.lilith.data.logging.json.mixin.ThrowableInfoMixIn;
 
 public class LoggingModule
 	extends SimpleModule
 {
+	private static final long serialVersionUID = 1811966736888686433L;
+
 	public LoggingModule()
 	{
 		super("LilithLogging", new Version(1, 0, 0, null, "de.huxhorn.lilith", "de.huxhorn.lilith.data.logging-json-serializer"));
@@ -52,6 +65,6 @@ public class LoggingModule
 		setMixInAnnotation(Marker.class, MarkerMixIn.class);
 		setMixInAnnotation(ThreadInfo.class, ThreadInfoMixIn.class);
 		setMixInAnnotation(LoggingEvent.class, LoggingEventMixIn.class);
-		setMixInAnnotation(ThrowableInfo.class, ThreadInfoMixIn.class);
+		setMixInAnnotation(ThrowableInfo.class, ThrowableInfoMixIn.class);
 	}
 }
