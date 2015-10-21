@@ -30,7 +30,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - `CHANGELOG.md` in the spirit of [Keep a CHANGELOG](http://keepachangelog.com/).
 - Rough `TODO.md` listing some things that should be done.
-- Error dialog if Lilith is started with Java prior to 1.8.0_51.
+- Error dialog if Lilith is started with Java prior to 1.8.0_66.
 - Added "Clear view" shortcut Cmd-K. K for clear.
 - Added lilith.version.bundle to system properties.
 - Displaying release notes of "newzest version" if already available.
