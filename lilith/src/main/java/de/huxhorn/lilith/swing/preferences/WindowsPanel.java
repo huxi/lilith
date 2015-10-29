@@ -53,7 +53,7 @@ public class WindowsPanel
 		showingStatusBarCheckbox = new JCheckBox("Show status bar.");
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
 		maximizeInternalFramesCheckbox = new JCheckBox("Maximize internal frames.");
-		showIdentifierCheckbox = new JCheckBox("Show identifier for named sources.");
+		showIdentifierCheckbox = new JCheckBox("Show primary identifier even for named sources.");
 		autoOpenCheckbox = new JCheckBox("Automatically open new views on connection.");
 		autoCloseCheckbox = new JCheckBox("Automatically close inactive views on disconnection.");
 		autoFocusCheckbox = new JCheckBox("Automatically focus window of new view.");

@@ -61,7 +61,7 @@ public class LilithPreferences
 	private boolean scrollingToBottom = true;
 	private boolean showingFullCallstack = false;
 	private boolean showingFullRecentPath = false;
-	private boolean showingIdentifier = true;
+	private boolean showingIdentifier = false;
 	private boolean showingStatusbar = true;
 	private boolean showingStackTrace = true;
 	private boolean showingTipOfTheDay = true;

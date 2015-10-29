@@ -52,6 +52,7 @@ All notable changes to this project will be documented in this file.
 - Recompressed images with latest [ImageOptim](https://imageoptim.com/) version.
 - Better app icon on Mac. Thanks to Christian Balog!
 - Tried to ensure that license dialog is always visible.
+- Changed default of `Show primary identifier even for named sources.` preferences to `false`.
 
 ### Deprecated
 - Nothing.
