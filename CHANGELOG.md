@@ -34,6 +34,7 @@ All notable changes to this project will be documented in this file.
 - Added "Clear view" shortcut Cmd-K. K for clear.
 - Added lilith.version.bundle to system properties.
 - Displaying release notes of "newzest version" if already available.
+- Option to ignore the secondary identifier of event sources, ignoring by default.
 
 ### Changed
 - Requires Java 8.
