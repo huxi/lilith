@@ -34,7 +34,6 @@ import de.huxhorn.lilith.eventhandlers.AlarmSoundAccessEventHandler;
 import de.huxhorn.lilith.eventhandlers.AlarmSoundLoggingEventHandler;
 import de.huxhorn.lilith.eventhandlers.FileDumpEventHandler;
 import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
-import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.debug.DebugDialog;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler;
@@ -2002,6 +2001,9 @@ public class MainFrame
 		SortedMap<String, SourceIdentifier> sources = new TreeMap<>();
 		if(files != null)
 		{
+			Map<String, String> sourceNames = applicationPreferences.getSourceNames();
+			boolean showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+
 			for(File f : files)
 			{
 				String name = f.getName();
@@ -2009,7 +2011,8 @@ public class MainFrame
 				if(!name.equalsIgnoreCase("global"))
 				{
 					SourceIdentifier si = new SourceIdentifier(name);
-					sources.put(getSourceTitle(si, null), si);
+					String sourceTitle = ViewActions.getPrimarySourceTitle(name, sourceNames, showingPrimaryIdentifier);
+					sources.put(sourceTitle, si);
 				}
 			}
 		}
@@ -2155,7 +2158,14 @@ public class MainFrame
 
 	public SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> getSortedLoggingViews()
 	{
-		EventSourceComparator<LoggingEvent> loggingComparator = new EventSourceComparator<>();
+		Map<String, String> sourceNames=null;
+		boolean showingPrimaryIdentifier = false;
+		if(applicationPreferences != null)
+		{
+			sourceNames = applicationPreferences.getSourceNames();
+			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+		}
+		EventSourceComparator<LoggingEvent> loggingComparator = new EventSourceComparator<>(sourceNames, showingPrimaryIdentifier);
 		SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> sortedLoggingViews;
 		sortedLoggingViews = new TreeMap<>(loggingComparator);
 		if(loggingEventViewManager != null)
@@ -2167,7 +2177,14 @@ public class MainFrame
 
 	public SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> getSortedAccessViews()
 	{
-		EventSourceComparator<AccessEvent> accessComparator = new EventSourceComparator<>();
+		Map<String, String> sourceNames=null;
+		boolean showingPrimaryIdentifier = false;
+		if(applicationPreferences != null)
+		{
+			sourceNames = applicationPreferences.getSourceNames();
+			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+		}
+		EventSourceComparator<AccessEvent> accessComparator = new EventSourceComparator<>(sourceNames, showingPrimaryIdentifier);
 		SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews;
 		sortedAccessViews = new TreeMap<>(accessComparator);
 		if(accessEventViewManager != null)
@@ -2447,137 +2464,25 @@ public class MainFrame
 		}
 	}
 
-	public String getPrimarySourceTitle(String primary)
+	/**
+	 * Convenience method. Only use if a single call is made.
+	 *
+	 * Use ViewActions.resolveSourceTitle otherwise and retrieve
+	 * sourceNames, showingPrimaryIdentifier and showingSecondaryIdentifier
+	 * only once.
+	*/
+	private String resolveSourceTitle(ViewContainer container)
 	{
-		if(primary == null)
+		Map<String, String> sourceNames = null;
+		boolean showingPrimaryIdentifier = false;
+		boolean showingSecondaryIdentifier = false;
+		if(applicationPreferences != null)
 		{
-			return null;
+			sourceNames = applicationPreferences.getSourceNames();
+			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+			showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
 		}
-		Map<String, String> sourceNames = applicationPreferences.getSourceNames();
-		String resolvedName = sourceNames.get(primary);
-		if(resolvedName != null && !resolvedName.equals(primary))
-		{
-			if(applicationPreferences.isShowingPrimaryIdentifier())
-			{
-				return resolvedName + " [" + primary + "]";
-			}
-			else
-			{
-				return resolvedName;
-			}
-		}
-		return primary;
-	}
-
-	public String getPrimarySourceTitle(SourceIdentifier identifier)
-	{
-		return getPrimarySourceTitle(identifier.getIdentifier());
-	}
-
-	public String getSourceTitle(SourceIdentifier identifier, String name)
-	{
-		String primary = getPrimarySourceTitle(identifier);
-		String secondary = identifier.getSecondaryIdentifier();
-		if(secondary == null)
-		{
-			if(name == null)
-			{
-				return primary;
-			}
-			return primary + " - " + name;
-		}
-		if(name == null)
-		{
-			return primary + " - " + secondary;
-		}
-		return primary + " - " +name + " - " + secondary;
-	}
-
-	public String getLoggingSourceTitle(SourceIdentifier identifier, String name)
-	{
-		return getSourceTitle(identifier, name) + " (Logging)";
-	}
-
-	public String getAccessSourceTitle(SourceIdentifier identifier, String name)
-	{
-		return getSourceTitle(identifier, name) + " (Access)";
-	}
-
-	String resolveSourceTitle(ViewContainer container)
-	{
-		EventWrapperViewPanel defaultView = container.getDefaultView();
-		EventSource eventSource = defaultView.getEventSource();
-		boolean global=eventSource.isGlobal();
-
-		String name=null;
-		if(!global)
-		{
-			Buffer buffer = defaultView.getSourceBuffer();
-			Object event=null;
-			if(buffer != null)
-			{
-				event = buffer.get(0);
-			}
-			name=resolveName(event);
-		}
-
-		SourceIdentifier si = eventSource.getSourceIdentifier();
-
-		Class clazz = container.getWrappedClass();
-		String title;
-		if(clazz == LoggingEvent.class)
-		{
-			title = getLoggingSourceTitle(si, name);
-		}
-		else
-		{
-			title = getAccessSourceTitle(si, name);
-		}
-		return title;
-	}
-
-	private static String resolveName(Object eventWrapperObj)
-	{
-		String name;
-		String appId=null;
-		if(eventWrapperObj instanceof EventWrapper)
-		{
-			EventWrapper wrapper= (EventWrapper) eventWrapperObj;
-			Serializable evtObject = wrapper.getEvent();
-			LoggerContext context = null;
-			if(evtObject instanceof LoggingEvent)
-			{
-				context = ((LoggingEvent) evtObject).getLoggerContext();
-			}
-			else if(evtObject instanceof AccessEvent)
-			{
-				context = ((AccessEvent) evtObject).getLoggerContext();
-			}
-			if(context != null)
-			{
-				name=context.getName();
-				if("default".equals(name) || "".equals(name))
-				{
-					name = null;
-				}
-				Map<String, String> props = context.getProperties();
-				if(props!= null)
-				{
-					appId=props.get(LoggerContext.APPLICATION_IDENTIFIER_PROPERTY_NAME);
-				}
-
-				if(name != null)
-				{
-					if(appId == null || name.equals(appId))
-					{
-						return name;
-					}
-					return name+"/"+appId;
-				}
-				return appId;
-			}
-		}
-		return null;
+		return ViewActions.resolveSourceTitle(container, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
 	}
 
 	public static void openUrl(URL url)
@@ -3438,9 +3343,18 @@ public class MainFrame
 		systemClipboard.setContents(transferableText, null);
 	}
 
-	public class EventSourceComparator<T extends Serializable>
+	private static class EventSourceComparator<T extends Serializable>
 		implements Comparator<EventSource<T>>
 	{
+		private final Map<String, String> sourceNames;
+		private final boolean showingPrimaryIdentifier;
+
+		public EventSourceComparator(Map<String, String> sourceNames, boolean showingPrimaryIdentifier)
+		{
+			this.sourceNames = sourceNames;
+			this.showingPrimaryIdentifier = showingPrimaryIdentifier;
+		}
+
 		public int compare(EventSource<T> o1, EventSource<T> o2)
 		{
 			if(o1 == o2)
@@ -3470,8 +3384,8 @@ public class MainFrame
 				return 1;
 			}
 
-			String primary1 = getPrimarySourceTitle(si1);
-			String primary2 = getPrimarySourceTitle(si2);
+			String primary1 = ViewActions.getPrimarySourceTitle(si1.getIdentifier(), sourceNames, showingPrimaryIdentifier);
+			String primary2 = ViewActions.getPrimarySourceTitle(si2.getIdentifier(), sourceNames, showingPrimaryIdentifier);
 			if(primary1 != null && primary2 != null)
 			{
 				int compare = primary1.compareTo(primary2);

@@ -20,8 +20,9 @@ package de.huxhorn.lilith.services.sender;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.impl.sourceproducer.SerializingMessageBasedServerSocketEventSourceProducer;
+import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
-
+import de.huxhorn.lilith.swing.ViewActions;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,11 +209,25 @@ public class SenderService
 		}
 
 		SortedMap<String, EventSender<T>> result = new TreeMap<>();
+		if(serviceNameSenderMapping.isEmpty())
+		{
+			return result;
+		}
+
+		ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+		Map<String, String> sourceNames = null;
+		boolean showingPrimaryIdentifier = false;
+		if(applicationPreferences != null)
+		{
+			sourceNames = applicationPreferences.getSourceNames();
+			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+		}
+
 		for(Map.Entry<String, EventSender<T>> current : serviceNameSenderMapping.entrySet())
 		{
 			EventSender<T> value = current.getValue();
 			String hostName = value.getHostAddress();
-			hostName = mainFrame.getPrimarySourceTitle(hostName);
+			hostName = ViewActions.getPrimarySourceTitle(hostName, sourceNames, showingPrimaryIdentifier);
 			EventSender<T> prevValue = result.get(hostName);
 			if(prevValue == null)
 			{

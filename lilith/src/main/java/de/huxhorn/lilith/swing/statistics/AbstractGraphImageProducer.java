@@ -19,7 +19,9 @@ package de.huxhorn.lilith.swing.statistics;
 
 import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.lilith.swing.ViewActions;
 
 import org.rrd4j.graph.RrdGraph;
 import org.rrd4j.graph.RrdGraphDef;
@@ -32,6 +34,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Map;
 
 public abstract class AbstractGraphImageProducer
 	implements GraphImageProducer
@@ -57,8 +60,17 @@ public abstract class AbstractGraphImageProducer
 
 	protected String createGraphTitle(SourceIdentifier sourceIdentifier)
 	{
-		return mainFrame.getPrimarySourceTitle(sourceIdentifier) + " @ "
-				+ DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.now());
+		ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+		Map<String, String> sourceNames = null;
+		boolean showingPrimaryIdentifier = false;
+		if(applicationPreferences != null)
+		{
+			sourceNames = applicationPreferences.getSourceNames();
+			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+		}
+		String title = ViewActions.getPrimarySourceTitle(sourceIdentifier.getIdentifier(), sourceNames, showingPrimaryIdentifier);
+
+		return title + " @ " + DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.now());
 	}
 
 	public BufferedImage createGraphImage(long nowInSeconds, SourceIdentifier sourceIdentifier, BufferedImage result, boolean showMax)

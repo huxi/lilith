@@ -23,6 +23,7 @@ import de.huxhorn.lilith.swing.statistics.StatisticsPanel;
 import javax.swing.JDialog;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 public class StatisticsDialog
 	extends JDialog
@@ -78,7 +79,17 @@ public class StatisticsDialog
 				if(newValue instanceof SourceIdentifier)
 				{
 					SourceIdentifier sourceIdentifier = (SourceIdentifier) newValue;
-					setTitle("Statistics for '" + mainFrame.getPrimarySourceTitle(sourceIdentifier) + "'...");
+
+					ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+					Map<String, String> sourceNames = null;
+					boolean showingPrimaryIdentifier = false;
+					if(applicationPreferences != null)
+					{
+						sourceNames = applicationPreferences.getSourceNames();
+						showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+					}
+					String title = ViewActions.getPrimarySourceTitle(sourceIdentifier.getIdentifier(), sourceNames, showingPrimaryIdentifier);
+					setTitle("Statistics for '" + title + "'...");
 				}
 			}
 		}

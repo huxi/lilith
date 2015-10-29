@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -43,6 +44,7 @@ import de.huxhorn.lilith.swing.actions.AbstractFilterAction;
 import de.huxhorn.lilith.swing.menu.ExcludeMenu;
 import de.huxhorn.lilith.swing.menu.FocusMenu;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
+import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -2404,12 +2406,13 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 6967472316665780683L;
 
-		private EventSource<LoggingEvent> eventSource;
+		private final EventSource<LoggingEvent> eventSource;
 
-		public ViewLoggingAction(ViewContainer<LoggingEvent> container)
+		public ViewLoggingAction(String title, String tooltipText, EventSource<LoggingEvent> eventSource)
 		{
-			super(mainFrame.resolveSourceTitle(container));
-			this.eventSource = container.getEventSource();
+			super(title);
+			this.eventSource = eventSource;
+			putValue(Action.SHORT_DESCRIPTION, tooltipText);
 			if(eventSource.isGlobal())
 			{
 				KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.VIEW_GLOBAL_CLASSIC_LOGS_ACTION);
@@ -2439,12 +2442,14 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 8054851261518410946L;
 
-		private EventSource<AccessEvent> eventSource;
+		private final EventSource<AccessEvent> eventSource;
 
-		public ViewAccessAction(ViewContainer<AccessEvent> container)
+		public ViewAccessAction(String title, String tooltipText, EventSource<AccessEvent> eventSource)
 		{
-			super(mainFrame.resolveSourceTitle(container));
-			this.eventSource = container.getEventSource();
+			super(title);
+			this.eventSource = eventSource;
+			putValue(Action.SHORT_DESCRIPTION, tooltipText);
+
 			if(eventSource.isGlobal())
 			{
 				KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.VIEW_GLOBAL_ACCESS_LOGS_ACTION);
@@ -2457,6 +2462,133 @@ public class ViewActions
 			mainFrame.showAccessView(eventSource);
 		}
 
+	}
+
+	public static String resolveSourceTitle(ViewContainer container, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier, boolean appendType)
+	{
+		EventWrapperViewPanel defaultView = container.getDefaultView();
+		EventSource eventSource = defaultView.getEventSource();
+		boolean global=eventSource.isGlobal();
+
+		String name=null;
+		if(!global)
+		{
+			Buffer buffer = defaultView.getSourceBuffer();
+			Object event=null;
+			if(buffer != null)
+			{
+				event = buffer.get(0);
+			}
+			name=resolveName(event);
+		}
+
+		SourceIdentifier si = eventSource.getSourceIdentifier();
+		String title = resolveSourceTitle(si, name, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
+
+		if(appendType)
+		{
+			Class clazz = container.getWrappedClass();
+			if (clazz == LoggingEvent.class)
+			{
+				title = title + " (Logging)";
+			}
+			else if (clazz == AccessEvent.class)
+			{
+				title = title + " (Access)";
+			}
+		}
+
+		return title;
+	}
+
+	public static String resolveSourceTitle(SourceIdentifier identifier, String name, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
+	{
+		String primary = getPrimarySourceTitle(identifier.getIdentifier(), sourceNames, showingPrimaryIdentifier);
+		String secondary = identifier.getSecondaryIdentifier();
+		if(secondary == null || !showingSecondaryIdentifier || secondary.equals(primary))
+		{
+			if(name == null)
+			{
+				return primary;
+			}
+			return primary + " - " + name;
+		}
+
+		if(name == null)
+		{
+			return primary + " - " + secondary;
+		}
+		return primary + " - " +name + " - " + secondary;
+	}
+
+	private static String resolveName(Object eventWrapperObj)
+	{
+		String name;
+		String appId=null;
+		if(eventWrapperObj instanceof EventWrapper)
+		{
+			EventWrapper wrapper= (EventWrapper) eventWrapperObj;
+			Serializable evtObject = wrapper.getEvent();
+			LoggerContext context = null;
+			if(evtObject instanceof LoggingEvent)
+			{
+				context = ((LoggingEvent) evtObject).getLoggerContext();
+			}
+			else if(evtObject instanceof AccessEvent)
+			{
+				context = ((AccessEvent) evtObject).getLoggerContext();
+			}
+			if(context != null)
+			{
+				name=context.getName();
+				if("default".equals(name) || "".equals(name))
+				{
+					name = null;
+				}
+				Map<String, String> props = context.getProperties();
+				if(props!= null)
+				{
+					appId=props.get(LoggerContext.APPLICATION_IDENTIFIER_PROPERTY_NAME);
+				}
+
+				if(name != null)
+				{
+					if(appId == null || name.equals(appId))
+					{
+						return name;
+					}
+					return name+"/"+appId;
+				}
+				return appId;
+			}
+		}
+		return null;
+	}
+
+	public static String getPrimarySourceTitle(String primaryIdentifier, Map<String, String> sourceNames, boolean showingPrimaryIdentifier)
+	{
+		if(primaryIdentifier == null)
+		{
+			return null;
+		}
+
+		String resolvedName = null;
+		if(sourceNames != null)
+		{
+			resolvedName = sourceNames.get(primaryIdentifier);
+		}
+		if(resolvedName != null && !resolvedName.equals(primaryIdentifier))
+		{
+			if(showingPrimaryIdentifier)
+			{
+				return resolvedName + " [" + primaryIdentifier + "]";
+			}
+			else
+			{
+				return resolvedName;
+			}
+		}
+		return primaryIdentifier;
 	}
 
 	class ViewStatisticsAction
@@ -2492,6 +2624,17 @@ public class ViewActions
 		{
 			// remove loggingViews that were closed in the meantime...
 			mainFrame.removeInactiveViews(true, false);
+
+			final ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+			Map<String, String> sourceNames = null;
+			boolean showingPrimaryIdentifier = false;
+			boolean showingSecondaryIdentifier = false;
+			if(applicationPreferences != null)
+			{
+				sourceNames = applicationPreferences.getSourceNames();
+				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+				showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
+			}
 			if(logger.isDebugEnabled()) logger.debug("Updating Views-Menu.");
 
 			windowMenu.removeAll();
@@ -2535,7 +2678,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JMenuItem menuItem = createLoggingMenuItem(key, value);
+					JMenuItem menuItem = createLoggingMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 					windowMenu.add(menuItem);
 				}
 			}
@@ -2558,7 +2701,7 @@ public class ViewActions
 							first = false;
 							windowMenu.addSeparator();
 						}
-						JMenuItem menuItem = createLoggingMenuItem(key, value);
+						JMenuItem menuItem = createLoggingMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 						windowMenu.add(menuItem);
 					}
 				}
@@ -2579,7 +2722,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JMenuItem menuItem = createAccessMenuItem(key, value);
+					JMenuItem menuItem = createAccessMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 					windowMenu.add(menuItem);
 				}
 			}
@@ -2601,7 +2744,7 @@ public class ViewActions
 							first = false;
 							windowMenu.addSeparator();
 						}
-						JMenuItem menuItem = createLoggingMenuItem(key, value);
+						JMenuItem menuItem = createLoggingMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 						windowMenu.add(menuItem);
 						activeCounter++;
 					}
@@ -2623,7 +2766,7 @@ public class ViewActions
 							first = false;
 							windowMenu.addSeparator();
 						}
-						JMenuItem menuItem = createLoggingMenuItem(key, value);
+						JMenuItem menuItem = createLoggingMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 						windowMenu.add(menuItem);
 						inactiveCounter++;
 					}
@@ -2644,7 +2787,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JMenuItem menuItem = createAccessMenuItem(key, value);
+					JMenuItem menuItem = createAccessMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 					windowMenu.add(menuItem);
 					activeCounter++;
 				}
@@ -2662,7 +2805,7 @@ public class ViewActions
 						first = false;
 						windowMenu.addSeparator();
 					}
-					JMenuItem menuItem = createAccessMenuItem(key, value);
+					JMenuItem menuItem = createAccessMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 					windowMenu.add(menuItem);
 					inactiveCounter++;
 				}
@@ -2697,12 +2840,14 @@ public class ViewActions
 			}
 		}
 
-
-		private JMenuItem createLoggingMenuItem(EventSource<LoggingEvent> key, ViewContainer<LoggingEvent> viewContainer)
+		private JMenuItem createLoggingMenuItem(ViewContainer<LoggingEvent> viewContainer, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
 		{
-			JMenuItem result = new JMenuItem(new ViewLoggingAction(viewContainer));
+			EventSource<LoggingEvent> eventSource = viewContainer.getEventSource();
+			String title=resolveSourceTitle(viewContainer, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
+			String tooltipText=resolveSourceTitle(viewContainer, sourceNames, true, true, true);
+			JMenuItem result = new JMenuItem(new ViewLoggingAction(title, tooltipText, eventSource));
 			Container compParent = viewContainer.getParent();
-			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
+			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", eventSource.getSourceIdentifier(), compParent);
 
 			boolean disabled = false;
 			if(compParent == null)
@@ -2714,11 +2859,14 @@ public class ViewActions
 			return result;
 		}
 
-		private JMenuItem createAccessMenuItem(EventSource<AccessEvent> key, ViewContainer<AccessEvent> viewContainer)
+		private JMenuItem createAccessMenuItem(ViewContainer<AccessEvent> viewContainer, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
 		{
-			JMenuItem result = new JMenuItem(new ViewAccessAction(viewContainer));
+			EventSource<AccessEvent> eventSource = viewContainer.getEventSource();
+			String title=resolveSourceTitle(viewContainer, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
+			String tooltipText=resolveSourceTitle(viewContainer, sourceNames, true, true, true);
+			JMenuItem result = new JMenuItem(new ViewAccessAction(title, tooltipText, eventSource));
 			Container compParent = viewContainer.getParent();
-			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", key.getSourceIdentifier(), compParent);
+			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", eventSource.getSourceIdentifier(), compParent);
 
 			boolean disabled = false;
 			if(compParent == null)

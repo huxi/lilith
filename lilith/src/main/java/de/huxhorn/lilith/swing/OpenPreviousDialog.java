@@ -283,10 +283,18 @@ public class OpenPreviousDialog
 		public void initUI()
 		{
 			List<SourceIdentifier> inactives = mainFrame.collectInactiveLogs(fileFactory);
+			ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+			Map<String, String> sourceNames = null;
+			boolean showingPrimaryIdentifier = false;
+			if(applicationPreferences != null)
+			{
+				sourceNames = applicationPreferences.getSourceNames();
+				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+			}
 			SortedMap<String, List<SourceIdentifier>> inactiveMap = new TreeMap<>();
 			for(SourceIdentifier current : inactives)
 			{
-				String primary = mainFrame.getPrimarySourceTitle(current);
+				String primary = ViewActions.getPrimarySourceTitle(current.getIdentifier(), sourceNames, showingPrimaryIdentifier);
 				List<SourceIdentifier> sourceList = inactiveMap.get(primary);
 				if(sourceList == null)
 				{
@@ -338,8 +346,16 @@ public class OpenPreviousDialog
 				return "";
 			}
 
+			ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+			Map<String, String> sourceNames = null;
+			boolean showingPrimaryIdentifier = false;
+			if(applicationPreferences != null)
+			{
+				sourceNames = applicationPreferences.getSourceNames();
+				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+			}
 			StringBuilder result = new StringBuilder();
-			result.append(mainFrame.getPrimarySourceTitle(selectedSource));
+			result.append(ViewActions.getPrimarySourceTitle(selectedSource.getIdentifier(), sourceNames, showingPrimaryIdentifier));
 			String secondary = selectedSource.getSecondaryIdentifier();
 			if(secondary != null)
 			{
