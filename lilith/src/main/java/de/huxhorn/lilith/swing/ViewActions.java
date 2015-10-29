@@ -547,8 +547,6 @@ public class ViewActions
 				this.viewContainer.addChangeListener(containerChangeListener);
 				this.viewContainer.addPropertyChangeListener(containerPropertyChangeListener);
 
-				//EventWrapperViewPanel zview = viewContainer.getSelectedView();
-
 				setEventWrapper(this.viewContainer.getSelectedEvent());
 			}
 			updateActions();
@@ -826,13 +824,6 @@ public class ViewActions
 		}
 		focusTable();
 	}
-
-/*
-	public void requestMenuBarFocus()
-	{
-		menubar.getComponent().requestFocusInWindow();
-	}
-*/
 
 	private void disconnect()
 	{
@@ -3401,15 +3392,7 @@ public class ViewActions
 				Toolkit toolkit = Toolkit.getDefaultToolkit();
 				clipboard = toolkit.getSystemClipboard();
 			}
-			catch(AWTError ex)
-			{
-				enable = false;
-			}
-			catch(HeadlessException ex)
-			{
-				enable = false;
-			}
-			catch(SecurityException ex)
+			catch(AWTError | HeadlessException | SecurityException ex)
 			{
 				enable = false;
 			}
@@ -3461,10 +3444,10 @@ public class ViewActions
 			if(logger.isDebugEnabled()) logger.debug("Line from clipboard: {}", text);
 			if(text != null)
 			{
-				ExtendedStackTraceElement xste = ExtendedStackTraceElement.parseStackTraceElement(text);
-				if(xste != null)
+				ExtendedStackTraceElement extendedStackTraceElement = ExtendedStackTraceElement.parseStackTraceElement(text);
+				if(extendedStackTraceElement != null)
 				{
-					StackTraceElement ste = xste.getStackTraceElement();
+					StackTraceElement ste = extendedStackTraceElement.getStackTraceElement();
 					if(logger.isDebugEnabled()) logger.debug("Parsed StackTraceElement: {}", ste);
 					mainFrame.goToSource(ste);
 				}

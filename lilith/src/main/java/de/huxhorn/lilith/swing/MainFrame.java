@@ -1744,7 +1744,7 @@ public class MainFrame
 				return;
 			}
 			MetaData metaData = header.getMetaData();
-			if(metaData == null || metaData.getData() == null)
+			if(metaData == null /*|| metaData.getData() == null*/)
 			{
 				if(logger.isWarnEnabled())
 				{
@@ -2675,7 +2675,7 @@ public class MainFrame
 	 * Initial scroll to bottom must be executed slightly after making it visible so
 	 * it's using invokeLater, now.
 	 *
-	 * @param window the window that should scrollt to bottom is configured that way.
+	 * @param window the window that should scroll to bottom is configured that way.
 	 */
 	private void executeScrollToBottom(ViewWindow window)
 	{
