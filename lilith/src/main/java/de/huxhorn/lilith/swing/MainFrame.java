@@ -2457,7 +2457,7 @@ public class MainFrame
 		String resolvedName = sourceNames.get(primary);
 		if(resolvedName != null && !resolvedName.equals(primary))
 		{
-			if(applicationPreferences.isShowingIdentifier())
+			if(applicationPreferences.isShowingPrimaryIdentifier())
 			{
 				return resolvedName + " [" + primary + "]";
 			}
@@ -2952,7 +2952,8 @@ public class MainFrame
 			}
 
 			if(ApplicationPreferences.SOURCE_NAMES_PROPERTY.equals(propName)
-				|| ApplicationPreferences.SHOWING_IDENTIFIER_PROPERTY.equals(propName))
+				|| ApplicationPreferences.SHOWING_PRIMARY_IDENTIFIER_PROPERTY.equals(propName)
+				|| ApplicationPreferences.SHOWING_SECONDARY_IDENTIFIER_PROPERTY.equals(propName))
 			{
 				updateSourceTitles();
 				return;

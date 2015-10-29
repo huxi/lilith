@@ -124,7 +124,8 @@ public class LilithPreferencesStreamingEncoder
 		prefs.setScrollingToBottom(p.isScrollingToBottom());
 		prefs.setShowingFullCallstack(p.isShowingFullCallstack());
 		prefs.setShowingFullRecentPath(p.isShowingFullRecentPath());
-		prefs.setShowingIdentifier(p.isShowingIdentifier());
+		prefs.setShowingPrimaryIdentifier(p.isShowingPrimaryIdentifier());
+		prefs.setShowingSecondaryIdentifier(p.isShowingSecondaryIdentifier());
 		prefs.setShowingStatusbar(p.isShowingStatusbar());
 		prefs.setShowingStacktrace(p.isShowingStackTrace());
 		prefs.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());

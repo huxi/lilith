@@ -111,7 +111,8 @@ public class ApplicationPreferences
 	public static final String COLORING_WHOLE_ROW_PROPERTY = "coloringWholeRow";
 	public static final String SHOWING_TOOLBAR_PROPERTY = "showingToolbar";
 	public static final String SHOWING_STATUSBAR_PROPERTY = "showingStatusbar";
-	public static final String SHOWING_IDENTIFIER_PROPERTY = "showingIdentifier";
+	public static final String SHOWING_PRIMARY_IDENTIFIER_PROPERTY = "showingPrimaryIdentifier";
+	public static final String SHOWING_SECONDARY_IDENTIFIER_PROPERTY = "showingSecondaryIdentifier";
 	public static final String SHOWING_FULL_CALLSTACK_PROPERTY = "showingFullCallstack";
 	public static final String USING_WRAPPED_EXCEPTION_STYLE_PROPERTY = "usingWrappedExceptionStyle";
 	public static final String SHOWING_STACKTRACE_PROPERTY = "showingStackTrace";
@@ -1945,17 +1946,30 @@ public class ApplicationPreferences
 	}
 
 
-	public void setShowingIdentifier(boolean showingIdentifierWithName)
+	public void setShowingPrimaryIdentifier(boolean showingPrimaryIdentifier)
 	{
-		Object oldValue = isShowingIdentifier();
-		PREFERENCES.putBoolean(SHOWING_IDENTIFIER_PROPERTY, showingIdentifierWithName);
-		Object newValue = isShowingIdentifier();
-		propertyChangeSupport.firePropertyChange(SHOWING_IDENTIFIER_PROPERTY, oldValue, newValue);
+		Object oldValue = isShowingPrimaryIdentifier();
+		PREFERENCES.putBoolean(SHOWING_PRIMARY_IDENTIFIER_PROPERTY, showingPrimaryIdentifier);
+		Object newValue = isShowingPrimaryIdentifier();
+		propertyChangeSupport.firePropertyChange(SHOWING_PRIMARY_IDENTIFIER_PROPERTY, oldValue, newValue);
 	}
 
-	public boolean isShowingIdentifier()
+	public boolean isShowingPrimaryIdentifier()
 	{
-		return PREFERENCES.getBoolean(SHOWING_IDENTIFIER_PROPERTY, DEFAULT_VALUES.isShowingIdentifier());
+		return PREFERENCES.getBoolean(SHOWING_PRIMARY_IDENTIFIER_PROPERTY, DEFAULT_VALUES.isShowingPrimaryIdentifier());
+	}
+
+	public void setShowingSecondaryIdentifier(boolean showingSecondaryIdentifier)
+	{
+		Object oldValue = isShowingSecondaryIdentifier();
+		PREFERENCES.putBoolean(SHOWING_SECONDARY_IDENTIFIER_PROPERTY, showingSecondaryIdentifier);
+		Object newValue = isShowingSecondaryIdentifier();
+		propertyChangeSupport.firePropertyChange(SHOWING_SECONDARY_IDENTIFIER_PROPERTY, oldValue, newValue);
+	}
+
+	public boolean isShowingSecondaryIdentifier()
+	{
+		return PREFERENCES.getBoolean(SHOWING_SECONDARY_IDENTIFIER_PROPERTY, DEFAULT_VALUES.isShowingPrimaryIdentifier());
 	}
 
 	public void setSplashScreenDisabled(boolean splashScreenDisabled)

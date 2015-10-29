@@ -233,7 +233,8 @@ public class ImportExportCommand
 		p.setShowingFullCallstack(prefs.isShowingFullCallstack());
 		p.setUsingWrappedExceptionStyle(prefs.isUsingWrappedExceptionStyle());
 		p.setShowingFullRecentPath(prefs.isShowingFullRecentPath());
-		p.setShowingIdentifier(prefs.isShowingIdentifier());
+		p.setShowingPrimaryIdentifier(prefs.isShowingPrimaryIdentifier());
+		p.setShowingSecondaryIdentifier(prefs.isShowingSecondaryIdentifier());
 		p.setShowingStatusbar(prefs.isShowingStatusBar());
 		p.setShowingStackTrace(prefs.isShowingStackTrace());
 		p.setShowingTipOfTheDay(prefs.isShowingTipOfTheDay());
@@ -287,7 +288,8 @@ public class ImportExportCommand
 		prefs.setShowingFullCallstack(p.isShowingFullCallstack());
 		prefs.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());
 		prefs.setShowingFullRecentPath(p.isShowingFullRecentPath());
-		prefs.setShowingIdentifier(p.isShowingIdentifier());
+		prefs.setShowingPrimaryIdentifier(p.isShowingPrimaryIdentifier());
+		prefs.setShowingSecondaryIdentifier(p.isShowingSecondaryIdentifier());
 		prefs.setShowingStatusBar(p.isShowingStatusbar());
 		prefs.setShowingStackTrace(p.isShowingStackTrace());
 		prefs.setShowingTipOfTheDay(p.isShowingTipOfTheDay());

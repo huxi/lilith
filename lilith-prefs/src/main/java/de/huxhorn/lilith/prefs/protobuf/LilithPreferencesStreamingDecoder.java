@@ -175,9 +175,13 @@ public class LilithPreferencesStreamingDecoder
 		{
 			prefs.setShowingFullRecentPath(p.getShowingFullRecentPath());
 		}
-		if(p.hasShowingIdentifier())
+		if(p.hasShowingPrimaryIdentifier())
 		{
-			prefs.setShowingIdentifier(p.getShowingIdentifier());
+			prefs.setShowingPrimaryIdentifier(p.getShowingPrimaryIdentifier());
+		}
+		if(p.hasShowingSecondaryIdentifier())
+		{
+			prefs.setShowingSecondaryIdentifier(p.getShowingSecondaryIdentifier());
 		}
 		if(p.hasShowingStatusbar())
 		{

@@ -310,20 +310,19 @@ public final class PrefsProto {
     boolean getShowingFullCallstack();
 
     /**
-     * <code>optional bool showing_identifier = 21;</code>
-     */
-    boolean hasShowingIdentifier();
-    /**
-     * <code>optional bool showing_identifier = 21;</code>
-     */
-    boolean getShowingIdentifier();
-
-    /**
      * <code>optional bool showing_statusbar = 22;</code>
+     *
+     * <pre>
+     *	optional bool              showing_identifier            = 21;
+     * </pre>
      */
     boolean hasShowingStatusbar();
     /**
      * <code>optional bool showing_statusbar = 22;</code>
+     *
+     * <pre>
+     *	optional bool              showing_identifier            = 21;
+     * </pre>
      */
     boolean getShowingStatusbar();
 
@@ -452,6 +451,24 @@ public final class PrefsProto {
      * <code>optional bool using_wrapped_exception_style = 35;</code>
      */
     boolean getUsingWrappedExceptionStyle();
+
+    /**
+     * <code>optional bool showing_primary_identifier = 36;</code>
+     */
+    boolean hasShowingPrimaryIdentifier();
+    /**
+     * <code>optional bool showing_primary_identifier = 36;</code>
+     */
+    boolean getShowingPrimaryIdentifier();
+
+    /**
+     * <code>optional bool showing_secondary_identifier = 37;</code>
+     */
+    boolean hasShowingSecondaryIdentifier();
+    /**
+     * <code>optional bool showing_secondary_identifier = 37;</code>
+     */
+    boolean getShowingSecondaryIdentifier();
   }
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.LilithPreferences}
@@ -628,38 +645,33 @@ public final class PrefsProto {
               showingFullCallstack_ = input.readBool();
               break;
             }
-            case 168: {
-              bitField0_ |= 0x00080000;
-              showingIdentifier_ = input.readBool();
-              break;
-            }
             case 176: {
-              bitField0_ |= 0x00100000;
+              bitField0_ |= 0x00080000;
               showingStatusbar_ = input.readBool();
               break;
             }
             case 184: {
-              bitField0_ |= 0x00200000;
+              bitField0_ |= 0x00100000;
               showingStacktrace_ = input.readBool();
               break;
             }
             case 192: {
-              bitField0_ |= 0x00400000;
+              bitField0_ |= 0x00200000;
               showingTipOfTheDay_ = input.readBool();
               break;
             }
             case 200: {
-              bitField0_ |= 0x00800000;
+              bitField0_ |= 0x00400000;
               showingToolbar_ = input.readBool();
               break;
             }
             case 208: {
-              bitField0_ |= 0x01000000;
+              bitField0_ |= 0x00800000;
               splashScreenDisabled_ = input.readBool();
               break;
             }
             case 216: {
-              bitField0_ |= 0x02000000;
+              bitField0_ |= 0x01000000;
               usingInternalFrames_ = input.readBool();
               break;
             }
@@ -669,25 +681,25 @@ public final class PrefsProto {
               if (value == null) {
                 unknownFields.mergeVarintField(28, rawValue);
               } else {
-                bitField0_ |= 0x04000000;
+                bitField0_ |= 0x02000000;
                 sourceFiltering_ = value;
               }
               break;
             }
             case 234: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x08000000;
+              bitField0_ |= 0x04000000;
               defaultConditionName_ = bs;
               break;
             }
             case 240: {
-              bitField0_ |= 0x10000000;
+              bitField0_ |= 0x08000000;
               checkingForSnapshot_ = input.readBool();
               break;
             }
             case 250: {
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder subBuilder = null;
-              if (((bitField0_ & 0x20000000) == 0x20000000)) {
+              if (((bitField0_ & 0x10000000) == 0x10000000)) {
                 subBuilder = groovyClipboardFormatters_.toBuilder();
               }
               groovyClipboardFormatters_ = input.readMessage(de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.PARSER, extensionRegistry);
@@ -695,27 +707,37 @@ public final class PrefsProto {
                 subBuilder.mergeFrom(groovyClipboardFormatters_);
                 groovyClipboardFormatters_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x20000000;
+              bitField0_ |= 0x10000000;
               break;
             }
             case 256: {
-              bitField0_ |= 0x40000000;
+              bitField0_ |= 0x20000000;
               trayActive_ = input.readBool();
               break;
             }
             case 264: {
-              bitField0_ |= 0x80000000;
+              bitField0_ |= 0x40000000;
               showingFullRecentPath_ = input.readBool();
               break;
             }
             case 272: {
-              bitField1_ |= 0x00000001;
+              bitField0_ |= 0x80000000;
               hidingOnClose_ = input.readBool();
               break;
             }
             case 280: {
-              bitField1_ |= 0x00000002;
+              bitField1_ |= 0x00000001;
               usingWrappedExceptionStyle_ = input.readBool();
+              break;
+            }
+            case 288: {
+              bitField1_ |= 0x00000002;
+              showingPrimaryIdentifier_ = input.readBool();
+              break;
+            }
+            case 296: {
+              bitField1_ |= 0x00000004;
+              showingSecondaryIdentifier_ = input.readBool();
               break;
             }
           }
@@ -1151,31 +1173,24 @@ public final class PrefsProto {
       return showingFullCallstack_;
     }
 
-    public static final int SHOWING_IDENTIFIER_FIELD_NUMBER = 21;
-    private boolean showingIdentifier_;
-    /**
-     * <code>optional bool showing_identifier = 21;</code>
-     */
-    public boolean hasShowingIdentifier() {
-      return ((bitField0_ & 0x00080000) == 0x00080000);
-    }
-    /**
-     * <code>optional bool showing_identifier = 21;</code>
-     */
-    public boolean getShowingIdentifier() {
-      return showingIdentifier_;
-    }
-
     public static final int SHOWING_STATUSBAR_FIELD_NUMBER = 22;
     private boolean showingStatusbar_;
     /**
      * <code>optional bool showing_statusbar = 22;</code>
+     *
+     * <pre>
+     *	optional bool              showing_identifier            = 21;
+     * </pre>
      */
     public boolean hasShowingStatusbar() {
-      return ((bitField0_ & 0x00100000) == 0x00100000);
+      return ((bitField0_ & 0x00080000) == 0x00080000);
     }
     /**
      * <code>optional bool showing_statusbar = 22;</code>
+     *
+     * <pre>
+     *	optional bool              showing_identifier            = 21;
+     * </pre>
      */
     public boolean getShowingStatusbar() {
       return showingStatusbar_;
@@ -1187,7 +1202,7 @@ public final class PrefsProto {
      * <code>optional bool showing_stacktrace = 23;</code>
      */
     public boolean hasShowingStacktrace() {
-      return ((bitField0_ & 0x00200000) == 0x00200000);
+      return ((bitField0_ & 0x00100000) == 0x00100000);
     }
     /**
      * <code>optional bool showing_stacktrace = 23;</code>
@@ -1202,7 +1217,7 @@ public final class PrefsProto {
      * <code>optional bool showing_tip_of_the_day = 24;</code>
      */
     public boolean hasShowingTipOfTheDay() {
-      return ((bitField0_ & 0x00400000) == 0x00400000);
+      return ((bitField0_ & 0x00200000) == 0x00200000);
     }
     /**
      * <code>optional bool showing_tip_of_the_day = 24;</code>
@@ -1217,7 +1232,7 @@ public final class PrefsProto {
      * <code>optional bool showing_toolbar = 25;</code>
      */
     public boolean hasShowingToolbar() {
-      return ((bitField0_ & 0x00800000) == 0x00800000);
+      return ((bitField0_ & 0x00400000) == 0x00400000);
     }
     /**
      * <code>optional bool showing_toolbar = 25;</code>
@@ -1232,7 +1247,7 @@ public final class PrefsProto {
      * <code>optional bool splash_screen_disabled = 26;</code>
      */
     public boolean hasSplashScreenDisabled() {
-      return ((bitField0_ & 0x01000000) == 0x01000000);
+      return ((bitField0_ & 0x00800000) == 0x00800000);
     }
     /**
      * <code>optional bool splash_screen_disabled = 26;</code>
@@ -1247,7 +1262,7 @@ public final class PrefsProto {
      * <code>optional bool using_internal_frames = 27;</code>
      */
     public boolean hasUsingInternalFrames() {
-      return ((bitField0_ & 0x02000000) == 0x02000000);
+      return ((bitField0_ & 0x01000000) == 0x01000000);
     }
     /**
      * <code>optional bool using_internal_frames = 27;</code>
@@ -1262,7 +1277,7 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
      */
     public boolean hasSourceFiltering() {
-      return ((bitField0_ & 0x04000000) == 0x04000000);
+      return ((bitField0_ & 0x02000000) == 0x02000000);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
@@ -1277,7 +1292,7 @@ public final class PrefsProto {
      * <code>optional string default_condition_name = 29;</code>
      */
     public boolean hasDefaultConditionName() {
-      return ((bitField0_ & 0x08000000) == 0x08000000);
+      return ((bitField0_ & 0x04000000) == 0x04000000);
     }
     /**
      * <code>optional string default_condition_name = 29;</code>
@@ -1319,7 +1334,7 @@ public final class PrefsProto {
      * <code>optional bool checking_for_snapshot = 30;</code>
      */
     public boolean hasCheckingForSnapshot() {
-      return ((bitField0_ & 0x10000000) == 0x10000000);
+      return ((bitField0_ & 0x08000000) == 0x08000000);
     }
     /**
      * <code>optional bool checking_for_snapshot = 30;</code>
@@ -1334,7 +1349,7 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
      */
     public boolean hasGroovyClipboardFormatters() {
-      return ((bitField0_ & 0x20000000) == 0x20000000);
+      return ((bitField0_ & 0x10000000) == 0x10000000);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
@@ -1355,7 +1370,7 @@ public final class PrefsProto {
      * <code>optional bool tray_active = 32;</code>
      */
     public boolean hasTrayActive() {
-      return ((bitField0_ & 0x40000000) == 0x40000000);
+      return ((bitField0_ & 0x20000000) == 0x20000000);
     }
     /**
      * <code>optional bool tray_active = 32;</code>
@@ -1370,7 +1385,7 @@ public final class PrefsProto {
      * <code>optional bool showing_full_recent_path = 33;</code>
      */
     public boolean hasShowingFullRecentPath() {
-      return ((bitField0_ & 0x80000000) == 0x80000000);
+      return ((bitField0_ & 0x40000000) == 0x40000000);
     }
     /**
      * <code>optional bool showing_full_recent_path = 33;</code>
@@ -1385,7 +1400,7 @@ public final class PrefsProto {
      * <code>optional bool hiding_on_close = 34;</code>
      */
     public boolean hasHidingOnClose() {
-      return ((bitField1_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x80000000) == 0x80000000);
     }
     /**
      * <code>optional bool hiding_on_close = 34;</code>
@@ -1400,13 +1415,43 @@ public final class PrefsProto {
      * <code>optional bool using_wrapped_exception_style = 35;</code>
      */
     public boolean hasUsingWrappedExceptionStyle() {
-      return ((bitField1_ & 0x00000002) == 0x00000002);
+      return ((bitField1_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>optional bool using_wrapped_exception_style = 35;</code>
      */
     public boolean getUsingWrappedExceptionStyle() {
       return usingWrappedExceptionStyle_;
+    }
+
+    public static final int SHOWING_PRIMARY_IDENTIFIER_FIELD_NUMBER = 36;
+    private boolean showingPrimaryIdentifier_;
+    /**
+     * <code>optional bool showing_primary_identifier = 36;</code>
+     */
+    public boolean hasShowingPrimaryIdentifier() {
+      return ((bitField1_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional bool showing_primary_identifier = 36;</code>
+     */
+    public boolean getShowingPrimaryIdentifier() {
+      return showingPrimaryIdentifier_;
+    }
+
+    public static final int SHOWING_SECONDARY_IDENTIFIER_FIELD_NUMBER = 37;
+    private boolean showingSecondaryIdentifier_;
+    /**
+     * <code>optional bool showing_secondary_identifier = 37;</code>
+     */
+    public boolean hasShowingSecondaryIdentifier() {
+      return ((bitField1_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional bool showing_secondary_identifier = 37;</code>
+     */
+    public boolean getShowingSecondaryIdentifier() {
+      return showingSecondaryIdentifier_;
     }
 
     private void initFields() {
@@ -1429,7 +1474,6 @@ public final class PrefsProto {
       mute_ = false;
       scrollingToBottom_ = false;
       showingFullCallstack_ = false;
-      showingIdentifier_ = false;
       showingStatusbar_ = false;
       showingStacktrace_ = false;
       showingTipOfTheDay_ = false;
@@ -1444,6 +1488,8 @@ public final class PrefsProto {
       showingFullRecentPath_ = false;
       hidingOnClose_ = false;
       usingWrappedExceptionStyle_ = false;
+      showingPrimaryIdentifier_ = false;
+      showingSecondaryIdentifier_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1540,49 +1586,52 @@ public final class PrefsProto {
         output.writeBool(20, showingFullCallstack_);
       }
       if (((bitField0_ & 0x00080000) == 0x00080000)) {
-        output.writeBool(21, showingIdentifier_);
-      }
-      if (((bitField0_ & 0x00100000) == 0x00100000)) {
         output.writeBool(22, showingStatusbar_);
       }
-      if (((bitField0_ & 0x00200000) == 0x00200000)) {
+      if (((bitField0_ & 0x00100000) == 0x00100000)) {
         output.writeBool(23, showingStacktrace_);
       }
-      if (((bitField0_ & 0x00400000) == 0x00400000)) {
+      if (((bitField0_ & 0x00200000) == 0x00200000)) {
         output.writeBool(24, showingTipOfTheDay_);
       }
-      if (((bitField0_ & 0x00800000) == 0x00800000)) {
+      if (((bitField0_ & 0x00400000) == 0x00400000)) {
         output.writeBool(25, showingToolbar_);
       }
-      if (((bitField0_ & 0x01000000) == 0x01000000)) {
+      if (((bitField0_ & 0x00800000) == 0x00800000)) {
         output.writeBool(26, splashScreenDisabled_);
       }
-      if (((bitField0_ & 0x02000000) == 0x02000000)) {
+      if (((bitField0_ & 0x01000000) == 0x01000000)) {
         output.writeBool(27, usingInternalFrames_);
       }
-      if (((bitField0_ & 0x04000000) == 0x04000000)) {
+      if (((bitField0_ & 0x02000000) == 0x02000000)) {
         output.writeEnum(28, sourceFiltering_.getNumber());
       }
-      if (((bitField0_ & 0x08000000) == 0x08000000)) {
+      if (((bitField0_ & 0x04000000) == 0x04000000)) {
         output.writeBytes(29, getDefaultConditionNameBytes());
       }
-      if (((bitField0_ & 0x10000000) == 0x10000000)) {
+      if (((bitField0_ & 0x08000000) == 0x08000000)) {
         output.writeBool(30, checkingForSnapshot_);
       }
-      if (((bitField0_ & 0x20000000) == 0x20000000)) {
+      if (((bitField0_ & 0x10000000) == 0x10000000)) {
         output.writeMessage(31, groovyClipboardFormatters_);
       }
-      if (((bitField0_ & 0x40000000) == 0x40000000)) {
+      if (((bitField0_ & 0x20000000) == 0x20000000)) {
         output.writeBool(32, trayActive_);
       }
-      if (((bitField0_ & 0x80000000) == 0x80000000)) {
+      if (((bitField0_ & 0x40000000) == 0x40000000)) {
         output.writeBool(33, showingFullRecentPath_);
       }
-      if (((bitField1_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x80000000) == 0x80000000)) {
         output.writeBool(34, hidingOnClose_);
       }
-      if (((bitField1_ & 0x00000002) == 0x00000002)) {
+      if (((bitField1_ & 0x00000001) == 0x00000001)) {
         output.writeBool(35, usingWrappedExceptionStyle_);
+      }
+      if (((bitField1_ & 0x00000002) == 0x00000002)) {
+        output.writeBool(36, showingPrimaryIdentifier_);
+      }
+      if (((bitField1_ & 0x00000004) == 0x00000004)) {
+        output.writeBool(37, showingSecondaryIdentifier_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1671,63 +1720,67 @@ public final class PrefsProto {
       }
       if (((bitField0_ & 0x00080000) == 0x00080000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(21, showingIdentifier_);
+          .computeBoolSize(22, showingStatusbar_);
       }
       if (((bitField0_ & 0x00100000) == 0x00100000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(22, showingStatusbar_);
+          .computeBoolSize(23, showingStacktrace_);
       }
       if (((bitField0_ & 0x00200000) == 0x00200000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(23, showingStacktrace_);
+          .computeBoolSize(24, showingTipOfTheDay_);
       }
       if (((bitField0_ & 0x00400000) == 0x00400000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(24, showingTipOfTheDay_);
+          .computeBoolSize(25, showingToolbar_);
       }
       if (((bitField0_ & 0x00800000) == 0x00800000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(25, showingToolbar_);
+          .computeBoolSize(26, splashScreenDisabled_);
       }
       if (((bitField0_ & 0x01000000) == 0x01000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(26, splashScreenDisabled_);
+          .computeBoolSize(27, usingInternalFrames_);
       }
       if (((bitField0_ & 0x02000000) == 0x02000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(27, usingInternalFrames_);
+          .computeEnumSize(28, sourceFiltering_.getNumber());
       }
       if (((bitField0_ & 0x04000000) == 0x04000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(28, sourceFiltering_.getNumber());
+          .computeBytesSize(29, getDefaultConditionNameBytes());
       }
       if (((bitField0_ & 0x08000000) == 0x08000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(29, getDefaultConditionNameBytes());
+          .computeBoolSize(30, checkingForSnapshot_);
       }
       if (((bitField0_ & 0x10000000) == 0x10000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(30, checkingForSnapshot_);
+          .computeMessageSize(31, groovyClipboardFormatters_);
       }
       if (((bitField0_ & 0x20000000) == 0x20000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(31, groovyClipboardFormatters_);
+          .computeBoolSize(32, trayActive_);
       }
       if (((bitField0_ & 0x40000000) == 0x40000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(32, trayActive_);
+          .computeBoolSize(33, showingFullRecentPath_);
       }
       if (((bitField0_ & 0x80000000) == 0x80000000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(33, showingFullRecentPath_);
+          .computeBoolSize(34, hidingOnClose_);
       }
       if (((bitField1_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(34, hidingOnClose_);
+          .computeBoolSize(35, usingWrappedExceptionStyle_);
       }
       if (((bitField1_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(35, usingWrappedExceptionStyle_);
+          .computeBoolSize(36, showingPrimaryIdentifier_);
+      }
+      if (((bitField1_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(37, showingSecondaryIdentifier_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1900,40 +1953,42 @@ public final class PrefsProto {
         bitField0_ = (bitField0_ & ~0x00020000);
         showingFullCallstack_ = false;
         bitField0_ = (bitField0_ & ~0x00040000);
-        showingIdentifier_ = false;
-        bitField0_ = (bitField0_ & ~0x00080000);
         showingStatusbar_ = false;
-        bitField0_ = (bitField0_ & ~0x00100000);
+        bitField0_ = (bitField0_ & ~0x00080000);
         showingStacktrace_ = false;
-        bitField0_ = (bitField0_ & ~0x00200000);
+        bitField0_ = (bitField0_ & ~0x00100000);
         showingTipOfTheDay_ = false;
-        bitField0_ = (bitField0_ & ~0x00400000);
+        bitField0_ = (bitField0_ & ~0x00200000);
         showingToolbar_ = false;
-        bitField0_ = (bitField0_ & ~0x00800000);
+        bitField0_ = (bitField0_ & ~0x00400000);
         splashScreenDisabled_ = false;
-        bitField0_ = (bitField0_ & ~0x01000000);
+        bitField0_ = (bitField0_ & ~0x00800000);
         usingInternalFrames_ = false;
-        bitField0_ = (bitField0_ & ~0x02000000);
+        bitField0_ = (bitField0_ & ~0x01000000);
         sourceFiltering_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering.NONE;
-        bitField0_ = (bitField0_ & ~0x04000000);
+        bitField0_ = (bitField0_ & ~0x02000000);
         defaultConditionName_ = "";
-        bitField0_ = (bitField0_ & ~0x08000000);
+        bitField0_ = (bitField0_ & ~0x04000000);
         checkingForSnapshot_ = false;
-        bitField0_ = (bitField0_ & ~0x10000000);
+        bitField0_ = (bitField0_ & ~0x08000000);
         if (groovyClipboardFormattersBuilder_ == null) {
           groovyClipboardFormatters_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance();
         } else {
           groovyClipboardFormattersBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x20000000);
+        bitField0_ = (bitField0_ & ~0x10000000);
         trayActive_ = false;
-        bitField0_ = (bitField0_ & ~0x40000000);
+        bitField0_ = (bitField0_ & ~0x20000000);
         showingFullRecentPath_ = false;
-        bitField0_ = (bitField0_ & ~0x80000000);
+        bitField0_ = (bitField0_ & ~0x40000000);
         hidingOnClose_ = false;
-        bitField1_ = (bitField1_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x80000000);
         usingWrappedExceptionStyle_ = false;
+        bitField1_ = (bitField1_ & ~0x00000001);
+        showingPrimaryIdentifier_ = false;
         bitField1_ = (bitField1_ & ~0x00000002);
+        showingSecondaryIdentifier_ = false;
+        bitField1_ = (bitField1_ & ~0x00000004);
         return this;
       }
 
@@ -2055,67 +2110,71 @@ public final class PrefsProto {
         if (((from_bitField0_ & 0x00080000) == 0x00080000)) {
           to_bitField0_ |= 0x00080000;
         }
-        result.showingIdentifier_ = showingIdentifier_;
+        result.showingStatusbar_ = showingStatusbar_;
         if (((from_bitField0_ & 0x00100000) == 0x00100000)) {
           to_bitField0_ |= 0x00100000;
         }
-        result.showingStatusbar_ = showingStatusbar_;
+        result.showingStacktrace_ = showingStacktrace_;
         if (((from_bitField0_ & 0x00200000) == 0x00200000)) {
           to_bitField0_ |= 0x00200000;
         }
-        result.showingStacktrace_ = showingStacktrace_;
+        result.showingTipOfTheDay_ = showingTipOfTheDay_;
         if (((from_bitField0_ & 0x00400000) == 0x00400000)) {
           to_bitField0_ |= 0x00400000;
         }
-        result.showingTipOfTheDay_ = showingTipOfTheDay_;
+        result.showingToolbar_ = showingToolbar_;
         if (((from_bitField0_ & 0x00800000) == 0x00800000)) {
           to_bitField0_ |= 0x00800000;
         }
-        result.showingToolbar_ = showingToolbar_;
+        result.splashScreenDisabled_ = splashScreenDisabled_;
         if (((from_bitField0_ & 0x01000000) == 0x01000000)) {
           to_bitField0_ |= 0x01000000;
         }
-        result.splashScreenDisabled_ = splashScreenDisabled_;
+        result.usingInternalFrames_ = usingInternalFrames_;
         if (((from_bitField0_ & 0x02000000) == 0x02000000)) {
           to_bitField0_ |= 0x02000000;
         }
-        result.usingInternalFrames_ = usingInternalFrames_;
+        result.sourceFiltering_ = sourceFiltering_;
         if (((from_bitField0_ & 0x04000000) == 0x04000000)) {
           to_bitField0_ |= 0x04000000;
         }
-        result.sourceFiltering_ = sourceFiltering_;
+        result.defaultConditionName_ = defaultConditionName_;
         if (((from_bitField0_ & 0x08000000) == 0x08000000)) {
           to_bitField0_ |= 0x08000000;
         }
-        result.defaultConditionName_ = defaultConditionName_;
+        result.checkingForSnapshot_ = checkingForSnapshot_;
         if (((from_bitField0_ & 0x10000000) == 0x10000000)) {
           to_bitField0_ |= 0x10000000;
-        }
-        result.checkingForSnapshot_ = checkingForSnapshot_;
-        if (((from_bitField0_ & 0x20000000) == 0x20000000)) {
-          to_bitField0_ |= 0x20000000;
         }
         if (groovyClipboardFormattersBuilder_ == null) {
           result.groovyClipboardFormatters_ = groovyClipboardFormatters_;
         } else {
           result.groovyClipboardFormatters_ = groovyClipboardFormattersBuilder_.build();
         }
+        if (((from_bitField0_ & 0x20000000) == 0x20000000)) {
+          to_bitField0_ |= 0x20000000;
+        }
+        result.trayActive_ = trayActive_;
         if (((from_bitField0_ & 0x40000000) == 0x40000000)) {
           to_bitField0_ |= 0x40000000;
         }
-        result.trayActive_ = trayActive_;
+        result.showingFullRecentPath_ = showingFullRecentPath_;
         if (((from_bitField0_ & 0x80000000) == 0x80000000)) {
           to_bitField0_ |= 0x80000000;
         }
-        result.showingFullRecentPath_ = showingFullRecentPath_;
+        result.hidingOnClose_ = hidingOnClose_;
         if (((from_bitField1_ & 0x00000001) == 0x00000001)) {
           to_bitField1_ |= 0x00000001;
         }
-        result.hidingOnClose_ = hidingOnClose_;
+        result.usingWrappedExceptionStyle_ = usingWrappedExceptionStyle_;
         if (((from_bitField1_ & 0x00000002) == 0x00000002)) {
           to_bitField1_ |= 0x00000002;
         }
-        result.usingWrappedExceptionStyle_ = usingWrappedExceptionStyle_;
+        result.showingPrimaryIdentifier_ = showingPrimaryIdentifier_;
+        if (((from_bitField1_ & 0x00000004) == 0x00000004)) {
+          to_bitField1_ |= 0x00000004;
+        }
+        result.showingSecondaryIdentifier_ = showingSecondaryIdentifier_;
         result.bitField0_ = to_bitField0_;
         result.bitField1_ = to_bitField1_;
         onBuilt();
@@ -2196,9 +2255,6 @@ public final class PrefsProto {
         if (other.hasShowingFullCallstack()) {
           setShowingFullCallstack(other.getShowingFullCallstack());
         }
-        if (other.hasShowingIdentifier()) {
-          setShowingIdentifier(other.getShowingIdentifier());
-        }
         if (other.hasShowingStatusbar()) {
           setShowingStatusbar(other.getShowingStatusbar());
         }
@@ -2221,7 +2277,7 @@ public final class PrefsProto {
           setSourceFiltering(other.getSourceFiltering());
         }
         if (other.hasDefaultConditionName()) {
-          bitField0_ |= 0x08000000;
+          bitField0_ |= 0x04000000;
           defaultConditionName_ = other.defaultConditionName_;
           onChanged();
         }
@@ -2242,6 +2298,12 @@ public final class PrefsProto {
         }
         if (other.hasUsingWrappedExceptionStyle()) {
           setUsingWrappedExceptionStyle(other.getUsingWrappedExceptionStyle());
+        }
+        if (other.hasShowingPrimaryIdentifier()) {
+          setShowingPrimaryIdentifier(other.getShowingPrimaryIdentifier());
+        }
+        if (other.hasShowingSecondaryIdentifier()) {
+          setShowingSecondaryIdentifier(other.getShowingSecondaryIdentifier());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -3303,65 +3365,49 @@ public final class PrefsProto {
         return this;
       }
 
-      private boolean showingIdentifier_ ;
-      /**
-       * <code>optional bool showing_identifier = 21;</code>
-       */
-      public boolean hasShowingIdentifier() {
-        return ((bitField0_ & 0x00080000) == 0x00080000);
-      }
-      /**
-       * <code>optional bool showing_identifier = 21;</code>
-       */
-      public boolean getShowingIdentifier() {
-        return showingIdentifier_;
-      }
-      /**
-       * <code>optional bool showing_identifier = 21;</code>
-       */
-      public Builder setShowingIdentifier(boolean value) {
-        bitField0_ |= 0x00080000;
-        showingIdentifier_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional bool showing_identifier = 21;</code>
-       */
-      public Builder clearShowingIdentifier() {
-        bitField0_ = (bitField0_ & ~0x00080000);
-        showingIdentifier_ = false;
-        onChanged();
-        return this;
-      }
-
       private boolean showingStatusbar_ ;
       /**
        * <code>optional bool showing_statusbar = 22;</code>
+       *
+       * <pre>
+       *	optional bool              showing_identifier            = 21;
+       * </pre>
        */
       public boolean hasShowingStatusbar() {
-        return ((bitField0_ & 0x00100000) == 0x00100000);
+        return ((bitField0_ & 0x00080000) == 0x00080000);
       }
       /**
        * <code>optional bool showing_statusbar = 22;</code>
+       *
+       * <pre>
+       *	optional bool              showing_identifier            = 21;
+       * </pre>
        */
       public boolean getShowingStatusbar() {
         return showingStatusbar_;
       }
       /**
        * <code>optional bool showing_statusbar = 22;</code>
+       *
+       * <pre>
+       *	optional bool              showing_identifier            = 21;
+       * </pre>
        */
       public Builder setShowingStatusbar(boolean value) {
-        bitField0_ |= 0x00100000;
+        bitField0_ |= 0x00080000;
         showingStatusbar_ = value;
         onChanged();
         return this;
       }
       /**
        * <code>optional bool showing_statusbar = 22;</code>
+       *
+       * <pre>
+       *	optional bool              showing_identifier            = 21;
+       * </pre>
        */
       public Builder clearShowingStatusbar() {
-        bitField0_ = (bitField0_ & ~0x00100000);
+        bitField0_ = (bitField0_ & ~0x00080000);
         showingStatusbar_ = false;
         onChanged();
         return this;
@@ -3372,7 +3418,7 @@ public final class PrefsProto {
        * <code>optional bool showing_stacktrace = 23;</code>
        */
       public boolean hasShowingStacktrace() {
-        return ((bitField0_ & 0x00200000) == 0x00200000);
+        return ((bitField0_ & 0x00100000) == 0x00100000);
       }
       /**
        * <code>optional bool showing_stacktrace = 23;</code>
@@ -3384,7 +3430,7 @@ public final class PrefsProto {
        * <code>optional bool showing_stacktrace = 23;</code>
        */
       public Builder setShowingStacktrace(boolean value) {
-        bitField0_ |= 0x00200000;
+        bitField0_ |= 0x00100000;
         showingStacktrace_ = value;
         onChanged();
         return this;
@@ -3393,7 +3439,7 @@ public final class PrefsProto {
        * <code>optional bool showing_stacktrace = 23;</code>
        */
       public Builder clearShowingStacktrace() {
-        bitField0_ = (bitField0_ & ~0x00200000);
+        bitField0_ = (bitField0_ & ~0x00100000);
         showingStacktrace_ = false;
         onChanged();
         return this;
@@ -3404,7 +3450,7 @@ public final class PrefsProto {
        * <code>optional bool showing_tip_of_the_day = 24;</code>
        */
       public boolean hasShowingTipOfTheDay() {
-        return ((bitField0_ & 0x00400000) == 0x00400000);
+        return ((bitField0_ & 0x00200000) == 0x00200000);
       }
       /**
        * <code>optional bool showing_tip_of_the_day = 24;</code>
@@ -3416,7 +3462,7 @@ public final class PrefsProto {
        * <code>optional bool showing_tip_of_the_day = 24;</code>
        */
       public Builder setShowingTipOfTheDay(boolean value) {
-        bitField0_ |= 0x00400000;
+        bitField0_ |= 0x00200000;
         showingTipOfTheDay_ = value;
         onChanged();
         return this;
@@ -3425,7 +3471,7 @@ public final class PrefsProto {
        * <code>optional bool showing_tip_of_the_day = 24;</code>
        */
       public Builder clearShowingTipOfTheDay() {
-        bitField0_ = (bitField0_ & ~0x00400000);
+        bitField0_ = (bitField0_ & ~0x00200000);
         showingTipOfTheDay_ = false;
         onChanged();
         return this;
@@ -3436,7 +3482,7 @@ public final class PrefsProto {
        * <code>optional bool showing_toolbar = 25;</code>
        */
       public boolean hasShowingToolbar() {
-        return ((bitField0_ & 0x00800000) == 0x00800000);
+        return ((bitField0_ & 0x00400000) == 0x00400000);
       }
       /**
        * <code>optional bool showing_toolbar = 25;</code>
@@ -3448,7 +3494,7 @@ public final class PrefsProto {
        * <code>optional bool showing_toolbar = 25;</code>
        */
       public Builder setShowingToolbar(boolean value) {
-        bitField0_ |= 0x00800000;
+        bitField0_ |= 0x00400000;
         showingToolbar_ = value;
         onChanged();
         return this;
@@ -3457,7 +3503,7 @@ public final class PrefsProto {
        * <code>optional bool showing_toolbar = 25;</code>
        */
       public Builder clearShowingToolbar() {
-        bitField0_ = (bitField0_ & ~0x00800000);
+        bitField0_ = (bitField0_ & ~0x00400000);
         showingToolbar_ = false;
         onChanged();
         return this;
@@ -3468,7 +3514,7 @@ public final class PrefsProto {
        * <code>optional bool splash_screen_disabled = 26;</code>
        */
       public boolean hasSplashScreenDisabled() {
-        return ((bitField0_ & 0x01000000) == 0x01000000);
+        return ((bitField0_ & 0x00800000) == 0x00800000);
       }
       /**
        * <code>optional bool splash_screen_disabled = 26;</code>
@@ -3480,7 +3526,7 @@ public final class PrefsProto {
        * <code>optional bool splash_screen_disabled = 26;</code>
        */
       public Builder setSplashScreenDisabled(boolean value) {
-        bitField0_ |= 0x01000000;
+        bitField0_ |= 0x00800000;
         splashScreenDisabled_ = value;
         onChanged();
         return this;
@@ -3489,7 +3535,7 @@ public final class PrefsProto {
        * <code>optional bool splash_screen_disabled = 26;</code>
        */
       public Builder clearSplashScreenDisabled() {
-        bitField0_ = (bitField0_ & ~0x01000000);
+        bitField0_ = (bitField0_ & ~0x00800000);
         splashScreenDisabled_ = false;
         onChanged();
         return this;
@@ -3500,7 +3546,7 @@ public final class PrefsProto {
        * <code>optional bool using_internal_frames = 27;</code>
        */
       public boolean hasUsingInternalFrames() {
-        return ((bitField0_ & 0x02000000) == 0x02000000);
+        return ((bitField0_ & 0x01000000) == 0x01000000);
       }
       /**
        * <code>optional bool using_internal_frames = 27;</code>
@@ -3512,7 +3558,7 @@ public final class PrefsProto {
        * <code>optional bool using_internal_frames = 27;</code>
        */
       public Builder setUsingInternalFrames(boolean value) {
-        bitField0_ |= 0x02000000;
+        bitField0_ |= 0x01000000;
         usingInternalFrames_ = value;
         onChanged();
         return this;
@@ -3521,7 +3567,7 @@ public final class PrefsProto {
        * <code>optional bool using_internal_frames = 27;</code>
        */
       public Builder clearUsingInternalFrames() {
-        bitField0_ = (bitField0_ & ~0x02000000);
+        bitField0_ = (bitField0_ & ~0x01000000);
         usingInternalFrames_ = false;
         onChanged();
         return this;
@@ -3532,7 +3578,7 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
        */
       public boolean hasSourceFiltering() {
-        return ((bitField0_ & 0x04000000) == 0x04000000);
+        return ((bitField0_ & 0x02000000) == 0x02000000);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
@@ -3547,7 +3593,7 @@ public final class PrefsProto {
         if (value == null) {
           throw new NullPointerException();
         }
-        bitField0_ |= 0x04000000;
+        bitField0_ |= 0x02000000;
         sourceFiltering_ = value;
         onChanged();
         return this;
@@ -3556,7 +3602,7 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
        */
       public Builder clearSourceFiltering() {
-        bitField0_ = (bitField0_ & ~0x04000000);
+        bitField0_ = (bitField0_ & ~0x02000000);
         sourceFiltering_ = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering.NONE;
         onChanged();
         return this;
@@ -3567,7 +3613,7 @@ public final class PrefsProto {
        * <code>optional string default_condition_name = 29;</code>
        */
       public boolean hasDefaultConditionName() {
-        return ((bitField0_ & 0x08000000) == 0x08000000);
+        return ((bitField0_ & 0x04000000) == 0x04000000);
       }
       /**
        * <code>optional string default_condition_name = 29;</code>
@@ -3610,7 +3656,7 @@ public final class PrefsProto {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x08000000;
+  bitField0_ |= 0x04000000;
         defaultConditionName_ = value;
         onChanged();
         return this;
@@ -3619,7 +3665,7 @@ public final class PrefsProto {
        * <code>optional string default_condition_name = 29;</code>
        */
       public Builder clearDefaultConditionName() {
-        bitField0_ = (bitField0_ & ~0x08000000);
+        bitField0_ = (bitField0_ & ~0x04000000);
         defaultConditionName_ = getDefaultInstance().getDefaultConditionName();
         onChanged();
         return this;
@@ -3632,7 +3678,7 @@ public final class PrefsProto {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x08000000;
+  bitField0_ |= 0x04000000;
         defaultConditionName_ = value;
         onChanged();
         return this;
@@ -3643,7 +3689,7 @@ public final class PrefsProto {
        * <code>optional bool checking_for_snapshot = 30;</code>
        */
       public boolean hasCheckingForSnapshot() {
-        return ((bitField0_ & 0x10000000) == 0x10000000);
+        return ((bitField0_ & 0x08000000) == 0x08000000);
       }
       /**
        * <code>optional bool checking_for_snapshot = 30;</code>
@@ -3655,7 +3701,7 @@ public final class PrefsProto {
        * <code>optional bool checking_for_snapshot = 30;</code>
        */
       public Builder setCheckingForSnapshot(boolean value) {
-        bitField0_ |= 0x10000000;
+        bitField0_ |= 0x08000000;
         checkingForSnapshot_ = value;
         onChanged();
         return this;
@@ -3664,7 +3710,7 @@ public final class PrefsProto {
        * <code>optional bool checking_for_snapshot = 30;</code>
        */
       public Builder clearCheckingForSnapshot() {
-        bitField0_ = (bitField0_ & ~0x10000000);
+        bitField0_ = (bitField0_ & ~0x08000000);
         checkingForSnapshot_ = false;
         onChanged();
         return this;
@@ -3677,7 +3723,7 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
        */
       public boolean hasGroovyClipboardFormatters() {
-        return ((bitField0_ & 0x20000000) == 0x20000000);
+        return ((bitField0_ & 0x10000000) == 0x10000000);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
@@ -3702,7 +3748,7 @@ public final class PrefsProto {
         } else {
           groovyClipboardFormattersBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x20000000;
+        bitField0_ |= 0x10000000;
         return this;
       }
       /**
@@ -3716,7 +3762,7 @@ public final class PrefsProto {
         } else {
           groovyClipboardFormattersBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x20000000;
+        bitField0_ |= 0x10000000;
         return this;
       }
       /**
@@ -3724,7 +3770,7 @@ public final class PrefsProto {
        */
       public Builder mergeGroovyClipboardFormatters(de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent value) {
         if (groovyClipboardFormattersBuilder_ == null) {
-          if (((bitField0_ & 0x20000000) == 0x20000000) &&
+          if (((bitField0_ & 0x10000000) == 0x10000000) &&
               groovyClipboardFormatters_ != de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance()) {
             groovyClipboardFormatters_ =
               de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.newBuilder(groovyClipboardFormatters_).mergeFrom(value).buildPartial();
@@ -3735,7 +3781,7 @@ public final class PrefsProto {
         } else {
           groovyClipboardFormattersBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x20000000;
+        bitField0_ |= 0x10000000;
         return this;
       }
       /**
@@ -3748,14 +3794,14 @@ public final class PrefsProto {
         } else {
           groovyClipboardFormattersBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x20000000);
+        bitField0_ = (bitField0_ & ~0x10000000);
         return this;
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
        */
       public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder getGroovyClipboardFormattersBuilder() {
-        bitField0_ |= 0x20000000;
+        bitField0_ |= 0x10000000;
         onChanged();
         return getGroovyClipboardFormattersFieldBuilder().getBuilder();
       }
@@ -3791,7 +3837,7 @@ public final class PrefsProto {
        * <code>optional bool tray_active = 32;</code>
        */
       public boolean hasTrayActive() {
-        return ((bitField0_ & 0x40000000) == 0x40000000);
+        return ((bitField0_ & 0x20000000) == 0x20000000);
       }
       /**
        * <code>optional bool tray_active = 32;</code>
@@ -3803,7 +3849,7 @@ public final class PrefsProto {
        * <code>optional bool tray_active = 32;</code>
        */
       public Builder setTrayActive(boolean value) {
-        bitField0_ |= 0x40000000;
+        bitField0_ |= 0x20000000;
         trayActive_ = value;
         onChanged();
         return this;
@@ -3812,7 +3858,7 @@ public final class PrefsProto {
        * <code>optional bool tray_active = 32;</code>
        */
       public Builder clearTrayActive() {
-        bitField0_ = (bitField0_ & ~0x40000000);
+        bitField0_ = (bitField0_ & ~0x20000000);
         trayActive_ = false;
         onChanged();
         return this;
@@ -3823,7 +3869,7 @@ public final class PrefsProto {
        * <code>optional bool showing_full_recent_path = 33;</code>
        */
       public boolean hasShowingFullRecentPath() {
-        return ((bitField0_ & 0x80000000) == 0x80000000);
+        return ((bitField0_ & 0x40000000) == 0x40000000);
       }
       /**
        * <code>optional bool showing_full_recent_path = 33;</code>
@@ -3835,7 +3881,7 @@ public final class PrefsProto {
        * <code>optional bool showing_full_recent_path = 33;</code>
        */
       public Builder setShowingFullRecentPath(boolean value) {
-        bitField0_ |= 0x80000000;
+        bitField0_ |= 0x40000000;
         showingFullRecentPath_ = value;
         onChanged();
         return this;
@@ -3844,7 +3890,7 @@ public final class PrefsProto {
        * <code>optional bool showing_full_recent_path = 33;</code>
        */
       public Builder clearShowingFullRecentPath() {
-        bitField0_ = (bitField0_ & ~0x80000000);
+        bitField0_ = (bitField0_ & ~0x40000000);
         showingFullRecentPath_ = false;
         onChanged();
         return this;
@@ -3855,7 +3901,7 @@ public final class PrefsProto {
        * <code>optional bool hiding_on_close = 34;</code>
        */
       public boolean hasHidingOnClose() {
-        return ((bitField1_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x80000000) == 0x80000000);
       }
       /**
        * <code>optional bool hiding_on_close = 34;</code>
@@ -3867,7 +3913,7 @@ public final class PrefsProto {
        * <code>optional bool hiding_on_close = 34;</code>
        */
       public Builder setHidingOnClose(boolean value) {
-        bitField1_ |= 0x00000001;
+        bitField0_ |= 0x80000000;
         hidingOnClose_ = value;
         onChanged();
         return this;
@@ -3876,7 +3922,7 @@ public final class PrefsProto {
        * <code>optional bool hiding_on_close = 34;</code>
        */
       public Builder clearHidingOnClose() {
-        bitField1_ = (bitField1_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x80000000);
         hidingOnClose_ = false;
         onChanged();
         return this;
@@ -3887,7 +3933,7 @@ public final class PrefsProto {
        * <code>optional bool using_wrapped_exception_style = 35;</code>
        */
       public boolean hasUsingWrappedExceptionStyle() {
-        return ((bitField1_ & 0x00000002) == 0x00000002);
+        return ((bitField1_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>optional bool using_wrapped_exception_style = 35;</code>
@@ -3899,7 +3945,7 @@ public final class PrefsProto {
        * <code>optional bool using_wrapped_exception_style = 35;</code>
        */
       public Builder setUsingWrappedExceptionStyle(boolean value) {
-        bitField1_ |= 0x00000002;
+        bitField1_ |= 0x00000001;
         usingWrappedExceptionStyle_ = value;
         onChanged();
         return this;
@@ -3908,8 +3954,72 @@ public final class PrefsProto {
        * <code>optional bool using_wrapped_exception_style = 35;</code>
        */
       public Builder clearUsingWrappedExceptionStyle() {
-        bitField1_ = (bitField1_ & ~0x00000002);
+        bitField1_ = (bitField1_ & ~0x00000001);
         usingWrappedExceptionStyle_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean showingPrimaryIdentifier_ ;
+      /**
+       * <code>optional bool showing_primary_identifier = 36;</code>
+       */
+      public boolean hasShowingPrimaryIdentifier() {
+        return ((bitField1_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional bool showing_primary_identifier = 36;</code>
+       */
+      public boolean getShowingPrimaryIdentifier() {
+        return showingPrimaryIdentifier_;
+      }
+      /**
+       * <code>optional bool showing_primary_identifier = 36;</code>
+       */
+      public Builder setShowingPrimaryIdentifier(boolean value) {
+        bitField1_ |= 0x00000002;
+        showingPrimaryIdentifier_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool showing_primary_identifier = 36;</code>
+       */
+      public Builder clearShowingPrimaryIdentifier() {
+        bitField1_ = (bitField1_ & ~0x00000002);
+        showingPrimaryIdentifier_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean showingSecondaryIdentifier_ ;
+      /**
+       * <code>optional bool showing_secondary_identifier = 37;</code>
+       */
+      public boolean hasShowingSecondaryIdentifier() {
+        return ((bitField1_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional bool showing_secondary_identifier = 37;</code>
+       */
+      public boolean getShowingSecondaryIdentifier() {
+        return showingSecondaryIdentifier_;
+      }
+      /**
+       * <code>optional bool showing_secondary_identifier = 37;</code>
+       */
+      public Builder setShowingSecondaryIdentifier(boolean value) {
+        bitField1_ |= 0x00000004;
+        showingSecondaryIdentifier_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool showing_secondary_identifier = 37;</code>
+       */
+      public Builder clearShowingSecondaryIdentifier() {
+        bitField1_ = (bitField1_ & ~0x00000004);
+        showingSecondaryIdentifier_ = false;
         onChanged();
         return this;
       }
@@ -9217,7 +9327,7 @@ public final class PrefsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\"src/main/protobuf/PrefsProto.proto\022\027de" +
-      ".huxhorn.lilith.prefs\"\245\t\n\021LilithPreferen" +
+      ".huxhorn.lilith.prefs\"\323\t\n\021LilithPreferen" +
       "ces\022D\n\021groovy_conditions\030\001 \001(\0132).de.huxh" +
       "orn.lilith.prefs.DirectoryContent\022?\n\014det" +
       "ails_view\030\002 \001(\0132).de.huxhorn.lilith.pref" +
@@ -9234,36 +9344,37 @@ public final class PrefsProto {
       "led\030\020 \001(\010\022\"\n\032maximizing_internal_frames\030" +
       "\021 \001(\010\022\014\n\004mute\030\022 \001(\010\022\033\n\023scrolling_to_bott" +
       "om\030\023 \001(\010\022\036\n\026showing_full_callstack\030\024 \001(\010" +
-      "\022\032\n\022showing_identifier\030\025 \001(\010\022\031\n\021showing_" +
-      "statusbar\030\026 \001(\010\022\032\n\022showing_stacktrace\030\027 ",
-      "\001(\010\022\036\n\026showing_tip_of_the_day\030\030 \001(\010\022\027\n\017s" +
-      "howing_toolbar\030\031 \001(\010\022\036\n\026splash_screen_di" +
-      "sabled\030\032 \001(\010\022\035\n\025using_internal_frames\030\033 " +
-      "\001(\010\022B\n\020source_filtering\030\034 \001(\0162(.de.huxho" +
-      "rn.lilith.prefs.SourceFiltering\022\036\n\026defau" +
-      "lt_condition_name\030\035 \001(\t\022\035\n\025checking_for_" +
-      "snapshot\030\036 \001(\010\022N\n\033groovy_clipboard_forma" +
-      "tters\030\037 \001(\0132).de.huxhorn.lilith.prefs.Di" +
-      "rectoryContent\022\023\n\013tray_active\030  \001(\010\022 \n\030s" +
-      "howing_full_recent_path\030! \001(\010\022\027\n\017hiding_",
-      "on_close\030\" \001(\010\022%\n\035using_wrapped_exceptio" +
-      "n_style\030# \001(\010\"\231\001\n\020DirectoryContent\022\014\n\004na" +
-      "me\030\001 \001(\t\0229\n\005entry\030\002 \003(\0132*.de.huxhorn.lil" +
-      "ith.prefs.ByteArrayMapEntry\022<\n\tdirectory" +
-      "\030\003 \003(\0132).de.huxhorn.lilith.prefs.Directo" +
-      "ryContent\"/\n\021ByteArrayMapEntry\022\013\n\003key\030\001 " +
-      "\002(\t\022\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry" +
-      "\030\001 \003(\0132\'.de.huxhorn.lilith.prefs.StringM" +
-      "apEntry\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r" +
-      "\n\005value\030\002 \001(\t\"M\n\016StringArrayMap\022;\n\005entry",
-      "\030\001 \003(\0132,.de.huxhorn.lilith.prefs.StringA" +
-      "rrayMapEntry\"\\\n\023StringArrayMapEntry\022\013\n\003k" +
-      "ey\030\001 \002(\t\0228\n\005value\030\002 \003(\0132).de.huxhorn.lil" +
-      "ith.prefs.StringArrayValue\"!\n\020StringArra" +
-      "yValue\022\r\n\005value\030\001 \001(\t*9\n\017SourceFiltering" +
-      "\022\010\n\004NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020\002" +
-      "B.\n*de.huxhorn.lilith.prefs.protobuf.gen" +
-      "eratedH\001"
+      "\022\031\n\021showing_statusbar\030\026 \001(\010\022\032\n\022showing_s" +
+      "tacktrace\030\027 \001(\010\022\036\n\026showing_tip_of_the_da",
+      "y\030\030 \001(\010\022\027\n\017showing_toolbar\030\031 \001(\010\022\036\n\026spla" +
+      "sh_screen_disabled\030\032 \001(\010\022\035\n\025using_intern" +
+      "al_frames\030\033 \001(\010\022B\n\020source_filtering\030\034 \001(" +
+      "\0162(.de.huxhorn.lilith.prefs.SourceFilter" +
+      "ing\022\036\n\026default_condition_name\030\035 \001(\t\022\035\n\025c" +
+      "hecking_for_snapshot\030\036 \001(\010\022N\n\033groovy_cli" +
+      "pboard_formatters\030\037 \001(\0132).de.huxhorn.lil" +
+      "ith.prefs.DirectoryContent\022\023\n\013tray_activ" +
+      "e\030  \001(\010\022 \n\030showing_full_recent_path\030! \001(" +
+      "\010\022\027\n\017hiding_on_close\030\" \001(\010\022%\n\035using_wrap",
+      "ped_exception_style\030# \001(\010\022\"\n\032showing_pri" +
+      "mary_identifier\030$ \001(\010\022$\n\034showing_seconda" +
+      "ry_identifier\030% \001(\010\"\231\001\n\020DirectoryContent" +
+      "\022\014\n\004name\030\001 \001(\t\0229\n\005entry\030\002 \003(\0132*.de.huxho" +
+      "rn.lilith.prefs.ByteArrayMapEntry\022<\n\tdir" +
+      "ectory\030\003 \003(\0132).de.huxhorn.lilith.prefs.D" +
+      "irectoryContent\"/\n\021ByteArrayMapEntry\022\013\n\003" +
+      "key\030\001 \002(\t\022\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n" +
+      "\005entry\030\001 \003(\0132\'.de.huxhorn.lilith.prefs.S" +
+      "tringMapEntry\",\n\016StringMapEntry\022\013\n\003key\030\001",
+      " \002(\t\022\r\n\005value\030\002 \001(\t\"M\n\016StringArrayMap\022;\n" +
+      "\005entry\030\001 \003(\0132,.de.huxhorn.lilith.prefs.S" +
+      "tringArrayMapEntry\"\\\n\023StringArrayMapEntr" +
+      "y\022\013\n\003key\030\001 \002(\t\0228\n\005value\030\002 \003(\0132).de.huxho" +
+      "rn.lilith.prefs.StringArrayValue\"!\n\020Stri" +
+      "ngArrayValue\022\r\n\005value\030\001 \001(\t*9\n\017SourceFil" +
+      "tering\022\010\n\004NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHITE" +
+      "LIST\020\002B.\n*de.huxhorn.lilith.prefs.protob" +
+      "uf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -9282,7 +9393,7 @@ public final class PrefsProto {
     internal_static_de_huxhorn_lilith_prefs_LilithPreferences_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_huxhorn_lilith_prefs_LilithPreferences_descriptor,
-        new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingIdentifier", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", "TrayActive", "ShowingFullRecentPath", "HidingOnClose", "UsingWrappedExceptionStyle", });
+        new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "LoggingStatisticEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallstack", "ShowingStatusbar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", "TrayActive", "ShowingFullRecentPath", "HidingOnClose", "UsingWrappedExceptionStyle", "ShowingPrimaryIdentifier", "ShowingSecondaryIdentifier", });
     internal_static_de_huxhorn_lilith_prefs_DirectoryContent_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_de_huxhorn_lilith_prefs_DirectoryContent_fieldAccessorTable = new

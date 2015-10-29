@@ -39,7 +39,8 @@ public class WindowsPanel
 	private JCheckBox autoOpenCheckbox;
 	private JCheckBox autoFocusCheckbox;
 	private JCheckBox autoCloseCheckbox;
-	private JCheckBox showIdentifierCheckbox;
+	private JCheckBox showPrimaryIdentifierCheckbox;
+	private JCheckBox showSecondaryIdentifierCheckbox;
 
 	public WindowsPanel(PreferencesDialog preferencesDialog)
 	{
@@ -53,7 +54,8 @@ public class WindowsPanel
 		showingStatusBarCheckbox = new JCheckBox("Show status bar.");
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
 		maximizeInternalFramesCheckbox = new JCheckBox("Maximize internal frames.");
-		showIdentifierCheckbox = new JCheckBox("Show primary identifier even for named sources.");
+		showPrimaryIdentifierCheckbox = new JCheckBox("Show primary identifier even for named sources.");
+		showSecondaryIdentifierCheckbox = new JCheckBox("Show secondary identifier.");
 		autoOpenCheckbox = new JCheckBox("Automatically open new views on connection.");
 		autoCloseCheckbox = new JCheckBox("Automatically close inactive views on disconnection.");
 		autoFocusCheckbox = new JCheckBox("Automatically focus window of new view.");
@@ -85,9 +87,12 @@ public class WindowsPanel
 		gbc.gridy++;
 		add(autoCloseCheckbox, gbc);
 
+		gbc.gridy++;
+		add(showPrimaryIdentifierCheckbox, gbc);
+
 		gbc.weighty = 1;
 		gbc.gridy++;
-		add(showIdentifierCheckbox, gbc);
+		add(showSecondaryIdentifierCheckbox, gbc);
 	}
 
 	public void initUI()
@@ -99,7 +104,8 @@ public class WindowsPanel
 		autoOpenCheckbox.setSelected(applicationPreferences.isAutoOpening());
 		autoFocusCheckbox.setSelected(applicationPreferences.isAutoFocusingWindow());
 		autoCloseCheckbox.setSelected(applicationPreferences.isAutoClosing());
-		showIdentifierCheckbox.setSelected(applicationPreferences.isShowingIdentifier());
+		showPrimaryIdentifierCheckbox.setSelected(applicationPreferences.isShowingPrimaryIdentifier());
+		showSecondaryIdentifierCheckbox.setSelected(applicationPreferences.isShowingSecondaryIdentifier());
 	}
 
 	public void saveSettings()
@@ -111,6 +117,7 @@ public class WindowsPanel
 		applicationPreferences.setAutoOpening(autoOpenCheckbox.isSelected());
 		applicationPreferences.setAutoFocusingWindow(autoFocusCheckbox.isSelected());
 		applicationPreferences.setAutoClosing(autoCloseCheckbox.isSelected());
-		applicationPreferences.setShowingIdentifier(showIdentifierCheckbox.isSelected());
+		applicationPreferences.setShowingPrimaryIdentifier(showPrimaryIdentifierCheckbox.isSelected());
+		applicationPreferences.setShowingSecondaryIdentifier(showPrimaryIdentifierCheckbox.isSelected());
 	}
 }

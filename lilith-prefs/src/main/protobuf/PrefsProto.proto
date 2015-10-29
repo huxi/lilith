@@ -46,7 +46,7 @@ message LilithPreferences {
 	optional bool              mute                          = 18;
 	optional bool              scrolling_to_bottom           = 19;
 	optional bool              showing_full_callstack        = 20;
-	optional bool              showing_identifier            = 21;
+//	optional bool              showing_identifier            = 21;
 	optional bool              showing_statusbar             = 22;
 	optional bool              showing_stacktrace            = 23;
 	optional bool              showing_tip_of_the_day        = 24;
@@ -64,6 +64,8 @@ message LilithPreferences {
 	optional bool              showing_full_recent_path      = 33;
 	optional bool              hiding_on_close               = 34;
 	optional bool              using_wrapped_exception_style = 35;
+	optional bool              showing_primary_identifier    = 36;
+	optional bool              showing_secondary_identifier  = 37;
 }
 
 enum SourceFiltering {
