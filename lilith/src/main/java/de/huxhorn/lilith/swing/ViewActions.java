@@ -2464,13 +2464,7 @@ public class ViewActions
 		String name=null;
 		if(!global)
 		{
-			Buffer buffer = defaultView.getSourceBuffer();
-			Object event=null;
-			if(buffer != null)
-			{
-				event = buffer.get(0);
-			}
-			name=resolveName(event);
+			name = resolveApplicationName(defaultView.getSourceBuffer());
 		}
 
 		SourceIdentifier si = eventSource.getSourceIdentifier();
@@ -2510,6 +2504,16 @@ public class ViewActions
 			return primary + " - " + secondary;
 		}
 		return primary + " - " +name + " - " + secondary;
+	}
+
+	public static String resolveApplicationName(Buffer<?> buffer)
+	{
+		Object event=null;
+		if(buffer != null)
+		{
+			event = buffer.get(0);
+		}
+		return resolveName(event);
 	}
 
 	private static String resolveName(Object eventWrapperObj)

@@ -54,6 +54,7 @@ All notable changes to this project will be documented in this file.
 - Better app icon on Mac. Thanks to Christian Balog!
 - Tried to ensure that license dialog is always visible.
 - Changed default of `Show primary identifier even for named sources.` preferences to `false`.
+- Enhanced `Open inactive log...` dialog.
 
 ### Deprecated
 - Nothing.

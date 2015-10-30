@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.LogFileFactory;
+import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
@@ -44,7 +45,6 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -93,7 +93,7 @@ public class OpenPreviousDialog
 	}
 
 	private static final String[] EMPTY_STRING_ARRAY = new String[]{};
-	private static final SourceIdentifier[] EMPTY_SECONDARY_ARRAY = new SourceIdentifier[]{};
+	private static final SourceIdentifierWrapper[] EMPTY_SECONDARY_ARRAY = new SourceIdentifierWrapper[]{};
 
 	private MainFrame mainFrame;
 	private OpenAction openAction;
@@ -155,7 +155,7 @@ public class OpenPreviousDialog
 		if(comp instanceof OpenPreviousPanel)
 		{
 			OpenPreviousPanel panel = (OpenPreviousPanel) comp;
-			SourceIdentifier selectedSource = panel.getSelectedSource();
+			SourceIdentifierWrapper selectedSource = panel.getSelectedSourceWrapper();
 			openAction.setEnabled(selectedSource != null);
 		}
 	}
@@ -167,16 +167,16 @@ public class OpenPreviousDialog
 		if(comp instanceof OpenPreviousPanel)
 		{
 			OpenPreviousPanel panel = (OpenPreviousPanel) comp;
-			SourceIdentifier selectedSource = panel.getSelectedSource();
+			SourceIdentifierWrapper selectedSource = panel.getSelectedSourceWrapper();
 			if(selectedSource != null)
 			{
 				if(panel.getEventType() == EventType.LOGGING)
 				{
-					mainFrame.openPreviousLogging(selectedSource);
+					mainFrame.openPreviousLogging(selectedSource.getSourceIdentifier());
 				}
 				else
 				{
-					mainFrame.openPreviousAccess(selectedSource);
+					mainFrame.openPreviousAccess(selectedSource.getSourceIdentifier());
 				}
 			}
 		}
@@ -235,15 +235,15 @@ public class OpenPreviousDialog
 	{
 		private static final long serialVersionUID = 1635486188020609000L;
 
-		private List<List<SourceIdentifier>> secondaries;
+		private List<List<SourceIdentifierWrapper>> secondaries;
 		private JList<String> primaryList;
-		private JList<SourceIdentifier> secondaryList;
+		private JList<SourceIdentifierWrapper> secondaryList;
 		private JTextArea infoArea;
 		private DecimalFormat eventCountFormat;
 		private final FileBufferFactory<T> fileBufferFactory;
 		private final LogFileFactory logFileFactory;
 		private EventType eventType;
-		private SourceIdentifier selectedSource;
+		private SourceIdentifierWrapper selectedSourceWrapper;
 
 		public OpenPreviousPanel(FileBufferFactory<T> fileBufferFactory, EventType eventType)
 		{
@@ -254,9 +254,9 @@ public class OpenPreviousDialog
 			this.createUI();
 		}
 
-		public SourceIdentifier getSelectedSource()
+		public SourceIdentifierWrapper getSelectedSourceWrapper()
 		{
-			return selectedSource;
+			return selectedSourceWrapper;
 		}
 
 		public String getPanelName()
@@ -269,10 +269,10 @@ public class OpenPreviousDialog
 			return eventType;
 		}
 
-		private void setSelectedSource(SourceIdentifier selected)
+		private void setSelectedSourceWrapper(SourceIdentifierWrapper selected)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Selected source: {}", selected);
-			this.selectedSource = selected;
+			this.selectedSourceWrapper = selected;
 			initOpenAction();
 			updateInfoArea();
 		}
@@ -315,17 +315,25 @@ public class OpenPreviousDialog
 			{
 				sourceNames = applicationPreferences.getSourceNames();
 			}
-			SortedMap<String, List<SourceIdentifier>> inactiveMap = new TreeMap<>();
+			SortedMap<String, List<SourceIdentifierWrapper>> inactiveMap = new TreeMap<>();
 			for(SourceIdentifier current : inactiveLogs)
 			{
 				String primary = ViewActions.getPrimarySourceTitle(current.getIdentifier(), sourceNames, false);
-				List<SourceIdentifier> sourceList = inactiveMap.get(primary);
+				List<SourceIdentifierWrapper> sourceList = inactiveMap.get(primary);
 				if(sourceList == null)
 				{
 					sourceList = new ArrayList<>();
 					inactiveMap.put(primary, sourceList);
 				}
-				sourceList.add(current);
+				long numberOfEvents = logFileFactory.getNumberOfEvents(current);
+				long sizeOnDisk = logFileFactory.getSizeOnDisk(current);
+				File dataFile = logFileFactory.getDataFile(current);
+				long lastModified = dataFile.lastModified();
+
+				Buffer<?> buffer=fileBufferFactory.createBuffer(current);
+				String applicationName=ViewActions.resolveApplicationName(buffer);
+				SourceIdentifierWrapper wrapper = new SourceIdentifierWrapper(current, sizeOnDisk, lastModified, numberOfEvents, applicationName);
+				sourceList.add(wrapper);
 			}
 
 			int primaryCount = inactiveMap.size();
@@ -333,22 +341,22 @@ public class OpenPreviousDialog
 			{
 				ArrayList<String> primaries = new ArrayList<>(primaryCount);
 				secondaries = new ArrayList<>(primaryCount);
-				for(Map.Entry<String, List<SourceIdentifier>> current : inactiveMap.entrySet())
+				for(Map.Entry<String, List<SourceIdentifierWrapper>> current : inactiveMap.entrySet())
 				{
 					primaries.add(current.getKey());
-					List<SourceIdentifier> value = current.getValue();
-					Collections.sort(value, new LastModifiedComparator());
+					List<SourceIdentifierWrapper> value = current.getValue();
+					Collections.sort(value);
 					secondaries.add(value);
 				}
 
 				primaryList.setListData(primaries.toArray(new String[primaries.size()]));
-				SourceIdentifier[] currentSecondary = EMPTY_SECONDARY_ARRAY;
+				SourceIdentifierWrapper[] currentSecondary = EMPTY_SECONDARY_ARRAY;
 				if(!secondaries.isEmpty())
 				{
-					List<SourceIdentifier> zero = secondaries.get(0);
+					List<SourceIdentifierWrapper> zero = secondaries.get(0);
 					if(!zero.isEmpty())
 					{
-						currentSecondary = zero.toArray(new SourceIdentifier[zero.size()]);
+						currentSecondary = zero.toArray(new SourceIdentifierWrapper[zero.size()]);
 					}
 				}
 				secondaryList.setListData(currentSecondary);
@@ -363,47 +371,45 @@ public class OpenPreviousDialog
 		}
 
 
-		private String getLogInfo(SourceIdentifier selectedSource)
-		{
-			if(selectedSource == null)
-			{
+		private String getLogInfo(SourceIdentifierWrapper selectedSource) {
+			if (selectedSource == null) {
 				return "";
 			}
 
 			ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
 			Map<String, String> sourceNames = null;
-			if(applicationPreferences != null)
-			{
+			if (applicationPreferences != null) {
 				sourceNames = applicationPreferences.getSourceNames();
 			}
 			StringBuilder result = new StringBuilder();
-			result.append(ViewActions.getPrimarySourceTitle(selectedSource.getIdentifier(), sourceNames, true));
-			String secondary = selectedSource.getSecondaryIdentifier();
-			if(secondary != null)
-			{
-				result.append(" - ").append(selectedSource.getSecondaryIdentifier());
+			SourceIdentifier sourceIdentifier = selectedSource.getSourceIdentifier();
+			result.append(ViewActions.getPrimarySourceTitle(sourceIdentifier.getIdentifier(), sourceNames, true));
+			String secondary = sourceIdentifier.getSecondaryIdentifier();
+			if (secondary != null) {
+				result.append(" - ").append(sourceIdentifier.getSecondaryIdentifier());
 			}
 			result.append("\n");
 
-			long numberOfEvents = logFileFactory.getNumberOfEvents(selectedSource);
-			long sizeOnDisk = logFileFactory.getSizeOnDisk(selectedSource);
-			File dataFile = logFileFactory.getDataFile(selectedSource);
-			long timestamp = dataFile.lastModified();
-
-			result.append("Number of events: ")
-				.append(eventCountFormat.format(numberOfEvents)).append("\n")
+			String applicationName = selectedSource.getApplicationName();
+			if(applicationName != null && !"".equals(applicationName))
+			{
+				result.append("Application: ").append(applicationName);
+			}
+			result.append('\n')
+				.append("Number of events: ")
+				.append(eventCountFormat.format(selectedSource.getNumberOfEvents())).append("\n")
 				.append("Size: ")
-				.append(HumanReadable.getHumanReadableSize(sizeOnDisk, true, false))
+				.append(HumanReadable.getHumanReadableSize(selectedSource.getSizeOnDisk(), true, false))
 				.append("bytes\n")
 				.append("Timestamp: ")
-				.append(DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(timestamp)));
+				.append(DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(selectedSource.getLastModified())));
 
 			return result.toString();
 		}
 
 		public void updateInfoArea()
 		{
-			infoArea.setText(getLogInfo(selectedSource));
+			infoArea.setText(getLogInfo(selectedSourceWrapper));
 		}
 
 
@@ -417,8 +423,8 @@ public class OpenPreviousDialog
 				int selectedIndex = source.getSelectedIndex();
 				if(selectedIndex >= 0 && selectedIndex < secondaries.size())
 				{
-					List<SourceIdentifier> sources = secondaries.get(selectedIndex);
-					secondaryList.setListData(sources.toArray(new SourceIdentifier[sources.size()]));
+					List<SourceIdentifierWrapper> sources = secondaries.get(selectedIndex);
+					secondaryList.setListData(sources.toArray(new SourceIdentifierWrapper[sources.size()]));
 					secondaryList.setSelectedIndex(0);
 				}
 				else
@@ -433,7 +439,7 @@ public class OpenPreviousDialog
 		{
 			public void valueChanged(ListSelectionEvent e)
 			{
-				SourceIdentifier selected = secondaryList.getSelectedValue();
+				SourceIdentifierWrapper selected = secondaryList.getSelectedValue();
 				int selectedIndex = secondaryList.getSelectedIndex();
 				if(selectedIndex != -1)
 				{
@@ -444,7 +450,7 @@ public class OpenPreviousDialog
 					}
 				}
 
-				setSelectedSource(selected);
+				setSelectedSourceWrapper(selected);
 			}
 
 		}
@@ -467,35 +473,83 @@ public class OpenPreviousDialog
 
 			}
 		}
+	}
 
-		private class LastModifiedComparator implements Comparator<SourceIdentifier>
+	private class SourceIdentifierWrapper
+		implements Comparable<SourceIdentifierWrapper>
+	{
+		private final SourceIdentifier sourceIdentifier;
+		private final long sizeOnDisk;
+		private final long lastModified;
+		private final long numberOfEvents;
+		private final String applicationName;
+
+		public SourceIdentifierWrapper(SourceIdentifier sourceIdentifier, long sizeOnDisk, long lastModified, long numberOfEvents, String applicationName)
 		{
-			@Override
-			public int compare(SourceIdentifier o1, SourceIdentifier o2) {
-				if(o1 == o2)
-				{
-					return 0;
-				}
-				if(o1 == null)
-				{
-					return -1;
-				}
-				if(o2 == null)
-				{
-					return 1;
-				}
-				long t1 = logFileFactory.getDataFile(o1).lastModified();
-				long t2 = logFileFactory.getDataFile(o2).lastModified();
-				if(t1 == t2)
-				{
-					return 0;
-				}
-				if(t1 < t2)
-				{
-					return 1;
-				}
-				return -1;
+			this.sourceIdentifier = sourceIdentifier;
+			this.sizeOnDisk = sizeOnDisk;
+			this.lastModified = lastModified;
+			this.numberOfEvents = numberOfEvents;
+			this.applicationName = applicationName;
+		}
+
+		public SourceIdentifier getSourceIdentifier()
+		{
+			return sourceIdentifier;
+		}
+
+		public long getLastModified()
+		{
+			return lastModified;
+		}
+
+		public long getSizeOnDisk()
+		{
+			return sizeOnDisk;
+		}
+
+		public long getNumberOfEvents()
+		{
+			return numberOfEvents;
+		}
+
+		public String getApplicationName()
+		{
+			return applicationName;
+		}
+
+		@SuppressWarnings("NullableProblems")
+		@Override
+		public int compareTo(SourceIdentifierWrapper other)
+		{
+			if(other == null)
+			{
+				throw new NullPointerException("other must not be null!");
 			}
+			if(lastModified == other.lastModified)
+			{
+				return 0;
+			}
+			if(lastModified < other.lastModified)
+			{
+				return 1;
+			}
+			return -1;
+		}
+
+		@Override
+		public String toString()
+		{
+			if(applicationName != null && !"".equals(applicationName))
+			{
+				return applicationName;
+			}
+			String secondary = sourceIdentifier.getSecondaryIdentifier();
+			if(secondary != null)
+			{
+				return secondary;
+			}
+			return "";
 		}
 	}
 }
