@@ -2033,14 +2033,14 @@ public class MainFrame
 		return longTaskManager;
 	}
 
-	public LogFileFactory getAccessFileFactory()
+	public FileBufferFactory<AccessEvent> getAccessFileBufferFactory()
 	{
-		return accessFileFactory;
+		return accessFileBufferFactory;
 	}
 
-	public LogFileFactory getLoggingFileFactory()
+	public FileBufferFactory<LoggingEvent> getLoggingFileBufferFactory()
 	{
-		return loggingFileFactory;
+		return loggingFileBufferFactory;
 	}
 
 	public void showLoggingView(EventSource<LoggingEvent> eventSource)

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2015 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,8 +43,8 @@ public class CleanAllInactiveCallable
 	public Long call()
 		throws Exception
 	{
-		LogFileFactory accessFileFactory = mainFrame.getAccessFileFactory();
-		LogFileFactory loggingFileFactory = mainFrame.getLoggingFileFactory();
+		LogFileFactory accessFileFactory = mainFrame.getAccessFileBufferFactory().getLogFileFactory();
+		LogFileFactory loggingFileFactory = mainFrame.getLoggingFileBufferFactory().getLogFileFactory();
 		List<SourceIdentifier> inactiveAccess = mainFrame.collectInactiveLogs(accessFileFactory);
 		List<SourceIdentifier> inactiveLogging = mainFrame.collectInactiveLogs(loggingFileFactory);
 		setNumberOfSteps(inactiveAccess.size() + inactiveLogging.size());

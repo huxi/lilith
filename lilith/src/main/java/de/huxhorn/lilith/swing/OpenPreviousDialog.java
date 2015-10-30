@@ -17,7 +17,11 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.DateTimeFormatters;
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -25,19 +29,39 @@ import de.huxhorn.sulky.swing.KeyStrokes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -74,8 +98,8 @@ public class OpenPreviousDialog
 	private MainFrame mainFrame;
 	private OpenAction openAction;
 	private JTabbedPane tabbedPane;
-	private OpenPreviousPanel loggingPanel;
-	private OpenPreviousPanel accessPanel;
+	private OpenPreviousPanel<LoggingEvent> loggingPanel;
+	private OpenPreviousPanel<AccessEvent> accessPanel;
 
 	public OpenPreviousDialog(MainFrame owner)
 	{
@@ -90,8 +114,8 @@ public class OpenPreviousDialog
 		CancelAction cancelAction = new CancelAction();
 
 		tabbedPane = new JTabbedPane();
-		loggingPanel = new OpenPreviousPanel(mainFrame.getLoggingFileFactory(), EventType.LOGGING);
-		accessPanel = new OpenPreviousPanel(mainFrame.getAccessFileFactory(), EventType.ACCESS);
+		loggingPanel = new OpenPreviousPanel<>(mainFrame.getLoggingFileBufferFactory(), EventType.LOGGING);
+		accessPanel = new OpenPreviousPanel<>(mainFrame.getAccessFileBufferFactory(), EventType.ACCESS);
 		tabbedPane.add(loggingPanel.getPanelName(), loggingPanel);
 		tabbedPane.add(accessPanel.getPanelName(), accessPanel);
 
@@ -206,7 +230,7 @@ public class OpenPreviousDialog
 		}
 	}
 
-	private class OpenPreviousPanel
+	private class OpenPreviousPanel<T extends Serializable>
 		extends JPanel
 	{
 		private static final long serialVersionUID = 1635486188020609000L;
@@ -216,13 +240,15 @@ public class OpenPreviousDialog
 		private JList<SourceIdentifier> secondaryList;
 		private JTextArea infoArea;
 		private DecimalFormat eventCountFormat;
-		private LogFileFactory fileFactory;
+		private final FileBufferFactory<T> fileBufferFactory;
+		private final LogFileFactory logFileFactory;
 		private EventType eventType;
 		private SourceIdentifier selectedSource;
 
-		public OpenPreviousPanel(LogFileFactory fileFactory, EventType eventType)
+		public OpenPreviousPanel(FileBufferFactory<T> fileBufferFactory, EventType eventType)
 		{
-			this.fileFactory = fileFactory;
+			this.fileBufferFactory = fileBufferFactory;
+			this.logFileFactory = fileBufferFactory.getLogFileFactory();
 			this.eventType = eventType;
 			eventCountFormat = new DecimalFormat("#,###");
 			this.createUI();
@@ -276,25 +302,23 @@ public class OpenPreviousDialog
 			infoArea = new JTextArea(3, 40);
 			infoArea.setEditable(false);
 			infoPanel.add(infoArea);
-			infoPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Log Informations"));
+			infoPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Log Information"));
 			add(infoPanel, BorderLayout.SOUTH);
 		}
 
 		public void initUI()
 		{
-			List<SourceIdentifier> inactives = mainFrame.collectInactiveLogs(fileFactory);
+			List<SourceIdentifier> inactiveLogs = mainFrame.collectInactiveLogs(logFileFactory);
 			ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
 			Map<String, String> sourceNames = null;
-			boolean showingPrimaryIdentifier = false;
 			if(applicationPreferences != null)
 			{
 				sourceNames = applicationPreferences.getSourceNames();
-				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
 			}
 			SortedMap<String, List<SourceIdentifier>> inactiveMap = new TreeMap<>();
-			for(SourceIdentifier current : inactives)
+			for(SourceIdentifier current : inactiveLogs)
 			{
-				String primary = ViewActions.getPrimarySourceTitle(current.getIdentifier(), sourceNames, showingPrimaryIdentifier);
+				String primary = ViewActions.getPrimarySourceTitle(current.getIdentifier(), sourceNames, false);
 				List<SourceIdentifier> sourceList = inactiveMap.get(primary);
 				if(sourceList == null)
 				{
@@ -313,7 +337,7 @@ public class OpenPreviousDialog
 				{
 					primaries.add(current.getKey());
 					List<SourceIdentifier> value = current.getValue();
-					Collections.reverse(value); // newest first
+					Collections.sort(value, new LastModifiedComparator());
 					secondaries.add(value);
 				}
 
@@ -348,14 +372,12 @@ public class OpenPreviousDialog
 
 			ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
 			Map<String, String> sourceNames = null;
-			boolean showingPrimaryIdentifier = false;
 			if(applicationPreferences != null)
 			{
 				sourceNames = applicationPreferences.getSourceNames();
-				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
 			}
 			StringBuilder result = new StringBuilder();
-			result.append(ViewActions.getPrimarySourceTitle(selectedSource.getIdentifier(), sourceNames, showingPrimaryIdentifier));
+			result.append(ViewActions.getPrimarySourceTitle(selectedSource.getIdentifier(), sourceNames, true));
 			String secondary = selectedSource.getSecondaryIdentifier();
 			if(secondary != null)
 			{
@@ -363,11 +385,18 @@ public class OpenPreviousDialog
 			}
 			result.append("\n");
 
+			long numberOfEvents = logFileFactory.getNumberOfEvents(selectedSource);
+			long sizeOnDisk = logFileFactory.getSizeOnDisk(selectedSource);
+			File dataFile = logFileFactory.getDataFile(selectedSource);
+			long timestamp = dataFile.lastModified();
+
 			result.append("Number of events: ")
-				.append(eventCountFormat.format(fileFactory.getNumberOfEvents(selectedSource))).append("\n");
-			result.append("Size: ")
-				.append(HumanReadable.getHumanReadableSize(fileFactory.getSizeOnDisk(selectedSource), true, false))
-				.append("bytes");
+				.append(eventCountFormat.format(numberOfEvents)).append("\n")
+				.append("Size: ")
+				.append(HumanReadable.getHumanReadableSize(sizeOnDisk, true, false))
+				.append("bytes\n")
+				.append("Timestamp: ")
+				.append(DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(timestamp)));
 
 			return result.toString();
 		}
@@ -436,6 +465,36 @@ public class OpenPreviousDialog
 					}
 				}
 
+			}
+		}
+
+		private class LastModifiedComparator implements Comparator<SourceIdentifier>
+		{
+			@Override
+			public int compare(SourceIdentifier o1, SourceIdentifier o2) {
+				if(o1 == o2)
+				{
+					return 0;
+				}
+				if(o1 == null)
+				{
+					return -1;
+				}
+				if(o2 == null)
+				{
+					return 1;
+				}
+				long t1 = logFileFactory.getDataFile(o1).lastModified();
+				long t2 = logFileFactory.getDataFile(o2).lastModified();
+				if(t1 == t2)
+				{
+					return 0;
+				}
+				if(t1 < t2)
+				{
+					return 1;
+				}
+				return -1;
 			}
 		}
 	}
