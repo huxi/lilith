@@ -289,7 +289,7 @@ public class MainFrame
 	private static final ViewActionsProcessor UPDATE_RECENT_FILES_ACTIONS_PROCESSOR = new UpdateRecentFilesProcessor();
 	private static final ViewActionsProcessor UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR = new UpdateWindowMenuProcessor();
 	private static final ViewContainerProcessor RESET_CONTAINER_PROCESSOR = new ResetContainerProcessor();
-	private final ViewContainerProcessor sourceTitleContainerProcessor=new SourceTitleContainerProcessor();
+	private final SourceTitleContainerProcessor sourceTitleContainerProcessor=new SourceTitleContainerProcessor();
 
 	private boolean usingThymeleaf;
 	/*
@@ -2464,27 +2464,6 @@ public class MainFrame
 		}
 	}
 
-	/**
-	 * Convenience method. Only use if a single call is made.
-	 *
-	 * Use ViewActions.resolveSourceTitle otherwise and retrieve
-	 * sourceNames, showingPrimaryIdentifier and showingSecondaryIdentifier
-	 * only once.
-	*/
-	private String resolveSourceTitle(ViewContainer container)
-	{
-		Map<String, String> sourceNames = null;
-		boolean showingPrimaryIdentifier = false;
-		boolean showingSecondaryIdentifier = false;
-		if(applicationPreferences != null)
-		{
-			sourceNames = applicationPreferences.getSourceNames();
-			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
-			showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
-		}
-		return ViewActions.resolveSourceTitle(container, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
-	}
-
 	public static void openUrl(URL url)
 	{
 		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
@@ -2593,23 +2572,22 @@ public class MainFrame
 
 	void showFrame(ViewContainer container)
 	{
-		String title = resolveSourceTitle(container);
 		ViewContainerFrame frame = new ViewContainerFrame(this, container);
 		frame.setShowingToolbar(applicationPreferences.isShowingToolbar());
 		frame.setShowingStatusBar(applicationPreferences.isShowingStatusBar());
-		frame.setTitle(title);
 		frame.setSize(800, 600);
-		Windows.showWindow(frame, null, false);
 
+		sourceTitleContainerProcessor.updateSourceNameSettings();
+		sourceTitleContainerProcessor.process(container);
+
+		Windows.showWindow(frame, null, false);
 		executeScrollToBottom(frame);
 	}
 
 	void showInternalFrame(ViewContainer container)
 	{
-		String title = resolveSourceTitle(container);
 		ViewContainerInternalFrame frame = new ViewContainerInternalFrame(this, container);
 		frame.setShowingStatusBar(applicationPreferences.isShowingStatusBar());
-		frame.setTitle(title);
 
 		int count = desktop.getComponentCount();
 		final int titleBarHeight = resolveInternalTitlebarHeight(/*frame*/);
@@ -2632,6 +2610,9 @@ public class MainFrame
 		}
 
 		viewActions.setViewContainer(container);
+
+		sourceTitleContainerProcessor.updateSourceNameSettings();
+		sourceTitleContainerProcessor.process(container);
 
 		frame.setVisible(true);
 		executeScrollToBottom(frame);
@@ -3052,6 +3033,7 @@ public class MainFrame
 		private void updateSourceTitles()
 		{
 			updateWindowMenus();
+			sourceTitleContainerProcessor.updateSourceNameSettings();
 			processViewContainers(sourceTitleContainerProcessor);
 		}
 	}
@@ -3241,6 +3223,19 @@ public class MainFrame
 	private class SourceTitleContainerProcessor
 			implements ViewContainerProcessor
 	{
+		private Map<String, String> sourceNames = null;
+		private boolean showingPrimaryIdentifier = false;
+		private boolean showingSecondaryIdentifier = false;
+
+		public void updateSourceNameSettings()
+		{
+			if(applicationPreferences != null)
+			{
+				sourceNames = applicationPreferences.getSourceNames();
+				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+				showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
+			}
+		}
 
 		@Override
 		public void process(ViewContainer<?> container)
@@ -3248,7 +3243,7 @@ public class MainFrame
 			ViewWindow window = container.resolveViewWindow();
 			if(window != null)
 			{
-				String title = resolveSourceTitle(container);
+				String title = ViewActions.resolveSourceTitle(container, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
 				window.setTitle(title);
 			}
 		}
