@@ -118,6 +118,6 @@ public class WindowsPanel
 		applicationPreferences.setAutoFocusingWindow(autoFocusCheckbox.isSelected());
 		applicationPreferences.setAutoClosing(autoCloseCheckbox.isSelected());
 		applicationPreferences.setShowingPrimaryIdentifier(showPrimaryIdentifierCheckbox.isSelected());
-		applicationPreferences.setShowingSecondaryIdentifier(showPrimaryIdentifierCheckbox.isSelected());
+		applicationPreferences.setShowingSecondaryIdentifier(showSecondaryIdentifierCheckbox.isSelected());
 	}
 }
