@@ -102,7 +102,7 @@ public enum HttpStatus
 	NO_RESPONSE(444, Type.CLIENT_ERROR, "No Response (Nginx)", Specification.NGINX),
 	RETRY_WITH(449, Type.CLIENT_ERROR, "Retry With", Specification.MICROSOFT),
 	BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS(450, Type.CLIENT_ERROR, "Blocked by Windows Parental Controls", Specification.MICROSOFT),
-	UNAVAILABLE_FOR_LEGAL_REASONS(451, Type.CLIENT_ERROR, "Unavailable For Legal Reasons (draft)", null /* draft-tbray-http-legally-restricted-status-04 */),
+	UNAVAILABLE_FOR_LEGAL_REASONS(451, Type.CLIENT_ERROR, "Unavailable For Legal Reasons (draft)", null /* https://tools.ietf.org/html/draft-ietf-httpbis-legally-restricted-status-02 */),
 	CLIENT_CLOSED_REQUEST(499, Type.CLIENT_ERROR, "Client Closed Request (Nginx)", Specification.NGINX),
 
 
@@ -264,7 +264,7 @@ public enum HttpStatus
 		MICROSOFT("Microsoft", "Microsoft extensions");
 
 		/*
-		http://tools.ietf.org/html/draft-tbray-http-legally-restricted-status-04
+		https://tools.ietf.org/html/draft-ietf-httpbis-legally-restricted-status-02
 		An HTTP Status Code to Report Legal Obstacles
 		*/
 
