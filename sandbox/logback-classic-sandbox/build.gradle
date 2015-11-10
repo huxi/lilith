@@ -2,6 +2,7 @@ apply from: '../../dependencyDefinitions.gradle'
 apply from: '../sandboxDefaults.gradle'
 
 apply plugin: 'application'
+apply plugin: 'idea'
 
 mainClassName = 'de.huxhorn.lilith.sandbox.LogbackClassicSandbox'
 

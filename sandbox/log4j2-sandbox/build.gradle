@@ -1,26 +1,8 @@
 apply from: '../../dependencyDefinitions.gradle'
+apply from: '../sandboxDefaults.gradle'
 
 apply plugin: 'application'
 apply plugin: 'idea'
-
-task wrapper(type: Wrapper) {
-	gradleVersion = '2.4'
-}
-
-project.ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
-project.ext.localSnapshotRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot")
-project.ext.localReleaseRepo = localReleaseRepoFile.toURL().toString()
-project.ext.localSnapshotRepo = localSnapshotRepoFile.toURL().toString()
-repositories {
-	maven {
-		url localReleaseRepo
-	}
-	maven {
-		url localSnapshotRepo
-	}
-	mavenCentral()
-	mavenLocal()
-}
 
 archivesBaseName = 'log4j2-sandbox'
 mainClassName = 'de.huxhorn.lilith.sandbox.Log4j2Sandbox'

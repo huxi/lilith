@@ -3,16 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.huxhorn.lilith</groupId>
 	<artifactId>de.huxhorn.lilith.sandbox.logback.access</artifactId>
-	<version><!-- LV -->0.9.43-SNAPSHOT</version>
+	<version><!-- LV -->8.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Logback Access Sandbox</name>
 	<description>This file is part of Lilith. It's a logback-access sandbox.</description>
 	<url>http://lilith.huxhorn.de/projects/${project.artifactId}/</url>
 	
 	<properties>
-		<slf4jVersion>1.7.5</slf4jVersion>
-		<logbackVersion>1.1.0</logbackVersion>
-		<lilithVersion>0.9.44-SNAPSHOT</lilithVersion>
+		<slf4jVersion>1.7.12</slf4jVersion>
+		<logbackVersion>1.1.3</logbackVersion>
+		<lilithVersion>8.0.0-SNAPSHOT</lilithVersion>
 	</properties>
 	<repositories>
 		<repository>

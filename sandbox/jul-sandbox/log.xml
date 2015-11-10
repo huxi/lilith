@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2011-07-10T19:11:32</date>
-  <millis>1310317892812</millis>
+  <date>2015-11-10T15:38:31</date>
+  <millis>1447166311699</millis>
   <sequence>0</sequence>
   <logger>de.huxhorn.lilith.sandbox.JulSandbox</logger>
   <level>INFO</level>
@@ -13,8 +13,8 @@
   <message>Args Foobar</message>
 </record>
 <record>
-  <date>2011-07-10T19:11:32</date>
-  <millis>1310317892906</millis>
+  <date>2015-11-10T15:38:31</date>
+  <millis>1447166311730</millis>
   <sequence>1</sequence>
   <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
   <level>INFO</level>
@@ -24,8 +24,8 @@
   <message>Foo!</message>
 </record>
 <record>
-  <date>2011-07-10T19:11:32</date>
-  <millis>1310317892906</millis>
+  <date>2015-11-10T15:38:31</date>
+  <millis>1447166311732</millis>
   <sequence>2</sequence>
   <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
   <level>WARNING</level>
@@ -38,28 +38,28 @@
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
       <method>createRuntimeException</method>
-      <line>66</line>
+      <line>38</line>
     </frame>
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
       <method>access$000</method>
-      <line>7</line>
+      <line>6</line>
     </frame>
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
       <method>execute</method>
-      <line>47</line>
+      <line>19</line>
     </frame>
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
       <method>main</method>
-      <line>105</line>
+      <line>77</line>
     </frame>
   </exception>
 </record>
 <record>
-  <date>2011-07-10T19:11:32</date>
-  <millis>1310317892906</millis>
+  <date>2015-11-10T15:38:31</date>
+  <millis>1447166311735</millis>
   <sequence>3</sequence>
   <logger>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</logger>
   <level>SEVERE</level>
@@ -72,22 +72,22 @@
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
       <method>createRuntimeException</method>
-      <line>66</line>
+      <line>38</line>
     </frame>
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
       <method>access$000</method>
-      <line>7</line>
+      <line>6</line>
     </frame>
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox$InnerClass</class>
       <method>execute</method>
-      <line>48</line>
+      <line>20</line>
     </frame>
     <frame>
       <class>de.huxhorn.lilith.sandbox.JulSandbox</class>
       <method>main</method>
-      <line>105</line>
+      <line>77</line>
     </frame>
   </exception>
 </record>
