@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -62,10 +63,10 @@ public class WhitelistObjectInputStream
 
 	private final Set<String> whitelist;
 	private final Set<String> unauthorized;
-	private final boolean dryRun;
+	private final boolean dryRunning;
 
 	/**
-	 * Creates a WhitelistObjectInputStream with dryRun = false.
+	 * Creates a WhitelistObjectInputStream with dryRunning = false.
 	 *
 	 * @param in the InputStream.
 	 * @param whitelist whitelist of classes that may be deserialized.
@@ -82,14 +83,14 @@ public class WhitelistObjectInputStream
 	 *
 	 * @param in the InputStream.
 	 * @param whitelist whitelist of classes that may be deserialized.
-	 * @param dryRun if true, only warnings are logged but classes are serialized anyway.
+	 * @param dryRunning if true, only warnings are logged but classes are serialized anyway.
 	 * @throws IOException if an I/O error occurs while reading stream header
 	 */
-	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist, boolean dryRun)
+	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist, boolean dryRunning)
 		throws IOException
 	{
 		super(in);
-		this.dryRun = dryRun;
+		this.dryRunning = dryRunning;
 		Objects.requireNonNull(whitelist, "whitelist must not be null!");
 		this.whitelist = new HashSet<>(whitelist);
 		this.unauthorized = new HashSet<>();
@@ -111,11 +112,29 @@ public class WhitelistObjectInputStream
 				if (logger.isWarnEnabled()) logger.warn("Unauthorized deserialization attempt! {}", className);
 				unauthorized.add(className);
 			}
-			if(!dryRun)
+			if(!dryRunning)
 			{
-				throw new InvalidClassException("Unauthorized deserialization attempt!",desc.getName());
+				throw new InvalidClassException(desc.getName(), "Unauthorized deserialization attempt!");
 			}
 		}
 		return super.resolveClass(desc);
+	}
+
+	public Set<String> getUnauthorized()
+	{
+		return Collections.unmodifiableSet(unauthorized);
+	}
+
+	public boolean isDryRunning()
+	{
+		return dryRunning;
+	}
+
+	@Override
+	public String toString() {
+		return "WhitelistObjectInputStream{" +
+				"whitelist=" + whitelist +
+				", dryRunning=" + dryRunning +
+				'}';
 	}
 }
