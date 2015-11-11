@@ -80,6 +80,10 @@ All notable changes to this project will be documented in this file.
 
 ### Security
 - Keep your Java version up-to-date.
+- Implemented whitelisting of classes allowed for deserialization to circumvent issues described in [AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/).
+  - [Apache Commons statement to widespread Java object de-serialisation vulnerability](https://blogs.apache.org/foundation/entry/apache_commons_statement_to_widespread)
+  - [What Do WebLogic, WebSphere, JBoss, Jenkins, OpenNMS, and Your Application Have in Common? This Vulnerability.](http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/)
+  - [Look-ahead Java deserialization](http://www.ibm.com/developerworks/library/se-lookahead/)
 
 
 ---
