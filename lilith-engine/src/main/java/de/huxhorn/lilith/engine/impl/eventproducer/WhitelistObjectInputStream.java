@@ -69,7 +69,7 @@ public class WhitelistObjectInputStream
 	 *
 	 * @param in the InputStream.
 	 * @param whitelist whitelist of classes that may be deserialized.
-	 * @throws IOException
+	 * @throws IOException if an I/O error occurs while reading stream header
 	 */
 	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist)
 			throws IOException
@@ -83,7 +83,7 @@ public class WhitelistObjectInputStream
 	 * @param in the InputStream.
 	 * @param whitelist whitelist of classes that may be deserialized.
 	 * @param dryRun if true, only warnings are logged but classes are serialized anyway.
-	 * @throws IOException
+	 * @throws IOException if an I/O error occurs while reading stream header
 	 */
 	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist, boolean dryRun)
 		throws IOException
