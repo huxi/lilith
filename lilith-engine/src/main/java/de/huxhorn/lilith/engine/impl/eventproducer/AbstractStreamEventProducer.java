@@ -139,9 +139,16 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 						addEvent(event);
 					}
 				}
-				catch(Throwable e)
+				catch(IOException e)
 				{
 					if(logger.isDebugEnabled()) logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
+					addEvent(null);
+					IOUtilities.interruptIfNecessary(e);
+					break;
+				}
+				catch(Throwable e)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 					addEvent(null);
 					IOUtilities.interruptIfNecessary(e);
 					break;

@@ -51,6 +51,7 @@ class WhitelistObjectInputStreamSpec extends Specification
         Object read = instance.readObject()
 
         then:
+        instance.dryRunning
         read == foo
         instance.unauthorized.contains(Foo.name)
     }
@@ -67,6 +68,7 @@ class WhitelistObjectInputStreamSpec extends Specification
         Object read = instance.readObject()
 
         then:
+        instance.dryRunning
         read == foo
         !instance.unauthorized.contains(Foo.name)
     }
@@ -83,9 +85,12 @@ class WhitelistObjectInputStreamSpec extends Specification
         instance.readObject()
 
         then:
-        InvalidClassException ex = thrown()
-        ex.message == Foo.name + '; Unauthorized deserialization attempt!'
-        ex.classname == Foo.name
+        !instance.dryRunning
+//        InvalidClassException ex = thrown()
+//        ex.message == Foo.name + '; Unauthorized deserialization attempt!'
+//        ex.classname == Foo.name
+        ClassNotFoundException ex = thrown();
+        ex.message == 'Unauthorized deserialization attempt! '+Foo.name
         instance.unauthorized.contains(Foo.name)
     }
 
@@ -101,6 +106,7 @@ class WhitelistObjectInputStreamSpec extends Specification
         Object read = instance.readObject()
 
         then:
+        !instance.dryRunning
         read == foo
         !instance.unauthorized.contains(Foo.name)
     }
