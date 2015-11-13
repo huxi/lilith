@@ -30,14 +30,14 @@ in either sulky or lilith.
 #####
 
 Change into sulky root.
-gradlew --no-daemon -Drelease=true -C rebuild
+gradlew --no-daemon -Drelease=true --recompile-scripts
 http://forums.gradle.org/gradle/topics/standard_in_when_using_the_daemon
 http://issues.gradle.org//browse/GRADLE-2310
 
 #####
 
 Change into lilith root.
-gradlew --no-daemon -Drelease=true -C rebuild
+gradlew --no-daemon -Drelease=true --recompile-scripts
 
 gradlew -PremoteUsername=huxi -PremotePassword=... syncStaging
 
