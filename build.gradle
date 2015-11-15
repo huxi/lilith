@@ -322,8 +322,7 @@ project(':lilith') {
 - http://docs.oracle.com/javase/8/docs/technotes/guides/deploy/package_for_mac.html
 - https://developer.apple.com/library/mac/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Optimizing/Optimizing.html
 */
-	
-	if(System.properties.'release' || System.properties.'prerelease') {
+	if(!System.properties.'ignoreGit' && (System.properties.'release' || System.properties.'prerelease')) {
 		project.git.requireClean = true
 		processResources.dependsOn checkGitState
 	}
