@@ -11,32 +11,32 @@ Write release notes and changes (README.txt) for sf.net upload.
 
 #####
 
-//Commit sulky with comment "x.x.x release"
-Tag sulky with comment "x.x.x release".
-git tag -s vx.x.x -m "x.x.x release"
-
-#####
-
-//Commit lilith with comment "x.x.x release"
-Tag lilith with comment "x.x.x release".
-git tag -s vx.x.x -m "x.x.x release"
-
-#####
-
 Execute
 gradlew cleanStaging
 in either sulky or lilith.
 
 #####
 
+Check that both sulky repository and lilith repository are clean.
+git status
+
+#####
+
 Change into sulky root.
+
+gradlew clean
+
 gradlew --no-daemon -Drelease=true --recompile-scripts
+
 http://forums.gradle.org/gradle/topics/standard_in_when_using_the_daemon
 http://issues.gradle.org//browse/GRADLE-2310
 
 #####
 
 Change into lilith root.
+
+gradlew clean
+
 gradlew --no-daemon -Drelease=true --recompile-scripts
 
 gradlew -PremoteUsername=huxi -PremotePassword=... syncStaging
@@ -45,6 +45,16 @@ gradlew -PremoteUsername=huxi -PremotePassword=... syncStaging
 
 Validate staged files and release them:
 https://oss.sonatype.org
+
+#####
+
+Tag sulky with comment "x.x.x release".
+git tag -s vx.x.x -m "x.x.x release"
+
+#####
+
+Tag lilith with comment "x.x.x release".
+git tag -s vx.x.x -m "x.x.x release"
 
 #####
 
@@ -90,10 +100,6 @@ git push --tags bitbucket
 Submit info to Freecode
 http://freecode.com/projects/lilith-viewer/releases
 Username: huxhorn
-
-#####
-
-Create new version (and default) and milestone in Trac.
 
 #####
 
