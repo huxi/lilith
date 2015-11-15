@@ -25,12 +25,12 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [8.0.0] - 2015-05-xx
+## [8.0.0] - 2015-11-15
 
 ### Added
 - `CHANGELOG.md` in the spirit of [Keep a CHANGELOG](http://keepachangelog.com/).
 - Rough `TODO.md` listing some things that should be done.
-- Error dialog if Lilith is started with Java prior to 1.8.0_66.
+- Error dialog if Lilith is started with Java prior to `1.8.0_66`.
 - Added "Clear view" shortcut Cmd-K. K for clear.
 - Added lilith.version.bundle to system properties.
 - Displaying release notes of "newzest version" if already available.
@@ -40,8 +40,8 @@ All notable changes to this project will be documented in this file.
 - Requires Java 8.
 - left-aligned most table cells.
 - Better view icons in `Window` menu. They now represent the state of the view, e.g. whether the connection is still alive and if a window of the view is already open.
-- Using EventQueue instead of SwingUtilities.
-- Using java.time.format instead of SimpleDateFormat or joda-time.
+- Using `EventQueue` instead of `SwingUtilities`.
+- Using `java.time.format` instead of `SimpleDateFormat` or `joda-time`.
 - Renamed "Previous tab" to "Previous view" and "Next tab" to "Next view".
 - Changed "Next view" shortcut from Cmd-K to Cmd-J and "Previous view" shortcut from Cmd-J to Cmd-shift-J.
 - Switched "Next view" and "Previous view" in "View" menu.
@@ -79,7 +79,7 @@ All notable changes to this project will be documented in this file.
 - SLF4J 1.7.13, Logback 1.1.3, Spring 4.2.2, Groovy 2.4.5, commons-codec 1.9, commons-lang3 3.4, httpclient 4.5.1, httpcore 4.4.4, jackson 2.6.3, log4j2 2.4.1, aspectj 1.8.7, Thymeleaf 2.1.4, substance 7.3, protobuf 2.6.1, jcommander 1.48, glazedlists 1.9.1, servlet-api 3.1.0, flying-saucer 9.0.6, cglib 3.1, rrd4j 2.2.1 
 
 ### Security
-- Keep your Java version up-to-date.
+- Keep your Java version up-to-date. Lilith now demands the latest Java version.
 - Implemented whitelisting of classes allowed for deserialization to circumvent issues described in [AppSecCali 2015: Marshalling Pickles - how deserializing objects will ruin your day](http://frohoff.github.io/appseccali-marshalling-pickles/).
   - [Apache Commons statement to widespread Java object de-serialisation vulnerability](https://blogs.apache.org/foundation/entry/apache_commons_statement_to_widespread)
   - [What Do WebLogic, WebSphere, JBoss, Jenkins, OpenNMS, and Your Application Have in Common? This Vulnerability.](http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/)
