@@ -23,6 +23,9 @@ import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Frame;
+import java.awt.Point;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
@@ -52,6 +55,7 @@ public class ViewContainerInternalFrame
 		setMaximizable(true);
 		setIconifiable(true);
 		addInternalFrameListener(new CleanupWindowChangeListener());
+		addComponentListener(new MovementComponentListener());
 	}
 
 	@Override
@@ -162,7 +166,7 @@ public class ViewContainerInternalFrame
 		if(logger.isInfoEnabled()) logger.info("Closed InternalFrame...");
 	}
 
-	class CleanupWindowChangeListener
+	private class CleanupWindowChangeListener
 		implements InternalFrameListener
 	{
 		public void internalFrameClosing(InternalFrameEvent e)
@@ -207,4 +211,63 @@ public class ViewContainerInternalFrame
 		}
 	}
 
+	private class MovementComponentListener
+		implements ComponentListener
+	{
+
+		@Override
+		public void componentResized(ComponentEvent e)
+		{
+			if(logger.isDebugEnabled()) logger.debug("componentResized: {}", e);
+			correctLocation(e);
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e)
+		{
+			if(logger.isDebugEnabled()) logger.debug("componentMoved: {}", e);
+			correctLocation(e);
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e)
+		{
+			if(logger.isDebugEnabled()) logger.debug("componentShown: {}", e);
+			correctLocation(e);
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e)
+		{
+			if(logger.isDebugEnabled()) logger.debug("componentHidden: {}", e);
+		}
+
+		private void correctLocation(ComponentEvent e)
+		{
+			Component component = e.getComponent();
+			Point location = component.getLocation();
+			//Rectangle bounds = component.getBounds();
+			//Container parent = component.getParent();
+			//Rectangle parentBounds = parent.getBounds();
+			//if(logger.isWarnEnabled()) logger.warn("Bounds={}, parentBounds={}", bounds, parentBounds);
+			int x = (int) location.getX();
+			int y = (int) location.getY();
+			boolean changed = false;
+			if(x<0)
+			{
+				x = 0;
+				changed = true;
+			}
+			if(y<0)
+			{
+				y = 0;
+				changed = true;
+			}
+			if(changed)
+			{
+				if(logger.isDebugEnabled()) logger.debug("Correcting location to {}, {}..", x, y);
+				component.setLocation(x, y);
+			}
+		}
+	}
 }

@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Fixed
-- Nothing.
+- Preventing negative location of internal frames. This could cause them to become unreachable.
 
 ### Security
 - Nothing.
