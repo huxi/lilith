@@ -1,12 +1,9 @@
 package de.huxhorn.lilith.sandbox;
 
-import org.jgroups.ChannelException;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,14 +16,14 @@ public class JGroupsSandbox
 	public static void main(String args[])
 		throws Exception
 	{
-		final Logger logger = LoggerFactory.getLogger(JGroupsSandbox.class);
-
 		new JGroupsSandbox().start();
 	}
 
 	void start()
-		throws ChannelException
+			throws Exception
 	{
+		// https://issues.jboss.org/browse/JGRP-1919
+		// *sigh*
 		userName = System.getProperty("user.name");
 		channel = new JChannel();
 		channel.setReceiver(new MyReceiver());
@@ -45,7 +42,13 @@ public class JGroupsSandbox
 			{
 				System.out.print("> ");
 				System.out.flush();
-				String line = in.readLine().toLowerCase();
+				String line = in.readLine();
+				if(line == null)
+				{
+					throw new RuntimeException("Could not read next line. Using 'gradle run'? Add --no-daemon option to your call.");
+				}
+
+				line = line.toLowerCase();
 				if(line.startsWith("quit") || line.startsWith("exit"))
 				{
 					break;
@@ -57,6 +60,7 @@ public class JGroupsSandbox
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				break;
 			}
 		}
 	}

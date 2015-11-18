@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%-5level - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="MultiplexClassicCompressed"
+	          class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
+		<Compressing>true</Compressing>
+		<ApplicationIdentifier>Lilith-Compressed</ApplicationIdentifier>
+		<ReconnectionDelay>30</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+		<RemoteHosts>localhost</RemoteHosts>
+	</appender>
+
+	<appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
+		<RemoteHost>localhost</RemoteHost>
+		<Port>4560</Port>
+		<ReconnectionDelay>170</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="MultiplexClassicCompressed"/>
+		<appender-ref ref="LogbackClassic"/>
+	</root>
+
+	<logger name="de.huxhorn.lilith.slf4j" level="ALL"/>
+	<logger name="org.jgroups" level="INFO"/>
+</configuration>
+
