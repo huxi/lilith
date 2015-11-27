@@ -266,7 +266,11 @@ public class LoggingEventProtobufEncoder
 			return null;
 		}
 		LoggingProto.Message.Builder messageBuilder = LoggingProto.Message.newBuilder();
-		messageBuilder.setMessagePattern(message.getMessagePattern());
+		String pattern = message.getMessagePattern();
+		if(pattern != null)
+		{
+			messageBuilder.setMessagePattern(pattern);
+		}
 
 		String[] arguments = message.getArguments();
 		if(arguments != null)
