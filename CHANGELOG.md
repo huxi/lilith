@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - Preventing negative location of internal frames. This could cause them to become unreachable.
+- Added some more classes to deserialization whitelist. The missing classes prevented deserialization of some log4j2 events. This fixes issue #21.
 
 ### Security
 - Nothing.
