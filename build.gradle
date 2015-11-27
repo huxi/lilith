@@ -153,7 +153,20 @@ allprojects {
 
 	jacoco {
 		toolVersion = '0.7.5.201505241946'
-	}	
+	}
+	
+	task printConfig << {
+		configurations.each { config ->
+			println "Configuration " + config.name
+				config.allArtifacts.each {
+					println "\t${it}"
+					println "\t\t${it.name}"
+					println "\t\t${it.file}"
+					println "\t\t${it.buildDependencies.values}"
+				}
+			println "------"
+		}
+	}
 }
 
 subprojects {
