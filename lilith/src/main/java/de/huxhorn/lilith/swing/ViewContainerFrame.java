@@ -25,7 +25,11 @@ import javax.swing.JToolBar;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Frame;
+import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -77,7 +81,74 @@ public class ViewContainerFrame
 		{
 			setState(Frame.NORMAL);
 		}
+		adjustBounds(this);
 		toFront();
+	}
+
+	private void adjustBounds(Component component)
+	{
+		GraphicsConfiguration gc = component.getGraphicsConfiguration();
+		if(gc == null)
+		{
+			if(logger.isWarnEnabled()) logger.warn("component.getGraphicsConfiguration() returned null!");
+			return;
+		}
+		Rectangle componentBounds = component.getBounds();
+
+		int componentX = (int) componentBounds.getX();
+		int componentY = (int) componentBounds.getY();
+		int componentWidth = (int) componentBounds.getWidth();
+		int componentHeight = (int) componentBounds.getHeight();
+		boolean adjusted = false;
+
+		Rectangle desktopBounds = gc.getBounds();
+		Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
+
+		int usableWidth = (int)(desktopBounds.getWidth()-screenInsets.left-screenInsets.right);
+		if(componentWidth > usableWidth)
+		{
+			componentWidth = usableWidth;
+			adjusted = true;
+		}
+
+		int usableHeight = (int)(desktopBounds.getHeight()-screenInsets.top-screenInsets.bottom);
+		if(componentHeight > usableHeight)
+		{
+			componentHeight = usableHeight;
+			adjusted = true;
+		}
+
+		int usableX = (int)(desktopBounds.getX()+screenInsets.left);
+		if(componentX < usableX)
+		{
+			componentX = usableX;
+			adjusted = true;
+		}
+		else if(usableX + usableWidth < componentX + componentWidth)
+		{
+			componentX = usableX + usableWidth - componentWidth;
+			adjusted = true;
+		}
+
+
+		int usableY = (int)(desktopBounds.getY()+screenInsets.top);
+		if(componentY < usableY)
+		{
+			componentY = usableY;
+			adjusted = true;
+		}
+		else if(usableY + usableHeight < componentY + componentHeight)
+		{
+			componentY = usableY + usableHeight - componentHeight;
+			adjusted = true;
+		}
+
+		if(adjusted)
+		{
+			Rectangle newBounds = new Rectangle(componentX, componentY, componentWidth, componentHeight);
+			component.setBounds(newBounds);
+			if(logger.isDebugEnabled()) logger.debug("Adjusted bounds from {} to {}.", componentBounds, newBounds);
+		}
 	}
 
 	public void minimizeWindow()

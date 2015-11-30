@@ -22,10 +22,9 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Frame;
-import java.awt.Point;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.Rectangle;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
@@ -55,7 +54,6 @@ public class ViewContainerInternalFrame
 		setMaximizable(true);
 		setIconifiable(true);
 		addInternalFrameListener(new CleanupWindowChangeListener());
-		addComponentListener(new MovementComponentListener());
 	}
 
 	@Override
@@ -96,6 +94,7 @@ public class ViewContainerInternalFrame
 			mainFrame.setState(Frame.NORMAL);
 		}
 		mainFrame.toFront();
+		adjustBounds(this);
 		try
 		{
 			setIcon(false);
@@ -107,6 +106,77 @@ public class ViewContainerInternalFrame
 			if(logger.isWarnEnabled()) logger.warn("Veto!!", ex);
 		}
 	}
+
+	private void adjustBounds(JInternalFrame component)
+	{
+		if(component.isMaximum())
+		{
+			// don't adjust if maximized
+			return;
+		}
+		Rectangle componentBounds = component.getBounds();
+
+		Container parent = component.getParent();
+		if(parent == null)
+		{
+			return;
+		}
+		Rectangle parentBounds = parent.getBounds();
+
+		int componentX = (int) componentBounds.getX();
+		int componentY = (int) componentBounds.getY();
+		int componentWidth = (int) componentBounds.getWidth();
+		int componentHeight = (int) componentBounds.getHeight();
+		boolean adjusted = false;
+
+
+		int usableWidth = (int)(parentBounds.getWidth());
+		if(componentWidth > usableWidth)
+		{
+			componentWidth = usableWidth;
+			adjusted = true;
+		}
+
+		int usableHeight = (int)(parentBounds.getHeight());
+		if(componentHeight > usableHeight)
+		{
+			componentHeight = usableHeight;
+			adjusted = true;
+		}
+
+		int usableX = 0;
+		if(componentX < usableX)
+		{
+			componentX = usableX;
+			adjusted = true;
+		}
+		else if(usableX + usableWidth < componentX + componentWidth)
+		{
+			componentX = usableX + usableWidth - componentWidth;
+			adjusted = true;
+		}
+
+
+		int usableY = 0;
+		if(componentY < usableY)
+		{
+			componentY = usableY;
+			adjusted = true;
+		}
+		else if(usableY + usableHeight < componentY + componentHeight)
+		{
+			componentY = usableY + usableHeight - componentHeight;
+			adjusted = true;
+		}
+
+		if(adjusted)
+		{
+			Rectangle newBounds = new Rectangle(componentX, componentY, componentWidth, componentHeight);
+			component.setBounds(newBounds);
+			if(logger.isDebugEnabled()) logger.debug("Adjusted bounds from {} to {}.", componentBounds, newBounds);
+		}
+	}
+
 
 	public void minimizeWindow()
 	{
@@ -208,66 +278,6 @@ public class ViewContainerInternalFrame
 		public void internalFrameDeactivated(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameDeactivated: {}", e.getInternalFrame());
-		}
-	}
-
-	private class MovementComponentListener
-		implements ComponentListener
-	{
-
-		@Override
-		public void componentResized(ComponentEvent e)
-		{
-			if(logger.isDebugEnabled()) logger.debug("componentResized: {}", e);
-			correctLocation(e);
-		}
-
-		@Override
-		public void componentMoved(ComponentEvent e)
-		{
-			if(logger.isDebugEnabled()) logger.debug("componentMoved: {}", e);
-			correctLocation(e);
-		}
-
-		@Override
-		public void componentShown(ComponentEvent e)
-		{
-			if(logger.isDebugEnabled()) logger.debug("componentShown: {}", e);
-			correctLocation(e);
-		}
-
-		@Override
-		public void componentHidden(ComponentEvent e)
-		{
-			if(logger.isDebugEnabled()) logger.debug("componentHidden: {}", e);
-		}
-
-		private void correctLocation(ComponentEvent e)
-		{
-			Component component = e.getComponent();
-			Point location = component.getLocation();
-			//Rectangle bounds = component.getBounds();
-			//Container parent = component.getParent();
-			//Rectangle parentBounds = parent.getBounds();
-			//if(logger.isWarnEnabled()) logger.warn("Bounds={}, parentBounds={}", bounds, parentBounds);
-			int x = (int) location.getX();
-			int y = (int) location.getY();
-			boolean changed = false;
-			if(x<0)
-			{
-				x = 0;
-				changed = true;
-			}
-			if(y<0)
-			{
-				y = 0;
-				changed = true;
-			}
-			if(changed)
-			{
-				if(logger.isDebugEnabled()) logger.debug("Correcting location to {}, {}..", x, y);
-				component.setLocation(x, y);
-			}
 		}
 	}
 }
