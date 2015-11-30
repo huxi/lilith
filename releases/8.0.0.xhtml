@@ -115,6 +115,20 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		
 		<h2>Known Issues</h2>
 		<ul>
+			<li>Garbled icons on Mac OS X 10.11. This is a bug in OS X. Supposedly #23164356.<br/>
+			The following text is written to stdout if this bug bites:
+				<pre>
+filter:2:47: error: excess elements in vector initializer
+  return img.a * mix(c0, c1, dot(img.rgb, vec3(0,000000e+00, 0,000000e+00, 0,000000e+00)));
+                                              ^                ~~~~~~~~~~
+filter:1:6: error: non-void function should return a value
+vec4 _falseColor(vec4 img, vec4 c0, vec4 c1) {
+     ^</pre>
+				<ul>
+					<li><a href="https://trac.filezilla-project.org/ticket/10669">Filezilla ticket</a></li>
+					<li><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=479590">Eclipse ticket</a></li>
+				</ul>
+			</li>
 			<li>Flying Saucer related issues:
 				<ul>
 					<li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
