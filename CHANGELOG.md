@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Make frames entirely visible after selecting them from the Windows Menu. 
 - Added some more classes to deserialization whitelist. The missing classes prevented deserialization of some log4j2 events. This fixes issue #21.
 - Fixed NPE in LoggingEventProtobufEncoder. This fixes issue #22.
+- Being less strict about the required Java version. It seems certain Linux distros have a Java version string like `1.8.0_66-internal` which is - strictly speaking - smaller than `1.8.0_66` since `-internal' is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.
 
 ### Security
 - Nothing.
