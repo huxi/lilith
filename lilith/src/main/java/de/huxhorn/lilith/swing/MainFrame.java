@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
@@ -170,11 +171,10 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -3764,10 +3764,10 @@ public class MainFrame
 					if (compare < 0)
 					{
 						String version = snapshotVersionBundle.getVersion();
-						Date d = new Date(snapshotVersionBundle.getTimestamp());
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
-						String message = "New snapshot: " + version + "-" + format.format(d);
+						long timestamp = snapshotVersionBundle.getTimestamp();
+						String timestampString =
+							DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(timestamp));
+						String message = "New snapshot: " + version + " - " + timestampString;
 						String changes = retrieveChanges(version);
 						EventQueue.invokeLater(new ShowUpdateDialogRunnable(message, changes));
 						return;

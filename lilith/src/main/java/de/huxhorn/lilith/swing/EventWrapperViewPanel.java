@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.DateTimeFormatters;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
@@ -84,9 +85,8 @@ import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -798,8 +798,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			if(logger.isDebugEnabled()) logger.debug("Created errors directory '{}'.", errorPath);
 		}
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmssSSSZ");
-		String filename = format.format(new Date());
+		String filename = DateTimeFormatters.COMPACT_DATETIME_IN_SYSTEM_ZONE_T.format(Instant.now());
 		File errorFile = new File(errorPath, filename);
 		FileOutputStream fos = null;
 		try

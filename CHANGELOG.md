@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 - Added `TemporalAccessor` support to `SafeString`.
 
 ### Changed
-- Nothing.
+- Using `java.time.format` instead of `SimpleDateFormat`.
 
 ### Deprecated
 - Nothing.

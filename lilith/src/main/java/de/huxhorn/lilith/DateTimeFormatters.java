@@ -29,4 +29,8 @@ public class DateTimeFormatters
 	public static final DateTimeFormatter TIME_IN_SYSTEM_ZONE =
 			DateTimeFormatter.ofPattern("HH:mm:ss.SSS")
 					.withZone(ZoneId.systemDefault());
+
+	public static final DateTimeFormatter COMPACT_DATETIME_IN_SYSTEM_ZONE_T =
+			DateTimeFormatter.ofPattern("yyyyMMdd\'T\'HHmmssSSS")
+					.withZone(ZoneId.systemDefault());
 }
