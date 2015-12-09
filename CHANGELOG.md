@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [8.0.1][unreleased] - TBD
 
 ### Added
-- Nothing.
+- Added `TemporalAccessor` support to `SafeString`.
 
 ### Changed
 - Nothing.
