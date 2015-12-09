@@ -2,7 +2,6 @@ target
 build
 .gradle
 .DS_Store
-buildNumber.properties
 *.iml
 *.iws
 *.ipr
