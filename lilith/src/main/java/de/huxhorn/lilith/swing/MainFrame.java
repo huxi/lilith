@@ -3735,50 +3735,56 @@ public class MainFrame
 		public void run()
 		{
 			VersionBundle releaseVersionBundle = retrieveVersion(RELEASE_VERSION_URL);
-			int compare = Lilith.APP_VERSION_BUNDLE.compareTo(releaseVersionBundle);
-			if(compare<0)
+			if(releaseVersionBundle != null)
 			{
-				String version = releaseVersionBundle.getVersion();
-				String message = "New release: " + version;
-				String changes = retrieveChanges(version);
-				EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
-				return;
-			}
+				int compare = Lilith.APP_VERSION_BUNDLE.compareTo(releaseVersionBundle);
+				if (compare < 0)
+				{
+					String version = releaseVersionBundle.getVersion();
+					String message = "New release: " + version;
+					String changes = retrieveChanges(version);
+					EventQueue.invokeLater(new ShowUpdateDialogRunnable(message, changes));
+					return;
+				}
 
-			if(!Lilith.APP_SNAPSHOT && compare>0)
-			{
-				showNewzestVersion("release", releaseVersionBundle);
-				return;
+				if (!Lilith.APP_SNAPSHOT && compare > 0)
+				{
+					showNewzestVersion("release", releaseVersionBundle);
+					return;
+				}
 			}
 
 			if(Lilith.APP_SNAPSHOT || checkSnapshot)
 			{
 				// check for snapshot if either checking is enabled or we are already using a snapshot
 				VersionBundle snapshotVersionBundle = retrieveVersion(SNAPSHOT_VERSION_URL);
-				compare = Lilith.APP_VERSION_BUNDLE.compareTo(snapshotVersionBundle);
-				if(compare<0)
+				if(snapshotVersionBundle != null)
 				{
-					String version = snapshotVersionBundle.getVersion();
-					Date d=new Date(snapshotVersionBundle.getTimestamp());
-					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+					int compare = Lilith.APP_VERSION_BUNDLE.compareTo(snapshotVersionBundle);
+					if (compare < 0)
+					{
+						String version = snapshotVersionBundle.getVersion();
+						Date d = new Date(snapshotVersionBundle.getTimestamp());
+						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
-					String message = "New snapshot: " + version + "-" + format.format(d);
-					String changes = retrieveChanges(version);
-					EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
-					return;
-				}
+						String message = "New snapshot: " + version + "-" + format.format(d);
+						String changes = retrieveChanges(version);
+						EventQueue.invokeLater(new ShowUpdateDialogRunnable(message, changes));
+						return;
+					}
 
-				if(compare>0)
-				{
-					showNewzestVersion("snapshot", snapshotVersionBundle);
-					return;
+					if (compare > 0)
+					{
+						showNewzestVersion("snapshot", snapshotVersionBundle);
+						return;
+					}
 				}
 			}
 
 			if(showAlways)
 			{
 				String changes = retrieveChanges(Lilith.APP_VERSION_BUNDLE.getVersion());
-				EventQueue.invokeLater(new ShowUpdateDialog(null /* i.e. up to date */, changes));
+				EventQueue.invokeLater(new ShowUpdateDialogRunnable(null /* i.e. up to date */, changes));
 			}
 		}
 
@@ -3792,17 +3798,17 @@ public class MainFrame
 
 				changes = retrieveChanges(version);
 			}
-			EventQueue.invokeLater(new ShowUpdateDialog(message, changes));
+			EventQueue.invokeLater(new ShowUpdateDialogRunnable(message, changes));
 		}
 	}
 
-	private class ShowUpdateDialog
+	private class ShowUpdateDialogRunnable
 		implements Runnable
 	{
 		private String message;
 		private String changes;
 
-		public ShowUpdateDialog(String message, String changes)
+		public ShowUpdateDialogRunnable(String message, String changes)
 		{
 			this.message = message;
 			this.changes = changes;
