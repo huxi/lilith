@@ -1,14 +1,25 @@
 package de.huxhorn.lilith.sandbox;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.apache.logging.log4j.ThreadContext;
-import org.apache.logging.log4j.message.FormattedMessage;
+import org.apache.logging.log4j.message.MapMessage;
 import org.apache.logging.log4j.message.Message;
+import org.apache.logging.log4j.message.MessageFormatMessage;
+import org.apache.logging.log4j.message.ObjectArrayMessage;
+import org.apache.logging.log4j.message.ObjectMessage;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.message.SimpleMessage;
+import org.apache.logging.log4j.message.StringFormattedMessage;
+import org.apache.logging.log4j.message.StructuredDataId;
+import org.apache.logging.log4j.message.StructuredDataMessage;
+import org.apache.logging.log4j.message.ThreadDumpMessage;
 import org.apache.logging.log4j.util.MessageSupplier;
 
 public class Log4j2Sandbox
@@ -105,6 +116,40 @@ public class Log4j2Sandbox
 			logger.debug(GLOBAL_BAR_MARKER, "global Bar");
 			logger.debug(GLOBAL_FOOBAR_MARKER, "global Foobar");
 
+			// see https://issues.apache.org/jira/browse/LOG4J2-1226
+
+			// broken logger.debug(new FormattedMessage("formatted message {} {}", new Object[]{"foo", "bar"}));
+			// broken logger.debug(new FormattedMessage("formatted message %s %s", new Object[]{"foo", "bar"}));
+
+			// does nothing logger.debug(new LocalizedMessage("LocalizedMessage %s %s", new Object[]{"foo", "bar"}));
+
+			Map<String, String> map=new HashMap<String, String>();
+			map.put("fooKey", "fooValue");
+			map.put("barKey", "barValue");
+			logger.debug(new MapMessage(map));
+
+			logger.debug(new MessageFormatMessage("MessageFormatMessage {0}", "Moep"));
+			logger.debug(new MessageFormatMessage("MessageFormatMessage {0}", new Foo()));
+
+			logger.debug(new ObjectArrayMessage("ObjectArrayMessage", "String"));
+			// broken logger.debug(new ObjectArrayMessage("ObjectArrayMessage", new Foo()));
+
+			logger.debug(new ObjectMessage("ObjectMessage"));
+			// broken logger.debug(new ObjectMessage(new Foo()));
+
+			logger.debug(new ParameterizedMessage("ParameterizedMessage {}", "foo"));
+			logger.debug(new ParameterizedMessage("ParameterizedMessage {}", new Foo()));
+
+			logger.debug(new SimpleMessage("simple message"));
+
+
+			logger.debug(new StringFormattedMessage("StringFormattedMessage %s", "String"));
+			logger.debug(new StringFormattedMessage("StringFormattedMessage %s", new Foo()));
+
+			logger.debug(new StructuredDataMessage(new StructuredDataId("dataIdName", 17, new String[]{"fooRequired"}, new String[]{"fooOptional"}), "StructuredDataMessage", "fooType", map));
+
+			logger.debug(new ThreadDumpMessage("title"));
+
 			MessageSupplier simpleMessageSupplier=new MessageSupplier()
 			{
 				@Override
@@ -114,29 +159,31 @@ public class Log4j2Sandbox
 				}
 			};
 			logger.debug(simpleMessageSupplier);
-			logger.debug(new SimpleMessage("simple message"));
 
-			MessageSupplier formattedMessageSupplier=new MessageSupplier()
-			{
-				@Override
-				public Message get()
-				{
-					return new FormattedMessage("formatted message supplier {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception"));
-				}
-			};
-			logger.debug(simpleMessageSupplier);
-			logger.debug(new FormattedMessage("formatted message supplier {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception")));
+			//logger.debug(new FormattedMessage("formatted message {} {}", new Object[]{new Foo(), "bar"}));
 
-			MessageSupplier fooMessageSupplier=new MessageSupplier()
-			{
-				@Override
-				public Message get()
-				{
-					return new FooMessage();
-				}
-			};
-			logger.debug(fooMessageSupplier);
-			logger.debug(new FooMessage());
+//			MessageSupplier formattedMessageSupplier=new MessageSupplier()
+//			{
+//				@Override
+//				public Message get()
+//				{
+//					return new FormattedMessage("formatted message supplier {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception"));
+//				}
+//			};
+//			logger.debug(formattedMessageSupplier);
+//			logger.debug(new FormattedMessage("formatted message {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception")));
+//
+//
+//			MessageSupplier fooMessageSupplier=new MessageSupplier()
+//			{
+//				@Override
+//				public Message get()
+//				{
+//					return new FooMessage();
+//				}
+//			};
+//			logger.debug(fooMessageSupplier);
+//			logger.debug(new FooMessage());
 
 			try
 			{
@@ -187,6 +234,14 @@ public class Log4j2Sandbox
 		public Throwable getThrowable()
 		{
 			return new RuntimeException();
+		}
+	}
+
+	public static class Foo implements Serializable
+	{
+		public String toString()
+		{
+			return "Foo object";
 		}
 	}
 

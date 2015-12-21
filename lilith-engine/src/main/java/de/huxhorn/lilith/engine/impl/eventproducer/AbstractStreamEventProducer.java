@@ -99,9 +99,16 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		whitelist.add("org.apache.logging.log4j.core.impl.Log4jLogEvent$LogEventProxy");
 		whitelist.add("org.apache.logging.log4j.core.impl.ThrowableProxy");
 		whitelist.add("org.apache.logging.log4j.message.FormattedMessage");
+		whitelist.add("org.apache.logging.log4j.message.MapMessage");
+		whitelist.add("org.apache.logging.log4j.message.MessageFormatMessage");
+		whitelist.add("org.apache.logging.log4j.message.ObjectArrayMessage");
 		whitelist.add("org.apache.logging.log4j.message.ObjectMessage");
 		whitelist.add("org.apache.logging.log4j.message.ParameterizedMessage");
 		whitelist.add("org.apache.logging.log4j.message.SimpleMessage");
+		whitelist.add("org.apache.logging.log4j.message.StringFormattedMessage");
+		whitelist.add("org.apache.logging.log4j.message.StructuredDataId");
+		whitelist.add("org.apache.logging.log4j.message.StructuredDataMessage");
+		whitelist.add("org.apache.logging.log4j.message.ThreadDumpMessage$ThreadDumpMessageProxy");
 		whitelist.add("org.apache.logging.log4j.spi.MutableThreadContextStack");
 		whitelist.add("org.apache.logging.log4j.spi.StandardLevel");
 		whitelist.add("org.slf4j.helpers.BasicMarker");
