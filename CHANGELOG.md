@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Added `TemporalAccessor` support to `SafeString`.
+- Added log4j2 `Marker` support.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.

@@ -66,6 +66,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		whitelist.add("[Ljava.lang.Object;");
 		whitelist.add("[Ljava.lang.StackTraceElement;");
 		whitelist.add("[Ljava.lang.String;");
+		whitelist.add("[Lorg.apache.logging.log4j.Marker;");
 		whitelist.add("[Lorg.apache.logging.log4j.core.impl.ExtendedStackTraceElement;");
 		whitelist.add("[Lorg.apache.logging.log4j.core.impl.ThrowableProxy;");
 		whitelist.add("ch.qos.logback.access.spi.AccessEvent");
@@ -80,6 +81,8 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		whitelist.add("java.util.ArrayList");
 		whitelist.add("java.util.Collections$EmptyMap");
 		whitelist.add("java.util.Collections$SynchronizedMap");
+		whitelist.add("java.util.Collections$UnmodifiableCollection");
+		whitelist.add("java.util.Collections$UnmodifiableList");
 		whitelist.add("java.util.Collections$UnmodifiableMap");
 		whitelist.add("java.util.HashMap");
 		whitelist.add("java.util.Hashtable");
@@ -89,11 +92,13 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		whitelist.add("org.apache.log4j.spi.LoggingEvent");
 		whitelist.add("org.apache.log4j.spi.ThrowableInformation");
 		whitelist.add("org.apache.logging.log4j.Level");
+		whitelist.add("org.apache.logging.log4j.MarkerManager$Log4jMarker");
 		whitelist.add("org.apache.logging.log4j.ThreadContext$EmptyThreadContextStack");
 		whitelist.add("org.apache.logging.log4j.core.impl.ExtendedClassInfo");
 		whitelist.add("org.apache.logging.log4j.core.impl.ExtendedStackTraceElement");
 		whitelist.add("org.apache.logging.log4j.core.impl.Log4jLogEvent$LogEventProxy");
 		whitelist.add("org.apache.logging.log4j.core.impl.ThrowableProxy");
+		whitelist.add("org.apache.logging.log4j.message.FormattedMessage");
 		whitelist.add("org.apache.logging.log4j.message.ObjectMessage");
 		whitelist.add("org.apache.logging.log4j.message.ParameterizedMessage");
 		whitelist.add("org.apache.logging.log4j.message.SimpleMessage");
