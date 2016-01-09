@@ -23,7 +23,7 @@ All notable changes to this project will be documented in this file.
 - Fixed NPE in LoggingEventProtobufEncoder. This fixes issue #22.
 - Fixed NPE in CheckForUpdateRunnable in case of broken network connection.
 - Being less strict about the required Java version. It seems certain Linux distros have a Java version string like `1.8.0_66-internal` which is - strictly speaking - smaller than `1.8.0_66` since `-internal' is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.
-- log4j2 2.5, jackson 2.6.4, Spring 4.2.4
+- log4j2 2.5, jackson 2.6.4, Spring 4.2.4, aspectj 1.8.8
 
 ### Security
 - Nothing.
