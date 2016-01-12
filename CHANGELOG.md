@@ -29,6 +29,35 @@ All notable changes to this project will be documented in this file.
 ### Security
 - Nothing.
 
+### Known issues
+- Garbled icons on Mac OS X 10.11. This is a bug in OS X. Supposedly #23164356.
+  - [Filezilla ticket](https://trac.filezilla-project.org/ticket/10669)
+  - [Eclipse ticket](https://bugs.eclipse.org/bugs/show_bug.cgi?id=479590)
+
+  The following text is written to stdout if this bug bites:
+  
+        filter:2:47: error: excess elements in vector initializer
+          return img.a * mix(c0, c1, dot(img.rgb, vec3(0,000000e+00, 0,000000e+00, 0,000000e+00)));
+                                                      ^                ~~~~~~~~~~
+        filter:1:6: error: non-void function should return a value
+        vec4 _falseColor(vec4 img, vec4 c0, vec4 c1) {
+             ^
+
+- Some log4j2 `Message` implementations aren't supported.
+  See [Message instances are simply serialized. They mustn't.](https://issues.apache.org/jira/browse/LOG4J2-1226).
+- Flying Saucer related issues:
+  - Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+    See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](http://code.google.com/p/flying-saucer/issues/detail?id=79").
+  - The first line of the message in HTML view is not properly indented if it starts with whitespace.
+    You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII").
+    The HTML created is actually correct.
+    See [Issue 125: &lt;pre> ignores leading whitespace](http://code.google.com/p/flying-saucer/issues/detail?id=125).
+  - Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+    See [Issue 105: URLs with anchors](http://code.google.com/p/flying-saucer/issues/detail?id=105).
+- Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.
+  This is caused by [Java bug #6995182](http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182) and I can't do anything about it.
+  Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.
+
 
 ---
 
