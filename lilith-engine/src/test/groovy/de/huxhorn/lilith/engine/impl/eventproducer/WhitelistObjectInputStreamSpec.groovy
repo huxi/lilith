@@ -47,7 +47,7 @@ class WhitelistObjectInputStreamSpec extends Specification
         when:
         Set<String> whitelist = []
         ByteArrayInputStream is = new ByteArrayInputStream(bytes)
-        WhitelistObjectInputStream instance = new WhitelistObjectInputStream(is, whitelist, true)
+        WhitelistObjectInputStream instance = new WhitelistObjectInputStream(is, whitelist, false, true)
         Object read = instance.readObject()
 
         then:
@@ -64,7 +64,7 @@ class WhitelistObjectInputStreamSpec extends Specification
         when:
         Set<String> whitelist = [Foo.name]
         ByteArrayInputStream is = new ByteArrayInputStream(bytes)
-        WhitelistObjectInputStream instance = new WhitelistObjectInputStream(is, whitelist, true)
+        WhitelistObjectInputStream instance = new WhitelistObjectInputStream(is, whitelist, false, true)
         Object read = instance.readObject()
 
         then:
@@ -109,6 +109,36 @@ class WhitelistObjectInputStreamSpec extends Specification
         !instance.dryRunning
         read == foo
         !instance.unauthorized.contains(Foo.name)
+    }
+
+    def "copySet=true works as expected."() {
+        setup:
+        Foo foo = new Foo('bar')
+        byte[] bytes = serialize(foo)
+        Set<String> whitelist = [Foo.name, 'Something']
+
+        when:
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes)
+        WhitelistObjectInputStream instance = new WhitelistObjectInputStream(is, whitelist, true)
+        whitelist.remove('Something')
+
+        then:
+        instance.whitelist == [Foo.name, 'Something'] as Set<String>
+    }
+
+    def "copySet=false works as expected."() {
+        setup:
+        Foo foo = new Foo('bar')
+        byte[] bytes = serialize(foo)
+        Set<String> whitelist = [Foo.name, 'Something']
+
+        when:
+        ByteArrayInputStream is = new ByteArrayInputStream(bytes)
+        WhitelistObjectInputStream instance = new WhitelistObjectInputStream(is, whitelist, false)
+        whitelist.remove('Something')
+
+        then:
+        instance.whitelist == [Foo.name] as Set<String>
     }
 
     byte[] serialize(Serializable o) {

@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
+- Don't create copy of whitelist Set in `WhitelistObjectInputStream`.
 
 ### Deprecated
 - Nothing.

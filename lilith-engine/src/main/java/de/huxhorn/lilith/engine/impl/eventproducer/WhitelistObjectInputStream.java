@@ -65,7 +65,7 @@ public class WhitelistObjectInputStream
 	private final boolean dryRunning;
 
 	/**
-	 * Creates a WhitelistObjectInputStream with dryRunning = false.
+	 * Creates a WhitelistObjectInputStream with copyMap = false and dryRunning = false.
 	 *
 	 * @param in the InputStream.
 	 * @param whitelist whitelist of classes that may be deserialized.
@@ -74,7 +74,21 @@ public class WhitelistObjectInputStream
 	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist)
 			throws IOException
 	{
-		this(in, whitelist, false);
+		this(in, whitelist, false, false);
+	}
+
+	/**
+	 * Creates a WhitelistObjectInputStream with dryRunning = false.
+	 *
+	 * @param in the InputStream.
+	 * @param whitelist whitelist of classes that may be deserialized.
+	 * @param copySet whether or not the given whitelist should be copied defensively.
+	 * @throws IOException if an I/O error occurs while reading stream header
+	 */
+	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist, boolean copySet)
+			throws IOException
+	{
+		this(in, whitelist, copySet, false);
 	}
 
 	/**
@@ -82,16 +96,29 @@ public class WhitelistObjectInputStream
 	 *
 	 * @param in the InputStream.
 	 * @param whitelist whitelist of classes that may be deserialized.
+	 * @param copySet whether or not the given whitelist should be copied defensively.
 	 * @param dryRunning if true, only warnings are logged but classes are serialized anyway.
 	 * @throws IOException if an I/O error occurs while reading stream header
 	 */
-	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist, boolean dryRunning)
+	public WhitelistObjectInputStream(InputStream in, Set<String> whitelist, boolean copySet, boolean dryRunning)
 		throws IOException
 	{
 		super(in);
 		this.dryRunning = dryRunning;
 		Objects.requireNonNull(whitelist, "whitelist must not be null!");
-		this.whitelist = new HashSet<>(whitelist);
+		// Won't prevent empty whitelist since it makes sense in case of dryRun.
+		// if(whitelist.isEmpty())
+		// {
+		// 	throw new IllegalArgumentException("whitelist must not be empty!");
+		// }
+		if(copySet)
+		{
+			this.whitelist = new HashSet<>(whitelist);
+		}
+		else
+		{
+			this.whitelist = whitelist;
+		}
 		this.unauthorized = new HashSet<>();
 	}
 
@@ -128,6 +155,11 @@ public class WhitelistObjectInputStream
 	public boolean isDryRunning()
 	{
 		return dryRunning;
+	}
+
+	public Set<String> getWhitelist()
+	{
+		return Collections.unmodifiableSet(whitelist);
 	}
 
 	@Override

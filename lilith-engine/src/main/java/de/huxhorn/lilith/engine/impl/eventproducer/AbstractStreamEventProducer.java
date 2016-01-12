@@ -122,7 +122,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		throws IOException
 	{
 		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
-		this.dataInput = new WhitelistObjectInputStream(new BufferedInputStream(inputStream), WHITELIST /*, true*/);
+		this.dataInput = new WhitelistObjectInputStream(new BufferedInputStream(inputStream), WHITELIST, false /*, true*/);
 	}
 
 	public void start()
