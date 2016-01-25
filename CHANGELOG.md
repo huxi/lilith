@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
 - Don't create copy of whitelist Set in `WhitelistObjectInputStream`.
+- Requires Java 8 `1.8.0_72`.
+- Added option to start application even if Java version requirements are not met.
 
 ### Deprecated
 - Nothing.
