@@ -19,7 +19,7 @@ public class FooAppender extends AppenderBase<ILoggingEvent>
 		System.out.println("############################################################");
 		System.out.println("############################################################");
 	}
-	
+
 	public void stop()
 	{
 		super.stop();

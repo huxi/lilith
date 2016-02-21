@@ -39,7 +39,7 @@ public class JulSandbox
 		}
 		return result;
 	}
-	
+
 
 	public static void main(String args[])
 		throws IOException
@@ -70,7 +70,7 @@ public class JulSandbox
 			}
 		}
 		rootLogger.setLevel(Level.ALL);
-		
+
 		final Logger logger = Logger.getLogger(JulSandbox.class.getName());
 		logger.log(Level.INFO, "Args {0}{1}", new Object[]{"Foo", "bar"});
 

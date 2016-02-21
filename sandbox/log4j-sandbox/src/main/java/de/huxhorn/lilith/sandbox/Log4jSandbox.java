@@ -10,7 +10,7 @@ public class Log4jSandbox
 		public static void execute()
 		{
 			final Logger logger = Logger.getLogger(InnerClass.class);
-			
+
 			try
 			{
 				foobar();
@@ -29,7 +29,7 @@ public class Log4jSandbox
 				RuntimeException newEx = new RuntimeException("Hello", ex);
 				if(logger.isDebugEnabled()) logger.debug("Exception with simple message!", newEx);
 			}
-			
+
 			try
 			{
 				foobar();
@@ -39,7 +39,7 @@ public class Log4jSandbox
 				RuntimeException newEx = new RuntimeException("Multi\nline\nmessage", ex);
 				if(logger.isDebugEnabled()) logger.debug("Exception with multiline message!", newEx);
 			}
-			
+
 			try
 			{
 				foobar();
@@ -54,7 +54,7 @@ public class Log4jSandbox
 
 			if(logger.isDebugEnabled()) logger.debug("Plain exception!", new RuntimeException());
 		}
-		
+
 		public static void foobar()
 		{
 			RuntimeException t = new RuntimeException("Hi.");
@@ -74,14 +74,14 @@ public class Log4jSandbox
 	public static void main(String args[])
 	{
 		final Logger logger = Logger.getLogger(Log4jSandbox.class);
-		
+
 		RuntimeException x=new RuntimeException(
 			new RuntimeException("Cause"));
 		x.addSuppressed(new RuntimeException("Suppressed1"));
 		x.addSuppressed(new RuntimeException("Suppressed2"));
-		
-		x.printStackTrace();	
-			
+
+		x.printStackTrace();
+
 		NDC.push("NDC1");
 		NDC.push("NDC2");
 		NDC.push("NDC with spaces...");

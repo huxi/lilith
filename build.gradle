@@ -120,9 +120,9 @@ gradle.taskGraph.whenReady { taskGraph ->
 }
 
 if(!System.properties.'release' && !System.properties.'prerelease') {
-	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz'	
+	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz'
 } else {
-	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz', 'signJavadocZip', 'signSourceZip'	
+	defaultTasks 'build', 'uploadPublished', 'jarAll', 'myDistZip', 'myDistTgz', 'appTgz', 'signJavadocZip', 'signSourceZip'
 }
 
 allprojects {
@@ -154,7 +154,7 @@ allprojects {
 	jacoco {
 		toolVersion = '0.7.5.201505241946'
 	}
-	
+
 	task printConfig << {
 		configurations.each { config ->
 			println "Configuration " + config.name
@@ -173,7 +173,7 @@ subprojects {
 	apply plugin: 'groovy'
 	apply plugin: 'maven'
 	apply plugin: 'signing'
-	
+
 	jacocoTestReport {
 		additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
 		sourceDirectories = files(sourceSets.main.allSource.srcDirs)
@@ -185,22 +185,22 @@ subprojects {
 		}
 	}
 	//defaultTasks 'build', 'uploadPublished'
-	
+
 	sourceCompatibility = globalSourceCompatibility
 	targetCompatibility = globalTargetCompatibility
-	
+
 	// -Xlint:-options disables the
 	// "warning: [options] bootstrap class path not set in conjunction with -source 1.x"
 	// for now
 	def compilerArgs = ['-Xlint:unchecked', '-Xlint:-options', '-Xlint:deprecation', '-g']
-	
+
 	compileJava.options.compilerArgs = compilerArgs
 	compileTestJava.options.compilerArgs = compilerArgs
 	compileGroovy.options.compilerArgs = compilerArgs
 	compileTestGroovy.options.compilerArgs = compilerArgs
 
 	def sourceEncoding = 'UTF-8'
-	
+
 	compileJava.options.encoding = sourceEncoding
 	compileTestJava.options.encoding = sourceEncoding
 	compileGroovy.options.encoding = sourceEncoding
@@ -216,7 +216,7 @@ subprojects {
 
 	task sourceJar(type: Jar) { from sourceSets.main.allSource; classifier = 'sources' }
 	task javadocJar(type: Jar) { from javadoc.outputs.files; classifier = 'javadoc' }
-	
+
 	artifacts { archives sourceJar, javadocJar }
 
     project.ext.defaultProject= {
@@ -230,7 +230,7 @@ subprojects {
     		developerConnection 'scm:git:ssh://git@github.com:huxi/lilith.git'
     		url 'http://github.com/huxi/lilith/'
     	}
-    	
+
 		licenses {
 			if(gpl)
 			{
@@ -247,7 +247,7 @@ subprojects {
 					url 'http://www.gnu.org/copyleft/lesser.html'
 					distribution 'repo'
 				}
-				
+
 				license {
 					name 'The Apache Software License, Version 2.0'
 					url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -255,7 +255,7 @@ subprojects {
 				}
 			}
 		}
-		
+
 		issueManagement {
 			system 'Github'
 			url 'https://github.com/huxi/lilith/issues'
@@ -273,7 +273,7 @@ subprojects {
 				}
 			}
 		}
-		
+
 		properties {
 			'project.build.sourceEncoding' 'UTF-8'
 			'project.reporting.outputEncoding' 'UTF-8'
@@ -286,7 +286,7 @@ subprojects {
 
 		published.extendsFrom archives, signatures
 	}
-	
+
 	dependencies {
 		testCompile libraries.'groovy'
 		testCompile libraries.'spock-core'
@@ -300,7 +300,7 @@ subprojects {
 	}
 
 	def deployer = null
-	
+
 	uploadPublished {
 		deployer = repositories.mavenDeployer {
 			repository(url: localReleaseRepo)
@@ -310,11 +310,11 @@ subprojects {
 			}
 		}
 	}
-	
+
 	def installer = install.repositories.mavenInstaller
-	
+
 	installer.pom.project defaultProject
-	
+
 	deployer.pom.project defaultProject
 }
 
@@ -339,10 +339,10 @@ project(':lilith') {
 		project.git.requireClean = true
 		processResources.dependsOn checkGitState
 	}
-	
+
 	//def theMainClassName = 'de.huxhorn.lilith.Lilith'
 	def theMainClassName = 'de.huxhorn.sulky.version.Main'
-	
+
 	mainClassName = theMainClassName
 
 	macAppBundle {
@@ -379,16 +379,16 @@ project(':lilith') {
 		)
 
 	}
-	
-	processResources { 
-		def props = [ 
-			'lilithVersion': version, 
-			'slf4jVersion': versions.slf4j, 
-			'logbackVersion': versions.logback, 
-			'gitRevision': project.gitHeadHash, 
-			'timestamp': "${System.currentTimeMillis()}" 
+
+	processResources {
+		def props = [
+			'lilithVersion': version,
+			'slf4jVersion': versions.slf4j,
+			'logbackVersion': versions.logback,
+			'gitRevision': project.gitHeadHash,
+			'timestamp': "${System.currentTimeMillis()}"
 		]
-		
+
 		// props is manually added as input to circumvent the following issues:
 		// - Change in filtered resource not picked up by archive tasks
 		//   http://issues.gradle.org/browse/GRADLE-1298
@@ -396,17 +396,17 @@ project(':lilith') {
 		//   https://issues.gradle.org/browse/GRADLE-1276
 		// - Copy tasks do not consider filter/expansion properties in up-to-date checks
 		//   https://issues.gradle.org/browse/GRADLE-1646
-		inputs.properties props 
+		inputs.properties props
 		// See also:
 		// http://forums.gradle.org/gradle/topics/1_7_rc_1_probably_erroneous_including_duplicate_file_warnings
 
-		filesMatching '**/*.properties', { expand props } 
-		filesMatching '**/*.xhtml', { expand props } 
-	} 
+		filesMatching '**/*.properties', { expand props }
+		filesMatching '**/*.xhtml', { expand props }
+	}
 
 	project.ext.distSpec = copySpec {
 		into("lilith-${version}") {
-			
+
 			//println "projectDir: ${projectDir}"
 			from(projectDir) {
 				include 'COPYING'
@@ -414,7 +414,7 @@ project(':lilith') {
 				include 'LICENSE-2.0.txt'
 				include 'build.txt'
 			}
-		
+
 			from(projectDir) {
 				include 'readme.txt'
 				expand(
@@ -431,19 +431,19 @@ project(':lilith') {
 					include 'lilith.bat'
 				}
 			}
-			
+
 			into('bin') {
 				from("${projectDir}/src/bin") {
 					include 'lilith'
 					fileMode = 0755
-					filter(FixCrLfFilter, 
+					filter(FixCrLfFilter,
 						eol: FixCrLfFilter.CrLf.newInstance('lf'),
 						tab: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
 						eof: FixCrLfFilter.AddAsisRemove.newInstance('remove'),
 						fixlast: true)
 				}
 			}
-			
+
 			into('lib') {
 				from configurations.default
 				from configurations.default.allArtifacts.files

@@ -32,7 +32,7 @@ public class LoggingLevelColumnModel
 
 	private static final String DEFAULT_COLUMN_NAME_INDEX = "#";
 	private static final String DEFAULT_COLUMN_NAME_PREVIEW = "Preview";
-	
+
 	private LoggingLevelPreviewRenderer previewRenderer;
 
 	public LoggingLevelColumnModel()

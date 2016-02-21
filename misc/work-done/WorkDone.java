@@ -4,8 +4,8 @@ import java.io.*;
 
 public class WorkDone
 {
-    
-    public static void main(String[] args) 
+
+    public static void main(String[] args)
 		throws InterruptedException, IOException
 	{
 		int amount=0;
@@ -24,10 +24,10 @@ public class WorkDone
 		if(amount<1)
 		{
 			Runtime runtime = Runtime.getRuntime();
-			
+
 			amount=runtime.availableProcessors();
 		}
-		
+
 		System.out.println("Environment:");
 		System.out.println("java.runtime.name    = "+System.getProperty("java.runtime.name"));
 		System.out.println("java.runtime.version = "+System.getProperty("java.runtime.version"));
@@ -40,12 +40,12 @@ public class WorkDone
 		System.out.println("os.version           = "+System.getProperty("os.version"));
 		System.out.println("os.arch              = "+System.getProperty("os.arch"));
 		System.out.println("##########################################");
-		
+
 		usingSynchronized(amount);
 		usingFairLock(amount);
-		usingUnfairLock(amount);		
+		usingUnfairLock(amount);
     }
-	
+
 	public static void usingSynchronized(int threadCount)
 		throws InterruptedException, IOException
 	{
@@ -57,7 +57,7 @@ public class WorkDone
 	{
 		perform(threadCount, "usingFairLock", new FairLogger());
 	}
-	
+
 	public static void usingUnfairLock(int threadCount)
 		throws InterruptedException, IOException
 	{
@@ -76,8 +76,8 @@ public class WorkDone
 		print(name, workRunnables);
 		logger.close();
 	}
-	
-	
+
+
 	public static void execute(String text, WorkRunnable[] workRunnables)
 		throws InterruptedException
 	{
@@ -88,21 +88,21 @@ public class WorkDone
 		{
 			threads[i]=new Thread(workRunnables[i]);
 		}
-		
+
 		for(int i=0;i<threadCount;i++)
 		{
 			threads[i].start();
 		}
-		
+
 		Thread.sleep(10000);
-		
+
 		for(int i=threadCount - 1 ; i>=0 ; i--)
 		{
 			workRunnables[i].cancel();
 		}
 		Thread.sleep(1000); // wait a moment for termination, too lazy for join ;)
 	}
-	
+
 	public static void print(String text, WorkRunnable[] workRunnables)
 	{
 		System.out.println("Results for "+text+":");
@@ -121,23 +121,23 @@ public class WorkDone
 	{
 		private File file;
 		private RandomAccessFile raf;
-		
+
 		public AbstractLogger()
 			throws IOException
 		{
 			file=File.createTempFile("example",".log");
 			file.deleteOnExit();
 			raf=new RandomAccessFile(file, "rw");
-			
+
 		}
-		
+
 		public File getFile()
 		{
 			return file;
 		}
-		
+
 		public abstract void log(String message);
-		
+
 		protected void performLogging(String message)
 		{
 			try
@@ -158,15 +158,15 @@ public class WorkDone
 			{}
 			*/
 		}
-		
+
 		public void close()
 			throws IOException
 		{
 			raf.close();
 		}
-		
+
 	}
-	
+
 	public static class SynchronizedLogger
 		extends AbstractLogger
 	{
@@ -175,7 +175,7 @@ public class WorkDone
 		{
 			super();
 		}
-		
+
 		public void log(String message)
 		{
 			synchronized(this)
@@ -189,14 +189,14 @@ public class WorkDone
 		extends AbstractLogger
 	{
 		private final ReentrantLock lock;
-		
+
 		protected LockLogger(boolean fair)
 			throws IOException
 		{
 			super();
 			this.lock=new ReentrantLock(fair);
 		}
-		
+
 		public void log(String message)
 		{
 			lock.lock();
@@ -210,7 +210,7 @@ public class WorkDone
 			}
 		}
 	}
-	
+
 	public static class FairLogger
 		extends LockLogger
 	{
@@ -230,7 +230,7 @@ public class WorkDone
 			super(false);
 		}
 	}
-	
+
 	public static class WorkRunnable
 		implements Runnable
 	{
@@ -238,27 +238,27 @@ public class WorkDone
 		private final AbstractLogger logger;
 		private int counter=0;
 		private boolean done;
-		
+
 		public WorkRunnable(AbstractLogger logger)
 		{
 			this.logger=logger;
 		}
-		
+
 		public void cancel()
 		{
 			cancel.set(true);
 		}
-		
+
 		public int getCounter()
 		{
 			return counter;
 		}
-		
+
 		public boolean isDone()
 		{
 			return done;
 		}
-		
+
 		public int fib(int value)
 		{
 			if(value == 0)
@@ -272,7 +272,7 @@ public class WorkDone
 			logger.log("Calling fib("+(value-1)+") + fib("+(value-2)+")...");
 			return fib(value-1)+fib(value-2);
 		}
-		
+
 		public void run()
 		{
 			done=false;
@@ -291,7 +291,7 @@ public class WorkDone
 			}
 			done=true;
 		}
-		
+
 		public String toString()
 		{
 			return "WorkRunnable[counter="+counter+", done="+done+"]";

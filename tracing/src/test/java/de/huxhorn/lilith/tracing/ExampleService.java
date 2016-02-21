@@ -36,7 +36,7 @@ package de.huxhorn.lilith.tracing;
 
 import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; 
+import org.slf4j.LoggerFactory;
 
 public class ExampleService implements ExampleServiceIfc, Cloneable
 {

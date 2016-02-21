@@ -155,7 +155,7 @@ public class LilithPreferencesStreamingEncoder
 		{
 			prefs.setSourceFiltering(PrefsProto.SourceFiltering.NONE);
 		}
-		
+
 		return prefs.build();
 	}
 }

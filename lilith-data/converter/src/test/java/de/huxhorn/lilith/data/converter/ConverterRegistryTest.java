@@ -43,19 +43,19 @@ import org.junit.Test;
 public class ConverterRegistryTest
 {
 	private ConverterRegistry<String> instance = null;
-	
+
 	@Before
 	public void setUp()
 	{
 		instance = new ConverterRegistry<>();
 	}
-	
+
 	@Test
 	public void checkEmpty()
 	{
 		assertNull(instance.resolveConverter("foo"));
 	}
-	
+
 	@Test(expected = java.lang.IllegalStateException.class)
 	public void brokenConverter()
 	{
@@ -74,7 +74,7 @@ public class ConverterRegistryTest
 		instance.addConverter(new UpperCaseConverter());
 		assertNotNull(instance.resolveConverter("FooBar"));
 	}
-	
+
 	@Test
 	public void resolveByClass()
 	{
@@ -90,7 +90,7 @@ public class ConverterRegistryTest
 		Converter<String> converter = instance.resolveConverter(String.class);
 		assertEquals("FOOBAR", converter.convert("FooBar"));
 	}
-	
+
 	@Test
 	public void inheritance()
 	{
@@ -107,7 +107,7 @@ public class ConverterRegistryTest
 		{
 			return "foo";
 		}
-		
+
 		public Class getSourceClass()
 		{
 			return null;
@@ -126,7 +126,7 @@ public class ConverterRegistryTest
 			}
 			throw new IllegalArgumentException("object is not a String!");
 		}
-		
+
 		public Class getSourceClass()
 		{
 			return String.class;
@@ -145,7 +145,7 @@ public class ConverterRegistryTest
 			}
 			throw new IllegalArgumentException("object is not a String!");
 		}
-		
+
 		public Class getSourceClass()
 		{
 			return String.class;

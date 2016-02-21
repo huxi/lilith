@@ -232,7 +232,7 @@ public class LilithPreferencesStreamingDecoder
 		}
 		else
 		{
-			prefs.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);			
+			prefs.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 		}
 		if(p.hasDefaultConditionName())
 		{

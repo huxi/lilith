@@ -421,7 +421,7 @@ public class FindPanel<T extends Serializable>
 	public void requestComboFocus()
 	{
 		findTextCombo.requestFocusInWindow();
-		findTextCombo.getEditor().selectAll();		
+		findTextCombo.getEditor().selectAll();
 	}
 
 	public void enableFindComponents(boolean enabled, Condition condition)

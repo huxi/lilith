@@ -45,7 +45,7 @@ public class AccessFormatter
 	private final Logger logger = LoggerFactory.getLogger(AccessFormatter.class);
 
 	private static final String DEFAULT_PATTERN="common";
-	
+
 	private ch.qos.logback.access.PatternLayout layout;
 	private String pattern;
 

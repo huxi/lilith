@@ -35,12 +35,12 @@ public class TimeWasted
 		System.out.println("os.version           = "+System.getProperty("os.version"));
 		System.out.println("os.arch              = "+System.getProperty("os.arch"));
 		System.out.println("##########################################");
-		
+
 		usingSynchronized(10, delay);
 		usingUnfairLock(10, delay);
 		usingFairLock(10, delay);
 	}
-	
+
 	public static void execute(String text, Thread[] threads)
 		throws InterruptedException
 	{
@@ -50,16 +50,16 @@ public class TimeWasted
 		{
 			threads[i].start();
 		}
-		
+
 		Thread.sleep(10000);
-		
+
 		for(int i=threadCount - 1 ; i>=0 ; i--)
 		{
 			threads[i].interrupt();
 		}
 		Thread.sleep(1000); // wait a moment for termination, too lazy for join ;)
 	}
-	
+
 	public static void print(String text, Runnable[] runnables)
 	{
 		System.out.println("Results for "+text+":");
@@ -76,7 +76,7 @@ public class TimeWasted
 		Object lockObject=new Object();
 		Runnable[] runnables=new Runnable[threadCount];
 		Thread[] threads=new Thread[threadCount];
-		
+
 		for(int i=0;i<threadCount;i++)
 		{
 			if(i==0)
@@ -93,14 +93,14 @@ public class TimeWasted
 		execute(text, threads);
 		print(text, runnables);
 	}
-	
+
 	public static void usingUnfairLock(int threadCount, int delay)
 		throws InterruptedException
 	{
 		Lock lock=new ReentrantLock();
 		Runnable[] runnables=new Runnable[threadCount];
 		Thread[] threads=new Thread[threadCount];
-		
+
 		for(int i=0;i<threadCount;i++)
 		{
 			if(i==0)
@@ -113,19 +113,19 @@ public class TimeWasted
 			}
 			threads[i]=new Thread(runnables[i]);
 		}
-		
+
 		String text="usingUnfairLock";
 		execute(text, threads);
 		print(text, runnables);
 	}
-	
+
 	public static void usingFairLock(int threadCount, int delay)
 		throws InterruptedException
 	{
 		Lock lock=new ReentrantLock(true);
 		Runnable[] runnables=new Runnable[threadCount];
 		Thread[] threads=new Thread[threadCount];
-		
+
 		for(int i=0;i<threadCount;i++)
 		{
 			if(i==0)
@@ -138,12 +138,12 @@ public class TimeWasted
 			}
 			threads[i]=new Thread(runnables[i]);
 		}
-		
+
 		String text="usingFairLock";
 		execute(text, threads);
 		print(text, runnables);
 	}
-	
+
 	public static class SynchronizedRunnable
 		implements Runnable
 	{
@@ -151,7 +151,7 @@ public class TimeWasted
 		private final int delay;
 		private int counter;
 		private boolean running;
-		
+
 		public SynchronizedRunnable(Object lockObject, int delay)
 		{
 			this.lockObject=lockObject;
@@ -159,7 +159,7 @@ public class TimeWasted
 			this.counter=0;
 			this.running=false;
 		}
-		
+
 		public void run()
 		{
 			running=true;
@@ -180,7 +180,7 @@ public class TimeWasted
 			}
 			running=false;
 		}
-		
+
 		public String toString()
 		{
 			return "SynchronizedRunnable[counter="+counter+", running="+running+", delay="+delay+"]";
@@ -194,7 +194,7 @@ public class TimeWasted
 		private final int delay;
 		private int counter;
 		private boolean running;
-		
+
 		public LockRunnable(Lock lock, int delay)
 		{
 			this.lock=lock;
@@ -202,7 +202,7 @@ public class TimeWasted
 			this.counter=0;
 			this.running=false;
 		}
-		
+
 		public void run()
 		{
 			running=true;
@@ -225,7 +225,7 @@ public class TimeWasted
 			}
 			running=false;
 		}
-		
+
 		public String toString()
 		{
 			return "LockRunnable[counter="+counter+", running="+running+", delay="+delay+"]";
@@ -243,7 +243,7 @@ public class TimeWasted
 		private long minWasted=0xFFFFFFFFL;
 		private long maxWasted;
 		private long totalWasted;
-		
+
 		public WastedTimeLockRunnable(Lock lock, int delay)
 		{
 			this.lock=lock;
@@ -251,7 +251,7 @@ public class TimeWasted
 			this.counter=0;
 			this.running=false;
 		}
-		
+
 		public void run()
 		{
 			running=true;
@@ -288,13 +288,13 @@ public class TimeWasted
 			}
 			running=false;
 		}
-		
+
 		public String toString()
 		{
 			return "WastedTimeLockRunnable[counter="+counter+", running="+running+", delay="+delay+", minWasted="+minWasted+", maxWasted="+maxWasted+", totalWasted="+totalWasted+"]";
 		}
 	}
-	
+
 	public static class WastedTimeSynchronizedRunnable
 		implements Runnable
 	{
@@ -305,7 +305,7 @@ public class TimeWasted
 		private long minWasted=0xFFFFFFFFL;
 		private long maxWasted;
 		private long totalWasted;
-		
+
 		public WastedTimeSynchronizedRunnable(Object lockObject, int delay)
 		{
 			this.lockObject=lockObject;
@@ -313,7 +313,7 @@ public class TimeWasted
 			this.counter=0;
 			this.running=false;
 		}
-		
+
 		public void run()
 		{
 			running=true;
@@ -345,7 +345,7 @@ public class TimeWasted
 			}
 			running=false;
 		}
-		
+
 		public String toString()
 		{
 			return "WastedTimeSynchronizedRunnable[counter="+counter+", running="+running+", delay="+delay+", minWasted="+minWasted+", maxWasted="+maxWasted+", totalWasted="+totalWasted+"]";

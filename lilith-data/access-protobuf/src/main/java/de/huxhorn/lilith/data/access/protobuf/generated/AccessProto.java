@@ -448,7 +448,7 @@ public final class AccessProto {
       public final boolean isInitialized() {
         if (hasEvent()) {
           if (!getEvent().isInitialized()) {
-            
+
             return false;
           }
         }
@@ -577,7 +577,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder>
           getEventIdentifierFieldBuilder() {
         if (eventIdentifierBuilder_ == null) {
           eventIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -693,7 +693,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder>
           getEventFieldBuilder() {
         if (eventBuilder_ == null) {
           eventBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -1279,7 +1279,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder>
           getSourceIdentifierFieldBuilder() {
         if (sourceIdentifierBuilder_ == null) {
           sourceIdentifierBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -1455,7 +1455,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -1471,7 +1471,7 @@ public final class AccessProto {
         getIdentifierBytes() {
       java.lang.Object ref = identifier_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         identifier_ = b;
@@ -1497,7 +1497,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -1513,7 +1513,7 @@ public final class AccessProto {
         getSecondaryIdentifierBytes() {
       java.lang.Object ref = secondaryIdentifier_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         secondaryIdentifier_ = b;
@@ -1804,7 +1804,7 @@ public final class AccessProto {
           getIdentifierBytes() {
         java.lang.Object ref = identifier_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           identifier_ = b;
@@ -1880,7 +1880,7 @@ public final class AccessProto {
           getSecondaryIdentifierBytes() {
         java.lang.Object ref = secondaryIdentifier_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           secondaryIdentifier_ = b;
@@ -2368,7 +2368,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2384,7 +2384,7 @@ public final class AccessProto {
         getMethodBytes() {
       java.lang.Object ref = method_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         method_ = b;
@@ -2410,7 +2410,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2426,7 +2426,7 @@ public final class AccessProto {
         getProtocolBytes() {
       java.lang.Object ref = protocol_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         protocol_ = b;
@@ -2452,7 +2452,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2468,7 +2468,7 @@ public final class AccessProto {
         getRemoteAddressBytes() {
       java.lang.Object ref = remoteAddress_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         remoteAddress_ = b;
@@ -2494,7 +2494,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2510,7 +2510,7 @@ public final class AccessProto {
         getRemoteHostBytes() {
       java.lang.Object ref = remoteHost_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         remoteHost_ = b;
@@ -2536,7 +2536,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2552,7 +2552,7 @@ public final class AccessProto {
         getRemoteUserBytes() {
       java.lang.Object ref = remoteUser_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         remoteUser_ = b;
@@ -2593,7 +2593,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2609,7 +2609,7 @@ public final class AccessProto {
         getRequestUriBytes() {
       java.lang.Object ref = requestUri_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         requestUri_ = b;
@@ -2635,7 +2635,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2651,7 +2651,7 @@ public final class AccessProto {
         getRequestUrlBytes() {
       java.lang.Object ref = requestUrl_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         requestUrl_ = b;
@@ -2707,7 +2707,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -2723,7 +2723,7 @@ public final class AccessProto {
         getServerNameBytes() {
       java.lang.Object ref = serverName_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         serverName_ = b;
@@ -3372,25 +3372,25 @@ public final class AccessProto {
       public final boolean isInitialized() {
         if (hasRequestHeaders()) {
           if (!getRequestHeaders().isInitialized()) {
-            
+
             return false;
           }
         }
         if (hasRequestParameters()) {
           if (!getRequestParameters().isInitialized()) {
-            
+
             return false;
           }
         }
         if (hasResponseHeaders()) {
           if (!getResponseHeaders().isInitialized()) {
-            
+
             return false;
           }
         }
         if (hasLoggerContext()) {
           if (!getLoggerContext().isInitialized()) {
-            
+
             return false;
           }
         }
@@ -3447,7 +3447,7 @@ public final class AccessProto {
           getMethodBytes() {
         java.lang.Object ref = method_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           method_ = b;
@@ -3523,7 +3523,7 @@ public final class AccessProto {
           getProtocolBytes() {
         java.lang.Object ref = protocol_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           protocol_ = b;
@@ -3599,7 +3599,7 @@ public final class AccessProto {
           getRemoteAddressBytes() {
         java.lang.Object ref = remoteAddress_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           remoteAddress_ = b;
@@ -3675,7 +3675,7 @@ public final class AccessProto {
           getRemoteHostBytes() {
         java.lang.Object ref = remoteHost_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           remoteHost_ = b;
@@ -3751,7 +3751,7 @@ public final class AccessProto {
           getRemoteUserBytes() {
         java.lang.Object ref = remoteUser_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           remoteUser_ = b;
@@ -3859,7 +3859,7 @@ public final class AccessProto {
           getRequestUriBytes() {
         java.lang.Object ref = requestUri_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           requestUri_ = b;
@@ -3935,7 +3935,7 @@ public final class AccessProto {
           getRequestUrlBytes() {
         java.lang.Object ref = requestUrl_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           requestUrl_ = b;
@@ -4075,7 +4075,7 @@ public final class AccessProto {
           getServerNameBytes() {
         java.lang.Object ref = serverName_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           serverName_ = b;
@@ -4223,7 +4223,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder>
           getRequestHeadersFieldBuilder() {
         if (requestHeadersBuilder_ == null) {
           requestHeadersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -4339,7 +4339,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder>
           getRequestParametersFieldBuilder() {
         if (requestParametersBuilder_ == null) {
           requestParametersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -4455,7 +4455,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder>
           getResponseHeadersFieldBuilder() {
         if (responseHeadersBuilder_ == null) {
           responseHeadersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -4571,7 +4571,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder>
           getLoggerContextFieldBuilder() {
         if (loggerContextBuilder_ == null) {
           loggerContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -4814,7 +4814,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -4830,7 +4830,7 @@ public final class AccessProto {
         getNameBytes() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         name_ = b;
@@ -5121,7 +5121,7 @@ public final class AccessProto {
       public final boolean isInitialized() {
         if (hasProperties()) {
           if (!getProperties().isInitialized()) {
-            
+
             return false;
           }
         }
@@ -5210,7 +5210,7 @@ public final class AccessProto {
           getNameBytes() {
         java.lang.Object ref = name_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           name_ = b;
@@ -5358,7 +5358,7 @@ public final class AccessProto {
        * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder>
           getPropertiesFieldBuilder() {
         if (propertiesBuilder_ == null) {
           propertiesBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -5389,7 +5389,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;</code>
      */
-    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> 
+    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>
         getEntryList();
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;</code>
@@ -5402,7 +5402,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;</code>
      */
-    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder>
         getEntryOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;</code>
@@ -5523,7 +5523,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;</code>
      */
-    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder>
         getEntryOrBuilderList() {
       return entry_;
     }
@@ -5778,7 +5778,7 @@ public final class AccessProto {
               entryBuilder_ = null;
               entry_ = other.entry_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              entryBuilder_ = 
+              entryBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getEntryFieldBuilder() : null;
             } else {
@@ -5793,7 +5793,7 @@ public final class AccessProto {
       public final boolean isInitialized() {
         for (int i = 0; i < getEntryCount(); i++) {
           if (!getEntry(i).isInitialized()) {
-            
+
             return false;
           }
         }
@@ -6014,7 +6014,7 @@ public final class AccessProto {
       /**
        * <code>repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;</code>
        */
-      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder>
            getEntryOrBuilderList() {
         if (entryBuilder_ != null) {
           return entryBuilder_.getMessageOrBuilderList();
@@ -6040,12 +6040,12 @@ public final class AccessProto {
       /**
        * <code>repeated .de.huxhorn.lilith.access.StringMapEntry entry = 1;</code>
        */
-      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder> 
+      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder>
            getEntryBuilderList() {
         return getEntryFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder>
           getEntryFieldBuilder() {
         if (entryBuilder_ == null) {
           entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -6222,7 +6222,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -6238,7 +6238,7 @@ public final class AccessProto {
         getKeyBytes() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         key_ = b;
@@ -6264,7 +6264,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -6280,7 +6280,7 @@ public final class AccessProto {
         getValueBytes() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         value_ = b;
@@ -6523,7 +6523,7 @@ public final class AccessProto {
 
       public final boolean isInitialized() {
         if (!hasKey()) {
-          
+
           return false;
         }
         return true;
@@ -6579,7 +6579,7 @@ public final class AccessProto {
           getKeyBytes() {
         java.lang.Object ref = key_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           key_ = b;
@@ -6655,7 +6655,7 @@ public final class AccessProto {
           getValueBytes() {
         java.lang.Object ref = value_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           value_ = b;
@@ -6718,7 +6718,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;</code>
      */
-    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> 
+    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>
         getEntryList();
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;</code>
@@ -6731,7 +6731,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;</code>
      */
-    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder>
         getEntryOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;</code>
@@ -6852,7 +6852,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;</code>
      */
-    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder>
         getEntryOrBuilderList() {
       return entry_;
     }
@@ -7107,7 +7107,7 @@ public final class AccessProto {
               entryBuilder_ = null;
               entry_ = other.entry_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              entryBuilder_ = 
+              entryBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getEntryFieldBuilder() : null;
             } else {
@@ -7122,7 +7122,7 @@ public final class AccessProto {
       public final boolean isInitialized() {
         for (int i = 0; i < getEntryCount(); i++) {
           if (!getEntry(i).isInitialized()) {
-            
+
             return false;
           }
         }
@@ -7343,7 +7343,7 @@ public final class AccessProto {
       /**
        * <code>repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;</code>
        */
-      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder>
            getEntryOrBuilderList() {
         if (entryBuilder_ != null) {
           return entryBuilder_.getMessageOrBuilderList();
@@ -7369,12 +7369,12 @@ public final class AccessProto {
       /**
        * <code>repeated .de.huxhorn.lilith.access.StringArrayMapEntry entry = 1;</code>
        */
-      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder> 
+      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder>
            getEntryBuilderList() {
         return getEntryFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder>
           getEntryFieldBuilder() {
         if (entryBuilder_ == null) {
           entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -7420,7 +7420,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;</code>
      */
-    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> 
+    java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>
         getValueList();
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;</code>
@@ -7433,7 +7433,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;</code>
      */
-    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder>
         getValueOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;</code>
@@ -7566,7 +7566,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -7582,7 +7582,7 @@ public final class AccessProto {
         getKeyBytes() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         key_ = b;
@@ -7603,7 +7603,7 @@ public final class AccessProto {
     /**
      * <code>repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;</code>
      */
-    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder>
         getValueOrBuilderList() {
       return value_;
     }
@@ -7877,7 +7877,7 @@ public final class AccessProto {
               valueBuilder_ = null;
               value_ = other.value_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              valueBuilder_ = 
+              valueBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getValueFieldBuilder() : null;
             } else {
@@ -7891,7 +7891,7 @@ public final class AccessProto {
 
       public final boolean isInitialized() {
         if (!hasKey()) {
-          
+
           return false;
         }
         return true;
@@ -7947,7 +7947,7 @@ public final class AccessProto {
           getKeyBytes() {
         java.lang.Object ref = key_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           key_ = b;
@@ -8187,7 +8187,7 @@ public final class AccessProto {
       /**
        * <code>repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;</code>
        */
-      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder>
            getValueOrBuilderList() {
         if (valueBuilder_ != null) {
           return valueBuilder_.getMessageOrBuilderList();
@@ -8213,12 +8213,12 @@ public final class AccessProto {
       /**
        * <code>repeated .de.huxhorn.lilith.access.StringArrayValue value = 2;</code>
        */
-      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder> 
+      public java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder>
            getValueBuilderList() {
         return getValueFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder> 
+          de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder>
           getValueFieldBuilder() {
         if (valueBuilder_ == null) {
           valueBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -8379,7 +8379,7 @@ public final class AccessProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -8395,7 +8395,7 @@ public final class AccessProto {
         getValueBytes() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         value_ = b;
@@ -8671,7 +8671,7 @@ public final class AccessProto {
           getValueBytes() {
         java.lang.Object ref = value_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           value_ = b;

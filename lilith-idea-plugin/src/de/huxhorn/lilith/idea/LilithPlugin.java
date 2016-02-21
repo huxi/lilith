@@ -451,7 +451,7 @@ public class LilithPlugin
 					{
 						theMethod.navigate(true);
 					}
-					WindowManager.getInstance().suggestParentWindow(project).toFront(); 
+					WindowManager.getInstance().suggestParentWindow(project).toFront();
 				}
 			}
 		}

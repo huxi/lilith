@@ -37,8 +37,8 @@ package de.huxhorn.lilith.data.converter;
 public interface Converter<T>
 {
 	T convert(Object o);
-	
-	
+
+
 	Class getSourceClass();
 }
 

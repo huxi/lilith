@@ -427,5 +427,5 @@ public class LilithPreferences
 	public static enum SourceFiltering
 	{
 		NONE, BLACKLIST, WHITELIST
-	}	
+	}
 }

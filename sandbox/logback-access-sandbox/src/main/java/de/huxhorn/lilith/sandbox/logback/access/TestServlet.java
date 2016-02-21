@@ -32,5 +32,5 @@ public class TestServlet extends HttpServlet {
         Writer out = response.getWriter();
         out.write(buf.toString());
         out.flush();
-    }   
+    }
 }

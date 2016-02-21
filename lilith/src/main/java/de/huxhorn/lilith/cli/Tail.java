@@ -27,7 +27,7 @@ import java.util.List;
 public class Tail
 {
 	public static final String NAME = "tail";
-	
+
 	@Parameter(names = { "-f", "--keep-running" }, description = "keep tailing the given Lilith logfile.")
 	public boolean keepRunning = false;
 

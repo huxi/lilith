@@ -40,7 +40,7 @@ import java.util.Map;
 public class ConverterRegistry<T>
 {
 	private final Map<Class<?>, Converter<T>> converterMap = new HashMap<>();
-	
+
 	public void addConverter(Converter<T> converter)
 	{
 		if(converter == null)
@@ -52,13 +52,13 @@ public class ConverterRegistry<T>
 		{
 			throw new IllegalStateException("Converter "+converter+" did not return a source class!");
 		}
-		
+
 		synchronized(converterMap)
 		{
 			converterMap.put(clazz, converter);
 		}
 	}
-	
+
 	/**
 	 * Returns a converter for the given object/class or null if no such converter
 	 * could be resolved.

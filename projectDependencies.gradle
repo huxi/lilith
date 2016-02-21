@@ -304,7 +304,7 @@ project(':logback-shutdown-context-listener') {
 	apply plugin: 'propdeps-maven'
 	apply plugin: 'propdeps-idea'
 	apply plugin: 'propdeps-eclipse'
-	
+
 	archivesBaseName = 'de.huxhorn.lilith.logback.servlet'
 	description = 'This file is part of Lilith. It contains a ServletContextListener that shuts down logback.'
 	dependencies {

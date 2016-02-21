@@ -70,7 +70,7 @@ public class Log4j2Sandbox
 				if(logger.isDebugEnabled()) logger.debug("Foo!",newEx);
 			}
 		}
-		
+
 		public static void foobar()
 		{
 			throw prepareException();
@@ -195,7 +195,7 @@ public class Log4j2Sandbox
 			}
 		}
 	}
-	
+
 	public static class FooException
 		extends RuntimeException
 	{

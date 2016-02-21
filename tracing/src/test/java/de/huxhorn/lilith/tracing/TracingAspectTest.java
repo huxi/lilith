@@ -83,7 +83,7 @@ public class TracingAspectTest
 		exampleServiceIfc.argsResult("first", "second");
 		exampleServiceIfc.methodCallingPrivateMethod();
 		exampleServiceIfc.callingOther();
-		
+
 		try
 		{
 			exampleServiceIfc.noArgsThrows();

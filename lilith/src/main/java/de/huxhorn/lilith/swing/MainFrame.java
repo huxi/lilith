@@ -342,7 +342,7 @@ public class MainFrame
 		autostartProcesses = new ArrayList<>();
 
 		addWindowListener(new MainWindowListener());
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // fixes ticket #79 
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // fixes ticket #79
 		Runtime runtime = Runtime.getRuntime();
 		Thread shutdownHook = new Thread(new ShutdownRunnable());
 		runtime.addShutdownHook(shutdownHook);

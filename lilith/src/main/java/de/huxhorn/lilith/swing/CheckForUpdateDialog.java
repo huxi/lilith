@@ -223,7 +223,7 @@ public class CheckForUpdateDialog
 //	{
 //		checkForSnapshotCheckbox.setSelected(checkingForUpdate);
 //	}
-	
+
 	private class OkAction
 		extends AbstractAction
 	{

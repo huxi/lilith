@@ -860,7 +860,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -876,7 +876,7 @@ public final class PrefsProto {
         getBlacklistNameBytes() {
       java.lang.Object ref = blacklistName_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         blacklistName_ = b;
@@ -902,7 +902,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -918,7 +918,7 @@ public final class PrefsProto {
         getWhitelistNameBytes() {
       java.lang.Object ref = whitelistName_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         whitelistName_ = b;
@@ -944,7 +944,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -960,7 +960,7 @@ public final class PrefsProto {
         getLookAndFeelBytes() {
       java.lang.Object ref = lookAndFeel_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         lookAndFeel_ = b;
@@ -1302,7 +1302,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -1318,7 +1318,7 @@ public final class PrefsProto {
         getDefaultConditionNameBytes() {
       java.lang.Object ref = defaultConditionName_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         defaultConditionName_ = b;
@@ -2312,25 +2312,25 @@ public final class PrefsProto {
       public final boolean isInitialized() {
         if (hasGroovyConditions()) {
           if (!getGroovyConditions().isInitialized()) {
-            
+
             return false;
           }
         }
         if (hasDetailsView()) {
           if (!getDetailsView().isInitialized()) {
-            
+
             return false;
           }
         }
         if (hasRootFiles()) {
           if (!getRootFiles().isInitialized()) {
-            
+
             return false;
           }
         }
         if (hasGroovyClipboardFormatters()) {
           if (!getGroovyClipboardFormatters().isInitialized()) {
-            
+
             return false;
           }
         }
@@ -2460,7 +2460,7 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
           getGroovyConditionsFieldBuilder() {
         if (groovyConditionsBuilder_ == null) {
           groovyConditionsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -2576,7 +2576,7 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
           getDetailsViewFieldBuilder() {
         if (detailsViewBuilder_ == null) {
           detailsViewBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -2692,7 +2692,7 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
           getRootFilesFieldBuilder() {
         if (rootFilesBuilder_ == null) {
           rootFilesBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -2736,7 +2736,7 @@ public final class PrefsProto {
           getBlacklistNameBytes() {
         java.lang.Object ref = blacklistName_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           blacklistName_ = b;
@@ -2812,7 +2812,7 @@ public final class PrefsProto {
           getWhitelistNameBytes() {
         java.lang.Object ref = whitelistName_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           whitelistName_ = b;
@@ -2888,7 +2888,7 @@ public final class PrefsProto {
           getLookAndFeelBytes() {
         java.lang.Object ref = lookAndFeel_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           lookAndFeel_ = b;
@@ -3639,7 +3639,7 @@ public final class PrefsProto {
           getDefaultConditionNameBytes() {
         java.lang.Object ref = defaultConditionName_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           defaultConditionName_ = b;
@@ -3819,7 +3819,7 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
           getGroovyClipboardFormattersFieldBuilder() {
         if (groovyClipboardFormattersBuilder_ == null) {
           groovyClipboardFormattersBuilder_ = new com.google.protobuf.SingleFieldBuilder<
@@ -4056,7 +4056,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
-    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry> 
+    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry>
         getEntryList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
@@ -4069,7 +4069,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
-    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder>
         getEntryOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
@@ -4084,7 +4084,7 @@ public final class PrefsProto {
      * supporting sub-dirs, unused
      * </pre>
      */
-    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent> 
+    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent>
         getDirectoryList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.DirectoryContent directory = 3;</code>
@@ -4109,7 +4109,7 @@ public final class PrefsProto {
      * supporting sub-dirs, unused
      * </pre>
      */
-    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
         getDirectoryOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.DirectoryContent directory = 3;</code>
@@ -4257,7 +4257,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -4273,7 +4273,7 @@ public final class PrefsProto {
         getNameBytes() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         name_ = b;
@@ -4294,7 +4294,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
-    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder>
         getEntryOrBuilderList() {
       return entry_;
     }
@@ -4337,7 +4337,7 @@ public final class PrefsProto {
      * supporting sub-dirs, unused
      * </pre>
      */
-    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
         getDirectoryOrBuilderList() {
       return directory_;
     }
@@ -4655,7 +4655,7 @@ public final class PrefsProto {
               entryBuilder_ = null;
               entry_ = other.entry_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              entryBuilder_ = 
+              entryBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getEntryFieldBuilder() : null;
             } else {
@@ -4681,7 +4681,7 @@ public final class PrefsProto {
               directoryBuilder_ = null;
               directory_ = other.directory_;
               bitField0_ = (bitField0_ & ~0x00000004);
-              directoryBuilder_ = 
+              directoryBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getDirectoryFieldBuilder() : null;
             } else {
@@ -4696,13 +4696,13 @@ public final class PrefsProto {
       public final boolean isInitialized() {
         for (int i = 0; i < getEntryCount(); i++) {
           if (!getEntry(i).isInitialized()) {
-            
+
             return false;
           }
         }
         for (int i = 0; i < getDirectoryCount(); i++) {
           if (!getDirectory(i).isInitialized()) {
-            
+
             return false;
           }
         }
@@ -4759,7 +4759,7 @@ public final class PrefsProto {
           getNameBytes() {
         java.lang.Object ref = name_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           name_ = b;
@@ -4999,7 +4999,7 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
        */
-      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder>
            getEntryOrBuilderList() {
         if (entryBuilder_ != null) {
           return entryBuilder_.getMessageOrBuilderList();
@@ -5025,12 +5025,12 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
        */
-      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry.Builder> 
+      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry.Builder>
            getEntryBuilderList() {
         return getEntryFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder>
           getEntryFieldBuilder() {
         if (entryBuilder_ == null) {
           entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -5299,7 +5299,7 @@ public final class PrefsProto {
        * supporting sub-dirs, unused
        * </pre>
        */
-      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
            getDirectoryOrBuilderList() {
         if (directoryBuilder_ != null) {
           return directoryBuilder_.getMessageOrBuilderList();
@@ -5337,12 +5337,12 @@ public final class PrefsProto {
        * supporting sub-dirs, unused
        * </pre>
        */
-      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder> 
+      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder>
            getDirectoryBuilderList() {
         return getDirectoryFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder>
           getDirectoryFieldBuilder() {
         if (directoryBuilder_ == null) {
           directoryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -5513,7 +5513,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -5529,7 +5529,7 @@ public final class PrefsProto {
         getKeyBytes() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         key_ = b;
@@ -5785,7 +5785,7 @@ public final class PrefsProto {
 
       public final boolean isInitialized() {
         if (!hasKey()) {
-          
+
           return false;
         }
         return true;
@@ -5841,7 +5841,7 @@ public final class PrefsProto {
           getKeyBytes() {
         java.lang.Object ref = key_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           key_ = b;
@@ -5939,7 +5939,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
-    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry> 
+    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry>
         getEntryList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
@@ -5952,7 +5952,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
-    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder>
         getEntryOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
@@ -6073,7 +6073,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
-    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder>
         getEntryOrBuilderList() {
       return entry_;
     }
@@ -6328,7 +6328,7 @@ public final class PrefsProto {
               entryBuilder_ = null;
               entry_ = other.entry_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              entryBuilder_ = 
+              entryBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getEntryFieldBuilder() : null;
             } else {
@@ -6343,7 +6343,7 @@ public final class PrefsProto {
       public final boolean isInitialized() {
         for (int i = 0; i < getEntryCount(); i++) {
           if (!getEntry(i).isInitialized()) {
-            
+
             return false;
           }
         }
@@ -6564,7 +6564,7 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
        */
-      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder>
            getEntryOrBuilderList() {
         if (entryBuilder_ != null) {
           return entryBuilder_.getMessageOrBuilderList();
@@ -6590,12 +6590,12 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
        */
-      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry.Builder> 
+      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry.Builder>
            getEntryBuilderList() {
         return getEntryFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder>
           getEntryFieldBuilder() {
         if (entryBuilder_ == null) {
           entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -6772,7 +6772,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -6788,7 +6788,7 @@ public final class PrefsProto {
         getKeyBytes() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         key_ = b;
@@ -6814,7 +6814,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -6830,7 +6830,7 @@ public final class PrefsProto {
         getValueBytes() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         value_ = b;
@@ -7073,7 +7073,7 @@ public final class PrefsProto {
 
       public final boolean isInitialized() {
         if (!hasKey()) {
-          
+
           return false;
         }
         return true;
@@ -7129,7 +7129,7 @@ public final class PrefsProto {
           getKeyBytes() {
         java.lang.Object ref = key_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           key_ = b;
@@ -7205,7 +7205,7 @@ public final class PrefsProto {
           getValueBytes() {
         java.lang.Object ref = value_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           value_ = b;
@@ -7268,7 +7268,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
-    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry> 
+    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry>
         getEntryList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
@@ -7281,7 +7281,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
-    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder>
         getEntryOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
@@ -7402,7 +7402,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
-    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder>
         getEntryOrBuilderList() {
       return entry_;
     }
@@ -7657,7 +7657,7 @@ public final class PrefsProto {
               entryBuilder_ = null;
               entry_ = other.entry_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              entryBuilder_ = 
+              entryBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getEntryFieldBuilder() : null;
             } else {
@@ -7672,7 +7672,7 @@ public final class PrefsProto {
       public final boolean isInitialized() {
         for (int i = 0; i < getEntryCount(); i++) {
           if (!getEntry(i).isInitialized()) {
-            
+
             return false;
           }
         }
@@ -7893,7 +7893,7 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
        */
-      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder>
            getEntryOrBuilderList() {
         if (entryBuilder_ != null) {
           return entryBuilder_.getMessageOrBuilderList();
@@ -7919,12 +7919,12 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
        */
-      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry.Builder> 
+      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry.Builder>
            getEntryBuilderList() {
         return getEntryFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder>
           getEntryFieldBuilder() {
         if (entryBuilder_ == null) {
           entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -7970,7 +7970,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
-    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue> 
+    java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue>
         getValueList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
@@ -7983,7 +7983,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
-    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder> 
+    java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder>
         getValueOrBuilderList();
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
@@ -8116,7 +8116,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -8132,7 +8132,7 @@ public final class PrefsProto {
         getKeyBytes() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         key_ = b;
@@ -8153,7 +8153,7 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
-    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder> 
+    public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder>
         getValueOrBuilderList() {
       return value_;
     }
@@ -8427,7 +8427,7 @@ public final class PrefsProto {
               valueBuilder_ = null;
               value_ = other.value_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              valueBuilder_ = 
+              valueBuilder_ =
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getValueFieldBuilder() : null;
             } else {
@@ -8441,7 +8441,7 @@ public final class PrefsProto {
 
       public final boolean isInitialized() {
         if (!hasKey()) {
-          
+
           return false;
         }
         return true;
@@ -8497,7 +8497,7 @@ public final class PrefsProto {
           getKeyBytes() {
         java.lang.Object ref = key_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           key_ = b;
@@ -8737,7 +8737,7 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
        */
-      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder> 
+      public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder>
            getValueOrBuilderList() {
         if (valueBuilder_ != null) {
           return valueBuilder_.getMessageOrBuilderList();
@@ -8763,12 +8763,12 @@ public final class PrefsProto {
       /**
        * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
        */
-      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue.Builder> 
+      public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue.Builder>
            getValueBuilderList() {
         return getValueFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder> 
+          de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder>
           getValueFieldBuilder() {
         if (valueBuilder_ == null) {
           valueBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
@@ -8929,7 +8929,7 @@ public final class PrefsProto {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
@@ -8945,7 +8945,7 @@ public final class PrefsProto {
         getValueBytes() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         value_ = b;
@@ -9221,7 +9221,7 @@ public final class PrefsProto {
           getValueBytes() {
         java.lang.Object ref = value_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           value_ = b;

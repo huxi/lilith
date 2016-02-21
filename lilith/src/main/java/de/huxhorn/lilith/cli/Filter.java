@@ -27,7 +27,7 @@ import java.util.List;
 public class Filter
 {
 	public static final String NAME = "filter";
-	
+
 	@Parameter(names = { "-f", "--keep-running" }, description = "keep filtering the given Lilith logfile.")
 	public boolean keepRunning = false;
 

@@ -1,17 +1,17 @@
 /*
  * Lilith - a log event viewer.
  * Copyright (C) 2007-2015 Joern Huxhorn
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -121,7 +121,7 @@ public class Lilith
 	public static final VersionBundle APP_VERSION_BUNDLE;
 
 	private static final String SNAPSHOT_POSTFIX = "-SNAPSHOT";
-	
+
 	private static final String JUNIQUE_MSG_SHOW = "Show";
 	private static final String JUNIQUE_REPLY_OK = "OK";
 	private static final String JUNIQUE_REPLY_UNKNOWN = "Unknown";
@@ -352,7 +352,7 @@ public class Lilith
 			}
 			System.exit(0);
 		}
-		
+
 		if(Md5.NAME.equals(command))
 		{
 			List<String> files = md5.files;
