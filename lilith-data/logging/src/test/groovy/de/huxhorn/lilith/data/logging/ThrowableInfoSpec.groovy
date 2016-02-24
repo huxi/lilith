@@ -231,7 +231,7 @@ class ThrowableInfoSpec extends Specification {
                         ),
                         new ThrowableInfo(
                             name: "java.lang.RuntimeException",
-                            message: "Multi\nline",
+                            message: "Multi"+LINE_SEPARATOR+"line",
                             stackTrace: [
                                 new ExtendedStackTraceElement(
                                     className: "de.huxhorn.lilith.sandbox.Log4jSandbox\$InnerClass",
