@@ -40,6 +40,7 @@ import de.huxhorn.lilith.services.clipboard.LoggingMessageFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingMessagePatternFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingNdcFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingThrowableNameFormatter;
 import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.swing.actions.AbstractFilterAction;
 import de.huxhorn.lilith.swing.menu.ExcludeMenu;
@@ -270,6 +271,7 @@ public class ViewActions
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMessagePatternFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingLoggerNameFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThrowableFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThrowableNameFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallStackFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallLocationFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMarkerFormatter()));

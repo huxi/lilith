@@ -68,6 +68,7 @@ public class LilithKeyStrokes
 	public static final String COPY_MESSAGE_PATTERN_ACTION = "COPY_MESSAGE_PATTERN_ACTION";
 	public static final String COPY_SELECTION_ACTION = "COPY_SELECTION_ACTION";
 	public static final String COPY_THROWABLE_ACTION = "COPY_THROWABLE_ACTION";
+	public static final String COPY_THROWABLE_NAME_ACTION = "COPY_THROWABLE_NAME_ACTION";
 	public static final String DISCONNECT_ACTION = "DISCONNECT_ACTION";
 	public static final String EDIT_CONDITION_ACTION = "EDIT_CONDITION_ACTION";
 	public static final String EDIT_SOURCE_NAME_ACTION = "EDIT_SOURCE_NAME_ACTION";
@@ -114,6 +115,7 @@ public class LilithKeyStrokes
 		addKeyStroke(COPY_MESSAGE_PATTERN_ACTION, KeyStrokes.COMMAND_ALIAS + " shift alt C");
 		addKeyStroke(COPY_SELECTION_ACTION, KeyStrokes.COMMAND_ALIAS + " C");
 		addKeyStroke(COPY_THROWABLE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift T");
+		addKeyStroke(COPY_THROWABLE_NAME_ACTION, KeyStrokes.COMMAND_ALIAS + " shift alt T");
 		addKeyStroke(DISCONNECT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift D");
 		addKeyStroke(EDIT_CONDITION_ACTION, KeyStrokes.COMMAND_ALIAS + " I");
 		addKeyStroke(EDIT_SOURCE_NAME_ACTION, KeyStrokes.COMMAND_ALIAS + " B");

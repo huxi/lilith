@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Added "Copy logger name" accelerator "command shift N".
 - Added "Copy message" accelerator "command shift C".
 - Added "Copy message pattern" accelerator "command shift alt C".
+- Added "Copy Throwable name" action with accelerator "command shift alt T".
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
