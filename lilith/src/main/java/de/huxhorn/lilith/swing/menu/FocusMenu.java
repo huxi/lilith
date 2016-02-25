@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.AbstractAccessFilterAction;
 import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
+import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpMethodAction;
@@ -33,6 +34,8 @@ import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
+import de.huxhorn.lilith.swing.actions.FocusThrowableAction;
+import de.huxhorn.lilith.swing.actions.FocusThrowablesAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
 import javax.swing.JMenu;
@@ -51,29 +54,45 @@ public class FocusMenu
 	private EventWrapper eventWrapper;
 
 	private FocusSavedConditionsMenu savedMenu;
-	private FocusMessagePatternAction messagePatternAction;
+
+	private FilterAction messagePatternAction;
 	private JMenuItem messagePatternItem;
-	private FocusFormattedMessageAction formattedMessageAction;
+
+	private FilterAction formattedMessageAction;
 	private JMenuItem formattedMessageItem;
-	private FocusCallLocationAction callLocationAction;
+
+	private FilterAction callLocationAction;
 	private JMenuItem callLocationItem;
+
+	private FilterAction throwablesAction;
+	private JMenuItem throwablesItem;
+
+	private FilterAction throwableAction;
+	private JMenuItem throwableItem;
+
 	private FocusMDCMenu mdcMenu;
 	private FocusMarkerMenu markerMenu;
 	private FocusNDCMenu ndcMenu;
 	private FocusLoggerMenu loggerMenu;
 	private FocusLevelMenu levelMenu;
 
-	private FocusHttpStatusCodeAction statusCodeAction;
+	private FilterAction statusCodeAction;
 	private JMenuItem statusCodeItem;
+
 	private FocusHttpStatusTypeMenu statusTypeMenu;
-	private FocusHttpMethodAction methodAction;
+
+	private FilterAction methodAction;
 	private JMenuItem methodItem;
-	private FocusHttpRequestUriAction requestUriAction;
+
+	private FilterAction requestUriAction;
 	private JMenuItem requestUriItem;
-	private FocusHttpRequestUrlAction requestUrlAction;
+
+	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
-	private FocusHttpRemoteUserAction remoteUserAction;
+
+	private FilterAction remoteUserAction;
 	private JMenuItem remoteUserItem;
+
 	private ViewContainer viewContainer;
 
 	public FocusMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
@@ -91,11 +110,20 @@ public class FocusMenu
 		savedMenu = new FocusSavedConditionsMenu(applicationPreferences, htmlTooltip);
 
 		messagePatternAction = new FocusMessagePatternAction(htmlTooltip);
-		formattedMessageAction=new FocusFormattedMessageAction(htmlTooltip);
-		callLocationAction=new FocusCallLocationAction();
 		messagePatternItem = new JMenuItem(messagePatternAction);
+
+		formattedMessageAction=new FocusFormattedMessageAction(htmlTooltip);
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
+
+		callLocationAction=new FocusCallLocationAction();
 		callLocationItem = new JMenuItem(callLocationAction);
+
+		throwablesAction=new FocusThrowablesAction();
+		throwablesItem = new JMenuItem(throwablesAction);
+
+		throwableAction=new FocusThrowableAction();
+		throwableItem = new JMenuItem(throwableAction);
+
 		mdcMenu = new FocusMDCMenu();
 		markerMenu = new FocusMarkerMenu();
 		ndcMenu = new FocusNDCMenu(htmlTooltip);
@@ -104,13 +132,18 @@ public class FocusMenu
 
 		statusCodeAction = new FocusHttpStatusCodeAction();
 		statusCodeItem = new JMenuItem(statusCodeAction);
+
 		statusTypeMenu = new FocusHttpStatusTypeMenu();
+
 		methodAction = new FocusHttpMethodAction();
 		methodItem = new JMenuItem(methodAction);
+
 		requestUriAction = new FocusHttpRequestUriAction();
 		requestUriItem = new JMenuItem(requestUriAction);
+
 		requestUrlAction = new FocusHttpRequestUrlAction();
 		requestUrlItem = new JMenuItem(requestUrlAction);
+
 		remoteUserAction = new FocusHttpRemoteUserAction();
 		remoteUserItem = new JMenuItem(remoteUserAction);
 	}
@@ -121,6 +154,10 @@ public class FocusMenu
 		messagePatternAction.setEventWrapper(eventWrapper);
 		formattedMessageAction.setEventWrapper(eventWrapper);
 		callLocationAction.setEventWrapper(eventWrapper);
+
+		throwablesAction.setEventWrapper(eventWrapper);
+		throwableAction.setEventWrapper(eventWrapper);
+
 		mdcMenu.setEventWrapper(eventWrapper);
 		markerMenu.setEventWrapper(eventWrapper);
 		ndcMenu.setEventWrapper(eventWrapper);
@@ -147,6 +184,10 @@ public class FocusMenu
 		messagePatternAction.setViewContainer(viewContainer);
 		formattedMessageAction.setViewContainer(viewContainer);
 		callLocationAction.setViewContainer(viewContainer);
+
+		throwablesAction.setViewContainer(viewContainer);
+		throwableAction.setViewContainer(viewContainer);
+
 		mdcMenu.setViewContainer(viewContainer);
 		markerMenu.setViewContainer(viewContainer);
 		ndcMenu.setViewContainer(viewContainer);
@@ -178,6 +219,9 @@ public class FocusMenu
 			add(levelMenu);
 			addSeparator();
 			add(callLocationItem);
+			addSeparator();
+			add(throwablesItem);
+			add(throwableItem);
 			addSeparator();
 			add(mdcMenu);
 			add(markerMenu);

@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
 - Added "Copy message" accelerator "command shift C".
 - Added "Copy message pattern" accelerator "command shift alt C".
 - Added "Copy Throwable name" action with accelerator "command shift alt T".
+- Added "Throwable" condition.
+- Added "Focus Throwables"/"Exclude Throwables" matching events with any Throwable.
+- Added "Focus Throwable"/"Exclude Throwable" matching events with a specific Throwable class name.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.

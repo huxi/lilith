@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
+import de.huxhorn.lilith.swing.actions.FocusThrowableAction;
+import de.huxhorn.lilith.swing.actions.FocusThrowablesAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
@@ -53,12 +55,22 @@ public class ExcludeMenu
 	private EventWrapper eventWrapper;
 
 	private ExcludeSavedConditionsMenu savedMenu;
+
 	private FilterAction messagePatternAction;
 	private JMenuItem messagePatternItem;
+
 	private FilterAction formattedMessageAction;
 	private JMenuItem formattedMessageItem;
+
 	private FilterAction callLocationAction;
 	private JMenuItem callLocationItem;
+
+	private FilterAction throwablesAction;
+	private JMenuItem throwablesItem;
+
+	private FilterAction throwableAction;
+	private JMenuItem throwableItem;
+
 	private ExcludeMDCMenu mdcMenu;
 	private ExcludeMarkerMenu markerMenu;
 	private ExcludeNDCMenu ndcMenu;
@@ -68,15 +80,21 @@ public class ExcludeMenu
 
 	private FilterAction statusCodeAction;
 	private JMenuItem statusCodeItem;
+
 	private ExcludeHttpStatusTypeMenu statusTypeMenu;
+
 	private FilterAction methodAction;
 	private JMenuItem methodItem;
+
 	private FilterAction requestUriAction;
 	private JMenuItem requestUriItem;
+
 	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
+
 	private FilterAction remoteUserAction;
 	private JMenuItem remoteUserItem;
+
 	private ViewContainer viewContainer;
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
@@ -94,11 +112,20 @@ public class ExcludeMenu
 		savedMenu = new ExcludeSavedConditionsMenu(applicationPreferences, htmlTooltip);
 
 		messagePatternAction = new NegateFilterAction(new FocusMessagePatternAction(htmlTooltip));
-		formattedMessageAction = new NegateFilterAction(new FocusFormattedMessageAction(htmlTooltip));
-		callLocationAction = new NegateFilterAction(new FocusCallLocationAction());
 		messagePatternItem = new JMenuItem(messagePatternAction);
+
+		formattedMessageAction = new NegateFilterAction(new FocusFormattedMessageAction(htmlTooltip));
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
+
+		callLocationAction = new NegateFilterAction(new FocusCallLocationAction());
 		callLocationItem = new JMenuItem(callLocationAction);
+
+		throwablesAction=new NegateFilterAction(new FocusThrowablesAction());
+		throwablesItem = new JMenuItem(throwablesAction);
+
+		throwableAction=new NegateFilterAction(new FocusThrowableAction());
+		throwableItem = new JMenuItem(throwableAction);
+
 		mdcMenu = new ExcludeMDCMenu();
 		markerMenu = new ExcludeMarkerMenu();
 		ndcMenu = new ExcludeNDCMenu(htmlTooltip);
@@ -106,13 +133,18 @@ public class ExcludeMenu
 
 		statusCodeAction = new NegateFilterAction(new FocusHttpStatusCodeAction());
 		statusCodeItem = new JMenuItem(statusCodeAction);
+
 		statusTypeMenu = new ExcludeHttpStatusTypeMenu();
+
 		methodAction = new NegateFilterAction(new FocusHttpMethodAction());
 		methodItem = new JMenuItem(methodAction);
+
 		requestUriAction = new NegateFilterAction(new FocusHttpRequestUriAction());
 		requestUriItem = new JMenuItem(requestUriAction);
+
 		requestUrlAction = new NegateFilterAction(new FocusHttpRequestUrlAction());
 		requestUrlItem = new JMenuItem(requestUrlAction);
+
 		remoteUserAction = new NegateFilterAction(new FocusHttpRemoteUserAction());
 		remoteUserItem = new JMenuItem(remoteUserAction);
 	}
@@ -123,6 +155,10 @@ public class ExcludeMenu
 		messagePatternAction.setEventWrapper(eventWrapper);
 		formattedMessageAction.setEventWrapper(eventWrapper);
 		callLocationAction.setEventWrapper(eventWrapper);
+
+		throwablesAction.setEventWrapper(eventWrapper);
+		throwableAction.setEventWrapper(eventWrapper);
+
 		mdcMenu.setEventWrapper(eventWrapper);
 		markerMenu.setEventWrapper(eventWrapper);
 		ndcMenu.setEventWrapper(eventWrapper);
@@ -144,6 +180,10 @@ public class ExcludeMenu
 		messagePatternAction.setViewContainer(viewContainer);
 		formattedMessageAction.setViewContainer(viewContainer);
 		callLocationAction.setViewContainer(viewContainer);
+
+		throwablesAction.setViewContainer(viewContainer);
+		throwableAction.setViewContainer(viewContainer);
+
 		mdcMenu.setViewContainer(viewContainer);
 		markerMenu.setViewContainer(viewContainer);
 		ndcMenu.setViewContainer(viewContainer);
@@ -178,6 +218,9 @@ public class ExcludeMenu
 			addSeparator();
 			add(callLocationItem);
 			addSeparator();
+			add(throwablesItem);
+			add(throwableItem);
+			addSeparator();
 			add(mdcMenu);
 			add(markerMenu);
 			add(ndcMenu);
@@ -188,6 +231,8 @@ public class ExcludeMenu
 					messagePatternItem.isEnabled() ||
 					formattedMessageItem.isEnabled() ||
 					callLocationItem.isEnabled() ||
+					throwablesItem.isEnabled() ||
+					throwableItem.isEnabled() ||
 					mdcMenu.isEnabled() ||
 					markerMenu.isEnabled() ||
 					loggerMenu.isEnabled() ||

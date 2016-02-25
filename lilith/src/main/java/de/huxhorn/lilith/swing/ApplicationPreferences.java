@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.lilith.conditions.MessagePatternContainsCondition;
 import de.huxhorn.lilith.conditions.MessagePatternEqualsCondition;
+import de.huxhorn.lilith.conditions.ThrowableCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.prefs.LilithPreferences;
@@ -195,6 +196,7 @@ public class ApplicationPreferences
 		LoggerContainsCondition.DESCRIPTION,
 		LoggerEqualsCondition.DESCRIPTION,
 		CallLocationCondition.DESCRIPTION,
+		ThrowableCondition.DESCRIPTION,
 		SAVED_CONDITION,
 	};
 
@@ -333,6 +335,11 @@ public class ApplicationPreferences
 		if(LoggerEqualsCondition.DESCRIPTION.equals(conditionName))
 		{
 			return new LoggerEqualsCondition(value);
+		}
+
+		if(ThrowableCondition.DESCRIPTION.equals(conditionName))
+		{
+			return new ThrowableCondition(value);
 		}
 
 		if(CallLocationCondition.DESCRIPTION.equals(conditionName))
