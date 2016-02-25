@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 
-## [8.0.1][unreleased] - TBD
+## [8.1.0][unreleased] - TBD
 
 ### Added
 - Added `TemporalAccessor` support to `SafeString`.
@@ -57,7 +57,7 @@ All notable changes to this project will be documented in this file.
   See [Message instances are simply serialized. They mustn't.](https://issues.apache.org/jira/browse/LOG4J2-1226).
 - Flying Saucer related issues:
   - Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
-    See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](http://code.google.com/p/flying-saucer/issues/detail?id=79").
+    See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](http://code.google.com/p/flying-saucer/issues/detail?id=79).
   - The first line of the message in HTML view is not properly indented if it starts with whitespace.
     You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII").
     The HTML created is actually correct.

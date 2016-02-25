@@ -48,7 +48,7 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '2.11'
 }
 
-def copyright = "Copyright \u00a9 2007-2015 J\u00f6rn Huxhorn"
+def copyright = "Copyright \u00a9 2007-2016 J\u00f6rn Huxhorn"
 def globalSourceCompatibility = 1.8
 def globalTargetCompatibility = 1.8
 
@@ -132,7 +132,7 @@ allprojects {
 	apply plugin: 'jacoco'
 
 	group = 'de.huxhorn.lilith'
-	version = '8.0.1'
+	version = '8.1.0'
 	def prereleaseIdentifier = System.properties.'prerelease'
 	if(prereleaseIdentifier) {
 		version = version + '-' + prereleaseIdentifier
