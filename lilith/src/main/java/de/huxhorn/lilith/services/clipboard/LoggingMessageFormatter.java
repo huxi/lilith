@@ -20,11 +20,14 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
 public class LoggingMessageFormatter
 	implements ClipboardFormatter
 {
 	private static final long serialVersionUID = -1333203619502038428L;
+
+	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_MESSAGE_ACTION).toString();
 
 	public String getName()
 	{
@@ -38,7 +41,7 @@ public class LoggingMessageFormatter
 
 	public String getAccelerator()
 	{
-		return null;
+		return ACCELERATOR;
 	}
 
 	public boolean isCompatible(Object object)

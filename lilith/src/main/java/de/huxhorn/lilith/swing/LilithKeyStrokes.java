@@ -63,6 +63,9 @@ public class LilithKeyStrokes
 	public static final String CLOSE_ALL_ACTION = "CLOSE_ALL_ACTION";
 	public static final String CLOSE_FILTER_ACTION = "CLOSE_FILTER_ACTION";
 	public static final String CLOSE_OTHER_FILTERS_ACTION = "CLOSE_OTHER_FILTERS_ACTION";
+	public static final String COPY_LOGGER_NAME_ACTION = "COPY_LOGGER_NAME_ACTION";
+	public static final String COPY_MESSAGE_ACTION = "COPY_MESSAGE_ACTION";
+	public static final String COPY_MESSAGE_PATTERN_ACTION = "COPY_MESSAGE_PATTERN_ACTION";
 	public static final String COPY_SELECTION_ACTION = "COPY_SELECTION_ACTION";
 	public static final String COPY_THROWABLE_ACTION = "COPY_THROWABLE_ACTION";
 	public static final String DISCONNECT_ACTION = "DISCONNECT_ACTION";
@@ -106,6 +109,9 @@ public class LilithKeyStrokes
 		addKeyStroke(CLOSE_ALL_ACTION, KeyStrokes.COMMAND_ALIAS+" shift alt W");
 		addKeyStroke(CLOSE_FILTER_ACTION, KeyStrokes.COMMAND_ALIAS + " W");
 		addKeyStroke(CLOSE_OTHER_FILTERS_ACTION, KeyStrokes.COMMAND_ALIAS + " shift W");
+		addKeyStroke(COPY_LOGGER_NAME_ACTION, KeyStrokes.COMMAND_ALIAS + " shift N");
+		addKeyStroke(COPY_MESSAGE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift C");
+		addKeyStroke(COPY_MESSAGE_PATTERN_ACTION, KeyStrokes.COMMAND_ALIAS + " shift alt C");
 		addKeyStroke(COPY_SELECTION_ACTION, KeyStrokes.COMMAND_ALIAS + " C");
 		addKeyStroke(COPY_THROWABLE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift T");
 		addKeyStroke(DISCONNECT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift D");
