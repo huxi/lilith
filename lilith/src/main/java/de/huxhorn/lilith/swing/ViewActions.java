@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,13 @@ import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.services.clipboard.AccessUriFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatterData;
+import de.huxhorn.lilith.services.clipboard.EventHtmlFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingEventJsonFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingEventXmlFormatter;
 import de.huxhorn.lilith.services.clipboard.GroovyFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallLocationFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallStackFormatter;
@@ -73,7 +74,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -262,10 +262,10 @@ public class ViewActions
 		showUnfilteredEventAction = new ShowUnfilteredEventAction();
 		gotoSourceAction = new GotoSourceAction();
 		copySelectionAction = new CopySelectionAction();
-		copyEventAction = new CopyToClipboardAction(new EventFormatter());
+		copyEventAction = new CopyToClipboardAction(new EventHtmlFormatter(mainFrame));
 		copyLoggingActions = new ArrayList<>();
-		copyLoggingActions.add(new CopyToClipboardAction(new EventJsonFormatter()));
-		copyLoggingActions.add(new CopyToClipboardAction(new EventXmlFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingEventJsonFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingEventXmlFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMessageFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMessagePatternFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingLoggerNameFormatter()));
@@ -1235,11 +1235,15 @@ public class ViewActions
 			boolean reset = false;
 			String name = formatter.getName();
 			KeyStroke currentKeyStroke = (KeyStroke) obj;
-			String existingActionName = LilithKeyStrokes.getActionName(currentKeyStroke);
-			if(existingActionName != null)
+			if(!formatter.isNative())
 			{
-				if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' of formatter '{}' would collide with native Lilith action '{}'. Ignoring...", currentKeyStroke, name, existingActionName);
-				reset = true;
+				String existingActionName = LilithKeyStrokes.getActionName(currentKeyStroke);
+				if (existingActionName != null)
+				{
+					if (logger.isWarnEnabled())
+						logger.warn("KeyStroke '{}' of formatter '{}' would collide with native Lilith action '{}'. Ignoring...", currentKeyStroke, name, existingActionName);
+					reset = true;
+				}
 			}
 			CopyToClipboardAction existingAction = mapping.get(currentKeyStroke);
 			if(existingAction != null)
@@ -3459,161 +3463,8 @@ public class ViewActions
 		}
 	}
 
-	private class EventFormatter
-		implements ClipboardFormatter
-	{
-		private static final long serialVersionUID = 2263706767713579277L;
 
-		public String getName()
-		{
-			return "Copy event";
-		}
 
-		public String getDescription()
-		{
-			return "Copies the HTML code of this events details view to the clipboard.";
-		}
-
-		public String getAccelerator()
-		{
-			return null;
-		}
-
-		public boolean isCompatible(Object object)
-		{
-			if(object instanceof EventWrapper)
-			{
-				EventWrapper wrapper = (EventWrapper) object;
-				Object eventObj = wrapper.getEvent();
-				return eventObj instanceof LoggingEvent || eventObj instanceof AccessEvent;
-			}
-			return false;
-		}
-
-		public String toString(Object object)
-		{
-			if(object instanceof EventWrapper)
-			{
-				EventWrapper wrapper = (EventWrapper) object;
-				return mainFrame.createMessage(wrapper);
-			}
-			return null;
-		}
-	}
-
-	private class EventJsonFormatter
-		implements ClipboardFormatter
-	{
-		private static final long serialVersionUID = 2263706767713579277L;
-
-		private LoggingJsonEncoder encoder = new LoggingJsonEncoder(false, true, true);
-
-		public String getName()
-		{
-			return "Copy event as JSON";
-		}
-
-		public String getDescription()
-		{
-			return "Copies the JSON representation of the event to the clipboard.";
-		}
-
-		public String getAccelerator()
-		{
-			return null;
-		}
-
-		public boolean isCompatible(Object object)
-		{
-			if(object instanceof EventWrapper)
-			{
-				EventWrapper wrapper = (EventWrapper) object;
-				Object eventObj = wrapper.getEvent();
-				return eventObj instanceof LoggingEvent;
-			}
-			return false;
-		}
-
-		public String toString(Object object)
-		{
-			if(object instanceof EventWrapper)
-			{
-				EventWrapper wrapper = (EventWrapper) object;
-				Serializable ser = wrapper.getEvent();
-				if(ser instanceof LoggingEvent)
-				{
-					LoggingEvent event = (LoggingEvent) ser;
-					byte[] bytes = encoder.encode(event);
-					try
-					{
-						return new String(bytes, "UTF-8");
-					}
-					catch(UnsupportedEncodingException e)
-					{
-						if(logger.isErrorEnabled()) logger.error("Couldn't create UTF-8 string!", e);
-					}
-				}
-			}
-			return null;
-		}
-	}
-
-	private class EventXmlFormatter
-		implements ClipboardFormatter
-	{
-		private static final long serialVersionUID = 2263706767713579277L;
-
-		private LoggingXmlEncoder encoder = new LoggingXmlEncoder(false, true);
-
-		public String getName()
-		{
-			return "Copy event as XML";
-		}
-
-		public String getDescription()
-		{
-			return "Copies the XML representation of the event to the clipboard.";
-		}
-
-		public String getAccelerator()
-		{
-			return null;
-		}
-
-		public boolean isCompatible(Object object)
-		{
-			if(object instanceof EventWrapper)
-			{
-				EventWrapper wrapper = (EventWrapper) object;
-				Object eventObj = wrapper.getEvent();
-				return eventObj instanceof LoggingEvent;
-			}
-			return false;
-		}
-
-		public String toString(Object object)
-		{
-			if(object instanceof EventWrapper)
-			{
-				EventWrapper wrapper = (EventWrapper) object;
-				Serializable ser = wrapper.getEvent();
-				if(ser instanceof LoggingEvent)
-				{
-					LoggingEvent event = (LoggingEvent) ser;
-					byte[] bytes = encoder.encode(event);
-					try
-					{
-						return new String(bytes, "UTF-8");
-					}
-					catch(UnsupportedEncodingException e)
-					{
-						if(logger.isErrorEnabled()) logger.error("Couldn't create UTF-8 string!", e);
-					}
-				}
-			}
-			return null;
-		}
-	}
 
 	private static class CopyToClipboardAction
 		extends AbstractAction

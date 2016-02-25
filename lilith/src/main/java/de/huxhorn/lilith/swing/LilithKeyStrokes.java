@@ -1,3 +1,21 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2016 Joern Huxhorn
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -46,6 +64,7 @@ public class LilithKeyStrokes
 	public static final String CLOSE_FILTER_ACTION = "CLOSE_FILTER_ACTION";
 	public static final String CLOSE_OTHER_FILTERS_ACTION = "CLOSE_OTHER_FILTERS_ACTION";
 	public static final String COPY_SELECTION_ACTION = "COPY_SELECTION_ACTION";
+	public static final String COPY_THROWABLE_ACTION = "COPY_THROWABLE_ACTION";
 	public static final String DISCONNECT_ACTION = "DISCONNECT_ACTION";
 	public static final String EDIT_CONDITION_ACTION = "EDIT_CONDITION_ACTION";
 	public static final String EDIT_SOURCE_NAME_ACTION = "EDIT_SOURCE_NAME_ACTION";
@@ -88,6 +107,7 @@ public class LilithKeyStrokes
 		addKeyStroke(CLOSE_FILTER_ACTION, KeyStrokes.COMMAND_ALIAS + " W");
 		addKeyStroke(CLOSE_OTHER_FILTERS_ACTION, KeyStrokes.COMMAND_ALIAS + " shift W");
 		addKeyStroke(COPY_SELECTION_ACTION, KeyStrokes.COMMAND_ALIAS + " C");
+		addKeyStroke(COPY_THROWABLE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift T");
 		addKeyStroke(DISCONNECT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift D");
 		addKeyStroke(EDIT_CONDITION_ACTION, KeyStrokes.COMMAND_ALIAS + " I");
 		addKeyStroke(EDIT_SOURCE_NAME_ACTION, KeyStrokes.COMMAND_ALIAS + " B");

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,4 +45,18 @@ public interface ClipboardFormatter
 	 * @return the accelerator of this formatter, can be null.
 	 */
 	String getAccelerator();
+
+	/**
+	 * Returns true, if this is a native Lilith formatter, i.e. the formatter is part
+	 * of Lilith itself so a match against Lilith accelerator keystrokes should not be
+	 * considered a problem.
+	 *
+	 * Default implementation returns false.
+	 *
+	 * @return true, if this is a native Lilith formatter. false otherwise
+	 */
+	default boolean isNative()
+	{
+		return false;
+	}
 }

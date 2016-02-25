@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Don't create copy of whitelist Set in `WhitelistObjectInputStream`.
 - Requires Java 8 `1.8.0_72`.
 - Added option to start application even if Java version requirements are not met.
+- Changed accelerator of "Copy Throwable" from "command shift alt T" to "command shift T".
 
 ### Deprecated
 - Nothing.

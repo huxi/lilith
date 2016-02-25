@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,18 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import de.huxhorn.lilith.swing.LilithKeyStrokes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.KeyStroke;
 
 public class LoggingThrowableFormatter
 	implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 830054294833389446L;
+
+	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_THROWABLE_ACTION).toString();
 
 	public String getName()
 	{
@@ -38,7 +45,7 @@ public class LoggingThrowableFormatter
 
 	public String getAccelerator()
 	{
-		return "command shift alt T";
+		return ACCELERATOR;
 	}
 
 	public boolean isCompatible(Object object)
@@ -80,5 +87,10 @@ public class LoggingThrowableFormatter
 		}
 
 		return null;
+	}
+
+	public boolean isNative()
+	{
+		return true;
 	}
 }

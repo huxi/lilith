@@ -15,25 +15,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
+import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.swing.MainFrame;
 
-public class LoggingMessagePatternFormatter
-	implements ClipboardFormatter
+public class EventHtmlFormatter
+		implements ClipboardFormatter
 {
-	private static final long serialVersionUID = -8422698763039005756L;
+	private static final long serialVersionUID = 2263706767713579277L;
+
+	private MainFrame mainFrame;
+
+	public EventHtmlFormatter(MainFrame mainFrame)
+	{
+		this.mainFrame = mainFrame;
+	}
 
 	public String getName()
 	{
-		return "Copy message pattern";
+		return "Copy event";
 	}
 
 	public String getDescription()
 	{
-		return "Copies the message pattern of the logging event to the clipboard.";
+		return "Copies the HTML code of this events details view to the clipboard.";
 	}
 
 	public String getAccelerator()
@@ -43,7 +52,13 @@ public class LoggingMessagePatternFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		return toString(object) != null;
+		if(object instanceof EventWrapper)
+		{
+			EventWrapper wrapper = (EventWrapper) object;
+			Object eventObj = wrapper.getEvent();
+			return eventObj instanceof LoggingEvent || eventObj instanceof AccessEvent;
+		}
+		return false;
 	}
 
 	public String toString(Object object)
@@ -51,21 +66,8 @@ public class LoggingMessagePatternFormatter
 		if(object instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Message messageObj = loggingEvent.getMessage();
-					if(messageObj != null)
-					{
-						return messageObj.getMessagePattern();
-					}
-				}
-			}
+			return mainFrame.createMessage(wrapper);
 		}
-
 		return null;
 	}
 

@@ -15,25 +15,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class LoggingMessagePatternFormatter
-	implements ClipboardFormatter
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+
+public class LoggingEventXmlFormatter
+		implements ClipboardFormatter
 {
-	private static final long serialVersionUID = -8422698763039005756L;
+	private static final long serialVersionUID = 2263706767713579277L;
+
+	private final Logger logger = LoggerFactory.getLogger(LoggingEventXmlFormatter.class);
+
+	private LoggingXmlEncoder encoder = new LoggingXmlEncoder(false, true);
 
 	public String getName()
 	{
-		return "Copy message pattern";
+		return "Copy event as XML";
 	}
 
 	public String getDescription()
 	{
-		return "Copies the message pattern of the logging event to the clipboard.";
+		return "Copies the XML representation of the event to the clipboard.";
 	}
 
 	public String getAccelerator()
@@ -43,7 +53,13 @@ public class LoggingMessagePatternFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		return toString(object) != null;
+		if(object instanceof EventWrapper)
+		{
+			EventWrapper wrapper = (EventWrapper) object;
+			Object eventObj = wrapper.getEvent();
+			return eventObj instanceof LoggingEvent;
+		}
+		return false;
 	}
 
 	public String toString(Object object)
@@ -51,21 +67,21 @@ public class LoggingMessagePatternFormatter
 		if(object instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
+			Serializable ser = wrapper.getEvent();
+			if(ser instanceof LoggingEvent)
 			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
+				LoggingEvent event = (LoggingEvent) ser;
+				byte[] bytes = encoder.encode(event);
+				try
 				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Message messageObj = loggingEvent.getMessage();
-					if(messageObj != null)
-					{
-						return messageObj.getMessagePattern();
-					}
+					return new String(bytes, "UTF-8");
+				}
+				catch(UnsupportedEncodingException e)
+				{
+					if(logger.isErrorEnabled()) logger.error("Couldn't create UTF-8 string!", e);
 				}
 			}
 		}
-
 		return null;
 	}
 
