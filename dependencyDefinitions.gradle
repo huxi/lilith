@@ -10,7 +10,7 @@ if(prereleaseIdentifier) {
 project.ext.versions = [
 'aspectj':        '1.8.8',
 'groovy':         '2.4.6',
-'httpClient':     '4.5.1',
+'httpClient':     '4.5.2',
 'httpCore':       '4.4.4',
 'jackson':        '2.7.1',
 'jacksonModule':  '2.7.1',
