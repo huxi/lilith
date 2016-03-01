@@ -187,6 +187,12 @@ public class AccessFormatter
 			return elapsedTime;
 		}
 
+		@Override
+		public long getElapsedSeconds()
+		{
+			return 0;
+		}
+
 		public void setTimeStamp(long timeStamp)
 		{
 			this.timeStamp = timeStamp;
@@ -288,6 +294,26 @@ public class AccessFormatter
 				serverName = NA;
 			}
 			return serverName;
+		}
+
+		@Override
+		public String getSessionID() {
+			return null;
+		}
+
+		@Override
+		public void setThreadName(String threadName) {
+
+		}
+
+		@Override
+		public String getThreadName() {
+			return null;
+		}
+
+		@Override
+		public String getQueryString() {
+			return null;
 		}
 
 		public void setRemoteAddr(String remoteAddr)
