@@ -102,7 +102,7 @@ public enum HttpStatus
 	NO_RESPONSE(444, Type.CLIENT_ERROR, "No Response (Nginx)", Specification.NGINX),
 	RETRY_WITH(449, Type.CLIENT_ERROR, "Retry With", Specification.MICROSOFT),
 	BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS(450, Type.CLIENT_ERROR, "Blocked by Windows Parental Controls", Specification.MICROSOFT),
-	UNAVAILABLE_FOR_LEGAL_REASONS(451, Type.CLIENT_ERROR, "Unavailable For Legal Reasons (draft)", null /* https://tools.ietf.org/html/draft-ietf-httpbis-legally-restricted-status-02 */),
+	UNAVAILABLE_FOR_LEGAL_REASONS(451, Type.CLIENT_ERROR, "Unavailable For Legal Reasons", Specification.RFC7725),
 	CLIENT_CLOSED_REQUEST(499, Type.CLIENT_ERROR, "Client Closed Request (Nginx)", Specification.NGINX),
 
 
@@ -215,10 +215,10 @@ public enum HttpStatus
 	public enum Type
 	{
 		INFORMATIONAL("Informational", "1xx"),
-		SUCCESSFUL("Successful", "2xx"),
-		REDIRECTION("Redirection", "3xx"),
-		CLIENT_ERROR("Client Error", "4xx"),
-		SERVER_ERROR("Server Error", "5xx");
+		SUCCESSFUL   ("Successful",    "2xx"),
+		REDIRECTION  ("Redirection",   "3xx"),
+		CLIENT_ERROR ("Client Error",  "4xx"),
+		SERVER_ERROR ("Server Error",  "5xx");
 
 		private final String description;
 		private final String range;
@@ -246,7 +246,6 @@ public enum HttpStatus
 		RFC2295("RFC 2295", "Transparent Content Negotiation in HTTP"),
 		RFC2324("RFC 2324", "Hyper Text Coffee Pot Control Protocol"),
 		RFC2518("RFC 2518", "HTTP Extensions for Distributed Authoring -- WEBDAV"),
-		//RFC2616("RFC 2616", "Hypertext Transfer Protocol -- HTTP/1.1"),
 		RFC2774("RFC 2774", "An HTTP Extension Framework"),
 		RFC2817("RFC 2817", "Upgrading to TLS Within HTTP/1.1"),
 		RFC3229("RFC 3229", "Delta encoding in HTTP"),
@@ -259,14 +258,10 @@ public enum HttpStatus
 		RFC7233("RFC 7233", "HTTP/1.1 Range Requests"),
 		RFC7235("RFC 7235", "HTTP/1.1 Authentication"),
 		RFC7238("RFC 7238", "The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect)"),
+		RFC7725("RFC 7725", "An HTTP Status Code to Report Legal Obstacles"),
 		NGINX("Nginx", "Nginx HTTP server extensions"),
 		APACHE("Apache", "Apache extensions"),
 		MICROSOFT("Microsoft", "Microsoft extensions");
-
-		/*
-		https://tools.ietf.org/html/draft-ietf-httpbis-legally-restricted-status-02
-		An HTTP Status Code to Report Legal Obstacles
-		*/
 
 		private String identifier;
 		private String description;

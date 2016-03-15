@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Requires Java 8 `1.8.0_72`.
 - Added option to start application even if Java version requirements are not met.
 - Changed accelerator of "Copy Throwable" from "command shift alt T" to "command shift T".
+- Changed specification of HTTP status code 451 from draft to RFC 7725.
 
 ### Deprecated
 - Nothing.
