@@ -32,10 +32,14 @@ project.ext.libraries = [
 'commons-io':               'commons-io:commons-io:2.4',
 'commons-lang':             'org.apache.commons:commons-lang3:3.4',
 //'disruptor':                'com.lmax:disruptor:3.3.0',
-//'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.0.7',
 // regression in 9.0.7:
 // https://code.google.com/p/flying-saucer/issues/detail?id=262
 // https://archive.is/lvkBt
+// regression in 9.0.9:
+//   NPE at org.xhtmlrenderer.resource.XMLResource$XMLResourceBuilder.createXMLResource(XMLResource.java:189)
+//   while clicking on links in help.
+// https://github.com/flyingsaucerproject/flyingsaucer
+//'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.0.9',
 'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.0.6',
 'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.9.1',
 'groovy':                   "org.codehaus.groovy:groovy:${versions.groovy}",
