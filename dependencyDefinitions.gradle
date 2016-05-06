@@ -19,7 +19,7 @@ project.ext.versions = [
 'logback':        '1.1.7',
 'slf4j':          '1.7.21',
 'spock':          '1.0-groovy-2.4',
-'spring':         '4.2.5.RELEASE',
+'spring':         '4.2.6.RELEASE',
 'substance':      '7.3',
 'sulky':          sulkyVersion,
 'thymeleaf':      '2.1.4.RELEASE'
