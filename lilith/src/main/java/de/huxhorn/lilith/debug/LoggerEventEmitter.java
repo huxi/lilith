@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,10 @@
  */
 package de.huxhorn.lilith.debug;
 
+import de.huxhorn.lilith.debug.exceptions.CauseCauseCauseException;
+import de.huxhorn.lilith.debug.exceptions.CauseCauseException;
+import de.huxhorn.lilith.debug.exceptions.CauseException;
+import de.huxhorn.lilith.debug.exceptions.SuppressedException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -115,20 +119,24 @@ public class LoggerEventEmitter
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logException2()
 	{
-		Exception causeCause = new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
-		Exception cause = new RuntimeException("Cause-Exception", causeCause);
-		Throwable ex = new RuntimeException("Another Test-Exception", cause);
+		Exception causeCause = new CauseCauseException("CauseCause-Exception", new CauseCauseCauseException("Inline CauseCauseCause-Exception"));
+		Exception cause = new CauseException("Cause-Exception", causeCause);
+		Throwable ex = new RuntimeException("Root-Exception", cause);
 		execute(new LogThrowableRunnable(delay, ex));
 	}
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logExceptionSuppressed()
 	{
-		Exception causeCause = new RuntimeException("Suppressed - CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
-		Exception cause = new RuntimeException("Suppressed - Cause-Exception", causeCause);
-		cause.addSuppressed(new RuntimeException("Suppressed1"));
-		cause.addSuppressed(new RuntimeException("Suppressed2"));
-		cause.addSuppressed(new RuntimeException("Suppressed3"));
+		Exception causeCause = new CauseCauseException("Suppressed - CauseCause-Exception", new CauseCauseCauseException("Inline CauseCauseCause-Exception"));
+		Exception cause = new CauseException("Suppressed - Cause-Exception", causeCause);
+		Exception supCause = new CauseException("Suppressed - Cause-Exception in Suppressed1");
+		Exception sup1 = new SuppressedException("Suppressed1", supCause);
+		sup1.addSuppressed(new SuppressedException("Suppressed1-1"));
+		sup1.addSuppressed(new SuppressedException("Suppressed1-2"));
+		cause.addSuppressed(sup1);
+		cause.addSuppressed(new SuppressedException("Suppressed2"));
+		cause.addSuppressed(new SuppressedException("Suppressed3"));
 		Throwable ex = new RuntimeException("Suppressed - Root-Exception", cause);
 		execute(new LogThrowableRunnable(delay, ex));
 	}
@@ -143,9 +151,9 @@ public class LoggerEventEmitter
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
 	public void logParamException2()
 	{
-		Exception causeCause = new RuntimeException("CauseCause-Exception", new RuntimeException("Inline CauseCauseCause-Exception"));
-		Exception cause = new RuntimeException("Cause-Exception", causeCause);
-		Throwable ex = new RuntimeException("Another Test-Exception", cause);
+		Exception causeCause = new CauseCauseException("CauseCause-Exception", new CauseCauseCauseException("Inline CauseCauseCause-Exception"));
+		Exception cause = new CauseException("Cause-Exception", causeCause);
+		Throwable ex = new RuntimeException("Root-Exception", cause);
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
 
