@@ -20,11 +20,13 @@ package de.huxhorn.lilith.conditions;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ThrowableCondition
 	implements LilithCondition, SearchStringCondition
 {
-	private static final long serialVersionUID = 478148397663546849L;
+	private static final long serialVersionUID = -6937557692850490570L;
 
 	public static final String DESCRIPTION = "Throwable";
 
@@ -78,15 +80,48 @@ public class ThrowableCondition
 					// no search string means "match any Throwable"
 					return true;
 				}
-				if(searchString.equals(throwable.getName()))
+
+				if(collectThrowableNames(throwable).contains(searchString))
 				{
-					// otherwise match if name matches
+					// otherwise match if any exception name matches
 					return true;
 				}
-
 			}
 		}
 		return false;
+	}
+
+	public static Set<String> collectThrowableNames(ThrowableInfo throwable)
+	{
+		Set<String> result=new HashSet<>();
+		collectThrowableNamesRescursive(throwable, result);
+		return result;
+	}
+
+	private static void collectThrowableNamesRescursive(ThrowableInfo throwable, Set<String> throwableNames)
+	{
+		if(throwable == null)
+		{
+			return;
+		}
+		String name = throwable.getName();
+		if(name != null)
+		{
+			throwableNames.add(name);
+		}
+
+		collectThrowableNamesRescursive(throwable.getCause(), throwableNames);
+
+		ThrowableInfo[] suppressed = throwable.getSuppressed();
+		if(suppressed == null)
+		{
+			return;
+		}
+
+		for (ThrowableInfo current : suppressed)
+		{
+			collectThrowableNamesRescursive(current, throwableNames);
+		}
 	}
 
 	public ThrowableCondition clone()
