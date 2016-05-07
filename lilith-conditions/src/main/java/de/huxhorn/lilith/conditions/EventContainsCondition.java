@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -154,6 +155,14 @@ public class EventContainsCondition
 				}
 
 				{
+					ThrowableInfo throwable = event.getThrowable();
+					if(checkThrowable(throwable))
+					{
+						return true;
+					}
+				}
+
+				{
 					ThreadInfo threadInfo = event.getThreadInfo();
 					if(threadInfo != null)
 					{
@@ -193,6 +202,27 @@ public class EventContainsCondition
 					}
 				}
 
+				{
+					Message[] ndc = event.getNdc();
+					if(ndc != null)
+					{
+						for (Message current : ndc)
+						{
+							if(current == null)
+							{
+								continue;
+							}
+							if(checkString(current.getMessage()))
+							{
+								return true;
+							}
+							if(checkString(current.getMessagePattern()))
+							{
+								return true;
+							}
+						}
+					}
+				}
 			}
 			else if(eventObj instanceof AccessEvent)
 			{
@@ -268,6 +298,39 @@ public class EventContainsCondition
 				}
 			}
 		}
+		return false;
+	}
+
+	private boolean checkThrowable(ThrowableInfo throwable)
+	{
+		if(throwable == null)
+		{
+			return false;
+		}
+		if(checkString(throwable.getName()))
+		{
+			return true;
+		}
+		if(checkString(throwable.getMessage()))
+		{
+			return true;
+		}
+		if(checkThrowable(throwable.getCause()))
+		{
+			return true;
+		}
+		ThrowableInfo[] suppressed = throwable.getSuppressed();
+		if(suppressed != null)
+		{
+			for (ThrowableInfo current : suppressed)
+			{
+				if(checkThrowable(current))
+				{
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 

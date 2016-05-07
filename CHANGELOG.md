@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Changed accelerator of "Copy Throwable" from "command shift alt T" to "command shift T".
 - Changed specification of HTTP status code 451 from draft to RFC 7725.
 - Changed meaning of `ThrowableCondition`. Condition now evaluates to true if search string is one of the `Throwable` contained in the hierarchy (including cause, suppressed) instead of only checking the root exception.
+- `EventContainsCondition` is now evaluating `Throwable` and NDC.
 
 ### Deprecated
 - Nothing.
