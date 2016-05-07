@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@
 package de.huxhorn.lilith.data.logging;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Replacement for java.lang.StackTraceElement containing additional info about
@@ -50,6 +51,11 @@ public class ExtendedStackTraceElement
 
 	private static final String NATIVE_METHOD_STRING = "Native Method";
 	private static final String UNKNOWN_SOURCE_STRING = "Unknown Source";
+	private static final String NA_PLACEHOLDER = "na";
+	private static final String EXTENDED_EXACT_PREFIX = "[";
+	private static final String EXTENDED_INEXACT_PREFIX = "~[";
+	private static final String EXTENDED_POSTFIX = "]";
+	private static final char SEPARATOR_CHAR = ':';
 
 	private String className;
 	private String methodName;
@@ -206,38 +212,45 @@ public class ExtendedStackTraceElement
 	{
 		if(codeLocation != null || version != null)
 		{
-			return appendExtended(null).toString();
+			return appendExtended(new StringBuilder()).toString();
 		}
 		return null;
 	}
 
-	public StringBuilder appendExtended(StringBuilder result)
+	private StringBuilder appendExtended(StringBuilder stringBuilder)
 	{
-		if(result == null)
+		if (exact)
 		{
-			result = new StringBuilder();
-		}
-
-		if(exact)
-		{
-			result.append("[");
+			stringBuilder.append(EXTENDED_EXACT_PREFIX);
 		}
 		else
 		{
-			result.append("~[");
+			stringBuilder.append(EXTENDED_INEXACT_PREFIX);
 		}
-		if(codeLocation != null)
-		{
-			result.append(codeLocation);
-		}
-		result.append(":");
-		if(version != null)
-		{
-			result.append(version);
-		}
-		result.append("]");
 
-		return result;
+		if (codeLocation != null)
+		{
+			stringBuilder.append(codeLocation);
+		}
+		else
+		{
+			stringBuilder.append(NA_PLACEHOLDER);
+		}
+
+		stringBuilder.append(SEPARATOR_CHAR);
+
+		if (version != null)
+		{
+			stringBuilder.append(version);
+		}
+		else
+		{
+			stringBuilder.append(NA_PLACEHOLDER);
+		}
+
+		stringBuilder.append(EXTENDED_POSTFIX);
+
+		return stringBuilder;
 	}
 
 	/**
@@ -261,48 +274,52 @@ public class ExtendedStackTraceElement
 	 */
 	public String toString(boolean extended)
 	{
-		return appendTo(null, extended).toString();
+		return appendTo(new StringBuilder(), extended).toString();
 	}
 
-	public StringBuilder appendTo(StringBuilder result, boolean extended)
+	/**
+	 * Appends this instance to the given StringBuilder.
+	 *
+	 * @param stringBuilder the StringBuilder to append this instance to.
+	 * @param extended Whether or not extended info should be included, if available.
+	 * @return the given StringBuilder instance.
+	 * @throws NullPointerException if stringBuilder is null.
+	 */
+	public StringBuilder appendTo(StringBuilder stringBuilder, boolean extended)
 	{
-		if(result == null)
-		{
-			result = new StringBuilder();
-		}
-
-		result.append(className).append(".").append(methodName);
+		Objects.requireNonNull(stringBuilder, "stringBuilder must not be null!");
+		stringBuilder.append(className).append(".").append(methodName);
 		if(isNativeMethod())
 		{
-			result.append("(").append(NATIVE_METHOD_STRING).append(")");
+			stringBuilder.append("(").append(NATIVE_METHOD_STRING).append(")");
 		}
 		else if(fileName != null)
 		{
-			result.append("(").append(fileName);
+			stringBuilder.append("(").append(fileName);
 			if(lineNumber >= 0)
 			{
-				result.append(":").append(lineNumber);
+				stringBuilder.append(SEPARATOR_CHAR).append(lineNumber);
 			}
-			result.append(")");
+			stringBuilder.append(")");
 		}
 		else
 		{
-			result.append("(").append(UNKNOWN_SOURCE_STRING).append(")");
+			stringBuilder.append("(").append(UNKNOWN_SOURCE_STRING).append(")");
 		}
 		if(extended)
 		{
 			if(codeLocation != null || version != null)
 			{
-				result.append(' ');
-				appendExtended(result);
+				stringBuilder.append(' ');
+				appendExtended(stringBuilder);
 			}
 		}
-		return result;
+		return stringBuilder;
 	}
 
 
 
-	public static ExtendedStackTraceElement parseStackTraceElement(String ste)
+	public static ExtendedStackTraceElement parseStackTraceElement(final String ste)
 	{
 		if(ste == null)
 		{
@@ -321,11 +338,10 @@ public class ExtendedStackTraceElement
 
 		String classAndMethod = ste.substring(0, idx);
 		String source = ste.substring(idx + 1, endIdx);
-		String remainder = ste.substring(endIdx + 1);
 		idx = classAndMethod.lastIndexOf('.');
 		String clazz = classAndMethod.substring(0, idx);
 		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
-		idx = source.lastIndexOf(':');
+		idx = source.lastIndexOf(SEPARATOR_CHAR);
 		String file = null;
 		int lineNumber = UNKNOWN_SOURCE_LINE_NUMBER;
 		if(idx != -1)
@@ -344,37 +360,42 @@ public class ExtendedStackTraceElement
 				file = source;
 			}
 		}
-		int vEndIdx = remainder.lastIndexOf(']');
-		if(vEndIdx >= 0)
+
+		if(endIdx + 2 < ste.length())
 		{
-			boolean exact = false;
-			String versionStr = null;
-			if(remainder.startsWith(" ["))
+			String remainder = ste.substring(endIdx + 2);
+			int vEndIdx = remainder.lastIndexOf(']');
+			if(vEndIdx >= 0)
 			{
-				exact = true;
-				versionStr = remainder.substring(2, vEndIdx);
-			}
-			else if(remainder.startsWith(" ~["))
-			{
-				exact = false;
-				versionStr = remainder.substring(3, vEndIdx);
-			}
-			if(versionStr != null)
-			{
-				int colonIdx = versionStr.indexOf(':');
-				if(colonIdx > -1)
+				boolean exact = false;
+				String versionStr = null;
+				if (remainder.startsWith(EXTENDED_EXACT_PREFIX))
 				{
-					String codeLocation = versionStr.substring(0, colonIdx);
-					String version = versionStr.substring(colonIdx + 1);
-					if("".equals(codeLocation) || "na".equals(codeLocation))
+					exact = true;
+					versionStr = remainder.substring(EXTENDED_EXACT_PREFIX.length(), vEndIdx);
+				}
+				else if (remainder.startsWith(EXTENDED_INEXACT_PREFIX))
+				{
+					exact = false;
+					versionStr = remainder.substring(EXTENDED_INEXACT_PREFIX.length(), vEndIdx);
+				}
+				if (versionStr != null)
+				{
+					int colonIdx = versionStr.indexOf(SEPARATOR_CHAR);
+					if (colonIdx > -1)
 					{
-						codeLocation = null;
+						String codeLocation = versionStr.substring(0, colonIdx);
+						String version = versionStr.substring(colonIdx + 1);
+						if ("".equals(codeLocation) || NA_PLACEHOLDER.equals(codeLocation))
+						{
+							codeLocation = null;
+						}
+						if ("".equals(version) || NA_PLACEHOLDER.equals(version))
+						{
+							version = null;
+						}
+						return new ExtendedStackTraceElement(clazz, method, file, lineNumber, codeLocation, version, exact);
 					}
-					if("".equals(version) || "na".equals(version))
-					{
-						version = null;
-					}
-					return new ExtendedStackTraceElement(clazz, method, file, lineNumber, codeLocation, version, exact);
 				}
 			}
 		}

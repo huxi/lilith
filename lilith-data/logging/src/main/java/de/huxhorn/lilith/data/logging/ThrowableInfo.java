@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ package de.huxhorn.lilith.data.logging;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class ThrowableInfo
@@ -192,19 +193,25 @@ public class ThrowableInfo
 	 */
 	public String toString(boolean extended)
 	{
-		return appendTo(null, extended).toString();
+		return appendTo(new StringBuilder(), extended).toString();
 	}
 
-	public StringBuilder appendTo(StringBuilder result, boolean extended)
+	/**
+	 * Appends this instance to the given StringBuilder.
+	 *
+	 * @param stringBuilder the StringBuilder to append this instance to.
+	 * @param extended Whether or not extended info should be included, if available.
+	 * @return the given StringBuilder instance.
+	 * @throws NullPointerException if stringBuilder is null.
+	 */
+	public StringBuilder appendTo(StringBuilder stringBuilder, boolean extended)
 	{
-		if(result == null)
-		{
-			result = new StringBuilder();
-		}
-		Set<ThrowableInfo> dejaVu = new HashSet<>();
-		recursiveAppend(result, dejaVu, null, 0, this, extended);
+		Objects.requireNonNull(stringBuilder, "stringBuilder must not be null!");
 
-		return result;
+		Set<ThrowableInfo> dejaVu = new HashSet<>();
+		recursiveAppend(stringBuilder, dejaVu, null, 0, this, extended);
+
+		return stringBuilder;
 	}
 
 	private static void recursiveAppend(StringBuilder sb, Set<ThrowableInfo> dejaVu, String prefix, int indent, ThrowableInfo throwableInfo, boolean extended)
@@ -268,22 +275,22 @@ public class ThrowableInfo
 	{
 		ExtendedStackTraceElement[] steArray = throwableInfo.getStackTrace();
 
-		int commonFrames = throwableInfo.getOmittedElements();
-
 		if(steArray != null)
 		{
-			for(int i = 0; i < steArray.length; i++)
+			for(ExtendedStackTraceElement ste : steArray)
 			{
-				ExtendedStackTraceElement ste = steArray[i];
-				if(ste != null)
+				if (ste == null)
 				{
-					appendIndent(sb, indentLevel);
-					sb.append("at ");
-					ste.appendTo(sb, extended);
-					sb.append(LINE_SEPARATOR);
+					continue;
 				}
+				appendIndent(sb, indentLevel);
+				sb.append("at ");
+				ste.appendTo(sb, extended);
+				sb.append(LINE_SEPARATOR);
 			}
 		}
+
+		int commonFrames = throwableInfo.getOmittedElements();
 
 		if(commonFrames > 0)
 		{
