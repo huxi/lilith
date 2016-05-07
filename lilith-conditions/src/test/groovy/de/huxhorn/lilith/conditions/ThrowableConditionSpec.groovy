@@ -42,4 +42,23 @@ public class ThrowableConditionSpec extends Specification
 		['java.lang.RuntimeException', 'java.lang.NullPointerException', 'java.lang.FooException'] as Set                           | new ThrowableInfo(name: 'java.lang.RuntimeException', suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException'), new ThrowableInfo(name: 'java.lang.FooException')])
 		['java.lang.RuntimeException', 'java.lang.NullPointerException', 'java.lang.FooException', 'java.lang.BarException'] as Set | new ThrowableInfo(name: 'java.lang.RuntimeException', cause: new ThrowableInfo(name: 'java.lang.BarException'), suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException'), new ThrowableInfo(name: 'java.lang.FooException')])
 	}
+
+	@Unroll
+	def "Corpus works as expected for #condition (searchString=#input)."() {
+		expect:
+		Corpus.executeConditionOnCorpus(condition) == expectedResult
+
+		where:
+		input                            | expectedResult
+		null                             | [25, 26, 27, 28, 29, 30] as Set
+		''                               | [25, 26, 27, 28, 29, 30] as Set
+		'snafu'                          | [] as Set
+		'java.lang.RuntimeException'     | [25, 26, 27, 28, 29, 30] as Set
+		'java.lang.NullPointerException' | [26, 27, 28, 29, 30] as Set
+		'java.lang.FooException'         | [27, 29, 30] as Set
+		'java.lang.BarException'         | [30] as Set
+
+		condition = new ThrowableCondition(input)
+	}
+
 }

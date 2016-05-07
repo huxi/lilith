@@ -1,0 +1,44 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2016 Joern Huxhorn
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package de.huxhorn.lilith.conditions
+
+import spock.lang.Specification
+import spock.lang.Unroll
+
+class FormattedMessageContainsConditionSpec extends Specification {
+	@Unroll
+	def "Corpus works as expected for #condition (searchString=#input)."() {
+		expect:
+		Corpus.executeConditionOnCorpus(condition) == expectedResult
+
+		where:
+		input              | expectedResult
+		null               | [] as Set
+		''                 | Corpus.matchAllSet()
+		'snafu'            | [] as Set
+		'message'          | [17, 18, 19, 20, 21] as Set
+		'a message'        | [17, 19, 20, 21] as Set
+		'another message'  | [18] as Set
+		'a message.'       | [17] as Set
+		'another message.' | [18] as Set
+		'paramValue'       | [19, 21, 22] as Set
+		'{}'               | [20, 21, 23] as Set
+
+		condition = new FormattedMessageContainsCondition(input)
+	}
+}
