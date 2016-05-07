@@ -15,6 +15,7 @@ import static ch.qos.logback.classic.Level.WARN
 
 context.name = 'Lilith'
 context.putProperty('foo','bar')
+context.setPackagingDataEnabled(true)
 
 def delay = new Duration(200)
 
