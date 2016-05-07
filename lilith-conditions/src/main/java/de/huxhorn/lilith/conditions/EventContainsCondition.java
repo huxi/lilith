@@ -64,10 +64,6 @@ public class EventContainsCondition
 
 	private boolean checkString(String input)
 	{
-		if(searchString == null)
-		{
-			return false;
-		}
 		if(input != null)
 		{
 			if(input.contains(searchString))
