@@ -113,28 +113,9 @@ public class EventContainsCondition
 				}
 
 				{
-					LoggerContext context = event.getLoggerContext();
-					if(context != null)
+					if (checkLoggerContext(event.getLoggerContext()))
 					{
-						if(checkString(context.getName()))
-						{
-							return true;
-						}
-						Map<String, String> props = context.getProperties();
-						if(props!= null)
-						{
-							for(Map.Entry<String, String> current:props.entrySet())
-							{
-								if(checkString(current.getKey()))
-								{
-									return true;
-								}
-								if(checkString(current.getValue()))
-								{
-									return true;
-								}
-							}
-						}
+						return true;
 					}
 				}
 
@@ -237,28 +218,9 @@ public class EventContainsCondition
 				}
 
 				{
-					LoggerContext context = event.getLoggerContext();
-					if(context != null)
+					if (checkLoggerContext(event.getLoggerContext()))
 					{
-						if(checkString(context.getName()))
-						{
-							return true;
-						}
-						Map<String, String> props = context.getProperties();
-						if(props!= null)
-						{
-							for(Map.Entry<String, String> current:props.entrySet())
-							{
-								if(checkString(current.getKey()))
-								{
-									return true;
-								}
-								if(checkString(current.getValue()))
-								{
-									return true;
-								}
-							}
-						}
+						return true;
 					}
 				}
 
@@ -301,6 +263,16 @@ public class EventContainsCondition
 		return false;
 	}
 
+	private boolean checkLoggerContext(LoggerContext context)
+	{
+		if (context == null)
+		{
+			return false;
+		}
+
+		return checkString(context.getName()) || checkMap(context.getProperties());
+	}
+
 	private boolean checkThrowable(ThrowableInfo throwable)
 	{
 		if(throwable == null)
@@ -336,75 +308,84 @@ public class EventContainsCondition
 
 	private boolean checkMarker(Marker marker, List<String> processedMarkers)
 	{
-		if(marker != null)
+		if(marker == null)
 		{
-			if(processedMarkers == null)
-			{
-				processedMarkers = new ArrayList<>();
-			}
-			if(checkString(marker.getName()))
-			{
-				return true;
-			}
-			if(!processedMarkers.contains(marker.getName()))
-			{
-				processedMarkers.add(marker.getName());
-				if(marker.hasReferences())
-				{
-					Map<String, Marker> children = marker.getReferences();
-					for(Map.Entry<String, Marker> current : children.entrySet())
-					{
-						Marker child = current.getValue();
-						if(checkMarker(child, processedMarkers))
-						{
-							return true;
-						}
-					}
-				}
-			}
+			return false;
 		}
-		return false;
-	}
-
-	private boolean checkMap(Map<String, String> map)
-	{
-		if(map != null)
+		if(checkString(marker.getName()))
 		{
-			for(Map.Entry<String, String> entry : map.entrySet())
-			{
-				if(checkString(entry.getKey()))
-				{
-					return true;
-				}
-				if(checkString(entry.getValue()))
-				{
-					return true;
-				}
-			}
+			return true;
 		}
-		return false;
-	}
 
-	private boolean checkArrayMap(Map<String, String[]> map)
-	{
-		if(map != null)
+		if(processedMarkers == null)
 		{
-			for(Map.Entry<String, String[]> entry : map.entrySet())
+			processedMarkers = new ArrayList<>();
+		}
+		if(!processedMarkers.contains(marker.getName()))
+		{
+			processedMarkers.add(marker.getName());
+			if(marker.hasReferences())
 			{
-				if(checkString(entry.getKey()))
+				Map<String, Marker> children = marker.getReferences();
+				for(Map.Entry<String, Marker> current : children.entrySet())
 				{
-					return true;
-				}
-				String[] array = entry.getValue();
-				for(String s : array)
-				{
-					if(checkString(s))
+					Marker child = current.getValue();
+					if(checkMarker(child, processedMarkers))
 					{
 						return true;
 					}
 				}
 			}
 		}
+
+		return false;
+	}
+
+	private boolean checkMap(Map<String, String> map)
+	{
+		if(map == null)
+		{
+			return false;
+		}
+
+		for(Map.Entry<String, String> entry : map.entrySet())
+		{
+			if(checkString(entry.getKey()) || checkString(entry.getValue()))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean checkArrayMap(Map<String, String[]> map)
+	{
+		if(map == null)
+		{
+			return false;
+		}
+
+		for(Map.Entry<String, String[]> entry : map.entrySet())
+		{
+			if(checkString(entry.getKey()))
+			{
+				return true;
+			}
+			String[] array = entry.getValue();
+			if(array == null)
+			{
+				continue;
+			}
+			for(String s : array)
+			{
+				if(checkString(s))
+				{
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 
