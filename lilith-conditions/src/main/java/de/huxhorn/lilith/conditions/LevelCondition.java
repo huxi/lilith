@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,14 +67,6 @@ public class LevelCondition
 
 	public boolean isTrue(Object value)
 	{
-		if(searchString == null)
-		{
-			return false;
-		}
-		if(searchString.length() == 0)
-		{
-			return true;
-		}
 		if(level == null)
 		{
 			return false;
@@ -127,9 +119,6 @@ public class LevelCondition
 	@Override
 	public String toString()
 	{
-		StringBuilder result = new StringBuilder();
-		result.append(getDescription());
-		result.append(level);
-		return result.toString();
+		return getDescription() + level;
 	}
 }
