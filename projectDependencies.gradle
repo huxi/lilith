@@ -488,6 +488,7 @@ project(':lilith-conditions') {
 		compile libraries.'sulky-groovy'
 		compile libraries.'slf4j-api'
 		compile libraries.'groovy'
+		testCompile libraries.'sulky-junit'
 	}
 }
 

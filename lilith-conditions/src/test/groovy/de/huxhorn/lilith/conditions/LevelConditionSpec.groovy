@@ -20,6 +20,10 @@ package de.huxhorn.lilith.conditions
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static de.huxhorn.sulky.junit.JUnitTools.testClone
+import static de.huxhorn.sulky.junit.JUnitTools.testSerialization
+import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization
+
 class LevelConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (searchString=#input)."() {
@@ -38,5 +42,50 @@ class LevelConditionSpec extends Specification {
 		'ERROR' | [12] as Set
 
 		condition = new LevelCondition(input)
+	}
+
+	def "serialization works."() {
+		when:
+		def condition = new LevelCondition()
+		condition.searchString = input
+
+		and:
+		def result = testSerialization(condition)
+
+		then:
+		result.searchString == input
+
+		where:
+		input << [null, '', 'value']
+	}
+
+	def "XML serialization works."() {
+		when:
+		def condition = new LevelCondition()
+		condition.searchString = input
+
+		and:
+		def result = testXmlSerialization(condition)
+
+		then:
+		result.searchString == input
+
+		where:
+		input << [null, '', 'value']
+	}
+
+	def "cloning works."() {
+		when:
+		def condition = new LevelCondition()
+		condition.searchString = input
+
+		and:
+		def result = testClone(condition)
+
+		then:
+		result.searchString == input
+
+		where:
+		input << [null, '', 'value']
 	}
 }

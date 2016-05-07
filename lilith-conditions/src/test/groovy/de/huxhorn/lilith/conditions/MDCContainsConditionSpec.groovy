@@ -20,6 +20,10 @@ package de.huxhorn.lilith.conditions
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static de.huxhorn.sulky.junit.JUnitTools.testClone
+import static de.huxhorn.sulky.junit.JUnitTools.testSerialization
+import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization
+
 class MDCContainsConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (key=#key, value=#value)."() {
@@ -33,5 +37,59 @@ class MDCContainsConditionSpec extends Specification {
 		'mdcKey' | 'mdcValue'  | [24] as Set
 
 		condition = new MDCContainsCondition(key, value)
+	}
+
+	def "serialization works."() {
+		when:
+		def condition = new MDCContainsCondition()
+		condition.key = key
+		condition.value = value
+
+		and:
+		def result = testSerialization(condition)
+
+		then:
+		result.key == key
+		result.value == value
+
+		where:
+		key << [null, '', 'key', 'key', null]
+		value << [null, '', 'value', null, 'value']
+	}
+
+	def "XML serialization works."() {
+		when:
+		def condition = new MDCContainsCondition()
+		condition.key = key
+		condition.value = value
+
+		and:
+		def result = testXmlSerialization(condition)
+
+		then:
+		result.key == key
+		result.value == value
+
+		where:
+		key << [null, '', 'key', 'key', null]
+		value << [null, '', 'value', null, 'value']
+	}
+
+	def "cloning works."() {
+		when:
+		def condition = new MDCContainsCondition()
+		condition.key = key
+		condition.value = value
+
+		and:
+		def result = testClone(condition)
+
+		then:
+		result.key == key
+		result.value == value
+
+		where:
+		key << [null, '', 'key', 'key', null]
+		value << [null, '', 'value', null, 'value']
 	}
 }

@@ -20,6 +20,10 @@ package de.huxhorn.lilith.conditions
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static de.huxhorn.sulky.junit.JUnitTools.testClone
+import static de.huxhorn.sulky.junit.JUnitTools.testSerialization
+import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization
+
 class FormattedMessageContainsConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (searchString=#input)."() {
@@ -40,5 +44,50 @@ class FormattedMessageContainsConditionSpec extends Specification {
 		'{}'               | [20, 21, 23] as Set
 
 		condition = new FormattedMessageContainsCondition(input)
+	}
+
+	def "serialization works."() {
+		when:
+		def condition = new FormattedMessageContainsCondition()
+		condition.searchString = input
+
+		and:
+		def result = testSerialization(condition)
+
+		then:
+		result.searchString == input
+
+		where:
+		input << [null, '', 'value']
+	}
+
+	def "XML serialization works."() {
+		when:
+		def condition = new FormattedMessageContainsCondition()
+		condition.searchString = input
+
+		and:
+		def result = testXmlSerialization(condition)
+
+		then:
+		result.searchString == input
+
+		where:
+		input << [null, '', 'value']
+	}
+
+	def "cloning works."() {
+		when:
+		def condition = new FormattedMessageContainsCondition()
+		condition.searchString = input
+
+		and:
+		def result = testClone(condition)
+
+		then:
+		result.searchString == input
+
+		where:
+		input << [null, '', 'value']
 	}
 }
