@@ -44,14 +44,6 @@ public class ThrowableCondition
 
 	public void setSearchString(String searchString)
 	{
-		if(searchString != null)
-		{
-			searchString = searchString.trim();
-			if(searchString.length() == 0)
-			{
-				searchString = null;
-			}
-		}
 		this.searchString = searchString;
 	}
 
@@ -75,7 +67,7 @@ public class ThrowableCondition
 				{
 					return false;
 				}
-				if(searchString == null)
+				if(searchString == null || "".equals(searchString))
 				{
 					// no search string means "match any Throwable"
 					return true;
