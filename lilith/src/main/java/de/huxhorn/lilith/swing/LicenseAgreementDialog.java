@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.io.IOUtilities;
+import java.nio.charset.Charset;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,7 @@ import javax.swing.text.html.HTMLEditorKit;
 public class LicenseAgreementDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = -4349856392257012707L;
 	private final Logger logger = LoggerFactory.getLogger(LicenseAgreementDialog.class);
 
 	private boolean licenseAgreed;
@@ -78,7 +80,7 @@ public class LicenseAgreementDialog
 		{
 			try
 			{
-				licenseText = IOUtils.toString(licenseStream);
+				licenseText = IOUtils.toString(licenseStream, Charset.forName("UTF-8"));
 			}
 			catch(IOException ex)
 			{

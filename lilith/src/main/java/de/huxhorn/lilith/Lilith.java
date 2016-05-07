@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@ import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
 import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
+import java.nio.charset.Charset;
 import org.apache.commons.io.FileUtils;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
@@ -1002,7 +1003,7 @@ public class Lilith
 		try
 		{
 			is = new FileInputStream(prevPathFile);
-			prevPathStr = IOUtils.toString(is);
+			prevPathStr = IOUtils.toString(is, Charset.forName("UTF-8"));
 		}
 		catch(IOException ex)
 		{
