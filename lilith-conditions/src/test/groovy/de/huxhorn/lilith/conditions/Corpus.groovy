@@ -20,6 +20,7 @@ package de.huxhorn.lilith.conditions
 import de.huxhorn.lilith.data.access.AccessEvent
 import de.huxhorn.lilith.data.eventsource.EventWrapper
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement
 import de.huxhorn.lilith.data.logging.LoggingEvent
 import de.huxhorn.lilith.data.logging.Marker
 import de.huxhorn.lilith.data.logging.Message
@@ -100,6 +101,69 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('a message with parameter {} and unresolved parameter {}.', ['paramValue'] as String[])])))
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('{}', ['paramValue'] as String[])])))
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('{}')])))
+
+		// call stack
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) ~[de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+		])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) ~[de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]'),
+		])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)'),
+		])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)'),
+		])))
+
+
+
+
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+		])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]'),
+		])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)'),
+		])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)'),
+		])))
 
 
 		return result
