@@ -29,6 +29,7 @@ public class CallLocationCondition
 	private static final long serialVersionUID = -3772942542557888560L;
 
 	public static final String DESCRIPTION = "CallLocation";
+	private static final String AT_PREFIX = "at ";
 
 	private String searchString;
 	private transient StackTraceElement stackTraceElement;
@@ -46,9 +47,19 @@ public class CallLocationCondition
 	public void setSearchString(String searchString)
 	{
 		this.searchString = searchString;
+		if(searchString == null)
+		{
+			stackTraceElement = null;
+			return;
+		}
+		String actualString = searchString.trim();
+		if(actualString.startsWith(AT_PREFIX))
+		{
+			actualString = actualString.substring(AT_PREFIX.length());
+		}
 		try
 		{
-			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(searchString);
+			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(actualString);
 			if(ste != null)
 			{
 				stackTraceElement = ste.getStackTraceElement();
@@ -71,14 +82,6 @@ public class CallLocationCondition
 
 	public boolean isTrue(Object value)
 	{
-		if(searchString == null)
-		{
-			return false;
-		}
-		if(searchString.length() == 0)
-		{
-			return true;
-		}
 		if(stackTraceElement == null)
 		{
 			return false;
