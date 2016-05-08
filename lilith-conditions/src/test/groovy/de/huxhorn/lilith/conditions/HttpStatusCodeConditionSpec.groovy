@@ -67,6 +67,7 @@ class HttpStatusCodeConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.statusCode == condition.statusCode
 
 		where:
 		input << [null, '', 'value', '404']
@@ -82,12 +83,14 @@ class HttpStatusCodeConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.statusCode == condition.statusCode
 
 		where:
 		input << [null, '', 'value', '404']
 	}
 
-	def "cloning works."() {
+	@Unroll
+	def "cloning works with searchString #input."() {
 		when:
 		def condition = new HttpStatusCodeCondition()
 		condition.searchString = input
@@ -97,6 +100,7 @@ class HttpStatusCodeConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.statusCode == condition.statusCode
 
 		where:
 		input << [null, '', 'value', '404']

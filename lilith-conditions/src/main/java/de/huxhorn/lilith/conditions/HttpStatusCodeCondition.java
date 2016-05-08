@@ -29,10 +29,10 @@ public class HttpStatusCodeCondition
 
 	public static final String DESCRIPTION = "HttpStatusCode==";
 
-	private static final int BROKEN = -1;
+	public static final int INVALID_CODE = -1;
 
 	private String searchString;
-	private transient int code;
+	private transient int statusCode;
 
 	public HttpStatusCodeCondition()
 	{
@@ -49,17 +49,17 @@ public class HttpStatusCodeCondition
 		this.searchString = searchString;
 		if(searchString == null)
 		{
-			code = BROKEN;
+			statusCode = INVALID_CODE;
 			return;
 		}
 		String actualString = searchString.trim();
 		try
 		{
-			code = Integer.parseInt(actualString);
+			statusCode = Integer.parseInt(actualString);
 		}
 		catch(Throwable e)
 		{
-			code = BROKEN;
+			statusCode = INVALID_CODE;
 		}
 	}
 
@@ -73,9 +73,14 @@ public class HttpStatusCodeCondition
 		return DESCRIPTION;
 	}
 
+	public int getStatusCode()
+	{
+		return statusCode;
+	}
+
 	public boolean isTrue(Object value)
 	{
-		if(code == BROKEN)
+		if(statusCode == INVALID_CODE)
 		{
 			return false;
 		}
@@ -87,7 +92,7 @@ public class HttpStatusCodeCondition
 			{
 				AccessEvent event = (AccessEvent) eventObj;
 
-				return event.getStatusCode() == code;
+				return event.getStatusCode() == statusCode;
 			}
 		}
 		return false;
@@ -100,12 +105,12 @@ public class HttpStatusCodeCondition
 
 		HttpStatusCodeCondition that = (HttpStatusCodeCondition) o;
 
-		return code == that.code;
+		return statusCode == that.statusCode;
 	}
 
 	public int hashCode()
 	{
-		return code;
+		return statusCode;
 	}
 
 	public HttpStatusCodeCondition clone()
@@ -128,7 +133,7 @@ public class HttpStatusCodeCondition
 	{
 		StringBuilder result = new StringBuilder();
 		result.append(getDescription());
-		result.append(code);
+		result.append(statusCode);
 		return result.toString();
 	}
 }
