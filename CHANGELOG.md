@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - `appendTo` methods of `ThrowableInfo` and `ExtendedStackTraceElement` now throw a `NullPointerException` if `StringBuilder` is `null`.
 - `ExtendedStackTraceElement.appendExtended` is now private.
 - `ExtendedStackTraceElement.toString(true)` is now printing `"na"` instead of empty string if codeLocation or version is null. 
+- `HttpStatusTypeCondition` understands more input. "SUCCESSFUL", "su", "2", "2X" and " 2x " will all evaluate to `HttpStatus.Type.SUCCESSFUL`.
 
 ### Deprecated
 - Nothing.

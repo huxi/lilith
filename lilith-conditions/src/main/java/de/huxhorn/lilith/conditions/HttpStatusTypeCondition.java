@@ -22,6 +22,7 @@ import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
 import java.io.ObjectStreamException;
+import java.util.Locale;
 
 public class HttpStatusTypeCondition
 	implements LilithCondition, SearchStringCondition
@@ -46,14 +47,42 @@ public class HttpStatusTypeCondition
 	public void setSearchString(String searchString)
 	{
 		this.searchString = searchString;
+		if(searchString == null)
+		{
+			type = null;
+			return;
+		}
+
+		String actualString = searchString.trim();
+		if("".equals(actualString))
+		{
+			type = null;
+			return;
+		}
 		try
 		{
 			type = HttpStatus.Type.valueOf(searchString);
+			return;
 		}
-		catch(Throwable e)
+		catch (Throwable t)
 		{
-			type = null;
+			// ignore
 		}
+		actualString = actualString.toLowerCase(Locale.ENGLISH);
+		for(HttpStatus.Type current : HttpStatus.Type.values())
+		{
+			if(current.toString().toLowerCase(Locale.ENGLISH).startsWith(actualString))
+			{
+				type = current;
+				return;
+			}
+			if(current.getRange().startsWith(actualString))
+			{
+				type = current;
+				return;
+			}
+		}
+		type = null;
 	}
 
 	public String getSearchString()

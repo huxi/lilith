@@ -165,6 +165,13 @@ public class Corpus
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)'),
 		])))
 
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 100)))
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 200)))
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 202)))
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 301)))
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 404)))
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 451)))
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 500)))
 
 		return result
 	}
