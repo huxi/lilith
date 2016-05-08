@@ -91,7 +91,7 @@ class EventContainsConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -107,7 +107,7 @@ class EventContainsConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -123,6 +123,11 @@ class EventContainsConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
+	}
+
+
+	def inputValues() {
+		[null, '', 'value']
 	}
 }

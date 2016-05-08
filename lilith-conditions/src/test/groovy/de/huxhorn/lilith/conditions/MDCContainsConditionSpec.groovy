@@ -54,8 +54,8 @@ class MDCContainsConditionSpec extends Specification {
 		result.value == value
 
 		where:
-		key << [null, '', 'key', 'key', null]
-		value << [null, '', 'value', null, 'value']
+		key << keys()
+		value << values()
 	}
 
 	@Unroll
@@ -73,8 +73,8 @@ class MDCContainsConditionSpec extends Specification {
 		result.value == value
 
 		where:
-		key << [null, '', 'key', 'key', null]
-		value << [null, '', 'value', null, 'value']
+		key << keys()
+		value << values()
 	}
 
 	@Unroll
@@ -92,7 +92,15 @@ class MDCContainsConditionSpec extends Specification {
 		result.value == value
 
 		where:
-		key << [null, '', 'key', 'key', null]
-		value << [null, '', 'value', null, 'value']
+		key << keys()
+		value << values()
+	}
+
+	def keys() {
+		[null, '', 'key', 'key', null]
+	}
+
+	def values() {
+		[null, '', 'value', null, 'value']
 	}
 }

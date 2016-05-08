@@ -72,7 +72,7 @@ class CallLocationConditionSpec extends Specification {
 		}
 
 		where:
-		input << [null, '', 'value', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -93,7 +93,7 @@ class CallLocationConditionSpec extends Specification {
 		}
 
 		where:
-		input << [null, '', 'value', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -114,6 +114,17 @@ class CallLocationConditionSpec extends Specification {
 		}
 
 		where:
-		input << [null, '', 'value', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)']
+		input << inputValues()
 	}
+
+	def inputValues() {
+		[
+				null,
+				'',
+				'value',
+				'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]',
+				'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)'
+		]
+	}
+
 }

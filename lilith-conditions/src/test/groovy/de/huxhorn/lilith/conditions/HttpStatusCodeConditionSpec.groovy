@@ -71,7 +71,7 @@ class HttpStatusCodeConditionSpec extends Specification {
 		result.statusCode == condition.statusCode
 
 		where:
-		input << [null, '', 'value', '404']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -88,7 +88,7 @@ class HttpStatusCodeConditionSpec extends Specification {
 		result.statusCode == condition.statusCode
 
 		where:
-		input << [null, '', 'value', '404']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -105,6 +105,10 @@ class HttpStatusCodeConditionSpec extends Specification {
 		result.statusCode == condition.statusCode
 
 		where:
-		input << [null, '', 'value', '404']
+		input << inputValues()
+	}
+
+	def inputValues() {
+		[null, '', 'value', '404']
 	}
 }

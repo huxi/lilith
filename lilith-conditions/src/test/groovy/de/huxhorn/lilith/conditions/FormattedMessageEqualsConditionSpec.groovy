@@ -59,7 +59,7 @@ class FormattedMessageEqualsConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -75,7 +75,7 @@ class FormattedMessageEqualsConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -91,6 +91,10 @@ class FormattedMessageEqualsConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
+	}
+
+	def inputValues() {
+		[null, '', 'value']
 	}
 }

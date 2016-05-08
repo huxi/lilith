@@ -76,7 +76,7 @@ class HttpRemoteUserConditionSpec extends Specification {
 		result.userName == condition.userName
 
 		where:
-		input << [null, '', ' ', '-', ' - ', 'sfalken', ' sfalken ']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -93,7 +93,7 @@ class HttpRemoteUserConditionSpec extends Specification {
 		result.userName == condition.userName
 
 		where:
-		input << [null, '', ' ', '-', ' - ', 'sfalken', ' sfalken ']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -110,6 +110,10 @@ class HttpRemoteUserConditionSpec extends Specification {
 		result.userName == condition.userName
 
 		where:
-		input << [null, '', ' ', '-', ' - ', 'sfalken', ' sfalken ']
+		input << inputValues()
+	}
+
+	def inputValues() {
+		[null, '', ' ', '-', ' - ', 'sfalken', ' sfalken ']
 	}
 }

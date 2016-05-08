@@ -87,7 +87,7 @@ class HttpStatusTypeConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value', '4xx']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -103,7 +103,7 @@ class HttpStatusTypeConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value', '4xx']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -119,6 +119,10 @@ class HttpStatusTypeConditionSpec extends Specification {
 		result.searchString == input
 
 		where:
-		input << [null, '', 'value', '4xx']
+		input << inputValues()
+	}
+
+	def inputValues() {
+		[null, '', 'value', '4xx']
 	}
 }
