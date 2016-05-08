@@ -104,7 +104,8 @@ class HttpStatusTypeConditionSpec extends Specification {
 		input << [null, '', 'value', '4xx']
 	}
 
-	def "cloning works."() {
+	@Unroll
+	def "cloning works with searchString #input."() {
 		when:
 		def condition = new HttpStatusTypeCondition()
 		condition.searchString = input

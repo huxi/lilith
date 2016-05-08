@@ -76,7 +76,8 @@ class MessagePatternContainsConditionSpec extends Specification {
 		input << [null, '', 'value']
 	}
 
-	def "cloning works."() {
+	@Unroll
+	def "cloning works with searchString #input."() {
 		when:
 		def condition = new MessagePatternContainsCondition()
 		condition.searchString = input

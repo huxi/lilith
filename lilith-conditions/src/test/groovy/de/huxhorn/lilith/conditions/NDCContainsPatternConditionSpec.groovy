@@ -76,7 +76,8 @@ class NDCContainsPatternConditionSpec extends Specification {
 		input << [null, '', 'value']
 	}
 
-	def "cloning works."() {
+	@Unroll
+	def "cloning works with searchString #input."() {
 		when:
 		def condition = new NDCContainsPatternCondition()
 		condition.searchString = input

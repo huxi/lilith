@@ -75,7 +75,8 @@ class MDCContainsConditionSpec extends Specification {
 		value << [null, '', 'value', null, 'value']
 	}
 
-	def "cloning works."() {
+	@Unroll
+	def "cloning works with key=#key and value=#value."() {
 		when:
 		def condition = new MDCContainsCondition()
 		condition.key = key
