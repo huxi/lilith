@@ -174,6 +174,14 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 451)))
 		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 500)))
 
+		// remote user
+		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: '')))
+		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: '-')))
+		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: ' ')))
+		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: ' - ')))
+		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: 'sfalken')))
+		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: ' sfalken ')))
+
 		return result
 	}
 
