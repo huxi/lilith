@@ -108,7 +108,16 @@ public class HttpRequestUriCondition
 	{
 		StringBuilder result = new StringBuilder();
 		result.append(getDescription());
-		result.append(searchString);
+		if(searchString != null)
+		{
+			result.append("\"");
+			result.append(searchString);
+			result.append("\"");
+		}
+		else
+		{
+			result.append("null");
+		}
 		return result.toString();
 	}
 }

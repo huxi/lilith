@@ -56,6 +56,10 @@ public class HttpStatusCodeCondition
 		try
 		{
 			statusCode = Integer.parseInt(actualString);
+			if(statusCode < 100 || statusCode > 599)
+			{
+				statusCode = INVALID_CODE;
+			}
 		}
 		catch(Throwable e)
 		{
@@ -133,7 +137,14 @@ public class HttpStatusCodeCondition
 	{
 		StringBuilder result = new StringBuilder();
 		result.append(getDescription());
-		result.append(statusCode);
+		if(statusCode == INVALID_CODE)
+		{
+			result.append("invalid");
+		}
+		else
+		{
+			result.append(statusCode);
+		}
 		return result.toString();
 	}
 }

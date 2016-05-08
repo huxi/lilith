@@ -110,7 +110,19 @@ public class HttpRemoteUserCondition
 	@Override
 	public String toString()
 	{
-		return getDescription() + userName;
+		StringBuilder result = new StringBuilder();
+		result.append(getDescription());
+		if(userName != null)
+		{
+			result.append("\"");
+			result.append(userName);
+			result.append("\"");
+		}
+		else
+		{
+			result.append(NA);
+		}
+		return result.toString();
 	}
 
 	private Object readResolve()
