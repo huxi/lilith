@@ -59,7 +59,8 @@ class LoggerStartsWithConditionSpec extends Specification {
 		input << [null, '', 'value']
 	}
 
-	def "XML serialization works."() {
+	@Unroll
+	def "XML serialization works with searchString #input."() {
 		when:
 		def condition = new LoggerStartsWithCondition()
 		condition.searchString = input

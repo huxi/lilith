@@ -57,7 +57,8 @@ class MDCContainsConditionSpec extends Specification {
 		value << [null, '', 'value', null, 'value']
 	}
 
-	def "XML serialization works."() {
+	@Unroll
+	def "XML serialization works with key=#key and value=#value."() {
 		when:
 		def condition = new MDCContainsCondition()
 		condition.key = key

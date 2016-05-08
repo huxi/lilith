@@ -73,7 +73,8 @@ class HttpStatusCodeConditionSpec extends Specification {
 		input << [null, '', 'value', '404']
 	}
 
-	def "XML serialization works."() {
+	@Unroll
+	def "XML serialization works with searchString #input."() {
 		when:
 		def condition = new HttpStatusCodeCondition()
 		condition.searchString = input

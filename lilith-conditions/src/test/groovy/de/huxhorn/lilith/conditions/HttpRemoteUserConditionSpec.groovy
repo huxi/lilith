@@ -78,7 +78,8 @@ class HttpRemoteUserConditionSpec extends Specification {
 		input << [null, '', ' ', '-', ' - ', 'sfalken', ' sfalken ']
 	}
 
-	def "XML serialization works."() {
+	@Unroll
+	def "XML serialization works with searchString #input."() {
 		when:
 		def condition = new HttpRemoteUserCondition()
 		condition.searchString = input
