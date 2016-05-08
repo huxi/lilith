@@ -35,6 +35,7 @@ class CallLocationConditionSpec extends Specification {
 		null                                                                                                                                | [] as Set
 		''                                                                                                                                  | Corpus.matchAllSet()
 		'snafu'                                                                                                                             | [] as Set
+		'actionPerformed(DebugDialog.java:358)'                                                                                             | [] as Set
 		'de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) [de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]'  | [44, 45, 46, 47] as Set
 		'de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) ~[de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]' | [44, 45, 46, 47] as Set
 		'de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358)'                                            | [44, 45, 46, 47] as Set
