@@ -85,6 +85,7 @@ class HttpStatusTypeConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.statusType == condition.statusType
 
 		where:
 		input << inputValues()
@@ -101,6 +102,7 @@ class HttpStatusTypeConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.statusType == condition.statusType
 
 		where:
 		input << inputValues()
@@ -117,6 +119,7 @@ class HttpStatusTypeConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.statusType == condition.statusType
 
 		where:
 		input << inputValues()

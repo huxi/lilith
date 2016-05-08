@@ -32,7 +32,7 @@ public class HttpStatusTypeCondition
 	public static final String DESCRIPTION = "HttpStatusType==";
 
 	private String searchString;
-	private transient HttpStatus.Type type;
+	private transient HttpStatus.Type statusType;
 
 	public HttpStatusTypeCondition()
 	{
@@ -49,19 +49,19 @@ public class HttpStatusTypeCondition
 		this.searchString = searchString;
 		if(searchString == null)
 		{
-			type = null;
+			statusType = null;
 			return;
 		}
 
 		String actualString = searchString.trim();
 		if("".equals(actualString))
 		{
-			type = null;
+			statusType = null;
 			return;
 		}
 		try
 		{
-			type = HttpStatus.Type.valueOf(searchString);
+			statusType = HttpStatus.Type.valueOf(searchString);
 			return;
 		}
 		catch (Throwable t)
@@ -73,16 +73,16 @@ public class HttpStatusTypeCondition
 		{
 			if(current.toString().toLowerCase(Locale.ENGLISH).startsWith(actualString))
 			{
-				type = current;
+				statusType = current;
 				return;
 			}
 			if(current.getRange().startsWith(actualString))
 			{
-				type = current;
+				statusType = current;
 				return;
 			}
 		}
-		type = null;
+		statusType = null;
 	}
 
 	public String getSearchString()
@@ -95,9 +95,14 @@ public class HttpStatusTypeCondition
 		return DESCRIPTION;
 	}
 
+	public HttpStatus.Type getStatusType()
+	{
+		return statusType;
+	}
+
 	public boolean isTrue(Object value)
 	{
-		if(type == null)
+		if(statusType == null)
 		{
 			return false;
 		}
@@ -110,7 +115,7 @@ public class HttpStatusTypeCondition
 				AccessEvent event = (AccessEvent) eventObj;
 
 				HttpStatus.Type eventType = HttpStatus.getType(event.getStatusCode());
-				return eventType == type;
+				return eventType == statusType;
 			}
 		}
 		return false;
@@ -123,12 +128,12 @@ public class HttpStatusTypeCondition
 
 		HttpStatusTypeCondition that = (HttpStatusTypeCondition) o;
 
-		return type == that.type;
+		return statusType == that.statusType;
 	}
 
 	public int hashCode()
 	{
-		return (type != null ? type.hashCode() : 0);
+		return (statusType != null ? statusType.hashCode() : 0);
 	}
 
 	public HttpStatusTypeCondition clone()
@@ -149,9 +154,6 @@ public class HttpStatusTypeCondition
 	@Override
 	public String toString()
 	{
-		StringBuilder result = new StringBuilder();
-		result.append(getDescription());
-		result.append(type);
-		return result.toString();
+		return getDescription() + statusType;
 	}
 }
