@@ -62,7 +62,8 @@ class HttpRemoteUserConditionSpec extends Specification {
 		condition = new HttpRemoteUserCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new HttpRemoteUserCondition()
 		condition.searchString = input

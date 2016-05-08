@@ -44,7 +44,8 @@ class LoggerContainsConditionSpec extends Specification {
 		condition = new LoggerContainsCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new LoggerContainsCondition()
 		condition.searchString = input

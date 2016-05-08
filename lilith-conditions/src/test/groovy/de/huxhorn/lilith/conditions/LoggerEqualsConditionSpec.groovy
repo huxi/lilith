@@ -44,7 +44,8 @@ class LoggerEqualsConditionSpec extends Specification {
 		condition = new LoggerEqualsCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new LoggerEqualsCondition()
 		condition.searchString = input

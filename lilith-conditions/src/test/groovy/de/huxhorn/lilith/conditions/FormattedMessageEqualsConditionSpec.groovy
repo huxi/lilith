@@ -46,7 +46,8 @@ class FormattedMessageEqualsConditionSpec extends Specification {
 		condition = new FormattedMessageEqualsCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new FormattedMessageEqualsCondition()
 		condition.searchString = input

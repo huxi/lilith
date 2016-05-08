@@ -44,7 +44,8 @@ class LevelConditionSpec extends Specification {
 		condition = new LevelCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new LevelCondition()
 		condition.searchString = input

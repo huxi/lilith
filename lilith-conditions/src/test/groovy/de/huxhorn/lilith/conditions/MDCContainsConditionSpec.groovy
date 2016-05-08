@@ -39,7 +39,8 @@ class MDCContainsConditionSpec extends Specification {
 		condition = new MDCContainsCondition(key, value)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with key=#key and value=#value."() {
 		when:
 		def condition = new MDCContainsCondition()
 		condition.key = key

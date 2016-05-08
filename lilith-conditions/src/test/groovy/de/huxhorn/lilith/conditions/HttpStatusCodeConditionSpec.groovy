@@ -57,7 +57,8 @@ class HttpStatusCodeConditionSpec extends Specification {
 		condition = new HttpStatusCodeCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new HttpStatusCodeCondition()
 		condition.searchString = input

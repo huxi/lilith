@@ -46,7 +46,8 @@ class MessagePatternContainsConditionSpec extends Specification {
 		condition = new MessagePatternContainsCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new MessagePatternContainsCondition()
 		condition.searchString = input

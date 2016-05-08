@@ -66,7 +66,8 @@ public class ThrowableConditionSpec extends Specification
 	}
 
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new ThrowableCondition()
 		condition.searchString = input

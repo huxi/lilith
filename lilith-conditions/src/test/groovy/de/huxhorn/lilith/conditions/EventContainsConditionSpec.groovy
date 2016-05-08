@@ -78,7 +78,8 @@ class EventContainsConditionSpec extends Specification {
 		condition = new EventContainsCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new EventContainsCondition()
 		condition.searchString = input

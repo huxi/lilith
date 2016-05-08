@@ -46,7 +46,8 @@ class NDCContainsConditionSpec extends Specification {
 		condition = new NDCContainsCondition(input)
 	}
 
-	def "serialization works."() {
+	@Unroll
+	def "serialization works with searchString #input."() {
 		when:
 		def condition = new NDCContainsCondition()
 		condition.searchString = input
