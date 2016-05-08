@@ -33,7 +33,7 @@ class HttpStatusTypeConditionSpec extends Specification {
 		where:
 		input           | expectedResult
 		null            | [] as Set
-		''              | Corpus.matchAllSet()
+		''              | [] as Set
 		'snafu'         | [] as Set
 		'INFORMATIONAL' | [52] as Set
 		'SUCCESSFUL'    | [53, 54] as Set

@@ -29,6 +29,8 @@ public class HttpStatusCodeCondition
 
 	public static final String DESCRIPTION = "HttpStatusCode==";
 
+	private static final int BROKEN = -1;
+
 	private String searchString;
 	private transient int code;
 
@@ -45,13 +47,19 @@ public class HttpStatusCodeCondition
 	public void setSearchString(String searchString)
 	{
 		this.searchString = searchString;
+		if(searchString == null)
+		{
+			code = BROKEN;
+			return;
+		}
+		String actualString = searchString.trim();
 		try
 		{
-			code = Integer.parseInt(searchString);
+			code = Integer.parseInt(actualString);
 		}
 		catch(Throwable e)
 		{
-			code = 0;
+			code = BROKEN;
 		}
 	}
 
@@ -67,13 +75,9 @@ public class HttpStatusCodeCondition
 
 	public boolean isTrue(Object value)
 	{
-		if(searchString == null)
+		if(code == BROKEN)
 		{
 			return false;
-		}
-		if(searchString.length() == 0)
-		{
-			return true;
 		}
 		if(value instanceof EventWrapper)
 		{
