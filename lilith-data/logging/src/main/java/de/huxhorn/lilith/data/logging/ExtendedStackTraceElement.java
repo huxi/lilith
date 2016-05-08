@@ -339,6 +339,10 @@ public class ExtendedStackTraceElement
 		String classAndMethod = ste.substring(0, idx);
 		String source = ste.substring(idx + 1, endIdx);
 		idx = classAndMethod.lastIndexOf('.');
+		if(idx < 0)
+		{
+			return null; // not a ste
+		}
 		String clazz = classAndMethod.substring(0, idx);
 		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
 		idx = source.lastIndexOf(SEPARATOR_CHAR);

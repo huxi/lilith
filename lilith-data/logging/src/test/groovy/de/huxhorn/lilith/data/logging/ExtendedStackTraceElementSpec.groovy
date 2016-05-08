@@ -44,7 +44,8 @@ class ExtendedStackTraceElementSpec extends Specification {
         [
             null,
             'foo',
-            'className.methodName(Unknown Source)',
+			'methodName(Unknown Source)',
+			'className.methodName(Unknown Source)',
             'java.lang.Thread.sleep(Native Method)',
             'java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)',
             'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [lilith.jar:0.9.35-SNAPSHOT]',
@@ -63,7 +64,8 @@ class ExtendedStackTraceElementSpec extends Specification {
     def parseResultValues() {
         [
             null,
-            null,
+			null,
+			null,
             new ExtendedStackTraceElement(
                 className: 'className',
                 methodName: 'methodName',
