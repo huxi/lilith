@@ -55,9 +55,10 @@ class LevelConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.level == condition.level
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -71,9 +72,10 @@ class LevelConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.level == condition.level
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
 	}
 
 	@Unroll
@@ -87,8 +89,13 @@ class LevelConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.level == condition.level
 
 		where:
-		input << [null, '', 'value']
+		input << inputValues()
+	}
+
+	def inputValues() {
+		[null, '', 'value', 'INFO']
 	}
 }

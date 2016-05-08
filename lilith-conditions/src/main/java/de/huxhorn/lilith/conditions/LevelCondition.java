@@ -65,6 +65,11 @@ public class LevelCondition
 		return DESCRIPTION;
 	}
 
+	public LoggingEvent.Level getLevel()
+	{
+		return level;
+	}
+
 	public boolean isTrue(Object value)
 	{
 		if(level == null)
