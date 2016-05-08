@@ -64,6 +64,11 @@ class CallLocationConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.stackTraceElement == condition.stackTraceElement
+		if(condition.stackTraceElement)
+		{
+			assert !condition.stackTraceElement.is(result.stackTraceElement)
+		}
 
 		where:
 		input << [null, '', 'value', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)']
@@ -79,12 +84,18 @@ class CallLocationConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.stackTraceElement == condition.stackTraceElement
+		if(condition.stackTraceElement)
+		{
+			assert !condition.stackTraceElement.is(result.stackTraceElement)
+		}
 
 		where:
 		input << [null, '', 'value', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)']
 	}
 
-	def "cloning works."() {
+	@Unroll
+	def "cloning works with searchString #input."() {
 		when:
 		def condition = new CallLocationCondition()
 		condition.searchString = input
@@ -94,6 +105,11 @@ class CallLocationConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
+		result.stackTraceElement == condition.stackTraceElement
+		if(condition.stackTraceElement)
+		{
+			assert !condition.stackTraceElement.is(result.stackTraceElement)
+		}
 
 		where:
 		input << [null, '', 'value', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]', 'javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)']

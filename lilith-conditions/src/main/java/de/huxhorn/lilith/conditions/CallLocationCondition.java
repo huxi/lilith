@@ -80,6 +80,11 @@ public class CallLocationCondition
 		return searchString;
 	}
 
+	public StackTraceElement getStackTraceElement()
+	{
+		return stackTraceElement;
+	}
+
 	public boolean isTrue(Object value)
 	{
 		if(stackTraceElement == null)
@@ -144,11 +149,6 @@ public class CallLocationCondition
 	@Override
 	public String toString()
 	{
-		StringBuilder result = new StringBuilder();
-		result.append(getDescription());
-		result.append("(");
-		result.append(stackTraceElement);
-		result.append(")");
-		return result.toString();
+		return getDescription() + "(" + stackTraceElement + ")";
 	}
 }
