@@ -12,5 +12,6 @@
 	</root>
 
 	<logger name="de.huxhorn.lilith.conditions" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.conditions.Corpus" level="INFO"/>
 
 </configuration>
