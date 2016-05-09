@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,9 +111,7 @@ public final class Message
 			return false;
 		}
 
-		if(!Arrays.equals(arguments, message.arguments)) return false;
-
-		return true;
+		return Arrays.equals(arguments, message.arguments);
 	}
 
 	@Override
@@ -140,6 +138,9 @@ public final class Message
 	@Override
 	public String toString()
 	{
-		return "Message[messagePattern=" + messagePattern + ", arguments=" + Arrays.toString(arguments) + "]";
+		return "Message{" +
+				"messagePattern='" + messagePattern + '\'' +
+				", arguments=" + Arrays.toString(arguments) +
+				'}';
 	}
 }

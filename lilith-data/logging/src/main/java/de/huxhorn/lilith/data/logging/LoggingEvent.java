@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -248,17 +248,19 @@ public class LoggingEvent
 	@Override
 	public String toString()
 	{
-		StringBuilder result = new StringBuilder();
-		result.append("LoggingEvent[");
-		result.append("logger=").append(logger).append(", ");
-		result.append("level=").append(level).append(", ");
-		result.append("message=").append(message).append(", ");
-		result.append("threadInfo=").append(threadInfo).append(", ");
-		result.append("loggerContext=").append(loggerContext).append(", ");
-		result.append("sequenceNumber=").append(sequenceNumber).append(", ");
-		result.append("timeStamp=").append(timeStamp);
-
-		result.append("]");
-		return result.toString();
+		return "LoggingEvent{" +
+				"logger='" + logger + '\'' +
+				", level=" + level +
+				", message=" + message +
+				", throwable=" + throwable +
+				", callStack=" + Arrays.toString(callStack) +
+				", mdc=" + mdc +
+				", ndc=" + Arrays.toString(ndc) +
+				", marker=" + marker +
+				", threadInfo=" + threadInfo +
+				", loggerContext=" + loggerContext +
+				", sequenceNumber=" + sequenceNumber +
+				", timeStamp=" + timeStamp +
+				'}';
 	}
 }
