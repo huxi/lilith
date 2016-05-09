@@ -75,6 +75,10 @@ public class NDCContainsCondition
 				}
 				for(Message current:messages)
 				{
+					if(current == null)
+					{
+						continue;
+					}
 					if(searchString.equals(current.getMessage()))
 					{
 						return true;

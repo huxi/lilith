@@ -74,6 +74,10 @@ public class NDCContainsPatternCondition
 				}
 				for(Message current:messages)
 				{
+					if(current == null)
+					{
+						continue;
+					}
 					if(searchString.equals(current.getMessagePattern()))
 					{
 						return true;
