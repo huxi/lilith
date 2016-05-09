@@ -56,10 +56,10 @@ class EventContainsConditionSpec extends Specification {
 		'{}'                             | [20, 21, 23, 38, 39, 40, 41, 42] as Set
 
 		// mdc
-		'Key'                            | [24] as Set
+		'Key'                            | [24, 68, 69] as Set
 
 		// mdc & paramValue
-		'Value'                          | [19, 21, 22, 24, 38, 40, 41] as Set
+		'Value'                          | [19, 21, 22, 24, 38, 40, 41, 68] as Set
 
 		// throwable
 		'java.lang.RuntimeException'     | [25, 26, 27, 28, 29, 30] as Set

@@ -83,10 +83,13 @@ public class MDCContainsCondition
 				{
 					return false;
 				}
+				if(value == null)
+				{
+					// no value means any value for the given key is true.
+					return mdc.containsKey(key);
+				}
 
-				String actualValue = mdc.get(key);
-				//noinspection StringEquality
-				return actualValue == value || value != null && value.equals(actualValue);
+				return value.equals(mdc.get(key));
 			}
 		}
 		return false;

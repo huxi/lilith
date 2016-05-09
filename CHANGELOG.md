@@ -29,7 +29,8 @@ All notable changes to this project will be documented in this file.
 - `ExtendedStackTraceElement.toString(true)` is now printing `"na"` instead of empty string if codeLocation or version is null.
 - `HttpStatusTypeCondition` understands more input. "SUCCESSFUL", "su", "2", "2X" and " 2x " will all evaluate to `HttpStatus.Type.SUCCESSFUL`.
 - `CallLocationCondition` understands more input. "at " and whitespace is now automatically removed.
-- `HttpRemoteUserCondition` is less strict. String is first trimmed for both condition and remote user of event. Empty string and "-" are both considered "no user name" and the condition matches accordingly. 
+- `HttpRemoteUserCondition` is less strict. String is first trimmed for both condition and remote user of event. Empty string and "-" are both considered "no user name" and the condition matches accordingly.
+- `MDCContainsCondition` without value will now match if the MDC of an event contains any value (even null) for the given key.
 
 ### Deprecated
 - Nothing.

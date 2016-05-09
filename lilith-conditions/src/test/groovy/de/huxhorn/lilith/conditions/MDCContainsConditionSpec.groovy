@@ -33,7 +33,7 @@ class MDCContainsConditionSpec extends Specification {
 		where:
 		key      | value       | expectedResult
 		null     | null        | [] as Set
-		'mdcKey' | null        | [] as Set
+		'mdcKey' | null        | [24, 68, 69] as Set
 		'mdcKey' | 'mdcValue'  | [24] as Set
 
 		condition = new MDCContainsCondition(key, value)
@@ -94,6 +94,23 @@ class MDCContainsConditionSpec extends Specification {
 		where:
 		key << keys()
 		value << values()
+	}
+
+	def "equals behaves as expected."() {
+		setup:
+		def instance = new MDCContainsCondition()
+		def other = new MDCContainsCondition(key, value)
+
+		expect:
+		instance.equals(instance)
+		!instance.equals(null)
+		!instance.equals(new Object())
+		!instance.equals(other)
+		!other.equals(instance)
+
+		where:
+		key << ['', 'key', 'key', null]
+		value << ['', 'value', null, 'value']
 	}
 
 	def keys() {

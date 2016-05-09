@@ -198,6 +198,11 @@ public class Corpus
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
 		])))
 
+		// more mdc
+		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: [:])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: ['mdcKey': 'otherMdcValue'])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: ['mdcKey': null])))
+
 		return result
 	}
 
