@@ -182,6 +182,22 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: 'sfalken')))
 		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: ' sfalken ')))
 
+		// broken call stack
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				null,
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+		])))
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				ExtendedStackTraceElement.parseStackTraceElement('de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) ~[de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]'),
+				null,
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+		])))
+
 		return result
 	}
 

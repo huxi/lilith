@@ -102,7 +102,12 @@ public class CallLocationCondition
 				ExtendedStackTraceElement[] callStack = event.getCallStack();
 				if(callStack != null && callStack.length > 0)
 				{
-					return stackTraceElement.equals(callStack[0].getStackTraceElement());
+					ExtendedStackTraceElement extendedStackTraceElement=callStack[0];
+					if(extendedStackTraceElement == null)
+					{
+						return false;
+					}
+					return stackTraceElement.equals(extendedStackTraceElement.getStackTraceElement());
 				}
 			}
 		}
