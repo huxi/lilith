@@ -95,6 +95,19 @@ class LevelConditionSpec extends Specification {
 		input << inputValues()
 	}
 
+	def "equals behaves as expected."() {
+		setup:
+		def instance = new LevelCondition()
+		def other = new LevelCondition('INFO')
+
+		expect:
+		instance.equals(instance)
+		!instance.equals(null)
+		!instance.equals(new Object())
+		!instance.equals(other)
+		!other.equals(instance)
+	}
+
 	def inputValues() {
 		[null, '', 'value', 'INFO']
 	}

@@ -94,6 +94,19 @@ class FormattedMessageEqualsConditionSpec extends Specification {
 		input << inputValues()
 	}
 
+	def "equals behaves as expected."() {
+		setup:
+		def instance = new FormattedMessageEqualsCondition()
+		def other = new FormattedMessageEqualsCondition('foo')
+
+		expect:
+		instance.equals(instance)
+		!instance.equals(null)
+		!instance.equals(new Object())
+		!instance.equals(other)
+		!other.equals(instance)
+	}
+
 	def inputValues() {
 		[null, '', 'value']
 	}

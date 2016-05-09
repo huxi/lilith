@@ -92,6 +92,19 @@ class LoggerContainsConditionSpec extends Specification {
 		input << inputValues()
 	}
 
+	def "equals behaves as expected."() {
+		setup:
+		def instance = new LoggerContainsCondition()
+		def other = new LoggerContainsCondition('foo')
+
+		expect:
+		instance.equals(instance)
+		!instance.equals(null)
+		!instance.equals(new Object())
+		!instance.equals(other)
+		!other.equals(instance)
+	}
+
 	def inputValues() {
 		[null, '', 'value']
 	}

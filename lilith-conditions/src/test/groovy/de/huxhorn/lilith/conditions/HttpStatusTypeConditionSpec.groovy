@@ -125,6 +125,19 @@ class HttpStatusTypeConditionSpec extends Specification {
 		input << inputValues()
 	}
 
+	def "equals behaves as expected."() {
+		setup:
+		def instance = new HttpStatusTypeCondition()
+		def other = new HttpStatusTypeCondition('4xx')
+
+		expect:
+		instance.equals(instance)
+		!instance.equals(null)
+		!instance.equals(new Object())
+		!instance.equals(other)
+		!other.equals(instance)
+	}
+
 	def inputValues() {
 		[null, '', 'value', '4xx']
 	}
