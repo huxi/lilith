@@ -57,19 +57,13 @@ public class CallLocationCondition
 		{
 			actualString = actualString.substring(AT_PREFIX.length());
 		}
-		try
+
+		ExtendedStackTraceElement extendedStackTraceElement = ExtendedStackTraceElement.parseStackTraceElement(actualString);
+		if(extendedStackTraceElement != null)
 		{
-			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(actualString);
-			if(ste != null)
-			{
-				stackTraceElement = ste.getStackTraceElement();
-			}
-			else
-			{
-				stackTraceElement = null;
-			}
+			stackTraceElement = extendedStackTraceElement.getStackTraceElement();
 		}
-		catch(Throwable e)
+		else
 		{
 			stackTraceElement = null;
 		}
