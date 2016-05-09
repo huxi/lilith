@@ -36,7 +36,7 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Removed
-- Nothing.
+- Removed `SourceInfo` and related classes. They were all unused and also terrible.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.
