@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Removed `SourceInfo` and related classes. They were all unused and also terrible.
 - Removed `LoggingEvents` and related classes. Same as above.
+- Removed `AccessEvents` and related classes. Same as above.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.
