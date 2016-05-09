@@ -3457,9 +3457,8 @@ public class ViewActions
 				ExtendedStackTraceElement extendedStackTraceElement = ExtendedStackTraceElement.parseStackTraceElement(text);
 				if(extendedStackTraceElement != null)
 				{
-					StackTraceElement ste = extendedStackTraceElement.getStackTraceElement();
-					if(logger.isDebugEnabled()) logger.debug("Parsed StackTraceElement: {}", ste);
-					mainFrame.goToSource(ste);
+					if(logger.isDebugEnabled()) logger.debug("Parsed StackTraceElement: {}", extendedStackTraceElement);
+					mainFrame.goToSource(extendedStackTraceElement.getStackTraceElement());
 				}
 			}
 		}
@@ -3562,7 +3561,7 @@ public class ViewActions
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = 4284532761807647658L;
-		private ExtendedStackTraceElement stackTraceElement;
+		private StackTraceElement stackTraceElement;
 
 		public GotoSourceAction()
 		{
@@ -3574,7 +3573,7 @@ public class ViewActions
 		{
 			if(wrapper == null)
 			{
-				setStackTraceElement(null);
+				setExtendedStackTraceElement(null);
 				return;
 			}
 			Serializable event = wrapper.getEvent();
@@ -3584,22 +3583,29 @@ public class ViewActions
 				ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
 				if(callStack != null && callStack.length > 0)
 				{
-					setStackTraceElement(callStack[0]);
+					setExtendedStackTraceElement(callStack[0]);
 					return;
 				}
 			}
-			setStackTraceElement(null);
+			setExtendedStackTraceElement(null);
 		}
 
-		public void setStackTraceElement(ExtendedStackTraceElement stackTraceElement)
+		private void setExtendedStackTraceElement(ExtendedStackTraceElement extendedStackTraceElement)
 		{
-			this.stackTraceElement = stackTraceElement;
+			if(extendedStackTraceElement == null)
+			{
+				this.stackTraceElement = null;
+			}
+			else
+			{
+				this.stackTraceElement = extendedStackTraceElement.getStackTraceElement();
+			}
 			setEnabled(this.stackTraceElement != null);
 		}
 
 		public void actionPerformed(ActionEvent e)
 		{
-			mainFrame.goToSource(stackTraceElement.getStackTraceElement());
+			mainFrame.goToSource(stackTraceElement);
 		}
 	}
 

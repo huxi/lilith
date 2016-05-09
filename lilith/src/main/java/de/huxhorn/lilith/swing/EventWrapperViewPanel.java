@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1157,7 +1157,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 							ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
 							if(callStack != null && callStack.length > 0)
 							{
-								mainFrame.goToSource(callStack[0].getStackTraceElement());
+								ExtendedStackTraceElement extendedStackTraceElement = callStack[0];
+								if(extendedStackTraceElement != null)
+								{
+									mainFrame.goToSource(extendedStackTraceElement.getStackTraceElement());
+								}
 							}
 						}
 					}

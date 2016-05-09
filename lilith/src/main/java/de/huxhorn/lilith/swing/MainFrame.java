@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1011,20 +1011,15 @@ public class MainFrame
 		accessEventSourceManager.removeEventProducer(id);
 	}
 
-	public void goToSource(StackTraceElement ste)
+	public void goToSource(StackTraceElement stackTraceElement)
 	{
-		/*
-		String className=ste.getClassName();
-		int dollarIndex = className.indexOf("$");
-		if(dollarIndex>=0)
+		if(stackTraceElement == null)
 		{
-			String parentClassName=className.substring(0, dollarIndex);
-			if(logger.isWarnEnabled()) logger.warn("parentClassName: {}", parentClassName);
+			return;
 		}
-        */
 		if(gotoSource != null)
 		{
-			gotoSource.goToSource(ste);
+			gotoSource.goToSource(stackTraceElement);
 		}
 	}
 
@@ -1624,9 +1619,12 @@ public class MainFrame
 		{
 			String steStr = uri.substring(STACK_TRACE_ELEMENT_URI_PREFIX.length());
 			steStr = SimpleXml.unescape(steStr);
-			ExtendedStackTraceElement ste = ExtendedStackTraceElement.parseStackTraceElement(steStr);
-			if(logger.isDebugEnabled()) logger.debug("STE: {}", ste);
-			goToSource(ste.getStackTraceElement());
+			ExtendedStackTraceElement extendedStackTraceElement = ExtendedStackTraceElement.parseStackTraceElement(steStr);
+			if(logger.isDebugEnabled()) logger.debug("STE: {}", extendedStackTraceElement);
+			if(extendedStackTraceElement != null)
+			{
+				goToSource(extendedStackTraceElement.getStackTraceElement());
+			}
 			return true;
 		}
 

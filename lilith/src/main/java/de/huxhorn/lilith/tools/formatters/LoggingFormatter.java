@@ -236,7 +236,14 @@ public class LoggingFormatter
 					StackTraceElement[] result=new StackTraceElement[callStack.length];
 					for(int i=0;i<callStack.length;i++)
 					{
-						result[i]=callStack[i].getStackTraceElement();
+						ExtendedStackTraceElement current = callStack[i];
+
+						if(current == null)
+						{
+							continue;
+						}
+
+						result[i] = current.getStackTraceElement();
 					}
 					return result;
 				}
