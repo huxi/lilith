@@ -40,7 +40,7 @@ class EventContainsConditionSpec extends Specification {
 		'EBU'                            | [9] as Set
 
 		// logger
-		'foo'                            | [13, 14] as Set
+		'foo'                            | [13, 14, 74, 75] as Set
 		'com'                            | [13, 14] as Set
 		'com.foo'                        | [13, 14] as Set
 		'com.foo.Foo'                    | [13] as Set
@@ -55,11 +55,11 @@ class EventContainsConditionSpec extends Specification {
 		'paramValue'                     | [19, 21, 22, 38, 40, 41] as Set
 		'{}'                             | [20, 21, 23, 38, 39, 40, 41, 42] as Set
 
-		// mdc
-		'Key'                            | [24, 68, 69] as Set
+		// mdc, loggerContext properties
+		'Key'                            | [24, 68, 69, 80, 81] as Set
 
-		// mdc & paramValue
-		'Value'                          | [19, 21, 22, 24, 38, 40, 41, 68] as Set
+		// mdc, paramValue, loggerContext properties
+		'Value'                          | [19, 21, 22, 24, 38, 40, 41, 68, 80, 81] as Set
 
 		// throwable
 		'java.lang.RuntimeException'     | [25, 26, 27, 28, 29, 30] as Set
@@ -74,6 +74,22 @@ class EventContainsConditionSpec extends Specification {
 		'-Marker'                        | [31, 32] as Set
 		'Foo-Marker'                     | [31] as Set
 		'Bar-Marker'                     | [31, 32] as Set
+
+		// loggerContext properties and name
+		'Context'                        | [76, 77, 80, 81] as Set
+
+		// thread info
+		'threadName'                     | [83] as Set
+		'11337'                          | [84] as Set
+		'groupName'                      | [85] as Set
+		'31337'                          | [86] as Set
+		'1337'                           | [84, 86] as Set
+
+		// threadName, groupName, contextName
+		'Name'                           | [76, 77, 83, 85] as Set
+
+		// broken ndc
+		'b0rked3'                        | [87] as Set
 
 		condition = new EventContainsCondition(input)
 	}

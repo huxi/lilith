@@ -19,11 +19,13 @@ package de.huxhorn.lilith.conditions
 
 import de.huxhorn.lilith.data.access.AccessEvent
 import de.huxhorn.lilith.data.eventsource.EventWrapper
+import de.huxhorn.lilith.data.eventsource.LoggerContext
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement
 import de.huxhorn.lilith.data.logging.LoggingEvent
 import de.huxhorn.lilith.data.logging.Marker
 import de.huxhorn.lilith.data.logging.Message
+import de.huxhorn.lilith.data.logging.ThreadInfo
 import de.huxhorn.lilith.data.logging.ThrowableInfo
 import de.huxhorn.sulky.conditions.Condition
 import org.slf4j.Logger
@@ -31,6 +33,8 @@ import org.slf4j.LoggerFactory
 
 public class Corpus
 {
+	private static final Logger logger = LoggerFactory.getLogger(Corpus)
+
 	private static final Set<Integer> MATCH_ALL_SET = Collections.unmodifiableSet(matchAllSet(createCorpus()))
 
 	private static final Marker FOO_MARKER=new Marker('Foo-Marker')
@@ -38,12 +42,28 @@ public class Corpus
 
 	static {
 		FOO_MARKER.add(BAR_MARKER)
+		if(logger.isInfoEnabled())
+		{
+			StringBuilder builder = new StringBuilder()
+			List<Object> corpus = createCorpus()
+			for(int i=0;i<corpus.size();i++) {
+				if(builder.length()>0) {
+					builder.append('\n')
+				}
+				builder.append('#').append(i).append('\n')
+				builder.append('\t').append(corpus[i])
+			}
+			logger.info('Corpus:\n{}', builder)
+		}
 	}
 
 	public static List<Object> createCorpus()
 	{
 		List<Object> result=new ArrayList<>()
 
+
+
+// #0
 		result.add(null)
 		result.add(new Foo())
 		result.add(new EventWrapper())
@@ -56,6 +76,10 @@ public class Corpus
 		// level
 		result.add(new EventWrapper<>(event: new LoggingEvent(level: LoggingEvent.Level.TRACE)))
 		result.add(new EventWrapper<>(event: new LoggingEvent(level: LoggingEvent.Level.DEBUG)))
+
+
+
+// #10
 		result.add(new EventWrapper<>(event: new LoggingEvent(level: LoggingEvent.Level.INFO)))
 		result.add(new EventWrapper<>(event: new LoggingEvent(level: LoggingEvent.Level.WARN)))
 		result.add(new EventWrapper<>(event: new LoggingEvent(level: LoggingEvent.Level.ERROR)))
@@ -70,6 +94,10 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new LoggingEvent(message: new Message('a message.'))))
 		result.add(new EventWrapper<>(event: new LoggingEvent(message: new Message('another message.'))))
 		result.add(new EventWrapper<>(event: new LoggingEvent(message: new Message('a message with parameter {}.', ['paramValue'] as String[]))))
+
+
+
+// #20
 		result.add(new EventWrapper<>(event: new LoggingEvent(message: new Message('a message with unresolved parameter {}.'))))
 		result.add(new EventWrapper<>(event: new LoggingEvent(message: new Message('a message with parameter {} and unresolved parameter {}.', ['paramValue'] as String[]))))
 		result.add(new EventWrapper<>(event: new LoggingEvent(message: new Message('{}', ['paramValue'] as String[]))))
@@ -84,6 +112,10 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(name: 'java.lang.RuntimeException', cause: new ThrowableInfo(name: 'java.lang.NullPointerException', cause: new ThrowableInfo(name: 'java.lang.FooException'))))))
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(name: 'java.lang.RuntimeException', suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException')]))))
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(name: 'java.lang.RuntimeException', suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException'), new ThrowableInfo(name: 'java.lang.FooException')]))))
+
+
+
+// #30
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(name: 'java.lang.RuntimeException', cause: new ThrowableInfo(name: 'java.lang.BarException'), suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException'), new ThrowableInfo(name: 'java.lang.FooException')]))))
 
 		// marker
@@ -98,6 +130,10 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('another message.')])))
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('a message with parameter {}.', ['paramValue'] as String[])])))
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('a message with unresolved parameter {}.')])))
+
+
+
+// #40
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('a message with parameter {} and unresolved parameter {}.', ['paramValue'] as String[])])))
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('{}', ['paramValue'] as String[])])))
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('{}')])))
@@ -135,9 +171,6 @@ public class Corpus
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)'),
 		])))
 
-
-
-
 		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
@@ -151,6 +184,10 @@ public class Corpus
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252) ~[na:1.8.0_92]'),
 		])))
+
+
+
+// # 50
 		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)'),
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)'),
@@ -176,6 +213,10 @@ public class Corpus
 
 		// remote user
 		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: '')))
+
+
+
+// #60
 		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: '-')))
 		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: ' ')))
 		result.add(new EventWrapper<>(event: new AccessEvent(remoteUser: ' - ')))
@@ -203,6 +244,45 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: ['mdcKey': 'otherMdcValue'])))
 		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: ['mdcKey': null])))
 
+
+
+// #70
+		// http method
+		result.add(new EventWrapper<>(event: new AccessEvent(method: 'GET')))
+		result.add(new EventWrapper<>(event: new AccessEvent(method: 'PUT')))
+
+		// request URI
+		result.add(new EventWrapper<>(event: new AccessEvent(requestURI: '/')))
+		result.add(new EventWrapper<>(event: new AccessEvent(requestURI: '/index.html')))
+
+		// request URL
+		result.add(new EventWrapper<>(event: new AccessEvent(requestURL: 'GET /?foo=bar&foo=schnurz HTTP/1.1')))
+		result.add(new EventWrapper<>(event: new AccessEvent(requestURL: 'GET /index.html?foo=bar&foo=schnurz HTTP/1.1')))
+
+		// logger context name
+		result.add(new EventWrapper<>(event: new LoggingEvent(loggerContext: new LoggerContext(name: 'loggerContextName'))))
+		result.add(new EventWrapper<>(event: new AccessEvent(loggerContext: new LoggerContext(name: 'loggerContextName'))))
+
+		// logger context properties
+		result.add(new EventWrapper<>(event: new LoggingEvent(loggerContext: new LoggerContext(properties: [:]))))
+		result.add(new EventWrapper<>(event: new AccessEvent(loggerContext: new LoggerContext(properties: [:]))))
+
+
+// #80
+		result.add(new EventWrapper<>(event: new LoggingEvent(loggerContext: new LoggerContext(properties: ['loggerContextKey':'loggerContextValue']))))
+		result.add(new EventWrapper<>(event: new AccessEvent(loggerContext: new LoggerContext(properties: ['loggerContextKey':'loggerContextValue']))))
+
+		// thread info
+		result.add(new EventWrapper<>(event: new LoggingEvent(threadInfo: new ThreadInfo())))
+		result.add(new EventWrapper<>(event: new LoggingEvent(threadInfo: new ThreadInfo(name: 'threadName'))))
+		result.add(new EventWrapper<>(event: new LoggingEvent(threadInfo: new ThreadInfo(id: 11337))))
+		result.add(new EventWrapper<>(event: new LoggingEvent(threadInfo: new ThreadInfo(groupName: 'groupName'))))
+		result.add(new EventWrapper<>(event: new LoggingEvent(threadInfo: new ThreadInfo(groupId: 31337))))
+
+		// broken ndc with gap
+		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('b0rked1'), null, new Message('b0rked3')])))
+
+
 		return result
 	}
 
@@ -227,7 +307,6 @@ public class Corpus
 		Objects.requireNonNull(condition, "condition must not be null!")
 		Objects.requireNonNull(corpus, "corpus must not be null!")
 
-		final Logger logger = LoggerFactory.getLogger(Corpus)
 
 		Set<Integer> result=new HashSet<>();
 
