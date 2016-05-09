@@ -143,15 +143,29 @@ public class EventContainsCondition
 					ThreadInfo threadInfo = event.getThreadInfo();
 					if(threadInfo != null)
 					{
-						String threadName = threadInfo.getName();
-						if(checkString(threadName))
+						if(checkString(threadInfo.getName()))
 						{
 							return true;
 						}
+
 						Long threadId = threadInfo.getId();
 						if(threadId != null)
 						{
 							if(checkString("" + threadId))
+							{
+								return true;
+							}
+						}
+
+						if(checkString(threadInfo.getGroupName()))
+						{
+							return true;
+						}
+
+						Long groupId = threadInfo.getGroupId();
+						if(groupId != null)
+						{
+							if(checkString("" + groupId))
 							{
 								return true;
 							}
