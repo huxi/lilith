@@ -108,6 +108,17 @@ class HttpStatusCodeConditionSpec extends Specification {
 		input << inputValues()
 	}
 
+	def "invalid value #input results in INVALID_CODE status code."() {
+		setup:
+		def instance = new HttpStatusCodeCondition(input)
+
+		expect:
+		instance.statusCode == HttpStatusCodeCondition.INVALID_CODE
+
+		where:
+		input << [null, '', 'foo', '99', '600']
+	}
+
 	def "equals behaves as expected."() {
 		setup:
 		def instance = new HttpStatusCodeCondition()
