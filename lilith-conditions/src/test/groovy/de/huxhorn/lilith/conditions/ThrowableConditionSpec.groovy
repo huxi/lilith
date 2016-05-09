@@ -45,6 +45,7 @@ public class ThrowableConditionSpec extends Specification
 		['java.lang.RuntimeException', 'java.lang.NullPointerException'] as Set                                                     | new ThrowableInfo(name: 'java.lang.RuntimeException', suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException')])
 		['java.lang.RuntimeException', 'java.lang.NullPointerException', 'java.lang.FooException'] as Set                           | new ThrowableInfo(name: 'java.lang.RuntimeException', suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException'), new ThrowableInfo(name: 'java.lang.FooException')])
 		['java.lang.RuntimeException', 'java.lang.NullPointerException', 'java.lang.FooException', 'java.lang.BarException'] as Set | new ThrowableInfo(name: 'java.lang.RuntimeException', cause: new ThrowableInfo(name: 'java.lang.BarException'), suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException'), new ThrowableInfo(name: 'java.lang.FooException')])
+		['java.lang.RuntimeException', 'java.lang.NullPointerException', 'java.lang.FooException'] as Set                           | new ThrowableInfo(name: 'java.lang.RuntimeException', cause: new ThrowableInfo(), suppressed: [new ThrowableInfo(name: 'java.lang.NullPointerException'), new ThrowableInfo(name: 'java.lang.FooException')])
 	}
 
 	@Unroll
