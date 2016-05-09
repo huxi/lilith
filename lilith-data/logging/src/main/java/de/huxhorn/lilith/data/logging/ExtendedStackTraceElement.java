@@ -70,9 +70,13 @@ public class ExtendedStackTraceElement
 		lineNumber = UNKNOWN_SOURCE_LINE_NUMBER;
 	}
 
-	public ExtendedStackTraceElement(StackTraceElement ste)
+	public ExtendedStackTraceElement(StackTraceElement stackTraceElement)
 	{
-		this(ste.getClassName(), ste.getMethodName(), ste.getFileName(), ste.getLineNumber());
+		Objects.requireNonNull(stackTraceElement, "stackTraceElement must not be null!");
+		this.className = stackTraceElement.getClassName();
+		this.methodName = stackTraceElement.getMethodName();
+		this.fileName = stackTraceElement.getFileName();
+		this.lineNumber = stackTraceElement.getLineNumber();
 	}
 
 	public ExtendedStackTraceElement(String className, String methodName, String fileName, int lineNumber)
@@ -197,8 +201,15 @@ public class ExtendedStackTraceElement
 		return result;
 	}
 
+	/**
+	 * @return the basic StackTraceElement this instance represents or null if either className or methodName are null.
+	 */
 	public StackTraceElement getStackTraceElement()
 	{
+		if(className == null || methodName == null)
+		{
+			return null;
+		}
 		return new StackTraceElement(className, methodName, fileName, lineNumber);
 	}
 
@@ -328,12 +339,12 @@ public class ExtendedStackTraceElement
 		int idx = ste.lastIndexOf('(');
 		if(idx < 0)
 		{
-			return null; // not a ste
+			return null; // invalid
 		}
 		int endIdx = ste.lastIndexOf(')');
 		if(endIdx < 0)
 		{
-			return null; // not a ste
+			return null; // invalid
 		}
 
 		String classAndMethod = ste.substring(0, idx);
@@ -341,7 +352,7 @@ public class ExtendedStackTraceElement
 		idx = classAndMethod.lastIndexOf('.');
 		if(idx < 0)
 		{
-			return null; // not a ste
+			return null; // invalid
 		}
 		String clazz = classAndMethod.substring(0, idx);
 		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
@@ -351,7 +362,15 @@ public class ExtendedStackTraceElement
 		if(idx != -1)
 		{
 			file = source.substring(0, idx);
-			lineNumber = Integer.parseInt(source.substring(idx + 1, source.length()));
+			String numberString = source.substring(idx + 1, source.length());
+			try
+			{
+				lineNumber = Integer.parseInt(numberString);
+			}
+			catch(NumberFormatException ex)
+			{
+				return null; // invalid
+			}
 		}
 		else
 		{

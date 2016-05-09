@@ -42,12 +42,29 @@ class ExtendedStackTraceElementSpec extends Specification {
 
 	def parseInputValues() {
 		[
+				// invalid
 				null,
 				'foo',
 				'methodName(Unknown Source)',
+				'java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303',
+				'java.util.concurrent.FutureTask$Sync.innerRun(:)',
+				'java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:foo)',
+
+				// invalid extended info
+				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [lilith.jar:0.9.35-SNAPSHOT',
+				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) ~[lilith.jar:0.9.35-SNAPSHOT',
+				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) ',
+				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079)  ',
+				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079)   ',
+				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) lilith.jar:0.9.35-SNAPSHOT]',
+				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [lilith.jar]',
+
+				// valid
+				'.(Unknown Source)', // valid enough to prevent explosion in StackTraceElement c'tor
 				'className.methodName(Unknown Source)',
 				'java.lang.Thread.sleep(Native Method)',
 				'java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)',
+				'java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java)',
 				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [lilith.jar:0.9.35-SNAPSHOT]',
 				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) ~[lilith.jar:0.9.35-SNAPSHOT]',
 				'de.huxhorn.lilith.swing.MainFrame.setAccessEventSourceManager(MainFrame.java:1079) [:0.9.35-SNAPSHOT]',
@@ -63,9 +80,56 @@ class ExtendedStackTraceElementSpec extends Specification {
 
 	def parseResultValues() {
 		[
+				// invalid
 				null,
 				null,
 				null,
+				null,
+				null,
+				null,
+
+				// invalid extended info
+				new ExtendedStackTraceElement(
+						className: 'de.huxhorn.lilith.swing.MainFrame',
+						methodName: 'setAccessEventSourceManager',
+						fileName: 'MainFrame.java',
+						lineNumber: 1079),
+				new ExtendedStackTraceElement(
+						className: 'de.huxhorn.lilith.swing.MainFrame',
+						methodName: 'setAccessEventSourceManager',
+						fileName: 'MainFrame.java',
+						lineNumber: 1079),
+				new ExtendedStackTraceElement(
+						className: 'de.huxhorn.lilith.swing.MainFrame',
+						methodName: 'setAccessEventSourceManager',
+						fileName: 'MainFrame.java',
+						lineNumber: 1079),
+				new ExtendedStackTraceElement(
+						className: 'de.huxhorn.lilith.swing.MainFrame',
+						methodName: 'setAccessEventSourceManager',
+						fileName: 'MainFrame.java',
+						lineNumber: 1079),
+				new ExtendedStackTraceElement(
+						className: 'de.huxhorn.lilith.swing.MainFrame',
+						methodName: 'setAccessEventSourceManager',
+						fileName: 'MainFrame.java',
+						lineNumber: 1079),
+				new ExtendedStackTraceElement(
+						className: 'de.huxhorn.lilith.swing.MainFrame',
+						methodName: 'setAccessEventSourceManager',
+						fileName: 'MainFrame.java',
+						lineNumber: 1079),
+				new ExtendedStackTraceElement(
+						className: 'de.huxhorn.lilith.swing.MainFrame',
+						methodName: 'setAccessEventSourceManager',
+						fileName: 'MainFrame.java',
+						lineNumber: 1079),
+
+				// valid
+				new ExtendedStackTraceElement(
+						className: '',
+						methodName: '',
+						lineNumber: ExtendedStackTraceElement.UNKNOWN_SOURCE_LINE_NUMBER),
 				new ExtendedStackTraceElement(
 						className: 'className',
 						methodName: 'methodName',
@@ -79,6 +143,11 @@ class ExtendedStackTraceElementSpec extends Specification {
 						methodName: 'innerRun',
 						fileName: 'FutureTask.java',
 						lineNumber: 303),
+				new ExtendedStackTraceElement(
+						className: 'java.util.concurrent.FutureTask$Sync',
+						methodName: 'innerRun',
+						fileName: 'FutureTask.java',
+						lineNumber: ExtendedStackTraceElement.UNKNOWN_SOURCE_LINE_NUMBER),
 				new ExtendedStackTraceElement(
 						className: 'de.huxhorn.lilith.swing.MainFrame',
 						methodName: 'setAccessEventSourceManager',
@@ -170,6 +239,7 @@ class ExtendedStackTraceElementSpec extends Specification {
 				new ExtendedStackTraceElement(methodName: 'methodName'),
 				new ExtendedStackTraceElement(fileName: 'fileName'),
 				new ExtendedStackTraceElement(lineNumber: 17),
+				new ExtendedStackTraceElement(lineNumber: ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER),
 				new ExtendedStackTraceElement(codeLocation: 'codeLocation'),
 				new ExtendedStackTraceElement(version: 'version'),
 				new ExtendedStackTraceElement(exact: true),
@@ -180,12 +250,20 @@ class ExtendedStackTraceElementSpec extends Specification {
 						lineNumber: 17,
 						codeLocation: 'codeLocation',
 						version: 'version',
+						exact: true),
+				new ExtendedStackTraceElement(
+						className: 'className',
+						methodName: 'methodName',
+						fileName: 'fileName',
+						lineNumber: ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER,
+						codeLocation: 'codeLocation',
+						version: 'version',
 						exact: true)
 		]
 	}
 
 	@Unroll
-	def 'Serialization of #inputValue'() {
+	def 'Serialization of #extendedString'() {
 		when: 'serialization works'
 		def other = JUnitTools.testSerialization(inputValue)
 
@@ -195,10 +273,11 @@ class ExtendedStackTraceElementSpec extends Specification {
 
 		where:
 		inputValue << inputValues()
+		extendedString = inputValue.toString(true)
 	}
 
 	@Unroll
-	def 'XML-Serialization of #inputValue'() {
+	def 'XML-Serialization of #extendedString'() {
 		when: 'xml serialization works'
 		def other = JUnitTools.testXmlSerialization(inputValue)
 
@@ -208,10 +287,11 @@ class ExtendedStackTraceElementSpec extends Specification {
 
 		where:
 		inputValue << inputValues()
+		extendedString = inputValue.toString(true)
 	}
 
 	@Unroll
-	def 'Cloning of #inputValue'() {
+	def 'Cloning of #extendedString'() {
 		when: 'cloning works'
 		def other = JUnitTools.testClone(inputValue)
 
@@ -221,6 +301,7 @@ class ExtendedStackTraceElementSpec extends Specification {
 
 		where:
 		inputValue << inputValues()
+		extendedString = inputValue.toString(true)
 	}
 
 	def 'Serialization of default constructor'() {
@@ -316,7 +397,7 @@ class ExtendedStackTraceElementSpec extends Specification {
 		]
 	}
 
-	def validInputValueExtendedStrings() {
+	def validInputValueToStringExtendedStrings() {
 		[
 				'className.methodName(Unknown Source)',
 				'className.methodName(fileName)',
@@ -331,8 +412,23 @@ class ExtendedStackTraceElementSpec extends Specification {
 		]
 	}
 
+	def validInputValueGetExtendedStringStrings() {
+		[
+				null,
+				null,
+				null,
+				'~[codeLocation:na]',
+				'~[na:version]',
+				null,
+				'[codeLocation:version]',
+				'[codeLocation:version]',
+				'[codeLocation:version]',
+				'~[codeLocation:version]'
+		]
+	}
+
 	@Unroll
-	def 'Plain toString compatibility of #inputValue'() {
+	def 'Plain toString compatibility of #extendedString'() {
 		setup:
 		StackTraceElement ste = inputValue.stackTraceElement
 
@@ -341,16 +437,98 @@ class ExtendedStackTraceElementSpec extends Specification {
 
 		where:
 		inputValue << validInputValues()
+		extendedString = inputValue.toString(true)
 	}
 
 	@Unroll
-	def 'Extended toString compatibility of #inputValue'() {
+	def 'Extended toString compatibility of #extendedString'() {
 		expect:
 		expectedValue == inputValue.toString(true)
 
 		where:
 		inputValue << validInputValues()
-		expectedValue << validInputValueExtendedStrings()
+		expectedValue << validInputValueToStringExtendedStrings()
+		extendedString = inputValue.toString(true)
+	}
+
+	@Unroll
+	def 'getExtendedString compatibility of #extendedString'() {
+		expect:
+		expectedValue == inputValue.getExtendedString()
+
+		where:
+		inputValue << validInputValues()
+		expectedValue << validInputValueGetExtendedStringStrings()
+		extendedString = inputValue.toString(true)
+	}
+
+	@Unroll
+	def "equals behaves as expected for #extendedString."() {
+		setup:
+		def instance = new ExtendedStackTraceElement()
+
+		expect:
+		instance.equals(instance)
+		!instance.equals(null)
+		!instance.equals(new Object())
+		!instance.equals(inputValue)
+		!inputValue.equals(instance)
+
+		where:
+		inputValue << inputValues()
+		extendedString = inputValue.toString(true)
+	}
+
+	def "new ExtendedStackTraceElement(null) throws expected exception."() {
+		when:
+		new ExtendedStackTraceElement(null)
+
+		then:
+		NullPointerException ex = thrown()
+		ex.message == 'stackTraceElement must not be null!'
+	}
+
+	@Unroll
+	def "new ExtendedStackTraceElement(#input) works as expected."() {
+		when:
+		def instance = new ExtendedStackTraceElement(input)
+
+		then:
+		instance.stackTraceElement == input
+		!instance.stackTraceElement.is(input)
+
+		where:
+		input << [
+		        new StackTraceElement('declaringClass', 'methodName', 'fileName', 17),
+				new StackTraceElement('declaringClass', 'methodName', null, ExtendedStackTraceElement.UNKNOWN_SOURCE_LINE_NUMBER),
+				new StackTraceElement('declaringClass', 'methodName', null, ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER),
+				new StackTraceElement('declaringClass', 'methodName', null, 17),
+				new StackTraceElement('', '', null, ExtendedStackTraceElement.UNKNOWN_SOURCE_LINE_NUMBER),
+				new StackTraceElement('', '', null, ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER),
+				new StackTraceElement('', '', null, 17),
+				new StackTraceElement('', '', null, -3),
+		]
+	}
+
+	def "Instances with missing className or methodName won't return a StackTraceElement."() {
+		expect:
+		input.stackTraceElement == null
+
+		where:
+		input << [
+				new ExtendedStackTraceElement(
+						className: null,
+						methodName: null
+				),
+				new ExtendedStackTraceElement(
+						className: null,
+						methodName: 'methodName'
+				),
+				new ExtendedStackTraceElement(
+						className: 'className',
+						methodName: null
+				),
+		]
 	}
 
 	def compare(ExtendedStackTraceElement inputValue, ExtendedStackTraceElement other) {
