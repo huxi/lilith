@@ -189,7 +189,7 @@ public class Corpus
 
 
 
-// # 50
+// #50
 		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)'),
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)'),
@@ -270,6 +270,7 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new AccessEvent(loggerContext: new LoggerContext(properties: [:]))))
 
 
+
 // #80
 		result.add(new EventWrapper<>(event: new LoggingEvent(loggerContext: new LoggerContext(properties: ['loggerContextKey':'loggerContextValue']))))
 		result.add(new EventWrapper<>(event: new AccessEvent(loggerContext: new LoggerContext(properties: ['loggerContextKey':'loggerContextValue']))))
@@ -286,6 +287,16 @@ public class Corpus
 
 		// recursive marker
 		result.add(new EventWrapper<>(event: new LoggingEvent(marker: RECURSIVE_MARKER)))
+
+		// throwable message
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(message: 'exception1'))))
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(cause: new ThrowableInfo(message: 'exception2')))))
+
+
+
+// #90
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(suppressed: [new ThrowableInfo(message: 'exception3')]))))
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(suppressed: [new ThrowableInfo(message: 'exception4'), null, new ThrowableInfo(message: 'exception5')]))))
 
 		return result
 	}

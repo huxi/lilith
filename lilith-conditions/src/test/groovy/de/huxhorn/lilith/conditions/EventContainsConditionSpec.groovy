@@ -91,6 +91,14 @@ class EventContainsConditionSpec extends Specification {
 		// broken ndc
 		'b0rked3'                        | [87] as Set
 
+		// exception message
+		'exception1'                     | [89] as Set
+		'exception2'                     | [90] as Set
+		'exception3'                     | [91] as Set
+		'exception4'                     | [92] as Set
+		'exception5'                     | [92] as Set
+		'exception'                      | [89, 90, 91, 92] as Set
+
 		condition = new EventContainsCondition(input)
 	}
 
