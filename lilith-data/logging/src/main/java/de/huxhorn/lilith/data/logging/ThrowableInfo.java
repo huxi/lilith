@@ -36,9 +36,8 @@ package de.huxhorn.lilith.data.logging;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Objects;
-import java.util.Set;
 
 public class ThrowableInfo
 	implements Serializable, Cloneable
@@ -121,29 +120,142 @@ public class ThrowableInfo
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 
-		final ThrowableInfo that = (ThrowableInfo) o;
+		return recursiveEquals((ThrowableInfo) o, new IdentityHashMap<>());
+	}
+
+	private boolean recursiveEquals(ThrowableInfo that, IdentityHashMap<ThrowableInfo, Object> dejaVu)
+	{
+		if(this == that) return true;
+
+		if(dejaVu.containsKey(that))
+		{
+			return true; // A special kind of true. Equally b0rked.
+		}
+		dejaVu.put(that, null);
+
 		if(omittedElements != that.omittedElements) return false;
 		if(name != null ? !name.equals(that.name) : that.name != null) return false;
 		if(message != null ? !message.equals(that.message) : that.message != null) return false;
 		if(!Arrays.equals(stackTrace, that.stackTrace)) return false;
-		if(!Arrays.equals(suppressed, that.suppressed)) return false;
-		return !(cause != null ? !cause.equals(that.cause) : that.cause != null);
+
+		if(cause == null)
+		{
+			if(that.cause != null)
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if(!cause.recursiveEquals(that.cause, dejaVu))
+			{
+				return false;
+			}
+		}
+
+		if(suppressed == null)
+		{
+			if(that.suppressed != null)
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if(that.suppressed == null)
+			{
+				return false;
+			}
+			if(suppressed.length != that.suppressed.length)
+			{
+				return false;
+			}
+			for(int i=0;i<suppressed.length; i++)
+			{
+				ThrowableInfo thisSuppressedEntry = suppressed[i];
+				ThrowableInfo thatSuppressedEntry = that.suppressed[i];
+
+				if(thisSuppressedEntry == null)
+				{
+					if(thatSuppressedEntry != null)
+					{
+						return false;
+					}
+				}
+				else
+				{
+					if(!thisSuppressedEntry.recursiveEquals(thatSuppressedEntry, dejaVu))
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public int hashCode()
 	{
-		int result = omittedElements;
+		return recursiveHashCode(this, new IdentityHashMap<>());
+	}
+
+	private static int recursiveHashCode(ThrowableInfo instance, IdentityHashMap<ThrowableInfo, Object> dejaVu)
+	{
+		if(instance == null)
+		{
+			return 0;
+		}
+		if(dejaVu == null)
+		{
+			dejaVu = new IdentityHashMap<>();
+		}
+		if(dejaVu.containsKey(instance))
+		{
+			return 0;
+		}
+		dejaVu.put(instance, null);
+		int result = instance.getOmittedElements();
+
+		String name = instance.getName();
 		result = 29 * result + (name != null ? name.hashCode() : 0);
+
+		String message = instance.getMessage();
 		result = 29 * result + (message != null ? message.hashCode() : 0);
-		result = 29 * result + (suppressed != null ? Arrays.hashCode(suppressed) : 0);
-		result = 29 * result + (cause != null ? cause.hashCode() : 0);
+
+		ThrowableInfo cause = instance.getCause();
+		result = 29 * result + recursiveHashCode(cause, dejaVu);
+
+		ThrowableInfo[] suppressed = instance.getSuppressed();
+		if(suppressed != null)
+		{
+			for (ThrowableInfo throwableInfo : suppressed)
+			{
+				result = 29 * result + recursiveHashCode(throwableInfo, dejaVu);
+			}
+		}
 		return result;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	@Override
 	public ThrowableInfo clone() throws CloneNotSupportedException
 	{
-		ThrowableInfo result = (ThrowableInfo) super.clone();
+		return recursiveClone(new IdentityHashMap<>());
+	}
+
+	private ThrowableInfo recursiveClone(IdentityHashMap<ThrowableInfo, ThrowableInfo> dejaVu)
+			throws CloneNotSupportedException
+	{
+		ThrowableInfo result = dejaVu.get(this);
+		if(result != null)
+		{
+			// we already cloned it.
+			return result;
+		}
+
+		result = (ThrowableInfo) super.clone();
+		dejaVu.put(this, result);
 
 		if(stackTrace != null)
 		{
@@ -158,6 +270,11 @@ public class ThrowableInfo
 			}
 		}
 
+		if(cause != null)
+		{
+			result.cause = cause.recursiveClone(dejaVu);
+		}
+
 		if(suppressed != null)
 		{
 			result.suppressed = new ThrowableInfo[suppressed.length];
@@ -166,15 +283,11 @@ public class ThrowableInfo
 				ThrowableInfo current = suppressed[i];
 				if(current != null)
 				{
-					result.suppressed[i] = current.clone();
+					result.suppressed[i] = current.recursiveClone(dejaVu);
 				}
 			}
 		}
 
-		if(cause != null)
-		{
-			result.cause = cause.clone();
-		}
 
 		return result;
 	}
@@ -208,13 +321,12 @@ public class ThrowableInfo
 	{
 		Objects.requireNonNull(stringBuilder, "stringBuilder must not be null!");
 
-		Set<ThrowableInfo> dejaVu = new HashSet<>();
-		recursiveAppend(stringBuilder, dejaVu, null, 0, this, extended);
+		recursiveAppend(stringBuilder, new IdentityHashMap<>(), null, 0, this, extended);
 
 		return stringBuilder;
 	}
 
-	private static void recursiveAppend(StringBuilder sb, Set<ThrowableInfo> dejaVu, String prefix, int indent, ThrowableInfo throwableInfo, boolean extended)
+	private static void recursiveAppend(StringBuilder sb, IdentityHashMap<ThrowableInfo, Object> dejaVu, String prefix, int indent, ThrowableInfo throwableInfo, boolean extended)
 	{
 		if(throwableInfo == null)
 		{
@@ -242,12 +354,12 @@ public class ThrowableInfo
 			sb.append(throwableInfo.getMessage());
 		}
 
-		if(dejaVu.contains(throwableInfo))
+		if(dejaVu.containsKey(throwableInfo))
 		{
 			sb.append("[CIRCULAR REFERENCE]");
 			return;
 		}
-		dejaVu.add(throwableInfo);
+		dejaVu.put(throwableInfo, null);
 		sb.append(LINE_SEPARATOR);
 
 		appendSTEArray(sb, indent + 1, throwableInfo, extended);
@@ -267,7 +379,7 @@ public class ThrowableInfo
 	{
 		for(int i=0;i<indent;i++)
 		{
-			sb.append("\t");
+			sb.append('\t');
 		}
 	}
 
