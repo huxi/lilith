@@ -99,6 +99,10 @@ class EventContainsConditionSpec extends Specification {
 		'exception5'                     | [92] as Set
 		'exception'                      | [89, 90, 91, 92] as Set
 
+		// status code
+		'404'                            | [56] as Set
+		'50'                             | [58] as Set
+
 		condition = new EventContainsCondition(input)
 	}
 
