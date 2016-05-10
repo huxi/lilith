@@ -55,8 +55,8 @@ public class ThrowableConditionSpec extends Specification
 
 		where:
 		input                            | expectedResult
-		null                             | [25, 26, 27, 28, 29, 30, 89, 90, 91, 92] as Set
-		''                               | [25, 26, 27, 28, 29, 30, 89, 90, 91, 92] as Set
+		null                             | [25, 26, 27, 28, 29, 30, 89, 90, 91, 92, 93, 94] as Set
+		''                               | [25, 26, 27, 28, 29, 30, 89, 90, 91, 92, 93, 94] as Set
 		'snafu'                          | [] as Set
 		'java.lang.RuntimeException'     | [25, 26, 27, 28, 29, 30] as Set
 		'java.lang.NullPointerException' | [26, 27, 28, 29, 30] as Set

@@ -100,6 +100,24 @@ class CorpusSpec extends Specification {
 		Corpus.matchAllSet() == Corpus.matchAllSet(Corpus.createCorpus())
 	}
 
+	def "sanity check"() {
+		setup:
+		def corpus = Corpus.createCorpus()
+
+		expect:
+		corpus != null
+		for (Object current : corpus) {
+			if(current == null) {
+				continue
+			}
+
+			// below code ensures that no basic operation on corpus entries is causing stack overflow
+			assert current.equals(current)
+			assert current.hashCode() == current.hashCode()
+			assert current.toString() != null
+		}
+	}
+
 	private static class MatchNoneCondition implements Condition {
 
 		@Override

@@ -298,6 +298,15 @@ public class Corpus
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(suppressed: [new ThrowableInfo(message: 'exception3')]))))
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(suppressed: [new ThrowableInfo(message: 'exception4'), null, new ThrowableInfo(message: 'exception5')]))))
 
+		// recursive throwables
+		ThrowableInfo recursiveCause = new ThrowableInfo(name: 'recursiveCause')
+		recursiveCause.cause=recursiveCause
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: recursiveCause)))
+
+		ThrowableInfo recursiveSuppressed = new ThrowableInfo(name: 'recursiveSuppressed')
+		recursiveSuppressed.suppressed=[recursiveSuppressed]
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: recursiveSuppressed)))
+
 		return result
 	}
 
@@ -331,7 +340,7 @@ public class Corpus
 			if(conditionResult) {
 				result.add(i)
 			}
-			logger.debug('Condition #{}: {}.isTrue({}) evaluated to {}.', i, condition, current, conditionResult)
+			logger.debug('#{}: {}.isTrue({}) evaluated to {}.', i, condition, current, conditionResult)
 		}
 
 		return result

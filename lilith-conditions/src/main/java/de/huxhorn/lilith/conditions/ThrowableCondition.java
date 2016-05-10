@@ -21,6 +21,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Set;
 
 public class ThrowableCondition
@@ -86,23 +87,33 @@ public class ThrowableCondition
 	public static Set<String> collectThrowableNames(ThrowableInfo throwable)
 	{
 		Set<String> result=new HashSet<>();
-		collectThrowableNamesRescursive(throwable, result);
+		IdentityHashMap<ThrowableInfo, String> dejaVu=new IdentityHashMap<>();
+		collectThrowableNamesRescursive(throwable, dejaVu);
+		for (String name : dejaVu.values())
+		{
+			if(name != null)
+			{
+				result.add(name);
+			}
+		}
 		return result;
 	}
 
-	private static void collectThrowableNamesRescursive(ThrowableInfo throwable, Set<String> throwableNames)
+	private static void collectThrowableNamesRescursive(ThrowableInfo throwable,  IdentityHashMap<ThrowableInfo, String> dejaVu)
 	{
 		if(throwable == null)
 		{
 			return;
 		}
-		String name = throwable.getName();
-		if(name != null)
+
+		if(dejaVu.containsKey(throwable))
 		{
-			throwableNames.add(name);
+			return;
 		}
 
-		collectThrowableNamesRescursive(throwable.getCause(), throwableNames);
+		dejaVu.put(throwable, throwable.getName());
+
+		collectThrowableNamesRescursive(throwable.getCause(), dejaVu);
 
 		ThrowableInfo[] suppressed = throwable.getSuppressed();
 		if(suppressed == null)
@@ -112,7 +123,7 @@ public class ThrowableCondition
 
 		for (ThrowableInfo current : suppressed)
 		{
-			collectThrowableNamesRescursive(current, throwableNames);
+			collectThrowableNamesRescursive(current, dejaVu);
 		}
 	}
 

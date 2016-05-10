@@ -28,9 +28,8 @@ import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -135,7 +134,7 @@ public class EventContainsCondition
 
 				{
 					ThrowableInfo throwable = event.getThrowable();
-					if(checkThrowable(throwable))
+					if(checkThrowable(throwable, null))
 					{
 						return true;
 					}
@@ -281,12 +280,21 @@ public class EventContainsCondition
 		return checkString(context.getName()) || checkMap(context.getProperties());
 	}
 
-	private boolean checkThrowable(ThrowableInfo throwable)
+	private boolean checkThrowable(ThrowableInfo throwable, IdentityHashMap<ThrowableInfo, Object> dejaVu)
 	{
 		if(throwable == null)
 		{
 			return false;
 		}
+		if(dejaVu == null)
+		{
+			dejaVu = new IdentityHashMap<>();
+		}
+		if(dejaVu.containsKey(throwable))
+		{
+			return false;
+		}
+		dejaVu.put(throwable, null);
 		if(checkString(throwable.getName()))
 		{
 			return true;
@@ -295,7 +303,7 @@ public class EventContainsCondition
 		{
 			return true;
 		}
-		if(checkThrowable(throwable.getCause()))
+		if(checkThrowable(throwable.getCause(), dejaVu))
 		{
 			return true;
 		}
@@ -304,7 +312,7 @@ public class EventContainsCondition
 		{
 			for (ThrowableInfo current : suppressed)
 			{
-				if(checkThrowable(current))
+				if(checkThrowable(current, dejaVu))
 				{
 					return true;
 				}
