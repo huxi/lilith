@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -252,18 +252,13 @@ public class MessageFormatter
 	 */
 	public static class ArgumentResult
 	{
-		private Throwable throwable;
-		private String[] arguments;
+		private final String[] arguments;
+		private final Throwable throwable;
 
 		public ArgumentResult(String[] arguments, Throwable throwable)
 		{
-			this.throwable = throwable;
 			this.arguments = arguments;
-		}
-
-		public Throwable getThrowable()
-		{
-			return throwable;
+			this.throwable = throwable;
 		}
 
 		public String[] getArguments()
@@ -271,19 +266,27 @@ public class MessageFormatter
 			return arguments;
 		}
 
+		public Throwable getThrowable()
+		{
+			return throwable;
+		}
+
 		@Override
 		public String toString()
 		{
-			StringBuilder result = new StringBuilder();
-			result.append("ArgumentResult[throwable=").append(throwable);
-			result.append(", arguments=");
-			if(arguments != null)
+			final StringBuilder result = new StringBuilder("ArgumentResult{");
+			result.append("arguments=");
+			if(arguments == null)
 			{
-				result.append("[");
+				result.append("null");
+			}
+			else
+			{
+				result.append('[');
 				boolean isFirst = true;
-				for(String current : arguments)
+				for (String current : arguments)
 				{
-					if(!isFirst)
+					if (!isFirst)
 					{
 						result.append(", ");
 					}
@@ -291,38 +294,40 @@ public class MessageFormatter
 					{
 						isFirst = false;
 					}
-					if(current != null)
+					if (current != null)
 					{
-						result.append("'").append(current).append("'");
+						result.append('"').append(current).append('"');
 					}
 					else
 					{
 						result.append("null");
 					}
 				}
-				result.append("]");
+				result.append(']');
 			}
+			result.append(", throwable=").append(throwable);
+			result.append('}');
 			return result.toString();
 		}
 
+		@Override
 		public boolean equals(Object o)
 		{
-			if(this == o) return true;
-			if(o == null || getClass() != o.getClass()) return false;
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
 
-			ArgumentResult result = (ArgumentResult) o;
+			ArgumentResult that = (ArgumentResult) o;
 
-			if(!Arrays.equals(arguments, result.arguments)) return false;
-			if(throwable != null ? !throwable.equals(result.throwable) : result.throwable != null) return false;
+			if (!Arrays.equals(arguments, that.arguments)) return false;
+			return throwable != null ? throwable.equals(that.throwable) : that.throwable == null;
 
-			return true;
 		}
 
+		@Override
 		public int hashCode()
 		{
-			int result;
-			result = (throwable != null ? throwable.hashCode() : 0);
-			result = 31 * result + (arguments != null ? Arrays.hashCode(arguments) : 0);
+			int result = Arrays.hashCode(arguments);
+			result = 31 * result + (throwable != null ? throwable.hashCode() : 0);
 			return result;
 		}
 	}
