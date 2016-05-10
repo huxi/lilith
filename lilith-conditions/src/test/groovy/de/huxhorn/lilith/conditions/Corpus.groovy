@@ -39,9 +39,11 @@ public class Corpus
 
 	private static final Marker FOO_MARKER=new Marker('Foo-Marker')
 	private static final Marker BAR_MARKER=new Marker('Bar-Marker')
+	private static final Marker RECURSIVE_MARKER=new Marker('Recursive-Marker')
 
 	static {
 		FOO_MARKER.add(BAR_MARKER)
+		RECURSIVE_MARKER.add(RECURSIVE_MARKER)
 		if(logger.isInfoEnabled())
 		{
 			StringBuilder builder = new StringBuilder()
@@ -282,6 +284,8 @@ public class Corpus
 		// broken ndc with gap
 		result.add(new EventWrapper<>(event: new LoggingEvent(ndc: [new Message('b0rked1'), null, new Message('b0rked3')])))
 
+		// recursive marker
+		result.add(new EventWrapper<>(event: new LoggingEvent(marker: RECURSIVE_MARKER)))
 
 		return result
 	}

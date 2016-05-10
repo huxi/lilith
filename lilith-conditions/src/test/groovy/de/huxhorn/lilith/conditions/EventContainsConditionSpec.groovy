@@ -71,7 +71,7 @@ class EventContainsConditionSpec extends Specification {
 		'java.lang'                      | [25, 26, 27, 28, 29, 30] as Set
 
 		// Marker
-		'-Marker'                        | [31, 32] as Set
+		'-Marker'                        | [31, 32, 88] as Set
 		'Foo-Marker'                     | [31] as Set
 		'Bar-Marker'                     | [31, 32] as Set
 

@@ -31,12 +31,13 @@ class MarkerContainsConditionSpec extends Specification {
 		Corpus.executeConditionOnCorpus(condition) == expectedResult
 
 		where:
-		input        | expectedResult
-		null         | [] as Set
-		''           | Corpus.matchAllSet()
-		'snafu'      | [] as Set
-		'Foo-Marker' | [31] as Set
-		'Bar-Marker' | [31, 32] as Set
+		input              | expectedResult
+		null               | [] as Set
+		''                 | Corpus.matchAllSet()
+		'snafu'            | [] as Set
+		'Foo-Marker'       | [31] as Set
+		'Bar-Marker'       | [31, 32] as Set
+		'Recursive-Marker' | [88] as Set
 
 
 		condition = new MarkerContainsCondition(input)

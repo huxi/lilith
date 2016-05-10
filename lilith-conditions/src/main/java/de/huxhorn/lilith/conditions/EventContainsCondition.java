@@ -29,8 +29,10 @@ import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class EventContainsCondition
@@ -183,13 +185,9 @@ public class EventContainsCondition
 
 
 				{
-					Marker marker = event.getMarker();
-					if(marker != null)
+					if(checkMarker(event.getMarker(), null))
 					{
-						if(checkMarker(marker, null))
-						{
-							return true;
-						}
+						return true;
 					}
 				}
 
@@ -316,7 +314,7 @@ public class EventContainsCondition
 		return false;
 	}
 
-	private boolean checkMarker(Marker marker, List<String> processedMarkers)
+	private boolean checkMarker(Marker marker, Set<String> processedMarkers)
 	{
 		if(marker == null)
 		{
@@ -329,7 +327,7 @@ public class EventContainsCondition
 
 		if(processedMarkers == null)
 		{
-			processedMarkers = new ArrayList<>();
+			processedMarkers = new HashSet<>();
 		}
 		if(!processedMarkers.contains(marker.getName()))
 		{
@@ -339,8 +337,7 @@ public class EventContainsCondition
 				Map<String, Marker> children = marker.getReferences();
 				for(Map.Entry<String, Marker> current : children.entrySet())
 				{
-					Marker child = current.getValue();
-					if(checkMarker(child, processedMarkers))
+					if(checkMarker(current.getValue(), processedMarkers))
 					{
 						return true;
 					}
