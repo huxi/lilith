@@ -556,4 +556,54 @@ class ThrowableInfoSpec extends Specification {
 		}
 		return true
 	}
+
+	@Unroll
+	def "#instance does not equal #other."() {
+		expect:
+		!instance.equals(other)
+		!other.equals(instance)
+
+		where:
+		instance                              | other
+		new ThrowableInfo()                   | new ThrowableInfo(name: 'b')
+		new ThrowableInfo(name: 'a')          | new ThrowableInfo(name: 'b')
+		new ThrowableInfo()                   | new ThrowableInfo(message: 'b')
+		new ThrowableInfo(message: 'a')       | new ThrowableInfo(message: 'b')
+		new ThrowableInfo()                   | new ThrowableInfo(cause: new ThrowableInfo())
+		new ThrowableInfo()                   | new ThrowableInfo(suppressed: [])
+		new ThrowableInfo(suppressed: [])     | new ThrowableInfo(suppressed: [null])
+		new ThrowableInfo(suppressed: [null]) | new ThrowableInfo(suppressed: [new ThrowableInfo()])
+	}
+
+	def "equals behaves as expected."() {
+		setup:
+		def instance = new ThrowableInfo()
+		def other = new ThrowableInfo(name: 'foo')
+
+		expect:
+		instance.equals(instance)
+		!instance.equals(null)
+		!instance.equals(new Object())
+		!instance.equals(other)
+		!other.equals(instance)
+	}
+
+	def "equals behaves as expected with internal identity equality."() {
+		setup:
+		def cause = new ThrowableInfo()
+		def instance = new ThrowableInfo(cause: cause)
+		def other = new ThrowableInfo(cause: cause)
+
+		expect:
+		instance.equals(instance)
+		instance.equals(other)
+		other.equals(instance)
+	}
+
+	def "toString() special cases"() {
+		expect:
+		new ThrowableInfo(name: 'java.lang.RuntimeException').toString() == 'java.lang.RuntimeException\n'
+		new ThrowableInfo(name: 'java.lang.RuntimeException', message: 'java.lang.RuntimeException').toString() == 'java.lang.RuntimeException\n'
+		new ThrowableInfo(name: 'java.lang.RuntimeException', message: 'foo').toString() == 'java.lang.RuntimeException: foo\n'
+	}
 }

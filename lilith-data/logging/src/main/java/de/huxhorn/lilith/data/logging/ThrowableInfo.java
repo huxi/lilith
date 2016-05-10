@@ -126,6 +126,7 @@ public class ThrowableInfo
 	private boolean recursiveEquals(ThrowableInfo that, IdentityHashMap<ThrowableInfo, Object> dejaVu)
 	{
 		if(this == that) return true;
+		if(that == null) return false;
 
 		if(dejaVu.containsKey(that))
 		{
@@ -205,10 +206,6 @@ public class ThrowableInfo
 		if(instance == null)
 		{
 			return 0;
-		}
-		if(dejaVu == null)
-		{
-			dejaVu = new IdentityHashMap<>();
 		}
 		if(dejaVu.containsKey(instance))
 		{
