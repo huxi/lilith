@@ -138,9 +138,52 @@ public final class Message
 	@Override
 	public String toString()
 	{
-		return "Message{" +
-				"messagePattern='" + messagePattern + '\'' +
-				", arguments=" + Arrays.toString(arguments) +
-				'}';
+		final StringBuilder sb = new StringBuilder("Message{");
+		sb.append("messagePattern=");
+		if(messagePattern == null)
+		{
+			sb.append((String)null);
+		}
+		else
+		{
+			sb.append('"');
+			sb.append(messagePattern);
+			sb.append('"');
+		}
+
+		sb.append(", arguments=");
+		if(arguments == null)
+		{
+			sb.append((String)null);
+		}
+		else
+		{
+			sb.append('[');
+			boolean first = true;
+			for (String current : arguments)
+			{
+				if(first)
+				{
+					first = false;
+				}
+				else
+				{
+					sb.append(", ");
+				}
+				if(current == null)
+				{
+					sb.append((String)null);
+				}
+				else
+				{
+					sb.append('"');
+					sb.append(current);
+					sb.append('"');
+				}
+			}
+			sb.append(']');
+		}
+		sb.append('}');
+		return sb.toString();
 	}
 }
