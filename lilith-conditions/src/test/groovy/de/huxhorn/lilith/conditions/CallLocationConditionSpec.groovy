@@ -130,6 +130,11 @@ class CallLocationConditionSpec extends Specification {
 		!other.equals(instance)
 	}
 
+	def "parseStackTraceElement(null) returns null."() {
+		expect:
+		CallLocationCondition.parseStackTraceElement(null) == null
+	}
+
 	def inputValues() {
 		[
 				null,

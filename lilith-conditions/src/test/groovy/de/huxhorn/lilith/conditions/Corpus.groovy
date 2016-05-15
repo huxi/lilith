@@ -290,12 +290,15 @@ public class Corpus
 
 		// throwable message
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(message: 'exception1'))))
+		// cause
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(cause: new ThrowableInfo(message: 'exception2')))))
 
 
 
 // #90
+		// suppressed
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(suppressed: [new ThrowableInfo(message: 'exception3')]))))
+		// broken suppressed array
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(suppressed: [new ThrowableInfo(message: 'exception4'), null, new ThrowableInfo(message: 'exception5')]))))
 
 		// recursive throwables
@@ -306,6 +309,23 @@ public class Corpus
 		ThrowableInfo recursiveSuppressed = new ThrowableInfo(name: 'recursiveSuppressed')
 		recursiveSuppressed.suppressed=[recursiveSuppressed]
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: recursiveSuppressed)))
+
+		// broken throwable stack trace
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(stackTrace: [
+				null,
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+		]))))
+
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(cause: new ThrowableInfo(stackTrace: [
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]'),
+				null,
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+		])))))
+
 
 		return result
 	}
