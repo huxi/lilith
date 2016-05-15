@@ -17,6 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.conditions.CallLocationCondition;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
@@ -66,14 +67,12 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -3412,55 +3411,41 @@ public class ViewActions
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			String text = null;
-			BufferedReader reader = null;
+			if(clipboard == null)
+			{
+				return;
+			}
 			try
 			{
 				Transferable transferable = clipboard.getContents(null /*unused*/);
-				if(transferable != null)
+				if(transferable == null)
 				{
-					reader = new BufferedReader(DataFlavor.getTextPlainUnicodeFlavor().getReaderForText(transferable));
-					text = reader.readLine();
-					if(text != null)
-					{
-						text = text.trim();
-						if(text.startsWith(AT_PREFIX))
-						{
-							text = text.substring(AT_PREFIX.length());
-						}
-					}
+					return;
 				}
-			}
-			catch(IllegalStateException | IllegalArgumentException | UnsupportedFlavorException | IOException ex)
-			{
-				// ignore
-			}
-			finally
-			{
-				if(reader != null)
+				DataFlavor[] dataFlavors = transferable.getTransferDataFlavors();
+				if(logger.isDebugEnabled()) logger.debug("DataFlavors on clipboard: {}", (Object)dataFlavors);
+				DataFlavor bestTextFlavor = DataFlavor.selectBestTextFlavor(dataFlavors);
+				if(logger.isDebugEnabled()) logger.debug("bestTextFlavor from clipboard: {}", bestTextFlavor);
+				if(bestTextFlavor == null)
 				{
-					try
-					{
-						reader.close();
-					}
-					catch (IOException e1)
-					{
-						// ignore
-					}
+					// no text on clipboard
+					return;
 				}
-			}
-			// wtf? :D
 
-			if(logger.isDebugEnabled()) logger.debug("Line from clipboard: {}", text);
-			if(text != null)
-			{
-				ExtendedStackTraceElement extendedStackTraceElement = ExtendedStackTraceElement.parseStackTraceElement(text);
-				if(extendedStackTraceElement != null)
+				try(BufferedReader reader = new BufferedReader(bestTextFlavor.getReaderForText(transferable)))
 				{
-					if(logger.isDebugEnabled()) logger.debug("Parsed StackTraceElement: {}", extendedStackTraceElement);
-					mainFrame.goToSource(extendedStackTraceElement.getStackTraceElement());
+					reader.lines()
+							.map(CallLocationCondition::parseStackTraceElement)
+							.filter(stackTraceElement -> stackTraceElement != null)
+							.findFirst()
+							.ifPresent(stackTraceElement -> mainFrame.goToSource(stackTraceElement));
 				}
 			}
+			catch(Throwable ex)
+			{
+				if(logger.isWarnEnabled()) logger.warn("Exception while obtaining StackTraceElement from clipboard!", ex);
+			}
+
 		}
 	}
 

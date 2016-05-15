@@ -52,21 +52,8 @@ public class CallLocationCondition
 			stackTraceElement = null;
 			return;
 		}
-		String actualString = searchString.trim();
-		if(actualString.startsWith(AT_PREFIX))
-		{
-			actualString = actualString.substring(AT_PREFIX.length());
-		}
 
-		ExtendedStackTraceElement extendedStackTraceElement = ExtendedStackTraceElement.parseStackTraceElement(actualString);
-		if(extendedStackTraceElement != null)
-		{
-			stackTraceElement = extendedStackTraceElement.getStackTraceElement();
-		}
-		else
-		{
-			stackTraceElement = null;
-		}
+		stackTraceElement = parseStackTraceElement(searchString);
 	}
 
 	public String getSearchString()
@@ -149,5 +136,35 @@ public class CallLocationCondition
 	public String toString()
 	{
 		return getDescription() + "(" + stackTraceElement + ")";
+	}
+
+	/**
+	 * Tries to parse a StackTraceElement from the given input.
+	 *
+	 * Parsing is more relaxed than the respective method in ExtendedStackTraceElement.
+	 * The given input is first trimmed and a potentially contained "at " at the start of the String is removed.
+	 *
+	 * @param input the input string.
+	 * @return the parsed StackTraceElement.
+	 * @see ExtendedStackTraceElement#parseStackTraceElement
+	 */
+	public static StackTraceElement parseStackTraceElement(String input)
+	{
+		if(input == null)
+		{
+			return null;
+		}
+		String cleanedInput = input.trim();
+		if(cleanedInput.startsWith(AT_PREFIX))
+		{
+			cleanedInput = cleanedInput.substring(AT_PREFIX.length());
+		}
+
+		ExtendedStackTraceElement extendedStackTraceElement = ExtendedStackTraceElement.parseStackTraceElement(cleanedInput);
+		if(extendedStackTraceElement == null)
+		{
+			return null;
+		}
+		return extendedStackTraceElement.getStackTraceElement();
 	}
 }
