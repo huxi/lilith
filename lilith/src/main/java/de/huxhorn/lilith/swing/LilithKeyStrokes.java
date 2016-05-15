@@ -63,6 +63,8 @@ public class LilithKeyStrokes
 	public static final String CLOSE_ALL_ACTION = "CLOSE_ALL_ACTION";
 	public static final String CLOSE_FILTER_ACTION = "CLOSE_FILTER_ACTION";
 	public static final String CLOSE_OTHER_FILTERS_ACTION = "CLOSE_OTHER_FILTERS_ACTION";
+	public static final String COPY_CALL_LOCATION_ACTION = "COPY_CALL_LOCATION_ACTION";
+	public static final String COPY_CALL_STACK_ACTION = "COPY_CALL_STACK_ACTION";
 	public static final String COPY_LOGGER_NAME_ACTION = "COPY_LOGGER_NAME_ACTION";
 	public static final String COPY_MESSAGE_ACTION = "COPY_MESSAGE_ACTION";
 	public static final String COPY_MESSAGE_PATTERN_ACTION = "COPY_MESSAGE_PATTERN_ACTION";
@@ -141,11 +143,13 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift N", COPY_LOGGER_NAME_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift O", OPEN_INACTIVE_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift PERIOD", ZOOM_OUT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift S", COPY_CALL_LOCATION_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift T", COPY_THROWABLE_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift V", PASTE_STACK_TRACE_ELEMENT_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift W", CLOSE_OTHER_FILTERS_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift X", CLEAN_ALL_INACTIVE_LOGS_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt C" , COPY_MESSAGE_PATTERN_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt S", COPY_CALL_STACK_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt T" , COPY_THROWABLE_NAME_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W" , CLOSE_ALL_ACTION);	}
 

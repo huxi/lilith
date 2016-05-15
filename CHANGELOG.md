@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 - Added "Throwable" condition.
 - Added "Focus Throwables"/"Exclude Throwables" matching events with any Throwable.
 - Added "Focus Throwable"/"Exclude Throwable" matching events with a specific Throwable class name.
+- Added "Copy call location" accelerator "command shift S".
+- Added "Copy call stack" accelerator "command shift alt S".
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
@@ -36,7 +38,8 @@ All notable changes to this project will be documented in this file.
    - `Map` instances are now formatted in Groovy style (`[key:value, key2:value2]`) instead of Java style (`{key=value, key2=value2}`).
    - `byte[]`, `Byte[]` and `Byte` are now converted to hex values. Because `[0xCA, 0xFE, 0xBA, 0xBE]` has better readability than `[-54, -2, -70, -66]`.
    - This is not a compatibility contest. It's about usability.
-- `"Paste StackTraceElement"` (Cmd-Shift-V) is now much more effective. It parses the text from the clipboard and opens the first `StackTraceElement` it finds in IDEA (if the necessary IDEA plugin is installed). Parsing is much more lenient.
+- "Paste StackTraceElement" (command shift V) is now much more effective. It parses the text from the clipboard and opens the first `StackTraceElement` it finds in IDEA (if the necessary IDEA plugin is installed). Parsing is much more lenient.
+
 ### Deprecated
 - Nothing.
 

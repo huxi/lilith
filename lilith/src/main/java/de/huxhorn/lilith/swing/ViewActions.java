@@ -271,8 +271,8 @@ public class ViewActions
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingLoggerNameFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThrowableFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThrowableNameFormatter()));
-		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallStackFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallLocationFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallStackFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMarkerFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMdcFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingNdcFormatter()));

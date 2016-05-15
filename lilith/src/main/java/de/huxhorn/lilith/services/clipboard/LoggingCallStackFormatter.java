@@ -20,11 +20,14 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
 public class LoggingCallStackFormatter
 	implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 861522045350829907L;
+
+	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_CALL_STACK_ACTION).toString();
 
 	public String getName()
 	{
@@ -38,7 +41,7 @@ public class LoggingCallStackFormatter
 
 	public String getAccelerator()
 	{
-		return null;
+		return ACCELERATOR;
 	}
 
 	public boolean isCompatible(Object object)
