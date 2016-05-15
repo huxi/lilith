@@ -31,7 +31,7 @@ public class LilithKeyStrokes
 	private static final Map<String, KeyStroke> actionKeyStrokes=new HashMap<>();
 	private static final Map<KeyStroke, String> keyStrokeActions=new HashMap<>();
 
-	private static void addKeyStroke(String actionName, String keyStrokeString)
+	private static void addKeyStroke(String keyStrokeString, String actionName)
 	{
 		final Logger logger = LoggerFactory.getLogger(LilithKeyStrokes.class);
 
@@ -104,51 +104,50 @@ public class LilithKeyStrokes
 
 	static
 	{
-		addKeyStroke(ATTACH_ACTION, KeyStrokes.COMMAND_ALIAS + " shift A");
-		addKeyStroke(CLEAN_ALL_INACTIVE_LOGS_ACTION, KeyStrokes.COMMAND_ALIAS + " shift X");
-		addKeyStroke(CLEAR_ACTION, KeyStrokes.COMMAND_ALIAS + " K");
-		addKeyStroke(CLOSE_ALL_ACTION, KeyStrokes.COMMAND_ALIAS+" shift alt W");
-		addKeyStroke(CLOSE_FILTER_ACTION, KeyStrokes.COMMAND_ALIAS + " W");
-		addKeyStroke(CLOSE_OTHER_FILTERS_ACTION, KeyStrokes.COMMAND_ALIAS + " shift W");
-		addKeyStroke(COPY_LOGGER_NAME_ACTION, KeyStrokes.COMMAND_ALIAS + " shift N");
-		addKeyStroke(COPY_MESSAGE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift C");
-		addKeyStroke(COPY_MESSAGE_PATTERN_ACTION, KeyStrokes.COMMAND_ALIAS + " shift alt C");
-		addKeyStroke(COPY_SELECTION_ACTION, KeyStrokes.COMMAND_ALIAS + " C");
-		addKeyStroke(COPY_THROWABLE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift T");
-		addKeyStroke(COPY_THROWABLE_NAME_ACTION, KeyStrokes.COMMAND_ALIAS + " shift alt T");
-		addKeyStroke(DISCONNECT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift D");
-		addKeyStroke(EDIT_CONDITION_ACTION, KeyStrokes.COMMAND_ALIAS + " I");
-		addKeyStroke(EDIT_SOURCE_NAME_ACTION, KeyStrokes.COMMAND_ALIAS + " B");
-		addKeyStroke(ENTER, "ENTER");
-		addKeyStroke(ESCAPE, "ESCAPE");
-		addKeyStroke(EXIT_ACTION, KeyStrokes.COMMAND_ALIAS + " Q");
-		addKeyStroke(EXPORT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift E");
-		addKeyStroke(FIND_ACTION, KeyStrokes.COMMAND_ALIAS + " F");
-		addKeyStroke(FIND_NEXT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift G");
-		addKeyStroke(FIND_NEXT_ACTIVE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift L");
-		addKeyStroke(FIND_PREVIOUS_ACTION, KeyStrokes.COMMAND_ALIAS + " G");
-		addKeyStroke(FIND_PREVIOUS_ACTIVE_ACTION, KeyStrokes.COMMAND_ALIAS + " L");
-		addKeyStroke(FOCUS_EVENTS_ACTION, KeyStrokes.COMMAND_ALIAS + " E");
-		addKeyStroke(FOCUS_MESSAGE_ACTION, KeyStrokes.COMMAND_ALIAS + " M");
-		addKeyStroke(HELP_ACTION, "F1");
-		addKeyStroke(IMPORT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift I");
-		addKeyStroke(NEXT_VIEW_ACTION, KeyStrokes.COMMAND_ALIAS + " J");
-		addKeyStroke(OPEN_ACTION, KeyStrokes.COMMAND_ALIAS + " O");
-		addKeyStroke(OPEN_INACTIVE_ACTION, KeyStrokes.COMMAND_ALIAS + " shift O");
-		addKeyStroke(PASTE_STACK_TRACE_ELEMENT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift V");
-		addKeyStroke(PAUSE_ACTION, KeyStrokes.COMMAND_ALIAS + " P");
-		addKeyStroke(PREFERENCES_ACTION, KeyStrokes.COMMAND_ALIAS + " COMMA");
-		addKeyStroke(PREVIOUS_VIEW_ACTION, KeyStrokes.COMMAND_ALIAS + " shift J");
-		addKeyStroke(REMOVE_INACTIVE_ACTION, KeyStrokes.COMMAND_ALIAS + " R");
-		addKeyStroke(REPLACE_FILTER_ACTION, "shift ENTER");
-		addKeyStroke(RESET_FIND_ACTION, KeyStrokes.COMMAND_ALIAS + " shift F");
-		addKeyStroke(SCROLL_TO_BOTTOM_ACTION, KeyStrokes.COMMAND_ALIAS + " T");
-		addKeyStroke(VIEW_GLOBAL_ACCESS_LOGS_ACTION, KeyStrokes.COMMAND_ALIAS + " 2");
-		addKeyStroke(VIEW_GLOBAL_CLASSIC_LOGS_ACTION, KeyStrokes.COMMAND_ALIAS + " 1");
-		addKeyStroke(VIEW_LILITH_LOGS_ACTION, KeyStrokes.COMMAND_ALIAS + " 0");
-		addKeyStroke(ZOOM_IN_ACTION, KeyStrokes.COMMAND_ALIAS + " PERIOD");
-		addKeyStroke(ZOOM_OUT_ACTION, KeyStrokes.COMMAND_ALIAS + " shift PERIOD");
-	}
+		addKeyStroke("ENTER", ENTER);
+		addKeyStroke("ESCAPE", ESCAPE);
+		addKeyStroke("F1", HELP_ACTION);
+		addKeyStroke("shift ENTER", REPLACE_FILTER_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " 0", VIEW_LILITH_LOGS_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " 1", VIEW_GLOBAL_CLASSIC_LOGS_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " 2", VIEW_GLOBAL_ACCESS_LOGS_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " B", EDIT_SOURCE_NAME_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " C", COPY_SELECTION_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " COMMA", PREFERENCES_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " E", FOCUS_EVENTS_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " F", FIND_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " G", FIND_PREVIOUS_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " I", EDIT_CONDITION_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " J", NEXT_VIEW_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " K", CLEAR_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " L", FIND_PREVIOUS_ACTIVE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " M", FOCUS_MESSAGE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " O", OPEN_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " P", PAUSE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " PERIOD", ZOOM_IN_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " Q", EXIT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " R", REMOVE_INACTIVE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " T", SCROLL_TO_BOTTOM_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " W", CLOSE_FILTER_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift A", ATTACH_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift C", COPY_MESSAGE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift D", DISCONNECT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift E", EXPORT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift F", RESET_FIND_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift G", FIND_NEXT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift I", IMPORT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift J", PREVIOUS_VIEW_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift L", FIND_NEXT_ACTIVE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift N", COPY_LOGGER_NAME_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift O", OPEN_INACTIVE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift PERIOD", ZOOM_OUT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift T", COPY_THROWABLE_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift V", PASTE_STACK_TRACE_ELEMENT_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift W", CLOSE_OTHER_FILTERS_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift X", CLEAN_ALL_INACTIVE_LOGS_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt C" , COPY_MESSAGE_PATTERN_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt T" , COPY_THROWABLE_NAME_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W" , CLOSE_ALL_ACTION);	}
 
 	public static KeyStroke getKeyStroke(String actionName)
 	{
