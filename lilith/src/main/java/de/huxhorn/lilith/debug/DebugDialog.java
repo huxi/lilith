@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,22 @@ package de.huxhorn.lilith.debug;
 
 import de.huxhorn.lilith.swing.MainFrame;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -31,7 +43,6 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -41,7 +52,7 @@ public class DebugDialog
 	private static final long serialVersionUID = 2056161561781289686L;
 	private final Logger logger = LoggerFactory.getLogger(DebugDialog.class);
 
-	LoggerEventEmitter loggerEventEmitter;
+	private LoggerEventEmitter loggerEventEmitter;
 	private MainFrame mainFrame;
 
 	public DebugDialog(Frame owner, MainFrame mainFrame)
@@ -123,10 +134,16 @@ public class DebugDialog
 		gbc.gridy = 3;
 		loggingPanel.add(button, gbc);
 
+		action = new LogContainerAction();
+		button = new JButton(action);
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		loggingPanel.add(button, gbc);
+
+
 		action = new LogAllAction();
 		button = new JButton(action);
-		gbc.gridwidth = 2;
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 4;
 		loggingPanel.add(button, gbc);
 
@@ -213,6 +230,23 @@ public class DebugDialog
 			loggerEventEmitter.logStuffWithMarker();
 			loggerEventEmitter.logStuffWithMdc();
 			loggerEventEmitter.logStuffWithMdcAndMarker();
+		}
+	}
+
+	private class LogContainerAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -4705100235484844484L;
+
+		public LogContainerAction()
+		{
+			super("Log containers");
+			putValue(Action.SHORT_DESCRIPTION, "Creates logging events with arrays, Collections and Maps as parameters.");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			loggerEventEmitter.logContainers();
 		}
 	}
 
@@ -365,6 +399,7 @@ public class DebugDialog
 			loggerEventEmitter.logAnonymous();
 			loggerEventEmitter.logNDC();
 			loggerEventEmitter.logDate();
+			loggerEventEmitter.logContainers();
 		}
 	}
 

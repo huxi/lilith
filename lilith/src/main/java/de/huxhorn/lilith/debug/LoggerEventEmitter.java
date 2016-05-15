@@ -184,4 +184,9 @@ public class LoggerEventEmitter
 	{
 		execute(new LogDateRunnable(delay));
 	}
+
+	public void logContainers()
+	{
+		execute(new LogContainerRunnable(delay));
+	}
 }
