@@ -31,6 +31,11 @@ All notable changes to this project will be documented in this file.
 - `CallLocationCondition` understands more input. "at " and whitespace is now automatically removed.
 - `HttpRemoteUserCondition` is less strict. String is first trimmed for both condition and remote user of event. Empty string and "-" are both considered "no user name" and the condition matches accordingly.
 - `MDCContainsCondition` without value will now match if the MDC of an event contains any value (even null) for the given key.
+- `SafeString`/`MessageFormatter` changes. Those only have an effect if Lilith appenders are used.
+   - `String` instances contained in `Collection`, `Map` or `Object[]` are now wrapped in apostrophes. This means that an empty `Set` will look differently than one containing an empty `String`. Similarly, a `null` element will look differently than `'null'`.
+   - `Map` instances are now formatted in Groovy style (`[key:value, key2:value2]`) instead of Java style (`{key=value, key2=value2}`).
+   - `byte[]`, `Byte[]` and `Byte` are now converted to hex values. Because `[0xCA, 0xFE, 0xBA, 0xBE]` has better readability than `[-54, -2, -70, -66]`.
+   - This is not a compatibility contest. It's about usability.
 
 ### Deprecated
 - Nothing.

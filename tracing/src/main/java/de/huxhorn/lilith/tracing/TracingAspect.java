@@ -196,7 +196,8 @@ public class TracingAspect
 					{
 						msg.append(", ");
 					}
-					msg.append(SafeString.toString(arg));
+					msg.append(SafeString.toString(arg,
+							SafeString.StringWrapping.ALL, SafeString.StringStyle.GROOVY, SafeString.MapStyle.GROOVY));
 				}
 			}
 			else

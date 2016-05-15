@@ -229,14 +229,16 @@ public class MessageFormatter
 		{
 			// special case
 			stringArgs = new String[1];
-			stringArgs[0] = SafeString.toString(arguments);
+			stringArgs[0] = SafeString.toString(arguments,
+					SafeString.StringWrapping.CONTAINED, SafeString.StringStyle.GROOVY, SafeString.MapStyle.GROOVY);
 		}
 		else
 		{
 			stringArgs = new String[resultArgCount];
 			for(int i = 0; i < stringArgs.length; i++)
 			{
-				stringArgs[i] = SafeString.toString(arguments[i]);
+				stringArgs[i] = SafeString.toString(arguments[i],
+						SafeString.StringWrapping.CONTAINED, SafeString.StringStyle.GROOVY, SafeString.MapStyle.GROOVY);
 			}
 		}
 		return new ArgumentResult(stringArgs, throwable);

@@ -38,6 +38,7 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class MessageFormatterSpec extends Specification {
+
 	@Unroll
 	def "ArgumentResult.equals behaves as expected for #inputValue."() {
 		setup:
@@ -142,5 +143,70 @@ class MessageFormatterSpec extends Specification {
 		'foo {}'       | null                | 'foo {}'
 		'foo {}'       | [] as String[]      | 'foo {}'
 		'{} {}'        | ['foo'] as String[] | 'foo {}'
+	}
+
+
+	@Unroll
+	def "messagePattern '#messagePattern' with arguments #arguments produces #expectedResult."() {
+		when:
+		def argumentResult = MessageFormatter.evaluateArguments(messagePattern, arguments)
+
+		def result = MessageFormatter.format(messagePattern, argumentResult.arguments)
+
+		then:
+		result == expectedResult
+		String.valueOf(argumentResult.throwable) == String.valueOf(expectedThrowable)
+
+		where:
+		messagePattern << messagePatterns()
+		arguments << messageArguments()
+		// stfu, IDEA.
+		//noinspection GroovyAssignabilityCheck
+		expectedThrowable << expectedThrowable()
+		expectedResult << expectedFormattedMessage()
+	}
+
+	def messagePatterns() {
+		[
+				'param1={}, param2={}, param3={}',
+				'param1={}, param2={}, param3={}, exceptionString={}',
+				'exceptionString={}',
+				'param={}',
+				'param1={}, param2={}, param3={}',
+				'param1={}, param2={}, param3={}',
+		]
+	}
+
+	def messageArguments() {
+		[
+				['One', 'Two', 'Three', new RuntimeException()] as Object[],
+				['One', 'Two', 'Three', new RuntimeException()] as Object[],
+				[new RuntimeException()] as Object[],
+				['One', 'Two', 'Three'] as Object[],
+				['One', 'Two', 'Three', 'Unused', 'Unused', new RuntimeException()] as Object[],
+				['One', ['Two.1', 'Two.2'], 'Three'] as Object[],
+		]
+	}
+
+	def expectedThrowable() {
+		[
+				new RuntimeException(),
+				null,
+				null,
+				null,
+				new RuntimeException(),
+				null,
+		]
+	}
+
+	def expectedFormattedMessage() {
+		[
+				'param1=One, param2=Two, param3=Three',
+				'param1=One, param2=Two, param3=Three, exceptionString=java.lang.RuntimeException',
+				'exceptionString=java.lang.RuntimeException',
+				'param=[\'One\', \'Two\', \'Three\']',
+				'param1=One, param2=Two, param3=Three',
+				'param1=One, param2=[\'Two.1\', \'Two.2\'], param3=Three',
+		]
 	}
 }

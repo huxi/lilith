@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,7 +156,7 @@ public class MessageFormatterTest
 			new UseCase("Array & Throwable", "Val1={}, Val2={", new Object[]{i1, i2, i3, t}, 1, "Val1=1, Val2={", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{i1, new Integer[]{i2, i3}, t}, 2, "1[2, 3]", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new Integer[]{i2, i3}, t}, 2, "a[2, 3]", t),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}, t}, 2, "a[1, 2]", t),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}, t}, new String[]{"a", "[0x01, 0x02]"}, 2, "a[0x01, 0x02]", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new int[]{1, 2}, t}, 2, "a[1, 2]", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new float[]{1, 2}, t}, 2, "a[1.0, 2.0]", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new double[]{1, 2}, t}, 2, "a[1.0, 2.0]", t), // missing short, long, boolean, char
@@ -183,7 +183,7 @@ public class MessageFormatterTest
 			new UseCase("Escaping", "\\{}", new Object[]{i1, i2, i3, t}, 0, "{}", t),
 			new UseCase("ArrayValues", "{}{}", new Object[]{i1, p1}, 2, i1 + Arrays.toString(p1)),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", p1}, 2, "a" + Arrays.toString(p1)),
-			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}}, 2, "a" + Arrays.toString(new byte[]{1, 2})),
+			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new byte[]{1, 2}}, new String[]{"a", "[0x01, 0x02]"}, 2, "a[0x01, 0x02]", null),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new short[]{1, 2}}, 2, "a" + Arrays.toString(new short[]{1, 2})),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new int[]{1, 2}}, 2, "a" + Arrays.toString(new int[]{1, 2})),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new long[]{1, 2}}, 2, "a" + Arrays.toString(new long[]{1, 2})),
@@ -192,7 +192,7 @@ public class MessageFormatterTest
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new boolean[]{true, false}}, 2, "a" + Arrays.toString(new boolean[]{true, false})),
 			new UseCase("ArrayValues", "{}{}", new Object[]{"a", new char[]{'b', 'c'}}, 2, "a" + Arrays.toString(new char[]{'b', 'c'})),
 			new UseCase("ArrayValues", "{}{}", multiArray, new String[]{"[" + multiArrayRec + ", " + Arrays.toString(p1) + "]", Arrays.toString(p1)}, 2, "[" + multiArrayRec + ", " + Arrays.toString(p1) + "]" + Arrays.toString(p1), null),
-			new UseCase("SpecialOneArgument", "Special {}", new Object[]{"One", "Two", "Three"}, new String[]{"[One, Two, Three]"}, 1, "Special " + Arrays.toString(new Object[]{"One", "Two", "Three"}), null),
+			new UseCase("SpecialOneArgument", "Special {}", new Object[]{"One", "Two", "Three"}, new String[]{"['One', 'Two', 'Three']"}, 1, "Special ['One', 'Two', 'Three']", null),
 		};
 	}
 
@@ -245,7 +245,7 @@ public class MessageFormatterTest
 		validateEvaluateArguments("{}{}{}",
 			new Object[]{"foo", null, 1L},
 			new MessageFormatter.ArgumentResult(
-				new String[]{"foo", null, "1"},
+				new String[]{"foo", "null", "1"},
 				null));
 
 		//noinspection ThrowableInstanceNeverThrown
@@ -253,25 +253,25 @@ public class MessageFormatterTest
 		validateEvaluateArguments("{}{}",
 			new Object[]{"foo", null, t},
 			new MessageFormatter.ArgumentResult(
-				new String[]{"foo", null},
+				new String[]{"foo", "null"},
 				t));
 
 		validateEvaluateArguments("{}{}{}",
 			new Object[]{"foo", null, t},
 			new MessageFormatter.ArgumentResult(
-				new String[]{"foo", null, "FooException"},
+				new String[]{"foo", "null", "FooException"},
 				null));
 
 		validateEvaluateArguments("{}{}{}",
 			new Object[]{"foo", null, t, 17L, 18L},
 			new MessageFormatter.ArgumentResult(
-				new String[]{"foo", null, "FooException", "17", "18"},
+				new String[]{"foo", "null", "FooException", "17", "18"},
 				null));
 
 		validateEvaluateArguments("{}{}{}",
 			new Object[]{"foo", null, 17L, 18L, t},
 			new MessageFormatter.ArgumentResult(
-				new String[]{"foo", null, "17", "18"},
+				new String[]{"foo", "null", "17", "18"},
 				t));
 	}
 
@@ -344,7 +344,7 @@ public class MessageFormatterTest
 			message.append("null");
 		}
 
-		message.append(" did not return expected result!");
+		message.append(" did not return expected result ").append(expected).append(" but ").append(result).append("!");
 		assertEquals(message.toString(), expected, result);
 	}
 
@@ -511,58 +511,50 @@ public class MessageFormatterTest
 		 */
 		private String getStringFor(Object o)
 		{
-			String argStr = null;
-			if(o != null)
+			if(o == null)
 			{
-				if(o.getClass().isArray())
+				return "null";
+			}
+			if(o instanceof String)
+			{
+				return (String) o;
+			}
+			if(o.getClass().isArray())
+			{
+				if(o instanceof short[])
 				{
-					if(o instanceof byte[])
-					{
-						argStr = Arrays.toString((byte[]) o);
-					}
-					else if(o instanceof short[])
-					{
-						argStr = Arrays.toString((short[]) o);
-					}
-					else if(o instanceof int[])
-					{
-						argStr = Arrays.toString((int[]) o);
-					}
-					else if(o instanceof long[])
-					{
-						argStr = Arrays.toString((long[]) o);
-					}
-					else if(o instanceof float[])
-					{
-						argStr = Arrays.toString((float[]) o);
-					}
-					else if(o instanceof double[])
-					{
-						argStr = Arrays.toString((double[]) o);
-					}
-					else if(o instanceof boolean[])
-					{
-						argStr = Arrays.toString((boolean[]) o);
-					}
-					else if(o instanceof char[])
-					{
-						argStr = Arrays.toString((char[]) o);
-					}
-					else
-					{
-						argStr = Arrays.deepToString((Object[]) o);
-					}
+					return Arrays.toString((short[]) o);
 				}
-				else if(o instanceof String)
+				if(o instanceof int[])
 				{
-					argStr = (String) o;
+					return Arrays.toString((int[]) o);
+				}
+				if(o instanceof long[])
+				{
+					return Arrays.toString((long[]) o);
+				}
+				if(o instanceof float[])
+				{
+					return Arrays.toString((float[]) o);
+				}
+				if(o instanceof double[])
+				{
+					return Arrays.toString((double[]) o);
+				}
+				else if(o instanceof boolean[])
+				{
+					return Arrays.toString((boolean[]) o);
+				}
+				else if(o instanceof char[])
+				{
+					return Arrays.toString((char[]) o);
 				}
 				else
 				{
-					argStr = o.toString();
+					return Arrays.deepToString((Object[]) o);
 				}
 			}
-			return argStr;
+			return o.toString();
 		}
 
 		public String getMessagePattern()
