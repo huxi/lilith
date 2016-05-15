@@ -35,7 +35,8 @@ class HttpRemoteUserConditionSpec extends Specification {
 
 	def setupSpec() {
 		accessEventsWithoutRemoteUser = Collections.unmodifiableSet([
-				5, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 70, 71, 72, 73, 74, 75, 77, 79, 81
+				5, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 70, 71, 72, 73, 74, 75, 77, 79, 81,
+				100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113
 		] as Set<Integer>)
 
 		sfalkenEvents = Collections.unmodifiableSet([

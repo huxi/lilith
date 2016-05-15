@@ -326,6 +326,46 @@ public class Corpus
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
 		])))))
 
+		// empty mdc
+		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: [:])))
+		// mdc null cases
+		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: ['nullMdcValueKey': null])))
+		Map<String, String> nullMdcKeyMap = new HashMap<>()
+		nullMdcKeyMap.put(null, 'nullMdcKeyValue')
+		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: nullMdcKeyMap)))
+
+
+
+// #100
+		// request headers
+		result.add(new EventWrapper<>(event: new AccessEvent(requestHeaders: [:])))
+		result.add(new EventWrapper<>(event: new AccessEvent(requestHeaders: ['requestHeaderKey':'requestHeaderValue'])))
+		result.add(new EventWrapper<>(event: new AccessEvent(requestHeaders: ['nullRequestHeaderValueKey':null])))
+		Map<String, String> nullRequestHeaderKeyMap = new HashMap<>()
+		nullRequestHeaderKeyMap.put(null, 'nullRequestHeaderKeyValue')
+		result.add(new EventWrapper<>(event: new AccessEvent(requestHeaders: nullRequestHeaderKeyMap)))
+
+		// response headers
+		result.add(new EventWrapper<>(event: new AccessEvent(responseHeaders: [:])))
+		result.add(new EventWrapper<>(event: new AccessEvent(responseHeaders: ['responseHeaderKey':'responseHeaderValue'])))
+		result.add(new EventWrapper<>(event: new AccessEvent(responseHeaders: ['nullResponseHeaderValueKey':null])))
+		Map<String, String> nullResponseHeaderKeyMap = new HashMap<>()
+		nullRequestHeaderKeyMap.put(null, 'nullResponseHeaderKeyValue')
+		result.add(new EventWrapper<>(event: new AccessEvent(responseHeaders: nullResponseHeaderKeyMap)))
+
+		// request parameters
+		result.add(new EventWrapper<>(event: new AccessEvent(requestParameters: [:])))
+		result.add(new EventWrapper<>(event: new AccessEvent(requestParameters: ['nullRequestParameterValueKey':null])))
+
+
+
+// #110
+		result.add(new EventWrapper<>(event: new AccessEvent(requestParameters: ['requestParameterKey':[] as String[]])))
+		result.add(new EventWrapper<>(event: new AccessEvent(requestParameters: ['requestParameterKey':['requestParameterValue1', 'requestParameterValue2'] as String[]])))
+		result.add(new EventWrapper<>(event: new AccessEvent(requestParameters: ['requestParameterKey':['requestParameterValue1', null, 'requestParameterValue3'] as String[]])))
+		Map<String, String[]> nullRequestParameterKeyMap = new HashMap<>()
+		nullRequestParameterKeyMap.put(null, ['nullRequestHeaderKeyValue'] as String[])
+		result.add(new EventWrapper<>(event: new AccessEvent(requestParameters: nullRequestParameterKeyMap)))
 
 		return result
 	}
