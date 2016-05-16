@@ -33,6 +33,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Added "Throwable" condition.</li>
 			<li>Added "Focus Throwables"/"Exclude Throwables" matching events with any Throwable.</li>
 			<li>Added "Focus Throwable"/"Exclude Throwable" matching events with a specific Throwable class name.</li>
+			<li>Added "Copy call location" accelerator "command shift S".</li>
+			<li>Added "Copy call stack" accelerator "command shift alt S".</li>
+			<li>Added "Copy request URL".</li>
 		</ul>
 		
 		<h3>Changed</h3>
@@ -40,10 +43,39 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<ul>
 			<li>Using <code>java.time.format</code> instead of <code>SimpleDateFormat</code>.</li>
 			<li>Don't create copy of whitelist Set in <code>WhitelistObjectInputStream</code>.</li>
-			<li>Requires Java 8 <code>1.8.0_77</code>.</li>
+			<li>Require Java 8 <code>1.8.0_92</code>.</li>
 			<li>Added option to start application even if Java version requirements are not met.</li>
 			<li>Changed accelerator of "Copy Throwable" from "command shift alt T" to "command shift T".</li>
 			<li>Changed specification of HTTP status code 451 from draft to RFC 7725.</li>
+			<li>Changed meaning of <code>ThrowableCondition</code>. Condition now evaluates to true if search string is one of the <code>Throwable</code> contained in the hierarchy (including cause, suppressed) instead of only checking the root exception.</li>
+			<li>
+				<code>EventContainsCondition</code> is now evaluating <code>Throwable</code> and NDC.</li>
+			<li>
+				<code>appendTo</code> methods of <code>ThrowableInfo</code> and <code>ExtendedStackTraceElement</code> now throw a <code>NullPointerException</code> if <code>StringBuilder</code> is <code>null</code>.</li>
+			<li>
+				<code>ExtendedStackTraceElement.appendExtended</code> is now private.</li>
+			<li>
+				<code>ExtendedStackTraceElement.toString(true)</code> is now printing <code>"na"</code> instead of empty string if codeLocation or version is null.</li>
+			<li>
+				<code>HttpStatusTypeCondition</code> understands more input. "SUCCESSFUL", "su", "2", "2X" and " 2x " will all evaluate to <code>HttpStatus.Type.SUCCESSFUL</code>.</li>
+			<li>
+				<code>CallLocationCondition</code> understands more input. "at " and whitespace is now automatically removed.</li>
+			<li>
+				<code>HttpRemoteUserCondition</code> is less strict. String is first trimmed for both condition and remote user of event. Empty string and "-" are both considered "no user name" and the condition matches accordingly.</li>
+			<li>
+				<code>MDCContainsCondition</code> without value will now match if the MDC of an event contains any value (even null) for the given key.</li>
+			<li>
+				<code>SafeString</code>/<code>MessageFormatter</code> changes. Those only have an effect if Lilith appenders are used.
+<ul><li><code>String</code> instances contained in <code>Collection</code>, <code>Map</code> or <code>Object[]</code> are now wrapped in apostrophes. This means that an empty <code>Set</code> will look differently than one containing an empty <code>String</code>. Similarly, a <code>null</code> element will look differently than <code>'null'</code>.</li>
+					<li>
+						<code>Map</code> instances are now formatted in Groovy style (<code>[key:value, key2:value2]</code>) instead of Java style (<code>{key=value, key2=value2}</code>).</li>
+					<li>
+						<code>byte[]</code>, <code>Byte[]</code> and <code>Byte</code> are now converted to hex values. Because <code>[0xCA, 0xFE, 0xBA, 0xBE]</code> has better readability than <code>[-54, -2, -70, -66]</code>.</li>
+					<li>This is not a compatibility contest. It's about usability.</li>
+				</ul>
+			</li>
+			<li>"Paste StackTraceElement" (command shift V) is now much more effective. It parses the text from the clipboard and opens the first <code>StackTraceElement</code> it finds in IDEA (if the necessary IDEA plugin is installed). Parsing is much more lenient.</li>
+			<li>Using <code>SafeString</code> for "Copy MDC".</li>
 		</ul>
 		
 		<h3>Deprecated</h3>
@@ -55,7 +87,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<h3>Removed</h3>
 		
 		<ul>
-			<li>Nothing.</li>
+			<li>Removed <code>SourceInfo</code> and related classes. They were all unused and also terrible.</li>
+			<li>Removed <code>LoggingEvents</code> and related classes. Same as above.</li>
+			<li>Removed <code>AccessEvents</code> and related classes. Same as above.</li>
 		</ul>
 		
 		<h3>Fixed</h3>
@@ -66,7 +100,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Fixed NPE in LoggingEventProtobufEncoder. This fixes issue #22.</li>
 			<li>Fixed NPE in CheckForUpdateRunnable in case of broken network connection.</li>
 			<li>Being less strict about the required Java version. It seems certain Linux distros have a Java version string like <code>1.8.0_66-internal</code> which is - strictly speaking - smaller than <code>1.8.0_66</code> since `-internal' is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.</li>
-			<li>log4j2 2.5, slf4j 1.7.21, Logback 1.1.7, jackson 2.7.3, Spring 4.2.5, Groovy 2.4.6, aspectj 1.8.9, httpclient 4.5.2</li>
+			<li>log4j2 2.5, slf4j 1.7.21, Logback 1.1.7, jackson 2.7.4, Spring 4.2.6, Groovy 2.4.6, aspectj 1.8.9, httpclient 4.5.2, jgoodies 2.7.0, commons-io 2.5</li>
 		</ul>
 		
 		<h3>Security</h3>
