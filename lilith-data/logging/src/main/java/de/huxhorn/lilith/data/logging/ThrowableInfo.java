@@ -353,7 +353,7 @@ public class ThrowableInfo
 
 		if(dejaVu.containsKey(throwableInfo))
 		{
-			sb.append("[CIRCULAR REFERENCE]");
+			sb.append("[CIRCULAR REFERENCE]\n");
 			return;
 		}
 		dejaVu.put(throwableInfo, null);
