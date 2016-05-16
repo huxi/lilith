@@ -25,7 +25,8 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
-import de.huxhorn.lilith.services.clipboard.AccessUriFormatter;
+import de.huxhorn.lilith.services.clipboard.AccessRequestUriFormatter;
+import de.huxhorn.lilith.services.clipboard.AccessRequestUrlFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatterData;
 import de.huxhorn.lilith.services.clipboard.EventHtmlFormatter;
@@ -277,7 +278,8 @@ public class ViewActions
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMdcFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingNdcFormatter()));
 		copyAccessActions = new ArrayList<>();
-		copyAccessActions.add(new CopyToClipboardAction(new AccessUriFormatter()));
+		copyAccessActions.add(new CopyToClipboardAction(new AccessRequestUriFormatter()));
+		copyAccessActions.add(new CopyToClipboardAction(new AccessRequestUrlFormatter()));
 
 		prepareClipboardActions(copyLoggingActions, keyStrokeActionMapping);
 		prepareClipboardActions(copyAccessActions, keyStrokeActionMapping);

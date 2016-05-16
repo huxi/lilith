@@ -20,19 +20,19 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
-public class AccessUriFormatter
+public class AccessRequestUrlFormatter
 	implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 1430411447952720184L;
 
 	public String getName()
 	{
-		return "Copy request URI";
+		return "Copy request URL";
 	}
 
 	public String getDescription()
 	{
-		return "Copies the request URI of the access event to the clipboard.";
+		return "Copies the request URL of the access event to the clipboard.";
 	}
 
 	public String getAccelerator()
@@ -56,7 +56,7 @@ public class AccessUriFormatter
 				if(eventObj instanceof AccessEvent)
 				{
 					AccessEvent accessEvent = (AccessEvent) eventObj;
-					return accessEvent.getRequestURI();
+					return accessEvent.getRequestURL();
 				}
 			}
 		}

@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Added "Focus Throwable"/"Exclude Throwable" matching events with a specific Throwable class name.
 - Added "Copy call location" accelerator "command shift S".
 - Added "Copy call stack" accelerator "command shift alt S".
+- Added "Copy request URL".
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
