@@ -31,7 +31,7 @@ class BasicFormatterCorpus {
 		Objects.requireNonNull(formatter, "formatter must not be null!")
 		List<Object> corpus = createCorpus()
 
-		Set<Integer> result = [] as HashSet<Integer>
+		Set<Integer> result = [] as TreeSet<Integer>
 		for(int i=0;i<corpus.size();i++) {
 			if(formatter.isCompatible(corpus[i])) {
 				result << i
