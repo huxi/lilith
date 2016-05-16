@@ -20,6 +20,7 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
+import de.huxhorn.sulky.formatting.SafeString;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -77,13 +78,10 @@ public class LoggingMdcFormatter
 					Map<String, String> mdc = loggingEvent.getMdc();
 					if(mdc != null && mdc.size()>0)
 					{
-						StringBuilder text = new StringBuilder();
-						SortedMap<String, String> sorted = new TreeMap<>(mdc);
-						for(Map.Entry<String, String> current : sorted.entrySet())
-						{
-							text.append(current.getKey()).append("\t").append(current.getValue()).append("\n");
-						}
-						return text.toString();
+						return SafeString.toString(new TreeMap<>(mdc),
+								SafeString.StringWrapping.CONTAINED,
+								SafeString.StringStyle.GROOVY,
+								SafeString.MapStyle.GROOVY);
 					}
 				}
 			}
