@@ -55,7 +55,15 @@ public class LoggingThrowableNameFormatter
 				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					return loggingEvent.getThrowable() != null;
+					ThrowableInfo throwable = loggingEvent.getThrowable();
+					if(throwable != null)
+					{
+						String throwableName = throwable.getName();
+						if(throwableName != null && !"".equals(throwableName))
+						{
+							return true;
+						}
+					}
 				}
 			}
 		}
@@ -73,10 +81,14 @@ public class LoggingThrowableNameFormatter
 				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ThrowableInfo info = loggingEvent.getThrowable();
-					if(info != null)
+					ThrowableInfo throwable = loggingEvent.getThrowable();
+					if(throwable != null)
 					{
-						return info.getName();
+						String throwableName = throwable.getName();
+						if(throwableName != null && !"".equals(throwableName))
+						{
+							return throwableName;
+						}
 					}
 				}
 			}
