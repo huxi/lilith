@@ -78,7 +78,15 @@ public class LoggingMdcFormatter
 					Map<String, String> mdc = loggingEvent.getMdc();
 					if(mdc != null && mdc.size()>0)
 					{
-						return SafeString.toString(new TreeMap<>(mdc),
+						if(!mdc.containsKey(null))
+						{
+							return SafeString.toString(new TreeMap<>(mdc),
+									SafeString.StringWrapping.CONTAINED,
+									SafeString.StringStyle.GROOVY,
+									SafeString.MapStyle.GROOVY);
+						}
+						// TreeMap can't handle null keys.
+						return SafeString.toString(mdc,
 								SafeString.StringWrapping.CONTAINED,
 								SafeString.StringStyle.GROOVY,
 								SafeString.MapStyle.GROOVY);

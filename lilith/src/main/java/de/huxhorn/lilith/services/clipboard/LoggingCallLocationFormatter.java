@@ -56,7 +56,7 @@ public class LoggingCallLocationFormatter
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
 					ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
-					return callStack != null && callStack.length > 0;
+					return callStack != null && callStack.length > 0 && callStack[0] != null;
 				}
 
 			}
@@ -78,7 +78,12 @@ public class LoggingCallLocationFormatter
 					ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
 					if(callStack != null && callStack.length > 0)
 					{
-						return callStack[0].toString(true);
+						ExtendedStackTraceElement element = callStack[0];
+						if(element == null)
+						{
+							return null;
+						}
+						return element.toString(true);
 					}
 				}
 			}

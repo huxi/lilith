@@ -90,7 +90,15 @@ public class LoggingCallStackFormatter
 							{
 								text.append("\n");
 							}
-							text.append("\tat ").append(current.toString(true));
+							text.append("\tat ");
+							if(current != null)
+							{
+								text.append(current.toString(true));
+							}
+							else
+							{
+								text.append((String)null);
+							}
 						}
 						return text.toString();
 					}
