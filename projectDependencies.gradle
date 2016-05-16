@@ -571,6 +571,7 @@ project(':lilith') {
 		runtime libraries.'jgoodies-looks'
 		runtime libraries.'log4j2-core'
 		runtime project(':lilith-sounds')
+		testCompile project(':lilith-data-corpus')
 	}
 }
 
