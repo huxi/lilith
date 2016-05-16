@@ -22,6 +22,11 @@ import de.huxhorn.lilith.services.BasicFormatter
 import spock.lang.Specification
 
 abstract class AbstractBasicFormatterSpec extends Specification {
+
+	def setupSpec() {
+		System.setProperty('java.awt.headless', 'true')
+	}
+
 	def "works on corpus."() {
 		setup:
 		def instance = createInstance()
