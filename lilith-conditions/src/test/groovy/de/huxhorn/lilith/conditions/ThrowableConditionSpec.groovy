@@ -51,7 +51,7 @@ public class ThrowableConditionSpec extends Specification
 	@Unroll
 	def "Corpus works as expected for #condition (searchString=#input)."() {
 		expect:
-		Corpus.executeConditionOnCorpus(condition) == expectedResult
+		ConditionCorpus.executeConditionOnCorpus(condition) == expectedResult
 
 		where:
 		input                            | expectedResult

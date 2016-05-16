@@ -28,12 +28,12 @@ class LoggerEqualsConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (searchString=#input)."() {
 		expect:
-		Corpus.executeConditionOnCorpus(condition) == expectedResult
+		ConditionCorpus.executeConditionOnCorpus(condition) == expectedResult
 
 		where:
 		input         | expectedResult
 		null          | [] as Set
-		''            | Corpus.matchAllSet()
+		''            | ConditionCorpus.matchAllSet()
 		'snafu'       | [] as Set
 		'foo'         | [] as Set
 		'com'         | [] as Set

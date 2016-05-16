@@ -28,12 +28,12 @@ class HttpRequestUrlConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (searchString=#input)."() {
 		expect:
-		Corpus.executeConditionOnCorpus(condition) == expectedResult
+		ConditionCorpus.executeConditionOnCorpus(condition) == expectedResult
 
 		where:
 		input                                          | expectedResult
 		null                                           | [] as Set
-		''                                             | Corpus.matchAllSet()
+		''                                             | ConditionCorpus.matchAllSet()
 		'snafu'                                        | [] as Set
 		'GET /?foo=bar&foo=schnurz HTTP/1.1'           | [74] as Set
 		'GET /index.html?foo=bar&foo=schnurz HTTP/1.1' | [75] as Set

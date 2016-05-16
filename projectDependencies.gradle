@@ -153,6 +153,19 @@ project(':lilith-data-access-protobuf') {
 	}
 }
 
+project(':lilith-data-corpus') {
+	apply plugin: 'groovy'
+	archivesBaseName = 'de.huxhorn.lilith.data.corpus'
+	description = 'This file is part of Lilith. It contains a corpus of Logging- and AccessEvents for tests.'
+
+	dependencies {
+		compile libraries.'groovy'
+		compile project(':lilith-data-eventsource')
+		compile project(':lilith-data-logging')
+		compile project(':lilith-data-access')
+	}
+}
+
 project(':lilith-constants') {
 	archivesBaseName = 'de.huxhorn.lilith.constants'
 	description = 'This file is part of Lilith. It contains part of the Lilith API (Constants).'
@@ -489,6 +502,7 @@ project(':lilith-conditions') {
 		compile libraries.'slf4j-api'
 		compile libraries.'groovy'
 		testCompile libraries.'sulky-junit'
+		testCompile project(':lilith-data-corpus')
 	}
 }
 

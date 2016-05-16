@@ -21,14 +21,14 @@ import de.huxhorn.sulky.conditions.Condition
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class CorpusSpec extends Specification {
+class ConditionCorpusSpec extends Specification {
 	@Unroll
 	def "corpus works as expected for condition #condition"() {
 		setup:
-		def corpus = Corpus.createCorpus()
+		def corpus = ConditionCorpus.createCorpus()
 
 		when:
-		def result = Corpus.executeConditionOnCorpus(condition, corpus)
+		def result = ConditionCorpus.executeConditionOnCorpus(condition, corpus)
 
 		then:
 		result == expectedResult
@@ -36,12 +36,12 @@ class CorpusSpec extends Specification {
 		where:
 		condition                | expectedResult
 		new MatchNoneCondition() | [] as Set
-		new MatchAllCondition()  | Corpus.matchAllSet()
+		new MatchAllCondition()  | ConditionCorpus.matchAllSet()
 	}
 
 	def "executeConditionOnCorpus(null) explodes as expected"() {
 		when:
-		Corpus.executeConditionOnCorpus(null)
+		ConditionCorpus.executeConditionOnCorpus(null)
 
 		then:
 		NullPointerException e = thrown()
@@ -50,7 +50,7 @@ class CorpusSpec extends Specification {
 
 	def "executeConditionOnCorpus(null, null) explodes as expected"() {
 		when:
-		Corpus.executeConditionOnCorpus(null, null)
+		ConditionCorpus.executeConditionOnCorpus(null, null)
 
 		then:
 		NullPointerException e = thrown()
@@ -59,7 +59,7 @@ class CorpusSpec extends Specification {
 
 	def "executeConditionOnCorpus(null, []) explodes as expected"() {
 		when:
-		Corpus.executeConditionOnCorpus(null, [])
+		ConditionCorpus.executeConditionOnCorpus(null, [])
 
 		then:
 		NullPointerException e = thrown()
@@ -68,54 +68,16 @@ class CorpusSpec extends Specification {
 
 	def "executeConditionOnCorpus(condition, null) explodes as expected"() {
 		when:
-		Corpus.executeConditionOnCorpus(new MatchNoneCondition(), null)
+		ConditionCorpus.executeConditionOnCorpus(new MatchNoneCondition(), null)
 
 		then:
 		NullPointerException e = thrown()
 		e.message == 'corpus must not be null!'
-	}
-
-	def "matchesAllSet(null) explodes as expected"() {
-		when:
-		Corpus.matchAllSet(null)
-
-		then:
-		NullPointerException e = thrown()
-		e.message == 'corpus must not be null!'
-	}
-
-	@Unroll
-	def "matchesAllSet(#input) returns expected output #expectedResult"() {
-		expect:
-		Corpus.matchAllSet(input) == expectedResult
-
-		where:
-		input           | expectedResult
-		[]              | [] as Set
-		['a', 'b', 'c'] | [0, 1, 2] as Set
 	}
 
 	def "matchesAllSet() returns expected output."() {
 		expect:
-		Corpus.matchAllSet() == Corpus.matchAllSet(Corpus.createCorpus())
-	}
-
-	def "sanity check"() {
-		setup:
-		def corpus = Corpus.createCorpus()
-
-		expect:
-		corpus != null
-		for (Object current : corpus) {
-			if(current == null) {
-				continue
-			}
-
-			// below code ensures that no basic operation on corpus entries is causing stack overflow
-			assert current.equals(current)
-			assert current.hashCode() == current.hashCode()
-			assert current.toString() != null
-		}
+		ConditionCorpus.matchAllSet() == 0..ConditionCorpus.createCorpus().size()-1 as Set<Integer>
 	}
 
 	private static class MatchNoneCondition implements Condition {

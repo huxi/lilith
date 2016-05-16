@@ -28,12 +28,12 @@ class MessagePatternContainsConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (searchString=#input)."() {
 		expect:
-		Corpus.executeConditionOnCorpus(condition) == expectedResult
+		ConditionCorpus.executeConditionOnCorpus(condition) == expectedResult
 
 		where:
 		input              | expectedResult
 		null               | [] as Set
-		''                 | Corpus.matchAllSet()
+		''                 | ConditionCorpus.matchAllSet()
 		'snafu'            | [] as Set
 		'message'          | [17, 18, 19, 20, 21] as Set
 		'a message'        | [17, 19, 20, 21] as Set

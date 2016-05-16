@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.conditions
+package de.huxhorn.lilith.data
 
 import de.huxhorn.lilith.data.access.AccessEvent
 import de.huxhorn.lilith.data.eventsource.EventWrapper
@@ -27,13 +27,12 @@ import de.huxhorn.lilith.data.logging.Marker
 import de.huxhorn.lilith.data.logging.Message
 import de.huxhorn.lilith.data.logging.ThreadInfo
 import de.huxhorn.lilith.data.logging.ThrowableInfo
-import de.huxhorn.sulky.conditions.Condition
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-public class Corpus
+public class EventWrapperCorpus
 {
-	private static final Logger logger = LoggerFactory.getLogger(Corpus)
+	private static final Logger logger = LoggerFactory.getLogger(EventWrapperCorpus)
 
 	private static final Set<Integer> MATCH_ALL_SET = Collections.unmodifiableSet(matchAllSet(createCorpus()))
 
@@ -55,7 +54,7 @@ public class Corpus
 				builder.append('#').append(i).append('\n')
 				builder.append('\t').append(corpus[i])
 			}
-			logger.info('Corpus:\n{}', builder)
+			logger.info('EventWrapperCorpus:\n{}', builder)
 		}
 	}
 
@@ -381,29 +380,6 @@ public class Corpus
 			return []
 		}
 		return 0..size-1
-	}
-
-	public static Set<Integer> executeConditionOnCorpus(Condition condition) {
-		return executeConditionOnCorpus(condition, createCorpus())
-	}
-
-	public static Set<Integer> executeConditionOnCorpus(Condition condition, List<Object> corpus) {
-		Objects.requireNonNull(condition, "condition must not be null!")
-		Objects.requireNonNull(corpus, "corpus must not be null!")
-
-
-		Set<Integer> result=new HashSet<>();
-
-		for(int i=0;i<corpus.size();i++) {
-			Object current = corpus.get(i)
-			boolean conditionResult = condition.isTrue(current)
-			if(conditionResult) {
-				result.add(i)
-			}
-			logger.debug('#{}: {}.isTrue({}) evaluated to {}.', i, condition, current, conditionResult)
-		}
-
-		return result
 	}
 
 	private static class Foo implements Serializable

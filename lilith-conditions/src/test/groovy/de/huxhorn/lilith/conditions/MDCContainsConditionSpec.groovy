@@ -28,7 +28,7 @@ class MDCContainsConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (key=#key, value=#value)."() {
 		expect:
-		Corpus.executeConditionOnCorpus(condition) == expectedResult
+		ConditionCorpus.executeConditionOnCorpus(condition) == expectedResult
 
 		where:
 		key      | value       | expectedResult
