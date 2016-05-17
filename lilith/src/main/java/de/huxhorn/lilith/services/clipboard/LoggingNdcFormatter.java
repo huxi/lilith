@@ -21,10 +21,6 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 public class LoggingNdcFormatter
 	implements ClipboardFormatter
 {
@@ -85,7 +81,14 @@ public class LoggingNdcFormatter
 							{
 								text.append("\n");
 							}
-							text.append(current.getMessage());
+							if(current != null)
+							{
+								text.append(current.getMessage());
+							}
+							else
+							{
+								text.append((String)null);
+							}
 						}
 						return text.toString();
 					}
