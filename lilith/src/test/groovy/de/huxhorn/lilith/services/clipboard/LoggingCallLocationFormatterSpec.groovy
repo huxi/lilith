@@ -50,4 +50,8 @@ class LoggingCallLocationFormatterSpec extends AbstractClipboardFormatterSpec {
 				'de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) ~[de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]',
 		]
 	}
+
+	boolean expectedAcceleratorAvailability() {
+		true
+	}
 }

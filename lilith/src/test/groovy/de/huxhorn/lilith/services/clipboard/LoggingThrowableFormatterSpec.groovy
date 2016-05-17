@@ -26,7 +26,7 @@ class LoggingThrowableFormatterSpec extends AbstractClipboardFormatterSpec {
 	}
 
 	def Set<Integer> expectedIndices() {
-		[25, 26, 27, 28, 29, 30, 89, 90, 91, 92, 93, 94, 95, 96]
+		[25, 26, 27, 28, 29, 30, 89, 90, 91, 92, 93, 94, 95, 96, 115]
 	}
 
 	def List<String> expectedResults() {
@@ -80,7 +80,13 @@ class LoggingThrowableFormatterSpec extends AbstractClipboardFormatterSpec {
 						'Caused by: null\n' +
 						'\tat javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]\n' +
 						'\tat javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]\n' +
-						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]\n'
+						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]\n',
+
+				'\n'
 		]
+	}
+
+	boolean expectedAcceleratorAvailability() {
+		true
 	}
 }

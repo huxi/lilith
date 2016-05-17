@@ -57,7 +57,14 @@ public class LoggingEventXmlFormatter
 		{
 			EventWrapper wrapper = (EventWrapper) object;
 			Object eventObj = wrapper.getEvent();
-			return eventObj instanceof LoggingEvent;
+			if(eventObj instanceof LoggingEvent)
+			{
+				// this is only an approximation.
+				// there are likely other cases causing NPE since XML requires schema conformance.
+				LoggingEvent event = (LoggingEvent) eventObj;
+				String loggerName = event.getLogger();
+				return loggerName != null && !"".equals(loggerName);
+			}
 		}
 		return false;
 	}
@@ -67,10 +74,15 @@ public class LoggingEventXmlFormatter
 		if(object instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) object;
-			Serializable ser = wrapper.getEvent();
-			if(ser instanceof LoggingEvent)
+			Object eventObj = wrapper.getEvent();
+			if(eventObj instanceof LoggingEvent)
 			{
-				LoggingEvent event = (LoggingEvent) ser;
+				LoggingEvent event = (LoggingEvent) eventObj;
+				String loggerName = event.getLogger();
+				if(loggerName == null || "".equals(loggerName))
+				{
+					return null;
+				}
 				byte[] bytes = encoder.encode(event);
 				try
 				{

@@ -35,4 +35,8 @@ class LoggingLoggerNameFormatterSpec extends AbstractClipboardFormatterSpec {
 				'com.foo.Bar',
 		]
 	}
+
+	boolean expectedAcceleratorAvailability() {
+		true
+	}
 }

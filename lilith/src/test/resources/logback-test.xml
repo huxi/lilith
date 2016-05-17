@@ -23,7 +23,8 @@
 		-->
 	</root>
 
-	<logger name="de.huxhorn.sulky.formatting.HumanReadable" level="WARN"/>
+	<logger name="de.huxhorn.lilith.services.clipboard" level="WARN"/>
+	<logger name="de.huxhorn.sulky.swing.KeyStrokes" level="ERROR"/>
 
 </configuration>
 

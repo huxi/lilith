@@ -366,6 +366,12 @@ public class EventWrapperCorpus
 		nullRequestParameterKeyMap.put(null, ['nullRequestHeaderKeyValue'] as String[])
 		result.add(new EventWrapper<>(event: new AccessEvent(requestParameters: nullRequestParameterKeyMap)))
 
+		// empty String logger name
+		result.add(new EventWrapper<>(event: new LoggingEvent(logger: '')))
+
+		// empty String throwable name
+		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(name: ''))))
+
 		return result
 	}
 

@@ -19,10 +19,13 @@
 package de.huxhorn.lilith.services.clipboard
 
 import de.huxhorn.lilith.services.BasicFormatter
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import spock.lang.Specification
 
 abstract class AbstractBasicFormatterSpec extends Specification {
 
+	private static final Logger logger = LoggerFactory.getLogger(AbstractBasicFormatterSpec)
 	def setupSpec() {
 		System.setProperty('java.awt.headless', 'true')
 	}
@@ -32,10 +35,11 @@ abstract class AbstractBasicFormatterSpec extends Specification {
 		def instance = createInstance()
 		def expectedIndices = expectedIndices()
 		def expectedResults = expectedResults()
+		def excludedIndices = excludedIndices()
 
 		when:
-		Set<Integer> compatibleIndices = BasicFormatterCorpus.isCompatible(instance)
-		List<String> results = BasicFormatterCorpus.toString(instance)
+		Set<Integer> compatibleIndices = BasicFormatterCorpus.isCompatible(instance, excludedIndices)
+		List<String> results = BasicFormatterCorpus.toString(instance, excludedIndices)
 
 		then:
 		compatibleIndices == expectedIndices
@@ -62,4 +66,8 @@ abstract class AbstractBasicFormatterSpec extends Specification {
 	abstract BasicFormatter createInstance()
 	abstract Set<Integer> expectedIndices()
 	abstract List<String> expectedResults()
+
+	Set<Integer> excludedIndices() {
+		[]
+	}
 }

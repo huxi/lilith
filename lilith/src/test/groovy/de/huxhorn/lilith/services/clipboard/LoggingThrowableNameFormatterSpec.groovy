@@ -41,4 +41,8 @@ class LoggingThrowableNameFormatterSpec extends AbstractClipboardFormatterSpec {
 				'recursiveSuppressed',
 		]
 	}
+
+	boolean expectedAcceleratorAvailability() {
+		true
+	}
 }

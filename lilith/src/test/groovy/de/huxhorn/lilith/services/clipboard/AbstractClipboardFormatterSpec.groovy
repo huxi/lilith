@@ -52,7 +52,28 @@ abstract class AbstractClipboardFormatterSpec extends AbstractBasicFormatterSpec
 		not = expectedNative? '' : ' not'
 	}
 
+	@Unroll
+	def "Formatter #has an accelerator."() {
+		when:
+		def instance = createInstance()
+
+		then:
+		if(expectedAcceleratorAvailability) {
+			assert instance.accelerator != null
+		} else {
+			assert instance.accelerator == null
+		}
+
+		where:
+		expectedAcceleratorAvailability = expectedAcceleratorAvailability()
+		has = expectedAcceleratorAvailability? 'has' : 'does not have'
+	}
+
 	boolean expectedNative() {
 		true
+	}
+
+	boolean expectedAcceleratorAvailability() {
+		false
 	}
 }

@@ -92,4 +92,8 @@ class LoggingCallStackFormatterSpec extends AbstractClipboardFormatterSpec {
 						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'
 		]
 	}
+
+	boolean expectedAcceleratorAvailability() {
+		true
+	}
 }

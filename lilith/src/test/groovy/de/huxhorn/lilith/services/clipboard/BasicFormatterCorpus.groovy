@@ -20,19 +20,31 @@ package de.huxhorn.lilith.services.clipboard
 
 import de.huxhorn.lilith.data.EventWrapperCorpus
 import de.huxhorn.lilith.services.BasicFormatter
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class BasicFormatterCorpus {
+	private static final Logger logger = LoggerFactory.getLogger(BasicFormatterCorpus)
 
 	public static List<Object> createCorpus() {
 		EventWrapperCorpus.createCorpus()
 	}
 
 	public static Set<Integer> isCompatible(BasicFormatter formatter) {
+		isCompatible(formatter, [])
+	}
+
+	public static Set<Integer> isCompatible(BasicFormatter formatter, Set<Integer> excluded) {
 		Objects.requireNonNull(formatter, "formatter must not be null!")
 		List<Object> corpus = createCorpus()
 
 		Set<Integer> result = [] as TreeSet<Integer>
 		for(int i=0;i<corpus.size();i++) {
+			if(excluded.contains(i)) {
+				if(logger.isDebugEnabled()) logger.debug('Skipping excluded isCompatible(corpus[{}])...', i)
+				continue;
+			}
+			if(logger.isDebugEnabled()) logger.debug('Before isCompatible(corpus[{}])...', i)
 			if(formatter.isCompatible(corpus[i])) {
 				result << i
 			}
@@ -41,10 +53,20 @@ class BasicFormatterCorpus {
 	}
 
 	public static List<String> toString(BasicFormatter formatter) {
+		toString(formatter, [])
+	}
+
+	public static List<String> toString(BasicFormatter formatter, Set<Integer> excluded) {
 		def result = []
 		List<Object> corpus = createCorpus()
-		corpus.each {
-			result << formatter.toString(it)
+		for(int i=0;i<corpus.size();i++) {
+			if(excluded.contains(i)) {
+				if(logger.isDebugEnabled()) logger.debug('Skipping excluded isCompatible(corpus[{}])...', i)
+				result << null
+				continue;
+			}
+			if(logger.isDebugEnabled()) logger.debug('Before toString(corpus[{}])...', i)
+			result << formatter.toString(corpus[i])
 		}
 		return result
 	}

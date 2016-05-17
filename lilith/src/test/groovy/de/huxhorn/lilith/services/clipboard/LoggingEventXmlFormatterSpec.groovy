@@ -18,30 +18,26 @@
 
 package de.huxhorn.lilith.services.clipboard
 
-class LoggingMessagePatternFormatterSpec extends AbstractClipboardFormatterSpec {
+class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 
 	@Override
-	LoggingMessagePatternFormatter createInstance() {
-		return new LoggingMessagePatternFormatter()
+	LoggingEventXmlFormatter createInstance() {
+		return new LoggingEventXmlFormatter()
 	}
 
 	def Set<Integer> expectedIndices() {
-		[17, 18, 19, 20, 21, 22, 23]
+		[
+				13, 14
+		]
 	}
 
 	def List<String> expectedResults() {
 		[
-				'a message.',
-				'another message.',
-				'a message with parameter {}.',
-				'a message with unresolved parameter {}.',
-				'a message with parameter {} and unresolved parameter {}.',
-				'{}',
-				'{}',
+				'<?xml version="1.0" encoding="utf-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/14" logger="com.foo.Foo" level="null"></LoggingEvent>',
+
+				'<?xml version="1.0" encoding="utf-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/14" logger="com.foo.Bar" level="null"></LoggingEvent>',
 		]
 	}
 
-	boolean expectedAcceleratorAvailability() {
-		true
-	}
+
 }

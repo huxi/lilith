@@ -59,7 +59,11 @@ public class LoggingLoggerNameFormatter
 				if(eventObj instanceof LoggingEvent)
 				{
 					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					return loggingEvent.getLogger();
+					String result = loggingEvent.getLogger();
+					if(!"".equals(result))
+					{
+						return result;
+					}
 				}
 			}
 		}

@@ -40,4 +40,8 @@ class LoggingMessageFormatterSpec extends AbstractClipboardFormatterSpec {
 				'{}',
 		]
 	}
+
+	boolean expectedAcceleratorAvailability() {
+		true
+	}
 }
