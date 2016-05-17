@@ -17,22 +17,18 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
+import java.util.Objects;
+
 public final class ClipboardFormatterData
 {
 	private String name;
 	private String description;
 	private String accelerator;
 
-	public ClipboardFormatterData()
-	{
-	}
-
 	public ClipboardFormatterData(ClipboardFormatter clipboardFormatter)
 	{
-		if(clipboardFormatter == null)
-		{
-			throw new IllegalArgumentException("clipboardFormatter must not be null!");
-		}
+		Objects.requireNonNull(clipboardFormatter, "clipboardFormatter must not be null!");
+
 		this.name = clipboardFormatter.getName();
 		this.description = clipboardFormatter.getDescription();
 		this.accelerator = clipboardFormatter.getAccelerator();
@@ -43,29 +39,14 @@ public final class ClipboardFormatterData
 		return name;
 	}
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
 	public String getDescription()
 	{
 		return description;
 	}
 
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-
 	public String getAccelerator()
 	{
 		return accelerator;
-	}
-
-	public void setAccelerator(String accelerator)
-	{
-		this.accelerator = accelerator;
 	}
 
 	@Override
