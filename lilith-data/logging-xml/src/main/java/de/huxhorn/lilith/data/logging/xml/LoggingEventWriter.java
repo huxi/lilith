@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
 import de.huxhorn.sulky.stax.WhiteSpaceHandling;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,7 +125,7 @@ public class LoggingEventWriter
 	{
 		if(isRoot)
 		{
-			writer.writeStartDocument("utf-8", "1.0");
+			writer.writeStartDocument(StandardCharsets.UTF_8.toString(), "1.0");
 		}
 
 		StaxUtilities.NamespaceInfo ni = StaxUtilities

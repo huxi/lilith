@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,10 +37,9 @@ package de.huxhorn.lilith.data.logging.xml;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
 import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.UnsupportedEncodingException;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -59,27 +58,20 @@ public class LoggingEventIOTest
 	{
 		if(logger.isDebugEnabled())
 		{
-			try
-			{
-				String data = new String(bytes, "UTF-8");
-				logger.debug("Data: {}", data);
-			}
-			catch(UnsupportedEncodingException ex)
-			{
-				if(logger.isErrorEnabled()) logger.error("Exception while converting data to string!", ex);
-			}
+			String data = bytes == null ? null : new String(bytes, StandardCharsets.UTF_8);
+			logger.debug("Data: {}", data);
 		}
 	}
 
 	public byte[] write(LoggingEvent event, boolean compressing)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		LoggingXmlEncoder ser = new LoggingXmlEncoder(compressing);
 		return ser.encode(event);
 	}
 
 	public LoggingEvent read(byte[] bytes, boolean compressing)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		LoggingXmlDecoder des = new LoggingXmlDecoder(compressing);
 		return des.decode(bytes);

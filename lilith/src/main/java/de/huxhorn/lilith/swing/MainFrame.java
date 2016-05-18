@@ -126,6 +126,7 @@ import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
 import de.huxhorn.sulky.io.IOUtilities;
+import java.nio.charset.StandardCharsets;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -1474,11 +1475,11 @@ public class MainFrame
 			String fileName=inputFile.getName().toLowerCase();
 			if(fileName.endsWith(".gz"))
 			{
-				br = new BufferedReader(new InputStreamReader(new GZIPInputStream(fis), "UTF-8"));
+				br = new BufferedReader(new InputStreamReader(new GZIPInputStream(fis), StandardCharsets.UTF_8));
 			}
 			else
 			{
-				br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+				br = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
 			}
 			for(int i = 0; i < 5; i++)
 			{

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2014-2015 Joern Huxhorn
+ * Copyright (C) 2014-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.formatting.SimpleXml;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
@@ -52,7 +53,7 @@ public class ThymeleafEventWrapperHtmlFormatter
 		FileTemplateResolver templateResolver = new FileTemplateResolver();
 		templateResolver.setPrefix(detailsViewRoot.getAbsolutePath()+"/");
 		templateResolver.setSuffix(".html");
-		templateResolver.setCharacterEncoding("UTF-8");
+		templateResolver.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 		templateResolver.setCacheable(true);
 		templateResolver.setCacheTTLMs(5000L);
 

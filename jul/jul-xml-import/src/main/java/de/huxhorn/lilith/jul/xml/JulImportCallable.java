@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.input.CountingInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,11 +106,11 @@ public class JulImportCallable
 		XMLStreamReader reader;
 		if(fileName.endsWith(".gz"))
 		{
-			reader = inputFactory.createXMLStreamReader(new InputStreamReader(new GZIPInputStream(cis), "utf-8"));
+			reader = inputFactory.createXMLStreamReader(new InputStreamReader(new GZIPInputStream(cis), StandardCharsets.UTF_8));
 		}
 		else
 		{
-			reader = inputFactory.createXMLStreamReader(new InputStreamReader(cis, "utf-8"));
+			reader = inputFactory.createXMLStreamReader(new InputStreamReader(cis, StandardCharsets.UTF_8));
 		}
 
 		for(; ;)

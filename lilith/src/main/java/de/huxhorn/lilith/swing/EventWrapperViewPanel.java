@@ -46,6 +46,7 @@ import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
 
 import de.huxhorn.sulky.io.IOUtilities;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.context.AWTFontResolver;
@@ -804,7 +805,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		try
 		{
 			fos = new FileOutputStream(errorFile);
-			OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+			OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
 			osw.append(message);
 			osw.flush();
 			if(logger.isInfoEnabled()) logger.info("Faulty message written to '{}'.", errorFile.getAbsolutePath());

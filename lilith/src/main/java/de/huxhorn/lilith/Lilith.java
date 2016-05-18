@@ -52,7 +52,7 @@ import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
 import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.FileUtils;
 import de.huxhorn.sulky.io.IOUtilities;
 import org.apache.commons.io.IOUtils;
@@ -1003,7 +1003,7 @@ public class Lilith
 		try
 		{
 			is = new FileInputStream(prevPathFile);
-			prevPathStr = IOUtils.toString(is, Charset.forName("UTF-8"));
+			prevPathStr = IOUtils.toString(is, StandardCharsets.UTF_8);
 		}
 		catch(IOException ex)
 		{

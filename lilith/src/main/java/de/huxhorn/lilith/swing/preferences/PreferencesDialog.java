@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
 import groovy.ui.Console;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -599,7 +600,7 @@ public class PreferencesDialog
 			try
 			{
 				is = new FileInputStream(messageViewGroovyFile);
-				List lines = IOUtils.readLines(is, "UTF-8");
+				List lines = IOUtils.readLines(is, StandardCharsets.UTF_8);
 				boolean isFirst = true;
 				StringBuilder textBuffer = new StringBuilder();
 				for(Object o : lines)

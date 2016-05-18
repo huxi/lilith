@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ import de.huxhorn.sulky.io.IOUtilities;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 
 import javax.xml.stream.XMLInputFactory;
@@ -75,25 +75,15 @@ public class LoggingXmlDecoder
 			if(compressing)
 			{
 				GZIPInputStream gis = new GZIPInputStream(in);
-				reader = inputFactory.createXMLStreamReader(new InputStreamReader(gis, "utf-8"));
+				reader = inputFactory.createXMLStreamReader(new InputStreamReader(gis, StandardCharsets.UTF_8));
 			}
 			else
 			{
-				reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
+				reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 			}
 			return loggingEventReader.read(reader);
 		}
-		catch(XMLStreamException e)
-		{
-// TODO: change body of catch statement
-			e.printStackTrace();
-		}
-		catch(UnsupportedEncodingException e)
-		{
-// TODO: change body of catch statement
-			e.printStackTrace();
-		}
-		catch(IOException e)
+		catch(XMLStreamException | IOException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();

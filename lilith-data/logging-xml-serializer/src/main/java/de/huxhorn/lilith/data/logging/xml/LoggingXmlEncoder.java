@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPOutputStream;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -101,12 +101,12 @@ public class LoggingXmlEncoder
 			if(compressing)
 			{
 				GZIPOutputStream gos = new GZIPOutputStream(out);
-				osw = new OutputStreamWriter(gos, "utf-8");
+				osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
 				writer = outputFactory.createXMLStreamWriter(osw);
 			}
 			else
 			{
-				osw = new OutputStreamWriter(out, "utf-8");
+				osw = new OutputStreamWriter(out, StandardCharsets.UTF_8);
 				writer = outputFactory.createXMLStreamWriter(osw);
 			}
 
@@ -117,17 +117,7 @@ public class LoggingXmlEncoder
 			osw.close(); // absolutely necessary!!
 			return out.toByteArray();
 		}
-		catch(XMLStreamException e)
-		{
-// TODO: change body of catch statement
-			e.printStackTrace();
-		}
-		catch(UnsupportedEncodingException e)
-		{
-// TODO: change body of catch statement
-			e.printStackTrace();
-		}
-		catch(IOException e)
+		catch(XMLStreamException | IOException e)
 		{
 // TODO: change body of catch statement
 			e.printStackTrace();

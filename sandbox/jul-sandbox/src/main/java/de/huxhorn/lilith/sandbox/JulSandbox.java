@@ -2,6 +2,7 @@ package de.huxhorn.lilith.sandbox;
 
 import java.util.logging.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class JulSandbox
 {
@@ -48,7 +49,7 @@ public class JulSandbox
 
 		{
 			FileHandler fh = new FileHandler("log.xml");
-			fh.setEncoding("UTF-8");
+			fh.setEncoding(StandardCharsets.UTF_8.toString());
 			fh.setFormatter(new XMLFormatter());
 
 			rootLogger.addHandler(fh);
@@ -58,7 +59,7 @@ public class JulSandbox
 			try
 			{
 				SocketHandler fh = new SocketHandler("127.0.0.1", 11020);
-				fh.setEncoding("UTF-8");
+				fh.setEncoding(StandardCharsets.UTF_8.toString());
 				fh.setFormatter(new XMLFormatter());
 
 				rootLogger.addHandler(fh);

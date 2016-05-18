@@ -42,6 +42,7 @@ import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 
 import de.huxhorn.sulky.io.IOUtilities;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2680,7 +2681,7 @@ public class ApplicationPreferences
 		try
 		{
 			os = new BufferedOutputStream(new FileOutputStream(file));
-			output.storeToXML(os, comment, "UTF-8");
+			output.storeToXML(os, comment, StandardCharsets.UTF_8.toString());
 		}
 		catch(IOException e)
 		{

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.nio.charset.StandardCharsets;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -49,7 +51,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -71,7 +72,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void full()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -159,7 +160,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void fullWith3rdPartyLevel()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -247,7 +248,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void fullWithoutExceptionMessage()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -334,7 +335,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void fullWithIgnoredKeyCatalogParams()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -425,9 +426,9 @@ public class LoggingEventReaderTest
 	}
 
 	private LoggingEvent read(String eventStr)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
-		return read((eventStr).getBytes("UTF-8"));
+		return read((eventStr).getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void logEvent(LoggingEvent event)
@@ -487,7 +488,7 @@ public class LoggingEventReaderTest
 	}
 
 	private LoggingEvent read(byte[] bytes)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
@@ -496,7 +497,7 @@ public class LoggingEventReaderTest
 
 
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
+		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return instance.read(reader);
 	}
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.input.CountingInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.zip.GZIPInputStream;
 
 import javax.xml.stream.XMLInputFactory;
@@ -109,11 +109,11 @@ public class Log4jImportCallable
 		BufferedReader br;
 		if(fileName.endsWith(".gz"))
 		{
-			br = new BufferedReader(new InputStreamReader(new GZIPInputStream(cis), "UTF-8"));
+			br = new BufferedReader(new InputStreamReader(new GZIPInputStream(cis), StandardCharsets.UTF_8));
 		}
 		else
 		{
-			br = new BufferedReader(new InputStreamReader(cis, "UTF-8"));
+			br = new BufferedReader(new InputStreamReader(cis, StandardCharsets.UTF_8));
 		}
 
 		StringBuilder builder = new StringBuilder();
@@ -172,10 +172,6 @@ public class Log4jImportCallable
 		{
 			// ignore
 		}
-		catch(UnsupportedEncodingException e)
-		{
-			// ignore
-		}
 	}
 
 	private String prepare(String eventStr)
@@ -190,16 +186,16 @@ public class Log4jImportCallable
 	}
 
 	private LoggingEvent readEvent(String eventStr)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
-		byte[] bytes = eventStr.getBytes("UTF-8");
+		byte[] bytes = eventStr.getBytes(StandardCharsets.UTF_8);
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
 		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
+		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return instance.read(reader);
 	}
 }

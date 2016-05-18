@@ -18,12 +18,15 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.io.IOUtilities;
-import java.nio.charset.Charset;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -80,7 +83,7 @@ public class LicenseAgreementDialog
 		{
 			try
 			{
-				licenseText = IOUtils.toString(licenseStream, Charset.forName("UTF-8"));
+				licenseText = IOUtils.toString(licenseStream, StandardCharsets.UTF_8);
 			}
 			catch(IOException ex)
 			{

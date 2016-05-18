@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ package de.huxhorn.lilith.data.eventsource.xml;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
@@ -47,7 +48,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -71,7 +71,7 @@ public class SourceIdentifierIOTest
 
 	@Test
 	public void minimal()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		SourceIdentifier identifier = createMinimalEventSource();
 		check(identifier, true);
@@ -79,7 +79,7 @@ public class SourceIdentifierIOTest
 
 	@Test
 	public void full()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		SourceIdentifier identifier = createMinimalEventSource();
 		identifier.setSecondaryIdentifier("secondary");
@@ -88,7 +88,7 @@ public class SourceIdentifierIOTest
 
 	@Test
 	public void fullPrefix()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		sourceIdentifierWriter.setPreferredPrefix("foo");
 		SourceIdentifier identifier = createMinimalEventSource();
@@ -104,29 +104,29 @@ public class SourceIdentifierIOTest
 	}
 
 	public void check(SourceIdentifier original, boolean indent)
-		throws UnsupportedEncodingException, XMLStreamException
+		throws XMLStreamException
 	{
 		if(logger.isDebugEnabled()) logger.debug("Processing:\n{}", original);
 		byte[] bytes = write(original, indent);
-		String originalStr = new String(bytes, "UTF-8");
+		String originalStr = new String(bytes, StandardCharsets.UTF_8);
 		if(logger.isDebugEnabled()) logger.debug("Marshalled to:\n{}", originalStr);
 		SourceIdentifier read = read(bytes);
 		if(logger.isDebugEnabled()) logger.debug("Read.");
 		assertEquals(original, read);
 		if(logger.isDebugEnabled()) logger.debug("Equal.");
 		bytes = write(read, indent);
-		String readStr = new String(bytes, "UTF-8");
+		String readStr = new String(bytes, StandardCharsets.UTF_8);
 		assertEquals(originalStr, readStr);
 		if(logger.isDebugEnabled()) logger.debug("Strings equal.");
 	}
 
 	public byte[] write(SourceIdentifier sourceIdentifier, boolean indent)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, "utf-8"));
+		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
 		if(logger.isDebugEnabled()) logger.debug("XMLStreamWriter class: {}", writer.getClass().getName());
 		if(indent)
 		{
@@ -138,7 +138,7 @@ public class SourceIdentifierIOTest
 	}
 
 	public SourceIdentifier read(byte[] bytes)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
@@ -146,7 +146,7 @@ public class SourceIdentifierIOTest
 		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
+		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return sourceIdentifierReader.read(reader);
 	}
 }

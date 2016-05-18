@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.nio.charset.StandardCharsets;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -49,7 +51,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +73,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void full()
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
 			"<log4j:message><![CDATA[Foo!]]></log4j:message>\n" +
@@ -169,7 +170,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void singleThrowable()
-		throws UnsupportedEncodingException, XMLStreamException
+		throws XMLStreamException
 	{
 		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
 			"<log4j:message><![CDATA[Foobar!]]></log4j:message>\n" +
@@ -254,7 +255,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void multiLineMessage()
-		throws UnsupportedEncodingException, XMLStreamException
+		throws XMLStreamException
 	{
 		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
 			"<log4j:message><![CDATA[Foo!]]></log4j:message>\n" +
@@ -357,7 +358,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void multiLineMessageWithEmptyLine()
-		throws UnsupportedEncodingException, XMLStreamException
+		throws XMLStreamException
 	{
 		String eventString = "<log4j:event logger=\"de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass\" timestamp=\"1234567890000\" level=\"DEBUG\" thread=\"main\">\n" +
 			"<log4j:message><![CDATA[Foo!]]></log4j:message>\n" +
@@ -461,7 +462,7 @@ public class LoggingEventReaderTest
 	}
 
 	private LoggingEvent read(String eventStr)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		if(logger.isDebugEnabled()) logger.debug("Before change: {}", eventStr);
 		if(!eventStr.contains("xmlns:log4j=\"http://jakarta.apache.org/log4j/\""))
@@ -470,7 +471,7 @@ public class LoggingEventReaderTest
 				.replace("<log4j:event ", "<log4j:event xmlns:log4j=\"http://jakarta.apache.org/log4j/\" ");
 			if(logger.isDebugEnabled()) logger.debug("After change: {}", eventStr);
 		}
-		return read((eventStr).getBytes("UTF-8"));
+		return read((eventStr).getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void logEvent(LoggingEvent event)
@@ -530,7 +531,7 @@ public class LoggingEventReaderTest
 	}
 
 	private LoggingEvent read(byte[] bytes)
-		throws XMLStreamException, UnsupportedEncodingException
+		throws XMLStreamException
 	{
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
@@ -538,7 +539,7 @@ public class LoggingEventReaderTest
 		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, "utf-8"));
+		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return instance.read(reader);
 	}
 }

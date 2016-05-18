@@ -21,18 +21,12 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class LoggingEventXmlFormatter
 		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 2263706767713579277L;
-
-	private final Logger logger = LoggerFactory.getLogger(LoggingEventXmlFormatter.class);
 
 	private LoggingXmlEncoder encoder = new LoggingXmlEncoder(false, true);
 
@@ -84,14 +78,13 @@ public class LoggingEventXmlFormatter
 					return null;
 				}
 				byte[] bytes = encoder.encode(event);
-				try
+
+				if(bytes == null)
 				{
-					return new String(bytes, "UTF-8");
+					return null;
 				}
-				catch(UnsupportedEncodingException e)
-				{
-					if(logger.isErrorEnabled()) logger.error("Couldn't create UTF-8 string!", e);
-				}
+
+				return new String(bytes, StandardCharsets.UTF_8);
 			}
 		}
 		return null;
