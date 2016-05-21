@@ -20,7 +20,6 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
-import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveCallStack;
 
 public class LoggingCallStackFormatter
@@ -47,12 +46,12 @@ public class LoggingCallStackFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		return resolveCallStack(object).map(it -> !isNullOrEmpty(it)).orElse(false);
+		return resolveCallStack(object).isPresent();
 	}
 
 	public String toString(Object object)
 	{
-		return resolveCallStack(object).map(LoggingCallStackFormatter::toStringOrNull).orElse(null);
+		return resolveCallStack(object).map(LoggingCallStackFormatter::toString).orElse(null);
 	}
 
 	public boolean isNative()
@@ -60,34 +59,30 @@ public class LoggingCallStackFormatter
 		return true;
 	}
 
-	private static String toStringOrNull(ExtendedStackTraceElement[] callStack)
+	private static String toString(ExtendedStackTraceElement[] callStack)
 	{
-		if (!isNullOrEmpty(callStack))
+		StringBuilder text = new StringBuilder();
+		boolean first = true;
+		for (ExtendedStackTraceElement current : callStack)
 		{
-			StringBuilder text = new StringBuilder();
-			boolean first = true;
-			for (ExtendedStackTraceElement current : callStack)
+			if (first)
 			{
-				if (first)
-				{
-					first = false;
-				}
-				else
-				{
-					text.append("\n");
-				}
-				text.append("\tat ");
-				if (current != null)
-				{
-					text.append(current.toString(true));
-				}
-				else
-				{
-					text.append((String) null);
-				}
+				first = false;
 			}
-			return text.toString();
+			else
+			{
+				text.append("\n");
+			}
+			text.append("\tat ");
+			if (current != null)
+			{
+				text.append(current.toString(true));
+			}
+			else
+			{
+				text.append((String) null);
+			}
 		}
-		return null;
+		return text.toString();
 	}
 }
