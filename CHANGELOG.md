@@ -17,6 +17,9 @@ All notable changes to this project will be documented in this file.
 - Added "Copy call location" accelerator "command shift S".
 - Added "Copy call stack" accelerator "command shift alt S".
 - Added "Copy request URL".
+- Added "Copy request headers".
+- Added "Copy request parameters".
+- Added "Copy response headers".
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.

@@ -25,8 +25,11 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventSource;
+import de.huxhorn.lilith.services.clipboard.AccessRequestHeadersFormatter;
+import de.huxhorn.lilith.services.clipboard.AccessRequestParametersFormatter;
 import de.huxhorn.lilith.services.clipboard.AccessRequestUriFormatter;
 import de.huxhorn.lilith.services.clipboard.AccessRequestUrlFormatter;
+import de.huxhorn.lilith.services.clipboard.AccessResponseHeadersFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatterData;
 import de.huxhorn.lilith.services.clipboard.EventHtmlFormatter;
@@ -280,6 +283,9 @@ public class ViewActions
 		copyAccessActions = new ArrayList<>();
 		copyAccessActions.add(new CopyToClipboardAction(new AccessRequestUriFormatter()));
 		copyAccessActions.add(new CopyToClipboardAction(new AccessRequestUrlFormatter()));
+		copyAccessActions.add(new CopyToClipboardAction(new AccessRequestHeadersFormatter()));
+		copyAccessActions.add(new CopyToClipboardAction(new AccessRequestParametersFormatter()));
+		copyAccessActions.add(new CopyToClipboardAction(new AccessResponseHeadersFormatter()));
 
 		prepareClipboardActions(copyLoggingActions, keyStrokeActionMapping);
 		prepareClipboardActions(copyAccessActions, keyStrokeActionMapping);
