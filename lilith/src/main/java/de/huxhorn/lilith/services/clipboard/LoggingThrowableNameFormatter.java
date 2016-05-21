@@ -17,13 +17,12 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveThrowableInfoName;
+
 public class LoggingThrowableNameFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 1139703047038656939L;
 
@@ -46,55 +45,12 @@ public class LoggingThrowableNameFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ThrowableInfo throwable = loggingEvent.getThrowable();
-					if(throwable != null)
-					{
-						String throwableName = throwable.getName();
-						if(throwableName != null && !"".equals(throwableName))
-						{
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
+		return resolveThrowableInfoName(object).isPresent();
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ThrowableInfo throwable = loggingEvent.getThrowable();
-					if(throwable != null)
-					{
-						String throwableName = throwable.getName();
-						if(throwableName != null && !"".equals(throwableName))
-						{
-							return throwableName;
-						}
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveThrowableInfoName(object).map(it -> it).orElse(null);
 	}
 
 	public boolean isNative()

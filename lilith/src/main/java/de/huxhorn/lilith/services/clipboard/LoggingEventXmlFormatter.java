@@ -18,17 +18,17 @@
 
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
-import java.nio.charset.StandardCharsets;
 
 public class LoggingEventXmlFormatter
-		implements ClipboardFormatter
+		extends AbstractLoggingEventEncoderFormatter
 {
 	private static final long serialVersionUID = 2263706767713579277L;
 
-	private LoggingXmlEncoder encoder = new LoggingXmlEncoder(false, true);
+	public LoggingEventXmlFormatter()
+	{
+		super(new LoggingXmlEncoder(false, true));
+	}
 
 	public String getName()
 	{
@@ -42,51 +42,6 @@ public class LoggingEventXmlFormatter
 
 	public String getAccelerator()
 	{
-		return null;
-	}
-
-	public boolean isCompatible(Object object)
-	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
-			{
-				// this is only an approximation.
-				// there are likely other cases causing NPE since XML requires schema conformance.
-				LoggingEvent event = (LoggingEvent) eventObj;
-				String loggerName = event.getLogger();
-				return loggerName != null && !"".equals(loggerName);
-			}
-		}
-		return false;
-	}
-
-	public String toString(Object object)
-	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
-			{
-				LoggingEvent event = (LoggingEvent) eventObj;
-				String loggerName = event.getLogger();
-				if(loggerName == null || "".equals(loggerName))
-				{
-					return null;
-				}
-				byte[] bytes = encoder.encode(event);
-
-				if(bytes == null)
-				{
-					return null;
-				}
-
-				return new String(bytes, StandardCharsets.UTF_8);
-			}
-		}
 		return null;
 	}
 

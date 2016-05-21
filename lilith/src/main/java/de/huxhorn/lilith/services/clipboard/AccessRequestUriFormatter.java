@@ -17,11 +17,12 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveAccessEvent;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.toStringOrNull;
 
 public class AccessRequestUriFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 1430411447952720184L;
 
@@ -42,26 +43,12 @@ public class AccessRequestUriFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		return toString(object) != null;
+		return resolveAccessEvent(object).map(it -> !isNullOrEmpty(it.getRequestURI())).orElse(false);
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof AccessEvent)
-				{
-					AccessEvent accessEvent = (AccessEvent) eventObj;
-					return accessEvent.getRequestURI();
-				}
-			}
-		}
-
-		return null;
+		return resolveAccessEvent(object).map(it -> toStringOrNull(it.getRequestURI())).orElse(null);
 	}
 
 	public boolean isNative()

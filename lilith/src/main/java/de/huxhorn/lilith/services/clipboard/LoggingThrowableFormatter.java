@@ -17,17 +17,13 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.KeyStroke;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveThrowableInfo;
 
 public class LoggingThrowableFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 830054294833389446L;
 
@@ -50,43 +46,12 @@ public class LoggingThrowableFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					return loggingEvent.getThrowable() != null;
-				}
-			}
-		}
-		return false;
+		return resolveThrowableInfo(object).isPresent();
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ThrowableInfo info = loggingEvent.getThrowable();
-					if(info != null)
-					{
-						return info.toString();
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveThrowableInfo(object).map(ThrowableInfo::toString).orElse(null);
 	}
 
 	public boolean isNative()

@@ -17,13 +17,14 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveCallStack;
+
 public class LoggingCallLocationFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 1443730189004642289L;
 
@@ -46,54 +47,34 @@ public class LoggingCallLocationFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
-					return callStack != null && callStack.length > 0 && callStack[0] != null;
-				}
-
-			}
-		}
-		return false;
+		return resolveCallStack(object).map(LoggingCallLocationFormatter::hasAtLeastOneElement).orElse(false);
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
-					if(callStack != null && callStack.length > 0)
-					{
-						ExtendedStackTraceElement element = callStack[0];
-						if(element == null)
-						{
-							return null;
-						}
-						return element.toString(true);
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveCallStack(object).map(LoggingCallLocationFormatter::toStringOrNull).orElse(null);
 	}
 
 	public boolean isNative()
 	{
 		return true;
+	}
+
+	private static boolean hasAtLeastOneElement(Object[] value)
+	{
+		return !isNullOrEmpty(value) && value[0] != null;
+	}
+
+	private static String toStringOrNull(ExtendedStackTraceElement[] callStack)
+	{
+		if (hasAtLeastOneElement(callStack))
+		{
+			ExtendedStackTraceElement element = callStack[0];
+			if (element != null)
+			{
+				return element.toString(true);
+			}
+		}
+		return null;
 	}
 }

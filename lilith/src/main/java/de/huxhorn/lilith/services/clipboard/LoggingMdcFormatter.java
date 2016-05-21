@@ -17,16 +17,12 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-
-import de.huxhorn.sulky.formatting.SafeString;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.toStringOrNull;
 
 public class LoggingMdcFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = -8079057597454959907L;
 
@@ -47,55 +43,12 @@ public class LoggingMdcFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Map<String, String> mdc = loggingEvent.getMdc();
-					return mdc != null && mdc.size()>0;
-				}
-			}
-		}
-		return false;
+		return resolveLoggingEvent(object).map(it -> !isNullOrEmpty(it.getMdc())).orElse(false);
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Map<String, String> mdc = loggingEvent.getMdc();
-					if(mdc != null && mdc.size()>0)
-					{
-						if(!mdc.containsKey(null))
-						{
-							return SafeString.toString(new TreeMap<>(mdc),
-									SafeString.StringWrapping.CONTAINED,
-									SafeString.StringStyle.GROOVY,
-									SafeString.MapStyle.GROOVY);
-						}
-						// TreeMap can't handle null keys.
-						return SafeString.toString(mdc,
-								SafeString.StringWrapping.CONTAINED,
-								SafeString.StringStyle.GROOVY,
-								SafeString.MapStyle.GROOVY);
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveLoggingEvent(object).map(it -> toStringOrNull(it.getMdc())).orElse(null);
 	}
 
 	public boolean isNative()

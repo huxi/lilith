@@ -117,10 +117,9 @@ public class LoggingXmlEncoder
 			osw.close(); // absolutely necessary!!
 			return out.toByteArray();
 		}
-		catch(XMLStreamException | IOException e)
+		catch(XMLStreamException | IOException | NullPointerException ignore)
 		{
-// TODO: change body of catch statement
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return null;
 	}

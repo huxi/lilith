@@ -17,12 +17,14 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
+
 public class LoggingNdcFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 5898595765166630166L;
 
@@ -43,64 +45,42 @@ public class LoggingNdcFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Message[] ndc = loggingEvent.getNdc();
-					return ndc != null && ndc.length>0;
-				}
-			}
-		}
-		return false;
+		return resolveLoggingEvent(object).map(it -> !isNullOrEmpty(it.getNdc())).orElse(false);
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Message[] ndc = loggingEvent.getNdc();
-					if(ndc != null && ndc.length>0)
-					{
-						StringBuilder text = new StringBuilder();
-						for(Message current : ndc)
-						{
-							if(text.length() != 0)
-							{
-								text.append("\n");
-							}
-							if(current != null)
-							{
-								text.append(current.getMessage());
-							}
-							else
-							{
-								text.append((String)null);
-							}
-						}
-						return text.toString();
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveLoggingEvent(object).map(LoggingNdcFormatter::toStringOrNull).orElse(null);
 	}
 
 	public boolean isNative()
 	{
 		return true;
+	}
+
+	private static String toStringOrNull(LoggingEvent value)
+	{
+		Message[] ndc = value.getNdc();
+		if (!isNullOrEmpty(ndc))
+		{
+			StringBuilder text = new StringBuilder();
+			for (Message current : ndc)
+			{
+				if (text.length() != 0)
+				{
+					text.append("\n");
+				}
+				if (current != null)
+				{
+					text.append(current.getMessage());
+				}
+				else
+				{
+					text.append((String) null);
+				}
+			}
+			return text.toString();
+		}
+		return null;
 	}
 }

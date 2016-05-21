@@ -349,7 +349,7 @@ public class EventWrapperCorpus
 		result.add(new EventWrapper<>(event: new AccessEvent(responseHeaders: ['responseHeaderKey':'responseHeaderValue'])))
 		result.add(new EventWrapper<>(event: new AccessEvent(responseHeaders: ['nullResponseHeaderValueKey':null])))
 		Map<String, String> nullResponseHeaderKeyMap = new HashMap<>()
-		nullRequestHeaderKeyMap.put(null, 'nullResponseHeaderKeyValue')
+		nullResponseHeaderKeyMap.put(null, 'nullResponseHeaderKeyValue')
 		result.add(new EventWrapper<>(event: new AccessEvent(responseHeaders: nullResponseHeaderKeyMap)))
 
 		// request parameters

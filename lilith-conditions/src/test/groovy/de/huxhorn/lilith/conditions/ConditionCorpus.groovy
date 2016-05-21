@@ -46,7 +46,7 @@ public class ConditionCorpus
 		Objects.requireNonNull(corpus, "corpus must not be null!")
 
 
-		Set<Integer> result=new HashSet<>();
+		Set<Integer> result=new TreeSet<>();
 
 		for(int i=0;i<corpus.size();i++) {
 			Object current = corpus.get(i)

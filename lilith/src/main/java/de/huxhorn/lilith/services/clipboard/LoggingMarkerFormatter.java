@@ -17,16 +17,17 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
 
 public class LoggingMarkerFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 8972697463195544172L;
 
@@ -47,45 +48,12 @@ public class LoggingMarkerFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					return loggingEvent.getMarker() != null;
-				}
-			}
-		}
-		return false;
+		return resolveLoggingEvent(object).map(it -> it.getMarker() != null).orElse(false);
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					Marker marker = loggingEvent.getMarker();
-					if(marker != null)
-					{
-						StringBuilder text = new StringBuilder();
-						buildMarker(text, 0, marker, new ArrayList<>());
-						return text.toString();
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveLoggingEvent(object).map(LoggingMarkerFormatter::toStringOrNull).orElse(null);
 	}
 
 	public boolean isNative()
@@ -93,17 +61,29 @@ public class LoggingMarkerFormatter
 		return true;
 	}
 
-	private void buildMarker(StringBuilder text, int indent, Marker marker, List<String> handledMarkers)
+	private static String toStringOrNull(LoggingEvent loggingEvent)
 	{
-		if(marker != null)
+		Marker marker = loggingEvent.getMarker();
+		if (marker == null)
 		{
-			for(int i = 0; i < indent; i++)
+			return null;
+		}
+		StringBuilder text = new StringBuilder();
+		buildMarker(text, 0, marker, new HashSet<>());
+		return text.toString();
+	}
+
+	private static void buildMarker(StringBuilder text, int indent, Marker marker, Set<String> handledMarkers)
+	{
+		if (marker != null)
+		{
+			for (int i = 0; i < indent; i++)
 			{
 				text.append("  ");
 			}
 			String markerName = marker.getName();
 			text.append("- ").append(markerName);
-			if(handledMarkers.contains(markerName))
+			if (handledMarkers.contains(markerName))
 			{
 				text.append(" [..]\n");
 			}
@@ -112,9 +92,9 @@ public class LoggingMarkerFormatter
 				text.append("\n");
 				handledMarkers.add(markerName);
 				Map<String, Marker> references = marker.getReferences();
-				if(references != null)
+				if (references != null)
 				{
-					for(Map.Entry<String, Marker> current : references.entrySet())
+					for (Map.Entry<String, Marker> current : references.entrySet())
 					{
 						buildMarker(text, indent + 1, current.getValue(), handledMarkers);
 					}

@@ -17,44 +17,45 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.swing.LilithKeyStrokes;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.sulky.codec.Encoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
-import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveFormattedMessage;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
 
-public class LoggingMessageFormatter
-		implements ClipboardFormatter
+public abstract class AbstractLoggingEventEncoderFormatter
+	implements ClipboardFormatter
 {
-	private static final long serialVersionUID = -1333203619502038428L;
+	private final Encoder<LoggingEvent> encoder;
 
-	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_MESSAGE_ACTION).toString();
-
-	public String getName()
+	protected AbstractLoggingEventEncoderFormatter(Encoder<LoggingEvent> encoder)
 	{
-		return "Copy message";
+		Objects.requireNonNull(encoder, "encoder must not be null!");
+		this.encoder = encoder;
 	}
 
-	public String getDescription()
-	{
-		return "Copies the message of the logging event to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return ACCELERATOR;
-	}
-
+	@Override
 	public boolean isCompatible(Object object)
 	{
-		return resolveFormattedMessage(object).isPresent();
+		return toString(object) != null;
 	}
 
+	@Override
 	public String toString(Object object)
 	{
-		return resolveFormattedMessage(object).map(it -> it).orElse(null);
+		return resolveLoggingEvent(object).map(this::encode).orElse(null);
 	}
 
-	public boolean isNative()
+	private String encode(LoggingEvent event)
 	{
-		return true;
+		byte[] bytes = encoder.encode(event);
+
+		if(bytes == null)
+		{
+			return null;
+		}
+
+		return new String(bytes, StandardCharsets.UTF_8);
 	}
 }

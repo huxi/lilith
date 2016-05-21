@@ -17,12 +17,14 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.toStringOrNull;
+
 public class LoggingLoggerNameFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = -7850932739151085487L;
 
@@ -45,30 +47,12 @@ public class LoggingLoggerNameFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		return toString(object) != null;
+		return resolveLoggingEvent(object).map(it -> !isNullOrEmpty(it.getLogger())).orElse(false);
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					String result = loggingEvent.getLogger();
-					if(!"".equals(result))
-					{
-						return result;
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveLoggingEvent(object).map(it -> toStringOrNull(it.getLogger())).orElse(null);
 	}
 
 	public boolean isNative()

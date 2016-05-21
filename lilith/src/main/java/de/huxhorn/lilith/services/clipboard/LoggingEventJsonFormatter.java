@@ -18,19 +18,17 @@
 
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
-import java.nio.charset.StandardCharsets;
-
-import java.io.Serializable;
 
 public class LoggingEventJsonFormatter
-		implements ClipboardFormatter
+		extends AbstractLoggingEventEncoderFormatter
 {
 	private static final long serialVersionUID = 2263706767713579277L;
 
-	private LoggingJsonEncoder encoder = new LoggingJsonEncoder(false, true, true);
+	public LoggingEventJsonFormatter()
+	{
+		super(new LoggingJsonEncoder(false, true, true));
+	}
 
 	public String getName()
 	{
@@ -44,39 +42,6 @@ public class LoggingEventJsonFormatter
 
 	public String getAccelerator()
 	{
-		return null;
-	}
-
-	public boolean isCompatible(Object object)
-	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			Object eventObj = wrapper.getEvent();
-			return eventObj instanceof LoggingEvent;
-		}
-		return false;
-	}
-
-	public String toString(Object object)
-	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			Serializable ser = wrapper.getEvent();
-			if(ser instanceof LoggingEvent)
-			{
-				LoggingEvent event = (LoggingEvent) ser;
-				byte[] bytes = encoder.encode(event);
-
-				if(bytes == null)
-				{
-					return null;
-				}
-
-				return new String(bytes, StandardCharsets.UTF_8);
-			}
-		}
 		return null;
 	}
 

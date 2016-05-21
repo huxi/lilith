@@ -27,7 +27,7 @@ class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 
 	def Set<Integer> expectedIndices() {
 		[
-				13, 14
+				13, 14, 13, 14, 114
 		]
 	}
 
@@ -36,6 +36,8 @@ class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 				'<?xml version="1.0" encoding="UTF-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/14" logger="com.foo.Foo" level="null"></LoggingEvent>',
 
 				'<?xml version="1.0" encoding="UTF-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/14" logger="com.foo.Bar" level="null"></LoggingEvent>',
+
+				'<?xml version="1.0" encoding="UTF-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/14" logger="" level="null"></LoggingEvent>',
 		]
 	}
 

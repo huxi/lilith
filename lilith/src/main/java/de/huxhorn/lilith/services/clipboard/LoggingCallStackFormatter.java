@@ -17,13 +17,14 @@
  */
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
+import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveCallStack;
+
 public class LoggingCallStackFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
 	private static final long serialVersionUID = 861522045350829907L;
 
@@ -46,71 +47,47 @@ public class LoggingCallStackFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
-					return callStack != null && callStack.length > 0;
-				}
-
-			}
-		}
-		return false;
+		return resolveCallStack(object).map(it -> !isNullOrEmpty(it)).orElse(false);
 	}
 
 	public String toString(Object object)
 	{
-		if(object instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) object;
-			if(wrapper.getEvent() != null)
-			{
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof LoggingEvent)
-				{
-					LoggingEvent loggingEvent = (LoggingEvent) eventObj;
-					ExtendedStackTraceElement[] callStack = loggingEvent.getCallStack();
-					if(callStack != null && callStack.length > 0)
-					{
-						StringBuilder text = new StringBuilder();
-						boolean first = true;
-						for(ExtendedStackTraceElement current : callStack)
-						{
-							if(first)
-							{
-								first = false;
-							}
-							else
-							{
-								text.append("\n");
-							}
-							text.append("\tat ");
-							if(current != null)
-							{
-								text.append(current.toString(true));
-							}
-							else
-							{
-								text.append((String)null);
-							}
-						}
-						return text.toString();
-					}
-				}
-			}
-		}
-
-		return null;
+		return resolveCallStack(object).map(LoggingCallStackFormatter::toStringOrNull).orElse(null);
 	}
 
 	public boolean isNative()
 	{
 		return true;
+	}
+
+	private static String toStringOrNull(ExtendedStackTraceElement[] callStack)
+	{
+		if (!isNullOrEmpty(callStack))
+		{
+			StringBuilder text = new StringBuilder();
+			boolean first = true;
+			for (ExtendedStackTraceElement current : callStack)
+			{
+				if (first)
+				{
+					first = false;
+				}
+				else
+				{
+					text.append("\n");
+				}
+				text.append("\tat ");
+				if (current != null)
+				{
+					text.append(current.toString(true));
+				}
+				else
+				{
+					text.append((String) null);
+				}
+			}
+			return text.toString();
+		}
+		return null;
 	}
 }

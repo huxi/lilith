@@ -56,10 +56,10 @@ class EventContainsConditionSpec extends Specification {
 		'{}'                             | [20, 21, 23, 38, 39, 40, 41, 42] as Set
 
 		// mdc, loggerContext properties, request headers, request parameters, response headers
-		'Key'                            | [24, 68, 69, 80, 81, 98, 99, 101, 102, 103, 105, 106, 109, 110, 111, 112, 113] as Set
+		'Key'                            | [24, 68, 69, 80, 81, 98, 99, 101, 102, 103, 105, 106, 107, 109, 110, 111, 112, 113] as Set
 
 		// mdc, paramValue, loggerContext properties, request headers, request parameters, response headers
-		'Value'                          | [19, 21, 22, 24, 38, 40, 41, 68, 80, 81, 98, 99, 101, 102, 103, 105, 106, 109, 111, 112, 113] as Set
+		'Value'                          | [19, 21, 22, 24, 38, 40, 41, 68, 80, 81, 98, 99, 101, 102, 103, 105, 106, 107, 109, 111, 112, 113] as Set
 
 		// throwable
 		'java.lang.RuntimeException'     | [25, 26, 27, 28, 29, 30] as Set
