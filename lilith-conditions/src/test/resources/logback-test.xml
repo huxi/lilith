@@ -7,11 +7,12 @@
 		</encoder>
 	</appender>
 
-	<root level="WARN">
+	<root level="ERROR">
 		<appender-ref ref="CONSOLE"/>
 	</root>
 
 	<logger name="de.huxhorn.lilith.conditions" level="DEBUG"/>
+	<logger name="de.huxhorn.lilith.conditions.GroovyCondition" level="ERROR"/>
 	<logger name="de.huxhorn.lilith.conditions.ConditionCorpus" level="INFO"/>
 
 </configuration>
