@@ -123,10 +123,7 @@ public class GroovyCondition
 
 				Binding binding = new Binding();
 				binding.setVariable("input", o);
-				if(searchString != null)
-				{
-					binding.setVariable("searchString", searchString);
-				}
+				binding.setVariable("searchString", searchString);
 				binding.setVariable("logger", logger);
 
 				script.setBinding(binding);
