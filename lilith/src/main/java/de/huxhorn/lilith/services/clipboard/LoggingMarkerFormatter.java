@@ -75,29 +75,26 @@ public class LoggingMarkerFormatter
 
 	private static void buildMarker(StringBuilder text, int indent, Marker marker, Set<String> handledMarkers)
 	{
-		if (marker != null)
+		for (int i = 0; i < indent; i++)
 		{
-			for (int i = 0; i < indent; i++)
+			text.append("  ");
+		}
+		String markerName = marker.getName();
+		text.append("- ").append(markerName);
+		if (handledMarkers.contains(markerName))
+		{
+			text.append(" [..]\n");
+		}
+		else
+		{
+			text.append("\n");
+			handledMarkers.add(markerName);
+			Map<String, Marker> references = marker.getReferences();
+			if (references != null)
 			{
-				text.append("  ");
-			}
-			String markerName = marker.getName();
-			text.append("- ").append(markerName);
-			if (handledMarkers.contains(markerName))
-			{
-				text.append(" [..]\n");
-			}
-			else
-			{
-				text.append("\n");
-				handledMarkers.add(markerName);
-				Map<String, Marker> references = marker.getReferences();
-				if (references != null)
+				for (Map.Entry<String, Marker> current : references.entrySet())
 				{
-					for (Map.Entry<String, Marker> current : references.entrySet())
-					{
-						buildMarker(text, indent + 1, current.getValue(), handledMarkers);
-					}
+					buildMarker(text, indent + 1, current.getValue(), handledMarkers);
 				}
 			}
 		}

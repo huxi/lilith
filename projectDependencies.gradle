@@ -572,6 +572,7 @@ project(':lilith') {
 		runtime libraries.'log4j2-core'
 		runtime project(':lilith-sounds')
 		testCompile project(':lilith-data-corpus')
+		testCompile libraries.'sulky-junit'
 	}
 }
 

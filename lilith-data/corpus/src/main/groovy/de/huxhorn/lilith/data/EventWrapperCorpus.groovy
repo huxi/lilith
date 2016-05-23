@@ -372,6 +372,16 @@ public class EventWrapperCorpus
 		// empty String throwable name
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: new ThrowableInfo(name: ''))))
 
+		// missing first call stack entry
+		result.add(new EventWrapper<>(event: new LoggingEvent(callStack: [
+				null,
+				ExtendedStackTraceElement.parseStackTraceElement('de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) ~[de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]'),
+				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
+		])))
+
+
 		return result
 	}
 

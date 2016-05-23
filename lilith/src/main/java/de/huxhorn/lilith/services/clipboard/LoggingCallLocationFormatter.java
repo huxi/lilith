@@ -20,7 +20,6 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 
-import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveCallStack;
 
 public class LoggingCallLocationFormatter
@@ -47,7 +46,7 @@ public class LoggingCallLocationFormatter
 
 	public boolean isCompatible(Object object)
 	{
-		return resolveCallStack(object).map(LoggingCallLocationFormatter::hasAtLeastOneElement).orElse(false);
+		return resolveCallStack(object).map(it -> it[0] != null).orElse(false);
 	}
 
 	public String toString(Object object)
@@ -60,20 +59,11 @@ public class LoggingCallLocationFormatter
 		return true;
 	}
 
-	private static boolean hasAtLeastOneElement(Object[] value)
-	{
-		return !isNullOrEmpty(value) && value[0] != null;
-	}
-
 	private static String toStringOrNull(ExtendedStackTraceElement[] callStack)
 	{
-		if (hasAtLeastOneElement(callStack))
+		if (callStack[0] != null)
 		{
-			ExtendedStackTraceElement element = callStack[0];
-			if (element != null)
-			{
-				return element.toString(true);
-			}
+			return callStack[0].toString(true);
 		}
 		return null;
 	}

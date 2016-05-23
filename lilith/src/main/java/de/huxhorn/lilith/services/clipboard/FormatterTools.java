@@ -28,11 +28,22 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 class FormatterTools
 {
+	private FormatterTools()
+	{
+	}
+
+	static
+	{
+		new FormatterTools(); // stfu, coverage
+	}
+
 	static Optional<AccessEvent> resolveAccessEvent(Object object)
 	{
 		return Optional.ofNullable(resolveAccessEventInternal(object));
@@ -113,70 +124,106 @@ class FormatterTools
 		return Optional.empty();
 	}
 
-	static boolean isNullOrEmpty(String value)
+	static boolean isNullOrEmpty(Object object)
 	{
-		return value == null || value.length() == 0;
+		if (object == null)
+		{
+			return true;
+		}
+		if (object instanceof String)
+		{
+			return ((String) object).length() == 0;
+		}
+		if (object instanceof Map)
+		{
+			return ((Map) object).isEmpty();
+		}
+
+		if (object instanceof Collection)
+		{
+			return ((Collection) object).isEmpty();
+		}
+
+		if (object instanceof Object[])
+		{
+			return ((Object[]) object).length == 0;
+		}
+
+		return false;
 	}
 
-	static boolean isNullOrEmpty(Map<?, ?> value)
-	{
-		return value == null || value.size() == 0;
-	}
-
-	static boolean isNullOrEmpty(Collection<?> value)
-	{
-		return value == null || value.size() == 0;
-	}
-
-	static boolean isNullOrEmpty(Object[] value)
-	{
-		return value == null || value.length == 0;
-	}
-
-
-	static String toStringOrNull(String value)
+	static String toStringOrNull(Object value)
 	{
 		if (isNullOrEmpty(value))
 		{
 			return null;
 		}
-		return value;
-	}
 
-	static String toStringOrNull(Map<String, ?> value)
-	{
-		if (isNullOrEmpty(value))
+		if (value instanceof String)
 		{
-			return null;
+			return (String) value;
 		}
-		if (!value.containsKey(null))
+
+		if (value instanceof Map)
 		{
-			return SafeString.toString(new TreeMap<>(value),
-					SafeString.StringWrapping.CONTAINED,
-					SafeString.StringStyle.GROOVY,
-					SafeString.MapStyle.GROOVY);
+			return toStringOrNullInternal((Map) value);
 		}
-		// TreeMap can't handle null keys.
+
+		if (value instanceof Collection)
+		{
+			return toStringOrNullInternal((Collection) value);
+		}
+
 		return SafeString.toString(value,
 				SafeString.StringWrapping.CONTAINED,
 				SafeString.StringStyle.GROOVY,
 				SafeString.MapStyle.GROOVY);
 	}
 
-	static String toStringOrNull(Set<String> value)
+	private static String toStringOrNullInternal(Map<?, ?> value)
 	{
-		if (isNullOrEmpty(value))
+		if (!(value instanceof SortedMap))
 		{
-			return null;
+			if (!value.containsKey(null))
+			{
+				// replace original map with sorted map, if possible
+				try
+				{
+					value = new TreeMap<>(value);
+				}
+				catch (ClassCastException ignore)
+				{
+					// if not comparable
+				}
+			}
 		}
-		if (!value.contains(null))
+		return SafeString.toString(value,
+				SafeString.StringWrapping.CONTAINED,
+				SafeString.StringStyle.GROOVY,
+				SafeString.MapStyle.GROOVY);
+	}
+
+	private static String toStringOrNullInternal(Collection<?> value)
+	{
+		if (value instanceof Set)
 		{
-			return SafeString.toString(new TreeSet<>(value),
-					SafeString.StringWrapping.CONTAINED,
-					SafeString.StringStyle.GROOVY,
-					SafeString.MapStyle.GROOVY);
+			if (!(value instanceof SortedSet))
+			{
+				if (!value.contains(null))
+				{
+					// replace original set with sorted set, if possible
+					try
+					{
+						value = new TreeSet<>(value);
+					}
+					catch (ClassCastException ignore)
+					{
+						// if not comparable
+					}
+				}
+			}
 		}
-		// TreeSet can't handle null values, right?.
+
 		return SafeString.toString(value,
 				SafeString.StringWrapping.CONTAINED,
 				SafeString.StringStyle.GROOVY,

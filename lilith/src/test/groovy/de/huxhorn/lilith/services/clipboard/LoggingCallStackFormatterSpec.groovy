@@ -26,7 +26,7 @@ class LoggingCallStackFormatterSpec extends AbstractClipboardFormatterSpec {
 	}
 
 	def Set<Integer> expectedIndices() {
-		[44, 45, 46, 47, 48, 49, 50, 51, 65, 66]
+		[44, 45, 46, 47, 48, 49, 50, 51, 65, 66, 116]
 	}
 
 	def List<String> expectedResults() {
@@ -89,7 +89,13 @@ class LoggingCallStackFormatterSpec extends AbstractClipboardFormatterSpec {
 						'\tat null\n' +
 						'\tat javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]\n' +
 						'\tat javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]\n' +
-						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'
+						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]',
+
+				'\tat null\n' +
+						'\tat de.huxhorn.lilith.debug.DebugDialog$LogAllAction.actionPerformed(DebugDialog.java:358) ~[de.huxhorn.lilith-8.1.0-SNAPSHOT.jar:na]\n' +
+						'\tat javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]\n' +
+						'\tat javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]\n' +
+						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]',
 		]
 	}
 
