@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,19 @@ import de.huxhorn.sulky.groovy.GroovyInstance;
 import java.io.File;
 
 public class GroovyFormatter
-	implements ClipboardFormatter
+		implements ClipboardFormatter
 {
+	private static final long serialVersionUID = -2815978833786033048L;
 	private GroovyInstance groovyInstance;
 
 	public GroovyFormatter()
 	{
-		groovyInstance = new GroovyInstance();
+		this(null);
 	}
 
 	public GroovyFormatter(String fileName)
 	{
-		this();
+		groovyInstance = new GroovyInstance();
 		setGroovyFileName(fileName);
 	}
 
@@ -50,12 +51,12 @@ public class GroovyFormatter
 	public String getName()
 	{
 		ClipboardFormatter formatter = getFormatter();
-		if(formatter != null)
+		if (formatter != null)
 		{
 			return formatter.getName();
 		}
 		String fileName = groovyInstance.getGroovyFileName();
-		if(fileName != null)
+		if (fileName != null)
 		{
 			File file = new File(fileName);
 			return file.getName();
@@ -66,27 +67,25 @@ public class GroovyFormatter
 	public String getDescription()
 	{
 		ClipboardFormatter formatter = getFormatter();
-		if(formatter != null)
+		if (formatter != null)
 		{
 			return formatter.getDescription();
 		}
 		String fileName = groovyInstance.getGroovyFileName();
 		String shortName = "Missing file!";
-		if(fileName != null)
+		if (fileName != null)
 		{
 			File file = new File(fileName);
 			shortName = file.getName();
 		}
-		String errorMessage = groovyInstance.getErrorMessage();
-		if(errorMessage == null)
+
+		Class instanceClass = groovyInstance.getInstanceClass();
+		if (instanceClass != null)
 		{
-			Class instanceClass = groovyInstance.getInstanceClass();
-			if(instanceClass != null)
-			{
-				return shortName + " - Expected ClipboardFormatter but received "+instanceClass.getName()+"!";
-			}
+			return shortName + " - Expected ClipboardFormatter but received " + instanceClass.getName() + "!";
 		}
-		return shortName + " - "+errorMessage;
+
+		return shortName + " - " + groovyInstance.getErrorMessage();
 	}
 
 	public String getAccelerator()
@@ -104,7 +103,7 @@ public class GroovyFormatter
 	public String toString(Object object)
 	{
 		ClipboardFormatter formatter = getFormatter();
-		if(formatter == null)
+		if (formatter == null)
 		{
 			return null;
 		}

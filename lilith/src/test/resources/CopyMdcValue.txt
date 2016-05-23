@@ -1,0 +1,45 @@
+import de.huxhorn.lilith.services.clipboard.ClipboardFormatter
+import de.huxhorn.lilith.data.eventsource.EventWrapper
+import de.huxhorn.lilith.data.logging.LoggingEvent
+
+/**
+ * Copy value to the clipboard if 'mdcKey' is available in the MDC.
+ */
+class CopyFoo
+	implements ClipboardFormatter
+{
+	String getName()
+	{
+		return 'Copy mdcKey value'
+	}
+
+	String getDescription()
+	{
+		return 'Copy mdcKey value from MDC, if available.'
+	}
+
+	String getAccelerator()
+	{
+		return 'command shift alt X'
+	}
+
+	boolean isCompatible(Object object)
+	{
+		return toString(object) != null
+	}
+
+	String toString(Object object)
+	{
+		if(object instanceof EventWrapper)
+		{
+			EventWrapper wrapper = (EventWrapper)object
+			def event = wrapper.getEvent();
+			if(event instanceof LoggingEvent)
+			{
+				LoggingEvent loggingEvent = (LoggingEvent)event
+				return loggingEvent.getMdc()?.get('mdcKey')
+			}
+		}
+		return null;
+	}
+}
