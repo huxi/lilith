@@ -1,0 +1,20 @@
+import de.huxhorn.sulky.conditions.Condition
+import de.huxhorn.lilith.data.eventsource.EventWrapper
+import de.huxhorn.lilith.data.logging.LoggingEvent
+
+if(input instanceof EventWrapper) {
+	EventWrapper wrapper = (EventWrapper) input
+	Object event = wrapper.event
+	if(event instanceof LoggingEvent) {
+		LoggingEvent loggingEvent = (LoggingEvent)event
+		Map<String, String> mdc = loggingEvent.mdc
+		if(mdc != null) {
+			int size = mdc.size()
+			if(size > 0) {
+				return null
+			}
+			return size
+		}
+	}
+}
+return null

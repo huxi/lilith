@@ -1,0 +1,13 @@
+import de.huxhorn.sulky.conditions.Condition
+import de.huxhorn.lilith.data.eventsource.EventWrapper
+import de.huxhorn.lilith.data.logging.LoggingEvent
+
+if(input instanceof EventWrapper) {
+	EventWrapper wrapper = (EventWrapper) input
+	Object event = wrapper.event
+	if(event instanceof LoggingEvent) {
+		LoggingEvent loggingEvent = (LoggingEvent)event
+		return loggingEvent.logger == searchString
+	}
+}
+return false

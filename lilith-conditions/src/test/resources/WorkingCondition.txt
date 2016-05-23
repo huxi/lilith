@@ -1,0 +1,25 @@
+import de.huxhorn.sulky.conditions.Condition
+import de.huxhorn.lilith.data.eventsource.EventWrapper
+import de.huxhorn.lilith.data.logging.LoggingEvent
+
+class FooCondition implements Condition {
+	boolean isTrue(Object element){
+		if(element instanceof EventWrapper) {
+			EventWrapper wrapper = (EventWrapper) element
+			Object event = wrapper.event
+			if(event instanceof LoggingEvent) {
+				LoggingEvent loggingEvent = (LoggingEvent)event
+				Map<String, String> mdc = loggingEvent.mdc
+				if(mdc != null) {
+					return mdc.isEmpty()
+				}
+			}
+		}
+		return false
+	}
+
+	FooCondition clone() {
+		super.clone()
+	}
+
+}
