@@ -103,6 +103,9 @@ class EventContainsConditionSpec extends Specification {
 		'404'                            | [56] as Set
 		'50'                             | [58] as Set
 
+		// callStack, stackTrace
+		'setPressed'                     | [44, 45, 46, 47, 48, 49, 50, 51, 65, 66, 95, 96, 116] as Set
+
 		condition = new EventContainsCondition(input)
 	}
 

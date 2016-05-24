@@ -20,6 +20,7 @@ package de.huxhorn.lilith.conditions;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
@@ -127,6 +128,13 @@ public class EventContainsCondition
 				{
 					String loggerName = event.getLogger();
 					if(checkString(loggerName))
+					{
+						return true;
+					}
+				}
+
+				{
+					if(checkStackTraceElements(event.getCallStack()))
 					{
 						return true;
 					}
@@ -319,6 +327,26 @@ public class EventContainsCondition
 			}
 		}
 
+		return checkStackTraceElements(throwable.getStackTrace());
+	}
+
+	private boolean checkStackTraceElements(ExtendedStackTraceElement[] callStack)
+	{
+		if(callStack == null)
+		{
+			return false;
+		}
+		for (ExtendedStackTraceElement current : callStack)
+		{
+			if(current == null)
+			{
+				continue;
+			}
+			if(checkString(current.toString(true)))
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 
