@@ -80,6 +80,8 @@ All notable changes to this project will be documented in this file.
 
 - Some log4j2 `Message` implementations aren't supported.
   See [Message instances are simply serialized. They mustn't.](https://issues.apache.org/jira/browse/LOG4J2-1226).
+- logback-access `AccessEvent` sent by `SocketAppender` isn't guaranteed to be deserializable at the moment. You can use the Lilith Multiplex Socket Appender in the meantime.
+  See [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Flying Saucer related issues:
   - Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
     See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](http://code.google.com/p/flying-saucer/issues/detail?id=79).
