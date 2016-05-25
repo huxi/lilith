@@ -1,3 +1,3 @@
-Execute something similar to
+Execute
 
-`mvn -U -DlocalSnapshot=file:///Users/huxi/local-gradle-repository/snapshot -DlocalRelease=file:///Users/huxi/local-gradle-repository/release clean install jetty:run`
+`./gradlew bootRun`
