@@ -86,6 +86,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		whitelist.add("java.util.Collections$UnmodifiableMap");
 		whitelist.add("java.util.HashMap");
 		whitelist.add("java.util.Hashtable");
+		whitelist.add("java.util.LinkedHashMap");
 		whitelist.add("java.util.TreeMap");
 		whitelist.add("java.util.Vector");
 		whitelist.add("org.apache.log4j.spi.LocationInfo");
