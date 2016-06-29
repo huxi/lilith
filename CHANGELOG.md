@@ -65,6 +65,8 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Known issues
+- Lilith won't work with Java 9 for now.
+  See [JDK-8160437 - com.apple.eawt.Application is not exported and jdeps didn't warn about it](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8160437).
 - Garbled icons on Mac OS X 10.11. This is a bug in OS X. Supposedly #23164356.
   - [Filezilla ticket](https://trac.filezilla-project.org/ticket/10669)
   - [Eclipse ticket](https://bugs.eclipse.org/bugs/show_bug.cgi?id=479590)
