@@ -39,8 +39,10 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
+import de.huxhorn.sulky.formatting.ReplaceInvalidXmlCharacterReader;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.input.CountingInputStream;
 import org.slf4j.Logger;
@@ -97,27 +99,29 @@ public class JulImportCallable
 		setNumberOfSteps(fileSize);
 		FileInputStream fis = new FileInputStream(inputFile);
 		CountingInputStream cis = new CountingInputStream(fis);
+
+		String fileName=inputFile.getName().toLowerCase();
+		XMLStreamReader xmlStreamReader;
+		Reader reader;
+		if(fileName.endsWith(".gz"))
+		{
+			reader = new InputStreamReader(new GZIPInputStream(cis), StandardCharsets.UTF_8);
+		}
+		else
+		{
+			reader = new InputStreamReader(cis, StandardCharsets.UTF_8);
+		}
+
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
 		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
-
-		String fileName=inputFile.getName().toLowerCase();
-		XMLStreamReader reader;
-		if(fileName.endsWith(".gz"))
-		{
-			reader = inputFactory.createXMLStreamReader(new InputStreamReader(new GZIPInputStream(cis), StandardCharsets.UTF_8));
-		}
-		else
-		{
-			reader = inputFactory.createXMLStreamReader(new InputStreamReader(cis, StandardCharsets.UTF_8));
-		}
-
+		xmlStreamReader = inputFactory.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(reader));
 		for(; ;)
 		{
 			try
 			{
-				LoggingEvent event = loggingEventReader.read(reader);
+				LoggingEvent event = loggingEventReader.read(xmlStreamReader);
 				setCurrentStep(cis.getByteCount());
 				if(event == null)
 				{

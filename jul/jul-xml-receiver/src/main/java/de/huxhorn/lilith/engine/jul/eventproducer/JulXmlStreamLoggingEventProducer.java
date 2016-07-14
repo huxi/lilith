@@ -25,6 +25,7 @@ import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierU
 import de.huxhorn.lilith.jul.xml.LoggingEventReader;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
+import de.huxhorn.sulky.formatting.ReplaceInvalidXmlCharacterReader;
 import de.huxhorn.sulky.io.IOUtilities;
 import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
@@ -76,7 +77,9 @@ public class JulXmlStreamLoggingEventProducer
 				inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 				inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
-				XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+				XMLStreamReader reader = inputFactory.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(
+						new InputStreamReader(inputStream, StandardCharsets.UTF_8))
+				);
 				for(; ;)
 				{
 					try

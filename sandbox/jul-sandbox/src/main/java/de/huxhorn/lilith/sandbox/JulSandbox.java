@@ -43,7 +43,7 @@ public class JulSandbox
 
 
 	public static void main(String args[])
-		throws IOException
+		throws IOException, InterruptedException
 	{
 		Logger rootLogger=Logger.getLogger("");
 
@@ -73,8 +73,13 @@ public class JulSandbox
 		rootLogger.setLevel(Level.ALL);
 
 		final Logger logger = Logger.getLogger(JulSandbox.class.getName());
-		logger.log(Level.INFO, "Args {0}{1}", new Object[]{"Foo", "bar"});
+		for(;;) {
+			logger.log(Level.INFO, "Args {0}{1}", new Object[]{"Foo", "bar"});
 
-		InnerClass.execute();
+			InnerClass.execute();
+			Thread.sleep(500);
+			
+			logger.log(Level.INFO, "Issue #26: Unable to read logs which contains unprintable characters:" + (char)0 + (char)0xFFFF + "...");
+		}
 	}
 }

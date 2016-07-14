@@ -428,14 +428,15 @@ project(':jul-xml-import') {
 	archivesBaseName = 'de.huxhorn.lilith.jul.xml-import'
 	description = 'This file is part of Lilith. It contains java.util.logging XML-Import.'
 	dependencies {
-		compile project(':lilith-data-logging')
-		compile project(':jul-xml')
+		compile libraries.'commons-io'
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-buffers'
+		compile libraries.'sulky-formatting'
+		compile libraries.'sulky-io'
 		compile libraries.'sulky-stax'
 		compile libraries.'sulky-tasks'
-		compile libraries.'sulky-buffers'
-		compile libraries.'slf4j-api'
-		compile libraries.'commons-io'
-		compile libraries.'sulky-io'
+		compile project(':jul-xml')
+		compile project(':lilith-data-logging')
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -444,14 +445,15 @@ project(':jul-xml-receiver') {
 	archivesBaseName = 'de.huxhorn.lilith.jul.xml.receiver'
 	description = 'This file is part of Lilith. It contains java.util.logging XML I/O.'
 	dependencies {
-		compile project(':lilith-data-logging')
-		compile project(':jul-xml')
-		compile project(':lilith-engine')
-		compile libraries.'sulky-stax'
-		compile libraries.'sulky-buffers'
-		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
+		compile libraries.'slf4j-api'
+		compile libraries.'sulky-buffers'
+		compile libraries.'sulky-formatting'
 		compile libraries.'sulky-io'
+		compile libraries.'sulky-stax'
+		compile project(':jul-xml')
+		compile project(':lilith-data-logging')
+		compile project(':lilith-engine')
 		testCompile project(':lilith-data-eventsource')
 	}
 }
