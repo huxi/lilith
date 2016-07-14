@@ -20,6 +20,8 @@ package de.huxhorn.lilith.services.clipboard
 
 class LoggingEventJsonFormatterSpec extends AbstractClipboardFormatterSpec {
 
+	private static final String NEWLINE = System.properties['line.separator']
+
 	@Override
 	LoggingEventJsonFormatter createInstance() {
 		return new LoggingEventJsonFormatter()
@@ -45,831 +47,831 @@ class LoggingEventJsonFormatterSpec extends AbstractClipboardFormatterSpec {
 
 				'{ }',
 
-				'{\n' +
-						'  "level" : "TRACE"\n' +
+				'{' + NEWLINE +
+						'  "level" : "TRACE"' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "level" : "DEBUG"\n' +
+				'{' + NEWLINE +
+						'  "level" : "DEBUG"' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "level" : "INFO"\n' +
+				'{' + NEWLINE +
+						'  "level" : "INFO"' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "level" : "WARN"\n' +
+				'{' + NEWLINE +
+						'  "level" : "WARN"' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "level" : "ERROR"\n' +
+				'{' + NEWLINE +
+						'  "level" : "ERROR"' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "logger" : "com.foo.Foo"\n' +
+				'{' + NEWLINE +
+						'  "logger" : "com.foo.Foo"' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "logger" : "com.foo.Bar"\n' +
+				'{' + NEWLINE +
+						'  "logger" : "com.foo.Bar"' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : { }\n' +
+				'{' + NEWLINE +
+						'  "message" : { }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : { }\n' +
+				'{' + NEWLINE +
+						'  "message" : { }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : {\n' +
-						'    "messagePattern" : "a message."\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "message" : {' + NEWLINE +
+						'    "messagePattern" : "a message."' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : {\n' +
-						'    "messagePattern" : "another message."\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "message" : {' + NEWLINE +
+						'    "messagePattern" : "another message."' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : {\n' +
-						'    "messagePattern" : "a message with parameter {}.",\n' +
-						'    "arguments" : [ "paramValue" ]\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "message" : {' + NEWLINE +
+						'    "messagePattern" : "a message with parameter {}.",' + NEWLINE +
+						'    "arguments" : [ "paramValue" ]' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : {\n' +
-						'    "messagePattern" : "a message with unresolved parameter {}."\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "message" : {' + NEWLINE +
+						'    "messagePattern" : "a message with unresolved parameter {}."' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : {\n' +
-						'    "messagePattern" : "a message with parameter {} and unresolved parameter {}.",\n' +
-						'    "arguments" : [ "paramValue" ]\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "message" : {' + NEWLINE +
+						'    "messagePattern" : "a message with parameter {} and unresolved parameter {}.",' + NEWLINE +
+						'    "arguments" : [ "paramValue" ]' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : {\n' +
-						'    "messagePattern" : "{}",\n' +
-						'    "arguments" : [ "paramValue" ]\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "message" : {' + NEWLINE +
+						'    "messagePattern" : "{}",' + NEWLINE +
+						'    "arguments" : [ "paramValue" ]' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "message" : {\n' +
-						'    "messagePattern" : "{}"\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "message" : {' + NEWLINE +
+						'    "messagePattern" : "{}"' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "mdc" : {\n' +
-						'    "mdcKey" : "mdcValue"\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "mdc" : {' + NEWLINE +
+						'    "mdcKey" : "mdcValue"' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "name" : "java.lang.RuntimeException",\n' +
-						'    "omittedElements" : 0\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "name" : "java.lang.RuntimeException",' + NEWLINE +
+						'    "omittedElements" : 0' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "name" : "java.lang.RuntimeException",\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "cause" : {\n' +
-						'      "name" : "java.lang.NullPointerException",\n' +
-						'      "omittedElements" : 0\n' +
-						'    }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "name" : "java.lang.RuntimeException",\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "cause" : {\n' +
-						'      "name" : "java.lang.NullPointerException",\n' +
-						'      "omittedElements" : 0,\n' +
-						'      "cause" : {\n' +
-						'        "name" : "java.lang.FooException",\n' +
-						'        "omittedElements" : 0\n' +
-						'      }\n' +
-						'    }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "name" : "java.lang.RuntimeException",\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "suppressed" : [ {\n' +
-						'      "name" : "java.lang.NullPointerException",\n' +
-						'      "omittedElements" : 0\n' +
-						'    } ]\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "name" : "java.lang.RuntimeException",\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "suppressed" : [ {\n' +
-						'      "name" : "java.lang.NullPointerException",\n' +
-						'      "omittedElements" : 0\n' +
-						'    }, {\n' +
-						'      "name" : "java.lang.FooException",\n' +
-						'      "omittedElements" : 0\n' +
-						'    } ]\n' +
-						'  }\n' +
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "name" : "java.lang.RuntimeException",' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "cause" : {' + NEWLINE +
+						'      "name" : "java.lang.NullPointerException",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "name" : "java.lang.RuntimeException",' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "cause" : {' + NEWLINE +
+						'      "name" : "java.lang.NullPointerException",' + NEWLINE +
+						'      "omittedElements" : 0,' + NEWLINE +
+						'      "cause" : {' + NEWLINE +
+						'        "name" : "java.lang.FooException",' + NEWLINE +
+						'        "omittedElements" : 0' + NEWLINE +
+						'      }' + NEWLINE +
+						'    }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "name" : "java.lang.RuntimeException",' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "suppressed" : [ {' + NEWLINE +
+						'      "name" : "java.lang.NullPointerException",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    } ]' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "name" : "java.lang.RuntimeException",' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "suppressed" : [ {' + NEWLINE +
+						'      "name" : "java.lang.NullPointerException",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    }, {' + NEWLINE +
+						'      "name" : "java.lang.FooException",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    } ]' + NEWLINE +
+						'  }' + NEWLINE +
 						'}',
 
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "name" : "java.lang.RuntimeException",\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "suppressed" : [ {\n' +
-						'      "name" : "java.lang.NullPointerException",\n' +
-						'      "omittedElements" : 0\n' +
-						'    }, {\n' +
-						'      "name" : "java.lang.FooException",\n' +
-						'      "omittedElements" : 0\n' +
-						'    } ],\n' +
-						'    "cause" : {\n' +
-						'      "name" : "java.lang.BarException",\n' +
-						'      "omittedElements" : 0\n' +
-						'    }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "marker" : {\n' +
-						'    "name" : "Foo-Marker",\n' +
-						'    "references" : {\n' +
-						'      "Bar-Marker" : {\n' +
-						'        "name" : "Bar-Marker"\n' +
-						'      }\n' +
-						'    }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "marker" : {\n' +
-						'    "name" : "Bar-Marker"\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ { } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ { } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "a message."\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "another message."\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "a message with parameter {}.",\n' +
-						'    "arguments" : [ "paramValue" ]\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "a message with unresolved parameter {}."\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "a message with parameter {} and unresolved parameter {}.",\n' +
-						'    "arguments" : [ "paramValue" ]\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "{}",\n' +
-						'    "arguments" : [ "paramValue" ]\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "{}"\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "DebugDialog.java",\n' +
-						'    "lineNumber" : 358,\n' +
-						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "DebugDialog.java",\n' +
-						'    "lineNumber" : 358,\n' +
-						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",\n' +
-						'    "methodName" : "mouseReleased",\n' +
-						'    "fileName" : "BasicButtonListener.java",\n' +
-						'    "lineNumber" : 252,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "DebugDialog.java",\n' +
-						'    "lineNumber" : 358,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "DebugDialog.java",\n' +
-						'    "lineNumber" : 358,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",\n' +
-						'    "methodName" : "mouseReleased",\n' +
-						'    "fileName" : "BasicButtonListener.java",\n' +
-						'    "lineNumber" : 252,\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",\n' +
-						'    "methodName" : "mouseReleased",\n' +
-						'    "fileName" : "BasicButtonListener.java",\n' +
-						'    "lineNumber" : 252,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",\n' +
-						'    "methodName" : "mouseReleased",\n' +
-						'    "fileName" : "BasicButtonListener.java",\n' +
-						'    "lineNumber" : 252,\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ null, {\n' +
-						'    "className" : "javax.swing.AbstractButton",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2022,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ {\n' +
-						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "DebugDialog.java",\n' +
-						'    "lineNumber" : 358,\n' +
-						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",\n' +
-						'    "exact" : false\n' +
-						'  }, null, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "mdc" : { }\n' +
-						'}',
-
-				'{\n' +
-						'  "mdc" : {\n' +
-						'    "mdcKey" : "otherMdcValue"\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "mdc" : {\n' +
-						'    "mdcKey" : null\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "loggerContext" : {\n' +
-						'    "name" : "loggerContextName"\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "loggerContext" : {\n' +
-						'    "properties" : { }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "loggerContext" : {\n' +
-						'    "properties" : {\n' +
-						'      "loggerContextKey" : "loggerContextValue"\n' +
-						'    }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "threadInfo" : { }\n' +
-						'}',
-
-				'{\n' +
-						'  "threadInfo" : {\n' +
-						'    "name" : "threadName"\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "threadInfo" : {\n' +
-						'    "id" : 11337\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "threadInfo" : {\n' +
-						'    "groupName" : "groupName"\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "threadInfo" : {\n' +
-						'    "groupId" : 31337\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "ndc" : [ {\n' +
-						'    "messagePattern" : "b0rked1"\n' +
-						'  }, null, {\n' +
-						'    "messagePattern" : "b0rked3"\n' +
-						'  } ]\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "message" : "exception1",\n' +
-						'    "omittedElements" : 0\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "cause" : {\n' +
-						'      "message" : "exception2",\n' +
-						'      "omittedElements" : 0\n' +
-						'    }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "suppressed" : [ {\n' +
-						'      "message" : "exception3",\n' +
-						'      "omittedElements" : 0\n' +
-						'    } ]\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "suppressed" : [ {\n' +
-						'      "message" : "exception4",\n' +
-						'      "omittedElements" : 0\n' +
-						'    }, null, {\n' +
-						'      "message" : "exception5",\n' +
-						'      "omittedElements" : 0\n' +
-						'    } ]\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "stackTrace" : [ null, {\n' +
-						'      "className" : "javax.swing.AbstractButton",\n' +
-						'      "methodName" : "fireActionPerformed",\n' +
-						'      "fileName" : "AbstractButton.java",\n' +
-						'      "lineNumber" : 2022,\n' +
-						'      "version" : "1.8.0_92",\n' +
-						'      "exact" : false\n' +
-						'    }, {\n' +
-						'      "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'      "methodName" : "actionPerformed",\n' +
-						'      "fileName" : "AbstractButton.java",\n' +
-						'      "lineNumber" : 2348,\n' +
-						'      "version" : "1.8.0_92",\n' +
-						'      "exact" : false\n' +
-						'    }, {\n' +
-						'      "className" : "javax.swing.DefaultButtonModel",\n' +
-						'      "methodName" : "fireActionPerformed",\n' +
-						'      "fileName" : "DefaultButtonModel.java",\n' +
-						'      "lineNumber" : 402,\n' +
-						'      "version" : "1.8.0_92",\n' +
-						'      "exact" : false\n' +
-						'    }, {\n' +
-						'      "className" : "javax.swing.DefaultButtonModel",\n' +
-						'      "methodName" : "setPressed",\n' +
-						'      "fileName" : "DefaultButtonModel.java",\n' +
-						'      "lineNumber" : 259,\n' +
-						'      "version" : "1.8.0_92",\n' +
-						'      "exact" : false\n' +
-						'    } ],\n' +
-						'    "omittedElements" : 0\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "omittedElements" : 0,\n' +
-						'    "cause" : {\n' +
-						'      "stackTrace" : [ {\n' +
-						'        "className" : "javax.swing.AbstractButton",\n' +
-						'        "methodName" : "fireActionPerformed",\n' +
-						'        "fileName" : "AbstractButton.java",\n' +
-						'        "lineNumber" : 2022,\n' +
-						'        "version" : "1.8.0_92",\n' +
-						'        "exact" : false\n' +
-						'      }, null, {\n' +
-						'        "className" : "javax.swing.DefaultButtonModel",\n' +
-						'        "methodName" : "fireActionPerformed",\n' +
-						'        "fileName" : "DefaultButtonModel.java",\n' +
-						'        "lineNumber" : 402,\n' +
-						'        "version" : "1.8.0_92",\n' +
-						'        "exact" : false\n' +
-						'      }, {\n' +
-						'        "className" : "javax.swing.DefaultButtonModel",\n' +
-						'        "methodName" : "setPressed",\n' +
-						'        "fileName" : "DefaultButtonModel.java",\n' +
-						'        "lineNumber" : 259,\n' +
-						'        "version" : "1.8.0_92",\n' +
-						'        "exact" : false\n' +
-						'      } ],\n' +
-						'      "omittedElements" : 0\n' +
-						'    }\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "mdc" : { }\n' +
-						'}',
-
-				'{\n' +
-						'  "mdc" : {\n' +
-						'    "nullMdcValueKey" : null\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "logger" : ""\n' +
-						'}',
-				'{\n' +
-						'  "throwable" : {\n' +
-						'    "name" : "",\n' +
-						'    "omittedElements" : 0\n' +
-						'  }\n' +
-						'}',
-
-				'{\n' +
-						'  "callStack" : [ null, {\n' +
-						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "DebugDialog.java",\n' +
-						'    "lineNumber" : 358,\n' +
-						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.AbstractButton$Handler",\n' +
-						'    "methodName" : "actionPerformed",\n' +
-						'    "fileName" : "AbstractButton.java",\n' +
-						'    "lineNumber" : 2348,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "fireActionPerformed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 402,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  }, {\n' +
-						'    "className" : "javax.swing.DefaultButtonModel",\n' +
-						'    "methodName" : "setPressed",\n' +
-						'    "fileName" : "DefaultButtonModel.java",\n' +
-						'    "lineNumber" : 259,\n' +
-						'    "version" : "1.8.0_92",\n' +
-						'    "exact" : false\n' +
-						'  } ]\n' +
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "name" : "java.lang.RuntimeException",' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "suppressed" : [ {' + NEWLINE +
+						'      "name" : "java.lang.NullPointerException",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    }, {' + NEWLINE +
+						'      "name" : "java.lang.FooException",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    } ],' + NEWLINE +
+						'    "cause" : {' + NEWLINE +
+						'      "name" : "java.lang.BarException",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "marker" : {' + NEWLINE +
+						'    "name" : "Foo-Marker",' + NEWLINE +
+						'    "references" : {' + NEWLINE +
+						'      "Bar-Marker" : {' + NEWLINE +
+						'        "name" : "Bar-Marker"' + NEWLINE +
+						'      }' + NEWLINE +
+						'    }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "marker" : {' + NEWLINE +
+						'    "name" : "Bar-Marker"' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ { } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ { } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "a message."' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "another message."' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "a message with parameter {}.",' + NEWLINE +
+						'    "arguments" : [ "paramValue" ]' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "a message with unresolved parameter {}."' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "a message with parameter {} and unresolved parameter {}.",' + NEWLINE +
+						'    "arguments" : [ "paramValue" ]' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "{}",' + NEWLINE +
+						'    "arguments" : [ "paramValue" ]' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "{}"' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "DebugDialog.java",' + NEWLINE +
+						'    "lineNumber" : 358,' + NEWLINE +
+						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "DebugDialog.java",' + NEWLINE +
+						'    "lineNumber" : 358,' + NEWLINE +
+						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",' + NEWLINE +
+						'    "methodName" : "mouseReleased",' + NEWLINE +
+						'    "fileName" : "BasicButtonListener.java",' + NEWLINE +
+						'    "lineNumber" : 252,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "DebugDialog.java",' + NEWLINE +
+						'    "lineNumber" : 358,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "DebugDialog.java",' + NEWLINE +
+						'    "lineNumber" : 358,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",' + NEWLINE +
+						'    "methodName" : "mouseReleased",' + NEWLINE +
+						'    "fileName" : "BasicButtonListener.java",' + NEWLINE +
+						'    "lineNumber" : 252,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",' + NEWLINE +
+						'    "methodName" : "mouseReleased",' + NEWLINE +
+						'    "fileName" : "BasicButtonListener.java",' + NEWLINE +
+						'    "lineNumber" : 252,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.plaf.basic.BasicButtonListener",' + NEWLINE +
+						'    "methodName" : "mouseReleased",' + NEWLINE +
+						'    "fileName" : "BasicButtonListener.java",' + NEWLINE +
+						'    "lineNumber" : 252,' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ null, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2022,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ {' + NEWLINE +
+						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "DebugDialog.java",' + NEWLINE +
+						'    "lineNumber" : 358,' + NEWLINE +
+						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, null, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "mdc" : { }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "mdc" : {' + NEWLINE +
+						'    "mdcKey" : "otherMdcValue"' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "mdc" : {' + NEWLINE +
+						'    "mdcKey" : null' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "loggerContext" : {' + NEWLINE +
+						'    "name" : "loggerContextName"' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "loggerContext" : {' + NEWLINE +
+						'    "properties" : { }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "loggerContext" : {' + NEWLINE +
+						'    "properties" : {' + NEWLINE +
+						'      "loggerContextKey" : "loggerContextValue"' + NEWLINE +
+						'    }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "threadInfo" : { }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "threadInfo" : {' + NEWLINE +
+						'    "name" : "threadName"' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "threadInfo" : {' + NEWLINE +
+						'    "id" : 11337' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "threadInfo" : {' + NEWLINE +
+						'    "groupName" : "groupName"' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "threadInfo" : {' + NEWLINE +
+						'    "groupId" : 31337' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "ndc" : [ {' + NEWLINE +
+						'    "messagePattern" : "b0rked1"' + NEWLINE +
+						'  }, null, {' + NEWLINE +
+						'    "messagePattern" : "b0rked3"' + NEWLINE +
+						'  } ]' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "message" : "exception1",' + NEWLINE +
+						'    "omittedElements" : 0' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "cause" : {' + NEWLINE +
+						'      "message" : "exception2",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "suppressed" : [ {' + NEWLINE +
+						'      "message" : "exception3",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    } ]' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "suppressed" : [ {' + NEWLINE +
+						'      "message" : "exception4",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    }, null, {' + NEWLINE +
+						'      "message" : "exception5",' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    } ]' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "stackTrace" : [ null, {' + NEWLINE +
+						'      "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'      "methodName" : "fireActionPerformed",' + NEWLINE +
+						'      "fileName" : "AbstractButton.java",' + NEWLINE +
+						'      "lineNumber" : 2022,' + NEWLINE +
+						'      "version" : "1.8.0_92",' + NEWLINE +
+						'      "exact" : false' + NEWLINE +
+						'    }, {' + NEWLINE +
+						'      "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'      "methodName" : "actionPerformed",' + NEWLINE +
+						'      "fileName" : "AbstractButton.java",' + NEWLINE +
+						'      "lineNumber" : 2348,' + NEWLINE +
+						'      "version" : "1.8.0_92",' + NEWLINE +
+						'      "exact" : false' + NEWLINE +
+						'    }, {' + NEWLINE +
+						'      "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'      "methodName" : "fireActionPerformed",' + NEWLINE +
+						'      "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'      "lineNumber" : 402,' + NEWLINE +
+						'      "version" : "1.8.0_92",' + NEWLINE +
+						'      "exact" : false' + NEWLINE +
+						'    }, {' + NEWLINE +
+						'      "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'      "methodName" : "setPressed",' + NEWLINE +
+						'      "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'      "lineNumber" : 259,' + NEWLINE +
+						'      "version" : "1.8.0_92",' + NEWLINE +
+						'      "exact" : false' + NEWLINE +
+						'    } ],' + NEWLINE +
+						'    "omittedElements" : 0' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "omittedElements" : 0,' + NEWLINE +
+						'    "cause" : {' + NEWLINE +
+						'      "stackTrace" : [ {' + NEWLINE +
+						'        "className" : "javax.swing.AbstractButton",' + NEWLINE +
+						'        "methodName" : "fireActionPerformed",' + NEWLINE +
+						'        "fileName" : "AbstractButton.java",' + NEWLINE +
+						'        "lineNumber" : 2022,' + NEWLINE +
+						'        "version" : "1.8.0_92",' + NEWLINE +
+						'        "exact" : false' + NEWLINE +
+						'      }, null, {' + NEWLINE +
+						'        "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'        "methodName" : "fireActionPerformed",' + NEWLINE +
+						'        "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'        "lineNumber" : 402,' + NEWLINE +
+						'        "version" : "1.8.0_92",' + NEWLINE +
+						'        "exact" : false' + NEWLINE +
+						'      }, {' + NEWLINE +
+						'        "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'        "methodName" : "setPressed",' + NEWLINE +
+						'        "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'        "lineNumber" : 259,' + NEWLINE +
+						'        "version" : "1.8.0_92",' + NEWLINE +
+						'        "exact" : false' + NEWLINE +
+						'      } ],' + NEWLINE +
+						'      "omittedElements" : 0' + NEWLINE +
+						'    }' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "mdc" : { }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "mdc" : {' + NEWLINE +
+						'    "nullMdcValueKey" : null' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "logger" : ""' + NEWLINE +
+						'}',
+				'{' + NEWLINE +
+						'  "throwable" : {' + NEWLINE +
+						'    "name" : "",' + NEWLINE +
+						'    "omittedElements" : 0' + NEWLINE +
+						'  }' + NEWLINE +
+						'}',
+
+				'{' + NEWLINE +
+						'  "callStack" : [ null, {' + NEWLINE +
+						'    "className" : "de.huxhorn.lilith.debug.DebugDialog$LogAllAction",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "DebugDialog.java",' + NEWLINE +
+						'    "lineNumber" : 358,' + NEWLINE +
+						'    "codeLocation" : "de.huxhorn.lilith-8.1.0-SNAPSHOT.jar",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.AbstractButton$Handler",' + NEWLINE +
+						'    "methodName" : "actionPerformed",' + NEWLINE +
+						'    "fileName" : "AbstractButton.java",' + NEWLINE +
+						'    "lineNumber" : 2348,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "fireActionPerformed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 402,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  }, {' + NEWLINE +
+						'    "className" : "javax.swing.DefaultButtonModel",' + NEWLINE +
+						'    "methodName" : "setPressed",' + NEWLINE +
+						'    "fileName" : "DefaultButtonModel.java",' + NEWLINE +
+						'    "lineNumber" : 259,' + NEWLINE +
+						'    "version" : "1.8.0_92",' + NEWLINE +
+						'    "exact" : false' + NEWLINE +
+						'  } ]' + NEWLINE +
 						'}',
 		]
 	}

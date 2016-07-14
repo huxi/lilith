@@ -20,6 +20,8 @@ package de.huxhorn.lilith.services.clipboard
 
 class LoggingThrowableFormatterSpec extends AbstractClipboardFormatterSpec {
 
+	private static final String NEWLINE = System.properties['line.separator']
+
 	@Override
 	LoggingThrowableFormatter createInstance() {
 		return new LoggingThrowableFormatter()
@@ -31,58 +33,58 @@ class LoggingThrowableFormatterSpec extends AbstractClipboardFormatterSpec {
 
 	def List<String> expectedResults() {
 		[
-				'java.lang.RuntimeException\n',
+				'java.lang.RuntimeException' + NEWLINE,
 
-				'java.lang.RuntimeException\n' +
-						'Caused by: java.lang.NullPointerException\n',
+				'java.lang.RuntimeException' + NEWLINE +
+						'Caused by: java.lang.NullPointerException' + NEWLINE,
 
-				'java.lang.RuntimeException\n' +
-						'Caused by: java.lang.NullPointerException\n' +
-						'Caused by: java.lang.FooException\n',
+				'java.lang.RuntimeException' + NEWLINE +
+						'Caused by: java.lang.NullPointerException' + NEWLINE +
+						'Caused by: java.lang.FooException' + NEWLINE,
 
-				'java.lang.RuntimeException\n' +
-						'\tSuppressed: java.lang.NullPointerException\n',
+				'java.lang.RuntimeException' + NEWLINE +
+						'\tSuppressed: java.lang.NullPointerException' + NEWLINE,
 
-				'java.lang.RuntimeException\n' +
-						'\tSuppressed: java.lang.NullPointerException\n' +
-						'\tSuppressed: java.lang.FooException\n',
+				'java.lang.RuntimeException' + NEWLINE +
+						'\tSuppressed: java.lang.NullPointerException' + NEWLINE +
+						'\tSuppressed: java.lang.FooException' + NEWLINE,
 
-				'java.lang.RuntimeException\n' +
-						'\tSuppressed: java.lang.NullPointerException\n' +
-						'\tSuppressed: java.lang.FooException\n' +
-						'Caused by: java.lang.BarException\n',
+				'java.lang.RuntimeException' + NEWLINE +
+						'\tSuppressed: java.lang.NullPointerException' + NEWLINE +
+						'\tSuppressed: java.lang.FooException' + NEWLINE +
+						'Caused by: java.lang.BarException' + NEWLINE,
 
-				'exception1\n',
+				'exception1' + NEWLINE,
 
-				'null\n' +
-						'Caused by: exception2\n',
+				'null' + NEWLINE +
+						'Caused by: exception2' + NEWLINE,
 
-				'null\n' +
-						'\tSuppressed: exception3\n',
+				'null' + NEWLINE +
+						'\tSuppressed: exception3' + NEWLINE,
 
-				'null\n' +
-						'\tSuppressed: exception4\n' +
-						'\tSuppressed: exception5\n',
+				'null' + NEWLINE +
+						'\tSuppressed: exception4' + NEWLINE +
+						'\tSuppressed: exception5' + NEWLINE,
 
-				'recursiveCause\n' +
-						'Caused by: recursiveCause[CIRCULAR REFERENCE]\n',
+				'recursiveCause' + NEWLINE +
+						'Caused by: recursiveCause[CIRCULAR REFERENCE]' + NEWLINE,
 
-				'recursiveSuppressed\n' +
-						'\tSuppressed: recursiveSuppressed[CIRCULAR REFERENCE]\n',
+				'recursiveSuppressed' + NEWLINE +
+						'\tSuppressed: recursiveSuppressed[CIRCULAR REFERENCE]' + NEWLINE,
 
-				'null\n' +
-						'\tat javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]\n' +
-						'\tat javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]\n' +
-						'\tat javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]\n' +
-						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]\n',
+				'null' + NEWLINE +
+						'\tat javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]' + NEWLINE +
+						'\tat javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348) ~[na:1.8.0_92]' + NEWLINE +
+						'\tat javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]' + NEWLINE +
+						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]' + NEWLINE,
 
-				'null\n' +
-						'Caused by: null\n' +
-						'\tat javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]\n' +
-						'\tat javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]\n' +
-						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]\n',
+				'null' + NEWLINE +
+						'Caused by: null' + NEWLINE +
+						'\tat javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022) ~[na:1.8.0_92]' + NEWLINE +
+						'\tat javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402) ~[na:1.8.0_92]' + NEWLINE +
+						'\tat javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]' + NEWLINE,
 
-				'\n'
+				NEWLINE
 		]
 	}
 
