@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,6 +109,8 @@ public class LoggingEventReader
 					.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_NAME_ATTRIBUTE);
 				String threadGroupIdStr = StaxUtilities
 					.readAttributeValue(reader, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE);
+				String threadPriorityStr = StaxUtilities
+					.readAttributeValue(reader, NAMESPACE_URI, THREAD_PRIORITY_ATTRIBUTE);
 				Long threadId = null;
 				if(threadIdStr != null)
 				{
@@ -133,9 +135,23 @@ public class LoggingEventReader
 						// ignore
 					}
 				}
-				if(threadName != null || threadId != null || threadGroupName != null || threadGroupId != null)
+				Integer threadPriority = null;
+				if(threadPriorityStr != null)
 				{
-					result.setThreadInfo(new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName));
+					try
+					{
+						threadPriority = Integer.valueOf(threadPriorityStr);
+					}
+					catch(NumberFormatException ex)
+					{
+						// ignore
+					}
+				}
+				if(threadName != null || threadId != null || threadGroupName != null || threadGroupId != null || threadPriority != null)
+				{
+					ThreadInfo threadInfo = new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName);
+					threadInfo.setPriority(threadPriority);
+					result.setThreadInfo(threadInfo);
 				}
 			}
 

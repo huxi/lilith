@@ -66,6 +66,7 @@ public class SameThreadLogbackLoggingConverter
 		}
 
 		threadInfo.setId(t.getId());
+		threadInfo.setPriority(t.getPriority());
 
 		ThreadGroup tg = t.getThreadGroup();
 		if(tg != null)

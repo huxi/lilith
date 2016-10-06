@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -305,7 +305,12 @@ public class LoggingEventProtobufDecoder
 		{
 			threadGroupName = parsedThreadInfo.getGroupName();
 		}
-		return new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName);
+		ThreadInfo result = new ThreadInfo(threadId, threadName, threadGroupId, threadGroupName);
+		if(parsedThreadInfo.hasPriority())
+		{
+			result.setPriority(parsedThreadInfo.getPriority());
+		}
+		return result;
 	}
 
 	public static LoggerContext convert(LoggingProto.LoggerContext loggerContext)

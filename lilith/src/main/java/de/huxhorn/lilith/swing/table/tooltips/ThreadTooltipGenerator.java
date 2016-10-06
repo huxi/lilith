@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,35 @@ public class ThreadTooltipGenerator
 							}
 						}
 					}
+					{
+						Integer priority = threadInfo.getPriority();
+						if(priority != null && priority > 0)
+						{
+							if(builder.length() > 0)
+							{
+								builder.append(", priority=").append(priority);
+							}
+							String description = null;
+							if(priority == Thread.NORM_PRIORITY)
+							{
+								description = "default";
+							}
+							else if(priority == Thread.MIN_PRIORITY)
+							{
+								description = "minimum";
+							}
+							else if(priority >= Thread.MAX_PRIORITY)
+							{
+								description = "maximum";
+							}
 
+							if(description != null)
+							{
+								builder.append(" (").append(description).append(")");
+							}
+
+						}
+					}
 					{
 						String name = threadInfo.getGroupName();
 						Long id = threadInfo.getGroupId();

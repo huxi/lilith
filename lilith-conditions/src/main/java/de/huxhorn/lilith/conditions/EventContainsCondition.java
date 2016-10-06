@@ -166,6 +166,15 @@ public class EventContainsCondition
 							}
 						}
 
+						Integer threadPriority = threadInfo.getPriority();
+						if(threadPriority != null)
+						{
+							if(checkString("" + threadPriority))
+							{
+								return true;
+							}
+						}
+
 						if(checkString(threadInfo.getGroupName()))
 						{
 							return true;

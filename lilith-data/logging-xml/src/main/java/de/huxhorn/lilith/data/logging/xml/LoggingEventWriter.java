@@ -166,6 +166,7 @@ public class LoggingEventWriter
 			String name = threadInfo.getName();
 			Long groupId = threadInfo.getGroupId();
 			String groupName = threadInfo.getGroupName();
+			Integer priority = threadInfo.getPriority();
 			if(name != null)
 			{
 				StaxUtilities
@@ -185,6 +186,11 @@ public class LoggingEventWriter
 			{
 				StaxUtilities
 					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE, "" + groupId);
+			}
+			if(priority != null)
+			{
+				StaxUtilities
+						.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_PRIORITY_ATTRIBUTE, "" + priority);
 			}
 		}
 

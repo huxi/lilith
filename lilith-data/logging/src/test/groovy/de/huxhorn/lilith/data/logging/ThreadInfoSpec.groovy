@@ -102,6 +102,7 @@ class ThreadInfoSpec extends Specification {
 				new ThreadInfo(name: 'threadName'),
 				new ThreadInfo(groupId: 17),
 				new ThreadInfo(groupName: 'groupName'),
+				new ThreadInfo(priority: 17),
 		]
 	}
 }

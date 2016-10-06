@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Added "Copy request headers".
 - Added "Copy request parameters".
 - Added "Copy response headers".
+- Added thread priority to thread info of logging event.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
@@ -44,6 +45,7 @@ All notable changes to this project will be documented in this file.
    - This is not a compatibility contest. It's about usability.
 - "Paste StackTraceElement" (command shift V) is now much more effective. It parses the text from the clipboard and opens the first `StackTraceElement` it finds in IDEA (if the necessary IDEA plugin is installed). Parsing is much more lenient.
 - Using `SafeString` for "Copy MDC".
+- Details view is now showing all available thread information.
 
 ### Deprecated
 - Nothing.
@@ -59,8 +61,8 @@ All notable changes to this project will be documented in this file.
 - Fixed NPE in LoggingEventProtobufEncoder. This fixes [issue #22](https://github.com/huxi/lilith/issues/22).
 - Fixed NPE in CheckForUpdateRunnable in case of broken network connection.
 - Fixed handling of invalid XML created by `java.util.logging.XMLFormatter`. This fixes [issue #26](https://github.com/huxi/lilith/issues/26).
-- Being less strict about the required Java version. It seems certain Linux distros have a Java version string like `1.8.0_66-internal` which is - strictly speaking - smaller than `1.8.0_66` since `-internal' is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.
-- log4j2 2.6.2, slf4j 1.7.21, Logback 1.1.7, jackson 2.8.3, Spring 4.3.3, Groovy 2.4.7, aspectj 1.8.9, httpclient 4.5.2, httpcore 4.4.5, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.0.2, jcommander 1.58
+- Being less strict about the required Java version. It seems certain Linux distros have a Java version string like `1.8.0_66-internal` which is - strictly speaking - less than `1.8.0_66` since `-internal' is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.
+- log4j2 2.7, slf4j 1.7.21, Logback 1.1.7, jackson 2.8.3, Spring 4.3.3, Groovy 2.4.7, aspectj 1.8.9, httpclient 4.5.2, httpcore 4.4.5, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.0.2, jcommander 1.58
 
 ### Security
 - Nothing.

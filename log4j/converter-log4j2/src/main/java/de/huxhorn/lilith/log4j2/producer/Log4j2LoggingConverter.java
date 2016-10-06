@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,6 +47,7 @@ import org.apache.logging.log4j.Level;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.util.ReadOnlyStringMap;
 
 public class Log4j2LoggingConverter
 		implements Converter<LoggingEvent>
@@ -122,29 +123,32 @@ public class Log4j2LoggingConverter
 			{
 				ThreadInfo threadInfo = new ThreadInfo();
 				threadInfo.setName(threadName);
+				threadInfo.setId(log4jEvent.getThreadId());
+				threadInfo.setPriority(log4jEvent.getThreadPriority());
 				result.setThreadInfo(threadInfo);
 			}
 		}
 
 		// MDC
 		{
-			Map<String, String> props = log4jEvent.getContextMap();
-			if (props != null)
+			ReadOnlyStringMap contextData = log4jEvent.getContextData();
+			if (!contextData.isEmpty())
 			{
-				mdc.putAll(props);
+				mdc.putAll(contextData.toMap());
 			}
 		}
-		if (mdc.size() > 0)
+
+		if (!mdc.isEmpty())
 		{
 			result.setMdc(mdc);
-		}
 
-		// application / contextName
-		if (mdc.containsKey(APPLICATION_MDC_KEY))
-		{
-			LoggerContext context = new LoggerContext();
-			context.setName(mdc.get(APPLICATION_MDC_KEY));
-			result.setLoggerContext(context);
+			// application / contextName
+			if (mdc.containsKey(APPLICATION_MDC_KEY))
+			{
+				LoggerContext context = new LoggerContext();
+				context.setName(mdc.get(APPLICATION_MDC_KEY));
+				result.setLoggerContext(context);
+			}
 		}
 
 		// NDC

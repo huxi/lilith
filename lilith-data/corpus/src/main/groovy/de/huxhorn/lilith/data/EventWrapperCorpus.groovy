@@ -381,6 +381,8 @@ public class EventWrapperCorpus
 				ExtendedStackTraceElement.parseStackTraceElement('javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259) ~[na:1.8.0_92]'),
 		])))
 
+		// thread priority
+		result.add(new EventWrapper<>(event: new LoggingEvent(threadInfo: new ThreadInfo(priority: 17))))
 
 		return result
 	}
