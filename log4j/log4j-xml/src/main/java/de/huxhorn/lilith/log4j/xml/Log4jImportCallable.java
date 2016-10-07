@@ -60,6 +60,15 @@ import javax.xml.stream.XMLStreamReader;
 public class Log4jImportCallable
 	extends AbstractProgressingCallable<Long>
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+	static
+	{
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_VALIDATING, false);
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(Log4jImportCallable.class);
 
 	public static final String CLOSING_LOG4J_EVENT_TAG = "</log4j:event>";
@@ -189,13 +198,9 @@ public class Log4jImportCallable
 		throws XMLStreamException
 	{
 		byte[] bytes = eventStr.getBytes(StandardCharsets.UTF_8);
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+		XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return instance.read(reader);
 	}
 }

@@ -44,6 +44,15 @@ public class LilithXmlStreamLoggingEventProducer
 	extends AbstractEventProducer<LoggingEvent>
 	implements LoggingEventSchemaConstants
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+	static
+	{
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_VALIDATING, false);
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(LilithXmlStreamLoggingEventProducer.class);
 
 	private LoggingEventReader loggingEventReader;
@@ -75,11 +84,6 @@ public class LilithXmlStreamLoggingEventProducer
 	{
 		public void run()
 		{
-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-			inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-			inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
-
 			try
 			{
 				ArrayList<Byte> bytes = new ArrayList<>();
@@ -112,7 +116,7 @@ public class LilithXmlStreamLoggingEventProducer
 						String str = new String(ba, StandardCharsets.UTF_8);
 						if(logger.isDebugEnabled()) logger.debug("Read: {}", str);
 						StringReader strr = new StringReader(str);
-						XMLStreamReader reader = inputFactory.createXMLStreamReader(strr);
+						XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(strr);
 						LoggingEvent event = loggingEventReader.read(reader);
 						addEvent(event);
 					}

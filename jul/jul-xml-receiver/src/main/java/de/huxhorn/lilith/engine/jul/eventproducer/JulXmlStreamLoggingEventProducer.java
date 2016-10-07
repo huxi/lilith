@@ -41,6 +41,15 @@ import java.io.InputStreamReader;
 public class JulXmlStreamLoggingEventProducer
 	extends AbstractEventProducer<LoggingEvent>
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+	static
+	{
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_VALIDATING, false);
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(JulXmlStreamLoggingEventProducer.class);
 
 	private LoggingEventReader loggingEventReader;
@@ -72,12 +81,7 @@ public class JulXmlStreamLoggingEventProducer
 		{
 			try
 			{
-				XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-				inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-				inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-				inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
-
-				XMLStreamReader reader = inputFactory.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(
+				XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(
 						new InputStreamReader(inputStream, StandardCharsets.UTF_8))
 				);
 				for(; ;)

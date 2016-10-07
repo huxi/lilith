@@ -60,6 +60,15 @@ import javax.xml.stream.XMLStreamReader;
 public class JulImportCallable
 	extends AbstractProgressingCallable<Long>
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+	static
+	{
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_VALIDATING, false);
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(JulImportCallable.class);
 
 	private File inputFile;
@@ -112,11 +121,7 @@ public class JulImportCallable
 			reader = new InputStreamReader(cis, StandardCharsets.UTF_8);
 		}
 
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
-		xmlStreamReader = inputFactory.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(reader));
+		xmlStreamReader = XML_INPUT_FACTORY.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(reader));
 		for(; ;)
 		{
 			try

@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -57,6 +58,16 @@ import javax.xml.stream.XMLStreamWriter;
 
 public class StackTraceElementIOTest
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+	static
+	{
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_VALIDATING, false);
+	}
+	private static final XMLOutputFactory XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
+
 	private final Logger logger = LoggerFactory.getLogger(StackTraceElementIOTest.class);
 	private StackTraceElementWriter steWriter;
 	private StackTraceElementReader steReader;
@@ -67,6 +78,20 @@ public class StackTraceElementIOTest
 		steWriter = new StackTraceElementWriter();
 		steWriter.setWritingSchemaLocation(true);
 		steReader = new StackTraceElementReader();
+	}
+
+	@Test
+	public void correctOutputFactoryIsObtained()
+	{
+		String factoryClassName = XML_OUTPUT_FACTORY.getClass().getName();
+		assertTrue(factoryClassName, factoryClassName.startsWith("com.ctc.wstx.stax"));
+	}
+
+	@Test
+	public void correctInputFactoryIsObtained()
+	{
+		String factoryClassName = XML_INPUT_FACTORY.getClass().getName();
+		assertTrue(factoryClassName, factoryClassName.startsWith("com.ctc.wstx.stax"));
 	}
 
 	@Test
@@ -173,10 +198,8 @@ public class StackTraceElementIOTest
 	public byte[] write(ExtendedStackTraceElement event, boolean indent)
 		throws XMLStreamException
 	{
-		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
+		XMLStreamWriter writer = XML_OUTPUT_FACTORY.createXMLStreamWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
 		if(indent)
 		{
 			writer = new IndentingXMLStreamWriter(writer);
@@ -189,13 +212,8 @@ public class StackTraceElementIOTest
 	public ExtendedStackTraceElement read(byte[] bytes)
 		throws XMLStreamException
 	{
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
-
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+		XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return steReader.read(reader);
 	}
 

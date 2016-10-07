@@ -52,6 +52,15 @@ import de.huxhorn.sulky.codec.Decoder;
 public class LoggingXmlDecoder
 	implements Decoder<LoggingEvent>
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+	static
+	{
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_VALIDATING, false);
+	}
+
 	private LoggingEventReader loggingEventReader;
 	private boolean compressing;
 
@@ -63,10 +72,6 @@ public class LoggingXmlDecoder
 
 	public LoggingEvent decode(byte[] bytes)
 	{
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		XMLStreamReader reader;
@@ -75,11 +80,11 @@ public class LoggingXmlDecoder
 			if(compressing)
 			{
 				GZIPInputStream gis = new GZIPInputStream(in);
-				reader = inputFactory.createXMLStreamReader(new InputStreamReader(gis, StandardCharsets.UTF_8));
+				reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(gis, StandardCharsets.UTF_8));
 			}
 			else
 			{
-				reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+				reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 			}
 			return loggingEventReader.read(reader);
 		}

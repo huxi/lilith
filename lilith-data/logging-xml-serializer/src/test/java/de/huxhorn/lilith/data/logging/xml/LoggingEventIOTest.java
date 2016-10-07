@@ -38,10 +38,13 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 
 import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
 import java.nio.charset.StandardCharsets;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamException;
+
+import static org.junit.Assert.assertTrue;
 
 public class LoggingEventIOTest
 	extends LoggingEventIOTestBase
@@ -51,6 +54,20 @@ public class LoggingEventIOTest
 	public LoggingEventIOTest(Boolean logging)
 	{
 		super(logging);
+	}
+
+	@Test
+	public void correctOutputFactoryIsObtained()
+	{
+		String factoryClassName = LoggingXmlEncoder.XML_OUTPUT_FACTORY.getClass().getName();
+		assertTrue(factoryClassName, factoryClassName.startsWith("com.ctc.wstx.stax"));
+	}
+
+	@Test
+	public void correctInputFactoryIsObtained()
+	{
+		String factoryClassName = LoggingXmlDecoder.XML_INPUT_FACTORY.getClass().getName();
+		assertTrue(factoryClassName, factoryClassName.startsWith("com.ctc.wstx.stax"));
 	}
 
 	@Override

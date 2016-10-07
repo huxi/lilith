@@ -36,6 +36,7 @@ project(':lilith-data-eventsource-xml') {
 	dependencies {
 		compile project(':lilith-data-eventsource')
 		compile libraries.'sulky-stax'
+		runtime libraries.'woodstox'
 	}
 }
 
@@ -69,6 +70,7 @@ project(':lilith-data-logging-xml') {
 		compile project(':lilith-data-logging')
 		compile project(':lilith-data-eventsource-xml')
 		compile libraries.'sulky-stax'
+		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -81,6 +83,7 @@ project(':lilith-data-logging-xml-serializer') {
 		compile libraries.'sulky-codec'
 		compile libraries.'sulky-io'
 		compile libraries.'sulky-stax'
+		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-logging')
 		testCompile project(':lilith-data-logging-io-test')
 		testCompile project(':lilith-data-eventsource')
@@ -381,6 +384,7 @@ project(':log4j-xml') {
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
 		compile libraries.'sulky-io'
+		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -420,6 +424,7 @@ project(':jul-xml') {
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
 		compile libraries.'sulky-io'
+		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -437,6 +442,7 @@ project(':jul-xml-import') {
 		compile libraries.'sulky-tasks'
 		compile project(':jul-xml')
 		compile project(':lilith-data-logging')
+		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-eventsource')
 	}
 }
@@ -454,6 +460,7 @@ project(':jul-xml-receiver') {
 		compile project(':jul-xml')
 		compile project(':lilith-data-logging')
 		compile project(':lilith-engine')
+		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-eventsource')
 	}
 }

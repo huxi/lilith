@@ -50,6 +50,9 @@ import de.huxhorn.sulky.codec.Encoder;
 public class LoggingXmlEncoder
 	implements Encoder<LoggingEvent>
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	static final XMLOutputFactory XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
+
 	private LoggingEventWriter loggingEventWriter;
 	private boolean compressing;
 	private boolean sortingMaps;
@@ -91,8 +94,6 @@ public class LoggingXmlEncoder
 
 	public byte[] encode(LoggingEvent event)
 	{
-		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		OutputStreamWriter osw;
 		try
@@ -102,12 +103,12 @@ public class LoggingXmlEncoder
 			{
 				GZIPOutputStream gos = new GZIPOutputStream(out);
 				osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
-				writer = outputFactory.createXMLStreamWriter(osw);
+				writer = XML_OUTPUT_FACTORY.createXMLStreamWriter(osw);
 			}
 			else
 			{
 				osw = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-				writer = outputFactory.createXMLStreamWriter(osw);
+				writer = XML_OUTPUT_FACTORY.createXMLStreamWriter(osw);
 			}
 
 			loggingEventWriter.write(writer, event, true);

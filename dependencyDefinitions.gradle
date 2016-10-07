@@ -22,7 +22,8 @@ project.ext.versions = [
 'spring':         '4.3.3.RELEASE',
 'substance':      '7.3',
 'sulky':          sulkyVersion,
-'thymeleaf':      '2.1.5.RELEASE'
+'thymeleaf':      '2.1.5.RELEASE',
+'woodstox':       '5.0.3',
 ]
 
 project.ext.libraries = [
@@ -92,6 +93,7 @@ project.ext.libraries = [
 'sulky-swing':              "de.huxhorn.sulky:de.huxhorn.sulky.swing:${versions.sulky}",
 'sulky-tasks':              "de.huxhorn.sulky:de.huxhorn.sulky.tasks:${versions.sulky}",
 'sulky-version':            "de.huxhorn.sulky:de.huxhorn.sulky.version:${versions.sulky}",
-'thymeleaf':                "org.thymeleaf:thymeleaf:${versions.thymeleaf}"
+'thymeleaf':                "org.thymeleaf:thymeleaf:${versions.thymeleaf}",
+'woodstox':                 "com.fasterxml.woodstox:woodstox-core:${versions.woodstox}",
 ]
 

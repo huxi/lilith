@@ -42,6 +42,7 @@ import de.huxhorn.lilith.data.logging.ThrowableInfo;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
 import org.junit.Before;
@@ -62,6 +63,15 @@ import javax.xml.stream.XMLStreamReader;
 
 public class LoggingEventReaderTest
 {
+	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+	static
+	{
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		XML_INPUT_FACTORY.setProperty(XMLInputFactory.IS_VALIDATING, false);
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(LoggingEventReaderTest.class);
 	private LoggingEventReader instance;
 
@@ -69,6 +79,13 @@ public class LoggingEventReaderTest
 	public void setUp()
 	{
 		instance = new LoggingEventReader();
+	}
+
+	@Test
+	public void correctInputFactoryIsObtained()
+	{
+		String factoryClassName = XML_INPUT_FACTORY.getClass().getName();
+		assertTrue(factoryClassName, factoryClassName.startsWith("com.ctc.wstx.stax"));
 	}
 
 	@Test
@@ -533,13 +550,8 @@ public class LoggingEventReaderTest
 	private LoggingEvent read(byte[] bytes)
 		throws XMLStreamException
 	{
-		XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-		inputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		inputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
-
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = inputFactory.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+		XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return instance.read(reader);
 	}
 }

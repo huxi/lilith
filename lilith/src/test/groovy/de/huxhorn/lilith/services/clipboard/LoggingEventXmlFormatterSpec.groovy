@@ -33,11 +33,11 @@ class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 
 	def List<String> expectedResults() {
 		[
-				'<?xml version="1.0" encoding="UTF-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="com.foo.Foo" level="null"></LoggingEvent>',
+				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="com.foo.Foo" level="null"/>',
 
-				'<?xml version="1.0" encoding="UTF-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="com.foo.Bar" level="null"></LoggingEvent>',
+				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="com.foo.Bar" level="null"/>',
 
-				'<?xml version="1.0" encoding="UTF-8"?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="" level="null"></LoggingEvent>',
+				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="" level="null"/>',
 		]
 	}
 

@@ -46,6 +46,7 @@ All notable changes to this project will be documented in this file.
 - "Paste StackTraceElement" (command shift V) is now much more effective. It parses the text from the clipboard and opens the first `StackTraceElement` it finds in IDEA (if the necessary IDEA plugin is installed). Parsing is much more lenient.
 - Using `SafeString` for "Copy MDC".
 - Details view is now showing all available thread information.
+- XML is now handled by Woodstox.
 
 ### Deprecated
 - Nothing.
