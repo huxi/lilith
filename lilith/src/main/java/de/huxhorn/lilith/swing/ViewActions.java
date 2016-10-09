@@ -44,6 +44,8 @@ import de.huxhorn.lilith.services.clipboard.LoggingMdcFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingMessageFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingMessagePatternFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingNdcFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingThreadGroupNameFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingThreadNameFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableNameFormatter;
 import de.huxhorn.lilith.services.sender.EventSender;
@@ -277,6 +279,8 @@ public class ViewActions
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThrowableNameFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallLocationFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingCallStackFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThreadNameFormatter()));
+		copyLoggingActions.add(new CopyToClipboardAction(new LoggingThreadGroupNameFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMarkerFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingMdcFormatter()));
 		copyLoggingActions.add(new CopyToClipboardAction(new LoggingNdcFormatter()));

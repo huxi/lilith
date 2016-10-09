@@ -22,6 +22,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.formatting.SafeString;
 import java.util.Collection;
@@ -115,6 +116,42 @@ class FormatterTools
 			if (throwable != null)
 			{
 				String name = throwable.getName();
+				if (!isNullOrEmpty(name))
+				{
+					return Optional.of(name);
+				}
+			}
+		}
+		return Optional.empty();
+	}
+
+	static Optional<String> resolveThreadName(Object object)
+	{
+		LoggingEvent value = resolveLoggingEventInternal(object);
+		if (value != null)
+		{
+			ThreadInfo threadInfo = value.getThreadInfo();
+			if (threadInfo != null)
+			{
+				String name = threadInfo.getName();
+				if (!isNullOrEmpty(name))
+				{
+					return Optional.of(name);
+				}
+			}
+		}
+		return Optional.empty();
+	}
+
+	static Optional<String> resolveThreadGroupName(Object object)
+	{
+		LoggingEvent value = resolveLoggingEventInternal(object);
+		if (value != null)
+		{
+			ThreadInfo threadInfo = value.getThreadInfo();
+			if (threadInfo != null)
+			{
+				String name = threadInfo.getGroupName();
 				if (!isNullOrEmpty(name))
 				{
 					return Optional.of(name);
