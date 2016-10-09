@@ -20,9 +20,13 @@ All notable changes to this project will be documented in this file.
 - Added "Copy request headers".
 - Added "Copy request parameters".
 - Added "Copy response headers".
+- Added thread priority to thread info of logging event.
 - Added "Copy thread name".
 - Added "Copy thread group name".
-- Added thread priority to thread info of logging event.
+- Added "ThreadName" condition.
+- Added "ThreadGroupName" condition.
+- Added "Focus Thread name"/"Exclude Thread name".
+- Added "Focus Thread group name"/"Exclude Thread group name".
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.

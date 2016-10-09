@@ -34,6 +34,8 @@ import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
+import de.huxhorn.lilith.swing.actions.FocusThreadGroupNameAction;
+import de.huxhorn.lilith.swing.actions.FocusThreadNameAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowableAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowablesAction;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
@@ -69,6 +71,12 @@ public class FocusMenu
 
 	private FilterAction throwableAction;
 	private JMenuItem throwableItem;
+
+	private FilterAction threadNameAction;
+	private JMenuItem threadNameItem;
+
+	private FilterAction threadGroupNameAction;
+	private JMenuItem threadGroupNameItem;
 
 	private FocusMDCMenu mdcMenu;
 	private FocusMarkerMenu markerMenu;
@@ -112,17 +120,23 @@ public class FocusMenu
 		messagePatternAction = new FocusMessagePatternAction(htmlTooltip);
 		messagePatternItem = new JMenuItem(messagePatternAction);
 
-		formattedMessageAction=new FocusFormattedMessageAction(htmlTooltip);
+		formattedMessageAction = new FocusFormattedMessageAction(htmlTooltip);
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
 
-		callLocationAction=new FocusCallLocationAction();
+		callLocationAction = new FocusCallLocationAction();
 		callLocationItem = new JMenuItem(callLocationAction);
 
-		throwablesAction=new FocusThrowablesAction();
+		throwablesAction = new FocusThrowablesAction();
 		throwablesItem = new JMenuItem(throwablesAction);
 
-		throwableAction=new FocusThrowableAction();
+		throwableAction = new FocusThrowableAction();
 		throwableItem = new JMenuItem(throwableAction);
+
+		threadNameAction = new FocusThreadNameAction();
+		threadNameItem = new JMenuItem(threadNameAction);
+
+		threadGroupNameAction = new FocusThreadGroupNameAction();
+		threadGroupNameItem = new JMenuItem(threadGroupNameAction);
 
 		mdcMenu = new FocusMDCMenu();
 		markerMenu = new FocusMarkerMenu();
@@ -158,6 +172,9 @@ public class FocusMenu
 		throwablesAction.setEventWrapper(eventWrapper);
 		throwableAction.setEventWrapper(eventWrapper);
 
+		threadNameAction.setEventWrapper(eventWrapper);
+		threadGroupNameAction.setEventWrapper(eventWrapper);
+
 		mdcMenu.setEventWrapper(eventWrapper);
 		markerMenu.setEventWrapper(eventWrapper);
 		ndcMenu.setEventWrapper(eventWrapper);
@@ -187,6 +204,9 @@ public class FocusMenu
 
 		throwablesAction.setViewContainer(viewContainer);
 		throwableAction.setViewContainer(viewContainer);
+
+		threadNameAction.setViewContainer(viewContainer);
+		threadGroupNameAction.setViewContainer(viewContainer);
 
 		mdcMenu.setViewContainer(viewContainer);
 		markerMenu.setViewContainer(viewContainer);
@@ -222,6 +242,9 @@ public class FocusMenu
 			addSeparator();
 			add(throwablesItem);
 			add(throwableItem);
+			addSeparator();
+			add(threadNameItem);
+			add(threadGroupNameItem);
 			addSeparator();
 			add(mdcMenu);
 			add(markerMenu);

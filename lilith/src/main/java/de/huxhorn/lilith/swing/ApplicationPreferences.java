@@ -31,6 +31,8 @@ import de.huxhorn.lilith.conditions.LoggerEqualsCondition;
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.lilith.conditions.MessagePatternContainsCondition;
 import de.huxhorn.lilith.conditions.MessagePatternEqualsCondition;
+import de.huxhorn.lilith.conditions.ThreadGroupNameCondition;
+import de.huxhorn.lilith.conditions.ThreadNameCondition;
 import de.huxhorn.lilith.conditions.ThrowableCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -198,6 +200,8 @@ public class ApplicationPreferences
 		LoggerEqualsCondition.DESCRIPTION,
 		CallLocationCondition.DESCRIPTION,
 		ThrowableCondition.DESCRIPTION,
+		ThreadNameCondition.DESCRIPTION,
+		ThreadGroupNameCondition.DESCRIPTION,
 		SAVED_CONDITION,
 	};
 
@@ -280,93 +284,77 @@ public class ApplicationPreferences
 			throw new NullPointerException("conditionName must not be null!");
 		}
 
-		if(EventContainsCondition.DESCRIPTION.equals(conditionName))
+		switch(conditionName)
 		{
-			return new EventContainsCondition(value);
-		}
+			case EventContainsCondition.DESCRIPTION:
+				return new EventContainsCondition(value);
 
-		if(LevelCondition.DESCRIPTION.equals(conditionName))
-		{
-			boolean found = false;
-			for(String current : LEVEL_VALUES)
-			{
-				if(current.equalsIgnoreCase(value))
+			case LevelCondition.DESCRIPTION:
+				boolean found = false;
+				for(String current : LEVEL_VALUES)
 				{
-					value=current;
-					found=true;
+					if(current.equalsIgnoreCase(value))
+					{
+						value=current;
+						found=true;
+					}
 				}
-			}
-			if(found)
-			{
-				return new LevelCondition(value);
-			}
-			throw new IllegalArgumentException("Unknown level value '"+value+"'!");
-		}
+				if(found)
+				{
+					return new LevelCondition(value);
+				}
+				throw new IllegalArgumentException("Unknown level value '"+value+"'!");
 
-		if(FormattedMessageContainsCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new FormattedMessageContainsCondition(value);
-		}
+			case FormattedMessageContainsCondition.DESCRIPTION:
+				return new FormattedMessageContainsCondition(value);
 
-		if(FormattedMessageEqualsCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new FormattedMessageEqualsCondition(value);
-		}
+			case FormattedMessageEqualsCondition.DESCRIPTION:
+				return new FormattedMessageEqualsCondition(value);
 
-		if(MessagePatternContainsCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new MessagePatternContainsCondition(value);
-		}
+			case MessagePatternContainsCondition.DESCRIPTION:
+				return new MessagePatternContainsCondition(value);
 
-		if(MessagePatternEqualsCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new MessagePatternEqualsCondition(value);
-		}
+			case MessagePatternEqualsCondition.DESCRIPTION:
+				return new MessagePatternEqualsCondition(value);
 
-		if(LoggerStartsWithCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new LoggerStartsWithCondition(value);
-		}
+			case LoggerStartsWithCondition.DESCRIPTION:
+				return new LoggerStartsWithCondition(value);
 
-		if(LoggerContainsCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new LoggerContainsCondition(value);
-		}
+			case LoggerContainsCondition.DESCRIPTION:
+				return new LoggerContainsCondition(value);
 
-		if(LoggerEqualsCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new LoggerEqualsCondition(value);
-		}
+			case LoggerEqualsCondition.DESCRIPTION:
+				return new LoggerEqualsCondition(value);
 
-		if(ThrowableCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new ThrowableCondition(value);
-		}
+			case ThrowableCondition.DESCRIPTION:
+				return new ThrowableCondition(value);
 
-		if(CallLocationCondition.DESCRIPTION.equals(conditionName))
-		{
-			return new CallLocationCondition(value);
-		}
+			case ThreadNameCondition.DESCRIPTION:
+				return new ThreadNameCondition(value);
 
+			case ThreadGroupNameCondition.DESCRIPTION:
+				return new ThreadGroupNameCondition(value);
 
-		if(SAVED_CONDITION.equals(conditionName))
-		{
-			SavedCondition savedCondition = resolveSavedCondition(value);
-			if(savedCondition != null)
-			{
-				return savedCondition.getCondition();
-			}
-			throw new IllegalArgumentException("Couldn't find saved condition named '" + value + "'.");
-		}
+			case CallLocationCondition.DESCRIPTION:
+				return new CallLocationCondition(value);
 
-		// we assume a groovy condition...
-		File resolvedScriptFile = resolveGroovyConditionScriptFile(conditionName);
-		if(resolvedScriptFile != null)
-		{
-			// there is a file...
-			return new GroovyCondition(resolvedScriptFile.getAbsolutePath(), value);
+			case SAVED_CONDITION:
+				SavedCondition savedCondition = resolveSavedCondition(value);
+				if(savedCondition != null)
+				{
+					return savedCondition.getCondition();
+				}
+				throw new IllegalArgumentException("Couldn't find saved condition named '" + value + "'.");
+
+			default: // we assume a groovy condition...
+				File resolvedScriptFile = resolveGroovyConditionScriptFile(conditionName);
+				if(resolvedScriptFile != null)
+				{
+					// there is a file...
+					return new GroovyCondition(resolvedScriptFile.getAbsolutePath(), value);
+				}
+				throw new IllegalArgumentException("Couldn't find condition '"+conditionName+"'!");
 		}
-		throw new IllegalArgumentException("Couldn't find condition '"+conditionName+"'!");
 	}
 
 	public String resolveConditionName(Condition condition)

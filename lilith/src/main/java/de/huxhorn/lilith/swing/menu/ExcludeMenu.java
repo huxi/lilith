@@ -34,6 +34,8 @@ import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
+import de.huxhorn.lilith.swing.actions.FocusThreadGroupNameAction;
+import de.huxhorn.lilith.swing.actions.FocusThreadNameAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowableAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowablesAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
@@ -70,6 +72,12 @@ public class ExcludeMenu
 
 	private FilterAction throwableAction;
 	private JMenuItem throwableItem;
+
+	private FilterAction threadNameAction;
+	private JMenuItem threadNameItem;
+
+	private FilterAction threadGroupNameAction;
+	private JMenuItem threadGroupNameItem;
 
 	private ExcludeMDCMenu mdcMenu;
 	private ExcludeMarkerMenu markerMenu;
@@ -120,11 +128,17 @@ public class ExcludeMenu
 		callLocationAction = new NegateFilterAction(new FocusCallLocationAction());
 		callLocationItem = new JMenuItem(callLocationAction);
 
-		throwablesAction=new NegateFilterAction(new FocusThrowablesAction());
+		throwablesAction = new NegateFilterAction(new FocusThrowablesAction());
 		throwablesItem = new JMenuItem(throwablesAction);
 
-		throwableAction=new NegateFilterAction(new FocusThrowableAction());
+		throwableAction = new NegateFilterAction(new FocusThrowableAction());
 		throwableItem = new JMenuItem(throwableAction);
+
+		threadNameAction = new NegateFilterAction(new FocusThreadNameAction());
+		threadNameItem = new JMenuItem(threadNameAction);
+
+		threadGroupNameAction = new NegateFilterAction(new FocusThreadGroupNameAction());
+		threadGroupNameItem = new JMenuItem(threadGroupNameAction);
 
 		mdcMenu = new ExcludeMDCMenu();
 		markerMenu = new ExcludeMarkerMenu();
@@ -159,6 +173,9 @@ public class ExcludeMenu
 		throwablesAction.setEventWrapper(eventWrapper);
 		throwableAction.setEventWrapper(eventWrapper);
 
+		threadNameAction.setEventWrapper(eventWrapper);
+		threadGroupNameAction.setEventWrapper(eventWrapper);
+
 		mdcMenu.setEventWrapper(eventWrapper);
 		markerMenu.setEventWrapper(eventWrapper);
 		ndcMenu.setEventWrapper(eventWrapper);
@@ -183,6 +200,9 @@ public class ExcludeMenu
 
 		throwablesAction.setViewContainer(viewContainer);
 		throwableAction.setViewContainer(viewContainer);
+
+		threadNameAction.setViewContainer(viewContainer);
+		threadGroupNameAction.setViewContainer(viewContainer);
 
 		mdcMenu.setViewContainer(viewContainer);
 		markerMenu.setViewContainer(viewContainer);
@@ -221,6 +241,9 @@ public class ExcludeMenu
 			add(throwablesItem);
 			add(throwableItem);
 			addSeparator();
+			add(threadNameItem);
+			add(threadGroupNameItem);
+			addSeparator();
 			add(mdcMenu);
 			add(markerMenu);
 			add(ndcMenu);
@@ -233,6 +256,8 @@ public class ExcludeMenu
 					callLocationItem.isEnabled() ||
 					throwablesItem.isEnabled() ||
 					throwableItem.isEnabled() ||
+					threadNameItem.isEnabled() ||
+					threadGroupNameItem.isEnabled() ||
 					mdcMenu.isEnabled() ||
 					markerMenu.isEnabled() ||
 					loggerMenu.isEnabled() ||

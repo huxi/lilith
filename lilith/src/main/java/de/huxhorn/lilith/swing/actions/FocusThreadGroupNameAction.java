@@ -1,0 +1,69 @@
+/*
+ * Lilith - a log event viewer.
+ * Copyright (C) 2007-2016 Joern Huxhorn
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package de.huxhorn.lilith.swing.actions;
+
+import de.huxhorn.lilith.conditions.ThreadGroupNameCondition;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.sulky.conditions.Condition;
+import javax.swing.Action;
+
+public class FocusThreadGroupNameAction
+		extends AbstractLoggingFilterAction
+{
+	private static final long serialVersionUID = 1830620169912965693L;
+
+	private String name;
+
+	public FocusThreadGroupNameAction()
+	{
+		super("Thread group name", false);
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+		putValue(Action.SHORT_DESCRIPTION, name);
+		setEnabled(name != null);
+	}
+
+	@Override
+	protected void updateState()
+	{
+		String resolvedName = null;
+		if(viewContainer != null && loggingEvent != null)
+		{
+			ThreadInfo threadInfo = loggingEvent.getThreadInfo();
+			if(threadInfo != null)
+			{
+				resolvedName = threadInfo.getGroupName();
+			}
+		}
+		setName(resolvedName);
+	}
+
+	@Override
+	public Condition resolveCondition()
+	{
+		return new ThreadGroupNameCondition(name);
+	}
+}
