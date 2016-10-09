@@ -233,6 +233,8 @@ public class FocusMenu
 		{
 			add(savedMenu);
 			addSeparator();
+			add(loggerMenu);
+			addSeparator();
 			add(messagePatternItem);
 			add(formattedMessageItem);
 			addSeparator();
@@ -249,8 +251,6 @@ public class FocusMenu
 			add(mdcMenu);
 			add(markerMenu);
 			add(ndcMenu);
-			addSeparator();
-			add(loggerMenu);
 
 			// levelMenu will always be enabled if an event exists at all
 			setEnabled(true);

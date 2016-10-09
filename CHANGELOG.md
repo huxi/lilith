@@ -53,6 +53,7 @@ All notable changes to this project will be documented in this file.
 - Using `SafeString` for "Copy MDC".
 - Details view is now showing all available thread information.
 - XML is now handled by Woodstox.
+- Moved "Logger" in "Focus"/"Exclude" menus from bottom to top.
 
 ### Deprecated
 - Nothing.

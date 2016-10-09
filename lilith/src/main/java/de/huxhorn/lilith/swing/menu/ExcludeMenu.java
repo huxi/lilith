@@ -233,6 +233,8 @@ public class ExcludeMenu
 		{
 			add(savedMenu);
 			addSeparator();
+			add(loggerMenu);
+			addSeparator();
 			add(messagePatternItem);
 			add(formattedMessageItem);
 			addSeparator();
@@ -247,8 +249,6 @@ public class ExcludeMenu
 			add(mdcMenu);
 			add(markerMenu);
 			add(ndcMenu);
-			addSeparator();
-			add(loggerMenu);
 
 			setEnabled(
 					messagePatternItem.isEnabled() ||
