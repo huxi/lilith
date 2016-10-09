@@ -88,7 +88,7 @@ public class ThrowableCondition
 	{
 		Set<String> result=new HashSet<>();
 		IdentityHashMap<ThrowableInfo, String> dejaVu=new IdentityHashMap<>();
-		collectThrowableNamesRescursive(throwable, dejaVu);
+		collectThrowableNamesRecursive(throwable, dejaVu);
 		for (String name : dejaVu.values())
 		{
 			if(name != null)
@@ -99,7 +99,7 @@ public class ThrowableCondition
 		return result;
 	}
 
-	private static void collectThrowableNamesRescursive(ThrowableInfo throwable,  IdentityHashMap<ThrowableInfo, String> dejaVu)
+	private static void collectThrowableNamesRecursive(ThrowableInfo throwable, IdentityHashMap<ThrowableInfo, String> dejaVu)
 	{
 		if(throwable == null)
 		{
@@ -113,7 +113,7 @@ public class ThrowableCondition
 
 		dejaVu.put(throwable, throwable.getName());
 
-		collectThrowableNamesRescursive(throwable.getCause(), dejaVu);
+		collectThrowableNamesRecursive(throwable.getCause(), dejaVu);
 
 		ThrowableInfo[] suppressed = throwable.getSuppressed();
 		if(suppressed == null)
@@ -123,7 +123,7 @@ public class ThrowableCondition
 
 		for (ThrowableInfo current : suppressed)
 		{
-			collectThrowableNamesRescursive(current, dejaVu);
+			collectThrowableNamesRecursive(current, dejaVu);
 		}
 	}
 
