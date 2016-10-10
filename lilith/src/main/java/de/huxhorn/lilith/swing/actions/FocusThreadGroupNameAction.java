@@ -34,12 +34,7 @@ public class FocusThreadGroupNameAction
 		super("Thread group name", false);
 	}
 
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
+	private void setName(String name)
 	{
 		this.name = name;
 		putValue(Action.SHORT_DESCRIPTION, name);
@@ -50,7 +45,7 @@ public class FocusThreadGroupNameAction
 	protected void updateState()
 	{
 		String resolvedName = null;
-		if(viewContainer != null && loggingEvent != null)
+		if(loggingEvent != null)
 		{
 			ThreadInfo threadInfo = loggingEvent.getThreadInfo();
 			if(threadInfo != null)
@@ -64,6 +59,10 @@ public class FocusThreadGroupNameAction
 	@Override
 	public Condition resolveCondition()
 	{
+		if(name == null)
+		{
+			return null;
+		}
 		return new ThreadGroupNameCondition(name);
 	}
 }

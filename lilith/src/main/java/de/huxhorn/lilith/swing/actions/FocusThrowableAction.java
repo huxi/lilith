@@ -35,12 +35,7 @@ public class FocusThrowableAction
 		super("Throwable", false);
 	}
 
-	public String getThrowableName()
-	{
-		return throwableName;
-	}
-
-	public void setThrowableName(String throwableName)
+	private void setThrowableName(String throwableName)
 	{
 		this.throwableName = throwableName;
 		putValue(Action.SHORT_DESCRIPTION, throwableName);
@@ -51,7 +46,7 @@ public class FocusThrowableAction
 	protected void updateState()
 	{
 		String throwableName = null;
-		if(viewContainer != null && loggingEvent != null)
+		if(loggingEvent != null)
 		{
 			ThrowableInfo throwable = loggingEvent.getThrowable();
 			if(throwable != null)
@@ -65,6 +60,10 @@ public class FocusThrowableAction
 	@Override
 	public Condition resolveCondition()
 	{
+		if(throwableName == null)
+		{
+			return null;
+		}
 		return new ThrowableCondition(throwableName);
 	}
 }

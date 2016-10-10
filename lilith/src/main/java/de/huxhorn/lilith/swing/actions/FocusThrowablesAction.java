@@ -36,12 +36,16 @@ public class FocusThrowablesAction
 	@Override
 	protected void updateState()
 	{
-		setEnabled(viewContainer != null && loggingEvent != null);
+		setEnabled(loggingEvent != null);
 	}
 
 	@Override
 	public Condition resolveCondition()
 	{
+		if(loggingEvent == null)
+		{
+			return null;
+		}
 		return new ThrowableCondition();
 	}
 }

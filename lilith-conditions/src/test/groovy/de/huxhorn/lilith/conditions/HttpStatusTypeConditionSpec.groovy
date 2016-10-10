@@ -38,37 +38,37 @@ class HttpStatusTypeConditionSpec extends Specification {
 		'INFORMATIONAL' | [52] as Set
 		'SUCCESSFUL'    | [53, 54] as Set
 		'REDIRECTION'   | [55] as Set
-		'CLIENT_ERROR'  | [56, 57] as Set
+		'CLIENT_ERROR'  | [56, 57, 120] as Set
 		'SERVER_ERROR'  | [58] as Set
 
 		'info'          | [52] as Set
 		'succ'          | [53, 54] as Set
 		'red'           | [55] as Set
-		'cl'            | [56, 57] as Set
+		'cl'            | [56, 57, 120] as Set
 		'se'            | [58] as Set
 
 		'1'             | [52] as Set
 		'2'             | [53, 54] as Set
 		'3'             | [55] as Set
-		'4'             | [56, 57] as Set
+		'4'             | [56, 57, 120] as Set
 		'5'             | [58] as Set
 
 		' 1 '           | [52] as Set
 		' 2 '           | [53, 54] as Set
 		' 3 '           | [55] as Set
-		' 4 '           | [56, 57] as Set
+		' 4 '           | [56, 57, 120] as Set
 		' 5 '           | [58] as Set
 
 		'1X'            | [52] as Set
 		'2X'            | [53, 54] as Set
 		'3X'            | [55] as Set
-		'4X'            | [56, 57] as Set
+		'4X'            | [56, 57, 120] as Set
 		'5X'            | [58] as Set
 
 		'1xx'           | [52] as Set
 		'2xx'           | [53, 54] as Set
 		'3xx'           | [55] as Set
-		'4xx'           | [56, 57] as Set
+		'4xx'           | [56, 57, 120] as Set
 		'5xx'           | [58] as Set
 
 		condition = new HttpStatusTypeCondition(input)

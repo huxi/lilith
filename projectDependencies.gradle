@@ -582,6 +582,8 @@ project(':lilith') {
 		runtime project(':lilith-sounds')
 		testCompile project(':lilith-data-corpus')
 		testCompile libraries.'sulky-junit'
+		testRuntime libraries.'cglib-nodep'
+		testRuntime libraries.'objenesis'
 	}
 }
 

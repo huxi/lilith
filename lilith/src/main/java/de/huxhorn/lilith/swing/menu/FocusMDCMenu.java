@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,13 +90,13 @@ public class FocusMDCMenu
 		}
 		for (Map.Entry<String, String> entry : mdc.entrySet())
 		{
-			add(createAction(viewContainer, entry.getKey(), entry.getValue()));
+			add(createAction(entry.getKey(), entry.getValue()));
 		}
 		setEnabled(true);
 	}
 
-	protected FilterAction createAction(ViewContainer viewContainer, String key, String value)
+	protected FilterAction createAction(String key, String value)
 	{
-		return new FocusMDCAction(viewContainer, key, value);
+		return new FocusMDCAction(key, value);
 	}
 }

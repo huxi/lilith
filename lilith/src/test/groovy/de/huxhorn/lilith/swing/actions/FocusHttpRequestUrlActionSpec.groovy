@@ -15,42 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.conditions.MarkerContainsCondition;
-import de.huxhorn.sulky.conditions.Condition;
+package de.huxhorn.lilith.swing.actions
 
-public class FocusMarkerAction
-		extends AbstractLoggingFilterAction
-{
-	private static final long serialVersionUID = -4897396873005451863L;
+import de.huxhorn.lilith.conditions.HttpRequestUrlCondition
 
-	private String markerName;
-
-	public FocusMarkerAction(String markerName)
-	{
-		super(markerName, false);
-		this.markerName = markerName;
+class FocusHttpRequestUrlActionSpec extends AbstractFilterActionSpec {
+	@Override
+	FilterAction createAction() {
+		return new FocusHttpRequestUrlAction()
 	}
 
 	@Override
-	protected void updateState()
-	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+	Set<Integer> expectedEnabledIndices() {
+		return [74, 75]
 	}
 
 	@Override
-	public Condition resolveCondition()
-	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
-		{
-			return null;
-		}
-		return new MarkerContainsCondition(markerName);
+	List<String> expectedSearchStrings() {
+		return [
+				'GET /?foo=bar&foo=schnurz HTTP/1.1',
+				'GET /index.html?foo=bar&foo=schnurz HTTP/1.1',
+		]
+	}
+
+	@Override
+	Class expectedConditionClass() {
+		return HttpRequestUrlCondition.class
 	}
 }

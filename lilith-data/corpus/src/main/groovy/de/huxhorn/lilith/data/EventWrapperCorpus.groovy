@@ -384,6 +384,11 @@ public class EventWrapperCorpus
 		// thread priority
 		result.add(new EventWrapper<>(event: new LoggingEvent(threadInfo: new ThreadInfo(priority: 17))))
 
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 99))) // status code too small
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 600))) // status code too large
+// #120
+		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 488))) // unknown status code
+
 		return result
 	}
 

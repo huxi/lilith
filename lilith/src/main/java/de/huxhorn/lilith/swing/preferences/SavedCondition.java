@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ package de.huxhorn.lilith.swing.preferences;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.sulky.conditions.Condition;
 
-import java.awt.*;
 import java.io.Serializable;
 
 public class SavedCondition
@@ -80,33 +79,6 @@ public class SavedCondition
 	public void setActive(boolean active)
 	{
 		this.active = active;
-	}
-
-	public Color getTextColor()
-	{
-		if(colorScheme != null)
-		{
-			return colorScheme.getTextColor();
-		}
-		return null;
-	}
-
-	public Color getBackgroundColor()
-	{
-		if(colorScheme != null)
-		{
-			return colorScheme.getBackgroundColor();
-		}
-		return null;
-	}
-
-	public Color getBorderColor()
-	{
-		if(colorScheme != null)
-		{
-			return colorScheme.getBorderColor();
-		}
-		return null;
 	}
 
 	public ColorScheme getColorScheme()

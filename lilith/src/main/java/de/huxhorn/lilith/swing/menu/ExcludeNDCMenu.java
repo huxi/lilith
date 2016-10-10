@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
@@ -34,14 +33,14 @@ public class ExcludeNDCMenu
 	}
 
 	@Override
-	protected FilterAction createMessageAction(ViewContainer viewContainer, String message)
+	protected FilterAction createMessageAction(String message)
 	{
-		return new NegateFilterAction(new FocusNDCAction(viewContainer, message, htmlTooltip));
+		return new NegateFilterAction(new FocusNDCAction(message, htmlTooltip));
 	}
 
 	@Override
-	protected FilterAction createMessagePatternAction(ViewContainer viewContainer, String pattern)
+	protected FilterAction createMessagePatternAction(String pattern)
 	{
-		return new NegateFilterAction(new FocusNDCPatternAction(viewContainer, pattern, htmlTooltip));
+		return new NegateFilterAction(new FocusNDCPatternAction(pattern, htmlTooltip));
 	}
 }

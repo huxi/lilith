@@ -34,12 +34,7 @@ public class FocusThreadNameAction
 		super("Thread name", false);
 	}
 
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
+	private void setName(String name)
 	{
 		this.name = name;
 		putValue(Action.SHORT_DESCRIPTION, name);
@@ -49,7 +44,7 @@ public class FocusThreadNameAction
 	protected void updateState()
 	{
 		String resolvedName = null;
-		if(viewContainer != null && loggingEvent != null)
+		if(loggingEvent != null)
 		{
 			ThreadInfo threadInfo = loggingEvent.getThreadInfo();
 			if(threadInfo != null)
@@ -63,6 +58,10 @@ public class FocusThreadNameAction
 	@Override
 	public Condition resolveCondition()
 	{
+		if(name == null)
+		{
+			return null;
+		}
 		return new ThreadNameCondition(name);
 	}
 }

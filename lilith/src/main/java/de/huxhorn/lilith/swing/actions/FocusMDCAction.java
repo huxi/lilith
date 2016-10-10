@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,29 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.MDCContainsCondition;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.TextPreprocessor;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
 
 public class FocusMDCAction
-		extends AbstractFilterAction
+		extends AbstractLoggingFilterAction
 {
 	private static final long serialVersionUID = -1245643497938628684L;
 
 	private final String key;
 	private final String value;
 
-	public FocusMDCAction(ViewContainer viewContainer, String key, String value)
+	public FocusMDCAction(String key, String value)
 	{
 		super(TextPreprocessor.cropToSingleLine(key), false);
 		this.key = key;
 		this.value = value;
 		initializeCroppedTooltip(value);
-		setViewContainer(viewContainer);
 	}
 
 	@Override
 	protected void updateState()
 	{
-		if(viewContainer == null)
+		if(loggingEvent == null || loggingEvent.getMdc() == null || loggingEvent.getMdc().isEmpty())
 		{
 			setEnabled(false);
 			return;
@@ -52,15 +49,9 @@ public class FocusMDCAction
 	}
 
 	@Override
-	public void setEventWrapper(EventWrapper eventWrapper)
-	{
-		// ignore
-	}
-
-	@Override
 	public Condition resolveCondition()
 	{
-		if(key == null)
+		if(loggingEvent == null || loggingEvent.getMdc() == null || loggingEvent.getMdc().isEmpty())
 		{
 			return null;
 		}

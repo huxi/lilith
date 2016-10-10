@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - Added "ThreadGroupName" condition.
 - Added "Focus Thread name"/"Exclude Thread name".
 - Added "Focus Thread group name"/"Exclude Thread group name".
+- Added lots of filter tests.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
@@ -62,6 +63,8 @@ All notable changes to this project will be documented in this file.
 - Removed `SourceInfo` and related classes. They were all unused and also terrible.
 - Removed `LoggingEvents` and related classes. Same as above.
 - Removed `AccessEvents` and related classes. Same as above.
+- Removed unused methods `getTextColor()`, `getBackgroundColor()` and `getBorderColor()` of class `SavedCondition`.
+- Removed unused c'tors in `AbstractFilterAction`, `AbstractLoggingFilterAction` and `AbstractAccessFilterAction`.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.

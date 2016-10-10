@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,13 +93,13 @@ public class FocusMarkerMenu
 		SortedSet<String> sorted = new TreeSet<>(collected);
 		for (String current : sorted)
 		{
-			add(createAction(viewContainer, current));
+			add(createAction(current));
 		}
 		setEnabled(true);
 	}
 
-	protected FilterAction createAction(ViewContainer viewContainer, String markerName)
+	protected FilterAction createAction(String markerName)
 	{
-		return new FocusMarkerAction(viewContainer, markerName);
+		return new FocusMarkerAction(markerName);
 	}
 }

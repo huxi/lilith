@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,22 +102,22 @@ public class FocusNDCMenu
 			{
 				addSeparator();
 			}
-			add(createMessageAction(viewContainer, message));
+			add(createMessageAction(message));
 			if(!message.equals(messagePattern))
 			{
-				add(createMessagePatternAction(viewContainer, messagePattern));
+				add(createMessagePatternAction(messagePattern));
 			}
 		}
 		setEnabled(true);
 	}
 
-	protected FilterAction createMessageAction(ViewContainer viewContainer, String message)
+	protected FilterAction createMessageAction(String message)
 	{
-		return new FocusNDCAction(viewContainer, message, htmlTooltip);
+		return new FocusNDCAction(message, htmlTooltip);
 	}
 
-	protected FilterAction createMessagePatternAction(ViewContainer viewContainer, String pattern)
+	protected FilterAction createMessagePatternAction(String pattern)
 	{
-		return new FocusNDCPatternAction(viewContainer, pattern, htmlTooltip);
+		return new FocusNDCPatternAction(pattern, htmlTooltip);
 	}
 }

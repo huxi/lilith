@@ -15,42 +15,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.conditions.MarkerContainsCondition;
-import de.huxhorn.sulky.conditions.Condition;
+package de.huxhorn.lilith.swing.actions
 
-public class FocusMarkerAction
-		extends AbstractLoggingFilterAction
-{
-	private static final long serialVersionUID = -4897396873005451863L;
+import de.huxhorn.lilith.conditions.MarkerContainsCondition
 
-	private String markerName;
-
-	public FocusMarkerAction(String markerName)
-	{
-		super(markerName, false);
-		this.markerName = markerName;
+class FocusMarkerActionSpec extends AbstractFilterActionSpec {
+	@Override
+	FilterAction createAction() {
+		return new FocusMarkerAction("markerName")
 	}
 
 	@Override
-	protected void updateState()
-	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+	Set<Integer> expectedEnabledIndices() {
+		return [31, 32, 88]
 	}
 
 	@Override
-	public Condition resolveCondition()
-	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
-		{
-			return null;
+	List<String> expectedSearchStrings() {
+		List<String> result = new ArrayList<>()
+		expectedEnabledIndices().each {
+			// returns always the markerName used during construction
+			result.add('markerName')
 		}
-		return new MarkerContainsCondition(markerName);
+		return result
+	}
+
+	@Override
+	Class expectedConditionClass() {
+		return MarkerContainsCondition.class
 	}
 }

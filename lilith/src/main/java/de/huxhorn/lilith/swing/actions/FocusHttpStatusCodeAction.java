@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,49 +36,39 @@ public class FocusHttpStatusCodeAction
 
 	protected void setStatusCode(Integer statusCode)
 	{
-		this.statusCode = statusCode;
-		if(statusCode != null)
+		if(statusCode == null || statusCode < 100 || statusCode >= 600)
 		{
-			HttpStatus status = HttpStatus.getStatus(statusCode);
-			if(status != null)
-			{
-				putValue(Action.SHORT_DESCRIPTION, status.getCode() + " - " + status.getDescription());
-			}
-			else
-			{
-				putValue(Action.SHORT_DESCRIPTION, statusCode);
-			}
-
-			setEnabled(true);
-		}
-		else
-		{
+			this.statusCode = null;
 			putValue(Action.SHORT_DESCRIPTION, null);
 
 			setEnabled(false);
+			return;
 		}
+
+		this.statusCode = statusCode;
+		HttpStatus status = HttpStatus.getStatus(statusCode);
+		if(status != null)
+		{
+			putValue(Action.SHORT_DESCRIPTION, status.getCode() + " - " + status.getDescription());
+		}
+		else
+		{
+			putValue(Action.SHORT_DESCRIPTION, statusCode);
+		}
+
+		setEnabled(true);
 	}
 
 	@Override
 	protected void updateState()
 	{
-		if(viewContainer == null)
-		{
-			setStatusCode(null);
-			return;
-		}
-
 		if(accessEvent != null)
 		{
-			int statusCode = accessEvent.getStatusCode();
-			if(statusCode < 100 || statusCode >= 600)
-			{
-				setStatusCode(null);
-			}
-			else
-			{
-				setStatusCode(statusCode);
-			}
+			setStatusCode(accessEvent.getStatusCode());
+		}
+		else
+		{
+			setStatusCode(null);
 		}
 	}
 

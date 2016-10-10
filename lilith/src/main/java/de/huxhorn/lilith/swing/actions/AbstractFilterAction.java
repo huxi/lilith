@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ import de.huxhorn.sulky.conditions.Condition;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
 import java.awt.event.ActionEvent;
 
 public abstract class AbstractFilterAction
@@ -37,30 +36,29 @@ public abstract class AbstractFilterAction
 	private final boolean htmlTooltip;
 
 
-	protected AbstractFilterAction(boolean htmlTooltip)
-	{
-		this.htmlTooltip = htmlTooltip;
-	}
-
 	protected AbstractFilterAction(String name, boolean htmlTooltip)
 	{
 		super(name);
 		this.htmlTooltip = htmlTooltip;
 	}
 
-	protected AbstractFilterAction(String name, Icon icon, boolean htmlTooltip)
-	{
-		super(name, icon);
-		this.htmlTooltip = htmlTooltip;
-	}
-
 	@Override
-	public void setViewContainer(ViewContainer viewContainer) {
+	public final void setViewContainer(ViewContainer viewContainer) {
 		if(this.viewContainer != viewContainer)
 		{
 			this.viewContainer = viewContainer;
-			updateState();
+			viewContainerUpdated();
 		}
+	}
+
+	private void viewContainerUpdated()
+	{
+		EventWrapper eventWrapper = null;
+		if(viewContainer != null)
+		{
+			eventWrapper = viewContainer.getSelectedEvent();
+		}
+		setEventWrapper(eventWrapper);
 	}
 
 	@Override
@@ -70,7 +68,7 @@ public abstract class AbstractFilterAction
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e)
+	public final void actionPerformed(ActionEvent e)
 	{
 		if(this.viewContainer == null)
 		{
@@ -79,7 +77,9 @@ public abstract class AbstractFilterAction
 		viewContainer.applyCondition(resolveCondition(), e);
 	}
 
-
+	/**
+	 * To be called after setEventWrapper.
+	 */
 	protected abstract void updateState();
 
 	protected void initializeCroppedTooltip(String tooltip)

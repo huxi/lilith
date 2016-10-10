@@ -15,42 +15,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.conditions.MarkerContainsCondition;
-import de.huxhorn.sulky.conditions.Condition;
+package de.huxhorn.lilith.swing.actions
 
-public class FocusMarkerAction
-		extends AbstractLoggingFilterAction
-{
-	private static final long serialVersionUID = -4897396873005451863L;
+import de.huxhorn.lilith.conditions.HttpStatusCodeCondition
 
-	private String markerName;
-
-	public FocusMarkerAction(String markerName)
-	{
-		super(markerName, false);
-		this.markerName = markerName;
+class FocusHttpStatusCodeActionSpec extends AbstractFilterActionSpec {
+	@Override
+	FilterAction createAction() {
+		return new FocusHttpStatusCodeAction()
 	}
 
 	@Override
-	protected void updateState()
-	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+	Set<Integer> expectedEnabledIndices() {
+		return [52, 53, 54, 55, 56, 57, 58, 120]
 	}
 
 	@Override
-	public Condition resolveCondition()
-	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
-		{
-			return null;
-		}
-		return new MarkerContainsCondition(markerName);
+	List<String> expectedSearchStrings() {
+		return ['100', '200', '202', '301', '404', '451', '500', '488']
+	}
+
+	@Override
+	Class expectedConditionClass() {
+		return HttpStatusCodeCondition.class
 	}
 }

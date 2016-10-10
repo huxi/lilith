@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,12 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.HttpStatusTypeCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.conditions.Condition;
 
 import javax.swing.Action;
 
 public class FocusHttpStatusTypeAction
-		extends AbstractFilterAction
+		extends AbstractAccessFilterAction
 {
 	private static final long serialVersionUID = -285766419031200234L;
 
@@ -42,23 +41,16 @@ public class FocusHttpStatusTypeAction
 	@Override
 	protected void updateState()
 	{
-		if(viewContainer == null)
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
-	}
-
-	@Override
-	public void setEventWrapper(EventWrapper eventWrapper)
-	{
-		// ignore
+		setEnabled(accessEvent != null);
 	}
 
 	@Override
 	public Condition resolveCondition()
 	{
+		if(accessEvent == null)
+		{
+			return null;
+		}
 		return new HttpStatusTypeCondition(type.name());
 	}
 }

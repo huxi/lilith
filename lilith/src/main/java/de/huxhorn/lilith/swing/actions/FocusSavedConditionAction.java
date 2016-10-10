@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ public class FocusSavedConditionAction
 	private static final long serialVersionUID = -1245643497938628684L;
 
 	private final SavedCondition savedCondition;
+	private EventWrapper eventWrapper;
 
 	public FocusSavedConditionAction(ViewContainer viewContainer, SavedCondition savedCondition, boolean htmlTooltip)
 	{
@@ -45,20 +46,14 @@ public class FocusSavedConditionAction
 	@Override
 	protected void updateState()
 	{
-		if(viewContainer == null) // || eventWrapper == null)
-		{
-			setEnabled(false);
-			return;
-		}
-		//setEnabled(eventWrapper.getEvent() != null);
-		setEnabled(true);
+		setEnabled(eventWrapper != null);
 	}
 
 	@Override
 	public void setEventWrapper(EventWrapper eventWrapper)
 	{
-		// ignore
-		// this.eventWrapper = eventWrapper;
+		this.eventWrapper = eventWrapper;
+		updateState();
 	}
 
 	@Override

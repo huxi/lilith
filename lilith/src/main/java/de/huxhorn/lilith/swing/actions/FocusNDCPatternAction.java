@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,19 +18,17 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.NDCContainsPatternCondition;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.TextPreprocessor;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
 
 public class FocusNDCPatternAction
-		extends AbstractFilterAction
+		extends AbstractLoggingFilterAction
 {
 	private static final long serialVersionUID = -4802481730349145765L;
 
 	private final String pattern;
 
-	public FocusNDCPatternAction(ViewContainer viewContainer, String pattern, boolean htmlTooltip)
+	public FocusNDCPatternAction(String pattern, boolean htmlTooltip)
 	{
 		super(TextPreprocessor.cropToSingleLine(pattern), htmlTooltip);
 		this.pattern = pattern;
@@ -41,7 +39,7 @@ public class FocusNDCPatternAction
 	@Override
 	protected void updateState()
 	{
-		if(viewContainer == null)
+		if(loggingEvent == null || loggingEvent.getNdc() == null || loggingEvent.getNdc().length == 0)
 		{
 			setEnabled(false);
 			return;
@@ -50,15 +48,9 @@ public class FocusNDCPatternAction
 	}
 
 	@Override
-	public void setEventWrapper(EventWrapper eventWrapper)
-	{
-		// ignore
-	}
-
-	@Override
 	public Condition resolveCondition()
 	{
-		if(pattern == null)
+		if(loggingEvent == null || loggingEvent.getNdc() == null || loggingEvent.getNdc().length == 0)
 		{
 			return null;
 		}
