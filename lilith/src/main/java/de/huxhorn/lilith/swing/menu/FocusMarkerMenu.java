@@ -93,7 +93,9 @@ public class FocusMarkerMenu
 		SortedSet<String> sorted = new TreeSet<>(collected);
 		for (String current : sorted)
 		{
-			add(createAction(current));
+			FilterAction filterAction = createAction(current);
+			filterAction.setViewContainer(viewContainer);
+			add(filterAction);
 		}
 		setEnabled(true);
 	}

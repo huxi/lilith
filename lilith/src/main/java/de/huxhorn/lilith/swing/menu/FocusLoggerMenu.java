@@ -84,7 +84,9 @@ public class FocusLoggerMenu
 
 		for (String current : prepareLoggerNames(loggerName))
 		{
-			add(createAction(current));
+			FilterAction filterAction = createAction(current);
+			filterAction.setViewContainer(viewContainer);
+			add(filterAction);
 		}
 		setEnabled(true);
 	}

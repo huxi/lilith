@@ -102,10 +102,14 @@ public class FocusNDCMenu
 			{
 				addSeparator();
 			}
-			add(createMessageAction(message));
+			FilterAction filterAction = createMessageAction(message);
+			filterAction.setViewContainer(viewContainer);
+			add(filterAction);
 			if(!message.equals(messagePattern))
 			{
-				add(createMessagePatternAction(messagePattern));
+				FilterAction patternFilterAction = createMessagePatternAction(messagePattern);
+				patternFilterAction.setViewContainer(viewContainer);
+				add(patternFilterAction);
 			}
 		}
 		setEnabled(true);

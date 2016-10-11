@@ -90,7 +90,9 @@ public class FocusMDCMenu
 		}
 		for (Map.Entry<String, String> entry : mdc.entrySet())
 		{
-			add(createAction(entry.getKey(), entry.getValue()));
+			FilterAction filterAction = createAction(entry.getKey(), entry.getValue());
+			filterAction.setViewContainer(viewContainer);
+			add(filterAction);
 		}
 		setEnabled(true);
 	}
