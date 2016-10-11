@@ -30,7 +30,7 @@ public class FocusSavedConditionAction
 	private final SavedCondition savedCondition;
 	private EventWrapper eventWrapper;
 
-	public FocusSavedConditionAction(ViewContainer viewContainer, SavedCondition savedCondition, boolean htmlTooltip)
+	public FocusSavedConditionAction(SavedCondition savedCondition, boolean htmlTooltip)
 	{
 		super(savedCondition.getName(), htmlTooltip);
 		this.savedCondition = savedCondition;
@@ -40,7 +40,6 @@ public class FocusSavedConditionAction
 			throw new IllegalArgumentException("Condition of "+savedCondition+" is null!");
 		}
 		initializeConditionTooltip(condition);
-		setViewContainer(viewContainer);
 	}
 
 	@Override

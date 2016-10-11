@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ public class ExcludeSavedConditionsMenu
 	}
 
 	@Override
-	protected FilterAction createAction(ViewContainer viewContainer, SavedCondition savedCondition)
+	protected FilterAction createAction(SavedCondition savedCondition)
 	{
-		return new NegateFilterAction(new FocusSavedConditionAction(viewContainer, savedCondition, htmlTooltip));
+		return new NegateFilterAction(new FocusSavedConditionAction(savedCondition, htmlTooltip));
 	}
 }
