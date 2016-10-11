@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpStatusCodeCondition
 
-class FocusHttpStatusCodeActionSpec extends AbstractFilterActionSpec {
+class FocusHttpStatusCodeActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusHttpStatusCodeAction()

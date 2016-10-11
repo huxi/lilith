@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpRemoteUserCondition
 
-class FocusHttpRemoteUserActionSpec extends AbstractFilterActionSpec {
+class FocusHttpRemoteUserActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusHttpRemoteUserAction()

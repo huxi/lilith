@@ -21,7 +21,7 @@ package de.huxhorn.lilith.swing.actions
 import de.huxhorn.lilith.conditions.HttpStatusTypeCondition
 import de.huxhorn.lilith.data.access.HttpStatus
 
-class FocusHttpStatusTypeActionSpec extends AbstractFilterActionSpec {
+class FocusHttpStatusTypeActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusHttpStatusTypeAction(HttpStatus.Type.CLIENT_ERROR)

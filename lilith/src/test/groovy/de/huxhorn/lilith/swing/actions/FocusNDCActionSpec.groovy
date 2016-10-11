@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.NDCContainsCondition
 
-class FocusNDCActionSpec extends AbstractFilterActionSpec {
+class FocusNDCActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusNDCAction("ndcMessage", false)

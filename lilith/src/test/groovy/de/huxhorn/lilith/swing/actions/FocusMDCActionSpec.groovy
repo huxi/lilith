@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.MDCContainsCondition
 
-class FocusMDCActionSpec extends AbstractFilterActionSpec {
+class FocusMDCActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusMDCAction("mdcKey", "mdcValue")

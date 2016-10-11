@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.ThreadNameCondition
 
-class FocusThreadNameActionSpec extends AbstractFilterActionSpec {
+class FocusThreadNameActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusThreadNameAction()

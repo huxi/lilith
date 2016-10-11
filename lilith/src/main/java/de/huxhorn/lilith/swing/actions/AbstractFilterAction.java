@@ -74,7 +74,12 @@ public abstract class AbstractFilterAction
 		{
 			return;
 		}
-		viewContainer.applyCondition(resolveCondition(), e);
+		Condition condition = resolveCondition();
+		if(condition == null)
+		{
+			return;
+		}
+		viewContainer.applyCondition(condition, e);
 	}
 
 	/**

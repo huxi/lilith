@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.ThrowableCondition
 
-class FocusThrowableActionSpec extends AbstractFilterActionSpec {
+class FocusThrowableActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusThrowableAction()

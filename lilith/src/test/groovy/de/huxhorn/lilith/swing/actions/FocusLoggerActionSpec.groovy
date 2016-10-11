@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition
 
-class FocusLoggerActionSpec extends AbstractFilterActionSpec {
+class FocusLoggerActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusLoggerAction("loggerName")

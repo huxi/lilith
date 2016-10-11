@@ -21,7 +21,7 @@ package de.huxhorn.lilith.swing.actions
 import de.huxhorn.lilith.conditions.LevelCondition
 import de.huxhorn.lilith.data.logging.LoggingEvent
 
-class FocusLevelActionSpec extends AbstractFilterActionSpec {
+class FocusLevelActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusLevelAction(LoggingEvent.Level.INFO)

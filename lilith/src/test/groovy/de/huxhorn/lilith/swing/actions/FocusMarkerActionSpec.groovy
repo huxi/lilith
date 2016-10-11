@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.MarkerContainsCondition
 
-class FocusMarkerActionSpec extends AbstractFilterActionSpec {
+class FocusMarkerActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusMarkerAction("markerName")

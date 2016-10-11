@@ -21,7 +21,7 @@ package de.huxhorn.lilith.swing.actions
 import de.huxhorn.lilith.conditions.ThreadNameCondition
 import de.huxhorn.lilith.swing.preferences.SavedCondition
 
-class FocusSavedConditionActionSpec extends AbstractFilterActionSpec {
+class FocusSavedConditionActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		SavedCondition savedCondition = new SavedCondition(new ThreadNameCondition())

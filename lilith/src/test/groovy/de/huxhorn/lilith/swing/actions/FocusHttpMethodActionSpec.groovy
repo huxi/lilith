@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpMethodCondition
 
-class FocusHttpMethodActionSpec extends AbstractFilterActionSpec {
+class FocusHttpMethodActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusHttpMethodAction()

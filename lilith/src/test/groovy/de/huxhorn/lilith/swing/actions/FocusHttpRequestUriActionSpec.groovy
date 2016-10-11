@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpRequestUriCondition
 
-class FocusHttpRequestUriActionSpec extends AbstractFilterActionSpec {
+class FocusHttpRequestUriActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusHttpRequestUriAction()

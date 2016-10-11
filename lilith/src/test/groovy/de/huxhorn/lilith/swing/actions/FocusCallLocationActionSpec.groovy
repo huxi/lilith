@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.CallLocationCondition
 
-class FocusCallLocationActionSpec extends AbstractFilterActionSpec {
+class FocusCallLocationActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusCallLocationAction()

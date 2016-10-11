@@ -20,7 +20,7 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.FormattedMessageEqualsCondition
 
-class FocusFormattedMessageActionSpec extends AbstractFilterActionSpec {
+class FocusFormattedMessageActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
 		return new FocusFormattedMessageAction(false)
