@@ -136,7 +136,12 @@ public class NegateFilterAction
 		{
 			return;
 		}
-		viewContainer.applyCondition(resolveCondition(), e);
+		Condition condition=resolveCondition();
+		if(condition == null)
+		{
+			return;
+		}
+		viewContainer.applyCondition(condition, e);
 	}
 
 	@Override
