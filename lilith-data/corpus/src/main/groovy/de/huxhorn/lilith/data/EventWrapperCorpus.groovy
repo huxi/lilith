@@ -35,6 +35,9 @@ public class EventWrapperCorpus
 	private static final Logger logger = LoggerFactory.getLogger(EventWrapperCorpus)
 
 	private static final Set<Integer> MATCH_ALL_SET = Collections.unmodifiableSet(matchAllSet(createCorpus()))
+	private static final Set<Integer> MATCH_ANY_LOGGING_SET = Collections.unmodifiableSet(matchAnyLoggingEventSet(createCorpus()))
+	private static final Set<Integer> MATCH_ANY_ACCESS_SET = Collections.unmodifiableSet(matchAnyAccessEventSet(createCorpus()))
+	private static final Set<Integer> MATCH_ANY_WRAPPER_SET = Collections.unmodifiableSet(matchAnyEventWrapperSet(createCorpus()))
 
 	private static final Marker FOO_MARKER=new Marker('Foo-Marker')
 	private static final Marker BAR_MARKER=new Marker('Bar-Marker')
@@ -389,11 +392,17 @@ public class EventWrapperCorpus
 // #120
 		result.add(new EventWrapper<>(event: new AccessEvent(statusCode: 488))) // unknown status code
 
+		// mdc with null key and other key/value
+		nullMdcKeyMap = new HashMap<>()
+		nullMdcKeyMap.put(null, 'nullMdcKeyValue')
+		nullMdcKeyMap.put('nonNullKey', 'nonNullValue')
+		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: nullMdcKeyMap)))
+
 		return result
 	}
 
 	public static Set<Integer> matchAllSet() {
-		return MATCH_ALL_SET
+		MATCH_ALL_SET
 	}
 
 	public static Set<Integer> matchAllSet(List<Object> corpus) {
@@ -403,6 +412,57 @@ public class EventWrapperCorpus
 			return []
 		}
 		return 0..size-1
+	}
+
+	public static Set<Integer> matchAnyLoggingEventSet() {
+		MATCH_ANY_LOGGING_SET
+	}
+
+	public static Set<Integer> matchAnyLoggingEventSet(List<Object> corpus) {
+		def result = []
+		for(int i=0; i<corpus.size(); i++) {
+			def current = corpus[i]
+			if(current instanceof EventWrapper) {
+				def event = ((EventWrapper)current).event
+				if(event instanceof LoggingEvent) {
+					result.add(i)
+				}
+			}
+		}
+		return result
+	}
+
+	public static Set<Integer> matchAnyAccessEventSet() {
+		MATCH_ANY_ACCESS_SET
+	}
+
+	public static Set<Integer> matchAnyAccessEventSet(List<Object> corpus) {
+		def result = []
+		for(int i=0; i<corpus.size(); i++) {
+			def current = corpus[i]
+			if(current instanceof EventWrapper) {
+				def event = ((EventWrapper)current).event
+				if(event instanceof AccessEvent) {
+					result.add(i)
+				}
+			}
+		}
+		return result
+	}
+
+	public static Set<Integer> matchAnyEventWrapperSet() {
+		MATCH_ANY_WRAPPER_SET
+	}
+
+	public static Set<Integer> matchAnyEventWrapperSet(List<Object> corpus) {
+		def result = []
+		for(int i=0; i<corpus.size(); i++) {
+			def current = corpus[i]
+			if(current instanceof EventWrapper) {
+				result.add(i)
+			}
+		}
+		return result
 	}
 
 	private static class Foo implements Serializable

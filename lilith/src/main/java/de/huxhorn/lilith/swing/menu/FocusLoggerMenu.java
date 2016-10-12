@@ -17,78 +17,48 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
-import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusLoggerAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class FocusLoggerMenu
-	extends JMenu
-	implements ViewContainerRelated, EventWrapperRelated
+class FocusLoggerMenu
+	extends AbstractLoggingFilterMenu
 {
-	private static final long serialVersionUID = -1383728062587884548L;
+	private static final long serialVersionUID = 7734936686237835484L;
 
-	private ViewContainer viewContainer;
-	private String loggerName;
-
-	public FocusLoggerMenu()
+	FocusLoggerMenu()
 	{
 		super("Logger");
+
 		setViewContainer(null);
-		setEventWrapper(null);
 	}
 
-	public void setViewContainer(ViewContainer viewContainer)
+	protected void updateState()
 	{
-		this.viewContainer = viewContainer;
-		updateState();
-	}
-
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
-	}
-
-	public void setEventWrapper(EventWrapper eventWrapper) {
+		removeAll();
 		String loggerName = null;
-		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
 		if (loggingEvent != null) {
 			loggerName = loggingEvent.getLogger();
 		}
-		setLoggerName(loggerName);
-	}
 
-	public void setLoggerName(String loggerName)
-	{
-		this.loggerName = loggerName;
-		updateState();
-	}
-
-	private void updateState()
-	{
-		removeAll();
-		if(viewContainer == null || loggerName == null)
+		if(loggerName == null)
 		{
 			setEnabled(false);
 			return;
 		}
 
+		boolean added = false;
 		for (String current : prepareLoggerNames(loggerName))
 		{
 			FilterAction filterAction = createAction(current);
 			filterAction.setViewContainer(viewContainer);
 			add(filterAction);
+			added = true;
 		}
-		setEnabled(true);
+		setEnabled(added);
 	}
 
 	protected FilterAction createAction(String loggerName)
@@ -96,12 +66,8 @@ public class FocusLoggerMenu
 		return new FocusLoggerAction(loggerName);
 	}
 
-	public static List<String> prepareLoggerNames(String loggerName)
+	private static List<String> prepareLoggerNames(String loggerName)
 	{
-		if(loggerName == null)
-		{
-			return new ArrayList<>();
-		}
 		List<String> tokens = new ArrayList<>();
 		loggerName = loggerName.replace('$', '.'); // better handling of inner classes
 		StringTokenizer tok = new StringTokenizer(loggerName, ".", false);

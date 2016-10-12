@@ -17,79 +17,41 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
-import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMarkerAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.*;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class FocusMarkerMenu
-	extends JMenu
-	implements ViewContainerRelated, EventWrapperRelated
+class FocusMarkerMenu
+	extends AbstractLoggingFilterMenu
 {
+	private static final long serialVersionUID = 3621448237085341280L;
 
-	private static final long serialVersionUID = -6549986627607364431L;
-	private ViewContainer viewContainer;
-	private Marker marker;
-
-	public FocusMarkerMenu()
+	FocusMarkerMenu()
 	{
 		super("Marker");
+
 		setViewContainer(null);
-		setEventWrapper(null);
 	}
 
-	public void setViewContainer(ViewContainer viewContainer)
+	protected void updateState()
 	{
-		this.viewContainer = viewContainer;
-		updateState();
-	}
-
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
-	}
-
-	public void setEventWrapper(EventWrapper eventWrapper)
-	{
-		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
+		removeAll();
 		Marker marker=null;
 		if (loggingEvent != null)
 		{
 			marker = loggingEvent.getMarker();
 		}
-		setMarker(marker);
-	}
-
-	public void setMarker(Marker marker)
-	{
-		this.marker = marker;
-		updateState();
-	}
-
-	private void updateState()
-	{
-		removeAll();
-		if(viewContainer == null || marker == null)
+		if(marker == null)
 		{
 			setEnabled(false);
 			return;
 		}
 		Set<String> collected = marker.collectMarkerNames();
-		if(collected == null || collected.isEmpty())
-		{
-			setEnabled(false);
-			return;
-		}
+		// "collected" is never null or empty
 		SortedSet<String> sorted = new TreeSet<>(collected);
 		for (String current : sorted)
 		{

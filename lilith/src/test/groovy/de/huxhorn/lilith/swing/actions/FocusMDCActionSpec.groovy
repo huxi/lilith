@@ -28,7 +28,7 @@ class FocusMDCActionSpec extends AbstractFilterActionSpecBase {
 
 	@Override
 	Set<Integer> expectedEnabledIndices() {
-		return [24, 68, 69, 98, 99]
+		return [24, 68, 69, 98, 99, 121]
 	}
 
 	@Override

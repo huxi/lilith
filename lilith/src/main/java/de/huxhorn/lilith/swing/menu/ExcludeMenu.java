@@ -21,10 +21,8 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.AbstractAccessFilterAction;
 import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
-import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
@@ -39,15 +37,11 @@ import de.huxhorn.lilith.swing.actions.FocusThreadNameAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowableAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowablesAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
-
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.util.List;
 
 public class ExcludeMenu
-	extends JMenu
-	implements ViewContainerRelated, EventWrapperRelated
+	extends AbstractFilterMenu
 {
 	private static final long serialVersionUID = -663125573199455498L;
 
@@ -58,37 +52,35 @@ public class ExcludeMenu
 
 	private ExcludeSavedConditionsMenu savedMenu;
 
+	private ExcludeLoggerMenu loggerMenu;
+
 	private FilterAction messagePatternAction;
 	private JMenuItem messagePatternItem;
-
 	private FilterAction formattedMessageAction;
 	private JMenuItem formattedMessageItem;
+
+	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
+	// not make sense.
 
 	private FilterAction callLocationAction;
 	private JMenuItem callLocationItem;
 
 	private FilterAction throwablesAction;
 	private JMenuItem throwablesItem;
-
 	private FilterAction throwableAction;
 	private JMenuItem throwableItem;
 
 	private FilterAction threadNameAction;
 	private JMenuItem threadNameItem;
-
 	private FilterAction threadGroupNameAction;
 	private JMenuItem threadGroupNameItem;
 
 	private ExcludeMDCMenu mdcMenu;
 	private ExcludeMarkerMenu markerMenu;
 	private ExcludeNDCMenu ndcMenu;
-	private ExcludeLoggerMenu loggerMenu;
-	// no levelMenu since logging levels stack so excluding events with a higher level than e.g. WARN does
-	// not make sense.
 
 	private FilterAction statusCodeAction;
 	private JMenuItem statusCodeItem;
-
 	private ExcludeHttpStatusTypeMenu statusTypeMenu;
 
 	private FilterAction methodAction;
@@ -96,14 +88,11 @@ public class ExcludeMenu
 
 	private FilterAction requestUriAction;
 	private JMenuItem requestUriItem;
-
 	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
 
 	private FilterAction remoteUserAction;
 	private JMenuItem remoteUserItem;
-
-	private ViewContainer viewContainer;
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
@@ -119,35 +108,34 @@ public class ExcludeMenu
 	{
 		savedMenu = new ExcludeSavedConditionsMenu(applicationPreferences, htmlTooltip);
 
+		loggerMenu = new ExcludeLoggerMenu();
+
 		messagePatternAction = new NegateFilterAction(new FocusMessagePatternAction(htmlTooltip));
 		messagePatternItem = new JMenuItem(messagePatternAction);
-
 		formattedMessageAction = new NegateFilterAction(new FocusFormattedMessageAction(htmlTooltip));
 		formattedMessageItem = new JMenuItem(formattedMessageAction);
+
+		// no levelMenu
 
 		callLocationAction = new NegateFilterAction(new FocusCallLocationAction());
 		callLocationItem = new JMenuItem(callLocationAction);
 
 		throwablesAction = new NegateFilterAction(new FocusThrowablesAction());
 		throwablesItem = new JMenuItem(throwablesAction);
-
 		throwableAction = new NegateFilterAction(new FocusThrowableAction());
 		throwableItem = new JMenuItem(throwableAction);
 
 		threadNameAction = new NegateFilterAction(new FocusThreadNameAction());
 		threadNameItem = new JMenuItem(threadNameAction);
-
 		threadGroupNameAction = new NegateFilterAction(new FocusThreadGroupNameAction());
 		threadGroupNameItem = new JMenuItem(threadGroupNameAction);
 
 		mdcMenu = new ExcludeMDCMenu();
 		markerMenu = new ExcludeMarkerMenu();
 		ndcMenu = new ExcludeNDCMenu(htmlTooltip);
-		loggerMenu = new ExcludeLoggerMenu();
 
 		statusCodeAction = new NegateFilterAction(new FocusHttpStatusCodeAction());
 		statusCodeItem = new JMenuItem(statusCodeAction);
-
 		statusTypeMenu = new ExcludeHttpStatusTypeMenu();
 
 		methodAction = new NegateFilterAction(new FocusHttpMethodAction());
@@ -155,7 +143,6 @@ public class ExcludeMenu
 
 		requestUriAction = new NegateFilterAction(new FocusHttpRequestUriAction());
 		requestUriItem = new JMenuItem(requestUriAction);
-
 		requestUrlAction = new NegateFilterAction(new FocusHttpRequestUrlAction());
 		requestUrlItem = new JMenuItem(requestUrlAction);
 
@@ -166,36 +153,21 @@ public class ExcludeMenu
 	public void setEventWrapper(EventWrapper eventWrapper)
 	{
 		this.eventWrapper = eventWrapper;
-		messagePatternAction.setEventWrapper(eventWrapper);
-		formattedMessageAction.setEventWrapper(eventWrapper);
-		callLocationAction.setEventWrapper(eventWrapper);
-
-		throwablesAction.setEventWrapper(eventWrapper);
-		throwableAction.setEventWrapper(eventWrapper);
-
-		threadNameAction.setEventWrapper(eventWrapper);
-		threadGroupNameAction.setEventWrapper(eventWrapper);
-
-		mdcMenu.setEventWrapper(eventWrapper);
-		markerMenu.setEventWrapper(eventWrapper);
-		ndcMenu.setEventWrapper(eventWrapper);
-		loggerMenu.setEventWrapper(eventWrapper);
-
-		statusCodeAction.setEventWrapper(eventWrapper);
-		methodAction.setEventWrapper(eventWrapper);
-		requestUriAction.setEventWrapper(eventWrapper);
-		requestUrlAction.setEventWrapper(eventWrapper);
-		remoteUserAction.setEventWrapper(eventWrapper);
 		updateState();
 	}
 
-	public void setViewContainer(ViewContainer viewContainer)
+	@Override
+	protected void viewContainerUpdated()
 	{
-		this.viewContainer = viewContainer;
 		savedMenu.setViewContainer(viewContainer);
+
+		loggerMenu.setViewContainer(viewContainer);
 
 		messagePatternAction.setViewContainer(viewContainer);
 		formattedMessageAction.setViewContainer(viewContainer);
+
+		// no levelMenu in Exclude
+
 		callLocationAction.setViewContainer(viewContainer);
 
 		throwablesAction.setViewContainer(viewContainer);
@@ -207,30 +179,46 @@ public class ExcludeMenu
 		mdcMenu.setViewContainer(viewContainer);
 		markerMenu.setViewContainer(viewContainer);
 		ndcMenu.setViewContainer(viewContainer);
-		loggerMenu.setViewContainer(viewContainer);
 
 		statusCodeAction.setViewContainer(viewContainer);
 		statusTypeMenu.setViewContainer(viewContainer);
+
 		methodAction.setViewContainer(viewContainer);
+
 		requestUriAction.setViewContainer(viewContainer);
 		requestUrlAction.setViewContainer(viewContainer);
-		remoteUserAction.setViewContainer(viewContainer);
-		updateState();
-	}
 
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
+		remoteUserAction.setViewContainer(viewContainer);
+
+		super.viewContainerUpdated();
 	}
 
 	private void updateState()
 	{
-		EventWrapper wrapper = this.eventWrapper;
 		removeAll();
 
-		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(wrapper);
+		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
 		if(loggingEvent != null)
 		{
+			savedMenu.setEventWrapper(eventWrapper);
+
+			loggerMenu.setEventWrapper(eventWrapper);
+
+			messagePatternAction.setEventWrapper(eventWrapper);
+			formattedMessageAction.setEventWrapper(eventWrapper);
+
+			callLocationAction.setEventWrapper(eventWrapper);
+
+			throwablesAction.setEventWrapper(eventWrapper);
+			throwableAction.setEventWrapper(eventWrapper);
+
+			threadNameAction.setEventWrapper(eventWrapper);
+			threadGroupNameAction.setEventWrapper(eventWrapper);
+
+			mdcMenu.setEventWrapper(eventWrapper);
+			markerMenu.setEventWrapper(eventWrapper);
+			ndcMenu.setEventWrapper(eventWrapper);
+
 			add(savedMenu);
 			addSeparator();
 			add(loggerMenu);
@@ -250,25 +238,26 @@ public class ExcludeMenu
 			add(markerMenu);
 			add(ndcMenu);
 
-			setEnabled(
-					messagePatternItem.isEnabled() ||
-					formattedMessageItem.isEnabled() ||
-					callLocationItem.isEnabled() ||
-					throwablesItem.isEnabled() ||
-					throwableItem.isEnabled() ||
-					threadNameItem.isEnabled() ||
-					threadGroupNameItem.isEnabled() ||
-					mdcMenu.isEnabled() ||
-					markerMenu.isEnabled() ||
-					loggerMenu.isEnabled() ||
-					savedMenu.isEnabled()
-				);
+			// throwablesAction will always be enabled if an event exists at all
+			setEnabled(true);
 			return;
 		}
 
 		AccessEvent accessEvent = AbstractAccessFilterAction.resolveAccessEvent(eventWrapper);
 		if(accessEvent != null)
 		{
+			savedMenu.setEventWrapper(eventWrapper);
+
+			statusCodeAction.setEventWrapper(eventWrapper);
+			statusTypeMenu.setEventWrapper(eventWrapper);
+
+			methodAction.setEventWrapper(eventWrapper);
+
+			requestUriAction.setEventWrapper(eventWrapper);
+			requestUrlAction.setEventWrapper(eventWrapper);
+
+			remoteUserAction.setEventWrapper(eventWrapper);
+
 			add(savedMenu);
 			addSeparator();
 			add(statusCodeItem);

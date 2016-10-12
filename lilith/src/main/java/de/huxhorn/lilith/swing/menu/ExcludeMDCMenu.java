@@ -21,7 +21,7 @@ import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMDCAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
-public class ExcludeMDCMenu
+class ExcludeMDCMenu
 	extends FocusMDCMenu
 {
 	private static final long serialVersionUID = 6995608490657897758L;

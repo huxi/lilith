@@ -16,34 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.swing.actions
+package de.huxhorn.lilith.swing.menu
 
-import de.huxhorn.lilith.conditions.ThrowableCondition
 import de.huxhorn.lilith.data.EventWrapperCorpus
+import de.huxhorn.lilith.swing.ApplicationPreferences
 
-class FocusThrowablesActionSpec extends AbstractFilterActionSpecBase {
+class ExcludeMenuSpec extends AbstractFilterMenuSpecBase {
 	@Override
-	FilterAction createAction() {
-		return new FocusThrowablesAction()
+	AbstractFilterMenu createMenu() {
+		return new ExcludeMenu(Mock(ApplicationPreferences), false)
 	}
 
 	@Override
 	Set<Integer> expectedEnabledIndices() {
-		EventWrapperCorpus.matchAnyLoggingEventSet()
+		def result = []
+		result.addAll(EventWrapperCorpus.matchAnyLoggingEventSet())
+		result.addAll(EventWrapperCorpus.matchAnyAccessEventSet())
+		result
 	}
 
 	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns null because that means "any throwable" in ThrowableCondition
-			result.add(null)
-		}
-		return result
+	int expectedGetSelectedEventCalls() {
+		19
 	}
 
-	@Override
-	Class expectedConditionClass() {
-		return ThrowableCondition.class
+	def 'setConditionNames() does not explode'() {
+		setup:
+		ExcludeMenu menu = (ExcludeMenu) createMenu()
+
+		expect:
+		menu.setConditionNames(['foo', 'bar'])
+		menu.setConditionNames([])
+		menu.setConditionNames(null)
 	}
 }

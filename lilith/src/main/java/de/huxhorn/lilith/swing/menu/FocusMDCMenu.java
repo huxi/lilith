@@ -17,78 +17,53 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
-import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMDCAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class FocusMDCMenu
-	extends JMenu
-	implements ViewContainerRelated, EventWrapperRelated
+class FocusMDCMenu
+	extends AbstractLoggingFilterMenu
 {
-	private static final long serialVersionUID = -1383728062587884548L;
+	private static final long serialVersionUID = -8657270846680308139L;
 
-	private SortedMap<String, String> mdc;
-	private ViewContainer viewContainer;
-
-	public FocusMDCMenu()
+	FocusMDCMenu()
 	{
 		super("MDC");
+
 		setToolTipText("Mapped Diagnostic Context");
+
 		setViewContainer(null);
-		setEventWrapper(null);
 	}
 
-	public void setViewContainer(ViewContainer viewContainer)
+	protected void updateState()
 	{
-		this.viewContainer = viewContainer;
-		updateState();
-	}
-
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
-	}
-
-	public void setEventWrapper(EventWrapper eventWrapper)
-	{
+		removeAll();
 		SortedMap<String, String> sorted = null;
-		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
 		if (loggingEvent != null)
 		{
 			Map<String, String> mdc = loggingEvent.getMdc();
 			if (mdc != null && !mdc.isEmpty())
 			{
+				if(mdc.containsKey(null))
+				{
+					mdc = new HashMap<>(mdc);
+					mdc.remove(null);
+				}
 				sorted = new TreeMap<>(mdc);
 			}
 		}
-		setMdc(sorted);
-	}
 
-	public void setMdc(SortedMap<String,String> mdc)
-	{
-		this.mdc = mdc;
-		updateState();
-	}
-
-	private void updateState()
-	{
-		removeAll();
-		if(viewContainer == null || mdc == null || mdc.isEmpty())
+		if(sorted == null || sorted.isEmpty())
 		{
 			setEnabled(false);
 			return;
 		}
-		for (Map.Entry<String, String> entry : mdc.entrySet())
+
+		for (Map.Entry<String, String> entry : sorted.entrySet())
 		{
 			FilterAction filterAction = createAction(entry.getKey(), entry.getValue());
 			filterAction.setViewContainer(viewContainer);

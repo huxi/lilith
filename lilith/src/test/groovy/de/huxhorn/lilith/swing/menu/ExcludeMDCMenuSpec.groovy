@@ -16,34 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.swing.actions
+package de.huxhorn.lilith.swing.menu
 
-import de.huxhorn.lilith.conditions.ThrowableCondition
-import de.huxhorn.lilith.data.EventWrapperCorpus
-
-class FocusThrowablesActionSpec extends AbstractFilterActionSpecBase {
+class ExcludeMDCMenuSpec extends FocusMDCMenuSpec {
 	@Override
-	FilterAction createAction() {
-		return new FocusThrowablesAction()
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		EventWrapperCorpus.matchAnyLoggingEventSet()
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns null because that means "any throwable" in ThrowableCondition
-			result.add(null)
-		}
-		return result
-	}
-
-	@Override
-	Class expectedConditionClass() {
-		return ThrowableCondition.class
+	AbstractFilterMenu createMenu() {
+		return new ExcludeMDCMenu()
 	}
 }

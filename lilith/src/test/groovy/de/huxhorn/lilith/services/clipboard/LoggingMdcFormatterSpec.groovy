@@ -26,7 +26,7 @@ class LoggingMdcFormatterSpec extends AbstractClipboardFormatterSpec {
 	}
 
 	def Set<Integer> expectedIndices() {
-		[24, 68, 69, 98, 99]
+		[24, 68, 69, 98, 99, 121]
 	}
 
 	def List<String> expectedResults() {
@@ -36,6 +36,7 @@ class LoggingMdcFormatterSpec extends AbstractClipboardFormatterSpec {
 				'[\'mdcKey\':null]',
 				'[\'nullMdcValueKey\':null]',
 				'[null:\'nullMdcKeyValue\']',
+				'[null:\'nullMdcKeyValue\', \'nonNullKey\':\'nonNullValue\']',
 		]
 	}
 }

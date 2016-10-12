@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,18 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.FocusLevelAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.*;
-
-public class FocusLevelMenu
-	extends JMenu
-	implements ViewContainerRelated
+class FocusLevelMenu
+	extends AbstractLoggingFilterMenu
 {
-	private static final long serialVersionUID = 5642118791633046024L;
+	private static final long serialVersionUID = -2715600759548679303L;
 	private final FocusLevelAction[] levelActions;
 
-	private ViewContainer viewContainer;
-
-	public FocusLevelMenu()
+	FocusLevelMenu()
 	{
 		super("Level");
-		setViewContainer(null);
+
 		LoggingEvent.Level[] values = LoggingEvent.Level.values();
 		levelActions = new FocusLevelAction[values.length-1];
 		for(int i=0;i<values.length-1;i++)
@@ -44,22 +37,13 @@ public class FocusLevelMenu
 			levelActions[i]=new FocusLevelAction(values[i+1]);
 			add(levelActions[i]);
 		}
+
+		setViewContainer(null);
 	}
 
-	public void setViewContainer(ViewContainer viewContainer)
+	protected void updateState()
 	{
-		this.viewContainer = viewContainer;
-		updateState();
-	}
-
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
-	}
-
-	private void updateState()
-	{
-		if(viewContainer == null)
+		if(loggingEvent == null)
 		{
 			setEnabled(false);
 			return;

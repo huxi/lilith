@@ -53,7 +53,7 @@ public class FocusHttpStatusCodeAction
 		}
 		else
 		{
-			putValue(Action.SHORT_DESCRIPTION, statusCode);
+			putValue(Action.SHORT_DESCRIPTION, Integer.toString(statusCode));
 		}
 
 		setEnabled(true);

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,20 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusTypeAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.*;
-
-public class FocusHttpStatusTypeMenu
-	extends JMenu
-	implements ViewContainerRelated
+class FocusHttpStatusTypeMenu
+	extends AbstractAccessFilterMenu
 {
-	private static final long serialVersionUID = -6987929141687901690L;
+	private static final long serialVersionUID = -675455690657800050L;
 
 	private final FilterAction[] statusTypeActions;
 
-	private ViewContainer viewContainer;
-
-	public FocusHttpStatusTypeMenu()
+	FocusHttpStatusTypeMenu()
 	{
 		super("Status Type");
-		setViewContainer(null);
+
 		HttpStatus.Type[] values = HttpStatus.Type.values();
 		statusTypeActions = new FilterAction[values.length];
 		for(int i=0;i<values.length;i++)
@@ -46,6 +39,8 @@ public class FocusHttpStatusTypeMenu
 			statusTypeActions[i]=createAction(values[i]);
 			add(statusTypeActions[i]);
 		}
+
+		setViewContainer(null);
 	}
 
 	protected FilterAction createAction(HttpStatus.Type type)
@@ -53,20 +48,9 @@ public class FocusHttpStatusTypeMenu
 		return new FocusHttpStatusTypeAction(type);
 	}
 
-	public void setViewContainer(ViewContainer viewContainer)
+	protected void updateState()
 	{
-		this.viewContainer = viewContainer;
-		updateState();
-	}
-
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
-	}
-
-	private void updateState()
-	{
-		if(viewContainer == null)
+		if(accessEvent == null)
 		{
 			setEnabled(false);
 			return;

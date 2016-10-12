@@ -19,6 +19,7 @@
 package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpStatusTypeCondition
+import de.huxhorn.lilith.data.EventWrapperCorpus
 import de.huxhorn.lilith.data.access.HttpStatus
 
 class FocusHttpStatusTypeActionSpec extends AbstractFilterActionSpecBase {
@@ -29,8 +30,7 @@ class FocusHttpStatusTypeActionSpec extends AbstractFilterActionSpecBase {
 
 	@Override
 	Set<Integer> expectedEnabledIndices() {
-		// enabled if event wrapper contains any access event
-		return [5, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 70, 71, 72, 73, 74, 75, 77, 79, 81, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 118, 119, 120]
+		EventWrapperCorpus.matchAnyAccessEventSet()
 	}
 
 	@Override

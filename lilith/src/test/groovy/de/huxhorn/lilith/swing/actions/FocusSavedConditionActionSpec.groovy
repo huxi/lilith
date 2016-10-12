@@ -19,6 +19,7 @@
 package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.ThreadNameCondition
+import de.huxhorn.lilith.data.EventWrapperCorpus
 import de.huxhorn.lilith.swing.preferences.SavedCondition
 
 class FocusSavedConditionActionSpec extends AbstractFilterActionSpecBase {
@@ -31,7 +32,7 @@ class FocusSavedConditionActionSpec extends AbstractFilterActionSpecBase {
 
 	@Override
 	Set<Integer> expectedEnabledIndices() {
-		return 2..120 as Set<Integer>
+		EventWrapperCorpus.matchAnyEventWrapperSet()
 	}
 
 	@Override

@@ -18,18 +18,17 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-public class ExcludeSavedConditionsMenu
+class ExcludeSavedConditionsMenu
 	extends FocusSavedConditionsMenu
 {
 	private static final long serialVersionUID = 6995608490657897758L;
 
-	public ExcludeSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
+	ExcludeSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super(applicationPreferences, htmlTooltip);
 	}

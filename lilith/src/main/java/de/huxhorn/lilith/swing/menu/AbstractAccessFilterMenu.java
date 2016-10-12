@@ -15,35 +15,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.huxhorn.lilith.swing.menu;
 
-package de.huxhorn.lilith.swing.actions
+import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 
-import de.huxhorn.lilith.conditions.ThrowableCondition
-import de.huxhorn.lilith.data.EventWrapperCorpus
+import static de.huxhorn.lilith.swing.actions.AbstractAccessFilterAction.resolveAccessEvent;
 
-class FocusThrowablesActionSpec extends AbstractFilterActionSpecBase {
-	@Override
-	FilterAction createAction() {
-		return new FocusThrowablesAction()
+abstract class AbstractAccessFilterMenu
+	extends AbstractFilterMenu
+{
+	private static final long serialVersionUID = -6260997553961428038L;
+	protected AccessEvent accessEvent;
+
+	AbstractAccessFilterMenu(String s)
+	{
+		super(s);
 	}
 
 	@Override
-	Set<Integer> expectedEnabledIndices() {
-		EventWrapperCorpus.matchAnyLoggingEventSet()
+	public final void setEventWrapper(EventWrapper eventWrapper)
+	{
+		setAccessEvent(resolveAccessEvent(eventWrapper));
 	}
 
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns null because that means "any throwable" in ThrowableCondition
-			result.add(null)
-		}
-		return result
+	public final void setAccessEvent(AccessEvent accessEvent)
+	{
+		this.accessEvent = accessEvent;
+		updateState();
 	}
 
-	@Override
-	Class expectedConditionClass() {
-		return ThrowableCondition.class
-	}
+	protected abstract void updateState();
 }

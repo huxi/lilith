@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusTypeAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
-public class ExcludeHttpStatusTypeMenu
+class ExcludeHttpStatusTypeMenu
 	extends FocusHttpStatusTypeMenu
 {
 	private static final long serialVersionUID = 4925999851649779333L;

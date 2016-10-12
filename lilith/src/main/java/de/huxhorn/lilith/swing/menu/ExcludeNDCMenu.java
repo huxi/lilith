@@ -22,12 +22,12 @@ import de.huxhorn.lilith.swing.actions.FocusNDCAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
-public class ExcludeNDCMenu
+class ExcludeNDCMenu
 	extends FocusNDCMenu
 {
 	private static final long serialVersionUID = 1051797757745679700L;
 
-	public ExcludeNDCMenu(boolean htmlTooltip)
+	ExcludeNDCMenu(boolean htmlTooltip)
 	{
 		super(htmlTooltip);
 	}

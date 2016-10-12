@@ -21,7 +21,7 @@ import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMarkerAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
-public class ExcludeMarkerMenu
+class ExcludeMarkerMenu
 	extends FocusMarkerMenu
 {
 	private static final long serialVersionUID = 6995608490657897758L;

@@ -17,47 +17,35 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-import javax.swing.JMenu;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FocusSavedConditionsMenu
-	extends JMenu
-	implements ViewContainerRelated
+class FocusSavedConditionsMenu
+	extends AbstractFilterMenu
 {
-	private static final long serialVersionUID = 5642118791633046024L;
+	private static final long serialVersionUID = 5145343038578903089L;
 	private final ApplicationPreferences applicationPreferences;
 	protected final boolean htmlTooltip;
 
 	private List<FilterAction> savedConditionActions;
-	private ViewContainer viewContainer;
+	private EventWrapper eventWrapper;
 
-	public FocusSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
+	FocusSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super("Saved conditions");
+
 		this.applicationPreferences = applicationPreferences;
 		this.htmlTooltip = htmlTooltip;
-		setViewContainer(null);
 		setConditionNames(applicationPreferences.getConditionNames());
-	}
 
-	public void setViewContainer(ViewContainer viewContainer)
-	{
-		this.viewContainer = viewContainer;
-		updateState();
-	}
-
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
+		setViewContainer(null);
 	}
 
 	public void setConditionNames(List<String> conditionNames)
@@ -95,7 +83,7 @@ public class FocusSavedConditionsMenu
 
 	private void updateState()
 	{
-		if(viewContainer == null || savedConditionActions == null || savedConditionActions.isEmpty())
+		if(eventWrapper == null || savedConditionActions == null || savedConditionActions.isEmpty())
 		{
 			setEnabled(false);
 			return;
@@ -122,5 +110,12 @@ public class FocusSavedConditionsMenu
 	protected FilterAction createAction(SavedCondition savedCondition)
 	{
 		return new FocusSavedConditionAction(savedCondition, htmlTooltip);
+	}
+
+	@Override
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		this.eventWrapper = eventWrapper;
+		updateState();
 	}
 }

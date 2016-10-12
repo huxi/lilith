@@ -17,77 +17,50 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
-import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction;
-import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
-import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
 
-import javax.swing.JMenu;
-
-public class FocusNDCMenu
-	extends JMenu
-	implements ViewContainerRelated, EventWrapperRelated
+class FocusNDCMenu
+	extends AbstractLoggingFilterMenu
 {
-	private static final long serialVersionUID = 2934068317229029302L;
+	private static final long serialVersionUID = 7925987112162466999L;
 	protected final boolean htmlTooltip;
 
-	private ViewContainer viewContainer;
-	private Message[] ndc;
-
-	public FocusNDCMenu(boolean htmlTooltip)
+	FocusNDCMenu(boolean htmlTooltip)
 	{
 		super("NDC");
+
 		this.htmlTooltip = htmlTooltip;
 		setToolTipText("Nested Diagnostic Context");
+
 		setViewContainer(null);
-		setEventWrapper(null);
 	}
 
-	public void setViewContainer(ViewContainer viewContainer)
+	protected void updateState()
 	{
-		this.viewContainer = viewContainer;
-		updateState();
-	}
+		removeAll();
 
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
-	}
-
-	public void setEventWrapper(EventWrapper eventWrapper)
-	{
 		Message[] ndc = null;
-		LoggingEvent loggingEvent = AbstractLoggingFilterAction.resolveLoggingEvent(eventWrapper);
 		if (loggingEvent != null)
 		{
 			ndc = loggingEvent.getNdc();
 		}
-		setNdc(ndc);
-	}
 
-	public void setNdc(Message[] ndc)
-	{
-		this.ndc = ndc;
-		updateState();
-	}
-
-	private void updateState()
-	{
-		removeAll();
-		if(viewContainer == null || ndc == null || ndc.length == 0)
+		if(ndc == null || ndc.length == 0)
 		{
 			setEnabled(false);
 			return;
 		}
+
 		boolean first = true;
 		for (Message current : ndc)
 		{
+			if(current == null)
+			{
+				continue;
+			}
 			String message = current.getMessage();
 			String messagePattern = current.getMessagePattern();
 			if(message == null)
@@ -112,7 +85,7 @@ public class FocusNDCMenu
 				add(patternFilterAction);
 			}
 		}
-		setEnabled(true);
+		setEnabled(!first);
 	}
 
 	protected FilterAction createMessageAction(String message)
