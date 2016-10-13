@@ -37,6 +37,7 @@ public class EventWrapperCorpus
 	private static final Set<Integer> MATCH_ALL_SET = Collections.unmodifiableSet(matchAllSet(createCorpus()))
 	private static final Set<Integer> MATCH_ANY_LOGGING_SET = Collections.unmodifiableSet(matchAnyLoggingEventSet(createCorpus()))
 	private static final Set<Integer> MATCH_ANY_ACCESS_SET = Collections.unmodifiableSet(matchAnyAccessEventSet(createCorpus()))
+	private static final Set<Integer> MATCH_ANY_LOGGING_OR_ACCESS_SET = Collections.unmodifiableSet(matchAnyLoggingOrAccessEventSet(createCorpus()))
 	private static final Set<Integer> MATCH_ANY_WRAPPER_SET = Collections.unmodifiableSet(matchAnyEventWrapperSet(createCorpus()))
 
 	private static final Marker FOO_MARKER=new Marker('Foo-Marker')
@@ -309,7 +310,7 @@ public class EventWrapperCorpus
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: recursiveCause)))
 
 		ThrowableInfo recursiveSuppressed = new ThrowableInfo(name: 'recursiveSuppressed')
-		recursiveSuppressed.suppressed=[recursiveSuppressed]
+		recursiveSuppressed.setSuppressed([recursiveSuppressed] as ThrowableInfo[])
 		result.add(new EventWrapper<>(event: new LoggingEvent(throwable: recursiveSuppressed)))
 
 		// broken throwable stack trace
@@ -443,6 +444,27 @@ public class EventWrapperCorpus
 			if(current instanceof EventWrapper) {
 				def event = ((EventWrapper)current).event
 				if(event instanceof AccessEvent) {
+					result.add(i)
+				}
+			}
+		}
+		return result
+	}
+
+	public static Set<Integer> matchAnyLoggingOrAccessEventSet() {
+		MATCH_ANY_LOGGING_OR_ACCESS_SET
+	}
+
+	public static Set<Integer> matchAnyLoggingOrAccessEventSet(List<Object> corpus) {
+		def result = []
+		for(int i=0; i<corpus.size(); i++) {
+			def current = corpus[i]
+			if(current instanceof EventWrapper) {
+				def event = ((EventWrapper)current).event
+				if(event instanceof AccessEvent) {
+					result.add(i)
+				}
+				if(event instanceof LoggingEvent) {
 					result.add(i)
 				}
 			}

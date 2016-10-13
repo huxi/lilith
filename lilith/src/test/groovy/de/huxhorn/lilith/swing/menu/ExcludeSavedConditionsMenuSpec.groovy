@@ -18,12 +18,11 @@
 
 package de.huxhorn.lilith.swing.menu
 
-import de.huxhorn.lilith.data.EventWrapperCorpus
 import de.huxhorn.lilith.swing.ApplicationPreferences
 import de.huxhorn.lilith.swing.preferences.SavedCondition
 import de.huxhorn.sulky.conditions.Condition
 
-class ExcludeSavedConditionsMenuSpec extends AbstractFilterMenuSpecBase {
+class ExcludeSavedConditionsMenuSpec extends FocusSavedConditionsMenuSpec {
 	@Override
 	AbstractFilterMenu createMenu() {
 		SavedCondition savedCondition = new SavedCondition(Mock(Condition))
@@ -31,10 +30,5 @@ class ExcludeSavedConditionsMenuSpec extends AbstractFilterMenuSpecBase {
 		applicationPreferencesMock.getConditionNames() >> ['foo', 'bar']
 		applicationPreferencesMock.resolveSavedCondition(_) >> savedCondition
 		return new ExcludeSavedConditionsMenu(applicationPreferencesMock, false)
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		return EventWrapperCorpus.matchAnyEventWrapperSet()
 	}
 }

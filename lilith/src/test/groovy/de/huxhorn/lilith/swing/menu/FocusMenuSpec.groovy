@@ -29,10 +29,7 @@ class FocusMenuSpec extends AbstractFilterMenuSpecBase {
 
 	@Override
 	Set<Integer> expectedEnabledIndices() {
-		def result = []
-		result.addAll(EventWrapperCorpus.matchAnyLoggingEventSet())
-		result.addAll(EventWrapperCorpus.matchAnyAccessEventSet())
-		result
+		EventWrapperCorpus.matchAnyLoggingOrAccessEventSet()
 	}
 
 	@Override
