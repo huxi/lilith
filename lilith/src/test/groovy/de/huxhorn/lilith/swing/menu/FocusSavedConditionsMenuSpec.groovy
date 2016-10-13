@@ -19,6 +19,7 @@
 package de.huxhorn.lilith.swing.menu
 
 import de.huxhorn.lilith.data.EventWrapperCorpus
+import de.huxhorn.lilith.data.eventsource.EventWrapper
 import de.huxhorn.lilith.swing.ApplicationPreferences
 import de.huxhorn.lilith.swing.preferences.SavedCondition
 import de.huxhorn.sulky.conditions.Condition
@@ -37,4 +38,30 @@ class FocusSavedConditionsMenuSpec extends AbstractFilterMenuSpecBase {
 	Set<Integer> expectedEnabledIndices() {
 		return EventWrapperCorpus.matchAnyEventWrapperSet()
 	}
+
+	def 'broken saved conditions are handled gracefully.'() {
+		setup:
+		SavedCondition savedCondition = new SavedCondition(null)
+		ApplicationPreferences applicationPreferencesMock = Mock(ApplicationPreferences)
+		applicationPreferencesMock.getConditionNames() >> ['foo', 'bar']
+		applicationPreferencesMock.resolveSavedCondition(_) >> savedCondition
+		def menu = new FocusSavedConditionsMenu(applicationPreferencesMock, false)
+		menu.setEventWrapper(eventWrapper)
+
+		when:
+		menu.setConditionNames(['foo', 'bar'])
+
+		then:
+		!menu.isEnabled()
+
+		when:
+		menu.setConditionNames(null)
+
+		then:
+		!menu.isEnabled()
+
+		where:
+		eventWrapper << [null, new EventWrapper()]
+	}
+
 }
