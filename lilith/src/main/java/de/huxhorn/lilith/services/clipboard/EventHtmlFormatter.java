@@ -66,7 +66,11 @@ public class EventHtmlFormatter
 		if(object instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) object;
-			return mainFrame.createMessage(wrapper);
+			Object eventObj = wrapper.getEvent();
+			if(eventObj instanceof LoggingEvent || eventObj instanceof AccessEvent)
+			{
+				return mainFrame.createMessage(wrapper);
+			}
 		}
 		return null;
 	}
