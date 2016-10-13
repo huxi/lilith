@@ -18,6 +18,8 @@
 
 package de.huxhorn.lilith.services.clipboard
 
+import de.huxhorn.lilith.data.EventWrapperCorpus
+
 class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 
 	@Override
@@ -26,9 +28,15 @@ class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 	}
 
 	def Set<Integer> expectedIndices() {
-		[
-				13, 14, 114
-		]
+		EventWrapperCorpus.matchAnyLoggingEventSet()
+	}
+
+	Set<Integer> excludedIndices() {
+		// schema (and therefore XML writer) require logger name
+		// exclude all events without one
+		def result = new HashSet(EventWrapperCorpus.matchAnyLoggingEventSet())
+		result.removeAll([13, 14, 114])
+		result
 	}
 
 	def List<String> expectedResults() {
@@ -41,5 +49,13 @@ class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 		]
 	}
 
+	def 'exploding formatter does simply return null.'() {
+		setup:
+		def corpus = EventWrapperCorpus.createCorpus()
+		def formatter = createInstance()
+		def exploding = corpus[6]
 
+		expect:
+		formatter.toString(exploding) == null
+	}
 }

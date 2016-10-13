@@ -31,19 +31,11 @@ class BasicFormatterCorpus {
 	}
 
 	public static Set<Integer> isCompatible(BasicFormatter formatter) {
-		isCompatible(formatter, [])
-	}
-
-	public static Set<Integer> isCompatible(BasicFormatter formatter, Set<Integer> excluded) {
 		Objects.requireNonNull(formatter, "formatter must not be null!")
 		List<Object> corpus = createCorpus()
 
 		Set<Integer> result = [] as TreeSet<Integer>
 		for(int i=0;i<corpus.size();i++) {
-			if(excluded.contains(i)) {
-				if(logger.isDebugEnabled()) logger.debug('Skipping excluded isCompatible(corpus[{}])...', i)
-				continue;
-			}
 			if(logger.isDebugEnabled()) logger.debug('Before isCompatible(corpus[{}])...', i)
 			if(formatter.isCompatible(corpus[i])) {
 				result << i
@@ -61,7 +53,7 @@ class BasicFormatterCorpus {
 		List<Object> corpus = createCorpus()
 		for(int i=0;i<corpus.size();i++) {
 			if(excluded.contains(i)) {
-				if(logger.isDebugEnabled()) logger.debug('Skipping excluded isCompatible(corpus[{}])...', i)
+				if(logger.isDebugEnabled()) logger.debug('Skipping excluded toString(corpus[{}])...', i)
 				result << null
 				continue;
 			}

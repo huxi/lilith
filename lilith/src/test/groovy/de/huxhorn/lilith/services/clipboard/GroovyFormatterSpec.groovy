@@ -72,7 +72,7 @@ class GroovyFormatterSpec extends AbstractClipboardFormatterSpec {
 		def instance = new GroovyFormatter(groovyFormatterFile.absolutePath)
 
 		when:
-		Set<Integer> compatibleIndices = BasicFormatterCorpus.isCompatible(instance, [] as Set)
+		Set<Integer> compatibleIndices = BasicFormatterCorpus.isCompatible(instance)
 		List<String> results = BasicFormatterCorpus.toString(instance, [] as Set)
 
 		then:

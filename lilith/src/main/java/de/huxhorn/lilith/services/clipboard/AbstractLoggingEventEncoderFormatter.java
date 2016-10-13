@@ -27,6 +27,7 @@ import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLogging
 public abstract class AbstractLoggingEventEncoderFormatter
 	implements ClipboardFormatter
 {
+	private static final long serialVersionUID = -1391876843138341269L;
 	private final Encoder<LoggingEvent> encoder;
 
 	protected AbstractLoggingEventEncoderFormatter(Encoder<LoggingEvent> encoder)
@@ -38,7 +39,7 @@ public abstract class AbstractLoggingEventEncoderFormatter
 	@Override
 	public boolean isCompatible(Object object)
 	{
-		return toString(object) != null;
+		return resolveLoggingEvent(object).isPresent();
 	}
 
 	@Override

@@ -35,7 +35,7 @@ abstract class AbstractBasicFormatterSpec extends Specification {
 		def excludedIndices = excludedIndices()
 
 		when:
-		Set<Integer> compatibleIndices = new TreeSet(BasicFormatterCorpus.isCompatible(instance, excludedIndices))
+		Set<Integer> compatibleIndices = new TreeSet(BasicFormatterCorpus.isCompatible(instance))
 		List<String> results = BasicFormatterCorpus.toString(instance, excludedIndices)
 
 		then:
@@ -43,6 +43,13 @@ abstract class AbstractBasicFormatterSpec extends Specification {
 
 		and:
 		for(int i=0;i<results.size();i++) {
+			if(excludedIndices.contains(i)) {
+				// ignore
+				// results[i] is null at this point but there is no use
+				// in checking this since it's just how BasicFormatterCorpus.toString
+				// works
+				continue
+			}
 			if(compatibleIndices.contains(i)) {
 				assert results[i] != null
 			} else {
@@ -57,7 +64,7 @@ abstract class AbstractBasicFormatterSpec extends Specification {
 
 		and:
 		// sanity check
-		results.size() == expectedIndices.size()
+		results.size() == expectedIndices.size() - excludedIndices.size()
 	}
 
 	abstract BasicFormatter createInstance()
