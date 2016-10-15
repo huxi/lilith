@@ -15,34 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package de.huxhorn.lilith.swing.menu;
 
-package de.huxhorn.lilith.swing.actions
+import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
+import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
-import de.huxhorn.lilith.conditions.HttpRequestUriStartsWithCondition
-
-class FocusHttpRequestUriActionSpec extends AbstractFilterActionSpecBase {
-	@Override
-	FilterAction createAction() {
-		new FocusHttpRequestUriAction("/foo")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		[72, 73, 122]
-	}
+class ExcludeHttpRequestUriMenu
+	extends FocusHttpRequestUriMenu
+{
+	private static final long serialVersionUID = -5153781586103062L;
 
 	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the request URI used during construction
-			result.add('/foo')
-		}
-		return result
-	}
-
-	@Override
-	Class expectedConditionClass() {
-		return HttpRequestUriStartsWithCondition.class
+	protected FilterAction createAction(String uri)
+	{
+		return new NegateFilterAction(new FocusHttpRequestUriAction(uri));
 	}
 }

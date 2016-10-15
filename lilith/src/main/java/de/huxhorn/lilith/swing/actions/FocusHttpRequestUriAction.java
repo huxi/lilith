@@ -17,51 +17,40 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.conditions.HttpRequestUriCondition;
+import de.huxhorn.lilith.conditions.HttpRequestUriStartsWithCondition;
 import de.huxhorn.sulky.conditions.Condition;
-
-import javax.swing.Action;
 
 public class FocusHttpRequestUriAction
 		extends AbstractAccessFilterAction
 {
-	private static final long serialVersionUID = -5114706063267599039L;
+	private static final long serialVersionUID = 6081844747737213317L;
 
-	private String searchString;
+	private final String requestUri;
 
-	public FocusHttpRequestUriAction()
+	public FocusHttpRequestUriAction(String requestUri)
 	{
-		super("Request URI", false);
-	}
-
-	protected void setSearchString(String searchString)
-	{
-		this.searchString = searchString;
-		putValue(Action.SHORT_DESCRIPTION, searchString);
-
-		setEnabled(searchString != null);
+		super(requestUri, false);
+		this.requestUri = requestUri;
 	}
 
 	@Override
 	protected void updateState()
 	{
-		if(accessEvent != null)
+		if(accessEvent == null || accessEvent.getRequestURI() == null)
 		{
-			setSearchString(accessEvent.getRequestURI());
+			setEnabled(false);
+			return;
 		}
-		else
-		{
-			setSearchString(null);
-		}
+		setEnabled(true);
 	}
 
 	@Override
 	public Condition resolveCondition()
 	{
-		if(searchString == null)
+		if(accessEvent == null || accessEvent.getRequestURI() == null)
 		{
 			return null;
 		}
-		return new HttpRequestUriCondition(searchString);
+		return new HttpRequestUriStartsWithCondition(requestUri);
 	}
 }

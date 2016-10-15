@@ -16,33 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.swing.actions
+package de.huxhorn.lilith.swing.menu
 
-import de.huxhorn.lilith.conditions.HttpRequestUriStartsWithCondition
+import spock.lang.Unroll
 
-class FocusHttpRequestUriActionSpec extends AbstractFilterActionSpecBase {
+class FocusHttpRequestUriMenuSpec extends AbstractFilterMenuSpecBase {
 	@Override
-	FilterAction createAction() {
-		new FocusHttpRequestUriAction("/foo")
+	AbstractFilterMenu createMenu() {
+		return new FocusHttpRequestUriMenu()
 	}
 
 	@Override
 	Set<Integer> expectedEnabledIndices() {
-		[72, 73, 122]
+		// does not include 72 because startsWith('/') wouldn't make sense
+		return [73, 122]
 	}
 
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the request URI used during construction
-			result.add('/foo')
-		}
-		return result
-	}
+	@Unroll
+	def 'prepareUris(\'#uri\') works as expected.'() {
+		when:
+		def result = FocusHttpRequestUriMenu.prepareUris(uri)
 
-	@Override
-	Class expectedConditionClass() {
-		return HttpRequestUriStartsWithCondition.class
+		then:
+		result == expectedResult
+
+		where:
+		uri               | expectedResult
+		''                | []
+		'/'               | []
+		'/foo'            | ['/foo']
+		'/foo/bar'        | ['/foo/bar', '/foo']
+		'/foo/bar/foobar' | ['/foo/bar/foobar', '/foo/bar', '/foo']
 	}
 }

@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - Added "ThreadGroupName" condition.
 - Added "Focus Thread name"/"Exclude Thread name".
 - Added "Focus Thread group name"/"Exclude Thread group name".
+- Added "Focus Request URI"/"Exclude Request URI" menus.
 - Added lots of filter tests.
 
 ### Changed

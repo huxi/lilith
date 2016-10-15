@@ -28,7 +28,6 @@ import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpMethodAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRemoteUserAction;
-import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
@@ -86,8 +85,7 @@ public class ExcludeMenu
 	private FilterAction methodAction;
 	private JMenuItem methodItem;
 
-	private FilterAction requestUriAction;
-	private JMenuItem requestUriItem;
+	private ExcludeHttpRequestUriMenu requestUriMenu;
 	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
 
@@ -141,8 +139,7 @@ public class ExcludeMenu
 		methodAction = new NegateFilterAction(new FocusHttpMethodAction());
 		methodItem = new JMenuItem(methodAction);
 
-		requestUriAction = new NegateFilterAction(new FocusHttpRequestUriAction());
-		requestUriItem = new JMenuItem(requestUriAction);
+		requestUriMenu = new ExcludeHttpRequestUriMenu();
 		requestUrlAction = new NegateFilterAction(new FocusHttpRequestUrlAction());
 		requestUrlItem = new JMenuItem(requestUrlAction);
 
@@ -185,7 +182,7 @@ public class ExcludeMenu
 
 		methodAction.setViewContainer(viewContainer);
 
-		requestUriAction.setViewContainer(viewContainer);
+		requestUriMenu.setViewContainer(viewContainer);
 		requestUrlAction.setViewContainer(viewContainer);
 
 		remoteUserAction.setViewContainer(viewContainer);
@@ -253,7 +250,7 @@ public class ExcludeMenu
 
 			methodAction.setEventWrapper(eventWrapper);
 
-			requestUriAction.setEventWrapper(eventWrapper);
+			requestUriMenu.setEventWrapper(eventWrapper);
 			requestUrlAction.setEventWrapper(eventWrapper);
 
 			remoteUserAction.setEventWrapper(eventWrapper);
@@ -265,7 +262,7 @@ public class ExcludeMenu
 			addSeparator();
 			add(methodItem);
 			addSeparator();
-			add(requestUriItem);
+			add(requestUriMenu);
 			add(requestUrlItem);
 			addSeparator();
 			add(remoteUserItem);

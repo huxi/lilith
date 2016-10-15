@@ -16,33 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.swing.actions
+package de.huxhorn.lilith.swing.menu
 
-import de.huxhorn.lilith.conditions.HttpRequestUriStartsWithCondition
-
-class FocusHttpRequestUriActionSpec extends AbstractFilterActionSpecBase {
+class ExcludeHttpRequestUriMenuSpec extends FocusHttpRequestUriMenuSpec {
 	@Override
-	FilterAction createAction() {
-		new FocusHttpRequestUriAction("/foo")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		[72, 73, 122]
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the request URI used during construction
-			result.add('/foo')
-		}
-		return result
-	}
-
-	@Override
-	Class expectedConditionClass() {
-		return HttpRequestUriStartsWithCondition.class
+	AbstractFilterMenu createMenu() {
+		return new ExcludeHttpRequestUriMenu()
 	}
 }

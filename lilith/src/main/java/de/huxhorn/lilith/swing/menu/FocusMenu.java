@@ -28,7 +28,6 @@ import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpMethodAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRemoteUserAction;
-import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUrlAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusCodeAction;
 import de.huxhorn.lilith.swing.actions.FocusMessagePatternAction;
@@ -84,8 +83,7 @@ public class FocusMenu
 	private FilterAction methodAction;
 	private JMenuItem methodItem;
 
-	private FilterAction requestUriAction;
-	private JMenuItem requestUriItem;
+	private FocusHttpRequestUriMenu requestUriMenu;
 	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
 
@@ -141,8 +139,7 @@ public class FocusMenu
 		methodAction = new FocusHttpMethodAction();
 		methodItem = new JMenuItem(methodAction);
 
-		requestUriAction = new FocusHttpRequestUriAction();
-		requestUriItem = new JMenuItem(requestUriAction);
+		requestUriMenu = new FocusHttpRequestUriMenu();
 
 		requestUrlAction = new FocusHttpRequestUrlAction();
 		requestUrlItem = new JMenuItem(requestUrlAction);
@@ -186,7 +183,7 @@ public class FocusMenu
 
 		methodAction.setViewContainer(viewContainer);
 
-		requestUriAction.setViewContainer(viewContainer);
+		requestUriMenu.setViewContainer(viewContainer);
 		requestUrlAction.setViewContainer(viewContainer);
 
 		remoteUserAction.setViewContainer(viewContainer);
@@ -258,7 +255,7 @@ public class FocusMenu
 
 			methodAction.setEventWrapper(eventWrapper);
 
-			requestUriAction.setEventWrapper(eventWrapper);
+			requestUriMenu.setEventWrapper(eventWrapper);
 			requestUrlAction.setEventWrapper(eventWrapper);
 
 			remoteUserAction.setEventWrapper(eventWrapper);
@@ -270,7 +267,7 @@ public class FocusMenu
 			addSeparator();
 			add(methodItem);
 			addSeparator();
-			add(requestUriItem);
+			add(requestUriMenu);
 			add(requestUrlItem);
 			addSeparator();
 			add(remoteUserItem);
