@@ -18,6 +18,8 @@
 
 package de.huxhorn.lilith.swing.menu
 
+import spock.lang.Unroll
+
 class FocusLoggerMenuSpec extends AbstractFilterMenuSpecBase {
 	@Override
 	AbstractFilterMenu createMenu() {
@@ -27,5 +29,21 @@ class FocusLoggerMenuSpec extends AbstractFilterMenuSpecBase {
 	@Override
 	Set<Integer> expectedEnabledIndices() {
 		return [13, 14]
+	}
+
+	@Unroll
+	def 'prepareLoggerNames(\'#loggerName\') works as expected.'() {
+		when:
+		def result = FocusLoggerMenu.prepareLoggerNames(loggerName)
+
+		then:
+		result == expectedResult
+
+		where:
+		loggerName       | expectedResult
+		''               | []
+		'Foo'            | ['Foo']
+		'foo.Bar'        | ['foo.Bar', 'foo']
+		'foo.Bar$Foobar' | ['foo.Bar.Foobar', 'foo.Bar', 'foo']
 	}
 }

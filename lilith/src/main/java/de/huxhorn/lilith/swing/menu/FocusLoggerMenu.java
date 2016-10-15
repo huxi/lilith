@@ -66,7 +66,7 @@ class FocusLoggerMenu
 		return new FocusLoggerAction(loggerName);
 	}
 
-	private static List<String> prepareLoggerNames(String loggerName)
+	static List<String> prepareLoggerNames(String loggerName)
 	{
 		List<String> tokens = new ArrayList<>();
 		loggerName = loggerName.replace('$', '.'); // better handling of inner classes
