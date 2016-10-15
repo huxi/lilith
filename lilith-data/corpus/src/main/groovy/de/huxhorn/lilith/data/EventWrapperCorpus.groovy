@@ -399,6 +399,9 @@ public class EventWrapperCorpus
 		nullMdcKeyMap.put('nonNullKey', 'nonNullValue')
 		result.add(new EventWrapper<>(event: new LoggingEvent(mdc: nullMdcKeyMap)))
 
+		// multi-level request URI
+		result.add(new EventWrapper<>(event: new AccessEvent(requestURI: '/foo/bar/foobar')))
+
 		return result
 	}
 

@@ -22,17 +22,18 @@ class AccessRequestUriFormatterSpec extends AbstractClipboardFormatterSpec {
 
 	@Override
 	AccessRequestUriFormatter createInstance() {
-		return new AccessRequestUriFormatter()
+		new AccessRequestUriFormatter()
 	}
 
 	def Set<Integer> expectedIndices() {
-		[72, 73]
+		[72, 73, 122]
 	}
 
 	def List<String> expectedResults() {
 		[
 				'/',
 				'/index.html',
+				'/foo/bar/foobar',
 		]
 	}
 }

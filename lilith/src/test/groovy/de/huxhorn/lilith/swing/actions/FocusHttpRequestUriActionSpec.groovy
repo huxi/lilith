@@ -23,17 +23,21 @@ import de.huxhorn.lilith.conditions.HttpRequestUriCondition
 class FocusHttpRequestUriActionSpec extends AbstractFilterActionSpecBase {
 	@Override
 	FilterAction createAction() {
-		return new FocusHttpRequestUriAction()
+		new FocusHttpRequestUriAction()
 	}
 
 	@Override
 	Set<Integer> expectedEnabledIndices() {
-		return [72, 73]
+		[72, 73, 122]
 	}
 
 	@Override
 	List<String> expectedSearchStrings() {
-		return ['/', '/index.html']
+		[
+				'/',
+				'/index.html',
+				'/foo/bar/foobar',
+		]
 	}
 
 	@Override

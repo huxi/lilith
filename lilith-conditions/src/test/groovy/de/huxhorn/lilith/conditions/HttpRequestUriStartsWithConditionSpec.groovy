@@ -17,7 +17,6 @@
  */
 package de.huxhorn.lilith.conditions
 
-import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -25,49 +24,33 @@ import static de.huxhorn.sulky.junit.JUnitTools.testClone
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization
 
-class HttpRemoteUserConditionSpec extends Specification {
-
-	@Shared
-	private Set<Integer> accessEventsWithoutRemoteUser
-
-	@Shared
-	private Set<Integer> sfalkenEvents
-
-	def setupSpec() {
-		accessEventsWithoutRemoteUser = Collections.unmodifiableSet([
-				5, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 70, 71, 72, 73, 74, 75, 77, 79, 81,
-				100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 118, 119,
-				120, 122
-		] as Set<Integer>)
-
-		sfalkenEvents = Collections.unmodifiableSet([
-				63, 64
-		] as Set<Integer>)
-	}
-
+class HttpRequestUriStartsWithConditionSpec extends Specification {
 	@Unroll
 	def "Corpus works as expected for #condition (searchString=#input)."() {
-		expect:
-		ConditionCorpus.executeConditionOnCorpus(condition) == expectedResult
+		when:
+		def result = ConditionCorpus.executeConditionOnCorpus(condition)
+
+		then:
+		new TreeSet(result) == new TreeSet(expectedResult)
 
 		where:
-		input           | expectedResult
-		null            | accessEventsWithoutRemoteUser
-		''              | accessEventsWithoutRemoteUser
-		'-'             | accessEventsWithoutRemoteUser
-		'   '           | accessEventsWithoutRemoteUser
-		' - '           | accessEventsWithoutRemoteUser
-		'snafu'         | [] as Set
-		'sfalken'       | sfalkenEvents as Set
-		'   sfalken   ' | sfalkenEvents as Set
+		input             | expectedResult
+		null              | [] as Set
+		''                | ConditionCorpus.matchAllSet()
+		'snafu'           | [] as Set
+		'/'               | [72, 73, 122] as Set
+		'/index.html'     | [73] as Set
+		'/foo'            | [122] as Set
+		'/foo/bar'        | [122] as Set
+		'/foo/bar/foobar' | [122] as Set
 
-		condition = new HttpRemoteUserCondition(input)
+		condition = new HttpRequestUriStartsWithCondition(input)
 	}
 
 	@Unroll
 	def "serialization works with searchString #input."() {
 		when:
-		def condition = new HttpRemoteUserCondition()
+		def condition = new HttpRequestUriStartsWithCondition()
 		condition.searchString = input
 
 		and:
@@ -75,7 +58,6 @@ class HttpRemoteUserConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
-		result.userName == condition.userName
 
 		where:
 		input << inputValues()
@@ -84,7 +66,7 @@ class HttpRemoteUserConditionSpec extends Specification {
 	@Unroll
 	def "XML serialization works with searchString #input."() {
 		when:
-		def condition = new HttpRemoteUserCondition()
+		def condition = new HttpRequestUriStartsWithCondition()
 		condition.searchString = input
 
 		and:
@@ -92,7 +74,6 @@ class HttpRemoteUserConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
-		result.userName == condition.userName
 
 		where:
 		input << inputValues()
@@ -101,7 +82,7 @@ class HttpRemoteUserConditionSpec extends Specification {
 	@Unroll
 	def "cloning works with searchString #input."() {
 		when:
-		def condition = new HttpRemoteUserCondition()
+		def condition = new HttpRequestUriStartsWithCondition()
 		condition.searchString = input
 
 		and:
@@ -109,7 +90,6 @@ class HttpRemoteUserConditionSpec extends Specification {
 
 		then:
 		result.searchString == input
-		result.userName == condition.userName
 
 		where:
 		input << inputValues()
@@ -117,8 +97,8 @@ class HttpRemoteUserConditionSpec extends Specification {
 
 	def "equals behaves as expected."() {
 		setup:
-		def instance = new HttpRemoteUserCondition()
-		def other = new HttpRemoteUserCondition('foo')
+		def instance = new HttpRequestUriStartsWithCondition()
+		def other = new HttpRequestUriStartsWithCondition('foo')
 
 		expect:
 		instance.equals(instance)
@@ -129,6 +109,6 @@ class HttpRemoteUserConditionSpec extends Specification {
 	}
 
 	def inputValues() {
-		[null, '', ' ', '-', ' - ', 'sfalken', ' sfalken ']
+		[null, '', 'value', '/', '/index.html']
 	}
 }
