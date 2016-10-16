@@ -17,10 +17,10 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.conditions.HttpRequestHeadersContainsCondition;
 import de.huxhorn.lilith.conditions.HttpResponseHeadersContainsCondition;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 
 public class FocusHttpResponseHeaderAction
 		extends AbstractAccessFilterAction
@@ -50,7 +50,7 @@ public class FocusHttpResponseHeaderAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(accessEvent == null || accessEvent.getResponseHeaders() == null || accessEvent.getResponseHeaders().isEmpty())
 		{

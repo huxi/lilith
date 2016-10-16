@@ -21,6 +21,7 @@ import de.huxhorn.lilith.conditions.LevelCondition;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.conditions.Condition;
 
+import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 public class FocusLevelAction
@@ -45,7 +46,7 @@ public class FocusLevelAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(loggingEvent == null)
 		{

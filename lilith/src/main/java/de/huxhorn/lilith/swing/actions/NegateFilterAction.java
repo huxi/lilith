@@ -54,13 +54,13 @@ public class NegateFilterAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(wrapped == null)
 		{
 			return null;
 		}
-		Condition condition = wrapped.resolveCondition();
+		Condition condition = wrapped.resolveCondition(e);
 		if(condition != null)
 		{
 			return new Not(condition);
@@ -136,7 +136,7 @@ public class NegateFilterAction
 		{
 			return;
 		}
-		Condition condition=resolveCondition();
+		Condition condition=resolveCondition(e);
 		if(condition == null)
 		{
 			return;

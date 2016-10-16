@@ -64,7 +64,7 @@ class NegateFilterActionSpec extends Specification {
 		NegateFilterAction action = new NegateFilterAction()
 
 		expect:
-		action.resolveCondition() == null
+		action.resolveCondition(null) == null
 	}
 
 	def 'resolveCondition() with wrapped FilterAction returning null returns null.'() {
@@ -73,13 +73,13 @@ class NegateFilterActionSpec extends Specification {
 		NegateFilterAction action = new NegateFilterAction(filterAction)
 
 		when:
-		def condition = action.resolveCondition()
+		def condition = action.resolveCondition(null)
 
 		then:
 		condition == null
 
 		and:
-		1 * filterAction.resolveCondition() >> null
+		1 * filterAction.resolveCondition(null) >> null
 		0 * filterAction._
 	}
 
@@ -90,7 +90,7 @@ class NegateFilterActionSpec extends Specification {
 		NegateFilterAction action = new NegateFilterAction(filterAction)
 
 		when:
-		def condition = action.resolveCondition()
+		def condition = action.resolveCondition(null)
 
 		then:
 		condition != null
@@ -98,7 +98,7 @@ class NegateFilterActionSpec extends Specification {
 		condition.condition == mockedCondition
 
 		and:
-		1 * filterAction.resolveCondition() >> mockedCondition
+		1 * filterAction.resolveCondition(null) >> mockedCondition
 		0 * filterAction._
 	}
 
@@ -322,7 +322,7 @@ class NegateFilterActionSpec extends Specification {
 
 		then:
 		1 * filterActionMock.getViewContainer() >> viewContainerMock
-		1 * filterActionMock.resolveCondition() >> conditionMock
+		1 * filterActionMock.resolveCondition(actionEvent) >> conditionMock
 		1 * viewContainerMock.applyCondition(new Not(conditionMock), actionEvent)
 		0 * filterActionMock._
 		0 * viewContainerMock._
@@ -365,7 +365,7 @@ class NegateFilterActionSpec extends Specification {
 
 		then:
 		1 * filterActionMock.getViewContainer() >> viewContainerMock
-		1 * filterActionMock.resolveCondition() >> null
+		1 * filterActionMock.resolveCondition(actionEvent) >> null
 		0 * filterActionMock._
 		0 * viewContainerMock._
 	}

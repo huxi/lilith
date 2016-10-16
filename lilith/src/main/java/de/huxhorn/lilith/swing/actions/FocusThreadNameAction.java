@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.ThreadNameCondition;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 public class FocusThreadNameAction
@@ -56,7 +57,7 @@ public class FocusThreadNameAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(name == null)
 		{

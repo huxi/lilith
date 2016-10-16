@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,25 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.sulky.conditions.Condition;
 
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
 
 public interface FilterAction
 	extends ViewContainerRelated, EventWrapperRelated, Action
 {
-	Condition resolveCondition();
+	/**
+	 * Returns the Condition for this FilterAction, if available.
+	 *
+	 * Implementations of this method must be able to cope with a null ActionEvent.
+	 * This should return the "default" condition. The ActionEvent can be used to
+	 * support "alternative behavior" if the Alt key is pressed while the event is
+	 * fired.
+	 *
+	 * Use this ability wisely because there is no way to inform the user about
+	 * the existence of this "alternative behavior". It will be magic.
+	 *
+	 * @param e the action event, can be null.
+	 * @return the resolved Condition or null if no Condition can be resolved.
+	 */
+	Condition resolveCondition(ActionEvent e);
 }

@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.MessagePatternEqualsCondition;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 
 public class FocusMessagePatternAction
 		extends AbstractLoggingFilterAction
@@ -66,7 +67,7 @@ public class FocusMessagePatternAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(messagePattern == null)
 		{

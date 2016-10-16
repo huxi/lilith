@@ -95,7 +95,7 @@ abstract class AbstractFilterActionSpecBase extends Specification {
 			def current = corpus[i]
 			if (current instanceof EventWrapper) {
 				filterAction.setEventWrapper(current)
-				Condition condition = filterAction.resolveCondition()
+				Condition condition = filterAction.resolveCondition(null)
 				if(!condition) {
 					continue
 				}
@@ -130,7 +130,7 @@ abstract class AbstractFilterActionSpecBase extends Specification {
 			def current = corpus[i]
 			if (current instanceof EventWrapper) {
 				filterAction.setEventWrapper(current)
-				Condition condition = filterAction.resolveCondition()
+				Condition condition = filterAction.resolveCondition(null)
 				if(!condition) {
 					continue
 				}

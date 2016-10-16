@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 
 public class FocusLoggerAction
 		extends AbstractLoggingFilterAction
@@ -45,7 +46,7 @@ public class FocusLoggerAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(loggingEvent == null)
 		{

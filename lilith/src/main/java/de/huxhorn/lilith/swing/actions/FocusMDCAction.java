@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.MDCContainsCondition;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 
 public class FocusMDCAction
 		extends AbstractLoggingFilterAction
@@ -49,7 +50,7 @@ public class FocusMDCAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(loggingEvent == null || loggingEvent.getMdc() == null || loggingEvent.getMdc().isEmpty())
 		{

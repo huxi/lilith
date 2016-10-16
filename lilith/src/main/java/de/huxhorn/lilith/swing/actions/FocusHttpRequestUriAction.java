@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.HttpRequestUriStartsWithCondition;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 
 public class FocusHttpRequestUriAction
 		extends AbstractAccessFilterAction
@@ -45,7 +46,7 @@ public class FocusHttpRequestUriAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(accessEvent == null || accessEvent.getRequestURI() == null)
 		{

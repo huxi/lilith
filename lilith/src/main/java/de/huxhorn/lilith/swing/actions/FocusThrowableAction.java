@@ -21,6 +21,7 @@ import de.huxhorn.lilith.conditions.ThrowableCondition;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.sulky.conditions.Condition;
 
+import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 public class FocusThrowableAction
@@ -58,7 +59,7 @@ public class FocusThrowableAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(throwableName == null)
 		{

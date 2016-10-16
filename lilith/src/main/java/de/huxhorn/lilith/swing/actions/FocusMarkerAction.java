@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.MarkerContainsCondition;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 
 public class FocusMarkerAction
 		extends AbstractLoggingFilterAction
@@ -45,7 +46,7 @@ public class FocusMarkerAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(loggingEvent == null || loggingEvent.getMarker() == null)
 		{

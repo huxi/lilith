@@ -74,7 +74,7 @@ public abstract class AbstractFilterAction
 		{
 			return;
 		}
-		Condition condition = resolveCondition();
+		Condition condition = resolveCondition(e);
 		if(condition == null)
 		{
 			return;
@@ -99,7 +99,7 @@ public abstract class AbstractFilterAction
 
 	public abstract void setEventWrapper(EventWrapper eventWrapper);
 
-	public abstract Condition resolveCondition();
+	public abstract Condition resolveCondition(ActionEvent e);
 
 	public static  void initializeConditionTooltip(Condition condition, Action action, boolean htmlTooltip)
 	{

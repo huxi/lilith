@@ -18,9 +18,9 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.conditions.Condition;
+import java.awt.event.ActionEvent;
 
 public class FocusSavedConditionAction
 		extends AbstractFilterAction
@@ -56,7 +56,7 @@ public class FocusSavedConditionAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		return savedCondition.getCondition();
 	}

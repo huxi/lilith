@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.ThrowableCondition;
 import de.huxhorn.sulky.conditions.Condition;
 
+import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 public class FocusThrowablesAction
@@ -40,7 +41,7 @@ public class FocusThrowablesAction
 	}
 
 	@Override
-	public Condition resolveCondition()
+	public Condition resolveCondition(ActionEvent e)
 	{
 		if(loggingEvent == null)
 		{
