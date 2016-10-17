@@ -106,6 +106,9 @@ class EventContainsConditionSpec extends Specification {
 		// callStack, stackTrace
 		'setPressed'                     | [44, 45, 46, 47, 48, 49, 50, 51, 65, 66, 95, 96, 116] as Set
 
+		// thread priority, thread id, thread group id
+		'7'                              | [84, 86, 117] as Set
+
 		condition = new EventContainsCondition(input)
 	}
 

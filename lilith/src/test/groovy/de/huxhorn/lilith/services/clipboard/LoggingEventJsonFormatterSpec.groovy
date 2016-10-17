@@ -878,7 +878,7 @@ class LoggingEventJsonFormatterSpec extends AbstractClipboardFormatterSpec {
 
 				'{' + NEWLINE +
 						'  "threadInfo" : {' + NEWLINE +
-						'    "priority" : 17' + NEWLINE +
+						'    "priority" : 7' + NEWLINE +
 						'  }' + NEWLINE +
 						'}',
 		]

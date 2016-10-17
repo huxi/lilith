@@ -23,14 +23,11 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import java.util.Map;
 
 public class MDCContainsCondition
-	implements LilithCondition
+	extends AbstractStringStringMapContainsCondition
 {
-	private static final long serialVersionUID = -7175187972553499074L;
+	private static final long serialVersionUID = -5889872043415042289L;
 
 	public static final String DESCRIPTION = "MDC.contains";
-
-	private String key;
-	private String value;
 
 	public MDCContainsCondition()
 	{
@@ -39,116 +36,29 @@ public class MDCContainsCondition
 
 	public MDCContainsCondition(String key, String value)
 	{
-		this.key = key;
-		this.value = value;
-	}
-
-	public String getKey()
-	{
-		return key;
-	}
-
-	public void setKey(String key)
-	{
-		this.key = key;
-	}
-
-	public String getValue()
-	{
-		return value;
-	}
-
-	public void setValue(String value)
-	{
-		this.value = value;
+		super(key, value);
 	}
 
 	@Override
-	public boolean isTrue(Object element)
+	protected Map<String, String> resolveMap(Object element)
 	{
-		if(key == null)
-		{
-			return false;
-		}
-		if(element instanceof EventWrapper)
+		if (element instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) element;
 			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
+			if (eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
 
-				Map<String, String> mdc = event.getMdc();
-				if(mdc == null || mdc.isEmpty())
-				{
-					return false;
-				}
-				if(value == null)
-				{
-					// no value means any value for the given key is true.
-					return mdc.containsKey(key);
-				}
-
-				return value.equals(mdc.get(key));
+				return event.getMdc();
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override
 	public MDCContainsCondition clone() throws CloneNotSupportedException {
 		return (MDCContainsCondition) super.clone();
-	}
-
-	public String toString()
-	{
-		StringBuilder result = new StringBuilder();
-		result.append(getDescription()).append("(");
-		if(key != null)
-		{
-			result.append("\"");
-			result.append(key);
-			result.append("\"");
-		}
-		else
-		{
-			result.append("null");
-		}
-		result.append(",");
-		if(value != null)
-		{
-			result.append("\"");
-			result.append(value);
-			result.append("\"");
-		}
-		else
-		{
-			result.append("null");
-		}
-		result.append(")");
-		return result.toString();
-	}
-
-	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		MDCContainsCondition that = (MDCContainsCondition) o;
-
-		if (key != null ? !key.equals(that.key) : that.key != null) return false;
-		if (value != null ? !value.equals(that.value) : that.value != null) return false;
-
-		return true;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		int result = key != null ? key.hashCode() : 0;
-		result = 31 * result + (value != null ? value.hashCode() : 0);
-		return result;
 	}
 
 	public String getDescription()

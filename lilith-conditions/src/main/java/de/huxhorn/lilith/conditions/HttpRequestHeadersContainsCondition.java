@@ -22,14 +22,11 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import java.util.Map;
 
 public class HttpRequestHeadersContainsCondition
-	implements LilithCondition
+	extends AbstractStringStringMapContainsCondition
 {
-	private static final long serialVersionUID = -4837874129991318629L;
+	private static final long serialVersionUID = -3656904761818693731L;
 
 	public static final String DESCRIPTION = "RequestHeaders.contains";
-
-	private String key;
-	private String value;
 
 	public HttpRequestHeadersContainsCondition()
 	{
@@ -38,116 +35,29 @@ public class HttpRequestHeadersContainsCondition
 
 	public HttpRequestHeadersContainsCondition(String key, String value)
 	{
-		this.key = key;
-		this.value = value;
-	}
-
-	public String getKey()
-	{
-		return key;
-	}
-
-	public void setKey(String key)
-	{
-		this.key = key;
-	}
-
-	public String getValue()
-	{
-		return value;
-	}
-
-	public void setValue(String value)
-	{
-		this.value = value;
+		super(key, value);
 	}
 
 	@Override
-	public boolean isTrue(Object element)
+	protected Map<String, String> resolveMap(Object element)
 	{
-		if(key == null)
-		{
-			return false;
-		}
 		if(element instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) element;
 			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof AccessEvent)
+			if (eventObj instanceof AccessEvent)
 			{
 				AccessEvent event = (AccessEvent) eventObj;
 
-				Map<String, String> requestHeaders = event.getRequestHeaders();
-				if(requestHeaders == null || requestHeaders.isEmpty())
-				{
-					return false;
-				}
-				if(value == null)
-				{
-					// no value means any value for the given key is true.
-					return requestHeaders.containsKey(key);
-				}
-
-				return value.equals(requestHeaders.get(key));
+				return event.getRequestHeaders();
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override
 	public HttpRequestHeadersContainsCondition clone() throws CloneNotSupportedException {
 		return (HttpRequestHeadersContainsCondition) super.clone();
-	}
-
-	public String toString()
-	{
-		StringBuilder result = new StringBuilder();
-		result.append(getDescription()).append("(");
-		if(key != null)
-		{
-			result.append("\"");
-			result.append(key);
-			result.append("\"");
-		}
-		else
-		{
-			result.append("null");
-		}
-		result.append(",");
-		if(value != null)
-		{
-			result.append("\"");
-			result.append(value);
-			result.append("\"");
-		}
-		else
-		{
-			result.append("null");
-		}
-		result.append(")");
-		return result.toString();
-	}
-
-	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		HttpRequestHeadersContainsCondition that = (HttpRequestHeadersContainsCondition) o;
-
-		if (key != null ? !key.equals(that.key) : that.key != null) return false;
-		if (value != null ? !value.equals(that.value) : that.value != null) return false;
-
-		return true;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		int result = key != null ? key.hashCode() : 0;
-		result = 31 * result + (value != null ? value.hashCode() : 0);
-		return result;
 	}
 
 	public String getDescription()

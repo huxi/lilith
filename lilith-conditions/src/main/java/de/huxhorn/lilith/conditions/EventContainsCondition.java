@@ -160,7 +160,7 @@ public class EventContainsCondition
 						Long threadId = threadInfo.getId();
 						if(threadId != null)
 						{
-							if(checkString("" + threadId))
+							if(checkString(Long.toString(threadId)))
 							{
 								return true;
 							}
@@ -169,7 +169,7 @@ public class EventContainsCondition
 						Integer threadPriority = threadInfo.getPriority();
 						if(threadPriority != null)
 						{
-							if(checkString("" + threadPriority))
+							if(checkString(Integer.toString(threadPriority)))
 							{
 								return true;
 							}
@@ -183,7 +183,7 @@ public class EventContainsCondition
 						Long groupId = threadInfo.getGroupId();
 						if(groupId != null)
 						{
-							if(checkString("" + groupId))
+							if(checkString(Long.toString(groupId)))
 							{
 								return true;
 							}
