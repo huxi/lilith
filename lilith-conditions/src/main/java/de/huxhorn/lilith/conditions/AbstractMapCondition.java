@@ -29,7 +29,7 @@ public abstract class AbstractMapCondition<V>
 
 	public AbstractMapCondition()
 	{
-		this(null, null);
+		super();
 	}
 
 	public AbstractMapCondition(String key, String value)

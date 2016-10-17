@@ -30,7 +30,7 @@ public class HttpRequestHeadersContainsCondition
 
 	public HttpRequestHeadersContainsCondition()
 	{
-		this(null, null);
+		super();
 	}
 
 	public HttpRequestHeadersContainsCondition(String key, String value)

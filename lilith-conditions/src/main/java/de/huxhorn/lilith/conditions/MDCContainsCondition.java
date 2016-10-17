@@ -31,7 +31,7 @@ public class MDCContainsCondition
 
 	public MDCContainsCondition()
 	{
-		this(null, null);
+		super();
 	}
 
 	public MDCContainsCondition(String key, String value)

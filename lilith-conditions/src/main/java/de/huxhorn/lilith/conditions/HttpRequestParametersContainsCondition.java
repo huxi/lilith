@@ -30,7 +30,7 @@ public class HttpRequestParametersContainsCondition
 
 	public HttpRequestParametersContainsCondition()
 	{
-		this(null, null);
+		super();
 	}
 
 	public HttpRequestParametersContainsCondition(String key, String value)

@@ -26,7 +26,7 @@ public abstract class AbstractStringStringArrayMapContainsCondition
 
 	public AbstractStringStringArrayMapContainsCondition()
 	{
-		this(null, null);
+		super();
 	}
 
 	public AbstractStringStringArrayMapContainsCondition(String key, String value)
