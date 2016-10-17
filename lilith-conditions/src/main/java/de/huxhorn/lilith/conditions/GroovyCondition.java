@@ -93,19 +93,7 @@ public class GroovyCondition
 
 		if(instance == null)
 		{
-			if(logger.isWarnEnabled())
-			{
-				String message = "Couldn't retrieve condition! " + groovyInstance.getErrorMessage();
-				Throwable cause = groovyInstance.getErrorCause();
-				if(cause != null)
-				{
-					logger.warn(message, cause);
-				}
-				else
-				{
-					logger.warn(message);
-				}
-			}
+			logger.warn("Couldn't retrieve condition!\n{}", groovyInstance.getErrorMessage(), groovyInstance.getErrorCause());
 			return false;
 		}
 
@@ -130,12 +118,12 @@ public class GroovyCondition
 				Object result = script.run();
 				return !(result == null || result.equals(Boolean.FALSE));
 			}
-			if(logger.isWarnEnabled()) logger.warn("Expected either Condition or Script but got {} instead!", instance.getClass().getName());
+			logger.warn("Expected either Condition or Script but got {} instead!", instance.getClass().getName());
 			return false;
 		}
 		catch(Throwable t)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while executing '{}'!", scriptFileName, t);
+			logger.warn("Exception while executing '{}'!", scriptFileName, t);
 			return false;
 		}
 	}
