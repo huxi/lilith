@@ -45,4 +45,9 @@ class FocusMDCActionSpec extends AbstractFilterActionSpecBase {
 	Class expectedConditionClass() {
 		return MDCContainsCondition.class
 	}
+
+	@Override
+	boolean isExpectingAlternativeBehavior() {
+		true
+	}
 }

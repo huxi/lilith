@@ -24,6 +24,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper
 import de.huxhorn.lilith.swing.ViewContainer
 import de.huxhorn.sulky.conditions.Condition
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import java.awt.event.ActionEvent
 
@@ -212,6 +213,41 @@ abstract class AbstractFilterActionSpecBase extends Specification {
 
 		then:
 		filterAction.viewContainer == null
+	}
+
+	@Unroll
+	def 'resolveCondition() with and without ActionEvent works as expected for #value.'() {
+		setup:
+		def filterAction = createAction()
+		ActionEvent actionEvent = new ActionEvent("Foo", 0, null)
+		ActionEvent altActionEvent = new ActionEvent("Foo", 0, null, ActionEvent.ALT_MASK)
+
+
+		when:
+		Condition nullEventCondition = null
+		Condition actionEventCondition = null
+		Condition altActionEventCondition = null
+		if (value instanceof EventWrapper) {
+			filterAction.setEventWrapper(value)
+			nullEventCondition = filterAction.resolveCondition(null)
+			actionEventCondition = filterAction.resolveCondition(actionEvent)
+			altActionEventCondition = filterAction.resolveCondition(altActionEvent)
+		}
+
+		then:
+		assert nullEventCondition == actionEventCondition
+		if(actionEventCondition != null && isExpectingAlternativeBehavior()) {
+			assert actionEventCondition != altActionEventCondition
+		} else {
+			assert actionEventCondition == altActionEventCondition
+		}
+
+		where:
+		value << EventWrapperCorpus.createCorpus()
+	}
+
+	boolean isExpectingAlternativeBehavior() {
+		false
 	}
 
 	def 'sanity check of expected values.'() {

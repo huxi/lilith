@@ -52,9 +52,13 @@ public class FocusMDCAction
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(loggingEvent == null || loggingEvent.getMdc() == null || loggingEvent.getMdc().isEmpty())
+		if(!isEnabled())
 		{
 			return null;
+		}
+		if(isAlternativeBehaviorRequested(e))
+		{
+			return new MDCContainsCondition(key, null);
 		}
 		return new MDCContainsCondition(key, value);
 	}

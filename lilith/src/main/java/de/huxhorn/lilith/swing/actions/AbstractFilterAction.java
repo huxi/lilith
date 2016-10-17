@@ -101,6 +101,11 @@ public abstract class AbstractFilterAction
 
 	public abstract Condition resolveCondition(ActionEvent e);
 
+	protected boolean isAlternativeBehaviorRequested(ActionEvent e)
+	{
+		return e != null && (e.getModifiers() & ActionEvent.ALT_MASK) != 0;
+	}
+
 	public static  void initializeConditionTooltip(Condition condition, Action action, boolean htmlTooltip)
 	{
 		initializeCroppedTooltip(TextPreprocessor.formatCondition(condition), action, htmlTooltip);
