@@ -46,6 +46,10 @@ public class FocusHttpRequestParameterAction
 		{
 			return null;
 		}
+		if(isAlternativeBehaviorRequested(e))
+		{
+			return new HttpRequestParametersContainsCondition(key, null);
+		}
 		return new HttpRequestParametersContainsCondition(key, value);
 	}
 }

@@ -30,4 +30,8 @@ class FocusHttpRequestHeaderActionSpec extends AbstractBasicFilterActionSpecBase
 	Class expectedConditionClass() {
 		return HttpRequestHeadersContainsCondition.class
 	}
+
+	boolean isExpectingAlternativeBehavior() {
+		true
+	}
 }

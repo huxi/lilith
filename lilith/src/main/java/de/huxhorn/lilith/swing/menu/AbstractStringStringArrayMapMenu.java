@@ -17,24 +17,30 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
-import de.huxhorn.lilith.swing.actions.NegateFilterAction;
-import de.huxhorn.lilith.swing.preferences.SavedCondition;
+import java.util.List;
 
-class ExcludeSavedConditionsMenu
-	extends FocusSavedConditionsMenu
+abstract class AbstractStringStringArrayMapMenu
+	extends AbstractMapMenu<String[]>
 {
-	private static final long serialVersionUID = 6995608490657897758L;
+	private static final long serialVersionUID = 5476262722332299274L;
 
-	ExcludeSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
+	AbstractStringStringArrayMapMenu(String name)
 	{
-		super(applicationPreferences, htmlTooltip);
+		super(name);
 	}
 
 	@Override
-	protected BasicFilterAction createAction(SavedCondition savedCondition)
+	protected void addActions(String key, String[] value, List<BasicFilterAction> actions)
 	{
-		return new NegateFilterAction(super.createAction(savedCondition));
+		if(value == null)
+		{
+			return;
+		}
+
+		for (String current : value)
+		{
+			actions.add(createAction(key, current));
+		}
 	}
 }

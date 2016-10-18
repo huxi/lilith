@@ -29,7 +29,10 @@ All notable changes to this project will be documented in this file.
 - Added "Focus Thread group name"/"Exclude Thread group name".
 - Added "Focus Request URI"/"Exclude Request URI" menus.
 - Added lots of filter tests.
-- Added alternative behavior for "Focus MDC"/"Exclude MDC". Pressing `Alt` while selecting Action will match any value for the given key.
+- Added "Focus Request Parameter"/"Exclude Request Parameter".
+- Added "Focus Request Header"/"Exclude Request Header".
+- Added "Focus Response Header"/"Exclude Response Header".
+- Added alternative behavior for "MDC", "Request Parameter", "Request Header" and "Response Header" Focus/Exclude menu items. Pressing `Alt` while selecting Action will match any value for the given key.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.

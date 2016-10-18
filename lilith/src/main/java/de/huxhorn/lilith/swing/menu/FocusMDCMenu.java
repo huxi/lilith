@@ -17,62 +17,40 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMDCAction;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+
+import static de.huxhorn.lilith.swing.actions.AbstractLoggingFilterAction.resolveLoggingEvent;
 
 class FocusMDCMenu
-	extends AbstractLoggingFilterMenu
+		extends AbstractStringStringMapMenu
 {
-	private static final long serialVersionUID = -8657270846680308139L;
+	private static final long serialVersionUID = -4341021865435725193L;
 
 	FocusMDCMenu()
 	{
 		super("MDC");
 
 		setToolTipText("Mapped Diagnostic Context");
-
-		setViewContainer(null);
-	}
-
-	protected void updateState()
-	{
-		removeAll();
-		SortedMap<String, String> sorted = null;
-		if (loggingEvent != null)
-		{
-			Map<String, String> mdc = loggingEvent.getMdc();
-			if (mdc != null && !mdc.isEmpty())
-			{
-				if(mdc.containsKey(null))
-				{
-					mdc = new HashMap<>(mdc);
-					mdc.remove(null);
-				}
-				sorted = new TreeMap<>(mdc);
-			}
-		}
-
-		if(sorted == null || sorted.isEmpty())
-		{
-			setEnabled(false);
-			return;
-		}
-
-		for (Map.Entry<String, String> entry : sorted.entrySet())
-		{
-			BasicFilterAction filterAction = createAction(entry.getKey(), entry.getValue());
-			filterAction.setViewContainer(viewContainer);
-			add(filterAction);
-		}
-		setEnabled(true);
 	}
 
 	protected BasicFilterAction createAction(String key, String value)
 	{
 		return new FocusMDCAction(key, value);
+	}
+
+	@Override
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		LoggingEvent loggingEvent = resolveLoggingEvent(eventWrapper);
+		Map<String, String> newMap = null;
+		if (loggingEvent != null)
+		{
+			newMap = loggingEvent.getMdc();
+		}
+		setMap(newMap);
 	}
 }

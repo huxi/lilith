@@ -34,16 +34,19 @@ class ExcludeMenuSpec extends AbstractFilterMenuSpecBase {
 
 	@Override
 	int expectedGetSelectedEventCalls() {
-		19
+		22
 	}
 
 	def 'setConditionNames() does not explode'() {
 		setup:
 		ExcludeMenu menu = (ExcludeMenu) createMenu()
 
-		expect:
+		when:
 		menu.setConditionNames(['foo', 'bar'])
 		menu.setConditionNames([])
 		menu.setConditionNames(null)
+
+		then:
+		noExceptionThrown()
 	}
 }

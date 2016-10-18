@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
-import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
 class ExcludeHttpRequestUriMenu
@@ -29,6 +28,6 @@ class ExcludeHttpRequestUriMenu
 	@Override
 	protected BasicFilterAction createAction(String uri)
 	{
-		return new NegateFilterAction(new FocusHttpRequestUriAction(uri));
+		return new NegateFilterAction(super.createAction(uri));
 	}
 }

@@ -46,6 +46,10 @@ public class FocusHttpResponseHeaderAction
 		{
 			return null;
 		}
+		if(isAlternativeBehaviorRequested(e))
+		{
+			return new HttpResponseHeadersContainsCondition(key, null);
+		}
 		return new HttpResponseHeadersContainsCondition(key, value);
 	}
 }

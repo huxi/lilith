@@ -17,17 +17,38 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
+import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
-import de.huxhorn.lilith.swing.actions.NegateFilterAction;
+import de.huxhorn.lilith.swing.actions.FocusHttpRequestParameterAction;
+import java.util.Map;
 
-class ExcludeMDCMenu
-	extends FocusMDCMenu
+import static de.huxhorn.lilith.swing.actions.AbstractAccessFilterAction.resolveAccessEvent;
+
+class FocusRequestParameterMenu
+		extends AbstractStringStringArrayMapMenu
 {
-	private static final long serialVersionUID = 6995608490657897758L;
+	private static final long serialVersionUID = -4101061660490519518L;
 
-	@Override
+	FocusRequestParameterMenu()
+	{
+		super("Request Parameter");
+	}
+
 	protected BasicFilterAction createAction(String key, String value)
 	{
-		return new NegateFilterAction(super.createAction(key, value));
+		return new FocusHttpRequestParameterAction(key, value);
+	}
+
+	@Override
+	public void setEventWrapper(EventWrapper eventWrapper)
+	{
+		AccessEvent accessEvent = resolveAccessEvent(eventWrapper);
+		Map<String, String[]> newMap = null;
+		if (accessEvent != null)
+		{
+			newMap = accessEvent.getRequestParameters();
+		}
+		setMap(newMap);
 	}
 }

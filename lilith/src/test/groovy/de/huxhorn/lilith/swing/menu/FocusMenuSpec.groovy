@@ -34,16 +34,19 @@ class FocusMenuSpec extends AbstractFilterMenuSpecBase {
 
 	@Override
 	int expectedGetSelectedEventCalls() {
-		20
+		23
 	}
 
 	def 'setConditionNames() does not explode'() {
 		setup:
 		FocusMenu menu = (FocusMenu) createMenu()
 
-		expect:
+		when:
 		menu.setConditionNames(['foo', 'bar'])
 		menu.setConditionNames([])
 		menu.setConditionNames(null)
+
+		then:
+		noExceptionThrown()
 	}
 }

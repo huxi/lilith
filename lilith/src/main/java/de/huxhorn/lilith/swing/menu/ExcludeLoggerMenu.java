@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
-import de.huxhorn.lilith.swing.actions.FocusLoggerAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
 class ExcludeLoggerMenu
@@ -29,6 +28,6 @@ class ExcludeLoggerMenu
 	@Override
 	protected BasicFilterAction createAction(String loggerName)
 	{
-		return new NegateFilterAction(new FocusLoggerAction(loggerName));
+		return new NegateFilterAction(super.createAction(loggerName));
 	}
 }

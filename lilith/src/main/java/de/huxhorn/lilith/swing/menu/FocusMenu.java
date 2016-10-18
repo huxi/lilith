@@ -87,6 +87,10 @@ public class FocusMenu
 	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
 
+	private FocusRequestParameterMenu requestParameterMenu;
+	private FocusRequestHeaderMenu requestHeaderMenu;
+	private FocusResponseHeaderMenu responseHeaderMenu;
+
 	private FilterAction remoteUserAction;
 	private JMenuItem remoteUserItem;
 
@@ -140,9 +144,12 @@ public class FocusMenu
 		methodItem = new JMenuItem(methodAction);
 
 		requestUriMenu = new FocusHttpRequestUriMenu();
-
 		requestUrlAction = new FocusHttpRequestUrlAction();
 		requestUrlItem = new JMenuItem(requestUrlAction);
+
+		requestParameterMenu = new FocusRequestParameterMenu();
+		requestHeaderMenu = new FocusRequestHeaderMenu();
+		responseHeaderMenu = new FocusResponseHeaderMenu();
 
 		remoteUserAction = new FocusHttpRemoteUserAction();
 		remoteUserItem = new JMenuItem(remoteUserAction);
@@ -185,6 +192,10 @@ public class FocusMenu
 
 		requestUriMenu.setViewContainer(viewContainer);
 		requestUrlAction.setViewContainer(viewContainer);
+
+		requestParameterMenu.setViewContainer(viewContainer);
+		requestHeaderMenu.setViewContainer(viewContainer);
+		responseHeaderMenu.setViewContainer(viewContainer);
 
 		remoteUserAction.setViewContainer(viewContainer);
 
@@ -258,6 +269,10 @@ public class FocusMenu
 			requestUriMenu.setEventWrapper(eventWrapper);
 			requestUrlAction.setEventWrapper(eventWrapper);
 
+			requestParameterMenu.setEventWrapper(eventWrapper);
+			requestHeaderMenu.setEventWrapper(eventWrapper);
+			responseHeaderMenu.setEventWrapper(eventWrapper);
+
 			remoteUserAction.setEventWrapper(eventWrapper);
 
 			add(savedMenu);
@@ -269,6 +284,10 @@ public class FocusMenu
 			addSeparator();
 			add(requestUriMenu);
 			add(requestUrlItem);
+			addSeparator();
+			add(requestParameterMenu);
+			add(requestHeaderMenu);
+			add(responseHeaderMenu);
 			addSeparator();
 			add(remoteUserItem);
 

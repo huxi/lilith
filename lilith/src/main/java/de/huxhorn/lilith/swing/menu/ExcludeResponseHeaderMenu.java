@@ -17,24 +17,17 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
-import de.huxhorn.lilith.swing.preferences.SavedCondition;
 
-class ExcludeSavedConditionsMenu
-	extends FocusSavedConditionsMenu
+class ExcludeResponseHeaderMenu
+		extends FocusResponseHeaderMenu
 {
-	private static final long serialVersionUID = 6995608490657897758L;
-
-	ExcludeSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
-	{
-		super(applicationPreferences, htmlTooltip);
-	}
+	private static final long serialVersionUID = -6094949800672359365L;
 
 	@Override
-	protected BasicFilterAction createAction(SavedCondition savedCondition)
+	protected BasicFilterAction createAction(String key, String value)
 	{
-		return new NegateFilterAction(super.createAction(savedCondition));
+		return new NegateFilterAction(super.createAction(key, value));
 	}
 }

@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
-import de.huxhorn.lilith.swing.actions.FocusMarkerAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
 class ExcludeMarkerMenu
@@ -29,6 +28,6 @@ class ExcludeMarkerMenu
 	@Override
 	protected BasicFilterAction createAction(String markerName)
 	{
-		return new NegateFilterAction(new FocusMarkerAction(markerName));
+		return new NegateFilterAction(super.createAction(markerName));
 	}
 }

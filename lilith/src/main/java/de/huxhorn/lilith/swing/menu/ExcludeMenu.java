@@ -89,6 +89,10 @@ public class ExcludeMenu
 	private FilterAction requestUrlAction;
 	private JMenuItem requestUrlItem;
 
+	private ExcludeRequestParameterMenu requestParameterMenu;
+	private ExcludeRequestHeaderMenu requestHeaderMenu;
+	private ExcludeResponseHeaderMenu responseHeaderMenu;
+
 	private FilterAction remoteUserAction;
 	private JMenuItem remoteUserItem;
 
@@ -143,6 +147,10 @@ public class ExcludeMenu
 		requestUrlAction = new NegateFilterAction(new FocusHttpRequestUrlAction());
 		requestUrlItem = new JMenuItem(requestUrlAction);
 
+		requestParameterMenu = new ExcludeRequestParameterMenu();
+		requestHeaderMenu = new ExcludeRequestHeaderMenu();
+		responseHeaderMenu = new ExcludeResponseHeaderMenu();
+
 		remoteUserAction = new NegateFilterAction(new FocusHttpRemoteUserAction());
 		remoteUserItem = new JMenuItem(remoteUserAction);
 	}
@@ -184,6 +192,10 @@ public class ExcludeMenu
 
 		requestUriMenu.setViewContainer(viewContainer);
 		requestUrlAction.setViewContainer(viewContainer);
+
+		requestParameterMenu.setViewContainer(viewContainer);
+		requestHeaderMenu.setViewContainer(viewContainer);
+		responseHeaderMenu.setViewContainer(viewContainer);
 
 		remoteUserAction.setViewContainer(viewContainer);
 
@@ -253,6 +265,10 @@ public class ExcludeMenu
 			requestUriMenu.setEventWrapper(eventWrapper);
 			requestUrlAction.setEventWrapper(eventWrapper);
 
+			requestParameterMenu.setEventWrapper(eventWrapper);
+			requestHeaderMenu.setEventWrapper(eventWrapper);
+			responseHeaderMenu.setEventWrapper(eventWrapper);
+
 			remoteUserAction.setEventWrapper(eventWrapper);
 
 			add(savedMenu);
@@ -264,6 +280,10 @@ public class ExcludeMenu
 			addSeparator();
 			add(requestUriMenu);
 			add(requestUrlItem);
+			addSeparator();
+			add(requestParameterMenu);
+			add(requestHeaderMenu);
+			add(responseHeaderMenu);
 			addSeparator();
 			add(remoteUserItem);
 
