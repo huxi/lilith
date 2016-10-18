@@ -20,25 +20,10 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.MarkerContainsCondition
 
-class FocusMarkerActionSpec extends AbstractFilterActionSpecBase {
+class FocusMarkerActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusMarkerAction("markerName")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		return [31, 32, 88]
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the markerName used during construction
-			result.add('markerName')
-		}
-		return result
 	}
 
 	@Override

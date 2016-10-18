@@ -20,25 +20,10 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.NDCContainsCondition
 
-class FocusNDCActionSpec extends AbstractFilterActionSpecBase {
+class FocusNDCActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusNDCAction("ndcMessage", false)
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		return [34, 35, 36, 37, 38, 39, 40, 41, 42, 87]
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the message used during construction
-			result.add('ndcMessage')
-		}
-		return result
 	}
 
 	@Override

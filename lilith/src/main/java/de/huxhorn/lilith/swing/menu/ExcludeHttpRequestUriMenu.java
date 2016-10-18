@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
@@ -27,7 +27,7 @@ class ExcludeHttpRequestUriMenu
 	private static final long serialVersionUID = -5153781586103062L;
 
 	@Override
-	protected FilterAction createAction(String uri)
+	protected BasicFilterAction createAction(String uri)
 	{
 		return new NegateFilterAction(new FocusHttpRequestUriAction(uri));
 	}

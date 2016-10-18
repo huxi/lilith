@@ -18,20 +18,21 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusLevelAction;
 
 class FocusLevelMenu
 	extends AbstractLoggingFilterMenu
 {
 	private static final long serialVersionUID = -2715600759548679303L;
-	private final FocusLevelAction[] levelActions;
+	private final BasicFilterAction[] levelActions;
 
 	FocusLevelMenu()
 	{
 		super("Level");
 
 		LoggingEvent.Level[] values = LoggingEvent.Level.values();
-		levelActions = new FocusLevelAction[values.length-1];
+		levelActions = new BasicFilterAction[values.length-1];
 		for(int i=0;i<values.length-1;i++)
 		{
 			levelActions[i]=new FocusLevelAction(values[i+1]);
@@ -50,7 +51,7 @@ class FocusLevelMenu
 		}
 		setEnabled(true);
 
-		for(FocusLevelAction current : levelActions)
+		for(BasicFilterAction current : levelActions)
 		{
 			current.setViewContainer(viewContainer);
 		}

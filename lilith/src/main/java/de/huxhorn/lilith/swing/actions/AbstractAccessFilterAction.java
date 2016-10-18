@@ -17,9 +17,8 @@
  */
 package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.access.AccessEvent;
-
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import java.io.Serializable;
 
 public abstract class AbstractAccessFilterAction

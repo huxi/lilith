@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpRequestUriAction;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ class FocusHttpRequestUriMenu
 		boolean added = false;
 		for (String current : prepareUris(uri))
 		{
-			FilterAction filterAction = createAction(current);
+			BasicFilterAction filterAction = createAction(current);
 			filterAction.setViewContainer(viewContainer);
 			add(filterAction);
 			added = true;
@@ -60,7 +60,7 @@ class FocusHttpRequestUriMenu
 		setEnabled(added);
 	}
 
-	protected FilterAction createAction(String uri)
+	protected BasicFilterAction createAction(String uri)
 	{
 		return new FocusHttpRequestUriAction(uri);
 	}

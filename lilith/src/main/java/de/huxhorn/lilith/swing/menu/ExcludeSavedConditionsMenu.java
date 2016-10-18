@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
@@ -34,7 +34,7 @@ class ExcludeSavedConditionsMenu
 	}
 
 	@Override
-	protected FilterAction createAction(SavedCondition savedCondition)
+	protected BasicFilterAction createAction(SavedCondition savedCondition)
 	{
 		return new NegateFilterAction(new FocusSavedConditionAction(savedCondition, htmlTooltip));
 	}

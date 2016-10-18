@@ -20,12 +20,11 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.HttpStatusTypeCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 public class FocusHttpStatusTypeAction
-		extends AbstractAccessFilterAction
+		extends AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = -285766419031200234L;
 
@@ -36,19 +35,13 @@ public class FocusHttpStatusTypeAction
 		super(type.getRange(), false);
 		this.type = type;
 		putValue(Action.SHORT_DESCRIPTION, type.toString());
-		setViewContainer(null);
-	}
-
-	@Override
-	protected void updateState()
-	{
-		setEnabled(accessEvent != null);
+		viewContainerUpdated();
 	}
 
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(accessEvent == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

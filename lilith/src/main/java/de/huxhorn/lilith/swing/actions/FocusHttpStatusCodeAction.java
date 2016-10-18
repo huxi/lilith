@@ -20,7 +20,6 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.HttpStatusCodeCondition;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
@@ -76,7 +75,7 @@ public class FocusHttpStatusCodeAction
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(statusCode == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

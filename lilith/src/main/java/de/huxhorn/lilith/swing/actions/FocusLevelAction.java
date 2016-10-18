@@ -20,12 +20,11 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.LevelCondition;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 public class FocusLevelAction
-		extends AbstractLoggingFilterAction
+		extends AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = -7615646386307125745L;
 
@@ -36,19 +35,13 @@ public class FocusLevelAction
 		super(level.name(), false);
 		this.level = level;
 		putValue(Action.SHORT_DESCRIPTION, new LevelCondition(level.name()).toString());
-		setViewContainer(null);
-	}
-
-	@Override
-	protected void updateState()
-	{
-		setEnabled(loggingEvent != null);
+		viewContainerUpdated();
 	}
 
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(loggingEvent == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

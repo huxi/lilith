@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusHttpStatusTypeAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
@@ -27,7 +27,7 @@ class ExcludeHttpStatusTypeMenu
 {
 	private static final long serialVersionUID = 4925999851649779333L;
 
-	protected FilterAction createAction(HttpStatus.Type type)
+	protected BasicFilterAction createAction(HttpStatus.Type type)
 	{
 		return new NegateFilterAction(new FocusHttpStatusTypeAction(type));
 	}

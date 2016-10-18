@@ -18,41 +18,24 @@
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.swing.TextPreprocessor;
-import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.conditions.Condition;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import java.awt.event.ActionEvent;
 
 public abstract class AbstractFilterAction
-	extends AbstractAction
+	extends AbstractBasicFilterAction
 	implements FilterAction
 {
-	private static final long serialVersionUID = -8702163293653882073L;
-
-	protected transient ViewContainer viewContainer;
-	private final boolean htmlTooltip;
-
+	private static final long serialVersionUID = -8402480035772204416L;
 
 	protected AbstractFilterAction(String name, boolean htmlTooltip)
 	{
-		super(name);
-		this.htmlTooltip = htmlTooltip;
+		super(name, htmlTooltip);
 	}
 
 	@Override
-	public final void setViewContainer(ViewContainer viewContainer) {
-		if(this.viewContainer != viewContainer)
-		{
-			this.viewContainer = viewContainer;
-			viewContainerUpdated();
-		}
-	}
-
-	private void viewContainerUpdated()
+	protected void viewContainerUpdated()
 	{
+		super.viewContainerUpdated();
 		EventWrapper eventWrapper = null;
 		if(viewContainer != null)
 		{
@@ -61,63 +44,12 @@ public abstract class AbstractFilterAction
 		setEventWrapper(eventWrapper);
 	}
 
-	@Override
-	public ViewContainer getViewContainer()
-	{
-		return viewContainer;
-	}
-
-	@Override
-	public final void actionPerformed(ActionEvent e)
-	{
-		if(this.viewContainer == null)
-		{
-			return;
-		}
-		Condition condition = resolveCondition(e);
-		if(condition == null)
-		{
-			return;
-		}
-		viewContainer.applyCondition(condition, e);
-	}
-
 	/**
 	 * To be called after setEventWrapper.
 	 */
 	protected abstract void updateState();
 
-	protected void initializeCroppedTooltip(String tooltip)
-	{
-		initializeCroppedTooltip(tooltip, this, htmlTooltip);
-	}
-
-	protected void initializeConditionTooltip(Condition condition)
-	{
-		initializeConditionTooltip(condition, this, htmlTooltip);
-	}
-
 	public abstract void setEventWrapper(EventWrapper eventWrapper);
 
 	public abstract Condition resolveCondition(ActionEvent e);
-
-	protected boolean isAlternativeBehaviorRequested(ActionEvent e)
-	{
-		return e != null && (e.getModifiers() & ActionEvent.ALT_MASK) != 0;
-	}
-
-	public static  void initializeConditionTooltip(Condition condition, Action action, boolean htmlTooltip)
-	{
-		initializeCroppedTooltip(TextPreprocessor.formatCondition(condition), action, htmlTooltip);
-	}
-
-	public static  void initializeCroppedTooltip(String tooltip, Action action, boolean htmlTooltip)
-	{
-		tooltip = TextPreprocessor.cropTextBlock(tooltip);
-		if(htmlTooltip)
-		{
-			tooltip = TextPreprocessor.preformattedTooltip(tooltip);
-		}
-		action.putValue(Action.SHORT_DESCRIPTION, tooltip);
-	}
 }

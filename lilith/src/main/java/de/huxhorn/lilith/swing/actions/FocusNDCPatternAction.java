@@ -23,7 +23,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import java.awt.event.ActionEvent;
 
 public class FocusNDCPatternAction
-		extends AbstractLoggingFilterAction
+		extends AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = -4802481730349145765L;
 
@@ -34,24 +34,13 @@ public class FocusNDCPatternAction
 		super(TextPreprocessor.cropToSingleLine(pattern), htmlTooltip);
 		this.pattern = pattern;
 		initializeCroppedTooltip(pattern);
-		setViewContainer(viewContainer);
-	}
-
-	@Override
-	protected void updateState()
-	{
-		if(loggingEvent == null || loggingEvent.getNdc() == null || loggingEvent.getNdc().length == 0)
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+		viewContainerUpdated();
 	}
 
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(loggingEvent == null || loggingEvent.getNdc() == null || loggingEvent.getNdc().length == 0)
+		if(!isEnabled())
 		{
 			return null;
 		}

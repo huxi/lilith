@@ -18,7 +18,7 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.logging.Message;
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
 
@@ -34,8 +34,7 @@ class FocusNDCMenu
 
 		this.htmlTooltip = htmlTooltip;
 		setToolTipText("Nested Diagnostic Context");
-
-		setViewContainer(null);
+		viewContainerUpdated();
 	}
 
 	protected void updateState()
@@ -75,12 +74,12 @@ class FocusNDCMenu
 			{
 				addSeparator();
 			}
-			FilterAction filterAction = createMessageAction(message);
+			BasicFilterAction filterAction = createMessageAction(message);
 			filterAction.setViewContainer(viewContainer);
 			add(filterAction);
 			if(!message.equals(messagePattern))
 			{
-				FilterAction patternFilterAction = createMessagePatternAction(messagePattern);
+				BasicFilterAction patternFilterAction = createMessagePatternAction(messagePattern);
 				patternFilterAction.setViewContainer(viewContainer);
 				add(patternFilterAction);
 			}
@@ -88,12 +87,12 @@ class FocusNDCMenu
 		setEnabled(!first);
 	}
 
-	protected FilterAction createMessageAction(String message)
+	protected BasicFilterAction createMessageAction(String message)
 	{
 		return new FocusNDCAction(message, htmlTooltip);
 	}
 
-	protected FilterAction createMessagePatternAction(String pattern)
+	protected BasicFilterAction createMessagePatternAction(String pattern)
 	{
 		return new FocusNDCPatternAction(pattern, htmlTooltip);
 	}

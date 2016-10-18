@@ -20,25 +20,10 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpRequestParametersContainsCondition
 
-class FocusHttpRequestParameterActionSpec extends AbstractFilterActionSpecBase {
+class FocusHttpRequestParameterActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusHttpRequestParameterAction("requestParameterKey", "requestParameterValue")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		return [109, 110, 111, 112, 113]
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the condition.toString()
-			result.add('RequestParameters.contains("requestParameterKey","requestParameterValue")')
-		}
-		return result
 	}
 
 	@Override

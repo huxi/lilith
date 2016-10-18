@@ -61,7 +61,7 @@ public class FocusFormattedMessageAction
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(formattedMessage == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

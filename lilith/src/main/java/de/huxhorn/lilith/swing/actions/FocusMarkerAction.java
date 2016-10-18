@@ -22,7 +22,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import java.awt.event.ActionEvent;
 
 public class FocusMarkerAction
-		extends AbstractLoggingFilterAction
+		extends AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = -4897396873005451863L;
 
@@ -32,23 +32,13 @@ public class FocusMarkerAction
 	{
 		super(markerName, false);
 		this.markerName = markerName;
-	}
-
-	@Override
-	protected void updateState()
-	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+		viewContainerUpdated();
 	}
 
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(loggingEvent == null || loggingEvent.getMarker() == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

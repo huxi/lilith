@@ -69,7 +69,7 @@ public class FocusMessagePatternAction
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(messagePattern == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

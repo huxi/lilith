@@ -19,29 +19,14 @@
 package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.ThreadNameCondition
-import de.huxhorn.lilith.data.EventWrapperCorpus
 import de.huxhorn.lilith.swing.preferences.SavedCondition
 
-class FocusSavedConditionActionSpec extends AbstractFilterActionSpecBase {
+class FocusSavedConditionActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		SavedCondition savedCondition = new SavedCondition(new ThreadNameCondition())
 		savedCondition.setName('savedCondition')
 		return new FocusSavedConditionAction(savedCondition, false)
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		EventWrapperCorpus.matchAnyEventWrapperSet()
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			result.add(null)
-		}
-		return result
 	}
 
 	@Override

@@ -20,7 +20,6 @@ package de.huxhorn.lilith.swing.actions;
 import de.huxhorn.lilith.conditions.CallLocationCondition;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
@@ -66,7 +65,7 @@ public class FocusCallLocationAction
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(callLocationString == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

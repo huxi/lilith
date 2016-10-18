@@ -243,7 +243,7 @@ class NegateFilterActionSpec extends Specification {
 		0 * filterAction._
 	}
 
-	def 'setEventWrapper propagates as expected.'() {
+	def 'setEventWrapper propagates as expected in case of FilterAction.'() {
 		setup:
 		EventWrapper mockedEventWrapper = Mock(EventWrapper)
 		FilterAction filterAction = Mock(FilterAction)
@@ -263,6 +263,30 @@ class NegateFilterActionSpec extends Specification {
 		then:
 		1 * filterAction.setEventWrapper(mockedEventWrapper)
 		0 * filterAction._
+	}
+
+	def 'setEventWrapper propagates as expected in case of BasicFilterAction.'() {
+		setup:
+		EventWrapper mockedEventWrapper = Mock(EventWrapper)
+		BasicFilterAction filterAction = Mock(BasicFilterAction)
+		NegateFilterAction action = new NegateFilterAction()
+
+		when:
+		action.setEventWrapper(mockedEventWrapper)
+
+		and:
+		action.wrapped = filterAction
+		action.setEventWrapper(mockedEventWrapper)
+
+		and:
+		action.wrapped = null
+		action.setEventWrapper(mockedEventWrapper)
+
+		then:
+		0 * filterAction._
+
+		and:
+		noExceptionThrown()
 	}
 
 	def 'setViewContainer propagates as expected.'() {

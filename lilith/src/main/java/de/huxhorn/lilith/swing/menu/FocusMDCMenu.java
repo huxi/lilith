@@ -17,9 +17,8 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMDCAction;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -65,14 +64,14 @@ class FocusMDCMenu
 
 		for (Map.Entry<String, String> entry : sorted.entrySet())
 		{
-			FilterAction filterAction = createAction(entry.getKey(), entry.getValue());
+			BasicFilterAction filterAction = createAction(entry.getKey(), entry.getValue());
 			filterAction.setViewContainer(viewContainer);
 			add(filterAction);
 		}
 		setEnabled(true);
 	}
 
-	protected FilterAction createAction(String key, String value)
+	protected BasicFilterAction createAction(String key, String value)
 	{
 		return new FocusMDCAction(key, value);
 	}

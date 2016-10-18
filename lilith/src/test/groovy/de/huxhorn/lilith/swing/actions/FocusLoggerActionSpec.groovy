@@ -19,27 +19,11 @@
 package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.LoggerStartsWithCondition
-import de.huxhorn.lilith.data.EventWrapperCorpus
 
-class FocusLoggerActionSpec extends AbstractFilterActionSpecBase {
+class FocusLoggerActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusLoggerAction("loggerName")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		EventWrapperCorpus.matchAnyLoggingEventSet()
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the loggerName used during construction
-			result.add('loggerName')
-		}
-		return result
 	}
 
 	@Override

@@ -19,28 +19,12 @@
 package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.LevelCondition
-import de.huxhorn.lilith.data.EventWrapperCorpus
 import de.huxhorn.lilith.data.logging.LoggingEvent
 
-class FocusLevelActionSpec extends AbstractFilterActionSpecBase {
+class FocusLevelActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusLevelAction(LoggingEvent.Level.INFO)
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		EventWrapperCorpus.matchAnyLoggingEventSet()
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the level used during construction
-			result.add('INFO')
-		}
-		return result
 	}
 
 	@Override

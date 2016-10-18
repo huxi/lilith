@@ -23,7 +23,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import java.awt.event.ActionEvent;
 
 public class FocusMDCAction
-		extends AbstractLoggingFilterAction
+		extends AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = -1245643497938628684L;
 
@@ -36,17 +36,7 @@ public class FocusMDCAction
 		this.key = key;
 		this.value = value;
 		initializeCroppedTooltip(value);
-	}
-
-	@Override
-	protected void updateState()
-	{
-		if(loggingEvent == null || loggingEvent.getMdc() == null || loggingEvent.getMdc().isEmpty())
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+		viewContainerUpdated();
 	}
 
 	@Override

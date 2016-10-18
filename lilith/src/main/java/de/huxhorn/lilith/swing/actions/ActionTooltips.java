@@ -15,39 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.actions;
 
-import de.huxhorn.lilith.swing.preferences.SavedCondition;
+import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.conditions.Condition;
-import java.awt.event.ActionEvent;
+import javax.swing.Action;
 
-public class FocusSavedConditionAction
-		extends AbstractBasicFilterAction
+public class ActionTooltips
 {
-	private static final long serialVersionUID = -1245643497938628684L;
-
-	private final SavedCondition savedCondition;
-
-	public FocusSavedConditionAction(SavedCondition savedCondition, boolean htmlTooltip)
+	static
 	{
-		super(savedCondition.getName(), htmlTooltip);
-		this.savedCondition = savedCondition;
-		Condition condition = savedCondition.getCondition();
-		if(condition == null)
-		{
-			throw new IllegalArgumentException("Condition of "+savedCondition+" is null!");
-		}
-		initializeConditionTooltip(condition);
-		viewContainerUpdated();
+		new ActionTooltips(); // STFU, coverage
 	}
 
-	@Override
-	public Condition resolveCondition(ActionEvent e)
+	public static void initializeConditionTooltip(Condition condition, Action action, boolean htmlTooltip)
 	{
-		if(!isEnabled())
+		initializeCroppedTooltip(TextPreprocessor.formatCondition(condition), action, htmlTooltip);
+	}
+
+	public static void initializeCroppedTooltip(String tooltip, Action action, boolean htmlTooltip)
+	{
+		tooltip = TextPreprocessor.cropTextBlock(tooltip);
+		if(htmlTooltip)
 		{
-			return null;
+			tooltip = TextPreprocessor.preformattedTooltip(tooltip);
 		}
-		return savedCondition.getCondition();
+		action.putValue(Action.SHORT_DESCRIPTION, tooltip);
 	}
 }

@@ -17,9 +17,8 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusLoggerAction;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -53,7 +52,7 @@ class FocusLoggerMenu
 		boolean added = false;
 		for (String current : prepareLoggerNames(loggerName))
 		{
-			FilterAction filterAction = createAction(current);
+			BasicFilterAction filterAction = createAction(current);
 			filterAction.setViewContainer(viewContainer);
 			add(filterAction);
 			added = true;
@@ -61,7 +60,7 @@ class FocusLoggerMenu
 		setEnabled(added);
 	}
 
-	protected FilterAction createAction(String loggerName)
+	protected BasicFilterAction createAction(String loggerName)
 	{
 		return new FocusLoggerAction(loggerName);
 	}

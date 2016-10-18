@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusLoggerAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
 
@@ -27,7 +27,7 @@ class ExcludeLoggerMenu
 	private static final long serialVersionUID = 6738151200076340278L;
 
 	@Override
-	protected FilterAction createAction(String loggerName)
+	protected BasicFilterAction createAction(String loggerName)
 	{
 		return new NegateFilterAction(new FocusLoggerAction(loggerName));
 	}

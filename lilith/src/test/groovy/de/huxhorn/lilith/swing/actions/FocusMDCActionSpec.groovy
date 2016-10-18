@@ -20,25 +20,10 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.MDCContainsCondition
 
-class FocusMDCActionSpec extends AbstractFilterActionSpecBase {
+class FocusMDCActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusMDCAction("mdcKey", "mdcValue")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		return [24, 68, 69, 98, 99, 121]
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the condition.toString()
-			result.add('MDC.contains("mdcKey","mdcValue")')
-		}
-		return result
 	}
 
 	@Override

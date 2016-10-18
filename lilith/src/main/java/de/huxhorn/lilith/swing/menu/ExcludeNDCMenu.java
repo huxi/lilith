@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.menu;
 
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCAction;
 import de.huxhorn.lilith.swing.actions.FocusNDCPatternAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
@@ -33,13 +33,13 @@ class ExcludeNDCMenu
 	}
 
 	@Override
-	protected FilterAction createMessageAction(String message)
+	protected BasicFilterAction createMessageAction(String message)
 	{
 		return new NegateFilterAction(new FocusNDCAction(message, htmlTooltip));
 	}
 
 	@Override
-	protected FilterAction createMessagePatternAction(String pattern)
+	protected BasicFilterAction createMessagePatternAction(String pattern)
 	{
 		return new NegateFilterAction(new FocusNDCPatternAction(pattern, htmlTooltip));
 	}

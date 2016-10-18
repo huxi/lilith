@@ -20,25 +20,10 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpResponseHeadersContainsCondition
 
-class FocusHttpResponseHeaderActionSpec extends AbstractFilterActionSpecBase {
+class FocusHttpResponseHeaderActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusHttpResponseHeaderAction("responseHeaderKey", "responseHeaderValue")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		return [105, 106, 107]
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the condition.toString()
-			result.add('ResponseHeaders.contains("responseHeaderKey","responseHeaderValue")')
-		}
-		return result
 	}
 
 	@Override

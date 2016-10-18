@@ -19,7 +19,6 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.HttpRequestUrlCondition;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
@@ -59,7 +58,7 @@ public class FocusHttpRequestUrlAction
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(searchString == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

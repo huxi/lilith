@@ -19,10 +19,9 @@ package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +33,7 @@ class FocusSavedConditionsMenu
 	private final ApplicationPreferences applicationPreferences;
 	protected final boolean htmlTooltip;
 
-	private List<FilterAction> savedConditionActions;
+	private List<BasicFilterAction> savedConditionActions;
 	private EventWrapper eventWrapper;
 
 	FocusSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
@@ -73,7 +72,7 @@ class FocusSavedConditionsMenu
 					// something went wrong, ignore.
 					continue;
 				}
-				FilterAction filterAction = createAction(savedCondition);
+				BasicFilterAction filterAction = createAction(savedCondition);
 				filterAction.setViewContainer(viewContainer);
 				savedConditionActions.add(filterAction);
 			}
@@ -90,7 +89,7 @@ class FocusSavedConditionsMenu
 		}
 
 		// update viewContainer of all actions
-		for(FilterAction current : savedConditionActions)
+		for(BasicFilterAction current : savedConditionActions)
 		{
 			current.setViewContainer(viewContainer);
 		}
@@ -98,16 +97,13 @@ class FocusSavedConditionsMenu
 		if(getMenuComponentCount() == 0)
 		{
 			// this indicates that the conditions have changed.
-			for(FilterAction current : savedConditionActions)
-			{
-				add(current);
-			}
+			savedConditionActions.forEach(this::add);
 		}
 
 		setEnabled(true);
 	}
 
-	protected FilterAction createAction(SavedCondition savedCondition)
+	protected BasicFilterAction createAction(SavedCondition savedCondition)
 	{
 		return new FocusSavedConditionAction(savedCondition, htmlTooltip);
 	}

@@ -23,7 +23,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import java.awt.event.ActionEvent;
 
 public class FocusHttpRequestParameterAction
-		extends AbstractAccessFilterAction
+		extends AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = -1245643497938628684L;
 
@@ -36,23 +36,13 @@ public class FocusHttpRequestParameterAction
 		this.key = key;
 		this.value = value;
 		initializeCroppedTooltip(value);
-	}
-
-	@Override
-	protected void updateState()
-	{
-		if(accessEvent == null || accessEvent.getRequestParameters() == null || accessEvent.getRequestParameters().isEmpty())
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+		viewContainerUpdated();
 	}
 
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(accessEvent == null || accessEvent.getRequestParameters() == null || accessEvent.getRequestParameters().isEmpty())
+		if(!isEnabled())
 		{
 			return null;
 		}

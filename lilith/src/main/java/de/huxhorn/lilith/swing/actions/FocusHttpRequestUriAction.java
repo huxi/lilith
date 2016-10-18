@@ -22,7 +22,7 @@ import de.huxhorn.sulky.conditions.Condition;
 import java.awt.event.ActionEvent;
 
 public class FocusHttpRequestUriAction
-		extends AbstractAccessFilterAction
+		extends AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = 6081844747737213317L;
 
@@ -32,23 +32,13 @@ public class FocusHttpRequestUriAction
 	{
 		super(requestUri, false);
 		this.requestUri = requestUri;
-	}
-
-	@Override
-	protected void updateState()
-	{
-		if(accessEvent == null || accessEvent.getRequestURI() == null)
-		{
-			setEnabled(false);
-			return;
-		}
-		setEnabled(true);
+		viewContainerUpdated();
 	}
 
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(accessEvent == null || accessEvent.getRequestURI() == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

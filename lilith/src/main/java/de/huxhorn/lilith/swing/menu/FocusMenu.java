@@ -35,8 +35,8 @@ import de.huxhorn.lilith.swing.actions.FocusThreadGroupNameAction;
 import de.huxhorn.lilith.swing.actions.FocusThreadNameAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowableAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowablesAction;
-import javax.swing.JMenuItem;
 import java.util.List;
+import javax.swing.JMenuItem;
 
 public class FocusMenu
 	extends AbstractFilterMenu

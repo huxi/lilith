@@ -18,9 +18,8 @@
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.logging.Marker;
-import de.huxhorn.lilith.swing.actions.FilterAction;
+import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusMarkerAction;
-
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -55,14 +54,14 @@ class FocusMarkerMenu
 		SortedSet<String> sorted = new TreeSet<>(collected);
 		for (String current : sorted)
 		{
-			FilterAction filterAction = createAction(current);
+			BasicFilterAction filterAction = createAction(current);
 			filterAction.setViewContainer(viewContainer);
 			add(filterAction);
 		}
 		setEnabled(true);
 	}
 
-	protected FilterAction createAction(String markerName)
+	protected BasicFilterAction createAction(String markerName)
 	{
 		return new FocusMarkerAction(markerName);
 	}

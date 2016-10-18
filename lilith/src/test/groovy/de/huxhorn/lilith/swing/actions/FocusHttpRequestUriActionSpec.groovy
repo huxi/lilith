@@ -20,25 +20,10 @@ package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpRequestUriStartsWithCondition
 
-class FocusHttpRequestUriActionSpec extends AbstractFilterActionSpecBase {
+class FocusHttpRequestUriActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		new FocusHttpRequestUriAction("/foo")
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		[72, 73, 122]
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the request URI used during construction
-			result.add('/foo')
-		}
-		return result
 	}
 
 	@Override

@@ -19,28 +19,12 @@
 package de.huxhorn.lilith.swing.actions
 
 import de.huxhorn.lilith.conditions.HttpStatusTypeCondition
-import de.huxhorn.lilith.data.EventWrapperCorpus
 import de.huxhorn.lilith.data.access.HttpStatus
 
-class FocusHttpStatusTypeActionSpec extends AbstractFilterActionSpecBase {
+class FocusHttpStatusTypeActionSpec extends AbstractBasicFilterActionSpecBase {
 	@Override
-	FilterAction createAction() {
+	BasicFilterAction createAction() {
 		return new FocusHttpStatusTypeAction(HttpStatus.Type.CLIENT_ERROR)
-	}
-
-	@Override
-	Set<Integer> expectedEnabledIndices() {
-		EventWrapperCorpus.matchAnyAccessEventSet()
-	}
-
-	@Override
-	List<String> expectedSearchStrings() {
-		List<String> result = new ArrayList<>()
-		expectedEnabledIndices().each {
-			// returns always the status type used during construction
-			result.add('CLIENT_ERROR')
-		}
-		return result
 	}
 
 	@Override

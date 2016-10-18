@@ -23,14 +23,14 @@ import spock.lang.Unroll
 
 import javax.swing.Action
 
-class AbstractFilterActionSpec extends Specification {
+class ActionTooltipsSpec extends Specification {
 	@Unroll
 	def 'initializeCroppedTooltip(#input, Action, #html) initializes tooltip of Action with expected value.'() {
 		setup:
 		Action action = Mock(Action)
 
 		when:
-		AbstractFilterAction.initializeCroppedTooltip(input, action, html)
+		ActionTooltips.initializeCroppedTooltip(input, action, html)
 
 		then:
 		1 * action.putValue(Action.SHORT_DESCRIPTION, expectedTooltip)

@@ -59,7 +59,7 @@ public class FocusThreadNameAction
 	@Override
 	public Condition resolveCondition(ActionEvent e)
 	{
-		if(name == null)
+		if(!isEnabled())
 		{
 			return null;
 		}

@@ -49,7 +49,7 @@ import de.huxhorn.lilith.services.clipboard.LoggingThreadNameFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableNameFormatter;
 import de.huxhorn.lilith.services.sender.EventSender;
-import de.huxhorn.lilith.swing.actions.AbstractFilterAction;
+import de.huxhorn.lilith.swing.actions.ActionTooltips;
 import de.huxhorn.lilith.swing.menu.ExcludeMenu;
 import de.huxhorn.lilith.swing.menu.FocusMenu;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
@@ -1778,7 +1778,7 @@ public class ViewActions
 					Condition condition = eventWrapperViewPanel.getCombinedCondition(currentFilter);
 					if(condition != null)
 					{
-						AbstractFilterAction.initializeConditionTooltip(condition, this, htmlTooltip);
+						ActionTooltips.initializeConditionTooltip(condition, this, htmlTooltip);
 						setEnabled(true);
 						return;
 					}

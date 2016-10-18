@@ -19,7 +19,6 @@ package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
 import java.io.Serializable;
 
 public abstract class AbstractLoggingFilterAction
