@@ -28,6 +28,7 @@ import java.util.List;
 
 class FocusSavedConditionsMenu
 	extends AbstractFilterMenu
+	implements ConditionNamesAware
 {
 	private static final long serialVersionUID = 5145343038578903089L;
 	private final ApplicationPreferences applicationPreferences;
