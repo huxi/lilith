@@ -39,6 +39,19 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Added "Copy request headers".</li>
 			<li>Added "Copy request parameters".</li>
 			<li>Added "Copy response headers".</li>
+			<li>Added thread priority to thread info of logging event.</li>
+			<li>Added "Copy thread name".</li>
+			<li>Added "Copy thread group name".</li>
+			<li>Added "ThreadName" condition.</li>
+			<li>Added "ThreadGroupName" condition.</li>
+			<li>Added "Focus Thread name"/"Exclude Thread name".</li>
+			<li>Added "Focus Thread group name"/"Exclude Thread group name".</li>
+			<li>Added "Focus Request URI"/"Exclude Request URI" menus.</li>
+			<li>Added lots of filter tests.</li>
+			<li>Added "Focus Request Parameter"/"Exclude Request Parameter".</li>
+			<li>Added "Focus Request Header"/"Exclude Request Header".</li>
+			<li>Added "Focus Response Header"/"Exclude Response Header".</li>
+			<li>Added alternative behavior for "MDC", "Request Parameter", "Request Header" and "Response Header" Focus/Exclude menu items. Pressing <code>Alt</code> while selecting Action will match any value for the given key.</li>
 		</ul>
 		
 		<h3>Changed</h3>
@@ -46,7 +59,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<ul>
 			<li>Using <code>java.time.format</code> instead of <code>SimpleDateFormat</code>.</li>
 			<li>Don't create copy of whitelist Set in <code>WhitelistObjectInputStream</code>.</li>
-			<li>Demand Java 8 <code>1.8.0_102</code>.</li>
+			<li>Demand Java 8 <code>1.8.0_111</code>.</li>
 			<li>Added option to start application even if Java version requirements are not met.</li>
 			<li>Changed accelerator of "Copy Throwable" from "command shift alt T" to "command shift T".</li>
 			<li>Changed specification of HTTP status code 451 from draft to RFC 7725.</li>
@@ -79,6 +92,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			</li>
 			<li>"Paste StackTraceElement" (command shift V) is now much more effective. It parses the text from the clipboard and opens the first <code>StackTraceElement</code> it finds in IDEA (if the necessary IDEA plugin is installed). Parsing is much more lenient.</li>
 			<li>Using <code>SafeString</code> for "Copy MDC".</li>
+			<li>Details view is now showing all available thread information.</li>
+			<li>XML is now handled by Woodstox.</li>
+			<li>Moved "Logger" in "Focus"/"Exclude" menus from bottom to top.</li>
 		</ul>
 		
 		<h3>Deprecated</h3>
@@ -93,6 +109,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Removed <code>SourceInfo</code> and related classes. They were all unused and also terrible.</li>
 			<li>Removed <code>LoggingEvents</code> and related classes. Same as above.</li>
 			<li>Removed <code>AccessEvents</code> and related classes. Same as above.</li>
+			<li>Removed unused methods <code>getTextColor()</code>, <code>getBackgroundColor()</code> and <code>getBorderColor()</code> of class <code>SavedCondition</code>.</li>
+			<li>Removed unused c'tors in <code>AbstractFilterAction</code>, <code>AbstractLoggingFilterAction</code> and <code>AbstractAccessFilterAction</code>.</li>
 		</ul>
 		
 		<h3>Fixed</h3>
@@ -103,8 +121,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Fixed NPE in LoggingEventProtobufEncoder. This fixes <a href="https://github.com/huxi/lilith/issues/22">issue #22</a>.</li>
 			<li>Fixed NPE in CheckForUpdateRunnable in case of broken network connection.</li>
 			<li>Fixed handling of invalid XML created by <code>java.util.logging.XMLFormatter</code>. This fixes <a href="https://github.com/huxi/lilith/issues/26">issue #26</a>.</li>
-			<li>Being less strict about the required Java version. It seems certain Linux distros have a Java version string like <code>1.8.0_66-internal</code> which is - strictly speaking - smaller than <code>1.8.0_66</code> since `-internal' is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.</li>
-			<li>log4j2 2.6.2, slf4j 1.7.21, Logback 1.1.7, jackson 2.8.1, Spring 4.3.1, Groovy 2.4.7, aspectj 1.8.9, httpclient 4.5.2, httpcore 4.4.5, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5</li>
+			<li>Being less strict about the required Java version. It seems certain Linux distros have a Java version string like <code>1.8.0_66-internal</code> which is - strictly speaking - less than <code>1.8.0_66</code> since `-internal' is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.</li>
+			<li>log4j2 2.7, slf4j 1.7.21, Logback 1.1.7, jackson 2.8.3, Spring 4.3.3, Groovy 2.4.7, aspectj 1.8.9, httpclient 4.5.2, httpcore 4.4.5, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.0.2, jcommander 1.58, commons-lang3 3.5</li>
 		</ul>
 		
 		<h3>Security</h3>
@@ -118,34 +136,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<ul>
 			<li>Lilith won't work with Java 9 for now.
 See <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8160437">JDK-8160437 - com.apple.eawt.Application is not exported and jdeps didn't warn about it</a>.</li>
-			<li>
-				<p>Garbled icons on Mac OS X 10.11. This is a bug in OS X. Supposedly #23164356.</p>
-				
-				<ul>
-					<li>
-						<a href="https://trac.filezilla-project.org/ticket/10669">Filezilla ticket</a>
-					</li>
-					<li>
-						<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=479590">Eclipse ticket</a>
-					</li>
-				</ul>
-				
-				<p>The following text is written to stdout if this bug bites:</p>
-				
-				<pre>
-					<code>filter:2:47: error: excess elements in vector initializer
-  return img.a * mix(c0, c1, dot(img.rgb, vec3(0,000000e+00, 0,000000e+00, 0,000000e+00)));
-                                              ^                ~~~~~~~~~~
-filter:1:6: error: non-void function should return a value
-vec4 _falseColor(vec4 img, vec4 c0, vec4 c1) {
-     ^
-</code>
-				</pre>
-			</li>
-			<li>
-				<p>Some log4j2 <code>Message</code> implementations aren't supported.
-See <a href="https://issues.apache.org/jira/browse/LOG4J2-1226">Message instances are simply serialized. They mustn't.</a>.</p>
-			</li>
+			<li>Some log4j2 <code>Message</code> implementations aren't supported.
+See <a href="https://issues.apache.org/jira/browse/LOG4J2-1226">Message instances are simply serialized. They mustn't.</a>.</li>
 			<li>logback-access <code>AccessEvent</code> sent by <code>SocketAppender</code> isn't guaranteed to be deserializable at the moment. You can use the Lilith Multiplex Socket Appender in the meantime.
 See <a href="http://jira.qos.ch/browse/LOGBACK-1182">LOGBACK-1182 - Problem deserializing AccessEvent.</a>.</li>
 			<li>Logback 1.1.0 introduced some message formatting regressions.

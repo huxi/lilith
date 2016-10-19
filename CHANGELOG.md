@@ -86,19 +86,6 @@ All notable changes to this project will be documented in this file.
 ### Known issues
 - Lilith won't work with Java 9 for now.
   See [JDK-8160437 - com.apple.eawt.Application is not exported and jdeps didn't warn about it](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8160437).
-- Garbled icons on Mac OS X 10.11. This is a bug in OS X. Supposedly #23164356.
-  - [Filezilla ticket](https://trac.filezilla-project.org/ticket/10669)
-  - [Eclipse ticket](https://bugs.eclipse.org/bugs/show_bug.cgi?id=479590)
-
-  The following text is written to stdout if this bug bites:
-
-        filter:2:47: error: excess elements in vector initializer
-          return img.a * mix(c0, c1, dot(img.rgb, vec3(0,000000e+00, 0,000000e+00, 0,000000e+00)));
-                                                      ^                ~~~~~~~~~~
-        filter:1:6: error: non-void function should return a value
-        vec4 _falseColor(vec4 img, vec4 c0, vec4 c1) {
-             ^
-
 - Some log4j2 `Message` implementations aren't supported.
   See [Message instances are simply serialized. They mustn't.](https://issues.apache.org/jira/browse/LOG4J2-1226).
 - logback-access `AccessEvent` sent by `SocketAppender` isn't guaranteed to be deserializable at the moment. You can use the Lilith Multiplex Socket Appender in the meantime.
