@@ -323,9 +323,9 @@ public class Lilith
 
 		if(cl.printBuildTimestamp)
 		{
-			System.out.println("Build-Timestamp: " + APP_TIMESTAMP);
 			System.out.println("Build-Date     : " + APP_TIMESTAMP_DATE);
 			System.out.println("Build-Revision : " + APP_REVISION);
+			System.out.println("Build-Timestamp: " + APP_TIMESTAMP);
 			System.exit(0);
 		}
 
