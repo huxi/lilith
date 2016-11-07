@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.apache.logging.log4j.ThreadContext;
+import org.apache.logging.log4j.message.FormattedMessage;
+import org.apache.logging.log4j.message.LocalizedMessage;
 import org.apache.logging.log4j.message.MapMessage;
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.MessageFormatMessage;
@@ -21,6 +23,7 @@ import org.apache.logging.log4j.message.StructuredDataId;
 import org.apache.logging.log4j.message.StructuredDataMessage;
 import org.apache.logging.log4j.message.ThreadDumpMessage;
 import org.apache.logging.log4j.util.MessageSupplier;
+import org.apache.logging.log4j.util.Supplier;
 
 public class Log4j2Sandbox
 {
@@ -45,10 +48,10 @@ public class Log4j2Sandbox
 	}
 
 
-	public static class InnerClass
+	private static class InnerClass
 	{
 		@SuppressWarnings({"ThrowableInstanceNeverThrown"})
-		public static void execute()
+		static void execute()
 		{
 			final Logger logger = LogManager.getLogger(InnerClass.class);
 			try
@@ -71,7 +74,7 @@ public class Log4j2Sandbox
 			}
 		}
 
-		public static void foobar()
+		static void foobar()
 		{
 			throw prepareException();
 		}
@@ -87,7 +90,7 @@ public class Log4j2Sandbox
 		return ex;
 	}
 
-	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
+	@SuppressWarnings({"ThrowableInstanceNeverThrown", "ThrowableResultOfMethodCallIgnored"})
 	public static void main(String args[])
 	{
 		final Logger logger = LogManager.getLogger(Log4j2Sandbox.class);
@@ -96,10 +99,12 @@ public class Log4j2Sandbox
 		ThreadContext.push("NDC with spaces...");
 		ThreadContext.put("key1", "value1");
 		ThreadContext.put("key2", "value2");
+		logger.debug("########## Start ##########");
 		if(logger.isDebugEnabled()) logger.debug("Foobar!", new Throwable());
 
 		for(;;)
 		{
+			logger.debug("########## loop ##########");
 			InnerClass.execute();
 			logger.trace("Trace!");
 			logger.debug("Debug!");
@@ -109,82 +114,68 @@ public class Log4j2Sandbox
 			logger.fatal("Fatal!");
 			logger.catching(Level.INFO, prepareException());
 			logger.catching(prepareException());
-			logger.debug(PRIVATE_FOO_MARKER, "private Foo");
-			logger.debug(PRIVATE_BAR_MARKER, "private Bar");
-			logger.debug(PRIVATE_FOOBAR_MARKER, "private Foobar");
-			logger.debug(GLOBAL_FOO_MARKER, "global Foo");
-			logger.debug(GLOBAL_BAR_MARKER, "global Bar");
-			logger.debug(GLOBAL_FOOBAR_MARKER, "global Foobar");
+			logger.debug(PRIVATE_FOO_MARKER, "private Foo Marker");
+			logger.debug(PRIVATE_BAR_MARKER, "private Bar Marker");
+			logger.debug(PRIVATE_FOOBAR_MARKER, "private Foobar Marker");
+			logger.debug(GLOBAL_FOO_MARKER, "global Foo Marker");
+			logger.debug(GLOBAL_BAR_MARKER, "global Bar Marker");
+			logger.debug(GLOBAL_FOOBAR_MARKER, "global Foobar Marker");
 
 			// see https://issues.apache.org/jira/browse/LOG4J2-1226
 
-			// broken logger.debug(new FormattedMessage("formatted message {} {}", new Object[]{"foo", "bar"}));
-			// broken logger.debug(new FormattedMessage("formatted message %s %s", new Object[]{"foo", "bar"}));
+			logger.debug((Message)new SimpleMessage("simple message"));
 
-			// does nothing logger.debug(new LocalizedMessage("LocalizedMessage %s %s", new Object[]{"foo", "bar"}));
+			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {}", new Object[]{"foo", "bar"}));
+			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {} with Throwable", new Object[]{"foo", "bar", prepareException()}));
+			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {} with Throwable {}", new Object[]{"foo", "bar", prepareException()}));
+			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {} with explicit Throwable", new Object[]{"foo", "bar"}, new FooException("foo exception")));
+			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {}", new Object[]{new Foo(), "bar"}));
 
-			Map<String, String> map=new HashMap<String, String>();
+			logger.debug(new FormattedMessage("percent-s FormattedMessage %s %s", new Object[]{"foo", "bar"}));
+			logger.debug(new FormattedMessage("percent-s FormattedMessage %s %s with Throwable", new Object[]{"foo", "bar", prepareException()}));
+			logger.debug(new FormattedMessage("percent-s FormattedMessage %s %s with Throwable %s", new Object[]{"foo", "bar", prepareException()}));
+
+			logger.debug(new LocalizedMessage("LocalizedMessage %s %s", new Object[]{"foo", "bar"}));
+			logger.debug(new LocalizedMessage("LocalizedMessage %s %s with Throwable", new Object[]{"foo", "bar", prepareException()}));
+			logger.debug(new LocalizedMessage("LocalizedMessage %s %s with Throwable %s", new Object[]{"foo", "bar", prepareException()}));
+
+			logger.debug(new MessageFormatMessage("MessageFormatMessage {0}", "foo"));
+			logger.debug(new MessageFormatMessage("MessageFormatMessage {0}", new Foo()));
+			logger.debug(new MessageFormatMessage("MessageFormatMessage {0} with Throwable", new Foo(), prepareException()));
+			logger.debug(new MessageFormatMessage("MessageFormatMessage {0} with Throwable {1}", new Foo(), prepareException()));
+
+			logger.debug(new ParameterizedMessage("ParameterizedMessage {}", "foo"));
+			logger.debug(new ParameterizedMessage("ParameterizedMessage {}", new Foo()));
+			logger.debug(new ParameterizedMessage("ParameterizedMessage {} with Throwable", new Foo(), prepareException()));
+			logger.debug(new ParameterizedMessage("ParameterizedMessage {} with Throwable {}", new Foo(), prepareException()));
+
+			logger.debug(new StringFormattedMessage("StringFormattedMessage %s", "foo"));
+			logger.debug(new StringFormattedMessage("StringFormattedMessage %s", new Foo()));
+			logger.debug(new StringFormattedMessage("StringFormattedMessage %s with Throwable", new Foo(), prepareException()));
+			logger.debug(new StringFormattedMessage("StringFormattedMessage %s with Throwable %s", new Foo(), prepareException()));
+
+			Map<String, String> map= new HashMap<>();
 			map.put("fooKey", "fooValue");
 			map.put("barKey", "barValue");
 			logger.debug(new MapMessage(map));
 
-			logger.debug(new MessageFormatMessage("MessageFormatMessage {0}", "Moep"));
-			logger.debug(new MessageFormatMessage("MessageFormatMessage {0}", new Foo()));
 
 			logger.debug(new ObjectArrayMessage("ObjectArrayMessage", "String"));
-			// broken logger.debug(new ObjectArrayMessage("ObjectArrayMessage", new Foo()));
+			logger.debug(new ObjectArrayMessage("ObjectArrayMessage", new Foo()));
 
 			logger.debug(new ObjectMessage("ObjectMessage"));
-			// broken logger.debug(new ObjectMessage(new Foo()));
-
-			logger.debug(new ParameterizedMessage("ParameterizedMessage {}", "foo"));
-			logger.debug(new ParameterizedMessage("ParameterizedMessage {}", new Foo()));
-
-			logger.debug(new SimpleMessage("simple message"));
-
-
-			logger.debug(new StringFormattedMessage("StringFormattedMessage %s", "String"));
-			logger.debug(new StringFormattedMessage("StringFormattedMessage %s", new Foo()));
+			logger.debug(new ObjectMessage(new Foo()));
 
 			logger.debug(new StructuredDataMessage(new StructuredDataId("dataIdName", 17, new String[]{"fooRequired"}, new String[]{"fooOptional"}), "StructuredDataMessage", "fooType", map));
 
-			logger.debug(new ThreadDumpMessage("title"));
+			logger.debug(new ThreadDumpMessage("threadDumpTitle"));
 
-			MessageSupplier simpleMessageSupplier=new MessageSupplier()
-			{
-				@Override
-				public Message get()
-				{
-					return new SimpleMessage("simple message supplier");
-				}
-			};
-			logger.debug(simpleMessageSupplier);
+			logger.debug(new FooMessage());
 
-			//logger.debug(new FormattedMessage("formatted message {} {}", new Object[]{new Foo(), "bar"}));
+			deprecatedMessageSupplier();
+			supplier();
 
-//			MessageSupplier formattedMessageSupplier=new MessageSupplier()
-//			{
-//				@Override
-//				public Message get()
-//				{
-//					return new FormattedMessage("formatted message supplier {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception"));
-//				}
-//			};
-//			logger.debug(formattedMessageSupplier);
-//			logger.debug(new FormattedMessage("formatted message {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception")));
-//
-//
-//			MessageSupplier fooMessageSupplier=new MessageSupplier()
-//			{
-//				@Override
-//				public Message get()
-//				{
-//					return new FooMessage();
-//				}
-//			};
-//			logger.debug(fooMessageSupplier);
-//			logger.debug(new FooMessage());
-
+			logger.debug("########## End ##########");
 			try
 			{
 				Thread.sleep(100);
@@ -196,12 +187,86 @@ public class Log4j2Sandbox
 		}
 	}
 
-	public static class FooException
+	@SuppressWarnings({"Convert2Lambda", "Anonymous2MethodRef", "deprecation"})
+	private static void deprecatedMessageSupplier()
+	{
+		final Logger logger = LogManager.getLogger(Log4j2Sandbox.class);
+
+		MessageSupplier simpleMessageMessageSupplier=new MessageSupplier()
+		{
+			@Override
+			public Message get()
+			{
+				return new SimpleMessage("simple message MessageSupplier");
+			}
+		};
+		logger.debug(simpleMessageMessageSupplier);
+
+		MessageSupplier formattedMessageMessageSupplier=new MessageSupplier()
+		{
+			@Override
+			public Message get()
+			{
+				return new FormattedMessage("formatted message MessageSupplier {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception"));
+			}
+		};
+		logger.debug(formattedMessageMessageSupplier);
+
+
+		MessageSupplier fooMessageMessageSupplier=new MessageSupplier()
+		{
+			@Override
+			public Message get()
+			{
+				return new FooMessage();
+			}
+		};
+		logger.debug(fooMessageMessageSupplier);
+	}
+
+	@SuppressWarnings({"Convert2Lambda", "Anonymous2MethodRef"})
+	private static void supplier()
+	{
+		final Logger logger = LogManager.getLogger(Log4j2Sandbox.class);
+
+		Supplier<Message> simpleMessageSupplier=new Supplier<Message>()
+		{
+			@Override
+			public Message get()
+			{
+				return new SimpleMessage("simple message Supplier<Message>");
+			}
+		};
+		logger.debug(simpleMessageSupplier);
+
+		Supplier<Message> formattedMessageSupplier=new Supplier<Message>()
+		{
+			@Override
+			public Message get()
+			{
+				return new FormattedMessage("formatted message Supplier<Message> {} {}", new Object[]{"foo", "bar"}, new FooException("foo exception"));
+			}
+		};
+		logger.debug(formattedMessageSupplier);
+
+
+		Supplier<Message> fooMessageSupplier=new Supplier<Message>()
+		{
+			@Override
+			public Message get()
+			{
+				return new FooMessage();
+			}
+		};
+		logger.debug(fooMessageSupplier);
+	}
+
+	private static class FooException
 		extends RuntimeException
 	{
 		private static final long serialVersionUID = 8987753386120938525L;
 
-		public FooException(String msg)
+		FooException(String msg)
 		{
 			super(msg);
 		}
@@ -237,8 +302,10 @@ public class Log4j2Sandbox
 		}
 	}
 
-	public static class Foo implements Serializable
+	private static class Foo implements Serializable
 	{
+		private static final long serialVersionUID = 7746306314408528044L;
+
 		public String toString()
 		{
 			return "Foo object";

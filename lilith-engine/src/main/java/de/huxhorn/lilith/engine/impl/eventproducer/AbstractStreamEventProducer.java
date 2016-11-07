@@ -61,6 +61,8 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 	static
 	{
 		Set<String> whitelist = new HashSet<>();
+
+		whitelist.add("[B");
 		whitelist.add("[Lch.qos.logback.classic.spi.IThrowableProxy;");
 		whitelist.add("[Lch.qos.logback.classic.spi.StackTraceElementProxy;");
 		whitelist.add("[Ljava.lang.Object;");
@@ -78,6 +80,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		whitelist.add("java.lang.Enum");
 		whitelist.add("java.lang.StackTraceElement");
 		whitelist.add("java.lang.String$CaseInsensitiveComparator");
+		whitelist.add("java.rmi.MarshalledObject");
 		whitelist.add("java.util.ArrayList");
 		whitelist.add("java.util.Collections$EmptyMap");
 		whitelist.add("java.util.Collections$SynchronizedMap");
@@ -112,6 +115,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		whitelist.add("org.apache.logging.log4j.message.ThreadDumpMessage$ThreadDumpMessageProxy");
 		whitelist.add("org.apache.logging.log4j.spi.MutableThreadContextStack");
 		whitelist.add("org.apache.logging.log4j.spi.StandardLevel");
+		whitelist.add("org.apache.logging.log4j.util.SortedArrayStringMap");
 		whitelist.add("org.slf4j.helpers.BasicMarker");
 
 		WHITELIST = Collections.unmodifiableSet(whitelist);
