@@ -121,8 +121,9 @@ public class Log4j2Sandbox
 			logger.debug(GLOBAL_BAR_MARKER, "global Bar Marker");
 			logger.debug(GLOBAL_FOOBAR_MARKER, "global Foobar Marker");
 
-			// see https://issues.apache.org/jira/browse/LOG4J2-1226
-
+			// see
+			// https://issues.apache.org/jira/browse/LOG4J2-1226
+			// https://issues.apache.org/jira/browse/LOG4J2-1675
 			logger.debug((Message)new SimpleMessage("simple message"));
 
 			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {}", new Object[]{"foo", "bar"}));
