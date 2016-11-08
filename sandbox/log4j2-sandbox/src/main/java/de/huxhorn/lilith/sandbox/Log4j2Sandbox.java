@@ -124,6 +124,7 @@ public class Log4j2Sandbox
 			// see
 			// https://issues.apache.org/jira/browse/LOG4J2-1226
 			// https://issues.apache.org/jira/browse/LOG4J2-1675
+			// https://issues.apache.org/jira/browse/LOG4J2-1676
 			logger.debug((Message)new SimpleMessage("simple message"));
 
 			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {}", new Object[]{"foo", "bar"}));
@@ -154,6 +155,15 @@ public class Log4j2Sandbox
 			logger.debug(new StringFormattedMessage("StringFormattedMessage %s", new Foo()));
 			logger.debug(new StringFormattedMessage("StringFormattedMessage %s with Throwable", new Foo(), prepareException()));
 			logger.debug(new StringFormattedMessage("StringFormattedMessage %s with Throwable %s", new Foo(), prepareException()));
+
+			// https://issues.apache.org/jira/browse/LOG4J2-1226?focusedCommentId=15645784&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-15645784
+			// "If you want to log a Throwable with a pre-existing Message object, you need to use one of the log(Message,Throwable) methods."
+			logger.debug(new FormattedMessage("curly-brackets FormattedMessage {} {} with Throwable as expected", new Object[]{"foo", "bar"}), prepareException());
+			logger.debug(new FormattedMessage("percent-s FormattedMessage %s %s with Throwable as expected", new Object[]{"foo", "bar"}), prepareException());
+			logger.debug(new LocalizedMessage("LocalizedMessage %s %s with Throwable as expected", new Object[]{"foo", "bar"}), prepareException());
+			logger.debug(new MessageFormatMessage("MessageFormatMessage {0} with Throwable as expected", new Foo()), prepareException());
+			logger.debug(new ParameterizedMessage("ParameterizedMessage {} with Throwable as expected", new Foo()), prepareException());
+			logger.debug(new StringFormattedMessage("StringFormattedMessage %s with Throwable as expected", new Foo()), prepareException());
 
 			Map<String, String> map= new HashMap<>();
 			map.put("fooKey", "fooValue");
@@ -223,6 +233,8 @@ public class Log4j2Sandbox
 			}
 		};
 		logger.debug(fooMessageMessageSupplier);
+
+		logger.debug(fooMessageMessageSupplier, prepareException());
 	}
 
 	@SuppressWarnings({"Convert2Lambda", "Anonymous2MethodRef"})
@@ -260,6 +272,8 @@ public class Log4j2Sandbox
 			}
 		};
 		logger.debug(fooMessageSupplier);
+
+		logger.debug(fooMessageSupplier, prepareException());
 	}
 
 	private static class FooException
