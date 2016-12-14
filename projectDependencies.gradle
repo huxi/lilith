@@ -261,6 +261,7 @@ project(':logback-multiplex-appender-core') {
 	dependencies {
 		compile project(':lilith-sender')
 		compile libraries.'sulky-codec'
+		compile libraries.'sulky-ulid'
 		compile libraries.'logback-core'
 	}
 }

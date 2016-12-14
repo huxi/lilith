@@ -36,19 +36,17 @@
 package de.huxhorn.lilith.logback.appender;
 
 
+import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import de.huxhorn.lilith.sender.HeartbeatRunnable;
 import de.huxhorn.lilith.sender.MessageWriteByteStrategy;
 import de.huxhorn.lilith.sender.MultiplexSendBytesService;
 import de.huxhorn.lilith.sender.WriteByteStrategy;
 import de.huxhorn.sulky.codec.Encoder;
-
-import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import de.huxhorn.sulky.io.IOUtilities;
-
+import de.huxhorn.sulky.ulid.ULID;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.UUID;
 
 public abstract class MultiplexSocketAppenderBase<E>
 	extends UnsynchronizedAppenderBase<E>
@@ -241,7 +239,8 @@ public abstract class MultiplexSocketAppenderBase<E>
 
 			if(creatingUUID)
 			{
-				setUUID(UUID.randomUUID().toString());
+				//setUUID(UUID.randomUUID().toString());
+				setUUID(ULIDHolder.ulid.nextULID());
 			}
 			else
 			{
@@ -361,5 +360,11 @@ public abstract class MultiplexSocketAppenderBase<E>
 	protected void setEncoder(Encoder<E> encoder)
 	{
 		this.encoder = encoder;
+	}
+
+	// lazily initialized ULID instance
+	private static class ULIDHolder
+	{
+		static final ULID ulid = new ULID();
 	}
 }

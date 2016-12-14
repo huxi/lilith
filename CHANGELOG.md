@@ -60,6 +60,7 @@ All notable changes to this project will be documented in this file.
 - Details view is now showing all available thread information.
 - XML is now handled by Woodstox.
 - Moved "Logger" in "Focus"/"Exclude" menus from bottom to top.
+- `applicationUUID` is now actually a [ULID](https://github.com/alizain/ulid). The existing methods `setCreatingUUID`/`isCreatingUUID` and `getUUID` in the multiplex appenders are not renamed for compatibility reasons. ULID generation is handled in the new `de.huxhorn.sulky:de.huxhorn.sulky.ulid` module.
 
 ### Deprecated
 - Nothing.

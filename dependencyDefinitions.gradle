@@ -93,6 +93,7 @@ project.ext.libraries = [
 'sulky-stax':               "de.huxhorn.sulky:de.huxhorn.sulky.stax:${versions.sulky}",
 'sulky-swing':              "de.huxhorn.sulky:de.huxhorn.sulky.swing:${versions.sulky}",
 'sulky-tasks':              "de.huxhorn.sulky:de.huxhorn.sulky.tasks:${versions.sulky}",
+'sulky-ulid':               "de.huxhorn.sulky:de.huxhorn.sulky.ulid:${versions.sulky}",
 'sulky-version':            "de.huxhorn.sulky:de.huxhorn.sulky.version:${versions.sulky}",
 'thymeleaf':                "org.thymeleaf:thymeleaf:${versions.thymeleaf}",
 'woodstox':                 "com.fasterxml.woodstox:woodstox-core:${versions.woodstox}",
