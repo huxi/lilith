@@ -34,10 +34,13 @@
 
 package de.huxhorn.lilith.data.logging
 
+import de.huxhorn.sulky.formatting.SafeString
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class MessageFormatterSpec extends Specification {
+
+	private static final Throwable SOME_THROWABLE = new MessageFormatterUseCases.FooThrowable('FooException')
 
 	@Unroll
 	def "ArgumentResult.equals behaves as expected for #inputValue."() {
@@ -147,10 +150,89 @@ class MessageFormatterSpec extends Specification {
 
 
 	@Unroll
+	def 'MessageFormatter.countArgumentPlaceholders(#messagePattern) returns expected #expectedResult.'() {
+		expect:
+		MessageFormatter.countArgumentPlaceholders(messagePattern) == expectedResult
+
+		where:
+		messagePattern | expectedResult
+		// simple
+		null           | 0
+		'foo'          | 0
+		'{}'           | 1
+		'{} {} {}'     | 3
+		// broken
+		'{'            | 0
+		'{} { {}'      | 2
+		'{} {'         | 1
+		// escaped
+		'\\{}'         | 0
+		'\\\\{}'       | 1
+		'\\\\\\{}'     | 0
+		'{} \\{}'      | 1
+		'{} \\\\{}'    | 2
+		'{} \\\\\\{}'  | 1
+	}
+
+	@Unroll
+	def 'UseCases: MessageFormatter.countArgumentPlaceholders(#messagePattern) returns expected #expectedResult.'() {
+		expect:
+		MessageFormatter.countArgumentPlaceholders(messagePattern) == expectedResult
+
+		where:
+		useCase << MessageFormatterUseCases.generateUseCases()
+		messagePattern = useCase.getMessagePattern()
+		expectedResult = useCase.getNumberOfPlaceholders()
+	}
+
+	@Unroll
+	def 'UseCases: MessageFormatter.evaluateArguments(#messagePattern, #argumentsString) returns expected #expectedResult.'() {
+		expect:
+		MessageFormatter.evaluateArguments(messagePattern, arguments) == expectedResult
+
+		where:
+		useCase << MessageFormatterUseCases.generateUseCases()
+		messagePattern = useCase.getMessagePattern()
+		arguments = useCase.getArguments()
+		argumentsString = SafeString.toString(arguments)
+		expectedResult = useCase.getArgumentResult()
+	}
+
+	@Unroll
+	def 'MessageFormatter.evaluateArguments(#messagePattern, #argumentsString) returns expected #expectedResult.'() {
+		expect:
+		MessageFormatter.evaluateArguments(messagePattern, arguments) == expectedResult
+
+		where:
+		messagePattern | arguments                                           | argumentStrings                                         | throwable
+		null           | null                                                | null                                                    | null
+		'{}{}{}'       | ['foo', null, 1L] as Object[]                       | ['foo', 'null', '1'] as String[]                        | null
+		'{}{}'         | ['foo', null, SOME_THROWABLE] as Object[]           | ['foo', 'null'] as String[]                             | SOME_THROWABLE
+		'{}{}{}'       | ['foo', null, SOME_THROWABLE] as Object[]           | ['foo', 'null', 'FooException'] as String[]             | null
+		'{}{}{}'       | ['foo', null, SOME_THROWABLE, 17L, 18L] as Object[] | ['foo', 'null', 'FooException', '17', '18'] as String[] | null
+		'{}{}{}'       | ['foo', null, 17L, 18L, SOME_THROWABLE] as Object[] | ['foo', 'null', '17', '18'] as String[]                 | SOME_THROWABLE
+		argumentsString = SafeString.toString(arguments)
+		expectedResult = argumentStrings == null ? null : new MessageFormatter.ArgumentResult(argumentStrings, throwable)
+	}
+
+	@Unroll
+	def 'UseCases: MessageFormatter.format(#messagePattern, #argumentsString) returns expected #expectedResult.'() {
+		expect:
+		MessageFormatter.format(messagePattern, arguments) == expectedResult
+
+		where:
+		useCase << MessageFormatterUseCases.generateUseCases()
+		messagePattern = useCase.getMessagePattern()
+		arguments = useCase.getArgumentStrings()
+		argumentsString = SafeString.toString(arguments)
+		expectedResult = useCase.getExpectedResult()
+	}
+
+	@Unroll
 	def "messagePattern '#messagePattern' with arguments #arguments produces #expectedResult."() {
 		when:
 		def argumentResult = MessageFormatter.evaluateArguments(messagePattern, arguments)
-
+		and:
 		def result = MessageFormatter.format(messagePattern, argumentResult.arguments)
 
 		then:
@@ -158,55 +240,13 @@ class MessageFormatterSpec extends Specification {
 		String.valueOf(argumentResult.throwable) == String.valueOf(expectedThrowable)
 
 		where:
-		messagePattern << messagePatterns()
-		arguments << messageArguments()
-		// stfu, IDEA.
-		//noinspection GroovyAssignabilityCheck
-		expectedThrowable << expectedThrowable()
-		expectedResult << expectedFormattedMessage()
-	}
 
-	def messagePatterns() {
-		[
-				'param1={}, param2={}, param3={}',
-				'param1={}, param2={}, param3={}, exceptionString={}',
-				'exceptionString={}',
-				'param={}',
-				'param1={}, param2={}, param3={}',
-				'param1={}, param2={}, param3={}',
-		]
-	}
-
-	def messageArguments() {
-		[
-				['One', 'Two', 'Three', new RuntimeException()] as Object[],
-				['One', 'Two', 'Three', new RuntimeException()] as Object[],
-				[new RuntimeException()] as Object[],
-				['One', 'Two', 'Three'] as Object[],
-				['One', 'Two', 'Three', 'Unused', 'Unused', new RuntimeException()] as Object[],
-				['One', ['Two.1', 'Two.2'], 'Three'] as Object[],
-		]
-	}
-
-	def expectedThrowable() {
-		[
-				new RuntimeException(),
-				null,
-				null,
-				null,
-				new RuntimeException(),
-				null,
-		]
-	}
-
-	def expectedFormattedMessage() {
-		[
-				'param1=One, param2=Two, param3=Three',
-				'param1=One, param2=Two, param3=Three, exceptionString=java.lang.RuntimeException',
-				'exceptionString=java.lang.RuntimeException',
-				'param=[\'One\', \'Two\', \'Three\']',
-				'param1=One, param2=Two, param3=Three',
-				'param1=One, param2=[\'Two.1\', \'Two.2\'], param3=Three',
-		]
+		messagePattern                                        | arguments                                                                       | expectedThrowable      | expectedResult
+		'param1={}, param2={}, param3={}'                     | ['One', 'Two', 'Three', new RuntimeException()] as Object[]                     | new RuntimeException() | 'param1=One, param2=Two, param3=Three'
+		'param1={}, param2={}, param3={}, exceptionString={}' | ['One', 'Two', 'Three', new RuntimeException()] as Object[]                     | null                   | 'param1=One, param2=Two, param3=Three, exceptionString=java.lang.RuntimeException'
+		'exceptionString={}'                                  | [new RuntimeException()] as Object[]                                            | null                   | 'exceptionString=java.lang.RuntimeException'
+		'param={}'                                            | ['One', 'Two', 'Three'] as Object[]                                             | null                   | 'param=[\'One\', \'Two\', \'Three\']'
+		'param1={}, param2={}, param3={}'                     | ['One', 'Two', 'Three', 'Unused', 'Unused', new RuntimeException()] as Object[] | new RuntimeException() | 'param1=One, param2=Two, param3=Three'
+		'param1={}, param2={}, param3={}'                     | ['One', ['Two.1', 'Two.2'], 'Three'] as Object[]                                | null                   | 'param1=One, param2=[\'Two.1\', \'Two.2\'], param3=Three'
 	}
 }

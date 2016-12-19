@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	
+
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%-5level - %d{HH:mm:ss.SSS} [%thread] - %file:%line - %msg%n%ex{full}</pattern>
@@ -15,7 +15,7 @@
 		<IncludeCallerData>true</IncludeCallerData>
 	</appender>
 	-->
-	
+
 	<root level="INFO">
 		<appender-ref ref="CONSOLE"/>
 		<!--
@@ -24,6 +24,6 @@
 	</root>
 
 	<logger name="de.huxhorn.lilith.data.logging.ExtendedStackTraceElementSpec" level="WARN"/>
-	<logger name="de.huxhorn.lilith.data.logging.MessageFormatterTest" level="WARN"/>
+	<logger name="de.huxhorn.lilith.data.logging.MessageFormatterSpec" level="WARN"/>
 
 </configuration>

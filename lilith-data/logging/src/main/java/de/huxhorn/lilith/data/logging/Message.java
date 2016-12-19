@@ -172,7 +172,7 @@ public final class Message
 				}
 				if(current == null)
 				{
-					sb.append((String)null);
+					sb.append("null");
 				}
 				else
 				{
