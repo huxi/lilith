@@ -12,11 +12,11 @@ cache:
   - $HOME/.gradle
 
 before_install:
-  - rm -r ~/.gradle/caches
-  - git clone https://github.com/huxi/sulky.git ~/builds/sulky 
-  - pushd ~/builds/sulky 
+#  - rm -r ~/.gradle/caches
+  - git clone https://github.com/huxi/sulky.git ~/builds/sulky
+  - pushd ~/builds/sulky
   - ./gradlew --stacktrace install
-  - popd 
+  - popd
 
 script:
   - ./gradlew --stacktrace
