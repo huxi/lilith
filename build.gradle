@@ -24,7 +24,7 @@ buildscript {
 		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:2.9'
 		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.2'
 		classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
+		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.7.1'
 		classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.1.6'
 		classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
 	}
