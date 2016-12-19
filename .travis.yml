@@ -11,7 +11,8 @@ cache:
   directories:
   - $HOME/.gradle
 
-before_install: 
+before_install:
+  - rm -r ~/.gradle/caches
   - git clone https://github.com/huxi/sulky.git ~/builds/sulky 
   - pushd ~/builds/sulky 
   - ./gradlew --stacktrace install
