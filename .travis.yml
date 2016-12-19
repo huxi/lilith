@@ -4,6 +4,9 @@ language: java
 jdk:
   - oraclejdk8
 
+env:
+  - TERM=dumb
+
 cache:
   directories:
   - $HOME/.gradle
@@ -11,13 +14,13 @@ cache:
 before_install: 
   - git clone https://github.com/huxi/sulky.git ~/builds/sulky 
   - pushd ~/builds/sulky 
-  - ./gradlew install 
+  - ./gradlew --stacktrace install
   - popd 
 
-env:
-- TERM=dumb
+script:
+  - ./gradlew --stacktrace
 
 after_success:
-- ./gradlew cleanTest
-- ./gradlew jacocoRootReport
-- ./gradlew coveralls
+  - ./gradlew --stacktrace cleanTest
+  - ./gradlew --stacktrace jacocoRootReport
+  - ./gradlew --stacktrace coveralls
