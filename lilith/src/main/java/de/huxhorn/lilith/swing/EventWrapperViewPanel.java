@@ -39,26 +39,12 @@ import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.formatting.HumanReadable;
+import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
-
-import de.huxhorn.sulky.io.IOUtilities;
-import java.nio.charset.StandardCharsets;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xhtmlrenderer.context.AWTFontResolver;
-import org.xhtmlrenderer.extend.FontResolver;
-import org.xhtmlrenderer.extend.TextRenderer;
-import org.xhtmlrenderer.layout.SharedContext;
-import org.xhtmlrenderer.simple.FSScrollPane;
-import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
-import org.xhtmlrenderer.swing.LinkListener;
-import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
-import org.xhtmlrenderer.swing.SelectionHighlighter;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -85,14 +71,16 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -107,6 +95,17 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.context.AWTFontResolver;
+import org.xhtmlrenderer.extend.FontResolver;
+import org.xhtmlrenderer.extend.TextRenderer;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.simple.FSScrollPane;
+import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
+import org.xhtmlrenderer.swing.LinkListener;
+import org.xhtmlrenderer.swing.ScalableXHTMLPanel;
+import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 public abstract class EventWrapperViewPanel<T extends Serializable>
 	extends JPanel
@@ -155,7 +154,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		super(true);
-		eventCountFormat = new DecimalFormat("#,###");
+		eventCountFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.US));
 		this.taskManager = mainFrame.getLongWorkManager();
 		findResultListener = new FindResultListener();
 		taskManager.addTaskListener(findResultListener);

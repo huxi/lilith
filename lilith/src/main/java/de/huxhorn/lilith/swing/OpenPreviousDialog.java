@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.swing.KeyStrokes;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -250,7 +252,7 @@ public class OpenPreviousDialog
 			this.fileBufferFactory = fileBufferFactory;
 			this.logFileFactory = fileBufferFactory.getLogFileFactory();
 			this.eventType = eventType;
-			eventCountFormat = new DecimalFormat("#,###");
+			eventCountFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.US));
 			this.createUI();
 		}
 

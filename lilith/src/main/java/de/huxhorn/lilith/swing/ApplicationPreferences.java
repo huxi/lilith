@@ -1518,7 +1518,7 @@ public class ApplicationPreferences
 		BufferedReader reader = null;
 		try
 		{
-			reader = new BufferedReader(new InputStreamReader(url.openStream()));
+			reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
 			for(; ;)
 			{
 				String currentLine = reader.readLine();

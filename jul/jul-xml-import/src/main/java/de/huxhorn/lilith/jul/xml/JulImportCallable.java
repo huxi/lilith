@@ -41,21 +41,19 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.formatting.ReplaceInvalidXmlCharacterReader;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.input.CountingInputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.zip.GZIPInputStream;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import org.apache.commons.io.input.CountingInputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JulImportCallable
 	extends AbstractProgressingCallable<Long>
@@ -109,7 +107,7 @@ public class JulImportCallable
 		FileInputStream fis = new FileInputStream(inputFile);
 		CountingInputStream cis = new CountingInputStream(fis);
 
-		String fileName=inputFile.getName().toLowerCase();
+		String fileName=inputFile.getName().toLowerCase(Locale.US);
 		XMLStreamReader xmlStreamReader;
 		Reader reader;
 		if(fileName.endsWith(".gz"))

@@ -42,6 +42,7 @@ import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.apache.commons.io.input.CountingInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,7 +115,7 @@ public class Log4jImportCallable
 		FileInputStream fis = new FileInputStream(inputFile);
 		CountingInputStream cis = new CountingInputStream(fis);
 
-		String fileName=inputFile.getName().toLowerCase();
+		String fileName=inputFile.getName().toLowerCase(Locale.US);
 		BufferedReader br;
 		if(fileName.endsWith(".gz"))
 		{

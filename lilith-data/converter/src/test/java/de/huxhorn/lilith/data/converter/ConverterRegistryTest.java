@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2013 Joern Huxhorn
+ * Copyright 2007-2016 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,11 +34,13 @@
 
 package de.huxhorn.lilith.data.converter;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class ConverterRegistryTest
 {
@@ -122,7 +124,7 @@ public class ConverterRegistryTest
 			if(o instanceof String)
 			{
 				String string = (String) o;
-				return string.toUpperCase();
+				return string.toUpperCase(Locale.US);
 			}
 			throw new IllegalArgumentException("object is not a String!");
 		}
@@ -141,7 +143,7 @@ public class ConverterRegistryTest
 			if(o instanceof String)
 			{
 				String string = (String) o;
-				return string.toLowerCase();
+				return string.toLowerCase(Locale.US);
 			}
 			throw new IllegalArgumentException("object is not a String!");
 		}

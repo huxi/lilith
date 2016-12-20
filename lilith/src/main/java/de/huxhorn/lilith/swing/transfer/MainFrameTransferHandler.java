@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ package de.huxhorn.lilith.swing.transfer;
 import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.swing.MainFrame;
 
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,7 +104,7 @@ public class MainFrameTransferHandler
 					File file = (File) o;
 					String fileName = file.getAbsolutePath();
 					if(logger.isDebugEnabled()) logger.debug("Checking file '{}'...", fileName);
-					if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+					if(fileName.toLowerCase(Locale.US).endsWith(FileConstants.FILE_EXTENSION))
 					{
 						mainFrame.open(file);
 					}
@@ -111,11 +112,7 @@ public class MainFrameTransferHandler
 
 			}
 		}
-		catch(UnsupportedFlavorException e)
-		{
-			return false;
-		}
-		catch(IOException e)
+		catch(UnsupportedFlavorException | IOException e)
 		{
 			return false;
 		}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.sulky.buffers.AppendOperation;
 
 import de.huxhorn.sulky.io.IOUtilities;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +51,7 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 	final Logger logger = LoggerFactory.getLogger(AbstractServerSocketEventSourceProducer.class);
 
 	private static final DateTimeFormatter FORMAT = DateTimeFormatter
-			.ofPattern("yyyyMMdd'T'HHmmssSSS")
+			.ofPattern("yyyyMMdd'T'HHmmssSSS", Locale.US)
 			.withZone(ZoneId.systemDefault());
 
 	private ServerSocket serverSocket;

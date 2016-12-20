@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import ch.qos.logback.core.status.StatusManager;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.logback.tools.ContextHelper;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -338,7 +339,7 @@ public class AccessFormatter
 		public String getRequestHeader(String key)
 		{
 			String result = null;
-			key = key.toLowerCase();
+			key = key.toLowerCase(Locale.US);
 			if(requestHeaderMap != null)
 			{
 				result = requestHeaderMap.get(key);

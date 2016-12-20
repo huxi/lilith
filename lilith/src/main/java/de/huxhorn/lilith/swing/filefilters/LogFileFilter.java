@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import de.huxhorn.lilith.engine.LogFileFactory;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Locale;
 
 public class LogFileFilter
 	implements FileFilter
@@ -34,7 +35,7 @@ public class LogFileFilter
 
 	public boolean accept(File file)
 	{
-		return file.getName().toLowerCase().endsWith(logFileFactory.getDataFileExtension());
+		return file.getName().toLowerCase(Locale.US).endsWith(logFileFactory.getDataFileExtension());
 	}
 }
 

@@ -52,6 +52,7 @@ import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
 import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.FileUtils;
 import de.huxhorn.sulky.io.IOUtilities;
@@ -870,7 +871,7 @@ public class Lilith
 				try
 				{
 					FileOutputStream fos = new FileOutputStream(errorLog, true);
-					PrintStream ps = new PrintStream(fos, true);
+					PrintStream ps = new PrintStream(fos, true, StandardCharsets.UTF_8.name());
 					if(!freshFile)
 					{
 						ps.println("----------------------------------------");
@@ -880,7 +881,7 @@ public class Lilith
 					System.setErr(ps);
 					if(logger.isInfoEnabled()) logger.info("Writing System.err to '{}'.", errorLog.getAbsolutePath());
 				}
-				catch(FileNotFoundException e)
+				catch(FileNotFoundException | UnsupportedEncodingException e)
 				{
 					e.printStackTrace();
 				}

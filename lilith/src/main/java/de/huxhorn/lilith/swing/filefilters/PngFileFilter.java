@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package de.huxhorn.lilith.swing.filefilters;
 
 import java.io.File;
 
+import java.util.Locale;
 import javax.swing.filechooser.FileFilter;
 
 public class PngFileFilter
@@ -26,7 +27,7 @@ public class PngFileFilter
 {
 	public boolean accept(File pathname)
 	{
-		return pathname.isDirectory() || pathname.isFile() && pathname.getName().toLowerCase().endsWith(".png");
+		return pathname.isDirectory() || pathname.isFile() && pathname.getName().toLowerCase(Locale.US).endsWith(".png");
 	}
 
 	public String getDescription()

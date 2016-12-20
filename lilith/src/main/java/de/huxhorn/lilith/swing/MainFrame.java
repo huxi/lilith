@@ -22,43 +22,43 @@ import de.huxhorn.lilith.Lilith;
 import de.huxhorn.lilith.LilithBuffer;
 import de.huxhorn.lilith.LilithSounds;
 import de.huxhorn.lilith.VersionBundle;
-import de.huxhorn.lilith.data.access.logback.LogbackAccessConverter;
-import de.huxhorn.lilith.data.converter.ConverterRegistry;
-import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.data.logging.logback.LogbackLoggingConverter;
-import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
-import de.huxhorn.lilith.engine.impl.sourceproducer.ConvertingServerSocketEventSourceProducer;
-import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonMessageLoggingServerSocketEventSourceProducer;
-import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonStreamLoggingServerSocketEventSourceProducer;
-import de.huxhorn.lilith.engine.jul.sourceproducer.JulXmlStreamLoggingServerSocketEventSourceProducer;
-import de.huxhorn.lilith.eventhandlers.AlarmSoundAccessEventHandler;
-import de.huxhorn.lilith.eventhandlers.AlarmSoundLoggingEventHandler;
-import de.huxhorn.lilith.eventhandlers.FileDumpEventHandler;
-import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
-import de.huxhorn.lilith.debug.DebugDialog;
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.appender.InternalLilithAppender;
-import de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
+import de.huxhorn.lilith.data.access.logback.LogbackAccessConverter;
+import de.huxhorn.lilith.data.converter.ConverterRegistry;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.logback.LogbackLoggingConverter;
+import de.huxhorn.lilith.debug.DebugDialog;
 import de.huxhorn.lilith.engine.AccessFileBufferFactory;
 import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
 import de.huxhorn.lilith.engine.FileBufferFactory;
-import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
+import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
 import de.huxhorn.lilith.engine.impl.sourceproducer.AccessEventProtobufServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.ConvertingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonMessageLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonStreamLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.jul.sourceproducer.JulXmlStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.sourceproducer.LilithXmlStreamLoggingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.eventhandlers.AlarmSoundAccessEventHandler;
+import de.huxhorn.lilith.eventhandlers.AlarmSoundLoggingEventHandler;
+import de.huxhorn.lilith.eventhandlers.FileDumpEventHandler;
+import de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler;
+import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
 import de.huxhorn.lilith.jul.xml.JulImportCallable;
 import de.huxhorn.lilith.log4j.producer.Log4jLoggingConverter;
 import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
@@ -118,31 +118,13 @@ import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Or;
 import de.huxhorn.sulky.formatting.SimpleXml;
+import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
-
-import de.huxhorn.sulky.io.IOUtilities;
-import java.nio.charset.StandardCharsets;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
-import org.simplericity.macify.eawt.Application;
-import org.simplericity.macify.eawt.ApplicationEvent;
-import org.simplericity.macify.eawt.ApplicationListener;
-import org.simplericity.macify.eawt.DefaultApplication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -163,21 +145,24 @@ import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -185,7 +170,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
-
 import javax.swing.Icon;
 import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
@@ -198,6 +182,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.border.EtchedBorder;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
+import org.simplericity.macify.eawt.Application;
+import org.simplericity.macify.eawt.ApplicationEvent;
+import org.simplericity.macify.eawt.ApplicationListener;
+import org.simplericity.macify.eawt.DefaultApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainFrame
 	extends JFrame
@@ -277,7 +276,7 @@ public class MainFrame
 		isMac = app.isMac();
 		if(!isMac)
 		{
-			String osName = System.getProperty("os.name").toLowerCase();
+			String osName = System.getProperty("os.name").toLowerCase(Locale.US);
 			isWindows = osName.startsWith("windows");
 		}
 		else
@@ -1178,7 +1177,7 @@ public class MainFrame
 		{
 			File importFile = importFileChooser.getSelectedFile();
 			String fileName = importFile.getAbsolutePath();
-			if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+			if(fileName.toLowerCase(Locale.US).endsWith(FileConstants.FILE_EXTENSION))
 			{
 				open(importFile);
 				return;
@@ -1212,7 +1211,7 @@ public class MainFrame
 			File file = exportFileChooser.getSelectedFile();
 			String fileName = file.getAbsolutePath();
 			String baseName;
-			if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+			if(fileName.toLowerCase(Locale.US).endsWith(FileConstants.FILE_EXTENSION))
 			{
 				baseName=fileName.substring(0, fileName.length()-FileConstants.FILE_EXTENSION.length());
 			}
@@ -1316,7 +1315,7 @@ public class MainFrame
 		}
 		String fileName = dataFile.getAbsolutePath();
 		String indexFileName;
-		if(fileName.toLowerCase().endsWith(FileConstants.FILE_EXTENSION))
+		if(fileName.toLowerCase(Locale.US).endsWith(FileConstants.FILE_EXTENSION))
 		{
 			indexFileName = fileName.substring(0, fileName.length() - FileConstants.FILE_EXTENSION.length());
 		}
@@ -1472,7 +1471,7 @@ public class MainFrame
 		{
 			FileInputStream fis = new FileInputStream(inputFile);
 
-			String fileName=inputFile.getName().toLowerCase();
+			String fileName=inputFile.getName().toLowerCase(Locale.US);
 			if(fileName.endsWith(".gz"))
 			{
 				br = new BufferedReader(new InputStreamReader(new GZIPInputStream(fis), StandardCharsets.UTF_8));
@@ -2878,20 +2877,15 @@ public class MainFrame
 				if(oldPath != null)
 				{
 					File previousApplicationPathFile = new File(newPath, ApplicationPreferences.PREVIOUS_APPLICATION_PATH_FILENAME);
-					FileWriter writer = null;
+					OutputStreamWriter writer = null;
 					try
 					{
-						writer = new FileWriter(previousApplicationPathFile);
+						writer = new OutputStreamWriter(new FileOutputStream(previousApplicationPathFile), StandardCharsets.UTF_8);
 						writer.append(oldPath.getAbsolutePath());
 					}
 					catch(IOException ex)
 					{
-						if(logger.isWarnEnabled())
-						{
-							logger
-								.warn("Exception while writing previous application path to file '" + previousApplicationPathFile
-									.getAbsolutePath() + "'!", ex);
-						}
+						if(logger.isWarnEnabled()) logger.warn("Exception while writing previous application path to file '{}'!", previousApplicationPathFile.getAbsolutePath(), ex);
 					}
 					finally
 					{
@@ -3489,7 +3483,7 @@ public class MainFrame
 
 			public AbstractOutputConsumerRunnable(InputStream input)
 			{
-				inputReader = new BufferedReader(new InputStreamReader(input));
+				inputReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
 			}
 
 			public void run()
@@ -3599,7 +3593,7 @@ public class MainFrame
 
 			public AbstractOutputConsumerRunnable(InputStream input)
 			{
-				inputReader = new BufferedReader(new InputStreamReader(input));
+				inputReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
 			}
 
 			public void run()

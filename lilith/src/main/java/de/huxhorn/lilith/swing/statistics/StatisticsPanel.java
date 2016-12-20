@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2016 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.filefilters.PngFileFilter;
 
 import de.huxhorn.sulky.io.IOUtilities;
+import java.util.Locale;
 import org.rrd4j.core.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -458,7 +459,7 @@ public class StatisticsPanel
 			{
 				File file = saveFileChooser.getSelectedFile();
 				String filename = file.getAbsolutePath();
-				if(!filename.toLowerCase().endsWith(".png"))
+				if(!filename.toLowerCase(Locale.US).endsWith(".png"))
 				{
 					filename = filename + ".png";
 				}
