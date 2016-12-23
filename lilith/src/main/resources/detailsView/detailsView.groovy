@@ -16,16 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import de.huxhorn.lilith.data.eventsource.LoggerContext
+
 import de.huxhorn.lilith.data.access.AccessEvent
 import de.huxhorn.lilith.data.access.HttpStatus
+import de.huxhorn.lilith.data.eventsource.LoggerContext
 import de.huxhorn.lilith.data.logging.LoggingEvent
 import de.huxhorn.lilith.data.logging.Message
 import de.huxhorn.lilith.data.logging.ThreadInfo
 import groovy.xml.StreamingMarkupBuilder
-import java.time.format.DateTimeFormatter
+
 import java.time.Instant
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 if (!binding.variables.containsKey('completeCallStack')) {
 	binding.setVariable('completeCallStack', false)
