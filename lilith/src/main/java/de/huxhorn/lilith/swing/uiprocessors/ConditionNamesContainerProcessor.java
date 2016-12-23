@@ -19,7 +19,6 @@
 package de.huxhorn.lilith.swing.uiprocessors;
 
 import de.huxhorn.lilith.swing.ViewContainer;
-
 import java.util.List;
 
 public class ConditionNamesContainerProcessor

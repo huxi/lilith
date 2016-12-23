@@ -41,12 +41,11 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfoParser;
-import org.apache.log4j.spi.LocationInfo;
-import org.apache.log4j.spi.ThrowableInformation;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.spi.LocationInfo;
+import org.apache.log4j.spi.ThrowableInformation;
 
 public class Log4jLoggingConverter
 	implements Converter<LoggingEvent>

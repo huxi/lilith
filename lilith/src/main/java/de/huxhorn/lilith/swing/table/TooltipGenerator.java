@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.table;
 
-import javax.swing.*;
+import javax.swing.JTable;
 
 public interface TooltipGenerator
 {

@@ -35,17 +35,16 @@
 package de.huxhorn.lilith.tracing;
 
 import de.huxhorn.sulky.formatting.SafeString;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 public class TracingAspect
 {

@@ -19,8 +19,7 @@ package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class ConditionPreviewRenderer
 	extends ColorSchemePreviewRenderer

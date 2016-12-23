@@ -19,11 +19,16 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.swing.GraphicsUtilities;
 import de.huxhorn.sulky.swing.filters.ColorTintFilter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -40,9 +45,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.Timer;
+import javax.swing.ToolTipManager;
+import javax.swing.UIManager;
 import javax.swing.event.MouseInputAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO: get/setMouseHandling/MouseInputMode
 // TODO: setVersionHeight(versionHeight);

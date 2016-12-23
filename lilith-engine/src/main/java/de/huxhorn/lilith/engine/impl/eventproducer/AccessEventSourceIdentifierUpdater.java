@@ -20,7 +20,6 @@ package de.huxhorn.lilith.engine.impl.eventproducer;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-
 import java.util.Map;
 
 public class AccessEventSourceIdentifierUpdater

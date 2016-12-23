@@ -17,11 +17,6 @@
  */
 package de.huxhorn.lilith.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.JFrame;
-import javax.swing.JToolBar;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Frame;
@@ -32,6 +27,10 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import javax.swing.JFrame;
+import javax.swing.JToolBar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ViewContainerFrame
 	extends JFrame

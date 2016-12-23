@@ -19,9 +19,7 @@ package de.huxhorn.lilith.tray;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
-
 import de.huxhorn.lilith.tray.impl.SystemTrayImpl;
-
 import java.awt.Image;
 import java.awt.SystemTray;
 

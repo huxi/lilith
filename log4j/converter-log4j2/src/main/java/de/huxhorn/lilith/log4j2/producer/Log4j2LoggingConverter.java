@@ -42,11 +42,10 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import org.apache.logging.log4j.Level;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.util.ReadOnlyStringMap;
 
 public class Log4j2LoggingConverter

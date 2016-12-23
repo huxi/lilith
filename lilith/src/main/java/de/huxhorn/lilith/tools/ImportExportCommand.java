@@ -22,9 +22,6 @@ import de.huxhorn.lilith.prefs.protobuf.LilithPreferencesStreamingDecoder;
 import de.huxhorn.lilith.prefs.protobuf.LilithPreferencesStreamingEncoder;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.io.IOUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -39,6 +36,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ImportExportCommand
 {

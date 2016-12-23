@@ -23,20 +23,6 @@ import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.Dispose;
 import de.huxhorn.sulky.conditions.Condition;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
-import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -51,6 +37,18 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class ComboPaneViewContainer<T extends Serializable>
 	extends ViewContainer<T>

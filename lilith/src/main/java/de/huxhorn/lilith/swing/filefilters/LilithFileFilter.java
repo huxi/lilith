@@ -18,9 +18,7 @@
 package de.huxhorn.lilith.swing.filefilters;
 
 import de.huxhorn.lilith.api.FileConstants;
-
 import java.io.File;
-
 import java.util.Locale;
 import javax.swing.filechooser.FileFilter;
 

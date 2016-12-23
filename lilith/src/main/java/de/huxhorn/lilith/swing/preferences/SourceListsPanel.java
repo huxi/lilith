@@ -19,10 +19,6 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.sulky.swing.Windows;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -31,7 +27,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -44,6 +39,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SourceListsPanel
 	extends JPanel

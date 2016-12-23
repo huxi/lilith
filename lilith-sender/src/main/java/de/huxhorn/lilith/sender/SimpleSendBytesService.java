@@ -35,7 +35,6 @@
 package de.huxhorn.lilith.sender;
 
 import de.huxhorn.sulky.io.IOUtilities;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;

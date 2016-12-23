@@ -26,12 +26,6 @@ import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.swing.KeyStrokes;
-
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -44,14 +38,15 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -70,6 +65,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OpenPreviousDialog
 	extends JDialog

@@ -19,11 +19,10 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.statistics.StatisticsPanel;
-
-import javax.swing.JDialog;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
+import javax.swing.JDialog;
 
 public class StatisticsDialog
 	extends JDialog

@@ -22,12 +22,10 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 import de.huxhorn.sulky.formatting.SimpleXml;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class MarkerTooltipGenerator
 	implements TooltipGenerator

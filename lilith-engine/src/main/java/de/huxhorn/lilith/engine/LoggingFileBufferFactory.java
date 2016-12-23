@@ -24,7 +24,6 @@ import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperPro
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.sulky.codec.Codec;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
-
 import java.util.Map;
 
 public class LoggingFileBufferFactory

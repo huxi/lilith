@@ -22,9 +22,7 @@ import de.huxhorn.lilith.sender.HeartbeatRunnable;
 import de.huxhorn.lilith.sender.MessageWriteByteStrategy;
 import de.huxhorn.lilith.sender.SimpleSendBytesService;
 import de.huxhorn.lilith.sender.SocketDataOutputStreamFactory;
-
 import java.io.Serializable;
-
 import javax.jmdns.JmDNS;
 
 public abstract class AbstractEventSender<T extends Serializable>

@@ -35,7 +35,6 @@
 package de.huxhorn.lilith.data.access;
 
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
-
 import java.io.Serializable;
 import java.util.Map;
 

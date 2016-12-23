@@ -26,10 +26,6 @@ import de.huxhorn.lilith.engine.EventSourceListener;
 import de.huxhorn.lilith.engine.EventSourceProducer;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -39,6 +35,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SourceManagerImpl<T extends Serializable>
 	implements SourceManager<T>

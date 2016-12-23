@@ -21,10 +21,8 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventHandler;
-
-import org.simplericity.macify.eawt.Application;
-
 import java.util.List;
+import org.simplericity.macify.eawt.Application;
 
 public class UserNotificationAccessEventHandler
 	implements EventHandler<AccessEvent>

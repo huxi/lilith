@@ -21,13 +21,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.filefilters.PngFileFilter;
-
 import de.huxhorn.sulky.io.IOUtilities;
-import java.util.Locale;
-import org.rrd4j.core.Util;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
@@ -41,9 +35,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -58,6 +52,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
+import org.rrd4j.core.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StatisticsPanel
 	extends JPanel

@@ -19,7 +19,6 @@ package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
 import java.io.ObjectStreamException;
 
 public class HttpStatusCodeCondition

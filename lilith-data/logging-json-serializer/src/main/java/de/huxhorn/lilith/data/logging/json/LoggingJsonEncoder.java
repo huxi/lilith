@@ -38,9 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
 import de.huxhorn.sulky.codec.Encoder;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;

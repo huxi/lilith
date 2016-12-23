@@ -22,7 +22,6 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
-
 import java.io.Serializable;
 import java.util.List;
 

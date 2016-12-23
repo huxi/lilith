@@ -26,17 +26,17 @@ import de.huxhorn.lilith.data.logging.LoggingEvent
 if(searchString == null || '' == searchString)
 {
 	// so no string doesn't filter anything
-	return true;
+	return true
 }
 
-def event = input?.event;
+def event = input?.event
 
 if(event instanceof LoggingEvent)
 {
-	def threadName = event.threadInfo?.name;
+	def threadName = event.threadInfo?.name
 	if(threadName)
 	{
-		return threadName.startsWith(searchString);
+		return threadName.startsWith(searchString)
 	}
 }
-return false;
+return false

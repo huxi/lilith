@@ -20,8 +20,7 @@ package de.huxhorn.lilith.swing.table.tooltips;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class SourceTooltipGenerator
 	implements TooltipGenerator

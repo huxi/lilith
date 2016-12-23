@@ -1,5 +1,4 @@
 import de.huxhorn.lilith.data.logging.LoggingEvent
-import de.huxhorn.lilith.data.logging.LoggingEvent.Level
 
 /*
  * Lilith - a log event viewer.
@@ -27,29 +26,29 @@ import de.huxhorn.lilith.data.logging.LoggingEvent.Level
 if(searchString == null || '' == searchString)
 {
 	// so no string doesn't filter anything
-	return true;
+	return true
 }
 
-def event = input?.event;
+def event = input?.event
 
 if(event instanceof LoggingEvent)
 {
-	def level = event.level;
+	def level = event.level
 
 	if(level)
 	{
 		try
 		{
-			def threshold=LoggingEvent.Level.valueOf(searchString);
+			def threshold=LoggingEvent.Level.valueOf(searchString)
 			if(level >= threshold)
 			{
-				return true;
+				return true
 			}
 		}
-		catch(IllegalArgumentException ex)
+		catch(IllegalArgumentException ignored)
 		{
 			// ignore
 		}
 	}
 }
-return false;
+return false

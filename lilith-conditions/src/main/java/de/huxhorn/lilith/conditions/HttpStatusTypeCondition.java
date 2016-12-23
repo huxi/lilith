@@ -20,7 +20,6 @@ package de.huxhorn.lilith.conditions;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
 import java.io.ObjectStreamException;
 import java.util.Locale;
 

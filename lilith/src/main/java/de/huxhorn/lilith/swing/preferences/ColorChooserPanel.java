@@ -17,13 +17,6 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -31,6 +24,12 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ColorChooserPanel
 	extends JPanel

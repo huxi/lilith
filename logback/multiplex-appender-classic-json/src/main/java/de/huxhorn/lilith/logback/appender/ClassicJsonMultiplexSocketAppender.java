@@ -34,10 +34,9 @@
 
 package de.huxhorn.lilith.logback.appender;
 
-import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
-
 import ch.qos.logback.classic.spi.LoggingEvent;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
+import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 
 public class ClassicJsonMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>

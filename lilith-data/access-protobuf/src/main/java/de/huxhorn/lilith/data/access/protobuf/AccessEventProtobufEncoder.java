@@ -38,7 +38,6 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.protobuf.generated.AccessProto;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.sulky.codec.Encoder;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;

@@ -18,15 +18,14 @@
 package de.huxhorn.lilith.services.gotosrc;
 
 import de.huxhorn.sulky.io.IOUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class sends serialized StackTraceElements to a server.

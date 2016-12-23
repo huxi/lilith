@@ -19,17 +19,16 @@ package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.io.IOUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.event.EventListenerList;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import java.awt.EventQueue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.event.EventListenerList;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LoggingLevelTableModel
 	implements TableModel

@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.statistics;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-
 import java.awt.image.BufferedImage;
 
 public interface GraphImageProducer

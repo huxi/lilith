@@ -17,9 +17,9 @@
  */
 package de.huxhorn.lilith.swing.table.renderer;
 
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 public class ToStringRenderer

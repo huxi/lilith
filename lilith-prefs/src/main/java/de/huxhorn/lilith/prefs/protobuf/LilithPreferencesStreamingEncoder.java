@@ -38,7 +38,6 @@ import com.google.protobuf.ByteString;
 import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto;
 import de.huxhorn.sulky.codec.streaming.StreamingEncoder;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;

@@ -34,10 +34,9 @@
 
 package de.huxhorn.lilith.logback.appender;
 
+import ch.qos.logback.access.spi.AccessEvent;
 import de.huxhorn.lilith.data.access.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.access.protobuf.AccessEventProtobufEncoder;
-
-import ch.qos.logback.access.spi.AccessEvent;
 
 public class AccessMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<AccessEvent>

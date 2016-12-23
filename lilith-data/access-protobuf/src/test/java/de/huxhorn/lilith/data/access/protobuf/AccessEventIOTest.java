@@ -36,14 +36,13 @@ package de.huxhorn.lilith.data.access.protobuf;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
-
-import static org.junit.Assert.assertEquals;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import static org.junit.Assert.assertEquals;
 
 public class AccessEventIOTest
 {

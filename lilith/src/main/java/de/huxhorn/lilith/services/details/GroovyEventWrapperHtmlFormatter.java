@@ -26,12 +26,11 @@ import de.huxhorn.sulky.formatting.SimpleXml;
 import de.huxhorn.sulky.groovy.GroovyInstance;
 import groovy.lang.Binding;
 import groovy.lang.Script;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.Serializable;
 import java.net.URL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GroovyEventWrapperHtmlFormatter
 	extends AbstractHtmlFormatter

@@ -21,7 +21,6 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-
 import java.io.Serializable;
 
 public class ExportCallable<T extends Serializable>

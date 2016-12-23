@@ -18,14 +18,12 @@
 package de.huxhorn.lilith.swing.taskmanager.table;
 
 import de.huxhorn.sulky.tasks.Task;
-
+import java.awt.Component;
+import javax.swing.JProgressBar;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
 
 
 public class TaskProgressRenderer

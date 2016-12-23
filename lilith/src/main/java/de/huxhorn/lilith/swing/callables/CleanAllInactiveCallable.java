@@ -21,12 +21,10 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CleanAllInactiveCallable
 	extends AbstractProgressingCallable<Long>

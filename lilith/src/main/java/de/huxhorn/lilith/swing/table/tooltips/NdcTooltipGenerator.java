@@ -22,8 +22,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
 import de.huxhorn.sulky.formatting.SimpleXml;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class NdcTooltipGenerator
 	implements TooltipGenerator

@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.services.sender;
 
 import java.io.Serializable;
-
 import javax.jmdns.JmDNS;
 
 public interface EventSender<T extends Serializable>

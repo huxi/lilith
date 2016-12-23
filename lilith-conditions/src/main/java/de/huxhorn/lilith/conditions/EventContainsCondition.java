@@ -26,7 +26,6 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashSet;

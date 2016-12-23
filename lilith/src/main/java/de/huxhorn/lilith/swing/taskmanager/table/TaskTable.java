@@ -20,18 +20,15 @@ package de.huxhorn.lilith.swing.taskmanager.table;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.Map;
-
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TaskTable<T>
 	extends JTable

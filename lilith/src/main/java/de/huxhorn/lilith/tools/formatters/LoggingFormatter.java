@@ -34,14 +34,13 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import de.huxhorn.lilith.logback.tools.ContextHelper;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class LoggingFormatter
 	implements Formatter<EventWrapper<LoggingEvent>>

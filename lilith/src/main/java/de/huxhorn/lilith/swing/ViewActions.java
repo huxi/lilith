@@ -33,11 +33,11 @@ import de.huxhorn.lilith.services.clipboard.AccessResponseHeadersFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatter;
 import de.huxhorn.lilith.services.clipboard.ClipboardFormatterData;
 import de.huxhorn.lilith.services.clipboard.EventHtmlFormatter;
-import de.huxhorn.lilith.services.clipboard.LoggingEventJsonFormatter;
-import de.huxhorn.lilith.services.clipboard.LoggingEventXmlFormatter;
 import de.huxhorn.lilith.services.clipboard.GroovyFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallLocationFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingCallStackFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingEventJsonFormatter;
+import de.huxhorn.lilith.services.clipboard.LoggingEventXmlFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingLoggerNameFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingMarkerFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingMdcFormatter;
@@ -54,14 +54,9 @@ import de.huxhorn.lilith.swing.menu.ExcludeMenu;
 import de.huxhorn.lilith.swing.menu.FocusMenu;
 import de.huxhorn.lilith.swing.table.EventWrapperViewTable;
 import de.huxhorn.sulky.buffers.Buffer;
-import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.KeyStrokes;
-
-import org.simplericity.macify.eawt.Application;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import java.awt.AWTError;
 import java.awt.Container;
 import java.awt.EventQueue;
@@ -94,7 +89,6 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -112,6 +106,9 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableColumn;
+import org.simplericity.macify.eawt.Application;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class needs cleanup...... remove duplicated logic, make ToolBar/Menu configurable...

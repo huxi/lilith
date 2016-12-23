@@ -20,10 +20,6 @@ package de.huxhorn.lilith.swing.preferences;
 import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
 import de.huxhorn.sulky.swing.KeyStrokes;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -39,7 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -55,6 +50,8 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EditSourceListDialog
 	extends JDialog

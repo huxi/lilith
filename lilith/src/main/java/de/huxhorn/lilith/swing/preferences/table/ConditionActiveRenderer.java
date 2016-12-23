@@ -18,10 +18,10 @@
 package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
-
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Component;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 public class ConditionActiveRenderer

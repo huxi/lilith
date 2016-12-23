@@ -35,12 +35,9 @@
 package de.huxhorn.lilith.data.logging.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
 import de.huxhorn.sulky.codec.Decoder;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;

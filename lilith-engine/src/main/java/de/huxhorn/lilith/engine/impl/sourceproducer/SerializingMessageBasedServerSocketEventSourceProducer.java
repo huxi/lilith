@@ -23,7 +23,6 @@ import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.SerializingMessageBasedEventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.SourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;

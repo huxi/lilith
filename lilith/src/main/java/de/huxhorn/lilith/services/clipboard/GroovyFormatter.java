@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.sulky.groovy.GroovyInstance;
-
 import java.io.File;
 
 public class GroovyFormatter

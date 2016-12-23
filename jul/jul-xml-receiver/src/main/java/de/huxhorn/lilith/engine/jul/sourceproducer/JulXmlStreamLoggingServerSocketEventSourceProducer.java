@@ -24,7 +24,6 @@ import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.sourceproducer.AbstractServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.jul.eventproducer.JulXmlStreamLoggingEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import java.io.IOException;
 import java.io.InputStream;
 

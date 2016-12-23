@@ -17,11 +17,10 @@
  */
 package de.huxhorn.lilith.swing;
 
+import java.net.URL;
+import javax.swing.ImageIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.swing.ImageIcon;
-import java.net.URL;
 
 public class Icons
 {

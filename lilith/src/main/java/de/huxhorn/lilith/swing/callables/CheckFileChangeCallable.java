@@ -20,12 +20,11 @@ package de.huxhorn.lilith.swing.callables;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CheckFileChangeCallable
 	extends AbstractProgressingCallable<Long>

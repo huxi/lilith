@@ -20,9 +20,9 @@ package de.huxhorn.lilith.conditions
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static de.huxhorn.sulky.junit.JUnitTools.testClone
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization
-import static de.huxhorn.sulky.junit.JUnitTools.testClone
 
 class EventContainsConditionSpec extends Specification {
 	@Unroll

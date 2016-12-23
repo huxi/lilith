@@ -22,10 +22,6 @@ import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.swing.filefilters.Mp3FileFilter;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -33,7 +29,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -47,6 +42,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SoundsPanel
 	extends JPanel

@@ -18,7 +18,6 @@
 
 package de.huxhorn.lilith.swing;
 
-import javax.swing.*;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -29,6 +28,9 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.GrayFilter;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class LoggingViewStateIcons
 {

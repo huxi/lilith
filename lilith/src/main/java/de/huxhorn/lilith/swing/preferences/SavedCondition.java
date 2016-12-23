@@ -19,7 +19,6 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.io.Serializable;
 
 public class SavedCondition

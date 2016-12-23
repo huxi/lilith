@@ -24,10 +24,8 @@ import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.sourceproducer.AbstractServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.xml.eventproducer.LilithXmlStreamLoggingEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.xml.stream.XMLStreamException;
 
 public class LilithXmlStreamLoggingServerSocketEventSourceProducer

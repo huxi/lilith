@@ -25,15 +25,13 @@ import de.huxhorn.sulky.codec.Codec;
 import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class FileBufferFactory<T extends Serializable>
 {

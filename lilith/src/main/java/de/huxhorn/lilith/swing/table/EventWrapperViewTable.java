@@ -21,13 +21,11 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
-import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
+import de.huxhorn.sulky.swing.PersistentTableColumnModel;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -39,11 +37,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class EventWrapperViewTable<T extends Serializable>
 	extends JTable

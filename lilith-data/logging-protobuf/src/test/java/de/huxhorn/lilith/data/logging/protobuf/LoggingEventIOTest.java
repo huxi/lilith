@@ -35,7 +35,6 @@
 package de.huxhorn.lilith.data.logging.protobuf;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
 import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
 
 public class LoggingEventIOTest

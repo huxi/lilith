@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.swing.*;
+import javax.swing.AbstractListModel;
 
 public class GenericSortedListModel<T extends Comparable<? super T>>
 	extends AbstractListModel<T>

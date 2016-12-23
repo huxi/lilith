@@ -39,7 +39,6 @@ import de.huxhorn.lilith.data.converter.ConverterRegistry;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;

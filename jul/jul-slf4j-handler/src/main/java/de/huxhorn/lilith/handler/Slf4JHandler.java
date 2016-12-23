@@ -34,13 +34,12 @@
 
 package de.huxhorn.lilith.handler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
-
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * <p>A java.util.logging.Handler that simply forwards LogRecords to the respective

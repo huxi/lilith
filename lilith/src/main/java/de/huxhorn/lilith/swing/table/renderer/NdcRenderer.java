@@ -23,10 +23,9 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
-
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 public class NdcRenderer

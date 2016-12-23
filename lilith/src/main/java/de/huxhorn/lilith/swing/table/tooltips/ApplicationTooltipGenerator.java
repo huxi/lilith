@@ -22,10 +22,8 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
-
 import java.util.Map;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class ApplicationTooltipGenerator
 	implements TooltipGenerator

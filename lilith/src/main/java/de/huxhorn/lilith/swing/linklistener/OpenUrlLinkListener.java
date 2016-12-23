@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.linklistener;
 
 import de.huxhorn.lilith.swing.MainFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.swing.BasicPanel;

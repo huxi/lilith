@@ -34,15 +34,16 @@
  */
 package de.huxhorn.lilith.data.eventsource;
 
-import static de.huxhorn.sulky.junit.JUnitTools.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import static de.huxhorn.sulky.junit.JUnitTools.testClone;
+import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
+import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class SourceIdentifierTest
 {

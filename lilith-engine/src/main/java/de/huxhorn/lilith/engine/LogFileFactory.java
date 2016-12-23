@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-
 import java.io.File;
 
 public interface LogFileFactory

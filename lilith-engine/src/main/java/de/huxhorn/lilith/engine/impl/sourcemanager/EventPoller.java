@@ -21,13 +21,11 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.sulky.buffers.CircularBuffer;
 import de.huxhorn.sulky.buffers.RemoveOperation;
-
 import de.huxhorn.sulky.io.IOUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EventPoller<T extends Serializable>
 	implements Runnable

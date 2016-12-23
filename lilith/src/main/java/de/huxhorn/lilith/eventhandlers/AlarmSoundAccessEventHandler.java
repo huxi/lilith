@@ -23,7 +23,6 @@ import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.sulky.sounds.Sounds;
-
 import java.util.List;
 
 public class AlarmSoundAccessEventHandler

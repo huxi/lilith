@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.filefilters;
 
 import java.io.File;
-
 import java.util.Locale;
 import javax.swing.filechooser.FileFilter;
 

@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-
 import java.io.Serializable;
 import java.util.List;
 

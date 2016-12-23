@@ -17,21 +17,19 @@
  */
 package de.huxhorn.lilith.appender;
 
+import ch.qos.logback.core.AppenderBase;
+import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.SameThreadLogbackLoggingConverter;
 import de.huxhorn.lilith.engine.FileBufferFactory;
-import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
-
-import ch.qos.logback.core.AppenderBase;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;

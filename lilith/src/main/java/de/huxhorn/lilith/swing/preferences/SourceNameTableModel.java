@@ -18,19 +18,17 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.sulky.io.IOUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SourceNameTableModel
 	implements TableModel

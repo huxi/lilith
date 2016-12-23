@@ -19,7 +19,6 @@ package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
 import java.util.Map;
 
 public class MDCContainsCondition

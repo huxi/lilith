@@ -35,13 +35,11 @@
 package de.huxhorn.lilith.data.logging.json;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
 import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
 import java.nio.charset.StandardCharsets;
+import javax.xml.stream.XMLStreamException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.xml.stream.XMLStreamException;
 
 public class LoggingEventIOTest
 	extends LoggingEventIOTestBase

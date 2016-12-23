@@ -22,10 +22,10 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
-
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 public class LevelRenderer

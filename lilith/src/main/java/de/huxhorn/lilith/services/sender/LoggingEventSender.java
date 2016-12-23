@@ -19,7 +19,6 @@ package de.huxhorn.lilith.services.sender;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.codec.SerializableEncoder;
-
 import javax.jmdns.JmDNS;
 
 public class LoggingEventSender

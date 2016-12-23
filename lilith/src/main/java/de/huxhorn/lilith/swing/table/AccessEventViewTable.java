@@ -21,14 +21,26 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
+import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ElapsedTimeRenderer;
+import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
+import de.huxhorn.lilith.swing.table.renderer.MethodRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ProtocolRenderer;
+import de.huxhorn.lilith.swing.table.renderer.RemoteAddrRenderer;
+import de.huxhorn.lilith.swing.table.renderer.RequestUriRenderer;
+import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
+import de.huxhorn.lilith.swing.table.renderer.StatusCodeRenderer;
+import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
+import de.huxhorn.lilith.swing.table.tooltips.ApplicationTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.ElapsedTimeTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.RequestUrlTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.SourceTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.StatusCodeTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.TimestampTooltipGenerator;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.*;
-import de.huxhorn.lilith.swing.table.tooltips.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.swing.table.TableColumn;
 
 public class AccessEventViewTable

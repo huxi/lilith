@@ -34,15 +34,13 @@
 
 package de.huxhorn.lilith.data.access.protobuf;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.lilith.data.access.protobuf.generated.AccessProto;
 import de.huxhorn.lilith.data.eventsource.EventIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.access.protobuf.generated.AccessProto;
 import de.huxhorn.sulky.codec.Decoder;
-
-import com.google.protobuf.InvalidProtocolBufferException;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;

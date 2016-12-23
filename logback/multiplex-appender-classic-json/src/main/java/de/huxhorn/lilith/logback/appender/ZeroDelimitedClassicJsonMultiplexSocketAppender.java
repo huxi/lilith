@@ -34,11 +34,10 @@
 
 package de.huxhorn.lilith.logback.appender;
 
-import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
-import de.huxhorn.lilith.sender.ZeroDelimitedWriteByteStrategy;
-
 import ch.qos.logback.classic.spi.LoggingEvent;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
+import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
+import de.huxhorn.lilith.sender.ZeroDelimitedWriteByteStrategy;
 
 /**
  * This appender should not be used and is only implemented for symmetric reasons so both an appender

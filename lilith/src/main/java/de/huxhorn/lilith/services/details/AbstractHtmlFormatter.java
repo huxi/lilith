@@ -19,7 +19,6 @@ package de.huxhorn.lilith.services.details;
 
 import de.huxhorn.lilith.services.BasicFormatter;
 import de.huxhorn.sulky.formatting.SimpleXml;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 

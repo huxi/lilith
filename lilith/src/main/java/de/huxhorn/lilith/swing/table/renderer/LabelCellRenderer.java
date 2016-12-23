@@ -19,10 +19,12 @@ package de.huxhorn.lilith.swing.table.renderer;
 
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
-
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 
 public class LabelCellRenderer
 	extends JLabel

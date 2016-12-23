@@ -22,7 +22,6 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.sulky.buffers.ElementProcessor;
 import de.huxhorn.sulky.buffers.ResetOperation;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

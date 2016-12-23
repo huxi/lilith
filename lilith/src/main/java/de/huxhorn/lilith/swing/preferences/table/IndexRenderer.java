@@ -17,9 +17,9 @@
  */
 package de.huxhorn.lilith.swing.preferences.table;
 
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 

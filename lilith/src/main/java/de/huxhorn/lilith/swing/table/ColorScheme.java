@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing.table;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.Serializable;
 
 public final class ColorScheme

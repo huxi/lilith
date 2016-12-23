@@ -23,17 +23,16 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.sulky.formatting.SimpleXml;
+import java.io.File;
+import java.io.Serializable;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
-
-import java.io.File;
-import java.io.Serializable;
-import java.net.URL;
-import java.util.Locale;
 
 public class ThymeleafEventWrapperHtmlFormatter
 	extends AbstractHtmlFormatter

@@ -34,19 +34,17 @@
 
 package de.huxhorn.lilith.data.logging.logback;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ThrowableProxy;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ThrowableProxy;
+import java.util.Map;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 public class LogbackLoggingConverterTest
 	extends TestCase

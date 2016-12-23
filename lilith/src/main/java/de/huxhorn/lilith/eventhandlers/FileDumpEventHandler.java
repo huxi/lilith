@@ -23,12 +23,10 @@ import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileDumpEventHandler<T extends Serializable>
 	implements EventHandler<T>

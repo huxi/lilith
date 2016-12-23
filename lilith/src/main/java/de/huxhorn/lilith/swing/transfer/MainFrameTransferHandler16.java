@@ -18,14 +18,11 @@
 package de.huxhorn.lilith.swing.transfer;
 
 import de.huxhorn.lilith.swing.MainFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-
-import javax.swing.*;
+import javax.swing.TransferHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is handling d&amp;d as expected by 1.6.

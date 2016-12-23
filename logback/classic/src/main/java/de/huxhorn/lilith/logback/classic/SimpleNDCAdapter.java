@@ -36,7 +36,6 @@ package de.huxhorn.lilith.logback.classic;
 
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
-
 import java.util.LinkedList;
 import java.util.List;
 

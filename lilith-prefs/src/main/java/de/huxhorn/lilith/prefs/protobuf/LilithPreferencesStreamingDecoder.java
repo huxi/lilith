@@ -37,7 +37,6 @@ package de.huxhorn.lilith.prefs.protobuf;
 import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto;
 import de.huxhorn.sulky.codec.streaming.StreamingDecoder;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;

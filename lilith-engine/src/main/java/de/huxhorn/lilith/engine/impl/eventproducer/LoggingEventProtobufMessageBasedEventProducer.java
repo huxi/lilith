@@ -17,13 +17,12 @@
  */
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDecoder;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
-
 import java.io.InputStream;
 
 public class LoggingEventProtobufMessageBasedEventProducer

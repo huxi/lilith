@@ -19,27 +19,6 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
 import de.huxhorn.sulky.swing.KeyStrokes;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xhtmlrenderer.context.AWTFontResolver;
-import org.xhtmlrenderer.extend.FontResolver;
-import org.xhtmlrenderer.extend.TextRenderer;
-import org.xhtmlrenderer.layout.SharedContext;
-import org.xhtmlrenderer.simple.FSScrollPane;
-import org.xhtmlrenderer.simple.XHTMLPanel;
-import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
-import org.xhtmlrenderer.swing.LinkListener;
-import org.xhtmlrenderer.swing.SelectionHighlighter;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -52,6 +31,25 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xhtmlrenderer.context.AWTFontResolver;
+import org.xhtmlrenderer.extend.FontResolver;
+import org.xhtmlrenderer.extend.TextRenderer;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.simple.FSScrollPane;
+import org.xhtmlrenderer.simple.XHTMLPanel;
+import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
+import org.xhtmlrenderer.swing.LinkListener;
+import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 public class CheckForUpdateDialog
 	extends JDialog

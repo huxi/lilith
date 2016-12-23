@@ -34,32 +34,31 @@
 
 package de.huxhorn.lilith.idea;
 
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.SwingUtilities;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.InetAddress;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.BufferedInputStream;
-import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Set;
+import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.HashSet;
+import java.util.Set;
+import javax.swing.SwingUtilities;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *

@@ -26,14 +26,12 @@ import de.huxhorn.sulky.codec.filebuffer.IndexStrategy;
 import de.huxhorn.sulky.codec.filebuffer.SparseDataStrategy;
 import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Should only be executed on inactive files.

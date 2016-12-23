@@ -34,8 +34,6 @@
 
 package de.huxhorn.lilith.sender;
 
-import de.huxhorn.lilith.sender.WriteByteStrategy;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 

@@ -18,18 +18,18 @@
 
 package de.huxhorn.lilith.swing;
 
-import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.swing.*;
+import java.nio.charset.StandardCharsets;
+import javax.swing.JDialog;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AboutDialog
 	extends JDialog

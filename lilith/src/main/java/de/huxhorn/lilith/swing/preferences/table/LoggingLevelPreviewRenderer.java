@@ -19,11 +19,10 @@ package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.ColorScheme;
+import java.util.Map;
+import javax.swing.JTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.swing.JTable;
-import java.util.Map;
 
 public class LoggingLevelPreviewRenderer
 	extends ColorSchemePreviewRenderer

@@ -17,9 +17,11 @@
  */
 package de.huxhorn.lilith.swing.preferences;
 
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
 public class SourceCellRenderer
 	implements ListCellRenderer<Source>

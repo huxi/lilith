@@ -40,17 +40,9 @@ import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
-import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import de.huxhorn.sulky.conditions.Condition;
-
 import de.huxhorn.sulky.io.IOUtilities;
-import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
+import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.Encoder;
@@ -74,6 +66,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,6 +81,11 @@ import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ApplicationPreferences
 {

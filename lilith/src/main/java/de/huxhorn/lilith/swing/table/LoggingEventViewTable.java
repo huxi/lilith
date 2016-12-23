@@ -20,14 +20,32 @@ package de.huxhorn.lilith.swing.table;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
+import de.huxhorn.lilith.swing.table.renderer.ApplicationRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ContextRenderer;
+import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
+import de.huxhorn.lilith.swing.table.renderer.LevelRenderer;
+import de.huxhorn.lilith.swing.table.renderer.LoggerNameRenderer;
+import de.huxhorn.lilith.swing.table.renderer.MarkerRenderer;
+import de.huxhorn.lilith.swing.table.renderer.MessageRenderer;
+import de.huxhorn.lilith.swing.table.renderer.NdcRenderer;
+import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ThreadRenderer;
+import de.huxhorn.lilith.swing.table.renderer.ThrowableRenderer;
+import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
+import de.huxhorn.lilith.swing.table.tooltips.ApplicationTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.ContextTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.LoggerNameTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.MarkerTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.MessageTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.NdcTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.SourceTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.ThreadTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.ThrowableTooltipGenerator;
+import de.huxhorn.lilith.swing.table.tooltips.TimestampTooltipGenerator;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
-import de.huxhorn.lilith.swing.table.renderer.*;
-import de.huxhorn.lilith.swing.table.tooltips.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.swing.table.TableColumn;
 
 public class LoggingEventViewTable

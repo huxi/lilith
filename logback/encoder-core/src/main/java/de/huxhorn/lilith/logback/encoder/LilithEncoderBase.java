@@ -40,7 +40,6 @@ import de.huxhorn.sulky.codec.Encoder;
 import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.codec.filebuffer.MetaDataCodec;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;

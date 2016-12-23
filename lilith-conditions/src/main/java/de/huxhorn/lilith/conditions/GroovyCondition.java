@@ -18,16 +18,14 @@
 package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.sulky.conditions.Condition;
-
 import de.huxhorn.sulky.groovy.GroovyInstance;
 import groovy.lang.Binding;
 import groovy.lang.Script;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GroovyCondition
 	implements LilithCondition, SearchStringCondition

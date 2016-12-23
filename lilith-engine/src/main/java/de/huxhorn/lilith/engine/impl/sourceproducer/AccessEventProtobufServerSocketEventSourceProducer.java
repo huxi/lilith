@@ -6,7 +6,6 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.AccessEventProtobufMessageBasedEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import java.io.IOException;
 import java.io.InputStream;
 

@@ -18,12 +18,10 @@
 package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.ColorScheme;
-
+import java.util.Map;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
-import java.util.Map;
 
 public class AccessStatusTypeColumnModel
 	extends DefaultTableColumnModel

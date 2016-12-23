@@ -24,19 +24,17 @@ import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.lilith.jul.xml.LoggingEventReader;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import de.huxhorn.sulky.formatting.ReplaceInvalidXmlCharacterReader;
 import de.huxhorn.sulky.io.IOUtilities;
-import java.nio.charset.StandardCharsets;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JulXmlStreamLoggingEventProducer
 	extends AbstractEventProducer<LoggingEvent>

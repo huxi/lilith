@@ -21,8 +21,7 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class StatusCodeTooltipGenerator
 	implements TooltipGenerator

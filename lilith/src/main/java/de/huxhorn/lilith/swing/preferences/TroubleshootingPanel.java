@@ -18,13 +18,6 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.MainFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +29,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TroubleshootingPanel
 	extends JPanel

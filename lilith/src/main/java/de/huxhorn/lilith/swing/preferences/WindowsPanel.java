@@ -18,11 +18,10 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 
 public class WindowsPanel
 	extends JPanel

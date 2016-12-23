@@ -22,11 +22,9 @@ import de.huxhorn.lilith.swing.EventWrapperViewPanel;
 import de.huxhorn.lilith.swing.table.model.EventWrapperTableModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-
+import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 public class FindNextCallable<T extends Serializable>
 	extends AbstractProgressingCallable<Long>

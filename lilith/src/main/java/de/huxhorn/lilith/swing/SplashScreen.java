@@ -17,16 +17,23 @@
  */
 package de.huxhorn.lilith.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JWindow;
+import javax.swing.SwingConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SplashScreen
 	extends JWindow

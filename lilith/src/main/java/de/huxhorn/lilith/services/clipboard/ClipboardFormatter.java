@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.services.BasicFormatter;
-
 import java.io.Serializable;
 
 public interface ClipboardFormatter

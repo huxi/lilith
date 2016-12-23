@@ -15,9 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import de.huxhorn.lilith.services.clipboard.ClipboardFormatter
+
 import de.huxhorn.lilith.data.eventsource.EventWrapper
 import de.huxhorn.lilith.data.logging.LoggingEvent
+import de.huxhorn.lilith.services.clipboard.ClipboardFormatter
 
 /**
  * Copy username to the clipboard if 'username' is available in the MDC.

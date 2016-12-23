@@ -18,7 +18,6 @@
 package de.huxhorn.lilith.swing.filefilters;
 
 import de.huxhorn.lilith.engine.LogFileFactory;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Locale;

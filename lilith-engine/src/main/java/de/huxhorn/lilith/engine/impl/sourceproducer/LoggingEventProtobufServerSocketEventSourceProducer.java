@@ -1,12 +1,11 @@
 package de.huxhorn.lilith.engine.impl.sourceproducer;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventProtobufMessageBasedEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import java.io.IOException;
 import java.io.InputStream;
 

@@ -35,11 +35,9 @@
 package de.huxhorn.lilith.slf4j.impl;
 
 import de.huxhorn.lilith.slf4j.Logger;
-
-import org.slf4j.Marker;
-
 import java.io.IOException;
 import java.io.Serializable;
+import org.slf4j.Marker;
 
 /**
  * This implementation assumes that http://bugzilla.slf4j.org/show_bug.cgi?id=70 and

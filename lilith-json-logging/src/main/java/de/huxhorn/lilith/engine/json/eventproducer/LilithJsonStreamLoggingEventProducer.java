@@ -24,14 +24,12 @@ import de.huxhorn.lilith.data.logging.json.LoggingJsonDecoder;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import de.huxhorn.sulky.io.IOUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LilithJsonStreamLoggingEventProducer
 	extends AbstractEventProducer<LoggingEvent>

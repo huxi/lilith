@@ -21,12 +21,11 @@ import de.huxhorn.lilith.debug.exceptions.CauseCauseCauseException;
 import de.huxhorn.lilith.debug.exceptions.CauseCauseException;
 import de.huxhorn.lilith.debug.exceptions.CauseException;
 import de.huxhorn.lilith.debug.exceptions.SuppressedException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class LoggerEventEmitter

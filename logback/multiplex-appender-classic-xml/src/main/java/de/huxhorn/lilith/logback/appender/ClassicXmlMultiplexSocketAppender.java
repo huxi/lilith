@@ -34,10 +34,9 @@
 
 package de.huxhorn.lilith.logback.appender;
 
+import ch.qos.logback.classic.spi.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
-
-import ch.qos.logback.classic.spi.LoggingEvent;
 
 public class ClassicXmlMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>

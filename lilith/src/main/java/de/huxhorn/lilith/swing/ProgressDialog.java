@@ -17,11 +17,15 @@
  */
 package de.huxhorn.lilith.swing;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.util.concurrent.Future;
-
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JProgressBar;
 
 public class ProgressDialog
 	extends JDialog

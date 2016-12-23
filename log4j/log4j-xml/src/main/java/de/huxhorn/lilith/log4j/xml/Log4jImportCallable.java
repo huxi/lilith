@@ -40,23 +40,20 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-import org.apache.commons.io.input.CountingInputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.zip.GZIPInputStream;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import org.apache.commons.io.input.CountingInputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Log4jImportCallable
 	extends AbstractProgressingCallable<Long>

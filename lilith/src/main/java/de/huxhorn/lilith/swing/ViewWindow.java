@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.swing;
 
-import java.awt.*;
+import java.awt.Component;
 
 public interface ViewWindow
 {

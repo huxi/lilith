@@ -34,12 +34,10 @@
 
 package de.huxhorn.lilith.data.access.logback;
 
-import de.huxhorn.lilith.data.converter.Converter;
-import de.huxhorn.sulky.codec.Encoder;
-import de.huxhorn.lilith.data.eventsource.LoggerContext;
-
 import ch.qos.logback.access.spi.AccessEvent;
-
+import de.huxhorn.lilith.data.converter.Converter;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
+import de.huxhorn.sulky.codec.Encoder;
 import java.util.HashMap;
 import java.util.Map;
 

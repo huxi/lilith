@@ -37,7 +37,6 @@ package de.huxhorn.lilith.data.eventsource.xml;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.stax.GenericStreamWriter;
 import de.huxhorn.sulky.stax.StaxUtilities;
-
 import java.nio.charset.StandardCharsets;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;

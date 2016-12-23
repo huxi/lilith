@@ -35,19 +35,16 @@
 package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
+import de.huxhorn.sulky.codec.Decoder;
 import de.huxhorn.sulky.io.IOUtilities;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import de.huxhorn.sulky.codec.Decoder;
 
 public class LoggingXmlDecoder
 	implements Decoder<LoggingEvent>

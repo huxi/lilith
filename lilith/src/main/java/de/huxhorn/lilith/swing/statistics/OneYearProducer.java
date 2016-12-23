@@ -17,15 +17,13 @@
  */
 package de.huxhorn.lilith.swing.statistics;
 
-import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
+import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
 import de.huxhorn.lilith.swing.MainFrame;
-
+import java.awt.Color;
 import org.rrd4j.ConsolFun;
 import org.rrd4j.graph.RrdGraphConstants;
 import org.rrd4j.graph.RrdGraphDef;
-
-import java.awt.*;
 
 public class OneYearProducer
 	extends AbstractGraphImageProducer

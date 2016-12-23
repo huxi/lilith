@@ -18,11 +18,10 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.io.IOUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Font;
 import java.io.InputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RendererConstants
 {

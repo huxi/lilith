@@ -25,7 +25,6 @@ import de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProd
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
-
 import java.io.InputStream;
 
 public class LilithJsonMessageLoggingEventProducer

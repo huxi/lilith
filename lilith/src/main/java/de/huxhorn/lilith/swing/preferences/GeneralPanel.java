@@ -20,7 +20,6 @@ package de.huxhorn.lilith.swing.preferences;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.tray.TraySupport;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -29,7 +28,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;

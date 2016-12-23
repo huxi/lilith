@@ -22,8 +22,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public class MessageTooltipGenerator
 	implements TooltipGenerator

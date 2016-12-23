@@ -17,20 +17,18 @@
  */
 package de.huxhorn.lilith.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Rectangle;
 import java.beans.PropertyVetoException;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ViewContainerInternalFrame
 	extends JInternalFrame

@@ -39,15 +39,13 @@ import ch.qos.logback.core.status.Status;
 import ch.qos.logback.core.status.StatusManager;
 import ch.qos.logback.core.status.StatusUtil;
 import de.huxhorn.lilith.logback.tools.ContextHelper;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
-
 import java.util.Iterator;
 import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.LoggerFactory;
 
 /**
  * See also: ch.qos.logback.classic.selector.servlet.ContextDetachingSCL

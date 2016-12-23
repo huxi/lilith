@@ -19,12 +19,11 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.KeyStroke;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.KeyStroke;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LilithKeyStrokes
 {

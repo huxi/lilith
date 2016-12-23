@@ -19,7 +19,6 @@ package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;

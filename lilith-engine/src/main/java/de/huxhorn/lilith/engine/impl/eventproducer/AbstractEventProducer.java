@@ -21,11 +21,9 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
+import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 public abstract class AbstractEventProducer<T extends Serializable>
 	implements EventProducer<T>

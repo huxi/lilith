@@ -22,19 +22,17 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.MainFrame;
 import de.huxhorn.lilith.swing.ViewActions;
-
-import org.rrd4j.graph.RrdGraph;
-import org.rrd4j.graph.RrdGraphDef;
-import org.rrd4j.graph.RrdGraphInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Map;
+import org.rrd4j.graph.RrdGraph;
+import org.rrd4j.graph.RrdGraphDef;
+import org.rrd4j.graph.RrdGraphInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractGraphImageProducer
 	implements GraphImageProducer

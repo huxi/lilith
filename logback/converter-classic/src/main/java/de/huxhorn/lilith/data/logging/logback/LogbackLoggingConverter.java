@@ -34,7 +34,13 @@
 
 package de.huxhorn.lilith.data.logging.logback;
 
+import ch.qos.logback.classic.spi.ClassPackagingData;
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.LoggerContextVO;
+import ch.qos.logback.classic.spi.StackTraceElementProxy;
+import ch.qos.logback.classic.spi.ThrowableProxy;
 import de.huxhorn.lilith.data.converter.Converter;
+import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Marker;
@@ -42,14 +48,6 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.MessageFormatter;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import de.huxhorn.lilith.data.eventsource.LoggerContext;
-
-import ch.qos.logback.classic.spi.ClassPackagingData;
-import ch.qos.logback.classic.spi.IThrowableProxy;
-import ch.qos.logback.classic.spi.LoggerContextVO;
-import ch.qos.logback.classic.spi.StackTraceElementProxy;
-import ch.qos.logback.classic.spi.ThrowableProxy;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;

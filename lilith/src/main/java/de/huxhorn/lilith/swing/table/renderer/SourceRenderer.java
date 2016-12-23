@@ -21,12 +21,11 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
-
+import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
 
 public class SourceRenderer
 	implements TableCellRenderer

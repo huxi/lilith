@@ -24,7 +24,6 @@ import de.huxhorn.lilith.data.access.protobuf.CompressingAccessEventWrapperProto
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.codec.Codec;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
-
 import java.util.Map;
 
 public class AccessFileBufferFactory

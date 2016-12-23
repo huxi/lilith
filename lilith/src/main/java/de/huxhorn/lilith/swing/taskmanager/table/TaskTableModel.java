@@ -22,20 +22,17 @@ import de.huxhorn.sulky.swing.RowBasedTableModel;
 import de.huxhorn.sulky.tasks.Task;
 import de.huxhorn.sulky.tasks.TaskListener;
 import de.huxhorn.sulky.tasks.TaskManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TaskTableModel<T>
 	implements RowBasedTableModel<Task<T>>

@@ -35,7 +35,6 @@
 package de.huxhorn.lilith.sender;
 
 import de.huxhorn.sulky.io.IOUtilities;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

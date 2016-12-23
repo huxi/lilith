@@ -24,10 +24,6 @@ import de.huxhorn.lilith.swing.preferences.table.ConditionTableColumnModel;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableModel;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.swing.Windows;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -35,7 +31,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -50,6 +45,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConditionsPanel
 	extends JPanel

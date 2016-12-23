@@ -18,12 +18,11 @@
 package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
-
+import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import java.awt.Component;
 
 public class ConditionNameRenderer
 	implements TableCellRenderer

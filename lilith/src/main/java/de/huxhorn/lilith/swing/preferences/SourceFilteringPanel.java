@@ -18,18 +18,22 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.prefs.LilithPreferences;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Collections;
 import java.util.List;
-
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SourceFilteringPanel
 	extends JPanel

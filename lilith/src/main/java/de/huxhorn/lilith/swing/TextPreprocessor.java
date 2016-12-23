@@ -24,7 +24,6 @@ import de.huxhorn.sulky.conditions.ConditionWrapper;
 import de.huxhorn.sulky.conditions.Not;
 import de.huxhorn.sulky.conditions.Or;
 import de.huxhorn.sulky.formatting.SimpleXml;
-
 import java.util.List;
 
 public class TextPreprocessor

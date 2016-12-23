@@ -17,9 +17,11 @@
  */
 package de.huxhorn.lilith.swing;
 
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import javax.swing.Icon;
 
 public class ColorIcon
 	implements Icon

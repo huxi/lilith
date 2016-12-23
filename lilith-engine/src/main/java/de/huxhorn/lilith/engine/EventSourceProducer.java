@@ -19,7 +19,6 @@ package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.buffers.AppendOperation;
-
 import java.io.Serializable;
 
 public interface EventSourceProducer<T extends Serializable>

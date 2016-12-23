@@ -20,9 +20,6 @@ package de.huxhorn.lilith.cli;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Parameters(commandDescription = "Filter the given file.")
 public class Filter
 {

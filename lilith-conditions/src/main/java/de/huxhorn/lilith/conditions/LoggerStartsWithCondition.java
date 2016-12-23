@@ -19,7 +19,6 @@ package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 

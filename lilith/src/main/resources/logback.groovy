@@ -2,7 +2,6 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.classic.net.SocketAppender
 import ch.qos.logback.core.ConsoleAppender
 import ch.qos.logback.core.util.Duration
-
 import de.huxhorn.lilith.appender.InternalLilithAppender
 import de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender
 import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender

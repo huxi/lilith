@@ -22,7 +22,6 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
 import de.huxhorn.sulky.codec.SerializableDecoder;
-
 import java.io.InputStream;
 import java.io.Serializable;
 

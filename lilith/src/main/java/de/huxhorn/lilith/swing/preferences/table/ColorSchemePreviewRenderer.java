@@ -19,10 +19,11 @@ package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.renderer.ConditionalBorder;
-
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 public abstract class ColorSchemePreviewRenderer

@@ -24,10 +24,6 @@ import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.lilith.engine.impl.EventSourceImpl;
 import de.huxhorn.sulky.buffers.FileBuffer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileSplitterEventHandler<T extends Serializable>
 	implements EventHandler<T>

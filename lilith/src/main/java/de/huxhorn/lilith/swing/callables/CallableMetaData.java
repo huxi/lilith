@@ -25,7 +25,6 @@ import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import de.huxhorn.sulky.buffers.filtering.FilteringBuffer;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;

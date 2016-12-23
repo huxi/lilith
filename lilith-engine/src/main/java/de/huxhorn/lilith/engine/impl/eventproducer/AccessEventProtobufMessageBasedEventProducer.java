@@ -23,7 +23,6 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
-
 import java.io.InputStream;
 
 public class AccessEventProtobufMessageBasedEventProducer

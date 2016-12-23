@@ -19,19 +19,18 @@ package de.huxhorn.lilith.swing.transfer;
 
 import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.swing.MainFrame;
-
-import java.util.Locale;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import javax.swing.*;
+import java.util.Locale;
+import javax.swing.JComponent;
+import javax.swing.JDesktopPane;
+import javax.swing.TransferHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class implements d&amp;d of files.

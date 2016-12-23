@@ -35,17 +35,15 @@
 package de.huxhorn.lilith.data.logging.xml;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-
+import de.huxhorn.sulky.codec.Encoder;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPOutputStream;
-
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import de.huxhorn.sulky.codec.Encoder;
 
 public class LoggingXmlEncoder
 	implements Encoder<LoggingEvent>

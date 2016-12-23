@@ -35,7 +35,6 @@
 package de.huxhorn.lilith.data.logging;
 
 import de.huxhorn.sulky.formatting.SafeString;
-
 import java.util.Arrays;
 
 /**

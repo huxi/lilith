@@ -19,18 +19,21 @@ package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.preferences.table.ConditionPreviewRenderer;
 import de.huxhorn.lilith.swing.table.ColorScheme;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import javax.swing.JColorChooser;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ColorSchemeEditorPanel
 	extends JPanel

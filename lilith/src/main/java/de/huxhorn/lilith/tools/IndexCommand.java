@@ -19,12 +19,11 @@ package de.huxhorn.lilith.tools;
 
 import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IndexCommand
 {

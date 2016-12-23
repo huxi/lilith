@@ -18,15 +18,12 @@
 package de.huxhorn.lilith.swing.taskmanager;
 
 import de.huxhorn.lilith.swing.MainFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.GridLayout;
+import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TaskManagerInternalFrame
 	extends JInternalFrame

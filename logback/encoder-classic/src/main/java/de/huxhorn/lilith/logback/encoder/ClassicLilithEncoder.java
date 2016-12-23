@@ -37,7 +37,6 @@ package de.huxhorn.lilith.logback.encoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.recovery.ResilientFileOutputStream;
 import de.huxhorn.lilith.api.FileConstants;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;

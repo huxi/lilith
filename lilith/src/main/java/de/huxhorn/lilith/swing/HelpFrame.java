@@ -18,7 +18,22 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
-
+import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.net.URL;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPopupMenu;
+import javax.swing.KeyStroke;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.context.AWTFontResolver;
@@ -30,23 +45,6 @@ import org.xhtmlrenderer.simple.XHTMLPanel;
 import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.net.URL;
-import java.util.List;
 
 public class HelpFrame
 	extends JFrame

@@ -21,7 +21,6 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.conditions.Condition;
-
 import java.io.Serializable;
 
 public interface EventSource<T extends Serializable>

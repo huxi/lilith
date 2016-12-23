@@ -19,14 +19,13 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.engine.EventSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class ViewManager<T extends Serializable>
 {

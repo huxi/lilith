@@ -23,12 +23,11 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
-
-import javax.swing.JTable;
 import java.time.Instant;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import javax.swing.JTable;
 
 public class ContextTooltipGenerator
 	implements TooltipGenerator
