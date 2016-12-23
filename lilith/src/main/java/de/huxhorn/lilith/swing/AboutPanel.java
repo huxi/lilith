@@ -442,7 +442,7 @@ public class AboutPanel
 			lines.add(prevToken);
 		}
 
-		String loScrollLines[] = new String[lines.size()];
+		String[] loScrollLines = new String[lines.size()];
 		loScrollLines = lines.toArray(loScrollLines);
 		setScrollLines(loScrollLines);
 	}
