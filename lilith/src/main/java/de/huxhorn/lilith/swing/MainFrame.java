@@ -2527,7 +2527,7 @@ public class MainFrame
 	private static final String[] MAC_OPEN_URL_ARRAY =
 		{
 			"open",
-			null
+			null,
 		};
 
 	private static final String[] WINDOWS_OPEN_URL_ARRAY =
@@ -2535,7 +2535,7 @@ public class MainFrame
 			"cmd",
 			"/C",
 			"start",
-			null
+			null,
 		};
 
 	private static String[] resolveOpenCommandArray(String value)

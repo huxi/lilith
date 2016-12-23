@@ -79,7 +79,7 @@ public class LogbackShutdownServletContextListener
 		{
 			"INFO : ",
 			"WARN : ",
-			"ERROR: "
+			"ERROR: ",
 		};
 
 	private void shutdownLogback()

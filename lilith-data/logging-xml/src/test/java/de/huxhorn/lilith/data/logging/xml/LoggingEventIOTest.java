@@ -249,7 +249,7 @@ public class LoggingEventIOTest
 		LoggingEvent event = createMinimalEvent();
 		Message[] ndc = new Message[]{
 			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
-			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"})
+			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}),
 		};
 		event.setNdc(ndc);
 		check(event, true);
@@ -346,7 +346,7 @@ public class LoggingEventIOTest
 
 		Message[] ndc = new Message[]{
 			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
-			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"})
+			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}),
 		};
 		event.setNdc(ndc);
 
@@ -393,7 +393,7 @@ public class LoggingEventIOTest
 
 		Message[] ndc = new Message[]{
 			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
-			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"})
+			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}),
 		};
 		event.setNdc(ndc);
 

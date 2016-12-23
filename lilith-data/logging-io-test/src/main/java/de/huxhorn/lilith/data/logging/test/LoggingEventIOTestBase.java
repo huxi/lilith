@@ -169,7 +169,7 @@ public abstract class LoggingEventIOTestBase
 		LoggingEvent event = createMinimalEvent();
 		Message[] ndc = new Message[]{
 			new Message("message"),
-			new Message("messagePattern {}", new String[]{"foo"})
+			new Message("messagePattern {}", new String[]{"foo"}),
 		};
 		event.setNdc(ndc);
 		check(event);
@@ -274,7 +274,7 @@ public abstract class LoggingEventIOTestBase
 
 		Message[] ndc = new Message[]{
 			new Message("message"),
-			new Message("messagePattern {}", new String[]{"foo"})
+			new Message("messagePattern {}", new String[]{"foo"}),
 		};
 		event.setNdc(ndc);
 

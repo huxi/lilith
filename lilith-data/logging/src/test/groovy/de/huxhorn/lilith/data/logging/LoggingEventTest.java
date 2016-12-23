@@ -315,7 +315,8 @@ public class LoggingEventTest
 		LoggingEvent instance = new LoggingEvent();
 
 		Message[] value = new Message[]{
-			new Message("pattern", new String[]{"foo", "bar"})};
+			new Message("pattern", new String[]{"foo", "bar"}),
+		};
 
 		instance.setNdc(value);
 

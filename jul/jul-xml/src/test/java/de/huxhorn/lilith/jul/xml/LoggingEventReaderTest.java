@@ -141,7 +141,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}
@@ -229,7 +229,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}
@@ -317,7 +317,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}
@@ -408,7 +408,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", "execute", null, -1),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}

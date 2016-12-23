@@ -134,7 +134,7 @@ public class LoggingEventReaderTest
 			Message[] expectedNdc = new Message[]
 				{
 					new Message("NDC1"),
-					new Message("NDC2")
+					new Message("NDC2"),
 				};
 			assertArrayEquals(expectedNdc, readEvent.getNdc());
 		}
@@ -143,7 +143,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 18)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 18),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}
@@ -239,7 +239,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 37)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 37),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}
@@ -331,7 +331,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 29)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 29),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}
@@ -436,7 +436,7 @@ public class LoggingEventReaderTest
 		{
 			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
 				{
-					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 29)
+					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 29),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
 		}

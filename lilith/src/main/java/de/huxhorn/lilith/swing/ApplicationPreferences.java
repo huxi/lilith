@@ -204,8 +204,13 @@ public class ApplicationPreferences
 	};
 
 	private static final String[] LEVEL_VALUES = {
-			"TRACE", "DEBUG", "INFO", "WARN", "ERROR"
+			"TRACE",
+			"DEBUG",
+			"INFO",
+			"WARN",
+			"ERROR",
 	};
+
 	private String[] clipboardFormatterScriptFiles;
 	private long lastClipboardFormatterCheck;
 

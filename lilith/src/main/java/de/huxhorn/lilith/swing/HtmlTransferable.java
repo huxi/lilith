@@ -44,7 +44,7 @@ class HtmlTransferable
 		{
 			XHTML_FLAVOR,
 			//HTML_FLAVOR,
-			PLAIN_TEXT_FLAVOR
+			PLAIN_TEXT_FLAVOR,
 		};
 
 	private String html;

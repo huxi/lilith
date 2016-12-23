@@ -57,14 +57,14 @@ public class TaskTableModel<T>
 		{
 			Long.class,
 			String.class,
-			Integer.class
+			Integer.class,
 		};
 
 	private static final String[] COLUMN_NAMES =
 		{
 			"ID",
 			"Name",
-			"Progress"
+			"Progress",
 		};
 
 	private TaskManager<T> taskManager;

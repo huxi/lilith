@@ -638,7 +638,7 @@ public class Lilith
 			{
 					"INFO : ",
 					"WARN : ",
-					"ERROR: "
+					"ERROR: ",
 			};
 
 	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})

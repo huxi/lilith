@@ -128,7 +128,7 @@ public class LoggingEventReader
 			{
 				ExtendedStackTraceElement[] callStack = new ExtendedStackTraceElement[]
 					{
-						new ExtendedStackTraceElement(classStr, methodStr, null, -1)
+						new ExtendedStackTraceElement(classStr, methodStr, null, -1),
 					};
 				result.setCallStack(callStack);
 			}
