@@ -63,7 +63,6 @@ class HtmlTransferable
 		}
 		catch(IOException e)
 		{
-// TODO: change body of catch statement
 			e.printStackTrace();
 		}
 		data = bos.toByteArray();

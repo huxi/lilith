@@ -57,7 +57,6 @@ public class AccessEventViewTable
 	public static final String DEFAULT_COLUMN_NAME_PROTOCOL = "Protocol";
 	public static final String DEFAULT_COLUMN_NAME_REMOTE_ADDR = "Remote Address";
 	public static final String DEFAULT_COLUMN_NAME_APPLICATIION = "Application";
-	//public static final String DEFAULT_COLUMN_NAME_CONTEXT = "Context";
 	public static final String DEFAULT_COLUMN_NAME_SOURCE = "Source";
 
 	public AccessEventViewTable(MainFrame mainFrame, EventWrapperTableModel<AccessEvent> model, boolean global)
@@ -76,8 +75,6 @@ public class AccessEventViewTable
 			new StatusCodeTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATIION,
 			new ApplicationTooltipGenerator());
-//		tooltipGenerators.put(DEFAULT_COLUMN_NAME_CONTEXT,
-//			new ContextTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_ELAPSED_TIME,
 			new ElapsedTimeTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_SOURCE,
@@ -135,14 +132,6 @@ public class AccessEventViewTable
 			col.setCellRenderer(new ApplicationRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
 		}
-/*
-		{
-			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_CONTEXT);
-			col.setCellRenderer(new ContextRenderer());
-			tableColumns.put(col.getHeaderValue(), col);
-		}
-*/
 		{
 			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_ELAPSED_TIME);
@@ -171,7 +160,6 @@ public class AccessEventViewTable
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REQUEST_URI, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REMOTE_ADDR, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATIION, 75, true));
-//		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_CONTEXT, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_ELAPSED_TIME, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_SOURCE, 75, isGlobal()));
 

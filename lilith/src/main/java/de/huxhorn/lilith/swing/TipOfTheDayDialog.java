@@ -252,11 +252,6 @@ public class TipOfTheDayDialog
 		if(logger.isInfoEnabled()) logger.info("Found {} Tips of the Day.", tipsOfTheDay.size());
 	}
 
-//	public void copySelection()
-//	{
-//		copyAction.actionPerformed(null);
-//	}
-
 	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
 	{
 		showTipOfTheDayCheckbox.setSelected(showingTipOfTheDay);

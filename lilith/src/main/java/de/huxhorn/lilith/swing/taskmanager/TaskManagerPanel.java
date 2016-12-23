@@ -93,11 +93,6 @@ public class TaskManagerPanel<T>
 		table.setPaused(paused);
 	}
 
-//	public boolean isPaused()
-//	{
-//		return table.isPaused();
-//	}
-
 	private class TaskSelectionListener
 		implements ListSelectionListener
 	{

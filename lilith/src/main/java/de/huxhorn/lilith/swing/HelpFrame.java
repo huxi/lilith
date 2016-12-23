@@ -53,7 +53,6 @@ public class HelpFrame
 
 	private final Logger logger = LoggerFactory.getLogger(HelpFrame.class);
 
-	//private EnhancedXHTMLPanel helpPane;
 	private XHTMLPanel helpPane;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private MainFrame mainFrame;
@@ -202,18 +201,7 @@ public class HelpFrame
 		helpUrl= HELP_BASE_URL.toExternalForm()+"/"+helpUrl;
 		if(logger.isDebugEnabled()) logger.debug("Final helpUrl: {}", helpUrl);
 		helpPane.setDocument(helpUrl, xhtmlNamespaceHandler);
-//		helpPane.setDocumentRelative(helpUrl);
-//		helpPane.relayout();
-//		int hashIndex=helpUrl.indexOf('#');
-//		if(hashIndex > -1)
-//		{
-//			helpUrl=helpUrl.substring(hashIndex);
-//			if(logger.isInfoEnabled()) logger.info("Jumping to anchor: '{}'", helpUrl);
-//			helpPane.setDocumentRelative(helpUrl);
-//		}
 		// TODO: jump to anchor. How can I do this??
-		//helpPane.setText(helpText);
-		//helpPane.setCaretPosition(0);
 	}
 
 	private class CopySelectionAction

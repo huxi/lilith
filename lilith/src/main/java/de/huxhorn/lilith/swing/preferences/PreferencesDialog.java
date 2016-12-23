@@ -645,8 +645,6 @@ public class PreferencesDialog
 		console.setDirty(false);
 		inputArea.setCaretPosition(0);
 		inputArea.requestFocusInWindow();
-//		console.selectFilename();
-//		console.fileOpen();
 	}
 
 

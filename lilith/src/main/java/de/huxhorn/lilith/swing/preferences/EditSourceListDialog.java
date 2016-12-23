@@ -60,7 +60,6 @@ public class EditSourceListDialog
 
 	private final Logger logger = LoggerFactory.getLogger(EditSourceListDialog.class);
 
-//	private boolean adding;
 	private boolean canceled;
 	private JTextField sourceListName;
 	private JList<Source> sourceList;
@@ -182,7 +181,6 @@ public class EditSourceListDialog
 
 	public void setAdding(boolean adding)
 	{
-//		this.adding = adding;
 		if(adding)
 		{
 			setTitle("Add a source list...");
@@ -224,11 +222,6 @@ public class EditSourceListDialog
 		addSourceAction.update();
 		removeSourceAction.update();
 	}
-
-//	public boolean isAdding()
-//	{
-//		return adding;
-//	}
 
 	public boolean isCanceled()
 	{

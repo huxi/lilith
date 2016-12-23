@@ -114,13 +114,13 @@ public class LogbackLoggingConverter
 		{
 			return null;
 		}
-/* CHECK: java.lang.IllegalStateException: Packaging data has been already set
-        if(calculatePackagingData && ti instanceof ThrowableProxy)
-        {
-            ThrowableProxy tp= (ThrowableProxy) ti;
-            tp.calculatePackagingData();
-        }
-*/
+		/* CHECK: java.lang.IllegalStateException: Packaging data has been already set
+		if(calculatePackagingData && ti instanceof ThrowableProxy)
+		{
+		    ThrowableProxy tp= (ThrowableProxy) ti;
+		    tp.calculatePackagingData();
+		}
+		*/
 		ThrowableInfo result = new ThrowableInfo();
 		result.setName(ti.getClassName());
 		result.setOmittedElements(ti.getCommonFrames());

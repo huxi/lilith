@@ -45,12 +45,12 @@ public class LoggingEventXmlFormatter
 		return null;
 	}
 
-//	Not performing this hardcore check for the sake of performance.
-//	@Override
-//	public boolean isCompatible(Object object)
-//	{
-//		return toString(object) != null;
-//	}
+	//Not performing this hardcore check for the sake of performance.
+	//@Override
+	//public boolean isCompatible(Object object)
+	//{
+	//	return toString(object) != null;
+	//}
 
 	public boolean isNative()
 	{

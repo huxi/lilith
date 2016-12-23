@@ -115,14 +115,9 @@ public class AboutPanel
 
 	//private static final int SCROLL_SLEEP_TIME = 50;
 	private static final int SCROLL_PIXELS = 1;
-	//private static final int SCROLL_THREAD_PRIORITY = Thread.NORM_PRIORITY+1;
-
-	//private final ResourceSupport resourceSupport;
 
 	private BufferedImage backgroundImage;
 	private BufferedImage aboutImage;
-	//private ImageIcon backgroundImageIcon;
-	//private ImageIcon aboutImageIcon;
 	private FontMetrics fontMetrics;
 
 	private Insets insets;
@@ -145,16 +140,9 @@ public class AboutPanel
 	private BufferedImage offscreenImage;
 	private BufferedImage scrollImage;
 	private boolean scrolling;
-	//private boolean offscreenInitialized = false;
-	//private boolean scrollInitialized = false;
-	//private boolean painted;
 	private int mouseEventHandling = MOUSE_BACKGROUND;
-	//private transient Thread scrollThread;
 	private boolean debug;
 	private Timer timer;
-	//private String scrollText;
-	//private Map textBundleMap;
-	//private int mouseEventHandling=MOUSE_DISABLED;
 
 	/**
 	 * Creates a new <code>AboutPanel</code> initialized with the given parameters.
@@ -259,118 +247,8 @@ public class AboutPanel
 		addMouseListener(mouseInputListener);
 		addMouseMotionListener(mouseInputListener);
 
-		//this.scrollThread=null;
-
 		setScrolling(false);
-//		initResources();
 	}
-
-
-//	protected void initResources()
-//	{
-//		initTextBundleMap();
-//
-//		//URL backgroundImageUrl=resourceSupport.getResource(BACKGROUND_IMAGE_RESOURCE);
-//		//URL imageUrl=resourceSupport.getResource(ABOUT_IMAGE_RESOURCE);
-//		//scrollText=getTextResource(SCROLL_TEXT_RESOURCE, null);
-//		versionText=getTextResource(VERSION_TEXT_RESOURCE, null);
-//		int versionHeight=-1;
-//		try
-//		{
-//			versionHeight=Integer.parseInt(getTextResource(VERSION_HEIGHT_RESOURCE, "-1"));
-//		}
-//		catch(NumberFormatException ex)
-//		{
-//			if(logger.isWarnEnabled()) logger.warn("Illegal integer value!", ex);
-//		}
-//
-//		Rectangle scrollArea=new Rectangle(-1, -1, -1, -1);
-//		try
-//		{
-//			scrollArea.x=Integer.parseInt(getTextResource(SCROLL_AREA_X_RESOURCE, "-1"));
-//		}
-//		catch(NumberFormatException ex)
-//		{
-//			if(logger.isWarnEnabled()) logger.warn("Illegal integer value!", ex);
-//		}
-//		try
-//		{
-//			scrollArea.y=Integer.parseInt(getTextResource(SCROLL_AREA_Y_RESOURCE, "-1"));
-//		}
-//		catch(NumberFormatException ex)
-//		{
-//			if(logger.isWarnEnabled()) logger.warn("Illegal integer value!", ex);
-//		}
-//		try
-//		{
-//			scrollArea.width=Integer.parseInt(getTextResource(SCROLL_AREA_WIDTH_RESOURCE, "-1"));
-//		}
-//		catch(NumberFormatException ex)
-//		{
-//			if(logger.isWarnEnabled()) logger.warn("Illegal integer value!", ex);
-//		}
-//		try
-//		{
-//			scrollArea.height=Integer.parseInt(getTextResource(SCROLL_AREA_HEIGHT_RESOURCE, "-1"));
-//		}
-//		catch(NumberFormatException ex)
-//		{
-//			if(logger.isWarnEnabled()) logger.warn("Illegal integer value!", ex);
-//		}
-//		if(	scrollArea.x == -1 ||
-//			scrollArea.y == -1 ||
-//			scrollArea.width == -1 ||
-//			scrollArea.height == -1 )
-//		{
-//			// ignore if scroll-area isn't fully specified
-//			scrollArea = null;
-//		}
-//		init(backgroundImageUrl, scrollArea, scrollText, imageUrl, versionText, versionHeight );
-//		//setScrollAreaToolTipText(getTextResource(SCROLL_AREA_TOOLTIP_TEXT_RESOURCE, null));
-//	}
-
-//	protected void initTextBundleMap()
-//	{
-//		textBundleMap=resourceSupport.getResourceMap(TEXT_RESOURCE_BUNDLE_RESOURCE, getLocale());
-//		if(logger.isDebugEnabled() && textBundleMap!=null)
-//		{
-//			StringBuffer buffer=new StringBuffer();
-//
-//			Iterator iter=textBundleMap.keySet().iterator();
-//			while(iter.hasNext())
-//			{
-//				Object key=iter.next();
-//				Object value=textBundleMap.get(key);
-//				buffer.append("Key: ");
-//				buffer.append(key);
-//				buffer.append("    Value: ");
-//				buffer.append(value);
-//				buffer.append("\n");
-//
-//			}
-//			logger.debug("BundleMap \""+TEXT_RESOURCE_BUNDLE_RESOURCE+"\" of class "+getClass().getName()+":\n"+buffer.toString());
-//		}
-//		if(logger.isInfoEnabled() && textBundleMap==null)
-//		{
-//			logger.info("Couldn't find BundleMap \""+TEXT_RESOURCE_BUNDLE_RESOURCE+"\" of class "+getClass().getName()+".");
-//		}
-//	}
-
-//	protected String getTextResource(final String resourceName, final String defaultValue)
-//	{
-//		String result=null;
-//		if(textBundleMap!=null)
-//		{
-//			result=(String)textBundleMap.get(resourceName);
-//		}
-//		if(result==null)
-//		{
-//			result=defaultValue;
-//			if(logger.isDebugEnabled()) logger.debug("Using default-value '{}' for text-resource '{}'.", defaultValue, resourceName);
-//		}
-//
-//		return result;
-//	}
 
 	private void init(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight)
 		throws IOException
@@ -385,25 +263,8 @@ public class AboutPanel
 		setScrollText(scrollText);
 	}
 
-	/*
-	protected synchronized boolean isPainted()
-	{
-		return painted;
-	}
-
-	protected synchronized void setPainted(boolean painted)
-	{
-		if(this.painted!=painted)
-		{
-			this.painted=painted;
-			notifyAll();
-		}
-	}
-    */
-
 	private void initAttributes()
 	{
-		//setPainted(true);
 		preferredSize = new Dimension();
 		offscreenOffset = new Point();
 		backgroundImageArea = new Rectangle();
@@ -1003,41 +864,6 @@ public class AboutPanel
 	}
 
 
-	/*
-	FontRenderContext frc = g2.getFontRenderContext();
-        Font f = new Font("sansserif",Font.PLAIN,w/8);
-        Font f1 = new Font("sansserif",Font.ITALIC,w/8);
-        String s = "AttributedString";
-        AttributedString as = new AttributedString(s);
-
-
-        // applies the TextAttribute.Font attribute to the AttributedString
-        // with the range 0 to 10, which encompasses the letters 'A' through
-        // 'd' of the String "AttributedString"
-        as.addAttribute(TextAttribute.FONT, f, 0, 10 );
-
-        // applies the TextAttribute.Font attribute to the AttributedString
-        // with the range 10 to the length of the String s, which encompasses
-        // the letters 'S' through 'g' of String "AttributedString"
-        as.addAttribute(TextAttribute.FONT, f1, 10, s.length() );
-
-        AttributedCharacterIterator aci = as.getIterator();
-
-        // creates a TextLayout from the AttributedCharacterIterator
-        TextLayout tl = new TextLayout (aci, frc);
-        float sw = (float) tl.getBounds().getWidth();
-        float sh = (float) tl.getBounds().getHeight();
-
-        // creates an outline shape from the TextLayout and centers it
-        // with respect to the width of the surface
-        Shape sha = tl.getOutline(AffineTransform.getTranslateInstance(w/2-sw/2, h*0.2+sh/2));
-        g2.setColor(Color.blue);
-        g2.setStroke(new BasicStroke(1.5f));
-        g2.draw(sha);
-        g2.setColor(Color.magenta);
-        g2.fill(sha);
-	*/
-
 	/**
 	 * Paints this component.
 	 *
@@ -1051,14 +877,13 @@ public class AboutPanel
 
 		// we need to create a copy of the given graphics since we
 		// change the clip. Otherwise the border wouldn't be painted
-		// propertly (not at all in this case).
+		// properly (not at all in this case).
 		Graphics2D graphics2D = (Graphics2D) graphics.create();
 
 		graphics2D.setClip(paintArea.x, paintArea.y, paintArea.width, paintArea.height);
 
 		graphics2D.drawImage(offscreenImage, paintArea.x + offscreenOffset.x, paintArea.y + offscreenOffset.y, this);
 		graphics2D.dispose();
-		//setPainted(true);
 	}
 
 
@@ -1259,10 +1084,6 @@ public class AboutPanel
 			{
 				flushScrollImage();
 			}
-//			else if ( propertyName.equals( "locale" ) )
-//			{
-//				initResources();
-//			}
 		}
 	}
 
@@ -1358,7 +1179,6 @@ public class AboutPanel
 		}
 	}
 
-
 	private class TimerActionListener
 		implements ActionListener
 	{
@@ -1379,315 +1199,5 @@ public class AboutPanel
 			}
 		}
 	}
-
-//	public static class Example
-//	{
-//		private JFrame dummyFrame;
-//		private JDialog dialog;
-//
-//		private AboutPanel theAboutPanel;
-//		private static JFileChooser chooser=new JFileChooser(new File("."));
-//
-//		abstract class SelectionAction extends AbstractAction
-//		{
-//			protected SelectionAction(String name)
-//			{
-//				super(name);
-//			}
-//
-//			public abstract void setImage(URL url);
-//
-//			public void actionPerformed(ActionEvent evt)
-//			{
-//				int returnVal = chooser.showOpenDialog(dialog);
-//				if(returnVal == JFileChooser.APPROVE_OPTION)
-//				{
-//					File file = chooser.getSelectedFile();
-//					System.out.println("You chose to open this file: " + file.getName());
-//					try
-//					{
-//						setImage(file.toURL());
-//						AboutPanel.Example.this.theAboutPanel.setScrollArea(null);
-//						dialog.pack();
-//					}
-//					catch(Exception loEx)
-//					{
-//						System.out.println(loEx);
-//					}
-//				}
-//			}
-//		}
-//
-//		class ImageSelectionAction extends SelectionAction
-//		{
-//			ImageSelectionAction()
-//			{
-//				super("Select image");
-//			}
-//
-//			public void setImage(URL url)
-//			{
-//				AboutPanel.Example.this.theAboutPanel.setAboutImage(url);
-//			}
-//		}
-//
-//		class BackgroundImageSelectionAction extends SelectionAction
-//		{
-//			BackgroundImageSelectionAction()
-//			{
-//				super("Select background-image");
-//			}
-//
-//			public void setImage(URL url)
-//			{
-//				AboutPanel.Example.this.theAboutPanel.setBackgroundImage(url);
-//			}
-//		}
-//
-//		class CloseAction extends AbstractAction
-//		{
-//			CloseAction()
-//			{
-//				super("Close");
-//			}
-//
-//			public void actionPerformed( ActionEvent evt )
-//			{
-//				dialog.dispose();
-//			}
-//		}
-//
-//		class FontSizeAction extends AbstractAction
-//		{
-//			int fontChange;
-//
-//
-//			public FontSizeAction( String name, int FontChange )
-//			{
-//				super(name);
-//				fontChange = FontChange;
-//			}
-//
-//
-//			public void actionPerformed( java.awt.event.ActionEvent evt )
-//			{
-//				Font loFont = AboutPanel.Example.this.theAboutPanel.getFont();
-//				float loSize = loFont.getSize2D() + fontChange;
-//
-//				AboutPanel.Example.this.theAboutPanel.setFont( loFont.deriveFont( loSize ) );
-//			}
-//		}
-//
-//		abstract class ChooseColorAction extends AbstractAction
-//		{
-//			private JColorChooser chooser;
-//			private String chooserTitle;
-//
-//			public ChooseColorAction( String name)//, String chooserTitle)
-//			{
-//				super(name);
-//				chooserTitle=name;
-//				chooser=new JColorChooser();
-////			this.chooserTitle=chooserTitle;
-//			}
-//
-//
-//			public void actionPerformed( java.awt.event.ActionEvent evt )
-//			{
-//				Color c=chooser.showDialog(dialog, chooserTitle, getSelectColor());
-//				if(c!=null)
-//				{
-//					setSelectColor(c);
-//				}
-//			}
-//
-//			public abstract Color getSelectColor();
-//			public abstract void setSelectColor(Color c);
-//		}
-//
-//		class ChooseBackgroundColorAction extends ChooseColorAction
-//		{
-//			public ChooseBackgroundColorAction()
-//			{
-//				super("Choose background-color");
-//			}
-//
-//			public Color getSelectColor()
-//			{
-//				return AboutPanel.Example.this.theAboutPanel.getBackground();
-//			}
-//
-//			public void setSelectColor(Color c)
-//			{
-//				AboutPanel.Example.this.theAboutPanel.setBackground(c);
-//			}
-//		}
-//
-//		class ChooseTextColorAction extends ChooseColorAction
-//		{
-//			public ChooseTextColorAction()
-//			{
-//				super("Choose text-color");
-//			}
-//
-//			public Color getSelectColor()
-//			{
-//				return AboutPanel.Example.this.theAboutPanel.getForeground();
-//			}
-//
-//			public void setSelectColor(Color c)
-//			{
-//				AboutPanel.Example.this.theAboutPanel.setForeground(c);
-//			}
-//		}
-//
-//		class ResetAction extends AbstractAction
-//		{
-//			public ResetAction()
-//			{
-//				super("Reset dialog");
-//			}
-//
-//			public void actionPerformed(ActionEvent evt)
-//			{
-//				AboutPanel panel = AboutPanel.Example.this.theAboutPanel;
-////				panel.initResources();
-//				dialog.pack();
-//			}
-//		}
-//
-//		class PackAction extends AbstractAction
-//		{
-//			public PackAction()
-//			{
-//				super("Pack dialog");
-//			}
-//
-//			public void actionPerformed(ActionEvent evt)
-//			{
-//				dialog.pack();
-//			}
-//		}
-//
-//		class ShowDialogAction extends AbstractAction
-//		{
-//			public ShowDialogAction()
-//			{
-//				super("Show dialog");
-//			}
-//
-//			public void actionPerformed(ActionEvent evt)
-//			{
-//				dialog.setVisible(true);
-//			}
-//		}
-//
-//		class ExitMenuAction extends AbstractAction
-//		{
-//			public ExitMenuAction()
-//			{
-//				super("Exit");
-//			}
-//
-//			public void actionPerformed(ActionEvent evt)
-//			{
-//				exit();
-//			}
-//		}
-//
-//		// TODO: Select font
-//		// TODO: Select scroll-area
-//		// TODO: Select scroll-text
-//		// TODO: Select version-text/height
-//
-//		public Example()
-//		{
-//			JMenuBar menuBar=new JMenuBar();
-//			dummyFrame=new JFrame( "DummyFrame" );
-//			dummyFrame.setDefaultCloseOperation( javax.swing.JFrame.EXIT_ON_CLOSE );
-//			dummyFrame.setJMenuBar(menuBar);
-//			JMenu fileMenu=new JMenu("File");
-//			menuBar.add(fileMenu);
-//			fileMenu.add(new JMenuItem(new ShowDialogAction()));
-//			fileMenu.addSeparator();
-//			fileMenu.add(new JMenuItem(new ExitMenuAction()));
-//
-//			dummyFrame.setBounds(10,10,100,100);
-//			dialog = new JDialog( dummyFrame, "About example", false );
-//
-//			JPanel content = new JPanel( new BorderLayout() );
-//
-//			dialog.setContentPane( content );
-//			content.setBorder( new EmptyBorder( 12, 12, 12, 12 ) );
-//
-//
-//			AboutPanel aboutPanel = new AboutPanel();
-//
-//			content.add(BorderLayout.CENTER,aboutPanel);
-//
-//			theAboutPanel=aboutPanel;
-//
-//			CloseAction closeAction = new CloseAction();
-//			JButton closeButton = new JButton( closeAction );
-//
-//			dialog.getRootPane().setDefaultButton( closeButton );
-//			JPanel buttonPanel = new JPanel();
-//
-//			buttonPanel.setLayout( new BoxLayout( buttonPanel, BoxLayout.X_AXIS ) );
-//			buttonPanel.setBorder( new EmptyBorder( 12, 0, 0, 0 ) );
-//			buttonPanel.add( Box.createGlue() );
-//			buttonPanel.add( closeButton );
-//			buttonPanel.add( Box.createGlue() );
-//			content.add( BorderLayout.SOUTH, buttonPanel );
-//
-//			JMenuBar dialogBar=new JMenuBar();
-//			dialog.setJMenuBar(dialogBar);
-//			JMenu optionsMenu=new JMenu("Options");
-//			dialogBar.add(optionsMenu);
-//
-//			JMenuItem bgImageItem = new JMenuItem( new BackgroundImageSelectionAction() );
-//			JMenuItem imageItem = new JMenuItem( new ImageSelectionAction() );
-//			JMenuItem textColorItem = new JMenuItem( new ChooseTextColorAction() );
-//			JMenuItem bgColorItem = new JMenuItem( new ChooseBackgroundColorAction() );
-//			JMenuItem fontPlusItem = new JMenuItem( new FontSizeAction("Increase font-size", 1));
-//			JMenuItem fontMinusItem = new JMenuItem(  new FontSizeAction("Decrease font-size", -1));
-//			JMenuItem packItem = new JMenuItem( new PackAction() );
-//			JMenuItem resetItem = new JMenuItem( new ResetAction() );
-//			JMenuItem closeItem = new JMenuItem( closeAction );
-//			JMenuItem exitItem = new JMenuItem( new ExitMenuAction() );
-//
-//			optionsMenu.add( bgImageItem );
-//			optionsMenu.add( imageItem );
-//			optionsMenu.add( textColorItem );
-//			optionsMenu.add( bgColorItem );
-//			optionsMenu.add( fontPlusItem );
-//			optionsMenu.add( fontMinusItem );
-//			optionsMenu.addSeparator();
-//			optionsMenu.add( packItem );
-//			optionsMenu.add( resetItem );
-//			optionsMenu.addSeparator();
-//			optionsMenu.add( closeItem );
-//			optionsMenu.add( exitItem );
-//
-//			dialog.pack();
-//			dummyFrame.setVisible(true);
-//		}
-//
-//		public void showDialog()
-//		{
-//			dialog.setVisible(true);
-//		}
-//
-//		public void exit()
-//		{
-//			System.exit(0);
-//		}
-//
-//		public static void main(String args[])
-//		{
-//            Example example=new Example();
-//			example.showDialog();
-//		}
-//	}
 }
 

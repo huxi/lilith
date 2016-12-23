@@ -149,17 +149,6 @@ public class ColorChooserPanel
 		return null;
 	}
 
-//	public void setInheritingColor(boolean inheritingColor)
-//	{
-//		inheritCheckbox.setSelected(inheritingColor);
-//		updateComponents();
-//	}
-//
-//	public boolean isInheritingColor()
-//	{
-//		return inheritCheckbox.isSelected();
-//	}
-
 	private class InheritListener
 		implements ActionListener
 	{

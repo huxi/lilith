@@ -110,10 +110,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	protected abstract void initTooltipGenerators();
 
 	protected abstract void initTableColumns();
-//	protected abstract void initColumnModel();
 
 	// TODO: Move to ViewActions
-
 	private void updatePopupMenu()
 	{
 		columnsMenu.removeAll();

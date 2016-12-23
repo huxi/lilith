@@ -1203,19 +1203,11 @@ public class ViewActions
 			customCopyPopupMenu.setEnabled(enabled);
 		}
 
-//		boolean enabled=false;
 		for(Map.Entry<String, CopyToClipboardAction> current : groovyClipboardActions.entrySet())
 		{
 			CopyToClipboardAction value = current.getValue();
 			value.setEventWrapper(wrapper);
-//			if(value.isEnabled())
-//			{
-//				enabled = true;
-//			}
 		}
-//
-//		customCopyMenu.setEnabled(enabled);
-//		customCopyPopupMenu.setEnabled(enabled);
 	}
 
 	private void prepareClipboardActions(Collection<CopyToClipboardAction> actions, Map<KeyStroke, CopyToClipboardAction> mapping)
@@ -1448,28 +1440,6 @@ public class ViewActions
 			mainFrame.getApplicationPreferences().clearRecentFiles();
 		}
 	}
-/*
-	private class ClearAndRemoveInactiveAction
-		extends AbstractAction
-	{
-
-		public ClearAndRemoveInactiveAction()
-		{
-			super("Clean and remove inactive");
-			putValue(Action.SMALL_ICON, EMPTY_16_ICON);
-			KeyStroke accelerator= KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS+" shift R");
-			if(logger.isDebugEnabled()) logger.debug("accelerator: {}", accelerator);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-			putValue(Action.MNEMONIC_KEY, Integer.valueOf('c'));
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			mainFrame.removeInactiveViews(false, true);
-			mainFrame.updateWindowMenus();
-		}
-	}
-*/
 
 	private class RemoveInactiveAction
 		extends AbstractAction

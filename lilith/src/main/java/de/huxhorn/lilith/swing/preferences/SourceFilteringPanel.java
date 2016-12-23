@@ -276,11 +276,6 @@ public class SourceFilteringPanel
 	{
 		private boolean initializing = false;
 
-//		public boolean isInitializing()
-//		{
-//			return initializing;
-//		}
-
 		public void setInitializing(boolean initializing)
 		{
 			this.initializing = initializing;

@@ -76,12 +76,6 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 		transformingEncoder.setUUID(getUUID());
 	}
 
-//	@Override
-//	public void setPort(int port)
-//	{
-//		super.setPort(port);
-//	}
-
 	public boolean isIncludeCallerData()
 	{
 		return includeCallerData;

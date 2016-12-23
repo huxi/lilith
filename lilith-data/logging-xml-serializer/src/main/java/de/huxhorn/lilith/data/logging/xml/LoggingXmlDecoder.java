@@ -87,7 +87,6 @@ public class LoggingXmlDecoder
 		}
 		catch(XMLStreamException | IOException e)
 		{
-// TODO: change body of catch statement
 			e.printStackTrace();
 		}
 		finally

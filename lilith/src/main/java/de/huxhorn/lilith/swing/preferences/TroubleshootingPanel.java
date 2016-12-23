@@ -430,14 +430,6 @@ public class TroubleshootingPanel
 				return 0;
 			}
 			// thread name is never null
-//			if(name == null)
-//			{
-//				return -1;
-//			}
-//			if(otherName == null)
-//			{
-//				return 1;
-//			}
 			return name.compareTo(otherName);
 		}
 	}

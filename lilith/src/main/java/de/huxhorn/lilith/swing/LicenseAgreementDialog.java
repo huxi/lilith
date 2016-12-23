@@ -72,14 +72,7 @@ public class LicenseAgreementDialog
 
 		JTextPane licenseTextPane = new JTextPane();
 		HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
-/*
-		StyleSheet ss=loadStyleSheet(EventWrapperViewPanel.class.getResource("/styles/messageView.css"));
-		if(ss!=null)
-		{
-			StyleSheet original=htmlEditorKit.getStyleSheet();
-			original.addStyleSheet(ss);
-		}
-*/
+
 		String licenseText = null;
 		InputStream licenseStream = LicenseAgreementDialog.class.getResourceAsStream("/licenses/license.html");
 		if(licenseStream != null)

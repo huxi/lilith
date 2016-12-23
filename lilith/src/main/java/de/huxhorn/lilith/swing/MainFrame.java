@@ -292,21 +292,6 @@ public class MainFrame
 	private final SourceTitleContainerProcessor sourceTitleContainerProcessor=new SourceTitleContainerProcessor();
 
 	private boolean usingThymeleaf;
-	/*
-	 * Need to use ConcurrentMap because it's accessed by both the EventDispatchThread and the CleanupThread.
-	 */
-	//private ConcurrentMap<EventIdentifier, SoftColorsReference> colorsCache;
-	//private ReferenceQueue<Colors> colorsReferenceQueue;
-
-//	public AccessEventViewManager getAccessEventViewManager()
-//	{
-//		return accessEventViewManager;
-//	}
-//
-//	public LoggingEventViewManager getLoggingEventViewManager()
-//	{
-//		return loggingEventViewManager;
-//	}
 
 	public PreferencesDialog getPreferencesDialog()
 	{
@@ -886,7 +871,6 @@ public class MainFrame
 			traySupport.setMainFrame(this);
 		}
 		setSplashStatusText("Finished.");
-//		viewActions.requestMenuBarFocus();
 	}
 
 	public void showTipOfTheDayDialog()
@@ -930,56 +914,14 @@ public class MainFrame
 		return application;
 	}
 
-//	/**
-//	 * Returns a sorted map containing resolved source name mapped to sender. If there is both a compressed
-//	 * and uncompressed sender the compressed one will be used.
-//	 * @param senders a map of all senders
-//	 * @return a  map of senders.
-//	 */
-//	private <T extends Serializable> Map<String, EventSender<T>> getEventSenders(Map<String, EventSender<T>> senders)
-//	{
-//		Map<String, EventSender<T>> serviceNameSenderMapping;
-//		synchronized(senders)
-//		{
-//			serviceNameSenderMapping =new HashMap<String, EventSender<T>>(senders);
-//		}
-//
-//		SortedMap<String, EventSender<T>> result=new TreeMap<String, EventSender<T>>();
-//		for(Map.Entry<String, EventSender<T>> current: serviceNameSenderMapping.entrySet())
-//		{
-//			EventSender<T> value = current.getValue();
-//			String hostName = value.getHostAddress();
-//			hostName = getPrimarySourceTitle(hostName);
-//			EventSender<T> prevValue = result.get(hostName);
-//			if(prevValue == null)
-//			{
-//				result.put(hostName, value);
-//			}
-//			else
-//			{
-//				if(value instanceof AbstractEventSender)
-//				{
-//					AbstractEventSender aes = (AbstractEventSender) value;
-//					if(aes.isCompressing())
-//					{
-//						result.put(hostName, value);
-//						if(logger.isDebugEnabled()) logger.debug("Replaced previous sender with compressing one.");
-//					}
-//				}
-//			}
-//		}
-//		if(logger.isDebugEnabled()) logger.debug("EventSenders: {}", result);
-//		return result;
-//	}
-
 	public Map<String, EventSender<LoggingEvent>> getLoggingEventSenders()
 	{
-		return senderService.getLoggingEventSenders();//getEventSenders(loggingEventSenders);
+		return senderService.getLoggingEventSenders();
 	}
 
 	public Map<String, EventSender<AccessEvent>> getAccessEventSenders()
 	{
-		return senderService.getAccessEventSenders();//getEventSenders(accessEventSenders);
+		return senderService.getAccessEventSenders();
 	}
 
 	public void updateWindowMenus()
@@ -1028,13 +970,6 @@ public class MainFrame
 		this.activeCounter = activeCounter;
 		updateStatus();
 	}
-
-//	private static void copyHtml(String html)
-//	{
-//		Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-//		Transferable transferableText = new HtmlTransferable(html);
-//		systemClipboard.setContents(transferableText, null);
-//	}
 
 	public void checkForUpdate(boolean showAlways)
 	{
@@ -1927,11 +1862,6 @@ public class MainFrame
 		}
 	}
 
-//	public SourceManager<LoggingEvent> getLoggingEventSourceManager()
-//	{
-//		return loggingEventSourceManager;
-//	}
-
 	private void setAccessEventSourceManager(SourceManager<AccessEvent> accessEventSourceManager)
 	{
 		if(this.accessEventSourceManager != null)
@@ -1947,16 +1877,6 @@ public class MainFrame
 			sources.forEach(accessEventViewManager::retrieveViewContainer);
 		}
 	}
-
-//	public SourceManager<AccessEvent> getAccessEventSourceManager()
-//	{
-//		return accessEventSourceManager;
-//	}
-
-//	public Sounds getSounds()
-//	{
-//		return sounds;
-//	}
 
 	public void setSounds(Sounds sounds)
 	{
@@ -1982,15 +1902,6 @@ public class MainFrame
 	{
 		return applicationPreferences;
 	}
-
-	/*
-	public EventWrapperViewPanel<LoggingEvent> createLoggingViewPanel(EventSource<LoggingEvent> eventSource)
-	{
-		EventWrapperViewPanel<LoggingEvent> result = new LoggingEventViewPanel(this, eventSource);
-		result.setScrollingToBottom(applicationPreferences.isScrollingToBottom());
-		return result;
-	}
-    */
 
 	public SortedMap<String, SourceIdentifier> getAvailableStatistics()
 	{
@@ -2282,11 +2193,6 @@ public class MainFrame
 	public void showAboutDialog()
 	{
 		Windows.showWindow(aboutDialog, MainFrame.this, true);
-
-//		if(!applicationPreferences.isMute() && sounds != null)
-//		{
-//			sounds.play(LilithSounds.ABOUT_SOUND);
-//		}
 	}
 
 	public void cleanAllInactiveLogs()
@@ -2765,9 +2671,6 @@ public class MainFrame
 		if(senderService != null)
 		{
 			senderService.stop();
-//			if(logger.isInfoEnabled()) logger.info("Unregistering services...");
-//			// this can't be done in the shutdown hook...
-//			jmDns.unregisterAllServices();
 		}
 		if(applicationPreferences.isCleaningLogsOnExit())
 		{
@@ -3051,7 +2954,6 @@ public class MainFrame
 	private void setCheckingForSnapshot(boolean checkingForSnapshot)
 	{
 		preferencesDialog.setCheckingForSnapshot(checkingForSnapshot);
-//		checkForUpdateDialog.setCheckingForSnapshot(checkingForSnapshot);
 	}
 
 	private void setShowingStatusBar(boolean showingStatusBar)
@@ -3555,14 +3457,6 @@ public class MainFrame
 		{
 			this.process = process;
 		}
-
-//		public void destroyProcess()
-//		{
-//			if(process != null)
-//			{
-//				process.destroy();
-//			}
-//		}
 
 		public void run()
 		{

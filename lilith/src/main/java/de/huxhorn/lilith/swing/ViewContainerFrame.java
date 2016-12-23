@@ -183,11 +183,6 @@ public class ViewContainerFrame
 		toolbar.setVisible(showingToolbar);
 	}
 
-//	public boolean isShowingToolbar()
-//	{
-//		return toolbar.isVisible();
-//	}
-
 	class CleanupWindowChangeListener
 		implements WindowListener
 	{

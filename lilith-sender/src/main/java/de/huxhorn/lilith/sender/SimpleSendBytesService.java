@@ -229,7 +229,6 @@ public class SimpleSendBytesService
 						}
 						if(outputStream != null)
 						{
-//								System.out.println(this+" - about to write "+copy.size()+" events...");
 							try
 							{
 								for(byte[] current : copy)
@@ -237,7 +236,6 @@ public class SimpleSendBytesService
 									writeByteStrategy.writeBytes(outputStream, current);
 								}
 								outputStream.flush();
-//									System.out.println(this+" wrote "+copy.size()+" events.");
 							}
 							catch(Throwable e)
 							{
@@ -247,10 +245,6 @@ public class SimpleSendBytesService
 						}
 						copy.clear();
 					}
-//						else
-//						{
-//							System.out.println(this+" ignored "+copy.size()+" events because of missing connection.");
-//						}
 					if(shutdown.get())
 					{
 						break;

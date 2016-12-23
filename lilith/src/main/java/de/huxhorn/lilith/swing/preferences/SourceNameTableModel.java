@@ -177,14 +177,6 @@ public class SourceNameTableModel
 		fireTableChange(event);
 	}
 
-//	private void fireTableChange(int prevValue, int currentValue)
-//	{
-//		TableModelEvent event = new TableModelEvent(this, prevValue, currentValue, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
-//		fireTableChange(event);
-//	}
-
-	//
-
 	private void fireTableChange(TableModelEvent evt)
 	{
 		Runnable r = new FireTableChangeRunnable(evt);

@@ -70,11 +70,6 @@ public class TaskTable<T>
 		}
 	}
 
-//	public boolean isPaused()
-//	{
-//		return taskTableModel.isPaused();
-//	}
-
 	public TaskTableModel<T> getTaskTableModel()
 	{
 		return taskTableModel;

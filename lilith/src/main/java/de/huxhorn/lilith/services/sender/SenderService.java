@@ -554,7 +554,6 @@ public class SenderService
 						registries.remove(current);
 						if(logger.isDebugEnabled()) logger.debug("Removed {} from registry.", current);
 					}
-//					if(logger.isDebugEnabled()) logger.debug("Registry after removing: {}", registries);
 				}
 
 				for(JmDNS current : obsoleteDns)
