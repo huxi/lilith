@@ -1,5 +1,3 @@
-import de.huxhorn.lilith.data.logging.LoggingEvent
-
 /*
  * Lilith - a log event viewer.
  * Copyright (C) 2007-2011 Joern Huxhorn
@@ -17,6 +15,8 @@ import de.huxhorn.lilith.data.logging.LoggingEvent
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import de.huxhorn.lilith.data.logging.LoggingEvent
 
 /**
  * Returns true if the logging event has a level higher or equal to the

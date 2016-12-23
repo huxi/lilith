@@ -8,9 +8,8 @@
 		<module name="UnusedImports"/>
 		<module name="AvoidStarImport"/>
 		<module name="UpperEll"/>
-		<!--
-        <module name="ConstantName"/>
-        <module name="EmptyBlock"/>
-        -->
+	</module>
+	<module name="NewlineAtEndOfFile">
+		<property name="lineSeparator" value="lf"/>
 	</module>
 </module>

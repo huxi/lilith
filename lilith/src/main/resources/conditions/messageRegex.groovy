@@ -1,8 +1,3 @@
-import de.huxhorn.lilith.data.logging.LoggingEvent
-
-import java.util.regex.Pattern
-import java.util.regex.PatternSyntaxException
-
 /*
  * Lilith - a log event viewer.
  * Copyright (C) 2007-2011 Joern Huxhorn
@@ -20,6 +15,11 @@ import java.util.regex.PatternSyntaxException
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import de.huxhorn.lilith.data.logging.LoggingEvent
+
+import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
 
 /**
  * Returns true if the logging events message matches the regex
