@@ -2006,7 +2006,7 @@ public class MainFrame
 			{
 				String name = f.getName();
 				name = name.substring(0, name.length() - 4); // we are sure about .rrd here...
-				if(!name.equalsIgnoreCase("global"))
+				if(!"global".equalsIgnoreCase(name))
 				{
 					SourceIdentifier si = new SourceIdentifier(name);
 					String sourceTitle = ViewActions.getPrimarySourceTitle(name, sourceNames, showingPrimaryIdentifier);

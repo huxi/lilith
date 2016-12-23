@@ -424,9 +424,9 @@ public class AboutPanel
 		while(st.hasMoreTokens())
 		{
 			String token = st.nextToken();
-			if(token.equals("\n"))
+			if("\n".equals(token))
 			{
-				if(prevToken != null && !prevToken.equals("\n"))
+				if(prevToken != null && !"\n".equals(prevToken))
 				{
 					lines.add(prevToken);
 				}
@@ -437,7 +437,7 @@ public class AboutPanel
 			}
 			prevToken = token;
 		}
-		if(prevToken != null && !prevToken.equals("\n"))
+		if(prevToken != null && !"\n".equals(prevToken))
 		{
 			lines.add(prevToken);
 		}
@@ -1247,15 +1247,15 @@ public class AboutPanel
 		{
 			String propertyName = evt.getPropertyName();
 
-			if(propertyName.equals("border"))
+			if("border".equals(propertyName))
 			{
 				calculatePreferredSize();
 			}
-			else if(propertyName.equals("foreground"))
+			else if("foreground".equals(propertyName))
 			{
 				flushScrollImage();
 			}
-			else if(propertyName.equals("background"))
+			else if("background".equals(propertyName))
 			{
 				flushScrollImage();
 			}
