@@ -50,7 +50,7 @@ class HtmlTransferable
 	private String html;
 	private byte[] data;
 
-	public HtmlTransferable(String html)
+	HtmlTransferable(String html)
 	{
 		this.html = html;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();

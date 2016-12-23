@@ -38,13 +38,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EditConditionDialog
 	extends JDialog
 {
-	private final Logger logger = LoggerFactory.getLogger(EditConditionDialog.class);
+	private static final long serialVersionUID = -217524106405669380L;
 
 	private SavedCondition savedCondition;
 	private JTextField conditionName;
@@ -55,7 +53,7 @@ public class EditConditionDialog
 	private JCheckBox activeCheckBox;
 	private ColorSchemeEditorPanel colorSchemeEditorPanel;
 
-	public EditConditionDialog(Dialog owner)
+	EditConditionDialog(Dialog owner)
 	{
 		super(owner);
 		setModal(true);
@@ -208,7 +206,7 @@ public class EditConditionDialog
 	{
 		private static final long serialVersionUID = -7380136684827113354L;
 
-		public OkAction()
+		OkAction()
 		{
 			super("Ok");
 		}
@@ -247,7 +245,7 @@ public class EditConditionDialog
 	{
 		private static final long serialVersionUID = 3523022122100092148L;
 
-		public ResetAction()
+		ResetAction()
 		{
 			super("Reset");
 		}
@@ -263,7 +261,7 @@ public class EditConditionDialog
 	{
 		private static final long serialVersionUID = 5442950514112749763L;
 
-		public CancelAction()
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);

@@ -167,7 +167,7 @@ public class AccessStatusTypePanel
 	{
 		private static final long serialVersionUID = 95425194239658313L;
 
-		public EditConditionAction()
+		EditConditionAction()
 		{
 			super("Edit");
 			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
@@ -195,7 +195,7 @@ public class AccessStatusTypePanel
 	private class ConditionTableMouseListener
 		implements MouseListener
 	{
-		public ConditionTableMouseListener()
+		ConditionTableMouseListener()
 		{
 		}
 

@@ -278,7 +278,7 @@ public class ConditionsPanel
 	{
 		private static final long serialVersionUID = 95425194239658313L;
 
-		public EditConditionAction()
+		EditConditionAction()
 		{
 			super("Edit");
 			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
@@ -306,7 +306,7 @@ public class ConditionsPanel
 	{
 		private static final long serialVersionUID = 4573645407508010450L;
 
-		public RemoveConditionAction()
+		RemoveConditionAction()
 		{
 			super("Remove");
 			putValue(Action.SMALL_ICON, Icons.REMOVE_16_ICON);
@@ -347,7 +347,7 @@ public class ConditionsPanel
 	{
 		private static final long serialVersionUID = -5414336722079117405L;
 
-		public MoveUpAction()
+		MoveUpAction()
 		{
 			super("Move up");
 			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
@@ -377,7 +377,7 @@ public class ConditionsPanel
 	{
 		private static final long serialVersionUID = -1115999498183305487L;
 
-		public MoveDownAction()
+		MoveDownAction()
 		{
 			super("Move down");
 			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
@@ -403,7 +403,7 @@ public class ConditionsPanel
 	private class ConditionTableMouseListener
 		implements MouseListener
 	{
-		public ConditionTableMouseListener()
+		ConditionTableMouseListener()
 		{
 		}
 

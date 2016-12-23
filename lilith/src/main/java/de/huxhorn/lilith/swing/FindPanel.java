@@ -665,7 +665,7 @@ public class FindPanel<T extends Serializable>
 	{
 		private static final long serialVersionUID = -6469494975854597398L;
 
-		public FindNextAction()
+		FindNextAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
@@ -688,7 +688,7 @@ public class FindPanel<T extends Serializable>
 	{
 		private static final long serialVersionUID = -8192948220602398223L;
 
-		public FindPreviousAction()
+		FindPreviousAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
@@ -708,7 +708,7 @@ public class FindPanel<T extends Serializable>
 	{
 		private static final long serialVersionUID = -7757686292973276423L;
 
-		public CloseFindAction()
+		CloseFindAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.CLOSE_16_ICON);
@@ -734,7 +734,7 @@ public class FindPanel<T extends Serializable>
 	{
 		private static final long serialVersionUID = 3876315232050114189L;
 
-		public ReplaceFilterAction()
+		ReplaceFilterAction()
 		{
 			super();
 			putValue(Action.SHORT_DESCRIPTION, "Replace filter.");
@@ -769,6 +769,5 @@ public class FindPanel<T extends Serializable>
 
 			updateCondition();
 		}
-
 	}
 }

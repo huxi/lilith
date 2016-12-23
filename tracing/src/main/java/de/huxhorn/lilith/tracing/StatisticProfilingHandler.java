@@ -172,7 +172,7 @@ public class StatisticProfilingHandler
 		private long minimumNanoSeconds=Long.MAX_VALUE;
 		private long maximumNanoSeconds;
 
-		public Entry(String methodBaseName)
+		Entry(String methodBaseName)
 		{
 			this.methodBaseName = methodBaseName;
 		}

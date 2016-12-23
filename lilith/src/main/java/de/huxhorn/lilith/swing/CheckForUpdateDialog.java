@@ -222,7 +222,7 @@ public class CheckForUpdateDialog
 	{
 		private static final long serialVersionUID = -7050362653241782872L;
 
-		public OkAction()
+		OkAction()
 		{
 			super("Ok");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ENTER);
@@ -248,7 +248,7 @@ public class CheckForUpdateDialog
 	{
 		private static final long serialVersionUID = -7356773009949031885L;
 
-		public CancelAction()
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);

@@ -2221,7 +2221,7 @@ public class MainFrame
 		{
 			EventSource<LoggingEvent> eventSource;
 
-			public LoggingSourceAddedRunnable(EventSource<LoggingEvent> eventSource)
+			LoggingSourceAddedRunnable(EventSource<LoggingEvent> eventSource)
 			{
 				this.eventSource = eventSource;
 			}
@@ -2261,7 +2261,7 @@ public class MainFrame
 		{
 			EventSource<LoggingEvent> eventSource;
 
-			public LoggingSourceRemovedRunnable(EventSource<LoggingEvent> eventSource)
+			LoggingSourceRemovedRunnable(EventSource<LoggingEvent> eventSource)
 			{
 				this.eventSource = eventSource;
 			}
@@ -2303,7 +2303,7 @@ public class MainFrame
 		{
 			EventSource<AccessEvent> eventSource;
 
-			public AccessSourceAddedRunnable(EventSource<AccessEvent> eventSource)
+			AccessSourceAddedRunnable(EventSource<AccessEvent> eventSource)
 			{
 				this.eventSource = eventSource;
 			}
@@ -2344,7 +2344,7 @@ public class MainFrame
 		{
 			EventSource<AccessEvent> eventSource;
 
-			public AccessSourceRemovedRunnable(EventSource<AccessEvent> eventSource)
+			AccessSourceRemovedRunnable(EventSource<AccessEvent> eventSource)
 			{
 				this.eventSource = eventSource;
 			}
@@ -2689,7 +2689,7 @@ public class MainFrame
 	{
 		private ViewContainer<?> container;
 
-		public ShowViewRunnable(ViewContainer<?> container)
+		ShowViewRunnable(ViewContainer<?> container)
 		{
 			this.container = container;
 		}
@@ -3239,7 +3239,7 @@ public class MainFrame
 		private final Map<String, String> sourceNames;
 		private final boolean showingPrimaryIdentifier;
 
-		public EventSourceComparator(Map<String, String> sourceNames, boolean showingPrimaryIdentifier)
+		EventSourceComparator(Map<String, String> sourceNames, boolean showingPrimaryIdentifier)
 		{
 			this.sourceNames = sourceNames;
 			this.showingPrimaryIdentifier = showingPrimaryIdentifier;
@@ -3383,7 +3383,7 @@ public class MainFrame
 		{
 			private BufferedReader inputReader;
 
-			public AbstractOutputConsumerRunnable(InputStream input)
+			AbstractOutputConsumerRunnable(InputStream input)
 			{
 				inputReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
 			}
@@ -3419,7 +3419,7 @@ public class MainFrame
 		private class OutConsumerRunnable
 			extends AbstractOutputConsumerRunnable
 		{
-			public OutConsumerRunnable(InputStream input)
+			OutConsumerRunnable(InputStream input)
 			{
 				super(input);
 			}
@@ -3433,7 +3433,7 @@ public class MainFrame
 		private class ErrorConsumerRunnable
 			extends AbstractOutputConsumerRunnable
 		{
-			public ErrorConsumerRunnable(InputStream input)
+			ErrorConsumerRunnable(InputStream input)
 			{
 				super(input);
 			}
@@ -3453,7 +3453,7 @@ public class MainFrame
 
 		private Process process;
 
-		public ProcessConsumerRunnable(Process process)
+		ProcessConsumerRunnable(Process process)
 		{
 			this.process = process;
 		}
@@ -3485,7 +3485,7 @@ public class MainFrame
 		{
 			private BufferedReader inputReader;
 
-			public AbstractOutputConsumerRunnable(InputStream input)
+			AbstractOutputConsumerRunnable(InputStream input)
 			{
 				inputReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
 			}
@@ -3518,7 +3518,7 @@ public class MainFrame
 		private class OutConsumerRunnable
 			extends AbstractOutputConsumerRunnable
 		{
-			public OutConsumerRunnable(InputStream input)
+			OutConsumerRunnable(InputStream input)
 			{
 				super(input);
 			}
@@ -3532,7 +3532,7 @@ public class MainFrame
 		private class ErrorConsumerRunnable
 			extends AbstractOutputConsumerRunnable
 		{
-			public ErrorConsumerRunnable(InputStream input)
+			ErrorConsumerRunnable(InputStream input)
 			{
 				super(input);
 			}
@@ -3600,7 +3600,7 @@ public class MainFrame
 		private boolean showAlways;
 		private boolean checkSnapshot;
 
-		public CheckForUpdateRunnable(boolean showAlways, boolean checkSnapshot)
+		CheckForUpdateRunnable(boolean showAlways, boolean checkSnapshot)
 		{
 			this.showAlways = showAlways;
 			this.checkSnapshot = checkSnapshot;
@@ -3695,7 +3695,7 @@ public class MainFrame
 		private String message;
 		private String changes;
 
-		public ShowUpdateDialogRunnable(String message, String changes)
+		ShowUpdateDialogRunnable(String message, String changes)
 		{
 			this.message = message;
 			this.changes = changes;

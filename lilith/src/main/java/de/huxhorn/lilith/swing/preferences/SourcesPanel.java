@@ -166,7 +166,7 @@ public class SourcesPanel
 	{
 		private static final long serialVersionUID = 2159800920473132058L;
 
-		public AddSourceNameAction()
+		AddSourceNameAction()
 		{
 			super("Add");
 			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
@@ -185,7 +185,7 @@ public class SourcesPanel
 	{
 		private static final long serialVersionUID = -6686916429941183752L;
 
-		public EditSourceNameAction()
+		EditSourceNameAction()
 		{
 			super("Edit");
 			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
@@ -211,7 +211,7 @@ public class SourcesPanel
 	{
 		private static final long serialVersionUID = -4376772972629739348L;
 
-		public RemoveSourceNameAction()
+		RemoveSourceNameAction()
 		{
 			super("Remove");
 			putValue(Action.SMALL_ICON, Icons.REMOVE_16_ICON);
@@ -237,7 +237,7 @@ public class SourcesPanel
 		private final Logger logger = LoggerFactory.getLogger(SourceNameTableMouseListener.class);
 
 
-		public SourceNameTableMouseListener()
+		SourceNameTableMouseListener()
 		{
 		}
 
@@ -300,7 +300,6 @@ public class SourcesPanel
 		public void mouseExited(MouseEvent e)
 		{
 		}
-
 	}
 
 }

@@ -253,7 +253,7 @@ public class EditSourceListDialog
 	{
 		private static final long serialVersionUID = -7574735536007230958L;
 
-		public OkAction()
+		OkAction()
 		{
 			super("Ok");
 		}
@@ -288,7 +288,7 @@ public class EditSourceListDialog
 
 		private static final long serialVersionUID = -3939426044729482353L;
 
-		public CancelAction()
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
@@ -349,7 +349,7 @@ public class EditSourceListDialog
 	{
 		private static final long serialVersionUID = -6614323545779829613L;
 
-		public AddSourceAction()
+		AddSourceAction()
 		{
 			super("Add");
 			putValue(Action.SMALL_ICON, Icons.ADD_16_ICON);
@@ -381,7 +381,7 @@ public class EditSourceListDialog
 	{
 		private static final long serialVersionUID = -2018151037420314725L;
 
-		public RemoveSourceAction()
+		RemoveSourceAction()
 		{
 			super("Remove");
 			putValue(Action.SMALL_ICON, Icons.REMOVE_16_ICON);

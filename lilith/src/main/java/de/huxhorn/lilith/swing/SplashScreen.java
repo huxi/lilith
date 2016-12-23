@@ -108,9 +108,10 @@ public class SplashScreen
 	private class ImagePanel
 		extends JComponent
 	{
+		private static final long serialVersionUID = 1400735425931232883L;
 		private BufferedImage image;
 
-		public ImagePanel(BufferedImage image)
+		ImagePanel(BufferedImage image)
 		{
 			this.image = image;
 			this.setPreferredSize(new Dimension(this.image.getWidth(), this.image.getHeight()));

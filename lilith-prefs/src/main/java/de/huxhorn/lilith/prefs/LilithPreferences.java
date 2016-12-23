@@ -424,7 +424,7 @@ public class LilithPreferences
 		this.usingWrappedExceptionStyle = usingWrappedExceptionStyle;
 	}
 
-	public static enum SourceFiltering
+	public enum SourceFiltering
 	{
 		NONE, BLACKLIST, WHITELIST
 	}

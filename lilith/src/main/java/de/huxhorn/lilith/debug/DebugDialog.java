@@ -199,7 +199,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -7747612911180730271L;
 
-		public DoneAction()
+		DoneAction()
 		{
 			super("Done");
 		}
@@ -215,7 +215,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -3191463140774402016L;
 
-		public LogStuffAction()
+		LogStuffAction()
 		{
 			super("Log stuff");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events, some containing MDC, some containing Markers and some containing both.");
@@ -235,7 +235,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -4705100235484844484L;
 
-		public LogContainerAction()
+		LogContainerAction()
 		{
 			super("Log containers");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events with arrays, Collections and Maps as parameters.");
@@ -252,7 +252,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -3162155864945849819L;
 
-		public LogASCIIArtAction()
+		LogASCIIArtAction()
 		{
 			super("Log ASCII-Art");
 			putValue(Action.SHORT_DESCRIPTION, "Logs some ASCII-Art. This can be used to see if details view is handling preformatted text correctly. May be NSFW depending on the closed-mindedness of your working environment...");
@@ -269,7 +269,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -2289262066339501111L;
 
-		public LogExceptionsAction()
+		LogExceptionsAction()
 		{
 			super("Log exceptions");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing exceptions.");
@@ -288,7 +288,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -7404752330757185806L;
 
-		public LogParamExceptionsAction()
+		LogParamExceptionsAction()
 		{
 			super("Log param exceptions");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing exceptions. Exceptions are given as a parameter which is not supported by Logback. The exceptions will only show up in the MultiplexAppenders.");
@@ -306,7 +306,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -7354728704746203904L;
 
-		public LogTruthAction()
+		LogTruthAction()
 		{
 			super("Log truth");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing Discordian Truth.");
@@ -323,7 +323,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -3343304084268635261L;
 
-		public LogAnonymousAction()
+		LogAnonymousAction()
 		{
 			super("Log anonymous");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events inside anonymous inner classes. Used to check if STE is handled correctly.");
@@ -340,7 +340,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -518958063141973150L;
 
-		public LogNDCAction()
+		LogNDCAction()
 		{
 			super("Log NDC");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing NDC. This is not supported by Logback. The NDC will only show up in the MultiplexAppenders.");
@@ -357,7 +357,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -1734237014776105342L;
 
-		public LogDateAction()
+		LogDateAction()
 		{
 			super("Log date");
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing a Date as an parameter. This will use Date.toString in case of Logback and ISO8601-format in case of MultiplexAppenders.");
@@ -374,7 +374,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -5004276984975201630L;
 
-		public LogAllAction()
+		LogAllAction()
 		{
 			super("Log all!");
 			putValue(Action.SHORT_DESCRIPTION, "Executes all of the above logging examples. May be NSFW depending on the closed-mindedness of your working environment...");
@@ -406,7 +406,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -3099597544720236257L;
 
-		public NetworkAction()
+		NetworkAction()
 		{
 			super("Network");
 			putValue(Action.SHORT_DESCRIPTION, "Detects all non-local network addresses and logs them to the internal Lilith log.");
@@ -447,7 +447,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -97047951966954750L;
 
-		public DebugCallableAction()
+		DebugCallableAction()
 		{
 			super("Callable");
 			putValue(Action.SHORT_DESCRIPTION, "Creates a callable that's simply counting up and adds it to the task-manager.");
@@ -465,7 +465,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -8812061542734868784L;
 
-		public EditGroovyAction()
+		EditGroovyAction()
 		{
 			super("Edit details view groovy!");
 			putValue(Action.SHORT_DESCRIPTION, "Edit the details view Groovy file.");
@@ -482,7 +482,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -3600189121760822853L;
 
-		public UncaughtExceptionAction()
+		UncaughtExceptionAction()
 		{
 			super("Uncaught Exception");
 			putValue(Action.SHORT_DESCRIPTION, "Throws an uncaught exception.");
@@ -499,7 +499,7 @@ public class DebugDialog
 	{
 		private static final long serialVersionUID = -2547578555283622327L;
 
-		public UsingThymeleafAction()
+		UsingThymeleafAction()
 		{
 			super("Using Thymeleaf");
 			putValue(Action.SHORT_DESCRIPTION, "Using Thymeleaf instead of Groovy for DetailsView.");

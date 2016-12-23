@@ -168,7 +168,7 @@ public class SoundsPanel
 	{
 		private static final long serialVersionUID = 5777380069273022677L;
 
-		public PlaySoundAction()
+		PlaySoundAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.PAUSED_MENU_ICON);
@@ -195,7 +195,7 @@ public class SoundsPanel
 	{
 		private static final long serialVersionUID = 4433633396782474246L;
 
-		public BrowseSoundAction()
+		BrowseSoundAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);

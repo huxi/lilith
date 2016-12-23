@@ -209,7 +209,7 @@ public class HelpFrame
 	{
 		private static final long serialVersionUID = -551520865313383753L;
 
-		public CopySelectionAction()
+		CopySelectionAction()
 		{
 			super("Copy selection");
 			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");

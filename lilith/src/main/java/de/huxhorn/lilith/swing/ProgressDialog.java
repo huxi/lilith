@@ -54,7 +54,9 @@ public class ProgressDialog
 	private class CancelAction
 		extends AbstractAction
 	{
-		public CancelAction()
+		private static final long serialVersionUID = -3955784042454340652L;
+
+		CancelAction()
 		{
 			super("Cancel");
 		}

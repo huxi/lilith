@@ -277,9 +277,9 @@ public class RrdLoggingEventHandler
 
 	private static class EventCounter
 	{
-		public final Map<String, Counter> counters;
+		final Map<String, Counter> counters;
 
-		public EventCounter()
+		EventCounter()
 		{
 			counters = new HashMap<>(6);
 			counters.put(TRACE_DS_NAME, new Counter());

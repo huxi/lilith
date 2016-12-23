@@ -33,13 +33,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EditAccessStatusTypeDialog
 	extends JDialog
 {
-	private final Logger logger = LoggerFactory.getLogger(EditAccessStatusTypeDialog.class);
+	private static final long serialVersionUID = 3514380262399736012L;
 
 	private ColorScheme scheme;
 	private boolean canceled;
@@ -129,7 +127,7 @@ public class EditAccessStatusTypeDialog
 	{
 		private static final long serialVersionUID = -7380136684827113354L;
 
-		public OkAction()
+		OkAction()
 		{
 			super("Ok");
 		}
@@ -148,7 +146,7 @@ public class EditAccessStatusTypeDialog
 	{
 		private static final long serialVersionUID = 3523022122100092148L;
 
-		public ResetAction()
+		ResetAction()
 		{
 			super("Reset");
 		}
@@ -164,7 +162,7 @@ public class EditAccessStatusTypeDialog
 	{
 		private static final long serialVersionUID = 5442950514112749763L;
 
-		public CancelAction()
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);

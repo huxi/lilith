@@ -33,14 +33,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EditLoggingLevelDialog
 	extends JDialog
 {
-	private final Logger logger = LoggerFactory.getLogger(EditLoggingLevelDialog.class);
-
+	private static final long serialVersionUID = 965096068831850739L;
 	private ColorScheme scheme;
 	private boolean canceled;
 
@@ -129,7 +126,7 @@ public class EditLoggingLevelDialog
 	{
 		private static final long serialVersionUID = -7380136684827113354L;
 
-		public OkAction()
+		OkAction()
 		{
 			super("Ok");
 		}
@@ -148,7 +145,7 @@ public class EditLoggingLevelDialog
 	{
 		private static final long serialVersionUID = 3523022122100092148L;
 
-		public ResetAction()
+		ResetAction()
 		{
 			super("Reset");
 		}
@@ -164,7 +161,7 @@ public class EditLoggingLevelDialog
 	{
 		private static final long serialVersionUID = 5442950514112749763L;
 
-		public CancelAction()
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);

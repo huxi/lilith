@@ -1132,7 +1132,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class TableMouseListener
 		implements MouseListener
 	{
-		public TableMouseListener()
+		TableMouseListener()
 		{
 		}
 
@@ -1214,7 +1214,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class EventViewMouseListener
 		implements MouseListener
 	{
-		public EventViewMouseListener()
+		EventViewMouseListener()
 		{
 		}
 
@@ -1262,7 +1262,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class ScrollPaneMouseListener
 		implements MouseListener
 	{
-		public ScrollPaneMouseListener()
+		ScrollPaneMouseListener()
 		{
 		}
 

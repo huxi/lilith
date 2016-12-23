@@ -445,7 +445,7 @@ public class SenderService
 	{
 		private ServiceEvent serviceEvent;
 
-		public GetServiceInfoRunnable(ServiceEvent serviceEvent)
+		GetServiceInfoRunnable(ServiceEvent serviceEvent)
 		{
 			this.serviceEvent = serviceEvent;
 		}
@@ -464,7 +464,7 @@ public class SenderService
 		private List<ServiceInfo> serviceInfos;
 		private JmDNS jmDns;
 
-		public ServiceRegistrationRunnable(JmDNS jmDns, List<ServiceInfo> serviceInfos)
+		ServiceRegistrationRunnable(JmDNS jmDns, List<ServiceInfo> serviceInfos)
 		{
 			this.jmDns = jmDns;
 			this.serviceInfos = serviceInfos;

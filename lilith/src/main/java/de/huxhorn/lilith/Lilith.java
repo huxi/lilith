@@ -942,7 +942,7 @@ public class Lilith
 		private SplashScreen splashScreen;
 		private String appTitle;
 
-		public CreateSplashRunnable(String appTitle)
+		CreateSplashRunnable(String appTitle)
 		{
 			this.appTitle = appTitle;
 		}
@@ -953,7 +953,7 @@ public class Lilith
 			Windows.showWindow(splashScreen, null, true);
 		}
 
-		public SplashScreen getSplashScreen()
+		SplashScreen getSplashScreen()
 		{
 			return splashScreen;
 		}
@@ -968,7 +968,7 @@ public class Lilith
 		private String appTitle;
 		private boolean enableBonjour;
 
-		public CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appTitle, boolean enableBonjour)
+		CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appTitle, boolean enableBonjour)
 		{
 			this.splashScreen = splashScreen;
 			this.enableBonjour = enableBonjour;

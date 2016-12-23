@@ -119,7 +119,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		private SourceIdentifier sourceIdentifier;
 		private static final String SOURCE_IDENTIFIER_MDC_KEY = "sourceIdentifier";
 
-		public ReceiverRunnable(SourceIdentifier sourceIdentifier)
+		ReceiverRunnable(SourceIdentifier sourceIdentifier)
 		{
 			this.sourceIdentifier = sourceIdentifier;
 		}

@@ -148,7 +148,7 @@ public class LicenseAgreementDialog
 	{
 		private static final long serialVersionUID = 5602271076398281248L;
 
-		public AcceptAction()
+		AcceptAction()
 		{
 			super("Accept");
 		}
@@ -164,7 +164,7 @@ public class LicenseAgreementDialog
 	{
 		private static final long serialVersionUID = 5007161609485321187L;
 
-		public DeclineAction()
+		DeclineAction()
 		{
 			super("Decline");
 		}

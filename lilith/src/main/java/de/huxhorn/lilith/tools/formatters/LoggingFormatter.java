@@ -114,7 +114,7 @@ public class LoggingFormatter
 	{
 		private LoggingEvent event;
 
-		public LoggingFoo(LoggingEvent event)
+		LoggingFoo(LoggingEvent event)
 		{
 			this.event=event;
 		}

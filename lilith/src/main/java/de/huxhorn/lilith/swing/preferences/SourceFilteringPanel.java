@@ -211,7 +211,7 @@ public class SourceFilteringPanel
 	{
 		private static final long serialVersionUID = -4154256012969198212L;
 
-		public DisabledAction()
+		DisabledAction()
 		{
 			super("None");
 			putValue(Action.SHORT_DESCRIPTION, "No source filtering.");
@@ -233,7 +233,7 @@ public class SourceFilteringPanel
 	{
 		private static final long serialVersionUID = -1181737422196108645L;
 
-		public BlacklistAction()
+		BlacklistAction()
 		{
 			super("Blacklist on...");
 			putValue(Action.SHORT_DESCRIPTION, "Blacklist on the selected source list.");
@@ -255,7 +255,7 @@ public class SourceFilteringPanel
 	{
 		private static final long serialVersionUID = -3403085106091507255L;
 
-		public WhitelistAction()
+		WhitelistAction()
 		{
 			super("Whitelist on...");
 			putValue(Action.SHORT_DESCRIPTION, "Whitelist on the selected source list.");

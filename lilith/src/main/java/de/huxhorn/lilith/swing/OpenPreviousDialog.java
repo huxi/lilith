@@ -197,7 +197,7 @@ public class OpenPreviousDialog
 	{
 		private static final long serialVersionUID = -7076284393995744935L;
 
-		public OpenAction()
+		OpenAction()
 		{
 			super("Open");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ENTER);
@@ -216,7 +216,7 @@ public class OpenPreviousDialog
 	{
 		private static final long serialVersionUID = -3717298306270939316L;
 
-		public CancelAction()
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
@@ -244,7 +244,7 @@ public class OpenPreviousDialog
 		private EventType eventType;
 		private SourceIdentifierWrapper selectedSourceWrapper;
 
-		public OpenPreviousPanel(FileBufferFactory<T> fileBufferFactory, EventType eventType)
+		OpenPreviousPanel(FileBufferFactory<T> fileBufferFactory, EventType eventType)
 		{
 			this.fileBufferFactory = fileBufferFactory;
 			this.logFileFactory = fileBufferFactory.getLogFileFactory();
@@ -483,7 +483,7 @@ public class OpenPreviousDialog
 		private final long numberOfEvents;
 		private final String applicationName;
 
-		public SourceIdentifierWrapper(SourceIdentifier sourceIdentifier, long sizeOnDisk, long lastModified, long numberOfEvents, String applicationName)
+		SourceIdentifierWrapper(SourceIdentifier sourceIdentifier, long sizeOnDisk, long lastModified, long numberOfEvents, String applicationName)
 		{
 			this.sourceIdentifier = sourceIdentifier;
 			this.sizeOnDisk = sizeOnDisk;

@@ -1401,7 +1401,7 @@ public class ViewActions
 
 		private String absoluteName;
 
-		public OpenFileAction(String absoluteName, boolean fullPath)
+		OpenFileAction(String absoluteName, boolean fullPath)
 		{
 			super();
 
@@ -1428,7 +1428,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 2330892725802760973L;
 
-		public ClearRecentFilesAction()
+		ClearRecentFilesAction()
 		{
 			super("Clear Recent Files");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1446,7 +1446,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -6662970580652310690L;
 
-		public RemoveInactiveAction()
+		RemoveInactiveAction()
 		{
 			super("Remove inactive");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1467,7 +1467,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8228641057263498624L;
 
-		public ShowTaskManagerAction()
+		ShowTaskManagerAction()
 		{
 			super("Task Manager");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1488,7 +1488,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -1587444647880660196L;
 
-		public CloseAllAction()
+		CloseAllAction()
 		{
 			super("Close all");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1509,7 +1509,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -3031217070975763827L;
 
-		public CloseOtherAction()
+		CloseOtherAction()
 		{
 			super("Close all other");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1531,7 +1531,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8828005158469519472L;
 
-		public MinimizeAllAction()
+		MinimizeAllAction()
 		{
 			super("Minimize all");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1553,7 +1553,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -2357859864329239268L;
 
-		public MinimizeAllOtherAction()
+		MinimizeAllOtherAction()
 		{
 			super("Minimize all other");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -1575,7 +1575,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -4713267797278778997L;
 
-		public ClearToolBarAction()
+		ClearToolBarAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.CLEAR_TOOLBAR_ICON);
@@ -1593,7 +1593,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 776175842981192877L;
 
-		public ClearMenuAction()
+		ClearMenuAction()
 		{
 			super("Clear");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.CLEAR_ACTION);
@@ -1613,7 +1613,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8380709624103338783L;
 
-		public ZoomInMenuAction()
+		ZoomInMenuAction()
 		{
 			super("Zoom in");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ZOOM_IN_ACTION);
@@ -1627,7 +1627,7 @@ public class ViewActions
 			mainFrame.zoomIn();
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			boolean enable = false;
 			if(viewContainer != null)
@@ -1647,7 +1647,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8380709624103338783L;
 
-		public ZoomOutMenuAction()
+		ZoomOutMenuAction()
 		{
 			super("Zoom out");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ZOOM_OUT_ACTION);
@@ -1681,7 +1681,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8380709624103338783L;
 
-		public ResetZoomMenuAction()
+		ResetZoomMenuAction()
 		{
 			super("Reset Zoom");
 			//KeyStroke accelerator = KeyStrokes.resolveAcceleratorKeyStroke(KeyStrokes.COMMAND_ALIAS + " +");
@@ -1718,7 +1718,7 @@ public class ViewActions
 		private static final String DEFAULT_TOOLTIP = "Add the condition of the current view.";
 		private final boolean htmlTooltip;
 
-		public SaveConditionMenuAction(boolean htmlTooltip)
+		SaveConditionMenuAction(boolean htmlTooltip)
 		{
 			super("Save condition...");
 			this.htmlTooltip = htmlTooltip;
@@ -1761,7 +1761,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 2807692748192366344L;
 
-		public EditSourceNameMenuAction()
+		EditSourceNameMenuAction()
 		{
 			super("Edit source name...");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_SOURCE_NAME_ACTION);
@@ -1805,7 +1805,7 @@ public class ViewActions
 		private Icon attachIcon = Icons.ATTACH_MENU_ICON;
 		private Icon detachIcon = Icons.DETACH_MENU_ICON;
 
-		public AttachMenuAction()
+		AttachMenuAction()
 		{
 			super();
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ATTACH_ACTION);
@@ -1847,7 +1847,7 @@ public class ViewActions
 		private Icon attachIcon = Icons.ATTACH_TOOLBAR_ICON;
 		private Icon detachIcon = Icons.DETACH_TOOLBAR_ICON;
 
-		public AttachToolBarAction()
+		AttachToolBarAction()
 		{
 			super();
 			updateAction();
@@ -1892,7 +1892,7 @@ public class ViewActions
 		private Icon pausedIcon = Icons.PAUSED_MENU_ICON;
 		private Icon unpausedIcon = Icons.UNPAUSED_MENU_ICON;
 
-		public PauseMenuAction()
+		PauseMenuAction()
 		{
 			super();
 			updateAction();
@@ -1930,7 +1930,7 @@ public class ViewActions
 		private Icon pausedIcon = Icons.PAUSED_TOOLBAR_ICON;
 		private Icon unpausedIcon = Icons.UNPAUSED_TOOLBAR_ICON;
 
-		public PauseToolBarAction()
+		PauseToolBarAction()
 		{
 			super();
 			updateAction();
@@ -1965,7 +1965,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 2241714830900044485L;
 
-		public FindMenuAction()
+		FindMenuAction()
 		{
 			super("Find");
 			putValue(Action.SMALL_ICON, Icons.FIND_MENU_ITEM);
@@ -1985,7 +1985,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -4080152597948489206L;
 
-		public FindToolBarAction()
+		FindToolBarAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.FIND_TOOLBAR_ICON);
@@ -2005,7 +2005,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -6336357605789928345L;
 
-		public StatisticsMenuAction()
+		StatisticsMenuAction()
 		{
 			super("Statistics");
 			putValue(Action.SMALL_ICON, Icons.STATISTICS_MENU_ICON);
@@ -2022,7 +2022,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 8971640305824353589L;
 
-		public DisconnectMenuAction()
+		DisconnectMenuAction()
 		{
 			super("Disconnect");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.DISCONNECT_ACTION);
@@ -2042,7 +2042,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8665004340745035737L;
 
-		public DisconnectToolBarAction()
+		DisconnectToolBarAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.DISCONNECT_TOOLBAR_ICON);
@@ -2060,7 +2060,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -421929316399318971L;
 
-		public FocusMessageAction()
+		FocusMessageAction()
 		{
 			super("Focus message");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2080,7 +2080,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 4207817900003297701L;
 
-		public FocusEventsAction()
+		FocusEventsAction()
 		{
 			super("Focus events");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2100,7 +2100,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 4771628062043742857L;
 
-		public FindNextAction()
+		FindNextAction()
 		{
 			super("Find next");
 			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
@@ -2121,7 +2121,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -284066693780808511L;
 
-		public FindPreviousAction()
+		FindPreviousAction()
 		{
 			super("Find previous");
 			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
@@ -2141,7 +2141,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 8153060295931745089L;
 
-		public FindNextActiveAction()
+		FindNextActiveAction()
 		{
 			super("Find next active");
 			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
@@ -2162,7 +2162,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 2473715367685180389L;
 
-		public FindPreviousActiveAction()
+		FindPreviousActiveAction()
 		{
 			super("Find previous active");
 			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
@@ -2182,7 +2182,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -1245378100755440576L;
 
-		public ResetFindAction()
+		ResetFindAction()
 		{
 			super("Reset find");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2204,7 +2204,7 @@ public class ViewActions
 		private Icon selectedIcon = Icons.TAIL_MENU_ICON;
 		private Icon unselectedIcon = Icons.EMPTY_16_ICON;
 
-		public ScrollToBottomMenuAction()
+		ScrollToBottomMenuAction()
 		{
 			super("Tail");
 			updateAction();
@@ -2239,7 +2239,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -7793074053120455264L;
 
-		public ScrollToBottomToolBarAction()
+		ScrollToBottomToolBarAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.TAIL_TOOLBAR_ICON);
@@ -2262,7 +2262,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -842677137302613585L;
 
-		public CloseFilterAction()
+		CloseFilterAction()
 		{
 			super("Close this filter");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2303,7 +2303,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -6399148183817841417L;
 
-		public CloseOtherFiltersAction()
+		CloseOtherFiltersAction()
 		{
 			super("Close all other filters");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2345,7 +2345,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 1212878326080544663L;
 
-		public CloseAllFiltersAction()
+		CloseAllFiltersAction()
 		{
 			super("Close all filters");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2383,7 +2383,7 @@ public class ViewActions
 
 		private final EventSource<LoggingEvent> eventSource;
 
-		public ViewLoggingAction(String title, String tooltipText, EventSource<LoggingEvent> eventSource)
+		ViewLoggingAction(String title, String tooltipText, EventSource<LoggingEvent> eventSource)
 		{
 			super(title);
 			this.eventSource = eventSource;
@@ -2419,7 +2419,7 @@ public class ViewActions
 
 		private final EventSource<AccessEvent> eventSource;
 
-		public ViewAccessAction(String title, String tooltipText, EventSource<AccessEvent> eventSource)
+		ViewAccessAction(String title, String tooltipText, EventSource<AccessEvent> eventSource)
 		{
 			super(title);
 			this.eventSource = eventSource;
@@ -2577,7 +2577,7 @@ public class ViewActions
 
 		private SourceIdentifier sourceIdentifier;
 
-		public ViewStatisticsAction(String name, SourceIdentifier sourceIdentifier)
+		ViewStatisticsAction(String name, SourceIdentifier sourceIdentifier)
 		{
 			super(name);
 			this.sourceIdentifier = sourceIdentifier;
@@ -2594,7 +2594,7 @@ public class ViewActions
 	{
 		private JMenu windowMenu;
 
-		public UpdateWindowMenuRunnable(JMenu windowMenu)
+		UpdateWindowMenuRunnable(JMenu windowMenu)
 		{
 			this.windowMenu = windowMenu;
 		}
@@ -2888,7 +2888,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -372250750198620913L;
 
-		public AboutAction()
+		AboutAction()
 		{
 			super("About...");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2905,7 +2905,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 6135867758474252484L;
 
-		public SaveLayoutAction()
+		SaveLayoutAction()
 		{
 			super("Save layout");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2933,7 +2933,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8396518428359553649L;
 
-		public ResetLayoutAction()
+		ResetLayoutAction()
 		{
 			super("Reset layout");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2961,7 +2961,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 529742851501771901L;
 
-		public CheckForUpdateAction()
+		CheckForUpdateAction()
 		{
 			super("Check for Update...");
 			putValue(Action.SMALL_ICON, Icons.CHECK_UPDATE_ICON);
@@ -2978,7 +2978,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 529742851501771901L;
 
-		public TroubleshootingAction()
+		TroubleshootingAction()
 		{
 			super("Troubleshooting...");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2995,7 +2995,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 6942092383339768508L;
 
-		public KeyboardHelpAction()
+		KeyboardHelpAction()
 		{
 			super("Help Topics");
 			putValue(Action.SMALL_ICON, Icons.HELP_MENU_ICON);
@@ -3015,7 +3015,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -3703967582739382172L;
 
-		public TipOfTheDayAction()
+		TipOfTheDayAction()
 		{
 			super("Tip of the Day...");
 			putValue(Action.SMALL_ICON, Icons.TOTD_ICON);
@@ -3032,7 +3032,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -196036112324455446L;
 
-		public PreferencesMenuAction()
+		PreferencesMenuAction()
 		{
 			super("Preferences...");
 			putValue(Action.SMALL_ICON, Icons.PREFERENCES_MENU_ICON);
@@ -3052,7 +3052,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 8353604009441967874L;
 
-		public PreferencesToolBarAction()
+		PreferencesToolBarAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.PREFERENCES_TOOLBAR_ICON);
@@ -3073,7 +3073,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 7535022992770523208L;
 
-		public ShowLoveMenuAction()
+		ShowLoveMenuAction()
 		{
 			super("Show some Love...");
 			putValue(Action.SMALL_ICON, Icons.LOVE_MENU_ICON);
@@ -3090,7 +3090,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -8956952034828513214L;
 
-		public ShowLoveToolbarAction()
+		ShowLoveToolbarAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.LOVE_TOOLBAR_ICON);
@@ -3108,7 +3108,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -1837786931224404611L;
 
-		public DebugAction()
+		DebugAction()
 		{
 			super("Debug");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -3125,7 +3125,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 6693131597277483031L;
 
-		public ExitMenuAction()
+		ExitMenuAction()
 		{
 			super("Exit");
 			putValue(Action.SMALL_ICON, Icons.EXIT_MENU_ICON);
@@ -3145,7 +3145,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 7500131416548647712L;
 
-		public OpenInactiveLogMenuAction()
+		OpenInactiveLogMenuAction()
 		{
 			super("Open inactive log...");
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
@@ -3165,7 +3165,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 7500131416548647712L;
 
-		public OpenMenuAction()
+		OpenMenuAction()
 		{
 			super("Open...");
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
@@ -3185,7 +3185,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 7500131416548647712L;
 
-		public ImportMenuAction()
+		ImportMenuAction()
 		{
 			super("Import...");
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
@@ -3207,7 +3207,7 @@ public class ViewActions
 
 		private EventWrapperViewPanel view;
 
-		public ExportMenuAction()
+		ExportMenuAction()
 		{
 			super("Export...");
 			putValue(Action.SMALL_ICON, Icons.EXPORT_MENU_ICON);
@@ -3233,7 +3233,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 626049491764655228L;
 
-		public CleanAllInactiveLogsMenuAction()
+		CleanAllInactiveLogsMenuAction()
 		{
 			super("Clean all inactive logs");
 			putValue(Action.SMALL_ICON, Icons.CLEAR_MENU_ICON);
@@ -3254,7 +3254,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 3841435361964210123L;
 
-		public PreviousViewAction()
+		PreviousViewAction()
 		{
 			super("Previous view");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREVIOUS_VIEW_ACTION);
@@ -3293,7 +3293,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 6997026628818486446L;
 
-		public NextViewAction()
+		NextViewAction()
 		{
 			super("Next view");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.NEXT_VIEW_ACTION);
@@ -3335,7 +3335,7 @@ public class ViewActions
 
 		private EventWrapperViewPanel view;
 
-		public CopySelectionAction()
+		CopySelectionAction()
 		{
 			super("Copy selection");
 			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");
@@ -3508,7 +3508,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -3282222163767568550L;
 
-		public ShowUnfilteredEventAction()
+		ShowUnfilteredEventAction()
 		{
 			super("Show unfiltered");
 			putValue(Action.SHORT_DESCRIPTION, "Show unfiltered event.");
@@ -3527,7 +3527,7 @@ public class ViewActions
 		private static final long serialVersionUID = 4284532761807647658L;
 		private StackTraceElement stackTraceElement;
 
-		public GotoSourceAction()
+		GotoSourceAction()
 		{
 			super("Go to source");
 			putValue(Action.SHORT_DESCRIPTION, "Show source in IDEA if everything is ok ;)");
@@ -3605,7 +3605,7 @@ public class ViewActions
 		private String columnName;
 		private PersistentTableColumnModel tableColumnModel;
 
-		public ShowHideAction(PersistentTableColumnModel tableColumnModel, String columnName, boolean visible)
+		ShowHideAction(PersistentTableColumnModel tableColumnModel, String columnName, boolean visible)
 		{
 			super(columnName);
 			this.columnName = columnName;

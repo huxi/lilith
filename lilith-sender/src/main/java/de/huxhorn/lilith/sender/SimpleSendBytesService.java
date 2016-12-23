@@ -172,7 +172,7 @@ public class SimpleSendBytesService
 	{
 		private DataOutputStream dataOutputStream;
 
-		public SendBytesThread()
+		SendBytesThread()
 		{
 			super("SendBytes@" + dataOutputStreamFactory);
 			setDaemon(true);
@@ -272,7 +272,7 @@ public class SimpleSendBytesService
 		private class ReconnectionThread
 			extends Thread
 		{
-			public ReconnectionThread()
+			ReconnectionThread()
 			{
 				super("Reconnection@" + dataOutputStreamFactory);
 				setDaemon(true);

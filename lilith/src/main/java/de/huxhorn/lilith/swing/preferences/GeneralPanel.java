@@ -265,7 +265,7 @@ public class GeneralPanel
 	{
 		private static final long serialVersionUID = -5563121695654253673L;
 
-		public BrowseApplicationPathAction()
+		BrowseApplicationPathAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);

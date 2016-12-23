@@ -440,7 +440,7 @@ public class StatisticsPanel
 	{
 		private static final long serialVersionUID = 2578860563978207116L;
 
-		public SaveAction()
+		SaveAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.SAVE_AS_32_ICON);
@@ -484,7 +484,7 @@ public class StatisticsPanel
 	{
 		private static final long serialVersionUID = -577021651355332547L;
 
-		public ShowMaxAction()
+		ShowMaxAction()
 		{
 			super("Show Max");
 			putValue(Action.SHORT_DESCRIPTION, "Show Max");
@@ -498,10 +498,10 @@ public class StatisticsPanel
 
 	private static class WrappedSourceIdentifier
 	{
-		public String resolvedName;
-		public SourceIdentifier sourceIdentifier;
+		String resolvedName;
+		SourceIdentifier sourceIdentifier;
 
-		public WrappedSourceIdentifier(String resolvedName, SourceIdentifier sourceIdentifier)
+		WrappedSourceIdentifier(String resolvedName, SourceIdentifier sourceIdentifier)
 		{
 			this.resolvedName = resolvedName;
 			this.sourceIdentifier = sourceIdentifier;

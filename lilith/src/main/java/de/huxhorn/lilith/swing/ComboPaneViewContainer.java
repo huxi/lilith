@@ -600,7 +600,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	{
 		private JLabel label;
 
-		public MyComboBoxRenderer()
+		MyComboBoxRenderer()
 		{
 			label = new JLabel();
 			label.setOpaque(true);

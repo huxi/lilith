@@ -36,13 +36,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EditSourceNameDialog
 	extends JDialog
 {
-	private final Logger logger = LoggerFactory.getLogger(EditSourceNameDialog.class);
+	private static final long serialVersionUID = -5435322391092309240L;
 
 	private JTextField sourceIdentifier;
 	private JTextField sourceName;
@@ -181,7 +179,9 @@ public class EditSourceNameDialog
 	private class OkAction
 		extends AbstractAction
 	{
-		public OkAction()
+		private static final long serialVersionUID = -1070599097881915176L;
+
+		OkAction()
 		{
 			super("Ok");
 		}
@@ -215,7 +215,9 @@ public class EditSourceNameDialog
 		extends AbstractAction
 	{
 
-		public CancelAction()
+		private static final long serialVersionUID = 7826699096883767188L;
+
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);

@@ -135,7 +135,7 @@ public class AccessStatusTypeTableModel
 	{
 		private TableModelEvent event;
 
-		public FireTableChangeRunnable(TableModelEvent event)
+		FireTableChangeRunnable(TableModelEvent event)
 		{
 			this.event = event;
 		}

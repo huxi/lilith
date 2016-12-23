@@ -410,7 +410,7 @@ public class PreferencesDialog
 	{
 		private static final long serialVersionUID = 3395474960394431088L;
 
-		public OkAction()
+		OkAction()
 		{
 			super("Ok");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ENTER);
@@ -430,7 +430,7 @@ public class PreferencesDialog
 	{
 		private static final long serialVersionUID = -4047672339764590549L;
 
-		public ApplyAction()
+		ApplyAction()
 		{
 			super("Apply");
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_A);
@@ -447,7 +447,7 @@ public class PreferencesDialog
 	{
 		private static final long serialVersionUID = -7109027518233905200L;
 
-		public ResetAction()
+		ResetAction()
 		{
 			super("Reset");
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
@@ -464,7 +464,7 @@ public class PreferencesDialog
 	{
 		private static final long serialVersionUID = 6933499606501725571L;
 
-		public CancelAction()
+		CancelAction()
 		{
 			super("Cancel");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
@@ -659,7 +659,7 @@ public class PreferencesDialog
 	{
 		private JLabel label;
 
-		public MyComboBoxRenderer()
+		MyComboBoxRenderer()
 		{
 			label = new JLabel();
 			label.setOpaque(true);

@@ -139,7 +139,7 @@ public class TaskManagerPanel<T>
 
 		private Task task;
 
-		public CancelTaskAction()
+		CancelTaskAction()
 		{
 			super("Cancel task");
 			putValue(Action.SMALL_ICON, Icons.STOP_16_ICON);
