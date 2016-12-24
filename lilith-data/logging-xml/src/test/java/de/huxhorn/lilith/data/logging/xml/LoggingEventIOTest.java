@@ -271,10 +271,10 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 		Marker marker = new Marker("marker");
-		Marker marker2_1 = new Marker("marker2-1");
-		Marker marker2_2 = new Marker("marker2-2");
-		marker.add(marker2_1);
-		marker.add(marker2_2);
+		Marker markerTwo1 = new Marker("markerTwo1");
+		Marker markerTwo2 = new Marker("markerTwo2");
+		marker.add(markerTwo1);
+		marker.add(markerTwo2);
 		event.setMarker(marker);
 		check(event, true);
 	}
@@ -288,13 +288,13 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 		Marker marker = new Marker("marker");
-		Marker marker2_1 = new Marker("marker2-1");
-		Marker marker2_2 = new Marker("marker2-2");
-		Marker marker3_1 = new Marker("marker3-1");
-		marker.add(marker2_1);
-		marker.add(marker2_2);
-		marker2_2.add(marker3_1);
-		marker3_1.add(marker2_1);
+		Marker markerTwo1 = new Marker("markerTwo1");
+		Marker markerTwo2 = new Marker("markerTwo2");
+		Marker markerThree = new Marker("markerThree");
+		marker.add(markerTwo1);
+		marker.add(markerTwo2);
+		markerTwo2.add(markerThree);
+		markerThree.add(markerTwo1);
 		event.setMarker(marker);
 		check(event, true);
 	}
@@ -351,13 +351,13 @@ public class LoggingEventIOTest
 		event.setNdc(ndc);
 
 		Marker marker = new Marker("marker");
-		Marker marker2_1 = new Marker("marker2-1");
-		Marker marker2_2 = new Marker("marker2-2");
-		Marker marker3_1 = new Marker("marker3-1");
-		marker.add(marker2_1);
-		marker.add(marker2_2);
-		marker2_2.add(marker3_1);
-		marker3_1.add(marker2_1);
+		Marker markerTwo1 = new Marker("markerTwo1");
+		Marker markerTwo2 = new Marker("markerTwo2");
+		Marker markerThree = new Marker("markerThree");
+		marker.add(markerTwo1);
+		marker.add(markerTwo2);
+		markerTwo2.add(markerThree);
+		markerThree.add(markerTwo1);
 		event.setMarker(marker);
 
 		event.setCallStack(createStackTraceElements());
@@ -398,13 +398,13 @@ public class LoggingEventIOTest
 		event.setNdc(ndc);
 
 		Marker marker = new Marker("marker");
-		Marker marker2_1 = new Marker("marker2-1");
-		Marker marker2_2 = new Marker("marker2-2");
-		Marker marker3_1 = new Marker("marker3-1");
-		marker.add(marker2_1);
-		marker.add(marker2_2);
-		marker2_2.add(marker3_1);
-		marker3_1.add(marker2_1);
+		Marker markerTwo1 = new Marker("markerTwo1");
+		Marker markerTwo2 = new Marker("markerTwo2");
+		Marker markerThree = new Marker("markerThree");
+		marker.add(markerTwo1);
+		marker.add(markerTwo2);
+		markerTwo2.add(markerThree);
+		markerThree.add(markerTwo1);
 		event.setMarker(marker);
 
 		event.setCallStack(createStackTraceElements());

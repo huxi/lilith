@@ -59,7 +59,7 @@ public class MessageFormatterUseCases
 		Integer[] ia1 = new Integer[]{10, 20, 30};
 
 		Object[][] multiOA = new Object[][]{ia0, ia1};
-		Object[][][] _3DOA = new Object[][][]{multiOA, multiOA};
+		Object[][][] multiOATwice = new Object[][][]{multiOA, multiOA};
 
 		Object[] cyclicA = new Object[1];
 		cyclicA[0] = cyclicA;
@@ -151,7 +151,7 @@ public class MessageFormatterUseCases
 				new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", new float[][]{{1, 2}, {10, 20}}, t}, 2, "a[[1.0, 2.0], [10.0, 20.0]]", t),
 				new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", new double[][]{{1, 2}, {10, 20}}, t}, 2, "a[[1.0, 2.0], [10.0, 20.0]]", t),
 				new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", multiOA, t}, 2, "a[[1, 2, 3], [10, 20, 30]]", t),
-				new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", _3DOA, t}, 2, "a[[[1, 2, 3], [10, 20, 30]], [[1, 2, 3], [10, 20, 30]]]", t),
+				new UseCase("MultiDimensionalArrayValues", "{}{}", new Object[]{"a", multiOATwice, t}, 2, "a[[[1, 2, 3], [10, 20, 30]], [[1, 2, 3], [10, 20, 30]]]", t),
 				new UseCase("CyclicArrays", "{}", new Object[]{cyclicA, t}, new String[]{"[" + cyclicARec + "]"}, 1, "[" + cyclicARec + "]", t),
 				new UseCase("CyclicArrays", "{}{}", cyclicB, new String[]{"1", "[2, [3, [1, " + cyclicBRec + "]]]"}, 2, "1[2, [3, [1, " + cyclicBRec + "]]]", null),
 				new UseCase("CyclicArrays", "{}{}", cyclicC, new String[]{"1", "[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]"}, 2, "1[2, [3, [1, " + cyclicCRec + ", FooThrowable]]]", t),
