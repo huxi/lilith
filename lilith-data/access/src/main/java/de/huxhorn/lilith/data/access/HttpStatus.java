@@ -123,13 +123,13 @@ public enum HttpStatus
 	NETWORK_CONNECT_TIMEOUT_ERROR(599, Type.SERVER_ERROR, "Network connect timeout error", Specification.MICROSOFT);
 
 
-	private static final Map<Integer, HttpStatus> codeMap = new HashMap<>();
+	private static final Map<Integer, HttpStatus> CODE_MAP = new HashMap<>();
 
 	static
 	{
 		for(HttpStatus code : HttpStatus.values())
 		{
-			HttpStatus previous = codeMap.put(code.getCode(), code);
+			HttpStatus previous = CODE_MAP.put(code.getCode(), code);
 			if(previous != null)
 			{
 				throw new RuntimeException("Duplicate entry for HttpStatus "+code.getCode()+"!");
@@ -139,7 +139,7 @@ public enum HttpStatus
 
 	public static HttpStatus getStatus(int code)
 	{
-		return codeMap.get(code);
+		return CODE_MAP.get(code);
 	}
 
 	public static HttpStatus.Type getType(int code)

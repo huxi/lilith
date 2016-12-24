@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 public class Icons
 {
-	private static final Logger logger = LoggerFactory.getLogger(Icons.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Icons.class);
 
 	public static final ImageIcon EMPTY_16_ICON = resolveImageIcon("/otherGraphics/empty16.png");
 	public static final ImageIcon CLEAR_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-clear.png");
@@ -74,7 +74,7 @@ public class Icons
 		{
 			return new ImageIcon(url);
 		}
-		if(logger.isWarnEnabled()) logger.warn("Failed to create ImageIcon from resource '{}'!", resourcePath);
+		if(LOGGER.isWarnEnabled()) LOGGER.warn("Failed to create ImageIcon from resource '{}'!", resourcePath);
 		return null;
 	}
 }

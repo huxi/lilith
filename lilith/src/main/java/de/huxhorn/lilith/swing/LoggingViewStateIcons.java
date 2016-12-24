@@ -34,58 +34,58 @@ import javax.swing.ImageIcon;
 
 public class LoggingViewStateIcons
 {
-	private static final ImageIcon activeGlobalIcon;
-	private static final ImageIcon inactiveGlobalIcon;
-	private static final Map<LoggingViewState, ImageIcon> activeIcons;
-	private static final Map<LoggingViewState, ImageIcon> inactiveIcons;
+	private static final ImageIcon ACTIVE_GLOBAL_ICON;
+	private static final ImageIcon INACTIVE_GLOBAL_ICON;
+	private static final Map<LoggingViewState, ImageIcon> ACTIVE_ICONS;
+	private static final Map<LoggingViewState, ImageIcon> INACTIVE_ICONS;
 
 	static
 	{
 		URL url = LoggingViewStateIcons.class.getResource("/tango/16x16/categories/applications-internet.png");
 		if (url != null)
 		{
-			activeGlobalIcon = new ImageIcon(url);
-			inactiveGlobalIcon = getDisabledIcon(activeGlobalIcon);
+			ACTIVE_GLOBAL_ICON = new ImageIcon(url);
+			INACTIVE_GLOBAL_ICON = getDisabledIcon(ACTIVE_GLOBAL_ICON);
 		}
 		else
 		{
-			activeGlobalIcon = null;
-			inactiveGlobalIcon = null;
+			ACTIVE_GLOBAL_ICON = null;
+			INACTIVE_GLOBAL_ICON = null;
 		}
-		activeIcons = new HashMap<>();
-		inactiveIcons = new HashMap<>();
+		ACTIVE_ICONS = new HashMap<>();
+		INACTIVE_ICONS = new HashMap<>();
 
 		url = LoggingViewStateIcons.class.getResource("/tango/16x16/status/network-receive.png");
 		if (url != null)
 		{
-			activeIcons.put(LoggingViewState.ACTIVE, new ImageIcon(url));
+			ACTIVE_ICONS.put(LoggingViewState.ACTIVE, new ImageIcon(url));
 		}
 
 		url = LoggingViewStateIcons.class.getResource("/tango/16x16/status/network-offline.png");
 		if (url != null)
 		{
-			activeIcons.put(LoggingViewState.INACTIVE, new ImageIcon(url));
+			ACTIVE_ICONS.put(LoggingViewState.INACTIVE, new ImageIcon(url));
 		}
 
 		url = LoggingViewStateIcons.class.getResource("/tango/16x16/emotes/face-grin.png");
 		if (url != null)
 		{
-			activeIcons.put(LoggingViewState.UPDATING_FILE, new ImageIcon(url));
+			ACTIVE_ICONS.put(LoggingViewState.UPDATING_FILE, new ImageIcon(url));
 		}
 
 		url = LoggingViewStateIcons.class.getResource("/tango/16x16/emotes/face-plain.png");
 		if (url != null)
 		{
-			activeIcons.put(LoggingViewState.STALE_FILE, new ImageIcon(url));
+			ACTIVE_ICONS.put(LoggingViewState.STALE_FILE, new ImageIcon(url));
 		}
 
-		for (Map.Entry<LoggingViewState, ImageIcon> current : activeIcons.entrySet())
+		for (Map.Entry<LoggingViewState, ImageIcon> current : ACTIVE_ICONS.entrySet())
 		{
 			LoggingViewState key = current.getKey();
 			ImageIcon value = current.getValue();
 			if(value != null)
 			{
-				inactiveIcons.put(key, getDisabledIcon(value));
+				INACTIVE_ICONS.put(key, getDisabledIcon(value));
 			}
 		}
 	}
@@ -100,18 +100,18 @@ public class LoggingViewStateIcons
 		ImageIcon result;
 		if(disabled)
 		{
-			result = inactiveGlobalIcon;
+			result = INACTIVE_GLOBAL_ICON;
 			if (state != null)
 			{
-				result = inactiveIcons.get(state);
+				result = INACTIVE_ICONS.get(state);
 			}
 		}
 		else
 		{
-			result = activeGlobalIcon;
+			result = ACTIVE_GLOBAL_ICON;
 			if (state != null)
 			{
-				result = activeIcons.get(state);
+				result = ACTIVE_ICONS.get(state);
 			}
 		}
 		return result;

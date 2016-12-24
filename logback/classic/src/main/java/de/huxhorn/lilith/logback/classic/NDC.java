@@ -38,12 +38,12 @@ import de.huxhorn.lilith.data.logging.Message;
 
 public class NDC
 {
-	private static final NDCAdapter ndcAdapter;
+	private static final NDCAdapter NDC_ADAPTER;
 
 	static
 	{
 		// TODO: configuration
-		ndcAdapter = new SimpleNDCAdapter();
+		NDC_ADAPTER = new SimpleNDCAdapter();
 	}
 
 	private NDC()
@@ -53,7 +53,7 @@ public class NDC
 
 	public static void push(String messagePattern, Object... arguments)
 	{
-		ndcAdapter.push(messagePattern, arguments);
+		NDC_ADAPTER.push(messagePattern, arguments);
 	}
 
 	/**
@@ -63,27 +63,27 @@ public class NDC
 	 */
 	public static void pop()
 	{
-		ndcAdapter.pop();
+		NDC_ADAPTER.pop();
 	}
 
 	public static int getDepth()
 	{
-		return ndcAdapter.getDepth();
+		return NDC_ADAPTER.getDepth();
 	}
 
 	public static void setMaximumDepth(int maximumDepth)
 	{
-		ndcAdapter.setMaximumDepth(maximumDepth);
+		NDC_ADAPTER.setMaximumDepth(maximumDepth);
 	}
 
 	public static boolean isEmpty()
 	{
-		return ndcAdapter.isEmpty();
+		return NDC_ADAPTER.isEmpty();
 	}
 
 	public static void clear()
 	{
-		ndcAdapter.clear();
+		NDC_ADAPTER.clear();
 	}
 
 	/**
@@ -95,6 +95,6 @@ public class NDC
 	 */
 	public static Message[] getContextStack()
 	{
-		return ndcAdapter.getContextStack();
+		return NDC_ADAPTER.getContextStack();
 	}
 }

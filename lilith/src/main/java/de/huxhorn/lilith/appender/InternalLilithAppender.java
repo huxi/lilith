@@ -44,12 +44,12 @@ import java.util.Map;
 public class InternalLilithAppender
 	extends AppenderBase<ch.qos.logback.classic.spi.LoggingEvent>
 {
-	private static final FileBuffer<EventWrapper<LoggingEvent>> fileBuffer;
-	private static final SourceIdentifier sourceIdentifier;
+	private static final FileBuffer<EventWrapper<LoggingEvent>> FILE_BUFFER;
+	private static final SourceIdentifier SOURCE_IDENTIFIER;
 
 	static
 	{
-		sourceIdentifier = new SourceIdentifier("Lilith");
+		SOURCE_IDENTIFIER = new SourceIdentifier("Lilith");
 
 		LogFileFactoryImpl logFileFactory =
 			new LogFileFactoryImpl(new File(ApplicationPreferences.DEFAULT_APPLICATION_PATH, "logs/logging"));
@@ -61,19 +61,19 @@ public class InternalLilithAppender
 		// TODO: configurable format and compressed
 
 		FileBufferFactory<LoggingEvent> fileBufferFactory = new LoggingFileBufferFactory(logFileFactory, loggingMetaData);
-		fileBuffer = fileBufferFactory.createActiveBuffer(sourceIdentifier);
+		FILE_BUFFER = fileBufferFactory.createActiveBuffer(SOURCE_IDENTIFIER);
 	}
 
 	public static Buffer<EventWrapper<LoggingEvent>> getBuffer()
 	{
-		return fileBuffer;
+		return FILE_BUFFER;
 	}
 
 	public static SourceIdentifier getSourceIdentifier()
 	{
 		try
 		{
-			return sourceIdentifier.clone();
+			return SOURCE_IDENTIFIER.clone();
 		}
 		catch(CloneNotSupportedException e)
 		{
@@ -93,13 +93,13 @@ public class InternalLilithAppender
 
 	protected void append(ch.qos.logback.classic.spi.LoggingEvent event)
 	{
-		if(event != null && fileBuffer != null) // just to make sure...
+		if(event != null && FILE_BUFFER != null) // just to make sure...
 		{
 			localId++;
 			event.getCallerData();
 			LoggingEvent lilithEvent = converter.convert(event);
-			EventWrapper<LoggingEvent> wrapper = new EventWrapper<>(sourceIdentifier, localId, lilithEvent);
-			fileBuffer.add(wrapper);
+			EventWrapper<LoggingEvent> wrapper = new EventWrapper<>(SOURCE_IDENTIFIER, localId, lilithEvent);
+			FILE_BUFFER.add(wrapper);
 		}
 	}
 }

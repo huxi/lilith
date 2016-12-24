@@ -241,8 +241,8 @@ public class MainFrame
 	private List<AutostartRunnable> autostartProcesses;
 	private SenderService senderService;
 	private boolean enableBonjour;
-	private static final boolean isMac;
-	private static final boolean isWindows;
+	private static final boolean IS_MAC;
+	private static final boolean IS_WINDOWS;
 	private List<SavedCondition> activeConditions;
 	private Map<LoggingEvent.Level, Colors> levelColors;
 	private Map<HttpStatus.Type, Colors> statusColors;
@@ -273,15 +273,15 @@ public class MainFrame
 	static
 	{
 		DefaultApplication app = new DefaultApplication();
-		isMac = app.isMac();
-		if(!isMac)
+		IS_MAC = app.isMac();
+		if(!IS_MAC)
 		{
 			String osName = System.getProperty("os.name").toLowerCase(Locale.US);
-			isWindows = osName.startsWith("windows");
+			IS_WINDOWS = osName.startsWith("windows");
 		}
 		else
 		{
-			isWindows = false;
+			IS_WINDOWS = false;
 		}
 	}
 
@@ -2451,12 +2451,12 @@ public class MainFrame
 			return null;
 		}
 		String[] result = null;
-		if(isWindows)
+		if(IS_WINDOWS)
 		{
 			result = new String[WINDOWS_OPEN_URL_ARRAY.length];
 			System.arraycopy(WINDOWS_OPEN_URL_ARRAY, 0, result, 0, WINDOWS_OPEN_URL_ARRAY.length);
 		}
-		else if(isMac)
+		else if(IS_MAC)
 		{
 			result = new String[MAC_OPEN_URL_ARRAY.length];
 			System.arraycopy(MAC_OPEN_URL_ARRAY, 0, result, 0, MAC_OPEN_URL_ARRAY.length);

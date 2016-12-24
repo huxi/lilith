@@ -27,33 +27,33 @@ import org.slf4j.LoggerFactory;
 
 public class LilithKeyStrokes
 {
-	private static final Map<String, KeyStroke> actionKeyStrokes=new HashMap<>();
-	private static final Map<KeyStroke, String> keyStrokeActions=new HashMap<>();
+	private static final Logger LOGGER = LoggerFactory.getLogger(LilithKeyStrokes.class);
+	private static final Map<String, KeyStroke> ACTION_KEY_STROKES =new HashMap<>();
+	private static final Map<KeyStroke, String> KEY_STROKE_ACTIONS =new HashMap<>();
 
 	private static void addKeyStroke(String keyStrokeString, String actionName)
 	{
-		final Logger logger = LoggerFactory.getLogger(LilithKeyStrokes.class);
 
 		KeyStroke keyStroke = KeyStrokes.resolveAcceleratorKeyStroke(keyStrokeString);
 		if(keyStroke == null)
 		{
-			if(logger.isErrorEnabled()) logger.error("KeyStroke '{}' for '{}' did not resolve to a KeyStroke!", keyStrokeString, actionName);
+			if(LOGGER.isErrorEnabled()) LOGGER.error("KeyStroke '{}' for '{}' did not resolve to a KeyStroke!", keyStrokeString, actionName);
 			return;
 		}
-		String existingActionName = keyStrokeActions.get(keyStroke);
+		String existingActionName = KEY_STROKE_ACTIONS.get(keyStroke);
 		if(existingActionName != null)
 		{
-			if(logger.isWarnEnabled()) logger.warn("KeyStroke '{}' is already used for '{}'! Ignoring '{}'.", keyStrokeString, existingActionName, actionName);
+			if(LOGGER.isWarnEnabled()) LOGGER.warn("KeyStroke '{}' is already used for '{}'! Ignoring '{}'.", keyStrokeString, existingActionName, actionName);
 			return;
 		}
-		KeyStroke existingKeyStroke = actionKeyStrokes.get(actionName);
+		KeyStroke existingKeyStroke = ACTION_KEY_STROKES.get(actionName);
 		if(existingKeyStroke != null)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Duplicate entry for '{}'! Won't overwrite '{}' with '{}'.", actionName, existingKeyStroke, keyStroke);
+			if(LOGGER.isWarnEnabled()) LOGGER.warn("Duplicate entry for '{}'! Won't overwrite '{}' with '{}'.", actionName, existingKeyStroke, keyStroke);
 			return;
 		}
-		actionKeyStrokes.put(actionName, keyStroke);
-		keyStrokeActions.put(keyStroke, actionName);
+		ACTION_KEY_STROKES.put(actionName, keyStroke);
+		KEY_STROKE_ACTIONS.put(keyStroke, actionName);
 	}
 
 	public static final String ATTACH_ACTION = "ATTACH_ACTION";
@@ -154,11 +154,11 @@ public class LilithKeyStrokes
 
 	public static KeyStroke getKeyStroke(String actionName)
 	{
-		return actionKeyStrokes.get(actionName);
+		return ACTION_KEY_STROKES.get(actionName);
 	}
 
 	public static String getActionName(KeyStroke keyStroke)
 	{
-		return keyStrokeActions.get(keyStroke);
+		return KEY_STROKE_ACTIONS.get(keyStroke);
 	}
 }

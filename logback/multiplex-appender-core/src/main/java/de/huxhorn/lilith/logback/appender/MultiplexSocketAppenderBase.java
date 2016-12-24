@@ -240,7 +240,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 			if(creatingUUID)
 			{
 				//setUUID(UUID.randomUUID().toString());
-				setUUID(ULIDHolder.ulid.nextULID());
+				setUUID(ULIDHolder.ULID.nextULID());
 			}
 			else
 			{
@@ -365,6 +365,6 @@ public abstract class MultiplexSocketAppenderBase<E>
 	// lazily initialized ULID instance
 	private static class ULIDHolder
 	{
-		static final ULID ulid = new ULID();
+		static final ULID ULID = new ULID();
 	}
 }

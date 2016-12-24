@@ -36,7 +36,7 @@ public class LogTruthRunnable
 		this.formatted = formatted;
 	}
 
-	private static final String[][] beliefs =
+	private static final String[][] BELIEFS =
 			{
 					{
 							"The",
@@ -182,7 +182,7 @@ public class LogTruthRunnable
 	private static String getTruth()
 	{
 		StringBuilder result = new StringBuilder();
-		for(String[] current : beliefs)
+		for(String[] current : BELIEFS)
 		{
 			result.append(current[(int) (Math.random() * current.length)]).append(" ");
 		}
