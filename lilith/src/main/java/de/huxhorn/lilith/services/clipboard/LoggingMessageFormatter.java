@@ -26,7 +26,7 @@ public class LoggingMessageFormatter
 {
 	private static final long serialVersionUID = -1333203619502038428L;
 
-	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_MESSAGE_ACTION).toString();
+	private static final String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_MESSAGE_ACTION).toString();
 
 	public String getName()
 	{

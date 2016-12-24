@@ -27,7 +27,7 @@ public class LoggingCallStackFormatter
 {
 	private static final long serialVersionUID = 861522045350829907L;
 
-	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_CALL_STACK_ACTION).toString();
+	private static final String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_CALL_STACK_ACTION).toString();
 
 	public String getName()
 	{

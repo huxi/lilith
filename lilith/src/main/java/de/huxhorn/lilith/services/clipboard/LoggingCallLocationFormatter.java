@@ -27,7 +27,7 @@ public class LoggingCallLocationFormatter
 {
 	private static final long serialVersionUID = 1443730189004642289L;
 
-	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_CALL_LOCATION_ACTION).toString();
+	private static final String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_CALL_LOCATION_ACTION).toString();
 
 	public String getName()
 	{

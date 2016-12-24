@@ -26,7 +26,7 @@ public class LoggingThrowableNameFormatter
 {
 	private static final long serialVersionUID = 1139703047038656939L;
 
-	private static String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_THROWABLE_NAME_ACTION).toString();
+	private static final String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_THROWABLE_NAME_ACTION).toString();
 
 	public String getName()
 	{
