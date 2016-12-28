@@ -191,6 +191,7 @@ subprojects {
 			//'commons-io-unsafe-2.5',
 			]
 		ignoreFailures = false
+		//failOnUnresolvableSignatures = false
 	}
 
 	jacocoTestReport {
