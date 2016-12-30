@@ -163,7 +163,7 @@ public class LoggingEventReader
 		{
 			Map<String, String> mdc = new HashMap<>();
 			reader.nextTag();
-			for(; ;)
+			for(;;)
 			{
 				MdcEntry entry = readMdcEntry(reader);
 				if(entry == null)

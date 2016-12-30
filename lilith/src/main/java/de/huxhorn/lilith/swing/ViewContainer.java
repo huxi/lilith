@@ -237,7 +237,7 @@ public abstract class ViewContainer<T extends Serializable>
 				// restore mapping of original view, this time with the new callable
 				filterMapping.put(callable, original);
 				// start the new task.
-				taskManager.startTask(callable, "Filtering", createFilteringMessage(metaData) , metaData);
+				taskManager.startTask(callable, "Filtering", createFilteringMessage(metaData), metaData);
 			}
 		}
 		else

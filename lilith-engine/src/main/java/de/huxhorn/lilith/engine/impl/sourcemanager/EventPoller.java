@@ -75,7 +75,7 @@ public class EventPoller<T extends Serializable>
 
 	public void run()
 	{
-		for(; ;)
+		for(;;)
 		{
 			long pollTime = System.currentTimeMillis();
 			List<EventWrapper<T>> events = queue.removeAll();

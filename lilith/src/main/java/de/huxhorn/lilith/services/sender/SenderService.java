@@ -509,7 +509,7 @@ public class SenderService
 
 		public void run()
 		{
-			for(; ;)
+			for(;;)
 			{
 				if(shutDown)
 				{

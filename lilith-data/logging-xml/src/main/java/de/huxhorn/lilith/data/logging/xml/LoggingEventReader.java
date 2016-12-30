@@ -250,7 +250,7 @@ public class LoggingEventReader
 		{
 			Map<String, String> map = new HashMap<>();
 			reader.nextTag();
-			for(; ;)
+			for(;;)
 			{
 				StringMapEntry entry = readStringMapEntry(reader);
 				if(entry == null)
@@ -280,7 +280,7 @@ public class LoggingEventReader
 		if(XMLStreamConstants.START_ELEMENT == type && nodeName.equals(reader.getLocalName()))
 		{
 			reader.nextTag();
-			for(; ;)
+			for(;;)
 			{
 				ExtendedStackTraceElement elem = steReader.read(reader);//readStackTraceElement(reader);
 				if(elem == null)
@@ -320,7 +320,7 @@ public class LoggingEventReader
 			marker = new Marker(name);
 			markers.put(name, marker);
 			reader.nextTag();
-			for(; ;)
+			for(;;)
 			{
 				Marker child = recursiveReadMarker(reader, markers);
 				if(child != null)
@@ -355,7 +355,7 @@ public class LoggingEventReader
 		{
 			Map<String, String> mdc = new HashMap<>();
 			reader.nextTag();
-			for(; ;)
+			for(;;)
 			{
 				StringMapEntry entry = readStringMapEntry(reader);
 				if(entry == null)
@@ -379,7 +379,7 @@ public class LoggingEventReader
 		{
 			List<Message> ndc = new ArrayList<>();
 			reader.nextTag();
-			for(; ;)
+			for(;;)
 			{
 				Message entry = readNdcEntry(reader);
 				if(entry == null)
@@ -506,7 +506,7 @@ public class LoggingEventReader
 		{
 			reader.nextTag();
 			List<String> args = new ArrayList<>();
-			for(; ;)
+			for(;;)
 			{
 				type = reader.getEventType();
 				if(XMLStreamConstants.END_ELEMENT == type && ARGUMENTS_NODE.equals(reader.getLocalName()))

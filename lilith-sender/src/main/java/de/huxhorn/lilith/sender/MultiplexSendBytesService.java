@@ -143,7 +143,7 @@ public class MultiplexSendBytesService
 	{
 		public void run()
 		{
-			for(; ;)
+			for(;;)
 			{
 				try
 				{

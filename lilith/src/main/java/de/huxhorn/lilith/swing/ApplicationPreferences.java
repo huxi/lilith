@@ -1522,7 +1522,7 @@ public class ApplicationPreferences
 		try
 		{
 			reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
-			for(; ;)
+			for(;;)
 			{
 				String currentLine = reader.readLine();
 				if(currentLine == null)
@@ -2856,7 +2856,7 @@ public class ApplicationPreferences
 		{
 			messageDigest = MessageDigest.getInstance("MD5");
 			byte[] buffer = new byte[1024];
-			for(; ;)
+			for(;;)
 			{
 				int read = input.read(buffer);
 				if(read < 0)

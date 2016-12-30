@@ -257,7 +257,7 @@ public class Log4j2LoggingConverter
 	    }
 
 		ThrowableInfo[] result = new ThrowableInfo[array.length];
-		for (int i=0 ; i<result.length ; i++)
+		for (int i=0; i<result.length; i++)
 		{
 			result[i]=convert(array[i]);
 		}
@@ -272,7 +272,7 @@ public class Log4j2LoggingConverter
 		}
 
 		ExtendedStackTraceElement[] result = new ExtendedStackTraceElement[array.length];
-		for(int i=0 ; i<result.length ; i++)
+		for(int i=0; i<result.length; i++)
 		{
 			result[i] = convert(array[i]);
 		}

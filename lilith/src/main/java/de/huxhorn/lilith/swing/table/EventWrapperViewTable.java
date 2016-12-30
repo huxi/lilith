@@ -538,7 +538,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		ViewContainer result = null;
 		Container parentContainer = getParent();
-		for(; ;)
+		for(;;)
 		{
 			if(parentContainer instanceof ViewContainer)
 			{

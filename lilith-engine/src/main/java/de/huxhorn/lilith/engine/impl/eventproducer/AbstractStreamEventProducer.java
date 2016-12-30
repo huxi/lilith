@@ -142,7 +142,7 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 	{
 		public void run()
 		{
-			for(; ;)
+			for(;;)
 			{
 				try
 				{

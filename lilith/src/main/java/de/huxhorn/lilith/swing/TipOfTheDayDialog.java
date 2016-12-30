@@ -239,7 +239,7 @@ public class TipOfTheDayDialog
 	private void initHelpResources()
 	{
 		tipsOfTheDay = new ArrayList<>();
-		for(int i = 0; ; i++)
+		for(int i = 0;; i++)
 		{
 			URL url = TipOfTheDayDialog.class.getResource("/tips/" + i + ".xhtml");
 			if(url == null)

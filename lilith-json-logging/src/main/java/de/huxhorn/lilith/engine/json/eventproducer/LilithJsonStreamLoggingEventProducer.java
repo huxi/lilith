@@ -67,9 +67,9 @@ public class LilithJsonStreamLoggingEventProducer
 			try
 			{
 				ArrayList<Byte> bytes = new ArrayList<>();
-				for(; ;)
+				for(;;)
 				{
-					for(; ;)
+					for(;;)
 					{
 						int readByte = inputStream.read();
 						if(readByte == -1)

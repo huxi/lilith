@@ -82,7 +82,7 @@ public class JulXmlStreamLoggingEventProducer
 				XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(
 						new InputStreamReader(inputStream, StandardCharsets.UTF_8))
 				);
-				for(; ;)
+				for(;;)
 				{
 					try
 					{

@@ -191,7 +191,7 @@ public class ConditionsPanel
 
 		editConditionDialog.setSavedCondition(savedCondition);
 		editConditionDialog.setAdding(adding);
-		for(; ;)
+		for(;;)
 		{
 			Windows.showWindow(editConditionDialog, preferencesDialog, true);
 			if(editConditionDialog.isCanceled())

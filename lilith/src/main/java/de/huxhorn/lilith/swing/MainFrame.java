@@ -3393,7 +3393,7 @@ public class MainFrame
 				try
 				{
 
-					for(; ;)
+					for(;;)
 					{
 						String line = inputReader.readLine();
 						if(line == null)
@@ -3495,7 +3495,7 @@ public class MainFrame
 				try
 				{
 
-					for(; ;)
+					for(;;)
 					{
 						String line = inputReader.readLine();
 						if(line == null)

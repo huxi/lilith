@@ -257,7 +257,7 @@ public class ThrowableInfo
 		if(stackTrace != null)
 		{
 			result.stackTrace = new ExtendedStackTraceElement[stackTrace.length];
-			for(int i=0 ; i<stackTrace.length ; i++)
+			for(int i=0; i<stackTrace.length; i++)
 			{
 				ExtendedStackTraceElement current = stackTrace[i];
 				if(current != null)
@@ -275,7 +275,7 @@ public class ThrowableInfo
 		if(suppressed != null)
 		{
 			result.suppressed = new ThrowableInfo[suppressed.length];
-			for(int i=0 ; i<suppressed.length ; i++)
+			for(int i=0; i<suppressed.length; i++)
 			{
 				ThrowableInfo current = suppressed[i];
 				if(current != null)

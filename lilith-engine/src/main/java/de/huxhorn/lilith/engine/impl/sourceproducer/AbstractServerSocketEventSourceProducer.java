@@ -99,7 +99,7 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 
 	public void run()
 	{
-		for(; ;)
+		for(;;)
 		{
 			Socket socket;
 			try

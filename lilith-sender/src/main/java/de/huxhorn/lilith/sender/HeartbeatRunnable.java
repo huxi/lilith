@@ -62,7 +62,7 @@ public class HeartbeatRunnable
 
 	public void run()
 	{
-		for(; ;)
+		for(;;)
 		{
 			try
 			{

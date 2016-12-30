@@ -72,7 +72,7 @@ public class ThrowableInfoParser
 			return null;
 		}
 
-		return parse(throwableInfoLines, /*startIndex=*/0 , /*indent=*/0).throwableInfo;
+		return parse(throwableInfoLines, /*startIndex=*/0, /*indent=*/0).throwableInfo;
 	}
 
 	private static class ThrowableInfoParseResult
@@ -100,7 +100,7 @@ public class ThrowableInfoParser
 		List<ThrowableInfo> suppressedInfos = null;
 
 		int index = startIndex;
-		for(; index<lineCount ; index++)
+		for(; index<lineCount; index++)
 		{
 			String currentLine = throwableInfoLines.get(index);
 			Matcher atMatcher = atMatcher(currentLine);

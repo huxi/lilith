@@ -215,7 +215,7 @@ public class SimpleSendBytesService
 			reconnectionThread.start();
 
 			List<byte[]> copy = new ArrayList<>(queueSize);
-			for(; ;)
+			for(;;)
 			{
 				try
 				{
@@ -280,7 +280,7 @@ public class SimpleSendBytesService
 
 			public void run()
 			{
-				for(; ;)
+				for(;;)
 				{
 					boolean connect = false;
 					synchronized(lock)

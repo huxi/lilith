@@ -86,7 +86,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	{
 		public void run()
 		{
-			for(; ;)
+			for(;;)
 			{
 				try
 				{
@@ -127,7 +127,7 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		public void run()
 		{
 			MDC.put(SOURCE_IDENTIFIER_MDC_KEY, sourceIdentifier.toString());
-			for(; ;)
+			for(;;)
 			{
 				try
 				{

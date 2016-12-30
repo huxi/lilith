@@ -126,7 +126,7 @@ public class Log4jImportCallable
 		StringBuilder builder = new StringBuilder();
 
 		result = 0;
-		for(; ;)
+		for(;;)
 		{
 			String line = br.readLine();
 			setCurrentStep(cis.getByteCount());
@@ -135,7 +135,7 @@ public class Log4jImportCallable
 				evaluate(builder.toString());
 				break;
 			}
-			for(; ;)
+			for(;;)
 			{
 				int closeIndex = line.indexOf(CLOSING_LOG4J_EVENT_TAG);
 				if(closeIndex >= 0)

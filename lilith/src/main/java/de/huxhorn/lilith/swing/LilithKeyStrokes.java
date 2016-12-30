@@ -147,10 +147,10 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift V", PASTE_STACK_TRACE_ELEMENT_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift W", CLOSE_OTHER_FILTERS_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift X", CLEAN_ALL_INACTIVE_LOGS_ACTION);
-		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt C" , COPY_MESSAGE_PATTERN_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt C", COPY_MESSAGE_PATTERN_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt S", COPY_CALL_STACK_ACTION);
-		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt T" , COPY_THROWABLE_NAME_ACTION);
-		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W" , CLOSE_ALL_ACTION);	}
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt T", COPY_THROWABLE_NAME_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W", CLOSE_ALL_ACTION);	}
 
 	public static KeyStroke getKeyStroke(String actionName)
 	{

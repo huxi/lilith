@@ -318,9 +318,9 @@ public class StatisticsPanel
 
 		public void run()
 		{
-			for(; ;)
+			for(;;)
 			{
-				for(; ;)
+				for(;;)
 				{
 					synchronized(StatisticsPanel.this)
 					{

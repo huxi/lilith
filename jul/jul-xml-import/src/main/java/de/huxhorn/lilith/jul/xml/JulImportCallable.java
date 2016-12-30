@@ -120,7 +120,7 @@ public class JulImportCallable
 		}
 
 		xmlStreamReader = XML_INPUT_FACTORY.createXMLStreamReader(new ReplaceInvalidXmlCharacterReader(reader));
-		for(; ;)
+		for(;;)
 		{
 			try
 			{
