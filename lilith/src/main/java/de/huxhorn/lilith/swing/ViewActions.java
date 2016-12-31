@@ -1189,7 +1189,7 @@ public class ViewActions
 						.map(Map.Entry::getValue)
 						.collect(Collectors.toList()));
 
-				HashMap<KeyStroke, CopyToClipboardAction> freshMapping = new HashMap<>(keyStrokeActionMapping);
+				Map<KeyStroke, CopyToClipboardAction> freshMapping = new HashMap<>(keyStrokeActionMapping);
 				prepareClipboardActions(sorted, freshMapping);
 
 				// add the sorted actions to the menus.

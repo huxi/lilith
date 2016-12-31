@@ -235,7 +235,7 @@ public class ApplicationPreferences
 		defaultSourceNames.put("127.0.0.1", "Localhost");
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
 
-		HashMap<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<>();
+		Map<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<>();
 		defaultLevelColors.put(LoggingEvent.Level.TRACE,
 			new ColorScheme(new Color(0x1F, 0x44, 0x58), new Color(0x80, 0xBA, 0xD9), new Color(0x80, 0xBA, 0xD9)));
 		defaultLevelColors.put(LoggingEvent.Level.DEBUG,
@@ -248,7 +248,7 @@ public class ApplicationPreferences
 			new ColorScheme(Color.YELLOW, Color.RED, Color.ORANGE));
 		DEFAULT_LEVEL_COLOR_SCHEMES = Collections.unmodifiableMap(defaultLevelColors);
 
-		HashMap<HttpStatus.Type, ColorScheme> defaultStatusColors = new HashMap<>();
+		Map<HttpStatus.Type, ColorScheme> defaultStatusColors = new HashMap<>();
 		defaultStatusColors.put(HttpStatus.Type.SUCCESSFUL,
 			new ColorScheme(Color.BLACK, Color.GREEN, Color.GREEN));
 		defaultStatusColors.put(HttpStatus.Type.INFORMATIONAL,
@@ -1233,7 +1233,7 @@ public class ApplicationPreferences
 
 				Map<String, Set> interimMap = transformToMap(String.class, Set.class, d.readObject());
 
-				HashMap<String, Set<String>> resultMap = null;
+				Map<String, Set<String>> resultMap = null;
 				if(interimMap != null)
 				{
 					resultMap = new HashMap<>();
