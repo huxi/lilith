@@ -5,7 +5,6 @@
 <suppressions>
 	<suppress checks="ArrayTrailingComma" files="generated"/>
 	<suppress checks="DefaultComesLast" files="generated"/>
-	<suppress checks="ModifiedControlVariable" files="MessageFormatter"/>
 	<suppress checks="RedundantModifier" files="generated"/>
 	<suppress checks="ConstantName" files="generated"/>
 	<suppress checks="LocalVariableName" files="generated"/>

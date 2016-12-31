@@ -119,6 +119,8 @@ public class MessageFormatter
 								}
 								currentArgument++;
 							}
+							// this is an optimization: charAt(i+1) has already been checked.
+							// @cs-: ModifiedControlVariable
 							i++;
 							escapeCounter = 0;
 							continue;
@@ -186,6 +188,8 @@ public class MessageFormatter
 						if(messagePattern.charAt(i + 1) == DELIM_STOP)
 						{
 							result++;
+							// this is an optimization: charAt(i+1) has already been checked.
+							// @cs-: ModifiedControlVariable
 							i++;
 						}
 					}
