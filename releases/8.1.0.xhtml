@@ -12,10 +12,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		
 		<div>
 			<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/8.1.0">Download Now!
-		<br />(Released: 2016-xx-xx)</a>
+		<br />(Released: 2017-xx-xx)</a>
 		</div>
 		
-		<p>This version of Lilith requires Java 8 update 92 or higher and will says so if you try to start it with an older version.</p>
+		<p>This version of Lilith demands Java 8 update 121 or higher and will says so if you try to start it with an older version.</p>
 		<p>You can still receive event from previous versions so if your application is still running Java 7 or lower just keep using the 0.9.44 artifacts.<br />
 		Keep in mind that <a href="http://www.oracle.com/technetwork/java/eol-135779.html">Java SE 7 End of Public Updates</a> has already been reached.</p>
 		
@@ -59,7 +59,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 		<ul>
 			<li>Using <code>java.time.format</code> instead of <code>SimpleDateFormat</code>.</li>
 			<li>Don't create copy of whitelist Set in <code>WhitelistObjectInputStream</code>.</li>
-			<li>Demand Java 8 <code>1.8.0_111</code>.</li>
+			<li>Demand Java 8 <code>1.8.0_121</code>.</li>
 			<li>Added option to start application even if Java version requirements are not met.</li>
 			<li>Changed accelerator of "Copy Throwable" from "command shift alt T" to "command shift T".</li>
 			<li>Changed specification of HTTP status code 451 from draft to RFC 7725.</li>
@@ -124,7 +124,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<li>Fixed NPE in CheckForUpdateRunnable in case of broken network connection.</li>
 			<li>Fixed handling of invalid XML created by <code>java.util.logging.XMLFormatter</code>. This fixes <a href="https://github.com/huxi/lilith/issues/26">issue #26</a>.</li>
 			<li>Being less strict about the required Java version. It seems certain Linux distros have a Java version string like <code>1.8.0_66-internal</code> which is - strictly speaking - less than <code>1.8.0_66</code> since <code>-internal</code> is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.</li>
-			<li>log4j2 2.7, slf4j 1.7.21, Logback 1.1.7, jackson 2.8.5, Spring 4.3.4, Groovy 2.4.7, aspectj 1.8.10, httpclient 4.5.2, httpcore 4.4.5, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.0.2, jcommander 1.58, commons-lang3 3.5</li>
+			<li>log4j2 2.7, slf4j 1.7.22, Logback 1.1.8, jackson 2.8.6, Spring 4.3.5, Groovy 2.4.8, aspectj 1.8.10, httpclient 4.5.2, httpcore 4.4.6, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.0.2, jcommander 1.60, commons-lang3 3.5</li>
 		</ul>
 		
 		<h3>Security</h3>
