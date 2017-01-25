@@ -97,6 +97,7 @@ public class Log4j2Sandbox
 		ThreadContext.push("NDC1");
 		ThreadContext.push("NDC2");
 		ThreadContext.push("NDC with spaces...");
+		ThreadContext.push("NDC with parameter {} and {}...", "foo", "bar");
 		ThreadContext.put("key1", "value1");
 		ThreadContext.put("key2", "value2");
 		logger.debug("########## Start ##########");

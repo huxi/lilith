@@ -7,6 +7,19 @@ apply plugin: 'idea'
 archivesBaseName = 'log4j2-sandbox'
 mainClassName = 'de.huxhorn.lilith.sandbox.Log4j2Sandbox'
 
+def globalSourceCompatibility = 1.8
+def globalTargetCompatibility = 1.8
+
+idea {
+	project {
+		jdkName = globalSourceCompatibility
+		languageLevel = globalSourceCompatibility
+	}
+}
+
+sourceCompatibility = globalSourceCompatibility
+targetCompatibility = globalTargetCompatibility
+
 dependencies {
 	compile libraries.'log4j2-api'
 	runtime libraries.'log4j2-core'

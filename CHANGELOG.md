@@ -79,7 +79,7 @@ All notable changes to this project will be documented in this file.
 - Fixed NPE in CheckForUpdateRunnable in case of broken network connection.
 - Fixed handling of invalid XML created by `java.util.logging.XMLFormatter`. This fixes [issue #26](https://github.com/huxi/lilith/issues/26).
 - Being less strict about the required Java version. It seems certain Linux distros have a Java version string like `1.8.0_66-internal` which is - strictly speaking - less than `1.8.0_66` since `-internal` is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.
-- log4j2 2.7, slf4j 1.7.22, Logback 1.1.9, jackson 2.8.6, Spring 4.3.5, Groovy 2.4.8, aspectj 1.8.10, httpclient 4.5.2, httpcore 4.4.6, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.0.2, jcommander 1.60, commons-lang3 3.5
+- log4j2 2.8, slf4j 1.7.22, Logback 1.1.9, jackson 2.8.6, Spring 4.3.5, Groovy 2.4.8, aspectj 1.8.10, httpclient 4.5.2, httpcore 4.4.6, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.0.2, jcommander 1.60, commons-lang3 3.5
 
 ### Security
 - Nothing.
@@ -87,8 +87,6 @@ All notable changes to this project will be documented in this file.
 ### Known issues
 - Lilith won't work with Java 9 for now.
   See [JDK-8160437 - com.apple.eawt.Application is not exported and jdeps didn't warn about it](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8160437).
-- Some log4j2 `Message` implementations aren't supported.
-  See [Message instances are simply serialized. They mustn't.](https://issues.apache.org/jira/browse/LOG4J2-1226).
 - logback-access `AccessEvent` sent by `SocketAppender` isn't guaranteed to be deserializable at the moment. You can use the Lilith Multiplex Socket Appender in the meantime.
   See [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Logback 1.1.0 introduced some message formatting regressions.
