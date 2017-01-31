@@ -31,7 +31,7 @@
 		<appender-ref ref="CONSOLE"/>
 	</root>
 	
-	<logger name="org.springframework" level="WARN"/>
+	<logger name="org.springframework" level="INFO"/>
 	<logger name="org.jboss" level="WARN"/>
 	<logger name="org.hibernate" level="WARN"/>
 	<logger name="org.apache" level="WARN"/>

@@ -7,13 +7,93 @@ buildscript {
 	}
 
 	dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
     }
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '3.3-rc-1'
+	gradleVersion = '3.4-rc-1'
 }
+
+class ConfigurationDetectionDependencyResolutionListener
+        implements DependencyResolutionListener, BuildListener {
+    private final Logger logger
+    private boolean enabled = true
+    private final Map<String, Long> timestampMap = [:]
+    private final Map<String, Long> resultMap = [:]
+    private final java.util.concurrent.locks.Lock lock =
+        new java.util.concurrent.locks.ReentrantLock()
+
+    ConfigurationDetectionDependencyResolutionListener(Gradle gradle) {
+        logger = gradle.rootProject.logger
+    }
+    
+    // DependencyResolutionListener
+    void beforeResolve(ResolvableDependencies dependencies) {
+        def path = dependencies.path
+        lock.lock()
+        try {
+            timestampMap[path] = System.currentTimeMillis()
+        } finally {
+            lock.unlock()
+        }
+    }
+
+    void afterResolve(ResolvableDependencies dependencies) {
+        def path = dependencies.path
+        long millis
+        lock.lock()
+        try {
+            if(!enabled) {
+                return
+            }
+    
+            millis = System.currentTimeMillis() - timestampMap[path]
+            resultMap[path] = millis
+        } finally {
+            lock.unlock()
+        }
+
+        logger.warn('PERFORMANCE WARNING: Resolving {} during configuration took {}ms!',path, millis, new Throwable())
+    }
+
+    // BuildListener
+    void buildStarted(Gradle gradle) {
+    }
+
+    void settingsEvaluated(Settings settings) {
+    }
+
+    void projectsLoaded(Gradle gradle) {
+    }
+
+    void projectsEvaluated(Gradle gradle) {
+        long accumulated = 0
+        lock.lock()
+        try {
+            enabled = false
+            if(resultMap.isEmpty()) {
+                return
+            }
+    
+            resultMap.each {
+                accumulated += it.value
+            }
+            timestampMap.clear()
+            resultMap.clear()
+        } finally {
+            lock.unlock()
+        }
+
+        logger.warn('### Total time spent resolving dependencies during configuration:\n### {}ms', accumulated)
+    }
+
+    void buildFinished(BuildResult result) {
+    }
+}
+
+gradle.addListener(new ConfigurationDetectionDependencyResolutionListener(gradle))
+
 
 apply plugin: 'idea'
 apply plugin: 'java'
