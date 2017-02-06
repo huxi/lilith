@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
 public class ClassicLilithEncoderTest
 {
 	private final Logger logger = LoggerFactory.getLogger(ClassicLilithEncoderTest.class);
+	private static final long DEFAULT_BUFFER_SIZE = 8192;
 
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
@@ -58,7 +59,7 @@ public class ClassicLilithEncoderTest
 	{
 		ClassicLilithEncoder instance = new ClassicLilithEncoder();
 		File file=folder.newFile("foo.lilith");
-		ResilientFileOutputStream fos=new ResilientFileOutputStream(file, false);
+		ResilientFileOutputStream fos=new ResilientFileOutputStream(file, false, DEFAULT_BUFFER_SIZE);
 
 		instance.init(fos);
 
