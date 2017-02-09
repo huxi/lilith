@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,48 +35,28 @@
 package de.huxhorn.lilith.logback.encoder;
 
 import ch.qos.logback.access.spi.AccessEvent;
-import ch.qos.logback.core.recovery.ResilientFileOutputStream;
 import de.huxhorn.lilith.api.FileConstants;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AccessLilithEncoder
 	extends LilithEncoderBase<AccessEvent>
 {
-	private WrappingAccessEncoder wrappingEncoder;
+	private static final Map<String, String> META_DATA_MAP;
+	static
+	{
+		Map<String, String> metaDataMap = new HashMap<>();
+		metaDataMap.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
+		metaDataMap.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
+		metaDataMap.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
+
+		META_DATA_MAP = Collections.unmodifiableMap(metaDataMap);
+	}
 
 	public AccessLilithEncoder()
 	{
-		wrappingEncoder = new WrappingAccessEncoder();
-		encoder=wrappingEncoder;
-	}
-
-	@Override
-	public void init(OutputStream os) throws IOException
-	{
-		super.init(os);
-		if(os instanceof ResilientFileOutputStream)
-		{
-			ResilientFileOutputStream rfos = (ResilientFileOutputStream) os;
-			File file = rfos.getFile();
-			if(file.length() == 0)
-			{
-				// write header
-				Map<String, String> metaDataMap = new HashMap<>();
-				metaDataMap.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
-				metaDataMap.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
-				metaDataMap.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
-				writeHeader(metaDataMap);
-			}
-		}
-		else
-		{
-			throw new IOException("OutputStream wasn't instanceof ResilientFileOutputStream! "+os);
-		}
-		wrappingEncoder.reset();
+		super(META_DATA_MAP, new WrappingAccessEncoder());
 	}
 
 	@Override

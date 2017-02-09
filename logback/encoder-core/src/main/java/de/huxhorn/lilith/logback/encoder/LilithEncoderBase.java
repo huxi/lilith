@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,68 +36,99 @@ package de.huxhorn.lilith.logback.encoder;
 
 import ch.qos.logback.core.encoder.EncoderBase;
 import de.huxhorn.lilith.api.FileConstants;
-import de.huxhorn.sulky.codec.Encoder;
 import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.codec.filebuffer.MetaDataCodec;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class LilithEncoderBase<E>
 	extends EncoderBase<E>
 {
-	protected Encoder<E> encoder;
-	private DataOutputStream dataOutputStream;
+	private static final byte[] EMPTY = new byte[0];
+	private final Map<String, String> metaDataMap;
+	private final ResettableEncoder<E> encoder;
 
-	@Override
-	public void init(OutputStream os) throws IOException
+	protected LilithEncoderBase(Map<String, String> metaDataMap, ResettableEncoder<E> encoder)
 	{
-		super.init(os);
-		dataOutputStream = new DataOutputStream(os);
+		Objects.requireNonNull(metaDataMap, "metaDataMap must not be null!");
+		Objects.requireNonNull(encoder, "encoder must not be null!");
+		this.metaDataMap = metaDataMap;
+		this.encoder = encoder;
 	}
 
-	protected void writeHeader(Map<String, String> metaDataMap) throws IOException
+	public byte[] headerBytes()
 	{
 		MetaData metaData = new MetaData(metaDataMap, false);
 
-		dataOutputStream.writeInt(DefaultFileHeaderStrategy.CODEC_FILE_HEADER_MAGIC_VALUE);
-		dataOutputStream.writeInt(FileConstants.MAGIC_VALUE);
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+		try
+		{
+			dataOutputStream.writeInt(DefaultFileHeaderStrategy.CODEC_FILE_HEADER_MAGIC_VALUE);
+			dataOutputStream.writeInt(FileConstants.MAGIC_VALUE);
 
-		MetaDataCodec metaCodec = new MetaDataCodec();
-		byte[] buffer = metaCodec.encode(metaData);
-		if(buffer != null)
-		{
-			dataOutputStream.writeInt(buffer.length);
-			dataOutputStream.write(buffer);
-			//System.out.println("Wrote header: " + (12 + buffer.length));
+			MetaDataCodec metaCodec = new MetaDataCodec();
+			byte[] buffer = metaCodec.encode(metaData);
+			if (buffer != null)
+			{
+				dataOutputStream.writeInt(buffer.length);
+				dataOutputStream.write(buffer);
+			}
+			else
+			{
+				dataOutputStream.writeInt(0);
+			}
+			dataOutputStream.flush();
 		}
-		else
+		catch (IOException e)
 		{
-			dataOutputStream.writeInt(0);
+			addError("Failed to create header!", e);
+			return null;
 		}
-		dataOutputStream.flush();
+
+		return byteArrayOutputStream.toByteArray();
 	}
 
-	public void doEncode(E event) throws IOException
+	public byte[] encode(E event)
 	{
 		preProcess(event);
 		byte[] buffer = encoder.encode(event);
 		if(buffer == null)
 		{
-			throw new IOException("Couldn't encode event " + event + "!");
+			addError("Couldn't encode event " + event + "!");
+			return EMPTY;
 		}
-		dataOutputStream.writeInt(buffer.length);
-		dataOutputStream.write(buffer);
-		//System.out.println("Wrote event : " + (4 + buffer.length));
-		dataOutputStream.flush();
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+		try
+		{
+			dataOutputStream.writeInt(buffer.length);
+			dataOutputStream.write(buffer);
+			dataOutputStream.flush();
+		}
+		catch (IOException e)
+		{
+			addError("Failed to encode event!", e);
+			return EMPTY;
+		}
+		return byteArrayOutputStream.toByteArray();
+	}
+
+	public byte[] footerBytes()
+	{
+		return null;
 	}
 
 	protected abstract void preProcess(E event);
 
-	public void close() throws IOException
+	@Override
+	public void start()
 	{
-		dataOutputStream.flush();
+		encoder.reset();
+		super.start();
 	}
 }

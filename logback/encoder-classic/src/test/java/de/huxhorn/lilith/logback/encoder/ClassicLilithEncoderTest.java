@@ -36,44 +36,40 @@ package de.huxhorn.lilith.logback.encoder;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.LoggingEvent;
-import ch.qos.logback.core.recovery.ResilientFileOutputStream;
-import java.io.File;
 import java.io.IOException;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 public class ClassicLilithEncoderTest
 {
-	private final Logger logger = LoggerFactory.getLogger(ClassicLilithEncoderTest.class);
-	private static final long DEFAULT_BUFFER_SIZE = 8192;
-
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
 
 	@Test
-	public void testIt() throws IOException
+	public void headerBytesWorks() throws IOException
 	{
 		ClassicLilithEncoder instance = new ClassicLilithEncoder();
-		File file=folder.newFile("foo.lilith");
-		ResilientFileOutputStream fos=new ResilientFileOutputStream(file, false, DEFAULT_BUFFER_SIZE);
 
-		instance.init(fos);
+		byte[] header = instance.headerBytes();
+		assertNotNull(header);
+		assertTrue(header.length > 4);
+	}
+
+	@Test
+	public void encodingWorks() throws IOException
+	{
+		final Logger logger = LoggerFactory.getLogger(ClassicLilithEncoderTest.class);
+		ClassicLilithEncoder instance = new ClassicLilithEncoder();
 
 		instance.setIncludeCallerData(true);
 
 		LoggingEvent event=new LoggingEvent(logger.getClass().getName(), (ch.qos.logback.classic.Logger) logger, Level.INFO, "Test", null, null);
-		for(int i=0;i<100;i++)
-		{
-			instance.doEncode(event);
-		}
 
-		instance.close();
-		System.out.println("File "+file.getAbsolutePath()+" has a size of "+file.length()+".");
+		byte[] encoded = instance.encode(event);
+		assertNotNull(encoded);
+		assertTrue(encoded.length > 0);
 	}
-
-
 }
