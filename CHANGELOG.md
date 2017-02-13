@@ -91,6 +91,8 @@ All notable changes to this project will be documented in this file.
   See [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Logback 1.1.0 introduced some message formatting regressions.
   See [LOGBACK-1183 - Message formatting regression](http://jira.qos.ch/browse/LOGBACK-1183).
+- Binary Lilith log files will only work in case of `append=false`.
+  See [LOGBACK-1257 - Invalid files in case of append=true and Encoder with non-null headerBytes() / footerBytes()](https://jira.qos.ch/browse/LOGBACK-1257)
 - Flying Saucer related issues:
   - Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
     See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](http://code.google.com/p/flying-saucer/issues/detail?id=79).
