@@ -17,7 +17,7 @@ project.ext.versions = [
 'log4j':          '1.2.17',
 'log4j2':         '2.8',
 'logback':        '1.2.0',
-'slf4j':          '1.7.22',
+'slf4j':          '1.7.23',
 'spock':          '1.0-groovy-2.4',
 'spring':         '4.3.6.RELEASE',
 'substance':      '7.3',
