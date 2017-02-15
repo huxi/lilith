@@ -34,14 +34,19 @@
 
 package de.huxhorn.lilith.logback.encoder;
 
+import ch.qos.logback.core.FileAppender;
+import ch.qos.logback.core.OutputStreamAppender;
 import ch.qos.logback.core.encoder.EncoderBase;
+import ch.qos.logback.core.recovery.ResilientFileOutputStream;
 import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.codec.filebuffer.MetaDataCodec;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 import java.util.Objects;
 
@@ -62,6 +67,12 @@ public abstract class LilithEncoderBase<E>
 
 	public byte[] headerBytes()
 	{
+		// suggested LOGBACK-1257 workaround below
+		if(!isSupposedToGenerateHeader())
+		{
+			return null;
+		}
+		// suggested LOGBACK-1257 workaround above
 		MetaData metaData = new MetaData(metaDataMap, false);
 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -131,4 +142,53 @@ public abstract class LilithEncoderBase<E>
 		encoder.reset();
 		super.start();
 	}
+
+	// suggested LOGBACK-1257 workaround below
+	private OutputStreamAppender<?> parent;
+
+	public void setParent(OutputStreamAppender<?> parent)
+	{
+		this.parent = parent;
+	}
+
+	private boolean isSupposedToGenerateHeader()
+	{
+		if(parent instanceof FileAppender)
+		{
+			FileAppender fileAppender = (FileAppender) parent;
+			if(!fileAppender.isAppend())
+			{
+				return true;
+			}
+			OutputStream outputStream = fileAppender.getOutputStream();
+			if(outputStream instanceof ResilientFileOutputStream)
+			{
+				ResilientFileOutputStream fileOutputStream = (ResilientFileOutputStream) outputStream;
+				File file = fileOutputStream.getFile();
+				if(file.length() != 0)
+				{
+					// appending and file with already existing content => no header.
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	// not necessary for this encoder since it doesn't require a footer
+	/*
+	private boolean isSupposedToGenerateFooter()
+	{
+		if(parent instanceof FileAppender)
+		{
+			FileAppender fileAppender = (FileAppender) parent;
+			if(fileAppender.isAppend())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	*/
+	// suggested LOGBACK-1257 workaround above
 }
