@@ -61,6 +61,7 @@ All notable changes to this project will be documented in this file.
 - XML is now handled by Woodstox.
 - Moved "Logger" in "Focus"/"Exclude" menus from bottom to top.
 - `applicationUUID` is now actually a [ULID](https://github.com/alizain/ulid). The existing methods `setCreatingUUID`/`isCreatingUUID` and `getUUID` in the multiplex appenders are not renamed for compatibility reasons. ULID generation is handled in the new `de.huxhorn.sulky:de.huxhorn.sulky.ulid` module.
+- Activated automatic graphics switching on Mac, i.e. don't demand the high-performance, energy-hungry GPU. This fixes [issue #27](https://github.com/huxi/lilith/issues/27). Thanks to Nikita Belenkiy for the detailed issue.
 
 ### Deprecated
 - Nothing.

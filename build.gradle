@@ -380,6 +380,7 @@ project(':lilith') {
 			'CFBundleShortVersionString': version,
 			//'CFBundleGetInfoString': copyright,
 			'NSHumanReadableCopyright': copyright,
+			'NSSupportsAutomaticGraphicsSwitching': true,
 		]
 		javaProperties = [
 			'apple.laf.useScreenMenuBar': 'true'
