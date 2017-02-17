@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -481,7 +481,7 @@ public class Lilith
 			flushLicensed();
 		}
 
-		startLilith(appTitleString, cl.enableBonjour);
+		startLilith(appTitleString);
 	}
 
 	private static void printHelp(JCommander commander)
@@ -527,7 +527,7 @@ public class Lilith
 		ImportExportCommand.exportPreferences(new File(file));
 	}
 
-	private static void startLilith(String appTitle, boolean enableBonjour)
+	private static void startLilith(String appTitle)
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
@@ -552,7 +552,7 @@ public class Lilith
 		// install uncaught exception handler on event thread.
 		EventQueue.invokeLater(() -> Thread.currentThread().setUncaughtExceptionHandler(uncaughtExceptionHandler));
 
-		startUI(appTitle, enableBonjour);
+		startUI(appTitle);
 	}
 
 	private static void initCLILogging()
@@ -755,7 +755,7 @@ public class Lilith
 	}
 
 
-	public static void startUI(final String appTitle, boolean enableBonjour)
+	public static void startUI(final String appTitle)
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
@@ -912,7 +912,7 @@ public class Lilith
 			}
 
 			updateSplashStatus(splashScreen, "Creating main window...");
-			CreateMainFrameRunnable createMain = new CreateMainFrameRunnable(applicationPreferences, splashScreen, appTitle, enableBonjour);
+			CreateMainFrameRunnable createMain = new CreateMainFrameRunnable(applicationPreferences, splashScreen, appTitle);
 			EventQueue.invokeAndWait(createMain);
 			final MainFrame frame = createMain.getMainFrame();
 			if(logger.isDebugEnabled()) logger.debug("After show...");
@@ -966,19 +966,17 @@ public class Lilith
 		private MainFrame mainFrame;
 		private ApplicationPreferences applicationPreferences;
 		private String appTitle;
-		private boolean enableBonjour;
 
-		CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appTitle, boolean enableBonjour)
+		CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appTitle)
 		{
 			this.splashScreen = splashScreen;
-			this.enableBonjour = enableBonjour;
 			this.appTitle = appTitle;
 			this.applicationPreferences = applicationPreferences;
 		}
 
 		public void run()
 		{
-			mainFrame = new MainFrame(applicationPreferences, splashScreen, appTitle, enableBonjour);
+			mainFrame = new MainFrame(applicationPreferences, splashScreen, appTitle);
 			mainFrame.setSounds(new JLayerSounds());
 			mainFrame.setSize(1024, 768);
 			Windows.showWindow(mainFrame, null, false);

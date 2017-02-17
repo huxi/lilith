@@ -48,7 +48,6 @@ import de.huxhorn.lilith.services.clipboard.LoggingThreadGroupNameFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThreadNameFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableFormatter;
 import de.huxhorn.lilith.services.clipboard.LoggingThrowableNameFormatter;
-import de.huxhorn.lilith.services.sender.EventSender;
 import de.huxhorn.lilith.swing.actions.ActionTooltips;
 import de.huxhorn.lilith.swing.menu.ExcludeMenu;
 import de.huxhorn.lilith.swing.menu.FocusMenu;
@@ -201,7 +200,6 @@ public class ViewActions
 	private ShowUnfilteredEventAction showUnfilteredEventAction;
 	private JPopupMenu popup;
 	private GotoSourceAction gotoSourceAction;
-	private JMenu sendToPopupMenu;
 	private FocusMenu focusMenu;
 	private ExcludeMenu excludeMenu;
 	private FocusMenu focusPopupMenu;
@@ -1059,9 +1057,6 @@ public class ViewActions
 		copyPopupMenu.addSeparator();
 		copyPopupMenu.add(customCopyPopupMenu);
 
-		sendToPopupMenu = new JMenu("Send to");
-		popup.add(sendToPopupMenu);
-
 		popup.add(gotoSourceAction);
 	}
 
@@ -1286,58 +1281,12 @@ public class ViewActions
 		{
 			initPopup();
 		}
-		sendToPopupMenu.removeAll();
-		boolean enableCopyMenu;
-		if(eventWrapper == null)
-		{
-			sendToPopupMenu.setEnabled(false);
-			enableCopyMenu = false;
-		}
-		else
+		boolean enableCopyMenu = false;
+		if(eventWrapper != null)
 		{
 			EventWrapper<LoggingEvent> loggingEventWrapper = asLoggingEventWrapper(eventWrapper);
 			EventWrapper<AccessEvent> accessEventWrapper = asAccessEventWrapper(eventWrapper);
-			if(loggingEventWrapper != null)
-			{
-				enableCopyMenu = true;
-				Map<String, EventSender<LoggingEvent>> senders = mainFrame.getLoggingEventSenders();
-				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
-				if(senders.size() == 0)
-				{
-					sendToPopupMenu.setEnabled(false);
-				}
-				else
-				{
-					sendToPopupMenu.setEnabled(true);
-					for(Map.Entry<String, EventSender<LoggingEvent>> current : senders.entrySet())
-					{
-						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), loggingEventWrapper));
-					}
-				}
-			}
-			else if(accessEventWrapper != null)
-			{
-				enableCopyMenu = true;
-				Map<String, EventSender<AccessEvent>> senders = mainFrame.getAccessEventSenders();
-				if(logger.isDebugEnabled()) logger.debug("Senders: {}", senders);
-				if(senders.size() == 0)
-				{
-					sendToPopupMenu.setEnabled(false);
-				}
-				else
-				{
-					sendToPopupMenu.setEnabled(true);
-					for(Map.Entry<String, EventSender<AccessEvent>> current : senders.entrySet())
-					{
-						sendToPopupMenu.add(new SendAction<>(current.getKey(), current.getValue(), accessEventWrapper));
-					}
-				}
-			}
-			else
-			{
-				enableCopyMenu = false;
-				sendToPopupMenu.setEnabled(false);
-			}
+			enableCopyMenu = loggingEventWrapper != null || accessEventWrapper != null;
 		}
 		boolean enableFilterMenu = closeFilterAction.isEnabled() || closeOtherFiltersAction.isEnabled() || closeAllFiltersAction.isEnabled();
 		filterPopupMenu.setEnabled(enableFilterMenu);
@@ -3502,30 +3451,6 @@ public class ViewActions
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.goToSource(stackTraceElement);
-		}
-	}
-
-	protected static class SendAction<T extends Serializable>
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 6612401555757959404L;
-		private EventSender<T> sender;
-		private T event;
-
-		public SendAction(String name, EventSender<T> sender, EventWrapper<T> wrapper)
-		{
-			super(name);
-			this.sender = sender;
-			this.event = wrapper.getEvent();
-			setEnabled(event != null);
-		}
-
-		/**
-		 * Invoked when an action occurs.
-		 */
-		public void actionPerformed(ActionEvent e)
-		{
-			sender.send(event);
 		}
 	}
 

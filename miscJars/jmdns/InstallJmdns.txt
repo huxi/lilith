@@ -1,5 +1,0 @@
-Execute the following line:
-mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=de.huxhorn.lilith -DartifactId=de.huxhorn.lilith.3rdparty.jmdns -Dversion=3.0 -Dfile=jmdns-3.0.jar
-
-mvn deploy:deploy-file -Durl=sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dfile=jmdns-3.0.jar -DpomFile=jmdns-pom.xml
-

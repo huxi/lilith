@@ -36,9 +36,6 @@ public class CommandLineArgs
 	@Parameter(names = { "-L", "--flush-licensed" }, description = "flush licensed.")
 	public boolean flushLicensed = false;
 
-	@Parameter(names = { "-b", "--bonjour" }, description = "enable Bonjour.")
-	public boolean enableBonjour = false;
-
 	@Parameter(names = { "-e", "--export-preferences" }, description = "export preferences into the given file.")
 	public String exportPreferencesFile;
 

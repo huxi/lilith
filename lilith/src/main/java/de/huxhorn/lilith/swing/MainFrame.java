@@ -74,8 +74,6 @@ import de.huxhorn.lilith.services.details.GroovyEventWrapperHtmlFormatter;
 import de.huxhorn.lilith.services.details.ThymeleafEventWrapperHtmlFormatter;
 import de.huxhorn.lilith.services.gotosrc.GoToSource;
 import de.huxhorn.lilith.services.gotosrc.SerializingGoToSource;
-import de.huxhorn.lilith.services.sender.EventSender;
-import de.huxhorn.lilith.services.sender.SenderService;
 import de.huxhorn.lilith.swing.callables.CheckFileChangeCallable;
 import de.huxhorn.lilith.swing.callables.CleanAllInactiveCallable;
 import de.huxhorn.lilith.swing.callables.CleanObsoleteCallable;
@@ -235,8 +233,6 @@ public class MainFrame
 	private Application application;
 	private int activeCounter;
 	private List<AutostartRunnable> autostartProcesses;
-	private SenderService senderService;
-	private boolean enableBonjour;
 	private static final boolean IS_MAC;
 	private static final boolean IS_WINDOWS;
 	private List<SavedCondition> activeConditions;
@@ -303,7 +299,7 @@ public class MainFrame
 		return desktop;
 	}
 
-	public MainFrame(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appName, boolean enableBonjour)
+	public MainFrame(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appName)
 	{
 		super(appName);
 		this.applicationPreferences = applicationPreferences;
@@ -327,8 +323,6 @@ public class MainFrame
 		Thread shutdownHook = new Thread(new ShutdownRunnable());
 		runtime.addShutdownHook(shutdownHook);
 
-		senderService = new SenderService(this);
-		this.enableBonjour = enableBonjour;
 		/*
 		if(application.isMac())
 		{
@@ -831,10 +825,6 @@ public class MainFrame
 		application.setEnabledPreferencesMenu(true);
 		application.addApplicationListener(new MyApplicationListener());
 
-		if(enableBonjour)
-		{
-			senderService.start();
-		}
 		if(Lilith.APP_SNAPSHOT || applicationPreferences.isCheckingForUpdate())
 		{
 			// always check for update in case of SNAPSHOT!
@@ -896,16 +886,6 @@ public class MainFrame
 	public Application getApplication()
 	{
 		return application;
-	}
-
-	public Map<String, EventSender<LoggingEvent>> getLoggingEventSenders()
-	{
-		return senderService.getLoggingEventSenders();
-	}
-
-	public Map<String, EventSender<AccessEvent>> getAccessEventSenders()
-	{
-		return senderService.getAccessEventSenders();
 	}
 
 	public void updateWindowMenus()
@@ -2617,11 +2597,6 @@ public class MainFrame
 			}
 		}
 		if(logger.isInfoEnabled()) logger.info("Exiting...");
-		// this probably isn't necessary since jmdns registers a shutdown hook.
-		if(senderService != null)
-		{
-			senderService.stop();
-		}
 		if(applicationPreferences.isCleaningLogsOnExit())
 		{
 			deleteInactiveLogs();

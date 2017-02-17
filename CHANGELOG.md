@@ -73,6 +73,7 @@ All notable changes to this project will be documented in this file.
 - Removed unused methods `getTextColor()`, `getBackgroundColor()` and `getBorderColor()` of class `SavedCondition`.
 - Removed unused c'tors in `AbstractFilterAction`, `AbstractLoggingFilterAction` and `AbstractAccessFilterAction`.
 - Removed RRD statistics.
+- Removed unused SenderService and jMDNS.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.

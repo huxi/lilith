@@ -530,7 +530,6 @@ project(':lilith') {
 		compile libraries.'httpclient'
 		compile libraries.'httpcore'
 		compile libraries.'jcommander'
-		compile libraries.'jmdns'
 		compile libraries.'junique'
 		compile libraries.'logback-access'
 		compile libraries.'logback-classic'
