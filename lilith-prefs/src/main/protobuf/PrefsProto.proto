@@ -1,17 +1,17 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
- * 
+ * Copyright (C) 2007-2017 Joern Huxhorn
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,11 +28,11 @@ message LilithPreferences {
 	optional DirectoryContent  groovy_conditions             =  1;
 	optional DirectoryContent  details_view                  =  2;
 	optional DirectoryContent  root_files                    =  3;
-	
+
 	optional string            blacklist_name                =  4;
 	optional string            whitelist_name                =  5;
 	optional string            look_and_feel                 =  6;
-	
+
 	optional bool              asking_before_quit            =  7;
 	optional bool              auto_closing                  =  8;
 	optional bool              auto_focusing_window          =  9;
@@ -41,20 +41,17 @@ message LilithPreferences {
 	optional bool              cleaning_logs_on_exit         = 12;
 	optional bool              coloring_whole_row            = 13;
 	optional bool              global_logging_enabled        = 14;
-//	optional bool              licensed                      = 15;
-	optional bool              logging_statistic_enabled     = 16;
 	optional bool              maximizing_internal_frames    = 17;
 	optional bool              mute                          = 18;
 	optional bool              scrolling_to_bottom           = 19;
 	optional bool              showing_full_callstack        = 20;
-//	optional bool              showing_identifier            = 21;
 	optional bool              showing_statusbar             = 22;
 	optional bool              showing_stacktrace            = 23;
 	optional bool              showing_tip_of_the_day        = 24;
 	optional bool              showing_toolbar               = 25;
 	optional bool              splash_screen_disabled        = 26;
 	optional bool              using_internal_frames         = 27;
-	
+
 	optional SourceFiltering   source_filtering              = 28;
 
 	optional string            default_condition_name        = 29;
@@ -67,6 +64,9 @@ message LilithPreferences {
 	optional bool              using_wrapped_exception_style = 35;
 	optional bool              showing_primary_identifier    = 36;
 	optional bool              showing_secondary_identifier  = 37;
+
+	reserved 15, 16, 21;
+	reserved "licensed", "logging_statistic_enabled", "showing_identifier";
 }
 
 enum SourceFiltering {

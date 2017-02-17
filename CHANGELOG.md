@@ -72,6 +72,7 @@ All notable changes to this project will be documented in this file.
 - Removed `AccessEvents` and related classes. Same as above.
 - Removed unused methods `getTextColor()`, `getBackgroundColor()` and `getBorderColor()` of class `SavedCondition`.
 - Removed unused c'tors in `AbstractFilterAction`, `AbstractLoggingFilterAction` and `AbstractAccessFilterAction`.
+- Removed RRD statistics.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.

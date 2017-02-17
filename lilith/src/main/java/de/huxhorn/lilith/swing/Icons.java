@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@ public class Icons
 	public static final ImageIcon UNPAUSED_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-playback-pause.png");
 	public static final ImageIcon FIND_MENU_ITEM = resolveImageIcon("/tango/16x16/actions/edit-find.png");
 	public static final ImageIcon FIND_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-find.png");
-	public static final ImageIcon STATISTICS_MENU_ICON = resolveImageIcon("/tango/16x16/apps/utilities-system-monitor.png");
 	public static final ImageIcon DISCONNECT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/media-eject.png");
 	public static final ImageIcon DISCONNECT_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-eject.png");
 	public static final ImageIcon FIND_NEXT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-down.png");

@@ -1,4 +1,0 @@
-Execute the following line:
-mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=de.huxhorn.lilith -DartifactId=de.huxhorn.lilith.3rdparty.rrd4j -Dversion=2.0.5 -Dfile=rrd4j-2.0.5.jar
-
-mvn deploy:deploy-file -Durl=scp://shell.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dfile=rrd4j-2.0.5.jar -DpomFile=rrd4j-pom.xml

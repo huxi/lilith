@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -145,7 +145,6 @@ public class ApplicationPreferences
 	public static final String SHOWING_TIP_OF_THE_DAY_PROPERTY = "showingTipOfTheDay";
 	public static final String MAXIMIZING_INTERNAL_FRAMES_PROPERTY = "maximizingInternalFrames";
 	public static final String GLOBAL_LOGGING_ENABLED_PROPERTY = "globalLoggingEnabled";
-	public static final String LOGGING_STATISTIC_ENABLED_PROPERTY = "loggingStatisticEnabled";
 	public static final String PREVIOUS_SEARCH_STRINGS_PROPERTY = "previousSearchStrings";
 	public static final String RECENT_FILES_PROPERTY = "recentFiles";
 	public static final String SHOWING_FULL_RECENT_PATH_PROPERTY="showingFullRecentPath";
@@ -1730,19 +1729,6 @@ public class ApplicationPreferences
 	public boolean isGlobalLoggingEnabled()
 	{
 		return PREFERENCES.getBoolean(GLOBAL_LOGGING_ENABLED_PROPERTY, DEFAULT_VALUES.isGlobalLoggingEnabled());
-	}
-
-	public void setLoggingStatisticEnabled(boolean enabled)
-	{
-		Object oldValue = isLoggingStatisticEnabled();
-		PREFERENCES.putBoolean(LOGGING_STATISTIC_ENABLED_PROPERTY, enabled);
-		Object newValue = isLoggingStatisticEnabled();
-		propertyChangeSupport.firePropertyChange(LOGGING_STATISTIC_ENABLED_PROPERTY, oldValue, newValue);
-	}
-
-	public boolean isLoggingStatisticEnabled()
-	{
-		return PREFERENCES.getBoolean(LOGGING_STATISTIC_ENABLED_PROPERTY, DEFAULT_VALUES.isLoggingStatisticEnabled());
 	}
 
 

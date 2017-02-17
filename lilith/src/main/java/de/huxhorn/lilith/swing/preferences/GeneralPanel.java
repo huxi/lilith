@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,6 @@ public class GeneralPanel
 	private JComboBox<String> defaultConditionCombo;
 
 	private JCheckBox globalLoggingEnabledCheckbox;
-	private JCheckBox loggingStatsEnabledCheckbox;
 	private JCheckBox trayActiveCheckbox;
 	private JCheckBox hidingOnCloseCheckbox;
 
@@ -118,7 +117,6 @@ public class GeneralPanel
 		defaultConditionCombo = new JComboBox<>();
 
 		globalLoggingEnabledCheckbox = new JCheckBox("Enable global logs.");
-		loggingStatsEnabledCheckbox = new JCheckBox("Enable logging statistics.");
 		trayActiveCheckbox = new JCheckBox("Enable tray icon.");
 		hidingOnCloseCheckbox = new JCheckBox("Hide windows on close.");
 		hidingOnCloseCheckbox.setToolTipText("Hide all windows on close of main frame instead of exiting the application. This is only relevant if tray icon is enabled.");
@@ -138,10 +136,9 @@ public class GeneralPanel
 		lookAndFeelCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Look & Feel"));
 		defaultConditionCombo.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Default search condition"));
 
-		JPanel globalPanel = new JPanel(new GridLayout(4, 1));
+		JPanel globalPanel = new JPanel(new GridLayout(3, 1));
 		globalPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Global settings"));
 		globalPanel.add(globalLoggingEnabledCheckbox);
-		globalPanel.add(loggingStatsEnabledCheckbox);
 		globalPanel.add(trayActiveCheckbox);
 		globalPanel.add(hidingOnCloseCheckbox);
 
@@ -234,7 +231,6 @@ public class GeneralPanel
 		appPathTextField.setToolTipText(appPath);
 
 		globalLoggingEnabledCheckbox.setSelected(applicationPreferences.isGlobalLoggingEnabled());
-		loggingStatsEnabledCheckbox.setSelected(applicationPreferences.isLoggingStatisticEnabled());
 		trayActiveCheckbox.setSelected(applicationPreferences.isTrayActive());
 		trayActiveCheckbox.setEnabled(TraySupport.isAvailable());
 		hidingOnCloseCheckbox.setSelected(applicationPreferences.isHidingOnClose());
@@ -255,7 +251,6 @@ public class GeneralPanel
 		applicationPreferences.setApplicationPath(new File(appPathTextField.getText()));
 
 		applicationPreferences.setGlobalLoggingEnabled(globalLoggingEnabledCheckbox.isSelected());
-		applicationPreferences.setLoggingStatisticEnabled(loggingStatsEnabledCheckbox.isSelected());
 		applicationPreferences.setTrayActive(trayActiveCheckbox.isSelected());
 		applicationPreferences.setHidingOnClose(hidingOnCloseCheckbox.isSelected());
 	}

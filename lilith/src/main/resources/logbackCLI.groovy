@@ -10,4 +10,3 @@ appender('CONSOLE', ConsoleAppender) {
   }
 }
 root(WARN, ['CONSOLE'])
-

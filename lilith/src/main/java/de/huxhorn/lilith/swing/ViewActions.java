@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -379,10 +379,6 @@ public class ViewActions
 
 		toolbar.addSeparator();
 
-		//JButton statisticsButton = new JButton(statisticsToolBarAction);
-		//toolbar.add(statisticsButton);
-		//toolbar.addSeparator();
-
 		JButton attachButton = new JButton(attachToolBarAction);
 		toolbar.add(attachButton);
 
@@ -471,7 +467,6 @@ public class ViewActions
 		viewMenu.add(disconnectMenuAction);
 		viewMenu.add(focusEventsAction);
 		viewMenu.add(focusMessageAction);
-		//viewMenu.add(statisticsMenuAction);
 		viewMenu.add(editSourceNameMenuAction);
 		viewMenu.addSeparator();
 		viewMenu.add(zoomInMenuAction);
@@ -651,7 +646,6 @@ public class ViewActions
 		pauseToolBarAction.setEnabled(hasView);
 		clearToolBarAction.setEnabled(hasView/* && !hasFilteredBuffer*/);
 		findToolBarAction.setEnabled(hasView);
-		//statisticsToolBarAction.setEnabled(hasView);
 		attachToolBarAction.setEnabled(hasView);
 		disconnectToolBarAction.setEnabled(isActive);
 
@@ -2000,23 +1994,6 @@ public class ViewActions
 		}
 	}
 
-	private static class StatisticsMenuAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -6336357605789928345L;
-
-		StatisticsMenuAction()
-		{
-			super("Statistics");
-			putValue(Action.SMALL_ICON, Icons.STATISTICS_MENU_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Statistics");
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-		}
-	}
-
 	private class DisconnectMenuAction
 		extends AbstractAction
 	{
@@ -2570,25 +2547,6 @@ public class ViewActions
 		return primaryIdentifier;
 	}
 
-	class ViewStatisticsAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = 4453230971326526165L;
-
-		private SourceIdentifier sourceIdentifier;
-
-		ViewStatisticsAction(String name, SourceIdentifier sourceIdentifier)
-		{
-			super(name);
-			this.sourceIdentifier = sourceIdentifier;
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			mainFrame.showStatistics(sourceIdentifier);
-		}
-	}
-
 	class UpdateWindowMenuRunnable
 		implements Runnable
 	{
@@ -2617,8 +2575,6 @@ public class ViewActions
 			if(logger.isDebugEnabled()) logger.debug("Updating Views-Menu.");
 
 			windowMenu.removeAll();
-			JMenu statisticsMenu = createStatisticsMenu();
-			windowMenu.add(statisticsMenu);
 			windowMenu.add(showTaskManagerItem);
 			windowMenu.addSeparator();
 			windowMenu.add(closeAllItem);
@@ -2854,30 +2810,6 @@ public class ViewActions
 			}
 			LoggingViewState state = viewContainer.getState();
 			result.setIcon(LoggingViewStateIcons.resolveIconForState(state, disabled));
-			return result;
-		}
-
-		private JMenu createStatisticsMenu()
-		{
-			StatisticsMenuAction statisticsMenuAction = new StatisticsMenuAction();
-			JMenu result = new JMenu(statisticsMenuAction);
-
-			SortedMap<String, SourceIdentifier> sources = mainFrame.getAvailableStatistics();
-
-			{
-				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction("Global", new SourceIdentifier("global")));
-				result.add(menuItem);
-				result.addSeparator();
-			}
-
-			for(Map.Entry<String, SourceIdentifier> current : sources.entrySet())
-			{
-				String key = current.getKey();
-				SourceIdentifier value = current.getValue();
-
-				JMenuItem menuItem = new JMenuItem(new ViewStatisticsAction(key, value));
-				result.add(menuItem);
-			}
 			return result;
 		}
 	}

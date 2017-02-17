@@ -536,7 +536,6 @@ project(':lilith') {
 		compile libraries.'logback-classic'
 		compile libraries.'logback-core'
 		compile libraries.'macify'
-		compile libraries.'rrd4j'
 		compile libraries.'servlet-api'
 		compile libraries.'slf4j-api'
 		compile libraries.'substance'

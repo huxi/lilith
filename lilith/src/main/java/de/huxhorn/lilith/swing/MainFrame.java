@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,6 @@ import de.huxhorn.lilith.eventhandlers.AlarmSoundAccessEventHandler;
 import de.huxhorn.lilith.eventhandlers.AlarmSoundLoggingEventHandler;
 import de.huxhorn.lilith.eventhandlers.FileDumpEventHandler;
 import de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler;
-import de.huxhorn.lilith.eventhandlers.RrdLoggingEventHandler;
 import de.huxhorn.lilith.jul.xml.JulImportCallable;
 import de.huxhorn.lilith.log4j.producer.Log4jLoggingConverter;
 import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
@@ -85,7 +84,6 @@ import de.huxhorn.lilith.swing.callables.IndexingCallable;
 import de.huxhorn.lilith.swing.filefilters.DirectoryFilter;
 import de.huxhorn.lilith.swing.filefilters.LilithFileFilter;
 import de.huxhorn.lilith.swing.filefilters.LogFileFilter;
-import de.huxhorn.lilith.swing.filefilters.RrdFileFilter;
 import de.huxhorn.lilith.swing.filefilters.XmlImportFileFilter;
 import de.huxhorn.lilith.swing.preferences.PreferencesDialog;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
@@ -230,8 +228,6 @@ public class MainFrame
 	private JLabel statusLabel;
 	private ApplicationPreferences applicationPreferences;
 	private DebugDialog debugDialog;
-	private RrdFileFilter rrdFileFilter;
-	private StatisticsDialog statisticsDialog;
 	private TaskManager<Long> longTaskManager;
 	private ViewActions viewActions;
 	private OpenPreviousDialog openInactiveLogsDialog;
@@ -265,7 +261,6 @@ public class MainFrame
 	private CheckForUpdateDialog checkForUpdateDialog;
 	private FileDumpEventHandler<LoggingEvent> loggingFileDump;
 	private FileDumpEventHandler<AccessEvent> accessFileDump;
-	private RrdLoggingEventHandler rrdLoggingEventHandler;
 	private static final int EXPORT_WARNING_SIZE = 20000;
 	private Condition findActiveCondition;
 	private TraySupport traySupport; // may be null
@@ -371,8 +366,6 @@ public class MainFrame
 
 		accessFileBufferFactory = new AccessFileBufferFactory(accessFileFactory, accessMetaData);
 
-		rrdFileFilter = new RrdFileFilter();
-
 		loggingEventViewManager = new LoggingEventViewManager(this);
 		accessEventViewManager = new AccessEventViewManager(this);
 		this.applicationPreferences.addPropertyChangeListener(new PreferencesChangeListener());
@@ -442,11 +435,6 @@ public class MainFrame
 		statusBar.add(memoryStatus, gbc);
 		add(desktop, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
-
-		setSplashStatusText("Creating statistics dialog.");
-		if(logger.isDebugEnabled()) logger.debug("Before creation of statistics-dialog...");
-		statisticsDialog = new StatisticsDialog(this);
-		if(logger.isDebugEnabled()) logger.debug("After creation of statistics-dialog...");
 
 		setSplashStatusText("Creating about dialog.");
 		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);
@@ -797,9 +785,6 @@ public class MainFrame
 
 		setSplashStatusText("Setting up event handlers.");
 
-		rrdLoggingEventHandler = new RrdLoggingEventHandler();
-		rrdLoggingEventHandler.setBasePath(new File(startupApplicationPath, "statistics"));
-		setStatisticsEnabled(applicationPreferences.isLoggingStatisticEnabled());
 		AlarmSoundLoggingEventHandler loggingEventAlarmSound = new AlarmSoundLoggingEventHandler();
 		loggingEventAlarmSound.setSounds(sounds);
 
@@ -808,7 +793,6 @@ public class MainFrame
 
 		List<EventHandler<LoggingEvent>> loggingHandlers = new ArrayList<>();
 
-		loggingHandlers.add(rrdLoggingEventHandler);
 		loggingHandlers.add(loggingEventAlarmSound);
 		loggingHandlers.add(fileSplitterLoggingEventHandler);
 		loggingHandlers.add(loggingFileDump);
@@ -1903,40 +1887,6 @@ public class MainFrame
 		return applicationPreferences;
 	}
 
-	public SortedMap<String, SourceIdentifier> getAvailableStatistics()
-	{
-		File statisticsPath = new File(applicationPreferences.getStartupApplicationPath(), "statistics");
-		File[] files = statisticsPath.listFiles(rrdFileFilter);
-		SortedMap<String, SourceIdentifier> sources = new TreeMap<>();
-		if(files != null)
-		{
-			Map<String, String> sourceNames = applicationPreferences.getSourceNames();
-			boolean showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
-
-			for(File f : files)
-			{
-				String name = f.getName();
-				name = name.substring(0, name.length() - 4); // we are sure about .rrd here...
-				if(!"global".equalsIgnoreCase(name))
-				{
-					SourceIdentifier si = new SourceIdentifier(name);
-					String sourceTitle = ViewActions.getPrimarySourceTitle(name, sourceNames, showingPrimaryIdentifier);
-					sources.put(sourceTitle, si);
-				}
-			}
-		}
-		return sources;
-	}
-
-	public void showStatistics(SourceIdentifier sourceIdentifier)
-	{
-		if(statisticsDialog != null)
-		{
-			statisticsDialog.setSourceIdentifier(sourceIdentifier);
-			Windows.showWindow(statisticsDialog, MainFrame.this, true);
-		}
-	}
-
 	public TaskManager<Long> getLongWorkManager()
 	{
 		return longTaskManager;
@@ -2902,11 +2852,6 @@ public class MainFrame
 				setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
 				return;
 			}
-			if(ApplicationPreferences.LOGGING_STATISTIC_ENABLED_PROPERTY.equals(propName))
-			{
-				setStatisticsEnabled(applicationPreferences.isLoggingStatisticEnabled());
-				return;
-			}
 
 			if(ApplicationPreferences.TRAY_ACTIVE_PROPERTY.equals(propName))
 			{
@@ -2938,11 +2883,6 @@ public class MainFrame
 	{
 		loggingFileDump.setEnabled(globalLoggingEnabled);
 		accessFileDump.setEnabled(globalLoggingEnabled);
-	}
-
-	private void setStatisticsEnabled(boolean statisticsEnabled)
-	{
-		rrdLoggingEventHandler.setEnabled(statisticsEnabled);
 	}
 
 	private void setCheckingForUpdate(boolean checkingForUpdate)

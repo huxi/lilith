@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -117,7 +117,6 @@ public class LilithPreferencesStreamingEncoder
 		prefs.setColoringWholeRow(p.isColoringWholeRow());
 		prefs.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());
 		prefs.setHidingOnClose(p.isHidingOnClose());
-		prefs.setLoggingStatisticEnabled(p.isLoggingStatisticEnabled());
 		prefs.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
 		prefs.setMute(p.isMute());
 		prefs.setScrollingToBottom(p.isScrollingToBottom());

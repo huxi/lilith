@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,6 @@ public class LilithPreferences
 	private boolean coloringWholeRow = false;
 	private boolean globalLoggingEnabled = true;
 	private boolean hidingOnClose = true;
-	private boolean loggingStatisticEnabled = true;
 	private boolean maximizingInternalFrames = false;
 	private boolean mute = false;
 	private boolean scrollingToBottom = true;
@@ -232,16 +231,6 @@ public class LilithPreferences
 	public void setGlobalLoggingEnabled(boolean globalLoggingEnabled)
 	{
 		this.globalLoggingEnabled = globalLoggingEnabled;
-	}
-
-	public boolean isLoggingStatisticEnabled()
-	{
-		return loggingStatisticEnabled;
-	}
-
-	public void setLoggingStatisticEnabled(boolean loggingStatisticEnabled)
-	{
-		this.loggingStatisticEnabled = loggingStatisticEnabled;
 	}
 
 	public boolean isMaximizingInternalFrames()
