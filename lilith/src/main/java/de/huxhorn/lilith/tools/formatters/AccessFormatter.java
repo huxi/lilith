@@ -351,7 +351,7 @@ public class AccessFormatter
 			return NA;
 		}
 
-		public Enumeration getRequestHeaderNames()
+		public Enumeration<String> getRequestHeaderNames()
 		{
 			if(requestHeaderMap == null)
 			{
