@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,9 +49,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -63,6 +60,9 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import org.apache.commons.io.IOUtils;
@@ -76,17 +76,29 @@ public class PreferencesDialog
 
 	public enum Panes
 	{
-		General,
-		StartupShutdown,
-		Windows,
-		Sounds,
-		Sources,
-		SourceLists,
-		SourceFiltering,
-		Conditions,
-		LoggingLevels,
-		AccessStatus,
-		Troubleshooting
+		General("General"),
+		StartupShutdown("Startup & Shutdown"),
+		Windows("Windows"),
+		Sounds("Sounds"),
+		Sources("Sources"),
+		SourceLists("Source Lists"),
+		SourceFiltering("Source Filtering"),
+		Conditions("Conditions"),
+		LoggingLevels("Logging levels"),
+		AccessStatus("Access status types"),
+		Troubleshooting("Troubleshooting");
+
+		private final String title;
+
+		Panes(String title)
+		{
+			this.title = title;
+		}
+
+		public String getTitle()
+		{
+			return title;
+		}
 	}
 
 	public enum Actions
@@ -94,13 +106,29 @@ public class PreferencesDialog
 		reinitializeDetailsViewFiles
 	}
 
+	private static final Map<Panes, String> PANE_TOOLTIPS=new HashMap<>();
+
+	static
+	{
+		PANE_TOOLTIPS.put(Panes.General, null);
+		PANE_TOOLTIPS.put(Panes.StartupShutdown, "Configure behavior at startup and shutdown.");
+		PANE_TOOLTIPS.put(Panes.Windows, null);
+		PANE_TOOLTIPS.put(Panes.Sounds, "Configure sounds or mute them entirely.");
+		PANE_TOOLTIPS.put(Panes.Sources, "Configure human-readable names for source IP addresses.");
+		PANE_TOOLTIPS.put(Panes.SourceLists, "Manage lists of sources. Those are used for Source filtering.");
+		PANE_TOOLTIPS.put(Panes.SourceFiltering, "Configure which hosts are allowed to connect.");
+		PANE_TOOLTIPS.put(Panes.Conditions, "Manage saved conditions and configure their styling.");
+		PANE_TOOLTIPS.put(Panes.LoggingLevels, "Configure the styling of the different logging levels.");
+		PANE_TOOLTIPS.put(Panes.AccessStatus, "Configure the styling of the different access status types.");
+		PANE_TOOLTIPS.put(Panes.Troubleshooting, "Got a problem? Broke something? Take a look here.");
+	}
+
 	private final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
 
 	private ApplicationPreferences applicationPreferences;
 	private MainFrame mainFrame;
 
-	private JComboBox<Panes> comboBox;
-	private DefaultComboBoxModel<Panes> comboBoxModel;
+	private JList<Panes> paneSelectionList;
 	private CardLayout cardLayout;
 	private JPanel content;
 
@@ -153,19 +181,21 @@ public class PreferencesDialog
 		accessStatusTypePanel = new AccessStatusTypePanel(this);
 		TroubleshootingPanel troubleshootingPanel = new TroubleshootingPanel(this);
 
-		comboBoxModel = new DefaultComboBoxModel<>();
+		DefaultListModel<Panes> paneSelectionListModel = new DefaultListModel<>();
 		for(Panes current : Panes.values())
 		{
-			comboBoxModel.addElement(current);
+			paneSelectionListModel.addElement(current);
 		}
-		comboBox = new JComboBox<>(comboBoxModel);
-		comboBox.setRenderer(new MyComboBoxRenderer());
-		comboBox.setEditable(false);
-		comboBox.addItemListener(new ComboItemListener());
+		paneSelectionList = new JList<>(paneSelectionListModel);
+		paneSelectionList.setCellRenderer(new PaneSelectionListCellRenderer());
+		paneSelectionList.setSelectedValue(Panes.General, true);
+		paneSelectionList.addListSelectionListener(new PaneSelectionListener());
+		paneSelectionList.setBorder(new EmptyBorder(4, 4, 0, 4));
 
 		cardLayout = new CardLayout();
 		content = new JPanel(cardLayout);
 		content.setPreferredSize(new Dimension(600, 500));
+		content.setBorder(new EmptyBorder(4, 4, 0, 4));
 
 		content.add(generalPanel, Panes.General.toString());
 		content.add(startupShutdownPanel, Panes.StartupShutdown.toString());
@@ -191,7 +221,7 @@ public class PreferencesDialog
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		contentPane.add(comboBox, BorderLayout.NORTH);
+		contentPane.add(paneSelectionList, BorderLayout.WEST);
 		contentPane.add(content, BorderLayout.CENTER);
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 		KeyStrokes.registerCommand(content, okAction, "OK_ACTION");
@@ -228,13 +258,6 @@ public class PreferencesDialog
 	public Map<String, String> getSourceNames()
 	{
 		return sourceNames;
-	}
-
-	public void setSourceNames(Map<String, String> sourceNames)
-	{
-		this.sourceNames = sourceNames;
-		sourcesPanel.initUI();
-		sourceListsPanel.initUI();
 	}
 
 	public void setSourceName(String oldIdentifier, String newIdentifier, String sourceName)
@@ -506,9 +529,9 @@ public class PreferencesDialog
 			return;
 		}
 		cardLayout.show(content, pane.toString());
-		if(!pane.equals(comboBox.getSelectedItem()))
+		if(!pane.equals(paneSelectionList.getSelectedValue()))
 		{
-			comboBox.setSelectedItem(pane);
+			paneSelectionList.setSelectedValue(pane, true);
 		}
 		if(!isVisible())
 		{
@@ -567,7 +590,6 @@ public class PreferencesDialog
 		String message = "This deletes *all* log files, even the Lilith logs and the global logs!\nDelete all log files right now?";
 		int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-		// TODO: add "Show in Finder/Explorer" button if running on Mac/Windows
 		if(JOptionPane.OK_OPTION != result)
 		{
 			return;
@@ -654,17 +676,18 @@ public class PreferencesDialog
 		conditionsPanel.editCondition(condition);
 	}
 
-	private static class MyComboBoxRenderer
+	private static class PaneSelectionListCellRenderer
 		implements ListCellRenderer<Panes>
 	{
 		private JLabel label;
 
-		MyComboBoxRenderer()
+		PaneSelectionListCellRenderer()
 		{
 			label = new JLabel();
 			label.setOpaque(true);
 			label.setHorizontalAlignment(SwingConstants.LEFT);
 			label.setVerticalAlignment(SwingConstants.CENTER);
+			label.setBorder(new EmptyBorder(2,2,2,2));
 		}
 
 		@Override
@@ -682,62 +705,33 @@ public class PreferencesDialog
 			}
 
 			String title = null;
+			String toolTipText = null;
 
 			if(value != null)
 			{
-				switch(value)
+				title = value.getTitle();
+				toolTipText = PANE_TOOLTIPS.get(value);
+				if(toolTipText == null)
 				{
-					case General:
-						title="General";
-						break;
-					case StartupShutdown:
-						title="Startup & Shutdown";
-						break;
-					case Windows:
-						title="Windows";
-						break;
-					case Sounds:
-						title="Sounds";
-						break;
-					case Sources:
-						title="Sources";
-						break;
-					case SourceLists:
-						title="Source Lists";
-						break;
-					case SourceFiltering:
-						title="Source Filtering";
-						break;
-					case Conditions:
-						title="Conditions";
-						break;
-					case LoggingLevels:
-						title="Logging levels";
-						break;
-					case AccessStatus:
-						title="Access status types";
-						break;
-					case Troubleshooting:
-						title="Troubleshooting";
-						break;
+					toolTipText = title;
 				}
 			}
 			label.setText(title);
-			label.setToolTipText(title);
+			label.setToolTipText(toolTipText);
 
 			return label;
 		}
 	}
 
-	private class ComboItemListener
-		implements ItemListener
+	private class PaneSelectionListener
+		implements ListSelectionListener
 	{
-		public void itemStateChanged(ItemEvent e)
+		@Override
+		public void valueChanged(ListSelectionEvent e)
 		{
-			Object item = comboBoxModel.getSelectedItem();
-			if(item instanceof Panes)
+			Panes pane = paneSelectionList.getSelectedValue();
+			if(pane != null)
 			{
-				Panes pane = (Panes) item;
 				showPane(pane);
 			}
 		}
