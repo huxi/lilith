@@ -76,6 +76,7 @@ All notable changes to this project will be documented in this file.
 - Removed RRD statistics.
 - Removed unused SenderService and jMDNS.
 - Removed unused and broken `UserNotificationLoggingEventHandler` and `UserNotificationAccessEventHandler`.
+- Removed macify to ensure Java 9 compatibility.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.
@@ -90,8 +91,6 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Known issues
-- Lilith won't work with Java 9 for now.
-  See [JDK-8160437 - com.apple.eawt.Application is not exported and jdeps didn't warn about it](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8160437).
 - logback-access `AccessEvent` sent by `SocketAppender` isn't guaranteed to be deserializable at the moment. You can use the Lilith Multiplex Socket Appender in the meantime.
   See [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Logback 1.1.0 introduced some message formatting regressions.

@@ -187,10 +187,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.simplericity.macify.eawt.Application;
-import org.simplericity.macify.eawt.ApplicationEvent;
-import org.simplericity.macify.eawt.ApplicationListener;
-import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -230,7 +226,6 @@ public class MainFrame
 	private ViewActions viewActions;
 	private OpenPreviousDialog openInactiveLogsDialog;
 	private HelpFrame helpFrame;
-	private Application application;
 	private int activeCounter;
 	private List<AutostartRunnable> autostartProcesses;
 	private static final boolean IS_MAC;
@@ -263,17 +258,9 @@ public class MainFrame
 
 	static
 	{
-		DefaultApplication app = new DefaultApplication();
-		IS_MAC = app.isMac();
-		if(!IS_MAC)
-		{
-			String osName = System.getProperty("os.name").toLowerCase(Locale.US);
-			IS_WINDOWS = osName.startsWith("windows");
-		}
-		else
-		{
-			IS_WINDOWS = false;
-		}
+		String osName = System.getProperty("os.name").toLowerCase(Locale.US);
+		IS_WINDOWS = osName.startsWith("windows");
+		IS_MAC = osName.startsWith("mac");
 	}
 
 	private static final ViewContainerProcessor UPDATE_VIEWS_CONTAINER_PROCESSOR = new UpdateViewsContainerProcessor();
@@ -314,7 +301,6 @@ public class MainFrame
 		{
 			setIconImage(Icons.FRAME_ICON.getImage());
 		}
-		application = new DefaultApplication();
 		autostartProcesses = new ArrayList<>();
 
 		addWindowListener(new MainWindowListener());
@@ -808,9 +794,6 @@ public class MainFrame
 		accessEventSourceManager.start();
 
 		viewActions.updateWindowMenu();
-		application.setEnabledAboutMenu(true);
-		application.setEnabledPreferencesMenu(true);
-		application.addApplicationListener(new MyApplicationListener());
 
 		if(Lilith.APP_SNAPSHOT || applicationPreferences.isCheckingForUpdate())
 		{
@@ -868,11 +851,6 @@ public class MainFrame
 		{
 			splashScreen.setStatusText(text);
 		}
-	}
-
-	public Application getApplication()
-	{
-		return application;
 	}
 
 	public void updateWindowMenus()
@@ -1748,53 +1726,6 @@ public class MainFrame
 			colors.put(current.getKey(), new Colors(current.getValue(), false));
 		}
 		levelColors = colors;
-	}
-
-	public class MyApplicationListener
-		implements ApplicationListener
-	{
-		private final Logger logger = LoggerFactory.getLogger(MyApplicationListener.class);
-
-		public void handleAbout(ApplicationEvent applicationEvent)
-		{
-			//application.requestUserAttention(Application.REQUEST_USER_ATTENTION_TYPE_INFORMATIONAL);
-			if(logger.isDebugEnabled()) logger.debug("handleAbout: {}", applicationEvent);
-			viewActions.getAboutAction().actionPerformed(null);
-			applicationEvent.setHandled(true);
-		}
-
-		public void handleOpenApplication(ApplicationEvent applicationEvent)
-		{
-			if(logger.isDebugEnabled()) logger.debug("handleOpenApplication: {}", applicationEvent);
-		}
-
-		public void handleOpenFile(ApplicationEvent applicationEvent)
-		{
-			if(logger.isDebugEnabled()) logger.debug("handleOpenFile: {}\n\tfilename: {}", applicationEvent, applicationEvent.getFilename());
-			open(new File(applicationEvent.getFilename()));
-		}
-
-		public void handlePreferences(ApplicationEvent applicationEvent)
-		{
-			if(logger.isDebugEnabled()) logger.debug("handlePreferences: {}", applicationEvent);
-			viewActions.getPreferencesAction().actionPerformed(null);
-		}
-
-		public void handlePrintFile(ApplicationEvent applicationEvent)
-		{
-			if(logger.isDebugEnabled()) logger.debug("handlePrintFile: {}", applicationEvent);
-		}
-
-		public void handleQuit(ApplicationEvent applicationEvent)
-		{
-			exit();
-		}
-
-		public void handleReOpenApplication(ApplicationEvent applicationEvent)
-		{
-			if(logger.isDebugEnabled()) logger.debug("handleReOpenApplication: {}", applicationEvent);
-			setVisible(true);
-		}
 	}
 
 	private void setLoggingEventSourceManager(SourceManager<LoggingEvent> loggingEventSourceManager)

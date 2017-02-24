@@ -105,7 +105,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableColumn;
-import org.simplericity.macify.eawt.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -235,6 +234,8 @@ public class ViewActions
 		this.mainFrame = mainFrame;
 
 		final ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+		// usingScreenMenuBar is used to determine whether HTML tooltips in menu are supported or not
+		// swing supports HTML tooltip, native macOS menu bar isn't.
 		final boolean usingScreenMenuBar = applicationPreferences != null && applicationPreferences.isUsingScreenMenuBar();
 
 		containerChangeListener = e -> updateActions();
@@ -394,8 +395,6 @@ public class ViewActions
 
 		recentFilesMenu=new JMenu("Recent Files");
 
-		Application app = mainFrame.getApplication();
-
 		menubar = new JMenuBar();
 
 		// File
@@ -407,7 +406,7 @@ public class ViewActions
 		fileMenu.add(cleanAllInactiveLogsMenuAction);
 		fileMenu.add(importMenuAction);
 		fileMenu.add(exportMenuAction);
-		if(!app.isMac())
+		// TODO if(!app.isMac())
 		{
 			fileMenu.addSeparator();
 			fileMenu.add(preferencesMenuAction);
@@ -501,7 +500,7 @@ public class ViewActions
 		helpMenu.add(troubleshootingAction);
 		helpMenu.addSeparator();
 		helpMenu.add(debugAction);
-		if(!app.isMac())
+		// TODO if(!app.isMac())
 		{
 			helpMenu.addSeparator();
 			helpMenu.add(aboutAction);

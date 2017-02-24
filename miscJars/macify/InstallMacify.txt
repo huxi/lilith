@@ -1,6 +1,0 @@
-Execute the following line:
-mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=de.huxhorn.lilith -DartifactId=de.huxhorn.lilith.3rdparty.macify -Dversion=1.4 -Dfile=macify-1.4.jar
-
-mvn deploy:deploy-file -Duser.name=huxhorn,lilith -Durl=sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dfile=macify-1.4.jar -DpomFile=macify-pom.xml
-mvn deploy:deploy-file -Duser.name=huxhorn,lilith -Durl=sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dclassifier=javadoc -Dfile=macify-1.4-javadoc.jar -DpomFile=macify-pom.xml
-mvn deploy:deploy-file -Duser.name=huxhorn,lilith -Durl=sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dclassifier=sources -Dfile=macify-1.4-sources.jar -DpomFile=macify-pom.xml

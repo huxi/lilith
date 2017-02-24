@@ -70,14 +70,13 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Handler;
 import javax.swing.UIManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.simplericity.macify.eawt.Application;
-import org.simplericity.macify.eawt.DefaultApplication;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -813,10 +812,7 @@ public class Lilith
 		boolean screenMenuBar = false;
 		if(systemLookAndFeelClassName.equals(lookAndFeelClassName))
 		{
-			// This instance of application is only used to query some info. The real one is in MainFrame.
-			Application application = new DefaultApplication();
-
-			if(application.isMac())
+			if(isMac())
 			{
 				// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
 				try
@@ -1037,5 +1033,11 @@ public class Lilith
 		{
 			if(logger.isDebugEnabled()) logger.debug("Deleted {}.", prevPathFile.getAbsolutePath());
 		}
+	}
+
+	private static boolean isMac()
+	{
+		String osName = System.getProperty("os.name").toLowerCase(Locale.US);
+		return osName.startsWith("mac");
 	}
 }
