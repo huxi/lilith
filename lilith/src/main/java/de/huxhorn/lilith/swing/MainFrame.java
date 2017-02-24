@@ -791,12 +791,6 @@ public class MainFrame
 		loggingHandlers.add(fileSplitterLoggingEventHandler);
 		loggingHandlers.add(loggingFileDump);
 
-		// crashes the app using j2se 6
-		//if(application.isMac())
-		//{
-		//	UserNotificationLoggingEventHandler notification = new UserNotificationLoggingEventHandler(application);
-		//	loggingHandlers.add(notification);
-		//}
 		loggingEventSourceManager.setEventHandlers(loggingHandlers);
 		loggingEventSourceManager.start();
 
@@ -809,13 +803,6 @@ public class MainFrame
 		accessHandlers.add(accessEventAlarmSound);
 		accessHandlers.add(fileSplitterAccessEventHandler);
 		accessHandlers.add(accessFileDump);
-
-		// crashes the app using j2se 6
-		//if(application.isMac())
-		//{
-		//	UserNotificationAccessEventHandler notification = new UserNotificationAccessEventHandler(application);
-		//	accessHandlers.add(notification);
-		//}
 
 		accessEventSourceManager.setEventHandlers(accessHandlers);
 		accessEventSourceManager.start();

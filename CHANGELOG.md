@@ -75,6 +75,7 @@ All notable changes to this project will be documented in this file.
 - Removed unused c'tors in `AbstractFilterAction`, `AbstractLoggingFilterAction` and `AbstractAccessFilterAction`.
 - Removed RRD statistics.
 - Removed unused SenderService and jMDNS.
+- Removed unused and broken `UserNotificationLoggingEventHandler` and `UserNotificationAccessEventHandler`.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.
