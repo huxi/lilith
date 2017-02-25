@@ -194,6 +194,7 @@ project(':lilith-engine') {
 		compile libraries.'sulky-io'
 		compile libraries.'sulky-codec'
 		compile libraries.'slf4j-api'
+		testCompile libraries.'logback-classic'
 	}
 }
 

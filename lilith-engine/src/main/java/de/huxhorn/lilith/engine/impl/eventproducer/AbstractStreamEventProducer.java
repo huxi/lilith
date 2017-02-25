@@ -43,9 +43,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,78 +51,13 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 {
 	final Logger logger = LoggerFactory.getLogger(AbstractStreamEventProducer.class);
 
-	private static final Set<String> WHITELIST;
-
-	static
-	{
-		Set<String> whitelist = new HashSet<>();
-
-		whitelist.add("[B");
-		whitelist.add("[Lch.qos.logback.classic.spi.IThrowableProxy;");
-		whitelist.add("[Lch.qos.logback.classic.spi.StackTraceElementProxy;");
-		whitelist.add("[Ljava.lang.Object;");
-		whitelist.add("[Ljava.lang.StackTraceElement;");
-		whitelist.add("[Ljava.lang.String;");
-		whitelist.add("[Lorg.apache.logging.log4j.Marker;");
-		whitelist.add("[Lorg.apache.logging.log4j.core.impl.ExtendedStackTraceElement;");
-		whitelist.add("[Lorg.apache.logging.log4j.core.impl.ThrowableProxy;");
-		whitelist.add("ch.qos.logback.access.spi.AccessEvent");
-		whitelist.add("ch.qos.logback.classic.spi.ClassPackagingData");
-		whitelist.add("ch.qos.logback.classic.spi.LoggerContextVO");
-		whitelist.add("ch.qos.logback.classic.spi.LoggingEventVO");
-		whitelist.add("ch.qos.logback.classic.spi.StackTraceElementProxy");
-		whitelist.add("ch.qos.logback.classic.spi.ThrowableProxyVO");
-		whitelist.add("java.lang.Enum");
-		whitelist.add("java.lang.StackTraceElement");
-		whitelist.add("java.lang.String$CaseInsensitiveComparator");
-		whitelist.add("java.rmi.MarshalledObject");
-		whitelist.add("java.util.ArrayList");
-		whitelist.add("java.util.Collections$EmptyMap");
-		whitelist.add("java.util.Collections$SynchronizedMap");
-		whitelist.add("java.util.Collections$UnmodifiableCollection");
-		whitelist.add("java.util.Collections$UnmodifiableList");
-		whitelist.add("java.util.Collections$UnmodifiableMap");
-		whitelist.add("java.util.HashMap");
-		whitelist.add("java.util.Hashtable");
-		whitelist.add("java.util.LinkedHashMap");
-		whitelist.add("java.util.TreeMap");
-		whitelist.add("java.util.Vector");
-		whitelist.add("org.apache.log4j.spi.LocationInfo");
-		whitelist.add("org.apache.log4j.spi.LoggingEvent");
-		whitelist.add("org.apache.log4j.spi.ThrowableInformation");
-		whitelist.add("org.apache.logging.log4j.Level");
-		whitelist.add("org.apache.logging.log4j.MarkerManager$Log4jMarker");
-		whitelist.add("org.apache.logging.log4j.ThreadContext$EmptyThreadContextStack");
-		whitelist.add("org.apache.logging.log4j.core.impl.ExtendedClassInfo");
-		whitelist.add("org.apache.logging.log4j.core.impl.ExtendedStackTraceElement");
-		whitelist.add("org.apache.logging.log4j.core.impl.Log4jLogEvent$LogEventProxy");
-		whitelist.add("org.apache.logging.log4j.core.impl.ThrowableProxy");
-		whitelist.add("org.apache.logging.log4j.message.FormattedMessage");
-		whitelist.add("org.apache.logging.log4j.message.MapMessage");
-		whitelist.add("org.apache.logging.log4j.message.MessageFormatMessage");
-		whitelist.add("org.apache.logging.log4j.message.ObjectArrayMessage");
-		whitelist.add("org.apache.logging.log4j.message.ObjectMessage");
-		whitelist.add("org.apache.logging.log4j.message.ParameterizedMessage");
-		whitelist.add("org.apache.logging.log4j.message.SimpleMessage");
-		whitelist.add("org.apache.logging.log4j.message.StringFormattedMessage");
-		whitelist.add("org.apache.logging.log4j.message.StructuredDataId");
-		whitelist.add("org.apache.logging.log4j.message.StructuredDataMessage");
-		whitelist.add("org.apache.logging.log4j.message.ThreadDumpMessage$ThreadDumpMessageProxy");
-		whitelist.add("org.apache.logging.log4j.spi.MutableThreadContextStack");
-		whitelist.add("org.apache.logging.log4j.spi.StandardLevel");
-		whitelist.add("org.apache.logging.log4j.util.SortedArrayStringMap");
-		whitelist.add("org.slf4j.helpers.BasicMarker");
-
-		WHITELIST = Collections.unmodifiableSet(whitelist);
-	}
-
 	private ObjectInputStream dataInput;
 
 	public AbstractStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream)
 		throws IOException
 	{
 		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
-		this.dataInput = new WhitelistObjectInputStream(new BufferedInputStream(inputStream), WHITELIST, false /*, true*/);
+		this.dataInput = new WhitelistObjectInputStream(new BufferedInputStream(inputStream), SerializableWhitelist.WHITELIST, false /*, true*/);
 	}
 
 	public void start()
