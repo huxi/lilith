@@ -8272,6 +8272,48 @@ public final class LoggingProto {
      * <code>optional bool exact = 7;</code>
      */
     boolean getExact();
+
+    /**
+     * <code>optional string class_loader_name = 8;</code>
+     */
+    boolean hasClassLoaderName();
+    /**
+     * <code>optional string class_loader_name = 8;</code>
+     */
+    java.lang.String getClassLoaderName();
+    /**
+     * <code>optional string class_loader_name = 8;</code>
+     */
+    com.google.protobuf.ByteString
+        getClassLoaderNameBytes();
+
+    /**
+     * <code>optional string module_name = 9;</code>
+     */
+    boolean hasModuleName();
+    /**
+     * <code>optional string module_name = 9;</code>
+     */
+    java.lang.String getModuleName();
+    /**
+     * <code>optional string module_name = 9;</code>
+     */
+    com.google.protobuf.ByteString
+        getModuleNameBytes();
+
+    /**
+     * <code>optional string module_version = 10;</code>
+     */
+    boolean hasModuleVersion();
+    /**
+     * <code>optional string module_version = 10;</code>
+     */
+    java.lang.String getModuleVersion();
+    /**
+     * <code>optional string module_version = 10;</code>
+     */
+    com.google.protobuf.ByteString
+        getModuleVersionBytes();
   }
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.StackTraceElement}
@@ -8292,6 +8334,9 @@ public final class LoggingProto {
       codeLocation_ = "";
       version_ = "";
       exact_ = false;
+      classLoaderName_ = "";
+      moduleName_ = "";
+      moduleVersion_ = "";
     }
 
     @java.lang.Override
@@ -8360,6 +8405,24 @@ public final class LoggingProto {
             case 56: {
               bitField0_ |= 0x00000040;
               exact_ = input.readBool();
+              break;
+            }
+            case 66: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000080;
+              classLoaderName_ = bs;
+              break;
+            }
+            case 74: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000100;
+              moduleName_ = bs;
+              break;
+            }
+            case 82: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000200;
+              moduleVersion_ = bs;
               break;
             }
           }
@@ -8627,6 +8690,132 @@ public final class LoggingProto {
       return exact_;
     }
 
+    public static final int CLASS_LOADER_NAME_FIELD_NUMBER = 8;
+    private volatile java.lang.Object classLoaderName_;
+    /**
+     * <code>optional string class_loader_name = 8;</code>
+     */
+    public boolean hasClassLoaderName() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>optional string class_loader_name = 8;</code>
+     */
+    public java.lang.String getClassLoaderName() {
+      java.lang.Object ref = classLoaderName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          classLoaderName_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string class_loader_name = 8;</code>
+     */
+    public com.google.protobuf.ByteString
+        getClassLoaderNameBytes() {
+      java.lang.Object ref = classLoaderName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        classLoaderName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MODULE_NAME_FIELD_NUMBER = 9;
+    private volatile java.lang.Object moduleName_;
+    /**
+     * <code>optional string module_name = 9;</code>
+     */
+    public boolean hasModuleName() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    /**
+     * <code>optional string module_name = 9;</code>
+     */
+    public java.lang.String getModuleName() {
+      java.lang.Object ref = moduleName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          moduleName_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string module_name = 9;</code>
+     */
+    public com.google.protobuf.ByteString
+        getModuleNameBytes() {
+      java.lang.Object ref = moduleName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        moduleName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MODULE_VERSION_FIELD_NUMBER = 10;
+    private volatile java.lang.Object moduleVersion_;
+    /**
+     * <code>optional string module_version = 10;</code>
+     */
+    public boolean hasModuleVersion() {
+      return ((bitField0_ & 0x00000200) == 0x00000200);
+    }
+    /**
+     * <code>optional string module_version = 10;</code>
+     */
+    public java.lang.String getModuleVersion() {
+      java.lang.Object ref = moduleVersion_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          moduleVersion_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string module_version = 10;</code>
+     */
+    public com.google.protobuf.ByteString
+        getModuleVersionBytes() {
+      java.lang.Object ref = moduleVersion_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        moduleVersion_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -8660,6 +8849,15 @@ public final class LoggingProto {
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         output.writeBool(7, exact_);
       }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 8, classLoaderName_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 9, moduleName_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 10, moduleVersion_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -8690,6 +8888,15 @@ public final class LoggingProto {
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(7, exact_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, classLoaderName_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, moduleName_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, moduleVersion_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -8743,6 +8950,21 @@ public final class LoggingProto {
         result = result && (getExact()
             == other.getExact());
       }
+      result = result && (hasClassLoaderName() == other.hasClassLoaderName());
+      if (hasClassLoaderName()) {
+        result = result && getClassLoaderName()
+            .equals(other.getClassLoaderName());
+      }
+      result = result && (hasModuleName() == other.hasModuleName());
+      if (hasModuleName()) {
+        result = result && getModuleName()
+            .equals(other.getModuleName());
+      }
+      result = result && (hasModuleVersion() == other.hasModuleVersion());
+      if (hasModuleVersion()) {
+        result = result && getModuleVersion()
+            .equals(other.getModuleVersion());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -8782,6 +9004,18 @@ public final class LoggingProto {
         hash = (37 * hash) + EXACT_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
             getExact());
+      }
+      if (hasClassLoaderName()) {
+        hash = (37 * hash) + CLASS_LOADER_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getClassLoaderName().hashCode();
+      }
+      if (hasModuleName()) {
+        hash = (37 * hash) + MODULE_NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getModuleName().hashCode();
+      }
+      if (hasModuleVersion()) {
+        hash = (37 * hash) + MODULE_VERSION_FIELD_NUMBER;
+        hash = (53 * hash) + getModuleVersion().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -8915,6 +9149,12 @@ public final class LoggingProto {
         bitField0_ = (bitField0_ & ~0x00000020);
         exact_ = false;
         bitField0_ = (bitField0_ & ~0x00000040);
+        classLoaderName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000080);
+        moduleName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000100);
+        moduleVersion_ = "";
+        bitField0_ = (bitField0_ & ~0x00000200);
         return this;
       }
 
@@ -8967,6 +9207,18 @@ public final class LoggingProto {
           to_bitField0_ |= 0x00000040;
         }
         result.exact_ = exact_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        result.classLoaderName_ = classLoaderName_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.moduleName_ = moduleName_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        result.moduleVersion_ = moduleVersion_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -9039,6 +9291,21 @@ public final class LoggingProto {
         }
         if (other.hasExact()) {
           setExact(other.getExact());
+        }
+        if (other.hasClassLoaderName()) {
+          bitField0_ |= 0x00000080;
+          classLoaderName_ = other.classLoaderName_;
+          onChanged();
+        }
+        if (other.hasModuleName()) {
+          bitField0_ |= 0x00000100;
+          moduleName_ = other.moduleName_;
+          onChanged();
+        }
+        if (other.hasModuleVersion()) {
+          bitField0_ |= 0x00000200;
+          moduleVersion_ = other.moduleVersion_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9508,6 +9775,234 @@ public final class LoggingProto {
       public Builder clearExact() {
         bitField0_ = (bitField0_ & ~0x00000040);
         exact_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object classLoaderName_ = "";
+      /**
+       * <code>optional string class_loader_name = 8;</code>
+       */
+      public boolean hasClassLoaderName() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>optional string class_loader_name = 8;</code>
+       */
+      public java.lang.String getClassLoaderName() {
+        java.lang.Object ref = classLoaderName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            classLoaderName_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string class_loader_name = 8;</code>
+       */
+      public com.google.protobuf.ByteString
+          getClassLoaderNameBytes() {
+        java.lang.Object ref = classLoaderName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          classLoaderName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string class_loader_name = 8;</code>
+       */
+      public Builder setClassLoaderName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000080;
+        classLoaderName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string class_loader_name = 8;</code>
+       */
+      public Builder clearClassLoaderName() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        classLoaderName_ = getDefaultInstance().getClassLoaderName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string class_loader_name = 8;</code>
+       */
+      public Builder setClassLoaderNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000080;
+        classLoaderName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object moduleName_ = "";
+      /**
+       * <code>optional string module_name = 9;</code>
+       */
+      public boolean hasModuleName() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>optional string module_name = 9;</code>
+       */
+      public java.lang.String getModuleName() {
+        java.lang.Object ref = moduleName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            moduleName_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string module_name = 9;</code>
+       */
+      public com.google.protobuf.ByteString
+          getModuleNameBytes() {
+        java.lang.Object ref = moduleName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          moduleName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string module_name = 9;</code>
+       */
+      public Builder setModuleName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000100;
+        moduleName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string module_name = 9;</code>
+       */
+      public Builder clearModuleName() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        moduleName_ = getDefaultInstance().getModuleName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string module_name = 9;</code>
+       */
+      public Builder setModuleNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000100;
+        moduleName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object moduleVersion_ = "";
+      /**
+       * <code>optional string module_version = 10;</code>
+       */
+      public boolean hasModuleVersion() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
+      }
+      /**
+       * <code>optional string module_version = 10;</code>
+       */
+      public java.lang.String getModuleVersion() {
+        java.lang.Object ref = moduleVersion_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            moduleVersion_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string module_version = 10;</code>
+       */
+      public com.google.protobuf.ByteString
+          getModuleVersionBytes() {
+        java.lang.Object ref = moduleVersion_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          moduleVersion_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string module_version = 10;</code>
+       */
+      public Builder setModuleVersion(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000200;
+        moduleVersion_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string module_version = 10;</code>
+       */
+      public Builder clearModuleVersion() {
+        bitField0_ = (bitField0_ & ~0x00000200);
+        moduleVersion_ = getDefaultInstance().getModuleVersion();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string module_version = 10;</code>
+       */
+      public Builder setModuleVersionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000200;
+        moduleVersion_ = value;
         onChanged();
         return this;
       }
@@ -14544,27 +15039,29 @@ public final class LoggingProto {
       "\005 \001(\005\"`\n\007Message\022\027\n\017message_pattern\030\001 \001(" +
       "\t\022<\n\010argument\030\002 \003(\0132*.de.huxhorn.lilith." +
       "logging.MessageArgument\" \n\017MessageArgume" +
-      "nt\022\r\n\005value\030\001 \001(\t\"\233\001\n\021StackTraceElement\022" +
+      "nt\022\r\n\005value\030\001 \001(\t\"\343\001\n\021StackTraceElement\022" +
       "\023\n\013method_name\030\001 \001(\t\022\022\n\nclass_name\030\002 \001(\t" +
       "\022\021\n\tfile_name\030\003 \001(\t\022\023\n\013line_number\030\004 \001(\005" +
       "\022\025\n\rcode_location\030\005 \001(\t\022\017\n\007version\030\006 \001(\t" +
-      "\022\r\n\005exact\030\007 \001(\010\"\211\002\n\tThrowable\022\027\n\017throwab" +
-      "le_class\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022I\n\023stack",
-      "_trace_element\030\003 \003(\0132,.de.huxhorn.lilith" +
-      ".logging.StackTraceElement\022\030\n\020omitted_el" +
-      "ements\030\004 \001(\005\0223\n\005cause\030\005 \001(\0132$.de.huxhorn" +
-      ".lilith.logging.Throwable\0228\n\nsuppressed\030" +
-      "\006 \003(\0132$.de.huxhorn.lilith.logging.Throwa" +
-      "ble\"L\n\027NestedDiagnosticContext\0221\n\005entry\030" +
-      "\001 \003(\0132\".de.huxhorn.lilith.logging.Messag" +
-      "e\"E\n\tStringMap\0228\n\005entry\030\001 \003(\0132).de.huxho" +
-      "rn.lilith.logging.StringMapEntry\",\n\016Stri" +
-      "ngMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"L",
-      "\n\006Marker\022\014\n\004name\030\001 \002(\t\0224\n\treference\030\002 \003(" +
-      "\0132!.de.huxhorn.lilith.logging.Marker*<\n\005" +
-      "Level\022\t\n\005TRACE\020\001\022\t\n\005DEBUG\020\002\022\010\n\004INFO\020\003\022\010\n" +
-      "\004WARN\020\004\022\t\n\005ERROR\020\005B5\n1de.huxhorn.lilith." +
-      "data.logging.protobuf.generatedH\001"
+      "\022\r\n\005exact\030\007 \001(\010\022\031\n\021class_loader_name\030\010 \001" +
+      "(\t\022\023\n\013module_name\030\t \001(\t\022\026\n\016module_versio",
+      "n\030\n \001(\t\"\211\002\n\tThrowable\022\027\n\017throwable_class" +
+      "\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022I\n\023stack_trace_e" +
+      "lement\030\003 \003(\0132,.de.huxhorn.lilith.logging" +
+      ".StackTraceElement\022\030\n\020omitted_elements\030\004" +
+      " \001(\005\0223\n\005cause\030\005 \001(\0132$.de.huxhorn.lilith." +
+      "logging.Throwable\0228\n\nsuppressed\030\006 \003(\0132$." +
+      "de.huxhorn.lilith.logging.Throwable\"L\n\027N" +
+      "estedDiagnosticContext\0221\n\005entry\030\001 \003(\0132\"." +
+      "de.huxhorn.lilith.logging.Message\"E\n\tStr" +
+      "ingMap\0228\n\005entry\030\001 \003(\0132).de.huxhorn.lilit",
+      "h.logging.StringMapEntry\",\n\016StringMapEnt" +
+      "ry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"L\n\006Marker" +
+      "\022\014\n\004name\030\001 \002(\t\0224\n\treference\030\002 \003(\0132!.de.h" +
+      "uxhorn.lilith.logging.Marker*<\n\005Level\022\t\n" +
+      "\005TRACE\020\001\022\t\n\005DEBUG\020\002\022\010\n\004INFO\020\003\022\010\n\004WARN\020\004\022" +
+      "\t\n\005ERROR\020\005B5\n1de.huxhorn.lilith.data.log" +
+      "ging.protobuf.generatedH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -14631,7 +15128,7 @@ public final class LoggingProto {
     internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor,
-        new java.lang.String[] { "MethodName", "ClassName", "FileName", "LineNumber", "CodeLocation", "Version", "Exact", });
+        new java.lang.String[] { "MethodName", "ClassName", "FileName", "LineNumber", "CodeLocation", "Version", "Exact", "ClassLoaderName", "ModuleName", "ModuleVersion", });
     internal_static_de_huxhorn_lilith_logging_Throwable_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable = new

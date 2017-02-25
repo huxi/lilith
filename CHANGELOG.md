@@ -33,6 +33,7 @@ All notable changes to this project will be documented in this file.
 - Added "Focus Request Header"/"Exclude Request Header".
 - Added "Focus Response Header"/"Exclude Response Header".
 - Added alternative behavior for "MDC", "Request Parameter", "Request Header" and "Response Header" Focus/Exclude menu items. Pressing `Alt` while selecting Action will match any value for the given key.
+- Added support for `ClassLoaderName`, `ModuleName` and `ModuleVersion` in Java 9 `StackTraceElement`.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.

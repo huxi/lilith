@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,9 @@ public class StackTraceElementReader
 		if(XMLStreamConstants.START_ELEMENT == type
 			&& STACK_TRACE_ELEMENT_NODE.equals(reader.getLocalName()))
 		{
+			String classLoaderName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_CLASS_LOADER_NAME_ATTRIBUTE);
+			String moduleName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_MODULE_NAME_ATTRIBUTE);
+			String moduleVersion = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_MODULE_VERSION_ATTRIBUTE);
 			String className = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE);
 			String methodName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE);
 			String fileName = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE);
@@ -89,7 +92,11 @@ public class StackTraceElementReader
 			}
 
 			reader.require(XMLStreamConstants.END_ELEMENT, null, STACK_TRACE_ELEMENT_NODE);
-			return new ExtendedStackTraceElement(className, methodName, fileName, lineNumber, codeLocation, version, exact);
+			ExtendedStackTraceElement result=new ExtendedStackTraceElement(className, methodName, fileName, lineNumber, codeLocation, version, exact);
+			result.setClassLoaderName(classLoaderName);
+			result.setModuleName(moduleName);
+			result.setModuleVersion(moduleVersion);
+			return result;
 		}
 		return null;
 	}

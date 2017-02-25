@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,9 @@
 package de.huxhorn.lilith.data.logging;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
@@ -44,7 +47,7 @@ import java.util.Objects;
 public class ExtendedStackTraceElement
 	implements Serializable, Cloneable
 {
-	private static final long serialVersionUID = 4907919529165316605L;
+	private static final long serialVersionUID = -6954579590347369344L;
 
 	public static final int UNKNOWN_SOURCE_LINE_NUMBER = -1;
 	public static final int NATIVE_METHOD_LINE_NUMBER = -2;
@@ -56,14 +59,23 @@ public class ExtendedStackTraceElement
 	private static final String EXTENDED_INEXACT_PREFIX = "~[";
 	private static final String EXTENDED_POSTFIX = "]";
 	private static final char SEPARATOR_CHAR = ':';
+	private static final char MODULE_SEPARATOR_CHAR = '/';
+	private static final char MODULE_VERSION_SEPARATOR_CHAR = '@';
 
 	private String className;
 	private String methodName;
 	private String fileName;
 	private int lineNumber;
+
+	// Logback extended info
 	private String codeLocation;
 	private String version;
 	private boolean exact;
+
+	// Java 9
+	private String classLoaderName;
+	private String moduleName;
+	private String moduleVersion;
 
 	public ExtendedStackTraceElement()
 	{
@@ -77,6 +89,9 @@ public class ExtendedStackTraceElement
 		this.methodName = stackTraceElement.getMethodName();
 		this.fileName = stackTraceElement.getFileName();
 		this.lineNumber = stackTraceElement.getLineNumber();
+		this.classLoaderName = getClassLoaderNameFrom(stackTraceElement);
+		this.moduleName = getModuleNameFrom(stackTraceElement);
+		this.moduleVersion= getModuleVersionFrom(stackTraceElement);
 	}
 
 	public ExtendedStackTraceElement(String className, String methodName, String fileName, int lineNumber)
@@ -170,34 +185,70 @@ public class ExtendedStackTraceElement
 		this.exact = exact;
 	}
 
+	public String getClassLoaderName()
+	{
+		return classLoaderName;
+	}
+
+	public void setClassLoaderName(String classLoaderName)
+	{
+		this.classLoaderName = classLoaderName;
+	}
+
+	public String getModuleName()
+	{
+		return moduleName;
+	}
+
+	public void setModuleName(String moduleName)
+	{
+		this.moduleName = moduleName;
+	}
+
+	public String getModuleVersion()
+	{
+		return moduleVersion;
+	}
+
+	public void setModuleVersion(String moduleVersion)
+	{
+		this.moduleVersion = moduleVersion;
+	}
+
+	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		ExtendedStackTraceElement that = (ExtendedStackTraceElement) o;
 
-		if(exact != that.exact) return false;
-		if(lineNumber != that.lineNumber) return false;
-		if(className != null ? !className.equals(that.className) : that.className != null) return false;
-		if(codeLocation != null ? !codeLocation.equals(that.codeLocation) : that.codeLocation != null) return false;
-		if(fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
-		if(methodName != null ? !methodName.equals(that.methodName) : that.methodName != null) return false;
-		if(version != null ? !version.equals(that.version) : that.version != null) return false;
-
-		return true;
+		if (lineNumber != that.lineNumber) return false;
+		if (exact != that.exact) return false;
+		if (className != null ? !className.equals(that.className) : that.className != null) return false;
+		if (methodName != null ? !methodName.equals(that.methodName) : that.methodName != null) return false;
+		if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
+		if (codeLocation != null ? !codeLocation.equals(that.codeLocation) : that.codeLocation != null) return false;
+		if (version != null ? !version.equals(that.version) : that.version != null) return false;
+		if (classLoaderName != null ? !classLoaderName.equals(that.classLoaderName) : that.classLoaderName != null)
+			return false;
+		if (moduleName != null ? !moduleName.equals(that.moduleName) : that.moduleName != null) return false;
+		return moduleVersion != null ? moduleVersion.equals(that.moduleVersion) : that.moduleVersion == null;
 	}
 
+	@Override
 	public int hashCode()
 	{
-		int result;
-		result = (className != null ? className.hashCode() : 0);
+		int result = className != null ? className.hashCode() : 0;
 		result = 31 * result + (methodName != null ? methodName.hashCode() : 0);
 		result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
 		result = 31 * result + lineNumber;
 		result = 31 * result + (codeLocation != null ? codeLocation.hashCode() : 0);
 		result = 31 * result + (version != null ? version.hashCode() : 0);
 		result = 31 * result + (exact ? 1 : 0);
+		result = 31 * result + (classLoaderName != null ? classLoaderName.hashCode() : 0);
+		result = 31 * result + (moduleName != null ? moduleName.hashCode() : 0);
+		result = 31 * result + (moduleVersion != null ? moduleVersion.hashCode() : 0);
 		return result;
 	}
 
@@ -210,7 +261,8 @@ public class ExtendedStackTraceElement
 		{
 			return null;
 		}
-		return new StackTraceElement(className, methodName, fileName, lineNumber);
+		return createStackTraceElement(classLoaderName, moduleName, moduleVersion,
+				className, methodName, fileName, lineNumber);
 	}
 
 	public ExtendedStackTraceElement clone()
@@ -299,6 +351,25 @@ public class ExtendedStackTraceElement
 	public StringBuilder appendTo(StringBuilder stringBuilder, boolean extended)
 	{
 		Objects.requireNonNull(stringBuilder, "stringBuilder must not be null!");
+		boolean separatorRequired = false;
+		if(classLoaderName != null && !classLoaderName.isEmpty())
+		{
+			stringBuilder.append(classLoaderName).append(MODULE_SEPARATOR_CHAR);
+			separatorRequired = true;
+		}
+		if(moduleName != null && !moduleName.isEmpty())
+		{
+			stringBuilder.append(moduleName);
+			if(moduleVersion != null && !moduleVersion.isEmpty())
+			{
+				stringBuilder.append(MODULE_VERSION_SEPARATOR_CHAR).append(moduleVersion);
+			}
+			separatorRequired = true;
+		}
+		if(separatorRequired)
+		{
+			stringBuilder.append(MODULE_SEPARATOR_CHAR);
+		}
 		stringBuilder.append(className).append(".").append(methodName);
 		if(isNativeMethod())
 		{
@@ -356,6 +427,43 @@ public class ExtendedStackTraceElement
 		}
 		String clazz = classAndMethod.substring(0, idx);
 		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
+		String classLoaderName = null;
+		String moduleName = null;
+		String moduleVersion = null;
+		idx = clazz.lastIndexOf(MODULE_SEPARATOR_CHAR);
+		if(idx > -1)
+		{
+			String loaderModule = clazz.substring(0, idx);
+			clazz = clazz.substring(idx + 1);
+			idx = loaderModule.indexOf(MODULE_SEPARATOR_CHAR);
+			if(idx > -1)
+			{
+				classLoaderName = loaderModule.substring(0, idx);
+				moduleName = loaderModule.substring(idx + 1);
+			}
+			else
+			{
+				moduleName = loaderModule;
+			}
+			idx = moduleName.indexOf(MODULE_VERSION_SEPARATOR_CHAR);
+			if(idx > -1)
+			{
+				moduleVersion = moduleName.substring(idx + 1);
+				moduleName = moduleName.substring(0, idx);
+			}
+		}
+		if(classLoaderName != null && classLoaderName.isEmpty())
+		{
+			classLoaderName = null;
+		}
+		if(moduleName != null && moduleName.isEmpty())
+		{
+			moduleName = null;
+		}
+		if(moduleVersion != null && moduleVersion.isEmpty())
+		{
+			moduleVersion = null;
+		}
 		idx = source.lastIndexOf(SEPARATOR_CHAR);
 		String file = null;
 		int lineNumber = UNKNOWN_SOURCE_LINE_NUMBER;
@@ -384,6 +492,7 @@ public class ExtendedStackTraceElement
 			}
 		}
 
+		ExtendedStackTraceElement result = null;
 		if(endIdx + 2 < ste.length())
 		{
 			String remainder = ste.substring(endIdx + 2);
@@ -409,22 +518,151 @@ public class ExtendedStackTraceElement
 					{
 						String codeLocation = versionStr.substring(0, colonIdx);
 						String version = versionStr.substring(colonIdx + 1);
-						if ("".equals(codeLocation) || NA_PLACEHOLDER.equals(codeLocation))
+						if (codeLocation.isEmpty() || NA_PLACEHOLDER.equals(codeLocation))
 						{
 							codeLocation = null;
 						}
-						if ("".equals(version) || NA_PLACEHOLDER.equals(version))
+						if (version.isEmpty() || NA_PLACEHOLDER.equals(version))
 						{
 							version = null;
 						}
-						return new ExtendedStackTraceElement(clazz, method, file, lineNumber, codeLocation, version, exact);
+						result = new ExtendedStackTraceElement(clazz, method, file, lineNumber, codeLocation, version, exact);
 					}
 				}
 			}
 		}
-
-		return new ExtendedStackTraceElement(clazz, method, file, lineNumber);
+		if(result == null)
+		{
+			result = new ExtendedStackTraceElement(clazz, method, file, lineNumber);
+		}
+		result.setClassLoaderName(classLoaderName);
+		result.setModuleName(moduleName);
+		result.setModuleVersion(moduleVersion);
+		return result;
 	}
 
+	private static final Method GET_CLASS_LOADER_NAME;
+	private static final Method GET_MODULE_NAME;
+	private static final Method GET_MODULE_VERSION;
+	private static final Constructor<StackTraceElement> FULL_CTOR;
 
+	static
+	{
+		{
+			Method method = null;
+			try
+			{
+				method = StackTraceElement.class.getMethod("getClassLoaderNameFrom");
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			GET_CLASS_LOADER_NAME = method;
+		}
+
+		{
+			Method method = null;
+			try
+			{
+				method = StackTraceElement.class.getMethod("getModuleName");
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			GET_MODULE_NAME = method;
+		}
+
+		{
+			Method method = null;
+			try
+			{
+				method = StackTraceElement.class.getMethod("getModuleVersion");
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			GET_MODULE_VERSION = method;
+		}
+
+		{
+			Constructor<StackTraceElement> ctor = null;
+			try
+			{
+				ctor = StackTraceElement.class.getConstructor(
+						String.class, // classLoaderName
+						String.class, // moduleName
+						String.class, // moduleVersion
+						String.class, // declaringClass
+						String.class, // methodName
+						String.class, // fileName
+						int.class // lineNumber
+				);
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			FULL_CTOR = ctor;
+		}
+	}
+
+	private static String getClassLoaderNameFrom(StackTraceElement ste)
+	{
+		return getValueFrom(GET_CLASS_LOADER_NAME, ste);
+	}
+
+	private static String getModuleNameFrom(StackTraceElement ste)
+	{
+		return getValueFrom(GET_MODULE_NAME, ste);
+	}
+
+	private static String getModuleVersionFrom(StackTraceElement ste)
+	{
+		return getValueFrom(GET_MODULE_VERSION, ste);
+	}
+
+	private static String getValueFrom(Method method, StackTraceElement ste)
+	{
+		if(method == null)
+		{
+			return null;
+		}
+		try
+		{
+			String result = (String) method.invoke(ste);
+			if(result != null && !result.isEmpty())
+			{
+				return result;
+			}
+		}
+		catch (IllegalAccessException | InvocationTargetException e)
+		{
+			// ignore
+		}
+		return null;
+	}
+
+	private static StackTraceElement createStackTraceElement(
+			String classLoaderName, String moduleName, String moduleVersion,
+			String declaringClass, String methodName, String fileName, int lineNumber)
+	{
+		if(FULL_CTOR != null)
+		{
+			try
+			{
+				return FULL_CTOR.newInstance(
+						classLoaderName, moduleName, moduleVersion,
+						declaringClass, methodName, fileName, lineNumber
+				);
+			}
+			catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+			{
+				// ignore
+			}
+		}
+		return new StackTraceElement(declaringClass, methodName, fileName, lineNumber);
+	}
 }

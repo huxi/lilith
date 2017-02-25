@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -137,6 +137,31 @@ public class LoggingEventProtobufEncoder
 			return null;
 		}
 		LoggingProto.StackTraceElement.Builder builder = LoggingProto.StackTraceElement.newBuilder();
+
+		{
+			String classLoaderName = ste.getClassLoaderName();
+			if(classLoaderName != null)
+			{
+				builder.setClassLoaderName(classLoaderName);
+			}
+		}
+
+		{
+			String moduleName = ste.getModuleName();
+			if(moduleName != null)
+			{
+				builder.setModuleName(moduleName);
+			}
+		}
+
+
+		{
+			String moduleVersion = ste.getModuleVersion();
+			if(moduleVersion != null)
+			{
+				builder.setModuleVersion(moduleVersion);
+			}
+		}
 
 		{
 			String methodName = ste.getMethodName();

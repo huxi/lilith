@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@
 
 package de.huxhorn.lilith.data.logging.protobuf;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -77,31 +76,24 @@ public class LoggingEventProtobufDecoder
 		{
 			return null;
 		}
-		LoggingProto.LoggingEvent parsedEvent = null;
-		if(!compressing)
+		LoggingProto.LoggingEvent parsedEvent;
+		try
 		{
-			try
+			if(!compressing)
 			{
 				parsedEvent = LoggingProto.LoggingEvent.parseFrom(bytes);
 			}
-			catch(InvalidProtocolBufferException e)
+			else
 			{
-				// ignore
-			}
-		}
-		else
-		{
-			ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-			try
-			{
+				ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 				GZIPInputStream gis = new GZIPInputStream(in);
 				parsedEvent = LoggingProto.LoggingEvent.parseFrom(gis);
 				gis.close();
 			}
-			catch(IOException e)
-			{
-				// ignore
-			}
+		}
+		catch(IOException e)
+		{
+			parsedEvent = null;
 		}
 		return convert(parsedEvent);
 	}
@@ -150,6 +142,22 @@ public class LoggingEventProtobufDecoder
 		}
 
 		ExtendedStackTraceElement result = new ExtendedStackTraceElement();
+
+		if(ste.hasClassLoaderName())
+		{
+			result.setClassLoaderName(ste.getClassLoaderName());
+		}
+
+		if(ste.hasModuleName())
+		{
+			result.setModuleName(ste.getModuleName());
+		}
+
+		if(ste.hasModuleVersion())
+		{
+			result.setModuleVersion(ste.getModuleVersion());
+		}
+
 		if(ste.hasMethodName())
 		{
 			result.setMethodName(ste.getMethodName());

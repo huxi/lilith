@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,12 +103,12 @@ public class StackTraceElementWriter
 		}
 
 		//StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
-		StaxUtilities
-			.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE, elem.getClassName());
-		StaxUtilities
-			.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE, elem.getMethodName());
-		StaxUtilities
-			.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE, elem.getFileName());
+		StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_CLASS_LOADER_NAME_ATTRIBUTE, elem.getClassLoaderName());
+		StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_MODULE_NAME_ATTRIBUTE, elem.getModuleName());
+		StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_MODULE_VERSION_ATTRIBUTE, elem.getModuleVersion());
+		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_CLASS_NAME_ATTRIBUTE, elem.getClassName());
+		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, ST_METHOD_NAME_ATTRIBUTE, elem.getMethodName());
+		StaxUtilities.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, ST_FILE_NAME_ATTRIBUTE, elem.getFileName());
 		int lineNumber = elem.getLineNumber();
 		if(lineNumber == ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER)
 		{

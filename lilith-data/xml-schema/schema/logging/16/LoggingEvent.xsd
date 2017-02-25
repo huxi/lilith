@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!--
+Lilith - a log event viewer.
+Copyright (C) 2007-2016 Joern Huxhorn
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+--><!--
+Changes in 1.1:
+Added CodeLocation, Version, Exact to StackTraceElement and omittedElements to Throwable.
+StackTraceElement is now an xs:element so it's possible to create an xml document that contains only such an element.
+
+Changes in 1.2:
+Added NDC and NDCEntry.
+
+Changes in 1.3:
+Added timeStampMillis, threadId, threadGroupId and threadGroup attributes to LoggingEvent. Message is optional.
+Added optional LoggerContext containing name, birthTime, birthTimeStamp and Properties.
+Added optional sequence number to LoggingEvent.
+
+Changes in 1.4:
+Added Suppressed to Throwable.
+
+Changes in 1.5:
+Added threadPriority attribute.
+
+Changes in 1.6:
+Added classLoaderName, moduleName and moduleVersion attributes.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://lilith.sf.net/schema/logging/16"
+           xmlns:logging="http://lilith.sf.net/schema/logging/16" xmlns:es="http://lilith.sf.net/schema/eventsource/10"
+           targetNamespace="http://lilith.sf.net/schema/logging/16" elementFormDefault="qualified">
+	<xs:import namespace="http://lilith.sf.net/schema/eventsource/10"
+	           schemaLocation="http://lilith.sf.net/schema/eventsource/10/EventSource.xsd"/>
+	<xs:element name="LoggingEvents">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A list of logging events.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="es:SourceIdentifier">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The source identifier of the contained events.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="LoggingEvent" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The logging events.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="startIndex" type="xs:nonNegativeInteger" use="optional" default="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The index of the first event contained in this list of logging
+						events. It is only used if logging event lists are transfered partially.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LoggingEvent">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A single logging event.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Message" type="WhitespacePreservingString" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The (unformatted) message of the logging event.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Arguments" type="Arguments" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The optional arguments of the logging event.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Throwable" type="Throwable" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The optional Throwable of the logging event.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MDC" type="StringMap" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The optional MDC of the logging event.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NDC" type="NDC" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The optional NDC of the logging event.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Marker" type="Marker" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The optional marker hierarchy of the logging event.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CallStack" type="StackTrace" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The optional call stack trace of the logging event.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LoggerContext" type="LoggerContext" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The optional logger context of the logging event.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="logger" type="NonEmptyCollapsingString" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The name of the Logger that created this logging event.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="level" type="LoggingLevel" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The level of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sequence" type="xs:long" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The sequence number of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="threadName" type="WhitespacePreservingString" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The thread name of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="threadPriority" type="xs:int" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The thread priority of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="threadId" type="xs:long" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The thread id of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="threadGroup" type="WhitespacePreservingString" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The thread group name of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="threadGroupId" type="xs:long" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The thread group id of the logging event.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="timeStamp" type="xs:dateTime" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The timestamp of the logging event, formatted as an xs:dateTime.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="timeStampMillis" type="xs:unsignedLong" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The timestamp of the logging event in milliseconds.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+		<xs:unique name="MdcKey">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">MDC entries must have unique keys.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="logging:MDC/logging:Entry"/>
+			<xs:field xpath="@key"/>
+		</xs:unique>
+		<xs:unique name="LoggerContextPropertyKey">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Logger context property entries must have unique keys.
+				</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="logging:LoggerContext/logging:Properties/logging:Entry"/>
+			<xs:field xpath="@key"/>
+		</xs:unique>
+		<xs:key name="MarkerName">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Marker names in the same hierarchy must be unique.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath=".//logging:Marker"/>
+			<xs:field xpath="@name"/>
+		</xs:key>
+		<xs:keyref name="MarkerReference" refer="MarkerName">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Marker references must reference Markers of the same hierarchy
+				</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath=".//logging:MarkerReference"/>
+			<xs:field xpath="@ref"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:simpleType name="LoggingLevel">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The valid logging levels.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TRACE"/>
+			<xs:enumeration value="DEBUG"/>
+			<xs:enumeration value="INFO"/>
+			<xs:enumeration value="WARN"/>
+			<xs:enumeration value="ERROR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LoggerContext">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The optional logger context of the logging event.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Properties" type="StringMap" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The optional properties of the logger context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="NonEmptyCollapsingString" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The name of the logger context.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="birthTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The birth time of the logger context, formatted as an xs:dateTime.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="birthTimeMillis" type="xs:unsignedLong" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The birth time of the logger context in milliseconds.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Arguments">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The optional arguments of the logging event.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="Argument" type="WhitespacePreservingString">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The list of arguments.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="null">
+					<xs:complexType>
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This element is used for null arguments. It must be empty.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexContent>
+							<xs:restriction base="xs:anyType"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Suppressed">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The optional suppressed Throwables of a Throwable.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Throwable" type="Throwable" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The list of suppressed Throwables.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Throwable">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The optional Throwable of the logging event.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Message" type="WhitespacePreservingString">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The message of the Throwable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StackTrace" type="StackTrace">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The stack trace of the Throwable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Suppressed" type="Suppressed" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The optional suppressed Throwables of the Throwable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cause" type="Throwable" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The optional cause of the Throwable.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="NonEmptyCollapsingString" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The class name of the Throwable.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="omittedElements" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of omitted common StackTraceElements</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- MDC -->
+	<xs:complexType name="StringMap">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The optional MDC (Mapped Diagnostic Context) of the logging event.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Entry" type="MapEntry" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The entries of the MDC. Entries must have unique keys.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MapEntry">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Represents a key-value pair.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="WhitespacePreservingString">
+				<xs:attribute name="key" type="WhitespacePreservingString" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- NDC -->
+	<xs:complexType name="NDC">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The optional NDC (Nested Diagnostic Context) of the logging event.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Entry" type="NDCEntry" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The entries of the NDC.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NDCEntry">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Represents a message with arguments.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Message" type="WhitespacePreservingString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The (unformatted) message of the NDC entry.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Arguments" type="Arguments" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The optional arguments of the NDC entry.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Marker -->
+	<xs:complexType name="Marker">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A Marker hierarchy.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The children of the Marker.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="Marker" type="Marker"/>
+				<xs:element name="MarkerReference" type="MarkerReference">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A MarkerReference references a Marker of the same hierarchy.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="name" type="WhitespacePreservingString" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The name of the Marker. Must be unique relative to it's hierarchy.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MarkerReference">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This type references a Marker in the same hierarchy.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="xs:anyType">
+				<xs:attribute name="ref" type="WhitespacePreservingString" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">References the name of a Marker in the same hierarchy.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- StackTrace -->
+	<xs:complexType name="StackTrace">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A stack trace.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StackTraceElement" type="StackTraceElementType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The stack trace elements of the stack trace.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="StackTraceElement" type="StackTraceElementType"/>
+	<xs:complexType name="StackTraceElementType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This type represents a java.lang.StackTraceElement.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="LineNumber" type="xs:nonNegativeInteger">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The line number of the StackTraceElement.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Native">
+					<xs:complexType>
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This type is used to tag a StackTraceElement as native. This
+								tag must be empty.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexContent>
+							<xs:restriction base="xs:anyType"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="CodeLocation" minOccurs="0"/>
+			<xs:element name="Version" minOccurs="0"/>
+			<xs:element name="Exact" minOccurs="0">
+				<xs:complexType>
+					<xs:annotation>
+						<xs:documentation xml:lang="en">This type is used to tag a StackTraceElement as native. This tag
+							must be empty.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexContent>
+						<xs:restriction base="xs:anyType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="classLoaderName" type="NonEmptyCollapsingString" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The class loader name of the StackTraceElement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="moduleName" type="NonEmptyCollapsingString" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The module name of the StackTraceElement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="moduleVersion" type="NonEmptyCollapsingString" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The module version of the StackTraceElement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="className" type="NonEmptyCollapsingString" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The class name of the StackTraceElement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="methodName" type="NonEmptyCollapsingString" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The method name of the StackTraceElement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fileName" type="NonEmptyCollapsingString" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The file name of the StackTraceElement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="NonEmptyCollapsingString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WhitespacePreservingString">
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

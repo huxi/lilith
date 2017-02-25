@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ package de.huxhorn.lilith.data.logging.xml;
 
 public interface LoggingEventSchemaConstants
 {
-	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/15";
-	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/15/LoggingEvent.xsd";
+	String NAMESPACE_URI = "http://lilith.sf.net/schema/logging/16";
+	String NAMESPACE_LOCATION = "http://lilith.sf.net/schema/logging/16/LoggingEvent.xsd";
 
 	String DEFAULT_NAMESPACE_PREFIX = "log";
 
@@ -83,6 +83,9 @@ public interface LoggingEventSchemaConstants
 
 	String STACK_TRACE_NODE = "StackTrace";
 	String STACK_TRACE_ELEMENT_NODE = "StackTraceElement";
+	String ST_CLASS_LOADER_NAME_ATTRIBUTE = "classLoaderName";
+	String ST_MODULE_NAME_ATTRIBUTE = "moduleName";
+	String ST_MODULE_VERSION_ATTRIBUTE = "moduleVersion";
 	String ST_CLASS_NAME_ATTRIBUTE = "className";
 	String ST_METHOD_NAME_ATTRIBUTE = "methodName";
 	String ST_FILE_NAME_ATTRIBUTE = "fileName";

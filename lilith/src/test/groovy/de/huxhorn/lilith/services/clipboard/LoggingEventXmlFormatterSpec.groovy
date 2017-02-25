@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 		return new LoggingEventXmlFormatter()
 	}
 
-	def Set<Integer> expectedIndices() {
+	Set<Integer> expectedIndices() {
 		EventWrapperCorpus.matchAnyLoggingEventSet()
 	}
 
@@ -39,13 +39,13 @@ class LoggingEventXmlFormatterSpec extends AbstractClipboardFormatterSpec {
 		result
 	}
 
-	def List<String> expectedResults() {
+	List<String> expectedResults() {
 		[
-				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="com.foo.Foo" level="null"/>',
+				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/16" logger="com.foo.Foo" level="null"/>',
 
-				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="com.foo.Bar" level="null"/>',
+				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/16" logger="com.foo.Bar" level="null"/>',
 
-				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/15" logger="" level="null"/>',
+				'<?xml version=\'1.0\' encoding=\'UTF-8\'?><LoggingEvent xmlns="http://lilith.sf.net/schema/logging/16" logger="" level="null"/>',
 		]
 	}
 
