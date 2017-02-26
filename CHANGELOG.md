@@ -99,6 +99,7 @@ All notable changes to this project will be documented in this file.
   See [LOGBACK-1183 - Message formatting regression](http://jira.qos.ch/browse/LOGBACK-1183).
 - <del>Binary Lilith log files will only work in case of `append=false`.</del> Implemented a workaround.
   See [LOGBACK-1257 - Invalid files in case of append=true and Encoder with non-null headerBytes() / footerBytes()](https://jira.qos.ch/browse/LOGBACK-1257)
+- log4j 1 won't be able to send `ClassLoaderName`, `ModuleName` and `ModuleVersion` for the call location of the event. Search `LOG4J_MODULE` in the source to take a look at the problem. Since [Log4j 1 End-Of-Life](https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces) has been announced 2015-08-06, chances are pretty slim that this will be fixed. Upgrade to [log4j 2](http://logging.apache.org/log4j/2.x/) or [Logback](https://logback.qos.ch/).
 - Flying Saucer related issues:
   - Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
     See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](http://code.google.com/p/flying-saucer/issues/detail?id=79).

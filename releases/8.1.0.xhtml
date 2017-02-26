@@ -115,6 +115,7 @@ See <a href="http://jira.qos.ch/browse/LOGBACK-1182">LOGBACK-1182 - Problem dese
 See <a href="http://jira.qos.ch/browse/LOGBACK-1183">LOGBACK-1183 - Message formatting regression</a>.</li>
 			<li><del>Binary Lilith log files will only work in case of <code>append=false</code>.</del> Implemented a workaround.
 See <a href="https://jira.qos.ch/browse/LOGBACK-1257">LOGBACK-1257 - Invalid files in case of append=true and Encoder with non-null headerBytes() / footerBytes()</a></li>
+			<li>log4j 1 won't be able to send <code>ClassLoaderName</code>, <code>ModuleName</code> and <code>ModuleVersion</code> for the call location of the event. Search <code>LOG4J_MODULE</code> in the source to take a look at the problem. Since <a href="https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces">Log4j 1 End-Of-Life</a> has been announced 2015-08-06, chances are pretty slim that this will be fixed. Upgrade to <a href="http://logging.apache.org/log4j/2.x/">log4j 2</a> or <a href="https://logback.qos.ch/">Logback</a>.</li>
 			<li>Flying Saucer related issues:
 <ul><li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
 See <a href="http://code.google.com/p/flying-saucer/issues/detail?id=79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>.</li><li>The first line of the message in HTML view is not properly indented if it starts with whitespace.
