@@ -40,17 +40,18 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.logback.SameThreadLogbackLoggingConverter;
 import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperProtobufCodec;
 import de.huxhorn.sulky.codec.Codec;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class WrappingClassicEncoder
 	implements ResettableEncoder<ILoggingEvent>
 {
 	private Converter<de.huxhorn.lilith.data.logging.LoggingEvent> converter = new SameThreadLogbackLoggingConverter();
 	private Codec<EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent>> codec = new CompressingLoggingEventWrapperProtobufCodec();
-	private long id;
+	private final AtomicLong localId = new AtomicLong(0);
 
 	public void reset()
 	{
-		id=0;
+		localId.set(0);
 	}
 
 	public byte[] encode(ILoggingEvent event)
@@ -58,10 +59,8 @@ public class WrappingClassicEncoder
 		de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = converter.convert(event);
 		EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent> wrapped=new EventWrapper<>();
 		wrapped.setEvent(lilithEvent);
-		//wrapped.setEventIdentifier();
-		id++;
+		long id = localId.incrementAndGet();
 		wrapped.setLocalId(id);
-		//wrapped.setSourceIdentifier();
 
 		return codec.encode(wrapped);
 	}

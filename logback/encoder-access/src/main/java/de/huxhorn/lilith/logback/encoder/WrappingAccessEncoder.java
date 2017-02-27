@@ -39,17 +39,18 @@ import de.huxhorn.lilith.data.access.logback.LogbackAccessConverter;
 import de.huxhorn.lilith.data.access.protobuf.CompressingAccessEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.sulky.codec.Codec;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class WrappingAccessEncoder
 	implements ResettableEncoder<AccessEvent>
 {
 	private LogbackAccessConverter converter = new LogbackAccessConverter();
 	private Codec<EventWrapper<de.huxhorn.lilith.data.access.AccessEvent>> codec = new CompressingAccessEventWrapperProtobufCodec();
-	private long id;
+	private final AtomicLong localId = new AtomicLong(0);
 
 	public void reset()
 	{
-		id=0;
+		localId.set(0);
 	}
 
 	public byte[] encode(AccessEvent event)
@@ -57,10 +58,8 @@ public class WrappingAccessEncoder
 		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = converter.convert(event);
 		EventWrapper<de.huxhorn.lilith.data.access.AccessEvent> wrapped=new EventWrapper<>();
 		wrapped.setEvent(lilithEvent);
-		//wrapped.setEventIdentifier();
-		id++;
+		long id = localId.incrementAndGet();
 		wrapped.setLocalId(id);
-		//wrapped.setSourceIdentifier();
 
 		return codec.encode(wrapped);
 	}
