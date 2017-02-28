@@ -554,6 +554,10 @@ public class ViewActions
 
 				setEventWrapper(this.viewContainer.getSelectedEvent());
 			}
+			else
+			{
+				setEventWrapper(null);
+			}
 			updateActions();
 		}
 	}
