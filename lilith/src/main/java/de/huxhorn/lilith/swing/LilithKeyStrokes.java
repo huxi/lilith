@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,6 +84,7 @@ public class LilithKeyStrokes
 	public static final String FIND_PREVIOUS_ACTIVE_ACTION = "FIND_PREVIOUS_ACTIVE_ACTION";
 	public static final String FOCUS_EVENTS_ACTION = "FOCUS_EVENTS_ACTION";
 	public static final String FOCUS_MESSAGE_ACTION = "FOCUS_MESSAGE_ACTION";
+	public static final String GO_TO_SOURCE_ACTION = "GO_TO_SOURCE_ACTION";
 	public static final String HELP_ACTION = "HELP_ACTION";
 	public static final String IMPORT_ACTION = "IMPORT_ACTION";
 	public static final String NEXT_VIEW_ACTION = "NEXT_VIEW_ACTION";
@@ -97,6 +98,7 @@ public class LilithKeyStrokes
 	public static final String REPLACE_FILTER_ACTION = "REPLACE_FILTER_ACTION";
 	public static final String RESET_FIND_ACTION = "RESET_FIND_ACTION";
 	public static final String SCROLL_TO_BOTTOM_ACTION = "SCROLL_TO_BOTTOM_ACTION";
+	public static final String SHOW_UNFILTERED_EVENT_ACTION = "SHOW_UNFILTERED_EVENT_ACTION";
 	public static final String VIEW_GLOBAL_ACCESS_LOGS_ACTION = "VIEW_GLOBAL_ACCESS_LOGS_ACTION";
 	public static final String VIEW_GLOBAL_CLASSIC_LOGS_ACTION = "VIEW_GLOBAL_CLASSIC_LOGS_ACTION";
 	public static final String VIEW_LILITH_LOGS_ACTION = "VIEW_LILITH_LOGS_ACTION";
@@ -114,6 +116,7 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " 2", VIEW_GLOBAL_ACCESS_LOGS_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " B", EDIT_SOURCE_NAME_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " C", COPY_SELECTION_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " D", GO_TO_SOURCE_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " COMMA", PREFERENCES_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " E", FOCUS_EVENTS_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " F", FIND_ACTION);
@@ -129,6 +132,7 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " Q", EXIT_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " R", REMOVE_INACTIVE_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " T", SCROLL_TO_BOTTOM_ACTION);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " U", SHOW_UNFILTERED_EVENT_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " W", CLOSE_FILTER_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift A", ATTACH_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift C", COPY_MESSAGE_ACTION);

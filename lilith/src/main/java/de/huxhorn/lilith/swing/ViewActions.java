@@ -434,6 +434,7 @@ public class ViewActions
 		editMenu.add(customCopyMenu);
 		editMenu.addSeparator();
 		PasteStackTraceElementAction pasteStackTraceElementAction = new PasteStackTraceElementAction();
+		editMenu.add(gotoSourceAction);
 		editMenu.add(pasteStackTraceElementAction);
 
 		// Search
@@ -453,6 +454,8 @@ public class ViewActions
 		excludeMenu = new ExcludeMenu(applicationPreferences, !usingScreenMenuBar);
 		searchMenu.add(focusMenu);
 		searchMenu.add(excludeMenu);
+		searchMenu.addSeparator();
+		searchMenu.add(showUnfilteredEventAction);
 
 		// View
 		viewMenu = new JMenu("View");
@@ -3243,7 +3246,6 @@ public class ViewActions
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = -7630719409103575849L;
-		private static final String AT_PREFIX="at ";
 		private final Logger logger = LoggerFactory.getLogger(PasteStackTraceElementAction.class);
 
 		private Clipboard clipboard;
@@ -3251,7 +3253,7 @@ public class ViewActions
 		private PasteStackTraceElementAction()
 		{
 			super("Paste StackTraceElement");
-			putValue(Action.SHORT_DESCRIPTION, "Paste StackTraceElement from clipboard and open code in IDE if available.");
+			putValue(Action.SHORT_DESCRIPTION, "Paste StackTraceElement from clipboard and open code in IDE if Lilith plugin is installed.");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PASTE_STACK_TRACE_ELEMENT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			boolean enable = true;
@@ -3391,7 +3393,9 @@ public class ViewActions
 		ShowUnfilteredEventAction()
 		{
 			super("Show unfiltered");
-			putValue(Action.SHORT_DESCRIPTION, "Show unfiltered event.");
+			putValue(Action.SHORT_DESCRIPTION, "Show selected event in unfiltered view.");
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.SHOW_UNFILTERED_EVENT_ACTION);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3410,7 +3414,9 @@ public class ViewActions
 		GotoSourceAction()
 		{
 			super("Go to source");
-			putValue(Action.SHORT_DESCRIPTION, "Show source in IDEA if everything is ok ;)");
+			putValue(Action.SHORT_DESCRIPTION, "Show source in IDE if Lilith plugin is installed.");
+			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.GO_TO_SOURCE_ACTION);
+			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
 		public void setEventWrapper(EventWrapper wrapper)

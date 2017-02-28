@@ -35,6 +35,8 @@ All notable changes to this project will be documented in this file.
 - Added alternative behavior for "MDC", "Request Parameter", "Request Header" and "Response Header" Focus/Exclude menu items. Pressing `Alt` while selecting Action will match any value for the given key.
 - Added support for `ClassLoaderName`, `ModuleName` and `ModuleVersion` in Java 9 `StackTraceElement`.
 - Added some more tips.
+- Added "Show unfiltered" accelerator "command U". Also added the action to the "Search" menu.
+- Added "Go to source" accelerator "command D". Also added the action to the "Edit" menu.
 
 ### Changed
 - Using `java.time.format` instead of `SimpleDateFormat`.
