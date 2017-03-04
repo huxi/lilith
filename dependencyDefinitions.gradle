@@ -51,7 +51,7 @@ project.ext.libraries = [
 'jcl-over-slf4j':           "org.slf4j:jcl-over-slf4j:${versions.slf4j}",
 'jackson-afterburner':      "com.fasterxml.jackson.module:jackson-module-afterburner:${versions.jacksonModule}",
 'jackson-databind':         "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
-'jcommander':               'com.beust:jcommander:1.60',
+'jcommander':               'com.beust:jcommander:1.64',
 'jgoodies-looks':           'com.jgoodies:jgoodies-looks:2.7.0',
 'junique':                  'de.huxhorn.lilith:de.huxhorn.lilith.3rdparty.junique:1.0.2',
 'junit':                    'junit:junit:4.12',
