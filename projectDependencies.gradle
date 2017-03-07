@@ -467,14 +467,6 @@ project(':jul-xml-receiver') {
 	}
 }
 
-project(':jul-slf4j-handler') {
-	archivesBaseName = 'de.huxhorn.lilith.jul-slf4j-handler'
-	description = 'This file is part of Lilith. It\'s a java.util.logging to slf4j bridge handler.'
-	dependencies {
-		compile libraries.'slf4j-api'
-	}
-}
-
 project(':lilith-sounds') {
 	archivesBaseName = 'de.huxhorn.lilith.sounds'
 	description = 'This file is part of Lilith. It contains the sound files of Lilith.'
@@ -531,6 +523,7 @@ project(':lilith') {
 		compile libraries.'httpclient'
 		compile libraries.'httpcore'
 		compile libraries.'jcommander'
+		compile libraries.'jul-to-slf4j'
 		compile libraries.'junique'
 		compile libraries.'logback-access'
 		compile libraries.'logback-classic'
@@ -554,7 +547,6 @@ project(':lilith') {
 		compile libraries.'sulky-tasks'
 		compile libraries.'sulky-version'
 		compile libraries.'thymeleaf'
-		compile project(':jul-slf4j-handler')
 		compile project(':jul-xml')
 		compile project(':jul-xml-import')
 		compile project(':jul-xml-receiver')

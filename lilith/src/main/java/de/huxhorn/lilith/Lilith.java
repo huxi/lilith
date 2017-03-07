@@ -35,7 +35,6 @@ import de.huxhorn.lilith.cli.Help;
 import de.huxhorn.lilith.cli.Index;
 import de.huxhorn.lilith.cli.Md5;
 import de.huxhorn.lilith.cli.Tail;
-import de.huxhorn.lilith.handler.Slf4JHandler;
 import de.huxhorn.lilith.logback.tools.ContextHelper;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.LicenseAgreementDialog;
@@ -73,16 +72,31 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Handler;
 import javax.swing.UIManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public class Lilith
 {
+	static
+	{
+		SLF4JBridgeHandler.removeHandlersForRootLogger();  // (since SLF4J 1.6.5)
+		SLF4JBridgeHandler.install();
+	}
+
+	// uncomment the code below to enable flyingsaucer logging......
+	/*
+	static
+	{
+		System.getProperties().setProperty("xr.util-logging.loggingEnabled", "true");
+		XRLog.setLoggingEnabled(true);
+	}
+    */
+
 	/**
 	 * Application name
 	 */
@@ -230,14 +244,6 @@ public class Lilith
 
 	public static void main(String[] args)
 	{
-		{
-			// initialize java.util.logging to use slf4j...
-			Handler handler = new Slf4JHandler();
-			java.util.logging.Logger rootLogger = java.util.logging.Logger.getLogger("");
-			rootLogger.addHandler(handler);
-			rootLogger.setLevel(java.util.logging.Level.WARNING);
-		}
-
 		StringBuilder appTitle = new StringBuilder();
 		appTitle.append(APP_NAME).append(" V").append(APP_VERSION);
 		if(APP_SNAPSHOT)

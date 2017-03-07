@@ -1,4 +1,5 @@
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
+import ch.qos.logback.classic.jul.LevelChangePropagator
 import ch.qos.logback.classic.net.SocketAppender
 import ch.qos.logback.core.ConsoleAppender
 import ch.qos.logback.core.util.Duration
@@ -7,14 +8,22 @@ import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender
 import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender
 import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender
 
+import static ch.qos.logback.classic.Level.ALL
 import static ch.qos.logback.classic.Level.DEBUG
 import static ch.qos.logback.classic.Level.INFO
 import static ch.qos.logback.classic.Level.TRACE
 import static ch.qos.logback.classic.Level.WARN
 
+// statusListener(OnConsoleStatusListener)
+
 context.name = 'Lilith'
 context.putProperty('foo','bar')
 context.setPackagingDataEnabled(true)
+
+LevelChangePropagator levelChangePropagator = new LevelChangePropagator()
+levelChangePropagator.setContext(context)
+levelChangePropagator.start()
+context.addListener(levelChangePropagator)
 
 def delay = new Duration(200)
 
@@ -122,4 +131,16 @@ logger('javax', WARN)
 logger('org.apache.commons.httpclient', WARN)
 logger('org.springframework', INFO)
 logger('org.thymeleaf', WARN)
+logger('org.xhtmlrenderer.cascade', WARN)
+logger('org.xhtmlrenderer.config', WARN)
+logger('org.xhtmlrenderer.css-parse', WARN)
+logger('org.xhtmlrenderer.exception', ALL)
+logger('org.xhtmlrenderer.general', WARN)
+logger('org.xhtmlrenderer.init', WARN)
+logger('org.xhtmlrenderer.junit', WARN)
+logger('org.xhtmlrenderer.layout', WARN)
+logger('org.xhtmlrenderer.load', ALL)
+logger('org.xhtmlrenderer.load.xml-entities', ALL)
+logger('org.xhtmlrenderer.match', WARN)
+logger('org.xhtmlrenderer.render', WARN)
 logger('sun', WARN)

@@ -81,6 +81,7 @@ All notable changes to this project will be documented in this file.
 - Removed unused SenderService and jMDNS.
 - Removed unused and broken `UserNotificationLoggingEventHandler` and `UserNotificationAccessEventHandler`.
 - Removed macify to ensure Java 9 compatibility.
+- Removed `de.huxhorn.lilith.jul-slf4j-handler`. Use `org.slf4j:jul-to-slf4j` and enable `ch.qos.logback.classic.jul.LevelChangePropagator` instead.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.
