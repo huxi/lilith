@@ -113,6 +113,8 @@ All notable changes to this project will be documented in this file.
     See [Issue 125: &lt;pre> ignores leading whitespace](http://code.google.com/p/flying-saucer/issues/detail?id=125).
   - Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
     See [Issue 105: URLs with anchors](http://code.google.com/p/flying-saucer/issues/detail?id=105).
+  - A regression introduced in 9.0.7 prevents me from upgrading to a newer version of Flying Saucer.
+    See [Issue 262: Regression resolving stylesheets relative to docroot](https://code.google.com/archive/p/flying-saucer/issues/262).
 - [GLAZEDLISTS-469 - AutoCompleteSupport: Arrowing down on the popup and pressing enter fails to update combobox](https://java.net/jira/browse/GLAZEDLISTS-469) is happening in the find panel on macOS. Select the correct entry with the mouse as a workaround.
 
 
