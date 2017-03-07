@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,12 +137,19 @@ public class DebugDialog
 		gbc.gridy = 4;
 		loggingPanel.add(button, gbc);
 
-
-		action = new LogAllAction();
+		action = new LogJulAction();
 		button = new JButton(action);
 		gbc.gridx = 1;
 		gbc.gridy = 4;
 		loggingPanel.add(button, gbc);
+
+		action = new LogAllAction();
+		button = new JButton(action);
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		gbc.gridwidth = 2;
+		loggingPanel.add(button, gbc);
+		gbc.gridwidth = 1;
 
 		JPanel miscPanel = new JPanel(new GridBagLayout());
 		miscPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Miscellaneous"));
@@ -227,6 +234,23 @@ public class DebugDialog
 			loggerEventEmitter.logStuffWithMarker();
 			loggerEventEmitter.logStuffWithMdc();
 			loggerEventEmitter.logStuffWithMdcAndMarker();
+		}
+	}
+
+	private class LogJulAction
+			extends AbstractAction
+	{
+		private static final long serialVersionUID = -1010040947971712929L;
+
+		LogJulAction()
+		{
+			super("Log j.u.l.Logger");
+			putValue(Action.SHORT_DESCRIPTION, "Creates logging events via java.util.logging.Logger.");
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			loggerEventEmitter.logJul();
 		}
 	}
 
@@ -397,6 +421,7 @@ public class DebugDialog
 			loggerEventEmitter.logNDC();
 			loggerEventEmitter.logDate();
 			loggerEventEmitter.logContainers();
+			loggerEventEmitter.logJul();
 		}
 	}
 
