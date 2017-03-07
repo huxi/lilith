@@ -114,9 +114,6 @@ All notable changes to this project will be documented in this file.
   - Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
     See [Issue 105: URLs with anchors](http://code.google.com/p/flying-saucer/issues/detail?id=105).
 - [GLAZEDLISTS-469 - AutoCompleteSupport: Arrowing down on the popup and pressing enter fails to update combobox](https://java.net/jira/browse/GLAZEDLISTS-469) is happening in the find panel on macOS. Select the correct entry with the mouse as a workaround.
-- Lilith may hang during startup while creating the preferences dialog. Just restart Lilith in that rare case.
-  This is caused by [Java bug #6995182](http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6995182) and I can't do anything about it.
-  Sorry about it. It's a stupid Java-MediaTracker-ColorChooser-Bug with no workaround available.
 
 
 ---
