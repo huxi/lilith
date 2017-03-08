@@ -530,7 +530,6 @@ project(':lilith') {
 		compile libraries.'logback-core'
 		compile libraries.'servlet-api'
 		compile libraries.'slf4j-api'
-		compile libraries.'substance'
 		compile libraries.'sulky-buffers'
 		compile libraries.'sulky-buffers-filtering'
 		compile libraries.'sulky-buffers-table'

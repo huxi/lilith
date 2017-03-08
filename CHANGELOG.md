@@ -82,6 +82,7 @@ All notable changes to this project will be documented in this file.
 - Removed unused and broken `UserNotificationLoggingEventHandler` and `UserNotificationAccessEventHandler`.
 - Removed macify to ensure Java 9 compatibility.
 - Removed `de.huxhorn.lilith.jul-slf4j-handler`. Use `org.slf4j:jul-to-slf4j` and enable `ch.qos.logback.classic.jul.LevelChangePropagator` instead.
+- Removed Substance look & feel. The [Insubstantial](https://github.com/Insubstantial/insubstantial/) fork is broken in Java 9 and isn't maintained anymore. The just-revived original [substance](https://github.com/kirill-grouchnikov/substance) won't provide Maven artifacts because those are just ["the latest chic"](https://github.com/kirill-grouchnikov/substance/issues/20#issuecomment-282442844). `¯\_(ツ)_/¯`
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.
