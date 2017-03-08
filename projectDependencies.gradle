@@ -567,7 +567,6 @@ project(':lilith') {
 		compile project(':logback-multiplex-appender-classic-json')
 		compile project(':logback-multiplex-appender-classic-xml')
 		runtime libraries.'jcl-over-slf4j'
-		runtime libraries.'jgoodies-looks'
 		runtime libraries.'log4j2-core'
 		runtime project(':lilith-sounds')
 		testCompile project(':lilith-data-corpus')

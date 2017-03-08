@@ -82,7 +82,8 @@ All notable changes to this project will be documented in this file.
 - Removed unused and broken `UserNotificationLoggingEventHandler` and `UserNotificationAccessEventHandler`.
 - Removed macify to ensure Java 9 compatibility.
 - Removed `de.huxhorn.lilith.jul-slf4j-handler`. Use `org.slf4j:jul-to-slf4j` and enable `ch.qos.logback.classic.jul.LevelChangePropagator` instead.
-- Removed Substance look & feel. The [Insubstantial](https://github.com/Insubstantial/insubstantial/) fork is broken in Java 9 and isn't maintained anymore. The just-revived original [substance](https://github.com/kirill-grouchnikov/substance) won't provide Maven artifacts because those are just ["the latest chic"](https://github.com/kirill-grouchnikov/substance/issues/20#issuecomment-282442844). `¯\_(ツ)_/¯`
+- Removed Substance look & feel. The [Insubstantial](https://github.com/Insubstantial/insubstantial/) fork is broken in Java 9 and isn't maintained anymore. The just-revived original [substance](https://github.com/kirill-grouchnikov/substance) won't provide Maven artifacts because those are just ["the latest chic"](https://github.com/kirill-grouchnikov/substance/issues/20#issuecomment-282442844).
+- Removed JGoodies look & feel. The current version is broken in Java 9 and the next version will be closed-source and payware.
 
 ### Fixed
 - Make frames entirely visible after selecting them from the Windows Menu.
@@ -93,7 +94,7 @@ All notable changes to this project will be documented in this file.
 - Fixed handling of invalid XML created by `java.util.logging.XMLFormatter`. This fixes [issue #26](https://github.com/huxi/lilith/issues/26).
 - Being less strict about the required Java version. It seems certain Linux distros have a Java version string like `1.8.0_66-internal` which is - strictly speaking - less than `1.8.0_66` since `-internal` is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.
 - Making sure selected event is reset when last view is closed.
-- log4j2 2.8.1, slf4j 1.7.24, Logback 1.2.1, jackson 2.8.7, Spring 4.3.7, Groovy 2.4.9, aspectj 1.8.10, httpclient 4.5.3, httpcore 4.4.6, jgoodies 2.7.0, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.2.0, jcommander 1.64, commons-lang3 3.5
+- log4j2 2.8.1, slf4j 1.7.24, Logback 1.2.1, jackson 2.8.7, Spring 4.3.7, Groovy 2.4.9, aspectj 1.8.10, httpclient 4.5.3, httpcore 4.4.6, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.2.0, jcommander 1.64, commons-lang3 3.5
 
 ### Security
 - Nothing.
