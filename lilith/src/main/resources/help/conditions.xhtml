@@ -10,7 +10,7 @@
 <body>
 <p><a href="index.xhtml">ToC</a></p>
 
-<h1><a name="top">Conditions</a></h1>
+<h1><a id="top">Conditions</a></h1>
 
 <p>
 	Lilith supports several types of conditions:
@@ -74,7 +74,7 @@
 </ul>
 <p><a href="#top">Back to top.</a></p>
 
-<h2><a name="saved">Saved conditions</a></h2>
+<h2><a id="saved">Saved conditions</a></h2>
 
 <p>You can save conditions using "Search" =&gt; "Save condition..." or the
 	respective entry in the popup menu.<br/>
@@ -117,7 +117,7 @@
 
 <p><a href="#top">Back to top.</a></p>
 
-<h2><a name="groovy">Custom Groovy conditions</a></h2>
+<h2><a id="groovy">Custom Groovy conditions</a></h2>
 
 <p>It is possible to create complex conditions in Groovy.
 	The scripts must be created in "[lilith.home]/conditions" and must have a ".groovy" extension.</p>
@@ -207,7 +207,7 @@ return false;</code></pre>
 -->
 <h3>Example 3: Match logging events with a message matching the regex given as searchString</h3>
 <pre><code>/**
- * Returns true if the logging events message matches the regex 
+ * Returns true if the logging events message matches the regex
  * given as searchString.
  */
 import de.huxhorn.lilith.data.logging.LoggingEvent;

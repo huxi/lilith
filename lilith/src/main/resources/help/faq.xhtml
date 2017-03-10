@@ -10,25 +10,9 @@
 <body>
 <p><a href="index.xhtml">ToC</a></p>
 
-<h1><a name="top">Frequently Asked Questions</a></h1>
+<h1><a id="top">Frequently Asked Questions</a></h1>
 
 <dl>
-	<!--
-					<dt>Why is Lilith still only supporting Logback 0.9.9?</dt>
-					<dd>
-						Logback 0.9.10 introduced new version information in the StackTraceElement string representation. This
-						breaks my current implementation of parsing. Since I parse the STEs both during receiving of original
-						Logback events and during creation of Lilith events in the multiplex appender, the parsing means a
-						significant performance impact. Previously, I circumvented this by using a hack and accessing the STEs
-						directly but this would now have the downside that I wouldn't be able to retrieve the formerly mentioned
-						version information.<br/>
-						Because of that, I suggested a change to the Logback codebase that would make my life quite a bit easier
-						while it wouldn't have a negative impact on the rest. It could even increase the general logging speed
-						a bit. I hope that Ceki will be able to implement it in time for Logback 0.9.12.<br/>
-						Feel free to take a look at <a href="http://jira.qos.ch/browse/LBCLASSIC-46">LBCLASSIC-46</a> if you like
-						more specific informations.
-					</dd>
-					-->
 	<dt>Why is there no case-insensitive search?</dt>
 	<dd>
 		Well, to be honest, this has two reasons:
