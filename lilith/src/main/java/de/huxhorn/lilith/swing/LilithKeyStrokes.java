@@ -154,7 +154,8 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt C", COPY_MESSAGE_PATTERN_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt S", COPY_CALL_STACK_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt T", COPY_THROWABLE_NAME_ACTION);
-		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W", CLOSE_ALL_ACTION);	}
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W", CLOSE_ALL_ACTION);
+	}
 
 	public static KeyStroke getKeyStroke(String actionName)
 	{
