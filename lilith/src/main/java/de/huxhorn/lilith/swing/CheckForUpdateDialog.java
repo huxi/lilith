@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,6 @@ public class CheckForUpdateDialog
 	extends JDialog
 {
 	private static final long serialVersionUID = 7361745831253216248L;
-	private final Logger logger = LoggerFactory.getLogger(CheckForUpdateDialog.class);
 	private XHTMLPanel helpPane;
 	private JLabel messageLabel;
 	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
@@ -68,11 +67,13 @@ public class CheckForUpdateDialog
 	{
 		super(mainFrame);
 		this.applicationPreferences = mainFrame.getApplicationPreferences();
-		setTitle("Check for update...");
+		setTitle("Check for Update...");
 		setModal(false);
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 
 		helpPane = new XHTMLPanel();
+
+		final Logger logger = LoggerFactory.getLogger(CheckForUpdateDialog.class);
 
 		{
 			SharedContext sharedContext = helpPane.getSharedContext();
@@ -209,7 +210,6 @@ public class CheckForUpdateDialog
 				"</html>";
 		}
 		helpPane.setDocumentFromString(changes, docRoot, xhtmlNamespaceHandler);
-
 	}
 
 	public void setCheckingForUpdate(boolean checkingForUpdate)
