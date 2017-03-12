@@ -844,7 +844,7 @@ public class Lilith
 				EventQueue.invokeAndWait(createRunnable);
 				splashScreen = createRunnable.getSplashScreen();
 				Thread.sleep(500); // so the splash gets the chance to get displayed :(
-				updateSplashStatus(splashScreen, "Initialized application preferences...");
+				updateSplashStatus(splashScreen, "Initialized application preferences…");
 			}
 
 			File startupApplicationPath = applicationPreferences.getStartupApplicationPath();
@@ -883,7 +883,7 @@ public class Lilith
 			File prevPathFile = new File(startupApplicationPath, ApplicationPreferences.PREVIOUS_APPLICATION_PATH_FILENAME);
 			if(prevPathFile.isFile())
 			{
-				updateSplashStatus(splashScreen, "Moving application path content...");
+				updateSplashStatus(splashScreen, "Moving application path content…");
 				moveApplicationPathContent(prevPathFile, startupApplicationPath);
 			}
 			if(!applicationPreferences.isLicensed())
@@ -905,12 +905,12 @@ public class Lilith
 				}
 			}
 
-			updateSplashStatus(splashScreen, "Creating main window...");
+			updateSplashStatus(splashScreen, "Creating main window…");
 			CreateMainFrameRunnable createMain = new CreateMainFrameRunnable(applicationPreferences, splashScreen, appTitle);
 			EventQueue.invokeAndWait(createMain);
 			final MainFrame frame = createMain.getMainFrame();
 			if(logger.isDebugEnabled()) logger.debug("After show...");
-			updateSplashStatus(splashScreen, "Initializing application...");
+			updateSplashStatus(splashScreen, "Initializing application…");
 			EventQueue.invokeAndWait(frame::startUp);
 			hideSplashScreen(splashScreen);
 			mainFrame=frame;

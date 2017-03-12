@@ -292,7 +292,7 @@ public class MainFrame
 		this.applicationPreferences = applicationPreferences;
 		this.coloringWholeRow = this.applicationPreferences.isColoringWholeRow();
 		this.splashScreen = splashScreen;
-		setSplashStatusText("Creating main frame.");
+		setSplashStatusText("Creating main frame…");
 
 		groovyFormatter = new GroovyEventWrapperHtmlFormatter(applicationPreferences);
 		thymeleafFormatter = new ThymeleafEventWrapperHtmlFormatter(applicationPreferences);
@@ -356,7 +356,7 @@ public class MainFrame
 		statusBar = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		statusLabel = new JLabel();
-		statusLabel.setText("Starting...");
+		statusLabel.setText("Starting…");
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
@@ -416,27 +416,28 @@ public class MainFrame
 		add(desktop, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
 
-		setSplashStatusText("Creating about dialog.");
-		aboutDialog = new AboutDialog(this, "About " + appName + "...", appName);
+		setSplashStatusText("Creating about dialog…");
+		aboutDialog = new AboutDialog(this, "About " + appName + "…", appName);
 
-		setSplashStatusText("Creating update dialog.");
+		setSplashStatusText("Creating update dialog…");
 		checkForUpdateDialog = new CheckForUpdateDialog(this);
 
-		setSplashStatusText("Creating debug dialog.");
+		setSplashStatusText("Creating debug dialog…");
 		debugDialog = new DebugDialog(this, this);
 
-		setSplashStatusText("Creating preferences dialog.");
+		setSplashStatusText("Creating preferences dialog…");
 		if(logger.isDebugEnabled()) logger.debug("Before creation of preferences-dialog...");
 		preferencesDialog = new PreferencesDialog(this);
 		if(logger.isDebugEnabled()) logger.debug("After creation of preferences-dialog...");
 
-		setSplashStatusText("Creating \"Open inactive\" dialog.");
+		setSplashStatusText("Creating \"Open inactive\" dialog…");
 		openInactiveLogsDialog = new OpenPreviousDialog(MainFrame.this);
 
-		setSplashStatusText("Creating help frame.");
+		setSplashStatusText("Creating help frame…");
 		helpFrame = new HelpFrame(this);
 		helpFrame.setTitle("Help Topics");
 
+		setSplashStatusText("Creating file choosers…");
 		openFileChooser = new JFileChooser();
 		openFileChooser.setFileFilter(new LilithFileFilter());
 		openFileChooser.setFileHidingEnabled(false);
@@ -452,7 +453,7 @@ public class MainFrame
 		exportFileChooser.setFileHidingEnabled(false);
 		exportFileChooser.setCurrentDirectory(this.applicationPreferences.getPreviousExportPath());
 
-		setSplashStatusText("Creating task manager frame.");
+		setSplashStatusText("Creating task manager frame…");
 		taskManagerFrame = new TaskManagerInternalFrame(this);
 		taskManagerFrame.setTitle("Task Manager");
 		taskManagerFrame.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
@@ -473,10 +474,10 @@ public class MainFrame
 			new MainFrameTransferHandler(this).attach();
 		}
 
-		setSplashStatusText("Creating Tip of the Day dialog.");
+		setSplashStatusText("Creating Tip of the Day dialog…");
 		tipOfTheDayDialog = new TipOfTheDayDialog(this);
 
-		setSplashStatusText("Creating actions and menus.");
+		setSplashStatusText("Creating actions and menus…");
 		viewActions = new ViewActions(this, null);
 		viewActions.getPopupMenu(); // initialize popup once in main frame only.
 
@@ -508,7 +509,7 @@ public class MainFrame
 		//referenceCollection.setDaemon(true);
 		//referenceCollection.start();
 
-		setSplashStatusText("Executing autostart items.");
+		setSplashStatusText("Executing autostart items…");
 		// Autostart
 		{
 			File autostartDir = new File(startupApplicationPath, "autostart");
@@ -545,7 +546,7 @@ public class MainFrame
 			//gotoSource.start() started when needed...
 		}
 
-		setSplashStatusText("Creating global views.");
+		setSplashStatusText("Creating global views…");
 		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
 
 		loggingFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, loggingFileBufferFactory);
@@ -560,7 +561,7 @@ public class MainFrame
 		EventSource<LoggingEvent> globalLoggingEventSource = new EventSourceImpl<>(globalSourceIdentifier, loggingFileDump.getBuffer(), true);
 		lsm.addSource(globalLoggingEventSource);
 
-		setSplashStatusText("Creating internal view.");
+		setSplashStatusText("Creating internal view…");
 		// add internal lilith logging
 		EventSource<LoggingEvent> lilithLoggingEventSource = new EventSourceImpl<>(InternalLilithAppender.getSourceIdentifier(), InternalLilithAppender.getBuffer(), false);
 		lsm.addSource(lilithLoggingEventSource);
@@ -581,7 +582,7 @@ public class MainFrame
 		ConverterRegistry<AccessEvent> accessConverterRegistry = new ConverterRegistry<>();
 		accessConverterRegistry.addConverter(new LogbackAccessConverter());
 
-		setSplashStatusText("Starting event receivers.");
+		setSplashStatusText("Starting event receivers…");
 
 		try
 		{
@@ -763,7 +764,7 @@ public class MainFrame
 			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
 		}
 
-		setSplashStatusText("Setting up event handlers.");
+		setSplashStatusText("Setting up event handlers…");
 
 		AlarmSoundLoggingEventHandler loggingEventAlarmSound = new AlarmSoundLoggingEventHandler();
 		loggingEventAlarmSound.setSounds(sounds);
@@ -814,7 +815,7 @@ public class MainFrame
 		{
 			traySupport.setMainFrame(this);
 		}
-		setSplashStatusText("Finished.");
+		setSplashStatusText("Done!");
 	}
 
 	public void showTipOfTheDayDialog()
@@ -1160,13 +1161,13 @@ public class MainFrame
 		if(!dataFile.isFile())
 		{
 			String message = "'" + dataFile.getAbsolutePath() + "' is not a file!";
-			JOptionPane.showMessageDialog(this, message, "Can't open file...", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, message, "Can't open file…", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if(!dataFile.canRead())
 		{
 			String message = "Can't read from '" + dataFile.getAbsolutePath() + "'!";
-			JOptionPane.showMessageDialog(this, message, "Can't open file...", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, message, "Can't open file…", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		ViewContainer<?> viewContainer = resolveViewContainer(dataFile);
@@ -1174,7 +1175,7 @@ public class MainFrame
 		{
 			showView(viewContainer);
 			String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
-			JOptionPane.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, message, "File is already open…", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		String fileName = dataFile.getAbsolutePath();
@@ -1205,7 +1206,7 @@ public class MainFrame
 				return;
 			}
 			String name = "Indexing Lilith file";
-			String description = "Indexing '" + dataFile.getAbsolutePath() + "'...";
+			String description = "Indexing '" + dataFile.getAbsolutePath() + "'…";
 			Task<Long> task = longTaskManager.startTask(new IndexingCallable(dataFile, indexFile), name, description);
 			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 			// opening of view will be done by the task
@@ -1227,7 +1228,7 @@ public class MainFrame
 				{
 					if(logger.isInfoEnabled()) logger.info("Deleted previous index file {}.", indexFile.getAbsolutePath());
 					String name = "Reindexing Lilith file";
-					String description = "Reindexing '" + dataFile.getAbsolutePath() + "'...";
+					String description = "Reindexing '" + dataFile.getAbsolutePath() + "'…";
 					Task<Long> task = longTaskManager.startTask(new IndexingCallable(dataFile, indexFile), name, description);
 					if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 					// opening of view will be done by the task
@@ -1249,13 +1250,13 @@ public class MainFrame
 		if(!importFile.isFile())
 		{
 			String message = "'" + importFile.getAbsolutePath() + "' is not a file!";
-			JOptionPane.showMessageDialog(this, message, "Can't import file...", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, message, "Can't import file…", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if(!importFile.canRead())
 		{
 			String message = "Can't read from '" + importFile.getAbsolutePath() + "'!";
-			JOptionPane.showMessageDialog(this, message, "Can't import file...", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, message, "Can't import file…", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -1271,8 +1272,7 @@ public class MainFrame
 			{
 				showView(viewContainer);
 				String message = "File '" + dataFile.getAbsolutePath() + "' is already open.";
-				JOptionPane
-					.showMessageDialog(this, message, "File is already open...", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, message, "File is already open…", JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
 			String dialogTitle = "Reimport file?";
@@ -1309,7 +1309,7 @@ public class MainFrame
 		if(type == ImportType.LOG4J)
 		{
 			String name = "Importing Log4J XML file";
-			String description = "Importing Log4J XML file '" + importFile.getAbsolutePath() + "'...";
+			String description = "Importing Log4J XML file '" + importFile.getAbsolutePath() + "'…";
 			Task<Long> task = longTaskManager.startTask(new Log4jImportCallable(importFile, buffer), name, description);
 			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 			return;
@@ -1317,7 +1317,7 @@ public class MainFrame
 		if(type == ImportType.JUL)
 		{
 			String name = "Importing java.util.logging XML file";
-			String description = "Importing java.util.logging XML file '" + importFile.getAbsolutePath() + "'...";
+			String description = "Importing java.util.logging XML file '" + importFile.getAbsolutePath() + "'…";
 			Task<Long> task = longTaskManager.startTask(new JulImportCallable(importFile, buffer), name, description);
 			if(logger.isInfoEnabled()) logger.info("Task-Name: {}", task.getName());
 			return;
@@ -1325,7 +1325,7 @@ public class MainFrame
 
 		// show warning "Unknown type"
 		String message = "Couldn't detect type of file '" + importFile.getAbsolutePath() + "'.\nFile is unsupported.";
-		JOptionPane.showMessageDialog(this, message, "Unknown file type...", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(this, message, "Unknown file type…", JOptionPane.WARNING_MESSAGE);
 	}
 
 	private ImportType resolveType(File inputFile)
@@ -2047,7 +2047,7 @@ public class MainFrame
 	{
 		loggingEventViewManager.removeInactiveViews(false);
 		accessEventViewManager.removeInactiveViews(false);
-		longTaskManager.startTask(new CleanAllInactiveCallable(this), "Clean all inactive...");
+		longTaskManager.startTask(new CleanAllInactiveCallable(this), "Clean all inactive…");
 		updateWindowMenus();
 	}
 
@@ -3574,7 +3574,7 @@ public class MainFrame
 				causeMsg=cause.toString();
 			}
 			message=message+"\n"+causeMsg;
-			JOptionPane.showMessageDialog(MainFrame.this, message, "Exception while executing task...", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(MainFrame.this, message, "Exception while executing task…", JOptionPane.ERROR_MESSAGE);
 
 			updateTaskStatus();
 		}

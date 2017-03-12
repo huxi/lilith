@@ -67,7 +67,7 @@ public class CheckForUpdateDialog
 	{
 		super(mainFrame);
 		this.applicationPreferences = mainFrame.getApplicationPreferences();
-		setTitle("Check for Update...");
+		setTitle("Check for Update…");
 		setModal(false);
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 

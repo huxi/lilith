@@ -1669,7 +1669,7 @@ public class ViewActions
 
 		SaveConditionMenuAction(boolean htmlTooltip)
 		{
-			super("Save condition...");
+			super("Save condition…");
 			this.htmlTooltip = htmlTooltip;
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_CONDITION_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -1712,7 +1712,7 @@ public class ViewActions
 
 		EditSourceNameMenuAction()
 		{
-			super("Edit source name...");
+			super("Edit source name…");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EDIT_SOURCE_NAME_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
@@ -2777,7 +2777,7 @@ public class ViewActions
 
 		AboutAction()
 		{
-			super("About...");
+			super("About…");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
@@ -2850,7 +2850,7 @@ public class ViewActions
 
 		CheckForUpdateAction()
 		{
-			super("Check for Update...");
+			super("Check for Update…");
 			putValue(Action.SMALL_ICON, Icons.CHECK_UPDATE_ICON);
 		}
 
@@ -2867,7 +2867,7 @@ public class ViewActions
 
 		TroubleshootingAction()
 		{
-			super("Troubleshooting...");
+			super("Troubleshooting…");
 			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
 		}
 
@@ -2904,7 +2904,7 @@ public class ViewActions
 
 		TipOfTheDayAction()
 		{
-			super("Tip of the Day...");
+			super("Tip of the Day…");
 			putValue(Action.SMALL_ICON, Icons.TOTD_ICON);
 		}
 
@@ -2921,7 +2921,7 @@ public class ViewActions
 
 		PreferencesMenuAction()
 		{
-			super("Preferences...");
+			super("Preferences…");
 			putValue(Action.SMALL_ICON, Icons.PREFERENCES_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREFERENCES_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -2943,7 +2943,7 @@ public class ViewActions
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.PREFERENCES_TOOLBAR_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Preferences...");
+			putValue(Action.SHORT_DESCRIPTION, "Preferences…");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.PREFERENCES_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 			putValue(Action.MNEMONIC_KEY, Integer.valueOf('p'));
@@ -2962,7 +2962,7 @@ public class ViewActions
 
 		ShowLoveMenuAction()
 		{
-			super("Show some Love...");
+			super("Show some Love…");
 			putValue(Action.SMALL_ICON, Icons.LOVE_MENU_ICON);
 		}
 
@@ -2981,7 +2981,7 @@ public class ViewActions
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.LOVE_TOOLBAR_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Show some Love...");
+			putValue(Action.SHORT_DESCRIPTION, "Show some Love…");
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3034,7 +3034,7 @@ public class ViewActions
 
 		OpenInactiveLogMenuAction()
 		{
-			super("Open inactive log...");
+			super("Open inactive log…");
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.OPEN_INACTIVE_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -3054,7 +3054,7 @@ public class ViewActions
 
 		OpenMenuAction()
 		{
-			super("Open...");
+			super("Open…");
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.OPEN_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -3074,7 +3074,7 @@ public class ViewActions
 
 		ImportMenuAction()
 		{
-			super("Import...");
+			super("Import…");
 			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.IMPORT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);
@@ -3096,7 +3096,7 @@ public class ViewActions
 
 		ExportMenuAction()
 		{
-			super("Export...");
+			super("Export…");
 			putValue(Action.SMALL_ICON, Icons.EXPORT_MENU_ICON);
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.EXPORT_ACTION);
 			putValue(Action.ACCELERATOR_KEY, accelerator);

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ public class OpenPreviousDialog
 
 	public OpenPreviousDialog(MainFrame owner)
 	{
-		super(owner, "Open previous log...");
+		super(owner, "Open previous log…");
 		this.mainFrame = owner;
 		createUI();
 	}

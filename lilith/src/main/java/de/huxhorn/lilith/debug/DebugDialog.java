@@ -20,7 +20,6 @@ package de.huxhorn.lilith.debug;
 import de.huxhorn.lilith.swing.MainFrame;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -56,12 +55,6 @@ public class DebugDialog
 	{
 		super(owner, "Debug");
 		this.mainFrame = mainFrame;
-		initUI();
-	}
-
-	public DebugDialog(Dialog owner)
-	{
-		super(owner, "Debug");
 		initUI();
 	}
 
@@ -401,7 +394,7 @@ public class DebugDialog
 		LogAllAction()
 		{
 			super("Log all!");
-			putValue(Action.SHORT_DESCRIPTION, "Executes all of the above logging examples. May be NSFW depending on the closed-mindedness of your working environment...");
+			putValue(Action.SHORT_DESCRIPTION, "Executes all of the above logging examples. May be NSFW depending on the closed-mindedness of your working environment…");
 		}
 
 		public void actionPerformed(ActionEvent e)

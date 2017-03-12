@@ -68,13 +68,13 @@
 </appender>]]></code></pre>
 
 
-<p>You also have to attach the appender to some logger, e.g. the root logger...</p>
+<p>You also have to attach the appender to some logger, e.g. the root logger…</p>
 		<pre><code><![CDATA[<root level="INFO">
   <appender-ref ref="multiplex"/>
 </root>]]></code></pre>
 
 
-<p>... or a specific logger...</p>
+<p>… or a specific logger…</p>
 		<pre><code><![CDATA[<logger name="foo.Bar" level="DEBUG">
   <appender-ref ref="multiplex"/>
 </logger>]]></code></pre>

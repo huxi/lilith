@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ public class EditAccessStatusTypeDialog
 
 	public void setType(HttpStatus.Type type)
 	{
-		setTitle("Edit colors for "+type+"...");
+		setTitle("Edit colors for "+type+"…");
 	}
 
 	private class OkAction

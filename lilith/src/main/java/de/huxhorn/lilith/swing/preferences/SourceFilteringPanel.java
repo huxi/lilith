@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -235,7 +235,7 @@ public class SourceFilteringPanel
 
 		BlacklistAction()
 		{
-			super("Blacklist on...");
+			super("Blacklist on…");
 			putValue(Action.SHORT_DESCRIPTION, "Blacklist on the selected source list.");
 		}
 
@@ -257,7 +257,7 @@ public class SourceFilteringPanel
 
 		WhitelistAction()
 		{
-			super("Whitelist on...");
+			super("Whitelist on…");
 			putValue(Action.SHORT_DESCRIPTION, "Whitelist on the selected source list.");
 		}
 

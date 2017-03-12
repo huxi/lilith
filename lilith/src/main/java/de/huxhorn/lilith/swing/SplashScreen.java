@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 public class SplashScreen
 	extends JWindow
 {
+	private static final long serialVersionUID = 668541832046187990L;
 	private final Logger logger = LoggerFactory.getLogger(SplashScreen.class);
 
 	private JLabel statusLabel;
@@ -85,7 +86,7 @@ public class SplashScreen
 
 		contentPane.add(titleLabel, BorderLayout.NORTH);
 		contentPane.add(statusLabel, BorderLayout.SOUTH);
-		statusLabel.setText("Initializing...");
+		statusLabel.setText("Initializing…");
 		setContentPane(contentPane);
 	}
 

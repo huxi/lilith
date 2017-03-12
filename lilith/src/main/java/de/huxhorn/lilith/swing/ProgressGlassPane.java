@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ public class ProgressGlassPane
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 
-		JLabel searchLabel = new JLabel("Searching...");
+		JLabel searchLabel = new JLabel("Searching…");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(searchLabel, gbc);
