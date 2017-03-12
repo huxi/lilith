@@ -94,7 +94,7 @@ All notable changes to this project will be documented in this file.
 - Fixed handling of invalid XML created by `java.util.logging.XMLFormatter`. This fixes [issue #26](https://github.com/huxi/lilith/issues/26).
 - Being less strict about the required Java version. It seems certain Linux distros have a Java version string like `1.8.0_66-internal` which is - strictly speaking - less than `1.8.0_66` since `-internal` is a pre-release identifier. Lilith will now accept versions like this if ignoring the pre-release identifier satisfies the version requirement.
 - Making sure selected event is reset when last view is closed.
-- log4j2 2.8.1, slf4j 1.7.24, Logback 1.2.1, jackson 2.8.7, Spring 4.3.7, Groovy 2.4.9, aspectj 1.8.10, httpclient 4.5.3, httpcore 4.4.6, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.2.0, jcommander 1.64, commons-lang3 3.5
+- log4j2 2.8.1, slf4j 1.7.24, Logback 1.2.1, jackson 2.8.7, Spring 4.3.7, Groovy 2.4.9, aspectj 1.8.10, httpclient 4.5.3, httpcore 4.4.6, commons-io 2.5, Thymeleaf 2.1.5, protobuf 3.2.0, jcommander 1.64, commons-lang3 3.5, flying-saucer 9.1.4
 
 ### Security
 - Nothing.
@@ -109,15 +109,9 @@ All notable changes to this project will be documented in this file.
 - log4j 1 won't be able to send `ClassLoaderName`, `ModuleName` and `ModuleVersion` for the call location of the event. Search `LOG4J_MODULE` in the source to take a look at the problem. Since [Log4j 1 End-Of-Life](https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces) has been announced 2015-08-06, chances are pretty slim that this will be fixed. Upgrade to [log4j 2](http://logging.apache.org/log4j/2.x/) or [Logback](https://logback.qos.ch/).
 - Flying Saucer related issues:
   - Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
-    See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](http://code.google.com/p/flying-saucer/issues/detail?id=79).
-  - The first line of the message in HTML view is not properly indented if it starts with whitespace.
-    You can see this effect by examining the event created by LogPinupLargeRunnable (executed via "Log ASCII").
-    The HTML created is actually correct.
-    See [Issue 125: &lt;pre> ignores leading whitespace](http://code.google.com/p/flying-saucer/issues/detail?id=125).
+    See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](https://code.google.com/archive/p/flying-saucer/issues/79).
   - Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
-    See [Issue 105: URLs with anchors](http://code.google.com/p/flying-saucer/issues/detail?id=105).
-  - A regression introduced in 9.0.7 prevents me from upgrading to a newer version of Flying Saucer.
-    See [Issue 262: Regression resolving stylesheets relative to docroot](https://code.google.com/archive/p/flying-saucer/issues/262).
+    See [Issue 105: URLs with anchors](https://code.google.com/archive/p/flying-saucer/issues/105).
 - [GLAZEDLISTS-469 - AutoCompleteSupport: Arrowing down on the popup and pressing enter fails to update combobox](https://java.net/jira/browse/GLAZEDLISTS-469) is happening in the find panel on macOS. Select the correct entry with the mouse as a workaround.
 
 
