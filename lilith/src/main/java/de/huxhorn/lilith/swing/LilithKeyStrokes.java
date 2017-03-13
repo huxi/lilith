@@ -19,8 +19,10 @@
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javax.swing.KeyStroke;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +30,13 @@ import org.slf4j.LoggerFactory;
 public class LilithKeyStrokes
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LilithKeyStrokes.class);
+	private static final Map<String, String> ACTION_KEY_STROKE_STRINGS =new HashMap<>();
 	private static final Map<String, KeyStroke> ACTION_KEY_STROKES =new HashMap<>();
 	private static final Map<KeyStroke, String> KEY_STROKE_ACTIONS =new HashMap<>();
 
 	private static void addKeyStroke(String keyStrokeString, String actionName)
 	{
-
+		ACTION_KEY_STROKE_STRINGS.put(actionName, keyStrokeString);
 		KeyStroke keyStroke = KeyStrokes.resolveAcceleratorKeyStroke(keyStrokeString);
 		if(keyStroke == null)
 		{
@@ -155,6 +158,16 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt S", COPY_CALL_STACK_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt T", COPY_THROWABLE_NAME_ACTION);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W", CLOSE_ALL_ACTION);
+	}
+
+	static Set<String> getActionNames()
+	{
+		return Collections.unmodifiableSet(ACTION_KEY_STROKE_STRINGS.keySet());
+	}
+
+	public static String getKeyStrokeString(String actionName)
+	{
+		return ACTION_KEY_STROKE_STRINGS.get(actionName);
 	}
 
 	public static KeyStroke getKeyStroke(String actionName)
