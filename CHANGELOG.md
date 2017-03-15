@@ -1,8 +1,45 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [8.2.0][unreleased] - TBD
 
-## [8.1.0][unreleased] - TBD
+### Added
+- Nothing.
+
+### Changed
+- Nothing.
+
+### Deprecated
+- Nothing.
+
+### Removed
+- Nothing.
+
+### Fixed
+- Nothing.
+
+### Security
+- Nothing.
+
+### Known issues
+- logback-access `AccessEvent` sent by `SocketAppender` isn't guaranteed to be deserializable at the moment. You can use the Lilith Multiplex Socket Appender in the meantime.
+  See [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
+- Logback 1.1.0 introduced some message formatting regressions.
+  See [LOGBACK-1183 - Message formatting regression](http://jira.qos.ch/browse/LOGBACK-1183).
+- <del>Binary Lilith log files will only work in case of `append=false`.</del> Implemented a workaround.
+  See [LOGBACK-1257 - Invalid files in case of append=true and Encoder with non-null headerBytes() / footerBytes()](https://jira.qos.ch/browse/LOGBACK-1257)
+- log4j 1 won't be able to send `ClassLoaderName`, `ModuleName` and `ModuleVersion` for the call location of the event. Search `LOG4J_MODULE` in the source to take a look at the problem. Since [Log4j 1 End-Of-Life](https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces) has been announced 2015-08-06, chances are pretty slim that this will be fixed. Upgrade to [log4j 2](http://logging.apache.org/log4j/2.x/) or [Logback](https://logback.qos.ch/).
+- Flying Saucer related issues:
+  - Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+    See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](https://code.google.com/archive/p/flying-saucer/issues/79).
+  - Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+    See [Issue 105: URLs with anchors](https://code.google.com/archive/p/flying-saucer/issues/105).
+- [GLAZEDLISTS-469 - AutoCompleteSupport: Arrowing down on the popup and pressing enter fails to update combobox](https://java.net/jira/browse/GLAZEDLISTS-469) is happening in the find panel on macOS. Select the correct entry with the mouse as a workaround.
+
+
+---
+
+## [8.1.0] - 2017-03-15
 
 ### Added
 - Added `TemporalAccessor` support to `SafeString`.
@@ -1267,7 +1304,8 @@ All notable changes to this project will be documented in this file.
 - Use default scrollToBottom for filtered views.
 - Prevented icon-change in case of filtered view.
 
-[unreleased]: https://github.com/huxi/lilith/compare/v8.0.0...HEAD
+[unreleased]: https://github.com/huxi/lilith/compare/v8.1.0...HEAD
+[8.1.0]: https://github.com/huxi/lilith/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/huxi/lilith/compare/v0.9.44...v8.0.0
 [0.9.44]: https://github.com/huxi/lilith/compare/v0.9.43...v0.9.44
 [0.9.43]: https://github.com/huxi/lilith/compare/v0.9.42.1...v0.9.43
