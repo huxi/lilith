@@ -119,7 +119,7 @@ public class TaskManagerPanel<T>
 
 	private void setSelectedTask(Task<T> task)
 	{
-		if(logger.isInfoEnabled()) logger.info("Selected task {}.", task);
+		if(logger.isDebugEnabled()) logger.debug("Selected task {}.", task);
 		cancelAction.setTask(task);
 		if(task != null && task.getDescription() != null)
 		{
