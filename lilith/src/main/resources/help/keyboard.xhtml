@@ -31,7 +31,7 @@
 	<dd>Open inactive log…</dd>
 
 	<dt>^+&#8679;+X</dt>
-	<dd>Remove all inactive logs</dd>
+	<dd>Clean all inactive logs</dd>
 
 	<dt>^+Q</dt>
 	<dd>Exit. Quit. No, I won't ask you for permission. I will ask for permission if you make me do so, though. :p</dd>
@@ -52,10 +52,7 @@
 
 	<dt>^+R</dt>
 	<dd>Remove inactive views.</dd>
-<!--
-	 <dt>^-&#8679;-R</dt>
-	 <dd>Clear and remove inactive views.</dd>
--->
+
 	<dt>^+T</dt>
 	<dd>Toggles tailing ("scroll to bottom"-functionality).</dd>
 
@@ -64,11 +61,6 @@
 		If the view is paused, events are still received in the background,
 		i.e. no events are lost while the view is paused.
 	</dd>
-
-<!--
-	<dt>???</dt>
-	<dd>Clear view.</dd>
--->
 
 	<dt>^+&#8679;+A</dt>
 	<dd>Attach/detach view.</dd>
@@ -86,7 +78,7 @@
 	<dd>Edit source name of the current view.</dd>
 
 	<dt>^+I</dt>
-	<dd>Add the current filter.</dd>
+	<dd>Save the current condition.</dd>
 
 	<dt>^+. (also ^+[mouse wheel up])</dt>
 	<dd>Zoom in</dd>
@@ -114,10 +106,10 @@
 	</dd>
 
 	<dt>^+J</dt>
-	<dd>Select previous tab.</dd>
-
-	<dt>^+K</dt>
 	<dd>Select next tab.</dd>
+
+	<dt>^++&#8679;J</dt>
+	<dd>Select previous tab.</dd>
 </dl>
 
 
@@ -141,21 +133,17 @@
 
 	<dt>^+&#8679;+L</dt>
 	<dd>Find next match of any active condition.</dd>
-<!--
-	<dt>???</dt>
-	<dd>Cancel find operation.</dd>
--->
 
 	<dt>Esc (if find panel is visible)</dt>
 	<dd>Close find panel.</dd>
 
 	<dt>&#8629; (if in find textfield)</dt>
-	<dd>Create a new tab with the current filter.</dd>
-
-	<dt>&#8679;+&#8629; (if in find textfield)</dt>
-	<dd>Replace filter of the current tab with the current filter.<br/>
+	<dd>Replace filter of the current tab with the new condition.<br/>
 		Opens a new tab, too, if the current tab is the unfiltered tab.
 	</dd>
+
+	<dt>&#8679;+&#8629; (if in find textfield)</dt>
+	<dd>Create a new tab with the new condition.</dd>
 </dl>
 
 <p><a href="#top">Back to top.</a></p>
