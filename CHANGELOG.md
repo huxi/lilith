@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Fixed
-- Nothing.
+- cglib 3.2.5
 
 ### Security
 - Nothing.
