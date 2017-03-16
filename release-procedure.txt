@@ -77,6 +77,7 @@ Update current-version.txt
 Update allprojects.version in sulky/build.gradle to next sulky-version 
 Update allprojects.version in lilith/build.gradle to next lilith-version 
 Update sulkyBaseVersion in lilith/dependencyDefinitions.gradle to next sulky-version
+Update project.ext.lilithVersion in lilith/sandbox/sandboxDefaults.gradle to next lilith-version
 
 #####
 
