@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@
 
 package de.huxhorn.lilith.engine.impl.eventproducer
 
-import spock.lang.Specification;
+import spock.lang.Specification
 
 class WhitelistObjectInputStreamSpec extends Specification
 {
@@ -89,7 +89,7 @@ class WhitelistObjectInputStreamSpec extends Specification
 //        InvalidClassException ex = thrown()
 //        ex.message == Foo.name + '; Unauthorized deserialization attempt!'
 //        ex.classname == Foo.name
-        ClassNotFoundException ex = thrown();
+        ClassNotFoundException ex = thrown()
         ex.message == 'Unauthorized deserialization attempt! '+Foo.name
         instance.unauthorized.contains(Foo.name)
     }
@@ -141,9 +141,9 @@ class WhitelistObjectInputStreamSpec extends Specification
         instance.whitelist == [Foo.name] as Set<String>
     }
 
-    byte[] serialize(Serializable o) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream dos = new ObjectOutputStream(bos);
+    static byte[] serialize(Serializable o) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream()
+        ObjectOutputStream dos = new ObjectOutputStream(bos)
         dos.writeObject(o)
         dos.close()
         bos.toByteArray()

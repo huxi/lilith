@@ -3,11 +3,21 @@ package de.huxhorn.lilith.sandbox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.slf4j.MarkerFactory;
+import org.slf4j.Marker;
 import ch.qos.logback.classic.LoggerContext;
 
 
 public class LogbackClassicSandbox
 {
+	private static final Marker FOO_MARKER = MarkerFactory.getDetachedMarker("foo-marker");
+	private static final Marker BAR_MARKER = MarkerFactory.getDetachedMarker("bar-marker");
+	
+	static
+	{
+		FOO_MARKER.add(BAR_MARKER);
+	}
+		
 	public static class InnerClass
 	{
 		@SuppressWarnings({"ThrowableInstanceNeverThrown"})
@@ -94,6 +104,7 @@ public class LogbackClassicSandbox
 			logger.info("Info!");
 			logger.warn("Warn!");
 			logger.error("Error!");
+			logger.info(FOO_MARKER, "Info with marker!");
 			try
 			{
 				Thread.sleep(100);
