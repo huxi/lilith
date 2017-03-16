@@ -1,0 +1,11 @@
+<html>This version of Lilith is using the following dependencies:
+<ul>
+<li>slf4j ${slf4jVersion}</li>
+<li>logback ${logbackVersion}</li>
+<li>log4j ${log4jVersion}</li>
+<li>log4j2 ${log4j2Version}</li>
+</ul>
+<p>If you run into problems, make sure that your dependencies match the ones above.</p>
+
+<p>If that fails, check the internal Lilith logs ("Window" => "Lilith - Lilith (logging)") for suspicious messages.</p>
+</html>

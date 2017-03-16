@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [8.2.0][unreleased] - TBD
 
 ### Added
-- Nothing.
+- Added dependency versions to Troubleshooting section of preferences. This was suggested in [issue #29](https://github.com/huxi/lilith/issues/29) by [@Pesegato](https://github.com/Pesegato).
 
 ### Changed
 - Nothing.

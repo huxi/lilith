@@ -409,6 +409,8 @@ project(':lilith') {
 			'lilithVersion': version,
 			'slf4jVersion': versions.slf4j,
 			'logbackVersion': versions.logback,
+			'log4jVersion': versions.log4j,
+			'log4j2Version': versions.log4j2,
 			'gitRevision': project.gitHeadHash,
 			'timestamp': "${System.currentTimeMillis()}"
 		]
@@ -426,6 +428,7 @@ project(':lilith') {
 
 		filesMatching '**/*.properties', { expand props }
 		filesMatching '**/*.xhtml', { expand props }
+		filesMatching '**/*.message', { expand props }
 	}
 
 	project.ext.distSpec = copySpec {

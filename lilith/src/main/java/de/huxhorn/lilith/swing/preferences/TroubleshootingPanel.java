@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,13 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.MainFrame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,7 +37,10 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,13 +60,50 @@ public class TroubleshootingPanel
 
 	private void createUI()
 	{
-		add(new JButton(new InitDetailsViewAction()));
-		add(new JButton(new InitExampleConditionScriptsAction()));
-		add(new JButton(new InitExampleClipboardFormatterScriptsAction()));
-		add(new JButton(new DeleteAllLogsAction()));
-		add(new JButton(new CopySystemPropertiesAction()));
-		add(new JButton(new CopyThreadsAction()));
-		add(new JButton(new GarbageCollectionAction()));
+		setLayout(new GridBagLayout());
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(new JButton(new InitDetailsViewAction()));
+		buttonPanel.add(new JButton(new InitExampleConditionScriptsAction()));
+		buttonPanel.add(new JButton(new InitExampleClipboardFormatterScriptsAction()));
+		buttonPanel.add(new JButton(new DeleteAllLogsAction()));
+		buttonPanel.add(new JButton(new CopySystemPropertiesAction()));
+		buttonPanel.add(new JButton(new CopyThreadsAction()));
+		buttonPanel.add(new JButton(new GarbageCollectionAction()));
+
+		JPanel messagePanel = new JPanel(new GridLayout(1,1));
+		JLabel messageField = new JLabel();
+		try
+		{
+			InputStream messageStream = TroubleshootingPanel.class.getResourceAsStream("/dependencies.message");
+			if(messageStream == null)
+			{
+				if(logger.isErrorEnabled()) logger.error("Failed to get resource dependencies.message!");
+			}
+			else
+			{
+				messageField.setText(IOUtils.toString(messageStream, StandardCharsets.UTF_8));
+			}
+		}
+		catch (IOException e)
+		{
+			if(logger.isErrorEnabled()) logger.error("Failed to load dependencies.message!", e);
+		}
+		messagePanel.add(messageField);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.NORTH;
+
+		add(buttonPanel, gbc);
+
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.SOUTH;
+		messagePanel.setBorder(new EmptyBorder(10,10,10,10));
+		add(messagePanel, gbc);
 	}
 
 	public class InitDetailsViewAction
