@@ -15,6 +15,7 @@ before_install:
 #  - rm -r ~/.gradle/caches
   - git clone https://github.com/huxi/sulky.git ~/builds/sulky
   - pushd ~/builds/sulky
+  - git checkout $TRAVIS_BRANCH
   - ./gradlew --stacktrace install
   - popd
 
