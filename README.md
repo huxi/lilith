@@ -1,5 +1,5 @@
 # Lilith [![Build Status](https://travis-ci.org/huxi/lilith.png?branch=master)](https://travis-ci.org/huxi/lilith) [![Coverage Status](https://coveralls.io/repos/huxi/lilith/badge.png)](https://coveralls.io/r/huxi/lilith)
-Lilith ([@lilithapp](https://twitter.com/#!/lilithapp)) is a logging and access event viewer for [Logback][], [log4j][]™ and [java.util.logging][jul].
+Lilith ([@lilithapp](https://twitter.com/#!/lilithapp)) is a logging and access event viewer for [Logback][], [log4j][]™, [Log4j 2][log4j2]™ and [java.util.logging][jul].
 
 ![Lilith] [img-lilith]
 
@@ -277,8 +277,33 @@ Using Lilith [`AccessLilithEncoder`][ale] requires `de.huxhorn.lilith:de.huxhorn
 
 Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
 
+### ...with Log4j 2™.
+Lilith is listening for [Log4j 2][log4j2]™ [`SocketAppender`][log4j2sa] connections on port 4445.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="debug">
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} --- %msg%n"/>
+		</Console>
+		<Socket name="Socket" host="localhost" port="4560" protocol="TCP">
+			<SerializedLayout />
+		</Socket>
+	</appenders>
+	<loggers>
+		<root level="all">
+			<appender-ref ref="Console"/>
+			<appender-ref ref="Socket"/>
+		</root>
+	</loggers>
+</configuration>
+```
+
+Take a look at the [Log4j 2™ manual][log4j2m] for more informations.
+
 ### ...with log4j™.
-Lilith is listening for [log4j][]™ [`SocketAppender`][l4jsa] connections on port 4445.
+Lilith is listening for [log4j][]™ [`SocketAppender`][log4jsa] connections on port 4445.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -414,14 +439,17 @@ All Your Base Are Belong To Us.
 [idea]: http://www.jetbrains.com/idea/ "IntelliJ IDEA - The Most Intelligent Java IDE"
 [jul]: http://download.oracle.com/javase/7/docs/api/java/util/logging/package-summary.html "java.util.logging package"
 [julsh]: http://docs.oracle.com/javase/7/docs/api/java/util/logging/SocketHandler.html "java.util.logging.SocketHandler"
-[l4jsa]: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/net/SocketAppender.html "org.apache.log4j.net.SocketAppender"
 [lapl]: http://logback.qos.ch/manual/layouts.html#AccessPatternLayout "logback-access PatternLayout"
 [lasa]: http://logback.qos.ch/apidocs/ch/qos/logback/access/net/SocketAppender.html "ch.qos.logback.access.net.SocketAppender" 
 [lcpl]: http://logback.qos.ch/manual/layouts.html#ClassicPatternLayout "logback-classic PatternLayout"
 [lcsa]: http://logback.qos.ch/apidocs/ch/qos/logback/classic/net/SocketAppender.html "ch.qos.logback.classic.net.SocketAppender"
 [lgpl]: http://www.gnu.org/licenses/lgpl.html "GNU Lesser General Public License v3.0"
+[log4j2]: http://logging.apache.org/log4j/2.x/ "Apache Log4j 2™"
+[log4j2m]: http://logging.apache.org/log4j/2.x/manual/index.html "Log4j 2™ manual"
+[log4j2sa]: http://logging.apache.org/log4j/2.x/manual/appenders.html#SocketAppender "SocketAppender"
 [log4j]: http://logging.apache.org/log4j/ "Apache log4j™"
 [log4jm]: http://logging.apache.org/log4j/1.2/manual.html "log4j™ manual"
+[log4jsa]: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/net/SocketAppender.html "org.apache.log4j.net.SocketAppender"
 [logback]: http://logback.qos.ch/ "Logback - the generic, reliable, fast & flexible logging framework"
 [logbackm]: http://logback.qos.ch/manual/ "Logback manual"
 [marked]: http://markedapp.com/ "marked - Markdown Preview for any text editor."
