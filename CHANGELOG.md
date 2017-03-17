@@ -39,7 +39,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [8.1.1][unreleased] - TBD
+## [8.1.1] - 2017-03-17
 
 ### Added
 - Added dependency versions to Troubleshooting section of preferences. This was suggested in [issue #29](https://github.com/huxi/lilith/issues/29) by [@Pesegato](https://github.com/Pesegato).
@@ -751,7 +751,7 @@ All notable changes to this project will be documented in this file.
 - sulky: Made sure that `TimeoutOutputStream-Watchdog-Thread` is stopped under all circumstances. Added testcases for every scenario.
 - sulky: Fixed a stupid problem that could result in a deadlock in Lilith internal log view.
 - Implemented changed message formatting logic introduced in SLF4J 1.5.3.
-- Prepared for logback 0.9.10. This required changes to `LoggingEvent and contained `StackTraceElement`s. Serialized `LoggingEvents` are not compatible to previous version.
+- Prepared for logback 0.9.10. This required changes to `LoggingEvent` and contained `StackTraceElement`s. Serialized `LoggingEvents` are not compatible to previous version.
 - New xml schema 1.1 to support logback 0.9.10 features, i.e. CodeLocation, Version and Exact.
 - Removed mac-specific UserNotification[..]EventConsumer because it crashes the app if J2SE 6 is used. It didn't work, anyway :p
 - `detailsView.groovy` does now support CodeLocation, Version and Exact as well as null eventwrappers that can happen if deserialization fails.
@@ -1342,7 +1342,8 @@ All notable changes to this project will be documented in this file.
 - Use default scrollToBottom for filtered views.
 - Prevented icon-change in case of filtered view.
 
-[unreleased]: https://github.com/huxi/lilith/compare/v8.1.0...HEAD
+[unreleased]: https://github.com/huxi/lilith/compare/v8.1.1...HEAD
+[8.1.1]: https://github.com/huxi/lilith/compare/v8.1.0...v8.1.1
 [8.1.0]: https://github.com/huxi/lilith/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/huxi/lilith/compare/v0.9.44...v8.0.0
 [0.9.44]: https://github.com/huxi/lilith/compare/v0.9.43...v0.9.44
@@ -1362,4 +1363,3 @@ All notable changes to this project will be documented in this file.
 [0.9.31]: https://github.com/huxi/lilith/compare/v0.9.30...v0.9.31
 [0.9.30]: https://github.com/huxi/lilith/compare/v0.9.29...v0.9.30
 [0.9.29]: https://github.com/huxi/lilith/compare/init...v0.9.29
-

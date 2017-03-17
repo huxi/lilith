@@ -41,6 +41,7 @@ import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import org.slf4j.Logger;
@@ -90,6 +91,13 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 					{
 						addEvent(event);
 					}
+				}
+				catch(InvalidClassException e)
+				{
+					if(logger.isWarnEnabled()) logger.warn("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
+					addEvent(null);
+					IOUtilities.interruptIfNecessary(e);
+					break;
 				}
 				catch(IOException e)
 				{

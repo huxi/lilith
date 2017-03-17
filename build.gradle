@@ -126,7 +126,7 @@ allprojects {
 	apply plugin: 'jacoco'
 
 	group = 'de.huxhorn.lilith'
-	version = '8.2.0'
+	version = '8.1.1'
 	def prereleaseIdentifier = System.properties.'prerelease'
 	if(prereleaseIdentifier) {
 		version = version + '-' + prereleaseIdentifier
