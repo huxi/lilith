@@ -1,7 +1,7 @@
 # Lilith [![Build Status](https://travis-ci.org/huxi/lilith.png?branch=master)](https://travis-ci.org/huxi/lilith) [![Coverage Status](https://coveralls.io/repos/huxi/lilith/badge.png)](https://coveralls.io/r/huxi/lilith)
 Lilith ([@lilithapp](https://twitter.com/#!/lilithapp)) is a logging and access event viewer for [Logback][], [log4j][]™, [Log4j 2][log4j2]™ and [java.util.logging][jul].
 
-![Lilith] [img-lilith]
+![Lilith][img-lilith]
 
 It has features roughly comparable to [Chainsaw][] for log4j™, but with an emphasis on stability, high performance and throughput. In contrast to Chainsaw, it is handling received logging events using the hard disk instead of keeping them in memory. Because of this, it is able to handle millions of events from several sources at the same time.
 
