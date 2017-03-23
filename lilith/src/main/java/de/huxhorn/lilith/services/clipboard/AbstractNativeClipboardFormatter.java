@@ -18,23 +18,43 @@
 
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
 import de.huxhorn.lilith.swing.LilithActionId;
+import de.huxhorn.lilith.swing.LilithKeyStrokes;
+import java.util.Objects;
 
-public class LoggingEventXmlFormatter
-		extends AbstractLoggingEventEncoderFormatter
+public abstract class AbstractNativeClipboardFormatter
+	implements ClipboardFormatter
 {
-	private static final long serialVersionUID = 2263706767713579277L;
+	private static final long serialVersionUID = -124752554703671002L;
 
-	public LoggingEventXmlFormatter()
+	private final LilithActionId id;
+
+	protected AbstractNativeClipboardFormatter(LilithActionId id)
 	{
-		super(LilithActionId.COPY_XML, new LoggingXmlEncoder(false, true));
+		this.id = Objects.requireNonNull(id, "id must not be null!");
 	}
 
-	//Not performing this hardcore check for the sake of performance.
-	//@Override
-	//public boolean isCompatible(Object object)
-	//{
-	//	return toString(object) != null;
-	//}
+	@Override
+	public final String getName()
+	{
+		return id.getText();
+	}
+
+	@Override
+	public final String getDescription()
+	{
+		return id.getDescription();
+	}
+
+	@Override
+	public final String getAccelerator()
+	{
+		return LilithKeyStrokes.getKeyStrokeString(id);
+	}
+
+	@Override
+	public final boolean isNative()
+	{
+		return true;
+	}
 }

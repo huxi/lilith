@@ -7,13 +7,13 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Changed
-- Nothing.
+- Refactored actions and icon handling.
 
 ### Deprecated
 - Nothing.
 
 ### Removed
-- Nothing.
+- Previous and Next buttons in find panel.
 
 ### Fixed
 - Groovy 2.4.10

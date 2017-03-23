@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
@@ -27,13 +28,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xhtmlrenderer.context.AWTFontResolver;
@@ -125,10 +123,8 @@ public class HelpFrame
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Rectangle maxBounds = ge.getMaximumWindowBounds();
 		setSize(maxBounds.width / 2, maxBounds.height / 2);
-		if(Icons.HELP_MENU_ICON != null)
-		{
-			setIconImage(Icons.HELP_MENU_ICON.getImage());
-		}
+
+		setIconImages(Icons.resolveIconImages(LilithFrameId.HELP));
 
 		CopySelectionAction copySelectionAction = new CopySelectionAction();
 		JMenuBar menuBar = new JMenuBar();
@@ -205,16 +201,13 @@ public class HelpFrame
 	}
 
 	private class CopySelectionAction
-		extends AbstractAction
+		extends AbstractLilithAction
 	{
-		private static final long serialVersionUID = -551520865313383753L;
+		private static final long serialVersionUID = 1045694633251532888L;
 
 		CopySelectionAction()
 		{
-			super("Copy selection");
-			putValue(Action.SHORT_DESCRIPTION, "Copies the selection to the clipboard.");
-			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_SELECTION_ACTION);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
+			super(LilithActionId.COPY_SELECTION);
 		}
 
 		public void actionPerformed(ActionEvent e)

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,32 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
+import de.huxhorn.lilith.swing.LilithActionId;
 
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
 
 public class LoggingNdcFormatter
-		implements ClipboardFormatter
+		extends AbstractNativeClipboardFormatter
 {
-	private static final long serialVersionUID = 5898595765166630166L;
+	private static final long serialVersionUID = 8250337181083260675L;
 
-	public String getName()
+	public LoggingNdcFormatter()
 	{
-		return "Copy NDC";
-	}
-
-	public String getDescription()
-	{
-		return "Copies the Nested Diagnostic Context of the logging event to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return null;
+		super(LilithActionId.COPY_NDC);
 	}
 
 	public boolean isCompatible(Object object)
@@ -51,11 +43,6 @@ public class LoggingNdcFormatter
 	public String toString(Object object)
 	{
 		return resolveLoggingEvent(object).map(LoggingNdcFormatter::toStringOrNull).orElse(null);
-	}
-
-	public boolean isNative()
-	{
-		return true;
 	}
 
 	private static String toStringOrNull(LoggingEvent value)

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.Icons;
+import de.huxhorn.lilith.swing.LilithActionId;
 import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableColumnModel;
 import de.huxhorn.lilith.swing.preferences.table.ConditionTableModel;
@@ -350,7 +352,7 @@ public class ConditionsPanel
 		MoveUpAction()
 		{
 			super("Move up");
-			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.resolveMenuIcon(LilithActionId.FIND_PREVIOUS));
 			putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition up.");
 		}
 
@@ -380,7 +382,7 @@ public class ConditionsPanel
 		MoveDownAction()
 		{
 			super("Move down");
-			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.resolveMenuIcon(LilithActionId.FIND_NEXT));
 			putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition down.");
 		}
 

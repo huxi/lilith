@@ -41,12 +41,12 @@ class LilithKeyStrokesSpec extends Specification {
 	@Unroll
 	"sanity-check keystroke string for #actionName"() {
 		when:
-		def keyStrokeString = LilithKeyStrokes.getKeyStrokeString(actionName)
+		def unprocessedKeyStrokeString = LilithKeyStrokes.getUnprocessedKeyStrokeString(actionName)
 
 		then:
-		keyStrokeString != null
-		println keyStrokeString
-		KeyStrokes.resolveAcceleratorKeyStroke(keyStrokeString) != null
+		unprocessedKeyStrokeString != null
+		println unprocessedKeyStrokeString
+		KeyStrokes.resolveAcceleratorKeyStroke(unprocessedKeyStrokeString) != null
 
 		where:
 		actionName << new TreeSet<String>(LilithKeyStrokes.getActionNames())

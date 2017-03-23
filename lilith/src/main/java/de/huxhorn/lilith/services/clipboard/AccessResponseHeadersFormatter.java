@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,30 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
+
+import de.huxhorn.lilith.swing.LilithActionId;
 
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveAccessEvent;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.toStringOrNull;
 
 public class AccessResponseHeadersFormatter
-		implements ClipboardFormatter
+		extends AbstractNativeClipboardFormatter
 {
-	private static final long serialVersionUID = 1531506371702810563L;
+	private static final long serialVersionUID = 6042109511574116215L;
 
-	public String getName()
+	public AccessResponseHeadersFormatter()
 	{
-		return "Copy response headers";
-	}
-
-	public String getDescription()
-	{
-		return "Copies the response headers of the access event to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return null;
+		super(LilithActionId.COPY_RESPONSE_HEADERS);
 	}
 
 	public boolean isCompatible(Object object)
@@ -49,10 +42,5 @@ public class AccessResponseHeadersFormatter
 	public String toString(Object object)
 	{
 		return resolveAccessEvent(object).map(it -> toStringOrNull(it.getResponseHeaders())).orElse(null);
-	}
-
-	public boolean isNative()
-	{
-		return true;
 	}
 }

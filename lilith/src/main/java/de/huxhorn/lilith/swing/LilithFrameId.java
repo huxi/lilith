@@ -16,25 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.services.clipboard;
+package de.huxhorn.lilith.swing;
 
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
-import de.huxhorn.lilith.swing.LilithActionId;
-
-public class LoggingEventXmlFormatter
-		extends AbstractLoggingEventEncoderFormatter
+public enum LilithFrameId
 {
-	private static final long serialVersionUID = 2263706767713579277L;
-
-	public LoggingEventXmlFormatter()
-	{
-		super(LilithActionId.COPY_XML, new LoggingXmlEncoder(false, true));
-	}
-
-	//Not performing this hardcore check for the sake of performance.
-	//@Override
-	//public boolean isCompatible(Object object)
-	//{
-	//	return toString(object) != null;
-	//}
+	MAIN,
+	HELP
 }

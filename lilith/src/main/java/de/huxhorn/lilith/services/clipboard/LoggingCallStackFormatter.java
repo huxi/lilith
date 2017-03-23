@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,33 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
-import de.huxhorn.lilith.swing.LilithKeyStrokes;
+import de.huxhorn.lilith.swing.LilithActionId;
 
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveCallStack;
 
 public class LoggingCallStackFormatter
-		implements ClipboardFormatter
+		extends AbstractNativeClipboardFormatter
 {
-	private static final long serialVersionUID = 861522045350829907L;
+	private static final long serialVersionUID = 7055240983247307195L;
 
-	private static final String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_CALL_STACK_ACTION).toString();
-
-	public String getName()
+	public LoggingCallStackFormatter()
 	{
-		return "Copy call stack";
-	}
-
-	public String getDescription()
-	{
-		return "Copies the call stack of the logging event to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return ACCELERATOR;
+		super(LilithActionId.COPY_CALL_STACK);
 	}
 
 	public boolean isCompatible(Object object)
@@ -52,11 +41,6 @@ public class LoggingCallStackFormatter
 	public String toString(Object object)
 	{
 		return resolveCallStack(object).map(LoggingCallStackFormatter::toString).orElse(null);
-	}
-
-	public boolean isNative()
-	{
-		return true;
 	}
 
 	private static String toString(ExtendedStackTraceElement[] callStack)

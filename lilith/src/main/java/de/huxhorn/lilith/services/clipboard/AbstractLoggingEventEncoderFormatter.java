@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.LilithActionId;
 import de.huxhorn.sulky.codec.Encoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
@@ -25,13 +27,15 @@ import java.util.Objects;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
 
 public abstract class AbstractLoggingEventEncoderFormatter
-	implements ClipboardFormatter
+		extends AbstractNativeClipboardFormatter
 {
-	private static final long serialVersionUID = -1391876843138341269L;
+	private static final long serialVersionUID = -7781395686178042636L;
+
 	private final Encoder<LoggingEvent> encoder;
 
-	protected AbstractLoggingEventEncoderFormatter(Encoder<LoggingEvent> encoder)
+	protected AbstractLoggingEventEncoderFormatter(LilithActionId id, Encoder<LoggingEvent> encoder)
 	{
+		super(id);
 		Objects.requireNonNull(encoder, "encoder must not be null!");
 		this.encoder = encoder;
 	}

@@ -15,10 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
 import de.huxhorn.lilith.swing.Icons;
+import de.huxhorn.lilith.swing.LilithActionId;
 import de.huxhorn.lilith.tray.TraySupport;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -263,7 +265,7 @@ public class GeneralPanel
 		BrowseApplicationPathAction()
 		{
 			super();
-			putValue(Action.SMALL_ICON, Icons.OPEN_INACTIVE_MENU_ICON);
+			putValue(Action.SMALL_ICON, Icons.resolveMenuIcon(LilithActionId.OPEN));
 			putValue(Action.SHORT_DESCRIPTION, "Browse for the application path.");
 		}
 

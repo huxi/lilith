@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,34 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.swing.LilithKeyStrokes;
+import de.huxhorn.lilith.swing.LilithActionId;
 
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.isNullOrEmpty;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveLoggingEvent;
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.toStringOrNull;
 
 public class LoggingLoggerNameFormatter
-		implements ClipboardFormatter
+		extends AbstractNativeClipboardFormatter
 {
-	private static final long serialVersionUID = -7850932739151085487L;
+	private static final long serialVersionUID = 3657795032988439671L;
 
-	private static final String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_LOGGER_NAME_ACTION).toString();
-
-	public String getName()
+	public LoggingLoggerNameFormatter()
 	{
-		return "Copy logger name";
-	}
-
-	public String getDescription()
-	{
-		return "Copies the logger name of the logging event to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return ACCELERATOR;
+		super(LilithActionId.COPY_LOGGER_NAME);
 	}
 
 	public boolean isCompatible(Object object)
@@ -53,10 +42,5 @@ public class LoggingLoggerNameFormatter
 	public String toString(Object object)
 	{
 		return resolveLoggingEvent(object).map(it -> toStringOrNull(it.getLogger())).orElse(null);
-	}
-
-	public boolean isNative()
-	{
-		return true;
 	}
 }

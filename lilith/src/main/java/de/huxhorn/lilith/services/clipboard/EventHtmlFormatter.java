@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,33 +21,20 @@ package de.huxhorn.lilith.services.clipboard;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.swing.LilithActionId;
 import de.huxhorn.lilith.swing.MainFrame;
 
 public class EventHtmlFormatter
-		implements ClipboardFormatter
+		extends AbstractNativeClipboardFormatter
 {
-	private static final long serialVersionUID = 2263706767713579277L;
+	private static final long serialVersionUID = 4012048231193993897L;
 
-	private MainFrame mainFrame;
+	private final MainFrame mainFrame;
 
 	public EventHtmlFormatter(MainFrame mainFrame)
 	{
+		super(LilithActionId.COPY_HTML);
 		this.mainFrame = mainFrame;
-	}
-
-	public String getName()
-	{
-		return "Copy event";
-	}
-
-	public String getDescription()
-	{
-		return "Copies the HTML code of this events details view to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return null;
 	}
 
 	public boolean isCompatible(Object object)
@@ -73,10 +60,5 @@ public class EventHtmlFormatter
 			}
 		}
 		return null;
-	}
-
-	public boolean isNative()
-	{
-		return true;
 	}
 }

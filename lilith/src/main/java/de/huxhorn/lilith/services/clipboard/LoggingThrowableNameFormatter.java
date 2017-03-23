@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,32 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.swing.LilithKeyStrokes;
+import de.huxhorn.lilith.swing.LilithActionId;
 
 import static de.huxhorn.lilith.services.clipboard.FormatterTools.resolveThrowableInfoName;
 
 public class LoggingThrowableNameFormatter
-		implements ClipboardFormatter
+		extends AbstractNativeClipboardFormatter
 {
 	private static final long serialVersionUID = 1139703047038656939L;
 
-	private static final String ACCELERATOR = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.COPY_THROWABLE_NAME_ACTION).toString();
-
-	public String getName()
+	public LoggingThrowableNameFormatter()
 	{
-		return "Copy Throwable name";
-	}
-
-	public String getDescription()
-	{
-		return "Copies the Throwable class name of the logging event to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return ACCELERATOR;
+		super(LilithActionId.COPY_THROWABLE_NAME);
 	}
 
 	public boolean isCompatible(Object object)
@@ -51,10 +40,5 @@ public class LoggingThrowableNameFormatter
 	public String toString(Object object)
 	{
 		return resolveThrowableInfoName(object).map(it -> it).orElse(null);
-	}
-
-	public boolean isNative()
-	{
-		return true;
 	}
 }

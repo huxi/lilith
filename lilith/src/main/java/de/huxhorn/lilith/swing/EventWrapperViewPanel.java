@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.DateTimeFormatters;
@@ -111,7 +112,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	extends JPanel
 	implements DisposeOperation, FlushOperation
 {
-	private static final long serialVersionUID = 7987088820464790207L;
+	private static final long serialVersionUID = -944900018575063575L;
 
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewPanel.class);
 
@@ -1412,7 +1413,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				" starting at row " + currentRow + ".\n\n" +
 				metaData.get(CallableMetaData.FIND_TASK_META_CONDITION);
 
-		findPanel.enableFindComponents(false, condition);
 		findResultListener.setCallable(callable);
 		Task<Long> task = taskManager.startTask(callable, name, description, metaData);
 		if(container != null)
@@ -1507,8 +1507,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				setCallable(null);
 				container.hideSearchPanel();
 			}
-
-			findPanel.enableFindComponents(true, table.getFilterCondition());
 		}
 
 		public void setCallable(Callable<Long> callable)
@@ -1516,8 +1514,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			if(logger.isDebugEnabled())
 			{
 				//noinspection ThrowableInstanceNeverThrown
-				logger
-					.debug("Setting task...\n     newCallable: " + callable + "\npreviousCallable: " + this.callable, new Throwable());
+				logger.debug("Setting task...\n     newCallable: " + callable + "\npreviousCallable: " + this.callable, new Throwable());
 			}
 			this.callable = callable;
 		}

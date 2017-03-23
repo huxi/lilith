@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,34 +19,15 @@
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
+import de.huxhorn.lilith.swing.LilithActionId;
 
 public class LoggingEventJsonFormatter
 		extends AbstractLoggingEventEncoderFormatter
 {
-	private static final long serialVersionUID = 2263706767713579277L;
+	private static final long serialVersionUID = -3491565980751250370L;
 
 	public LoggingEventJsonFormatter()
 	{
-		super(new LoggingJsonEncoder(false, true, true));
-	}
-
-	public String getName()
-	{
-		return "Copy event as JSON";
-	}
-
-	public String getDescription()
-	{
-		return "Copies the JSON representation of the event to the clipboard.";
-	}
-
-	public String getAccelerator()
-	{
-		return null;
-	}
-
-	public boolean isNative()
-	{
-		return true;
+		super(LilithActionId.COPY_JSON, new LoggingJsonEncoder(false, true, true));
 	}
 }

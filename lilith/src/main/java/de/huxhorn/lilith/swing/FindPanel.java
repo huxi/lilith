@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import ca.odell.glazedlists.BasicEventList;
@@ -58,7 +59,7 @@ import org.slf4j.LoggerFactory;
 public class FindPanel<T extends Serializable>
 	extends JPanel
 {
-	private static final long serialVersionUID = -2647531824717123615L;
+	private static final long serialVersionUID = 4365760593809731152L;
 
 	private final Logger logger = LoggerFactory.getLogger(FindPanel.class);
 
@@ -72,15 +73,8 @@ public class FindPanel<T extends Serializable>
 	private MainFrame mainFrame;
 	private EventWrapperViewPanel<T> eventWrapperViewPanel;
 
-	private FindNextAction findNextAction;
-	private FindPreviousAction findPrevAction;
-	private CloseFindAction closeFindAction;
-
 	private JButton closeFindButton;
 	private JToggleButton findNotButton;
-	private JButton findPrevButton;
-	private JButton findNextButton;
-
 
 	private Condition condition;
 	private ApplicationPreferences applicationPreferences;
@@ -106,7 +100,7 @@ public class FindPanel<T extends Serializable>
 
 	private void initUi()
 	{
-		closeFindAction = new CloseFindAction();
+		CloseFindAction closeFindAction = new CloseFindAction();
 		closeFindButton = new JButton(closeFindAction);
 		closeFindButton.setMargin(new Insets(0, 0, 0, 0));
 		GridBagConstraints gbc=new GridBagConstraints();
@@ -160,23 +154,6 @@ public class FindPanel<T extends Serializable>
 		gbc.fill=GridBagConstraints.BOTH;
 		add(findTextCombo, gbc);
 
-		findPrevAction = new FindPreviousAction();
-		findPrevButton = new JButton(findPrevAction);
-		findPrevButton.setMargin(new Insets(0, 0, 0, 0));
-
-		gbc.gridx = 5;
-		gbc.weightx = 0.0;
-		gbc.weighty = 0.0;
-		gbc.fill=GridBagConstraints.NONE;
-		add(findPrevButton, gbc);
-
-		findNextAction = new FindNextAction();
-		findNextButton = new JButton(findNextAction);
-		findNextButton.setMargin(new Insets(0, 0, 0, 0));
-
-		gbc.gridx = 6;
-		add(findNextButton, gbc);
-
 		FindTextFieldListener findTextFieldListener = new FindTextFieldListener();
 		JTextComponent findEditorComponent = getFindEditorComponent();
 		if(findEditorComponent instanceof JTextField)
@@ -185,7 +162,8 @@ public class FindPanel<T extends Serializable>
 		}
 		else
 		{
-			if(logger.isWarnEnabled()) logger.warn("findEditorComponent ({}) is not instanceof JTextField!", findEditorComponent.getClass().getName());
+			if(logger.isWarnEnabled()) logger.warn("findEditorComponent ({}) is not instanceof JTextField!",
+					findEditorComponent == null ? "null" : findEditorComponent.getClass().getName());
 		}
 		if(findEditorComponent != null)
 		{
@@ -194,8 +172,6 @@ public class FindPanel<T extends Serializable>
 		}
 		ReplaceFilterAction replaceFilterAction = new ReplaceFilterAction();
 
-		KeyStrokes.registerCommand(this, findNextAction, "FIND_NEXT_ACTION");
-		KeyStrokes.registerCommand(this, findPrevAction, "FIND_PREV_ACTION");
 		KeyStrokes.registerCommand(this, closeFindAction, "CLOSE_FIND_ACTION");
 		KeyStrokes.registerCommand(findTextCombo, replaceFilterAction, "REPLACE_FILTER_ACTION");
 
@@ -226,8 +202,6 @@ public class FindPanel<T extends Serializable>
 			if(logger.isWarnEnabled()) logger.warn("Condition {} does not support cloning!", condition, e);
 		}
 		Object newValue=getCondition();
-		findPrevAction.setEnabled(this.condition != null);
-		findNextAction.setEnabled(this.condition != null);
 		firePropertyChange(CONDITION_PROPERTY, oldValue, newValue);
 	}
 
@@ -424,23 +398,6 @@ public class FindPanel<T extends Serializable>
 		findTextCombo.getEditor().selectAll();
 	}
 
-	public void enableFindComponents(boolean enabled, Condition condition)
-	{
-		// TODO: check if this can be changed.
-		closeFindAction.setEnabled(enabled);
-		findTextCombo.setEnabled(enabled);
-		if(condition != null)
-		{
-			findPrevAction.setEnabled(enabled);
-			findNextAction.setEnabled(enabled);
-		}
-		else
-		{
-			findPrevAction.setEnabled(false);
-			findNextAction.setEnabled(false);
-		}
-	}
-
 	private void updateFindCombo()
 	{
 		String selectedType = (String) findTypeCombo.getSelectedItem();
@@ -517,14 +474,6 @@ public class FindPanel<T extends Serializable>
 			}
 			if(aComponent.equals(findTextCombo))
 			{
-				return findPrevButton;
-			}
-			if(aComponent.equals(findPrevButton))
-			{
-				return findNextButton;
-			}
-			if(aComponent.equals(findNextButton))
-			{
 				return closeFindButton;
 			}
 
@@ -536,7 +485,7 @@ public class FindPanel<T extends Serializable>
 			}
 			if(findTextCombo.equals(c))
 			{
-				return findPrevButton;
+				return closeFindButton;
 			}
 
 			if(aContainer == aComponent)
@@ -554,7 +503,7 @@ public class FindPanel<T extends Serializable>
 		{
 			if(aComponent.equals(closeFindButton))
 			{
-				return findNextButton;
+				return findTextCombo;
 			}
 			if(aComponent.equals(findNotButton))
 			{
@@ -567,14 +516,6 @@ public class FindPanel<T extends Serializable>
 			if(aComponent.equals(findTextCombo))
 			{
 				return findTypeCombo;
-			}
-			if(aComponent.equals(findPrevButton))
-			{
-				return findTextCombo;
-			}
-			if(aComponent.equals(findNextButton))
-			{
-				return findPrevButton;
 			}
 
 			// not found, try to resolve it...
@@ -606,7 +547,7 @@ public class FindPanel<T extends Serializable>
 
 		public Component getLastComponent(Container aContainer)
 		{
-			return findNextButton;
+			return findTextCombo;
 		}
 
 		public Component getDefaultComponent(Container aContainer)
@@ -657,52 +598,6 @@ public class FindPanel<T extends Serializable>
 		}
 	}
 
-	/**
-	 * This action has different enabled logic than the one in ViewActions
-	 */
-	private class FindNextAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -6469494975854597398L;
-
-		FindNextAction()
-		{
-			super();
-			putValue(Action.SMALL_ICON, Icons.FIND_NEXT_MENU_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Find next.");
-			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_NEXT_ACTION);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			eventWrapperViewPanel.findNext();
-		}
-	}
-
-	/**
-	 * This action has different enabled logic than the one in ViewActions
-	 */
-	private class FindPreviousAction
-		extends AbstractAction
-	{
-		private static final long serialVersionUID = -8192948220602398223L;
-
-		FindPreviousAction()
-		{
-			super();
-			putValue(Action.SMALL_ICON, Icons.FIND_PREV_MENU_ICON);
-			putValue(Action.SHORT_DESCRIPTION, "Find previous.");
-			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.FIND_PREVIOUS_ACTION);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			eventWrapperViewPanel.findPrevious();
-		}
-	}
-
 	private class CloseFindAction
 		extends AbstractAction
 	{
@@ -730,16 +625,13 @@ public class FindPanel<T extends Serializable>
 	}
 
 	private class ReplaceFilterAction
-		extends AbstractAction
+		extends AbstractLilithAction
 	{
-		private static final long serialVersionUID = 3876315232050114189L;
+		private static final long serialVersionUID = -8465877386933116956L;
 
 		ReplaceFilterAction()
 		{
-			super();
-			putValue(Action.SHORT_DESCRIPTION, "Replace filter.");
-			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.REPLACE_FILTER_ACTION);
-			putValue(Action.ACCELERATOR_KEY, accelerator);
+			super(LilithActionId.REPLACE_FILTER);
 		}
 
 		public void actionPerformed(ActionEvent e)
