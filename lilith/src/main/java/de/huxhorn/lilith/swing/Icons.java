@@ -57,7 +57,9 @@ public class Icons
 	private static final ImageIcon EXPORT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/document-save.png");
 	private static final ImageIcon FIND_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-find.png");
 	private static final ImageIcon FIND_NEXT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-down.png");
+	private static final ImageIcon FIND_NEXT_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-down.png");
 	private static final ImageIcon FIND_PREV_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-up.png");
+	private static final ImageIcon FIND_PREV_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-up.png");
 	private static final ImageIcon FIND_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-find.png");
 	private static final ImageIcon FRAME_ICON = resolveImageIcon("/otherGraphics/Lilith16.jpg");
 	private static final ImageIcon HELP_MENU_ICON = resolveImageIcon("/tango/16x16/apps/help-browser.png");
@@ -76,32 +78,34 @@ public class Icons
 
 	static
 	{
-		registerMenuIcon(LilithActionId.FIND, FIND_MENU_ICON);
-		registerMenuIcon(LilithActionId.DISCONNECT, DISCONNECT_MENU_ICON);
-		registerMenuIcon(LilithActionId.PREFERENCES, PREFERENCES_MENU_ICON);
-		registerMenuIcon(LilithActionId.SCROLL_TO_BOTTOM, TAIL_MENU_ICON);
-		registerMenuIcon(LilithActionId.CLEAR, CLEAR_MENU_ICON);
-		registerMenuIcon(LilithActionId.CLEAN_ALL_INACTIVE_LOGS, CLEAR_MENU_ICON);
-		registerMenuIcon(LilithActionId.LOVE, LOVE_MENU_ICON);
 		registerMenuIcon(LilithActionId.CHECK_FOR_UPDATE, CHECK_FOR_UPDATE_MENU_ICON);
+		registerMenuIcon(LilithActionId.CLEAN_ALL_INACTIVE_LOGS, CLEAR_MENU_ICON);
+		registerMenuIcon(LilithActionId.CLEAR, CLEAR_MENU_ICON);
+		registerMenuIcon(LilithActionId.DISCONNECT, DISCONNECT_MENU_ICON);
 		registerMenuIcon(LilithActionId.EXIT, EXIT_MENU_ICON);
-		registerMenuIcon(LilithActionId.TIP_OF_THE_DAY, TOTD_ICON);
-		registerMenuIcon(LilithActionId.HELP, HELP_MENU_ICON);
 		registerMenuIcon(LilithActionId.EXPORT, EXPORT_MENU_ICON);
-		registerMenuIcon(LilithActionId.OPEN, OPEN_MENU_ICON);
-		registerMenuIcon(LilithActionId.OPEN_INACTIVE, OPEN_MENU_ICON);
-		registerMenuIcon(LilithActionId.IMPORT, OPEN_MENU_ICON);
-		registerMenuIcon(LilithActionId.FIND_PREVIOUS, FIND_PREV_MENU_ICON);
-		registerMenuIcon(LilithActionId.FIND_PREVIOUS_ACTIVE, FIND_PREV_MENU_ICON);
+		registerMenuIcon(LilithActionId.FIND, FIND_MENU_ICON);
 		registerMenuIcon(LilithActionId.FIND_NEXT, FIND_NEXT_MENU_ICON);
 		registerMenuIcon(LilithActionId.FIND_NEXT_ACTIVE, FIND_NEXT_MENU_ICON);
+		registerMenuIcon(LilithActionId.FIND_PREVIOUS, FIND_PREV_MENU_ICON);
+		registerMenuIcon(LilithActionId.FIND_PREVIOUS_ACTIVE, FIND_PREV_MENU_ICON);
+		registerMenuIcon(LilithActionId.HELP, HELP_MENU_ICON);
+		registerMenuIcon(LilithActionId.IMPORT, OPEN_MENU_ICON);
+		registerMenuIcon(LilithActionId.LOVE, LOVE_MENU_ICON);
+		registerMenuIcon(LilithActionId.OPEN, OPEN_MENU_ICON);
+		registerMenuIcon(LilithActionId.OPEN_INACTIVE, OPEN_MENU_ICON);
+		registerMenuIcon(LilithActionId.PREFERENCES, PREFERENCES_MENU_ICON);
+		registerMenuIcon(LilithActionId.SCROLL_TO_BOTTOM, TAIL_MENU_ICON);
+		registerMenuIcon(LilithActionId.TIP_OF_THE_DAY, TOTD_ICON);
 
-		registerToolbarIcon(LilithActionId.FIND, FIND_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.CLEAR, CLEAR_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.DISCONNECT, DISCONNECT_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.FIND, FIND_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.FIND_NEXT, FIND_NEXT_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.FIND_PREVIOUS, FIND_PREV_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.LOVE, LOVE_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.PREFERENCES, PREFERENCES_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.SCROLL_TO_BOTTOM, TAIL_TOOLBAR_ICON);
-		registerToolbarIcon(LilithActionId.CLEAR, CLEAR_TOOLBAR_ICON);
-		registerToolbarIcon(LilithActionId.LOVE, LOVE_TOOLBAR_ICON);
 
 		registerIconImage(LilithFrameId.HELP, HELP_MENU_ICON.getImage());
 		registerIconImage(LilithFrameId.MAIN, FRAME_ICON.getImage());

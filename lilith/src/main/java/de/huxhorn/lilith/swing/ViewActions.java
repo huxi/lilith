@@ -150,8 +150,10 @@ public class ViewActions
 	private DisconnectAction disconnectMenuAction;
 	private PauseAction pauseToolBarAction;
 	private PauseAction pauseMenuAction;
-	private FindPreviousAction findPreviousAction;
-	private FindNextAction findNextAction;
+	private FindPreviousAction findPreviousToolBarAction;
+	private FindPreviousAction findPreviousMenuAction;
+	private FindNextAction findNextToolBarAction;
+	private FindNextAction findNextMenuAction;
 	private FindPreviousActiveAction findPreviousActiveAction;
 	private FindNextActiveAction findNextActiveAction;
 	private ResetFindAction resetFindAction;
@@ -289,8 +291,8 @@ public class ViewActions
 
 		// Search
 		findMenuAction = new FindAction(false);
-		findPreviousAction = new FindPreviousAction(false);
-		findNextAction = new FindNextAction(false);
+		findPreviousMenuAction = new FindPreviousAction(false);
+		findNextMenuAction = new FindNextAction(false);
 		findPreviousActiveAction = new FindPreviousActiveAction(false);
 		findNextActiveAction = new FindNextActiveAction(false);
 		resetFindAction = new ResetFindAction();
@@ -343,8 +345,8 @@ public class ViewActions
 		pauseToolBarAction = new PauseAction(true);
 		clearToolBarAction = new ClearAction(true);
 		findToolBarAction = new FindAction(true);
-		// TODO: findPreviousToolBarAction = new FindPreviousAction(true);
-		// TODO: findNextToolBarAction = new FindNextAction(true);
+		findPreviousToolBarAction = new FindPreviousAction(true);
+		findNextToolBarAction = new FindNextAction(true);
 
 		attachToolBarAction = new AttachAction(true);
 		disconnectToolBarAction = new DisconnectAction(true);
@@ -370,11 +372,19 @@ public class ViewActions
 		JButton clearButton = new JButton(clearToolBarAction);
 		toolbar.add(clearButton);
 
+		JButton disconnectButton = new JButton(disconnectToolBarAction);
+		toolbar.add(disconnectButton);
+
+		toolbar.addSeparator();
+
 		JButton findButton = new JButton(findToolBarAction);
 		toolbar.add(findButton);
 
-		JButton disconnectButton = new JButton(disconnectToolBarAction);
-		toolbar.add(disconnectButton);
+		JButton prevButton = new JButton(findPreviousToolBarAction);
+		toolbar.add(prevButton);
+
+		JButton nextButton = new JButton(findNextToolBarAction);
+		toolbar.add(nextButton);
 
 		toolbar.addSeparator();
 
@@ -442,8 +452,8 @@ public class ViewActions
 		searchMenu.setMnemonic('s');
 		searchMenu.add(findMenuAction);
 		searchMenu.add(resetFindAction);
-		searchMenu.add(findPreviousAction);
-		searchMenu.add(findNextAction);
+		searchMenu.add(findPreviousMenuAction);
+		searchMenu.add(findNextMenuAction);
 		searchMenu.add(findPreviousActiveAction);
 		searchMenu.add(findNextActiveAction);
 		searchMenu.addSeparator();
@@ -598,8 +608,10 @@ public class ViewActions
 		searchMenu.setEnabled(hasView);
 		findMenuAction.setEnabled(hasView);
 		resetFindAction.setEnabled(hasFilter);
-		findPreviousAction.setEnabled(hasFilter);
-		findNextAction.setEnabled(hasFilter);
+		findPreviousMenuAction.setEnabled(hasFilter);
+		findPreviousToolBarAction.setEnabled(hasFilter);
+		findNextMenuAction.setEnabled(hasFilter);
+		findNextToolBarAction.setEnabled(hasFilter);
 
 		Condition condition = mainFrame.getFindActiveCondition();
 		findPreviousActiveAction.setEnabled(hasView && condition != null);
