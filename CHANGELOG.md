@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Refactored actions and icon handling.
+- Don't add null-events to global logs.
 
 ### Deprecated
 - Nothing.

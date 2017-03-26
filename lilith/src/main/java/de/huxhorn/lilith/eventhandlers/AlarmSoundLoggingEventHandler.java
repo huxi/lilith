@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.LilithSounds;
@@ -29,11 +30,6 @@ public class AlarmSoundLoggingEventHandler
 {
 	private Sounds sounds;
 
-	public Sounds getSounds()
-	{
-		return sounds;
-	}
-
 	public void setSounds(Sounds sounds)
 	{
 		this.sounds = sounds;
@@ -41,30 +37,40 @@ public class AlarmSoundLoggingEventHandler
 
 	public void handle(List<EventWrapper<LoggingEvent>> events)
 	{
-		if(sounds != null)
+		if(sounds == null)
 		{
-			boolean errorDetected = false;
-			boolean warnDetected = false;
-			for(EventWrapper<LoggingEvent> current : events)
+			return;
+		}
+		if(events == null || events.isEmpty())
+		{
+			return;
+		}
+
+		boolean errorDetected = false;
+		boolean warnDetected = false;
+		for(EventWrapper<LoggingEvent> current : events)
+		{
+			LoggingEvent event = current.getEvent();
+			if(event == null)
 			{
-				LoggingEvent event = current.getEvent();
-				if(event != null && LoggingEvent.Level.ERROR == event.getLevel())
-				{
-					errorDetected = true;
-				}
-				if(event != null && LoggingEvent.Level.WARN == event.getLevel())
-				{
-					warnDetected = true;
-				}
+				continue;
 			}
-			if(warnDetected)
+			if(LoggingEvent.Level.ERROR == event.getLevel())
 			{
-				sounds.play(LilithSounds.WARN_EVENT_ALARM);
+				errorDetected = true;
 			}
-			if(errorDetected)
+			else if(LoggingEvent.Level.WARN == event.getLevel())
 			{
-				sounds.play(LilithSounds.ERROR_EVENT_ALARM);
+				warnDetected = true;
 			}
+		}
+		if(warnDetected)
+		{
+			sounds.play(LilithSounds.WARN_EVENT_ALARM);
+		}
+		if(errorDetected)
+		{
+			sounds.play(LilithSounds.ERROR_EVENT_ALARM);
 		}
 	}
 }

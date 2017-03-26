@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -24,6 +25,7 @@ import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,10 +46,32 @@ public class FileDumpEventHandler<T extends Serializable>
 
 	public void handle(List<EventWrapper<T>> events)
 	{
-		if(enabled)
+		if(!enabled)
 		{
-			fileBuffer.addAll(events);
-			if(logger.isInfoEnabled()) logger.info("Wrote {} events to file.", events.size());
+			return;
+		}
+
+		if(events == null || events.isEmpty())
+		{
+			return;
+		}
+
+		List<EventWrapper<T>> sanitized = new ArrayList<>(events.size());
+		for (EventWrapper<T> eventWrapper : events)
+		{
+			if (eventWrapper != null)
+			{
+				T event = eventWrapper.getEvent();
+				if (event != null)
+				{
+					sanitized.add(eventWrapper);
+				}
+			}
+		}
+		if (!sanitized.isEmpty())
+		{
+			fileBuffer.addAll(sanitized);
+			if (logger.isInfoEnabled()) logger.info("Wrote {} events to file.", events.size());
 		}
 	}
 

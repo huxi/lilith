@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -53,61 +54,62 @@ public class FileSplitterEventHandler<T extends Serializable>
 
 	public void handle(List<EventWrapper<T>> events)
 	{
-		if(events != null && events.size() > 0)
+		if(events == null || events.isEmpty())
 		{
-			Map<SourceIdentifier, List<EventWrapper<T>>> splittedEvents = new HashMap<>();
-			for(EventWrapper<T> wrapper : events)
+			return;
+		}
+
+		Map<SourceIdentifier, List<EventWrapper<T>>> splitEvents = new HashMap<>();
+		for(EventWrapper<T> wrapper : events)
+		{
+			SourceIdentifier si = wrapper.getSourceIdentifier();
+			List<EventWrapper<T>> sourceList = splitEvents.get(si);
+			if(sourceList == null)
 			{
-				SourceIdentifier si = wrapper.getSourceIdentifier();
-				List<EventWrapper<T>> sourceList = splittedEvents.get(si);
-				if(sourceList == null)
-				{
-					sourceList = new ArrayList<>();
-					splittedEvents.put(si, sourceList);
-				}
-				sourceList.add(wrapper);
+				sourceList = new ArrayList<>();
+				splitEvents.put(si, sourceList);
 			}
-			if(logger.isInfoEnabled())
+			sourceList.add(wrapper);
+		}
+		if(logger.isInfoEnabled()) logger.info("Split {} events to {} sources.", events.size(), splitEvents.size());
+
+		for(Map.Entry<SourceIdentifier, List<EventWrapper<T>>> entry : splitEvents.entrySet())
+		{
+			SourceIdentifier si = entry.getKey();
+			List<EventWrapper<T>> value = entry.getValue();
+			int valueCount = value.size();
+			// we know that valueCount is > 0 because otherwise it wouldn't exist.
+			EventWrapper<T> lastEvent = value.get(valueCount - 1);
+			boolean close=false;
+			boolean doNotOpen=false;
+			if(lastEvent.getEvent() == null)
 			{
-				logger.info("Split {} events to {} sources.", events.size(), splittedEvents.size());
-			}
-			for(Map.Entry<SourceIdentifier, List<EventWrapper<T>>> entry : splittedEvents.entrySet())
-			{
-				SourceIdentifier si = entry.getKey();
-				List<EventWrapper<T>> value = entry.getValue();
-				int valueCount = value.size();
-				// we know that valueCount is > 0 because otherwise it wouldn't exist.
-				EventWrapper<T> lastEvent = value.get(valueCount - 1);
-				boolean close=false;
-				boolean dontOpen=false;
-				if(lastEvent.getEvent() == null)
+				close=true;
+				if(valueCount == 1)
 				{
-					close=true;
-					if(valueCount == 1)
-					{
-						dontOpen=true;
-					}
+					doNotOpen=true;
 				}
-				// only create view/add if valid
-				if(!dontOpen)
+			}
+			// only create view/add if valid
+			if(!doNotOpen)
+			{
+				// resolveBuffer is also creating the view
+				FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
+				buffer.addAll(value);
+				if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
+			}
+
+			if(close)
+			{
+				if(sourceManager != null)
 				{
-					// resolveBuffer is also creating the view
-					FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
-					buffer.addAll(value);
-					if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
+					sourceManager.removeSource(si);
 				}
 
-				if(close)
-				{
-					if(sourceManager != null)
-					{
-						sourceManager.removeSource(si);
-					}
-
-					File activeFile = fileBufferFactory.getLogFileFactory().getActiveFile(si);
-					activeFile.delete();
-					fileBuffers.remove(si);
-				}
+				File activeFile = fileBufferFactory.getLogFileFactory().getActiveFile(si);
+				//noinspection ResultOfMethodCallIgnored
+				activeFile.delete();
+				fileBuffers.remove(si);
 			}
 		}
 	}

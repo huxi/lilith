@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.LilithSounds;
@@ -30,11 +31,6 @@ public class AlarmSoundAccessEventHandler
 {
 	private Sounds sounds;
 
-	public Sounds getSounds()
-	{
-		return sounds;
-	}
-
 	public void setSounds(Sounds sounds)
 	{
 		this.sounds = sounds;
@@ -42,26 +38,33 @@ public class AlarmSoundAccessEventHandler
 
 	public void handle(List<EventWrapper<AccessEvent>> events)
 	{
-		if(sounds != null)
+		if(sounds == null)
 		{
-			boolean errorDetected = false;
-			for(EventWrapper<AccessEvent> current : events)
+			return;
+		}
+		if(events == null || events.isEmpty())
+		{
+			return;
+		}
+
+		boolean errorDetected = false;
+		for(EventWrapper<AccessEvent> current : events)
+		{
+			AccessEvent event = current.getEvent();
+			if(event == null)
 			{
-				AccessEvent event = current.getEvent();
-				if(event != null)
-				{
-					HttpStatus status = HttpStatus.getStatus(event.getStatusCode());
-					if(status.getType() == HttpStatus.Type.SERVER_ERROR)
-					{
-						errorDetected = true;
-						break;
-					}
-				}
+				continue;
 			}
-			if(errorDetected)
+			HttpStatus status = HttpStatus.getStatus(event.getStatusCode());
+			if(status.getType() == HttpStatus.Type.SERVER_ERROR)
 			{
-				sounds.play(LilithSounds.ERROR_EVENT_ALARM);
+				errorDetected = true;
+				break;
 			}
+		}
+		if(errorDetected)
+		{
+			sounds.play(LilithSounds.ERROR_EVENT_ALARM);
 		}
 	}
 }
