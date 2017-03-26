@@ -211,7 +211,6 @@ public class ViewActions
 	private JMenuItem minimizeAllItem;
 	private JMenuItem closeAllOtherItem;
 	private JMenuItem minimizeAllOtherItem;
-	private JMenu editMenu;
 	private JMenu recentFilesMenu;
 	private ClearRecentFilesAction clearRecentFilesAction;
 	private JMenu customCopyMenu;
@@ -425,7 +424,7 @@ public class ViewActions
 		}
 
 		// Edit
-		editMenu = new JMenu("Edit");
+		JMenu editMenu = new JMenu("Edit");
 		editMenu.setMnemonic('e');
 		editMenu.add(copySelectionAction);
 		editMenu.addSeparator();
@@ -1087,17 +1086,6 @@ public class ViewActions
 		{
 			current.setEventWrapper(eventWrapper);
 		}
-		boolean enableEditMenu;
-		if(eventWrapper == null)
-		{
-			enableEditMenu = false;
-		}
-		else
-		{
-			Serializable event = eventWrapper.getEvent();
-			enableEditMenu = event instanceof LoggingEvent || event instanceof AccessEvent;
-		}
-		editMenu.setEnabled(enableEditMenu);
 		updateCustomCopyMenu(eventWrapper);
 		focusMenu.setViewContainer(viewContainer);
 		focusMenu.setEventWrapper(eventWrapper);
