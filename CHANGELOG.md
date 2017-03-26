@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Previous and Next buttons in find panel.
 
 ### Fixed
+- Fixed initial enabled state of "Go to source".
 - Groovy 2.4.10
 
 ### Security

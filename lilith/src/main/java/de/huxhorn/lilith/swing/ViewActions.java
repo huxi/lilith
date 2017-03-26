@@ -3080,6 +3080,7 @@ public class ViewActions
 		GoToSourceAction()
 		{
 			super(LilithActionId.GO_TO_SOURCE);
+			setEventWrapper(null);
 		}
 
 		public void setEventWrapper(EventWrapper wrapper)
