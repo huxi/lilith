@@ -581,7 +581,6 @@ public class ViewActions
 		boolean hasView = false;
 		boolean hasFilter = false;
 		boolean isActive = false;
-		//boolean hasFilteredBuffer = false;
 		EventSource eventSource = null;
 		EventWrapperViewPanel eventWrapperViewPanel=null;
 		if(viewContainer != null)
@@ -593,10 +592,9 @@ public class ViewActions
 				eventSource = eventWrapperViewPanel.getEventSource();
 				hasFilter = eventWrapperViewPanel.getFilterCondition() != null;
 				isActive = eventWrapperViewPanel.getState() == LoggingViewState.ACTIVE;
-				//hasFilteredBuffer = eventWrapperViewPanel.getBufferCondition() != null;
 			}
-			copySelectionAction.setView(eventWrapperViewPanel);
 		}
+		copySelectionAction.setView(eventWrapperViewPanel);
 
 		if(logger.isDebugEnabled()) logger.debug("updateActions() eventSource={}", eventSource);
 
