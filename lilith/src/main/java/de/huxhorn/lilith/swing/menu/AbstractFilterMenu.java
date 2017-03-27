@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.ViewContainer;
 import de.huxhorn.lilith.swing.actions.EventWrapperRelated;
 import de.huxhorn.lilith.swing.actions.ViewContainerRelated;
+import javax.swing.Action;
 import javax.swing.JMenu;
 
 abstract class AbstractFilterMenu
@@ -28,6 +30,11 @@ abstract class AbstractFilterMenu
 {
 	private static final long serialVersionUID = -2749976234225574839L;
 	protected transient ViewContainer viewContainer;
+
+	AbstractFilterMenu(Action action)
+	{
+		super(action);
+	}
 
 	AbstractFilterMenu(String s)
 	{

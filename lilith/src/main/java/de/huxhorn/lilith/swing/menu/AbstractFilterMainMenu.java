@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
@@ -30,6 +31,7 @@ import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
@@ -48,9 +50,9 @@ class AbstractFilterMainMenu
 	protected final boolean htmlTooltip;
 	protected final ApplicationPreferences applicationPreferences;
 
-	protected AbstractFilterMainMenu(String name, ApplicationPreferences applicationPreferences, boolean htmlTooltip)
+	protected AbstractFilterMainMenu(Action action, ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
-		super(name);
+		super(action);
 		this.htmlTooltip = htmlTooltip;
 		this.applicationPreferences = applicationPreferences;
 		JLabel hintLabel = new JLabel("Hold " + KeyEvent.getKeyModifiersText(KeyEvent.SHIFT_MASK) + " to create new view.");

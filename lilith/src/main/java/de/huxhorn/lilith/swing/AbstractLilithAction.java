@@ -44,10 +44,14 @@ public abstract class AbstractLilithAction
 	private void initProperties()
 	{
 		putValue(Action.ACCELERATOR_KEY, LilithKeyStrokes.getKeyStroke(id));
+		String text = id.getText();
 		String description=id.getDescription();
-		if(description == null)
+		if(text != null)
 		{
-			description = id.getText();
+			if(text.equals(description))
+			{
+				description = null;
+			}
 		}
 		putValue(Action.SHORT_DESCRIPTION, description);
 		if(toolbar)
@@ -56,7 +60,7 @@ public abstract class AbstractLilithAction
 		}
 		else
 		{
-			putValue(Action.NAME, id.getText());
+			putValue(Action.NAME, text);
 			putValue(Action.MNEMONIC_KEY, id.getMnemonic());
 			putValue(Action.SMALL_ICON, Icons.resolveMenuIcon(id));
 		}

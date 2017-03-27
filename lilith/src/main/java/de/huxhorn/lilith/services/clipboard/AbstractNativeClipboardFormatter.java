@@ -53,6 +53,12 @@ public abstract class AbstractNativeClipboardFormatter
 	}
 
 	@Override
+	public final Integer getMnemonic()
+	{
+		return id.getMnemonic();
+	}
+
+	@Override
 	public final boolean isNative()
 	{
 		return true;

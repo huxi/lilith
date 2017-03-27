@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Added Previous and Next buttons to toolbar.
+- Added lots of missing mnemonics.
 
 ### Changed
 - Refactored actions and icon handling.

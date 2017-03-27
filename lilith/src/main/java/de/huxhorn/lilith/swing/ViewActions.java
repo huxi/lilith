@@ -83,13 +83,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -141,7 +141,7 @@ public class ViewActions
 
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
-	private JToggleButton scrollToBottomButton;
+	private JToggleButton tailButton;
 
 	private ExportMenuAction exportMenuAction;
 	private AttachAction attachToolBarAction;
@@ -157,7 +157,7 @@ public class ViewActions
 	private FindPreviousActiveAction findPreviousActiveAction;
 	private FindNextActiveAction findNextActiveAction;
 	private ResetFindAction resetFindAction;
-	private ScrollToBottomAction scrollToBottomMenuAction;
+	private TailAction tailMenuAction;
 	private EditSourceNameMenuAction editSourceNameMenuAction;
 	private SaveLayoutAction saveLayoutAction;
 	private ResetLayoutAction resetLayoutAction;
@@ -190,7 +190,7 @@ public class ViewActions
 	private FocusMessageAction focusMessageAction;
 	private FocusEventsAction focusEventsAction;
 	private ChangeListener containerChangeListener;
-	private ScrollToBottomAction scrollToBottomToolBarAction;
+	private TailAction tailToolBarAction;
 	private ClearAction clearToolBarAction;
 	private FindAction findToolBarAction;
 	private CopySelectionAction copySelectionAction;
@@ -297,7 +297,7 @@ public class ViewActions
 		resetFindAction = new ResetFindAction();
 
 		// View
-		scrollToBottomMenuAction = new ScrollToBottomAction(false);
+		tailMenuAction = new TailAction(false);
 		pauseMenuAction = new PauseAction(false);
 		clearMenuAction = new ClearAction(false);
 		attachMenuAction = new AttachAction(false);
@@ -331,7 +331,7 @@ public class ViewActions
 		//clearAndRemoveInactiveAction=new ClearAndRemoveInactiveAction();
 
 		// Help
-		HelpAction helpAction = new HelpAction();
+		HelpTopicsAction helpTopicsAction = new HelpTopicsAction();
 		ShowLoveAction showLoveMenuAction = new ShowLoveAction(false);
 		TipOfTheDayAction tipOfTheDayAction = new TipOfTheDayAction();
 		DebugAction debugAction = new DebugAction();
@@ -340,15 +340,19 @@ public class ViewActions
 		TroubleshootingAction troubleshootingAction = new TroubleshootingAction();
 
 		// ##### ToolBar Actions #####
-		scrollToBottomToolBarAction = new ScrollToBottomAction(true);
+		tailToolBarAction = new TailAction(true);
 		pauseToolBarAction = new PauseAction(true);
 		clearToolBarAction = new ClearAction(true);
+		disconnectToolBarAction = new DisconnectAction(true);
+
 		findToolBarAction = new FindAction(true);
 		findPreviousToolBarAction = new FindPreviousAction(true);
 		findNextToolBarAction = new FindNextAction(true);
 
 		attachToolBarAction = new AttachAction(true);
-		disconnectToolBarAction = new DisconnectAction(true);
+
+		PreferencesAction preferencesToolBarAction = new PreferencesAction(true);
+		ShowLoveAction showLoveToolbarAction = new ShowLoveAction(true);
 
 		showTaskManagerItem = new JMenuItem(showTaskManagerAction);
 		closeAllItem = new JMenuItem(closeAllAction);
@@ -356,59 +360,40 @@ public class ViewActions
 		minimizeAllItem = new JMenuItem(minimizeAllAction);
 		minimizeAllOtherItem = new JMenuItem(minimizeAllOtherAction);
 		removeInactiveItem = new JMenuItem(removeInactiveAction);
-		//clearAndRemoveInactiveItem = new JMenuItem(clearAndRemoveInactiveAction);
 
 		toolbar = new JToolBar(SwingConstants.HORIZONTAL);
 		toolbar.setFloatable(false);
 
-
-		scrollToBottomButton = new JToggleButton(scrollToBottomToolBarAction);
-		toolbar.add(scrollToBottomButton);
-
-		JButton pauseButton = new JButton(pauseToolBarAction);
-		toolbar.add(pauseButton);
-
-		JButton clearButton = new JButton(clearToolBarAction);
-		toolbar.add(clearButton);
-
-		JButton disconnectButton = new JButton(disconnectToolBarAction);
-		toolbar.add(disconnectButton);
+		tailButton = new JToggleButton(tailToolBarAction);
+		toolbar.add(tailButton);
+		toolbar.add(new JButton(pauseToolBarAction));
+		toolbar.add(new JButton(clearToolBarAction));
+		toolbar.add(new JButton(disconnectToolBarAction));
 
 		toolbar.addSeparator();
 
-		JButton findButton = new JButton(findToolBarAction);
-		toolbar.add(findButton);
-
-		JButton prevButton = new JButton(findPreviousToolBarAction);
-		toolbar.add(prevButton);
-
-		JButton nextButton = new JButton(findNextToolBarAction);
-		toolbar.add(nextButton);
+		toolbar.add(new JButton(findToolBarAction));
+		toolbar.add(new JButton(findPreviousToolBarAction));
+		toolbar.add(new JButton(findNextToolBarAction));
 
 		toolbar.addSeparator();
 
-		JButton attachButton = new JButton(attachToolBarAction);
-		toolbar.add(attachButton);
+		toolbar.add(new JButton(attachToolBarAction));
 
 		toolbar.addSeparator();
 
-		PreferencesAction preferencesToolBarAction = new PreferencesAction(true);
-		JButton preferencesButton = new JButton(preferencesToolBarAction);
-		toolbar.add(preferencesButton);
+		toolbar.add(new JButton(preferencesToolBarAction));
 
 		toolbar.addSeparator();
 
-		ShowLoveAction showLoveToolbarAction = new ShowLoveAction(true);
-		JButton showLoveButton = new JButton(showLoveToolbarAction);
-		toolbar.add(showLoveButton);
+		toolbar.add(new JButton(showLoveToolbarAction));
 
-		recentFilesMenu=new JMenu("Recent Files");
+		recentFilesMenu=new JMenu(new RecentFilesAction());
 
 		menubar = new JMenuBar();
 
 		// File
-		JMenu fileMenu = new JMenu("File");
-		fileMenu.setMnemonic('f');
+		JMenu fileMenu = new JMenu(new FileAction());
 		fileMenu.add(openMenuAction);
 		fileMenu.add(recentFilesMenu);
 		fileMenu.add(openInactiveLogMenuAction);
@@ -424,8 +409,7 @@ public class ViewActions
 		}
 
 		// Edit
-		JMenu editMenu = new JMenu("Edit");
-		editMenu.setMnemonic('e');
+		JMenu editMenu = new JMenu(new EditAction());
 		editMenu.add(copySelectionAction);
 		editMenu.addSeparator();
 		editMenu.add(copyEventAction);
@@ -438,8 +422,9 @@ public class ViewActions
 		copyAccessActions.forEach(editMenu::add);
 
 		editMenu.addSeparator();
-		customCopyMenu = new JMenu("Custom copy");
-		customCopyPopupMenu = new JMenu("Custom copy");
+		CustomCopyAction customCopyAction = new CustomCopyAction();
+		customCopyMenu = new JMenu(customCopyAction);
+		customCopyPopupMenu = new JMenu(customCopyAction);
 		editMenu.add(customCopyMenu);
 		editMenu.addSeparator();
 		PasteStackTraceElementAction pasteStackTraceElementAction = new PasteStackTraceElementAction();
@@ -447,8 +432,7 @@ public class ViewActions
 		editMenu.add(pasteStackTraceElementAction);
 
 		// Search
-		searchMenu = new JMenu("Search");
-		searchMenu.setMnemonic('s');
+		searchMenu = new JMenu(new SearchAction());
 		searchMenu.add(findMenuAction);
 		searchMenu.add(resetFindAction);
 		searchMenu.add(findPreviousMenuAction);
@@ -467,9 +451,8 @@ public class ViewActions
 		searchMenu.add(showUnfilteredEventAction);
 
 		// View
-		viewMenu = new JMenu("View");
-		viewMenu.setMnemonic('v');
-		viewMenu.add(scrollToBottomMenuAction);
+		viewMenu = new JMenu(new ViewAction());
+		viewMenu.add(tailMenuAction);
 		viewMenu.add(pauseMenuAction);
 		viewMenu.add(clearMenuAction);
 		viewMenu.add(attachMenuAction);
@@ -482,8 +465,8 @@ public class ViewActions
 		viewMenu.add(zoomOutMenuAction);
 		viewMenu.add(resetZoomMenuAction);
 		viewMenu.addSeparator();
-		JMenu layoutMenu = new JMenu("Layout");
-		columnsMenu = new JMenu("Columns");
+		JMenu layoutMenu = new JMenu(new LayoutAction());
+		columnsMenu = new JMenu(new ColumnsAction());
 		layoutMenu.add(columnsMenu);
 		layoutMenu.addSeparator();
 		layoutMenu.add(saveLayoutAction);
@@ -498,14 +481,12 @@ public class ViewActions
 		viewMenu.add(closeAllFiltersAction);
 
 		// Window
-		windowMenu = new JMenu("Window");
-		windowMenu.setMnemonic('w');
+		windowMenu = new JMenu(new WindowAction());
 
 		// Help
-		JMenu helpMenu = new JMenu("Help");
-		helpMenu.setMnemonic('h');
+		JMenu helpMenu = new JMenu(new HelpAction());
 
-		helpMenu.add(helpAction);
+		helpMenu.add(helpTopicsAction);
 		helpMenu.add(showLoveMenuAction);
 		helpMenu.add(tipOfTheDayAction);
 		helpMenu.add(checkForUpdateAction);
@@ -616,7 +597,7 @@ public class ViewActions
 
 		// View
 		viewMenu.setEnabled(hasView);
-		scrollToBottomMenuAction.setEnabled(hasView);
+		tailMenuAction.setEnabled(hasView);
 		editSourceNameMenuAction.setEnabled(hasView);
 		saveLayoutAction.setEnabled(hasView);
 		resetLayoutAction.setEnabled(hasView);
@@ -632,7 +613,7 @@ public class ViewActions
 
 		disconnectToolBarAction.setEnabled(isActive);
 
-		scrollToBottomMenuAction.updateAction();
+		tailMenuAction.updateAction();
 		editSourceNameMenuAction.updateAction();
 		saveConditionMenuAction.updateAction();
 		zoomInMenuAction.updateAction();
@@ -646,11 +627,11 @@ public class ViewActions
 		closeOtherFiltersAction.updateAction();
 		closeAllFiltersAction.updateAction();
 
-		scrollToBottomButton.setSelected(isScrollingToBottom());
+		tailButton.setSelected(isScrollingToBottom());
 		pauseToolBarAction.updateAction();
 		attachToolBarAction.updateAction();
 
-		scrollToBottomToolBarAction.setEnabled(hasView);
+		tailToolBarAction.setEnabled(hasView);
 		pauseToolBarAction.setEnabled(hasView);
 		clearToolBarAction.setEnabled(hasView/* && !hasFilteredBuffer*/);
 		findToolBarAction.setEnabled(hasView);
@@ -694,7 +675,7 @@ public class ViewActions
 		}
 	}
 
-	void setShowingFilters(boolean showingFilters)
+	private void setShowingFilters(boolean showingFilters)
 	{
 		if(viewContainer != null)
 		{
@@ -706,7 +687,7 @@ public class ViewActions
 		}
 	}
 
-	boolean isScrollingToBottom()
+	private boolean isScrollingToBottom()
 	{
 		if(viewContainer != null)
 		{
@@ -719,7 +700,7 @@ public class ViewActions
 		return false;
 	}
 
-	void setScrollingToBottom(boolean scrollingToBottom)
+	private void setScrollingToBottom(boolean scrollingToBottom)
 	{
 		if(viewContainer != null)
 		{
@@ -732,7 +713,7 @@ public class ViewActions
 	}
 
 
-	boolean isPaused()
+	private boolean isPaused()
 	{
 		if(viewContainer != null)
 		{
@@ -1291,7 +1272,7 @@ public class ViewActions
 		excludePopupMenu.setEventWrapper(eventWrapper);
 	}
 
-	public JPopupMenu getPopupMenu()
+	JPopupMenu getPopupMenu()
 	{
 		updatePopup();
 
@@ -1350,7 +1331,7 @@ public class ViewActions
 				name=f.getName();
 			}
 			putValue(Action.NAME, name);
-			putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
+			putValue(Action.SMALL_ICON, Icons.resolveEmptyMenuIcon());
 			putValue(Action.SHORT_DESCRIPTION, absoluteName);
 		}
 
@@ -1538,7 +1519,7 @@ public class ViewActions
 			mainFrame.zoomOut();
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			boolean enable = false;
 			if(viewContainer != null)
@@ -1568,7 +1549,7 @@ public class ViewActions
 			mainFrame.resetZoom();
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			boolean enable = false;
 			if(viewContainer != null)
@@ -1715,9 +1696,6 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = -5242236903640590549L;
 
-		private Icon pausedIcon = Icons.PAUSED_MENU_ICON;
-		private Icon unpausedIcon = Icons.UNPAUSED_MENU_ICON;
-
 		PauseAction(boolean toolbar)
 		{
 			super(LilithActionId.PAUSE, toolbar);
@@ -1731,7 +1709,7 @@ public class ViewActions
 			focusTable();
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			if(isPaused())
 			{
@@ -1908,15 +1886,170 @@ public class ViewActions
 		}
 	}
 
-
-	private class ScrollToBottomAction
+	private static class FileAction
 			extends AbstractLilithAction
 	{
-		private static final long serialVersionUID = -7793074053120455264L;
+		private static final long serialVersionUID = 6713037299656243140L;
 
-		ScrollToBottomAction(boolean toolbar)
+		FileAction()
 		{
-			super(LilithActionId.SCROLL_TO_BOTTOM, toolbar);
+			super(LilithActionId.FILE);
+			putValue(Action.SMALL_ICON, null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class EditAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = -2716967152517099080L;
+
+		EditAction()
+		{
+			super(LilithActionId.EDIT);
+			putValue(Action.SMALL_ICON, null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class SearchAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = 4657376136768632219L;
+
+		SearchAction()
+		{
+			super(LilithActionId.SEARCH);
+			putValue(Action.SMALL_ICON, null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class ViewAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = 3606162173106275568L;
+
+		ViewAction()
+		{
+			super(LilithActionId.VIEW);
+			putValue(Action.SMALL_ICON, null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class WindowAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = 9045231748351787117L;
+
+		WindowAction()
+		{
+			super(LilithActionId.WINDOW);
+			putValue(Action.SMALL_ICON, null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class HelpAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = 2294357096466137621L;
+
+		HelpAction()
+		{
+			super(LilithActionId.HELP);
+			putValue(Action.SMALL_ICON, null);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class LayoutAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = 2989496510791574495L;
+
+		LayoutAction()
+		{
+			super(LilithActionId.LAYOUT);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class ColumnsAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = 4884985802967711064L;
+
+		ColumnsAction()
+		{
+			super(LilithActionId.COLUMNS);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class RecentFilesAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = 3479806600315336050L;
+
+		RecentFilesAction()
+		{
+			super(LilithActionId.RECENT_FILES);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private static class CustomCopyAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = -5009668707700082616L;
+
+		CustomCopyAction()
+		{
+			super(LilithActionId.CUSTOM_COPY);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
+	}
+
+	private class TailAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = -8499706451642163124L;
+
+		TailAction(boolean toolbar)
+		{
+			super(LilithActionId.TAIL, toolbar);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -1939,7 +2072,7 @@ public class ViewActions
 			}
 			else
 			{
-				putValue(Action.SMALL_ICON, Icons.EMPTY_16_ICON);
+				putValue(Action.SMALL_ICON, Icons.resolveEmptyMenuIcon());
 			}
 		}
 	}
@@ -2116,7 +2249,7 @@ public class ViewActions
 
 	}
 
-	public static String resolveSourceTitle(ViewContainer container, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier, boolean appendType)
+	static String resolveSourceTitle(ViewContainer container, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier, boolean appendType)
 	{
 		EventWrapperViewPanel defaultView = container.getDefaultView();
 		EventSource eventSource = defaultView.getEventSource();
@@ -2147,7 +2280,7 @@ public class ViewActions
 		return title;
 	}
 
-	public static String resolveSourceTitle(SourceIdentifier identifier, String name, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
+	private static String resolveSourceTitle(SourceIdentifier identifier, String name, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
 	{
 		String primary = getPrimarySourceTitle(identifier.getIdentifier(), sourceNames, showingPrimaryIdentifier);
 		String secondary = identifier.getSecondaryIdentifier();
@@ -2167,7 +2300,7 @@ public class ViewActions
 		return primary + " - " +name + " - " + secondary;
 	}
 
-	public static String resolveApplicationName(Buffer<?> buffer)
+	static String resolveApplicationName(Buffer<?> buffer)
 	{
 		Object event=null;
 		if(buffer != null)
@@ -2617,14 +2750,14 @@ public class ViewActions
 		}
 	}
 
-	class HelpAction
+	class HelpTopicsAction
 		extends AbstractLilithAction
 	{
-		private static final long serialVersionUID = 6942092383339768508L;
+		private static final long serialVersionUID = 4151080083718877643L;
 
-		HelpAction()
+		HelpTopicsAction()
 		{
-			super(LilithActionId.HELP);
+			super(LilithActionId.HELP_TOPICS);
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -2955,7 +3088,7 @@ public class ViewActions
 				{
 					reader.lines()
 							.map(CallLocationCondition::parseStackTraceElement)
-							.filter(stackTraceElement -> stackTraceElement != null)
+							.filter(Objects::nonNull)
 							.findFirst()
 							.ifPresent(stackTraceElement -> mainFrame.goToSource(stackTraceElement));
 				}
@@ -2983,12 +3116,12 @@ public class ViewActions
 			setEventWrapper(null);
 		}
 
-		public ClipboardFormatter getClipboardFormatter()
+		ClipboardFormatter getClipboardFormatter()
 		{
 			return clipboardFormatter;
 		}
 
-		public void setClipboardFormatter(ClipboardFormatter clipboardFormatter)
+		void setClipboardFormatter(ClipboardFormatter clipboardFormatter)
 		{
 			if(clipboardFormatter == null)
 			{
@@ -2997,6 +3130,7 @@ public class ViewActions
 			this.clipboardFormatter = clipboardFormatter;
 			putValue(Action.NAME, clipboardFormatter.getName());
 			putValue(Action.SHORT_DESCRIPTION, clipboardFormatter.getDescription());
+			putValue(Action.MNEMONIC_KEY, clipboardFormatter.getMnemonic());
 			String acc = clipboardFormatter.getAccelerator();
 			if(acc != null)
 			{

@@ -71,7 +71,7 @@ public class LilithKeyStrokes
 	{
 		addKeyStroke("ENTER", ENTER);
 		addKeyStroke("ESCAPE", ESCAPE);
-		addKeyStroke("F1", LilithActionId.HELP);
+		addKeyStroke("F1", LilithActionId.HELP_TOPICS);
 		addKeyStroke("shift ENTER", LilithActionId.REPLACE_FILTER);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " 0", LilithActionId.VIEW_LILITH_LOGS);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " 1", LilithActionId.VIEW_GLOBAL_CLASSIC_LOGS);
@@ -93,7 +93,7 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " PERIOD", LilithActionId.ZOOM_IN);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " Q", LilithActionId.EXIT);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " R", LilithActionId.REMOVE_INACTIVE);
-		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " T", LilithActionId.SCROLL_TO_BOTTOM);
+		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " T", LilithActionId.TAIL);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " U", LilithActionId.SHOW_UNFILTERED_EVENT);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " W", LilithActionId.CLOSE_FILTER);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift A", LilithActionId.ATTACH);

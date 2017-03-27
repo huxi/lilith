@@ -38,7 +38,6 @@ public class Icons
 	public static final ImageIcon DETACH_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-redo.png");
 	public static final ImageIcon DIALOG_INFO_ICON = resolveImageIcon("/tango/32x32/status/dialog-information.png");
 	public static final ImageIcon DIALOG_WARNING_ICON = resolveImageIcon("/tango/32x32/status/dialog-warning.png");
-	public static final ImageIcon EMPTY_16_ICON = resolveImageIcon("/otherGraphics/empty16.png");
 	public static final ImageIcon PAUSED_MENU_ICON = resolveImageIcon("/tango/16x16/actions/media-playback-start.png");
 	public static final ImageIcon PAUSED_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-playback-start.png");
 	public static final ImageIcon PROGRESS_ICON = resolveImageIcon("/otherGraphics/Progress16.gif");
@@ -53,6 +52,7 @@ public class Icons
 	private static final ImageIcon CLEAR_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-clear.png");
 	private static final ImageIcon DISCONNECT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/media-eject.png");
 	private static final ImageIcon DISCONNECT_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-eject.png");
+	private static final ImageIcon EMPTY_MENU_ICON = resolveImageIcon("/otherGraphics/empty16.png");
 	private static final ImageIcon EXIT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/system-log-out.png");
 	private static final ImageIcon EXPORT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/document-save.png");
 	private static final ImageIcon FIND_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-find.png");
@@ -89,13 +89,13 @@ public class Icons
 		registerMenuIcon(LilithActionId.FIND_NEXT_ACTIVE, FIND_NEXT_MENU_ICON);
 		registerMenuIcon(LilithActionId.FIND_PREVIOUS, FIND_PREV_MENU_ICON);
 		registerMenuIcon(LilithActionId.FIND_PREVIOUS_ACTIVE, FIND_PREV_MENU_ICON);
-		registerMenuIcon(LilithActionId.HELP, HELP_MENU_ICON);
+		registerMenuIcon(LilithActionId.HELP_TOPICS, HELP_MENU_ICON);
 		registerMenuIcon(LilithActionId.IMPORT, OPEN_MENU_ICON);
 		registerMenuIcon(LilithActionId.LOVE, LOVE_MENU_ICON);
 		registerMenuIcon(LilithActionId.OPEN, OPEN_MENU_ICON);
 		registerMenuIcon(LilithActionId.OPEN_INACTIVE, OPEN_MENU_ICON);
 		registerMenuIcon(LilithActionId.PREFERENCES, PREFERENCES_MENU_ICON);
-		registerMenuIcon(LilithActionId.SCROLL_TO_BOTTOM, TAIL_MENU_ICON);
+		registerMenuIcon(LilithActionId.TAIL, TAIL_MENU_ICON);
 		registerMenuIcon(LilithActionId.TIP_OF_THE_DAY, TOTD_ICON);
 
 		registerToolbarIcon(LilithActionId.CLEAR, CLEAR_TOOLBAR_ICON);
@@ -105,7 +105,7 @@ public class Icons
 		registerToolbarIcon(LilithActionId.FIND_PREVIOUS, FIND_PREV_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.LOVE, LOVE_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.PREFERENCES, PREFERENCES_TOOLBAR_ICON);
-		registerToolbarIcon(LilithActionId.SCROLL_TO_BOTTOM, TAIL_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.TAIL, TAIL_TOOLBAR_ICON);
 
 		registerIconImage(LilithFrameId.HELP, HELP_MENU_ICON.getImage());
 		registerIconImage(LilithFrameId.MAIN, FRAME_ICON.getImage());
@@ -139,7 +139,16 @@ public class Icons
 	public static Icon resolveMenuIcon(LilithActionId id)
 	{
 		Icon result = MENU_ICONS.get(Objects.requireNonNull(id, "id must not be null!"));
-		return result == null ? EMPTY_16_ICON : result;
+		return result == null ? EMPTY_MENU_ICON : result;
+	}
+
+	/**
+	 *
+	 * @return a transparent icon with the proper size for menu entries.
+	 */
+	public static Icon resolveEmptyMenuIcon()
+	{
+		return EMPTY_MENU_ICON;
 	}
 
 	public static Icon resolveToolbarIcon(LilithActionId id)

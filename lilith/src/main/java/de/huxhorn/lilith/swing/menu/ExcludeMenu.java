@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.menu;
 
+import de.huxhorn.lilith.swing.AbstractLilithAction;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
+import de.huxhorn.lilith.swing.LilithActionId;
 import de.huxhorn.lilith.swing.actions.FilterAction;
 import de.huxhorn.lilith.swing.actions.FocusCallLocationAction;
 import de.huxhorn.lilith.swing.actions.FocusFormattedMessageAction;
@@ -31,6 +34,8 @@ import de.huxhorn.lilith.swing.actions.FocusThreadNameAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowableAction;
 import de.huxhorn.lilith.swing.actions.FocusThrowablesAction;
 import de.huxhorn.lilith.swing.actions.NegateFilterAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 public class ExcludeMenu
@@ -40,7 +45,7 @@ public class ExcludeMenu
 
 	public ExcludeMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
-		super("Exclude", applicationPreferences, htmlTooltip);
+		super(ACTION_INSTANCE, applicationPreferences, htmlTooltip);
 		createUI();
 		viewContainerUpdated();
 	}
@@ -161,5 +166,22 @@ public class ExcludeMenu
 		registerAccessComponent(responseHeaderMenu);
 		registerAccessComponent(null);
 		registerAccessComponent(remoteUserItem);
+	}
+
+	private static final Action ACTION_INSTANCE=new MenuAction();
+
+	private static class MenuAction
+			extends AbstractLilithAction
+	{
+		private static final long serialVersionUID = -3921428596260398928L;
+
+		MenuAction()
+		{
+			super(LilithActionId.EXCLUDE);
+		}
+
+		public void actionPerformed(ActionEvent e)
+		{
+		}
 	}
 }
