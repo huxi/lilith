@@ -23,6 +23,9 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class LilithKeyStrokesSpec extends Specification {
+	def setupSpec() {
+		System.setProperty("java.awt.headless", "true")
+	}
 
 	@Unroll
 	"sanity-check keystroke for #actionName"() {
@@ -31,7 +34,7 @@ class LilithKeyStrokesSpec extends Specification {
 
 		then:
 		keyStroke != null
-		println keyStroke
+		//println actionName + " => " + keyStroke
 		actionName == LilithKeyStrokes.getActionName(keyStroke)
 
 		where:
@@ -45,10 +48,55 @@ class LilithKeyStrokesSpec extends Specification {
 
 		then:
 		unprocessedKeyStrokeString != null
-		println unprocessedKeyStrokeString
+		//println actionName + " => " + unprocessedKeyStrokeString
 		KeyStrokes.resolveAcceleratorKeyStroke(unprocessedKeyStrokeString) != null
 
 		where:
 		actionName << new TreeSet<String>(LilithKeyStrokes.getActionNames())
+	}
+
+	def 'addKeyStroke("", ...) throws expected exception.'() {
+		when:
+		LilithKeyStrokes.addKeyStroke('', 'foo')
+
+		then:
+		IllegalArgumentException ex = thrown()
+		ex.message == 'keyStrokeString \'\' did not resolve to a KeyStroke!'
+	}
+
+	def 'addKeyStroke(null, ...) throws expected exception.'() {
+		when:
+		LilithKeyStrokes.addKeyStroke(null, 'foo')
+
+		then:
+		NullPointerException ex = thrown()
+		ex.message == 'keyStrokeString must not be null!'
+	}
+
+	def 'addKeyStroke(..., null) throws expected exception.'() {
+		when:
+		LilithKeyStrokes.addKeyStroke('foo', null)
+
+		then:
+		NullPointerException ex = thrown()
+		ex.message == 'actionName must not be null!'
+	}
+
+	def 'addKeyStroke() with duplicate key stroke throws expected exception.'() {
+		when:
+		LilithKeyStrokes.addKeyStroke('command F', 'foo')
+
+		then:
+		IllegalStateException ex = thrown()
+		ex.message == 'Duplicate action name entry for \'command F\': \'FIND\' and \'foo\''
+	}
+
+	def 'addKeyStroke() with duplicate action name throws expected exception.'() {
+		when:
+		LilithKeyStrokes.addKeyStroke('command F2', 'FIND')
+
+		then:
+		IllegalStateException ex = thrown()
+		ex.message == 'Duplicate action name entry \'FIND\'!'
 	}
 }

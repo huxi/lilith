@@ -20,11 +20,12 @@ package de.huxhorn.lilith.swing;
 
 import java.awt.Image;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import javax.swing.GrayFilter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -46,6 +47,7 @@ public class Icons
 	public static final ImageIcon UNPAUSED_MENU_ICON = resolveImageIcon("/tango/16x16/actions/media-playback-pause.png");
 	public static final ImageIcon UNPAUSED_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/media-playback-pause.png");
 	public static final ImageIcon UPDATE_AVAILABLE_32_ICON = resolveImageIcon("/tango/32x32/status/software-update-available.png");
+	public static final ImageIcon LILITH_SYSTEM_TRAY_ICON = resolveImageIcon("/lilith-tray-icon.png");
 
 	private static final ImageIcon CHECK_FOR_UPDATE_MENU_ICON = resolveImageIcon("/tango/16x16/status/software-update-available.png");
 	private static final ImageIcon CLEAR_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-clear.png");
@@ -72,12 +74,20 @@ public class Icons
 	private static final ImageIcon TAIL_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-bottom.png");
 	private static final ImageIcon TOTD_ICON = resolveImageIcon("/tango/16x16/status/dialog-information.png");
 
+	private static final ImageIcon VIEW_STATE_GLOBAL_ICON = resolveImageIcon("/tango/16x16/categories/applications-internet.png");
+	private static final ImageIcon VIEW_STATE_ACTIVE_ICON = resolveImageIcon("/tango/16x16/status/network-receive.png");
+	private static final ImageIcon VIEW_STATE_INACTIVE_ICON = resolveImageIcon("/tango/16x16/status/network-offline.png");
+	private static final ImageIcon VIEW_STATE_UPDATING_FILE_ICON = resolveImageIcon("/tango/16x16/emotes/face-grin.png");
+	private static final ImageIcon VIEW_STATE_STALE_FILE_ICON = resolveImageIcon("/tango/16x16/emotes/face-grin.png");
+
 	private static final EnumMap<LilithActionId, Icon> MENU_ICONS = new EnumMap<>(LilithActionId.class);
 	private static final EnumMap<LilithActionId, Icon> TOOLBAR_ICONS = new EnumMap<>(LilithActionId.class);
-	private static final EnumMap<LilithFrameId, List<Image>> ICON_IMAGES = new EnumMap<>(LilithFrameId.class);
+	private static final EnumMap<LilithFrameId, ImageIcon> FRAME_ICONS = new EnumMap<>(LilithFrameId.class);
+	private static final EnumMap<LilithFrameId, List<Image>> FRAME_ICON_IMAGES = new EnumMap<>(LilithFrameId.class);
 
 	static
 	{
+		new Icons(); // coverage report shall stfu
 		registerMenuIcon(LilithActionId.CHECK_FOR_UPDATE, CHECK_FOR_UPDATE_MENU_ICON);
 		registerMenuIcon(LilithActionId.CLEAN_ALL_INACTIVE_LOGS, CLEAR_MENU_ICON);
 		registerMenuIcon(LilithActionId.CLEAR, CLEAR_MENU_ICON);
@@ -107,33 +117,61 @@ public class Icons
 		registerToolbarIcon(LilithActionId.PREFERENCES, PREFERENCES_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.TAIL, TAIL_TOOLBAR_ICON);
 
-		registerIconImage(LilithFrameId.HELP, HELP_MENU_ICON.getImage());
-		registerIconImage(LilithFrameId.MAIN, FRAME_ICON.getImage());
-		// TODO: ViewContainer / LoggingViewStateIcons.resolveIconForState
+		registerFrameIcon(LilithFrameId.HELP, HELP_MENU_ICON);
+		registerFrameIcon(LilithFrameId.MAIN, FRAME_ICON);
+
+		registerFrameIcon(LilithFrameId.VIEW_STATE_GLOBAL, VIEW_STATE_GLOBAL_ICON);
+		registerFrameIcon(LilithFrameId.VIEW_STATE_ACTIVE, VIEW_STATE_ACTIVE_ICON);
+		registerFrameIcon(LilithFrameId.VIEW_STATE_INACTIVE, VIEW_STATE_INACTIVE_ICON);
+		registerFrameIcon(LilithFrameId.VIEW_STATE_UPDATING_FILE, VIEW_STATE_UPDATING_FILE_ICON);
+		registerFrameIcon(LilithFrameId.VIEW_STATE_STALE_FILE, VIEW_STATE_STALE_FILE_ICON);
+
+		registerFrameIcon(LilithFrameId.VIEW_STATE_GLOBAL_DISABLED, createDisabledImageIcon(VIEW_STATE_GLOBAL_ICON));
+		registerFrameIcon(LilithFrameId.VIEW_STATE_ACTIVE_DISABLED, createDisabledImageIcon(VIEW_STATE_ACTIVE_ICON));
+		registerFrameIcon(LilithFrameId.VIEW_STATE_INACTIVE_DISABLED, createDisabledImageIcon(VIEW_STATE_INACTIVE_ICON));
+		registerFrameIcon(LilithFrameId.VIEW_STATE_UPDATING_FILE_DISABLED, createDisabledImageIcon(VIEW_STATE_UPDATING_FILE_ICON));
+		registerFrameIcon(LilithFrameId.VIEW_STATE_STALE_FILE_DISABLED, createDisabledImageIcon(VIEW_STATE_STALE_FILE_ICON));
+
+		createFrameIconImages();
+		// add additional frame icon images manually if necessary
 	}
 
-	private static void registerIconImage(LilithFrameId id, Image image)
+	private static void createFrameIconImages()
 	{
-		Objects.requireNonNull(id, "id must not be null!");
-		Objects.requireNonNull(image, "image must not be null!");
-
-		List<Image> list = ICON_IMAGES.get(id);
-		if(list == null)
+		for (Map.Entry<LilithFrameId, ImageIcon> entry : FRAME_ICONS.entrySet())
 		{
-			list = new ArrayList<>();
+			LilithFrameId key = entry.getKey();
+			ImageIcon value = entry.getValue();
+			FRAME_ICON_IMAGES.put(key, Collections.singletonList(value.getImage()));
 		}
-		else
-		{
-			list = new ArrayList<>(list);
-		}
-		list.add(image);
-
-		ICON_IMAGES.put(id, Collections.unmodifiableList(list));
 	}
 
-	public static List<? extends Image> resolveIconImages(LilithFrameId id)
+	private static void registerFrameIcon(LilithFrameId id, ImageIcon icon)
 	{
-		return ICON_IMAGES.get(id);
+		FRAME_ICONS.put(
+				Objects.requireNonNull(id, "id must not be null!"),
+				Objects.requireNonNull(icon, "frame icon for "+id+" must not be null!")
+		);
+	}
+
+	public static List<? extends Image> resolveFrameIconImages(LilithFrameId id)
+	{
+		return FRAME_ICON_IMAGES.get(id);
+	}
+
+	public static Icon resolveFrameIcon(LilithFrameId id)
+	{
+		return FRAME_ICONS.get(id);
+	}
+
+	public static List<? extends Image> resolveFrameIconImages(LoggingViewState state, boolean disabled)
+	{
+		return resolveFrameIconImages(frameIdForViewState(state, disabled));
+	}
+
+	public static Icon resolveFrameIcon(LoggingViewState state, boolean disabled)
+	{
+		return resolveFrameIcon(frameIdForViewState(state, disabled));
 	}
 
 	public static Icon resolveMenuIcon(LilithActionId id)
@@ -172,13 +210,66 @@ public class Icons
 		);
 	}
 
-	private static ImageIcon resolveImageIcon(String resourcePath)
+	static ImageIcon resolveImageIcon(String resourcePath)
 	{
-		URL url = Icons.class.getResource(resourcePath);
+		URL url = Icons.class.getResource(Objects.requireNonNull(resourcePath,
+				"resourcePath must not be null!"));
 		if (url == null)
 		{
 			throw new IllegalArgumentException("Failed to create ImageIcon from resource '" + resourcePath + "'!");
 		}
 		return new ImageIcon(url);
+	}
+
+	static LilithFrameId frameIdForViewState(LoggingViewState state, boolean disabled)
+	{
+		if (state == null)
+		{
+			if (disabled)
+			{
+				return LilithFrameId.VIEW_STATE_GLOBAL_DISABLED;
+			}
+			return LilithFrameId.VIEW_STATE_GLOBAL;
+		}
+		if(state == LoggingViewState.ACTIVE)
+		{
+			if (disabled)
+			{
+				return LilithFrameId.VIEW_STATE_ACTIVE_DISABLED;
+			}
+			return LilithFrameId.VIEW_STATE_ACTIVE;
+		}
+		if(state == LoggingViewState.INACTIVE)
+		{
+			if (disabled)
+			{
+				return LilithFrameId.VIEW_STATE_INACTIVE_DISABLED;
+			}
+			return LilithFrameId.VIEW_STATE_INACTIVE;
+		}
+		if(state == LoggingViewState.UPDATING_FILE)
+		{
+			if (disabled)
+			{
+				return LilithFrameId.VIEW_STATE_UPDATING_FILE_DISABLED;
+			}
+			return LilithFrameId.VIEW_STATE_UPDATING_FILE;
+		}
+
+		// must be STALE_FILE, otherwise tests would fail
+		if (disabled)
+		{
+			return LilithFrameId.VIEW_STATE_STALE_FILE_DISABLED;
+		}
+		return LilithFrameId.VIEW_STATE_STALE_FILE;
+	}
+
+	private static ImageIcon createDisabledImageIcon(ImageIcon icon)
+	{
+		return new ImageIcon(GrayFilter.createDisabledImage(icon.getImage()));
+	}
+
+	private Icons()
+	{
 	}
 }

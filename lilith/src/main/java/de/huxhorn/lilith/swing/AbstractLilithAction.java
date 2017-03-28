@@ -38,32 +38,41 @@ public abstract class AbstractLilithAction
 	{
 		this.id = Objects.requireNonNull(id, "id must not be null!");
 		this.toolbar = toolbar;
-		initProperties();
-	}
-
-	private void initProperties()
-	{
-		putValue(Action.ACCELERATOR_KEY, LilithKeyStrokes.getKeyStroke(id));
-		String text = id.getText();
-		String description=id.getDescription();
-		if(text != null)
-		{
-			if(text.equals(description))
-			{
-				description = null;
-			}
-		}
-		putValue(Action.SHORT_DESCRIPTION, description);
 		if(toolbar)
 		{
-			putValue(Action.SMALL_ICON, Icons.resolveToolbarIcon(id));
+			initToolBarActionFromActionId(this, id);
 		}
 		else
 		{
-			putValue(Action.NAME, text);
-			putValue(Action.MNEMONIC_KEY, id.getMnemonic());
-			putValue(Action.SMALL_ICON, Icons.resolveMenuIcon(id));
+			initMenuActionFromActionId(this, id);
 		}
+	}
+
+	public static void initMenuActionFromActionId(Action action, LilithActionId id)
+	{
+		Objects.requireNonNull(action, "action must not be null!");
+		Objects.requireNonNull(id, "id must not be null!");
+
+		action.putValue(Action.NAME, id.getText());
+		action.putValue(Action.SHORT_DESCRIPTION, id.getDescription());
+		action.putValue(Action.MNEMONIC_KEY, id.getMnemonic());
+		action.putValue(Action.ACCELERATOR_KEY, LilithKeyStrokes.getKeyStroke(id));
+		action.putValue(Action.SMALL_ICON, Icons.resolveMenuIcon(id));
+	}
+
+	public static void initToolBarActionFromActionId(Action action, LilithActionId id)
+	{
+		Objects.requireNonNull(action, "action must not be null!");
+		Objects.requireNonNull(id, "id must not be null!");
+
+		String description=id.getDescription();
+		if(description == null)
+		{
+			description = id.getText();
+		}
+		action.putValue(Action.SHORT_DESCRIPTION, description);
+		//action.putValue(Action.ACCELERATOR_KEY, LilithKeyStrokes.getKeyStroke(id));
+		action.putValue(Action.SMALL_ICON, Icons.resolveToolbarIcon(id));
 	}
 
 	public LilithActionId getId()

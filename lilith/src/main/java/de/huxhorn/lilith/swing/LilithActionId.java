@@ -31,7 +31,7 @@ public enum LilithActionId
 	CLOSE_ALL_OTHER("Close all other", 'o', null),
 	CLOSE_FILTER("Close this filter", 'f', null),
 	CLOSE_OTHER_FILTERS("Close all other filters", 'h', null),
-	COLUMNS("Columns"),
+	COLUMNS("Columns", 'c', null),
 	COPY_CALL_LOCATION("Copy call location", 'l', "Copies the call location, i.e. the first element of the logging events call stack, to the clipboard."),
 	COPY_CALL_STACK("Copy call stack", 'k', "Copies the call stack of the logging event to the clipboard."),
 	COPY_HTML("Copy event as HTML", 'h', "Copies the HTML code of this events details view to the clipboard."),
@@ -77,7 +77,7 @@ public enum LilithActionId
 	LAYOUT("Layout", 'y', null),
 	LOVE("Show some Love…", 'l', "Show some Love… You love Lilith, right?"),
 	MINIMIZE_ALL("Minimize all", 'm', null),
-	MINIMIZE_OTHER("Minimize all other", 'a', null),
+	MINIMIZE_OTHER("Minimize all other", 'n', null),
 	NEXT_VIEW("Next view", 'n', null),
 	OPEN("Open…", 'o', null),
 	OPEN_INACTIVE("Open inactive log…", 'n', null),
@@ -87,12 +87,12 @@ public enum LilithActionId
 	PREVIOUS_VIEW("Previous view", 'p', null),
 	RECENT_FILES("Recent files", 'r', null),
 	REMOVE_INACTIVE("Remove inactive", 'r', null),
-	REPLACE_FILTER(null, "Replace filter."),
+	REPLACE_FILTER("Replace filter", 'r' /* for the sake of test correctness */, null),
 	RESET_FIND("Reset find", 'r', null),
-	RESET_LAYOUT("Reset layout"),
+	RESET_LAYOUT("Reset layout", 'r', null),
 	RESET_ZOOM("Reset Zoom", 'r', "Reset Zoom of the details view."),
 	SAVE_CONDITION("Save condition…", 's', "Save the condition of the current view."),
-	SAVE_LAYOUT("Save layout"),
+	SAVE_LAYOUT("Save layout", 's', null),
 	SEARCH("Search", 's', null),
 	SHOW_UNFILTERED_EVENT("Show unfiltered", 'u', "Show selected event in unfiltered view."),
 	TAIL("Tail", 't', "Tail (\"scroll to bottom\")"),
@@ -100,9 +100,9 @@ public enum LilithActionId
 	TIP_OF_THE_DAY("Tip of the Day…", 't', "Shows you a Tip of the Day."),
 	TROUBLESHOOTING("Troubleshooting…", 'o', null),
 	VIEW("View", 'v', null),
-	VIEW_GLOBAL_ACCESS_LOGS(),
-	VIEW_GLOBAL_CLASSIC_LOGS(),
-	VIEW_LILITH_LOGS(),
+	VIEW_GLOBAL_ACCESS_LOGS("Global access events", 'a', "Opens the global access events."),
+	VIEW_GLOBAL_CLASSIC_LOGS("Global logging events", 'l', "Opens the global logging events."),
+	VIEW_LILITH_LOGS("Lilith events", 'i', "Opens the internal Lilith logging events. Take a look here if you have mysterious problems."),
 	WINDOW("Window", 'w', null),
 	ZOOM_IN("Zoom in", 'z', "Zoom in on the details view."),
 	ZOOM_OUT("Zoom out", 'o', "Zoom out on the details view.");
@@ -110,21 +110,6 @@ public enum LilithActionId
 	private final String text;
 	private final Character mnemonic;
 	private final String description;
-
-	LilithActionId()
-	{
-		this(null);
-	}
-
-	LilithActionId(String text)
-	{
-		this(text, null, null);
-	}
-
-	LilithActionId(String text, String description)
-	{
-		this(text, null, description);
-	}
 
 	LilithActionId(String text, Character mnemonic, String description)
 	{
@@ -145,10 +130,6 @@ public enum LilithActionId
 
 	public Integer getMnemonic()
 	{
-		if(mnemonic == null)
-		{
-			return null;
-		}
 		return (int) mnemonic;
 	}
 }

@@ -297,7 +297,7 @@ public class MainFrame
 		groovyFormatter = new GroovyEventWrapperHtmlFormatter(applicationPreferences);
 		thymeleafFormatter = new ThymeleafEventWrapperHtmlFormatter(applicationPreferences);
 
-		setIconImages(Icons.resolveIconImages(LilithFrameId.MAIN));
+		setIconImages(Icons.resolveFrameIconImages(LilithFrameId.MAIN));
 
 		autostartProcesses = new ArrayList<>();
 

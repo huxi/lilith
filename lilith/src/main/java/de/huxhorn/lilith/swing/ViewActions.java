@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.conditions.CallLocationCondition;
@@ -517,7 +518,7 @@ public class ViewActions
 		return toolbar;
 	}
 
-	public JMenuBar getMenuBar()
+	JMenuBar getMenuBar()
 	{
 		return menubar;
 	}
@@ -726,7 +727,7 @@ public class ViewActions
 		return false;
 	}
 
-	void setPaused(boolean paused)
+	private void setPaused(boolean paused)
 	{
 		if(viewContainer != null)
 		{
@@ -750,7 +751,7 @@ public class ViewActions
 		}
 	}
 
-	void focusTable()
+	private void focusTable()
 	{
 		if(viewContainer != null)
 		{
@@ -1582,7 +1583,7 @@ public class ViewActions
 			editCondition();
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			if(viewContainer != null)
 			{
@@ -1621,7 +1622,7 @@ public class ViewActions
 		}
 
 
-		public void updateAction()
+		void updateAction()
 		{
 			boolean enable = false;
 			if(viewContainer != null)
@@ -1658,7 +1659,7 @@ public class ViewActions
 			updateAction();
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			ViewContainer container = getViewContainer();
 			if(container != null)
@@ -2060,7 +2061,7 @@ public class ViewActions
 			focusTable();
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			if(isToolbar())
 			{
@@ -2087,7 +2088,7 @@ public class ViewActions
 			super(LilithActionId.CLOSE_FILTER);
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			if(viewContainer != null)
 			{
@@ -2124,7 +2125,7 @@ public class ViewActions
 			super(LilithActionId.CLOSE_OTHER_FILTERS);
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			if(viewContainer != null)
 			{
@@ -2162,7 +2163,7 @@ public class ViewActions
 			super(LilithActionId.CLOSE_ALL_FILTERS);
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
 			int viewCount = 0;
 			if(viewContainer != null)
@@ -2197,11 +2198,11 @@ public class ViewActions
 		{
 			super(title);
 			this.eventSource = eventSource;
-			putValue(Action.SHORT_DESCRIPTION, tooltipText);
+
+			LilithActionId actionId = null;
 			if(eventSource.isGlobal())
 			{
-				KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithActionId.VIEW_GLOBAL_CLASSIC_LOGS);
-				putValue(Action.ACCELERATOR_KEY, accelerator);
+				actionId = LilithActionId.VIEW_GLOBAL_CLASSIC_LOGS;
 			}
 			else
 			{
@@ -2209,9 +2210,17 @@ public class ViewActions
 				if(si != null && "Lilith".equals(si.getIdentifier()))
 				{
 					// internal Lilith log
-					KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithActionId.VIEW_LILITH_LOGS);
-					putValue(Action.ACCELERATOR_KEY, accelerator);
+					actionId = LilithActionId.VIEW_LILITH_LOGS;
 				}
+			}
+
+			if(actionId != null)
+			{
+				AbstractLilithAction.initMenuActionFromActionId(this, actionId);
+			}
+			else
+			{
+				putValue(Action.SHORT_DESCRIPTION, tooltipText);
 			}
 		}
 
@@ -2233,12 +2242,20 @@ public class ViewActions
 		{
 			super(title);
 			this.eventSource = eventSource;
-			putValue(Action.SHORT_DESCRIPTION, tooltipText);
 
+			LilithActionId actionId = null;
 			if(eventSource.isGlobal())
 			{
-				KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithActionId.VIEW_GLOBAL_ACCESS_LOGS);
-				putValue(Action.ACCELERATOR_KEY, accelerator);
+				actionId = LilithActionId.VIEW_GLOBAL_ACCESS_LOGS;
+			}
+
+			if(actionId != null)
+			{
+				AbstractLilithAction.initMenuActionFromActionId(this, actionId);
+			}
+			else
+			{
+				putValue(Action.SHORT_DESCRIPTION, tooltipText);
 			}
 		}
 
@@ -2354,7 +2371,7 @@ public class ViewActions
 		return null;
 	}
 
-	public static String getPrimarySourceTitle(String primaryIdentifier, Map<String, String> sourceNames, boolean showingPrimaryIdentifier)
+	static String getPrimarySourceTitle(String primaryIdentifier, Map<String, String> sourceNames, boolean showingPrimaryIdentifier)
 	{
 		if(primaryIdentifier == null)
 		{
@@ -2622,8 +2639,7 @@ public class ViewActions
 			{
 				disabled = true;
 			}
-			LoggingViewState state = viewContainer.getState();
-			result.setIcon(LoggingViewStateIcons.resolveIconForState(state, disabled));
+			result.setIcon(Icons.resolveFrameIcon(viewContainer.getState(), disabled));
 			return result;
 		}
 
@@ -2641,8 +2657,7 @@ public class ViewActions
 			{
 				disabled = true;
 			}
-			LoggingViewState state = viewContainer.getState();
-			result.setIcon(LoggingViewStateIcons.resolveIconForState(state, disabled));
+			result.setIcon(Icons.resolveFrameIcon(viewContainer.getState(), disabled));
 			return result;
 		}
 	}
@@ -2935,6 +2950,11 @@ public class ViewActions
 		}
 	}
 
+	private boolean hasMultipleViews()
+	{
+		return viewContainer != null && viewContainer.getViewCount() > 1;
+	}
+
 	private class PreviousViewAction
 			extends AbstractLilithAction
 	{
@@ -2945,24 +2965,9 @@ public class ViewActions
 			super(LilithActionId.PREVIOUS_VIEW);
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
-			if(viewContainer != null)
-			{
-				int viewCount = viewContainer.getViewCount();
-				if(viewCount > 1)
-				{
-					setEnabled(true);
-				}
-				else
-				{
-					setEnabled(false);
-				}
-			}
-			else
-			{
-				setEnabled(false);
-			}
+			setEnabled(hasMultipleViews());
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -2981,24 +2986,9 @@ public class ViewActions
 			super(LilithActionId.NEXT_VIEW);
 		}
 
-		public void updateAction()
+		void updateAction()
 		{
-			if(viewContainer != null)
-			{
-				int viewCount = viewContainer.getViewCount();
-				if(viewCount > 1)
-				{
-					setEnabled(true);
-				}
-				else
-				{
-					setEnabled(false);
-				}
-			}
-			else
-			{
-				setEnabled(false);
-			}
+			setEnabled(hasMultipleViews());
 		}
 
 		public void actionPerformed(ActionEvent e)
@@ -3285,7 +3275,7 @@ public class ViewActions
 	private static class CopyToClipboardByNameComparator
 		implements Comparator<CopyToClipboardAction>
 	{
-		public static final CopyToClipboardByNameComparator INSTANCE = new CopyToClipboardByNameComparator();
+		static final CopyToClipboardByNameComparator INSTANCE = new CopyToClipboardByNameComparator();
 
 		public int compare(CopyToClipboardAction o1, CopyToClipboardAction o2)
 		{

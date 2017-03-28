@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.tray.impl;
 
+import de.huxhorn.lilith.swing.Icons;
 import de.huxhorn.lilith.tray.TraySupport;
 import java.awt.AWTException;
 import java.awt.Image;
-import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
-import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,34 +39,12 @@ public class SystemTrayImpl
 	private final Logger logger = LoggerFactory.getLogger(SystemTrayImpl.class);
 
 	private TrayIcon trayIcon;
-	private static final Image DEFAULT_ICON_IMAGE;
-	private Menu sourcesMenu;
 	private SystemTray tray;
 	private boolean active=false;
-
-	static
-	{
-		final Logger logger = LoggerFactory.getLogger(SystemTrayImpl.class);
-
-		URL iconUrl = SystemTrayImpl.class.getResource("/Lilith.png");
-		Image image = null;
-		if(iconUrl == null)
-		{
-			if(logger.isErrorEnabled()) logger.error("Could not load default icon!");
-		}
-		else
-		{
-			image = Toolkit.getDefaultToolkit().createImage(iconUrl);
-		}
-		DEFAULT_ICON_IMAGE = image;
-	}
-
 
 	public SystemTrayImpl()
 	{
 		tray = SystemTray.getSystemTray();
-
-		sourcesMenu = new Menu("Sources");
 
 		PopupMenu popup = new PopupMenu();
 
@@ -75,14 +52,12 @@ public class SystemTrayImpl
 		defaultItem.addActionListener(new ShowHideActionListener());
 		popup.add(defaultItem);
 
-		//popup.add(sourcesMenu);
-
 		MenuItem quitItem = new MenuItem("Quit");
 		quitItem.addActionListener(new QuitActionListener());
 		popup.add(quitItem);
 
 
-		trayIcon = new TrayIcon(DEFAULT_ICON_IMAGE, "Lilith", popup);
+		trayIcon = new TrayIcon(getDefaultIcon(), "Lilith", popup);
 		trayIcon.setImageAutoSize(true);
 
 		trayIcon.addActionListener(new TrayIconActionListener());
@@ -161,7 +136,7 @@ public class SystemTrayImpl
 
 	public Image getDefaultIcon()
 	{
-		return DEFAULT_ICON_IMAGE;
+		return Icons.LILITH_SYSTEM_TRAY_ICON.getImage();
 	}
 
 	private class QuitActionListener

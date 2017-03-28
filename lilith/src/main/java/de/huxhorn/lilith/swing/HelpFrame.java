@@ -124,7 +124,7 @@ public class HelpFrame
 		Rectangle maxBounds = ge.getMaximumWindowBounds();
 		setSize(maxBounds.width / 2, maxBounds.height / 2);
 
-		setIconImages(Icons.resolveIconImages(LilithFrameId.HELP));
+		setIconImages(Icons.resolveFrameIconImages(LilithFrameId.HELP));
 
 		CopySelectionAction copySelectionAction = new CopySelectionAction();
 		JMenuBar menuBar = new JMenuBar();

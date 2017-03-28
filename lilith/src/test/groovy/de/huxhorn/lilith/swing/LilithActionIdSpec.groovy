@@ -3,26 +3,40 @@ package de.huxhorn.lilith.swing
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static org.junit.Assume.assumeTrue
-
 class LilithActionIdSpec extends Specification {
 	@Unroll
-	'mnemonic of #value is contained in name'() {
+	'#actionId has a text'(LilithActionId actionId) {
+		expect:
+		actionId.text != null
+
+		where:
+		actionId << LilithActionId.values()
+	}
+
+	@Unroll
+	'#actionId has a mnemonic'(LilithActionId actionId) {
+		expect:
+		actionId.mnemonic != null
+
+		where:
+		actionId << LilithActionId.values()
+	}
+
+	@Unroll
+	'mnemonic of #actionId is contained in name'(LilithActionId actionId) {
 
 		when:
-		def text = value.text
-		assumeTrue('text of '+value+' is null.', text != null)
-		def mnemonic = value.mnemonic
-		assumeTrue('mnemonic of '+value+' is null.', mnemonic != null)
+		def text = actionId.text
+		Integer mnemonic = actionId.mnemonic
 
-		String mnemonicChar = ''+(char)mnemonic
+		String mnemonicChar = '' + (char) (mnemonic.intValue())
 
 
 		then:
 		text.toLowerCase(Locale.US).contains(mnemonicChar)
 
 		where:
-		value << LilithActionId.values()
+		actionId << LilithActionId.values()
 	}
 
 	def 'all actions are checked'() {
@@ -38,7 +52,7 @@ class LilithActionIdSpec extends Specification {
 	}
 
 	@Unroll
-	'text of #actionId does not equal description'() {
+	'text of #actionId does not equal description'(LilithActionId actionId) {
 		expect:
 		actionId.text == null || actionId.text != actionId.description
 

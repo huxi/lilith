@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
@@ -281,23 +280,13 @@ public abstract class ViewContainer<T extends Serializable>
 
 	private void updateFrameIcon(JFrame frame)
 	{
-		ImageIcon frameImageIcon = LoggingViewStateIcons.resolveIconForState(defaultView.getState());
-
-		if (frameImageIcon != null)
-		{
-			frame.setIconImage(frameImageIcon.getImage());
-		}
+		frame.setIconImages(Icons.resolveFrameIconImages(defaultView.getState(), false));
 	}
 
 	private void updateInternalFrameIcon(JInternalFrame iframe)
 	{
-		ImageIcon frameImageIcon = LoggingViewStateIcons.resolveIconForState(defaultView.getState());
-
-		if (frameImageIcon != null)
-		{
-			iframe.setFrameIcon(frameImageIcon);
-			iframe.repaint(); // Apple L&F Bug workaround
-		}
+		iframe.setFrameIcon(Icons.resolveFrameIcon(defaultView.getState(), false));
+		iframe.repaint(); // Apple L&F Bug workaround
 	}
 
 	public void addNotify()
