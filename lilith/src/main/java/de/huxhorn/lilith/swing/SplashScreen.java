@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import java.awt.BorderLayout;
@@ -32,14 +33,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SplashScreen
 	extends JWindow
 {
 	private static final long serialVersionUID = 668541832046187990L;
-	private final Logger logger = LoggerFactory.getLogger(SplashScreen.class);
 
 	private JLabel statusLabel;
 	private JPanel contentPane;
@@ -69,7 +67,7 @@ public class SplashScreen
 			}
 			catch(IOException ex)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while loading image!", ex);
+				ex.printStackTrace();
 			}
 		}
 		statusLabel = new JLabel();
@@ -93,7 +91,6 @@ public class SplashScreen
 	public void setStatusText(final String statusText)
 	{
 		statusLabel.setText(statusText);
-		if(logger.isInfoEnabled()) logger.info("Status: {}", statusText);
 		if(!isVisible())
 		{
 			setVisible(true);
@@ -102,8 +99,6 @@ public class SplashScreen
 		Rectangle bounds = contentPane.getBounds();
 		int height=statusLabel.getHeight();
 		contentPane.paintImmediately(0,bounds.height-height,bounds.width, height);
-		//statusLabel.paintImmediately(statusLabel.getBounds());
-		//repaint();
 	}
 
 	private class ImagePanel
@@ -120,13 +115,11 @@ public class SplashScreen
 
 		public void paint(Graphics g)
 		{
-			if(logger.isInfoEnabled()) logger.info("paint");
 			g.drawImage(image, 0, 0, this);
 		}
 
 		public void update(Graphics g)
 		{
-			if(logger.isInfoEnabled()) logger.info("update");
 			paint(g);
 		}
 
@@ -137,7 +130,6 @@ public class SplashScreen
 
 		public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h)
 		{
-			if(logger.isInfoEnabled()) logger.info("imageUpdate");
 			repaint();
 			return (infoflags & (ALLBITS | ABORT)) == 0;
 		}
