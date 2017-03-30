@@ -292,12 +292,19 @@ public class MainFrame
 		this.applicationPreferences = applicationPreferences;
 		this.coloringWholeRow = this.applicationPreferences.isColoringWholeRow();
 		this.splashScreen = splashScreen;
+		setSplashStatusText("Creating icons…");
+		// Executing any Icons method triggers initialisation of class
+		setIconImages(Icons.resolveFrameIconImages(LilithFrameId.MAIN));
+
+		// Executing any LilithKeyStrokes method triggers initialisation of class
+		setSplashStatusText("Creating keystrokes…");
+		LilithKeyStrokes.getActionNames();
+
 		setSplashStatusText("Creating main frame…");
 
 		groovyFormatter = new GroovyEventWrapperHtmlFormatter(applicationPreferences);
 		thymeleafFormatter = new ThymeleafEventWrapperHtmlFormatter(applicationPreferences);
 
-		setIconImages(Icons.resolveFrameIconImages(LilithFrameId.MAIN));
 
 		autostartProcesses = new ArrayList<>();
 
