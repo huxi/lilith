@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file.
 - Fixed initial enabled state of "Go to source".
 - Fixed enabled state of "Edit" menu. Mustn't be disabled anymore because "Paste StackTraceElement" is always available.
 - Fixed enabled state of "Copy selection".
-- Groovy 2.4.10, Logback 1.2.3
+- Groovy 2.4.10, Logback 1.2.3, flying-saucer 9.1.5
 
 ### Security
 - Nothing.
