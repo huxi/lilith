@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,7 +138,6 @@ public class SourceManagerImpl<T extends Serializable>
 		eventSourceProducers.add(producer);
 	}
 
-	// SourceIdentifiers can change so they are not suitable as the key of a Map.
 	private EventProducer<T> findProducer(SourceIdentifier id)
 	{
 		if(id == null)
@@ -148,6 +147,9 @@ public class SourceManagerImpl<T extends Serializable>
 		eventProducersLock.lock();
 		try
 		{
+			// The SourceIdentifier of an EventProducer can change so it is not
+			// suitable as the key of a Map.
+			// See SourceIdentifierUpdater and its implementations.
 			for(EventProducer<T> current : eventProducers)
 			{
 				if(id.equals(current.getSourceIdentifier()))
@@ -166,20 +168,8 @@ public class SourceManagerImpl<T extends Serializable>
 	public void addEventProducer(EventProducer<T> producer)
 	{
 		SourceIdentifier id = producer.getSourceIdentifier();
-		EventProducer previous = findProducer(id);
-		if(previous != null)
-		{
-			previous.close();
-			eventProducersLock.lock();
-			try
-			{
-				eventProducers.remove(previous);
-			}
-			finally
-			{
-				eventProducersLock.unlock();
-			}
-		}
+		removeEventProducer(id);
+
 		eventProducersLock.lock();
 		try
 		{

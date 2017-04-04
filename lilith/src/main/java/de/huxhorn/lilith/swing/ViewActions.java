@@ -18,6 +18,7 @@
 
 package de.huxhorn.lilith.swing;
 
+import de.huxhorn.lilith.appender.InternalLilithAppender;
 import de.huxhorn.lilith.conditions.CallLocationCondition;
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -114,6 +115,8 @@ import org.slf4j.LoggerFactory;
 public class ViewActions
 {
 	private final Logger logger = LoggerFactory.getLogger(ViewActions.class);
+
+	public static final String GLOBAL_SOURCE_IDENTIFIER="global";
 
 	/**
 	 * Taken over from Action.SELECTED_KEY for 1.5 compatibility.
@@ -776,22 +779,6 @@ public class ViewActions
 				if(condition != null)
 				{
 					mainFrame.getPreferencesDialog().editCondition(condition);
-				}
-			}
-		}
-	}
-
-	private void editSourceName()
-	{
-		if(viewContainer != null)
-		{
-			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel != null)
-			{
-				String sourceIdentifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
-				if(!"global".equals(sourceIdentifier) && !"Lilith".equals(sourceIdentifier))
-				{
-					mainFrame.getPreferencesDialog().editSourceName(sourceIdentifier);
 				}
 			}
 		}
@@ -1618,7 +1605,22 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			editSourceName();
+			if(viewContainer == null)
+			{
+				return;
+			}
+			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+			if(eventWrapperViewPanel == null)
+			{
+				return;
+			}
+
+			String identifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
+			if(!GLOBAL_SOURCE_IDENTIFIER.equals(identifier)
+					&& !InternalLilithAppender.IDENTIFIER_NAME.equals(identifier))
+			{
+				mainFrame.getPreferencesDialog().editSourceName(identifier);
+			}
 		}
 
 
@@ -1630,9 +1632,9 @@ public class ViewActions
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					String sourceIdentifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier()
-						.getIdentifier();
-					if(!"global".equals(sourceIdentifier) && !"Lilith".equals(sourceIdentifier))
+					String identifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
+					if(!GLOBAL_SOURCE_IDENTIFIER.equals(identifier)
+							&& !InternalLilithAppender.IDENTIFIER_NAME.equals(identifier))
 					{
 						enable = true;
 					}
@@ -2207,7 +2209,7 @@ public class ViewActions
 			else
 			{
 				SourceIdentifier si = eventSource.getSourceIdentifier();
-				if(si != null && "Lilith".equals(si.getIdentifier()))
+				if(InternalLilithAppender.IDENTIFIER_NAME.equals(si.getIdentifier()))
 				{
 					// internal Lilith log
 					actionId = LilithActionId.VIEW_LILITH_LOGS;
@@ -2451,7 +2453,7 @@ public class ViewActions
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
-				if("Lilith".equals(si.getIdentifier()))
+				if(InternalLilithAppender.IDENTIFIER_NAME.equals(si.getIdentifier()))
 				{
 					ViewContainer<LoggingEvent> value = entry.getValue();
 					if(value.resolveViewWindow() != null)
@@ -2472,7 +2474,7 @@ public class ViewActions
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
-				if(!"Lilith".equals(si.getIdentifier()))
+				if(!InternalLilithAppender.IDENTIFIER_NAME.equals(si.getIdentifier()))
 				{
 					ViewContainer<LoggingEvent> value = entry.getValue();
 					if(value.resolveViewWindow() != null)
@@ -2518,7 +2520,7 @@ public class ViewActions
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
-				if(!"Lilith".equals(si.getIdentifier()))
+				if(!InternalLilithAppender.IDENTIFIER_NAME.equals(si.getIdentifier()))
 				{
 					ViewContainer<LoggingEvent> value = entry.getValue();
 					EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();
@@ -2540,7 +2542,7 @@ public class ViewActions
 			{
 				EventSource<LoggingEvent> key = entry.getKey();
 				SourceIdentifier si = key.getSourceIdentifier();
-				if(!"Lilith".equals(si.getIdentifier()))
+				if(!InternalLilithAppender.IDENTIFIER_NAME.equals(si.getIdentifier()))
 				{
 					ViewContainer<LoggingEvent> value = entry.getValue();
 					EventWrapperViewPanel<LoggingEvent> panel = value.getDefaultView();

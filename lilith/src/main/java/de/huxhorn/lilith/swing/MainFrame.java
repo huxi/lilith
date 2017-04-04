@@ -552,7 +552,7 @@ public class MainFrame
 		}
 
 		setSplashStatusText("Creating global views…");
-		SourceIdentifier globalSourceIdentifier = new SourceIdentifier("global", null);
+		SourceIdentifier globalSourceIdentifier = new SourceIdentifier(ViewActions.GLOBAL_SOURCE_IDENTIFIER, null);
 
 		loggingFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, loggingFileBufferFactory);
 		accessFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, accessFileBufferFactory);
@@ -2841,7 +2841,7 @@ public class MainFrame
 		}
 	}
 
-	private void setShowingToolbar(ViewContainer container, boolean showingToolbar)
+	private static void setShowingToolbar(ViewContainer container, boolean showingToolbar)
 	{
 		ViewWindow viewWindow = container.resolveViewWindow();
 		if(viewWindow instanceof ViewContainerFrame)
@@ -2851,7 +2851,7 @@ public class MainFrame
 		}
 	}
 
-	private void setShowingStatusBar(ViewContainer container, boolean showingStatusBar)
+	private static void setShowingStatusBar(ViewContainer container, boolean showingStatusBar)
 	{
 		ViewWindow viewWindow = container.resolveViewWindow();
 		if(viewWindow != null)
@@ -3103,15 +3103,7 @@ public class MainFrame
 			{
 				return 0;
 			}
-			if(si1 == null)
-			{
-				return -1;
-			}
-			if(si2 == null)
-			{
-				return 1;
-			}
-
+			// SourceIdentifier of EventSource can't be null.
 			String primary1 = ViewActions.getPrimarySourceTitle(si1.getIdentifier(), sourceNames, showingPrimaryIdentifier);
 			String primary2 = ViewActions.getPrimarySourceTitle(si2.getIdentifier(), sourceNames, showingPrimaryIdentifier);
 			if(primary1 != null && primary2 != null)

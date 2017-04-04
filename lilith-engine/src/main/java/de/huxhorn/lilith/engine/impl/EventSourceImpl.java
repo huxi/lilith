@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,15 @@ import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.conditions.Condition;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class EventSourceImpl<T extends Serializable>
 	implements EventSource<T>
 {
-	private SourceIdentifier sourceIdentifier;
-	private Buffer<EventWrapper<T>> buffer;
-	private boolean global;
-	private Condition filter;
+	private final SourceIdentifier sourceIdentifier;
+	private final Buffer<EventWrapper<T>> buffer;
+	private final boolean global;
+	private final Condition filter;
 
 	public EventSourceImpl(SourceIdentifier sourceIdentifier, Buffer<EventWrapper<T>> buffer, boolean global)
 	{
@@ -39,8 +40,8 @@ public class EventSourceImpl<T extends Serializable>
 
 	public EventSourceImpl(SourceIdentifier sourceIdentifier, Buffer<EventWrapper<T>> buffer, Condition filter, boolean global)
 	{
-		this.sourceIdentifier = sourceIdentifier;
-		this.buffer = buffer;
+		this.sourceIdentifier = Objects.requireNonNull(sourceIdentifier, "sourceIdentifier must not be null!");
+		this.buffer = Objects.requireNonNull(buffer, "buffer must not be null!");
 		this.filter = filter;
 		this.global = global;
 	}
@@ -65,24 +66,25 @@ public class EventSourceImpl<T extends Serializable>
 		return filter;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-		final EventSourceImpl that = (EventSourceImpl) o;
+		EventSourceImpl<?> that = (EventSourceImpl<?>) o;
 
-		if(filter != null ? !filter.equals(that.filter) : that.filter != null) return false;
-		return !(sourceIdentifier != null ? !sourceIdentifier
-			.equals(that.sourceIdentifier) : that.sourceIdentifier != null);
-
+		if (global != that.global) return false;
+		if (!sourceIdentifier.equals(that.sourceIdentifier)) return false;
+		return filter != null ? filter.equals(that.filter) : that.filter == null;
 	}
 
+	@Override
 	public int hashCode()
 	{
-		int result;
-		result = (sourceIdentifier != null ? sourceIdentifier.hashCode() : 0);
-		result = 29 * result + (filter != null ? filter.hashCode() : 0);
+		int result = sourceIdentifier.hashCode();
+		result = 31 * result + (global ? 1 : 0);
+		result = 31 * result + (filter != null ? filter.hashCode() : 0);
 		return result;
 	}
 
@@ -103,25 +105,10 @@ public class EventSourceImpl<T extends Serializable>
 			}
 		}
 
-		if(sourceIdentifier == null)
+		int result = sourceIdentifier.compareTo(o.getSourceIdentifier());
+		if(result != 0)
 		{
-			if(o.getSourceIdentifier() != null)
-			{
-				return -1;
-			}
-			//return 0;
-		}
-		else
-		{
-			if(o.getSourceIdentifier() == null)
-			{
-				return 1;
-			}
-			int result = sourceIdentifier.compareTo(o.getSourceIdentifier());
-			if(result != 0)
-			{
-				return result;
-			}
+			return result;
 		}
 
 		if(filter == null)
@@ -145,14 +132,12 @@ public class EventSourceImpl<T extends Serializable>
 
 	public String toString()
 	{
-		StringBuilder result = new StringBuilder();
-		result.append("EventSource[");
-		result.append("id=").append(sourceIdentifier);
-		result.append(", ");
-		result.append("filter=").append(filter);
-		result.append(", ");
-		result.append("global=").append(global);
-		result.append("]");
-		return result.toString();
+		return "EventSource[" +
+				"id=" + sourceIdentifier +
+				", " +
+				"filter=" + filter +
+				", " +
+				"global=" + global +
+				"]";
 	}
 }

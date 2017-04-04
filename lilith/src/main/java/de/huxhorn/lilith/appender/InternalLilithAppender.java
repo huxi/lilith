@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class will always write into &lt;user.home&gt;/.lilith/sources/logs/Lilith.xxx. This s done so logging events during
- * movement of home directory can be handled. It's also quite handy because no instance of ApplicationPreferences
+ * This class will always write into &lt;user.home&gt;/.lilith/sources/logs/Lilith.xxx.
+ * This s done so logging events during movement of home directory can be handled.
+ * It's also quite handy because no instance of ApplicationPreferences
  * is actually needed.
  *
  * Attention: If SerializingFileBuffer is logging then SomethingBad(TM) will happen :)
@@ -44,12 +45,14 @@ import java.util.Map;
 public class InternalLilithAppender
 	extends AppenderBase<ch.qos.logback.classic.spi.LoggingEvent>
 {
+	public static final String IDENTIFIER_NAME="Lilith";
+
 	private static final FileBuffer<EventWrapper<LoggingEvent>> FILE_BUFFER;
 	private static final SourceIdentifier SOURCE_IDENTIFIER;
 
 	static
 	{
-		SOURCE_IDENTIFIER = new SourceIdentifier("Lilith");
+		SOURCE_IDENTIFIER = new SourceIdentifier(IDENTIFIER_NAME);
 
 		LogFileFactoryImpl logFileFactory =
 			new LogFileFactoryImpl(new File(ApplicationPreferences.DEFAULT_APPLICATION_PATH, "logs/logging"));
