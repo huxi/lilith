@@ -116,8 +116,6 @@ public class ViewActions
 {
 	private final Logger logger = LoggerFactory.getLogger(ViewActions.class);
 
-	public static final String GLOBAL_SOURCE_IDENTIFIER="global";
-
 	/**
 	 * Taken over from Action.SELECTED_KEY for 1.5 compatibility.
 	 * Does not work with 1.5 :( I was really sure that there was some selected event...
@@ -143,7 +141,8 @@ public class ViewActions
 	private JToolBar toolbar;
 	private JMenuBar menubar;
 
-	private MainFrame mainFrame;
+	private final MainFrame mainFrame;
+	private final ApplicationPreferences applicationPreferences;
 	private ViewContainer viewContainer;
 	private JToggleButton tailButton;
 
@@ -224,21 +223,15 @@ public class ViewActions
 	private List<CopyToClipboardAction> copyLoggingActions;
 	private List<CopyToClipboardAction> copyAccessActions;
 	private Map<KeyStroke, CopyToClipboardAction> keyStrokeActionMapping;
+	private boolean initialized = false;
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
 	{
-		this(mainFrame);
-		setViewContainer(viewContainer);
-	}
-
-	public ViewActions(MainFrame mainFrame)
-	{
-		this.mainFrame = mainFrame;
-
-		final ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
+		this.mainFrame = Objects.requireNonNull(mainFrame, "mainFrame must not be null!");
+		this.applicationPreferences = mainFrame.getApplicationPreferences();
 		// usingScreenMenuBar is used to determine whether HTML tooltips in menu are supported or not
 		// swing supports HTML tooltip, native macOS menu bar isn't.
-		final boolean usingScreenMenuBar = applicationPreferences != null && applicationPreferences.isUsingScreenMenuBar();
+		final boolean usingScreenMenuBar = applicationPreferences.isUsingScreenMenuBar();
 
 		containerChangeListener = e -> updateActions();
 
@@ -513,7 +506,9 @@ public class ViewActions
 
 		updateWindowMenu();
 		updateRecentFiles();
-		updateActions();
+
+		setViewContainer(viewContainer);
+		initialized = true;
 	}
 
 	public JToolBar getToolbar()
@@ -528,7 +523,7 @@ public class ViewActions
 
 	public void setViewContainer(ViewContainer viewContainer)
 	{
-		if(this.viewContainer != viewContainer)
+		if(this.viewContainer != viewContainer || !initialized)
 		{
 			if(this.viewContainer != null)
 			{
@@ -676,18 +671,6 @@ public class ViewActions
 				}
 			}
 
-		}
-	}
-
-	private void setShowingFilters(boolean showingFilters)
-	{
-		if(viewContainer != null)
-		{
-			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel != null)
-			{
-				eventWrapperViewPanel.setShowingFilters(showingFilters);
-			}
 		}
 	}
 
@@ -1010,8 +993,8 @@ public class ViewActions
 		popup.add(saveConditionMenuAction);
 		popup.addSeparator();
 
-		focusPopupMenu = new FocusMenu(mainFrame.getApplicationPreferences(), true);
-		excludePopupMenu = new ExcludeMenu(mainFrame.getApplicationPreferences(), true);
+		focusPopupMenu = new FocusMenu(applicationPreferences, true);
+		excludePopupMenu = new ExcludeMenu(applicationPreferences, true);
 
 		popup.add(focusPopupMenu);
 		popup.add(excludePopupMenu);
@@ -1062,8 +1045,7 @@ public class ViewActions
 
 	private void updateCustomCopyMenu(EventWrapper wrapper)
 	{
-		ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
-		String[] scripts = prefs.getClipboardFormatterScriptFiles();
+		String[] scripts = applicationPreferences.getClipboardFormatterScriptFiles();
 		boolean changed = false;
 		if(groovyClipboardActions == null)
 		{
@@ -1093,7 +1075,7 @@ public class ViewActions
 				if(!groovyClipboardActions.containsKey(current))
 				{
 					GroovyFormatter newFormatter = new GroovyFormatter();
-					newFormatter.setGroovyFileName(prefs.resolveClipboardFormatterScriptFile(current).getAbsolutePath());
+					newFormatter.setGroovyFileName(applicationPreferences.resolveClipboardFormatterScriptFile(current).getAbsolutePath());
 					CopyToClipboardAction newAction = new CopyToClipboardAction(newFormatter);
 					groovyClipboardActions.put(current, newAction);
 					changed = true;
@@ -1269,8 +1251,7 @@ public class ViewActions
 
 	public void updateRecentFiles()
 	{
-		ApplicationPreferences prefs = mainFrame.getApplicationPreferences();
-		List<String> recentFilesStrings = prefs.getRecentFiles();
+		List<String> recentFilesStrings = applicationPreferences.getRecentFiles();
 		if(recentFilesStrings == null || recentFilesStrings.size()==0)
 		{
 			recentFilesMenu.removeAll();
@@ -1278,7 +1259,7 @@ public class ViewActions
 		}
 		else
 		{
-			boolean fullPath=prefs.isShowingFullRecentPath();
+			boolean fullPath=applicationPreferences.isShowingFullRecentPath();
 
 			recentFilesMenu.removeAll();
 
@@ -1341,7 +1322,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			mainFrame.getApplicationPreferences().clearRecentFiles();
+			applicationPreferences.clearRecentFiles();
 		}
 	}
 
@@ -1615,12 +1596,18 @@ public class ViewActions
 				return;
 			}
 
-			String identifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
-			if(!GLOBAL_SOURCE_IDENTIFIER.equals(identifier)
-					&& !InternalLilithAppender.IDENTIFIER_NAME.equals(identifier))
+			EventSource eventSource = eventWrapperViewPanel.getEventSource();
+			if(eventSource.isGlobal())
 			{
-				mainFrame.getPreferencesDialog().editSourceName(identifier);
+				return;
 			}
+
+			String identifier = eventSource.getSourceIdentifier().getIdentifier();
+			if(InternalLilithAppender.IDENTIFIER_NAME.equals(identifier))
+			{
+				return;
+			}
+			mainFrame.getPreferencesDialog().editSourceName(identifier);
 		}
 
 
@@ -1632,11 +1619,14 @@ public class ViewActions
 				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
 				if(eventWrapperViewPanel != null)
 				{
-					String identifier = eventWrapperViewPanel.getEventSource().getSourceIdentifier().getIdentifier();
-					if(!GLOBAL_SOURCE_IDENTIFIER.equals(identifier)
-							&& !InternalLilithAppender.IDENTIFIER_NAME.equals(identifier))
+					EventSource eventSource = eventWrapperViewPanel.getEventSource();
+					if(!eventSource.isGlobal())
 					{
-						enable = true;
+						String identifier = eventSource.getSourceIdentifier().getIdentifier();
+						if (!InternalLilithAppender.IDENTIFIER_NAME.equals(identifier))
+						{
+							enable = true;
+						}
 					}
 				}
 			}
@@ -1754,7 +1744,14 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			setShowingFilters(true);
+			if(viewContainer != null)
+			{
+				EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
+				if(eventWrapperViewPanel != null)
+				{
+					eventWrapperViewPanel.setShowingFilters(true);
+				}
+			}
 		}
 	}
 
@@ -2268,7 +2265,7 @@ public class ViewActions
 
 	}
 
-	static String resolveSourceTitle(ViewContainer container, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier, boolean appendType)
+	static String resolveSourceTitle(ViewContainer container, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
 	{
 		EventWrapperViewPanel defaultView = container.getDefaultView();
 		EventSource eventSource = defaultView.getEventSource();
@@ -2283,17 +2280,14 @@ public class ViewActions
 		SourceIdentifier si = eventSource.getSourceIdentifier();
 		String title = resolveSourceTitle(si, name, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 
-		if(appendType)
+		Class clazz = container.getWrappedClass();
+		if (clazz == LoggingEvent.class)
 		{
-			Class clazz = container.getWrappedClass();
-			if (clazz == LoggingEvent.class)
-			{
-				title = title + " (Logging)";
-			}
-			else if (clazz == AccessEvent.class)
-			{
-				title = title + " (Access)";
-			}
+			title = title + " (Logging)";
+		}
+		else if (clazz == AccessEvent.class)
+		{
+			title = title + " (Access)";
 		}
 
 		return title;
@@ -2414,17 +2408,12 @@ public class ViewActions
 			// remove loggingViews that were closed in the meantime...
 			mainFrame.removeInactiveViews(true, false);
 
-			final ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
-			Map<String, String> sourceNames = null;
-			boolean showingPrimaryIdentifier = false;
-			boolean showingSecondaryIdentifier = false;
-			if(applicationPreferences != null)
-			{
-				sourceNames = applicationPreferences.getSourceNames();
-				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
-				showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
-			}
-			if(logger.isDebugEnabled()) logger.debug("Updating Views-Menu.");
+			Map<String, String> sourceNames = applicationPreferences.getSourceNames();
+			boolean showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+			boolean showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
+			boolean globalLoggingEnabled = applicationPreferences.isGlobalLoggingEnabled();
+
+			if(logger.isDebugEnabled()) logger.debug("Updating Window-Menu.");
 
 			windowMenu.removeAll();
 			windowMenu.add(showTaskManagerItem);
@@ -2489,6 +2478,7 @@ public class ViewActions
 							windowMenu.addSeparator();
 						}
 						JMenuItem menuItem = createLoggingMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
+						menuItem.setEnabled(globalLoggingEnabled);
 						windowMenu.add(menuItem);
 					}
 				}
@@ -2510,6 +2500,7 @@ public class ViewActions
 						windowMenu.addSeparator();
 					}
 					JMenuItem menuItem = createAccessMenuItem(value, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
+					menuItem.setEnabled(globalLoggingEnabled);
 					windowMenu.add(menuItem);
 				}
 			}
@@ -2630,8 +2621,8 @@ public class ViewActions
 		private JMenuItem createLoggingMenuItem(ViewContainer<LoggingEvent> viewContainer, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
 		{
 			EventSource<LoggingEvent> eventSource = viewContainer.getEventSource();
-			String title=resolveSourceTitle(viewContainer, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
-			String tooltipText=resolveSourceTitle(viewContainer, sourceNames, true, true, true);
+			String title=resolveSourceTitle(viewContainer, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
+			String tooltipText=resolveSourceTitle(viewContainer, sourceNames, true, true);
 			JMenuItem result = new JMenuItem(new ViewLoggingAction(title, tooltipText, eventSource));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", eventSource.getSourceIdentifier(), compParent);
@@ -2648,8 +2639,8 @@ public class ViewActions
 		private JMenuItem createAccessMenuItem(ViewContainer<AccessEvent> viewContainer, Map<String, String> sourceNames, boolean showingPrimaryIdentifier, boolean showingSecondaryIdentifier)
 		{
 			EventSource<AccessEvent> eventSource = viewContainer.getEventSource();
-			String title=resolveSourceTitle(viewContainer, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
-			String tooltipText=resolveSourceTitle(viewContainer, sourceNames, true, true, true);
+			String title=resolveSourceTitle(viewContainer, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
+			String tooltipText=resolveSourceTitle(viewContainer, sourceNames, true, true);
 			JMenuItem result = new JMenuItem(new ViewAccessAction(title, tooltipText, eventSource));
 			Container compParent = viewContainer.getParent();
 			if(logger.isDebugEnabled()) logger.debug("\n\nParent for {}: {}\n", eventSource.getSourceIdentifier(), compParent);
@@ -3082,7 +3073,7 @@ public class ViewActions
 							.map(CallLocationCondition::parseStackTraceElement)
 							.filter(Objects::nonNull)
 							.findFirst()
-							.ifPresent(stackTraceElement -> mainFrame.goToSource(stackTraceElement));
+							.ifPresent(mainFrame::goToSource);
 				}
 			}
 			catch(Throwable ex)

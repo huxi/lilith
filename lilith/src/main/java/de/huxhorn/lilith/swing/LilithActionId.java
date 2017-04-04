@@ -100,8 +100,8 @@ public enum LilithActionId
 	TIP_OF_THE_DAY("Tip of the Day…", 't', "Shows you a Tip of the Day."),
 	TROUBLESHOOTING("Troubleshooting…", 'o', null),
 	VIEW("View", 'v', null),
-	VIEW_GLOBAL_ACCESS_LOGS("Global access events", 'a', "Opens the global access events."),
-	VIEW_GLOBAL_CLASSIC_LOGS("Global logging events", 'l', "Opens the global logging events."),
+	VIEW_GLOBAL_ACCESS_LOGS("Global access events", 'a', "Opens the global access events." + Constants.ENABLE_GLOBAL_LOGS_HELP_TEXT),
+	VIEW_GLOBAL_CLASSIC_LOGS("Global logging events", 'l', "Opens the global logging events." + Constants.ENABLE_GLOBAL_LOGS_HELP_TEXT),
 	VIEW_LILITH_LOGS("Lilith events", 'i', "Opens the internal Lilith logging events. Take a look here if you have mysterious problems."),
 	WINDOW("Window", 'w', null),
 	ZOOM_IN("Zoom in", 'z', "Zoom in on the details view."),
@@ -131,5 +131,10 @@ public enum LilithActionId
 	public Integer getMnemonic()
 	{
 		return (int) mnemonic;
+	}
+
+	private static class Constants
+	{
+		private static final String ENABLE_GLOBAL_LOGS_HELP_TEXT = " You can enable or disable global logs in Preferences => General => \"Enable global logs.\".";
 	}
 }

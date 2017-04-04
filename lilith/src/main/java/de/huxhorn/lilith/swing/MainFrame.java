@@ -106,6 +106,7 @@ import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.buffers.BlockingCircularBuffer;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
+import de.huxhorn.sulky.buffers.Reset;
 import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.codec.filebuffer.DefaultFileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.FileHeader;
@@ -160,6 +161,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
@@ -220,7 +222,7 @@ public class MainFrame
 	private PreferencesDialog preferencesDialog;
 	private JDialog aboutDialog;
 	private JLabel statusLabel;
-	private ApplicationPreferences applicationPreferences;
+	private final ApplicationPreferences applicationPreferences;
 	private DebugDialog debugDialog;
 	private TaskManager<Long> longTaskManager;
 	private ViewActions viewActions;
@@ -263,6 +265,7 @@ public class MainFrame
 		IS_MAC = osName.startsWith("mac");
 	}
 
+	private static final String GLOBAL_SOURCE_IDENTIFIER_NAME ="global";
 	private static final ViewContainerProcessor UPDATE_VIEWS_CONTAINER_PROCESSOR = new UpdateViewsContainerProcessor();
 	private static final ViewActionsProcessor UPDATE_RECENT_FILES_ACTIONS_PROCESSOR = new UpdateRecentFilesProcessor();
 	private static final ViewActionsProcessor UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR = new UpdateWindowMenuProcessor();
@@ -289,7 +292,7 @@ public class MainFrame
 	public MainFrame(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appName)
 	{
 		super(appName);
-		this.applicationPreferences = applicationPreferences;
+		this.applicationPreferences = Objects.requireNonNull(applicationPreferences, "applicationPreferences must not be null!");
 		this.coloringWholeRow = this.applicationPreferences.isColoringWholeRow();
 		this.splashScreen = splashScreen;
 		setSplashStatusText("Creating icons…");
@@ -552,10 +555,11 @@ public class MainFrame
 		}
 
 		setSplashStatusText("Creating global views…");
-		SourceIdentifier globalSourceIdentifier = new SourceIdentifier(ViewActions.GLOBAL_SOURCE_IDENTIFIER, null);
+		SourceIdentifier globalSourceIdentifier = new SourceIdentifier(GLOBAL_SOURCE_IDENTIFIER_NAME, null);
 
 		loggingFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, loggingFileBufferFactory);
 		accessFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, accessFileBufferFactory);
+
 		setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
 
 		BlockingCircularBuffer<EventWrapper<LoggingEvent>> loggingEventQueue = new LilithBuffer<>(applicationPreferences, 1000);
@@ -1920,13 +1924,8 @@ public class MainFrame
 
 	public SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> getSortedLoggingViews()
 	{
-		Map<String, String> sourceNames=null;
-		boolean showingPrimaryIdentifier = false;
-		if(applicationPreferences != null)
-		{
-			sourceNames = applicationPreferences.getSourceNames();
-			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
-		}
+		Map<String, String> sourceNames = applicationPreferences.getSourceNames();
+		boolean showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
 		EventSourceComparator<LoggingEvent> loggingComparator = new EventSourceComparator<>(sourceNames, showingPrimaryIdentifier);
 		SortedMap<EventSource<LoggingEvent>, ViewContainer<LoggingEvent>> sortedLoggingViews;
 		sortedLoggingViews = new TreeMap<>(loggingComparator);
@@ -1939,13 +1938,8 @@ public class MainFrame
 
 	public SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> getSortedAccessViews()
 	{
-		Map<String, String> sourceNames=null;
-		boolean showingPrimaryIdentifier = false;
-		if(applicationPreferences != null)
-		{
-			sourceNames = applicationPreferences.getSourceNames();
-			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
-		}
+		Map<String, String> sourceNames = applicationPreferences.getSourceNames();
+		boolean showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
 		EventSourceComparator<AccessEvent> accessComparator = new EventSourceComparator<>(sourceNames, showingPrimaryIdentifier);
 		SortedMap<EventSource<AccessEvent>, ViewContainer<AccessEvent>> sortedAccessViews;
 		sortedAccessViews = new TreeMap<>(accessComparator);
@@ -2779,8 +2773,47 @@ public class MainFrame
 
 	private void setGlobalLoggingEnabled(boolean globalLoggingEnabled)
 	{
-		loggingFileDump.setEnabled(globalLoggingEnabled);
-		accessFileDump.setEnabled(globalLoggingEnabled);
+		setGlobalLoggingEnabled(loggingFileDump, loggingEventViewManager, globalLoggingEnabled);
+		setGlobalLoggingEnabled(accessFileDump, accessEventViewManager, globalLoggingEnabled);
+
+		viewActions.updateWindowMenu();
+	}
+
+	private static <T extends Serializable> void setGlobalLoggingEnabled(FileDumpEventHandler<T> fileDumpEventHandler, ViewManager<T> viewManager, boolean globalLoggingEnabled)
+	{
+		fileDumpEventHandler.setEnabled(globalLoggingEnabled);
+
+		ViewContainer<T> viewContainer = resolveGlobalView(viewManager);
+		if(viewContainer != null)
+		{
+			ViewWindow viewWindow = viewContainer.resolveViewWindow();
+			if (viewWindow instanceof ViewContainerFrame)
+			{
+				viewWindow.getViewActions().updateWindowMenu();
+			}
+		}
+
+		if(!globalLoggingEnabled)
+		{
+			// close view
+			viewManager.closeViewContainer(viewContainer);
+			// delete data file
+			Reset.reset(fileDumpEventHandler.getBuffer());
+		}
+	}
+
+	private static <T extends Serializable> ViewContainer<T> resolveGlobalView(ViewManager<T> viewManager)
+	{
+		Map<EventSource<T>, ViewContainer<T>> views = viewManager.getViews();
+		for (Map.Entry<EventSource<T>, ViewContainer<T>> entry : views.entrySet())
+		{
+			EventSource<T> key = entry.getKey();
+			if (key.isGlobal())
+			{
+				return entry.getValue();
+			}
+		}
+		return null;
 	}
 
 	private void setCheckingForUpdate(boolean checkingForUpdate)
@@ -2960,14 +2993,11 @@ public class MainFrame
 		private boolean showingPrimaryIdentifier = false;
 		private boolean showingSecondaryIdentifier = false;
 
-		public void updateSourceNameSettings()
+		void updateSourceNameSettings()
 		{
-			if(applicationPreferences != null)
-			{
-				sourceNames = applicationPreferences.getSourceNames();
-				showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
-				showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
-			}
+			sourceNames = applicationPreferences.getSourceNames();
+			showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();
+			showingSecondaryIdentifier = applicationPreferences.isShowingSecondaryIdentifier();
 		}
 
 		@Override
@@ -2976,7 +3006,7 @@ public class MainFrame
 			ViewWindow window = container.resolveViewWindow();
 			if(window != null)
 			{
-				String title = ViewActions.resolveSourceTitle(container, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier, true);
+				String title = ViewActions.resolveSourceTitle(container, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 				window.setTitle(title);
 			}
 		}
