@@ -1338,7 +1338,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			mainFrame.removeInactiveViews(false, false);
+			mainFrame.removeInactiveViews(false);
 			mainFrame.updateWindowMenus();
 		}
 	}
@@ -2406,7 +2406,7 @@ public class ViewActions
 		public void run()
 		{
 			// remove loggingViews that were closed in the meantime...
-			mainFrame.removeInactiveViews(true, false);
+			mainFrame.removeInactiveViews(true);
 
 			Map<String, String> sourceNames = applicationPreferences.getSourceNames();
 			boolean showingPrimaryIdentifier = applicationPreferences.isShowingPrimaryIdentifier();

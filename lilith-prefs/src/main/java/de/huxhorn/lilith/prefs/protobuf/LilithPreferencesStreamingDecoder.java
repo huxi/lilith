@@ -48,8 +48,8 @@ public class LilithPreferencesStreamingDecoder
 {
 	public LilithPreferences decode(InputStream from) throws IOException
 	{
-		PrefsProto.LilithPreferences prefs=PrefsProto.LilithPreferences.parseFrom(from);
-		return convert(prefs);
+		PrefsProto.LilithPreferences preferences=PrefsProto.LilithPreferences.parseFrom(from);
+		return convert(preferences);
 	}
 
 	private static Map<String, byte[]> convert(PrefsProto.DirectoryContent dir)
@@ -76,139 +76,139 @@ public class LilithPreferencesStreamingDecoder
 		{
 			return null;
 		}
-		LilithPreferences prefs = new LilithPreferences();
+		LilithPreferences preferences = new LilithPreferences();
 
 		if(p.hasGroovyConditions())
 		{
-			prefs.setGroovyConditions(convert(p.getGroovyConditions()));
+			preferences.setGroovyConditions(convert(p.getGroovyConditions()));
 		}
 		if(p.hasGroovyClipboardFormatters())
 		{
-			prefs.setGroovyClipboardFormatters(convert(p.getGroovyClipboardFormatters()));
+			preferences.setGroovyClipboardFormatters(convert(p.getGroovyClipboardFormatters()));
 		}
 		if(p.hasDetailsView())
 		{
-			prefs.setDetailsView(convert(p.getDetailsView()));
+			preferences.setDetailsView(convert(p.getDetailsView()));
 		}
 		if(p.hasRootFiles())
 		{
-			prefs.setRootFiles(convert(p.getRootFiles()));
+			preferences.setRootFiles(convert(p.getRootFiles()));
 		}
 
 		// String
 		if(p.hasBlacklistName())
 		{
-			prefs.setBlackListName(p.getBlacklistName());
+			preferences.setBlackListName(p.getBlacklistName());
 		}
 		if(p.hasWhitelistName())
 		{
-			prefs.setWhiteListName(p.getWhitelistName());
+			preferences.setWhiteListName(p.getWhitelistName());
 		}
 		if(p.hasLookAndFeel())
 		{
-			prefs.setLookAndFeel(p.getLookAndFeel());
+			preferences.setLookAndFeel(p.getLookAndFeel());
 		}
 
 		// boolean
 		if(p.hasAskingBeforeQuit())
 		{
-			prefs.setAskingBeforeQuit(p.getAskingBeforeQuit());
+			preferences.setAskingBeforeQuit(p.getAskingBeforeQuit());
 		}
 		if(p.hasAutoClosing())
 		{
-			prefs.setAutoClosing(p.getAutoClosing());
+			preferences.setAutoClosing(p.getAutoClosing());
 		}
 		if(p.hasAutoFocusingWindow())
 		{
-			prefs.setAutoFocusingWindow(p.getAutoFocusingWindow());
+			preferences.setAutoFocusingWindow(p.getAutoFocusingWindow());
 		}
 		if(p.hasAutoOpening())
 		{
-			prefs.setAutoOpening(p.getAutoOpening());
+			preferences.setAutoOpening(p.getAutoOpening());
 		}
 		if(p.hasCheckingForUpdate())
 		{
-			prefs.setCheckingForUpdate(p.getCheckingForUpdate());
+			preferences.setCheckingForUpdate(p.getCheckingForUpdate());
 		}
 		if(p.hasCheckingForSnapshot())
 		{
-			prefs.setCheckingForSnapshot(p.getCheckingForSnapshot());
+			preferences.setCheckingForSnapshot(p.getCheckingForSnapshot());
 		}
 		if(p.hasCleaningLogsOnExit())
 		{
-			prefs.setCleaningLogsOnExit(p.getCleaningLogsOnExit());
+			preferences.setCleaningLogsOnExit(p.getCleaningLogsOnExit());
 		}
 		if(p.hasColoringWholeRow())
 		{
-			prefs.setColoringWholeRow(p.getColoringWholeRow());
+			preferences.setColoringWholeRow(p.getColoringWholeRow());
 		}
 		if(p.hasGlobalLoggingEnabled())
 		{
-			prefs.setGlobalLoggingEnabled(p.getGlobalLoggingEnabled());
+			preferences.setGlobalLoggingEnabled(p.getGlobalLoggingEnabled());
 		}
 		if(p.hasHidingOnClose())
 		{
-			prefs.setHidingOnClose(p.getHidingOnClose());
+			preferences.setHidingOnClose(p.getHidingOnClose());
 		}
 		if(p.hasMaximizingInternalFrames())
 		{
-			prefs.setMaximizingInternalFrames(p.getMaximizingInternalFrames());
+			preferences.setMaximizingInternalFrames(p.getMaximizingInternalFrames());
 		}
 		if(p.hasMute())
 		{
-			prefs.setMute(p.getMute());
+			preferences.setMute(p.getMute());
 		}
 		if(p.hasScrollingToBottom())
 		{
-			prefs.setScrollingToBottom(p.getScrollingToBottom());
+			preferences.setScrollingToBottom(p.getScrollingToBottom());
 		}
-		if(p.hasShowingFullCallstack())
+		if(p.hasShowingFullCallStack())
 		{
-			prefs.setShowingFullCallstack(p.getShowingFullCallstack());
+			preferences.setShowingFullCallStack(p.getShowingFullCallStack());
 		}
 		if(p.hasShowingFullRecentPath())
 		{
-			prefs.setShowingFullRecentPath(p.getShowingFullRecentPath());
+			preferences.setShowingFullRecentPath(p.getShowingFullRecentPath());
 		}
 		if(p.hasShowingPrimaryIdentifier())
 		{
-			prefs.setShowingPrimaryIdentifier(p.getShowingPrimaryIdentifier());
+			preferences.setShowingPrimaryIdentifier(p.getShowingPrimaryIdentifier());
 		}
 		if(p.hasShowingSecondaryIdentifier())
 		{
-			prefs.setShowingSecondaryIdentifier(p.getShowingSecondaryIdentifier());
+			preferences.setShowingSecondaryIdentifier(p.getShowingSecondaryIdentifier());
 		}
-		if(p.hasShowingStatusbar())
+		if(p.hasShowingStatusBar())
 		{
-			prefs.setShowingStatusbar(p.getShowingStatusbar());
+			preferences.setShowingStatusBar(p.getShowingStatusBar());
 		}
 		if(p.hasShowingStacktrace())
 		{
-			prefs.setShowingStackTrace(p.getShowingStacktrace());
+			preferences.setShowingStackTrace(p.getShowingStacktrace());
 		}
 		if(p.hasUsingWrappedExceptionStyle())
 		{
-			prefs.setUsingWrappedExceptionStyle(p.getUsingWrappedExceptionStyle());
+			preferences.setUsingWrappedExceptionStyle(p.getUsingWrappedExceptionStyle());
 		}
 		if(p.hasShowingTipOfTheDay())
 		{
-			prefs.setShowingTipOfTheDay(p.getShowingTipOfTheDay());
+			preferences.setShowingTipOfTheDay(p.getShowingTipOfTheDay());
 		}
 		if(p.hasShowingToolbar())
 		{
-			prefs.setShowingToolbar(p.getShowingToolbar());
+			preferences.setShowingToolbar(p.getShowingToolbar());
 		}
 		if(p.hasSplashScreenDisabled())
 		{
-			prefs.setSplashScreenDisabled(p.getSplashScreenDisabled());
+			preferences.setSplashScreenDisabled(p.getSplashScreenDisabled());
 		}
 		if(p.hasTrayActive())
 		{
-			prefs.setTrayActive(p.getTrayActive());
+			preferences.setTrayActive(p.getTrayActive());
 		}
 		if(p.hasUsingInternalFrames())
 		{
-			prefs.setUsingInternalFrames(p.getUsingInternalFrames());
+			preferences.setUsingInternalFrames(p.getUsingInternalFrames());
 		}
 		if(p.hasSourceFiltering())
 		{
@@ -216,24 +216,24 @@ public class LilithPreferencesStreamingDecoder
 			switch(sf)
 			{
 				case BLACKLIST:
-					prefs.setSourceFiltering(LilithPreferences.SourceFiltering.BLACKLIST);
+					preferences.setSourceFiltering(LilithPreferences.SourceFiltering.BLACKLIST);
 					break;
 				case WHITELIST:
-					prefs.setSourceFiltering(LilithPreferences.SourceFiltering.WHITELIST);
+					preferences.setSourceFiltering(LilithPreferences.SourceFiltering.WHITELIST);
 					break;
 				default:
-					prefs.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
+					preferences.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 			}
 		}
 		else
 		{
-			prefs.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
+			preferences.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
 		}
 		if(p.hasDefaultConditionName())
 		{
-			prefs.setDefaultConditionName(p.getDefaultConditionName());
+			preferences.setDefaultConditionName(p.getDefaultConditionName());
 		}
-		return prefs;
+		return preferences;
 	}
 
 }

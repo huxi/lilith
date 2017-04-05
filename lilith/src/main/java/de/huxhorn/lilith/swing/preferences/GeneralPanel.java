@@ -56,7 +56,7 @@ public class GeneralPanel
 	private JCheckBox coloringWholeRowCheckbox;
 
 	// Details view
-	private JCheckBox showFullCallstackCheckbox;
+	private JCheckBox showFullCallStackCheckbox;
 	private JCheckBox showStackTraceCheckbox;
 	private JCheckBox usingWrappedExceptionStyleCheckbox;
 
@@ -70,7 +70,7 @@ public class GeneralPanel
 	private JCheckBox trayActiveCheckbox;
 	private JCheckBox hidingOnCloseCheckbox;
 
-	public GeneralPanel(PreferencesDialog preferencesDialog)
+	GeneralPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
@@ -83,7 +83,7 @@ public class GeneralPanel
 		scrollingToBottomCheckbox = new JCheckBox("Initial 'Scrolling to Bottom' setting");
 		coloringWholeRowCheckbox = new JCheckBox("Color whole row according to Level or Status");
 
-		showFullCallstackCheckbox = new JCheckBox("Show full Callstack.");
+		showFullCallStackCheckbox = new JCheckBox("Show full call stack.");
 		showStackTraceCheckbox = new JCheckBox("Show stacktrace of Throwables");
 		usingWrappedExceptionStyleCheckbox = new JCheckBox("Use wrapped exception style.");
 
@@ -131,7 +131,7 @@ public class GeneralPanel
 
 		JPanel detailsPanel = new JPanel(new GridLayout(3, 1));
 		detailsPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "Details View"));
-		detailsPanel.add(showFullCallstackCheckbox);
+		detailsPanel.add(showFullCallStackCheckbox);
 		detailsPanel.add(showStackTraceCheckbox);
 		detailsPanel.add(usingWrappedExceptionStyleCheckbox);
 
@@ -180,7 +180,7 @@ public class GeneralPanel
 	{
 		scrollingToBottomCheckbox.setSelected(applicationPreferences.isScrollingToBottom());
 		coloringWholeRowCheckbox.setSelected(applicationPreferences.isColoringWholeRow());
-		showFullCallstackCheckbox.setSelected(applicationPreferences.isShowingFullCallstack());
+		showFullCallStackCheckbox.setSelected(applicationPreferences.isShowingFullCallStack());
 		showStackTraceCheckbox.setSelected(applicationPreferences.isShowingStackTrace());
 		usingWrappedExceptionStyleCheckbox.setSelected(applicationPreferences.isUsingWrappedExceptionStyle());
 
@@ -239,11 +239,11 @@ public class GeneralPanel
 		hidingOnCloseCheckbox.setEnabled(TraySupport.isAvailable());
 	}
 
-	public void saveSettings()
+	void saveSettings()
 	{
 		applicationPreferences.setScrollingToBottom(scrollingToBottomCheckbox.isSelected());
 		applicationPreferences.setColoringWholeRow(coloringWholeRowCheckbox.isSelected());
-		applicationPreferences.setShowingFullCallstack(showFullCallstackCheckbox.isSelected());
+		applicationPreferences.setShowingFullCallStack(showFullCallStackCheckbox.isSelected());
 		applicationPreferences.setShowingStackTrace(showStackTraceCheckbox.isSelected());
 		applicationPreferences.setUsingWrappedExceptionStyle(usingWrappedExceptionStyleCheckbox.isSelected());
 

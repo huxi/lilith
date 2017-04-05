@@ -43,37 +43,37 @@ public class ImportExportCommand
 {
 	private static final int MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-	public static Map<String, byte[]> exportGroovyConditions(ApplicationPreferences prefs)
+	private static Map<String, byte[]> exportGroovyConditions(ApplicationPreferences preferences)
 	{
-		String[] files = prefs.getAllGroovyConditionScriptFiles();
+		String[] files = preferences.getAllGroovyConditionScriptFiles();
 		if(files == null)
 		{
 			return null;
 		}
-		return exportFiles(prefs.getGroovyConditionsPath(), files);
+		return exportFiles(preferences.getGroovyConditionsPath(), files);
 	}
 
-	public static Map<String, byte[]> exportClipboardFormatterScriptFiles(ApplicationPreferences prefs)
+	private static Map<String, byte[]> exportClipboardFormatterScriptFiles(ApplicationPreferences preferences)
 	{
-		String[] files = prefs.getClipboardFormatterScriptFiles();
+		String[] files = preferences.getClipboardFormatterScriptFiles();
 		if(files == null)
 		{
 			return null;
 		}
-		return exportFiles(prefs.getGroovyConditionsPath(), files);
+		return exportFiles(preferences.getGroovyConditionsPath(), files);
 	}
 
-	public static Map<String, byte[]> exportDetailsView(ApplicationPreferences prefs)
+	private static Map<String, byte[]> exportDetailsView(ApplicationPreferences preferences)
 	{
 		String[] files = new String[]
 			{
 				ApplicationPreferences.DETAILS_VIEW_CSS_FILENAME,
 				ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME,
 			};
-		return exportFiles(prefs.getDetailsViewRoot(), files);
+		return exportFiles(preferences.getDetailsViewRoot(), files);
 	}
 
-	public static Map<String, byte[]> exportRootFiles(ApplicationPreferences prefs)
+	private static Map<String, byte[]> exportRootFiles(ApplicationPreferences preferences)
 	{
 		String[] files = new String[]
 			{
@@ -88,10 +88,10 @@ public class ImportExportCommand
 				ApplicationPreferences.STATUS_COLORS_XML_FILENAME,
 				ApplicationPreferences.LEVEL_COLORS_XML_FILENAME,
 			};
-		return exportFiles(prefs.getStartupApplicationPath(), files);
+		return exportFiles(preferences.getStartupApplicationPath(), files);
 	}
 
-	public static Map<String, byte[]> exportFiles(File basePath, String[] files)
+	private static Map<String, byte[]> exportFiles(File basePath, String[] files)
 	{
 		final Logger logger = LoggerFactory.getLogger(ImportExportCommand.class);
 
@@ -160,7 +160,7 @@ public class ImportExportCommand
 		return result;
 	}
 
-	public static void importFiles(File basePath, Map<String, byte[]> files)
+	private static void importFiles(File basePath, Map<String, byte[]> files)
 	{
 		final Logger logger = LoggerFactory.getLogger(ImportExportCommand.class);
 
@@ -201,109 +201,109 @@ public class ImportExportCommand
 		}
 	}
 
-	public static LilithPreferences exportPersistence(ApplicationPreferences prefs)
+	private static LilithPreferences exportPersistence(ApplicationPreferences preferences)
 	{
 		LilithPreferences p=new LilithPreferences();
-		p.setGroovyConditions(exportGroovyConditions(prefs));
-		p.setGroovyClipboardFormatters(exportClipboardFormatterScriptFiles(prefs));
-		p.setDetailsView(exportDetailsView(prefs));
-		p.setRootFiles(exportRootFiles(prefs));
+		p.setGroovyConditions(exportGroovyConditions(preferences));
+		p.setGroovyClipboardFormatters(exportClipboardFormatterScriptFiles(preferences));
+		p.setDetailsView(exportDetailsView(preferences));
+		p.setRootFiles(exportRootFiles(preferences));
 
 		// String
-		p.setBlackListName(prefs.getBlackListName());
-		p.setWhiteListName(prefs.getWhiteListName());
-		p.setLookAndFeel(prefs.getLookAndFeel());
+		p.setBlackListName(preferences.getBlackListName());
+		p.setWhiteListName(preferences.getWhiteListName());
+		p.setLookAndFeel(preferences.getLookAndFeel());
 
 		// boolean
-		p.setAskingBeforeQuit(prefs.isAskingBeforeQuit());
-		p.setAutoClosing(prefs.isAutoClosing());
-		p.setAutoFocusingWindow(prefs.isAutoFocusingWindow());
-		p.setAutoOpening(prefs.isAutoOpening());
-		p.setCheckingForUpdate(prefs.isCheckingForUpdate());
-		p.setCheckingForSnapshot(prefs.isCheckingForSnapshot());
-		p.setCleaningLogsOnExit(prefs.isCleaningLogsOnExit());
-		p.setColoringWholeRow(prefs.isColoringWholeRow());
-		p.setGlobalLoggingEnabled(prefs.isGlobalLoggingEnabled());
-		p.setHidingOnClose(prefs.isHidingOnClose());
-		p.setMaximizingInternalFrames(prefs.isMaximizingInternalFrames());
-		p.setMute(prefs.isMute());
-		p.setScrollingToBottom(prefs.isScrollingToBottom());
-		p.setShowingFullCallstack(prefs.isShowingFullCallstack());
-		p.setUsingWrappedExceptionStyle(prefs.isUsingWrappedExceptionStyle());
-		p.setShowingFullRecentPath(prefs.isShowingFullRecentPath());
-		p.setShowingPrimaryIdentifier(prefs.isShowingPrimaryIdentifier());
-		p.setShowingSecondaryIdentifier(prefs.isShowingSecondaryIdentifier());
-		p.setShowingStatusbar(prefs.isShowingStatusBar());
-		p.setShowingStackTrace(prefs.isShowingStackTrace());
-		p.setShowingTipOfTheDay(prefs.isShowingTipOfTheDay());
-		p.setShowingToolbar(prefs.isShowingToolbar());
-		p.setSplashScreenDisabled(prefs.isSplashScreenDisabled());
-		p.setTrayActive(prefs.isTrayActive());
-		p.setUsingInternalFrames(prefs.isUsingInternalFrames());
-		p.setSourceFiltering(prefs.getSourceFiltering());
+		p.setAskingBeforeQuit(preferences.isAskingBeforeQuit());
+		p.setAutoClosing(preferences.isAutoClosing());
+		p.setAutoFocusingWindow(preferences.isAutoFocusingWindow());
+		p.setAutoOpening(preferences.isAutoOpening());
+		p.setCheckingForUpdate(preferences.isCheckingForUpdate());
+		p.setCheckingForSnapshot(preferences.isCheckingForSnapshot());
+		p.setCleaningLogsOnExit(preferences.isCleaningLogsOnExit());
+		p.setColoringWholeRow(preferences.isColoringWholeRow());
+		p.setGlobalLoggingEnabled(preferences.isGlobalLoggingEnabled());
+		p.setHidingOnClose(preferences.isHidingOnClose());
+		p.setMaximizingInternalFrames(preferences.isMaximizingInternalFrames());
+		p.setMute(preferences.isMute());
+		p.setScrollingToBottom(preferences.isScrollingToBottom());
+		p.setShowingFullCallStack(preferences.isShowingFullCallStack());
+		p.setUsingWrappedExceptionStyle(preferences.isUsingWrappedExceptionStyle());
+		p.setShowingFullRecentPath(preferences.isShowingFullRecentPath());
+		p.setShowingPrimaryIdentifier(preferences.isShowingPrimaryIdentifier());
+		p.setShowingSecondaryIdentifier(preferences.isShowingSecondaryIdentifier());
+		p.setShowingStatusBar(preferences.isShowingStatusBar());
+		p.setShowingStackTrace(preferences.isShowingStackTrace());
+		p.setShowingTipOfTheDay(preferences.isShowingTipOfTheDay());
+		p.setShowingToolbar(preferences.isShowingToolbar());
+		p.setSplashScreenDisabled(preferences.isSplashScreenDisabled());
+		p.setTrayActive(preferences.isTrayActive());
+		p.setUsingInternalFrames(preferences.isUsingInternalFrames());
+		p.setSourceFiltering(preferences.getSourceFiltering());
 		return p;
 	}
 
-	public static void importPersistence(ApplicationPreferences prefs, LilithPreferences p)
+	private static void importPersistence(ApplicationPreferences preferences, LilithPreferences p)
 	{
 		if(p.getGroovyConditions() != null)
 		{
-			importFiles(prefs.getGroovyConditionsPath(), p.getGroovyConditions());
+			importFiles(preferences.getGroovyConditionsPath(), p.getGroovyConditions());
 		}
 		if(p.getGroovyConditions() != null)
 		{
-			importFiles(prefs.getGroovyClipboardFormattersPath(), p.getGroovyClipboardFormatters());
+			importFiles(preferences.getGroovyClipboardFormattersPath(), p.getGroovyClipboardFormatters());
 		}
 		if(p.getDetailsView() != null)
 		{
-			importFiles(prefs.getDetailsViewRoot(), p.getDetailsView());
+			importFiles(preferences.getDetailsViewRoot(), p.getDetailsView());
 		}
 		if(p.getRootFiles() != null)
 		{
-			importFiles(prefs.getStartupApplicationPath(), p.getRootFiles());
+			importFiles(preferences.getStartupApplicationPath(), p.getRootFiles());
 		}
 
 		// String
-		prefs.setBlackListName(p.getBlackListName());
-		prefs.setWhiteListName(p.getWhiteListName());
-		prefs.setLookAndFeel(p.getLookAndFeel());
+		preferences.setBlackListName(p.getBlackListName());
+		preferences.setWhiteListName(p.getWhiteListName());
+		preferences.setLookAndFeel(p.getLookAndFeel());
 
 		// boolean
-		prefs.setAskingBeforeQuit(p.isAskingBeforeQuit());
-		prefs.setAutoClosing(p.isAutoClosing());
-		prefs.setAutoFocusingWindow(p.isAutoFocusingWindow());
-		prefs.setAutoOpening(p.isAutoOpening());
-		prefs.setCheckingForUpdate(p.isCheckingForUpdate());
-		prefs.setCheckingForSnapshot(p.isCheckingForSnapshot());
-		prefs.setCleaningLogsOnExit(p.isCleaningLogsOnExit());
-		prefs.setColoringWholeRow(p.isColoringWholeRow());
-		prefs.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());
-		prefs.setHidingOnClose(p.isHidingOnClose());
-		prefs.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
-		prefs.setMute(p.isMute());
-		prefs.setScrollingToBottom(p.isScrollingToBottom());
-		prefs.setShowingFullCallstack(p.isShowingFullCallstack());
-		prefs.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());
-		prefs.setShowingFullRecentPath(p.isShowingFullRecentPath());
-		prefs.setShowingPrimaryIdentifier(p.isShowingPrimaryIdentifier());
-		prefs.setShowingSecondaryIdentifier(p.isShowingSecondaryIdentifier());
-		prefs.setShowingStatusBar(p.isShowingStatusbar());
-		prefs.setShowingStackTrace(p.isShowingStackTrace());
-		prefs.setShowingTipOfTheDay(p.isShowingTipOfTheDay());
-		prefs.setShowingToolbar(p.isShowingToolbar());
-		prefs.setSplashScreenDisabled(p.isSplashScreenDisabled());
-		prefs.setTrayActive(p.isTrayActive());
-		prefs.setUsingInternalFrames(p.isUsingInternalFrames());
-		prefs.setSourceFiltering(p.getSourceFiltering());
+		preferences.setAskingBeforeQuit(p.isAskingBeforeQuit());
+		preferences.setAutoClosing(p.isAutoClosing());
+		preferences.setAutoFocusingWindow(p.isAutoFocusingWindow());
+		preferences.setAutoOpening(p.isAutoOpening());
+		preferences.setCheckingForUpdate(p.isCheckingForUpdate());
+		preferences.setCheckingForSnapshot(p.isCheckingForSnapshot());
+		preferences.setCleaningLogsOnExit(p.isCleaningLogsOnExit());
+		preferences.setColoringWholeRow(p.isColoringWholeRow());
+		preferences.setGlobalLoggingEnabled(p.isGlobalLoggingEnabled());
+		preferences.setHidingOnClose(p.isHidingOnClose());
+		preferences.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
+		preferences.setMute(p.isMute());
+		preferences.setScrollingToBottom(p.isScrollingToBottom());
+		preferences.setShowingFullCallStack(p.isShowingFullCallStack());
+		preferences.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());
+		preferences.setShowingFullRecentPath(p.isShowingFullRecentPath());
+		preferences.setShowingPrimaryIdentifier(p.isShowingPrimaryIdentifier());
+		preferences.setShowingSecondaryIdentifier(p.isShowingSecondaryIdentifier());
+		preferences.setShowingStatusBar(p.isShowingStatusBar());
+		preferences.setShowingStackTrace(p.isShowingStackTrace());
+		preferences.setShowingTipOfTheDay(p.isShowingTipOfTheDay());
+		preferences.setShowingToolbar(p.isShowingToolbar());
+		preferences.setSplashScreenDisabled(p.isSplashScreenDisabled());
+		preferences.setTrayActive(p.isTrayActive());
+		preferences.setUsingInternalFrames(p.isUsingInternalFrames());
+		preferences.setSourceFiltering(p.getSourceFiltering());
 	}
 
 	public static void exportPreferences(File file)
 	{
 		final Logger logger = LoggerFactory.getLogger(ImportExportCommand.class);
 
-		ApplicationPreferences prefs = new ApplicationPreferences();
+		ApplicationPreferences preferences = new ApplicationPreferences();
 
-		LilithPreferences p = exportPersistence(prefs);
+		LilithPreferences p = exportPersistence(preferences);
 
 		try
 		{
@@ -319,12 +319,12 @@ public class ImportExportCommand
 	{
 		final Logger logger = LoggerFactory.getLogger(ImportExportCommand.class);
 
-		ApplicationPreferences prefs = new ApplicationPreferences();
+		ApplicationPreferences preferences = new ApplicationPreferences();
 
 		try
 		{
 			LilithPreferences p = readPersistence(file);
-			importPersistence(prefs, p);
+			importPersistence(preferences, p);
 		}
 		catch(IOException e)
 		{

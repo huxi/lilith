@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2014-2016 Joern Huxhorn
+ * Copyright (C) 2014-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ public class ThymeleafEventWrapperHtmlFormatter
 			context.setVariable(LOGGING_EVENT_VARIABLE, loggingEvent);
 			context.setVariable(ACCESS_EVENT_VARIABLE, accessEvent);
 
-			context.setVariable(COMPLETE_CALL_STACK_OPTION_VARIABLE, applicationPreferences.isShowingFullCallstack());
+			context.setVariable(COMPLETE_CALL_STACK_OPTION_VARIABLE, applicationPreferences.isShowingFullCallStack());
 			context.setVariable(SHOW_STACK_TRACE_OPTION_VARIABLE, applicationPreferences.isShowingStackTrace());
 			context.setVariable(WRAPPED_EXCEPTION_STYLE_OPTION_VARIABLE, applicationPreferences.isUsingWrappedExceptionStyle());
 

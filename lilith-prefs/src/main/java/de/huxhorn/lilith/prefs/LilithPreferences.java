@@ -58,11 +58,11 @@ public class LilithPreferences
 	private boolean maximizingInternalFrames = false;
 	private boolean mute = false;
 	private boolean scrollingToBottom = true;
-	private boolean showingFullCallstack = false;
+	private boolean showingFullCallStack = false;
 	private boolean showingFullRecentPath = false;
 	private boolean showingPrimaryIdentifier = false;
 	private boolean showingSecondaryIdentifier = false;
-	private boolean showingStatusbar = true;
+	private boolean showingStatusBar = true;
 	private boolean showingStackTrace = true;
 	private boolean showingTipOfTheDay = true;
 	private boolean showingToolbar = true;
@@ -263,14 +263,14 @@ public class LilithPreferences
 		this.scrollingToBottom = scrollingToBottom;
 	}
 
-	public boolean isShowingFullCallstack()
+	public boolean isShowingFullCallStack()
 	{
-		return showingFullCallstack;
+		return showingFullCallStack;
 	}
 
-	public void setShowingFullCallstack(boolean showingFullCallstack)
+	public void setShowingFullCallStack(boolean showingFullCallStack)
 	{
-		this.showingFullCallstack = showingFullCallstack;
+		this.showingFullCallStack = showingFullCallStack;
 	}
 
 	public boolean isShowingPrimaryIdentifier()
@@ -293,14 +293,14 @@ public class LilithPreferences
 		this.showingSecondaryIdentifier = showingSecondaryIdentifier;
 	}
 
-	public boolean isShowingStatusbar()
+	public boolean isShowingStatusBar()
 	{
-		return showingStatusbar;
+		return showingStatusBar;
 	}
 
-	public void setShowingStatusbar(boolean showingStatusbar)
+	public void setShowingStatusBar(boolean showingStatusBar)
 	{
-		this.showingStatusbar = showingStatusbar;
+		this.showingStatusBar = showingStatusBar;
 	}
 
 	public boolean isShowingStackTrace()

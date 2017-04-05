@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2014-2015 Joern Huxhorn
+ * Copyright (C) 2014-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,7 +101,7 @@ public class GroovyEventWrapperHtmlFormatter
 				binding.setVariable(LOGGING_EVENT_VARIABLE, loggingEvent);
 				binding.setVariable(ACCESS_EVENT_VARIABLE, accessEvent);
 
-				binding.setVariable(COMPLETE_CALL_STACK_OPTION_VARIABLE, applicationPreferences.isShowingFullCallstack());
+				binding.setVariable(COMPLETE_CALL_STACK_OPTION_VARIABLE, applicationPreferences.isShowingFullCallStack());
 				binding.setVariable(SHOW_STACK_TRACE_OPTION_VARIABLE, applicationPreferences.isShowingStackTrace());
 				binding.setVariable(WRAPPED_EXCEPTION_STYLE_OPTION_VARIABLE, applicationPreferences.isUsingWrappedExceptionStyle());
 

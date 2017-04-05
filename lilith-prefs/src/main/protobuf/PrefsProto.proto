@@ -44,8 +44,8 @@ message LilithPreferences {
 	optional bool              maximizing_internal_frames    = 17;
 	optional bool              mute                          = 18;
 	optional bool              scrolling_to_bottom           = 19;
-	optional bool              showing_full_callstack        = 20;
-	optional bool              showing_statusbar             = 22;
+	optional bool              showing_full_call_stack       = 20;
+	optional bool              showing_status_bar            = 22;
 	optional bool              showing_stacktrace            = 23;
 	optional bool              showing_tip_of_the_day        = 24;
 	optional bool              showing_toolbar               = 25;
