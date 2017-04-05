@@ -7,5 +7,5 @@
 </ul>
 <p>If you run into problems, make sure that your dependencies match the ones above.</p>
 
-<p>If that fails, check the internal Lilith logs ("Window" => "Lilith - Lilith (logging)") for suspicious messages.</p>
+<p>If that fails, check the internal Lilith logs (##WindowMenuPlaceholder## => "##LilithLogsPlaceholder##") for suspicious messages.</p>
 </html>

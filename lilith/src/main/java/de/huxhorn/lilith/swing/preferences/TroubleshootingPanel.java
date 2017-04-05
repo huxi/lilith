@@ -15,8 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
+import de.huxhorn.lilith.swing.LilithActionId;
 import de.huxhorn.lilith.swing.MainFrame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -48,11 +50,13 @@ public class TroubleshootingPanel
 	extends JPanel
 {
 	private static final long serialVersionUID = 5589305263321629687L;
+	private static final String LILITH_LOGS_PLACEHOLDER = "##LilithLogsPlaceholder##";
+	private static final String WINDOW_MENU_PLACEHOLDER = "##WindowMenuPlaceholder##";
 
 	private final Logger logger = LoggerFactory.getLogger(TroubleshootingPanel.class);
 	private PreferencesDialog preferencesDialog;
 
-	public TroubleshootingPanel(PreferencesDialog preferencesDialog)
+	TroubleshootingPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		createUI();
@@ -72,22 +76,7 @@ public class TroubleshootingPanel
 
 		JPanel messagePanel = new JPanel(new GridLayout(1,1));
 		JLabel messageField = new JLabel();
-		try
-		{
-			InputStream messageStream = TroubleshootingPanel.class.getResourceAsStream("/dependencies.message");
-			if(messageStream == null)
-			{
-				if(logger.isErrorEnabled()) logger.error("Failed to get resource dependencies.message!");
-			}
-			else
-			{
-				messageField.setText(IOUtils.toString(messageStream, StandardCharsets.UTF_8));
-			}
-		}
-		catch (IOException e)
-		{
-			if(logger.isErrorEnabled()) logger.error("Failed to load dependencies.message!", e);
-		}
+		messageField.setText(resolveMessage());
 		messagePanel.add(messageField);
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -106,12 +95,38 @@ public class TroubleshootingPanel
 		add(messagePanel, gbc);
 	}
 
+	static String resolveMessage()
+	{
+		final Logger logger = LoggerFactory.getLogger(TroubleshootingPanel.class);
+
+		try
+		{
+			InputStream messageStream = TroubleshootingPanel.class.getResourceAsStream("/dependencies.message");
+			if(messageStream == null)
+			{
+				if(logger.isErrorEnabled()) logger.error("Failed to get resource dependencies.message!");
+			}
+			else
+			{
+				String message = IOUtils.toString(messageStream, StandardCharsets.UTF_8);
+				message = message.replace(WINDOW_MENU_PLACEHOLDER, LilithActionId.WINDOW.getText());
+				message = message.replace(LILITH_LOGS_PLACEHOLDER, LilithActionId.VIEW_LILITH_LOGS.getText());
+				return message;
+			}
+		}
+		catch (IOException e)
+		{
+			if(logger.isErrorEnabled()) logger.error("Failed to load dependencies.message!", e);
+		}
+		return null;
+	}
+
 	public class InitDetailsViewAction
 		extends AbstractAction
 	{
 		private static final long serialVersionUID = 8374235720899930441L;
 
-		public InitDetailsViewAction()
+		InitDetailsViewAction()
 		{
 			super("Reinitialize details view files.");
 		}
@@ -127,7 +142,7 @@ public class TroubleshootingPanel
 	{
 		private static final long serialVersionUID = -4197531497673863904L;
 
-		public InitExampleConditionScriptsAction()
+		InitExampleConditionScriptsAction()
 		{
 			super("Reinitialize example groovy conditions.");
 		}
@@ -143,7 +158,7 @@ public class TroubleshootingPanel
 	{
 		private static final long serialVersionUID = -4197531497673863904L;
 
-		public InitExampleClipboardFormatterScriptsAction()
+		InitExampleClipboardFormatterScriptsAction()
 		{
 			super("Reinitialize example groovy clipboard formatters.");
 		}
@@ -159,7 +174,7 @@ public class TroubleshootingPanel
 	{
 		private static final long serialVersionUID = 5218712842261152334L;
 
-		public DeleteAllLogsAction()
+		DeleteAllLogsAction()
 		{
 			super("Delete *all* logs.");
 		}
@@ -175,7 +190,7 @@ public class TroubleshootingPanel
 	{
 		private static final long serialVersionUID = -2375370123070284280L;
 
-		public CopySystemPropertiesAction()
+		CopySystemPropertiesAction()
 		{
 			super("Copy properties");
 			putValue(SHORT_DESCRIPTION, "Copy system properties to the clipboard.");
@@ -212,7 +227,7 @@ public class TroubleshootingPanel
 	{
 		private static final long serialVersionUID = -2375370123070284280L;
 
-		public CopyThreadsAction()
+		CopyThreadsAction()
 		{
 			super("Copy threads");
 			putValue(SHORT_DESCRIPTION, "Copy the stacktraces of all threads to the clipboard.");
@@ -298,7 +313,7 @@ public class TroubleshootingPanel
 			if(groups != null && groups.size() > 0)
 			{
 				builder.append(indentStr).append("groups = {\n");
-				Collections.sort(groups, new ThreadGroupComparator());
+				groups.sort(ThreadGroupComparator.INSTANCE);
 				for(ThreadGroup current : groups)
 				{
 					appendGroup(indent + 1, builder, current, threadGroups, threadGroupMapping);
@@ -377,6 +392,7 @@ public class TroubleshootingPanel
 	private static class ThreadGroupComparator
 		implements Comparator<ThreadGroup>
 	{
+		static final Comparator<ThreadGroup> INSTANCE = new ThreadGroupComparator();
 
 		public int compare(ThreadGroup o1, ThreadGroup o2)
 		{
@@ -428,7 +444,7 @@ public class TroubleshootingPanel
 			return thread;
 		}
 
-		public StackTraceElement[] getStackTraceElements()
+		StackTraceElement[] getStackTraceElements()
 		{
 			return stackTraceElements;
 		}
@@ -485,7 +501,7 @@ public class TroubleshootingPanel
 	{
 		private static final long serialVersionUID = -4636919088257143096L;
 
-		public GarbageCollectionAction()
+		GarbageCollectionAction()
 		{
 			super("Execute GC");
 			putValue(SHORT_DESCRIPTION, "Execute garbage collection.");
