@@ -44,3 +44,12 @@ a.download:active
 {
 	color:#000;
 }
+
+dt {
+	font-weight: bold;
+}
+
+dd {
+	margin: 0;
+	padding: 0 0 0.5em 1em;
+}

@@ -12,138 +12,130 @@
 
 <h1 id="top">Keyboard</h1>
 
-<p>^ represents the system dependent command key, e.g. "Ctrl" on Windows and
-	"cmd &#8984;" on Mac</p>
-
-<p>Alt represents "Alt" ("Option &#8997;" on Mac).</p>
-
-<p>&#8679; represents "Shift".</p>
-
-<p>&#8629; represents "Enter" or "Return".</p>
-
-<h2>General</h2>
-
+<h2>Notation</h2>
 <dl>
-	<dt>F1</dt>
-	<dd>Show help…</dd>
+	<dt>^</dt>
+	<dd>represents the system dependent command key, e.g. &quot;Ctrl&quot; on Windows and &quot;cmd ⌘&quot; on macOS.</dd>
+	<dt>alt</dt>
+	<dd>represents &quot;Alt&quot; (&quot;alt ⌥&quot; on Mac).</dd>
+	<dt>⇧</dt>
+	<dd>represents &quot;Shift&quot;.</dd>
+	<dt>↵</dt>
+	<dd>represents &quot;Enter&quot; or &quot;Return&quot;.</dd>
+</dl>
 
-	<dt>^+&#8679;+O</dt>
+<h2>File</h2>
+<dl>
+	<dt>^+O</dt>
+	<dd>Open…</dd>
+	<dt>^+⇧+O</dt>
 	<dd>Open inactive log…</dd>
-
-	<dt>^+&#8679;+X</dt>
+	<dt>^+⇧+X</dt>
 	<dd>Clean all inactive logs</dd>
-
+	<dt>^+⇧+I</dt>
+	<dd>Import…</dd>
+	<dt>^+⇧+E</dt>
+	<dd>Export…</dd>
+	<dt>^+COMMA</dt>
+	<dd>Preferences…<br/>Open Preferences.</dd>
 	<dt>^+Q</dt>
-	<dd>Exit. Quit. No, I won't ask you for permission. I will ask for permission if you make me do so, though. :p</dd>
+	<dd>Exit<br/>Exit Lilith.<br/>No, I won&apos;t ask you for permission. I will only ask for permission if you make me do so in Preferences, though. :p</dd>
 </dl>
 
-
-<h2>View related</h2>
-
+<h2>Edit</h2>
 <dl>
-	<dt>^+1</dt>
-	<dd>Opens the global logging view.</dd>
-
-	<dt>^+2</dt>
-	<dd>Opens the global access view.</dd>
-
-	<dt>^+0</dt>
-	<dd>Opens the internal Lilith logging view.</dd>
-
-	<dt>^+R</dt>
-	<dd>Remove inactive views.</dd>
-
-	<dt>^+T</dt>
-	<dd>Toggles tailing ("scroll to bottom"-functionality).</dd>
-
-	<dt>^+P</dt>
-	<dd>Pause/Unpause view.<br/>
-		If the view is paused, events are still received in the background,
-		i.e. no events are lost while the view is paused.
-	</dd>
-
-	<dt>^+&#8679;+A</dt>
-	<dd>Attach/detach view.</dd>
-
-	<dt>^+&#8679;+D</dt>
-	<dd>Disconnect - terminates the connection.</dd>
-
-	<dt>^+M</dt>
-	<dd>Focus message.</dd>
-
-	<dt>^+E</dt>
-	<dd>Focus events.</dd>
-
-	<dt>^+B</dt>
-	<dd>Edit source name of the current view.</dd>
-
-	<dt>^+I</dt>
-	<dd>Save the current condition.</dd>
-
-	<dt>^+. (also ^+[mouse wheel up])</dt>
-	<dd>Zoom in</dd>
-
-	<dt>^+&#8679;+. (also ^+[mouse wheel down])</dt>
-	<dd>Zoom out</dd>
+	<dt>^+C</dt>
+	<dd>Copy selection<br/>Copies the selection to the clipboard.</dd>
+	<dt>^+D</dt>
+	<dd>Go to source<br/>Show source in IDE if Lilith plugin is installed.</dd>
+	<dt>^+⇧+V</dt>
+	<dd>Paste StackTraceElement<br/>Paste StackTraceElement from clipboard and open code in IDE if Lilith plugin is installed.</dd>
+	<dt>^+⇧+C</dt>
+	<dd>Copy message<br/>Copies the message of the logging event to the clipboard.</dd>
+	<dt>^+⇧+alt+C</dt>
+	<dd>Copy message pattern<br/>Copies the message pattern of the logging event to the clipboard.</dd>
+	<dt>^+⇧+N</dt>
+	<dd>Copy logger name<br/>Copies the logger name of the logging event to the clipboard.</dd>
+	<dt>^+⇧+T</dt>
+	<dd>Copy Throwable<br/>Copies the Throwable of the logging event to the clipboard.</dd>
+	<dt>^+⇧+alt+T</dt>
+	<dd>Copy Throwable name<br/>Copies the Throwable class name of the logging event to the clipboard.</dd>
+	<dt>^+⇧+S</dt>
+	<dd>Copy call location<br/>Copies the call location, i.e. the first element of the logging events call stack, to the clipboard.</dd>
+	<dt>^+⇧+alt+S</dt>
+	<dd>Copy call stack<br/>Copies the call stack of the logging event to the clipboard.</dd>
 </dl>
 
-<h2>Tab related</h2>
-
-<dl>
-	<dt>^+W</dt>
-	<dd>Close the current tab.<br/>
-		The unfiltered tab is not closeable.
-	</dd>
-
-	<dt>^+&#8679;+W</dt>
-	<dd>Close all but the current tab.<br/>
-		The unfiltered tab is not closeable.
-	</dd>
-
-	<dt>^+Alt+&#8679;+W</dt>
-	<dd>Close all tabs.<br/>
-		The unfiltered tab is not closeable.
-	</dd>
-
-	<dt>^+J</dt>
-	<dd>Select next tab.</dd>
-
-	<dt>^++&#8679;J</dt>
-	<dd>Select previous tab.</dd>
-</dl>
-
-
-<h2>Find related</h2>
-
+<h2>Search</h2>
 <dl>
 	<dt>^+F</dt>
-	<dd>Show find panel and focus find textfield.</dd>
-
-	<dt>^+&#8679;+F</dt>
-	<dd>Reset find.</dd>
-
+	<dd>Find<br/>Opens the Find panel.</dd>
+	<dt>^+⇧+F</dt>
+	<dd>Reset find</dd>
 	<dt>^+G</dt>
-	<dd>Find previous match.</dd>
-
-	<dt>^+&#8679;+G</dt>
-	<dd>Find next match.</dd>
-
+	<dd>Find previous<br/>Find previous match of the current filter.</dd>
+	<dt>^+⇧+G</dt>
+	<dd>Find next<br/>Find next match of the current filter.</dd>
 	<dt>^+L</dt>
-	<dd>Find previous match of any active condition.</dd>
+	<dd>Find previous active<br/>Find previous match of any active condition.</dd>
+	<dt>^+⇧+L</dt>
+	<dd>Find next active<br/>Find next match of any active condition.</dd>
+	<dt>^+I</dt>
+	<dd>Save condition…<br/>Save the condition of the current view.</dd>
+	<dt>^+U</dt>
+	<dd>Show unfiltered<br/>Show selected event in unfiltered view.</dd>
+</dl>
 
-	<dt>^+&#8679;+L</dt>
-	<dd>Find next match of any active condition.</dd>
+<h2>View</h2>
+<dl>
+	<dt>^+T</dt>
+	<dd>Tail<br/>Tail (&quot;scroll to bottom&quot;)</dd>
+	<dt>^+P</dt>
+	<dd>Pause<br/>Pause or resume view updates.<br/>If the view is paused, events are still received in the background, i.e. no events are lost while the view is paused.</dd>
+	<dt>^+K</dt>
+	<dd>Clear<br/>Clear this view.</dd>
+	<dt>^+⇧+A</dt>
+	<dd>Attach/Detach<br/>Attach or detach the current view.</dd>
+	<dt>^+⇧+D</dt>
+	<dd>Disconnect<br/>Terminates this connection.</dd>
+	<dt>^+E</dt>
+	<dd>Focus events<br/>Focus the table containing the events.</dd>
+	<dt>^+M</dt>
+	<dd>Focus message<br/>Focus detailed message view.</dd>
+	<dt>^+B</dt>
+	<dd>Edit source name…<br/>Edit the source name of the current view.</dd>
+	<dt>^+PERIOD (also: ^+[mouse wheel up])</dt>
+	<dd>Zoom in<br/>Zoom in on the details view.</dd>
+	<dt>^+⇧+PERIOD (also: ^+[mouse wheel down])</dt>
+	<dd>Zoom out<br/>Zoom out on the details view.</dd>
+	<dt>^+J</dt>
+	<dd>Next view</dd>
+	<dt>^+⇧+J</dt>
+	<dd>Previous view</dd>
+	<dt>^+W</dt>
+	<dd>Close this filter</dd>
+	<dt>^+⇧+W</dt>
+	<dd>Close all other filters</dd>
+</dl>
 
-	<dt>Esc (if find panel is visible)</dt>
-	<dd>Close find panel.</dd>
+<h2>Window</h2>
+<dl>
+	<dt>^+⇧+alt+W</dt>
+	<dd>Close all</dd>
+	<dt>^+R</dt>
+	<dd>Remove inactive</dd>
+	<dt>^+0</dt>
+	<dd>Lilith events<br/>Opens the internal Lilith logging events. Take a look here if you have mysterious problems.</dd>
+	<dt>^+1</dt>
+	<dd>Global logging events<br/>Opens the global logging events. You can enable or disable global logs in Preferences =&gt; General =&gt; &quot;Enable global logs.&quot;.</dd>
+	<dt>^+2</dt>
+	<dd>Global access events<br/>Opens the global access events. You can enable or disable global logs in Preferences =&gt; General =&gt; &quot;Enable global logs.&quot;.</dd>
+</dl>
 
-	<dt>&#8629; (if in find textfield)</dt>
-	<dd>Replace filter of the current tab with the new condition.<br/>
-		Opens a new tab, too, if the current tab is the unfiltered tab.
-	</dd>
-
-	<dt>&#8679;+&#8629; (if in find textfield)</dt>
-	<dd>Create a new tab with the new condition.</dd>
+<h2>Help</h2>
+<dl>
+	<dt>F1</dt>
+	<dd>Help Topics…</dd>
 </dl>
 
 <p><a href="#top">Back to top.</a></p>

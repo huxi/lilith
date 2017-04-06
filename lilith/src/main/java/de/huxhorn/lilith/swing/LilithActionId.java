@@ -82,7 +82,7 @@ public enum LilithActionId
 	OPEN("Open…", 'o', null),
 	OPEN_INACTIVE("Open inactive log…", 'n', null),
 	PASTE_STACK_TRACE_ELEMENT("Paste StackTraceElement", 'a', "Paste StackTraceElement from clipboard and open code in IDE if Lilith plugin is installed."),
-	PAUSE("Pause", 'u', "Pause or resume receiving of events."),
+	PAUSE("Pause", 'u', "Pause or resume view updates."),
 	PREFERENCES("Preferences…", 'p', "Open Preferences."),
 	PREVIOUS_VIEW("Previous view", 'p', null),
 	RECENT_FILES("Recent files", 'r', null),

@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - Refactored actions and icon handling.
 - Don't add null-events to global logs.
 - Unchecking "Enable global logs." in Preferences is now deleting existing global log files automatically.
+- Keyboard help will now always be up-to-date.
 
 ### Deprecated
 - Nothing.
