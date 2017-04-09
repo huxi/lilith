@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Refactored actions and icon handling.
-- Don't add null-events to global logs.
+- Don't add null events to global logs.
 - Unchecking "Enable global logs." in Preferences is now deleting existing global log files automatically.
 - Keyboard help will now always be up-to-date.
 
@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 - Fixed enabled state of "Edit" menu. Mustn't be disabled anymore because "Paste StackTraceElement" is always available.
 - Fixed enabled state of "Copy selection".
 - Menu entries related to global logs are now disabled if "Enable global logs." is unchecked in Preferences.
-- Groovy 2.4.10, Logback 1.2.3, flying-saucer 9.1.5, jackson 2.8.8
+- Groovy 2.4.10, Logback 1.2.3, flying-saucer 9.1.5, jackson 2.8.8, log4j2 2.8.2
 
 ### Security
 - Nothing.
