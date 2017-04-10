@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -42,14 +43,16 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	private Decoder<T> decoder;
 	private boolean compressing;
 	private final AtomicLong heartbeatTimestamp;
+	private final boolean requiresHeartbeat;
 
-	public AbstractMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream, boolean compressing)
+	public AbstractMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream, boolean compressing, boolean requiresHeartbeat)
 	{
 		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
 		this.dataInput = new DataInputStream(new BufferedInputStream(inputStream));
 		this.compressing = compressing;
 		this.decoder = createDecoder();
-		this.heartbeatTimestamp = new AtomicLong();
+		this.heartbeatTimestamp = new AtomicLong(System.currentTimeMillis());
+		this.requiresHeartbeat = requiresHeartbeat;
 	}
 
 	protected abstract Decoder<T> createDecoder();
@@ -61,24 +64,33 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 		t.setDaemon(false);
 		t.start();
 
-		t = new Thread(new HeartbeatObserverRunnable(), "" + getSourceIdentifier() + "-HeartbeatObserver");
-		t.setDaemon(false);
-		t.start();
+		if(requiresHeartbeat)
+		{
+			t = new Thread(new HeartbeatObserverRunnable(), "" + getSourceIdentifier() + "-HeartbeatObserver");
+			t.setDaemon(false);
+			t.start();
+		}
 	}
 
-	protected void updateHeartbeatTimestamp()
+	private void updateHeartbeatTimestamp()
 	{
 		heartbeatTimestamp.set(System.currentTimeMillis());
 	}
 
-	protected long getHeartbeatTimestamp()
+	private long getMillisSinceLastHeartbeat()
 	{
-		return heartbeatTimestamp.get();
+		return System.currentTimeMillis() - heartbeatTimestamp.get();
 	}
 
 	public boolean isCompressing()
 	{
 		return compressing;
+	}
+
+	public void close()
+	{
+		if(logger.isInfoEnabled()) logger.info("Closing {} for source {}.", this.getClass().getName(), getSourceIdentifier());
+		IOUtilities.closeQuietly(dataInput);
 	}
 
 	private class HeartbeatObserverRunnable
@@ -91,13 +103,9 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 				try
 				{
 					Thread.sleep(HeartbeatRunnable.HEARTBEAT_RATE);
-					long heartbeat = getHeartbeatTimestamp();
-					if(System.currentTimeMillis() - heartbeat > 2 * HeartbeatRunnable.HEARTBEAT_RATE)
+					if(getMillisSinceLastHeartbeat() > 2 * HeartbeatRunnable.HEARTBEAT_RATE)
 					{
-						if(logger.isInfoEnabled())
-						{
-							logger.info("Closing receiver because heartbeat of {} was missing.", getSourceIdentifier());
-						}
+						if(logger.isInfoEnabled()) logger.info("Closing receiver because heartbeat of {} was missing.", getSourceIdentifier());
 						close();
 						return;
 					}
@@ -155,28 +163,19 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 						}
 						else
 						{
-							if(logger.isDebugEnabled())
-							{
-								logger.debug("Received heartbeat from {}.", getSourceIdentifier());
-							}
+							if(logger.isDebugEnabled()) logger.debug("Received heartbeat from {}.", getSourceIdentifier());
 						}
 					}
 					catch(OutOfMemoryError ex)
 					{
 						if(allocating)
 						{
-							if(logger.isWarnEnabled())
-							{
-								logger.warn("Out of memory while trying to allocate {} bytes! Skipping them instead...", size);
-							}
+							if(logger.isWarnEnabled()) logger.warn("Out of memory while trying to allocate {} bytes! Skipping them instead...", size);
 							skipBytes(size, dataInput);
 						}
 						else
 						{
-							if(logger.isWarnEnabled())
-							{
-								logger.warn("Out of memory while deserializing from {} bytes!", size);
-							}
+							if(logger.isWarnEnabled()) logger.warn("Out of memory while deserializing from {} bytes!", size);
 						}
 					}
 				}
@@ -188,10 +187,11 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 					break;
 				}
 			}
+			close();
 			MDC.remove(SOURCE_IDENTIFIER_MDC_KEY); //this shouldn't be necessary but I don't care :p
 		}
 
-		public void skipBytes(long numberOfBytes, InputStream input)
+		void skipBytes(long numberOfBytes, InputStream input)
 			throws IOException
 		{
 			long skippedTotal = 0;
@@ -205,11 +205,5 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 				skippedTotal = skippedTotal + skipped;
 			}
 		}
-	}
-
-	public void close()
-	{
-		if(logger.isInfoEnabled()) logger.info("Closing {}.", this.getClass().getName());
-		IOUtilities.closeQuietly(dataInput);
 	}
 }
