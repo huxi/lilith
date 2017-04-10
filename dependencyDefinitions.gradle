@@ -63,6 +63,7 @@ project.ext.libraries = [
 'spring-context':           "org.springframework:spring-context:${versions.spring}",
 'spring-core':              "org.springframework:spring-core:${versions.spring}",
 'spring-instrument':        "org.springframework:spring-instrument:${versions.spring}",
+'spring-webmvc':            "org.springframework:spring-webmvc:${versions.spring}",
 'sulky-buffers':            "de.huxhorn.sulky:de.huxhorn.sulky.buffers:${versions.sulky}",
 'sulky-buffers-filtering':  "de.huxhorn.sulky:de.huxhorn.sulky.buffers.filtering:${versions.sulky}",
 'sulky-buffers-table':      "de.huxhorn.sulky:de.huxhorn.sulky.buffers.table:${versions.sulky}",
@@ -83,5 +84,7 @@ project.ext.libraries = [
 'sulky-version':            "de.huxhorn.sulky:de.huxhorn.sulky.version:${versions.sulky}",
 'thymeleaf':                "org.thymeleaf:thymeleaf:${versions.thymeleaf}",
 'woodstox':                 "com.fasterxml.woodstox:woodstox-core:${versions.woodstox}",
+
+'spring-boot-ext-logback-access': 'net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.6',
 ]
 

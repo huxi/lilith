@@ -568,6 +568,10 @@ project(':lilith') {
 		compile project(':logback-multiplex-appender-classic-xml')
 		runtime libraries.'jcl-over-slf4j'
 		runtime libraries.'log4j2-core'
+		// 'spring-boot-ext-logback-access' and 'spring-webmvc' should not be necessary
+		// see LOGBACK-1182
+		runtime libraries.'spring-boot-ext-logback-access'
+		runtime libraries.'spring-webmvc'
 		runtime project(':lilith-sounds')
 		testCompile project(':lilith-data-corpus')
 		testCompile libraries.'sulky-junit'

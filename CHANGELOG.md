@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 - Fixed enabled state of "Edit" menu. Mustn't be disabled anymore because "Paste StackTraceElement" is always available.
 - Fixed enabled state of "Copy selection".
 - Menu entries related to global logs are now disabled if "Enable global logs." is unchecked in Preferences.
+- Added more dependencies and entries to the deserialization whitelist. This is essentially necessary because `logback-access` does not have an `AccessEventVO`. See also [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182). 
 - Groovy 2.4.10, Logback 1.2.3, flying-saucer 9.1.5, jackson 2.8.8, log4j2 2.8.2
 
 ### Security

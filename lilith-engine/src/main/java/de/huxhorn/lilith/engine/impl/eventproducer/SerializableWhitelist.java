@@ -62,6 +62,8 @@ class SerializableWhitelist
 		whitelist.add("ch.qos.logback.classic.spi.StackTraceElementProxy");
 		whitelist.add("ch.qos.logback.classic.spi.ThrowableProxyVO");
 		whitelist.add("java.lang.Enum");
+		whitelist.add("java.lang.Integer");
+		whitelist.add("java.lang.Number");
 		whitelist.add("java.lang.StackTraceElement");
 		whitelist.add("java.lang.String$CaseInsensitiveComparator");
 		whitelist.add("java.rmi.MarshalledObject");
@@ -77,6 +79,9 @@ class SerializableWhitelist
 		whitelist.add("java.util.TreeMap");
 		whitelist.add("java.util.Vector");
 		whitelist.add("java.util.concurrent.CopyOnWriteArrayList");
+		whitelist.add("net.rakugakibox.springbootext.logback.access.AbstractAccessEvent");
+		whitelist.add("net.rakugakibox.springbootext.logback.access.jetty.JettyAccessEvent");
+		whitelist.add("net.rakugakibox.springbootext.logback.access.tomcat.TomcatAccessEvent");
 		whitelist.add("org.apache.log4j.spi.LocationInfo");
 		whitelist.add("org.apache.log4j.spi.LoggingEvent");
 		whitelist.add("org.apache.log4j.spi.ThrowableInformation");
@@ -102,6 +107,8 @@ class SerializableWhitelist
 		whitelist.add("org.apache.logging.log4j.spi.StandardLevel");
 		whitelist.add("org.apache.logging.log4j.util.SortedArrayStringMap");
 		whitelist.add("org.slf4j.helpers.BasicMarker");
+		whitelist.add("org.springframework.util.LinkedMultiValueMap");
+		whitelist.add("org.springframework.web.servlet.FlashMap");
 
 		WHITELIST = Collections.unmodifiableSet(whitelist);
 	}

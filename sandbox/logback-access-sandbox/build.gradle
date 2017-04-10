@@ -7,14 +7,15 @@ buildscript {
 	}
 
 	dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
     }
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '3.4-rc-1'
+	gradleVersion = '3.4'
 }
 
+/*
 class ConfigurationDetectionDependencyResolutionListener
         implements DependencyResolutionListener, BuildListener {
     private final Logger logger
@@ -93,7 +94,7 @@ class ConfigurationDetectionDependencyResolutionListener
 }
 
 gradle.addListener(new ConfigurationDetectionDependencyResolutionListener(gradle))
-
+*/
 
 apply plugin: 'idea'
 apply plugin: 'java'
@@ -107,8 +108,9 @@ dependencies {
 	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:${lilithVersion}"
 	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.access:${lilithVersion}"
 	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic:${lilithVersion}"
-	runtime 'net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.6'
-	runtime libraries.'logback-access'
-	runtime libraries.'logback-classic'
+	runtime libraries.'spring-boot-ext-logback-access'
+	compile libraries.'logback-access'
+	compile libraries.'logback-core'
+	compile libraries.'logback-classic'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
