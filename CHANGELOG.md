@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Added Previous and Next buttons to toolbar.
 - Added lots of missing mnemonics.
+- If the connection is lost then Message/RequestURI in table will now show "Connection closed." instead of nothing.
 
 ### Changed
 - Refactored actions and icon handling.
