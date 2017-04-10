@@ -80,24 +80,11 @@ public class FileSplitterEventHandler<T extends Serializable>
 			int valueCount = value.size();
 			// we know that valueCount is > 0 because otherwise it wouldn't exist.
 			EventWrapper<T> lastEvent = value.get(valueCount - 1);
-			boolean close=false;
-			boolean doNotOpen=false;
-			if(lastEvent.getEvent() == null)
-			{
-				close=true;
-				if(valueCount == 1)
-				{
-					doNotOpen=true;
-				}
-			}
-			// only create view/add if valid
-			if(!doNotOpen)
-			{
-				// resolveBuffer is also creating the view
-				FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
-				buffer.addAll(value);
-				if(logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
-			}
+			boolean close = lastEvent.getEvent() == null;
+			// resolveBuffer is also creating the view
+			FileBuffer<EventWrapper<T>> buffer = resolveBuffer(si);
+			buffer.addAll(value);
+			if (logger.isInfoEnabled()) logger.info("Wrote {} events for source '{}'.", valueCount, si);
 
 			if(close)
 			{
@@ -107,8 +94,11 @@ public class FileSplitterEventHandler<T extends Serializable>
 				}
 
 				File activeFile = fileBufferFactory.getLogFileFactory().getActiveFile(si);
-				//noinspection ResultOfMethodCallIgnored
-				activeFile.delete();
+
+				if(activeFile.delete())
+				{
+					if(logger.isDebugEnabled()) logger.debug("Deleted active file {}.", activeFile.getAbsolutePath());
+				}
 				fileBuffers.remove(si);
 			}
 		}
