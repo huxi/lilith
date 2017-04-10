@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table.renderer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.table.ColorsProvider;
 import java.awt.Color;
@@ -69,55 +69,14 @@ public class LevelRenderer
 			}
 		}
 		renderer.setText(text);
-		boolean colorsInitialized = false;
-		if(!hasFocus && !isSelected)
-		{
-			if(table instanceof ColorsProvider)
-			{
-				if(value instanceof EventWrapper)
-				{
-					EventWrapper wrapper = (EventWrapper) value;
-					ColorsProvider cp = (ColorsProvider) table;
-					Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
-					if(colors.isSticky())
-					{
-						colorsInitialized = renderer.updateColors(colors);
-					}
-				}
-			}
-		}
+		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value, true);
 		if(!colorsInitialized && level != null && table instanceof ColorsProvider)
 		{
 			ColorsProvider cp = (ColorsProvider) table;
 			Colors colors = cp.resolveColors(level, rowIndex, vColIndex);
 
-			ColorScheme scheme = colors.getColorScheme();
-
 			renderer.setForeground(Color.BLACK);
-
-			if(scheme != null)
-			{
-				{
-					Color c = scheme.getBackgroundColor();
-					if(c != null)
-					{
-						renderer.setBackground(c);
-					}
-				}
-
-				{
-					Color c = scheme.getTextColor();
-					if(c != null)
-					{
-						renderer.setForeground(c);
-					}
-				}
-
-				{
-					Color c = scheme.getBorderColor();
-					renderer.setBorderColor(c);
-				}
-			}
+			renderer.updateColorsFromScheme(colors.getColorScheme());
 		}
 
 		renderer.correctRowHeight(table);

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.renderer.ConditionalBorder;
+import de.huxhorn.lilith.swing.table.renderer.LabelCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -35,7 +37,7 @@ public abstract class ColorSchemePreviewRenderer
 	private ConditionalBorder border;
 	protected JLabel renderer;
 
-	public ColorSchemePreviewRenderer()
+	ColorSchemePreviewRenderer()
 	{
 		renderer = new JLabel();
 		Font font = renderer.getFont();
@@ -68,15 +70,7 @@ public abstract class ColorSchemePreviewRenderer
 
 		updateText(table, value, isSelected, hasFocus, row, column);
 
-		if(table != null)
-		{
-			int rowHeight = table.getRowHeight();
-			int preferredHeight = renderer.getPreferredSize().height;
-			if(rowHeight < preferredHeight)
-			{
-				table.setRowHeight(preferredHeight);
-			}
-		}
+		LabelCellRenderer.correctRowHeight(table, renderer);
 
 		return renderer;
 	}

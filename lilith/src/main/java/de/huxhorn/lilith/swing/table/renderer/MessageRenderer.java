@@ -22,8 +22,6 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.swing.TextPreprocessor;
-import de.huxhorn.lilith.swing.table.Colors;
-import de.huxhorn.lilith.swing.table.ColorsProvider;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;
@@ -78,20 +76,7 @@ public class MessageRenderer
 		}
 		renderer.setText(text);
 
-		boolean colorsInitialized = false;
-		if(!hasFocus && !isSelected)
-		{
-			if(table instanceof ColorsProvider)
-			{
-				if(value instanceof EventWrapper)
-				{
-					EventWrapper wrapper = (EventWrapper) value;
-					ColorsProvider cp = (ColorsProvider) table;
-					Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
-					colorsInitialized = renderer.updateColors(colors);
-				}
-			}
-		}
+		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value);
 		if(!colorsInitialized)
 		{
 			renderer.setForeground(foreground);

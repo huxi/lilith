@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table.tooltips;
 
-import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
+import de.huxhorn.lilith.swing.table.renderer.ElapsedTimeRenderer;
 import javax.swing.JTable;
 
 public class ElapsedTimeTooltipGenerator
@@ -27,21 +27,11 @@ public class ElapsedTimeTooltipGenerator
 {
 	public String createTooltipText(JTable table, int row)
 	{
-		String tooltip = null;
 		Object value = table.getValueAt(row, 0);
-		if(value instanceof EventWrapper)
+		String tooltip = ElapsedTimeRenderer.resolveElapsedTime(value);
+		if("".equals(tooltip))
 		{
-			EventWrapper wrapper = (EventWrapper) value;
-			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof AccessEvent)
-			{
-				AccessEvent event = (AccessEvent) eventObj;
-				Long elapsedTime = event.getElapsedTime();
-				if(elapsedTime != null)
-				{
-					tooltip = ""+elapsedTime;
-				}
-			}
+			tooltip = null;
 		}
 		return tooltip;
 	}

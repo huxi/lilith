@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table.tooltips;
 
 import de.huxhorn.lilith.DateTimeFormatters;
-import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.swing.table.TooltipGenerator;
+import de.huxhorn.lilith.swing.table.renderer.TimestampRenderer;
 import java.time.Instant;
 import javax.swing.JTable;
 
@@ -33,31 +32,7 @@ public class TimestampTooltipGenerator
 	{
 		String tooltip = null;
 		Object value = table.getValueAt(row, 0);
-		Instant instant = null;
-		if(value instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) value;
-			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
-			{
-				LoggingEvent event = (LoggingEvent) eventObj;
-				Long timestamp = event.getTimeStamp();
-				if(timestamp != null)
-				{
-					instant = Instant.ofEpochMilli(timestamp);
-				}
-
-			}
-			else if(eventObj instanceof AccessEvent)
-			{
-				AccessEvent event = (AccessEvent) eventObj;
-				Long timestamp = event.getTimeStamp();
-				if(timestamp != null)
-				{
-					instant = Instant.ofEpochMilli(timestamp);
-				}
-			}
-		}
+		Instant instant = TimestampRenderer.resolveInstant(value);
 		if(instant != null)
 		{
 			tooltip = DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(instant);

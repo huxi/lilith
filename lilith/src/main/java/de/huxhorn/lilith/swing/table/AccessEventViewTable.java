@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
@@ -26,7 +27,7 @@ import de.huxhorn.lilith.swing.table.renderer.ElapsedTimeRenderer;
 import de.huxhorn.lilith.swing.table.renderer.IdRenderer;
 import de.huxhorn.lilith.swing.table.renderer.MethodRenderer;
 import de.huxhorn.lilith.swing.table.renderer.ProtocolRenderer;
-import de.huxhorn.lilith.swing.table.renderer.RemoteAddrRenderer;
+import de.huxhorn.lilith.swing.table.renderer.RemoteAddressRenderer;
 import de.huxhorn.lilith.swing.table.renderer.RequestUriRenderer;
 import de.huxhorn.lilith.swing.table.renderer.SourceRenderer;
 import de.huxhorn.lilith.swing.table.renderer.StatusCodeRenderer;
@@ -123,7 +124,7 @@ public class AccessEventViewTable
 		{
 			TableColumn col = new TableColumn(0);
 			col.setHeaderValue(DEFAULT_COLUMN_NAME_REMOTE_ADDR);
-			col.setCellRenderer(new RemoteAddrRenderer());
+			col.setCellRenderer(new RemoteAddressRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
 		}
 		{

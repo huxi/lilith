@@ -20,8 +20,6 @@ package de.huxhorn.lilith.swing.table.renderer;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.swing.table.Colors;
-import de.huxhorn.lilith.swing.table.ColorsProvider;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;
@@ -73,20 +71,7 @@ public class RequestUriRenderer
 		}
 		renderer.setText(text);
 
-		boolean colorsInitialized = false;
-		if(!hasFocus && !isSelected)
-		{
-			if(table instanceof ColorsProvider)
-			{
-				if(value instanceof EventWrapper)
-				{
-					EventWrapper wrapper = (EventWrapper) value;
-					ColorsProvider cp = (ColorsProvider) table;
-					Colors colors = cp.resolveColors(wrapper, rowIndex, vColIndex);
-					colorsInitialized = renderer.updateColors(colors);
-				}
-			}
-		}
+		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value);
 		if(!colorsInitialized)
 		{
 			renderer.setForeground(foreground);
