@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ public abstract class AbstractEventProducer<T extends Serializable>
 			// this is a good idea because sometimes exceptions are thrown while
 			// establishing the connection/during first read.
 			// this would otherwise produce views that contain only the connection closed event
-			// which isn't very usefull :)
+			// which isn't very useful :)
 			return;
 		}
 		localIdCounter++;
