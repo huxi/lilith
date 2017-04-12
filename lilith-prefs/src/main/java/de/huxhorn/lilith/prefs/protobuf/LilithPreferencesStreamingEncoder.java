@@ -119,6 +119,7 @@ public class LilithPreferencesStreamingEncoder
 		preferences.setHidingOnClose(p.isHidingOnClose());
 		preferences.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
 		preferences.setMute(p.isMute());
+		preferences.setScrollingSmoothly(p.isScrollingSmoothly());
 		preferences.setScrollingToBottom(p.isScrollingToBottom());
 		preferences.setShowingFullCallStack(p.isShowingFullCallStack());
 		preferences.setShowingFullRecentPath(p.isShowingFullRecentPath());

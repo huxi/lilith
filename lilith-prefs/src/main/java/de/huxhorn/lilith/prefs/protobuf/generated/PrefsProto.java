@@ -458,6 +458,15 @@ public final class PrefsProto {
      * <code>optional bool showing_secondary_identifier = 37;</code>
      */
     boolean getShowingSecondaryIdentifier();
+
+    /**
+     * <code>optional bool scrolling_smoothly = 38;</code>
+     */
+    boolean hasScrollingSmoothly();
+    /**
+     * <code>optional bool scrolling_smoothly = 38;</code>
+     */
+    boolean getScrollingSmoothly();
   }
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.LilithPreferences}
@@ -501,6 +510,7 @@ public final class PrefsProto {
       usingWrappedExceptionStyle_ = false;
       showingPrimaryIdentifier_ = false;
       showingSecondaryIdentifier_ = false;
+      scrollingSmoothly_ = false;
     }
 
     @java.lang.Override
@@ -742,6 +752,11 @@ public final class PrefsProto {
             case 296: {
               bitField1_ |= 0x00000002;
               showingSecondaryIdentifier_ = input.readBool();
+              break;
+            }
+            case 304: {
+              bitField1_ |= 0x00000004;
+              scrollingSmoothly_ = input.readBool();
               break;
             }
           }
@@ -1413,6 +1428,21 @@ public final class PrefsProto {
       return showingSecondaryIdentifier_;
     }
 
+    public static final int SCROLLING_SMOOTHLY_FIELD_NUMBER = 38;
+    private boolean scrollingSmoothly_;
+    /**
+     * <code>optional bool scrolling_smoothly = 38;</code>
+     */
+    public boolean hasScrollingSmoothly() {
+      return ((bitField1_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional bool scrolling_smoothly = 38;</code>
+     */
+    public boolean getScrollingSmoothly() {
+      return scrollingSmoothly_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -1550,6 +1580,9 @@ public final class PrefsProto {
       }
       if (((bitField1_ & 0x00000002) == 0x00000002)) {
         output.writeBool(37, showingSecondaryIdentifier_);
+      }
+      if (((bitField1_ & 0x00000004) == 0x00000004)) {
+        output.writeBool(38, scrollingSmoothly_);
       }
       unknownFields.writeTo(output);
     }
@@ -1690,6 +1723,10 @@ public final class PrefsProto {
       if (((bitField1_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(37, showingSecondaryIdentifier_);
+      }
+      if (((bitField1_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(38, scrollingSmoothly_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1877,6 +1914,11 @@ public final class PrefsProto {
         result = result && (getShowingSecondaryIdentifier()
             == other.getShowingSecondaryIdentifier());
       }
+      result = result && (hasScrollingSmoothly() == other.hasScrollingSmoothly());
+      if (hasScrollingSmoothly()) {
+        result = result && (getScrollingSmoothly()
+            == other.getScrollingSmoothly());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2048,6 +2090,11 @@ public final class PrefsProto {
         hash = (37 * hash) + SHOWING_SECONDARY_IDENTIFIER_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
             getShowingSecondaryIdentifier());
+      }
+      if (hasScrollingSmoothly()) {
+        hash = (37 * hash) + SCROLLING_SMOOTHLY_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getScrollingSmoothly());
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -2255,6 +2302,8 @@ public final class PrefsProto {
         bitField1_ = (bitField1_ & ~0x00000001);
         showingSecondaryIdentifier_ = false;
         bitField1_ = (bitField1_ & ~0x00000002);
+        scrollingSmoothly_ = false;
+        bitField1_ = (bitField1_ & ~0x00000004);
         return this;
       }
 
@@ -2433,6 +2482,10 @@ public final class PrefsProto {
           to_bitField1_ |= 0x00000002;
         }
         result.showingSecondaryIdentifier_ = showingSecondaryIdentifier_;
+        if (((from_bitField1_ & 0x00000004) == 0x00000004)) {
+          to_bitField1_ |= 0x00000004;
+        }
+        result.scrollingSmoothly_ = scrollingSmoothly_;
         result.bitField0_ = to_bitField0_;
         result.bitField1_ = to_bitField1_;
         onBuilt();
@@ -2585,6 +2638,9 @@ public final class PrefsProto {
         }
         if (other.hasShowingSecondaryIdentifier()) {
           setShowingSecondaryIdentifier(other.getShowingSecondaryIdentifier());
+        }
+        if (other.hasScrollingSmoothly()) {
+          setScrollingSmoothly(other.getScrollingSmoothly());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4243,6 +4299,38 @@ public final class PrefsProto {
       public Builder clearShowingSecondaryIdentifier() {
         bitField1_ = (bitField1_ & ~0x00000002);
         showingSecondaryIdentifier_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean scrollingSmoothly_ ;
+      /**
+       * <code>optional bool scrolling_smoothly = 38;</code>
+       */
+      public boolean hasScrollingSmoothly() {
+        return ((bitField1_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional bool scrolling_smoothly = 38;</code>
+       */
+      public boolean getScrollingSmoothly() {
+        return scrollingSmoothly_;
+      }
+      /**
+       * <code>optional bool scrolling_smoothly = 38;</code>
+       */
+      public Builder setScrollingSmoothly(boolean value) {
+        bitField1_ |= 0x00000004;
+        scrollingSmoothly_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool scrolling_smoothly = 38;</code>
+       */
+      public Builder clearScrollingSmoothly() {
+        bitField1_ = (bitField1_ & ~0x00000004);
+        scrollingSmoothly_ = false;
         onChanged();
         return this;
       }
@@ -10092,7 +10180,7 @@ public final class PrefsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\"src/main/protobuf/PrefsProto.proto\022\027de" +
-      ".huxhorn.lilith.prefs\"\375\t\n\021LilithPreferen" +
+      ".huxhorn.lilith.prefs\"\231\n\n\021LilithPreferen" +
       "ces\022D\n\021groovy_conditions\030\001 \001(\0132).de.huxh" +
       "orn.lilith.prefs.DirectoryContent\022?\n\014det" +
       "ails_view\030\002 \001(\0132).de.huxhorn.lilith.pref" +
@@ -10122,25 +10210,26 @@ public final class PrefsProto {
       "th\030! \001(\010\022\027\n\017hiding_on_close\030\" \001(\010\022%\n\035usi" +
       "ng_wrapped_exception_style\030# \001(\010\022\"\n\032show",
       "ing_primary_identifier\030$ \001(\010\022$\n\034showing_" +
-      "secondary_identifier\030% \001(\010J\004\010\017\020\020J\004\010\020\020\021J\004" +
-      "\010\025\020\026R\010licensedR\031logging_statistic_enable" +
-      "dR\022showing_identifier\"\231\001\n\020DirectoryConte" +
-      "nt\022\014\n\004name\030\001 \001(\t\0229\n\005entry\030\002 \003(\0132*.de.hux" +
-      "horn.lilith.prefs.ByteArrayMapEntry\022<\n\td" +
-      "irectory\030\003 \003(\0132).de.huxhorn.lilith.prefs" +
-      ".DirectoryContent\"/\n\021ByteArrayMapEntry\022\013" +
-      "\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\014\"C\n\tStringMap\022" +
-      "6\n\005entry\030\001 \003(\0132\'.de.huxhorn.lilith.prefs",
-      ".StringMapEntry\",\n\016StringMapEntry\022\013\n\003key" +
-      "\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"M\n\016StringArrayMap\022" +
-      ";\n\005entry\030\001 \003(\0132,.de.huxhorn.lilith.prefs" +
-      ".StringArrayMapEntry\"\\\n\023StringArrayMapEn" +
-      "try\022\013\n\003key\030\001 \002(\t\0228\n\005value\030\002 \003(\0132).de.hux" +
-      "horn.lilith.prefs.StringArrayValue\"!\n\020St" +
-      "ringArrayValue\022\r\n\005value\030\001 \001(\t*9\n\017SourceF" +
-      "iltering\022\010\n\004NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHI" +
-      "TELIST\020\002B.\n*de.huxhorn.lilith.prefs.prot" +
-      "obuf.generatedH\001"
+      "secondary_identifier\030% \001(\010\022\032\n\022scrolling_" +
+      "smoothly\030& \001(\010J\004\010\017\020\020J\004\010\020\020\021J\004\010\025\020\026R\010licens" +
+      "edR\031logging_statistic_enabledR\022showing_i" +
+      "dentifier\"\231\001\n\020DirectoryContent\022\014\n\004name\030\001" +
+      " \001(\t\0229\n\005entry\030\002 \003(\0132*.de.huxhorn.lilith." +
+      "prefs.ByteArrayMapEntry\022<\n\tdirectory\030\003 \003" +
+      "(\0132).de.huxhorn.lilith.prefs.DirectoryCo" +
+      "ntent\"/\n\021ByteArrayMapEntry\022\013\n\003key\030\001 \002(\t\022" +
+      "\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry\030\001 \003",
+      "(\0132\'.de.huxhorn.lilith.prefs.StringMapEn" +
+      "try\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005va" +
+      "lue\030\002 \001(\t\"M\n\016StringArrayMap\022;\n\005entry\030\001 \003" +
+      "(\0132,.de.huxhorn.lilith.prefs.StringArray" +
+      "MapEntry\"\\\n\023StringArrayMapEntry\022\013\n\003key\030\001" +
+      " \002(\t\0228\n\005value\030\002 \003(\0132).de.huxhorn.lilith." +
+      "prefs.StringArrayValue\"!\n\020StringArrayVal" +
+      "ue\022\r\n\005value\030\001 \001(\t*9\n\017SourceFiltering\022\010\n\004" +
+      "NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020\002B.\n*" +
+      "de.huxhorn.lilith.prefs.protobuf.generat",
+      "edH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -10159,7 +10248,7 @@ public final class PrefsProto {
     internal_static_de_huxhorn_lilith_prefs_LilithPreferences_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_de_huxhorn_lilith_prefs_LilithPreferences_descriptor,
-        new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallStack", "ShowingStatusBar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", "TrayActive", "ShowingFullRecentPath", "HidingOnClose", "UsingWrappedExceptionStyle", "ShowingPrimaryIdentifier", "ShowingSecondaryIdentifier", });
+        new java.lang.String[] { "GroovyConditions", "DetailsView", "RootFiles", "BlacklistName", "WhitelistName", "LookAndFeel", "AskingBeforeQuit", "AutoClosing", "AutoFocusingWindow", "AutoOpening", "CheckingForUpdate", "CleaningLogsOnExit", "ColoringWholeRow", "GlobalLoggingEnabled", "MaximizingInternalFrames", "Mute", "ScrollingToBottom", "ShowingFullCallStack", "ShowingStatusBar", "ShowingStacktrace", "ShowingTipOfTheDay", "ShowingToolbar", "SplashScreenDisabled", "UsingInternalFrames", "SourceFiltering", "DefaultConditionName", "CheckingForSnapshot", "GroovyClipboardFormatters", "TrayActive", "ShowingFullRecentPath", "HidingOnClose", "UsingWrappedExceptionStyle", "ShowingPrimaryIdentifier", "ShowingSecondaryIdentifier", "ScrollingSmoothly", });
     internal_static_de_huxhorn_lilith_prefs_DirectoryContent_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_de_huxhorn_lilith_prefs_DirectoryContent_fieldAccessorTable = new

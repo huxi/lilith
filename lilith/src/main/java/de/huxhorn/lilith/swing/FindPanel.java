@@ -68,7 +68,7 @@ public class FindPanel<T extends Serializable>
 	private static final Color ERROR_COLOR = new Color(0x990000);
 	private static final Color NO_ERROR_COLOR = Color.BLACK;
 
-	public static final String CONDITION_PROPERTY = "condition";
+	static final String CONDITION_PROPERTY = "condition";
 
 	private MainFrame mainFrame;
 	private EventWrapperViewPanel<T> eventWrapperViewPanel;
@@ -88,7 +88,7 @@ public class FindPanel<T extends Serializable>
 	private BasicEventList<String> findTextEventList;
 
 
-	public FindPanel(EventWrapperViewPanel<T> eventWrapperViewPanel)
+	FindPanel(EventWrapperViewPanel<T> eventWrapperViewPanel)
 	{
 		this.eventWrapperViewPanel = eventWrapperViewPanel;
 		this.mainFrame=this.eventWrapperViewPanel.getMainFrame();
@@ -332,7 +332,7 @@ public class FindPanel<T extends Serializable>
 		return condition;
 	}
 
-	public void resetFind()
+	void resetFind()
 	{
 		JTextComponent findEditorComponent = getFindEditorComponent();
 		if(findEditorComponent != null)
@@ -341,7 +341,7 @@ public class FindPanel<T extends Serializable>
 		}
 	}
 
-	public void updateUi()
+	void updateUi()
 	{
 		initTypeCombo();
 		// select correct type in combo
@@ -392,7 +392,7 @@ public class FindPanel<T extends Serializable>
 		return null;
 	}
 
-	public void requestComboFocus()
+	void requestComboFocus()
 	{
 		findTextCombo.requestFocusInWindow();
 		findTextCombo.getEditor().selectAll();
@@ -422,7 +422,7 @@ public class FindPanel<T extends Serializable>
 		}
 	}
 
-	public void setPreviousSearchStrings(List<String> previousSearchStrings)
+	void setPreviousSearchStrings(List<String> previousSearchStrings)
 	{
 		this.previousSearchStrings=new ArrayList<>(previousSearchStrings);
 		this.previousSearchStrings.add(0, ""); // always add an empty string as first
@@ -443,6 +443,7 @@ public class FindPanel<T extends Serializable>
 		private Component resolveComponent(Component component)
 		{
 			Container container = component.getParent();
+			//noinspection Duplicates
 			while(container != null)
 			{
 				if(container == findTypeCombo)

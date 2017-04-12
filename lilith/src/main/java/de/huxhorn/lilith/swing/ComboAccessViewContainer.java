@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
@@ -23,18 +24,16 @@ import de.huxhorn.lilith.engine.EventSource;
 public class ComboAccessViewContainer
 	extends ComboPaneViewContainer<AccessEvent>
 {
-	public ComboAccessViewContainer(MainFrame mainFrame, EventSource<AccessEvent> eventSource)
+	private static final long serialVersionUID = 7450348702013390368L;
+
+	ComboAccessViewContainer(MainFrame mainFrame, EventSource<AccessEvent> eventSource)
 	{
 		super(mainFrame, eventSource);
 	}
 
 	protected EventWrapperViewPanel<AccessEvent> createViewPanel(EventSource<AccessEvent> eventSource)
 	{
-		MainFrame mainFrame = getMainFrame();
-		boolean scrollingToBottom = mainFrame.getApplicationPreferences().isScrollingToBottom();
-		EventWrapperViewPanel<AccessEvent> result = new AccessEventViewPanel(mainFrame, eventSource);
-		result.setScrollingToBottom(scrollingToBottom);
-		return result;
+		return new AccessEventViewPanel(getMainFrame(), eventSource);
 	}
 
 	public Class getWrappedClass()

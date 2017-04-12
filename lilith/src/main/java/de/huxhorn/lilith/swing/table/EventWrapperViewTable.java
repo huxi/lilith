@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -46,6 +47,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
@@ -56,15 +58,16 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	extends JTable
 	implements ColorsProvider
 {
+	private static final long serialVersionUID = 7740275815213975505L;
+
 	public static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
-	public static final String FILTER_CONDITION_PROPERTY = "filterCondition";
+	private static final String FILTER_CONDITION_PROPERTY = "filterCondition";
 
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewTable.class);
 
-	protected EventWrapperTableModel<T> tableModel;
-	protected Map<Object, TooltipGenerator> tooltipGenerators;
-	protected Map<Object, TableColumn> tableColumns;
-	protected PersistentTableColumnModel tableColumnModel;
+	Map<Object, TooltipGenerator> tooltipGenerators;
+	Map<Object, TableColumn> tableColumns;
+	PersistentTableColumnModel tableColumnModel;
 	private boolean scrollingToBottom;
 	private Condition filterCondition;
 
@@ -73,14 +76,14 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private JMenuItem columnsMenu;
 	private boolean global;
 	protected MainFrame mainFrame;
+	private boolean scrollingSmoothly =true;
 
-	public EventWrapperViewTable(MainFrame mainFrame, EventWrapperTableModel<T> model, boolean global)
+	EventWrapperViewTable(MainFrame mainFrame, EventWrapperTableModel<T> tableModel, boolean global)
 	{
 		super();
 		this.mainFrame = mainFrame;
 		this.global = global;
-		this.tableModel = model;
-		this.tableModel.addTableModelListener(new ScrollToEventListener());
+		tableModel.addTableModelListener(new ScrollToEventListener());
 		setAutoCreateColumnsFromModel(false);
 		setModel(tableModel);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -243,7 +246,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 
 	protected abstract List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout();
 
-	protected void fireViewContainerChange()
+	private void fireViewContainerChange()
 	{
 		ViewContainer viewContainer = resolveViewContainer();
 		if(viewContainer != null)
@@ -329,7 +332,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		if(logger.isDebugEnabled())
 		{
-			logger.debug("changeSelection({}, {}, {}, {})", new Object[]{rowIndex, columnIndex, toggle, extend});
+			logger.debug("changeSelection({}, {}, {}, {})", rowIndex, columnIndex, toggle, extend);
 			//noinspection ThrowableInstanceNeverThrown
 			logger.debug("changeSelection-Stacktrace", new Throwable());
 		}
@@ -534,7 +537,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	}
 
 	// TODO: Move to ViewActions
-	protected ViewContainer resolveViewContainer()
+	private ViewContainer resolveViewContainer()
 	{
 		ViewContainer result = null;
 		Container parentContainer = getParent();
@@ -593,4 +596,23 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 	}
 
+
+	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
+	{
+		if(orientation != SwingConstants.HORIZONTAL || !scrollingSmoothly)
+		{
+			return super.getScrollableUnitIncrement(visibleRect, orientation, direction);
+		}
+		return 5;
+	}
+
+	public void setScrollingSmoothly(boolean scrollingSmoothly)
+	{
+		this.scrollingSmoothly = scrollingSmoothly;
+	}
+
+	public boolean isScrollingSmoothly()
+	{
+		return scrollingSmoothly;
+	}
 }

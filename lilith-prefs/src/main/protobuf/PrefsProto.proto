@@ -64,6 +64,7 @@ message LilithPreferences {
 	optional bool              using_wrapped_exception_style = 35;
 	optional bool              showing_primary_identifier    = 36;
 	optional bool              showing_secondary_identifier  = 37;
+	optional bool              scrolling_smoothly            = 38;
 
 	reserved 15, 16, 21;
 	reserved "licensed", "logging_statistic_enabled", "showing_identifier";

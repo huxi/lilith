@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -55,7 +56,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 {
 	private static final long serialVersionUID = -399179541035021703L;
 
-	public static final String UNFILTERED = "Unfiltered";
+	private static final String UNFILTERED = "Unfiltered";
 	private final Logger logger = LoggerFactory.getLogger(ComboPaneViewContainer.class);
 
 	private SourceChangeListener sourceChangeListener;
@@ -69,7 +70,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	private CloseAction closeAction;
 	private JPanel comboBoxPane;
 
-	public ComboPaneViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
+	ComboPaneViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		super(mainFrame, eventSource);
 		disposed = false;
@@ -407,7 +408,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		return disposed;
 	}
 
-	public void setSelectedEvent(EventWrapper<T> selectedEvent)
+	private void setSelectedEvent(EventWrapper<T> selectedEvent)
 	{
 		Object oldValue = this.selectedEvent;
 		this.selectedEvent = selectedEvent;
@@ -611,6 +612,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		@Override
 		public Component getListCellRendererComponent(JList<? extends ViewHolder> list, ViewHolder value, int index, boolean isSelected, boolean cellHasFocus)
 		{
+			//noinspection Duplicates
 			if(isSelected)
 			{
 				label.setBackground(list.getSelectionBackground());

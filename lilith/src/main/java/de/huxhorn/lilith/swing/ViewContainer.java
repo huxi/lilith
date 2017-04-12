@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JFrame;
@@ -59,16 +60,16 @@ public abstract class ViewContainer<T extends Serializable>
 	private static final long serialVersionUID = 4834209079953596930L;
 
 	// TODO: property change instead of change?
-	public static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
+	static final String SELECTED_EVENT_PROPERTY_NAME = "selectedEvent";
 
 
 	private final List<ChangeListener> changeListeners = new LinkedList<>();
-	private EventWrapperViewPanel<T> defaultView;
 	private final MainFrame mainFrame;
+	private final EventSource<T> eventSource;
+	private EventWrapperViewPanel<T> defaultView;
 	private TaskManager<Long> taskManager;
 	private Map<Callable<Long>, EventWrapperViewPanel<T>> filterMapping;
 	private FilterTaskListener filterTaskListener;
-	private EventSource<T> eventSource;
 	private ProgressGlassPane progressPanel;
 	private Component prevGlassPane;
 	private boolean searching;
@@ -76,12 +77,8 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public ViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
-		if(mainFrame == null)
-		{
-			throw new IllegalArgumentException("mainFrame must not be null!");
-		}
-		this.mainFrame = mainFrame;
-		this.eventSource = eventSource;
+		this.mainFrame = Objects.requireNonNull(mainFrame, "mainFrame must not be null!");
+		this.eventSource = Objects.requireNonNull(eventSource, "eventSource must not be null!");
 		taskManager = mainFrame.getLongWorkManager();
 		progressPanel = new ProgressGlassPane();
 		filterMapping = new HashMap<>();
@@ -121,12 +118,21 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract Class getWrappedClass();
 
-	public EventWrapperViewPanel<T> getDefaultView()
+	EventWrapperViewPanel<T> getDefaultView()
 	{
 		return defaultView;
 	}
 
-	public LoggingViewState getState()
+	void setScrollingSmoothly(boolean scrollingSmoothly)
+	{
+		defaultView.setScrollingSmoothly(scrollingSmoothly);
+		for (EventWrapperViewPanel<T> viewPanel : filterMapping.values())
+		{
+			viewPanel.setScrollingSmoothly(scrollingSmoothly);
+		}
+	}
+
+	LoggingViewState getState()
 	{
 		if(defaultView != null)
 		{
@@ -182,7 +188,7 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	public void addFilteredView(EventWrapperViewPanel<T> original, Condition filter)
+	void addFilteredView(EventWrapperViewPanel<T> original, Condition filter)
 	{
 		Buffer<EventWrapper<T>> originalBuffer = original.getSourceBuffer();
 		FilteringBuffer<EventWrapper<T>> filteredBuffer = new FilteringBuffer<>(originalBuffer, filter);
@@ -197,7 +203,7 @@ public abstract class ViewContainer<T extends Serializable>
 		taskManager.startTask(callable, "Filtering", createFilteringMessage(metaData), metaData);
 	}
 
-	public void replaceFilteredView(EventWrapperViewPanel<T> original, Condition filter)
+	void replaceFilteredView(EventWrapperViewPanel<T> original, Condition filter)
 	{
 		EventSource<T> eventSource = original.getEventSource();
 
@@ -283,10 +289,10 @@ public abstract class ViewContainer<T extends Serializable>
 		frame.setIconImages(Icons.resolveFrameIconImages(defaultView.getState(), false));
 	}
 
-	private void updateInternalFrameIcon(JInternalFrame iframe)
+	private void updateInternalFrameIcon(JInternalFrame internalFrame)
 	{
-		iframe.setFrameIcon(Icons.resolveFrameIcon(defaultView.getState(), false));
-		iframe.repaint(); // Apple L&F Bug workaround
+		internalFrame.setFrameIcon(Icons.resolveFrameIcon(defaultView.getState(), false));
+		internalFrame.repaint(); // Apple L&F Bug workaround
 	}
 
 	public void addNotify()
@@ -295,7 +301,7 @@ public abstract class ViewContainer<T extends Serializable>
 		updateContainerIcon();
 	}
 
-	public void addChangeListener(ChangeListener listener)
+	void addChangeListener(ChangeListener listener)
 	{
 		boolean changed = false;
 		synchronized (changeListeners)
@@ -312,7 +318,7 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	public void removeChangeListener(ChangeListener listener)
+	void removeChangeListener(ChangeListener listener)
 	{
 		boolean changed = false;
 		synchronized (changeListeners)
@@ -365,7 +371,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract void setShowingStatusBar(boolean showingStatusBar);
 
-	public void setUpdateCallable(ProgressingCallable<Long> updateCallable)
+	void setUpdateCallable(ProgressingCallable<Long> updateCallable)
 	{
 		cancelUpdateTask();
 		this.updateCallable=updateCallable;
@@ -466,18 +472,18 @@ public abstract class ViewContainer<T extends Serializable>
 
 	public abstract int getViewIndex();
 
-	public boolean isSearching()
+	boolean isSearching()
 	{
 		return searching;
 	}
 
-	public void cancelSearching()
+	void cancelSearching()
 	{
 		progressPanel.getFindCancelAction().actionPerformed(null);
 
 	}
 
-	public void hideSearchPanel()
+	void hideSearchPanel()
 	{
 		if(searching)
 		{
@@ -492,7 +498,7 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	public void showSearchPanel(Task<Long> task)
+	void showSearchPanel(Task<Long> task)
 	{
 		if(task != null)
 		{
@@ -512,7 +518,7 @@ public abstract class ViewContainer<T extends Serializable>
 		}
 	}
 
-	public ProgressGlassPane getProgressPanel()
+	ProgressGlassPane getProgressPanel()
 	{
 		return progressPanel;
 	}

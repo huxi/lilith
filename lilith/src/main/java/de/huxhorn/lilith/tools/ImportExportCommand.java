@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.tools;
 
 import de.huxhorn.lilith.prefs.LilithPreferences;
@@ -227,6 +228,7 @@ public class ImportExportCommand
 		p.setHidingOnClose(preferences.isHidingOnClose());
 		p.setMaximizingInternalFrames(preferences.isMaximizingInternalFrames());
 		p.setMute(preferences.isMute());
+		p.setScrollingSmoothly(preferences.isScrollingSmoothly());
 		p.setScrollingToBottom(preferences.isScrollingToBottom());
 		p.setShowingFullCallStack(preferences.isShowingFullCallStack());
 		p.setUsingWrappedExceptionStyle(preferences.isUsingWrappedExceptionStyle());
@@ -281,6 +283,7 @@ public class ImportExportCommand
 		preferences.setHidingOnClose(p.isHidingOnClose());
 		preferences.setMaximizingInternalFrames(p.isMaximizingInternalFrames());
 		preferences.setMute(p.isMute());
+		preferences.setScrollingSmoothly(p.isScrollingSmoothly());
 		preferences.setScrollingToBottom(p.isScrollingToBottom());
 		preferences.setShowingFullCallStack(p.isShowingFullCallStack());
 		preferences.setUsingWrappedExceptionStyle(p.isUsingWrappedExceptionStyle());

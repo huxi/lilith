@@ -46,12 +46,13 @@ import javax.swing.border.TitledBorder;
 public class GeneralPanel
 	extends JPanel
 {
-	private static final long serialVersionUID = -1175111472436154676L;
+	private static final long serialVersionUID = -3070943109124678227L;
 
 	private PreferencesDialog preferencesDialog;
 	private ApplicationPreferences applicationPreferences;
 
 	// Views
+	private JCheckBox scrollingSmoothlyCheckbox;
 	private JCheckBox scrollingToBottomCheckbox;
 	private JCheckBox coloringWholeRowCheckbox;
 
@@ -80,6 +81,7 @@ public class GeneralPanel
 	private void createUI()
 	{
 		// General
+		scrollingSmoothlyCheckbox = new JCheckBox("Smooth horizontal table scrolling");
 		scrollingToBottomCheckbox = new JCheckBox("Initial 'Scrolling to Bottom' setting");
 		coloringWholeRowCheckbox = new JCheckBox("Color whole row according to Level or Status");
 
@@ -123,9 +125,9 @@ public class GeneralPanel
 		hidingOnCloseCheckbox = new JCheckBox("Hide windows on close.");
 		hidingOnCloseCheckbox.setToolTipText("Hide all windows on close of main frame instead of exiting the application. This is only relevant if tray icon is enabled.");
 
-
-		JPanel viewPanel = new JPanel(new GridLayout(2, 1));
+		JPanel viewPanel = new JPanel(new GridLayout(3, 1));
 		viewPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "View"));
+		viewPanel.add(scrollingSmoothlyCheckbox);
 		viewPanel.add(scrollingToBottomCheckbox);
 		viewPanel.add(coloringWholeRowCheckbox);
 
@@ -178,6 +180,7 @@ public class GeneralPanel
 
 	public void initUI()
 	{
+		scrollingSmoothlyCheckbox.setSelected(applicationPreferences.isScrollingSmoothly());
 		scrollingToBottomCheckbox.setSelected(applicationPreferences.isScrollingToBottom());
 		coloringWholeRowCheckbox.setSelected(applicationPreferences.isColoringWholeRow());
 		showFullCallStackCheckbox.setSelected(applicationPreferences.isShowingFullCallStack());
@@ -241,6 +244,7 @@ public class GeneralPanel
 
 	void saveSettings()
 	{
+		applicationPreferences.setScrollingSmoothly(scrollingSmoothlyCheckbox.isSelected());
 		applicationPreferences.setScrollingToBottom(scrollingToBottomCheckbox.isSelected());
 		applicationPreferences.setColoringWholeRow(coloringWholeRowCheckbox.isSelected());
 		applicationPreferences.setShowingFullCallStack(showFullCallStackCheckbox.isSelected());

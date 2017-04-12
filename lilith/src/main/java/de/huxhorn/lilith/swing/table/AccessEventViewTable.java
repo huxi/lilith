@@ -49,16 +49,16 @@ public class AccessEventViewTable
 {
 	private static final long serialVersionUID = -5675168001393911040L;
 
-	public static final String DEFAULT_COLUMN_NAME_ID = "ID";
-	public static final String DEFAULT_COLUMN_NAME_TIMESTAMP = "Timestamp";
-	public static final String DEFAULT_COLUMN_NAME_ELAPSED_TIME = "Elapsed Time";
-	public static final String DEFAULT_COLUMN_NAME_STATUS_CODE = "Status";
-	public static final String DEFAULT_COLUMN_NAME_METHOD = "Method";
-	public static final String DEFAULT_COLUMN_NAME_REQUEST_URI = "Request URI";
-	public static final String DEFAULT_COLUMN_NAME_PROTOCOL = "Protocol";
-	public static final String DEFAULT_COLUMN_NAME_REMOTE_ADDR = "Remote Address";
-	public static final String DEFAULT_COLUMN_NAME_APPLICATIION = "Application";
-	public static final String DEFAULT_COLUMN_NAME_SOURCE = "Source";
+	private static final String DEFAULT_COLUMN_NAME_ID = "ID";
+	private static final String DEFAULT_COLUMN_NAME_TIMESTAMP = "Timestamp";
+	private static final String DEFAULT_COLUMN_NAME_ELAPSED_TIME = "Elapsed Time";
+	private static final String DEFAULT_COLUMN_NAME_STATUS_CODE = "Status";
+	private static final String DEFAULT_COLUMN_NAME_METHOD = "Method";
+	private static final String DEFAULT_COLUMN_NAME_REQUEST_URI = "Request URI";
+	private static final String DEFAULT_COLUMN_NAME_PROTOCOL = "Protocol";
+	private static final String DEFAULT_COLUMN_NAME_REMOTE_ADDRESS = "Remote Address";
+	private static final String DEFAULT_COLUMN_NAME_APPLICATION = "Application";
+	private static final String DEFAULT_COLUMN_NAME_SOURCE = "Source";
 
 	public AccessEventViewTable(MainFrame mainFrame, EventWrapperTableModel<AccessEvent> model, boolean global)
 	{
@@ -74,7 +74,7 @@ public class AccessEventViewTable
 			new RequestUrlTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_STATUS_CODE,
 			new StatusCodeTooltipGenerator());
-		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATIION,
+		tooltipGenerators.put(DEFAULT_COLUMN_NAME_APPLICATION,
 			new ApplicationTooltipGenerator());
 		tooltipGenerators.put(DEFAULT_COLUMN_NAME_ELAPSED_TIME,
 			new ElapsedTimeTooltipGenerator());
@@ -123,13 +123,13 @@ public class AccessEventViewTable
 		}
 		{
 			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_REMOTE_ADDR);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_REMOTE_ADDRESS);
 			col.setCellRenderer(new RemoteAddressRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
 		}
 		{
 			TableColumn col = new TableColumn(0);
-			col.setHeaderValue(DEFAULT_COLUMN_NAME_APPLICATIION);
+			col.setHeaderValue(DEFAULT_COLUMN_NAME_APPLICATION);
 			col.setCellRenderer(new ApplicationRenderer());
 			tableColumns.put(col.getHeaderValue(), col);
 		}
@@ -159,8 +159,8 @@ public class AccessEventViewTable
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_METHOD, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_PROTOCOL, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REQUEST_URI, 75, true));
-		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REMOTE_ADDR, 75, true));
-		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATIION, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_REMOTE_ADDRESS, 75, true));
+		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_APPLICATION, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_ELAPSED_TIME, 75, true));
 		result.add(new PersistentTableColumnModel.TableColumnLayoutInfo(DEFAULT_COLUMN_NAME_SOURCE, 75, isGlobal()));
 
@@ -169,8 +169,8 @@ public class AccessEventViewTable
 
 	public void saveLayout()
 	{
-		List<PersistentTableColumnModel.TableColumnLayoutInfo> infos = tableColumnModel.getColumnLayoutInfos();
-		mainFrame.getApplicationPreferences().writeAccessColumnLayout(isGlobal(), infos);
+		List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfoList = tableColumnModel.getColumnLayoutInfos();
+		mainFrame.getApplicationPreferences().writeAccessColumnLayout(isGlobal(), layoutInfoList);
 	}
 
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout()

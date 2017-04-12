@@ -57,6 +57,7 @@ public class LilithPreferences
 	private boolean hidingOnClose = true;
 	private boolean maximizingInternalFrames = false;
 	private boolean mute = false;
+	private boolean scrollingSmoothly = true;
 	private boolean scrollingToBottom = true;
 	private boolean showingFullCallStack = false;
 	private boolean showingFullRecentPath = false;
@@ -251,6 +252,17 @@ public class LilithPreferences
 	public void setMute(boolean mute)
 	{
 		this.mute = mute;
+	}
+
+
+	public boolean isScrollingSmoothly()
+	{
+		return scrollingSmoothly;
+	}
+
+	public void setScrollingSmoothly(boolean scrollingSmoothly)
+	{
+		this.scrollingSmoothly = scrollingSmoothly;
 	}
 
 	public boolean isScrollingToBottom()

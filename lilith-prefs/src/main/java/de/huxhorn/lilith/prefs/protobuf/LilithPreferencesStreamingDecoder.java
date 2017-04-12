@@ -158,6 +158,10 @@ public class LilithPreferencesStreamingDecoder
 		{
 			preferences.setMute(p.getMute());
 		}
+		if(p.hasScrollingSmoothly())
+		{
+			preferences.setScrollingSmoothly(p.getScrollingSmoothly());
+		}
 		if(p.hasScrollingToBottom())
 		{
 			preferences.setScrollingToBottom(p.getScrollingToBottom());

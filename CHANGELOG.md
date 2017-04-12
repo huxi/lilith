@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added Previous and Next buttons to toolbar.
 - Added lots of missing mnemonics.
 - If the connection is lost then Message/RequestURI in table will now show "Connection closed." instead of nothing.
+- Added smooth horizontal table scrolling option that is enabled by default.
 
 ### Changed
 - Refactored actions and icon handling.

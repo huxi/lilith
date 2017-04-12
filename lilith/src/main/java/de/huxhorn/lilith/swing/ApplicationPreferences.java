@@ -112,6 +112,7 @@ public class ApplicationPreferences
 	static final String LOOK_AND_FEEL_PROPERTY = "lookAndFeel";
 	private static final String CLEANING_LOGS_ON_EXIT_PROPERTY = "cleaningLogsOnExit";
 	static final String COLORING_WHOLE_ROW_PROPERTY = "coloringWholeRow";
+	static final String SCROLLING_SMOOTHLY_PROPERTY = "scrollingSmoothly";
 	static final String SHOWING_TOOLBAR_PROPERTY = "showingToolbar";
 	static final String SHOWING_STATUS_BAR_PROPERTY = "showingStatusBar";
 	static final String SHOWING_PRIMARY_IDENTIFIER_PROPERTY = "showingPrimaryIdentifier";
@@ -1862,6 +1863,19 @@ public class ApplicationPreferences
 	public boolean isHidingOnClose()
 	{
 		return PREFERENCES.getBoolean(HIDING_ON_CLOSE_PROPERTY, DEFAULT_VALUES.isHidingOnClose());
+	}
+
+	public boolean isScrollingSmoothly()
+	{
+		return PREFERENCES.getBoolean(SCROLLING_SMOOTHLY_PROPERTY, DEFAULT_VALUES.isScrollingSmoothly());
+	}
+
+	public void setScrollingSmoothly(boolean scrollingSmoothly)
+	{
+		Object oldValue = isScrollingSmoothly();
+		PREFERENCES.putBoolean(SCROLLING_SMOOTHLY_PROPERTY, scrollingSmoothly);
+		Object newValue = isScrollingSmoothly();
+		propertyChangeSupport.firePropertyChange(SCROLLING_SMOOTHLY_PROPERTY, oldValue, newValue);
 	}
 
 	public void setShowingToolbar(boolean showingToolbar)

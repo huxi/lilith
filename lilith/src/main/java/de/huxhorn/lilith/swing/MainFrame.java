@@ -271,6 +271,7 @@ public class MainFrame
 	private static final ViewActionsProcessor UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR = new UpdateWindowMenuProcessor();
 	private static final ViewContainerProcessor RESET_CONTAINER_PROCESSOR = new ResetContainerProcessor();
 	private final SourceTitleContainerProcessor sourceTitleContainerProcessor=new SourceTitleContainerProcessor();
+	private final ScrollingSmoothlyContainerProcessor scrollingSmoothlyContainerProcessor = new ScrollingSmoothlyContainerProcessor();
 
 	private boolean usingThymeleaf;
 
@@ -2717,6 +2718,12 @@ public class MainFrame
 				return;
 			}
 
+			if(ApplicationPreferences.SCROLLING_SMOOTHLY_PROPERTY.equals(propName))
+			{
+				updateScrollingSmoothly();
+				return;
+			}
+
 			if(ApplicationPreferences.COLORING_WHOLE_ROW_PROPERTY.equals(propName))
 			{
 				coloringWholeRow = applicationPreferences.isColoringWholeRow();
@@ -2731,6 +2738,12 @@ public class MainFrame
 			updateWindowMenus();
 			sourceTitleContainerProcessor.updateSourceNameSettings();
 			processViewContainers(sourceTitleContainerProcessor);
+		}
+
+		private void updateScrollingSmoothly()
+		{
+			scrollingSmoothlyContainerProcessor.updateScrollingSmoothly();
+			processViewContainers(scrollingSmoothlyContainerProcessor);
 		}
 	}
 
@@ -2972,6 +2985,23 @@ public class MainFrame
 				String title = ViewActions.resolveSourceTitle(container, sourceNames, showingPrimaryIdentifier, showingSecondaryIdentifier);
 				window.setTitle(title);
 			}
+		}
+	}
+
+	private class ScrollingSmoothlyContainerProcessor
+			implements ViewContainerProcessor
+	{
+		private boolean scrollingSmoothly;
+
+		void updateScrollingSmoothly()
+		{
+			scrollingSmoothly = applicationPreferences.isScrollingSmoothly();
+		}
+
+		@Override
+		public void process(ViewContainer<?> container)
+		{
+			container.setScrollingSmoothly(scrollingSmoothly);
 		}
 	}
 
