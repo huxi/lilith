@@ -1,0 +1,24 @@
+Release 1.0.4 - 2009/12/24
+Bugfix in handling messages larger than 127 chars
+
+Thanks to Fatih Ulusoy
+
+
+Release 1.0.3 - 2009/12/07
+Windows XP firewall popup has been avoided
+(the junique internal server has been
+explicitly bound on the "localhost" address).
+
+Thanks to Stephan Heiss
+
+
+Release 1.0.2 - 2009/07/19
+A minor bug has been solved in the
+it.sauronsoftware.junique.Server class.
+
+Thanks to Stephan Heiss
+
+
+Release 1.0.1 - 2009/05/06
+The software sources have been reorganized
+and an automated build procedure has been added.

@@ -1,0 +1,14 @@
+Come il primo esempio, ma con supporto per gli argomenti
+da riga di comando e scambio di messaggi fra istanze.
+
+Prova a lanciare questo comando:
+
+java -Djava.ext.dirs=../../ -jar textpad.jar README.txt
+
+(oppure lancia run1.bat)
+
+Mentre l'applicazione e' aperta lancia anche
+
+java -Djava.ext.dirs=../../ -jar textpad.jar LEGGIMI.txt
+
+(oppure lancia run2.bat)

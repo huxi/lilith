@@ -1,0 +1,138 @@
+
+
+apply plugin: 'signing'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'de.huxhorn.lilith'
+archivesBaseName = 'de.huxhorn.lilith.3rdparty.junique'
+version = '1.0.4'
+description = 'Custom build of junique for Maven Central deployment.'
+
+
+defaultTasks 'build', 'uploadPublished'
+
+ext.localReleaseRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/release")
+ext.localSnapshotRepoFile = new File("${System.properties.'user.home'}/local-gradle-repository/snapshot")
+ext.localReleaseRepo = localReleaseRepoFile.toURL().toString()
+ext.localSnapshotRepo = localSnapshotRepoFile.toURL().toString()
+
+repositories {
+	maven {
+		url localReleaseRepo
+	}
+	maven {
+		url localSnapshotRepo
+	}
+	mavenCentral()
+	mavenLocal()
+}
+
+configurations {
+	published.extendsFrom archives, signatures
+}
+
+String pgpPassword = System.properties.'pgpPassword'
+if(!pgpPassword) {
+	// name clash with org.gradle.api.tasks.Console
+	java.io.Console console = System.console()
+	if(!console) {
+		throw new IllegalStateException('System.console() returned null. Restart with --no-daemon.')
+	}
+	pgpPassword = new String(console.readPassword("\nPGP Private Key Password: "))
+}
+
+signing {
+	required = true
+	sign configurations.archives
+}
+
+compileJava.options.compilerArgs=['-Xlint:unchecked', '-Xlint:-options', '-Xlint:deprecation', '-g']
+
+def sourceEncoding = 'UTF-8'
+compileJava.options.encoding = sourceEncoding
+javadoc.options.encoding = sourceEncoding
+
+def compatibilityVersion = '1.5'
+sourceCompatibility = compatibilityVersion
+targetCompatibility = compatibilityVersion
+
+task sourceJar(type: Jar) { from sourceSets.main.allSource; classifier = 'sources' }
+task javadocJar(type: Jar) { from javadoc.outputs.files; classifier = 'javadoc' }
+
+artifacts { archives sourceJar, javadocJar }
+
+ext.'signing.keyId' = '740A1840'
+ext.'signing.secretKeyRingFile' = new File("${System.properties['user.home']}/.gnupg/secring.gpg").absolutePath
+ext."signing.password" = pgpPassword
+
+project.ext.defaultProject= {
+	url 'http://www.sauronsoftware.it/projects/junique/'
+	name project.name
+	description project.description
+	inceptionYear '2009'
+
+	scm {
+		connection 'scm:git:git://github.com/huxi/lilith.git'
+		developerConnection 'scm:git:ssh://git@github.com:huxi/lilith.git'
+		url 'https://github.com/huxi/lilith/tree/master/3rdparty/junique'
+	}
+
+	licenses {
+		license {
+			name 'GNU Lesser General Public License v3 (LGPL)'
+			url 'http://www.gnu.org/copyleft/lesser.html'
+			distribution 'repo'
+		}
+	}
+
+	developers {
+		developer {
+			id 'pelliccia'
+			email 'cpelliccia@sauronsoftware.it'
+			name 'Carlo Pelliccia'
+			organization = 'Sauron Software'
+			organizationUrl 'http://www.sauronsoftware.it/projects/junique/'
+			roles {
+				role 'Developer'
+			}
+		}
+
+		developer {
+			id 'huxhorn'
+			email 'huxhorn@users.sourceforge.net'
+			name 'Joern Huxhorn'
+			organization = 'Joern Huxhorn'
+			organizationUrl 'http://lilithapp.com'
+			roles {
+				role 'Deployer'
+			}
+		}
+	}
+
+	properties {
+		'project.build.sourceEncoding' 'UTF-8'
+		'project.reporting.outputEncoding' 'UTF-8'
+	}
+}
+
+
+def deployer = null
+
+uploadPublished {
+	deployer = repositories.mavenDeployer {
+		repository(url: localReleaseRepo)
+		snapshotRepository(url: localSnapshotRepo)
+		beforeDeployment { MavenDeployment deployment ->
+			signing.signPom(deployment)
+		}
+	}
+}
+
+
+def installer = install.repositories.mavenInstaller
+
+installer.pom.project defaultProject
+
+deployer.pom.project defaultProject
+

@@ -1,4 +1,0 @@
-Execute the following line:
-mvn install:install-file -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -DgroupId=de.huxhorn.lilith -DartifactId=de.huxhorn.lilith.3rdparty.flyingsaucer.core-renderer -Dversion=8RC1 -Dfile=core-renderer.jar
-
-mvn deploy:deploy-file -Duser.name=huxhorn,lilith -Durl=sftp://web.sourceforge.net/home/groups/l/li/lilith/htdocs/repository -DrepositoryId=lilith-repos -Dfile=core-renderer.jar -DpomFile=fs-pom.xml

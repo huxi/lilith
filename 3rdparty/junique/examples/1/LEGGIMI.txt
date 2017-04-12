@@ -1,0 +1,8 @@
+Una sorta di semplice blocco note, che pero' non puo' 
+essere avviato piu' volte contemporaneamente.
+
+Prova a lanciare questo comando piu' di una volta:
+
+java -Djava.ext.dirs=../../ -jar textpad.jar
+
+(oppure lancia run.bat)
