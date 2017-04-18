@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,9 +43,10 @@ import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Locale;
 import java.util.zip.GZIPInputStream;
 import javax.xml.stream.XMLInputFactory;
@@ -109,7 +110,7 @@ public class Log4jImportCallable
 		}
 		long fileSize = inputFile.length();
 		setNumberOfSteps(fileSize);
-		FileInputStream fis = new FileInputStream(inputFile);
+		InputStream fis = Files.newInputStream(inputFile.toPath());
 		CountingInputStream cis = new CountingInputStream(fis);
 
 		String fileName=inputFile.getName().toLowerCase(Locale.US);

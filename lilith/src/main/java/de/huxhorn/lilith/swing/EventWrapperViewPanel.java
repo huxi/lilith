@@ -40,7 +40,6 @@ import de.huxhorn.sulky.codec.filebuffer.CodecFileBuffer;
 import de.huxhorn.sulky.conditions.And;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.formatting.HumanReadable;
-import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.swing.KeyStrokes;
 import de.huxhorn.sulky.tasks.ProgressingCallable;
 import de.huxhorn.sulky.tasks.Task;
@@ -68,11 +67,12 @@ import java.awt.event.MouseWheelListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.Instant;
@@ -820,10 +820,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		String filename = DateTimeFormatters.COMPACT_DATETIME_IN_SYSTEM_ZONE_T.format(Instant.now());
 		File errorFile = new File(errorPath, filename);
-		FileOutputStream fos = null;
-		try
+
+		try(OutputStream fos = Files.newOutputStream(errorFile.toPath()))
 		{
-			fos = new FileOutputStream(errorFile);
 			OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
 			osw.append(message);
 			osw.flush();
@@ -831,16 +830,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 		catch(Throwable e)
 		{
-			if(logger.isWarnEnabled())
-			{
-				logger.warn("Exception while writing faulty message to '" + errorFile.getAbsolutePath() + "'!", e);
-			}
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing faulty message to '{}'!", errorFile.getAbsolutePath(), e);
 		}
-		finally
-		{
-			IOUtilities.closeQuietly(fos);
-		}
-
 	}
 
 

@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.Lilith;
@@ -57,9 +58,6 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -67,6 +65,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -682,7 +681,7 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(file)));
+				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())));
 
 				this.recentFiles = transformToList(logger, String.class, d.readObject());
 			}
@@ -726,11 +725,11 @@ public class ApplicationPreferences
 		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			e = new XMLEncoder(bos);
 			e.writeObject(object);
 		}
-		catch(FileNotFoundException ex)
+		catch(IOException ex)
 		{
 			error = ex;
 		}
@@ -795,7 +794,7 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(file)));
+				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())));
 
 				this.previousSearchStrings = transformToList(logger, String.class, d.readObject());
 			}
@@ -958,7 +957,7 @@ public class ApplicationPreferences
 				XMLDecoder d = null;
 				try
 				{
-					d = new XMLDecoder(new BufferedInputStream(new FileInputStream(levelColorsFile)));
+					d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(levelColorsFile.toPath())));
 
 					levelColors = transformToMap(LoggingEvent.Level.class, ColorScheme.class, d.readObject());
 				}
@@ -1036,7 +1035,7 @@ public class ApplicationPreferences
 		File file = new File(appPath, LEVEL_COLORS_XML_FILENAME);
 		try
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			XMLEncoder e = new XMLEncoder(bos);
 			PersistenceDelegate delegate = new EnumPersistenceDelegate();
 			e.setPersistenceDelegate(LoggingEvent.Level.class, delegate);
@@ -1071,7 +1070,7 @@ public class ApplicationPreferences
 				XMLDecoder d = null;
 				try
 				{
-					d = new XMLDecoder(new BufferedInputStream(new FileInputStream(statusColorsFile)));
+					d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(statusColorsFile.toPath())));
 
 					statusColors = transformToMap(HttpStatus.Type.class, ColorScheme.class, d.readObject());
 				}
@@ -1149,7 +1148,7 @@ public class ApplicationPreferences
 		File file = new File(appPath, STATUS_COLORS_XML_FILENAME);
 		try
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			XMLEncoder e = new XMLEncoder(bos);
 			PersistenceDelegate delegate = new EnumPersistenceDelegate();
 			e.setPersistenceDelegate(HttpStatus.Type.class, delegate);
@@ -1188,7 +1187,7 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(sourceListsFile)));
+				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(sourceListsFile.toPath())));
 
 				Map<String, Set> interimMap = transformToMap(String.class, Set.class, d.readObject());
 
@@ -1347,10 +1346,10 @@ public class ApplicationPreferences
 
 			try
 			{
-				FileInputStream availableFile = new FileInputStream(file);
+				InputStream availableFile = Files.newInputStream(file.toPath());
 				available = getMD5(availableFile);
 			}
-			catch(FileNotFoundException e)
+			catch(IOException e)
 			{
 				// ignore
 			}
@@ -1443,10 +1442,8 @@ public class ApplicationPreferences
 		if(!target.isFile())
 		{
 			InputStream is = null;
-			FileOutputStream os = null;
-			try
+			try(OutputStream os = Files.newOutputStream(target.toPath()))
 			{
-				os = new FileOutputStream(target);
 				is = source.openStream();
 				IOUtils.copy(is, os);
 				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
@@ -1458,7 +1455,6 @@ public class ApplicationPreferences
 			finally
 			{
 				IOUtilities.closeQuietly(is);
-				IOUtilities.closeQuietly(os);
 			}
 		}
 		else
@@ -1709,7 +1705,7 @@ public class ApplicationPreferences
 			XMLDecoder d = null;
 			try
 			{
-				d = new XMLDecoder(new BufferedInputStream(new FileInputStream(conditionsFile)));
+				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(conditionsFile.toPath())));
 
 				conditions = transformToList(logger, SavedCondition.class, d.readObject());
 				lastConditionsModified = lastModified;
@@ -2509,12 +2505,12 @@ public class ApplicationPreferences
 		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			e = new XMLEncoder(bos);
 			e.writeObject(conditions);
 			if(logger.isInfoEnabled()) logger.info("Wrote conditions {}.", conditions);
 		}
-		catch(FileNotFoundException ex)
+		catch(IOException ex)
 		{
 			error = ex;
 		}
@@ -2543,14 +2539,14 @@ public class ApplicationPreferences
 		InputStream is = null;
 		try
 		{
-			is = new BufferedInputStream(new FileInputStream(file));
+			is = new BufferedInputStream(Files.newInputStream(file.toPath()));
 			Properties props = new Properties();
 			props.loadFromXML(is);
 			return convert(props);
 		}
 		catch(IOException e)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
+			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '{}'!", file.getAbsolutePath(), e);
 		}
 		finally
 		{
@@ -2601,7 +2597,7 @@ public class ApplicationPreferences
 		Throwable error = null;
 		try
 		{
-			os = new BufferedOutputStream(new FileOutputStream(file));
+			os = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			output.storeToXML(os, comment, StandardCharsets.UTF_8.toString());
 		}
 		catch(IOException e)
@@ -2626,7 +2622,7 @@ public class ApplicationPreferences
 		InputStream is = null;
 		try
 		{
-			is = new BufferedInputStream(new FileInputStream(file));
+			is = new BufferedInputStream(Files.newInputStream(file.toPath()));
 			Properties props = new Properties();
 			props.load(is);
 			return convert(props);
@@ -2708,12 +2704,12 @@ public class ApplicationPreferences
 		Throwable error = null;
 		try
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			e = new XMLEncoder(bos);
 			e.writeObject(layoutInfo);
 			if(logger.isInfoEnabled()) logger.info("Wrote layouts {} to file '{}'.", layoutInfo, file.getAbsolutePath());
 		}
-		catch(FileNotFoundException ex)
+		catch(IOException ex)
 		{
 			error = ex;
 		}
@@ -2738,7 +2734,7 @@ public class ApplicationPreferences
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> result;
 		try
 		{
-			d = new XMLDecoder(new BufferedInputStream(new FileInputStream(file)));
+			d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())));
 
 			result = transformToList(logger, PersistentTableColumnModel.TableColumnLayoutInfo.class, d.readObject());
 		}

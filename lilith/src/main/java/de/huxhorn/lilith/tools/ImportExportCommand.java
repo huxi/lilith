@@ -28,9 +28,8 @@ import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -130,7 +129,7 @@ public class ImportExportCommand
 						continue;
 					}
 					byte[] bytes=new byte[(int) length];
-					is=new DataInputStream(new FileInputStream(currentFile));
+					is=new DataInputStream(Files.newInputStream(currentFile.toPath()));
 					is.readFully(bytes);
 					result.put(current, bytes);
 				}
@@ -182,7 +181,7 @@ public class ImportExportCommand
 				DataOutputStream os=null;
 				try
 				{
-					os=new DataOutputStream(new FileOutputStream(currentFile));
+					os=new DataOutputStream(Files.newOutputStream(currentFile.toPath()));
 					os.write(value);
 					if(logger.isInfoEnabled()) logger.info("Wrote {} bytes into '{}'.", value.length, currentFile.getAbsolutePath());
 				}
@@ -341,7 +340,7 @@ public class ImportExportCommand
 		GZIPOutputStream os = null;
 		try
 		{
-			os = new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+			os = new GZIPOutputStream(new BufferedOutputStream(Files.newOutputStream(file.toPath())));
 			LilithPreferencesStreamingEncoder encoder = new LilithPreferencesStreamingEncoder();
 			encoder.encode(p, os);
 		}
@@ -361,7 +360,7 @@ public class ImportExportCommand
 		GZIPInputStream is = null;
 		try
 		{
-			is = new GZIPInputStream(new BufferedInputStream(new FileInputStream(file)));
+			is = new GZIPInputStream(new BufferedInputStream(Files.newInputStream(file.toPath())));
 			LilithPreferencesStreamingDecoder decoder = new LilithPreferencesStreamingDecoder();
 			return decoder.decode(is);
 		}

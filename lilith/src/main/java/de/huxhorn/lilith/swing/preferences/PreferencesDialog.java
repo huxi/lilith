@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -36,10 +37,10 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -615,16 +616,13 @@ public class PreferencesDialog
 		}
 		if(messageViewGroovyFile.isFile())
 		{
-			InputStream is;
-			try
+			try(InputStream is = Files.newInputStream(messageViewGroovyFile.toPath()))
 			{
-				is = new FileInputStream(messageViewGroovyFile);
-				List lines = IOUtils.readLines(is, StandardCharsets.UTF_8);
+				List<String> lines = IOUtils.readLines(is, StandardCharsets.UTF_8);
 				boolean isFirst = true;
 				StringBuilder textBuffer = new StringBuilder();
-				for(Object o : lines)
+				for(String s : lines)
 				{
-					String s = (String) o;
 					if(isFirst)
 					{
 						isFirst = false;
@@ -639,10 +637,7 @@ public class PreferencesDialog
 			}
 			catch(IOException e)
 			{
-				if(logger.isInfoEnabled())
-				{
-					logger.info("Exception while reading '" + messageViewGroovyFile.getAbsolutePath() + "'.", e);
-				}
+				if(logger.isInfoEnabled()) logger.info("Exception while reading '{}'.", messageViewGroovyFile.getAbsolutePath(), e);
 			}
 		}
 		else

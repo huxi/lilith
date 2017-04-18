@@ -54,17 +54,15 @@ import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
 import java.awt.EventQueue;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Iterator;
@@ -79,6 +77,9 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
 
 public class Lilith
 {
@@ -863,7 +864,7 @@ public class Lilith
 				}
 				try
 				{
-					FileOutputStream fos = new FileOutputStream(errorLog, true);
+					OutputStream fos = Files.newOutputStream(errorLog.toPath(), CREATE, APPEND);
 					PrintStream ps = new PrintStream(fos, true, StandardCharsets.UTF_8.name());
 					if(!freshFile)
 					{
@@ -874,7 +875,7 @@ public class Lilith
 					System.setErr(ps);
 					if(logger.isInfoEnabled()) logger.info("Writing System.err to '{}'.", errorLog.getAbsolutePath());
 				}
-				catch(FileNotFoundException | UnsupportedEncodingException e)
+				catch(IOException e)
 				{
 					e.printStackTrace();
 				}
@@ -990,20 +991,14 @@ public class Lilith
 	{
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
-		InputStream is = null;
 		String prevPathStr = null;
-		try
+		try(InputStream is = Files.newInputStream(prevPathFile.toPath()))
 		{
-			is = new FileInputStream(prevPathFile);
 			prevPathStr = IOUtils.toString(is, StandardCharsets.UTF_8);
 		}
 		catch(IOException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while reading previous application path!", ex);
-		}
-		finally
-		{
-			IOUtilities.closeQuietly(is);
 		}
 		if(prevPathStr != null)
 		{

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,9 +39,10 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.io.IOUtilities;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
@@ -101,7 +102,7 @@ public class JulImportCallableTest
 		}
 		inputFile = File.createTempFile("Import", "test");
 		inputFile.delete();
-		FileOutputStream output = new FileOutputStream(inputFile);
+		OutputStream output = Files.newOutputStream(inputFile.toPath());
 		IOUtils.copyLarge(input, output);
 		IOUtilities.closeQuietly(output);
 	}

@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.DateTimeFormatters;
@@ -141,8 +142,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -153,6 +152,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1341,7 +1341,7 @@ public class MainFrame
 		BufferedReader br = null;
 		try
 		{
-			FileInputStream fis = new FileInputStream(inputFile);
+			InputStream fis = Files.newInputStream(inputFile.toPath());
 
 			String fileName=inputFile.getName().toLowerCase(Locale.US);
 			if(fileName.endsWith(".gz"))
@@ -2589,7 +2589,7 @@ public class MainFrame
 					OutputStreamWriter writer = null;
 					try
 					{
-						writer = new OutputStreamWriter(new FileOutputStream(previousApplicationPathFile), StandardCharsets.UTF_8);
+						writer = new OutputStreamWriter(Files.newOutputStream(previousApplicationPathFile.toPath()), StandardCharsets.UTF_8);
 						writer.append(oldPath.getAbsolutePath());
 					}
 					catch(IOException ex)
