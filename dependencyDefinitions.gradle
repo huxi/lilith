@@ -54,7 +54,7 @@ project.ext.libraries = [
 'logback-classic':          "ch.qos.logback:logback-classic:${versions.logback}",
 'logback-core':             "ch.qos.logback:logback-core:${versions.logback}",
 'objenesis':                'org.objenesis:objenesis:2.4',
-'protobuf':                 'com.google.protobuf:protobuf-java:3.2.0',
+'protobuf':                 'com.google.protobuf:protobuf-java:3.3.0',
 'servlet-api':              'javax.servlet:javax.servlet-api:3.1.0',
 'slf4j-api':                "org.slf4j:slf4j-api:${versions.slf4j}",
 'spock-core':               "org.spockframework:spock-core:${versions.spock}",

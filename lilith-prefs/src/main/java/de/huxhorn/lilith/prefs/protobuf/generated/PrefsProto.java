@@ -2102,6 +2102,17 @@ public final class PrefsProto {
     }
 
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.LilithPreferences parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
@@ -4808,6 +4819,17 @@ public final class PrefsProto {
     }
 
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
@@ -6048,6 +6070,17 @@ public final class PrefsProto {
     }
 
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
@@ -6650,6 +6683,17 @@ public final class PrefsProto {
       return hash;
     }
 
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMap parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMap parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMap parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7475,6 +7519,17 @@ public final class PrefsProto {
     }
 
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
@@ -8120,6 +8175,17 @@ public final class PrefsProto {
       return hash;
     }
 
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMap parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMap parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMap parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -8951,6 +9017,17 @@ public final class PrefsProto {
       return hash;
     }
 
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -9784,6 +9861,17 @@ public final class PrefsProto {
       return hash;
     }
 
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
