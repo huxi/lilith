@@ -38,7 +38,7 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.plugins.signing.Sign
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '3.5'
+	gradleVersion = '4.0-rc-1'
 }
 
 def copyright = "Copyright \u00a9 2007-2017 J\u00f6rn Huxhorn"
@@ -350,7 +350,6 @@ project(':lilith') {
 ### macappbundle
 - [Gradle Plugin Homepage](https://github.com/crotwell/gradle-macappbundle/)
 - [MacAppBundlePluginExtension](https://github.com/crotwell/gradle-macappbundle/blob/master/src/main/groovy/edu/sc/seis/macAppBundle/MacAppBundlePluginExtension.groovy)
-- Artifact: `'gradle.plugin.edu.sc.seis:macAppBundle:2.1.1'`
 - http://kovuthehusky.com/blog/running-minecraft-on-os-x-using-java-7/
 - https://bugs.mojang.com/browse/MCL-1049
 - https://bugs.mojang.com/browse/MCL-2628
