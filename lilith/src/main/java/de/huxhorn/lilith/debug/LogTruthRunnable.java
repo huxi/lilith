@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  */
 package de.huxhorn.lilith.debug;
 
-import org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
@@ -29,7 +29,7 @@ public class LogTruthRunnable
 	private Marker marker;
 	private boolean formatted;
 
-	public LogTruthRunnable(int delay, Marker marker, boolean formatted)
+	LogTruthRunnable(int delay, Marker marker, boolean formatted)
 	{
 		super(delay);
 		this.marker = marker;
