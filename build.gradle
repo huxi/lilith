@@ -27,6 +27,7 @@ buildscript {
 		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.7.1'
 		classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.1.6'
 		classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+		// https://github.com/policeman-tools/forbidden-apis/issues/120
 		classpath 'de.thetaphi:forbiddenapis:2.3'
 	}
 }
