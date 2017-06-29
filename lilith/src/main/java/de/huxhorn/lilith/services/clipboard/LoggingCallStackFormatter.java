@@ -40,7 +40,7 @@ public class LoggingCallStackFormatter
 
 	public String toString(Object object)
 	{
-		return resolveCallStack(object).map(LoggingCallStackFormatter::toString).orElse(null);
+		return resolveCallStack(object).map(callStack -> toString(callStack)).orElse(null);
 	}
 
 	private static String toString(ExtendedStackTraceElement[] callStack)

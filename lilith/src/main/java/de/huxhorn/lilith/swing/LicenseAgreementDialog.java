@@ -56,7 +56,7 @@ public class LicenseAgreementDialog
 		{
 			public void windowClosing(WindowEvent we)
 			{
-				decline();
+				declineLicense();
 			}
 		});
 		licenseAgreed = false;
@@ -133,12 +133,12 @@ public class LicenseAgreementDialog
 		}
 	}
 
-	private void accept()
+	private void acceptLicense()
 	{
 		setLicenseAgreed(true);
 	}
 
-	private void decline()
+	private void declineLicense()
 	{
 		setLicenseAgreed(false);
 	}
@@ -155,7 +155,7 @@ public class LicenseAgreementDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			accept();
+			acceptLicense();
 		}
 	}
 
@@ -171,7 +171,7 @@ public class LicenseAgreementDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			decline();
+			declineLicense();
 		}
 	}
 }
