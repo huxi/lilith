@@ -50,7 +50,7 @@ class AbstractFilterMainMenu
 	protected final boolean htmlTooltip;
 	protected final ApplicationPreferences applicationPreferences;
 
-	protected AbstractFilterMainMenu(Action action, ApplicationPreferences applicationPreferences, boolean htmlTooltip)
+	AbstractFilterMainMenu(Action action, ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super(action);
 		this.htmlTooltip = htmlTooltip;
@@ -62,13 +62,13 @@ class AbstractFilterMainMenu
 		registerAccessComponent(null);
 	}
 
-	protected void registerFilterAction(FilterAction filterAction)
+	void registerFilterAction(FilterAction filterAction)
 	{
 		eventWrapperRelatedList.add(filterAction);
 		viewContainerRelatedList.add(filterAction);
 	}
 
-	protected void registerAbstractFilterMenu(AbstractFilterMenu filterMenu)
+	void registerAbstractFilterMenu(AbstractFilterMenu filterMenu)
 	{
 		eventWrapperRelatedList.add(filterMenu);
 		viewContainerRelatedList.add(filterMenu);
@@ -78,12 +78,12 @@ class AbstractFilterMainMenu
 		}
 	}
 
-	protected void registerLoggingComponent(Component component)
+	void registerLoggingComponent(Component component)
 	{
 		loggingComponents.add(component);
 	}
 
-	protected void registerAccessComponent(Component component)
+	void registerAccessComponent(Component component)
 	{
 		accessComponents.add(component);
 	}
