@@ -1614,7 +1614,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		public void mouseWheelMoved(MouseWheelEvent e)
 		{
 			//noinspection MagicConstant
-			if(e.getModifiers() == KeyStrokes.COMMAND_KEYMASK)
+			if((e.getModifiersEx() & KeyStrokes.COMMAND_MODIFIERS) != 0)
 			{
 				// special handling, i.e. zoom in, zoom out
 				int rotation = e.getWheelRotation();

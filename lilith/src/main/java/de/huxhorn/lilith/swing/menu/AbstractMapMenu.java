@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ abstract class AbstractMapMenu<V>
 	{
 		super(name);
 
-		hintLabel = new JLabel("Hold "+ KeyEvent.getKeyModifiersText(KeyEvent.ALT_MASK)+" to match any value.");
+		hintLabel = new JLabel("Hold "+ KeyEvent.getModifiersExText(KeyEvent.ALT_DOWN_MASK)+" to match any value.");
 		viewContainerUpdated();
 	}
 

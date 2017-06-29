@@ -55,7 +55,7 @@ class AbstractFilterMainMenu
 		super(action);
 		this.htmlTooltip = htmlTooltip;
 		this.applicationPreferences = applicationPreferences;
-		JLabel hintLabel = new JLabel("Hold " + KeyEvent.getKeyModifiersText(KeyEvent.SHIFT_MASK) + " to create new view.");
+		JLabel hintLabel = new JLabel("Hold " + KeyEvent.getModifiersExText(KeyEvent.SHIFT_DOWN_MASK) + " to create new view.");
 		registerLoggingComponent(hintLabel);
 		registerLoggingComponent(null);
 		registerAccessComponent(hintLabel);
