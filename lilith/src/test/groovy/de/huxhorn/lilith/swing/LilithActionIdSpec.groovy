@@ -214,7 +214,6 @@ class LilithActionIdSpec extends Specification {
 	static List<LilithActionId> viewMenuActions() {
 		[
 				LilithActionId.TAIL,
-				LilithActionId.PAUSE,
 				LilithActionId.CLEAR,
 				LilithActionId.ATTACH,
 				LilithActionId.DISCONNECT,

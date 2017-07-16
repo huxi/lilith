@@ -151,8 +151,6 @@ public class ViewActions
 	private AttachAction attachMenuAction;
 	private DisconnectAction disconnectToolBarAction;
 	private DisconnectAction disconnectMenuAction;
-	private PauseAction pauseToolBarAction;
-	private PauseAction pauseMenuAction;
 	private FindPreviousAction findPreviousToolBarAction;
 	private FindPreviousAction findPreviousMenuAction;
 	private FindNextAction findNextToolBarAction;
@@ -295,7 +293,6 @@ public class ViewActions
 
 		// View
 		tailMenuAction = new TailAction(false);
-		pauseMenuAction = new PauseAction(false);
 		clearMenuAction = new ClearAction(false);
 		attachMenuAction = new AttachAction(false);
 		disconnectMenuAction = new DisconnectAction(false);
@@ -338,7 +335,6 @@ public class ViewActions
 
 		// ##### ToolBar Actions #####
 		tailToolBarAction = new TailAction(true);
-		pauseToolBarAction = new PauseAction(true);
 		clearToolBarAction = new ClearAction(true);
 		disconnectToolBarAction = new DisconnectAction(true);
 
@@ -363,7 +359,6 @@ public class ViewActions
 
 		tailButton = new JToggleButton(tailToolBarAction);
 		toolbar.add(tailButton);
-		toolbar.add(new JButton(pauseToolBarAction));
 		toolbar.add(new JButton(clearToolBarAction));
 		toolbar.add(new JButton(disconnectToolBarAction));
 
@@ -450,7 +445,6 @@ public class ViewActions
 		// View
 		viewMenu = new JMenu(new ViewAction());
 		viewMenu.add(tailMenuAction);
-		viewMenu.add(pauseMenuAction);
 		viewMenu.add(clearMenuAction);
 		viewMenu.add(attachMenuAction);
 		viewMenu.add(disconnectMenuAction);
@@ -600,7 +594,6 @@ public class ViewActions
 		editSourceNameMenuAction.setEnabled(hasView);
 		saveLayoutAction.setEnabled(hasView);
 		resetLayoutAction.setEnabled(hasView);
-		pauseMenuAction.setEnabled(hasView);
 		clearMenuAction.setEnabled(hasView/* && !hasFilteredBuffer*/);
 		attachMenuAction.setEnabled(hasView);
 		disconnectMenuAction.setEnabled(isActive);
@@ -619,7 +612,6 @@ public class ViewActions
 		zoomOutMenuAction.updateAction();
 		resetZoomMenuAction.updateAction();
 
-		pauseMenuAction.updateAction();
 		attachMenuAction.updateAction();
 
 		closeFilterAction.updateAction();
@@ -627,11 +619,9 @@ public class ViewActions
 		closeAllFiltersAction.updateAction();
 
 		tailButton.setSelected(isScrollingToBottom());
-		pauseToolBarAction.updateAction();
 		attachToolBarAction.updateAction();
 
 		tailToolBarAction.setEnabled(hasView);
-		pauseToolBarAction.setEnabled(hasView);
 		clearToolBarAction.setEnabled(hasView/* && !hasFilteredBuffer*/);
 		findToolBarAction.setEnabled(hasView);
 		attachToolBarAction.setEnabled(hasView);
@@ -695,32 +685,6 @@ public class ViewActions
 			if(eventWrapperViewPanel != null)
 			{
 				eventWrapperViewPanel.setScrollingToBottom(scrollingToBottom);
-			}
-		}
-	}
-
-
-	private boolean isPaused()
-	{
-		if(viewContainer != null)
-		{
-			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel != null)
-			{
-				return eventWrapperViewPanel.isPaused();
-			}
-		}
-		return false;
-	}
-
-	private void setPaused(boolean paused)
-	{
-		if(viewContainer != null)
-		{
-			EventWrapperViewPanel eventWrapperViewPanel = viewContainer.getSelectedView();
-			if(eventWrapperViewPanel != null)
-			{
-				eventWrapperViewPanel.setPaused(paused);
 			}
 		}
 	}
@@ -1684,57 +1648,9 @@ public class ViewActions
 		}
 	}
 
-	private class PauseAction
-			extends AbstractLilithAction
-	{
-		private static final long serialVersionUID = -5242236903640590549L;
-
-		PauseAction(boolean toolbar)
-		{
-			super(LilithActionId.PAUSE, toolbar);
-			updateAction();
-		}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			setPaused(!isPaused());
-			updateAction();
-			focusTable();
-		}
-
-		void updateAction()
-		{
-			if(isPaused())
-			{
-				if(isToolbar())
-				{
-					putValue(Action.SMALL_ICON, Icons.PAUSED_TOOLBAR_ICON);
-				}
-				else
-				{
-					putValue(Action.SMALL_ICON, Icons.PAUSED_MENU_ICON);
-					putValue(Action.NAME, "Resume");
-				}
-			}
-			else
-			{
-				if(isToolbar())
-				{
-					putValue(Action.SMALL_ICON, Icons.UNPAUSED_TOOLBAR_ICON);
-				}
-				else
-				{
-					putValue(Action.SMALL_ICON, Icons.UNPAUSED_MENU_ICON);
-					putValue(Action.NAME, "Pause");
-				}
-			}
-		}
-	}
-
 	private class FindAction
 			extends AbstractLilithAction
 	{
-
 		private static final long serialVersionUID = 8686689881059491581L;
 
 		FindAction(boolean toolbar)

@@ -90,7 +90,6 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " L", LilithActionId.FIND_PREVIOUS_ACTIVE);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " M", LilithActionId.FOCUS_MESSAGE);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " O", LilithActionId.OPEN);
-		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " P", LilithActionId.PAUSE);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " PERIOD", LilithActionId.ZOOM_IN);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " Q", LilithActionId.EXIT);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " R", LilithActionId.REMOVE_INACTIVE);

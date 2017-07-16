@@ -126,7 +126,6 @@ class KeyboardHelpSpec extends Specification {
 	]
 
 	private static final Map<LilithActionId, String> ADDITIONAL_INFO = [
-			(LilithActionId.PAUSE): 'If the view is paused, events are still received in the background, i.e. no events are lost while the view is paused.',
 			(LilithActionId.EXIT) : 'No, I won\'t ask you for permission. I will only ask for permission if you make me do so in Preferences, though. :p',
 	]
 

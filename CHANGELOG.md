@@ -20,7 +20,8 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Removed
-- Previous and Next buttons in find panel.
+- "Previous" and "Next" buttons in find panel.
+- "Pause" action. Pausing only paused updating of the table, not receiving of events. This was confusing (even me) and served no actual purpose. This action was a left-over from the early days of Lilith when it was used for debugging during development.
 
 ### Fixed
 - Fixed initial enabled state of "Go to source".

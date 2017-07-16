@@ -121,7 +121,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private static final String FILTER_CONDITION_PROPERTY = "filterCondition";
 	static final String EVENT_SOURCE_PROPERTY = "eventSource";
 	private static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
-	private static final String PAUSED_PROPERTY = "paused";
 	static final String SELECTED_EVENT_PROPERTY = "selectedEvent";
 
 
@@ -287,7 +286,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		statusPanel.add(statusLabel, gbc);
 		add(bottomPanel, BorderLayout.SOUTH);
 
-		setPaused(false);
+		tableModel.setPaused(false);
 
 		FocusTraversalPolicy focusTraversalPolicy = new MyFocusTraversalPolicy();
 		setFocusTraversalPolicy(focusTraversalPolicy);
@@ -485,19 +484,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	boolean isScrollingToBottom()
 	{
 		return table.isScrollingToBottom();
-	}
-
-	boolean isPaused()
-	{
-		return tableModel.isPaused();
-	}
-
-	void setPaused(boolean paused)
-	{
-		Object oldValue = tableModel.isPaused();
-		tableModel.setPaused(paused);
-		Object newValue = tableModel.isPaused();
-		firePropertyChange(PAUSED_PROPERTY, oldValue, newValue);
 	}
 
 	@SuppressWarnings("unchecked")
