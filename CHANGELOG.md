@@ -4,12 +4,14 @@ All notable changes to this project will be documented in this file.
 ## [8.2.0][unreleased] - TBD
 
 ### Added
-- Added Previous and Next buttons to toolbar.
+- Added "Find previous active" and "Find next active" buttons to toolbar. 
+- Added "Find previous" and "Find next" buttons to toolbar.
 - Added lots of missing mnemonics.
 - If the connection is lost then Message/RequestURI in table will now show "Connection closed." instead of nothing.
 - Added smooth horizontal table scrolling option that is enabled by default.
 
 ### Changed
+- Changed icons for "Find previous active" and "Find next active". They now differ from "Find previous" and "Find next" as they should.
 - Refactored actions and icon handling.
 - Don't add null events to global logs.
 - Unchecking "Enable global logs." in Preferences is now deleting existing global log files automatically.

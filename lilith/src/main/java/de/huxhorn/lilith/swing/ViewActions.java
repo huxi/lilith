@@ -156,7 +156,9 @@ public class ViewActions
 	private FindNextAction findNextToolBarAction;
 	private FindNextAction findNextMenuAction;
 	private FindPreviousActiveAction findPreviousActiveAction;
+	private FindPreviousActiveAction findPreviousActiveToolBarAction;
 	private FindNextActiveAction findNextActiveAction;
+	private FindNextActiveAction findNextActiveToolBarAction;
 	private ResetFindAction resetFindAction;
 	private TailAction tailMenuAction;
 	private EditSourceNameMenuAction editSourceNameMenuAction;
@@ -341,6 +343,8 @@ public class ViewActions
 		findToolBarAction = new FindAction(true);
 		findPreviousToolBarAction = new FindPreviousAction(true);
 		findNextToolBarAction = new FindNextAction(true);
+		findPreviousActiveToolBarAction = new FindPreviousActiveAction(true);
+		findNextActiveToolBarAction = new FindNextActiveAction(true);
 
 		attachToolBarAction = new AttachAction(true);
 
@@ -367,6 +371,8 @@ public class ViewActions
 		toolbar.add(new JButton(findToolBarAction));
 		toolbar.add(new JButton(findPreviousToolBarAction));
 		toolbar.add(new JButton(findNextToolBarAction));
+		toolbar.add(new JButton(findPreviousActiveToolBarAction));
+		toolbar.add(new JButton(findNextActiveToolBarAction));
 
 		toolbar.addSeparator();
 
@@ -585,8 +591,11 @@ public class ViewActions
 		findNextToolBarAction.setEnabled(hasFilter);
 
 		Condition condition = mainFrame.getFindActiveCondition();
-		findPreviousActiveAction.setEnabled(hasView && condition != null);
-		findNextActiveAction.setEnabled(hasView && condition != null);
+		boolean activeEnabled = hasView && condition != null;
+		findPreviousActiveAction.setEnabled(activeEnabled);
+		findPreviousActiveToolBarAction.setEnabled(activeEnabled);
+		findNextActiveAction.setEnabled(activeEnabled);
+		findNextActiveToolBarAction.setEnabled(activeEnabled);
 
 		// View
 		viewMenu.setEnabled(hasView);

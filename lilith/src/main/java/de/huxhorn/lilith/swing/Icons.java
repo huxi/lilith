@@ -60,8 +60,12 @@ public class Icons
 	private static final ImageIcon FIND_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-find.png");
 	private static final ImageIcon FIND_NEXT_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-down.png");
 	private static final ImageIcon FIND_NEXT_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-down.png");
-	private static final ImageIcon FIND_PREV_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-up.png");
-	private static final ImageIcon FIND_PREV_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-up.png");
+	private static final ImageIcon FIND_PREVIOUS_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-up.png");
+	private static final ImageIcon FIND_PREVIOUS_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-up.png");
+	private static final ImageIcon FIND_NEXT_ACTIVE_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-down-active.png");
+	private static final ImageIcon FIND_NEXT_ACTIVE_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-down-active.png");
+	private static final ImageIcon FIND_PREVIOUS_ACTIVE_MENU_ICON = resolveImageIcon("/tango/16x16/actions/go-up-active.png");
+	private static final ImageIcon FIND_PREVIOUS_ACTIVE_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/go-up-active.png");
 	private static final ImageIcon FIND_TOOLBAR_ICON = resolveImageIcon("/tango/32x32/actions/edit-find.png");
 	private static final ImageIcon FRAME_ICON = resolveImageIcon("/otherGraphics/Lilith16.jpg");
 	private static final ImageIcon HELP_MENU_ICON = resolveImageIcon("/tango/16x16/apps/help-browser.png");
@@ -96,9 +100,9 @@ public class Icons
 		registerMenuIcon(LilithActionId.EXPORT, EXPORT_MENU_ICON);
 		registerMenuIcon(LilithActionId.FIND, FIND_MENU_ICON);
 		registerMenuIcon(LilithActionId.FIND_NEXT, FIND_NEXT_MENU_ICON);
-		registerMenuIcon(LilithActionId.FIND_NEXT_ACTIVE, FIND_NEXT_MENU_ICON);
-		registerMenuIcon(LilithActionId.FIND_PREVIOUS, FIND_PREV_MENU_ICON);
-		registerMenuIcon(LilithActionId.FIND_PREVIOUS_ACTIVE, FIND_PREV_MENU_ICON);
+		registerMenuIcon(LilithActionId.FIND_NEXT_ACTIVE, FIND_NEXT_ACTIVE_MENU_ICON);
+		registerMenuIcon(LilithActionId.FIND_PREVIOUS, FIND_PREVIOUS_MENU_ICON);
+		registerMenuIcon(LilithActionId.FIND_PREVIOUS_ACTIVE, FIND_PREVIOUS_ACTIVE_MENU_ICON);
 		registerMenuIcon(LilithActionId.HELP_TOPICS, HELP_MENU_ICON);
 		registerMenuIcon(LilithActionId.IMPORT, OPEN_MENU_ICON);
 		registerMenuIcon(LilithActionId.LOVE, LOVE_MENU_ICON);
@@ -112,7 +116,9 @@ public class Icons
 		registerToolbarIcon(LilithActionId.DISCONNECT, DISCONNECT_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.FIND, FIND_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.FIND_NEXT, FIND_NEXT_TOOLBAR_ICON);
-		registerToolbarIcon(LilithActionId.FIND_PREVIOUS, FIND_PREV_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.FIND_PREVIOUS, FIND_PREVIOUS_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.FIND_NEXT_ACTIVE, FIND_NEXT_ACTIVE_TOOLBAR_ICON);
+		registerToolbarIcon(LilithActionId.FIND_PREVIOUS_ACTIVE, FIND_PREVIOUS_ACTIVE_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.LOVE, LOVE_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.PREFERENCES, PREFERENCES_TOOLBAR_ICON);
 		registerToolbarIcon(LilithActionId.TAIL, TAIL_TOOLBAR_ICON);
