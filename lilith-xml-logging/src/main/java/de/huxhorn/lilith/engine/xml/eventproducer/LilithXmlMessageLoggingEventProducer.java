@@ -22,22 +22,16 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.xml.LoggingXmlDecoder;
-import de.huxhorn.lilith.engine.impl.eventproducer.AbstractMessageBasedEventProducer;
+import de.huxhorn.lilith.engine.impl.eventproducer.MessageBasedEventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.codec.Decoder;
 import java.io.InputStream;
 
 public class LilithXmlMessageLoggingEventProducer
-	extends AbstractMessageBasedEventProducer<LoggingEvent>
+	extends MessageBasedEventProducer<LoggingEvent>
 {
 	public LilithXmlMessageLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), inputStream, compressing, false);
-	}
-
-	protected Decoder<LoggingEvent> createDecoder()
-	{
-		return new LoggingXmlDecoder(isCompressing());
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingXmlDecoder(compressing), inputStream, false);
 	}
 }

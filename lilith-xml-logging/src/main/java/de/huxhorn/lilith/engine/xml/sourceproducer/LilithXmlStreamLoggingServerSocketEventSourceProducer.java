@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.engine.xml.sourceproducer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -46,8 +47,7 @@ public class LilithXmlStreamLoggingServerSocketEventSourceProducer
 		}
 		catch(XMLStreamException e)
 		{
-			throw new IOException("Couldn't create producer for '" + id + "'!");
-			// REMIND: can't set cause because c'tor was only added in 1.6 :(
+			throw new IOException("Couldn't create producer for '" + id + "'!", e);
 		}
 	}
 

@@ -42,7 +42,7 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class SerializableWhitelistSpec extends Specification{
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStreamEventProducer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SerializableEventProducer.class);
 	@Unroll
 	"deserialization works for #valueClass: #value"() {
 		when:

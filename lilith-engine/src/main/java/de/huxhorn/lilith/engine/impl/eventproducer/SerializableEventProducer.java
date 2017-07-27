@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@
 
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
+import de.huxhorn.lilith.data.converter.Converter;
+import de.huxhorn.lilith.data.converter.ConverterRegistry;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
@@ -44,21 +46,25 @@ import java.io.InputStream;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractStreamEventProducer<T extends Serializable>
+public class SerializableEventProducer<T extends Serializable>
 	extends AbstractEventProducer<T>
 {
-	final Logger logger = LoggerFactory.getLogger(AbstractStreamEventProducer.class);
+	private final Logger logger = LoggerFactory.getLogger(SerializableEventProducer.class);
 
+	private final ConverterRegistry<T> converterRegistry;
+	private Converter<T> converter;
 	private ObjectInputStream dataInput;
 
-	public AbstractStreamEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream)
+	public SerializableEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, ConverterRegistry<T> converterRegistry, InputStream inputStream)
 		throws IOException
 	{
 		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
-		this.dataInput = new WhitelistObjectInputStream(new BufferedInputStream(inputStream), SerializableWhitelist.WHITELIST, false /*, true*/);
+		this.converterRegistry = Objects.requireNonNull(converterRegistry, "converterRegistry must not be null!");
+		this.dataInput = new WhitelistObjectInputStream(new BufferedInputStream(Objects.requireNonNull(inputStream, "inputStream must not be null!")), SerializableWhitelist.WHITELIST, false /*, true*/);
 	}
 
 	public void start()
@@ -68,7 +74,23 @@ public abstract class AbstractStreamEventProducer<T extends Serializable>
 		t.start();
 	}
 
-	protected abstract T postProcessEvent(Object o);
+	private T postProcessEvent(Object o)
+	{
+		if(o == null)
+		{
+			return null;
+		}
+		if(converter == null)
+		{
+			converter = converterRegistry.resolveConverter(o);
+		}
+		if(converter != null)
+		{
+			return converter.convert(o);
+		}
+		if(logger.isWarnEnabled()) logger.warn("Retrieved unsupported class {}.", o.getClass().getName());
+		return null;
+	}
 
 	private class ReceiverRunnable
 		implements Runnable

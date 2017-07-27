@@ -23,19 +23,13 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDecoder;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.codec.Decoder;
 import java.io.InputStream;
 
 public class LoggingEventProtobufMessageBasedEventProducer
-	extends AbstractMessageBasedEventProducer<LoggingEvent>
+	extends MessageBasedEventProducer<LoggingEvent>
 {
 	public LoggingEventProtobufMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), inputStream, compressing, true);
-	}
-
-	protected Decoder<LoggingEvent> createDecoder()
-	{
-		return new LoggingEventProtobufDecoder(isCompressing());
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingEventProtobufDecoder(compressing), inputStream, true);
 	}
 }

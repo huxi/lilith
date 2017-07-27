@@ -48,7 +48,7 @@ import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
 import de.huxhorn.lilith.engine.impl.sourceproducer.AccessEventProtobufServerSocketEventSourceProducer;
-import de.huxhorn.lilith.engine.impl.sourceproducer.ConvertingServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.SerializableServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonStreamLoggingServerSocketEventSourceProducer;
@@ -596,8 +596,8 @@ public class MainFrame
 
 		try
 		{
-			ConvertingServerSocketEventSourceProducer<LoggingEvent> producer
-					= new ConvertingServerSocketEventSourceProducer<>(4560, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
+			SerializableServerSocketEventSourceProducer<LoggingEvent> producer
+					= new SerializableServerSocketEventSourceProducer<>(4560, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
 		catch(IOException ex)
@@ -607,8 +607,8 @@ public class MainFrame
 
 		try
 		{
-			ConvertingServerSocketEventSourceProducer<LoggingEvent> producer
-					= new ConvertingServerSocketEventSourceProducer<>(4445, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
+			SerializableServerSocketEventSourceProducer<LoggingEvent> producer
+					= new SerializableServerSocketEventSourceProducer<>(4445, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
 		catch(IOException ex)
@@ -738,8 +738,8 @@ public class MainFrame
 
 		try
 		{
-			ConvertingServerSocketEventSourceProducer<AccessEvent> producer
-					= new ConvertingServerSocketEventSourceProducer<>(4570, accessConverterRegistry, null);
+			SerializableServerSocketEventSourceProducer<AccessEvent> producer
+					= new SerializableServerSocketEventSourceProducer<>(4570, accessConverterRegistry, null);
 			accessEventSourceManager.addEventSourceProducer(producer);
 		}
 		catch(IOException ex)

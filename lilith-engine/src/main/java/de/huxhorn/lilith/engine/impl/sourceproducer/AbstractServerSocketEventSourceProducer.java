@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.engine.impl.sourceproducer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -40,13 +41,10 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO: ServerSocket
-
-// TODO: postprocess
 public abstract class AbstractServerSocketEventSourceProducer<T extends Serializable>
 	implements EventSourceProducer<T>, Runnable
 {
-	final Logger logger = LoggerFactory.getLogger(AbstractServerSocketEventSourceProducer.class);
+	private final Logger logger = LoggerFactory.getLogger(AbstractServerSocketEventSourceProducer.class);
 
 	private static final DateTimeFormatter FORMAT = DateTimeFormatter
 			.ofPattern("yyyyMMdd'T'HHmmssSSS", Locale.US)
@@ -55,7 +53,7 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 	private ServerSocket serverSocket;
 	private AppendOperation<EventWrapper<T>> queue;
 	private SourceManager<T> sourceManager;
-	private int port;
+	private final int port;
 
 	public AbstractServerSocketEventSourceProducer(int port)
 		throws IOException

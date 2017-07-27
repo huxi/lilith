@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,34 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.engine.json.eventproducer;
+
+package de.huxhorn.lilith.engine.impl.eventproducer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonDecoder;
-import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
-import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
+import de.huxhorn.sulky.codec.Decoder;
 import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LilithJsonStreamLoggingEventProducer
-	extends AbstractEventProducer<LoggingEvent>
+public class ZeroDelimitedEventProducer<T extends Serializable>
+		extends AbstractEventProducer<T>
 {
-	private final Logger logger = LoggerFactory.getLogger(LilithJsonStreamLoggingEventProducer.class);
+	private final Logger logger = LoggerFactory.getLogger(ZeroDelimitedEventProducer.class);
 
-	private LoggingJsonDecoder decoder;
+	private final Decoder<T> decoder;
 	private BufferedInputStream inputStream;
 
-	public LilithJsonStreamLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
+	public ZeroDelimitedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, Decoder<T> decoder, InputStream inputStream)
 	{
-		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater());
-		decoder=new LoggingJsonDecoder(false);
+		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
+		this.decoder = decoder;
 
 		this.inputStream = new BufferedInputStream(inputStream);
 	}
@@ -60,51 +59,52 @@ public class LilithJsonStreamLoggingEventProducer
 	}
 
 	private class ReceiverRunnable
-		implements Runnable
+			implements Runnable
 	{
 		public void run()
 		{
 			try
 			{
 				ArrayList<Byte> bytes = new ArrayList<>();
-				for(;;)
+				for (;;)
 				{
-					for(;;)
+					for (;;)
 					{
 						int readByte = inputStream.read();
-						if(readByte == -1)
+						if (readByte == -1)
 						{
-							if(logger.isDebugEnabled()) logger.debug("Read -1, stopping...");
+							if (logger.isDebugEnabled()) logger.debug("Read -1, stopping...");
 							return;
 						}
 						byte current = (byte) readByte;
-						if(current == 0)
+						if (current == 0)
 						{
 							break;
 						}
 						bytes.add(current);
 					}
 
-					if(bytes.size() > 0)
+					if (bytes.size() > 0)
 					{
 						byte[] ba = new byte[bytes.size()];
-						for(int i = 0; i < bytes.size(); i++)
+						for (int i = 0; i < bytes.size(); i++)
 						{
 							ba[i] = bytes.get(i);
 						}
 						bytes.clear();
-						LoggingEvent event = decoder.decode(ba);
+						T event = decoder.decode(ba);
 						addEvent(event);
 					}
 					else
 					{
-						if(logger.isDebugEnabled()) logger.debug("bytes.size()==0!!");
+						if (logger.isDebugEnabled()) logger.debug("bytes.size()==0!!");
 					}
 				}
 			}
-			catch(Throwable e)
+			catch (Throwable e)
 			{
-				if(logger.isDebugEnabled()) logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
+				if (logger.isDebugEnabled())
+					logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 				addEvent(null);
 				IOUtilities.interruptIfNecessary(e);
 			}

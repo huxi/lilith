@@ -29,33 +29,30 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
+public class MessageBasedEventProducer<T extends Serializable>
 	extends AbstractEventProducer<T>
 {
-	private final Logger logger = LoggerFactory.getLogger(AbstractMessageBasedEventProducer.class);
+	private final Logger logger = LoggerFactory.getLogger(MessageBasedEventProducer.class);
 
 	private final DataInputStream dataInput;
-	private Decoder<T> decoder;
-	private boolean compressing;
+	private final Decoder<T> decoder;
 	private final AtomicLong heartbeatTimestamp;
 	private final boolean requiresHeartbeat;
 
-	public AbstractMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, InputStream inputStream, boolean compressing, boolean requiresHeartbeat)
+	public MessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, Decoder<T> decoder, InputStream inputStream, boolean requiresHeartbeat)
 	{
 		super(sourceIdentifier, eventQueue, sourceIdentifierUpdater);
-		this.dataInput = new DataInputStream(new BufferedInputStream(inputStream));
-		this.compressing = compressing;
-		this.decoder = createDecoder();
+		this.decoder = Objects.requireNonNull(decoder, "decoder must not be null!");
+		this.dataInput = new DataInputStream(new BufferedInputStream(Objects.requireNonNull(inputStream, "inputStream must not be null!")));
 		this.heartbeatTimestamp = new AtomicLong(System.currentTimeMillis());
 		this.requiresHeartbeat = requiresHeartbeat;
 	}
-
-	protected abstract Decoder<T> createDecoder();
 
 	public void start()
 	{
@@ -80,11 +77,6 @@ public abstract class AbstractMessageBasedEventProducer<T extends Serializable>
 	private long getMillisSinceLastHeartbeat()
 	{
 		return System.currentTimeMillis() - heartbeatTimestamp.get();
-	}
-
-	public boolean isCompressing()
-	{
-		return compressing;
 	}
 
 	public void close()
