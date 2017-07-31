@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Using the Log4j 2 SocketAppender</title>
+	<link href="help.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<p><a href="index.xhtml">ToC</a></p>
+
+<h1 id="top">Using the Log4j 2 SocketAppender</h1>
+
+
+<p>Lilith is listening for Log4j 2™ <code>SocketAppender</code> connections...</p>
+
+<ul>
+	<li>...using <code>SerializedLayout</code> on port 4445 or port 4560.</li>
+	<li>...using <code>JsonLayout</code> on port 12000.</li>
+	<li>...using <code>YamlLayout</code> on port 12010.</li>
+	<li>...using <code>XmlLayout</code> on port 12020.</li>
+</ul>
+
+<h2>log4j2.xml Example</h2>
+
+<p>Configure LOG4J2 as usual using a `log4j2.xml` file.</p>
+		<pre><code><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="debug">
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} --- %msg%n"/>
+    </Console>
+    <Socket name="Socket-JSON" host="localhost" port="12000" protocol="TCP">
+      <JsonLayout includeNullDelimiter="true" />
+    </Socket>
+    <Socket name="Socket-YAML" host="localhost" port="12010" protocol="TCP">
+      <YamlLayout includeNullDelimiter="true" />
+    </Socket>
+    <Socket name="Socket-XML" host="localhost" port="12020" protocol="TCP">
+      <XmlLayout includeNullDelimiter="true" />
+    </Socket>
+    <Socket name="Socket-Serialized" host="localhost" port="4560" protocol="TCP">
+      <SerializedLayout />
+    </Socket>
+  </appenders>
+  <loggers>
+    <root level="all">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="Socket-JSON"/>
+      <appender-ref ref="Socket-YAML"/>
+      <appender-ref ref="Socket-XML"/>
+      <appender-ref ref="Socket-Serialized"/>
+    </root>
+  </loggers>
+</configuration>]]></code></pre>
+
+<p><code>SerializedLayout</code> has been deprecated in Log4j2 2.9.0. You should instead use one one of the other options.</p>
+
+<h2>Required dependencies</h2>
+
+<p>Using JSON, YAML or XML requires the following dependency:</p>
+
+<pre><code><![CDATA[<dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-databind</artifactId>
+  <version>${jacksonVersion}</version>
+  <scope>runtime</scope>
+</dependency>]]></code></pre>
+
+<p>In addition to that, XML requires this dependency...</p>
+<pre><code><![CDATA[<dependency>
+  <groupId>com.fasterxml.jackson.dataformat</groupId>
+  <artifactId>jackson-dataformat-xml</artifactId>
+  <version>${jacksonVersion}</version>
+  <scope>runtime</scope>
+</dependency>]]></code></pre>
+
+<p>... while YAML requires this dependency:</p>
+<pre><code><![CDATA[<dependency>
+  <groupId>com.fasterxml.jackson.dataformat</groupId>
+  <artifactId>jackson-dataformat-yaml</artifactId>
+  <version>${jacksonVersion}</version>
+  <scope>runtime</scope>
+</dependency>]]></code></pre>
+
+
+<p><a href="#top">Back to top.</a></p>
+</body>
+</html>

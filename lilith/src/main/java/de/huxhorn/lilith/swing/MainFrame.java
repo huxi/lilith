@@ -39,6 +39,7 @@ import de.huxhorn.lilith.engine.AccessFileBufferFactory;
 import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.lilith.engine.EventSource;
 import de.huxhorn.lilith.engine.EventSourceListener;
+import de.huxhorn.lilith.engine.EventSourceProducer;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
@@ -48,8 +49,8 @@ import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.lilith.engine.impl.sourcemanager.SourceManagerImpl;
 import de.huxhorn.lilith.engine.impl.sourceproducer.AccessEventProtobufServerSocketEventSourceProducer;
-import de.huxhorn.lilith.engine.impl.sourceproducer.SerializableServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.impl.sourceproducer.LoggingEventProtobufServerSocketEventSourceProducer;
+import de.huxhorn.lilith.engine.impl.sourceproducer.SerializableServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonMessageLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.json.sourceproducer.LilithJsonStreamLoggingServerSocketEventSourceProducer;
 import de.huxhorn.lilith.engine.jul.sourceproducer.JulXmlStreamLoggingServerSocketEventSourceProducer;
@@ -62,7 +63,11 @@ import de.huxhorn.lilith.eventhandlers.FileSplitterEventHandler;
 import de.huxhorn.lilith.jul.xml.JulImportCallable;
 import de.huxhorn.lilith.log4j.producer.Log4jLoggingConverter;
 import de.huxhorn.lilith.log4j.xml.Log4jImportCallable;
+import de.huxhorn.lilith.log4j2.producer.Log4j2JsonServerSocketEventSourceProducer;
 import de.huxhorn.lilith.log4j2.producer.Log4j2LoggingConverter;
+import de.huxhorn.lilith.log4j2.producer.Log4j2Ports;
+import de.huxhorn.lilith.log4j2.producer.Log4j2XmlServerSocketEventSourceProducer;
+import de.huxhorn.lilith.log4j2.producer.Log4j2YamlServerSocketEventSourceProducer;
 import de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
@@ -596,7 +601,7 @@ public class MainFrame
 
 		try
 		{
-			SerializableServerSocketEventSourceProducer<LoggingEvent> producer
+			EventSourceProducer<LoggingEvent> producer
 					= new SerializableServerSocketEventSourceProducer<>(4560, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
@@ -607,7 +612,7 @@ public class MainFrame
 
 		try
 		{
-			SerializableServerSocketEventSourceProducer<LoggingEvent> producer
+			EventSourceProducer<LoggingEvent> producer
 					= new SerializableServerSocketEventSourceProducer<>(4445, loggingConverterRegistry, new LoggingEventSourceIdentifierUpdater());
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}
@@ -618,7 +623,7 @@ public class MainFrame
 
 		try
 		{
-			LoggingEventProtobufServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LoggingEventProtobufServerSocketEventSourceProducer
 				(ClassicMultiplexSocketAppender.COMPRESSED_DEFAULT_PORT, true);
 
@@ -632,7 +637,7 @@ public class MainFrame
 
 		try
 		{
-			LoggingEventProtobufServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LoggingEventProtobufServerSocketEventSourceProducer
 				(ClassicMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
 
@@ -647,7 +652,7 @@ public class MainFrame
 
 		try
 		{
-			LilithXmlMessageLoggingServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LilithXmlMessageLoggingServerSocketEventSourceProducer
 				(ClassicXmlMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
 
@@ -660,7 +665,7 @@ public class MainFrame
 
 		try
 		{
-			LilithXmlMessageLoggingServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LilithXmlMessageLoggingServerSocketEventSourceProducer
 				(ClassicXmlMultiplexSocketAppender.COMPRESSED_DEFAULT_PORT, true);
 
@@ -674,7 +679,7 @@ public class MainFrame
 
 		try
 		{
-			LilithJsonMessageLoggingServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LilithJsonMessageLoggingServerSocketEventSourceProducer
 				(ClassicJsonMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
 
@@ -687,7 +692,7 @@ public class MainFrame
 
 		try
 		{
-			LilithJsonMessageLoggingServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LilithJsonMessageLoggingServerSocketEventSourceProducer
 				(ClassicJsonMultiplexSocketAppender.COMPRESSED_DEFAULT_PORT, true);
 
@@ -700,7 +705,7 @@ public class MainFrame
 
 		try
 		{
-			LilithXmlStreamLoggingServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LilithXmlStreamLoggingServerSocketEventSourceProducer
 				(ZeroDelimitedClassicXmlMultiplexSocketAppender.DEFAULT_PORT);
 
@@ -713,7 +718,7 @@ public class MainFrame
 
 		try
 		{
-			LilithJsonStreamLoggingServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new LilithJsonStreamLoggingServerSocketEventSourceProducer
 				(ZeroDelimitedClassicJsonMultiplexSocketAppender.DEFAULT_PORT);
 
@@ -726,7 +731,7 @@ public class MainFrame
 
 		try
 		{
-			JulXmlStreamLoggingServerSocketEventSourceProducer producer
+			EventSourceProducer<LoggingEvent> producer
 				= new JulXmlStreamLoggingServerSocketEventSourceProducer(11020);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
@@ -738,7 +743,43 @@ public class MainFrame
 
 		try
 		{
-			SerializableServerSocketEventSourceProducer<AccessEvent> producer
+			EventSourceProducer<LoggingEvent> producer
+					= new Log4j2JsonServerSocketEventSourceProducer(Log4j2Ports.JSON);
+
+			loggingEventSourceManager.addEventSourceProducer(producer);
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+		}
+
+		try
+		{
+			EventSourceProducer<LoggingEvent> producer
+					= new Log4j2YamlServerSocketEventSourceProducer(Log4j2Ports.YAML);
+
+			loggingEventSourceManager.addEventSourceProducer(producer);
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+		}
+
+		try
+		{
+			EventSourceProducer<LoggingEvent> producer
+					= new Log4j2XmlServerSocketEventSourceProducer(Log4j2Ports.XML);
+
+			loggingEventSourceManager.addEventSourceProducer(producer);
+		}
+		catch(IOException ex)
+		{
+			if(logger.isWarnEnabled()) logger.warn("Exception while creating event producer!", ex);
+		}
+
+		try
+		{
+			EventSourceProducer<AccessEvent> producer
 					= new SerializableServerSocketEventSourceProducer<>(4570, accessConverterRegistry, null);
 			accessEventSourceManager.addEventSourceProducer(producer);
 		}
@@ -748,12 +789,11 @@ public class MainFrame
 		}
 		try
 		{
-			AccessEventProtobufServerSocketEventSourceProducer producer
+			EventSourceProducer<AccessEvent> producer
 				= new AccessEventProtobufServerSocketEventSourceProducer
 				(AccessMultiplexSocketAppender.COMPRESSED_DEFAULT_PORT, true);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
-			// TODO: senderService.addAccessProducer(producer);
 		}
 		catch(IOException ex)
 		{
@@ -762,12 +802,11 @@ public class MainFrame
 
 		try
 		{
-			AccessEventProtobufServerSocketEventSourceProducer producer
+			EventSourceProducer<AccessEvent> producer
 				= new AccessEventProtobufServerSocketEventSourceProducer
 				(AccessMultiplexSocketAppender.UNCOMPRESSED_DEFAULT_PORT, false);
 
 			accessEventSourceManager.addEventSourceProducer(producer);
-			// TODO: senderService.addAccessProducer(producer);
 		}
 		catch(IOException ex)
 		{

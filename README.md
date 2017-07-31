@@ -19,10 +19,10 @@ Add the following to your applications `logback.xml`:
 
 ```xml
 <appender name="LogbackClassic" class="ch.qos.logback.classic.net.SocketAppender">
-    <RemoteHost>localhost</RemoteHost>
-    <Port>4560</Port>
-    <ReconnectionDelay>170</ReconnectionDelay>
-    <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHost>localhost</RemoteHost>
+  <Port>4560</Port>
+  <ReconnectionDelay>170</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
 </appender>
 ```
 
@@ -30,7 +30,7 @@ You also have to attach the appender to some logger, e.g. the root logger...
 
 ```xml
 <root level="INFO">
-    <appender-ref ref="LogbackClassic"/>
+  <appender-ref ref="LogbackClassic"/>
 </root>
 ```
 
@@ -38,13 +38,13 @@ You also have to attach the appender to some logger, e.g. the root logger...
 
 ```xml
 <logger name="foo.Bar" level="DEBUG">
-    <appender-ref ref="LogbackClassic"/>
+  <appender-ref ref="LogbackClassic"/>
 </logger>
 ```
 
 Using logback-classic [`SocketAppender`][lcsa] requires `ch.qos.logback:logback-classic` as runtime dependency.
 
-Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
+Take a look at the [Logback manual][logbackm] and the Lilith help for more information.
 
 #### ...and Lilith ClassicMultiplexSocketAppender.
 
@@ -72,20 +72,20 @@ Add the following to your applications `logback.xml`:
 
 ```xml
 <appender name="multiplex" class="de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender">
-    <Compressing>true</Compressing>
-    <!-- will automatically use correct default port -->
-    <!-- Default port for compressed is 10000 and uncompressed 10001 -->
-    <ReconnectionDelay>10000</ReconnectionDelay>
-    <IncludeCallerData>true</IncludeCallerData>
-    <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
-    <!-- Alternatively:
-    <RemoteHost>localhost</RemoteHost>
-    <RemoteHost>10.200.55.13</RemoteHost>
-    -->
-    <!--
-    Optional:
-    <CreatingUUID>false</CreatingUUID>
-    -->
+  <Compressing>true</Compressing>
+  <!-- will automatically use correct default port -->
+  <!-- Default port for compressed is 10000 and uncompressed 10001 -->
+  <ReconnectionDelay>10000</ReconnectionDelay>
+  <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHosts>localhost, 10.200.55.13</RemoteHosts>
+  <!-- Alternatively:
+  <RemoteHost>localhost</RemoteHost>
+  <RemoteHost>10.200.55.13</RemoteHost>
+  -->
+  <!--
+  Optional:
+  <CreatingUUID>false</CreatingUUID>
+  -->
 </appender>
 ```
 
@@ -93,7 +93,7 @@ You also have to attach the appender to some logger, e.g. the root logger...
 
 ```xml
 <root level="INFO">
-    <appender-ref ref="multiplex"/>
+  <appender-ref ref="multiplex"/>
 </root>
 ```
 
@@ -101,13 +101,13 @@ You also have to attach the appender to some logger, e.g. the root logger...
 
 ```xml
 <logger name="foo.Bar" level="DEBUG">
-    <appender-ref ref="multiplex"/>
+  <appender-ref ref="multiplex"/>
 </logger>
 ```
 
 Using Lilith [`ClassicMultiplexSocketAppender`][cmsa] requires `de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic` as runtime dependency.
 
-Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
+Take a look at the [Logback manual][logbackm] and the Lilith help for more information.
 
 #### ...and logback-classic with FileAppender.
 
@@ -144,10 +144,10 @@ Add the following to your applications `logback.xml`:
 
 ```xml
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-	<file>classic.lilith</file>
-	<encoder class="de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder">
-		<IncludeCallerData>true</IncludeCallerData>
-	</encoder>
+  <file>classic.lilith</file>
+  <encoder class="de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder">
+    <IncludeCallerData>true</IncludeCallerData>
+  </encoder>
 </appender>
 ```
 
@@ -155,7 +155,7 @@ You also have to attach the appender to some logger, e.g. the root logger...
 
 ```xml
 <root level="INFO">
-    <appender-ref ref="FILE"/>
+  <appender-ref ref="FILE"/>
 </root>
 ```
 
@@ -163,13 +163,13 @@ You also have to attach the appender to some logger, e.g. the root logger...
 
 ```xml
 <logger name="foo.Bar" level="DEBUG">
-    <appender-ref ref="FILE"/>
+  <appender-ref ref="FILE"/>
 </logger>
 ```
 
 Using Lilith [`ClassicLilithEncoder`][cle] requires `de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic` as runtime dependency.
 
-Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
+Take a look at the [Logback manual][logbackm] and the Lilith help for more information.
 
 
 #### ...and logback-access SocketAppender.
@@ -182,17 +182,22 @@ Add the following to your applications `logback-access.xml`:
 
 ```xml
 <appender name="LogbackAccess" class="ch.qos.logback.access.net.SocketAppender"> 
-    <RemoteHost>localhost</RemoteHost>
-    <Port>4570</Port> 
-    <ReconnectionDelay>170</ReconnectionDelay> 
-    <IncludeCallerData>true</IncludeCallerData>
+  <RemoteHost>localhost</RemoteHost>
+  <Port>4570</Port> 
+  <ReconnectionDelay>170</ReconnectionDelay> 
+  <IncludeCallerData>true</IncludeCallerData>
 </appender>
+```
+
+and
+
+```xml
 <appender-ref ref="LogbackAccess" />
 ```
 
 Using logback-access [`SocketAppender`][lasa] requires `ch.qos.logback:logback-access` as runtime dependency.
 
-Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
+Take a look at the [Logback manual][logbackm] and the Lilith help for more information.
 
 #### ...and Lilith AccessMultiplexSocketAppender.
 
@@ -216,18 +221,22 @@ Add the following to your applications `logback-access.xml`:
 
 ```xml
 <appender name="multiplex" class="de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender">
-	<Compressing>true</Compressing> <!-- will automatically use correct default port -->
-	<!-- Default port for compressed is 10010 and uncompressed 10011 -->
-	<ReconnectionDelay>30000</ReconnectionDelay>
-	<RemoteHosts>localhost</RemoteHosts>
+  <Compressing>true</Compressing> <!-- will automatically use correct default port -->
+  <!-- Default port for compressed is 10010 and uncompressed 10011 -->
+  <ReconnectionDelay>30000</ReconnectionDelay>
+  <RemoteHosts>localhost</RemoteHosts>
 </appender>
+```
 
+and
+
+```xml
 <appender-ref ref="multiplex" />
 ```
 
 Using Lilith [`AccessMultiplexSocketAppender`][amsa] requires `de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-access` as runtime dependency.
 
-Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
+Take a look at the [Logback manual][logbackm] and the Lilith help for more information.
 
 #### ...and logback-access with FileAppender.
 
@@ -264,10 +273,10 @@ Add the following to your applications `logback-access.xml`:
 
 ```xml
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-	<file>classic.lilith</file>
-	<encoder class="de.huxhorn.lilith.logback.encoder.AccessLilithEncoder">
-		<IncludeCallerData>true</IncludeCallerData>
-	</encoder>
+  <file>classic.lilith</file>
+  <encoder class="de.huxhorn.lilith.logback.encoder.AccessLilithEncoder">
+    <IncludeCallerData>true</IncludeCallerData>
+  </encoder>
 </appender>
 
 <appender-ref ref="FILE" />
@@ -275,32 +284,52 @@ Add the following to your applications `logback-access.xml`:
 
 Using Lilith [`AccessLilithEncoder`][ale] requires `de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.access` as runtime dependency.
 
-Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
+Take a look at the [Logback manual][logbackm] and the Lilith help for more information.
 
 ### ...with Log4j 2™.
-Lilith is listening for [Log4j 2][log4j2]™ [`SocketAppender`][log4j2sa] connections on port 4445 or port 4560.
+Lilith is listening for [Log4j 2][log4j2]™ [`SocketAppender`][log4j2sa] connections...
+ 
+- ...using `SerializedLayout` on port 4445 or port 4560.
+- ...using `JsonLayout` on port 12000.
+- ...using `YamlLayout` on port 12010.
+- ...using `XmlLayout` on port 12020.
+
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="debug">
-	<appenders>
-		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} --- %msg%n"/>
-		</Console>
-		<Socket name="Socket" host="localhost" port="4560" protocol="TCP">
-			<SerializedLayout />
-		</Socket>
-	</appenders>
-	<loggers>
-		<root level="all">
-			<appender-ref ref="Console"/>
-			<appender-ref ref="Socket"/>
-		</root>
-	</loggers>
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} --- %msg%n"/>
+    </Console>
+    <Socket name="Socket-JSON" host="localhost" port="12000" protocol="TCP">
+      <JsonLayout includeNullDelimiter="true" />
+    </Socket>
+    <Socket name="Socket-YAML" host="localhost" port="12010" protocol="TCP">
+      <YamlLayout includeNullDelimiter="true" />
+    </Socket>
+    <Socket name="Socket-XML" host="localhost" port="12020" protocol="TCP">
+      <XmlLayout includeNullDelimiter="true" />
+    </Socket>
+    <Socket name="Socket-Serialized" host="localhost" port="4560" protocol="TCP">
+      <SerializedLayout />
+    </Socket>
+  </appenders>
+  <loggers>
+    <root level="all">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="Socket-JSON"/>
+      <appender-ref ref="Socket-YAML"/>
+      <appender-ref ref="Socket-XML"/>
+      <appender-ref ref="Socket-Serialized"/>
+    </root>
+  </loggers>
 </configuration>
 ```
 
-Take a look at the [Log4j 2™ manual][log4j2m] for more informations.
+`SerializedLayout` has been deprecated in Log4j2 2.9.0. You should instead use one one of the other options.
+
+Take a look at the [Log4j 2™ manual][log4j2m] for more information.
 
 ### ...with log4j™.
 Lilith is listening for [log4j][]™ [`SocketAppender`][log4jsa] connections on port 4445 or port 4560.
@@ -309,22 +338,22 @@ Lilith is listening for [log4j][]™ [`SocketAppender`][log4jsa] connections on 
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-    <appender name="socket" class="org.apache.log4j.net.SocketAppender">
-        <param name="Application" value="YourApplication"/>
-        <param name="locationInfo" value="true"/>
-        <param name="Port" value="4560"/>
-        <param name="RemoteHost" value="127.0.0.1"/>
-        <param name="ReconnectionDelay" value="10"/>
-    </appender>
+  <appender name="socket" class="org.apache.log4j.net.SocketAppender">
+    <param name="Application" value="YourApplication"/>
+    <param name="locationInfo" value="true"/>
+    <param name="Port" value="4560"/>
+    <param name="RemoteHost" value="127.0.0.1"/>
+    <param name="ReconnectionDelay" value="10"/>
+  </appender>
     
-    <root>
-        <priority value ="ALL" />
-        <appender-ref ref="socket" />
-    </root>
+  <root>
+    <priority value ="ALL" />
+    <appender-ref ref="socket" />
+  </root>
 </log4j:configuration>
 ```
 
-Take a look at the [log4j™ manual][log4jm] for more informations.
+Take a look at the [log4j™ manual][log4jm] for more information.
 
 ### ...with java.util.logging.SocketHandler.
 

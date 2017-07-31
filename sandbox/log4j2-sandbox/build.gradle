@@ -20,11 +20,11 @@ idea {
 sourceCompatibility = globalSourceCompatibility
 targetCompatibility = globalTargetCompatibility
 
-//def log4j2Version = '2.3'
-def log4j2Version = versions.log4j2
-
 dependencies {
-	compile "org.apache.logging.log4j:log4j-api:${log4j2Version}"
-	runtime "org.apache.logging.log4j:log4j-core:${log4j2Version}"
+	compile libraries.'log4j2-api'
+	runtime libraries.'log4j2-core'
+	runtime libraries.'jackson-databind'
+	runtime libraries.'jackson-dataformat-xml'
+	runtime libraries.'jackson-dataformat-yaml'
 }
 

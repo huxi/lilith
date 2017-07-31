@@ -408,6 +408,7 @@ project(':lilith') {
 	processResources {
 		def props = [
 			'lilithVersion': version,
+			'jacksonVersion': versions.jackson,
 			'slf4jVersion': versions.slf4j,
 			'logbackVersion': versions.logback,
 			'log4jVersion': versions.log4j,

@@ -4,14 +4,26 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} --- %msg%n"/>
 		</Console>
-		<Socket name="Socket" host="localhost" port="4560" protocol="TCP">
+		<Socket name="Socket-JSON" host="localhost" port="12000" protocol="TCP">
+			<JsonLayout includeNullDelimiter="true" />
+		</Socket>
+		<Socket name="Socket-YAML" host="localhost" port="12010" protocol="TCP">
+			<YamlLayout includeNullDelimiter="true" />
+		</Socket>
+		<Socket name="Socket-XML" host="localhost" port="12020" protocol="TCP">
+			<XmlLayout includeNullDelimiter="true" />
+		</Socket>
+		<Socket name="Socket-Serialized" host="localhost" port="4560" protocol="TCP">
 			<SerializedLayout />
 		</Socket>
 	</appenders>
 	<loggers>
 		<root level="all">
 			<appender-ref ref="Console"/>
-			<appender-ref ref="Socket"/>
+			<appender-ref ref="Socket-JSON"/>
+			<appender-ref ref="Socket-YAML"/>
+			<appender-ref ref="Socket-XML"/>
+			<appender-ref ref="Socket-Serialized"/>
 		</root>
 	</loggers>
 </configuration>
