@@ -14,7 +14,6 @@ import org.apache.logging.log4j.message.LocalizedMessage;
 import org.apache.logging.log4j.message.MapMessage;
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.MessageFormatMessage;
-import org.apache.logging.log4j.message.ObjectArrayMessage;
 import org.apache.logging.log4j.message.ObjectMessage;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import org.apache.logging.log4j.message.SimpleMessage;
@@ -22,6 +21,8 @@ import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.apache.logging.log4j.message.StructuredDataId;
 import org.apache.logging.log4j.message.StructuredDataMessage;
 import org.apache.logging.log4j.message.ThreadDumpMessage;
+
+import org.apache.logging.log4j.message.ObjectArrayMessage;
 import org.apache.logging.log4j.util.MessageSupplier;
 import org.apache.logging.log4j.util.Supplier;
 
@@ -172,9 +173,6 @@ public class Log4j2Sandbox
 			logger.debug(new MapMessage(map));
 
 
-			logger.debug(new ObjectArrayMessage("ObjectArrayMessage", "String"));
-			logger.debug(new ObjectArrayMessage("ObjectArrayMessage", new Foo()));
-
 			logger.debug(new ObjectMessage("ObjectMessage"));
 			logger.debug(new ObjectMessage(new Foo()));
 
@@ -184,9 +182,10 @@ public class Log4j2Sandbox
 
 			logger.debug(new FooMessage());
 
-			deprecatedMessageSupplier();
-			supplier();
-
+			objectArrayMessage(logger);
+			deprecatedMessageSupplier(logger);
+			supplier(logger);
+			
 			logger.debug("########## End ##########");
 			try
 			{
@@ -199,11 +198,15 @@ public class Log4j2Sandbox
 		}
 	}
 
-	@SuppressWarnings({"Convert2Lambda", "Anonymous2MethodRef", "deprecation"})
-	private static void deprecatedMessageSupplier()
+	private static void objectArrayMessage(Logger logger)
 	{
-		final Logger logger = LogManager.getLogger(Log4j2Sandbox.class);
-
+		logger.debug(new ObjectArrayMessage("ObjectArrayMessage", "String"));
+		logger.debug(new ObjectArrayMessage("ObjectArrayMessage", new Foo()));
+	}
+	
+	@SuppressWarnings({"Convert2Lambda", "Anonymous2MethodRef", "deprecation"})
+	private static void deprecatedMessageSupplier(Logger logger)
+	{
 		MessageSupplier simpleMessageMessageSupplier=new MessageSupplier()
 		{
 			@Override
@@ -239,10 +242,8 @@ public class Log4j2Sandbox
 	}
 
 	@SuppressWarnings({"Convert2Lambda", "Anonymous2MethodRef"})
-	private static void supplier()
+	private static void supplier(Logger logger)
 	{
-		final Logger logger = LogManager.getLogger(Log4j2Sandbox.class);
-
 		Supplier<Message> simpleMessageSupplier=new Supplier<Message>()
 		{
 			@Override
