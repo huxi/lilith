@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.LogFileFactory;
 import de.huxhorn.lilith.swing.MainFrame;
+import de.huxhorn.sulky.formatting.HumanReadable;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 import java.io.File;
 import java.util.List;
@@ -47,32 +49,40 @@ public class CleanAllInactiveCallable
 		List<SourceIdentifier> inactiveLogging = mainFrame.collectInactiveLogs(loggingFileFactory);
 		setNumberOfSteps(inactiveAccess.size() + inactiveLogging.size());
 		long currentStep = 0;
+		long reclaimed = 0;
 		for(SourceIdentifier si : inactiveAccess)
 		{
-			delete(accessFileFactory, si);
+			reclaimed += delete(accessFileFactory, si);
 			currentStep++;
 			setCurrentStep(currentStep);
 		}
 		for(SourceIdentifier si : inactiveLogging)
 		{
-			delete(loggingFileFactory, si);
+			reclaimed += delete(loggingFileFactory, si);
 			currentStep++;
 			setCurrentStep(currentStep);
 		}
-		return currentStep;
+		if(logger.isInfoEnabled()) logger.info("Cleaning inactive logs reclaimed {}bytes.", HumanReadable.getHumanReadableSize(reclaimed, true, false));
+		return reclaimed;
 	}
 
-	private void delete(LogFileFactory fileFactory, SourceIdentifier si)
+	private long delete(LogFileFactory fileFactory, SourceIdentifier si)
 	{
-		File dataFile = fileFactory.getDataFile(si);
-		File indexFile = fileFactory.getIndexFile(si);
-		if(dataFile.delete())
+		return delete(fileFactory.getDataFile(si)) +
+				delete(fileFactory.getIndexFile(si));
+	}
+
+	private long delete(File file)
+	{
+		if(file.isFile())
 		{
-			if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
+			long fileSize = file.length();
+			if (file.delete())
+			{
+				if(logger.isDebugEnabled()) logger.debug("Deleted '{}'.", file.getAbsolutePath());
+				return fileSize;
+			}
 		}
-		if(indexFile.delete())
-		{
-			if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
-		}
+		return 0;
 	}
 }

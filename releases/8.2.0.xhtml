@@ -12,7 +12,7 @@
 			<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/8.2.0">Download Now!
 		<br />(Released: 2017-xx-xx)</a>
 		</div>
-		<p>This version of Lilith demands Java 8 update 141 or higher and will says so if you try to start it with an older version. It has also been tested with Java 9-ea+176.</p>
+		<p>This version of Lilith demands Java 8 update 144 or higher and will says so if you try to start it with an older version. It has also been tested with Java 9-ea+180.</p>
 		<p>You can still receive event from previous versions so if your application is still running Java 7 or lower just keep using the 0.9.44 artifacts.<br />
 		Keep in mind that <a href="http://www.oracle.com/technetwork/java/eol-135779.html">Java SE 7 End of Public Updates</a> has already been reached.</p>
 		<h2>Changelog</h2>
@@ -29,6 +29,7 @@
 		<h3>Changed</h3>
 
 		<ul>
+			<li>"Clean all inactive logs" is now less noisy in the Lilith log.</li>
 			<li>Changed icons for "Find previous active" and "Find next active". They now differ from "Find previous" and "Find next" as they should.</li>
 			<li>Refactored actions and icon handling.</li>
 			<li>Don't add null events to global logs.</li>
@@ -53,6 +54,7 @@
 		<h3>Fixed</h3>
 
 		<ul>
+			<li>Zero-delimited event receivers did not add a <code>null</code> event when end of stream was reached.</li>
 			<li>Fixed initial enabled state of "Go to source".</li>
 			<li>Fixed enabled state of "Edit" menu. Mustn't be disabled anymore because "Paste StackTraceElement" is always available.</li>
 			<li>Fixed enabled state of "Copy selection".</li>
@@ -79,7 +81,7 @@ See <a href="http://jira.qos.ch/browse/LOGBACK-1183">LOGBACK-1183 - Message form
 				<del>Binary Lilith log files will only work in case of <code>append=false</code>.</del> Implemented a workaround.
 See <a href="https://jira.qos.ch/browse/LOGBACK-1257">LOGBACK-1257 - Invalid files in case of append=true and Encoder with non-null headerBytes() / footerBytes()</a>
 			</li>
-			<li>log4j 1 won't be able to send <code>ClassLoaderName</code>, <code>ModuleName</code> and <code>ModuleVersion</code> for the call location of the event. Search <code>LOG4J_MODULE</code> in the source to take a look at the problem. Since <a href="https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces">Log4j 1 End-Of-Life</a> has been announced 2015-08-06, chances are pretty slim that this will be fixed. Upgrade to <a href="http://logging.apache.org/log4j/2.x/">log4j 2</a> or <a href="https://logback.qos.ch/">Logback</a>.</li>
+			<li>log4j 1 won't be able to send Java 9 <code>ClassLoaderName</code>, <code>ModuleName</code> and <code>ModuleVersion</code> for the call location of the event. Search <code>LOG4J_MODULE</code> in the source to take a look at the problem. Since <a href="https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces">Log4j 1 End-Of-Life</a> has been announced 2015-08-06, chances are pretty slim that this will be fixed. Upgrade to <a href="http://logging.apache.org/log4j/2.x/">log4j 2</a> or <a href="https://logback.qos.ch/">Logback</a>.</li>
 			<li>Flying Saucer related issues:
 <ul><li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
 See <a href="https://code.google.com/archive/p/flying-saucer/issues/79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>.</li>

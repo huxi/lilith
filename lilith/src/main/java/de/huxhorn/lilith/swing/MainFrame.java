@@ -3578,7 +3578,7 @@ public class MainFrame
 
 		public void taskCreated(Task<Long> longTask)
 		{
-			if(logger.isInfoEnabled()) logger.info("Task {} created.", longTask.getName());
+			if(logger.isDebugEnabled()) logger.debug("Task {} created.", longTask.getName());
 			updateTaskStatus();
 		}
 
@@ -3604,7 +3604,7 @@ public class MainFrame
 
 		public void executionFinished(Task<Long> longTask, Long result)
 		{
-			if(logger.isInfoEnabled()) logger.info("Execution of task {} finished!", longTask.getName());
+			if(logger.isDebugEnabled()) logger.debug("Execution of task {} finished!", longTask.getName());
 			updateTaskStatus();
 			Callable<Long> callable = longTask.getCallable();
 

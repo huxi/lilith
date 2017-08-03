@@ -2863,7 +2863,6 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
-			if(logger.isInfoEnabled()) logger.info("Clean all inactive logs");
 			mainFrame.cleanAllInactiveLogs();
 		}
 	}
