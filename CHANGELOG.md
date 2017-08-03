@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - "Pause" action. Pausing only paused updating of the table, not receiving of events. This was confusing (even me) and served no actual purpose. This action was a left-over from the early days of Lilith when it was used for debugging during development.
 
 ### Fixed
+- Zero-delimited event receivers did not add a `null` event when end of stream was reached.
 - Fixed initial enabled state of "Go to source".
 - Fixed enabled state of "Edit" menu. Mustn't be disabled anymore because "Paste StackTraceElement" is always available.
 - Fixed enabled state of "Copy selection".

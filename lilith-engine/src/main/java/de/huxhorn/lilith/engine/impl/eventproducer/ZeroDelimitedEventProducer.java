@@ -74,6 +74,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 						if (readByte == -1)
 						{
 							if (logger.isDebugEnabled()) logger.debug("Read -1, stopping...");
+							addEvent(null);
 							return;
 						}
 						byte current = (byte) readByte;
@@ -103,8 +104,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 			}
 			catch (Throwable e)
 			{
-				if (logger.isDebugEnabled())
-					logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
+				if(logger.isWarnEnabled()) logger.warn("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 				addEvent(null);
 				IOUtilities.interruptIfNecessary(e);
 			}
