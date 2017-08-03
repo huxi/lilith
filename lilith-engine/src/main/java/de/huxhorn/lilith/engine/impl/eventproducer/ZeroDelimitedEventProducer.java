@@ -26,6 +26,7 @@ import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.SocketException;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,8 +103,16 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 					}
 				}
 			}
+			catch (SocketException e)
+			{
+				// this is thrown when inputStream is closed in close()
+				if(logger.isDebugEnabled()) logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
+				addEvent(null);
+				IOUtilities.interruptIfNecessary(e);
+			}
 			catch (Throwable e)
 			{
+				// this indicates that something has actually gone wrong
 				if(logger.isWarnEnabled()) logger.warn("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 				addEvent(null);
 				IOUtilities.interruptIfNecessary(e);
