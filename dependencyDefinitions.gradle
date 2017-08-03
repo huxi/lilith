@@ -34,7 +34,7 @@ project.ext.libraries = [
 'commons-text':             'org.apache.commons:commons-text:1.1',
 //'disruptor':                'com.lmax:disruptor:3.3.0',
 'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.1.6',
-'glazedlists':              'net.java.dev.glazedlists:glazedlists_java15:1.9.1',
+'glazedlists':              'net.java.dev.glazedlists:glazedlists_java16:1.10.0',
 'groovy':                   "org.codehaus.groovy:groovy:${versions.groovy}",
 'groovy-console':           "org.codehaus.groovy:groovy-console:${versions.groovy}",
 'groovy-xml':               "org.codehaus.groovy:groovy-xml:${versions.groovy}",

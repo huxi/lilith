@@ -34,7 +34,7 @@ All notable changes to this project will be documented in this file.
 - Menu entries related to global logs are now disabled if "Enable global logs." is unchecked in Preferences.
 - Added more dependencies and entries to the deserialization whitelist. This is essentially necessary because `logback-access` does not have an `AccessEventVO`. See also [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Not all event producers expect a heartbeat.
-- Groovy 2.4.12, Logback 1.2.3, flying-saucer 9.1.6, spring 4.3.10, jackson 2.9.0, log4j2 2.8.2, junique 1.0.4, jcommander 1.72, protobuf 3.3.1, commons-lang 3.6, commons-text 1.1
+- Groovy 2.4.12, Logback 1.2.3, flying-saucer 9.1.6, spring 4.3.10, jackson 2.9.0, log4j2 2.8.2, junique 1.0.4, jcommander 1.72, protobuf 3.3.1, commons-lang 3.6, commons-text 1.1, glazedlists 1.10.0
 
 ### Security
 - Nothing.
@@ -52,7 +52,7 @@ All notable changes to this project will be documented in this file.
     See [Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel](https://code.google.com/archive/p/flying-saucer/issues/79).
   - Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
     See [Issue 105: URLs with anchors](https://code.google.com/archive/p/flying-saucer/issues/105).
-- [GLAZEDLISTS-469 - AutoCompleteSupport: Arrowing down on the popup and pressing enter fails to update combobox](https://java.net/jira/browse/GLAZEDLISTS-469) is happening in the find panel on macOS. Select the correct entry with the mouse as a workaround.
+- [glazedlists #485 - AutoCompleteSupport: Arrowing down on the popup and pressing enter fails to update combobox](https://github.com/glazedlists/glazedlists/issues/485) is happening in the find panel on macOS. Select the correct entry with the mouse as a workaround.
 
 
 ---
