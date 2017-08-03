@@ -11,9 +11,8 @@ Please take a look at the help contained in Lilith itself.
 Hopefully, lots of questions are answered by it.
 
 Lilith opens:
-- a standard LoggingEvent server socket on port 4560 as used by LogBACK classic SocketAppender.
+- standard LoggingEvent server sockets on port 4445 and 4560 as used by LogBACK classic SocketAppender, Log4j SocketAppender and Log4j2 SocketAppender.
 - a standard AccessEvent server socket on port 4570 as used by LogBACK access SocketAppender.
-- a standard Log4j LoggingEvent server socket on port 4445 as used by Log4j SocketAppender.
 - a multiplex Lilith LoggingEvent server socket on ports 10000 (compressed)
   and 10001 (uncompressed).
 - a multiplex AccessEvent server socket on ports 10010 (compressed)

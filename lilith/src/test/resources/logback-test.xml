@@ -10,7 +10,7 @@
 	<!--
 	<appender name="Localhorst" class="ch.qos.logback.classic.net.SocketAppender">
 		<RemoteHost>localhost</RemoteHost>
-		<Port>4445</Port>
+		<Port>4560</Port>
 		<ReconnectionDelay>1</ReconnectionDelay>
 		<IncludeCallerData>true</IncludeCallerData>
 	</appender>

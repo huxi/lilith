@@ -32,7 +32,7 @@ overview of the advantages you'll get if you decide to take the dive.</p>
 	appender designed for high-performance multiple-recipient usage in a live environment.</p>
 
 <h2>log4j.xml Example</h2>
-<p>Configure LOG4J as usual and define a SocketAppender connecting to port 4445.</p>
+<p>Configure LOG4J as usual and define a SocketAppender connecting to port 4445 or port 4560.</p>
 		<pre><code><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
@@ -41,7 +41,7 @@ overview of the advantages you'll get if you decide to take the dive.</p>
     <appender name="socket" class="org.apache.log4j.net.SocketAppender">
         <param name="Application" value="YourApplication"/>
         <param name="locationInfo" value="true"/>
-        <param name="Port" value="4445"/>
+        <param name="Port" value="4560"/>
         <param name="RemoteHost" value="127.0.0.1"/>
         <param name="ReconnectionDelay" value="10"/>
     </appender>

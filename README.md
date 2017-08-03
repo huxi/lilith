@@ -11,7 +11,7 @@ It has features roughly comparable to [Chainsaw][] for log4j™, but with an emp
 
 #### ...and logback-classic SocketAppender.
 
-Lilith is listening for logback-classic [`SocketAppender`][lcsa] connections on port 4560. 
+Lilith is listening for logback-classic [`SocketAppender`][lcsa] connections on port 4445 or port 4560. 
 
 A [`SocketAppender`][lcsa]  establishes a connection with exactly one host that is defined in the `RemoteHost` property.
 
@@ -278,7 +278,7 @@ Using Lilith [`AccessLilithEncoder`][ale] requires `de.huxhorn.lilith:de.huxhorn
 Take a look at the [Logback manual][logbackm] and the Lilith help for more informations.
 
 ### ...with Log4j 2™.
-Lilith is listening for [Log4j 2][log4j2]™ [`SocketAppender`][log4j2sa] connections on port 4445.
+Lilith is listening for [Log4j 2][log4j2]™ [`SocketAppender`][log4j2sa] connections on port 4445 or port 4560.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -303,7 +303,7 @@ Lilith is listening for [Log4j 2][log4j2]™ [`SocketAppender`][log4j2sa] connec
 Take a look at the [Log4j 2™ manual][log4j2m] for more informations.
 
 ### ...with log4j™.
-Lilith is listening for [log4j][]™ [`SocketAppender`][log4jsa] connections on port 4445.
+Lilith is listening for [log4j][]™ [`SocketAppender`][log4jsa] connections on port 4445 or port 4560.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -312,7 +312,7 @@ Lilith is listening for [log4j][]™ [`SocketAppender`][log4jsa] connections on 
     <appender name="socket" class="org.apache.log4j.net.SocketAppender">
         <param name="Application" value="YourApplication"/>
         <param name="locationInfo" value="true"/>
-        <param name="Port" value="4445"/>
+        <param name="Port" value="4560"/>
         <param name="RemoteHost" value="127.0.0.1"/>
         <param name="ReconnectionDelay" value="10"/>
     </appender>
