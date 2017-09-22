@@ -60,6 +60,8 @@ public class Log4jImportCallable
 	extends AbstractProgressingCallable<Long>
 {
 	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
+	// XMLInputFactory.newFactory() is not deprecated. See http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8183519
+	@SuppressWarnings("deprecation")
 	static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
 	static
 	{
