@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -187,8 +188,8 @@ public class Lilith
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
 		boolean snapshot=false;
-		String plainVersion=APP_VERSION;
-		if(plainVersion != null && plainVersion.endsWith(SNAPSHOT_POSTFIX))
+		String plainVersion=APP_VERSION != null ? APP_VERSION : "n/a";
+		if(plainVersion.endsWith(SNAPSHOT_POSTFIX))
 		{
 			snapshot = true;
 			plainVersion = plainVersion.substring(0, plainVersion.length()-SNAPSHOT_POSTFIX.length());
