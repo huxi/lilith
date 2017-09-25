@@ -809,9 +809,10 @@ public class Lilith
 		}
 
 		boolean screenMenuBar = false;
-		if(systemLookAndFeelClassName.equals(lookAndFeelClassName))
+		if(isMac())
 		{
-			if(isMac())
+			if(isJava9OrHigher() // all L&F support screen menu bar with Java 9 or higher
+					|| systemLookAndFeelClassName.equals(lookAndFeelClassName))
 			{
 				// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
 				try
@@ -1030,7 +1031,11 @@ public class Lilith
 
 	private static boolean isMac()
 	{
-		String osName = System.getProperty("os.name").toLowerCase(Locale.US);
-		return osName.startsWith("mac");
+		return System.getProperty("os.name").toLowerCase(Locale.US).startsWith("mac");
+	}
+
+	private static boolean isJava9OrHigher()
+	{
+		return !System.getProperty("java.version").startsWith("1.");
 	}
 }
