@@ -19,8 +19,6 @@
 package de.huxhorn.lilith;
 
 import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class VersionBundle
 	implements Comparable<VersionBundle>
@@ -55,8 +53,6 @@ public final class VersionBundle
 
 	public static VersionBundle fromString(String input)
 	{
-		final Logger logger = LoggerFactory.getLogger(VersionBundle.class);
-
 		if(input == null)
 		{
 			return null;
@@ -67,7 +63,6 @@ public final class VersionBundle
 		VersionBundle result;
 		if(hashIndex < 0)
 		{
-			if(logger.isWarnEnabled()) logger.warn("Retrieved version without timestamp! '{}'", input);
 			result=new VersionBundle(input);
 		}
 		else
@@ -81,11 +76,10 @@ public final class VersionBundle
 			}
 			catch(NumberFormatException ex)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Retrieved version with invalid timestamp! '{}'", input, ex);
 				result=new VersionBundle(input);
 			}
 		}
-		if(logger.isDebugEnabled()) logger.debug("VersionBundle: {}", result);
+
 		return result;
 	}
 

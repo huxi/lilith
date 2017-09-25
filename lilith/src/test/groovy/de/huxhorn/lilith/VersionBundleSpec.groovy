@@ -96,6 +96,9 @@ class VersionBundleSpec extends Specification {
 		instance4.compareTo(instance2) > 0
 		instance4.compareTo(instance3) == 0
 		instance4.compareTo(instance4) == 0
+
+		and:
+		instance1.compareTo(null) > 0
 	}
 
 	def 'new VersionBundle(null) explodes as expected'() {
@@ -114,5 +117,29 @@ class VersionBundleSpec extends Specification {
 		then:
 		NullPointerException ex = thrown()
 		ex.message == 'version must not be null!'
+	}
+
+	@SuppressWarnings("ChangeToOperator")
+	def 'equals() and hashCode checks'() {
+		given:
+		def instance1 = new VersionBundle('foo', 10)
+		def instance2 = new VersionBundle('foo', 10)
+		def instance3 = new VersionBundle('foo', 17)
+		def instance4 = new VersionBundle('bar', 17)
+		def instance5 = new VersionBundle('bar', 10)
+
+		expect:
+		!instance1.equals(null)
+		//noinspection GrEqualsBetweenInconvertibleTypes
+		!instance1.equals(1)
+		instance1.equals(instance1)
+		instance1.equals(instance2)
+		!instance1.equals(instance3)
+		!instance1.equals(instance4)
+		!instance1.equals(instance5)
+
+		and:
+		instance1.hashCode() == instance1.hashCode()
+		instance1.hashCode() == instance2.hashCode()
 	}
 }
