@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.Icons;
@@ -23,8 +24,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -57,7 +58,7 @@ public class SourceListsPanel
 	private EditSourceListDialog editSourceListDialog;
 	private GenericSortedListModel<Source> listModel;
 
-	public SourceListsPanel(PreferencesDialog preferencesDialog)
+	SourceListsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		createUI();
@@ -158,7 +159,7 @@ public class SourceListsPanel
 		removeSourceListAction.setEnabled(selectedIndex != -1);
 	}
 
-	public void editSourceList(final String sourceListName, boolean add)
+	private void editSourceList(final String sourceListName, boolean add)
 	{
 		editSourceListDialog.setSourceListName(sourceListName);
 		List<Source> data = preferencesDialog.getSourceList(sourceListName);
@@ -252,13 +253,9 @@ public class SourceListsPanel
 	}
 
 	private class SourceListMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
 		private final Logger logger = LoggerFactory.getLogger(SourceListMouseListener.class);
-
-		SourceListMouseListener()
-		{
-		}
 
 		public void mouseClicked(MouseEvent evt)
 		{
@@ -279,43 +276,6 @@ public class SourceListsPanel
 					if(logger.isInfoEnabled()) logger.info("After show...");
 				}
 			}
-			else if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-
-		/**
-		 * @param evt the mouse event the popup should be shown at
-		 * @noinspection UnusedDeclaration
-		 */
-		private void showPopup(MouseEvent evt)
-		{
-		}
-
-		public void mousePressed(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseReleased(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
 		}
 	}
 

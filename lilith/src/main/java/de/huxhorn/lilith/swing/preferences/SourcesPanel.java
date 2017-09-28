@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.Icons;
@@ -23,8 +24,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.AbstractAction;
@@ -54,7 +55,7 @@ public class SourcesPanel
 	private EditSourceNameDialog editSourceNameDialog;
 	private PreferencesDialog preferencesDialog;
 
-	public SourcesPanel(PreferencesDialog preferencesDialog)
+	SourcesPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		createUI();
@@ -103,7 +104,7 @@ public class SourcesPanel
 		updateSourceNames();
 	}
 
-	public void updateSourceNames()
+	private void updateSourceNames()
 	{
 		int selectedRow = sourceNameTable.getSelectedRow();
 		if(logger.isDebugEnabled()) logger.debug("selectedRow={}", selectedRow);
@@ -112,7 +113,7 @@ public class SourcesPanel
 		removeSourceNameAction.setEnabled(selectedRow != -1);
 	}
 
-	public void editSourceName(final String sourceIdentifier)
+	void editSourceName(final String sourceIdentifier)
 	{
 		Map<String, String> data = sourceNameTableModel.getData();
 		if(data.containsKey(sourceIdentifier))
@@ -125,7 +126,7 @@ public class SourcesPanel
 		}
 	}
 
-	public void editSourceName(final String sourceIdentifier, boolean add)
+	private void editSourceName(final String sourceIdentifier, boolean add)
 	{
 		Map<String, String> data = sourceNameTableModel.getData();
 		String sourceName = data.get(sourceIdentifier);
@@ -232,14 +233,9 @@ public class SourcesPanel
 	}
 
 	private class SourceNameTableMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
 		private final Logger logger = LoggerFactory.getLogger(SourceNameTableMouseListener.class);
-
-
-		SourceNameTableMouseListener()
-		{
-		}
 
 		public void mouseClicked(MouseEvent evt)
 		{
@@ -262,44 +258,6 @@ public class SourcesPanel
 					if(logger.isInfoEnabled()) logger.info("After show...");
 				}
 			}
-			else if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-
-		/**
-		 * @param evt the mouse event
-		 * @noinspection UNUSED_SYMBOL,UnusedDeclaration
-		 */
-		private void showPopup(MouseEvent evt)
-		{
-		}
-
-		public void mousePressed(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseReleased(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
 		}
 	}
-
 }

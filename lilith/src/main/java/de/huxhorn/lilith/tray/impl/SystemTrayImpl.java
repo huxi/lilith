@@ -182,12 +182,9 @@ public class SystemTrayImpl
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
-			if(e.getClickCount() >= 2)
+			if(mainFrame != null && e.getClickCount() >= 2)
 			{
-				if(mainFrame != null)
-				{
-					mainFrame.toggleVisible();
-				}
+				mainFrame.toggleVisible();
 			}
 		}
 	}

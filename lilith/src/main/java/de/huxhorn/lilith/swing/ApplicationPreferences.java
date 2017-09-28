@@ -231,7 +231,7 @@ public class ApplicationPreferences
 		DEFAULT_SOUND_LOCATIONS = Collections.unmodifiableMap(defaultSoundLocations);
 
 		Map<String, String> defaultSourceNames = new HashMap<>();
-		defaultSourceNames.put("127.0.0.1", "Localhost");
+		defaultSourceNames.put("127.0.0.1", "Localhost"); // NOPMD
 		DEFAULT_SOURCE_NAMES = Collections.unmodifiableMap(defaultSourceNames);
 
 		Map<LoggingEvent.Level, ColorScheme> defaultLevelColors = new HashMap<>();
@@ -492,7 +492,7 @@ public class ApplicationPreferences
 		}
 		if(!dataFile.isFile() || !dataFile.canRead())
 		{
-			if(logger.isWarnEnabled()) logger.warn("Tried to add invalid recent file.");
+			if(logger.isWarnEnabled()) logger.warn("Tried to add invalid recent file."); // NOPMD
 		}
 		String absName=dataFile.getAbsolutePath();
 
@@ -1304,7 +1304,7 @@ public class ApplicationPreferences
 		detailsViewRoot = new File(startupApplicationPath, DETAILS_VIEW_ROOT_FOLDER);
 		if(detailsViewRoot.mkdirs())
 		{
-			if(logger.isInfoEnabled()) logger.info("Created directory {}.", detailsViewRoot.getAbsolutePath());
+			if(logger.isInfoEnabled()) logger.info("Created directory {}.", detailsViewRoot.getAbsolutePath()); // NOPMD
 		}
 		try
 		{
@@ -1424,18 +1424,15 @@ public class ApplicationPreferences
 
 	private static void copy(Logger logger, URL source, File target, boolean overwrite)
 	{
-		if(overwrite)
+		if(overwrite && target.isFile())
 		{
-			if(target.isFile())
+			if(target.delete())
 			{
-				if(target.delete())
-				{
-					if(logger.isInfoEnabled()) logger.info("Deleted {}. ", target.getAbsolutePath());
-				}
-				else
-				{
-					if(logger.isWarnEnabled()) logger.warn("Tried to delete {} but couldn't!", target.getAbsolutePath());
-				}
+				if(logger.isInfoEnabled()) logger.info("Deleted {}. ", target.getAbsolutePath());
+			}
+			else
+			{
+				if(logger.isWarnEnabled()) logger.warn("Tried to delete {} but couldn't!", target.getAbsolutePath());
 			}
 		}
 
@@ -1450,7 +1447,7 @@ public class ApplicationPreferences
 			}
 			catch(IOException e)
 			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while initializing '" + target.getAbsolutePath() + "' with data from '" + source + "'.!", e);
+				if(logger.isWarnEnabled()) logger.warn("Exception while initializing '{}' with data from '{}'.!", target.getAbsolutePath(), source, e);
 			}
 			finally
 			{
@@ -2199,7 +2196,7 @@ public class ApplicationPreferences
 	{
 		if(applicationPath.mkdirs())
 		{
-			if(logger.isInfoEnabled()) logger.info("Created directory {}.", applicationPath.getAbsolutePath());
+			if(logger.isInfoEnabled()) logger.info("Created directory {}.", applicationPath.getAbsolutePath()); // NOPMD
 		}
 		if(!applicationPath.isDirectory())
 		{
@@ -2217,7 +2214,7 @@ public class ApplicationPreferences
 		File result = new File(appPath);
 		if(result.mkdirs())
 		{
-			if(logger.isInfoEnabled()) logger.info("Created directory {}.", result.getAbsolutePath());
+			if(logger.isInfoEnabled()) logger.info("Created directory {}.", result.getAbsolutePath()); // NOPMD
 		}
 		return result;
 	}
@@ -2317,21 +2314,15 @@ public class ApplicationPreferences
 		File appPath = getStartupApplicationPath();
 		File sourceNamesFile = new File(appPath, SOURCE_NAMES_XML_FILENAME);
 
-		if(sourceNamesFile.isFile())
+		if(sourceNamesFile.isFile() && loadSourceNamesXml(sourceNamesFile))
 		{
-			if(loadSourceNamesXml(sourceNamesFile))
-			{
-				return new HashMap<>(sourceNames);
-			}
+			return new HashMap<>(sourceNames);
 		}
 
 		sourceNamesFile = new File(appPath, SOURCE_NAMES_PROPERTIES_FILENAME);
-		if(sourceNamesFile.isFile())
+		if(sourceNamesFile.isFile() && loadSourceNamesProperties(sourceNamesFile))
 		{
-			if(loadSourceNamesProperties(sourceNamesFile))
-			{
-				return new HashMap<>(sourceNames);
-			}
+			return new HashMap<>(sourceNames);
 		}
 		return new HashMap<>(DEFAULT_SOURCE_NAMES);
 	}
@@ -2342,12 +2333,9 @@ public class ApplicationPreferences
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, SOUND_LOCATIONS_XML_FILENAME);
 
-		if(file.isFile())
+		if(file.isFile() && loadSoundLocationsXml(file))
 		{
-			if(loadSoundLocationsXml(file))
-			{
-				return new HashMap<>(soundLocations);
-			}
+			return new HashMap<>(soundLocations);
 		}
 
 		return new HashMap<>(DEFAULT_SOUND_LOCATIONS);

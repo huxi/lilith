@@ -529,7 +529,7 @@ public class MainFrame
 			File autostartDir = new File(startupApplicationPath, "autostart");
 			if(autostartDir.mkdirs())
 			{
-				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", autostartDir.getAbsolutePath());
+				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", autostartDir.getAbsolutePath()); // NOPMD
 			}
 			File[] autoFiles = autostartDir.listFiles(File::isFile);
 
@@ -995,7 +995,7 @@ public class MainFrame
 	{
 		if(!EventQueue.isDispatchThread())
 		{
-			if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!");
+			if(logger.isErrorEnabled()) logger.error("Not on EventDispatchThread!"); // NOPMD
 		}
 
 		ColorScheme result=null;
@@ -1142,11 +1142,11 @@ public class MainFrame
 				}
 				if(!dataFile.delete())
 				{
-					if(logger.isWarnEnabled()) logger.warn("Couldn't delete existing file {}!", dataFile.getAbsolutePath());
+					if(logger.isWarnEnabled()) logger.warn("Couldn't delete existing file {}!", dataFile.getAbsolutePath()); // NOPMD
 				}
 				if(indexFile.isFile() && !indexFile.delete())
 				{
-					if(logger.isWarnEnabled()) logger.warn("Couldn't delete existing file {}!", indexFile.getAbsolutePath());
+					if(logger.isWarnEnabled()) logger.warn("Couldn't delete existing file {}!", indexFile.getAbsolutePath()); // NOPMD
 				}
 			}
 
@@ -1262,7 +1262,7 @@ public class MainFrame
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if(JOptionPane.OK_OPTION == result)
 			{
-				if(indexFile.delete())
+				if(indexFile.delete()) // NOPMD
 				{
 					if(logger.isInfoEnabled()) logger.info("Deleted previous index file {}.", indexFile.getAbsolutePath());
 					String name = "Re-indexing Lilith file";
@@ -1333,15 +1333,12 @@ public class MainFrame
 
 			if(dataFile.delete())
 			{
-				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", dataFile.getAbsolutePath());
+				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", dataFile.getAbsolutePath()); // NOPMD
 			}
 		}
-		if(indexFile.isFile())
+		if(indexFile.isFile() && indexFile.delete())
 		{
-			if(indexFile.delete())
-			{
-				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", indexFile.getAbsolutePath());
-			}
+			if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", indexFile.getAbsolutePath()); // NOPMD
 		}
 
 		Map<String, String> metaData = new HashMap<>();
@@ -3081,11 +3078,11 @@ public class MainFrame
 			File indexFile = fileFactory.getIndexFile(si);
 			if(dataFile.delete())
 			{
-				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile);
+				if(logger.isInfoEnabled()) logger.info("Deleted {}", dataFile); // NOPMD
 			}
 			if(indexFile.delete())
 			{
-				if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile);
+				if(logger.isInfoEnabled()) logger.info("Deleted {}", indexFile); // NOPMD
 			}
 		}
 	}
@@ -3698,11 +3695,11 @@ public class MainFrame
 						if(logger.isInfoEnabled()) logger.info("Deleted {}.", dataFile.getAbsolutePath());
 						if(dataFile.isFile())
 						{
-							if(logger.isWarnEnabled()) logger.warn("WTF???? I just deleted {} and now it's still a file?!", dataFile.getAbsolutePath());
+							if(logger.isWarnEnabled()) logger.warn("WTF???? I just deleted {} and now it's still a file?!", dataFile.getAbsolutePath()); // NOPMD
 						}
 						if(dataFile.exists())
 						{
-							if(logger.isWarnEnabled()) logger.warn("WTF???? I just deleted {} and now it still exists?!", dataFile.getAbsolutePath());
+							if(logger.isWarnEnabled()) logger.warn("WTF???? I just deleted {} and now it still exists?!", dataFile.getAbsolutePath()); // NOPMD
 						}
 					}
 					else

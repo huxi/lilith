@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
@@ -32,7 +33,6 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
-
 
 public class EventContainsCondition
 	implements LilithCondition, SearchStringCondition
@@ -65,14 +65,7 @@ public class EventContainsCondition
 
 	private boolean checkString(String input)
 	{
-		if(input != null)
-		{
-			if(input.contains(searchString))
-			{
-				return true;
-			}
-		}
-		return false;
+		return input != null && input.contains(searchString);
 	}
 
 	public boolean isTrue(Object value)
@@ -100,12 +93,9 @@ public class EventContainsCondition
 					{
 						message = messageObj.getMessage();
 					}
-					if(message != null)
+					if(checkString(message))
 					{
-						if(checkString(message))
-						{
-							return true;
-						}
+						return true;
 					}
 				}
 
@@ -157,21 +147,15 @@ public class EventContainsCondition
 						}
 
 						Long threadId = threadInfo.getId();
-						if(threadId != null)
+						if(threadId != null && checkString(Long.toString(threadId)))
 						{
-							if(checkString(Long.toString(threadId)))
-							{
-								return true;
-							}
+							return true;
 						}
 
 						Integer threadPriority = threadInfo.getPriority();
-						if(threadPriority != null)
+						if(threadPriority != null && checkString(Integer.toString(threadPriority)))
 						{
-							if(checkString(Integer.toString(threadPriority)))
-							{
-								return true;
-							}
+							return true;
 						}
 
 						if(checkString(threadInfo.getGroupName()))
@@ -180,12 +164,9 @@ public class EventContainsCondition
 						}
 
 						Long groupId = threadInfo.getGroupId();
-						if(groupId != null)
+						if(groupId != null && checkString(Long.toString(groupId)))
 						{
-							if(checkString(Long.toString(groupId)))
-							{
-								return true;
-							}
+							return true;
 						}
 					}
 				}
@@ -288,12 +269,7 @@ public class EventContainsCondition
 
 	private boolean checkLoggerContext(LoggerContext context)
 	{
-		if (context == null)
-		{
-			return false;
-		}
-
-		return checkString(context.getName()) || checkMap(context.getProperties());
+		return context != null && (checkString(context.getName()) || checkMap(context.getProperties()));
 	}
 
 	private boolean checkThrowable(ThrowableInfo throwable, IdentityHashMap<ThrowableInfo, Object> dejaVu)

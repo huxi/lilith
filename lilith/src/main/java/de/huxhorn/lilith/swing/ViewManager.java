@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.appender.InternalLilithAppender;
@@ -139,36 +140,37 @@ public abstract class ViewManager<T extends Serializable>
 				ViewContainer<T> value = entry.getValue();
 				EventWrapperViewPanel panel = value.getDefaultView();
 
-				if (!key.isGlobal() && LoggingViewState.ACTIVE != panel.getState())
+				if (!key.isGlobal()
+						&& LoggingViewState.ACTIVE != panel.getState()
+						&& !key.getSourceIdentifier().equals(InternalLilithAppender.getSourceIdentifier()))
 				{
-					if(!key.getSourceIdentifier().equals(InternalLilithAppender.getSourceIdentifier()))
+					if (onlyClosed)
 					{
-						if (onlyClosed)
-						{
-							//if(value.resolveInternalFrame()==null && value.resolveFrame()==null)
-							if (value.resolveViewWindow() == null)
-							{
-								result.add(value);
-								inactiveKeys.add(key);
-							}
-						}
-						else
+						if (value.resolveViewWindow() == null)
 						{
 							result.add(value);
 							inactiveKeys.add(key);
 						}
 					}
+					else
+					{
+						result.add(value);
+						inactiveKeys.add(key);
+					}
 				}
 			}
 		}
+
 		for (EventSource<T> current : inactiveKeys)
 		{
 			removeView(current);
 		}
+
 		for (ViewContainer<T> current : result)
 		{
 			closeViewContainer(current);
 		}
+
 		return result;
 	}
 

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.gotosrc;
 
 import de.huxhorn.sulky.io.IOUtilities;
@@ -117,7 +118,7 @@ public class SerializingGoToSource
 		{
 			try
 			{
-				socket = new Socket("127.0.0.1", port);
+				socket = new Socket("127.0.0.1", port); // NOPMD
 				oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			}
 			catch(IOException e)

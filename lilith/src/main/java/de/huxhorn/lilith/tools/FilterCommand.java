@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.tools;
 
 import de.huxhorn.lilith.api.FileConstants;
@@ -108,11 +109,11 @@ public class FilterCommand
 		{
 			if(outputDataFile.delete())
 			{
-				if(logger.isDebugEnabled()) logger.debug("Deleted {}.", outputDataFileStr);
+				if(logger.isDebugEnabled()) logger.debug("Deleted {}.", outputDataFileStr); // NOPMD
 			}
 			if(outputIndexFile.delete())
 			{
-				if(logger.isDebugEnabled()) logger.debug("Deleted {}.", outputIndexFileStr);
+				if(logger.isDebugEnabled()) logger.debug("Deleted {}.", outputIndexFileStr); // NOPMD
 			}
 		}
 
@@ -264,21 +265,18 @@ public class FilterCommand
 		for (i = 0; i < bufferSize; i++)
 		{
 			EventWrapper<T> current = inputBuffer.get(i);
-			if (current != null)
+			if (current != null && groovyCondition.isTrue(current))
 			{
-				if(groovyCondition.isTrue(current))
+				if(formatter != null)
 				{
-					if(formatter != null)
+					String msg = formatter.format(current);
+					if (msg != null)
 					{
-						String msg = formatter.format(current);
-						if (msg != null)
-						{
-							System.out.print(msg);
-							System.out.flush();
-						}
+						System.out.print(msg);
+						System.out.flush();
 					}
-					outputBuffer.add(current);
 				}
+				outputBuffer.add(current);
 			}
 		}
 		return i;
@@ -308,21 +306,18 @@ public class FilterCommand
 				for(;index < inputBuffer.getSize();index++)
 				{
 					EventWrapper<T> current = inputBuffer.get(index);
-					if (current != null)
+					if (current != null && groovyCondition.isTrue(current))
 					{
-						if(groovyCondition.isTrue(current))
+						if(formatter != null)
 						{
-							if(formatter != null)
+							String msg = formatter.format(current);
+							if (msg != null)
 							{
-								String msg = formatter.format(current);
-								if (msg != null)
-								{
-									System.out.print(msg);
-									System.out.flush();
-								}
+								System.out.print(msg);
+								System.out.flush();
 							}
-							outputBuffer.add(current);
 						}
+						outputBuffer.add(current);
 					}
 				}
 			}

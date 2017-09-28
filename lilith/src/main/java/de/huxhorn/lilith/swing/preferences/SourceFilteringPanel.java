@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.prefs.LilithPreferences;
@@ -54,7 +55,7 @@ public class SourceFilteringPanel
 	private JRadioButton whitelistButton;
 	private ListItemListener listItemListener;
 
-	public SourceFilteringPanel(PreferencesDialog preferencesDialog)
+	SourceFilteringPanel(PreferencesDialog preferencesDialog)
 	{
 		super();
 		this.preferencesDialog = preferencesDialog;
@@ -276,7 +277,7 @@ public class SourceFilteringPanel
 	{
 		private boolean initializing = false;
 
-		public void setInitializing(boolean initializing)
+		void setInitializing(boolean initializing)
 		{
 			this.initializing = initializing;
 		}
@@ -288,21 +289,22 @@ public class SourceFilteringPanel
 		 */
 		public void itemStateChanged(ItemEvent e)
 		{
-			if(!initializing)
+			if(!initializing && e.getStateChange() == ItemEvent.SELECTED)
 			{
-				if(e.getStateChange() == ItemEvent.SELECTED)
+				String item = (String) e.getItem();
+				Object source = e.getSource();
+
+				if(source == whitelistNames)
 				{
-					String item = (String) e.getItem();
-					if(e.getSource() == whitelistNames)
-					{
-						if(logger.isInfoEnabled()) logger.info("WhiteList Selected: {}", item);
-						preferencesDialog.setWhiteListName(item);
-					}
-					else if(e.getSource() == blacklistNames)
-					{
-						if(logger.isInfoEnabled()) logger.info("BlackList Selected: {}", item);
-						preferencesDialog.setBlackListName(item);
-					}
+					if(logger.isInfoEnabled()) logger.info("WhiteList Selected: {}", item);
+					preferencesDialog.setWhiteListName(item);
+					return;
+				}
+
+				if(source == blacklistNames)
+				{
+					if(logger.isInfoEnabled()) logger.info("BlackList Selected: {}", item);
+					preferencesDialog.setBlackListName(item);
 				}
 			}
 		}

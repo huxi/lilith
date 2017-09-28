@@ -278,13 +278,13 @@ public class TroubleshootingPanel
 				}
 				else if(rootGroup != root)
 				{
-					if(logger.isErrorEnabled()) logger.error("root={}, rootGroup={}", root, rootGroup);
+					if(logger.isErrorEnabled()) logger.error("root={}, rootGroup={}", root, rootGroup); // NOPMD
 				}
 			}
 
 			if(rootGroup == null)
 			{
-				if(logger.isErrorEnabled()) logger.error("Couldn't resolve root ThreadGroup!");
+				if(logger.isErrorEnabled()) logger.error("Couldn't resolve root ThreadGroup!"); // NOPMD
 				return;
 			}
 

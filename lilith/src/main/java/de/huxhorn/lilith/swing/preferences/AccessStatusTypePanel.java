@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
@@ -28,8 +29,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractAction;
@@ -60,7 +61,7 @@ public class AccessStatusTypePanel
 	private EditConditionAction editAction;
 	private Map<HttpStatus.Type, ColorScheme> colors;
 
-	public AccessStatusTypePanel(PreferencesDialog preferencesDialog)
+	AccessStatusTypePanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
@@ -112,7 +113,7 @@ public class AccessStatusTypePanel
 		updateConditions();
 	}
 
-	public void updateConditions()
+	private void updateConditions()
 	{
 		int selectedRow = table.getSelectedRow();
 		if(logger.isDebugEnabled()) logger.debug("selectedRow={}", selectedRow);
@@ -127,7 +128,7 @@ public class AccessStatusTypePanel
 		editAction.setEnabled(type != null);
 	}
 
-	public void saveSettings()
+	void saveSettings()
 	{
 		if(logger.isInfoEnabled()) logger.info("Setting level colors to {}.", colors);
 		applicationPreferences.setStatusColors(colors);
@@ -193,64 +194,22 @@ public class AccessStatusTypePanel
 
 
 	private class ConditionTableMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
-		ConditionTableMouseListener()
-		{
-		}
-
 		public void mouseClicked(MouseEvent evt)
 		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-			else if(evt.getButton() == MouseEvent.BUTTON1)
+			if(evt.getButton() == MouseEvent.BUTTON1)
 			{
 				Point p = evt.getPoint();
 				int row = table.rowAtPoint(p);
 
 				List<HttpStatus.Type> types = tableModel.getData();
-				if(row >= 0 && row < types.size())
+				if(row >= 0 && row < types.size() && evt.getClickCount() >= 2)
 				{
-					if(evt.getClickCount() >= 2)
-					{
-						HttpStatus.Type type = types.get(row);
-						edit(type);
-					}
+					HttpStatus.Type type = types.get(row);
+					edit(type);
 				}
 			}
 		}
-
-
-		@SuppressWarnings({"UnusedDeclaration"})
-		private void showPopup(MouseEvent evt)
-		{
-		}
-
-		public void mousePressed(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseReleased(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
-
 	}
 }

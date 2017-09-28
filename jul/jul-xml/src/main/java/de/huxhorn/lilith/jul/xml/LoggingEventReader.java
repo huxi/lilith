@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,8 +64,7 @@ public class LoggingEventReader
 	public LoggingEvent read(XMLStreamReader reader)
 		throws XMLStreamException
 	{
-		LoggingEvent result = null;
-		String rootNamespace = NAMESPACE_URI;
+
 		int type = reader.getEventType();
 		if(XMLStreamConstants.START_DOCUMENT == type)
 		{
@@ -75,13 +74,12 @@ public class LoggingEventReader
 				type = reader.getEventType();
 			}
 			while(type != XMLStreamConstants.START_ELEMENT || !RECORD_NODE.equals(reader.getLocalName()));
-			rootNamespace = null;
 		}
 		if(XMLStreamConstants.START_ELEMENT == type && RECORD_NODE.equals(reader.getLocalName()))
 		{
 			reader.nextTag();
 
-			result = new LoggingEvent();
+			LoggingEvent result = new LoggingEvent();
 
 			String dateStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, DATE_NODE);
 			String millisStr = StaxUtilities.readSimpleTextNodeIfAvailable(reader, null, MILLIS_NODE);
@@ -100,10 +98,7 @@ public class LoggingEventReader
 			if(timeStamp == null && dateStr != null)
 			{
 				// TODO: parse from string
-				if(logger.isInfoEnabled())
-				{
-					logger.info("Parsing date hasn't been implemented since millis is mandatory in Schema.");
-				}
+				if(logger.isInfoEnabled()) logger.info("Parsing date hasn't been implemented since millis is mandatory in Schema."); // NOPMD
 			}
 			result.setTimeStamp(timeStamp);
 
@@ -167,11 +162,7 @@ public class LoggingEventReader
 				}
 				if(keyStr != null || catalogStr != null || paramList.size() > 0)
 				{
-					if(logger.isInfoEnabled())
-					{
-						logger
-							.info("Ignoring the following message infos: key={}, catalog={}, params={}", new Object[]{keyStr, catalogStr, paramList});
-					}
+					if(logger.isInfoEnabled()) logger.info("Ignoring the following message info: key={}, catalog={}, params={}", keyStr, catalogStr, paramList); // NOPMD
 				}
 			}
 			result.setThrowable(readThrowableInfo(reader));
@@ -191,7 +182,7 @@ public class LoggingEventReader
 			}
 			return result;
 		}
-		return result;
+		return null;
 	}
 
 

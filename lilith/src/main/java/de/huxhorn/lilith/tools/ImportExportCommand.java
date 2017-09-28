@@ -166,7 +166,7 @@ public class ImportExportCommand
 
 		if(basePath.mkdirs())
 		{
-			if(logger.isInfoEnabled()) logger.info("Created directory '{}'.", basePath.getAbsolutePath());
+			if(logger.isInfoEnabled()) logger.info("Created directory '{}'.", basePath.getAbsolutePath()); // NOPMD
 		}
 
 		for(Map.Entry<String, byte[]> current : files.entrySet())

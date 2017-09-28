@@ -810,27 +810,26 @@ public class Lilith
 		}
 
 		boolean screenMenuBar = false;
-		if(isMac())
+		if(isMac() && (
+				isJava9OrHigher() // all L&F support screen menu bar with Java 9 or higher
+				|| systemLookAndFeelClassName.equals(lookAndFeelClassName)
+		))
 		{
-			if(isJava9OrHigher() // all L&F support screen menu bar with Java 9 or higher
-					|| systemLookAndFeelClassName.equals(lookAndFeelClassName))
+			// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
+			try
 			{
-				// Use Apple Aqua L&F screen menu bar if available; set property before any frames created
+				System.setProperty(APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY, "true");
+				screenMenuBar = true;
+			}
+			catch(Throwable e)
+			{
 				try
 				{
-					System.setProperty(APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY, "true");
-					screenMenuBar = true;
+					screenMenuBar = Boolean.parseBoolean(System.getProperty(APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY, "false"));
 				}
-				catch(Throwable e)
+				catch(Throwable e2)
 				{
-					try
-					{
-						screenMenuBar = Boolean.parseBoolean(System.getProperty(APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY, "false"));
-					}
-					catch(Throwable e2)
-					{
-						// ignore
-					}
+					// ignore
 				}
 			}
 		}
@@ -853,7 +852,7 @@ public class Lilith
 			File startupApplicationPath = applicationPreferences.getStartupApplicationPath();
 			if(startupApplicationPath.mkdirs())
 			{
-				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", startupApplicationPath.getAbsolutePath());
+				if(logger.isDebugEnabled()) logger.debug("Created '{}'.", startupApplicationPath.getAbsolutePath()); // NOPMD
 			}
 
 			// System.err redirection
@@ -1026,7 +1025,7 @@ public class Lilith
 		}
 		if(prevPathFile.delete())
 		{
-			if(logger.isDebugEnabled()) logger.debug("Deleted {}.", prevPathFile.getAbsolutePath());
+			if(logger.isDebugEnabled()) logger.debug("Deleted {}.", prevPathFile.getAbsolutePath()); // NOPMD
 		}
 	}
 

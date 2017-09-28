@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,8 +63,7 @@ public class LoggingEventReader
 	public LoggingEvent read(XMLStreamReader reader)
 		throws XMLStreamException
 	{
-		LoggingEvent result = null;
-		String rootNamespace = NAMESPACE_URI;
+
 		int type = reader.getEventType();
 		if(XMLStreamConstants.START_DOCUMENT == type)
 		{
@@ -74,11 +73,10 @@ public class LoggingEventReader
 				type = reader.getEventType();
 			}
 			while(type != XMLStreamConstants.START_ELEMENT);
-			rootNamespace = null;
 		}
 		if(XMLStreamConstants.START_ELEMENT == type && LOGGING_EVENT_NODE.equals(reader.getLocalName()))
 		{
-			result = new LoggingEvent();
+			LoggingEvent result = new LoggingEvent();
 			result.setLogger(StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LOGGER_ATTRIBUTE));
 
 			String levelStr = StaxUtilities.readAttributeValue(reader, NAMESPACE_URI, LEVEL_ATTRIBUTE);
@@ -152,7 +150,7 @@ public class LoggingEventReader
 			result.setMdc(readMdc(reader));
 			return result;
 		}
-		return result;
+		return null;
 	}
 
 	private Map<String, String> readMdc(XMLStreamReader reader)

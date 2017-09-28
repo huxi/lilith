@@ -97,7 +97,7 @@ public class FileSplitterEventHandler<T extends Serializable>
 
 				if(activeFile.delete())
 				{
-					if(logger.isDebugEnabled()) logger.debug("Deleted active file {}.", activeFile.getAbsolutePath());
+					if(logger.isDebugEnabled()) logger.debug("Deleted active file {}.", activeFile.getAbsolutePath()); // NOPMD
 				}
 				fileBuffers.remove(si);
 			}

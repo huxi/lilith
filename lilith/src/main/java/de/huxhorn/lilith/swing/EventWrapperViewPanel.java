@@ -324,11 +324,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		if(!EventQueue.isDispatchThread())
 		{
-			if(logger.isWarnEnabled())
-			{
-				//noinspection ThrowableInstanceNeverThrown
-				logger.warn("!DispatchThread - getState: state=" + state, new Throwable());
-			}
+			//noinspection ThrowableInstanceNeverThrown
+			if(logger.isWarnEnabled()) logger.warn("!DispatchThread - getState: state={}", state, new Throwable()); // NOPMD
 		}
 		return state;
 	}
@@ -802,7 +799,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		File errorPath = new File(appPath, "errors");
 		if(errorPath.mkdirs())
 		{
-			if(logger.isDebugEnabled()) logger.debug("Created errors directory '{}'.", errorPath);
+			if(logger.isDebugEnabled()) logger.debug("Created errors directory '{}'.", errorPath); // NOPMD
 		}
 		String filename = DateTimeFormatters.COMPACT_DATETIME_IN_SYSTEM_ZONE_T.format(Instant.now());
 		File errorFile = new File(errorPath, filename);
@@ -1344,12 +1341,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		{
 			if(logger.isDebugEnabled()) logger.debug("changeEvent: {}", evt);
 
-			if(isScrollingToBottom())
+			if(isScrollingToBottom()
+					&& verticalLogScrollBar.getModel().getValueIsAdjusting())
 			{
-				if(verticalLogScrollBar.getModel().getValueIsAdjusting())
-				{
-					setScrollingToBottom(false);
-				}
+				setScrollingToBottom(false);
 			}
 		}
 	}
@@ -1399,13 +1394,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private void executeFind(Callable<Long> callable, String name, int currentRow, Condition condition)
 	{
 		ViewContainer<T> container = resolveContainer();
-		if(container != null)
+		if(container != null && container.isSearching())
 		{
-			if(container.isSearching())
-			{
-				return; // prevent scheduling of multiple searches...
-			}
+			return; // prevent scheduling of multiple searches...
 		}
+
 		Map<String, String> metaData = CallableMetaData.createFindMetaData(condition, eventSource, currentRow);
 
 		String description = "Executing '" + name + "'  on " +

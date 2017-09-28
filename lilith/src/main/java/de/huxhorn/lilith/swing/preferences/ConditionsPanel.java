@@ -30,8 +30,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -69,7 +69,7 @@ public class ConditionsPanel
 	private MoveUpAction moveUpAction;
 	private MoveDownAction moveDownAction;
 
-	public ConditionsPanel(PreferencesDialog preferencesDialog)
+	ConditionsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
@@ -134,7 +134,7 @@ public class ConditionsPanel
 		updateConditions();
 	}
 
-	public void updateConditions()
+	private void updateConditions()
 	{
 		int selectedRow = conditionTable.getSelectedRow();
 		if(logger.isDebugEnabled()) logger.debug("selectedRow={}", selectedRow);
@@ -157,13 +157,13 @@ public class ConditionsPanel
 		conditionTextArea.setText(description);
 	}
 
-	public void saveSettings()
+	void saveSettings()
 	{
 		if(logger.isInfoEnabled()) logger.info("Setting conditions to {}.", conditions);
 		applicationPreferences.setConditions(conditions);
 	}
 
-	public void editCondition(Condition condition)
+	void editCondition(Condition condition)
 	{
 		SavedCondition savedCondition = null;
 		for(SavedCondition current : conditions)
@@ -224,7 +224,7 @@ public class ConditionsPanel
 			{
 				// replace?
 				String dialogTitle = "Duplicate condition name!";
-				String message = "A different confition with the same name does already exist!\nOverwrite that condition?";
+				String message = "A different condition with the same name does already exist!\nOverwrite that condition?";
 				int result = JOptionPane.showConfirmDialog(this, message, dialogTitle,
 					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if(JOptionPane.OK_OPTION == result)
@@ -291,14 +291,11 @@ public class ConditionsPanel
 		{
 			if(logger.isDebugEnabled()) logger.debug("Edit");
 			int row = conditionTable.getSelectedRow();
-			if(row >= 0)
+			if(row >= 0 && row < conditions.size())
 			{
-				if(row < conditions.size())
-				{
-					SavedCondition condition = conditions.get(row);
-					editCondition(condition.getCondition());
-					updateConditions();
-				}
+				SavedCondition condition = conditions.get(row);
+				editCondition(condition.getCondition());
+				updateConditions();
 			}
 		}
 	}
@@ -403,19 +400,11 @@ public class ConditionsPanel
 	}
 
 	private class ConditionTableMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
-		ConditionTableMouseListener()
-		{
-		}
-
 		public void mouseClicked(MouseEvent evt)
 		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-			else if(evt.getButton() == MouseEvent.BUTTON1)
+			if(evt.getButton() == MouseEvent.BUTTON1)
 			{
 				Point p = evt.getPoint();
 				int row = conditionTable.rowAtPoint(p);
@@ -436,36 +425,5 @@ public class ConditionsPanel
 				}
 			}
 		}
-
-
-		@SuppressWarnings({"UnusedDeclaration"})
-		private void showPopup(MouseEvent evt)
-		{
-		}
-
-		public void mousePressed(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseReleased(MouseEvent evt)
-		{
-			if(evt.isPopupTrigger())
-			{
-				showPopup(evt);
-			}
-		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
-
 	}
 }

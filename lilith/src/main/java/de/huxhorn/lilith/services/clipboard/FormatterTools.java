@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
@@ -219,19 +220,16 @@ class FormatterTools
 
 	private static String toStringOrNullInternal(Map<?, ?> value)
 	{
-		if (!(value instanceof SortedMap))
+		if (!(value instanceof SortedMap) && !value.containsKey(null))
 		{
-			if (!value.containsKey(null))
+			// replace original map with sorted map, if possible
+			try
 			{
-				// replace original map with sorted map, if possible
-				try
-				{
-					value = new TreeMap<>(value);
-				}
-				catch (ClassCastException ignore)
-				{
-					// if not comparable
-				}
+				value = new TreeMap<>(value);
+			}
+			catch (ClassCastException ignore)
+			{
+				// if not comparable
 			}
 		}
 		return SafeString.toString(value,
@@ -242,22 +240,16 @@ class FormatterTools
 
 	private static String toStringOrNullInternal(Collection<?> value)
 	{
-		if (value instanceof Set)
+		if (value instanceof Set && !(value instanceof SortedSet) && !value.contains(null))
 		{
-			if (!(value instanceof SortedSet))
+			// replace original set with sorted set, if possible
+			try
 			{
-				if (!value.contains(null))
-				{
-					// replace original set with sorted set, if possible
-					try
-					{
-						value = new TreeSet<>(value);
-					}
-					catch (ClassCastException ignore)
-					{
-						// if not comparable
-					}
-				}
+				value = new TreeSet<>(value);
+			}
+			catch (ClassCastException ignore)
+			{
+				// if not comparable
 			}
 		}
 

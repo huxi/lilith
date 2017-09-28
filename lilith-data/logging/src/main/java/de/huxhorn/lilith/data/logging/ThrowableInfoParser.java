@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,8 +77,8 @@ public class ThrowableInfoParser
 
 	private static class ThrowableInfoParseResult
 	{
-		public ThrowableInfo throwableInfo;
-		public int endIndex;
+		ThrowableInfo throwableInfo;
+		int endIndex;
 
 		private ThrowableInfoParseResult(ThrowableInfo throwableInfo, int endIndex)
 		{
@@ -161,27 +161,25 @@ public class ThrowableInfoParser
 						continue;
 					}
 				}
-				else if(ThrowableInfo.SUPPRESSED_PREFIX.equals(type))
+				else if(ThrowableInfo.SUPPRESSED_PREFIX.equals(type)
+						&& index != startIndex)
 				{
-					if(index != startIndex)
+					if(indentString.length() != indent + 1)
 					{
-						if(indentString.length() != indent + 1)
-						{
-							// we reached wrong nesting...
-							break;
-						}
-						ThrowableInfoParseResult parsed = parse(throwableInfoLines, index, indent + 1);
-						index = parsed.endIndex - 1;
-						if(parsed.throwableInfo != null)
-						{
-							if(suppressedInfos == null)
-							{
-								suppressedInfos = new ArrayList<>();
-							}
-							suppressedInfos.add(parsed.throwableInfo);
-						}
-						continue;
+						// we reached wrong nesting...
+						break;
 					}
+					ThrowableInfoParseResult parsed = parse(throwableInfoLines, index, indent + 1);
+					index = parsed.endIndex - 1;
+					if(parsed.throwableInfo != null)
+					{
+						if(suppressedInfos == null)
+						{
+							suppressedInfos = new ArrayList<>();
+						}
+						suppressedInfos.add(parsed.throwableInfo);
+					}
+					continue;
 				}
 				if(message == null)
 				{

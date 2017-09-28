@@ -388,13 +388,10 @@ public class ExtendedStackTraceElement
 		{
 			stringBuilder.append("(").append(UNKNOWN_SOURCE_STRING).append(")");
 		}
-		if(extended)
+		if(extended && (codeLocation != null || version != null))
 		{
-			if(codeLocation != null || version != null)
-			{
-				stringBuilder.append(' ');
-				appendExtended(stringBuilder);
-			}
+			stringBuilder.append(' ');
+			appendExtended(stringBuilder);
 		}
 		return stringBuilder;
 	}

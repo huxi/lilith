@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,8 +56,8 @@ import java.util.Arrays;
  */
 public class MessageFormatter
 {
-	private static final char DELIM_START = '{';
-	private static final char DELIM_STOP = '}';
+	private static final char DELIMITER_START = '{';
+	private static final char DELIMITER_STOP = '}';
 	private static final char ESCAPE_CHAR = '\\';
 
 	/**
@@ -86,48 +86,44 @@ public class MessageFormatter
 			}
 			else
 			{
-				if(curChar == DELIM_START)
+				if(curChar == DELIMITER_START
+						&& (i < messagePattern.length() - 1)
+						&& (messagePattern.charAt(i + 1) == DELIMITER_STOP))
 				{
-					if(i < messagePattern.length() - 1)
+					// write escaped escape chars
+					int escapedEscapes = escapeCounter / 2;
+					for(int j = 0; j < escapedEscapes; j++)
 					{
-						if(messagePattern.charAt(i + 1) == DELIM_STOP)
-						{
-							// write escaped escape chars
-							int escapedEscapes = escapeCounter / 2;
-							for(int j = 0; j < escapedEscapes; j++)
-							{
-								result.append(ESCAPE_CHAR);
-							}
-
-							if(escapeCounter % 2 == 1)
-							{
-								// i.e. escaped
-								// write escaped escape chars
-								result.append(DELIM_START);
-								result.append(DELIM_STOP);
-							}
-							else
-							{
-								// unescaped
-								if(currentArgument < arguments.length)
-								{
-									result.append(arguments[currentArgument]);
-								}
-								else
-								{
-									result.append(DELIM_START).append(DELIM_STOP);
-								}
-								currentArgument++;
-							}
-							// this is an optimization: charAt(i+1) has already been checked.
-							// @cs-: ModifiedControlVariable
-							i++;
-							escapeCounter = 0;
-							continue;
-						}
+						result.append(ESCAPE_CHAR);
 					}
+
+					if(escapeCounter % 2 == 1)
+					{
+						// i.e. escaped
+						// write escaped escape chars
+						result.append(DELIMITER_START);
+						result.append(DELIMITER_STOP);
+					}
+					else
+					{
+						// unescaped
+						if(currentArgument < arguments.length)
+						{
+							result.append(arguments[currentArgument]);
+						}
+						else
+						{
+							result.append(DELIMITER_START).append(DELIMITER_STOP);
+						}
+						currentArgument++;
+					}
+					// this is an optimization: charAt(i+1) has already been checked.
+					// @cs-: ModifiedControlVariable
+					i++;
+					escapeCounter = 0;
+					continue;
 				}
-				// any other char beside ESCAPE or DELIM_START/STOP-combo
+				// any other char beside ESCAPE or DELIMITER_START/STOP-combo
 				// write unescaped escape chars
 				if(escapeCounter > 0)
 				{
@@ -156,7 +152,7 @@ public class MessageFormatter
 			return 0;
 		}
 
-		if(-1 == messagePattern.indexOf(DELIM_START))
+		if(-1 == messagePattern.indexOf(DELIMITER_START))
 		{
 			// Special case: no placeholders at all.
 
@@ -179,20 +175,16 @@ public class MessageFormatter
 			{
 				isEscaped = !isEscaped;
 			}
-			else if(curChar == DELIM_START)
+			else if(curChar == DELIMITER_START)
 			{
-				if(!isEscaped)
+				if(!isEscaped
+						&& (i < messagePattern.length() - 1)
+						&& (messagePattern.charAt(i + 1) == DELIMITER_STOP))
 				{
-					if(i < messagePattern.length() - 1)
-					{
-						if(messagePattern.charAt(i + 1) == DELIM_STOP)
-						{
-							result++;
-							// this is an optimization: charAt(i+1) has already been checked.
-							// @cs-: ModifiedControlVariable
-							i++;
-						}
-					}
+					result++;
+					// this is an optimization: charAt(i+1) has already been checked.
+					// @cs-: ModifiedControlVariable
+					i++;
 				}
 				isEscaped = false;
 			}
@@ -225,13 +217,11 @@ public class MessageFormatter
 		int argsCount = countArgumentPlaceholders(messagePattern);
 		int resultArgCount = arguments.length;
 		Throwable throwable = null;
-		if(argsCount < arguments.length)
+		if(argsCount < arguments.length
+				&& arguments[arguments.length - 1] instanceof Throwable)
 		{
-			if(arguments[arguments.length - 1] instanceof Throwable)
-			{
-				throwable = (Throwable) arguments[arguments.length - 1];
-				resultArgCount--;
-			}
+			throwable = (Throwable) arguments[arguments.length - 1];
+			resultArgCount--;
 		}
 
 		String[] stringArgs;
@@ -330,9 +320,8 @@ public class MessageFormatter
 
 			ArgumentResult that = (ArgumentResult) o;
 
-			if (!Arrays.equals(arguments, that.arguments)) return false;
-			return throwable != null ? throwable.equals(that.throwable) : that.throwable == null;
-
+			return Arrays.equals(arguments, that.arguments)
+					&& (throwable != null ? throwable.equals(that.throwable) : that.throwable == null);
 		}
 
 		@Override

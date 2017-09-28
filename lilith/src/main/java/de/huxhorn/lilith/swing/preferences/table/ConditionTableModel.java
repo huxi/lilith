@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ public class ConditionTableModel
 {
 	private final Logger logger = LoggerFactory.getLogger(ConditionTableModel.class);
 
-	public static final int CONDITION_COLUMN = 0;
+	private static final int CONDITION_COLUMN = 0;
 
 	private List<SavedCondition> data;
 	private final EventListenerList eventListenerList;
@@ -136,15 +136,11 @@ public class ConditionTableModel
 
 	public void remove(int row)
 	{
-		if(row >= 0)
+		if(row >= 0 && row < data.size())
 		{
-			if(row < data.size())
-			{
-				data.remove(row);
-				fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
-			}
+			data.remove(row);
+			fireTableChange(new TableModelEvent(this, row, row, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
 		}
-
 	}
 
 	public int moveUp(int row)

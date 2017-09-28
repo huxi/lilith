@@ -47,14 +47,12 @@ public class StackTraceElementReader
 	public ExtendedStackTraceElement read(XMLStreamReader reader)
 		throws XMLStreamException
 	{
-		String rootNamespace = NAMESPACE_URI;
 		int type = reader.getEventType();
 
 		if(XMLStreamConstants.START_DOCUMENT == type)
 		{
 			reader.nextTag();
 			type = reader.getEventType();
-			rootNamespace = null;
 		}
 
 		if(XMLStreamConstants.START_ELEMENT == type

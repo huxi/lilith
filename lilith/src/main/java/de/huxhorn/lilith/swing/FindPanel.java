@@ -321,14 +321,13 @@ public class FindPanel<T extends Serializable>
 				findEditorComponent.setToolTipText(null);
 			}
 		}
-		if(condition != null)
+
+		if(condition != null && findNotButton.isSelected())
 		{
 			// wrap in Not if not is selected.
-			if(findNotButton.isSelected())
-			{
-				condition = new Not(condition);
-			}
+			condition = new Not(condition);
 		}
+
 		return condition;
 	}
 
@@ -573,13 +572,12 @@ public class FindPanel<T extends Serializable>
 			String selectedType = (String) findTypeCombo.getSelectedItem();
 
 			if(!LevelCondition.DESCRIPTION.equals(selectedType)
-				&& !ApplicationPreferences.SAVED_CONDITION.equals(selectedType))
+				&& !ApplicationPreferences.SAVED_CONDITION.equals(selectedType)
+				&& condition instanceof SearchStringCondition)
 			{
-				if(condition instanceof SearchStringCondition)
-				{
-					mainFrame.getApplicationPreferences().addPreviousSearchString(((SearchStringCondition)condition).getSearchString());
-				}
+				mainFrame.getApplicationPreferences().addPreviousSearchString(((SearchStringCondition)condition).getSearchString());
 			}
+
 			eventWrapperViewPanel.createFilteredView();
 		}
 

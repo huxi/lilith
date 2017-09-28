@@ -74,12 +74,9 @@ public class ClassicLilithEncoder
 	@Override
 	protected void preProcess(ILoggingEvent event)
 	{
-		if(event != null)
+		if(event != null && includeCallerData)
 		{
-			if(includeCallerData)
-			{
-				event.getCallerData();
-			}
+			event.getCallerData();
 		}
 	}
 }

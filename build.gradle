@@ -171,6 +171,7 @@ subprojects {
 	apply plugin: 'signing'
 	apply plugin: 'de.thetaphi.forbiddenapis'
 	apply plugin: 'checkstyle'
+	apply plugin: 'pmd'
 	
 	checkstyle {
 		configFile = rootProject.file('config/checkstyle/checkstyle.xml')
@@ -182,6 +183,13 @@ subprojects {
 		//ignoreFailures = true
 	}
 	
+	pmd {
+		ruleSetFiles = files(rootProject.file('config/pmd/ruleSet.xml'))
+		ruleSets = []
+		toolVersion = '5.8.1'
+		//ignoreFailures = true
+	}
+
 	forbiddenApis {
 		bundledSignatures = [
 			'jdk-unsafe-1.8',
