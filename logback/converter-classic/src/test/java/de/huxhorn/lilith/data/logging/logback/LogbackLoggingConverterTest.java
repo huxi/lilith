@@ -42,26 +42,29 @@ import de.huxhorn.lilith.data.logging.Marker;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import java.util.Map;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 public class LogbackLoggingConverterTest
-	extends TestCase
 {
 	private static final String INDENT = "  ";
 	private final Logger logger = LoggerFactory.getLogger(LogbackLoggingConverterTest.class);
 
 	private LogbackLoggingConverter instance;
 
-	@Override
-	protected void setUp()
+	@Before
+	public void setUp()
 		throws Exception
 	{
-		super.setUp();
 		instance = new LogbackLoggingConverter();
 	}
 
+	@Test
 	public void testThrowableProxy()
 	{
 		Throwable t = produceThrowable();
@@ -102,6 +105,7 @@ public class LogbackLoggingConverterTest
 		return t;
 	}
 
+	@Test
 	public void testConvertEvent()
 	{
 		// LoggingEvent(String fqcn, Logger logger, Level level, String message, Throwable throwable, Object[] argArray)

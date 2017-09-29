@@ -36,6 +36,7 @@ package de.huxhorn.lilith.logback.classic;
 
 import de.huxhorn.lilith.data.logging.Message;
 
+@SuppressWarnings("PMD.ShortClassName")
 public class NDC
 {
 	private static final NDCAdapter NDC_ADAPTER;

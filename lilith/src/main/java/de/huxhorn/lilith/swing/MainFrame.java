@@ -208,7 +208,7 @@ public class MainFrame
 	private final GroovyEventWrapperHtmlFormatter groovyFormatter;
 	private final ThymeleafEventWrapperHtmlFormatter thymeleafFormatter;
 
-	private GoToSource gotoSource;
+	private GoToSource gotoSourceProvider;
 	private LogFileFactory loggingFileFactory;
 	private SourceManager<LoggingEvent> loggingEventSourceManager;
 	private FileBufferFactory<LoggingEvent> loggingFileBufferFactory;
@@ -445,7 +445,7 @@ public class MainFrame
 		if(logger.isDebugEnabled()) logger.debug("After creation of preferences-dialog...");
 
 		setSplashStatusText("Creating \"Open inactive\" dialog…");
-		openInactiveLogsDialog = new OpenPreviousDialog(MainFrame.this);
+		openInactiveLogsDialog = new OpenPreviousDialog(this);
 
 		setSplashStatusText("Creating help frame…");
 		helpFrame = new HelpFrame(this);
@@ -556,7 +556,7 @@ public class MainFrame
 
 		// go to source
 		{
-			gotoSource = new SerializingGoToSource();
+			gotoSourceProvider = new SerializingGoToSource();
 			//gotoSource.start() started when needed...
 		}
 
@@ -938,9 +938,9 @@ public class MainFrame
 		{
 			return;
 		}
-		if(gotoSource != null)
+		if(gotoSourceProvider != null)
 		{
-			gotoSource.goToSource(stackTraceElement);
+			gotoSourceProvider.goToSource(stackTraceElement);
 		}
 	}
 
@@ -2024,12 +2024,12 @@ public class MainFrame
 
 	void showDebugDialog()
 	{
-		Windows.showWindow(debugDialog, MainFrame.this, true);
+		Windows.showWindow(debugDialog, this, true);
 	}
 
 	public void showPreferencesDialog()
 	{
-		Windows.showWindow(preferencesDialog, MainFrame.this, true);
+		Windows.showWindow(preferencesDialog, this, true);
 	}
 
 	void showHelp()
@@ -2039,7 +2039,7 @@ public class MainFrame
 
 	void showAboutDialog()
 	{
-		Windows.showWindow(aboutDialog, MainFrame.this, true);
+		Windows.showWindow(aboutDialog, this, true);
 	}
 
 	void cleanAllInactiveLogs()
@@ -3204,10 +3204,10 @@ public class MainFrame
 		public void run()
 		{
 			if(logger.isInfoEnabled()) logger.info("Executing shutdown hook...");
-			if(gotoSource != null)
+			if(gotoSourceProvider != null)
 			{
-				gotoSource.stop();
-				gotoSource = null;
+				gotoSourceProvider.stop();
+				gotoSourceProvider = null;
 			}
 			for(AutostartRunnable current : autostartProcesses)
 			{

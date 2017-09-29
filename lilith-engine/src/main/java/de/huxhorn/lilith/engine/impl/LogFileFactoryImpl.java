@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.engine.impl;
 
 import de.huxhorn.lilith.api.FileConstants;
@@ -25,17 +26,11 @@ import java.io.File;
 public class LogFileFactoryImpl
 	implements LogFileFactory
 {
-	private File baseDir;
-	private String dataFileExtension;
+	private final File baseDir;
 
 	public LogFileFactoryImpl(File baseDir)
 	{
 		this.baseDir = baseDir;
-		this.dataFileExtension = FileConstants.FILE_EXTENSION;
-		if(!dataFileExtension.startsWith("."))
-		{
-			this.dataFileExtension = "." + this.dataFileExtension;
-		}
 	}
 
 	private String getBaseFileName(SourceIdentifier si)
@@ -83,7 +78,7 @@ public class LogFileFactoryImpl
 	public File getDataFile(SourceIdentifier sourceIdentifier)
 	{
 		String baseName = getBaseFileName(sourceIdentifier);
-		return new File(baseName + dataFileExtension);
+		return new File(baseName + FileConstants.FILE_EXTENSION);
 	}
 
 	public File getActiveFile(SourceIdentifier sourceIdentifier)
@@ -94,7 +89,7 @@ public class LogFileFactoryImpl
 
 	public String getDataFileExtension()
 	{
-		return dataFileExtension;
+		return FileConstants.FILE_EXTENSION;
 	}
 
 	public long getSizeOnDisk(SourceIdentifier sourceIdentifier)

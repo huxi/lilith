@@ -1480,7 +1480,7 @@ public class ApplicationPreferences
 					break;
 				}
 				currentLine = currentLine.trim();
-				if(!"".equals(currentLine) && !currentLine.startsWith("#"))
+				if(!currentLine.isEmpty() && currentLine.charAt(0) != '#')
 				{
 					result.add(currentLine);
 				}

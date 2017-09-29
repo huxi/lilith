@@ -92,7 +92,8 @@ public class GroovyCondition
 
 		if(instance == null)
 		{
-			logger.warn("Couldn't retrieve condition!\n{}", groovyInstance.getErrorMessage(), groovyInstance.getErrorCause());
+			Throwable throwable = groovyInstance.getErrorCause();
+			logger.warn("Couldn't retrieve condition!\n{}", groovyInstance.getErrorMessage(), throwable);
 			return false;
 		}
 

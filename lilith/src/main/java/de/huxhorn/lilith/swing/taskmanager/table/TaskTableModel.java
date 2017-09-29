@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.taskmanager.table;
 
 import de.huxhorn.sulky.io.IOUtilities;
@@ -160,7 +161,7 @@ public class TaskTableModel<T>
 		if(row >= 0 && row < tasks.size())
 		{
 			Task<T> result = tasks.get(row);
-			logger.debug("getValueAt {} result={}", result);
+			logger.debug("getValueAt {} result={}", row, result);
 			return result;
 		}
 		logger.debug("getValueAt {} is null!", row);

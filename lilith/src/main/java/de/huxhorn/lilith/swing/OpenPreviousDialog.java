@@ -180,7 +180,7 @@ public class OpenPreviousDialog
 				}
 			}
 		}
-		OpenPreviousDialog.this.setVisible(false);
+		setVisible(false);
 	}
 
 	private class TabChangeListener

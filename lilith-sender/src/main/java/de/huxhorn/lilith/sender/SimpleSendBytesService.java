@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,13 +62,12 @@ public class SimpleSendBytesService
 
 	private WriteByteStrategy writeByteStrategy;
 	private DataOutputStreamFactory dataOutputStreamFactory;
-	//private boolean shutdown;
 	private final long reconnectionDelay;
 	private final int queueSize;
 	private final int pollInterval;
 
 	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<>(ConnectionState.Offline);
-	private final AtomicBoolean shutdown=new AtomicBoolean(false);
+	private final AtomicBoolean shutdownIndicator = new AtomicBoolean(false);
 	private SendBytesThread sendBytesThread;
 	private boolean debug;
 
@@ -137,7 +136,7 @@ public class SimpleSendBytesService
 		{
 			if(sendBytesThread == null)
 			{
-				shutdown.set(false);
+				shutdownIndicator.set(false);
 				sendBytesThread = new SendBytesThread();
 				sendBytesThread.start();
 			}
@@ -146,7 +145,7 @@ public class SimpleSendBytesService
 
 	public void shutDown()
 	{
-		shutdown.set(true);
+		shutdownIndicator.set(true);
 		synchronized(lock)
 		{
 			connectionState.set(ConnectionState.Canceled);
@@ -245,7 +244,7 @@ public class SimpleSendBytesService
 						}
 						copy.clear();
 					}
-					if(shutdown.get())
+					if(shutdownIndicator.get())
 					{
 						break;
 					}
