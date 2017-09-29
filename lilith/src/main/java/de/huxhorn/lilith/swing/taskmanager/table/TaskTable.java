@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.taskmanager.table;
 
 import de.huxhorn.lilith.swing.TextPreprocessor;
@@ -116,8 +117,7 @@ public class TaskTable<T>
 		{
 			StringBuilder result = new StringBuilder();
 
-			result.append("<html><body>");
-			result.append("<p>").append(task.getName()).append(" (ID=").append(task.getId()).append(")</p>");
+			result.append("<html><body><p>").append(task.getName()).append(" (ID=").append(task.getId()).append(")</p>");
 			String description = task.getDescription();
 			if(description != null)
 			{
@@ -126,18 +126,14 @@ public class TaskTable<T>
 			Map<String, String> metaData = task.getMetaData();
 			if(metaData != null && metaData.size() > 0)
 			{
-				result.append("<table border=\"1\">");
-				result.append("<tr><th>Key</th><th>Value</th></tr>");
+				result.append("<table border=\"1\"><tr><th>Key</th><th>Value</th></tr>");
 				for(Map.Entry<String, String> current : metaData.entrySet())
 				{
-					result.append("<tr>");
-					result.append("<td>");
-					result.append(TextPreprocessor.cropToSingleLine(current.getKey()));
-					result.append("</td>");
-					result.append("<td>");
-					result.append(TextPreprocessor.cropToSingleLine(current.getValue()));
-					result.append("</td>");
-					result.append("</tr>");
+					result.append("<tr><td>")
+							.append(TextPreprocessor.cropToSingleLine(current.getKey()))
+							.append("</td><td>")
+							.append(TextPreprocessor.cropToSingleLine(current.getValue()))
+							.append("</td></tr>");
 				}
 				result.append("</table>");
 			}

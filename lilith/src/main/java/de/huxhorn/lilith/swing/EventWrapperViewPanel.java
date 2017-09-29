@@ -936,10 +936,10 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			if(size > 0)
 			{
 				statusText.append("   Size on disk: ")
-					.append(HumanReadable.getHumanReadableSize(size, true, false)).append("bytes");
-
-				statusText.append("   Average event: ")
-					.append(HumanReadable.getHumanReadableSize(size / eventCount, true, false)).append("bytes");
+						.append(HumanReadable.getHumanReadableSize(size, true, false))
+						.append("bytes   Average event: ")
+						.append(HumanReadable.getHumanReadableSize(size / eventCount, true, false))
+						.append("bytes");
 			}
 		}
 

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2013 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -165,7 +165,7 @@ public class TracingAspect
 		StringBuilder msg=new StringBuilder();
 		if(showingModifiers)
 		{
-			msg.append(Modifier.toString(signature.getModifiers())).append(" ");
+			msg.append(Modifier.toString(signature.getModifiers())).append(' ');
 		}
 		if(usingShortClassName)
 		{
@@ -175,12 +175,12 @@ public class TracingAspect
 		{
 			msg.append(fullClassName);
 		}
-		msg.append(".").append(methodName);
+		msg.append('.').append(methodName);
 		String methodBaseName = msg.toString();
 		if(signature instanceof MethodSignature)
 		{
 			MethodSignature methodSignature=(MethodSignature)signature;
-			msg.append("(");
+			msg.append('(');
 			if(showingParameterValues)
 			{
 				Object[] args=call.getArgs();
@@ -195,8 +195,7 @@ public class TracingAspect
 					{
 						msg.append(", ");
 					}
-					msg.append(SafeString.toString(arg,
-							SafeString.StringWrapping.ALL, SafeString.StringStyle.GROOVY, SafeString.MapStyle.GROOVY));
+					msg.append(SafeString.toString(arg, SafeString.StringWrapping.ALL, SafeString.StringStyle.GROOVY, SafeString.MapStyle.GROOVY));
 				}
 			}
 			else
@@ -223,7 +222,7 @@ public class TracingAspect
 					msg.append("...");
 				}
 			}
-			msg.append(")");
+			msg.append(')');
 		}
 		String methodSignatureString=msg.toString();
 

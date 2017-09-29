@@ -1894,7 +1894,7 @@ public class MainFrame
 
 	private void updateStatus()
 	{
-		StringBuilder statusText = new StringBuilder();
+		StringBuilder statusText = new StringBuilder(100);
 
 		LilithPreferences.SourceFiltering filtering = applicationPreferences.getSourceFiltering();
 		switch(filtering)

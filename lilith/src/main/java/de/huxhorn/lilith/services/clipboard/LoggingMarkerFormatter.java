@@ -73,7 +73,7 @@ public class LoggingMarkerFormatter
 		}
 		else
 		{
-			text.append("\n");
+			text.append('\n');
 			handledMarkers.add(markerName);
 			Map<String, Marker> references = marker.getReferences();
 			if (references != null)

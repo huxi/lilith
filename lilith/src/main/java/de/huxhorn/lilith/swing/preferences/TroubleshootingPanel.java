@@ -216,7 +216,10 @@ public class TroubleshootingPanel
 			StringBuilder builder = new StringBuilder();
 			for(Map.Entry<String, String> current : sortedProps.entrySet())
 			{
-				builder.append(current.getKey()).append("=").append(current.getValue()).append("\n");
+				builder.append(current.getKey())
+						.append('=')
+						.append(current.getValue())
+						.append('\n');
 			}
 			MainFrame.copyText(builder.toString());
 		}
@@ -354,7 +357,7 @@ public class TroubleshootingPanel
 
 			for(StackTraceElement current : stackTraceElements)
 			{
-				builder.append(indentStr).append("at ").append(current).append("\n");
+				builder.append(indentStr).append("at ").append(current).append('\n');
 			}
 		}
 
@@ -363,7 +366,7 @@ public class TroubleshootingPanel
 			StringBuilder result = new StringBuilder();
 			for(int i = 0; i < indent; i++)
 			{
-				result.append("\t");
+				result.append('\t');
 			}
 			return result.toString();
 		}

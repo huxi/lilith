@@ -84,6 +84,7 @@ import java.util.stream.Collectors;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -745,16 +746,12 @@ public class ApplicationPreferences
 
 	void addPreviousSearchString(String searchString)
 	{
-		if(searchString == null)
+		if(StringUtils.isBlank(searchString))
 		{
+			// ignore null and whitespace-only strings
 			return;
 		}
 
-		if(searchString.trim().length() == 0)
-		{
-			// ignore whitespace-only strings
-			return;
-		}
 		List<String> previousSearchStrings=getPreviousSearchStrings();
 		if(previousSearchStrings.contains(searchString))
 		{

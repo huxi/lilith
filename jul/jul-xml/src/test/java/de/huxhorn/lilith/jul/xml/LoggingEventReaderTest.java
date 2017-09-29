@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -455,22 +455,21 @@ public class LoggingEventReaderTest
 			msg.append("loggingEvent=");
 			if(event == null)
 			{
-				msg.append((String) null);
+				msg.append("null");
 			}
 			else
 			{
-				msg.append("[");
-				msg.append("logger=").append(event.getLogger());
-				msg.append(", level=").append(event.getLevel());
-				msg.append(", threadInfo=").append(event.getThreadInfo());
-				msg.append(", timeStamp=").append(event.getTimeStamp());
-				msg.append(", message=").append(event.getMessage());
+				msg.append("[logger=").append(event.getLogger())
+						.append(", level=").append(event.getLevel())
+						.append(", threadInfo=").append(event.getThreadInfo())
+						.append(", timeStamp=").append(event.getTimeStamp())
+						.append(", message=").append(event.getMessage());
 				appendCallStack(msg, event.getCallStack());
 				appendThrowable(msg, event.getThrowable());
 				msg.append(", mdc=").append(event.getMdc());
 				appendNdc(msg, event.getNdc());
 
-				msg.append("]");
+				msg.append(']');
 			}
 			logger.info(msg.toString());
 		}

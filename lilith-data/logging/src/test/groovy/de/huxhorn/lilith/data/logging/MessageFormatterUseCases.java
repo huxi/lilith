@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -376,28 +376,25 @@ public class MessageFormatterUseCases
 		@Override
 		public String toString()
 		{
-			StringBuilder result = new StringBuilder();
-			result.append("UseCase[");
-			result.append("section=").append(section);
-			result.append(", ");
-			result.append("messagePattern=");
+			StringBuilder result = new StringBuilder(500);
+			result.append("UseCase[section=").append(section)
+					.append(", messagePattern=");
 			if (messagePattern == null)
 			{
 				result.append("null");
 			}
 			else
 			{
-				result.append("'").append(messagePattern).append("'");
+				result.append('\'').append(messagePattern).append('\'');
 			}
-			result.append(", ");
-			result.append("arguments=");
+			result.append(", arguments=");
 			if (arguments == null)
 			{
 				result.append("null");
 			}
 			else
 			{
-				result.append("[");
+				result.append('[');
 				boolean isFirst = true;
 				for (Object argument : arguments)
 				{
@@ -411,17 +408,16 @@ public class MessageFormatterUseCases
 					}
 					result.append(argument);
 				}
-				result.append("]");
+				result.append(']');
 			}
-			result.append(", ");
-			result.append("argumentStrings=");
+			result.append(", argumentStrings=");
 			if (argumentStrings == null)
 			{
 				result.append("null");
 			}
 			else
 			{
-				result.append("[");
+				result.append('[');
 				boolean isFirst = true;
 				for (String argument : argumentStrings)
 				{
@@ -435,25 +431,22 @@ public class MessageFormatterUseCases
 					}
 					result.append(argument);
 				}
-				result.append("]");
+				result.append(']');
 			}
-			result.append(", ");
-			result.append("numberOfPlaceholders=").append(numberOfPlaceholders);
+			result.append(", numberOfPlaceholders=").append(numberOfPlaceholders)
 
-			result.append(", ");
-			result.append("expectedResult=");
+					.append(", expectedResult=");
 			if (expectedResult == null)
 			{
 				result.append("null");
 			}
 			else
 			{
-				result.append("'").append(expectedResult).append("'");
+				result.append('\'').append(expectedResult).append('\'');
 			}
 
-			result.append(", ");
-			result.append("throwable=").append(throwable);
-			result.append("]");
+			result.append(", throwable=").append(throwable).append(']');
+
 			return result.toString();
 		}
 	}

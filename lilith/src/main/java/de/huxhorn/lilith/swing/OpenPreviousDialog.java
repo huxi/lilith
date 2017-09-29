@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.DateTimeFormatters;
@@ -380,27 +381,25 @@ public class OpenPreviousDialog
 			if (applicationPreferences != null) {
 				sourceNames = applicationPreferences.getSourceNames();
 			}
-			StringBuilder result = new StringBuilder();
+			StringBuilder result = new StringBuilder(200);
 			SourceIdentifier sourceIdentifier = selectedSource.getSourceIdentifier();
 			result.append(ViewActions.getPrimarySourceTitle(sourceIdentifier.getIdentifier(), sourceNames, true));
 			String secondary = sourceIdentifier.getSecondaryIdentifier();
 			if (secondary != null) {
 				result.append(" - ").append(sourceIdentifier.getSecondaryIdentifier());
 			}
-			result.append("\n");
+			result.append('\n');
 
 			String applicationName = selectedSource.getApplicationName();
 			if(applicationName != null && !"".equals(applicationName))
 			{
 				result.append("Application: ").append(applicationName);
 			}
-			result.append('\n')
-				.append("Number of events: ")
-				.append(eventCountFormat.format(selectedSource.getNumberOfEvents())).append("\n")
-				.append("Size: ")
+			result.append("\nNumber of events: ")
+				.append(eventCountFormat.format(selectedSource.getNumberOfEvents()))
+				.append("\nSize: ")
 				.append(HumanReadable.getHumanReadableSize(selectedSource.getSizeOnDisk(), true, false))
-				.append("bytes\n")
-				.append("Timestamp: ")
+				.append("bytes\nTimestamp: ")
 				.append(DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(selectedSource.getLastModified())));
 
 			return result.toString();

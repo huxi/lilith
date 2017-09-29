@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
 public class LoggerEqualsCondition
-	implements LilithCondition, SearchStringCondition
+	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -7972026995883628318L;
 
@@ -101,18 +102,16 @@ public class LoggerEqualsCondition
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();
-		result.append(getDescription()).append("(");
+		result.append(getDescription()).append('(');
 		if(searchString != null)
 		{
-			result.append("\"");
-			result.append(searchString);
-			result.append("\"");
+			result.append('"').append(searchString).append('"');
 		}
 		else
 		{
 			result.append("null");
 		}
-		result.append(")");
+		result.append(')');
 		return result.toString();
 	}
 

@@ -72,10 +72,10 @@ public class Log4jImportCallable
 
 	private final Logger logger = LoggerFactory.getLogger(Log4jImportCallable.class);
 
-	public static final String CLOSING_LOG4J_EVENT_TAG = "</log4j:event>";
-	public static final String LOG4J_NAMESPACE = "xmlns:log4j=\"http://jakarta.apache.org/log4j/\"";
-	public static final String OPENING_LOG4J_EVENT_TAG_EXCL_NS = "<log4j:event ";
-	public static final String OPENING_LOG4J_EVENT_TAG_INCL_NS = OPENING_LOG4J_EVENT_TAG_EXCL_NS + LOG4J_NAMESPACE + " ";
+	private static final String CLOSING_LOG4J_EVENT_TAG = "</log4j:event>";
+	private static final String LOG4J_NAMESPACE = "xmlns:log4j=\"http://jakarta.apache.org/log4j/\"";
+	private static final String OPENING_LOG4J_EVENT_TAG_EXCL_NS = "<log4j:event ";
+	private static final String OPENING_LOG4J_EVENT_TAG_INCL_NS = OPENING_LOG4J_EVENT_TAG_EXCL_NS + LOG4J_NAMESPACE + " ";
 
 	private File inputFile;
 	private AppendOperation<EventWrapper<LoggingEvent>> buffer;
@@ -151,8 +151,7 @@ public class Log4jImportCallable
 				}
 				else
 				{
-					builder.append(line);
-					builder.append("\n");
+					builder.append(line).append('\n');
 					break;
 				}
 			}

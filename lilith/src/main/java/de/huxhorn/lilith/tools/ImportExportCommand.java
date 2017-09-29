@@ -151,8 +151,8 @@ public class ImportExportCommand
 			msg.append("Exported files:\n");
 			for(Map.Entry<String, byte[]> current: sortedResult.entrySet())
 			{
-				msg.append("- ").append(current.getKey()).append("\n");
-				msg.append("  ").append(current.getValue().length).append(" bytes\n");
+				msg.append("- ").append(current.getKey()).append("\n  ")
+						.append(current.getValue().length).append(" bytes\n");
 			}
 			logger.info(msg.toString());
 		}

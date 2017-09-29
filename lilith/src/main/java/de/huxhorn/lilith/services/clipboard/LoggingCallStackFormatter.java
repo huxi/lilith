@@ -55,7 +55,7 @@ public class LoggingCallStackFormatter
 			}
 			else
 			{
-				text.append("\n");
+				text.append('\n');
 			}
 			text.append("\tat ");
 			if (current != null)

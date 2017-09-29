@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class EventContainsCondition
-	implements LilithCondition, SearchStringCondition
+	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -8094852331877521764L;
 
@@ -449,18 +449,16 @@ public class EventContainsCondition
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();
-		result.append(getDescription()).append("(");
+		result.append(getDescription()).append('(');
 		if(searchString != null)
 		{
-			result.append("\"");
-			result.append(searchString);
-			result.append("\"");
+			result.append('"').append(searchString).append('"');
 		}
 		else
 		{
 			result.append("null");
 		}
-		result.append(")");
+		result.append(')');
 		return result.toString();
 	}
 

@@ -276,8 +276,8 @@ public class MessageFormatter
 		@Override
 		public String toString()
 		{
-			final StringBuilder result = new StringBuilder("ArgumentResult{");
-			result.append("arguments=");
+			final StringBuilder result = new StringBuilder(500);
+			result.append("ArgumentResult{arguments=");
 			if(arguments == null)
 			{
 				result.append("null");
@@ -307,8 +307,7 @@ public class MessageFormatter
 				}
 				result.append(']');
 			}
-			result.append(", throwable=").append(throwable);
-			result.append('}');
+			result.append(", throwable=").append(throwable).append('}');
 			return result.toString();
 		}
 

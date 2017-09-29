@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table.tooltips;
 
 import de.huxhorn.lilith.DateTimeFormatters;
@@ -57,24 +58,19 @@ public class ContextTooltipGenerator
 				Long timestamp = context.getBirthTime();
 				if(timestamp != null)
 				{
-					msg.append("<h4>Birthtime</h4>");
+					msg.append("<h4>Birth time</h4>");
 					msg.append(DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(timestamp)));
 				}
 				Map<String, String> props = context.getProperties();
 				if(props != null && props.size() > 0)
 				{
-					msg.append("<h4>Properties</h4>");
+					msg.append("<h4>Properties</h4><table><tr><th>Key</th><th>Value</th></tr>");
 					SortedMap<String, String> sortedProps = new TreeMap<>(props);
-					msg.append("<table>");
-					msg.append("<tr>");
-					msg.append("<th>Key</th><th>Value</th>");
-					msg.append("</tr>");
 					for(Map.Entry<String, String> current : sortedProps.entrySet())
 					{
-						msg.append("<tr>");
-						msg.append("<td>").append(current.getKey()).append("</td>");
-						msg.append("<td>").append(current.getValue()).append("</td>");
-						msg.append("</tr>");
+						msg.append("<tr><td>").append(current.getKey())
+								.append("</td><td>").append(current.getValue())
+								.append("</td></tr>");
 					}
 					msg.append("</table>");
 				}

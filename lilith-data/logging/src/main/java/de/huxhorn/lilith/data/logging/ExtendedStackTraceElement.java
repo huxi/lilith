@@ -370,23 +370,23 @@ public class ExtendedStackTraceElement
 		{
 			stringBuilder.append(MODULE_SEPARATOR_CHAR);
 		}
-		stringBuilder.append(className).append(".").append(methodName);
+		stringBuilder.append(className).append('.').append(methodName);
 		if(isNativeMethod())
 		{
-			stringBuilder.append("(").append(NATIVE_METHOD_STRING).append(")");
+			stringBuilder.append('(').append(NATIVE_METHOD_STRING).append(')');
 		}
 		else if(fileName != null)
 		{
-			stringBuilder.append("(").append(fileName);
+			stringBuilder.append('(').append(fileName);
 			if(lineNumber >= 0)
 			{
 				stringBuilder.append(SEPARATOR_CHAR).append(lineNumber);
 			}
-			stringBuilder.append(")");
+			stringBuilder.append(')');
 		}
 		else
 		{
-			stringBuilder.append("(").append(UNKNOWN_SOURCE_STRING).append(")");
+			stringBuilder.append('(').append(UNKNOWN_SOURCE_STRING).append(')');
 		}
 		if(extended && (codeLocation != null || version != null))
 		{

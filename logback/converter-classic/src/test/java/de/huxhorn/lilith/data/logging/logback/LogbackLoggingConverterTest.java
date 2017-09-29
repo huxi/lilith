@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
 public class LogbackLoggingConverterTest
 	extends TestCase
 {
+	private static final String INDENT = "  ";
 	private final Logger logger = LoggerFactory.getLogger(LogbackLoggingConverterTest.class);
 
 	private LogbackLoggingConverter instance;
@@ -125,87 +126,69 @@ public class LogbackLoggingConverterTest
 		if(logger.isDebugEnabled())
 		{
 			StringBuilder msg = new StringBuilder();
-			msg.append("Logger         : ").append(event.getLogger());
-			msg.append("\n");
-
-			msg.append("Message        : ").append(event.getMessage());
-			msg.append("\n");
-
-			msg.append("Level          : ").append(event.getLevel());
-			msg.append("\n");
+			msg.append("Logger         : ").append(event.getLogger())
+					.append("\nMessage        : ").append(event.getMessage())
+					.append("\nLevel          : ").append(event.getLevel())
+					.append('\n');
 			ThreadInfo threadInfo = event.getThreadInfo();
 			if(threadInfo != null)
 			{
-				msg.append("ThreadInfo     : ").append(threadInfo);
-				msg.append("\n");
+				msg.append("ThreadInfo     : ").append(threadInfo).append('\n');
 			}
 
-			msg.append("TimeStamp      : ").append(event.getTimeStamp());
-			msg.append("\n");
-
-			msg.append("Message        : ").append(event.getMessage());
-			msg.append("\n");
+			msg.append("TimeStamp      : ").append(event.getTimeStamp())
+					.append("\nMessage        : ").append(event.getMessage()).append('\n');
 
 			ExtendedStackTraceElement[] callStack = event.getCallStack();
 			if(callStack != null)
 			{
-				msg.append("Call-Stack     : ");
-				msg.append("\n");
+				msg.append("Call-Stack     :\n");
 				for(ExtendedStackTraceElement ste : callStack)
 				{
-					msg.append("\t").append(ste).append("\n");
+					msg.append('\t').append(ste).append('\n');
 				}
-				msg.append("\n");
+				msg.append('\n');
 			}
 
 			Marker marker = event.getMarker();
 			if(marker != null)
 			{
-				msg.append("Marker         : ");
-				msg.append(marker);
-				msg.append("\n");
+				msg.append("Marker         : ").append(marker).append('\n');
 			}
 			Map<String, String> mdc = event.getMdc();
 			if(mdc != null)
 			{
-				msg.append("MDC            : ");
-				msg.append("\n");
+				msg.append("MDC            :\n");
 				for(Map.Entry<String, String> current : mdc.entrySet())
 				{
-					msg.append("\t").append(current.getKey()).append(": ").append(current.getValue());
-					msg.append("\n");
+					msg.append('\t').append(current.getKey()).append(": ")
+							.append(current.getValue()).append('\n');
 				}
 			}
 			ThrowableInfo ti = event.getThrowable();
 			if(ti != null)
 			{
-				msg.append("Throwable      : ");
-				msg.append("\n");
+				msg.append("Throwable      :\n");
 				ThrowableInfo current = ti;
-				StringBuilder indent = new StringBuilder("  ");
+				StringBuilder indent = new StringBuilder(INDENT);
 				while(current != null)
 				{
-					msg.append(indent.toString());
-					msg.append("Name      : ").append(current.getName());
-					msg.append("\n");
-					msg.append(indent.toString());
-					msg.append("Message   : ").append(current.getMessage());
-					msg.append("\n");
-					msg.append(indent.toString());
-					msg.append("StackTrace: ");
-					msg.append("\n");
-					indent.append("  ");
+					msg.append(indent.toString()).append("Name      : ").append(current.getName()).append('\n')
+							.append(indent.toString()).append("Message   : ").append(current.getMessage()).append('\n')
+							.append(indent.toString()).append("StackTrace:\n");
+
+					indent.append(INDENT);
 					ExtendedStackTraceElement[] stackTrace = current.getStackTrace();
 					if(stackTrace != null)
 					{
 						for(ExtendedStackTraceElement ste : stackTrace)
 						{
-							msg.append(indent.toString());
-							msg.append(ste.toString(true));
-							msg.append("\n");
+							msg.append(indent.toString())
+									.append(ste.toString(true))
+									.append('\n');
 						}
 					}
-					indent.append("  ");
+					indent.append(INDENT);
 					current = current.getCause();
 				}
 			}

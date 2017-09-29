@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import java.awt.BorderLayout;
@@ -40,7 +41,7 @@ public class ViewContainerInternalFrame
 	private MainFrame mainFrame;
 	private ViewContainer viewContainer;
 
-	public ViewContainerInternalFrame(MainFrame mainFrame, ViewContainer viewContainer)
+	ViewContainerInternalFrame(MainFrame mainFrame, ViewContainer viewContainer)
 	{
 		super();
 		this.mainFrame = mainFrame;
@@ -201,7 +202,7 @@ public class ViewContainerInternalFrame
 			{
 				for(JInternalFrame current : frames)
 				{
-					result.append(current).append("\n");
+					result.append(current).append('\n');
 				}
 			}
 
@@ -225,7 +226,7 @@ public class ViewContainerInternalFrame
 			{
 				for(JInternalFrame current : frames)
 				{
-					result.append(current).append("\n");
+					result.append(current).append('\n');
 				}
 			}
 

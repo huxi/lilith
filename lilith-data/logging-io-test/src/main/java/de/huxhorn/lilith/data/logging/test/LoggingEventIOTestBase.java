@@ -410,9 +410,9 @@ public abstract class LoggingEventIOTestBase
 					}
 					recursiveToString(result, processedMarkers, current.getValue());
 				}
-				result.append("}");
+				result.append('}');
 			}
-			result.append("]");
+			result.append(']');
 		}
 	}
 

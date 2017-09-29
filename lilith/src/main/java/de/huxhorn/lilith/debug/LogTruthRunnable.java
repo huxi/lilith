@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.debug;
 
 import org.apache.commons.text.WordUtils;
@@ -184,7 +185,7 @@ public class LogTruthRunnable
 		StringBuilder result = new StringBuilder();
 		for(String[] current : BELIEFS)
 		{
-			result.append(current[(int) (Math.random() * current.length)]).append(" ");
+			result.append(current[(int) (Math.random() * current.length)]).append(' ');
 		}
 		return result.toString();
 	}

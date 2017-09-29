@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2014-2015 Joern Huxhorn
+ * Copyright (C) 2014-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.details;
 
 import de.huxhorn.lilith.services.BasicFormatter;
@@ -41,22 +42,16 @@ public abstract class AbstractHtmlFormatter
 
 	public static String createErrorHtml(String message, String additionalInfo, Throwable throwable)
 	{
-		StringBuilder msg = new StringBuilder();
-		msg.append("<html><head><title></title><style type=\"text/css\">body {color: black; background-color: white; border-style: solid; border-width: 5px; border-color: red; padding: 5px; margin: 5px; font-family: Arial, Helvetica, sans-serif;}</style></head><body>")
-			.append("<h1>")
-			.append(SimpleXml.escape(message))
-			.append("</h1>");
-
-		msg.append("<p>You can <a href=\"prefs://Troubleshooting#reinitializeDetailsViewFiles\">initialize the detailsView</a> to a safe state using ")
-			.append("\"Reinitialize details view files.\" in ")
-			.append("<a href=\"prefs://Troubleshooting\">Troubleshooting preferences</a>.")
-			.append("</p>");
+		StringBuilder msg = new StringBuilder(1000);
+		msg.append("<html><head><title></title><style type=\"text/css\">body {color: black; background-color: white; border-style: solid; border-width: 5px; border-color: red; padding: 5px; margin: 5px; font-family: Arial, Helvetica, sans-serif;}</style></head><body><h1>")
+				.append(SimpleXml.escape(message))
+				.append("</h1><p>You can <a href=\"prefs://Troubleshooting#reinitializeDetailsViewFiles\">initialize the detailsView</a> to a safe state using \"Reinitialize details view files.\" in <a href=\"prefs://Troubleshooting\">Troubleshooting preferences</a>.</p>");
 
 		if(additionalInfo != null && !additionalInfo.isEmpty())
 		{
 			msg.append("<p>")
-				.append(SimpleXml.escape(additionalInfo))
-				.append("</p>");
+					.append(SimpleXml.escape(additionalInfo))
+					.append("</p>");
 		}
 
 		if(throwable != null)
@@ -66,8 +61,8 @@ public abstract class AbstractHtmlFormatter
 			String exceptionStr = SimpleXml.escape(sw.toString());
 
 			msg.append("<pre>")
-				.append(exceptionStr)
-				.append("</pre>");
+					.append(exceptionStr)
+					.append("</pre>");
 		}
 		msg.append("</body></html>");
 

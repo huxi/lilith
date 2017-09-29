@@ -251,7 +251,7 @@ public class Lilith
 		if(APP_SNAPSHOT)
 		{
 			// always append timestamp for SNAPSHOT
-			appTitle.append(" (").append(APP_TIMESTAMP_DATE).append(")");
+			appTitle.append(" (").append(APP_TIMESTAMP_DATE).append(')');
 		}
 
 		CommandLineArgs cl=new CommandLineArgs();
@@ -286,7 +286,7 @@ public class Lilith
 			{
 				// timestamp is always appended for SNAPSHOT
 				// don't append it twice
-				appTitle.append(" (").append(APP_TIMESTAMP_DATE).append(")");
+				appTitle.append(" (").append(APP_TIMESTAMP_DATE).append(')');
 			}
 			appTitle.append(" - ").append(APP_REVISION);
 		}

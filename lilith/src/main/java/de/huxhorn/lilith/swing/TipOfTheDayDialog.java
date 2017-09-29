@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
@@ -53,7 +54,7 @@ import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
 
-public class TipOfTheDayDialog
+class TipOfTheDayDialog
 	extends JDialog
 {
 	private static final long serialVersionUID = -1068053167252606619L;
@@ -70,7 +71,7 @@ public class TipOfTheDayDialog
 	private static final int INSET = 10;
 
 
-	public TipOfTheDayDialog(MainFrame owner)
+	TipOfTheDayDialog(MainFrame owner)
 	{
 		super(owner);
 
@@ -123,7 +124,7 @@ public class TipOfTheDayDialog
 
 		{
 			LinkListener originalLinkListener = null;
-			java.util.List mouseTrackingList = helpPane.getMouseTrackingListeners();
+			List mouseTrackingList = helpPane.getMouseTrackingListeners();
 			if(mouseTrackingList != null)
 			{
 				for(Object o : mouseTrackingList)
@@ -252,7 +253,7 @@ public class TipOfTheDayDialog
 		if(logger.isInfoEnabled()) logger.info("Found {} Tips of the Day.", tipsOfTheDay.size());
 	}
 
-	public void setShowingTipOfTheDay(boolean showingTipOfTheDay)
+	void setShowingTipOfTheDay(boolean showingTipOfTheDay)
 	{
 		showTipOfTheDayCheckbox.setSelected(showingTipOfTheDay);
 	}

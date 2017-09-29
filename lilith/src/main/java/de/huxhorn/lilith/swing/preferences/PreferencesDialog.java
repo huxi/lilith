@@ -629,7 +629,7 @@ public class PreferencesDialog
 					}
 					else
 					{
-						textBuffer.append("\n");
+						textBuffer.append('\n');
 					}
 					textBuffer.append(s);
 				}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,17 +101,13 @@ public final class Message
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		Message message = (Message) o;
 
-		if(messagePattern != null ? !messagePattern.equals(message.messagePattern) : message.messagePattern != null)
-		{
-			return false;
-		}
-
-		return Arrays.equals(arguments, message.arguments);
+		return (messagePattern != null ? messagePattern.equals(message.messagePattern) : message.messagePattern == null)
+				&& Arrays.equals(arguments, message.arguments);
 	}
 
 	@Override
@@ -138,17 +134,17 @@ public final class Message
 	@Override
 	public String toString()
 	{
-		final StringBuilder sb = new StringBuilder("Message{");
-		sb.append("messagePattern=");
+		final StringBuilder sb = new StringBuilder(200);
+		sb.append("Message{messagePattern=");
 		if(messagePattern == null)
 		{
 			sb.append((String)null);
 		}
 		else
 		{
-			sb.append('"');
-			sb.append(messagePattern);
-			sb.append('"');
+			sb.append('"')
+					.append(messagePattern)
+					.append('"');
 		}
 
 		sb.append(", arguments=");
@@ -176,9 +172,9 @@ public final class Message
 				}
 				else
 				{
-					sb.append('"');
-					sb.append(current);
-					sb.append('"');
+					sb.append('"')
+							.append(current)
+							.append('"');
 				}
 			}
 			sb.append(']');

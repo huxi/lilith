@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.sulky.conditions.Condition;
@@ -28,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GroovyCondition
-	implements LilithCondition, SearchStringCondition
+	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = 907179107764473874L;
 
@@ -136,17 +137,13 @@ public class GroovyCondition
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(!(o instanceof GroovyCondition)) return false;
+		if (this == o) return true;
+		if (!(o instanceof GroovyCondition)) return false;
 
 		GroovyCondition that = (GroovyCondition) o;
 
-		if(scriptFileName != null ? !scriptFileName.equals(that.scriptFileName) : that.scriptFileName != null)
-		{
-			return false;
-		}
-		return !(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null);
-
+		return (scriptFileName != null ? scriptFileName.equals(that.scriptFileName) : that.scriptFileName == null)
+				&& !(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null);
 	}
 
 	@Override
@@ -164,9 +161,7 @@ public class GroovyCondition
 		result.append(getDescription());
 		if(searchString != null)
 		{
-			result.append("(");
-			result.append(searchString);
-			result.append(")");
+			result.append('(').append(searchString).append(')');
 		}
 		return result.toString();
 	}

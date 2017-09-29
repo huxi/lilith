@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,24 +15,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.conditions;
 
 import java.util.Map;
 
 public abstract class AbstractMapCondition<V>
-	implements LilithCondition
+	implements LilithCondition, Cloneable
 {
 	private static final long serialVersionUID = 6645626846624677071L;
 
 	private String key;
 	private String value;
 
-	public AbstractMapCondition()
+	AbstractMapCondition()
 	{
 		super();
 	}
 
-	public AbstractMapCondition(String key, String value)
+	AbstractMapCondition(String key, String value)
 	{
 		this.key = key;
 		this.value = value;
@@ -97,12 +98,10 @@ public abstract class AbstractMapCondition<V>
 	public final String toString()
 	{
 		StringBuilder result = new StringBuilder();
-		result.append(getDescription()).append("(");
+		result.append(getDescription()).append('(');
 		if(key != null)
 		{
-			result.append("\"");
-			result.append(key);
-			result.append("\"");
+			result.append('"').append(key).append('"');
 		}
 		else
 		{
@@ -110,12 +109,9 @@ public abstract class AbstractMapCondition<V>
 		}
 		if(value != null)
 		{
-			result.append(",");
-			result.append("\"");
-			result.append(value);
-			result.append("\"");
+			result.append(",\"").append(value).append('"');
 		}
-		result.append(")");
+		result.append(')');
 		return result.toString();
 	}
 
@@ -127,10 +123,8 @@ public abstract class AbstractMapCondition<V>
 
 		AbstractMapCondition that = (AbstractMapCondition) o;
 
-		if (key != null ? !key.equals(that.key) : that.key != null) return false;
-		if (value != null ? !value.equals(that.value) : that.value != null) return false;
-
-		return true;
+		return (key != null ? key.equals(that.key) : that.key == null)
+				&& (value != null ? value.equals(that.value) : that.value == null);
 	}
 
 	@Override

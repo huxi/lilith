@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table.tooltips;
 
 import de.huxhorn.lilith.data.access.AccessEvent;
@@ -41,7 +42,7 @@ public class RequestUrlTooltipGenerator
 				String text = "URI: " + event.getRequestURI() + "\nURL: " + event.getRequestURL();
 				tooltip = text.trim(); // remove empty lines etc.
 				tooltip = SimpleXml.escape(tooltip);
-				int newlineIndex = text.indexOf("\n");
+				int newlineIndex = text.indexOf('\n');
 				if(newlineIndex > -1)
 				{
 					tooltip = tooltip.replace("\n", "<br>");

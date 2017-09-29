@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,12 +133,12 @@ public class LogbackShutdownServletContextListener
 		{
 			builder.append(STATUS_TEXT[levelCode]);
 		}
-		builder.append(status.getMessage()).append("\n");
+		builder.append(status.getMessage()).append('\n');
 		Throwable t = status.getThrowable();
 		if(t != null)
 		{
 			appendIndent(builder, indent+1);
-			builder.append(t.getMessage()).append("\n");
+			builder.append(t.getMessage()).append('\n');
 		}
 		if(status.hasChildren())
 		{
