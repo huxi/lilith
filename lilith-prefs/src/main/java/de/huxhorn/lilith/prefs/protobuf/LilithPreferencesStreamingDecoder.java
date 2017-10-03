@@ -227,6 +227,7 @@ public class LilithPreferencesStreamingDecoder
 					break;
 				default:
 					preferences.setSourceFiltering(LilithPreferences.SourceFiltering.NONE);
+					break;
 			}
 		}
 		else

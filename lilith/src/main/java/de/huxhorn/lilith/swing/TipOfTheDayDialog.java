@@ -63,10 +63,10 @@ class TipOfTheDayDialog
 
 	private List<URL> tipsOfTheDay;
 	private int currentTipOfTheDay;
-	private ApplicationPreferences applicationPreferences;
-	private XHTMLPanel helpPane;
-	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
-	private JCheckBox showTipOfTheDayCheckbox;
+	private final ApplicationPreferences applicationPreferences;
+	private final XHTMLPanel helpPane;
+	private final XhtmlNamespaceHandler xhtmlNamespaceHandler;
+	private final JCheckBox showTipOfTheDayCheckbox;
 
 	private static final int INSET = 10;
 
@@ -263,7 +263,7 @@ class TipOfTheDayDialog
 	{
 		private static final long serialVersionUID = -4025074394725104369L;
 
-		private PreviousTipAction()
+		PreviousTipAction()
 		{
 			super("Previous Tip");
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_P);
@@ -280,7 +280,7 @@ class TipOfTheDayDialog
 	{
 		private static final long serialVersionUID = 107240711521577323L;
 
-		private NextTipAction()
+		NextTipAction()
 		{
 			super("Next Tip");
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
@@ -297,7 +297,7 @@ class TipOfTheDayDialog
 	{
 		private static final long serialVersionUID = -3837690263247686627L;
 
-		private CloseAction()
+		CloseAction()
 		{
 			super("Close");
 			KeyStroke accelerator = LilithKeyStrokes.getKeyStroke(LilithKeyStrokes.ESCAPE);
@@ -321,12 +321,11 @@ class TipOfTheDayDialog
 	private class CheckboxListener
 		implements ItemListener
 	{
-
 		public void itemStateChanged(ItemEvent e)
 		{
 			Object source = e.getItemSelectable();
 
-			if(source == showTipOfTheDayCheckbox)
+			if(source == showTipOfTheDayCheckbox) // NOPMD
 			{
 				applicationPreferences.setShowingTipOfTheDay(showTipOfTheDayCheckbox.isSelected());
 			}

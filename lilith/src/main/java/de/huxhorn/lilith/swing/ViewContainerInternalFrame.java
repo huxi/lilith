@@ -38,8 +38,9 @@ public class ViewContainerInternalFrame
 	private static final long serialVersionUID = 4881227991504896068L;
 
 	private final Logger logger = LoggerFactory.getLogger(ViewContainerInternalFrame.class);
-	private MainFrame mainFrame;
-	private ViewContainer viewContainer;
+
+	private final MainFrame mainFrame;
+	private final ViewContainer viewContainer;
 
 	ViewContainerInternalFrame(MainFrame mainFrame, ViewContainer viewContainer)
 	{

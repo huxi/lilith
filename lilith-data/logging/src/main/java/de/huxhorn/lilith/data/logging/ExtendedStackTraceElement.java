@@ -62,6 +62,78 @@ public class ExtendedStackTraceElement
 	private static final char MODULE_SEPARATOR_CHAR = '/';
 	private static final char MODULE_VERSION_SEPARATOR_CHAR = '@';
 
+	private static final Method GET_CLASS_LOADER_NAME;
+	private static final Method GET_MODULE_NAME;
+	private static final Method GET_MODULE_VERSION;
+	private static final Constructor<StackTraceElement> FULL_CTOR;
+
+	static
+	{
+		{
+			Method method = null;
+			try
+			{
+				//noinspection JavaReflectionMemberAccess
+				method = StackTraceElement.class.getMethod("getClassLoaderNameFrom");
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			GET_CLASS_LOADER_NAME = method;
+		}
+
+		{
+			Method method = null;
+			try
+			{
+				//noinspection JavaReflectionMemberAccess
+				method = StackTraceElement.class.getMethod("getModuleName");
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			GET_MODULE_NAME = method;
+		}
+
+		{
+			Method method = null;
+			try
+			{
+				//noinspection JavaReflectionMemberAccess
+				method = StackTraceElement.class.getMethod("getModuleVersion");
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			GET_MODULE_VERSION = method;
+		}
+
+		{
+			Constructor<StackTraceElement> ctor = null;
+			try
+			{
+				//noinspection JavaReflectionMemberAccess
+				ctor = StackTraceElement.class.getConstructor(
+						String.class, // classLoaderName
+						String.class, // moduleName
+						String.class, // moduleVersion
+						String.class, // declaringClass
+						String.class, // methodName
+						String.class, // fileName
+						int.class // lineNumber
+				);
+			}
+			catch (NoSuchMethodException e)
+			{
+				// ignore
+			}
+			FULL_CTOR = ctor;
+		}
+	}
+
 	private String className;
 	private String methodName;
 	private String fileName;
@@ -110,6 +182,7 @@ public class ExtendedStackTraceElement
 		this.exact = exact;
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public boolean isNativeMethod()
 	{
 		return lineNumber == NATIVE_METHOD_LINE_NUMBER;
@@ -223,17 +296,16 @@ public class ExtendedStackTraceElement
 
 		ExtendedStackTraceElement that = (ExtendedStackTraceElement) o;
 
-		if (lineNumber != that.lineNumber) return false;
-		if (exact != that.exact) return false;
-		if (className != null ? !className.equals(that.className) : that.className != null) return false;
-		if (methodName != null ? !methodName.equals(that.methodName) : that.methodName != null) return false;
-		if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
-		if (codeLocation != null ? !codeLocation.equals(that.codeLocation) : that.codeLocation != null) return false;
-		if (version != null ? !version.equals(that.version) : that.version != null) return false;
-		if (classLoaderName != null ? !classLoaderName.equals(that.classLoaderName) : that.classLoaderName != null)
-			return false;
-		if (moduleName != null ? !moduleName.equals(that.moduleName) : that.moduleName != null) return false;
-		return moduleVersion != null ? moduleVersion.equals(that.moduleVersion) : that.moduleVersion == null;
+		return lineNumber == that.lineNumber
+				&& exact == that.exact
+				&& (className != null ? className.equals(that.className) : that.className == null)
+				&& (methodName != null ? methodName.equals(that.methodName) : that.methodName == null)
+				&& (fileName != null ? fileName.equals(that.fileName) : that.fileName == null)
+				&& (codeLocation != null ? codeLocation.equals(that.codeLocation) : that.codeLocation == null)
+				&& (version != null ? version.equals(that.version) : that.version == null)
+				&& (classLoaderName != null ? classLoaderName.equals(that.classLoaderName) : that.classLoaderName == null)
+				&& (moduleName != null ? moduleName.equals(that.moduleName) : that.moduleName == null)
+				&& (moduleVersion != null ? moduleVersion.equals(that.moduleVersion) : that.moduleVersion == null);
 	}
 
 	@Override
@@ -348,6 +420,7 @@ public class ExtendedStackTraceElement
 	 * @return the given StringBuilder instance.
 	 * @throws NullPointerException if stringBuilder is null.
 	 */
+	@SuppressWarnings("WeakerAccess")
 	public StringBuilder appendTo(StringBuilder stringBuilder, boolean extended)
 	{
 		Objects.requireNonNull(stringBuilder, "stringBuilder must not be null!");
@@ -536,74 +609,6 @@ public class ExtendedStackTraceElement
 		result.setModuleName(moduleName);
 		result.setModuleVersion(moduleVersion);
 		return result;
-	}
-
-	private static final Method GET_CLASS_LOADER_NAME;
-	private static final Method GET_MODULE_NAME;
-	private static final Method GET_MODULE_VERSION;
-	private static final Constructor<StackTraceElement> FULL_CTOR;
-
-	static
-	{
-		{
-			Method method = null;
-			try
-			{
-				method = StackTraceElement.class.getMethod("getClassLoaderNameFrom");
-			}
-			catch (NoSuchMethodException e)
-			{
-				// ignore
-			}
-			GET_CLASS_LOADER_NAME = method;
-		}
-
-		{
-			Method method = null;
-			try
-			{
-				method = StackTraceElement.class.getMethod("getModuleName");
-			}
-			catch (NoSuchMethodException e)
-			{
-				// ignore
-			}
-			GET_MODULE_NAME = method;
-		}
-
-		{
-			Method method = null;
-			try
-			{
-				method = StackTraceElement.class.getMethod("getModuleVersion");
-			}
-			catch (NoSuchMethodException e)
-			{
-				// ignore
-			}
-			GET_MODULE_VERSION = method;
-		}
-
-		{
-			Constructor<StackTraceElement> ctor = null;
-			try
-			{
-				ctor = StackTraceElement.class.getConstructor(
-						String.class, // classLoaderName
-						String.class, // moduleName
-						String.class, // moduleVersion
-						String.class, // declaringClass
-						String.class, // methodName
-						String.class, // fileName
-						int.class // lineNumber
-				);
-			}
-			catch (NoSuchMethodException e)
-			{
-				// ignore
-			}
-			FULL_CTOR = ctor;
-		}
 	}
 
 	private static String getClassLoaderNameFrom(StackTraceElement ste)

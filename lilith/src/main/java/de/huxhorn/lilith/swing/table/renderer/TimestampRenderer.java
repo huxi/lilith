@@ -32,7 +32,7 @@ import javax.swing.table.TableCellRenderer;
 public class TimestampRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public TimestampRenderer()
 	{

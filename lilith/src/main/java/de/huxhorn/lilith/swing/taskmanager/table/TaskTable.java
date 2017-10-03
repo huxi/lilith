@@ -37,7 +37,7 @@ public class TaskTable<T>
 	private static final long serialVersionUID = -7788744990458100395L;
 
 	private final Logger logger = LoggerFactory.getLogger(TaskTable.class);
-	private TaskTableModel<T> taskTableModel;
+	private final TaskTableModel<T> taskTableModel;
 
 	public TaskTable(TaskManager<T> taskManager)
 	{
@@ -93,7 +93,7 @@ public class TaskTable<T>
 		return null;
 	}
 
-	public void selectRow(int row)
+	private void selectRow(int row)
 	{
 		if(row >= 0 && row < getRowCount())
 		{
@@ -124,7 +124,7 @@ public class TaskTable<T>
 				result.append("<p>").append(TextPreprocessor.wrapWithPre(TextPreprocessor.cropTextBlock(description))).append("</p>");
 			}
 			Map<String, String> metaData = task.getMetaData();
-			if(metaData != null && metaData.size() > 0)
+			if(metaData != null && !metaData.isEmpty())
 			{
 				result.append("<table border=\"1\"><tr><th>Key</th><th>Value</th></tr>");
 				for(Map.Entry<String, String> current : metaData.entrySet())

@@ -32,6 +32,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -43,22 +44,22 @@ public class SourceManagerImpl<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(SourceManagerImpl.class);
 
-	private BlockingCircularBuffer<EventWrapper<T>> queue;
-	private Set<EventSourceListener<T>> listeners;
-	private PropertyChangeSupport changeSupport;
+	private static final String NUMBER_OF_SOURCES = "numberOfSources";
+
+	private final BlockingCircularBuffer<EventWrapper<T>> queue;
+	private final Set<EventSourceListener<T>> listeners;
+	private final PropertyChangeSupport changeSupport;
 	private final List<EventSource<T>> sources;
 	private final Set<EventProducer<T>> eventProducers;
 	private final Lock eventProducersLock;
-	private EventPoller<T> eventPoller;
+	private final EventPoller<T> eventPoller;
 
-	private static final String NUMBER_OF_SOURCES = "numberOfSources";
-	private List<EventSourceProducer<T>> eventSourceProducers;
+	private final List<EventSourceProducer<T>> eventSourceProducers;
 
 	public SourceManagerImpl(BlockingCircularBuffer<EventWrapper<T>> queue)
 	{
-		this.queue = queue;
-		eventPoller = new EventPoller<>(queue);
-		eventPoller.setPollDelay(100);
+		this.queue = Objects.requireNonNull(queue, "queue must not be null!");
+		eventPoller = new EventPoller<>(queue, 100);
 		eventProducersLock = new ReentrantLock();
 		eventProducers = new HashSet<>();
 		eventSourceProducers = new ArrayList<>();
@@ -233,6 +234,7 @@ public class SourceManagerImpl<T extends Serializable>
 		changeSupport.addPropertyChangeListener(listener);
 	}
 
+	@SuppressWarnings("unused")
 	public void removePropertyChangeListener(PropertyChangeListener listener)
 	{
 		changeSupport.removePropertyChangeListener(listener);

@@ -27,15 +27,9 @@ public class LogTruthRunnable
 	extends AbstractDebugRunnable
 {
 	private final Logger logger = LoggerFactory.getLogger(LogTruthRunnable.class);
-	private Marker marker;
-	private boolean formatted;
 
-	LogTruthRunnable(int delay, Marker marker, boolean formatted)
-	{
-		super(delay);
-		this.marker = marker;
-		this.formatted = formatted;
-	}
+	private final Marker marker;
+	private final boolean formatted;
 
 	private static final String[][] BELIEFS =
 			{
@@ -179,6 +173,13 @@ public class LogTruthRunnable
 							"megadoses of vitamin C.",
 					},
 			};
+
+	LogTruthRunnable(int delay, Marker marker, boolean formatted)
+	{
+		super(delay);
+		this.marker = marker;
+		this.formatted = formatted;
+	}
 
 	private static String getTruth()
 	{

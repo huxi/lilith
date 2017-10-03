@@ -54,7 +54,7 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	public static final int DEFAULT_PORT = 11000;
 
 	private boolean includeCallerData;
-	private TransformingEncoder transformingEncoder;
+	private final TransformingEncoder transformingEncoder;
 
 	public ZeroDelimitedClassicXmlMultiplexSocketAppender()
 	{
@@ -74,11 +74,6 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	protected void uuidChanged()
 	{
 		transformingEncoder.setUUID(getUUID());
-	}
-
-	public boolean isIncludeCallerData()
-	{
-		return includeCallerData;
 	}
 
 	public void setIncludeCallerData(boolean includeCallerData)

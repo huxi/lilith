@@ -48,21 +48,17 @@ public class SourcesPanel
 
 	final Logger logger = LoggerFactory.getLogger(SourcesPanel.class);
 
-	private JTable sourceNameTable;
-	private SourceNameTableModel sourceNameTableModel;
-	private EditSourceNameAction editSourceNameAction;
-	private RemoveSourceNameAction removeSourceNameAction;
-	private EditSourceNameDialog editSourceNameDialog;
-	private PreferencesDialog preferencesDialog;
+	private final JTable sourceNameTable;
+	private final SourceNameTableModel sourceNameTableModel;
+	private final EditSourceNameAction editSourceNameAction;
+	private final RemoveSourceNameAction removeSourceNameAction;
+	private final EditSourceNameDialog editSourceNameDialog;
+	private final PreferencesDialog preferencesDialog;
 
 	SourcesPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
-		createUI();
-	}
 
-	private void createUI()
-	{
 		setLayout(new BorderLayout());
 		editSourceNameDialog = new EditSourceNameDialog(preferencesDialog);
 		Map<String, String> sourceNames = new HashMap<>();

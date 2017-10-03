@@ -44,7 +44,6 @@ import javax.xml.stream.XMLStreamWriter;
 public class StackTraceElementWriter
 	implements GenericStreamWriter<ExtendedStackTraceElement>, LoggingEventSchemaConstants
 {
-	private String prefix;
 	private String preferredPrefix;
 	private boolean writingSchemaLocation;
 
@@ -78,7 +77,7 @@ public class StackTraceElementWriter
 		StaxUtilities.NamespaceInfo ni = StaxUtilities
 			.setNamespace(writer, preferredPrefix, NAMESPACE_URI, DEFAULT_NAMESPACE_PREFIX);
 
-		prefix = ni.getPrefix();
+		String prefix = ni.getPrefix();
 
 		StaxUtilities.writeStartElement(writer, prefix, NAMESPACE_URI, STACK_TRACE_ELEMENT_NODE);
 		if(ni.isCreated())

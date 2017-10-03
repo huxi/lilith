@@ -21,7 +21,7 @@ package de.huxhorn.lilith.engine.json.sourceproducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonDecoder;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonCodec;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.lilith.engine.impl.eventproducer.ZeroDelimitedEventProducer;
@@ -42,7 +42,7 @@ public class LilithJsonStreamLoggingServerSocketEventSourceProducer
 	protected EventProducer<LoggingEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{
-		return new ZeroDelimitedEventProducer<>(id, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingJsonDecoder(false), inputStream);
+		return new ZeroDelimitedEventProducer<>(id, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingJsonCodec(false), inputStream);
 	}
 
 	@Override

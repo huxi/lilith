@@ -24,7 +24,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import java.io.ObjectStreamException;
 import java.util.Locale;
 
-public class HttpStatusTypeCondition
+public final class HttpStatusTypeCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -3335718950761221210L;

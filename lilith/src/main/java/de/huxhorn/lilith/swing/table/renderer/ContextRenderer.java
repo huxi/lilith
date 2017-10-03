@@ -31,7 +31,7 @@ import javax.swing.table.TableCellRenderer;
 public class ContextRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public ContextRenderer()
 	{

@@ -77,9 +77,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Joern Huxhorn
  */
-public class AboutPanel
+public final class AboutPanel
 	extends JComponent
 {
+	private static final long serialVersionUID = -1152941907500323104L;
+
 	private final Logger logger = LoggerFactory.getLogger(AboutPanel.class);
 
 	public static final String BACKGROUND_IMAGE_RESOURCE = "background.png";
@@ -141,7 +143,7 @@ public class AboutPanel
 	private BufferedImage offscreenImage;
 	private BufferedImage scrollImage;
 	private boolean scrolling;
-	private int mouseEventHandling = MOUSE_BACKGROUND;
+	private final int mouseEventHandling = MOUSE_BACKGROUND;
 	private boolean debug;
 	private Timer timer;
 
@@ -511,11 +513,8 @@ public class AboutPanel
 		{	// -> default: MOUSE_COMPONENT
 			return contains(loPoint);
 		}
-		if(loArea.contains(loPoint))
-		{	// MOUSE_BACKGROUND / MOUSE_SCROLLAREA
-			return true;
-		}
-		return false;
+		// MOUSE_BACKGROUND / MOUSE_SCROLLAREA
+		return loArea.contains(loPoint);
 	}
 
 
@@ -1183,16 +1182,17 @@ public class AboutPanel
 	private class TimerActionListener
 		implements ActionListener
 	{
+		private static final long FREQUENCY = 25;
+
 		private final Logger logger = LoggerFactory.getLogger(AboutPanel.class);
 
 		private long lastRepaintStart;
-		private long frequency = 25;
 
 		public void actionPerformed(ActionEvent e)
 		{
 			long currentTime = System.nanoTime() / 1000000;
 			long meanTime = currentTime - lastRepaintStart;
-			if(meanTime > frequency)
+			if(meanTime > FREQUENCY)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Tick! meanTime={}", meanTime);
 				increaseScrollPosition();

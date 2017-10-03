@@ -50,22 +50,18 @@ public class SourceListsPanel
 
 	final Logger logger = LoggerFactory.getLogger(SourceListsPanel.class);
 
-	private JList<String> sourceListList;
-	private GenericSortedListModel<String> sourceListListModel;
-	private EditSourceListAction editSourceListAction;
-	private RemoveSourceListAction removeSourceListAction;
-	private PreferencesDialog preferencesDialog;
-	private EditSourceListDialog editSourceListDialog;
-	private GenericSortedListModel<Source> listModel;
+	private final JList<String> sourceListList;
+	private final GenericSortedListModel<String> sourceListListModel;
+	private final EditSourceListAction editSourceListAction;
+	private final RemoveSourceListAction removeSourceListAction;
+	private final PreferencesDialog preferencesDialog;
+	private final EditSourceListDialog editSourceListDialog;
+	private final GenericSortedListModel<Source> listModel;
 
 	SourceListsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
-		createUI();
-	}
 
-	private void createUI()
-	{
 		editSourceListDialog = new EditSourceListDialog(preferencesDialog);
 		setLayout(new BorderLayout());
 		sourceListListModel = new GenericSortedListModel<>();

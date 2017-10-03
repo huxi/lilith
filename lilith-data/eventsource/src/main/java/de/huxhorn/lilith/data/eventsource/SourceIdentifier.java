@@ -46,6 +46,7 @@ public class SourceIdentifier
 
 	public SourceIdentifier()
 	{
+		// XML serialization
 	}
 
 	public SourceIdentifier(String identifier)
@@ -81,14 +82,13 @@ public class SourceIdentifier
 
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		final SourceIdentifier that = (SourceIdentifier) o;
 
-		if(identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
-		return !(secondaryIdentifier != null ? !secondaryIdentifier
-			.equals(that.secondaryIdentifier) : that.secondaryIdentifier != null);
+		return (identifier != null ? identifier.equals(that.identifier) : that.identifier == null)
+				&& !(secondaryIdentifier != null ? !secondaryIdentifier.equals(that.secondaryIdentifier) : that.secondaryIdentifier != null);
 	}
 
 	public int hashCode()

@@ -60,8 +60,8 @@ import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.beans.PropertyChangeEvent;
@@ -123,34 +123,33 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
 	static final String SELECTED_EVENT_PROPERTY = "selectedEvent";
 
-
 	private final MainFrame mainFrame;
+	private final TaskManager<Long> taskManager;
+
+	private final EventWrapperViewTable<T> table;
+	private final EventWrapperTableModel<T> tableModel;
+
+	private final JLabel statusLabel;
+	private final JScrollBar verticalLogScrollBar;
+
+	private final MatteBorder focusedBorder;
+	private final MatteBorder unfocusedBorder;
+	private final DecimalFormat eventCountFormat;
+	private final FindResultListener findResultListener;
+
+	private final ScalableXHTMLPanel messagePane;
+	private final XhtmlNamespaceHandler xhtmlNamespaceHandler;
+	private final SelectionHighlighter.CopyAction copyAction;
+	private final JScrollPane tableScrollPane;
+	private final FindPanel<T> findPanel;
+	private final SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer;
+
 	private EventSource<T> eventSource;
 	private LoggingViewState state;
 	private boolean showingFilters;
 	private Condition filterCondition;
-	private TaskManager<Long> taskManager;
-
-	private EventWrapperViewTable<T> table;
-	private EventWrapperTableModel<T> tableModel;
-
-	private JLabel statusLabel;
-	private JScrollBar verticalLogScrollBar;
-
-	private StatusTableModelListener tableModelListener;
-	private MatteBorder focusedBorder;
-	private MatteBorder unfocusedBorder;
-	private DecimalFormat eventCountFormat;
-	private FindResultListener findResultListener;
-
-	private ScalableXHTMLPanel messagePane;
-	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
 	private EventWrapper<T> selectedEvent;
-	private SelectionHighlighter.CopyAction copyAction;
 	private double scale;
-	private JScrollPane tableScrollPane;
-	private FindPanel<T> findPanel;
-	private SoftReferenceCachingBuffer<EventWrapper<T>> cachedBuffer;
 
 	public EventWrapperViewPanel(MainFrame mainFrame, EventSource<T> eventSource)
 	{
@@ -160,17 +159,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		this.eventSource = Objects.requireNonNull(eventSource, "eventSource must not be null!");
 
 		eventCountFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.US));
-		this.taskManager = mainFrame.getLongWorkManager();
+		taskManager = mainFrame.getLongWorkManager();
 		findResultListener = new FindResultListener();
 		taskManager.addTaskListener(findResultListener);
 		showingFilters = false;
 
-		tableModelListener = new StatusTableModelListener();
-		initUi();
-	}
+		StatusTableModelListener tableModelListener = new StatusTableModelListener();
 
-	private void initUi()
-	{
 		ApplicationPreferences applicationPreferences = mainFrame.getApplicationPreferences();
 		scale = applicationPreferences.getScaleFactor();
 		Insets borderInsets = new Insets(2, 2, 2, 2);
@@ -580,11 +575,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			//noinspection Duplicates
 			while(container != null)
 			{
-				if(container == table)
+				if(container == table) // NOPMD
 				{
 					return table;
 				}
-				if(container == messagePane)
+				if(container == messagePane) // NOPMD
 				{
 					return messagePane;
 				}
@@ -652,7 +647,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				return result;
 			}
 
-			if(aContainer == aComponent)
+			if(aContainer == aComponent) // NOPMD
 			{
 				// prevent useless warning
 				return null;
@@ -725,7 +720,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				return result;
 			}
 
-			if(aContainer == aComponent)
+			if(aContainer == aComponent) // NOPMD
 			{
 				// prevent useless warning
 				return null;
@@ -1128,12 +1123,8 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	}
 
 	private class TableMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
-		TableMouseListener()
-		{
-		}
-
 		public void mouseClicked(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1174,7 +1165,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
-
 		private void showPopup(MouseEvent evt)
 		{
 			Point p = evt.getPoint();
@@ -1198,24 +1188,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				showPopup(evt);
 			}
 		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
-
 	}
 
 	private class EventViewMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
-		EventViewMouseListener()
-		{
-		}
-
 		private void showPopup(MouseEvent evt)
 		{
 			Point p = evt.getPoint();
@@ -1246,24 +1223,11 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				showPopup(evt);
 			}
 		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
-
 	}
 
 	private class ScrollPaneMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
-		ScrollPaneMouseListener()
-		{
-		}
-
 		private void showPopup(MouseEvent evt)
 		{
 			Point p = evt.getPoint();
@@ -1294,15 +1258,6 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 				showPopup(evt);
 			}
 		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
-
 	}
 
 	private class TableRowSelectionListener
@@ -1421,7 +1376,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 		public void taskCreated(Task<Long> longTask)
 		{
-
+			// no-op
 		}
 
 		public void executionFailed(Task<Long> task, ExecutionException exception)
@@ -1582,10 +1537,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class WrappingMouseWheelListener
 		implements MouseWheelListener
 	{
+		private final MouseWheelListener[] wrapped;
 
-		private MouseWheelListener[] wrapped;
-
-		private WrappingMouseWheelListener(MouseWheelListener[] wrapped)
+		WrappingMouseWheelListener(MouseWheelListener[] wrapped)
 		{
 			this.wrapped = wrapped;
 		}

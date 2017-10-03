@@ -77,9 +77,9 @@ public class Log4jImportCallable
 	private static final String OPENING_LOG4J_EVENT_TAG_EXCL_NS = "<log4j:event ";
 	private static final String OPENING_LOG4J_EVENT_TAG_INCL_NS = OPENING_LOG4J_EVENT_TAG_EXCL_NS + LOG4J_NAMESPACE + " ";
 
-	private File inputFile;
-	private AppendOperation<EventWrapper<LoggingEvent>> buffer;
-	private LoggingEventReader instance;
+	private final File inputFile;
+	private final AppendOperation<EventWrapper<LoggingEvent>> buffer;
+	private final LoggingEventReader instance;
 	private long result;
 
 	public Log4jImportCallable(File inputFile, AppendOperation<EventWrapper<LoggingEvent>> buffer)

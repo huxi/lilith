@@ -95,21 +95,18 @@ public class OpenPreviousDialog
 	private static final String[] EMPTY_STRING_ARRAY = new String[]{};
 	private static final SourceIdentifierWrapper[] EMPTY_SECONDARY_ARRAY = new SourceIdentifierWrapper[]{};
 
-	private MainFrame mainFrame;
-	private OpenAction openAction;
-	private JTabbedPane tabbedPane;
+	private final MainFrame mainFrame;
+	private final OpenAction openAction;
+	private final JTabbedPane tabbedPane;
+
 	private OpenPreviousPanel<LoggingEvent> loggingPanel;
 	private OpenPreviousPanel<AccessEvent> accessPanel;
 
-	public OpenPreviousDialog(MainFrame owner)
+	OpenPreviousDialog(MainFrame owner)
 	{
 		super(owner, "Open previous log…");
 		this.mainFrame = owner;
-		createUI();
-	}
 
-	private void createUI()
-	{
 		openAction = new OpenAction();
 		CancelAction cancelAction = new CancelAction();
 
@@ -161,7 +158,7 @@ public class OpenPreviousDialog
 	}
 
 
-	public void openSelection()
+	private void openSelection()
 	{
 		Component comp = tabbedPane.getSelectedComponent();
 		if(comp instanceof OpenPreviousPanel)
@@ -235,14 +232,15 @@ public class OpenPreviousDialog
 	{
 		private static final long serialVersionUID = 1635486188020609000L;
 
-		private List<List<SourceIdentifierWrapper>> secondaries;
-		private JList<String> primaryList;
-		private JList<SourceIdentifierWrapper> secondaryList;
-		private JTextArea infoArea;
-		private DecimalFormat eventCountFormat;
+		private final DecimalFormat eventCountFormat;
 		private final FileBufferFactory<T> fileBufferFactory;
 		private final LogFileFactory logFileFactory;
-		private EventType eventType;
+		private final EventType eventType;
+		private final JList<String> primaryList;
+		private final JList<SourceIdentifierWrapper> secondaryList;
+		private final JTextArea infoArea;
+
+		private List<List<SourceIdentifierWrapper>> secondaries;
 		private SourceIdentifierWrapper selectedSourceWrapper;
 
 		OpenPreviousPanel(FileBufferFactory<T> fileBufferFactory, EventType eventType)
@@ -251,34 +249,7 @@ public class OpenPreviousDialog
 			this.logFileFactory = fileBufferFactory.getLogFileFactory();
 			this.eventType = eventType;
 			eventCountFormat = new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.US));
-			this.createUI();
-		}
 
-		public SourceIdentifierWrapper getSelectedSourceWrapper()
-		{
-			return selectedSourceWrapper;
-		}
-
-		public String getPanelName()
-		{
-			return eventType.getTypeName();
-		}
-
-		public EventType getEventType()
-		{
-			return eventType;
-		}
-
-		private void setSelectedSourceWrapper(SourceIdentifierWrapper selected)
-		{
-			if(logger.isDebugEnabled()) logger.debug("Selected source: {}", selected);
-			this.selectedSourceWrapper = selected;
-			initOpenAction();
-			updateInfoArea();
-		}
-
-		private void createUI()
-		{
 			primaryList = new JList<>();
 			secondaryList = new JList<>();
 
@@ -370,6 +341,28 @@ public class OpenPreviousDialog
 
 		}
 
+		SourceIdentifierWrapper getSelectedSourceWrapper()
+		{
+			return selectedSourceWrapper;
+		}
+
+		String getPanelName()
+		{
+			return eventType.getTypeName();
+		}
+
+		EventType getEventType()
+		{
+			return eventType;
+		}
+
+		private void setSelectedSourceWrapper(SourceIdentifierWrapper selected)
+		{
+			if(logger.isDebugEnabled()) logger.debug("Selected source: {}", selected);
+			this.selectedSourceWrapper = selected;
+			initOpenAction();
+			updateInfoArea();
+		}
 
 		private String getLogInfo(SourceIdentifierWrapper selectedSource) {
 			if (selectedSource == null) {
@@ -405,7 +398,7 @@ public class OpenPreviousDialog
 			return result.toString();
 		}
 
-		public void updateInfoArea()
+		void updateInfoArea()
 		{
 			infoArea.setText(getLogInfo(selectedSourceWrapper));
 		}
@@ -496,22 +489,22 @@ public class OpenPreviousDialog
 			return sourceIdentifier;
 		}
 
-		public long getLastModified()
+		long getLastModified()
 		{
 			return lastModified;
 		}
 
-		public long getSizeOnDisk()
+		long getSizeOnDisk()
 		{
 			return sizeOnDisk;
 		}
 
-		public long getNumberOfEvents()
+		long getNumberOfEvents()
 		{
 			return numberOfEvents;
 		}
 
-		public String getApplicationName()
+		String getApplicationName()
 		{
 			return applicationName;
 		}
@@ -524,15 +517,7 @@ public class OpenPreviousDialog
 			{
 				throw new NullPointerException("other must not be null!");
 			}
-			if(lastModified == other.lastModified)
-			{
-				return 0;
-			}
-			if(lastModified < other.lastModified)
-			{
-				return 1;
-			}
-			return -1;
+			return Long.compare(other.lastModified, lastModified);
 		}
 
 		@Override

@@ -72,9 +72,9 @@ public class JulImportCallable
 
 	private final Logger logger = LoggerFactory.getLogger(JulImportCallable.class);
 
-	private File inputFile;
-	private AppendOperation<EventWrapper<LoggingEvent>> buffer;
-	private LoggingEventReader loggingEventReader;
+	private final File inputFile;
+	private final AppendOperation<EventWrapper<LoggingEvent>> buffer;
+	private final LoggingEventReader loggingEventReader;
 	private long result;
 
 	public JulImportCallable(File inputFile, AppendOperation<EventWrapper<LoggingEvent>> buffer)
@@ -89,6 +89,7 @@ public class JulImportCallable
 		return buffer;
 	}
 
+	@SuppressWarnings("unused")
 	public File getInputFile()
 	{
 		return inputFile;

@@ -304,7 +304,7 @@ public class AccessFormatter
 
 		@Override
 		public void setThreadName(String threadName) {
-
+			// no-op
 		}
 
 		@Override
@@ -486,7 +486,7 @@ public class AccessFormatter
 
 		public void prepareForDeferredProcessing()
 		{
+			// no-op
 		}
-
 	}
 }

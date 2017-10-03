@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
@@ -44,24 +45,19 @@ public class EditConditionDialog
 {
 	private static final long serialVersionUID = -217524106405669380L;
 
-	private SavedCondition savedCondition;
-	private JTextField conditionName;
-	private OkAction okAction;
-	private boolean adding;
-	private boolean canceled;
+	private final JTextField conditionName;
+	private final OkAction okAction;
+	private final JCheckBox activeCheckBox;
+	private final ColorSchemeEditorPanel colorSchemeEditorPanel;
 
-	private JCheckBox activeCheckBox;
-	private ColorSchemeEditorPanel colorSchemeEditorPanel;
+	private SavedCondition savedCondition;
+	private boolean canceled;
 
 	EditConditionDialog(Dialog owner)
 	{
 		super(owner);
 		setModal(true);
-		createUi();
-	}
 
-	private void createUi()
-	{
 		okAction = new OkAction();
 		Action cancelAction = new CancelAction();
 
@@ -125,9 +121,8 @@ public class EditConditionDialog
 	}
 
 
-	public void setAdding(boolean adding)
+	void setAdding(boolean adding)
 	{
-		this.adding = adding;
 		if(adding)
 		{
 			setTitle("Add condition…");
@@ -173,11 +168,6 @@ public class EditConditionDialog
 	public void setSavedCondition(SavedCondition savedCondition)
 	{
 		this.savedCondition = savedCondition;
-	}
-
-	public boolean isAdding()
-	{
-		return adding;
 	}
 
 	public boolean isCanceled()
@@ -298,10 +288,12 @@ public class EditConditionDialog
 
 		public void keyPressed(KeyEvent e)
 		{
+			// no-op
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
+			// no-op
 		}
 	}
 }

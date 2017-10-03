@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -29,12 +30,19 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CallableMetaData
+public final class CallableMetaData
 {
 	public static final String FIND_TASK_META_CONDITION = "Condition";
 	public static final String FIND_TASK_META_SOURCE_IDENTIFIER = "SourceIdentifier";
 	private static final String FIND_TASK_META_START_ROW = "StartRow";
 	private static final String FIND_TASK_META_DATA_FILE = "DataFile";
+
+	static
+	{
+		new CallableMetaData(); // stfu
+	}
+
+	private CallableMetaData() {}
 
 	public static <T extends Serializable> Map<String, String> createFindMetaData(Condition condition, EventSource<T> eventSource, int startRow)
 	{

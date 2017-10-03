@@ -39,9 +39,16 @@ import java.util.zip.GZIPOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ImportExportCommand
+public final class ImportExportCommand
 {
 	private static final int MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+	static
+	{
+		new ImportExportCommand(); // stfu
+	}
+
+	private ImportExportCommand() {}
 
 	private static Map<String, byte[]> exportGroovyConditions(ApplicationPreferences preferences)
 	{

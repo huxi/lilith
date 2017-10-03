@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@ public class CauseException extends RuntimeException
 {
 	private static final long serialVersionUID = 6077546503617251568L;
 
-	public CauseException()
-	{
-	}
-
 	public CauseException(String message)
 	{
 		super(message);
@@ -34,15 +30,5 @@ public class CauseException extends RuntimeException
 	public CauseException(String message, Throwable cause)
 	{
 		super(message, cause);
-	}
-
-	public CauseException(Throwable cause)
-	{
-		super(cause);
-	}
-
-	public CauseException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
-	{
-		super(message, cause, enableSuppression, writableStackTrace);
 	}
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.sulky.io.IOUtilities;
@@ -30,7 +31,7 @@ import javax.swing.table.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SoundLocationTableModel
+public final class SoundLocationTableModel
 	implements TableModel
 {
 	private final Logger logger = LoggerFactory.getLogger(SoundLocationTableModel.class);
@@ -41,7 +42,7 @@ public class SoundLocationTableModel
 	private List<String> keys;
 	private final EventListenerList eventListenerList;
 
-	public SoundLocationTableModel(Map<String, String> data)
+	SoundLocationTableModel(Map<String, String> data)
 	{
 		eventListenerList = new EventListenerList();
 		setData(data);
@@ -89,8 +90,9 @@ public class SoundLocationTableModel
 				return "Event";
 			case SoundLocationTableModel.SOUND_LOCATION_COLUMN:
 				return "Location";
+			default:
+				return null;
 		}
-		return null;
 	}
 
 	public Class<?> getColumnClass(int columnIndex)
@@ -120,8 +122,9 @@ public class SoundLocationTableModel
 				return key;
 			case SoundLocationTableModel.SOUND_LOCATION_COLUMN:
 				return data.get(key);
+			default:
+				return null;
 		}
-		return null;
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
@@ -149,6 +152,9 @@ public class SoundLocationTableModel
 				data.put(key, newValue);
 				fireTableChange();
 			}
+			break;
+			default: // nothing
+			break;
 		}
 	}
 
@@ -174,7 +180,7 @@ public class SoundLocationTableModel
 	private class FireTableChangeRunnable
 		implements Runnable
 	{
-		private TableModelEvent event;
+		private final TableModelEvent event;
 
 		FireTableChangeRunnable(TableModelEvent event)
 		{

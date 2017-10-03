@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,14 @@ import de.huxhorn.lilith.swing.TextPreprocessor;
 import de.huxhorn.sulky.conditions.Condition;
 import javax.swing.Action;
 
-public class ActionTooltips
+public final class ActionTooltips
 {
 	static
 	{
 		new ActionTooltips(); // STFU, coverage
 	}
+
+	private ActionTooltips() {}
 
 	public static void initializeConditionTooltip(Condition condition, Action action, boolean htmlTooltip)
 	{

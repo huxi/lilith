@@ -28,8 +28,15 @@ import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CreateMd5Command
+public final class CreateMd5Command
 {
+	static
+	{
+		new CreateMd5Command(); // stfu
+	}
+
+	private CreateMd5Command() {}
+
 	public static boolean createMd5(File input)
 	{
 		final Logger logger = LoggerFactory.getLogger(CreateMd5Command.class);

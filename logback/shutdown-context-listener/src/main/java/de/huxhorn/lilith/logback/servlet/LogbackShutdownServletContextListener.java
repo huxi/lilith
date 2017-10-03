@@ -53,7 +53,14 @@ import org.slf4j.LoggerFactory;
 public class LogbackShutdownServletContextListener
 	implements ServletContextListener
 {
-	public static final String LOGBACK_SHUTDOWN_DEBUG = "LogbackShutdownDebug";
+	private static final String LOGBACK_SHUTDOWN_DEBUG = "LogbackShutdownDebug";
+
+	private static final String[] STATUS_TEXT=
+			{
+					"INFO : ",
+					"WARN : ",
+					"ERROR: ",
+			};
 
 	private boolean debug=false;
 
@@ -74,13 +81,6 @@ public class LogbackShutdownServletContextListener
 			}
 		}
 	}
-
-	private static final String[] STATUS_TEXT=
-		{
-			"INFO : ",
-			"WARN : ",
-			"ERROR: ",
-		};
 
 	private void shutdownLogback()
 	{
@@ -157,5 +157,4 @@ public class LogbackShutdownServletContextListener
 			builder.append("       ");
 		}
 	}
-
 }

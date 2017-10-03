@@ -54,26 +54,22 @@ public class SoundsPanel
 
 	final Logger logger = LoggerFactory.getLogger(SoundsPanel.class);
 
-	private BrowseSoundAction browseSoundAction;
-	private PlaySoundAction playSoundAction;
-	private JCheckBox muteCheckbox;
-	private JFileChooser soundFileChooser;
-	private SoundLocationTableModel soundLocationTableModel;
-	private JTable soundLocationTable;
-	private Sounds sounds;
-	private PreferencesDialog preferencesDialog;
-	private ApplicationPreferences applicationPreferences;
+	private final BrowseSoundAction browseSoundAction;
+	private final PlaySoundAction playSoundAction;
+	private final JCheckBox muteCheckbox;
+	private final JFileChooser soundFileChooser;
+	private final SoundLocationTableModel soundLocationTableModel;
+	private final JTable soundLocationTable;
+	private final Sounds sounds;
+	private final PreferencesDialog preferencesDialog;
+	private final ApplicationPreferences applicationPreferences;
 
-	public SoundsPanel(PreferencesDialog preferencesDialog)
+	SoundsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
 		this.sounds = new JLayerSounds();
-		createUI();
-	}
 
-	private void createUI()
-	{
 		setLayout(new BorderLayout());
 		// Sounds
 		muteCheckbox = new JCheckBox("Mute");
@@ -128,7 +124,7 @@ public class SoundsPanel
 		updateSounds(mute);
 	}
 
-	public void saveSettings()
+	void saveSettings()
 	{
 		applicationPreferences.setMute(muteCheckbox.isSelected());
 		applicationPreferences.setSoundLocations(soundLocationTableModel.getData());

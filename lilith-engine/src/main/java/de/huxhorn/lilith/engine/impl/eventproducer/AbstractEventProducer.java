@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.engine.impl.eventproducer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -22,6 +23,7 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import java.io.Serializable;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,25 +32,22 @@ public abstract class AbstractEventProducer<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(AbstractEventProducer.class);
 
-	private AppendOperation<EventWrapper<T>> eventQueue;
-	private SourceIdentifier sourceIdentifier;
-	private SourceIdentifierUpdater<T> sourceIdentifierUpdater;
+	private final SourceIdentifier sourceIdentifier;
+	private final AppendOperation<EventWrapper<T>> eventQueue;
+	private final SourceIdentifierUpdater<T> sourceIdentifierUpdater;
+
 	private long localIdCounter;
 
 	protected AbstractEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater)
 	{
-		this.sourceIdentifier = sourceIdentifier;
-		this.eventQueue = eventQueue;
+		this.sourceIdentifier = Objects.requireNonNull(sourceIdentifier, "sourceIdentifier must not be null!");
+		this.eventQueue = Objects.requireNonNull(eventQueue, "eventQueue must not be null!");
 		this.sourceIdentifierUpdater = sourceIdentifierUpdater;
 		localIdCounter = 0;
 	}
 
 	public SourceIdentifier getSourceIdentifier()
 	{
-		if(sourceIdentifier == null)
-		{
-			return null;
-		}
 		try
 		{
 			return sourceIdentifier.clone();
@@ -83,7 +82,8 @@ public abstract class AbstractEventProducer<T extends Serializable>
 			sourceIdentifierUpdater.updateIdentifier(sourceIdentifier, event);
 		}
 
-		EventWrapper<T> wrapper = new EventWrapper<>(getSourceIdentifier(), localIdCounter, event);
+		SourceIdentifier clonedIdentifier = getSourceIdentifier();
+		EventWrapper<T> wrapper = new EventWrapper<>(clonedIdentifier, localIdCounter, event);
 		eventQueue.add(wrapper);
 		if(logger.isDebugEnabled()) logger.debug("Added event-wrapper for {}.", event);
 	}

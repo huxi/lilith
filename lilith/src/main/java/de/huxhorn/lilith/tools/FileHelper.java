@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,16 @@ import de.huxhorn.lilith.api.FileConstants;
 import java.io.File;
 import java.util.Locale;
 
-public class FileHelper
+final class FileHelper
 {
-	public static File resolveDataFile(File baseFile)
+	static
+	{
+		new FileHelper(); // stfu
+	}
+
+	private FileHelper() {}
+
+	static File resolveDataFile(File baseFile)
 	{
 		String fileStr = baseFile.getAbsolutePath();
 
@@ -39,7 +46,7 @@ public class FileHelper
 		return new File(fileStr + FileConstants.FILE_EXTENSION);
 	}
 
-	public static File resolveIndexFile(File baseFile)
+	static File resolveIndexFile(File baseFile)
 	{
 		String fileStr = baseFile.getAbsolutePath();
 

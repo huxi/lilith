@@ -27,13 +27,20 @@ import de.huxhorn.sulky.conditions.Or;
 import de.huxhorn.sulky.formatting.SimpleXml;
 import java.util.List;
 
-public class TextPreprocessor
+public final class TextPreprocessor
 {
 	private static final int MAX_LINE_LENGTH = 100;
 	private static final int MAX_LINES = 40;
 	private static final String TAB_REPLACEMENT = "    ";
 	private static final String LINE_TRUNCATION = "[..]";
 	private static final String INDENT = "    ";
+
+	static
+	{
+		new TextPreprocessor(); // stfu
+	}
+
+	private TextPreprocessor() {}
 
 	public static String cropLine(String text)
 	{

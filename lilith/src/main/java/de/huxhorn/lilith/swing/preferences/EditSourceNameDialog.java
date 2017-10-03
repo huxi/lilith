@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.LilithKeyStrokes;
@@ -42,21 +43,18 @@ public class EditSourceNameDialog
 {
 	private static final long serialVersionUID = -5435322391092309240L;
 
-	private JTextField sourceIdentifier;
-	private JTextField sourceName;
-	private OkAction okAction;
+	private final JTextField sourceIdentifier;
+	private final JTextField sourceName;
+	private final OkAction okAction;
+
 	private boolean adding;
 	private boolean canceled;
 
-	public EditSourceNameDialog(Dialog owner)
+	EditSourceNameDialog(Dialog owner)
 	{
 		super(owner);
 		setModal(true);
-		createUi();
-	}
 
-	private void createUi()
-	{
 		okAction = new OkAction();
 		Action cancelAction = new CancelAction();
 
@@ -103,7 +101,7 @@ public class EditSourceNameDialog
 
 	}
 
-	public void setAdding(boolean adding)
+	void setAdding(boolean adding)
 	{
 		this.adding = adding;
 		if(adding)
@@ -141,22 +139,17 @@ public class EditSourceNameDialog
 		okAction.update();
 	}
 
-	public boolean isAdding()
-	{
-		return adding;
-	}
-
 	public boolean isCanceled()
 	{
 		return canceled;
 	}
 
-	public void setSourceName(String sourceName)
+	void setSourceName(String sourceName)
 	{
 		this.sourceName.setText(sourceName);
 	}
 
-	public String getSourceName()
+	String getSourceName()
 	{
 		return sourceName.getText();
 	}
@@ -268,11 +261,12 @@ public class EditSourceNameDialog
 
 		public void keyPressed(KeyEvent e)
 		{
+			// no-op
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
+			// no-op
 		}
 	}
-
 }

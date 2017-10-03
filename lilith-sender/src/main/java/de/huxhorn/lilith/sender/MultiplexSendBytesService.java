@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ package de.huxhorn.lilith.sender;
 import de.huxhorn.sulky.io.IOUtilities;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -44,28 +45,30 @@ import java.util.concurrent.BlockingQueue;
 public class MultiplexSendBytesService
 	implements SendBytesService
 {
-	private int queueSize;
+	private final String name;
+	private final List<String> remoteHostsList;
+	private final int port;
+	private final WriteByteStrategy writeByteStrategy;
+	private final long reconnectionDelay;
+	private final int queueSize;
 
-	private Set<SimpleSendBytesService> senderServices;
+	private final Set<SimpleSendBytesService> senderServices;
 	private final BlockingQueue<byte[]> eventBytes;
-	private List<String> remoteHostsList;
+
 	private Thread dispatcherThread;
-	private String name;
-	private WriteByteStrategy writeByteStrategy;
-	private int port;
-	private long reconnectionDelay;
 	private boolean debug;
 
 	public MultiplexSendBytesService(String name, List<String> remoteHostsList, int port, WriteByteStrategy writeByteStrategy, long reconnectionDelay, int queueSize)
 	{
 		this.name = name;
+		this.remoteHostsList = Objects.requireNonNull(remoteHostsList, "remoteHostsList must not be null!");
+		this.port = port;
+		this.writeByteStrategy = Objects.requireNonNull(writeByteStrategy, "writeByteStrategy must not be null!");
+		this.reconnectionDelay = reconnectionDelay;
 		this.queueSize = queueSize;
-		this.remoteHostsList = remoteHostsList;
+
 		this.senderServices = new HashSet<>();
 		this.eventBytes = new ArrayBlockingQueue<>(queueSize, true);
-		this.writeByteStrategy = writeByteStrategy;
-		this.port = port;
-		this.reconnectionDelay = reconnectionDelay;
 	}
 
 	public boolean isDebug()

@@ -34,8 +34,8 @@ public abstract class ColorSchemePreviewRenderer
 {
 	private static final ColorScheme DEFAULT_SCHEME = new ColorScheme().initDefaults();
 
-	private ConditionalBorder border;
-	protected JLabel renderer;
+	private final ConditionalBorder border;
+	protected final JLabel renderer;
 
 	ColorSchemePreviewRenderer()
 	{

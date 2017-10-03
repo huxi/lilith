@@ -52,15 +52,16 @@ public class ClassicXmlMultiplexSocketAppender
 	public static final int UNCOMPRESSED_DEFAULT_PORT = 10021;
 
 	private boolean includeCallerData;
-	private boolean compressing;
 	private boolean usingDefaultPort;
 	private TransformingEncoder transformingEncoder;
 
+	@SuppressWarnings("unused")
 	public ClassicXmlMultiplexSocketAppender()
 	{
 		this(true);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public ClassicXmlMultiplexSocketAppender(boolean compressing)
 	{
 		super();
@@ -97,7 +98,6 @@ public class ClassicXmlMultiplexSocketAppender
 	 */
 	public void setCompressing(boolean compressing)
 	{
-		this.compressing = compressing;
 		if(usingDefaultPort)
 		{
 			if(compressing)
@@ -111,16 +111,6 @@ public class ClassicXmlMultiplexSocketAppender
 			usingDefaultPort = true;
 		}
 		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(compressing));
-	}
-
-	public boolean isCompressing()
-	{
-		return compressing;
-	}
-
-	public boolean isIncludeCallerData()
-	{
-		return includeCallerData;
 	}
 
 	public void setIncludeCallerData(boolean includeCallerData)

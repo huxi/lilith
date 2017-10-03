@@ -30,7 +30,7 @@ import javax.swing.table.TableCellRenderer;
 public class ThrowableRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public ThrowableRenderer()
 	{

@@ -21,7 +21,7 @@ package de.huxhorn.lilith.conditions;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 
-public class LoggerContainsCondition
+public final class LoggerContainsCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -6941621995990374101L;

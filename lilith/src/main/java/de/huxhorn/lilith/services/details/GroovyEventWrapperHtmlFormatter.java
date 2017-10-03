@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.details;
 
 import de.huxhorn.lilith.DateTimeFormatters;
@@ -39,7 +40,7 @@ public class GroovyEventWrapperHtmlFormatter
 
 	private final ApplicationPreferences applicationPreferences;
 
-	private GroovyInstance groovyInstance;
+	private final GroovyInstance groovyInstance;
 
 	public GroovyEventWrapperHtmlFormatter(ApplicationPreferences applicationPreferences)
 	{

@@ -21,7 +21,7 @@ package de.huxhorn.lilith.engine.impl.eventproducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufDecoder;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufCodec;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import java.io.InputStream;
 
@@ -30,6 +30,6 @@ public class LoggingEventProtobufMessageBasedEventProducer
 {
 	public LoggingEventProtobufMessageBasedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingEventProtobufDecoder(compressing), inputStream, true);
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingEventProtobufCodec(compressing), inputStream, true);
 	}
 }

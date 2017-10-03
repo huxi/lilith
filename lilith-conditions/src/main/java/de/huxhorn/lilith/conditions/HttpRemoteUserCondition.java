@@ -22,7 +22,7 @@ import de.huxhorn.lilith.data.access.AccessEvent;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import java.io.ObjectStreamException;
 
-public class HttpRemoteUserCondition
+public final class HttpRemoteUserCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -6203602189173332391L;

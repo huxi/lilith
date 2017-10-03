@@ -21,9 +21,9 @@ package de.huxhorn.lilith.engine.json.eventproducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonDecoder;
-import de.huxhorn.lilith.engine.impl.eventproducer.MessageBasedEventProducer;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonCodec;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
+import de.huxhorn.lilith.engine.impl.eventproducer.MessageBasedEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import java.io.InputStream;
 
@@ -32,6 +32,6 @@ public class LilithJsonMessageLoggingEventProducer
 {
 	public LilithJsonMessageLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingJsonDecoder(compressing), inputStream, false);
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingJsonCodec(compressing), inputStream, false);
 	}
 }

@@ -38,15 +38,15 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.logback.SameThreadLogbackLoggingConverter;
-import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperProtobufCodec;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.sulky.codec.Codec;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class WrappingClassicEncoder
 	implements ResettableEncoder<ILoggingEvent>
 {
-	private Converter<de.huxhorn.lilith.data.logging.LoggingEvent> converter = new SameThreadLogbackLoggingConverter();
-	private Codec<EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent>> codec = new CompressingLoggingEventWrapperProtobufCodec();
+	private final Converter<de.huxhorn.lilith.data.logging.LoggingEvent> converter = new SameThreadLogbackLoggingConverter();
+	private final Codec<EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent>> codec = new LoggingEventWrapperProtobufCodec(true);
 	private final AtomicLong localId = new AtomicLong(0);
 
 	public void reset()

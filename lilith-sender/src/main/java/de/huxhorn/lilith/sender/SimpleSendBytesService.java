@@ -58,16 +58,18 @@ public class SimpleSendBytesService
 	public static final int DEFAULT_POLL_INTERVAL = 100;
 
 	private final Object lock = new Object();
-	private final BlockingQueue<byte[]> localEventBytes;
 
-	private WriteByteStrategy writeByteStrategy;
-	private DataOutputStreamFactory dataOutputStreamFactory;
-	private final long reconnectionDelay;
+	private final DataOutputStreamFactory dataOutputStreamFactory;
+	private final WriteByteStrategy writeByteStrategy;
 	private final int queueSize;
+	private final long reconnectionDelay;
 	private final int pollInterval;
+
+	private final BlockingQueue<byte[]> localEventBytes;
 
 	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<>(ConnectionState.Offline);
 	private final AtomicBoolean shutdownIndicator = new AtomicBoolean(false);
+
 	private SendBytesThread sendBytesThread;
 	private boolean debug;
 
@@ -78,26 +80,28 @@ public class SimpleSendBytesService
 
 	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, long reconnectionDelay, int pollInterval)
 	{
-		Objects.requireNonNull(dataOutputStreamFactory, "dataOutputStreamFactory must not be null!");
-		Objects.requireNonNull(writeByteStrategy, "writeByteStrategy must not be null!");
+		this.dataOutputStreamFactory = Objects.requireNonNull(dataOutputStreamFactory, "dataOutputStreamFactory must not be null!");
+		this.writeByteStrategy = Objects.requireNonNull(writeByteStrategy, "writeByteStrategy must not be null!");
+
 		if(queueSize <= 0)
 		{
 			throw new IllegalArgumentException("queueSize must be greater than zero but was "+queueSize+"!");
 		}
+		this.queueSize = queueSize;
+
 		if(reconnectionDelay <= 0)
 		{
 			throw new IllegalArgumentException("reconnectionDelay must be greater than zero but was "+reconnectionDelay+"!");
 		}
+		this.reconnectionDelay = reconnectionDelay;
+
 		if(pollInterval <= 0)
 		{
 			throw new IllegalArgumentException("pollInterval must be greater than zero but was "+pollInterval+"!");
 		}
-		this.localEventBytes = new ArrayBlockingQueue<>(queueSize, true);
-		this.dataOutputStreamFactory = dataOutputStreamFactory;
-		this.writeByteStrategy = writeByteStrategy;
-		this.queueSize = queueSize;
-		this.reconnectionDelay = reconnectionDelay;
 		this.pollInterval = pollInterval;
+
+		this.localEventBytes = new ArrayBlockingQueue<>(queueSize, true);
 	}
 
 	public boolean isDebug()
@@ -177,7 +181,7 @@ public class SimpleSendBytesService
 			setDaemon(true);
 		}
 
-		public void closeConnection()
+		void closeConnection()
 		{
 			synchronized(lock)
 			{
@@ -219,7 +223,7 @@ public class SimpleSendBytesService
 				try
 				{
 					localEventBytes.drainTo(copy);
-					if(copy.size() > 0)
+					if(!copy.isEmpty())
 					{
 						DataOutputStream outputStream;
 						synchronized(lock)

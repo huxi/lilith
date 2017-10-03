@@ -43,27 +43,23 @@ public class SourceFilteringPanel
 
 	final Logger logger = LoggerFactory.getLogger(SourceFilteringPanel.class);
 
-	private BlacklistAction blacklistAction;
-	private WhitelistAction whitelistAction;
-	private PreferencesDialog preferencesDialog;
-	private JComboBox<String> blacklistNames;
-	private DefaultComboBoxModel<String> blacklistNamesModel;
-	private JComboBox<String> whitelistNames;
-	private DefaultComboBoxModel<String> whitelistNamesModel;
-	private JRadioButton disabledButton;
-	private JRadioButton blacklistButton;
-	private JRadioButton whitelistButton;
-	private ListItemListener listItemListener;
+	private final BlacklistAction blacklistAction;
+	private final WhitelistAction whitelistAction;
+	private final PreferencesDialog preferencesDialog;
+	private final JComboBox<String> blacklistNames;
+	private final DefaultComboBoxModel<String> blacklistNamesModel;
+	private final JComboBox<String> whitelistNames;
+	private final DefaultComboBoxModel<String> whitelistNamesModel;
+	private final JRadioButton disabledButton;
+	private final JRadioButton blacklistButton;
+	private final JRadioButton whitelistButton;
+	private final ListItemListener listItemListener;
 
 	SourceFilteringPanel(PreferencesDialog preferencesDialog)
 	{
 		super();
 		this.preferencesDialog = preferencesDialog;
-		createUI();
-	}
 
-	private void createUI()
-	{
 		DisabledAction disabledAction = new DisabledAction();
 		blacklistAction = new BlacklistAction();
 		whitelistAction = new WhitelistAction();
@@ -124,15 +120,15 @@ public class SourceFilteringPanel
 		List<String> sourceListNames = preferencesDialog.getSourceListNames();
 		boolean hasSourceLists = false;
 		String fallbackSourceListName;
-		if(sourceListNames.size() > 0)
+		if(sourceListNames.isEmpty())
+		{
+			fallbackSourceListName = "";
+		}
+		else
 		{
 			Collections.sort(sourceListNames);
 			fallbackSourceListName = sourceListNames.get(0);
 			hasSourceLists = true;
-		}
-		else
-		{
-			fallbackSourceListName = "";
 		}
 
 		blacklistAction.setEnabled(hasSourceLists);
@@ -202,6 +198,7 @@ public class SourceFilteringPanel
 				break;
 			default:
 				disabledButton.setSelected(true);
+				break;
 		}
 
 		listItemListener.setInitializing(false);
@@ -294,14 +291,14 @@ public class SourceFilteringPanel
 				String item = (String) e.getItem();
 				Object source = e.getSource();
 
-				if(source == whitelistNames)
+				if(source == whitelistNames) // NOPMD
 				{
 					if(logger.isInfoEnabled()) logger.info("WhiteList Selected: {}", item);
 					preferencesDialog.setWhiteListName(item);
 					return;
 				}
 
-				if(source == blacklistNames)
+				if(source == blacklistNames) // NOPMD
 				{
 					if(logger.isInfoEnabled()) logger.info("BlackList Selected: {}", item);
 					preferencesDialog.setBlackListName(item);

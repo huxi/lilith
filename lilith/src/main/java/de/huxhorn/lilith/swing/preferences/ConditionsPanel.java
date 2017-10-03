@@ -57,27 +57,24 @@ public class ConditionsPanel
 
 	private final Logger logger = LoggerFactory.getLogger(ConditionsPanel.class);
 
-	private PreferencesDialog preferencesDialog;
-	private ApplicationPreferences applicationPreferences;
-	private EditConditionDialog editConditionDialog;
+	private final PreferencesDialog preferencesDialog;
+	private final ApplicationPreferences applicationPreferences;
+	private final EditConditionDialog editConditionDialog;
+	private final JTable conditionTable;
+	private final ConditionTableModel conditionTableModel;
+	private final EditConditionAction editConditionAction;
+	private final RemoveConditionAction removeConditionAction;
+	private final JTextArea conditionTextArea;
+	private final MoveUpAction moveUpAction;
+	private final MoveDownAction moveDownAction;
+
 	private List<SavedCondition> conditions;
-	private JTable conditionTable;
-	private ConditionTableModel conditionTableModel;
-	private EditConditionAction editConditionAction;
-	private RemoveConditionAction removeConditionAction;
-	private JTextArea conditionTextArea;
-	private MoveUpAction moveUpAction;
-	private MoveDownAction moveDownAction;
 
 	ConditionsPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
-		createUI();
-	}
 
-	private void createUI()
-	{
 		setLayout(new BorderLayout());
 		editConditionDialog = new EditConditionDialog(preferencesDialog);
 

@@ -36,7 +36,7 @@ package de.huxhorn.lilith.logback.appender;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufEncoder;
+import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufCodec;
 
 public class ClassicMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>
@@ -52,7 +52,6 @@ public class ClassicMultiplexSocketAppender
 	public static final int UNCOMPRESSED_DEFAULT_PORT = 10001;
 
 	private boolean includeCallerData;
-	private boolean compressing;
 	private boolean usingDefaultPort;
 	private TransformingEncoder transformingEncoder;
 
@@ -97,7 +96,6 @@ public class ClassicMultiplexSocketAppender
 	 */
 	public void setCompressing(boolean compressing)
 	{
-		this.compressing = compressing;
 		if(usingDefaultPort)
 		{
 			if(compressing)
@@ -110,17 +108,7 @@ public class ClassicMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		transformingEncoder.setLilithEncoder(new LoggingEventProtobufEncoder(compressing));
-	}
-
-	public boolean isCompressing()
-	{
-		return compressing;
-	}
-
-	public boolean isIncludeCallerData()
-	{
-		return includeCallerData;
+		transformingEncoder.setLilithEncoder(new LoggingEventProtobufCodec(compressing));
 	}
 
 	public void setIncludeCallerData(boolean includeCallerData)

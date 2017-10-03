@@ -24,11 +24,10 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import javax.swing.border.AbstractBorder;
 
-
 /**
  * This is basically a mutable, simplified LineBorder-EmptyBorder combination.
  */
-public class ConditionalBorder
+public final class ConditionalBorder
 	extends AbstractBorder
 {
 	private static final long serialVersionUID = -2372658104457011019L;
@@ -177,6 +176,4 @@ public class ConditionalBorder
 	{
 		return innerThickness == 0 && thickness > 0 && borderColor != null;
 	}
-
-
 }

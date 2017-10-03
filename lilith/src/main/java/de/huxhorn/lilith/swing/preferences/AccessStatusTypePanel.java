@@ -52,24 +52,21 @@ public class AccessStatusTypePanel
 	private static final long serialVersionUID = -2356865948513043440L;
 	private final Logger logger = LoggerFactory.getLogger(AccessStatusTypePanel.class);
 
-	private PreferencesDialog preferencesDialog;
-	private ApplicationPreferences applicationPreferences;
-	private EditAccessStatusTypeDialog editDialog;
-	private JTable table;
-	private AccessStatusTypeTableModel tableModel;
-	private AccessStatusTypeColumnModel tableColumnModel;
-	private EditConditionAction editAction;
+	private final PreferencesDialog preferencesDialog;
+	private final ApplicationPreferences applicationPreferences;
+	private final EditAccessStatusTypeDialog editDialog;
+	private final JTable table;
+	private final AccessStatusTypeTableModel tableModel;
+	private final AccessStatusTypeColumnModel tableColumnModel;
+	private final EditConditionAction editAction;
+
 	private Map<HttpStatus.Type, ColorScheme> colors;
 
 	AccessStatusTypePanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
-		createUI();
-	}
 
-	private void createUI()
-	{
 		setLayout(new BorderLayout());
 		editDialog = new EditAccessStatusTypeDialog(preferencesDialog);
 

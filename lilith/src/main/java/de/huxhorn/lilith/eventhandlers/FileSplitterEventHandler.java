@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.slf4j.Logger;
@@ -41,15 +42,15 @@ public class FileSplitterEventHandler<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FileSplitterEventHandler.class);
 
-	private FileBufferFactory<T> fileBufferFactory;
-	private ConcurrentMap<SourceIdentifier, FileBuffer<EventWrapper<T>>> fileBuffers;
-	private SourceManager<T> sourceManager;
+	private final FileBufferFactory<T> fileBufferFactory;
+	private final SourceManager<T> sourceManager;
+	private final ConcurrentMap<SourceIdentifier, FileBuffer<EventWrapper<T>>> fileBuffers;
 
 	public FileSplitterEventHandler(FileBufferFactory<T> fileBufferFactory, SourceManager<T> sourceManager)
 	{
-		this.fileBufferFactory = fileBufferFactory;
+		this.fileBufferFactory = Objects.requireNonNull(fileBufferFactory, "fileBufferFactory must not be null!");
+		this.sourceManager = Objects.requireNonNull(sourceManager, "sourceManager must not be null!");
 		fileBuffers = new ConcurrentHashMap<>();
-		this.sourceManager = sourceManager;
 	}
 
 	public void handle(List<EventWrapper<T>> events)

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2014 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2014 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -266,13 +266,13 @@ public class AccessEventIOTest
 
 	public byte[] write(AccessEvent event, boolean compressing)
 	{
-		AccessEventProtobufEncoder ser = new AccessEventProtobufEncoder(compressing);
+		AccessEventProtobufCodec ser = new AccessEventProtobufCodec(compressing);
 		return ser.encode(event);
 	}
 
 	public AccessEvent read(byte[] bytes, boolean compressing)
 	{
-		AccessEventProtobufDecoder des = new AccessEventProtobufDecoder(compressing);
+		AccessEventProtobufCodec des = new AccessEventProtobufCodec(compressing);
 		return des.decode(bytes);
 	}
 }

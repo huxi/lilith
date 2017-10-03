@@ -32,10 +32,10 @@ public abstract class ViewManager<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(ViewManager.class);
 
+	private final MainFrame mainFrame;
 	private final Map<EventSource<T>, ViewContainer<T>> views;
-	private MainFrame mainFrame;
 
-	public ViewManager(MainFrame mainFrame)
+	ViewManager(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		this.views = new HashMap<>();
@@ -46,7 +46,7 @@ public abstract class ViewManager<T extends Serializable>
 		return mainFrame;
 	}
 
-	public ViewContainer<T> retrieveViewContainer(EventSource<T> eventSource)
+	ViewContainer<T> retrieveViewContainer(EventSource<T> eventSource)
 	{
 		ViewContainer<T> result;
 		synchronized (views)
@@ -62,7 +62,7 @@ public abstract class ViewManager<T extends Serializable>
 		}
 	}
 
-	public Map<EventSource<T>, ViewContainer<T>> getViews()
+	Map<EventSource<T>, ViewContainer<T>> getViews()
 	{
 		synchronized (views)
 		{
@@ -73,6 +73,7 @@ public abstract class ViewManager<T extends Serializable>
 
 	protected abstract ViewContainer<T> createViewContainer(EventSource<T> eventSource);
 
+	@SuppressWarnings("UnusedReturnValue")
 	List<ViewContainer<T>> minimizeAllViews(ViewContainer beside)
 	{
 		List<ViewContainer<T>> result = new ArrayList<>();
@@ -82,7 +83,7 @@ public abstract class ViewManager<T extends Serializable>
 			{
 				ViewContainer<T> value = entry.getValue();
 
-				if (value.resolveViewWindow() != null && value != beside)
+				if (value.resolveViewWindow() != null && value != beside) // NOPMD
 				{
 					result.add(value);
 				}
@@ -95,6 +96,7 @@ public abstract class ViewManager<T extends Serializable>
 		return result;
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	List<ViewContainer<T>> closeAllViews(ViewContainer beside)
 	{
 		List<ViewContainer<T>> result = new ArrayList<>();
@@ -107,11 +109,11 @@ public abstract class ViewManager<T extends Serializable>
 				ViewContainer<T> value = entry.getValue();
 				EventWrapperViewPanel panel = value.getDefaultView();
 
-				if (!key.isGlobal() && LoggingViewState.INACTIVE == panel.getState() && value != beside)
+				if (!key.isGlobal() && LoggingViewState.INACTIVE == panel.getState() && value != beside) // NOPMD
 				{
 					inactiveKeys.add(key);
 				}
-				if (value.resolveViewWindow() != null && value != beside)
+				if (value.resolveViewWindow() != null && value != beside) // NOPMD
 				{
 					result.add(value);
 				}
@@ -128,6 +130,7 @@ public abstract class ViewManager<T extends Serializable>
 		return result;
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	List<ViewContainer<T>> removeInactiveViews(boolean onlyClosed)
 	{
 		List<ViewContainer<T>> result = new ArrayList<>();

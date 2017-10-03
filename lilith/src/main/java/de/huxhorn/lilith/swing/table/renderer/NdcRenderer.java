@@ -30,7 +30,8 @@ import javax.swing.table.TableCellRenderer;
 public class NdcRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private static final String EMPTY_STRING = "";
+	private final LabelCellRenderer renderer;
 
 	public NdcRenderer()
 	{
@@ -53,42 +54,48 @@ public class NdcRenderer
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
 
-		Color foreground = Color.BLACK;
-		String text = "";
-		if(value instanceof EventWrapper)
-		{
-			EventWrapper wrapper = (EventWrapper) value;
-			Object eventObj = wrapper.getEvent();
-			if(eventObj instanceof LoggingEvent)
-			{
-				LoggingEvent event = (LoggingEvent) eventObj;
-				Message[] ndc = event.getNdc();
-
-				if(ndc != null)
-				{
-					int size = ndc.length;
-					if(size > 0)
-					{
-						Message message = ndc[size - 1];
-						if(message != null)
-						{
-							text = message.getMessage();
-						}
-					}
-				}
-				text = TextPreprocessor.cropLine(text);
-			}
-		}
-		renderer.setText(text);
+		renderer.setText(resolveText(value));
 
 		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value);
 		if(!colorsInitialized)
 		{
-			renderer.setForeground(foreground);
+			renderer.setForeground(Color.BLACK);
 		}
 
 		renderer.correctRowHeight(table);
 
 		return renderer;
+	}
+
+
+
+	private String resolveText(Object value)
+	{
+		if(!(value instanceof EventWrapper))
+		{
+			return EMPTY_STRING;
+		}
+		EventWrapper wrapper = (EventWrapper) value;
+		Object eventObj = wrapper.getEvent();
+		if(!(eventObj instanceof LoggingEvent))
+		{
+			return EMPTY_STRING;
+		}
+
+		LoggingEvent event = (LoggingEvent) eventObj;
+		Message[] ndc = event.getNdc();
+
+		if(ndc == null || ndc.length == 0)
+		{
+			return EMPTY_STRING;
+		}
+
+		Message message = ndc[ndc.length - 1];
+		if(message == null)
+		{
+			return EMPTY_STRING;
+		}
+
+		return TextPreprocessor.cropLine(message.getMessage());
 	}
 }

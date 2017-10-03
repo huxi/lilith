@@ -56,8 +56,8 @@ import javax.xml.stream.XMLStreamReader;
 public class LoggingEventReader
 	implements GenericStreamReader<LoggingEvent>, LoggingEventSchemaConstants
 {
-	private DateTimeFormatter dateTimeFormatter;
-	private StackTraceElementReader steReader;
+	private final DateTimeFormatter dateTimeFormatter;
+	private final StackTraceElementReader steReader;
 
 	public LoggingEventReader()
 	{
@@ -270,6 +270,7 @@ public class LoggingEventReader
 		event.setCallStack(readStackTraceNode(reader, CALLSTACK_NODE));
 	}
 
+	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	private ExtendedStackTraceElement[] readStackTraceNode(XMLStreamReader reader, String nodeName)
 		throws XMLStreamException
 	{
@@ -369,6 +370,7 @@ public class LoggingEventReader
 		return null;
 	}
 
+	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	private Message[] readNdc(XMLStreamReader reader)
 		throws XMLStreamException
 	{

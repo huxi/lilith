@@ -28,7 +28,7 @@ import java.io.ObjectInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GroovyCondition
+public final class GroovyCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = 907179107764473874L;

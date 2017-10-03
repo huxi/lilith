@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.debug;
 
 import de.huxhorn.lilith.swing.MainFrame;
@@ -48,8 +49,8 @@ public class DebugDialog
 	private static final long serialVersionUID = 2056161561781289686L;
 	private final Logger logger = LoggerFactory.getLogger(DebugDialog.class);
 
+	private final MainFrame mainFrame;
 	private LoggerEventEmitter loggerEventEmitter;
-	private MainFrame mainFrame;
 
 	public DebugDialog(Frame owner, MainFrame mainFrame)
 	{
@@ -435,21 +436,20 @@ public class DebugDialog
 			Set<InetAddress> inetAddresses = new HashSet<>();
 			try
 			{
-				Enumeration<NetworkInterface> netIfcs = NetworkInterface.getNetworkInterfaces();
+				Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
 
-				while(netIfcs.hasMoreElements())
+				while(networkInterfaces.hasMoreElements())
 				{
-					NetworkInterface ni = netIfcs.nextElement();
-					Enumeration<InetAddress> inetAddrs = ni.getInetAddresses();
-					while(inetAddrs.hasMoreElements())
+					NetworkInterface ni = networkInterfaces.nextElement();
+					Enumeration<InetAddress> interfaceInetAddresses = ni.getInetAddresses();
+					while(interfaceInetAddresses.hasMoreElements())
 					{
-						InetAddress iadd = inetAddrs.nextElement();
-						if(!iadd.isLoopbackAddress())
+						InetAddress address = interfaceInetAddresses.nextElement();
+						if(!address.isLoopbackAddress())
 						{
-							inetAddresses.add(iadd);
+							inetAddresses.add(address);
 						}
 					}
-
 				}
 			}
 			catch(SocketException ex)

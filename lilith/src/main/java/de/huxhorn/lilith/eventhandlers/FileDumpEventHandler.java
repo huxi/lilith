@@ -19,14 +19,13 @@
 package de.huxhorn.lilith.eventhandlers;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.engine.EventHandler;
-import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.sulky.buffers.Buffer;
 import de.huxhorn.sulky.buffers.FileBuffer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,13 +34,13 @@ public class FileDumpEventHandler<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FileDumpEventHandler.class);
 
-	private FileBuffer<EventWrapper<T>> fileBuffer;
+	private final FileBuffer<EventWrapper<T>> fileBuffer;
 	private boolean enabled;
 
-	public FileDumpEventHandler(SourceIdentifier sourceIdentifier, FileBufferFactory<T> fileBufferFactory)
+	public FileDumpEventHandler(FileBuffer<EventWrapper<T>> fileBuffer)
 	{
+		this.fileBuffer = Objects.requireNonNull(fileBuffer, "fileBuffer must not be null!");
 		enabled = true;
-		fileBuffer = fileBufferFactory.createActiveBuffer(sourceIdentifier);
 	}
 
 	public void handle(List<EventWrapper<T>> events)

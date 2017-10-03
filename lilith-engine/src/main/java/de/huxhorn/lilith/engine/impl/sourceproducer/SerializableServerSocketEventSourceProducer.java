@@ -34,7 +34,7 @@ public class SerializableServerSocketEventSourceProducer<T extends Serializable>
 	extends AbstractServerSocketEventSourceProducer<T>
 {
 	private final ConverterRegistry<T> converterRegistry;
-	private SourceIdentifierUpdater<T> sourceIdentifierUpdater;
+	private final SourceIdentifierUpdater<T> sourceIdentifierUpdater;
 
 	public SerializableServerSocketEventSourceProducer(int port, ConverterRegistry<T> converterRegistry, SourceIdentifierUpdater<T> sourceIdentifierUpdater)
 			throws IOException

@@ -35,7 +35,7 @@
 package de.huxhorn.lilith.logback.appender;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonCodec;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.sender.ZeroDelimitedWriteByteStrategy;
 
@@ -54,13 +54,13 @@ public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 	public static final int DEFAULT_PORT = 11010;
 
 	private boolean includeCallerData;
-	private TransformingEncoder transformingEncoder;
+	private final TransformingEncoder transformingEncoder;
 
 	public ZeroDelimitedClassicJsonMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
 		transformingEncoder =new TransformingEncoder();
-		transformingEncoder.setLilithEncoder(new LoggingJsonEncoder(false));
+		transformingEncoder.setLilithEncoder(new LoggingJsonCodec(false));
 		setEncoder(transformingEncoder);
 		includeCallerData = true;
 		setPort(DEFAULT_PORT);
@@ -76,11 +76,6 @@ public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 		transformingEncoder.setUUID(getUUID());
 	}
 
-	public boolean isIncludeCallerData()
-	{
-		return includeCallerData;
-	}
-
 	public void setIncludeCallerData(boolean includeCallerData)
 	{
 		this.includeCallerData = includeCallerData;
@@ -93,5 +88,4 @@ public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 			event.getCallerData();
 		}
 	}
-
 }

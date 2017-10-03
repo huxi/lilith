@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,16 +83,14 @@ public class LoggerContext
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		LoggerContext that = (LoggerContext) o;
 
-		if(birthTime != null ? !birthTime.equals(that.birthTime) : that.birthTime != null) return false;
-		if(name != null ? !name.equals(that.name) : that.name != null) return false;
-		if(properties != null ? !properties.equals(that.properties) : that.properties != null) return false;
-
-		return true;
+		return (birthTime != null ? birthTime.equals(that.birthTime) : that.birthTime == null)
+				&& (name != null ? name.equals(that.name) : that.name == null)
+				&& (properties != null ? properties.equals(that.properties) : that.properties == null);
 	}
 
 	@Override

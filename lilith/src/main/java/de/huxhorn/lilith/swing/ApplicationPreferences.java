@@ -46,9 +46,6 @@ import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.beans.Encoder;
-import java.beans.Expression;
-import java.beans.PersistenceDelegate;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.XMLDecoder;
@@ -90,7 +87,6 @@ import org.slf4j.LoggerFactory;
 
 public class ApplicationPreferences
 {
-
 	private static final Preferences PREFERENCES =
 		Preferences.userNodeForPackage(ApplicationPreferences.class);
 
@@ -215,6 +211,49 @@ public class ApplicationPreferences
 	private long lastClipboardFormatterCheck;
 
 	private static final LilithPreferences DEFAULT_VALUES=new LilithPreferences();
+
+	private final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
+
+	private final PropertyChangeSupport propertyChangeSupport;
+
+	private final File startupApplicationPath;
+
+	private File detailsViewRoot;
+
+	private final List<String> installedLookAndFeels;
+	private String[] conditionScriptFiles;
+	private long lastConditionsCheck;
+
+	private Map<LoggingEvent.Level, ColorScheme> levelColors;
+	private Map<HttpStatus.Type, ColorScheme> statusColors;
+
+	private URL detailsViewRootUrl;
+
+	/**
+	 * Identifier => Name
+	 */
+	private Map<String, String> sourceNames;
+	private long lastSourceNamesModified;
+
+	private long lastConditionsModified;
+
+	private Map<String, String> soundLocations;
+	private long lastSoundLocationsModified;
+
+	private Map<String, Set<String>> sourceLists;
+	private long lastSourceListsModified;
+
+	private LilithPreferences.SourceFiltering sourceFiltering;
+
+	private Set<String> blackList;
+	private Set<String> whiteList;
+	private List<SavedCondition> conditions;
+	private List<String> previousSearchStrings;
+
+	private List<String> recentFiles;
+
+	private final File groovyConditionsPath;
+	private final File groovyClipboardFormattersPath;
 
 	static
 	{
@@ -404,48 +443,6 @@ public class ApplicationPreferences
 		return itemsVector;
 	}
 
-	private final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
-
-	private PropertyChangeSupport propertyChangeSupport;
-
-	private File startupApplicationPath;
-
-	private File detailsViewRoot;
-
-	private List<String> installedLookAndFeels;
-	private String[] conditionScriptFiles;
-	private long lastConditionsCheck;
-
-	private Map<LoggingEvent.Level, ColorScheme> levelColors;
-	private Map<HttpStatus.Type, ColorScheme> statusColors;
-
-	private URL detailsViewRootUrl;
-
-	/**
-	 * Identifier => Name
-	 */
-	private Map<String, String> sourceNames;
-	private long lastSourceNamesModified;
-
-	private long lastConditionsModified;
-
-	private Map<String, String> soundLocations;
-	private long lastSoundLocationsModified;
-
-	private Map<String, Set<String>> sourceLists;
-	private long lastSourceListsModified;
-
-	private LilithPreferences.SourceFiltering sourceFiltering;
-
-	private Set<String> blackList;
-	private Set<String> whiteList;
-	private List<SavedCondition> conditions;
-	private List<String> previousSearchStrings;
-
-	private List<String> recentFiles;
-
-	private File groovyConditionsPath;
-	private File groovyClipboardFormattersPath;
 
 	public ApplicationPreferences()
 	{
@@ -904,13 +901,13 @@ public class ApplicationPreferences
 		return clipboardFormatterScriptFiles;
 	}
 
-	public void installExampleConditions()
+	public final void installExampleConditions()
 	{
 		String path = EXAMPLE_GROOVY_CONDITIONS_BASE + GROOVY_EXAMPLE_LIST;
 		installFromList(logger, path, EXAMPLE_GROOVY_CONDITIONS_BASE, groovyConditionsPath);
 	}
 
-	public void installExampleClipboardFormatters()
+	public final void installExampleClipboardFormatters()
 	{
 		String path = EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE + GROOVY_EXAMPLE_LIST;
 		installFromList(logger, path, EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE, groovyClipboardFormattersPath);
@@ -1034,8 +1031,6 @@ public class ApplicationPreferences
 		{
 			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			XMLEncoder e = new XMLEncoder(bos);
-			PersistenceDelegate delegate = new EnumPersistenceDelegate();
-			e.setPersistenceDelegate(LoggingEvent.Level.class, delegate);
 			e.writeObject(colors);
 			e.close();
 		}
@@ -1147,8 +1142,6 @@ public class ApplicationPreferences
 		{
 			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			XMLEncoder e = new XMLEncoder(bos);
-			PersistenceDelegate delegate = new EnumPersistenceDelegate();
-			e.setPersistenceDelegate(HttpStatus.Type.class, delegate);
 			e.writeObject(colors);
 			e.close();
 		}
@@ -1540,8 +1533,9 @@ public class ApplicationPreferences
 				return !isBlackListed(source);
 			case WHITELIST:
 				return isWhiteListed(source);
+			default: // NONE
+				return true;
 		}
-		return true;
 	}
 
 	private boolean isBlackListed(String source)
@@ -2205,7 +2199,7 @@ public class ApplicationPreferences
 		propertyChangeSupport.firePropertyChange(APPLICATION_PATH_PROPERTY, oldValue, newValue);
 	}
 
-	public File getApplicationPath()
+	public final File getApplicationPath()
 	{
 		String appPath = PREFERENCES.get(APPLICATION_PATH_PROPERTY, DEFAULT_APPLICATION_PATH);
 		File result = new File(appPath);
@@ -2746,6 +2740,7 @@ public class ApplicationPreferences
 	 * @param input the input
 	 * @return the checksum
 	 */
+	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public static byte[] getMD5(InputStream input)
 	{
 		if(input == null)
@@ -2819,23 +2814,5 @@ public class ApplicationPreferences
 	boolean isUsingScreenMenuBar()
 	{
 		return usingScreenMenuBar;
-	}
-
-	/**
-	 * As described in http://weblogs.java.net/blog/malenkov/archive/2006/08/how_to_encode_e.html
-	 */
-	static class EnumPersistenceDelegate
-		extends PersistenceDelegate
-	{
-		protected boolean mutatesTo(Object oldInstance, Object newInstance)
-		{
-			return oldInstance == newInstance;
-		}
-
-		protected Expression instantiate(Object oldInstance, Encoder out)
-		{
-			Enum e = (Enum) oldInstance;
-			return new Expression(e, e.getClass(), "valueOf", new Object[]{e.name()});
-		}
 	}
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.ApplicationPreferences;
@@ -28,27 +29,23 @@ public class WindowsPanel
 {
 	private static final long serialVersionUID = -2493318827216879146L;
 
-	private ApplicationPreferences applicationPreferences;
+	private final ApplicationPreferences applicationPreferences;
 
 	// Windows
-	private JCheckBox showingToolbarCheckbox;
-	private JCheckBox showingStatusBarCheckbox;
-	private JCheckBox internalFramesCheckbox;
-	private JCheckBox maximizeInternalFramesCheckbox;
-	private JCheckBox autoOpenCheckbox;
-	private JCheckBox autoFocusCheckbox;
-	private JCheckBox autoCloseCheckbox;
-	private JCheckBox showPrimaryIdentifierCheckbox;
-	private JCheckBox showSecondaryIdentifierCheckbox;
+	private final JCheckBox showingToolbarCheckbox;
+	private final JCheckBox showingStatusBarCheckbox;
+	private final JCheckBox internalFramesCheckbox;
+	private final JCheckBox maximizeInternalFramesCheckbox;
+	private final JCheckBox autoOpenCheckbox;
+	private final JCheckBox autoFocusCheckbox;
+	private final JCheckBox autoCloseCheckbox;
+	private final JCheckBox showPrimaryIdentifierCheckbox;
+	private final JCheckBox showSecondaryIdentifierCheckbox;
 
-	public WindowsPanel(PreferencesDialog preferencesDialog)
+	WindowsPanel(PreferencesDialog preferencesDialog)
 	{
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
-		createUI();
-	}
 
-	private void createUI()
-	{
 		showingToolbarCheckbox = new JCheckBox("Show toolbar.");
 		showingStatusBarCheckbox = new JCheckBox("Show status bar.");
 		internalFramesCheckbox = new JCheckBox("Use internal frames.");
@@ -107,7 +104,7 @@ public class WindowsPanel
 		showSecondaryIdentifierCheckbox.setSelected(applicationPreferences.isShowingSecondaryIdentifier());
 	}
 
-	public void saveSettings()
+	void saveSettings()
 	{
 		applicationPreferences.setShowingToolbar(showingToolbarCheckbox.isSelected());
 		applicationPreferences.setShowingStatusBar(showingStatusBarCheckbox.isSelected());

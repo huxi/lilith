@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,7 @@
  * limitations under the License.
  */
 
-
 package de.huxhorn.lilith.logback.appender;
-
 
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import de.huxhorn.lilith.sender.HeartbeatRunnable;
@@ -66,26 +64,21 @@ public abstract class MultiplexSocketAppenderBase<E>
 	private boolean creatingUUID=true;
 	private String uuid;
 
-	public MultiplexSocketAppenderBase()
+	MultiplexSocketAppenderBase()
 	{
 		this(new MessageWriteByteStrategy());
 	}
 
-	public MultiplexSocketAppenderBase(WriteByteStrategy writeByteStrategy)
+	MultiplexSocketAppenderBase(WriteByteStrategy writeByteStrategy)
 	{
 		this(writeByteStrategy, DEFAULT_QUEUE_SIZE);
 	}
 
-	public MultiplexSocketAppenderBase(WriteByteStrategy writeByteStrategy, int queueSize)
+	private MultiplexSocketAppenderBase(WriteByteStrategy writeByteStrategy, int queueSize)
 	{
 		this.writeByteStrategy = writeByteStrategy;
-		setQueueSize(queueSize);
+		this.queueSize = queueSize;
 		remoteHostsList=new ArrayList<>();
-	}
-
-	public boolean isCreatingUUID()
-	{
-		return creatingUUID;
 	}
 
 	public void setCreatingUUID(boolean creatingUUID)
@@ -93,7 +86,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 		this.creatingUUID = creatingUUID;
 	}
 
-	public String getUUID()
+	String getUUID()
 	{
 		return uuid;
 	}
@@ -116,17 +109,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 		this.debug = debug;
 	}
 
-	public int getQueueSize()
-	{
-		return queueSize;
-	}
-
-	public void setQueueSize(int queueSize)
-	{
-		this.queueSize = queueSize;
-	}
-
-	public String getApplicationIdentifier()
+	String getApplicationIdentifier()
 	{
 		return applicationIdentifier;
 	}
@@ -138,11 +121,6 @@ public abstract class MultiplexSocketAppenderBase<E>
 	}
 
 	protected abstract void applicationIdentifierChanged();
-
-	public long getReconnectionDelay()
-	{
-		return reconnectionDelay;
-	}
 
 	public void setReconnectionDelay(long reconnectionDelay)
 	{
@@ -159,16 +137,12 @@ public abstract class MultiplexSocketAppenderBase<E>
 		this.port = port;
 	}
 
-	public List<String> getRemoteHostsList()
-	{
-		return new ArrayList<>(remoteHostsList);
-	}
-
 	/**
 	 * Sets the remote host list by splitting the string remoteHosts. It is expected to be comma-separated.
 	 *
-	 * @param remoteHosts comma-seperated list of hosts.
+	 * @param remoteHosts comma-separated list of hosts.
 	 */
+	@SuppressWarnings("unused")
 	public void setRemoteHosts(String remoteHosts)
 	{
 		StringTokenizer tok = new StringTokenizer(remoteHosts, ",", false);
@@ -192,6 +166,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 	 *
 	 * @param remoteHostsList the list of remote hosts.
 	 */
+	@SuppressWarnings("WeakerAccess")
 	public void setRemoteHostsList(List<String> remoteHostsList)
 	{
 		if(debug)
@@ -202,6 +177,8 @@ public abstract class MultiplexSocketAppenderBase<E>
 		this.remoteHostsList.addAll(remoteHostsList);
 	}
 
+
+	@SuppressWarnings("unused")
 	public void addRemoteHost(String remoteHost)
 	{
 		remoteHost=remoteHost.trim();
@@ -225,7 +202,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 				addError("No port was configured for appender" + name + ".");
 			}
 
-			if(remoteHostsList == null || remoteHostsList.size() == 0)
+			if(remoteHostsList == null || remoteHostsList.isEmpty())
 			{
 				errorCount++;
 				addError("No remote addresses were configured for appender" + name + ".");
@@ -329,7 +306,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 		multiplexSendBytes = null;
 	}
 
-	protected void sendBytes(byte[] bytes)
+	private void sendBytes(byte[] bytes)
 	{
 		if(multiplexSendBytes != null)
 		{
@@ -351,11 +328,6 @@ public abstract class MultiplexSocketAppenderBase<E>
 	}
 
 	protected abstract void preProcess(E e);
-
-	protected Encoder<E> getEncoder()
-	{
-		return encoder;
-	}
 
 	protected void setEncoder(Encoder<E> encoder)
 	{

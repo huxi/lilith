@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,10 +77,6 @@ public class LoggingEvent
 	private LoggerContext loggerContext;
 	private Long sequenceNumber;
 	private Long timeStamp;
-
-	public LoggingEvent()
-	{
-	}
 
 	public String getLogger()
 	{
@@ -204,32 +200,23 @@ public class LoggingEvent
 
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		LoggingEvent event = (LoggingEvent) o;
 
-		if(level != event.level) return false;
-		if(sequenceNumber != null ? !sequenceNumber.equals(event.sequenceNumber) : event.sequenceNumber != null)
-		{
-			return false;
-		}
-		if(timeStamp != null ? !timeStamp.equals(event.timeStamp) : event.timeStamp != null) return false;
-		if(logger != null ? !logger.equals(event.logger) : event.logger != null) return false;
-		if(loggerContext != null ? !loggerContext
-			.equals(event.loggerContext) : event.loggerContext != null)
-		{
-			return false;
-		}
-		if(message != null ? !message.equals(event.message) : event.message != null) return false;
-		if(threadInfo != null ? !threadInfo.equals(event.threadInfo) : event.threadInfo != null) return false;
-		if(!Arrays.equals(callStack, event.callStack)) return false;
-		if(marker != null ? !marker.equals(event.marker) : event.marker != null) return false;
-		if(mdc != null ? !mdc.equals(event.mdc) : event.mdc != null) return false;
-		if(!Arrays.equals(ndc, event.ndc)) return false;
-		if(throwable != null ? !throwable.equals(event.throwable) : event.throwable != null) return false;
-
-		return true;
+		return level == event.level
+				&& (sequenceNumber != null ? sequenceNumber.equals(event.sequenceNumber) : event.sequenceNumber == null)
+				&& (timeStamp != null ? timeStamp.equals(event.timeStamp) : event.timeStamp == null)
+				&& (logger != null ? logger.equals(event.logger) : event.logger == null)
+				&& (loggerContext != null ? loggerContext.equals(event.loggerContext) : event.loggerContext == null)
+				&& (message != null ? message.equals(event.message) : event.message == null)
+				&& (threadInfo != null ? threadInfo.equals(event.threadInfo) : event.threadInfo == null)
+				&& Arrays.equals(callStack, event.callStack)
+				&& (marker != null ? marker.equals(event.marker) : event.marker == null)
+				&& (mdc != null ? mdc.equals(event.mdc) : event.mdc == null)
+				&& Arrays.equals(ndc, event.ndc)
+				&& (throwable != null ? throwable.equals(event.throwable) : event.throwable == null);
 	}
 
 	public int hashCode()

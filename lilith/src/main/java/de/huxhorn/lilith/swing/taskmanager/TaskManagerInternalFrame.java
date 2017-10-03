@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.taskmanager;
 
 import de.huxhorn.lilith.swing.MainFrame;
@@ -28,9 +29,11 @@ import org.slf4j.LoggerFactory;
 public class TaskManagerInternalFrame
 	extends JInternalFrame
 {
+	private static final long serialVersionUID = 7919725126794950187L;
+
 	private final Logger logger = LoggerFactory.getLogger(TaskManagerInternalFrame.class);
 
-	private MainFrame mainFrame;
+	private final MainFrame mainFrame;
 
 	public TaskManagerInternalFrame(MainFrame mainFrame)
 	{

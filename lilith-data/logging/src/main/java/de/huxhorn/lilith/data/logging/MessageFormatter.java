@@ -54,11 +54,18 @@ import java.util.Arrays;
  * actual construction of the message, is only done on demand.
  * </p>
  */
-public class MessageFormatter
+public final class MessageFormatter
 {
 	private static final char DELIMITER_START = '{';
 	private static final char DELIMITER_STOP = '}';
 	private static final char ESCAPE_CHAR = '\\';
+
+	static
+	{
+		new MessageFormatter(); // stfu
+	}
+
+	private MessageFormatter() {}
 
 	/**
 	 * Replace placeholders in the given messagePattern with arguments.

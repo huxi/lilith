@@ -32,44 +32,16 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.json;
+package de.huxhorn.lilith.data.access.protobuf;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.sulky.codec.Decoder;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.zip.GZIPInputStream;
+import de.huxhorn.lilith.data.access.AccessEvent;
+import de.huxhorn.sulky.codec.DelegatingCodecBase;
 
-public class LoggingJsonDecoder
-	implements Decoder<LoggingEvent>
+public class AccessEventProtobufCodec
+	extends DelegatingCodecBase<AccessEvent>
 {
-	private final boolean compressing;
-	private final ObjectMapper mapper;
-
-	public LoggingJsonDecoder(boolean compressing)
+	public AccessEventProtobufCodec(boolean compressing)
 	{
-		this.compressing = compressing;
-		mapper = new ObjectMapper();
-		mapper.registerModule(new LoggingModule());
-		mapper.registerModule(new AfterburnerModule());
-	}
-
-	public LoggingEvent decode(byte[] bytes)
-	{
-		try
-		{
-			if(compressing)
-			{
-				return mapper.readValue(new GZIPInputStream(new ByteArrayInputStream(bytes)), LoggingEvent.class);
-			}
-			return mapper.readValue(new ByteArrayInputStream(bytes), LoggingEvent.class);
-		}
-		catch(IOException ex)
-		{
-			ex.printStackTrace();
-		}
-		return null;
+		super(new AccessEventProtobufEncoder(compressing), new AccessEventProtobufDecoder(compressing));
 	}
 }

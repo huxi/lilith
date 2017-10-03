@@ -28,7 +28,7 @@ import javax.swing.table.TableCellRenderer;
 public class ConditionActiveRenderer
 	implements TableCellRenderer
 {
-	private JCheckBox renderer;
+	private final JCheckBox renderer;
 
 	ConditionActiveRenderer()
 	{

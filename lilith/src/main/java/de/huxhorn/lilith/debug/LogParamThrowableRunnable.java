@@ -26,9 +26,10 @@ public class LogParamThrowableRunnable
 	extends AbstractDebugRunnable
 {
 	private final Logger logger = LoggerFactory.getLogger(LogParamThrowableRunnable.class);
-	private Throwable throwable;
 
-	public LogParamThrowableRunnable(int delay, Throwable throwable)
+	private final Throwable throwable;
+
+	LogParamThrowableRunnable(int delay, Throwable throwable)
 	{
 		super(delay);
 		this.throwable = throwable;

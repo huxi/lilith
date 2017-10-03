@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.debug;
 
 import de.huxhorn.lilith.debug.exceptions.CauseCauseCauseException;
@@ -27,16 +28,15 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-
 public class LoggerEventEmitter
 {
 	private static final int DEFAULT_DELAY = 50;
 	private int delay = DEFAULT_DELAY;
-	private Marker marker;
-	private Marker fnordMarker;
-	private ExecutorService executor;
+	private final Marker marker;
+	private final Marker fnordMarker;
+	private final ExecutorService executor;
 
-	public LoggerEventEmitter()
+	LoggerEventEmitter()
 	{
 		marker = createMarker();
 		fnordMarker = createFnordMarker();
@@ -53,12 +53,12 @@ public class LoggerEventEmitter
 		this.delay = delay;
 	}
 
-	public void logStuff()
+	void logStuff()
 	{
 		execute(new LogStuffRunnable(delay, null));
 	}
 
-	public void logNDC()
+	void logNDC()
 	{
 		execute(new LogNdcRunnable(delay));
 	}
@@ -68,7 +68,7 @@ public class LoggerEventEmitter
 		executor.execute(runnable);
 	}
 
-	public void logStuffWithMdc()
+	void logStuffWithMdc()
 	{
 		execute(new LogStuffWithMdcRunnable(delay, null));
 	}
@@ -98,25 +98,25 @@ public class LoggerEventEmitter
 		return eris;
 	}
 
-	public void logStuffWithMdcAndMarker()
+	void logStuffWithMdcAndMarker()
 	{
 		execute(new LogStuffWithMdcRunnable(delay, marker));
 	}
 
-	public void logStuffWithMarker()
+	void logStuffWithMarker()
 	{
 		execute(new LogStuffRunnable(delay, marker));
 	}
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
-	public void logException()
+	void logException()
 	{
 		Throwable ex = new RuntimeException("Test-Exception");
 		execute(new LogThrowableRunnable(delay, ex));
 	}
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
-	public void logException2()
+	void logException2()
 	{
 		Exception causeCause = new CauseCauseException("CauseCause-Exception", new CauseCauseCauseException("Inline CauseCauseCause-Exception"));
 		Exception cause = new CauseException("Cause-Exception", causeCause);
@@ -125,7 +125,7 @@ public class LoggerEventEmitter
 	}
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
-	public void logExceptionSuppressed()
+	void logExceptionSuppressed()
 	{
 		Exception causeCause = new CauseCauseException("Suppressed - CauseCause-Exception", new CauseCauseCauseException("Inline CauseCauseCause-Exception"));
 		Exception cause = new CauseException("Suppressed - Cause-Exception", causeCause);
@@ -141,14 +141,14 @@ public class LoggerEventEmitter
 	}
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
-	public void logParamException()
+	void logParamException()
 	{
 		Throwable ex = new RuntimeException("Test-Exception");
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
 
 	@SuppressWarnings({"ThrowableInstanceNeverThrown"})
-	public void logParamException2()
+	void logParamException2()
 	{
 		Exception causeCause = new CauseCauseException("CauseCause-Exception", new CauseCauseCauseException("Inline CauseCauseCause-Exception"));
 		Exception cause = new CauseException("Cause-Exception", causeCause);
@@ -156,7 +156,7 @@ public class LoggerEventEmitter
 		execute(new LogParamThrowableRunnable(delay, ex));
 	}
 
-	public void logAnonymous()
+	void logAnonymous()
 	{
 		execute(new LogAnonymousRunnable(delay));
 		logLambda();
@@ -167,29 +167,29 @@ public class LoggerEventEmitter
 		execute(() -> LoggerFactory.getLogger(this.getClass()).info("Info from Lambda"));
 	}
 
-	public void logASCII()
+	void logASCII()
 	{
 		execute(new LogASCIIRunnable(delay));
 	}
 
 
-	public void logTruth()
+	void logTruth()
 	{
 		execute(new LogTruthRunnable(delay, fnordMarker, true));
 		execute(new LogTruthRunnable(delay, fnordMarker, false));
 	}
 
-	public void logDate()
+	void logDate()
 	{
 		execute(new LogDateRunnable(delay));
 	}
 
-	public void logContainers()
+	void logContainers()
 	{
 		execute(new LogContainerRunnable(delay));
 	}
 
-	public void logJul()
+	void logJul()
 	{
 		execute(new LogJulRunnable(delay));
 	}

@@ -31,7 +31,7 @@ import javax.swing.table.TableCellRenderer;
 public class LevelRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public LevelRenderer()
 	{
@@ -56,7 +56,6 @@ public class LevelRenderer
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
 		String text = "";
-		LoggingEvent.Level level = null;
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;
@@ -64,23 +63,54 @@ public class LevelRenderer
 			if(eventObj instanceof LoggingEvent)
 			{
 				LoggingEvent event = (LoggingEvent) eventObj;
-				level = event.getLevel();
-				text = "" + level;
+				LoggingEvent.Level level = event.getLevel();
+				if(level != null)
+				{
+					text = "" + level;
+				}
 			}
 		}
 		renderer.setText(text);
-		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value, true);
-		if(!colorsInitialized && level != null && table instanceof ColorsProvider)
-		{
-			ColorsProvider cp = (ColorsProvider) table;
-			Colors colors = cp.resolveColors(level, rowIndex, vColIndex);
 
-			renderer.setForeground(Color.BLACK);
-			renderer.updateColorsFromScheme(colors.getColorScheme());
+		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value, true);
+		if(!colorsInitialized)
+		{
+			initializeColors(table, value, rowIndex, vColIndex);
 		}
 
 		renderer.correctRowHeight(table);
 
 		return renderer;
+	}
+
+	private void initializeColors(JTable table, Object value, int rowIndex, int vColIndex)
+	{
+		renderer.setForeground(Color.BLACK);
+		if(!(value instanceof EventWrapper))
+		{
+			return;
+		}
+		EventWrapper wrapper = (EventWrapper) value;
+		Object eventObj = wrapper.getEvent();
+		if(!(eventObj instanceof LoggingEvent))
+		{
+			return;
+		}
+
+		LoggingEvent event = (LoggingEvent) eventObj;
+		LoggingEvent.Level level = event.getLevel();
+		if(level == null)
+		{
+			return;
+		}
+		if(!(table instanceof ColorsProvider))
+		{
+			return;
+		}
+
+		ColorsProvider cp = (ColorsProvider) table;
+		Colors colors = cp.resolveColors(level, rowIndex, vColIndex);
+
+		renderer.updateColorsFromScheme(colors.getColorScheme());
 	}
 }

@@ -43,6 +43,8 @@ public class ExcludeMenu
 {
 	private static final long serialVersionUID = 7891868504135342449L;
 
+	private static final Action ACTION_INSTANCE = new MenuAction();
+
 	public ExcludeMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super(ACTION_INSTANCE, applicationPreferences, htmlTooltip);
@@ -168,8 +170,6 @@ public class ExcludeMenu
 		registerAccessComponent(remoteUserItem);
 	}
 
-	private static final Action ACTION_INSTANCE=new MenuAction();
-
 	private static class MenuAction
 			extends AbstractLilithAction
 	{
@@ -182,6 +182,7 @@ public class ExcludeMenu
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// no-op
 		}
 	}
 }

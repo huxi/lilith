@@ -62,5 +62,6 @@ public class AccessLilithEncoder
 	@Override
 	protected void preProcess(AccessEvent event)
 	{
+		// nothing
 	}
 }

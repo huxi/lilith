@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Marker
+public final class Marker
 	implements Serializable
 {
 	private static final long serialVersionUID = -4828769420328139691L;
@@ -62,7 +62,7 @@ public class Marker
 	{
 		if(name == null)
 		{
-			throw new IllegalArgumentException("Markername must not be null!");
+			throw new IllegalArgumentException("Marker name must not be null!");
 		}
 		this.name = name;
 	}
@@ -108,7 +108,7 @@ public class Marker
 
 	public boolean hasReferences()
 	{
-		return references != null && references.size() != 0;
+		return references != null && !references.isEmpty();
 	}
 
 	public boolean contains(Marker other)

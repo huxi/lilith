@@ -53,6 +53,7 @@ public final class Message
 
 	public Message()
 	{
+		// for XML serialization
 	}
 
 	public Message(String messagePattern)
@@ -142,9 +143,7 @@ public final class Message
 		}
 		else
 		{
-			sb.append('"')
-					.append(messagePattern)
-					.append('"');
+			sb.append('"').append(messagePattern).append('"');
 		}
 
 		sb.append(", arguments=");
@@ -172,9 +171,7 @@ public final class Message
 				}
 				else
 				{
-					sb.append('"')
-							.append(current)
-							.append('"');
+					sb.append('"').append(current).append('"');
 				}
 			}
 			sb.append(']');

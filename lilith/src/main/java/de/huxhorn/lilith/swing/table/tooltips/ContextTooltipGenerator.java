@@ -62,7 +62,7 @@ public class ContextTooltipGenerator
 					msg.append(DateTimeFormatters.DATETIME_IN_SYSTEM_ZONE_SPACE.format(Instant.ofEpochMilli(timestamp)));
 				}
 				Map<String, String> props = context.getProperties();
-				if(props != null && props.size() > 0)
+				if(props != null && !props.isEmpty())
 				{
 					msg.append("<h4>Properties</h4><table><tr><th>Key</th><th>Value</th></tr>");
 					SortedMap<String, String> sortedProps = new TreeMap<>(props);

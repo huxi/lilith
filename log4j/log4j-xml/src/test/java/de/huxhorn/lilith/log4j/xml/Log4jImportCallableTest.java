@@ -124,9 +124,9 @@ public class Log4jImportCallableTest
 	private static class AppendOpStub
 		implements AppendOperation<EventWrapper<LoggingEvent>>
 	{
-		private List<EventWrapper<LoggingEvent>> list;
+		private final List<EventWrapper<LoggingEvent>> list;
 
-		private AppendOpStub()
+		AppendOpStub()
 		{
 			list = new ArrayList<>();
 		}

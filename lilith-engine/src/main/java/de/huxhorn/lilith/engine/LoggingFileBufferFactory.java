@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.api.FileConstants;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.protobuf.CompressingLoggingEventWrapperProtobufCodec;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventWrapperProtobufCodec;
 import de.huxhorn.sulky.codec.Codec;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
@@ -51,23 +51,11 @@ public class LoggingFileBufferFactory
 			format = data.get(FileConstants.CONTENT_FORMAT_KEY);
 		}
 
-		Codec<EventWrapper<LoggingEvent>> codec;
-
 		if(FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF.equals(format))
 		{
-			if(compressed)
-			{
-				codec = new CompressingLoggingEventWrapperProtobufCodec();
-			}
-			else
-			{
-				codec = new LoggingEventWrapperProtobufCodec();
-			}
+			return new LoggingEventWrapperProtobufCodec(compressed);
 		}
-		else
-		{
-			throw new IllegalArgumentException("Unknown content format " + format + "!");
-		}
-		return codec;
+
+		throw new IllegalArgumentException("Unknown content format " + format + "!");
 	}
 }

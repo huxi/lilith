@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,6 +123,12 @@ public enum HttpStatus
 	NETWORK_CONNECT_TIMEOUT_ERROR(599, Type.SERVER_ERROR, "Network connect timeout error", Specification.MICROSOFT);
 
 
+	private int code;
+	private Type type;
+	private Specification specification;
+	private String description;
+	private boolean deprecated;
+
 	private static final Map<Integer, HttpStatus> CODE_MAP = new HashMap<>();
 
 	static
@@ -166,12 +172,6 @@ public enum HttpStatus
 		}
 		return null;
 	}
-
-	private int code;
-	private Type type;
-	private Specification specification;
-	private String description;
-	private boolean deprecated;
 
 	HttpStatus(int code, Type type, String description, Specification specification)
 	{

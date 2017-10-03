@@ -34,11 +34,13 @@ public class LabelCellRenderer
 	extends JLabel
 {
 	private static final long serialVersionUID = 3593164189779196002L;
-	private ConditionalBorder border;
-	private boolean selected;
-	private boolean focused;
+
 	private static final Color FOCUSED_SELECTED_BACKGROUND = new Color(255, 255, 0);
 	private static final Color FOCUSED_UNSELECTED_BACKGROUND = new Color(255, 255, 180);
+
+	private final ConditionalBorder border;
+	private boolean selected;
+	private boolean focused;
 
 	public LabelCellRenderer()
 	{
@@ -70,34 +72,6 @@ public class LabelCellRenderer
 
 	private void initCellProperties()
 	{
-		/*
-		if(!focused)
-		{
-			if (selected)
-			{
-				setBackground(UIManager.getColor("Table.selectionBackground"));
-				setForeground(UIManager.getColor("Table.selectionForeground"));
-			}
-			else
-			{
-				setBackground(UIManager.getColor("Table.background"));
-				setForeground(UIManager.getColor("Table.foreground"));
-			}
-		}
-		else
-		{
-			if (selected)
-			{
-				setBackground(FOCUSED_SELECTED_BACKGROUND);
-				setForeground(UIManager.getColor("Table.selectionForeground"));
-			}
-			else
-			{
-				setBackground(FOCUSED_UNSELECTED_BACKGROUND);
-				setForeground(UIManager.getColor("Table.foreground"));
-			}
-		}
-		*/
 		if(selected)
 		{
 			if(focused)
@@ -126,18 +100,22 @@ public class LabelCellRenderer
 	// The following methods override the defaults for performance reasons
 	public void validate()
 	{
+		// performance
 	}
 
 	public void revalidate()
 	{
+		// performance
 	}
 
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue)
 	{
+		// performance
 	}
 
 	public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue)
 	{
+		// performance
 	}
 
 	public boolean updateColors(Colors colors)

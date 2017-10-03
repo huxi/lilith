@@ -29,7 +29,7 @@ import javax.swing.GrayFilter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class Icons
+public final class Icons
 {
 	public static final ImageIcon ADD_16_ICON = resolveImageIcon("/tango/16x16/actions/list-add.png");
 	public static final ImageIcon ATTACH_MENU_ICON = resolveImageIcon("/tango/16x16/actions/edit-undo.png");
@@ -140,7 +140,12 @@ public class Icons
 
 		createFrameIconImages();
 		// add additional frame icon images manually if necessary
+
+		new Icons(); // stfu
 	}
+
+
+	private Icons() {}
 
 	private static void createFrameIconImages()
 	{
@@ -273,9 +278,5 @@ public class Icons
 	private static ImageIcon createDisabledImageIcon(ImageIcon icon)
 	{
 		return new ImageIcon(GrayFilter.createDisabledImage(icon.getImage()));
-	}
-
-	private Icons()
-	{
 	}
 }

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.taskmanager;
 
 import de.huxhorn.lilith.swing.Icons;
@@ -48,10 +49,10 @@ public class TaskManagerPanel<T>
 
 	private final Logger logger = LoggerFactory.getLogger(TaskManagerPanel.class);
 
-	private CancelTaskAction cancelAction;
-	private TaskTable<T> table;
-	private JPopupMenu popup;
-	private JTextArea details;
+	private final CancelTaskAction cancelAction;
+	private final TaskTable<T> table;
+	private final JPopupMenu popup;
+	private final JTextArea details;
 
 	public TaskManagerPanel(TaskManager<T> taskManager)
 	{

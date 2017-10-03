@@ -126,26 +126,26 @@ public class PreferencesDialog
 
 	private final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
 
-	private ApplicationPreferences applicationPreferences;
-	private MainFrame mainFrame;
+	private final ApplicationPreferences applicationPreferences;
+	private final MainFrame mainFrame;
 
-	private JList<Panes> paneSelectionList;
-	private CardLayout cardLayout;
-	private JPanel content;
+	private final JList<Panes> paneSelectionList;
+	private final CardLayout cardLayout;
+	private final JPanel content;
 
-	private GeneralPanel generalPanel;
-	private StartupShutdownPanel startupShutdownPanel;
-	private WindowsPanel windowsPanel;
-	private SoundsPanel soundsPanel;
-	private SourcesPanel sourcesPanel;
-	private SourceListsPanel sourceListsPanel;
-	private ConditionsPanel conditionsPanel;
-	private LoggingLevelPanel loggingLevelPanel;
-	private AccessStatusTypePanel accessStatusTypePanel;
+	private final GeneralPanel generalPanel;
+	private final StartupShutdownPanel startupShutdownPanel;
+	private final WindowsPanel windowsPanel;
+	private final SoundsPanel soundsPanel;
+	private final SourcesPanel sourcesPanel;
+	private final SourceListsPanel sourceListsPanel;
+	private final ConditionsPanel conditionsPanel;
+	private final LoggingLevelPanel loggingLevelPanel;
+	private final AccessStatusTypePanel accessStatusTypePanel;
+	private final SourceFilteringPanel sourceFilteringPanel;
 
 	private Map<String, String> sourceNames;
 	private Map<String, Set<String>> sourceLists;
-	private SourceFilteringPanel sourceFilteringPanel;
 	private String blackListName;
 	private String whiteListName;
 	private LilithPreferences.SourceFiltering sourceFiltering;
@@ -155,21 +155,7 @@ public class PreferencesDialog
 		super(mainFrame, "Preferences");
 		this.mainFrame = mainFrame;
 		this.applicationPreferences = mainFrame.getApplicationPreferences();
-		createUI();
-	}
 
-	public ApplicationPreferences getApplicationPreferences()
-	{
-		return applicationPreferences;
-	}
-
-	public MainFrame getMainFrame()
-	{
-		return mainFrame;
-	}
-
-	private void createUI()
-	{
 		generalPanel = new GeneralPanel(this);
 		startupShutdownPanel = new StartupShutdownPanel(this);
 		windowsPanel = new WindowsPanel(this);
@@ -256,12 +242,22 @@ public class PreferencesDialog
 		accessStatusTypePanel.initUI();
 	}
 
-	public Map<String, String> getSourceNames()
+	public ApplicationPreferences getApplicationPreferences()
+	{
+		return applicationPreferences;
+	}
+
+	public MainFrame getMainFrame()
+	{
+		return mainFrame;
+	}
+
+	Map<String, String> getSourceNames()
 	{
 		return sourceNames;
 	}
 
-	public void setSourceName(String oldIdentifier, String newIdentifier, String sourceName)
+	void setSourceName(String oldIdentifier, String newIdentifier, String sourceName)
 	{
 		if(sourceNames.containsKey(oldIdentifier))
 		{
@@ -272,7 +268,7 @@ public class PreferencesDialog
 		sourceListsPanel.initUI();
 	}
 
-	public void setSourceList(String oldName, String newName, List<Source> sourceList)
+	void setSourceList(String oldName, String newName, List<Source> sourceList)
 	{
 		if(sourceLists.containsKey(oldName))
 		{
@@ -293,7 +289,7 @@ public class PreferencesDialog
 	 * @param name the name of the source list
 	 * @return the source list of the given name or an empty List
 	 */
-	public List<Source> getSourceList(String name)
+	List<Source> getSourceList(String name)
 	{
 		Set<String> srcList = sourceLists.get(name);
 		if(srcList != null)
@@ -341,7 +337,7 @@ public class PreferencesDialog
 
 	private void resetSettings()
 	{
-		// just reinit from preferences, nobody would expect anything else...
+		// just re-init from preferences, nobody would expect anything else...
 		initUI();
 	}
 
@@ -357,12 +353,12 @@ public class PreferencesDialog
 		}
 	}
 
-	public List<String> getSourceListNames()
+	List<String> getSourceListNames()
 	{
 		return new ArrayList<>(sourceLists.keySet());
 	}
 
-	public void removeSourceList(String sourceListName)
+	void removeSourceList(String sourceListName)
 	{
 		if(sourceLists.containsKey(sourceListName))
 		{
@@ -372,7 +368,7 @@ public class PreferencesDialog
 		}
 	}
 
-	public String getBlackListName()
+	String getBlackListName()
 	{
 		if(blackListName == null)
 		{
@@ -381,7 +377,7 @@ public class PreferencesDialog
 		return blackListName;
 	}
 
-	public String getWhiteListName()
+	String getWhiteListName()
 	{
 		if(whiteListName == null)
 		{
@@ -390,7 +386,7 @@ public class PreferencesDialog
 		return whiteListName;
 	}
 
-	public LilithPreferences.SourceFiltering getSourceFiltering()
+	LilithPreferences.SourceFiltering getSourceFiltering()
 	{
 		if(sourceFiltering == null)
 		{
@@ -399,17 +395,17 @@ public class PreferencesDialog
 		return sourceFiltering;
 	}
 
-	public void setSourceFiltering(LilithPreferences.SourceFiltering sourceFiltering)
+	void setSourceFiltering(LilithPreferences.SourceFiltering sourceFiltering)
 	{
 		this.sourceFiltering = sourceFiltering;
 	}
 
-	public void setBlackListName(String blackListName)
+	void setBlackListName(String blackListName)
 	{
 		this.blackListName = blackListName;
 	}
 
-	public void setWhiteListName(String whiteListName)
+	void setWhiteListName(String whiteListName)
 	{
 		this.whiteListName = whiteListName;
 	}
@@ -515,11 +511,9 @@ public class PreferencesDialog
 		{
 			return;
 		}
-		switch(action)
+		if(action == Actions.reinitializeDetailsViewFiles)
 		{
-			case reinitializeDetailsViewFiles:
-				reinitializeDetailsViewFiles();
-			break;
+			reinitializeDetailsViewFiles();
 		}
 	}
 
@@ -540,7 +534,7 @@ public class PreferencesDialog
 		}
 	}
 
-	public void reinitializeDetailsViewFiles()
+	void reinitializeDetailsViewFiles()
 	{
 		String dialogTitle = "Reinitialize details view files?";
 		String message = "This resets all details view related files, all manual changes will be lost!\nReinitialize details view right now?";
@@ -555,7 +549,7 @@ public class PreferencesDialog
 		applicationPreferences.initDetailsViewRoot(true);
 	}
 
-	public void reinitializeGroovyConditions()
+	void reinitializeGroovyConditions()
 	{
 		String dialogTitle = "Reinitialize example groovy conditions?";
 		String message = "This overwrites all example groovy conditions. Other conditions are not changed!\nReinitialize example groovy conditions right now?";
@@ -570,7 +564,7 @@ public class PreferencesDialog
 		applicationPreferences.installExampleConditions();
 	}
 
-	public void reinitializeGroovyClipboardFormatters()
+	void reinitializeGroovyClipboardFormatters()
 	{
 		String dialogTitle = "Reinitialize example groovy clipboard formatters?";
 		String message = "This overwrites all example groovy clipboard formatters. Other clipboard formatters are not changed!\nReinitialize example groovy clipboard formatters right now?";
@@ -585,7 +579,7 @@ public class PreferencesDialog
 		applicationPreferences.installExampleClipboardFormatters();
 	}
 
-	public void deleteAllLogs()
+	void deleteAllLogs()
 	{
 		String dialogTitle = "Delete all log files?";
 		String message = "This deletes *all* log files, even the Lilith logs and the global logs!\nDelete all log files right now?";
@@ -674,7 +668,7 @@ public class PreferencesDialog
 	private static class PaneSelectionListCellRenderer
 		implements ListCellRenderer<Panes>
 	{
-		private JLabel label;
+		private final JLabel label;
 
 		PaneSelectionListCellRenderer()
 		{

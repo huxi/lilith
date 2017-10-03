@@ -23,7 +23,7 @@ import de.huxhorn.lilith.data.logging.LoggingEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class LoggerStartsWithCondition
+public final class LoggerStartsWithCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -9144937393832722541L;

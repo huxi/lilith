@@ -56,10 +56,6 @@ public class LoggingEventReader
 {
 	private static final String NEWLINE = "\n";
 
-	public LoggingEventReader()
-	{
-	}
-
 	public LoggingEvent read(XMLStreamReader reader)
 		throws XMLStreamException
 	{
@@ -194,6 +190,7 @@ public class LoggingEventReader
 		return null;
 	}
 
+	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	private ExtendedStackTraceElement[] readLocationInfo(XMLStreamReader reader)
 		throws XMLStreamException
 	{

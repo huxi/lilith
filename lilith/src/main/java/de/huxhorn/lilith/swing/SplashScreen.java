@@ -39,18 +39,13 @@ public class SplashScreen
 {
 	private static final long serialVersionUID = 668541832046187990L;
 
-	private JLabel statusLabel;
-	private JPanel contentPane;
+	private final JPanel contentPane;
+	private final JLabel statusLabel;
 
 	public SplashScreen(String applicationTitle)
 	{
 		super();
-		initUI(applicationTitle);
-	}
 
-
-	private void initUI(String applicationTitle)
-	{
 		contentPane = new JPanel(true);
 		contentPane.setLayout(new BorderLayout());
 		URL url = SplashScreen.class.getResource("/splash/splash.jpg");
@@ -105,7 +100,7 @@ public class SplashScreen
 		extends JComponent
 	{
 		private static final long serialVersionUID = 1400735425931232883L;
-		private BufferedImage image;
+		private final BufferedImage image;
 
 		ImagePanel(BufferedImage image)
 		{
@@ -128,10 +123,10 @@ public class SplashScreen
 			paint(g);
 		}
 
-		public boolean imageUpdate(Image img, int infoflags, int x, int y, int w, int h)
+		public boolean imageUpdate(Image img, int infoFlags, int x, int y, int w, int h)
 		{
 			repaint();
-			return (infoflags & (ALLBITS | ABORT)) == 0;
+			return (infoFlags & (ALLBITS | ABORT)) == 0;
 		}
 	}
 }

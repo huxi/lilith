@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.swing.Icons;
@@ -60,27 +61,24 @@ public class EditSourceListDialog
 
 	private final Logger logger = LoggerFactory.getLogger(EditSourceListDialog.class);
 
-	private boolean canceled;
-	private JTextField sourceListName;
-	private JList<Source> sourceList;
-	private GenericSortedListModel<Source> sourcesListModel;
-	private JList<Source> listList;
-	private GenericSortedListModel<Source> listModel;
-	private PreferencesDialog preferencesDialog;
-	private AddSourceAction addSourceAction;
-	private RemoveSourceAction removeSourceAction;
-	private OkAction okAction;
+	private final JTextField sourceListName;
+	private final JList<Source> sourceList;
+	private final GenericSortedListModel<Source> sourcesListModel;
+	private final JList<Source> listList;
+	private final GenericSortedListModel<Source> listModel;
+	private final PreferencesDialog preferencesDialog;
+	private final AddSourceAction addSourceAction;
+	private final RemoveSourceAction removeSourceAction;
+	private final OkAction okAction;
 
-	public EditSourceListDialog(PreferencesDialog owner)
+	private boolean canceled;
+
+	EditSourceListDialog(PreferencesDialog owner)
 	{
 		super(owner);
 		preferencesDialog = owner;
 		setModal(true);
-		createUi();
-	}
 
-	private void createUi()
-	{
 		okAction = new OkAction();
 		Action cancelAction = new EditSourceListDialog.CancelAction();
 		sourceListName = new JTextField(25);
@@ -120,7 +118,6 @@ public class EditSourceListDialog
 		JPanel listsPanel = new JPanel(new GridLayout(1, 2));
 		listsPanel.add(sourceListScrollPane);
 		listsPanel.add(listScrollPane);
-
 
 		JPanel centerPanel = new JPanel(new GridBagLayout());
 
@@ -179,7 +176,7 @@ public class EditSourceListDialog
 
 	}
 
-	public void setAdding(boolean adding)
+	void setAdding(boolean adding)
 	{
 		if(adding)
 		{
@@ -228,12 +225,12 @@ public class EditSourceListDialog
 		return canceled;
 	}
 
-	public void setSourceListName(String sourceName)
+	void setSourceListName(String sourceName)
 	{
 		this.sourceListName.setText(sourceName);
 	}
 
-	public String getSourceListName()
+	String getSourceListName()
 	{
 		return sourceListName.getText();
 	}
@@ -436,10 +433,12 @@ public class EditSourceListDialog
 
 		public void keyPressed(KeyEvent e)
 		{
+			// no-op
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
+			// no-op
 		}
 	}
 }

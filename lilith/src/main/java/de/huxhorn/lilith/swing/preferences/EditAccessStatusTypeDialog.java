@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.lilith.data.access.HttpStatus;
@@ -39,20 +40,16 @@ public class EditAccessStatusTypeDialog
 {
 	private static final long serialVersionUID = 3514380262399736012L;
 
+	private final ColorSchemeEditorPanel colorSchemeEditorPanel;
+
 	private ColorScheme scheme;
 	private boolean canceled;
 
-	private ColorSchemeEditorPanel colorSchemeEditorPanel;
-
-	public EditAccessStatusTypeDialog(Dialog owner)
+	EditAccessStatusTypeDialog(Dialog owner)
 	{
 		super(owner);
 		setModal(true);
-		createUi();
-	}
 
-	private void createUi()
-	{
 		OkAction okAction = new OkAction();
 		Action cancelAction = new CancelAction();
 
@@ -92,12 +89,12 @@ public class EditAccessStatusTypeDialog
 		super.setVisible(b);
 	}
 
-	public ColorScheme getScheme()
+	ColorScheme getScheme()
 	{
 		return scheme;
 	}
 
-	public void setScheme(ColorScheme scheme)
+	void setScheme(ColorScheme scheme)
 	{
 		this.scheme = scheme;
 	}

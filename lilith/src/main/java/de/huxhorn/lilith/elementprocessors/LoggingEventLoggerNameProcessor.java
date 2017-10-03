@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.elementprocessors;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -28,12 +29,7 @@ import java.util.Set;
 public class LoggingEventLoggerNameProcessor
 	implements ElementProcessor<EventWrapper<LoggingEvent>>, ResetOperation
 {
-	private Set<String> loggerNames;
-
-	public LoggingEventLoggerNameProcessor()
-	{
-		loggerNames = new HashSet<>();
-	}
+	private final Set<String> loggerNames = new HashSet<>();
 
 	public void processElement(EventWrapper<LoggingEvent> element)
 	{
@@ -60,7 +56,7 @@ public class LoggingEventLoggerNameProcessor
 
 	public void processElements(List<EventWrapper<LoggingEvent>> elements)
 	{
-		if(elements == null || elements.size() == 0)
+		if(elements == null || elements.isEmpty())
 		{
 			return;
 		}
@@ -87,8 +83,8 @@ public class LoggingEventLoggerNameProcessor
 				loggerNames.add(name);
 				changed = true;
 			}
-
 		}
+
 		if(changed)
 		{
 			changed();

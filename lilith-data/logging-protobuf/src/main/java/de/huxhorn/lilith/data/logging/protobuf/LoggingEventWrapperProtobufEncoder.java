@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,12 +44,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
-public class LoggingEventWrapperProtobufEncoder
+class LoggingEventWrapperProtobufEncoder
 	implements Encoder<EventWrapper<LoggingEvent>>
 {
-	private boolean compressing;
+	private final boolean compressing;
 
-	public LoggingEventWrapperProtobufEncoder(boolean compressing)
+	LoggingEventWrapperProtobufEncoder(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -59,11 +59,7 @@ public class LoggingEventWrapperProtobufEncoder
 		return compressing;
 	}
 
-	public void setCompressing(boolean compressing)
-	{
-		this.compressing = compressing;
-	}
-
+	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] encode(EventWrapper<LoggingEvent> wrapper)
 	{
 		LoggingProto.EventWrapper converted = convert(wrapper);

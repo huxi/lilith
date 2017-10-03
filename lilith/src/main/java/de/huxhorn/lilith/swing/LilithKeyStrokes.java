@@ -26,11 +26,16 @@ import java.util.Objects;
 import java.util.Set;
 import javax.swing.KeyStroke;
 
-public class LilithKeyStrokes
+public final class LilithKeyStrokes
 {
 	private static final Map<String, String> UNPROCESSED_KEY_STROKE_STRINGS =new HashMap<>();
 	private static final Map<String, KeyStroke> ACTION_KEY_STROKES =new HashMap<>();
 	private static final Map<KeyStroke, String> KEY_STROKE_ACTIONS =new HashMap<>();
+
+	public static final String ENTER = "ENTER";
+	public static final String ESCAPE = "ESCAPE";
+
+	private LilithKeyStrokes() {}
 
 	static void addKeyStroke(String keyStrokeString, String actionName)
 	{
@@ -63,9 +68,6 @@ public class LilithKeyStrokes
 	{
 		addKeyStroke(keyStrokeString, id.name());
 	}
-
-	public static final String ENTER = "ENTER";
-	public static final String ESCAPE = "ESCAPE";
 
 	static
 	{
@@ -117,6 +119,8 @@ public class LilithKeyStrokes
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt S", LilithActionId.COPY_CALL_STACK);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt T", LilithActionId.COPY_THROWABLE_NAME);
 		addKeyStroke(KeyStrokes.COMMAND_ALIAS + " shift alt W", LilithActionId.CLOSE_ALL);
+
+		new LilithKeyStrokes(); // stfu
 	}
 
 	static Set<String> getActionNames()
@@ -152,9 +156,5 @@ public class LilithKeyStrokes
 	public static String getActionName(KeyStroke keyStroke)
 	{
 		return KEY_STROKE_ACTIONS.get(keyStroke);
-	}
-
-	private LilithKeyStrokes()
-	{
 	}
 }

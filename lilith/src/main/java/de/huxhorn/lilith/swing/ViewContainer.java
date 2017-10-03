@@ -66,11 +66,11 @@ public abstract class ViewContainer<T extends Serializable>
 	private final List<ChangeListener> changeListeners = new LinkedList<>();
 	private final MainFrame mainFrame;
 	private final EventSource<T> eventSource;
-	private EventWrapperViewPanel<T> defaultView;
-	private TaskManager<Long> taskManager;
-	private Map<Callable<Long>, EventWrapperViewPanel<T>> filterMapping;
-	private FilterTaskListener filterTaskListener;
-	private ProgressGlassPane progressPanel;
+	private final EventWrapperViewPanel<T> defaultView;
+	private final TaskManager<Long> taskManager;
+	private final Map<Callable<Long>, EventWrapperViewPanel<T>> filterMapping;
+	private final FilterTaskListener filterTaskListener;
+	private final ProgressGlassPane progressPanel;
 	private Component prevGlassPane;
 	private boolean searching;
 	private ProgressingCallable<Long> updateCallable;
@@ -403,7 +403,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 		public void taskCreated(Task<Long> longTask)
 		{
-
+			// no-op
 		}
 
 		public void executionFailed(Task<Long> task, ExecutionException exception)
@@ -450,6 +450,7 @@ public abstract class ViewContainer<T extends Serializable>
 
 		public void progressUpdated(Task<Long> task, int progress)
 		{
+			// no-op
 		}
 
 		private void finished(EventWrapperViewPanel<T> view)

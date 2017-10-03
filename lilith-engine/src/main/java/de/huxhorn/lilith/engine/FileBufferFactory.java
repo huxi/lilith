@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.engine;
 
 import de.huxhorn.lilith.api.FileConstants;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,13 +39,13 @@ public abstract class FileBufferFactory<T extends Serializable>
 {
 	private final Logger logger = LoggerFactory.getLogger(FileBufferFactory.class);
 
-	private LogFileFactory logFileFactory;
-	private int magicValue;
-	private Map<String, String> metaData;
+	private final LogFileFactory logFileFactory;
+	private final int magicValue;
+	private final Map<String, String> metaData;
 
 	public FileBufferFactory(LogFileFactory logFileFactory, Map<String, String> metaData)
 	{
-		this.logFileFactory = logFileFactory;
+		this.logFileFactory = Objects.requireNonNull(logFileFactory, "logFileFactory must not be null!");
 		this.magicValue = FileConstants.MAGIC_VALUE;
 		if(metaData == null)
 		{

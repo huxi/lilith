@@ -42,6 +42,8 @@ public class FocusMenu
 {
 	private static final long serialVersionUID = 348653831948777676L;
 
+	private static final Action ACTION_INSTANCE = new MenuAction();
+
 	public FocusMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super(ACTION_INSTANCE, applicationPreferences, htmlTooltip);
@@ -170,8 +172,6 @@ public class FocusMenu
 		registerAccessComponent(remoteUserItem);
 	}
 
-	private static final Action ACTION_INSTANCE=new MenuAction();
-
 	private static class MenuAction
 			extends AbstractLilithAction
 	{
@@ -184,6 +184,7 @@ public class FocusMenu
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// no-op
 		}
 	}
 }

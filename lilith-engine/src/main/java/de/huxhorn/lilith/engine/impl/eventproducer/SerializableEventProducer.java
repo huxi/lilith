@@ -56,8 +56,9 @@ public class SerializableEventProducer<T extends Serializable>
 	private final Logger logger = LoggerFactory.getLogger(SerializableEventProducer.class);
 
 	private final ConverterRegistry<T> converterRegistry;
+	private final ObjectInputStream dataInput;
+
 	private Converter<T> converter;
-	private ObjectInputStream dataInput;
 
 	public SerializableEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, ConverterRegistry<T> converterRegistry, InputStream inputStream)
 		throws IOException

@@ -32,7 +32,7 @@ import javax.swing.table.TableCellRenderer;
 public class StatusCodeRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public StatusCodeRenderer()
 	{
@@ -56,7 +56,6 @@ public class StatusCodeRenderer
 		}
 		renderer.setSelected(isSelected);
 		renderer.setFocused(hasFocus);
-		Color foreground = Color.BLACK;
 		String text = "";
 		//String tooltip="";
 		if(value instanceof EventWrapper)
@@ -74,33 +73,51 @@ public class StatusCodeRenderer
 		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value, true);
 		if(!colorsInitialized)
 		{
-			renderer.setForeground(foreground);
-			if(value instanceof EventWrapper)
-			{
-				EventWrapper wrapper = (EventWrapper) value;
-				Object eventObj = wrapper.getEvent();
-				if(eventObj instanceof AccessEvent)
-				{
-					AccessEvent event = (AccessEvent) eventObj;
-					int code = event.getStatusCode();
-					HttpStatus status = HttpStatus.getStatus(code);
-					if(status != null)
-					{
-						HttpStatus.Type type = status.getType();
-						if(type != null && table instanceof ColorsProvider)
-						{
-							ColorsProvider cp = (ColorsProvider) table;
-							Colors colors = cp.resolveColors(type, rowIndex, vColIndex);
-
-							renderer.updateColorsFromScheme(colors.getColorScheme());
-						}
-					}
-				}
-			}
+			initializeColors(table, value, rowIndex, vColIndex);
 		}
 
 		renderer.correctRowHeight(table);
 
 		return renderer;
+	}
+
+	private void initializeColors(JTable table, Object value, int rowIndex, int vColIndex)
+	{
+		renderer.setForeground(Color.BLACK);
+		if(!(value instanceof EventWrapper))
+		{
+			return;
+		}
+		EventWrapper wrapper = (EventWrapper) value;
+
+		Object eventObj = wrapper.getEvent();
+		if(!(eventObj instanceof AccessEvent))
+		{
+			return;
+		}
+
+		AccessEvent event = (AccessEvent) eventObj;
+		int code = event.getStatusCode();
+		HttpStatus status = HttpStatus.getStatus(code);
+
+		if(status == null)
+		{
+			return;
+		}
+		if(!(table instanceof ColorsProvider))
+		{
+			return;
+		}
+
+		HttpStatus.Type type = status.getType();
+		if(type == null)
+		{
+			return;
+		}
+
+		ColorsProvider cp = (ColorsProvider) table;
+		Colors colors = cp.resolveColors(type, rowIndex, vColIndex);
+
+		renderer.updateColorsFromScheme(colors.getColorScheme());
 	}
 }

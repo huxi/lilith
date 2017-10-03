@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,11 +84,9 @@ public class LoggerImpl
 				return logger.isInfoEnabled();
 			case WARN:
 				return logger.isWarnEnabled();
-			case ERROR:
+			default: // ERROR
 				return logger.isErrorEnabled();
 		}
-
-		return false;
 	}
 
 	public boolean isLoggingEnabled(Level level, Marker marker)
@@ -103,11 +101,9 @@ public class LoggerImpl
 				return logger.isInfoEnabled(marker);
 			case WARN:
 				return logger.isWarnEnabled(marker);
-			case ERROR:
+			default: // ERROR
 				return logger.isErrorEnabled(marker);
 		}
-
-		return false;
 	}
 
 	public void log(Level level, String messagePattern, Object... args)
@@ -126,7 +122,7 @@ public class LoggerImpl
 			case WARN:
 				logger.warn(messagePattern, args);
 				break;
-			case ERROR:
+			default: // ERROR
 				logger.error(messagePattern, args);
 				break;
 		}
@@ -148,7 +144,7 @@ public class LoggerImpl
 			case WARN:
 				logger.warn(marker, messagePattern, args);
 				break;
-			case ERROR:
+			default: // ERROR
 				logger.error(marker, messagePattern, args);
 				break;
 		}

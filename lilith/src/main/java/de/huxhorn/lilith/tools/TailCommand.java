@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.tools;
 
 import de.huxhorn.lilith.api.FileConstants;
@@ -44,8 +45,15 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TailCommand
+public final class TailCommand
 {
+	static
+	{
+		new TailCommand();
+	}
+
+	private TailCommand() {}
+
 	public static boolean tailFile(File inputFile, String pattern, long amount, boolean keepRunning)
 	{
 		final Logger logger = LoggerFactory.getLogger(TailCommand.class);

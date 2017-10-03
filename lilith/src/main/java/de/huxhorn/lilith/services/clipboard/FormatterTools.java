@@ -35,134 +35,158 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-class FormatterTools
+@SuppressWarnings("WeakerAccess")
+public final class FormatterTools
 {
-	private FormatterTools()
-	{
-	}
-
 	static
 	{
 		new FormatterTools(); // stfu, coverage
 	}
 
-	static Optional<AccessEvent> resolveAccessEvent(Object object)
+	private FormatterTools() {}
+
+	public static Optional<AccessEvent> resolveAccessEvent(Object object)
 	{
 		return Optional.ofNullable(resolveAccessEventInternal(object));
 	}
 
-	static Optional<LoggingEvent> resolveLoggingEvent(Object object)
+	public static Optional<LoggingEvent> resolveLoggingEvent(Object object)
 	{
 		return Optional.ofNullable(resolveLoggingEventInternal(object));
 	}
 
-	static Optional<String> resolveFormattedMessage(Object object)
+	public static Optional<String> resolveFormattedMessage(Object object)
 	{
 		Message message = resolveMessageInternal(object);
-		if (message != null)
+		if (message == null)
 		{
-			String value = message.getMessage();
-			if (!isNullOrEmpty(value))
-			{
-				return Optional.of(value);
-			}
+			return Optional.empty();
 		}
-		return Optional.empty();
+
+		String value = message.getMessage();
+		if (isNullOrEmpty(value))
+		{
+			return Optional.empty();
+		}
+
+		return Optional.of(value);
 	}
 
-	static Optional<String> resolveMessagePattern(Object object)
+	public static Optional<String> resolveMessagePattern(Object object)
 	{
 		Message message = resolveMessageInternal(object);
-		if (message != null)
+		if (message == null)
 		{
-			String value = message.getMessagePattern();
-			if (!isNullOrEmpty(value))
-			{
-				return Optional.of(value);
-			}
+			return Optional.empty();
 		}
-		return Optional.empty();
+
+		String value = message.getMessagePattern();
+		if (isNullOrEmpty(value))
+		{
+			return Optional.empty();
+		}
+
+		return Optional.of(value);
 	}
 
-	static Optional<ExtendedStackTraceElement[]> resolveCallStack(Object object)
+	public static Optional<ExtendedStackTraceElement[]> resolveCallStack(Object object)
 	{
 		LoggingEvent value = resolveLoggingEventInternal(object);
-		if (value != null)
+		if (value == null)
 		{
-			ExtendedStackTraceElement[] callStack = value.getCallStack();
-			if (!isNullOrEmpty(callStack))
-			{
-				return Optional.of(callStack);
-			}
+			return Optional.empty();
 		}
-		return Optional.empty();
+
+		ExtendedStackTraceElement[] callStack = value.getCallStack();
+		if (isNullOrEmpty(callStack))
+		{
+			return Optional.empty();
+		}
+
+		return Optional.of(callStack);
 	}
 
-	static Optional<ThrowableInfo> resolveThrowableInfo(Object object)
+	public static Optional<ThrowableInfo> resolveThrowableInfo(Object object)
 	{
 		LoggingEvent value = resolveLoggingEventInternal(object);
-		if (value != null)
+		if (value == null)
 		{
-			return Optional.ofNullable(value.getThrowable());
+			return Optional.empty();
 		}
-		return Optional.empty();
+
+		return Optional.ofNullable(value.getThrowable());
 	}
 
-	static Optional<String> resolveThrowableInfoName(Object object)
+	public static Optional<String> resolveThrowableInfoName(Object object)
 	{
 		LoggingEvent value = resolveLoggingEventInternal(object);
-		if (value != null)
+		if (value == null)
 		{
-			ThrowableInfo throwable = value.getThrowable();
-			if (throwable != null)
-			{
-				String name = throwable.getName();
-				if (!isNullOrEmpty(name))
-				{
-					return Optional.of(name);
-				}
-			}
+			return Optional.empty();
 		}
-		return Optional.empty();
+
+		ThrowableInfo throwable = value.getThrowable();
+		if (throwable == null)
+		{
+			return Optional.empty();
+		}
+
+		String name = throwable.getName();
+		if (isNullOrEmpty(name))
+		{
+			return Optional.empty();
+		}
+
+		return Optional.of(name);
 	}
 
-	static Optional<String> resolveThreadName(Object object)
+	public static Optional<String> resolveThreadName(Object object)
 	{
 		LoggingEvent value = resolveLoggingEventInternal(object);
-		if (value != null)
+		if (value == null)
 		{
-			ThreadInfo threadInfo = value.getThreadInfo();
-			if (threadInfo != null)
-			{
-				String name = threadInfo.getName();
-				if (!isNullOrEmpty(name))
-				{
-					return Optional.of(name);
-				}
-			}
+			return Optional.empty();
 		}
-		return Optional.empty();
+
+		ThreadInfo threadInfo = value.getThreadInfo();
+		if (threadInfo == null)
+		{
+			return Optional.empty();
+		}
+
+		String name = threadInfo.getName();
+		if (isNullOrEmpty(name))
+		{
+			return Optional.empty();
+		}
+
+		return Optional.of(name);
 	}
 
-	static Optional<String> resolveThreadGroupName(Object object)
+	public static Optional<String> resolveThreadGroupName(Object object)
 	{
 		LoggingEvent value = resolveLoggingEventInternal(object);
-		if (value != null)
+		if (value == null)
 		{
-			ThreadInfo threadInfo = value.getThreadInfo();
-			if (threadInfo != null)
-			{
-				String name = threadInfo.getGroupName();
-				if (!isNullOrEmpty(name))
-				{
-					return Optional.of(name);
-				}
-			}
+			return Optional.empty();
 		}
-		return Optional.empty();
+
+		ThreadInfo threadInfo = value.getThreadInfo();
+		if(threadInfo == null)
+		{
+			return Optional.empty();
+		}
+
+		String name = threadInfo.getGroupName();
+		if (isNullOrEmpty(name))
+		{
+			return Optional.empty();
+		}
+
+		return Optional.of(name);
 	}
 
-	static boolean isNullOrEmpty(Object object)
+	public static boolean isNullOrEmpty(Object object)
 	{
 		if (object == null)
 		{
@@ -182,6 +206,7 @@ class FormatterTools
 			return ((Collection) object).isEmpty();
 		}
 
+		//noinspection SimplifiableIfStatement
 		if (object instanceof Object[])
 		{
 			return ((Object[]) object).length == 0;
@@ -190,7 +215,7 @@ class FormatterTools
 		return false;
 	}
 
-	static String toStringOrNull(Object value)
+	public static String toStringOrNull(Object value)
 	{
 		if (isNullOrEmpty(value))
 		{

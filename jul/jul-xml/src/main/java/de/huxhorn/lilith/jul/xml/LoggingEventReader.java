@@ -57,10 +57,6 @@ public class LoggingEventReader
 
 	private static final String MESSAGE_SEPARATOR = ": ";
 
-	public LoggingEventReader()
-	{
-	}
-
 	public LoggingEvent read(XMLStreamReader reader)
 		throws XMLStreamException
 	{
@@ -160,7 +156,7 @@ public class LoggingEventReader
 					}
 					paramList.add(paramStr);
 				}
-				if(keyStr != null || catalogStr != null || paramList.size() > 0)
+				if(keyStr != null || catalogStr != null || !paramList.isEmpty())
 				{
 					if(logger.isInfoEnabled()) logger.info("Ignoring the following message info: key={}, catalog={}, params={}", keyStr, catalogStr, paramList); // NOPMD
 				}

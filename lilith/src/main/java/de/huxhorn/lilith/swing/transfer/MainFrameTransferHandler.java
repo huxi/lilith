@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.transfer;
 
 import de.huxhorn.lilith.api.FileConstants;
@@ -32,19 +33,14 @@ import javax.swing.TransferHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * This class implements d&amp;d of files.
- * It only supports d&amp;d of files onto the desktop of MainFrame, not the frame itself, and is used if creation
- * of MainFrameTransferHandler16 fails, i.e. if not using Java 1.6.
- */
-public class MainFrameTransferHandler
+public final class MainFrameTransferHandler
 	extends TransferHandler
 {
 	private static final long serialVersionUID = 6201602937026372558L;
 	private final Logger logger = LoggerFactory.getLogger(MainFrameTransferHandler.class);
 
-	protected MainFrame mainFrame;
-	protected JDesktopPane desktop;
+	private final MainFrame mainFrame;
+	private final JDesktopPane desktop;
 
 	public MainFrameTransferHandler(MainFrame mainFrame)
 	{
@@ -68,7 +64,7 @@ public class MainFrameTransferHandler
 	public boolean canImport(JComponent comp,
 	                         DataFlavor[] transferFlavors)
 	{
-		if(comp != desktop)
+		if(comp != desktop) // NOPMD
 		{
 			return false;
 		}
@@ -85,7 +81,7 @@ public class MainFrameTransferHandler
 		return false;
 	}
 
-	protected boolean importData(Transferable transferable)
+	private boolean importData(Transferable transferable)
 	{
 		if(!transferable.isDataFlavorSupported(DataFlavor.javaFileListFlavor))
 		{
@@ -119,5 +115,22 @@ public class MainFrameTransferHandler
 		return true;
 	}
 
+	@Override
+	public boolean canImport(TransferHandler.TransferSupport support)
+	{
+		return support.isDataFlavorSupported(DataFlavor.javaFileListFlavor)
+				&& (COPY & support.getSourceDropActions()) != 0;
+	}
 
+	@Override
+	public boolean importData(TransferHandler.TransferSupport support)
+	{
+		if(!canImport(support))
+		{
+			return false;
+		}
+
+		Transferable t = support.getTransferable();
+		return importData(t);
+	}
 }

@@ -90,7 +90,7 @@ public class Lilith
 		SLF4JBridgeHandler.install();
 	}
 
-	// uncomment the code below to enable flyingsaucer logging......
+	// uncomment the code below to enable flying saucer logging......
 	/*
 	static
 	{
@@ -145,8 +145,21 @@ public class Lilith
 	private static final String APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY = "apple.laf.useScreenMenuBar";
 	private static final String GROOVY_EXTENSION = ".groovy";
 
+	private static final String[] STATUS_TEXT=
+			{
+					"INFO : ",
+					"WARN : ",
+					"ERROR: ",
+			};
+
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 	private static MainFrame mainFrame;
+
+	static {
+		new Lilith(); // stfu
+	}
+
+	private Lilith() {}
 
 	private static class UncaughtExceptionHandler
 		implements Thread.UncaughtExceptionHandler
@@ -392,7 +405,7 @@ public class Lilith
 				initCLILogging();
 			}
 			List<String> files = index.files;
-			if(files == null || files.size()==0)
+			if(files == null || files.isEmpty())
 			{
 				printHelp(commander);
 				System.exit(-1);
@@ -640,13 +653,6 @@ public class Lilith
 
 		}
 	}
-
-	private static final String[] STATUS_TEXT=
-			{
-					"INFO : ",
-					"WARN : ",
-					"ERROR: ",
-			};
 
 	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
 	private static void appendStatus(StringBuilder builder, Status status, int indent)
@@ -931,12 +937,12 @@ public class Lilith
 		}
 	}
 
-
 	static class CreateSplashRunnable
 		implements Runnable
 	{
+		private final String appTitle;
+
 		private SplashScreen splashScreen;
-		private String appTitle;
 
 		CreateSplashRunnable(String appTitle)
 		{
@@ -958,16 +964,17 @@ public class Lilith
 	static class CreateMainFrameRunnable
 		implements Runnable
 	{
-		private SplashScreen splashScreen;
+		private final ApplicationPreferences applicationPreferences;
+		private final SplashScreen splashScreen;
+		private final String appTitle;
+
 		private MainFrame mainFrame;
-		private ApplicationPreferences applicationPreferences;
-		private String appTitle;
 
 		CreateMainFrameRunnable(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appTitle)
 		{
+			this.applicationPreferences = applicationPreferences;
 			this.splashScreen = splashScreen;
 			this.appTitle = appTitle;
-			this.applicationPreferences = applicationPreferences;
 		}
 
 		public void run()

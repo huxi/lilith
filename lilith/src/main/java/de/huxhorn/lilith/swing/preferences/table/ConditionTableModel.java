@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
@@ -28,7 +29,7 @@ import javax.swing.table.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ConditionTableModel
+public final class ConditionTableModel
 	implements TableModel
 {
 	private final Logger logger = LoggerFactory.getLogger(ConditionTableModel.class);
@@ -71,32 +72,24 @@ public class ConditionTableModel
 
 	public String getColumnName(int columnIndex)
 	{
-		switch(columnIndex)
+		if(CONDITION_COLUMN == columnIndex)
 		{
-			case CONDITION_COLUMN:
-				return "Condition";
+			return "Condition";
 		}
 		return null;
 	}
 
 	public Class<?> getColumnClass(int columnIndex)
 	{
-		switch(columnIndex)
+		if(CONDITION_COLUMN == columnIndex)
 		{
-			case CONDITION_COLUMN:
-				return SavedCondition.class;
+			return SavedCondition.class;
 		}
 		return null;
 	}
 
 	public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
-		switch(columnIndex)
-		{
-			case CONDITION_COLUMN:
-				return false;
-		}
-
 		return false;
 	}
 
@@ -106,12 +99,9 @@ public class ConditionTableModel
 		{
 			return null;
 		}
-		switch(columnIndex)
+		if(CONDITION_COLUMN == columnIndex)
 		{
-			case CONDITION_COLUMN:
-			{
-				return data.get(rowIndex);
-			}
+			return data.get(rowIndex);
 		}
 		return null;
 	}
@@ -122,16 +112,12 @@ public class ConditionTableModel
 		{
 			return;
 		}
-		switch(columnIndex)
+		if(CONDITION_COLUMN == columnIndex)
 		{
-			case CONDITION_COLUMN:
-			{
-				SavedCondition newValue = (SavedCondition) aValue;
-				data.set(rowIndex, newValue);
-				fireTableChange(new TableModelEvent(this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
-			}
+			SavedCondition newValue = (SavedCondition) aValue;
+			data.set(rowIndex, newValue);
+			fireTableChange(new TableModelEvent(this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
 		}
-
 	}
 
 	public void remove(int row)
@@ -213,7 +199,7 @@ public class ConditionTableModel
 	private class FireTableChangeRunnable
 		implements Runnable
 	{
-		private TableModelEvent event;
+		private final TableModelEvent event;
 
 		FireTableChangeRunnable(TableModelEvent event)
 		{

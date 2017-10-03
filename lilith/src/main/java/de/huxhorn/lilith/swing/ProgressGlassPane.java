@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.sulky.swing.KeyStrokes;
@@ -47,11 +48,11 @@ public class ProgressGlassPane
 {
 	private static final long serialVersionUID = -7692063970775627702L;
 
-	private CancelAction cancelAction;
-	private JProgressBar progressBar;
-	private JButton cancelButton;
+	private final CancelAction cancelAction;
+	private final JProgressBar progressBar;
+	private final JButton cancelButton;
 
-	public ProgressGlassPane()
+	ProgressGlassPane()
 	{
 		super(new GridBagLayout());
 
@@ -109,12 +110,12 @@ public class ProgressGlassPane
 		paintComponents(g);
 	}
 
-	public void setProgress(int progressValue)
+	void setProgress(int progressValue)
 	{
 		progressBar.setValue(progressValue);
 	}
 
-	public CancelAction getFindCancelAction()
+	CancelAction getFindCancelAction()
 	{
 		return cancelAction;
 	}
@@ -146,7 +147,7 @@ public class ProgressGlassPane
 			setEnabled((this.task != null));
 		}
 
-		public void cancelSearch()
+		void cancelSearch()
 		{
 			Task task = this.task;
 			if(task != null)
@@ -164,33 +165,39 @@ public class ProgressGlassPane
 	private static class MouseEventEater
 		implements MouseListener, MouseMotionListener
 	{
-
 		public void mouseClicked(MouseEvent e)
 		{
+			// just eat it
 		}
 
 		public void mousePressed(MouseEvent e)
 		{
+			// just eat it
 		}
 
 		public void mouseReleased(MouseEvent e)
 		{
+			// just eat it
 		}
 
 		public void mouseEntered(MouseEvent e)
 		{
+			// just eat it
 		}
 
 		public void mouseExited(MouseEvent e)
 		{
+			// just eat it
 		}
 
 		public void mouseDragged(MouseEvent e)
 		{
+			// just eat it
 		}
 
 		public void mouseMoved(MouseEvent e)
 		{
+			// just eat it
 		}
 	}
 }

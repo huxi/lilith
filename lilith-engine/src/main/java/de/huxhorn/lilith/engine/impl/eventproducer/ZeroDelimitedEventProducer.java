@@ -37,7 +37,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 	private final Logger logger = LoggerFactory.getLogger(ZeroDelimitedEventProducer.class);
 
 	private final Decoder<T> decoder;
-	private BufferedInputStream inputStream;
+	private final BufferedInputStream inputStream;
 
 	public ZeroDelimitedEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<T>> eventQueue, SourceIdentifierUpdater<T> sourceIdentifierUpdater, Decoder<T> decoder, InputStream inputStream)
 	{
@@ -86,7 +86,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 						bytes.add(current);
 					}
 
-					if (bytes.size() > 0)
+					if (!bytes.isEmpty())
 					{
 						byte[] ba = new byte[bytes.size()];
 						for (int i = 0; i < bytes.size(); i++)

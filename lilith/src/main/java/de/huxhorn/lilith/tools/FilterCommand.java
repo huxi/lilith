@@ -48,8 +48,15 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FilterCommand
+public final class FilterCommand
 {
+	static
+	{
+		new FilterCommand(); // stfu
+	}
+
+	private FilterCommand() {}
+
 	public static boolean filterFile(File inputFile, File outputFile, File conditionFile, String searchString, String pattern, boolean overwrite, boolean keepRunning, boolean exclusive)
 	{
 		final Logger logger = LoggerFactory.getLogger(FilterCommand.class);
@@ -158,12 +165,10 @@ public class FilterCommand
 				return false;
 			}
 			MetaData metaData = header.getMetaData();
-			if (metaData == null || metaData.getData() == null)
+			if (metaData == null)
 			{
-				if (logger.isWarnEnabled())
-				{
-					logger.warn("Couldn't read meta data from '{}'!", inputDataFileStr);
-				}
+				if (logger.isWarnEnabled()) logger.warn("Couldn't read meta data from '{}'!", inputDataFileStr);
+
 				return false;
 			}
 			Map<String, String> data = metaData.getData();

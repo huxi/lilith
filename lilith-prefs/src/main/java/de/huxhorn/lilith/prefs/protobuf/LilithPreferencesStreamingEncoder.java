@@ -148,6 +148,7 @@ public class LilithPreferencesStreamingEncoder
 					break;
 				default:
 					preferences.setSourceFiltering(PrefsProto.SourceFiltering.NONE);
+					break;
 			}
 		}
 		else

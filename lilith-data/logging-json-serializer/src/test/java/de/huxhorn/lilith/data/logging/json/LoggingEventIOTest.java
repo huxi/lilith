@@ -64,14 +64,14 @@ public class LoggingEventIOTest
 	public byte[] write(LoggingEvent event, boolean compressing)
 		throws XMLStreamException
 	{
-		LoggingJsonEncoder ser = new LoggingJsonEncoder(compressing);
+		LoggingJsonCodec ser = new LoggingJsonCodec(compressing);
 		return ser.encode(event);
 	}
 
 	public LoggingEvent read(byte[] bytes, boolean compressing)
 		throws XMLStreamException
 	{
-		LoggingJsonDecoder des = new LoggingJsonDecoder(compressing);
+		LoggingJsonCodec des = new LoggingJsonCodec(compressing);
 		return des.decode(bytes);
 	}
 }

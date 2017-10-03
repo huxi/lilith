@@ -78,12 +78,12 @@ class AbstractFilterMainMenu
 		}
 	}
 
-	void registerLoggingComponent(Component component)
+	final void registerLoggingComponent(Component component)
 	{
 		loggingComponents.add(component);
 	}
 
-	void registerAccessComponent(Component component)
+	final void registerAccessComponent(Component component)
 	{
 		accessComponents.add(component);
 	}

@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -31,8 +32,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -63,6 +64,13 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	public static final String SCROLLING_TO_BOTTOM_PROPERTY = "scrollingToBottom";
 	private static final String FILTER_CONDITION_PROPERTY = "filterCondition";
 
+	private static final Colors NOT_MATCHING_COLORS =
+			new Colors(new ColorScheme(new Color(192, 192, 192), new Color(245, 245, 245), new Color(245, 245, 245)), true);
+	private static final ColorScheme EVEN_ROW_COLOR_SCHEME =
+			new ColorScheme(new Color(0, 0, 0), new Color(255, 255, 255), new Color(255, 255, 255));
+	private static final ColorScheme ODD_ROW_COLOR_SCHEME =
+			new ColorScheme(new Color(0, 0, 0), new Color(0xE9, 0xED, 0xF2), new Color(0xE9, 0xED, 0xF2));
+
 	private final Logger logger = LoggerFactory.getLogger(EventWrapperViewTable.class);
 
 	Map<Object, TooltipGenerator> tooltipGenerators;
@@ -72,11 +80,11 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private Condition filterCondition;
 
 	// TODO: Move to ViewActions
-	private JPopupMenu popupMenu;
-	private JMenuItem columnsMenu;
-	private boolean global;
-	protected MainFrame mainFrame;
-	private boolean scrollingSmoothly =true;
+	private final JPopupMenu popupMenu;
+	private final JMenuItem columnsMenu;
+	private final boolean global;
+	protected final MainFrame mainFrame;
+	private boolean scrollingSmoothly = true;
 
 	EventWrapperViewTable(MainFrame mainFrame, EventWrapperTableModel<T> tableModel, boolean global)
 	{
@@ -256,7 +264,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 	}
 
-	public void resetLayout()
+	public final void resetLayout()
 	{
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> loadedInfos = loadLayout();
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> defaults = getDefaultLayout();
@@ -342,13 +350,6 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 		super.changeSelection(rowIndex, columnIndex, toggle, extend);
 	}
-
-	private static final Colors NOT_MATCHING_COLORS =
-		new Colors(new ColorScheme(new Color(192, 192, 192), new Color(245, 245, 245), new Color(245, 245, 245)), true);
-	private static final ColorScheme EVEN_ROW_COLOR_SCHEME =
-		new ColorScheme(new Color(0, 0, 0), new Color(255, 255, 255), new Color(255, 255, 255));
-	private static final ColorScheme ODD_ROW_COLOR_SCHEME =
-		new ColorScheme(new Color(0, 0, 0), new Color(0xE9, 0xED, 0xF2), new Color(0xE9, 0xED, 0xF2));
 
 	public Colors resolveColors(Object object, int row, int column)
 	{
@@ -456,9 +457,8 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	}
 
 	private class PopupListener
-		implements MouseListener
+		extends MouseAdapter
 	{
-
 		public void mouseClicked(MouseEvent e)
 		{
 			if(e.isPopupTrigger())
@@ -483,14 +483,6 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			}
 		}
 
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
-
 		private void showPopup(Point p)
 		{
 			// TODO: call ViewActions
@@ -506,7 +498,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		private static final long serialVersionUID = 1154654992206760884L;
 
-		private SaveLayoutAction()
+		SaveLayoutAction()
 		{
 			super("Save layout");
 		}
@@ -524,7 +516,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		private static final long serialVersionUID = 8635210294474124660L;
 
-		private ResetLayoutAction()
+		ResetLayoutAction()
 		{
 			super("Reset layout");
 		}
@@ -563,10 +555,11 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	{
 		private static final long serialVersionUID = 2845939134245819103L;
 
-		private boolean visible;
-		private String columnName;
+		private final String columnName;
 
-		private ShowHideAction(String columnName, boolean visible)
+		private boolean visible;
+
+		ShowHideAction(String columnName, boolean visible)
 		{
 			super(columnName);
 			this.columnName = columnName;
@@ -596,7 +589,6 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 	}
 
-
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
 	{
 		if(orientation != SwingConstants.HORIZONTAL || !scrollingSmoothly)
@@ -609,10 +601,5 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	public void setScrollingSmoothly(boolean scrollingSmoothly)
 	{
 		this.scrollingSmoothly = scrollingSmoothly;
-	}
-
-	public boolean isScrollingSmoothly()
-	{
-		return scrollingSmoothly;
 	}
 }

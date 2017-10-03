@@ -54,16 +54,12 @@ public class TroubleshootingPanel
 	private static final String WINDOW_MENU_PLACEHOLDER = "##WindowMenuPlaceholder##";
 
 	private final Logger logger = LoggerFactory.getLogger(TroubleshootingPanel.class);
-	private PreferencesDialog preferencesDialog;
+	private final PreferencesDialog preferencesDialog;
 
 	TroubleshootingPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
-		createUI();
-	}
 
-	private void createUI()
-	{
 		setLayout(new GridBagLayout());
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(new JButton(new InitDetailsViewAction()));
@@ -279,7 +275,7 @@ public class TroubleshootingPanel
 				{
 					rootGroup = root;
 				}
-				else if(rootGroup != root)
+				else if(rootGroup != root) // NOPMD
 				{
 					if(logger.isErrorEnabled()) logger.error("root={}, rootGroup={}", root, rootGroup); // NOPMD
 				}
@@ -293,7 +289,7 @@ public class TroubleshootingPanel
 
 			appendGroup(0, builder, rootGroup, threadGroups, threadGroupMapping);
 
-			if(nullList.size() > 0)
+			if(!nullList.isEmpty())
 			{
 				builder.append("no group:\n");
 				for(ThreadHolder current : nullList)
@@ -313,7 +309,7 @@ public class TroubleshootingPanel
 				.append(group.getMaxPriority()).append("]\n");
 
 			List<ThreadGroup> groups = threadGroups.get(group);
-			if(groups != null && groups.size() > 0)
+			if(groups != null && !groups.isEmpty())
 			{
 				builder.append(indentStr).append("groups = {\n");
 				groups.sort(ThreadGroupComparator.INSTANCE);
@@ -326,7 +322,7 @@ public class TroubleshootingPanel
 			}
 
 			List<ThreadHolder> threads = threadGroupMapping.get(group);
-			if(threads != null && threads.size() > 0)
+			if(threads != null && !threads.isEmpty())
 			{
 				builder.append(indentStr).append("threads = {\n");
 				Collections.sort(threads);
@@ -399,7 +395,7 @@ public class TroubleshootingPanel
 
 		public int compare(ThreadGroup o1, ThreadGroup o2)
 		{
-			if(o1 == o2)
+			if(o1 == o2) // NOPMD
 			{
 				return 0;
 			}
@@ -414,7 +410,7 @@ public class TroubleshootingPanel
 			String name = o1.getName();
 			String otherName = o2.getName();
 			//noinspection StringEquality
-			if(name == otherName)
+			if(name == otherName) // NOPMD
 			{
 				return 0;
 			}
@@ -436,7 +432,7 @@ public class TroubleshootingPanel
 		private final Thread thread;
 		private final StackTraceElement[] stackTraceElements;
 
-		private ThreadHolder(Thread thread, StackTraceElement[] stackTraceElements)
+		ThreadHolder(Thread thread, StackTraceElement[] stackTraceElements)
 		{
 			this.thread = thread;
 			this.stackTraceElements = stackTraceElements;
@@ -490,7 +486,7 @@ public class TroubleshootingPanel
 			String name = thread.getName();
 			String otherName = other.thread.getName();
 			//noinspection StringEquality
-			if(name == otherName)
+			if(name == otherName) // NOPMD
 			{
 				return 0;
 			}

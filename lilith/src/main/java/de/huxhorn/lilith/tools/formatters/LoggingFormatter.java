@@ -112,7 +112,7 @@ public class LoggingFormatter
 	private static class LoggingFoo
 		implements ILoggingEvent
 	{
-		private LoggingEvent event;
+		private final LoggingEvent event;
 
 		LoggingFoo(LoggingEvent event)
 		{
@@ -149,7 +149,7 @@ public class LoggingFormatter
 							return ch.qos.logback.classic.Level.INFO;
 						case WARN:
 							return ch.qos.logback.classic.Level.WARN;
-						case ERROR:
+						default: // ERROR
 							return ch.qos.logback.classic.Level.ERROR;
 					}
 				}
@@ -304,6 +304,7 @@ public class LoggingFormatter
 
 		public void prepareForDeferredProcessing()
 		{
+			// no-op
 		}
 
 		private static Marker convert(de.huxhorn.lilith.data.logging.Marker originalMarker, Map<String, Marker> markerMap)

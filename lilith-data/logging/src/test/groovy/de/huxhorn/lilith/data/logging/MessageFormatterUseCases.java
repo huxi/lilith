@@ -37,8 +37,10 @@ package de.huxhorn.lilith.data.logging;
 import de.huxhorn.sulky.formatting.SafeString;
 import java.util.Arrays;
 
-public class MessageFormatterUseCases
+public final class MessageFormatterUseCases
 {
+	private MessageFormatterUseCases() {}
+
 	public static UseCase[] generateUseCases()
 	{
 		Integer i1 = 1;
@@ -346,20 +348,11 @@ public class MessageFormatterUseCases
 
 			UseCase useCase = (UseCase) o;
 
-			if (numberOfPlaceholders != useCase.numberOfPlaceholders) return false;
-			// Probably incorrect - comparing Object[] arrays with Arrays.equals
-			if (!Arrays.equals(arguments, useCase.arguments)) return false;
-			if (expectedResult != null ? !expectedResult.equals(useCase.expectedResult) : useCase.expectedResult != null)
-			{
-				return false;
-			}
-			if (messagePattern != null ? !messagePattern.equals(useCase.messagePattern) : useCase.messagePattern != null)
-			{
-				return false;
-			}
-			if (throwable != null ? !throwable.equals(useCase.throwable) : useCase.throwable != null) return false;
-
-			return true;
+			return numberOfPlaceholders == useCase.numberOfPlaceholders
+					&& Arrays.equals(arguments, useCase.arguments)
+					&& (expectedResult != null ? expectedResult.equals(useCase.expectedResult) : useCase.expectedResult == null)
+					&& (messagePattern != null ? messagePattern.equals(useCase.messagePattern) : useCase.messagePattern == null)
+					&& (throwable != null ? throwable.equals(useCase.throwable) : useCase.throwable == null);
 		}
 
 		public int hashCode()

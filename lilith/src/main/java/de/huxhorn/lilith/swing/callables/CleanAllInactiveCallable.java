@@ -33,7 +33,7 @@ public class CleanAllInactiveCallable
 {
 	private final Logger logger = LoggerFactory.getLogger(CleanAllInactiveCallable.class);
 
-	private MainFrame mainFrame;
+	private final MainFrame mainFrame;
 
 	public CleanAllInactiveCallable(MainFrame mainFrame)
 	{

@@ -57,19 +57,22 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	private static final long serialVersionUID = -399179541035021703L;
 
 	private static final String UNFILTERED = "Unfiltered";
+
 	private final Logger logger = LoggerFactory.getLogger(ComboPaneViewContainer.class);
 
-	private SourceChangeListener sourceChangeListener;
+	private final SourceChangeListener sourceChangeListener;
+	private final JPanel contentPane;
+	private final JComboBox<ViewHolder> comboBox;
+	private final DefaultComboBoxModel<ViewHolder> comboBoxModel;
+	private final CardLayout cardLayout;
+	private final CloseAction closeAction;
+	private final JPanel comboBoxPane;
+
+	private int comboCounter;
 	private boolean disposed;
 	private EventWrapper<T> selectedEvent;
-	private JPanel contentPane;
-	private final JComboBox<ViewHolder> comboBox;
-	private DefaultComboBoxModel<ViewHolder> comboBoxModel;
-	private int comboCounter;
-	private CardLayout cardLayout;
-	private CloseAction closeAction;
-	private JPanel comboBoxPane;
 
+	@SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
 	ComboPaneViewContainer(MainFrame mainFrame, EventSource<T> eventSource)
 	{
 		super(mainFrame, eventSource);
@@ -113,7 +116,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	{
 		private static final long serialVersionUID = 7687142682378711767L;
 
-		private CloseAction()
+		CloseAction()
 		{
 			super();
 			putValue(Action.SMALL_ICON, Icons.CLOSE_16_ICON);
@@ -178,7 +181,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		private final EventWrapperViewPanel<T> view;
 		private final String id;
 
-		private ViewHolder(EventWrapperViewPanel<T> view)
+		ViewHolder(EventWrapperViewPanel<T> view)
 		{
 			this.view = view;
 			comboCounter++;
@@ -199,12 +202,11 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		public boolean equals(Object o)
 		{
 			if (this == o) return true;
-			if (o == null || !(o instanceof ViewHolderIdentity)) return false;
+			if (!(o instanceof ViewHolderIdentity)) return false;
 
 			ViewHolderIdentity that = (ViewHolderIdentity) o;
 
 			return id.equals(that.getId());
-
 		}
 
 		@Override
@@ -219,7 +221,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		}
 	}
 
-	public void addView(EventWrapperViewPanel<T> view)
+	public final void addView(EventWrapperViewPanel<T> view)
 	{
 		EventSource source = view.getEventSource();
 		if(logger.isInfoEnabled()) logger.info("Adding view for {}", source);
@@ -297,7 +299,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 			}
 
 			EventWrapperViewPanel<T> current = holder.getView();
-			if(current == view)
+			if(current == view) // NOPMD
 			{
 				found = holder;
 				break;
@@ -599,7 +601,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	private class MyComboBoxRenderer
 		implements ListCellRenderer<ViewHolder>
 	{
-		private JLabel label;
+		private final JLabel label;
 
 		MyComboBoxRenderer()
 		{

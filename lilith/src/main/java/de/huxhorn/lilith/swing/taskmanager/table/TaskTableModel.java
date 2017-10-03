@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
@@ -35,24 +36,19 @@ import javax.swing.event.TableModelListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TaskTableModel<T>
+public final class TaskTableModel<T>
 	implements RowBasedTableModel<Task<T>>
 {
 	private final Logger logger = LoggerFactory.getLogger(TaskTableModel.class);
 
 	private final List<Task<T>> tasks;
 	private final EventListenerList eventListenerList;
-	private Comparator<Task<T>> taskComparator = new Comparator<Task<T>>()
-	{
-		public int compare(Task<T> task1, Task<T> task2)
-		{
-			return (int) (task1.getId() - task2.getId());
-		}
-	};
+	private final Comparator<Task<T>> taskComparator =
+			(task1, task2) -> (int) (task1.getId() - task2.getId());
 
-	public static final int ID_INDEX = 0;
-	public static final int NAME_INDEX = 1;
-	public static final int PROGRESS_INDEX = 2;
+	static final int ID_INDEX = 0;
+	static final int NAME_INDEX = 1;
+	static final int PROGRESS_INDEX = 2;
 
 	private static final Class[] COLUMN_CLASSES =
 		{
@@ -68,19 +64,19 @@ public class TaskTableModel<T>
 			"Progress",
 		};
 
-	private TaskManager<T> taskManager;
+	private final TaskManager<T> taskManager;
 	private boolean paused;
-	private TaskListener<T> taskListener;
 
-
-	public TaskTableModel(TaskManager<T> taskManager)
+	TaskTableModel(TaskManager<T> taskManager)
 	{
 		this.tasks = new ArrayList<>();
 		this.paused = true;
 		this.eventListenerList = new EventListenerList();
-		this.taskListener = new UpdateViewTaskListener();
 
-		setTaskManager(taskManager);
+		TaskListener<T> taskListener = new UpdateViewTaskListener();
+
+		this.taskManager = Objects.requireNonNull(taskManager, "taskManager must not be null!");
+		this.taskManager.addTaskListener(taskListener);
 	}
 
 	public Class<?> getColumnClass(int columnIndex)
@@ -112,12 +108,14 @@ public class TaskTableModel<T>
 				return task.getName();
 			case PROGRESS_INDEX:
 				return task.getProgress();
+			default:
+				return null;
 		}
-		return null;
 	}
 
 	public void setValueAt(Object o, int rowIndex, int columnIndex)
 	{
+		// read-only
 	}
 
 	public void addTableModelListener(TableModelListener l)
@@ -262,32 +260,6 @@ public class TaskTableModel<T>
 			this.paused = paused;
 		}
 
-	}
-
-	public TaskManager<?> getTaskManager()
-	{
-		return taskManager;
-	}
-
-	public void setTaskManager(TaskManager<T> taskManager)
-	{
-		if(this.taskManager != null)
-		{
-			this.taskManager.removeTaskListener(taskListener);
-		}
-		this.taskManager = taskManager;
-		if(this.taskManager != null)
-		{
-			this.taskManager.addTaskListener(taskListener);
-		}
-		if(!paused)
-		{
-			initTasks();
-		}
-		else
-		{
-			clearTasks();
-		}
 	}
 
 	private class UpdateViewTaskListener

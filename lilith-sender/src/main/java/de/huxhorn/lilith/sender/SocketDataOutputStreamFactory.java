@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2015 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,16 +49,14 @@ public class SocketDataOutputStreamFactory
 	public static final int DEFAULT_CONNECTION_TIMEOUT = 10000;
 	public static final int DEFAULT_WRITE_TIMEOUT = 5000;
 
-	private String hostName;
-	private int port;
+	private final String hostName;
+	private final int port;
 	private int connectionTimeout;
 	private int writeTimeout;
 
 	public SocketDataOutputStreamFactory(String hostName, int port)
 	{
 		this(hostName, port, DEFAULT_CONNECTION_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
-		this.hostName = hostName;
-		this.port = port;
 	}
 
 	public SocketDataOutputStreamFactory(String hostName, int port, int connectionTimeout, int writeTimeout)

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -23,7 +24,6 @@ import de.huxhorn.lilith.swing.actions.BasicFilterAction;
 import de.huxhorn.lilith.swing.actions.FocusSavedConditionAction;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 class FocusSavedConditionsMenu
@@ -37,6 +37,7 @@ class FocusSavedConditionsMenu
 	private List<BasicFilterAction> savedConditionActions;
 	private EventWrapper eventWrapper;
 
+	@SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
 	FocusSavedConditionsMenu(ApplicationPreferences applicationPreferences, boolean htmlTooltip)
 	{
 		super("Saved conditions");
@@ -48,7 +49,7 @@ class FocusSavedConditionsMenu
 		setViewContainer(null);
 	}
 
-	public void setConditionNames(List<String> conditionNames)
+	public final void setConditionNames(List<String> conditionNames)
 	{
 		// *only* remove if conditions changed.
 		removeAll();
@@ -59,7 +60,7 @@ class FocusSavedConditionsMenu
 		else
 		{
 			conditionNames = new ArrayList<>(conditionNames);
-			Collections.sort(conditionNames, String.CASE_INSENSITIVE_ORDER);
+			conditionNames.sort(String.CASE_INSENSITIVE_ORDER);
 			savedConditionActions = new ArrayList<>(conditionNames.size());
 			for(String current : conditionNames)
 			{

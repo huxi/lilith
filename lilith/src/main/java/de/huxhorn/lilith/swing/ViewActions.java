@@ -112,7 +112,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This class needs cleanup...... remove duplicated logic, make ToolBar/Menu configurable...
  */
-public class ViewActions
+public final class ViewActions
 {
 	private final Logger logger = LoggerFactory.getLogger(ViewActions.class);
 
@@ -138,92 +138,92 @@ public class ViewActions
 		manager.addKeyEventDispatcher(new EggListener());
 	}
 
-	private JToolBar toolbar;
-	private JMenuBar menubar;
+	private final JToolBar toolBar;
+	private final JMenuBar menuBar;
 
 	private final MainFrame mainFrame;
 	private final ApplicationPreferences applicationPreferences;
+	private final JToggleButton tailButton;
+
+	private final ExportMenuAction exportMenuAction;
+	private final AttachAction attachToolBarAction;
+	private final AttachAction attachMenuAction;
+	private final DisconnectAction disconnectToolBarAction;
+	private final DisconnectAction disconnectMenuAction;
+	private final FindPreviousAction findPreviousToolBarAction;
+	private final FindPreviousAction findPreviousMenuAction;
+	private final FindNextAction findNextToolBarAction;
+	private final FindNextAction findNextMenuAction;
+	private final FindPreviousActiveAction findPreviousActiveAction;
+	private final FindPreviousActiveAction findPreviousActiveToolBarAction;
+	private final FindNextActiveAction findNextActiveAction;
+	private final FindNextActiveAction findNextActiveToolBarAction;
+	private final ResetFindAction resetFindAction;
+	private final TailAction tailMenuAction;
+	private final EditSourceNameMenuAction editSourceNameMenuAction;
+	private final SaveLayoutAction saveLayoutAction;
+	private final ResetLayoutAction resetLayoutAction;
+	private final SaveConditionMenuAction saveConditionMenuAction;
+
+	private final ZoomInMenuAction zoomInMenuAction;
+	private final ZoomOutMenuAction zoomOutMenuAction;
+	private final ResetZoomMenuAction resetZoomMenuAction;
+
+	private final NextViewAction nextViewAction;
+	private final PreviousViewAction previousViewAction;
+	private final CloseFilterAction closeFilterAction;
+	private final CloseOtherFiltersAction closeOtherFiltersAction;
+	private final CloseAllFiltersAction closeAllFiltersAction;
+
+	private final RemoveInactiveAction removeInactiveAction;
+	private final CloseAllAction closeAllAction;
+	private final CloseOtherAction closeOtherAction;
+	private final MinimizeAllAction minimizeAllAction;
+	private final MinimizeAllOtherAction minimizeAllOtherAction;
+
+	private final JMenuItem removeInactiveItem;
+
+	private final JMenu windowMenu;
+	private final FindAction findMenuAction;
+	private final JMenu searchMenu;
+	private final JMenu viewMenu;
+	private final JMenu columnsMenu;
+	private final ClearAction clearMenuAction;
+	private final FocusMessageAction focusMessageAction;
+	private final FocusEventsAction focusEventsAction;
+	private final ChangeListener containerChangeListener;
+	private final TailAction tailToolBarAction;
+	private final ClearAction clearToolBarAction;
+	private final FindAction findToolBarAction;
+	private final CopySelectionAction copySelectionAction;
+	private final CopyToClipboardAction copyEventAction;
+	private final ShowUnfilteredEventAction showUnfilteredEventAction;
+	private final JPopupMenu popup;
+	private final GoToSourceAction goToSourceAction;
+	private final FocusMenu focusMenu;
+	private final ExcludeMenu excludeMenu;
+	private final FocusMenu focusPopupMenu;
+	private final ExcludeMenu excludePopupMenu;
+	private final JMenu filterPopupMenu;
+	private final JMenu copyPopupMenu;
+	private final PropertyChangeListener containerPropertyChangeListener;
+	private final JMenuItem showTaskManagerItem;
+	private final JMenuItem closeAllItem;
+	private final JMenuItem minimizeAllItem;
+	private final JMenuItem closeAllOtherItem;
+	private final JMenuItem minimizeAllOtherItem;
+	private final JMenu recentFilesMenu;
+	private final ClearRecentFilesAction clearRecentFilesAction;
+	private final JMenu customCopyMenu;
+	private final JMenu customCopyPopupMenu;
+	private final List<CopyToClipboardAction> copyLoggingActions;
+	private final List<CopyToClipboardAction> copyAccessActions;
+	private final Map<KeyStroke, CopyToClipboardAction> keyStrokeActionMapping;
+
 	private ViewContainer viewContainer;
-	private JToggleButton tailButton;
-
-	private ExportMenuAction exportMenuAction;
-	private AttachAction attachToolBarAction;
-	private AttachAction attachMenuAction;
-	private DisconnectAction disconnectToolBarAction;
-	private DisconnectAction disconnectMenuAction;
-	private FindPreviousAction findPreviousToolBarAction;
-	private FindPreviousAction findPreviousMenuAction;
-	private FindNextAction findNextToolBarAction;
-	private FindNextAction findNextMenuAction;
-	private FindPreviousActiveAction findPreviousActiveAction;
-	private FindPreviousActiveAction findPreviousActiveToolBarAction;
-	private FindNextActiveAction findNextActiveAction;
-	private FindNextActiveAction findNextActiveToolBarAction;
-	private ResetFindAction resetFindAction;
-	private TailAction tailMenuAction;
-	private EditSourceNameMenuAction editSourceNameMenuAction;
-	private SaveLayoutAction saveLayoutAction;
-	private ResetLayoutAction resetLayoutAction;
-	private SaveConditionMenuAction saveConditionMenuAction;
-
-	private ZoomInMenuAction zoomInMenuAction;
-	private ZoomOutMenuAction zoomOutMenuAction;
-	private ResetZoomMenuAction resetZoomMenuAction;
-
-	private NextViewAction nextViewAction;
-	private PreviousViewAction previousViewAction;
-	private CloseFilterAction closeFilterAction;
-	private CloseOtherFiltersAction closeOtherFiltersAction;
-	private CloseAllFiltersAction closeAllFiltersAction;
-
-	private RemoveInactiveAction removeInactiveAction;
-	private CloseAllAction closeAllAction;
-	private CloseOtherAction closeOtherAction;
-	private MinimizeAllAction minimizeAllAction;
-	private MinimizeAllOtherAction minimizeAllOtherAction;
-
-	private JMenuItem removeInactiveItem;
-
-	private JMenu windowMenu;
-	private FindAction findMenuAction;
-	private JMenu searchMenu;
-	private JMenu viewMenu;
-	private JMenu columnsMenu;
-	private ClearAction clearMenuAction;
-	private FocusMessageAction focusMessageAction;
-	private FocusEventsAction focusEventsAction;
-	private ChangeListener containerChangeListener;
-	private TailAction tailToolBarAction;
-	private ClearAction clearToolBarAction;
-	private FindAction findToolBarAction;
-	private CopySelectionAction copySelectionAction;
-	private CopyToClipboardAction copyEventAction;
-	private ShowUnfilteredEventAction showUnfilteredEventAction;
-	private JPopupMenu popup;
-	private GoToSourceAction goToSourceAction;
-	private FocusMenu focusMenu;
-	private ExcludeMenu excludeMenu;
-	private FocusMenu focusPopupMenu;
-	private ExcludeMenu excludePopupMenu;
-	private JMenu filterPopupMenu;
-	private JMenu copyPopupMenu;
-	private PropertyChangeListener containerPropertyChangeListener;
 	private EventWrapper eventWrapper;
-	private JMenuItem showTaskManagerItem;
-	private JMenuItem closeAllItem;
-	private JMenuItem minimizeAllItem;
-	private JMenuItem closeAllOtherItem;
-	private JMenuItem minimizeAllOtherItem;
-	private JMenu recentFilesMenu;
-	private ClearRecentFilesAction clearRecentFilesAction;
-	private JMenu customCopyMenu;
-	private JMenu customCopyPopupMenu;
 	private Map<String, CopyToClipboardAction> groovyClipboardActions;
 	private Map<String, ClipboardFormatterData> groovyClipboardData;
-	private List<CopyToClipboardAction> copyLoggingActions;
-	private List<CopyToClipboardAction> copyAccessActions;
-	private Map<KeyStroke, CopyToClipboardAction> keyStrokeActionMapping;
-	private boolean initialized = false;
 
 	public ViewActions(MainFrame mainFrame, ViewContainer viewContainer)
 	{
@@ -358,37 +358,37 @@ public class ViewActions
 		minimizeAllOtherItem = new JMenuItem(minimizeAllOtherAction);
 		removeInactiveItem = new JMenuItem(removeInactiveAction);
 
-		toolbar = new JToolBar(SwingConstants.HORIZONTAL);
-		toolbar.setFloatable(false);
+		toolBar = new JToolBar(SwingConstants.HORIZONTAL);
+		toolBar.setFloatable(false);
 
 		tailButton = new JToggleButton(tailToolBarAction);
-		toolbar.add(tailButton);
-		toolbar.add(new JButton(clearToolBarAction));
-		toolbar.add(new JButton(disconnectToolBarAction));
+		toolBar.add(tailButton);
+		toolBar.add(new JButton(clearToolBarAction));
+		toolBar.add(new JButton(disconnectToolBarAction));
 
-		toolbar.addSeparator();
+		toolBar.addSeparator();
 
-		toolbar.add(new JButton(findToolBarAction));
-		toolbar.add(new JButton(findPreviousToolBarAction));
-		toolbar.add(new JButton(findNextToolBarAction));
-		toolbar.add(new JButton(findPreviousActiveToolBarAction));
-		toolbar.add(new JButton(findNextActiveToolBarAction));
+		toolBar.add(new JButton(findToolBarAction));
+		toolBar.add(new JButton(findPreviousToolBarAction));
+		toolBar.add(new JButton(findNextToolBarAction));
+		toolBar.add(new JButton(findPreviousActiveToolBarAction));
+		toolBar.add(new JButton(findNextActiveToolBarAction));
 
-		toolbar.addSeparator();
+		toolBar.addSeparator();
 
-		toolbar.add(new JButton(attachToolBarAction));
+		toolBar.add(new JButton(attachToolBarAction));
 
-		toolbar.addSeparator();
+		toolBar.addSeparator();
 
-		toolbar.add(new JButton(preferencesToolBarAction));
+		toolBar.add(new JButton(preferencesToolBarAction));
 
-		toolbar.addSeparator();
+		toolBar.addSeparator();
 
-		toolbar.add(new JButton(showLoveToolbarAction));
+		toolBar.add(new JButton(showLoveToolbarAction));
 
 		recentFilesMenu=new JMenu(new RecentFilesAction());
 
-		menubar = new JMenuBar();
+		menuBar = new JMenuBar();
 
 		// File
 		JMenu fileMenu = new JMenu(new FileAction());
@@ -497,31 +497,81 @@ public class ViewActions
 		}
 
 
-		menubar.add(fileMenu);
-		menubar.add(editMenu);
-		menubar.add(searchMenu);
-		menubar.add(viewMenu);
-		menubar.add(windowMenu);
-		menubar.add(helpMenu);
+		menuBar.add(fileMenu);
+		menuBar.add(editMenu);
+		menuBar.add(searchMenu);
+		menuBar.add(viewMenu);
+		menuBar.add(windowMenu);
+		menuBar.add(helpMenu);
 
 		updateWindowMenu();
 		updateRecentFiles();
 
-		setViewContainer(viewContainer);
-		initialized = true;
+		popup = new JPopupMenu();
+		JMenuItem showUnfilteredMenuItem = new JMenuItem(showUnfilteredEventAction);
+		Font f = showUnfilteredMenuItem.getFont();
+		Font boldFont = f.deriveFont(Font.BOLD);
+		showUnfilteredMenuItem.setFont(boldFont);
+
+		popup.add(showUnfilteredMenuItem);
+
+		filterPopupMenu = new JMenu("Filter");
+		popup.add(filterPopupMenu);
+		filterPopupMenu.add(closeFilterAction);
+		filterPopupMenu.add(closeOtherFiltersAction);
+		filterPopupMenu.add(closeAllFiltersAction);
+
+		popup.addSeparator();
+		popup.add(saveConditionMenuAction);
+		popup.addSeparator();
+
+		focusPopupMenu = new FocusMenu(applicationPreferences, true);
+		excludePopupMenu = new ExcludeMenu(applicationPreferences, true);
+
+		popup.add(focusPopupMenu);
+		popup.add(excludePopupMenu);
+		popup.addSeparator();
+
+		updateCustomCopyMenu(this.eventWrapper);
+
+		copyPopupMenu = new JMenu("Copy");
+		popup.add(copyPopupMenu);
+		copyPopupMenu.add(copySelectionAction);
+		copyPopupMenu.addSeparator();
+		copyPopupMenu.add(copyEventAction);
+
+		copyPopupMenu.addSeparator();
+
+		copyLoggingActions.forEach(copyPopupMenu::add);
+
+		copyPopupMenu.addSeparator();
+
+		copyAccessActions.forEach(copyPopupMenu::add);
+
+		copyPopupMenu.addSeparator();
+		copyPopupMenu.add(customCopyPopupMenu);
+
+		popup.add(goToSourceAction);
+
+		setViewContainer(viewContainer, false);
 	}
 
-	public JToolBar getToolbar()
+	JToolBar getToolBar()
 	{
-		return toolbar;
+		return toolBar;
 	}
 
 	JMenuBar getMenuBar()
 	{
-		return menubar;
+		return menuBar;
 	}
 
 	public void setViewContainer(ViewContainer viewContainer)
+	{
+		setViewContainer(viewContainer, true);
+	}
+
+	private void setViewContainer(ViewContainer viewContainer, boolean initialized)
 	{
 		if(this.viewContainer != viewContainer || !initialized)
 		{
@@ -663,9 +713,9 @@ public class ViewActions
 					for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
 					{
 						boolean visible = current.isVisible();
-						JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible));
-						cbmi.setSelected(visible);
-						columnsMenu.add(cbmi);
+						JCheckBoxMenuItem checkBoxMenuItem = new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible));
+						checkBoxMenuItem.setSelected(visible);
+						columnsMenu.add(checkBoxMenuItem);
 					}
 				}
 			}
@@ -945,56 +995,6 @@ public class ViewActions
 		}
 	}
 
-	private void initPopup()
-	{
-		if(logger.isDebugEnabled()) logger.debug("initPopup()");
-		popup = new JPopupMenu();
-		JMenuItem showUnfilteredMenuItem = new JMenuItem(showUnfilteredEventAction);
-		Font f = showUnfilteredMenuItem.getFont();
-		Font boldFont = f.deriveFont(Font.BOLD);
-		showUnfilteredMenuItem.setFont(boldFont);
-
-		popup.add(showUnfilteredMenuItem);
-
-		filterPopupMenu = new JMenu("Filter");
-		popup.add(filterPopupMenu);
-		filterPopupMenu.add(closeFilterAction);
-		filterPopupMenu.add(closeOtherFiltersAction);
-		filterPopupMenu.add(closeAllFiltersAction);
-
-		popup.addSeparator();
-		popup.add(saveConditionMenuAction);
-		popup.addSeparator();
-
-		focusPopupMenu = new FocusMenu(applicationPreferences, true);
-		excludePopupMenu = new ExcludeMenu(applicationPreferences, true);
-
-		popup.add(focusPopupMenu);
-		popup.add(excludePopupMenu);
-		popup.addSeparator();
-
-		updateCustomCopyMenu(this.eventWrapper);
-
-		copyPopupMenu = new JMenu("Copy");
-		popup.add(copyPopupMenu);
-		copyPopupMenu.add(copySelectionAction);
-		copyPopupMenu.addSeparator();
-		copyPopupMenu.add(copyEventAction);
-
-		copyPopupMenu.addSeparator();
-
-		copyLoggingActions.forEach(copyPopupMenu::add);
-
-		copyPopupMenu.addSeparator();
-
-		copyAccessActions.forEach(copyPopupMenu::add);
-
-		copyPopupMenu.addSeparator();
-		copyPopupMenu.add(customCopyPopupMenu);
-
-		popup.add(goToSourceAction);
-	}
-
 	private void setEventWrapper(EventWrapper wrapper)
 	{
 		if(logger.isDebugEnabled()) logger.debug("setEventWrapper: {}", wrapper);
@@ -1032,7 +1032,7 @@ public class ViewActions
 		}
 		if(scripts == null || scripts.length == 0)
 		{
-			if(groovyClipboardActions.size() > 0)
+			if(!groovyClipboardActions.isEmpty())
 			{
 				groovyClipboardActions.clear();
 				groovyClipboardData.clear();
@@ -1083,7 +1083,7 @@ public class ViewActions
 			{
 				changed = true;
 				groovyClipboardData.put(key, data);
-				value.setClipboardFormatter(formatter); // this reinitializes the action
+				value.setClipboardFormatter(formatter); // this re-initializes the action
 			}
 		}
 
@@ -1092,7 +1092,7 @@ public class ViewActions
 			customCopyMenu.removeAll();
 			customCopyPopupMenu.removeAll();
 			boolean enabled = false;
-			if(groovyClipboardActions.size() > 0)
+			if(!groovyClipboardActions.isEmpty())
 			{
 				enabled = true;
 				SortedSet<CopyToClipboardAction> sorted = new TreeSet<>(CopyToClipboardByNameComparator.INSTANCE);
@@ -1195,10 +1195,6 @@ public class ViewActions
 	private void updatePopup()
 	{
 		if(logger.isDebugEnabled()) logger.debug("updatePopup()");
-		if(popup == null)
-		{
-			initPopup();
-		}
 		boolean enableCopyMenu = false;
 		if(eventWrapper != null)
 		{
@@ -1225,7 +1221,7 @@ public class ViewActions
 	public void updateRecentFiles()
 	{
 		List<String> recentFilesStrings = applicationPreferences.getRecentFiles();
-		if(recentFilesStrings == null || recentFilesStrings.size()==0)
+		if(recentFilesStrings == null || recentFilesStrings.isEmpty())
 		{
 			recentFilesMenu.removeAll();
 			recentFilesMenu.setEnabled(false);
@@ -1259,7 +1255,7 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 3138705799791457944L;
 
-		private String absoluteName;
+		private final String absoluteName;
 
 		OpenFileAction(String absoluteName, boolean fullPath)
 		{
@@ -1624,7 +1620,7 @@ public class ViewActions
 			updateAction();
 		}
 
-		void updateAction()
+		final void updateAction()
 		{
 			ViewContainer container = getViewContainer();
 			if(container != null)
@@ -1824,6 +1820,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1840,6 +1837,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1856,6 +1854,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1872,6 +1871,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1888,6 +1888,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1904,6 +1905,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1919,6 +1921,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1934,6 +1937,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1949,6 +1953,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -1964,6 +1969,7 @@ public class ViewActions
 
 		public void actionPerformed(ActionEvent e)
 		{
+			// nothing
 		}
 	}
 
@@ -2321,7 +2327,7 @@ public class ViewActions
 	class UpdateWindowMenuRunnable
 		implements Runnable
 	{
-		private JMenu windowMenu;
+		private final JMenu windowMenu;
 
 		UpdateWindowMenuRunnable(JMenu windowMenu)
 		{
@@ -2951,7 +2957,7 @@ public class ViewActions
 
 		private Clipboard clipboard;
 
-		private PasteStackTraceElementAction()
+		PasteStackTraceElementAction()
 		{
 			super(LilithActionId.PASTE_STACK_TRACE_ELEMENT);
 			boolean enable = true;
@@ -3017,7 +3023,7 @@ public class ViewActions
 		private ClipboardFormatter clipboardFormatter;
 		private transient EventWrapper wrapper;
 
-		private CopyToClipboardAction(ClipboardFormatter clipboardFormatter)
+		CopyToClipboardAction(ClipboardFormatter clipboardFormatter)
 		{
 			setClipboardFormatter(clipboardFormatter);
 			setEventWrapper(null);
@@ -3028,7 +3034,7 @@ public class ViewActions
 			return clipboardFormatter;
 		}
 
-		void setClipboardFormatter(ClipboardFormatter clipboardFormatter)
+		final void setClipboardFormatter(ClipboardFormatter clipboardFormatter)
 		{
 			if(clipboardFormatter == null)
 			{
@@ -3155,8 +3161,8 @@ public class ViewActions
 	{
 		private static final long serialVersionUID = 7775753128032553866L;
 		private boolean visible;
-		private String columnName;
-		private PersistentTableColumnModel tableColumnModel;
+		private final String columnName;
+		private final PersistentTableColumnModel tableColumnModel;
 
 		ShowHideAction(PersistentTableColumnModel tableColumnModel, String columnName, boolean visible)
 		{
@@ -3196,7 +3202,7 @@ public class ViewActions
 
 		public int compare(CopyToClipboardAction o1, CopyToClipboardAction o2)
 		{
-			if(o1 == o2)
+			if(o1 == o2) // NOPMD
 			{
 				return 0;
 			}
@@ -3210,7 +3216,7 @@ public class ViewActions
 			}
 			ClipboardFormatter f1 = o1.getClipboardFormatter();
 			ClipboardFormatter f2 = o2.getClipboardFormatter();
-			if(f1 == f2)
+			if(f1 == f2) // NOPMD
 			{
 				return 0;
 			}
@@ -3225,7 +3231,7 @@ public class ViewActions
 			String n1 = f1.getName();
 			String n2 = f2.getName();
 			//noinspection StringEquality
-			if(n1 == n2)
+			if(n1 == n2) // NOPMD
 			{
 				return 0;
 			}

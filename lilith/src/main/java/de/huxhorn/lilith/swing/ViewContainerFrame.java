@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import java.awt.BorderLayout;
@@ -40,10 +41,10 @@ public class ViewContainerFrame
 
 	private final Logger logger = LoggerFactory.getLogger(ViewContainerFrame.class);
 
-	private ViewActions viewActions;
-	private MainFrame mainFrame;
-	private ViewContainer viewContainer;
-	private JToolBar toolbar;
+	private final ViewActions viewActions;
+	private final MainFrame mainFrame;
+	private final ViewContainer viewContainer;
+	private final JToolBar toolbar;
 
 	public ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer)
 		throws HeadlessException
@@ -54,7 +55,7 @@ public class ViewContainerFrame
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		add(viewContainer, BorderLayout.CENTER);
-		toolbar=viewActions.getToolbar();
+		toolbar=viewActions.getToolBar();
 		add(toolbar, BorderLayout.NORTH);
 		setJMenuBar(viewActions.getMenuBar());
 		addWindowListener(new CleanupWindowChangeListener());

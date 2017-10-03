@@ -95,7 +95,6 @@ import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.lilith.swing.table.Colors;
 import de.huxhorn.lilith.swing.taskmanager.TaskManagerInternalFrame;
 import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler;
-import de.huxhorn.lilith.swing.transfer.MainFrameTransferHandler16;
 import de.huxhorn.lilith.swing.uiprocessors.ConditionNamesActionsProcessor;
 import de.huxhorn.lilith.swing.uiprocessors.ConditionNamesContainerProcessor;
 import de.huxhorn.lilith.swing.uiprocessors.PreviousSearchStringsContainerProcessor;
@@ -202,97 +201,103 @@ public class MainFrame
 {
 	private static final long serialVersionUID = 6138189654024239738L;
 
+	private static final String LOGS_SUBDIRECTORY = "logs";
+	private static final String LOGGING_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/logging";
+	private static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
+	private static final String GLOBAL_SOURCE_IDENTIFIER_NAME ="global";
+	private static final String HELP_URI_PREFIX = "help://";
+	private static final String PREFERENCES_URI_PREFIX = "prefs://";
+	private static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
+	private static final ViewContainerProcessor UPDATE_VIEWS_CONTAINER_PROCESSOR = new UpdateViewsContainerProcessor();
+	private static final ViewActionsProcessor UPDATE_RECENT_FILES_ACTIONS_PROCESSOR = new UpdateRecentFilesProcessor();
+	private static final ViewActionsProcessor UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR = new UpdateWindowMenuProcessor();
+	private static final ViewContainerProcessor RESET_CONTAINER_PROCESSOR = new ResetContainerProcessor();
+	private static final double SCALE_FACTOR = 0.05d;
+	private static final int EXPORT_WARNING_SIZE = 20000;
+	private static final boolean IS_MAC;
+	private static final boolean IS_WINDOWS;
+
+	private static final String[] MAC_OPEN_URL_ARRAY =
+			{
+					// Mac: open http://www.heise.de
+					"open",
+					null,
+			};
+
+	private static final String[] WINDOWS_OPEN_URL_ARRAY =
+			{
+					// Windows: cmd /C start http://www.heise.de
+					"cmd",
+					"/C",
+					"start",
+					null,
+			};
+
+
 	private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
 	private final File startupApplicationPath;
 	private final GroovyEventWrapperHtmlFormatter groovyFormatter;
 	private final ThymeleafEventWrapperHtmlFormatter thymeleafFormatter;
 
-	private GoToSource gotoSourceProvider;
-	private LogFileFactory loggingFileFactory;
-	private SourceManager<LoggingEvent> loggingEventSourceManager;
-	private FileBufferFactory<LoggingEvent> loggingFileBufferFactory;
-	private EventSourceListener<LoggingEvent> loggingSourceListener;
-	private LoggingEventViewManager loggingEventViewManager;
+	private final LogFileFactory loggingFileFactory;
+	private final FileBufferFactory<LoggingEvent> loggingFileBufferFactory;
+	private final EventSourceListener<LoggingEvent> loggingSourceListener;
+	private final LoggingEventViewManager loggingEventViewManager;
 
-	private LogFileFactory accessFileFactory;
-	private SourceManager<AccessEvent> accessEventSourceManager;
-	private FileBufferFactory<AccessEvent> accessFileBufferFactory;
-	private EventSourceListener<AccessEvent> accessSourceListener;
-	private AccessEventViewManager accessEventViewManager;
+	private final LogFileFactory accessFileFactory;
+	private final FileBufferFactory<AccessEvent> accessFileBufferFactory;
+	private final EventSourceListener<AccessEvent> accessSourceListener;
+	private final AccessEventViewManager accessEventViewManager;
 
-	private Sounds sounds;
-	private JDesktopPane desktop;
+	private final JDesktopPane desktop;
 
-	private PreferencesDialog preferencesDialog;
-	private JDialog aboutDialog;
-	private JLabel statusLabel;
+	private final PreferencesDialog preferencesDialog;
+	private final JDialog aboutDialog;
+	private final JLabel statusLabel;
 	private final ApplicationPreferences applicationPreferences;
-	private DebugDialog debugDialog;
-	private TaskManager<Long> longTaskManager;
-	private ViewActions viewActions;
-	private OpenPreviousDialog openInactiveLogsDialog;
-	private HelpFrame helpFrame;
+	private final DebugDialog debugDialog;
+	private final TaskManager<Long> longTaskManager;
+	private final ViewActions viewActions;
+	private final OpenPreviousDialog openInactiveLogsDialog;
+	private final HelpFrame helpFrame;
+	private final List<AutostartRunnable> autostartProcesses;
+	private final SplashScreen splashScreen;
+	private final TaskManagerInternalFrame taskManagerFrame;
+	private final JLabel taskStatusLabel;
+	private final JFileChooser openFileChooser;
+	private final JFileChooser importFileChooser;
+	private final JFileChooser exportFileChooser;
+
+	private final JToolBar toolbar;
+	private final JPanel statusBar;
+	private final TipOfTheDayDialog tipOfTheDayDialog;
+	private final CheckForUpdateDialog checkForUpdateDialog;
+
+	private final SourceTitleContainerProcessor sourceTitleContainerProcessor=new SourceTitleContainerProcessor();
+	private final ScrollingSmoothlyContainerProcessor scrollingSmoothlyContainerProcessor = new ScrollingSmoothlyContainerProcessor();
+
+	private GoToSource gotoSourceProvider;
+	private SourceManager<LoggingEvent> loggingEventSourceManager;
+	private SourceManager<AccessEvent> accessEventSourceManager;
+	private Sounds sounds;
 	private int activeCounter;
-	private List<AutostartRunnable> autostartProcesses;
-	private static final boolean IS_MAC;
-	private static final boolean IS_WINDOWS;
 	private List<SavedCondition> activeConditions;
 	private Map<LoggingEvent.Level, Colors> levelColors;
 	private Map<HttpStatus.Type, Colors> statusColors;
-	private SplashScreen splashScreen;
-	private TaskManagerInternalFrame taskManagerFrame;
-	private JLabel taskStatusLabel;
 	private int previousNumberOfTasks;
-	private static final String LOGS_SUBDIRECTORY = "logs";
-	private static final String LOGGING_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/logging";
-	private static final String ACCESS_FILE_SUBDIRECTORY = LOGS_SUBDIRECTORY + "/access";
-	private JFileChooser openFileChooser;
-	private JFileChooser importFileChooser;
-	private JFileChooser exportFileChooser;
 	private boolean coloringWholeRow;
-
-	private static final double SCALE_FACTOR = 0.05d;
-	private JToolBar toolbar;
-	private JPanel statusBar;
-	private TipOfTheDayDialog tipOfTheDayDialog;
-	private CheckForUpdateDialog checkForUpdateDialog;
 	private FileDumpEventHandler<LoggingEvent> loggingFileDump;
 	private FileDumpEventHandler<AccessEvent> accessFileDump;
-	private static final int EXPORT_WARNING_SIZE = 20000;
 	private Condition findActiveCondition;
 	private TraySupport traySupport; // may be null
+	private boolean usingThymeleaf;
 
 	static
 	{
 		String osName = System.getProperty("os.name").toLowerCase(Locale.US);
 		IS_WINDOWS = osName.startsWith("windows");
 		IS_MAC = osName.startsWith("mac");
-	}
-
-	private static final String GLOBAL_SOURCE_IDENTIFIER_NAME ="global";
-	private static final ViewContainerProcessor UPDATE_VIEWS_CONTAINER_PROCESSOR = new UpdateViewsContainerProcessor();
-	private static final ViewActionsProcessor UPDATE_RECENT_FILES_ACTIONS_PROCESSOR = new UpdateRecentFilesProcessor();
-	private static final ViewActionsProcessor UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR = new UpdateWindowMenuProcessor();
-	private static final ViewContainerProcessor RESET_CONTAINER_PROCESSOR = new ResetContainerProcessor();
-	private final SourceTitleContainerProcessor sourceTitleContainerProcessor=new SourceTitleContainerProcessor();
-	private final ScrollingSmoothlyContainerProcessor scrollingSmoothlyContainerProcessor = new ScrollingSmoothlyContainerProcessor();
-
-	private boolean usingThymeleaf;
-
-	public PreferencesDialog getPreferencesDialog()
-	{
-		return preferencesDialog;
-	}
-
-	public ViewActions getViewActions()
-	{
-		return viewActions;
-	}
-
-	public JDesktopPane getDesktop()
-	{
-		return desktop;
 	}
 
 	public MainFrame(ApplicationPreferences applicationPreferences, SplashScreen splashScreen, String appName)
@@ -477,16 +482,7 @@ public class MainFrame
 		desktop.validate();
 
 		// the following code must be executed after desktop has been initialized...
-		try
-		{
-			// try to use the 1.6 transfer handler...
-			new MainFrameTransferHandler16(this).attach();
-		}
-		catch(Throwable t)
-		{
-			// ... and use the basic 1.5 transfer handler if this fails.
-			new MainFrameTransferHandler(this).attach();
-		}
+		new MainFrameTransferHandler(this).attach();
 
 		setSplashStatusText("Creating Tip of the Day dialog…");
 		tipOfTheDayDialog = new TipOfTheDayDialog(this);
@@ -496,7 +492,7 @@ public class MainFrame
 		viewActions.getPopupMenu(); // initialize popup once in main frame only.
 
 		JMenuBar menuBar = viewActions.getMenuBar();
-		toolbar = viewActions.getToolbar();
+		toolbar = viewActions.getToolBar();
 		add(toolbar, BorderLayout.NORTH);
 		setJMenuBar(menuBar);
 
@@ -563,8 +559,8 @@ public class MainFrame
 		setSplashStatusText("Creating global views…");
 		SourceIdentifier globalSourceIdentifier = new SourceIdentifier(GLOBAL_SOURCE_IDENTIFIER_NAME, null);
 
-		loggingFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, loggingFileBufferFactory);
-		accessFileDump = new FileDumpEventHandler<>(globalSourceIdentifier, accessFileBufferFactory);
+		loggingFileDump = new FileDumpEventHandler<>(loggingFileBufferFactory.createActiveBuffer(globalSourceIdentifier));
+		accessFileDump = new FileDumpEventHandler<>(accessFileBufferFactory.createActiveBuffer(globalSourceIdentifier));
 
 		setGlobalLoggingEnabled(applicationPreferences.isGlobalLoggingEnabled());
 
@@ -865,6 +861,21 @@ public class MainFrame
 			traySupport.setMainFrame(this);
 		}
 		setSplashStatusText("Done!");
+	}
+
+	public PreferencesDialog getPreferencesDialog()
+	{
+		return preferencesDialog;
+	}
+
+	public ViewActions getViewActions()
+	{
+		return viewActions;
+	}
+
+	public JDesktopPane getDesktop()
+	{
+		return desktop;
 	}
 
 	void showTipOfTheDayDialog()
@@ -1470,10 +1481,6 @@ public class MainFrame
 		cleanAllInactiveLogs();
 	}
 
-	private static final String HELP_URI_PREFIX = "help://";
-	private static final String PREFERENCES_URI_PREFIX = "prefs://";
-	private static final String STACK_TRACE_ELEMENT_URI_PREFIX = "ste://";
-
 	public boolean openUriString(String uri)
 	{
 		if(uri.startsWith(HELP_URI_PREFIX))
@@ -1909,6 +1916,8 @@ public class MainFrame
 				statusText.append(applicationPreferences.getWhiteListName());
 				statusText.append("'.  ");
 				break;
+			default: // NONE
+				break;
 		}
 
 		if(activeCounter == 0)
@@ -2274,23 +2283,6 @@ public class MainFrame
 		}
 	}
 
-	// Windows: cmd /C start http://www.heise.de
-	// Mac: open http://www.heise.de
-
-	private static final String[] MAC_OPEN_URL_ARRAY =
-		{
-			"open",
-			null,
-		};
-
-	private static final String[] WINDOWS_OPEN_URL_ARRAY =
-		{
-			"cmd",
-			"/C",
-			"start",
-			null,
-		};
-
 	private static String[] resolveOpenCommandArray(String value)
 	{
 		if(value == null)
@@ -2421,9 +2413,9 @@ public class MainFrame
 	private static class ScrollToBottomRunnable
 		implements Runnable
 	{
-		private ViewWindow window;
+		private final ViewWindow window;
 
-		private ScrollToBottomRunnable(ViewWindow window)
+		ScrollToBottomRunnable(ViewWindow window)
 		{
 			this.window = window;
 		}
@@ -2529,7 +2521,7 @@ public class MainFrame
 	class ShowViewRunnable
 		implements Runnable
 	{
-		private ViewContainer<?> container;
+		private final ViewContainer<?> container;
 
 		ShowViewRunnable(ViewContainer<?> container)
 		{
@@ -3148,7 +3140,7 @@ public class MainFrame
 
 		public int compare(EventSource<T> o1, EventSource<T> o2)
 		{
-			if(o1 == o2)
+			if(o1 == o2) // NOPMD
 			{
 				return 0;
 			}
@@ -3162,7 +3154,7 @@ public class MainFrame
 			}
 			SourceIdentifier si1 = o1.getSourceIdentifier();
 			SourceIdentifier si2 = o2.getSourceIdentifier();
-			if(si1 == si2)
+			if(si1 == si2) // NOPMD
 			{
 				return 0;
 			}
@@ -3223,7 +3215,7 @@ public class MainFrame
 	{
 		private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
-		private File file;
+		private final File file;
 		private Process process;
 
 		AutostartRunnable(File file)
@@ -3274,7 +3266,7 @@ public class MainFrame
 		abstract class AbstractOutputConsumerRunnable
 			implements Runnable
 		{
-			private BufferedReader inputReader;
+			private final BufferedReader inputReader;
 
 			AbstractOutputConsumerRunnable(InputStream input)
 			{
@@ -3344,7 +3336,7 @@ public class MainFrame
 	{
 		private final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
-		private Process process;
+		private final Process process;
 
 		ProcessConsumerRunnable(Process process)
 		{
@@ -3376,7 +3368,7 @@ public class MainFrame
 		abstract class AbstractOutputConsumerRunnable
 			implements Runnable
 		{
-			private BufferedReader inputReader;
+			private final BufferedReader inputReader;
 
 			AbstractOutputConsumerRunnable(InputStream input)
 			{
@@ -3502,8 +3494,8 @@ public class MainFrame
 		private static final String RELEASE_VERSION_URL = "http://lilithapp.com/release-version.txt";
 		private static final String SNAPSHOT_VERSION_URL = "http://lilithapp.com/snapshot-version.txt";
 
-		private boolean showAlways;
-		private boolean checkSnapshot;
+		private final boolean showAlways;
+		private final boolean checkSnapshot;
 
 		CheckForUpdateRunnable(boolean showAlways, boolean checkSnapshot)
 		{
@@ -3584,8 +3576,8 @@ public class MainFrame
 	private class ShowUpdateDialogRunnable
 		implements Runnable
 	{
-		private String message;
-		private String changes;
+		private final String message;
+		private final String changes;
 
 		ShowUpdateDialogRunnable(String message, String changes)
 		{

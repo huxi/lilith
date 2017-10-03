@@ -23,7 +23,7 @@ import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import java.io.ObjectStreamException;
 
-public class CallLocationCondition
+public final class CallLocationCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -3772942542557888560L;

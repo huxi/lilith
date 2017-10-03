@@ -48,38 +48,34 @@ public class GeneralPanel
 {
 	private static final long serialVersionUID = -3070943109124678227L;
 
-	private PreferencesDialog preferencesDialog;
-	private ApplicationPreferences applicationPreferences;
+	private final PreferencesDialog preferencesDialog;
+	private final ApplicationPreferences applicationPreferences;
 
 	// Views
-	private JCheckBox scrollingSmoothlyCheckbox;
-	private JCheckBox scrollingToBottomCheckbox;
-	private JCheckBox coloringWholeRowCheckbox;
+	private final JCheckBox scrollingSmoothlyCheckbox;
+	private final JCheckBox scrollingToBottomCheckbox;
+	private final JCheckBox coloringWholeRowCheckbox;
 
 	// Details view
-	private JCheckBox showFullCallStackCheckbox;
-	private JCheckBox showStackTraceCheckbox;
-	private JCheckBox usingWrappedExceptionStyleCheckbox;
+	private final JCheckBox showFullCallStackCheckbox;
+	private final JCheckBox showStackTraceCheckbox;
+	private final JCheckBox usingWrappedExceptionStyleCheckbox;
 
 	// ???
-	private JFileChooser applicationPathFileChooser;
-	private JTextField appPathTextField;
-	private JComboBox<String> lookAndFeelCombo;
-	private JComboBox<String> defaultConditionCombo;
+	private final JFileChooser applicationPathFileChooser;
+	private final JTextField appPathTextField;
+	private final JComboBox<String> lookAndFeelCombo;
+	private final JComboBox<String> defaultConditionCombo;
 
-	private JCheckBox globalLoggingEnabledCheckbox;
-	private JCheckBox trayActiveCheckbox;
-	private JCheckBox hidingOnCloseCheckbox;
+	private final JCheckBox globalLoggingEnabledCheckbox;
+	private final JCheckBox trayActiveCheckbox;
+	private final JCheckBox hidingOnCloseCheckbox;
 
 	GeneralPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
-		createUI();
-	}
 
-	private void createUI()
-	{
 		// General
 		scrollingSmoothlyCheckbox = new JCheckBox("Smooth horizontal table scrolling");
 		scrollingToBottomCheckbox = new JCheckBox("Initial 'Scrolling to Bottom' setting");

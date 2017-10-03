@@ -30,7 +30,7 @@ import javax.swing.table.TableCellRenderer;
 public class MarkerRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public MarkerRenderer()
 	{

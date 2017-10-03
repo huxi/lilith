@@ -56,6 +56,8 @@ public abstract class LilithEncoderBase<E>
 	private static final byte[] EMPTY = new byte[0];
 	private final Map<String, String> metaDataMap;
 	private final ResettableEncoder<E> encoder;
+	// suggested LOGBACK-1257 workaround below
+	private OutputStreamAppender<?> parent;
 
 	protected LilithEncoderBase(Map<String, String> metaDataMap, ResettableEncoder<E> encoder)
 	{
@@ -129,6 +131,7 @@ public abstract class LilithEncoderBase<E>
 		return byteArrayOutputStream.toByteArray();
 	}
 
+	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] footerBytes()
 	{
 		return null;
@@ -142,9 +145,6 @@ public abstract class LilithEncoderBase<E>
 		encoder.reset();
 		super.start();
 	}
-
-	// suggested LOGBACK-1257 workaround below
-	private OutputStreamAppender<?> parent;
 
 	public void setParent(OutputStreamAppender<?> parent)
 	{

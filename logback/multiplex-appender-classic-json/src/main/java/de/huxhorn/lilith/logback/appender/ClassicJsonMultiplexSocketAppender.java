@@ -35,7 +35,7 @@
 package de.huxhorn.lilith.logback.appender;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
-import de.huxhorn.lilith.data.logging.json.LoggingJsonEncoder;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonCodec;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 
 public class ClassicJsonMultiplexSocketAppender
@@ -52,15 +52,16 @@ public class ClassicJsonMultiplexSocketAppender
 	public static final int UNCOMPRESSED_DEFAULT_PORT = 10031;
 
 	private boolean includeCallerData;
-	private boolean compressing;
 	private boolean usingDefaultPort;
 	private TransformingEncoder transformingEncoder;
 
+	@SuppressWarnings("unused")
 	public ClassicJsonMultiplexSocketAppender()
 	{
 		this(true);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public ClassicJsonMultiplexSocketAppender(boolean compressing)
 	{
 		super();
@@ -97,7 +98,6 @@ public class ClassicJsonMultiplexSocketAppender
 	 */
 	public void setCompressing(boolean compressing)
 	{
-		this.compressing = compressing;
 		if(usingDefaultPort)
 		{
 			if(compressing)
@@ -110,17 +110,7 @@ public class ClassicJsonMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		transformingEncoder.setLilithEncoder(new LoggingJsonEncoder(compressing));
-	}
-
-	public boolean isCompressing()
-	{
-		return compressing;
-	}
-
-	public boolean isIncludeCallerData()
-	{
-		return includeCallerData;
+		transformingEncoder.setLilithEncoder(new LoggingJsonCodec(compressing));
 	}
 
 	public void setIncludeCallerData(boolean includeCallerData)

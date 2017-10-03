@@ -29,7 +29,7 @@ import java.util.List;
 public class LilithBuffer<T extends Serializable>
 	extends BlockingCircularBuffer<EventWrapper<T>>
 {
-	private ApplicationPreferences applicationPreferences;
+	private final ApplicationPreferences applicationPreferences;
 
 	public LilithBuffer(ApplicationPreferences applicationPreferences, int bufferSize, int congestionDelay)
 	{

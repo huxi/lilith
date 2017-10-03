@@ -18,6 +18,13 @@
 
 package de.huxhorn.lilith.services.clipboard
 
+import de.huxhorn.lilith.data.access.AccessEvent
+import de.huxhorn.lilith.data.eventsource.EventWrapper
+import de.huxhorn.lilith.data.logging.ExtendedStackTraceElement
+import de.huxhorn.lilith.data.logging.LoggingEvent
+import de.huxhorn.lilith.data.logging.Message
+import de.huxhorn.lilith.data.logging.ThreadInfo
+import de.huxhorn.lilith.data.logging.ThrowableInfo
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -86,6 +93,222 @@ class FormatterToolsSpec extends Specification {
 		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
 	}
 
+	@Unroll
+	def 'resolveAccessEvent(#input#inputClass) is#not present.'() {
+		expect:
+		FormatterTools.resolveAccessEvent(input).present == present
+
+
+		where:
+		input                          | present
+		null                           | false
+		1                              | false
+		wrapperFor(new AccessEvent())  | true
+		wrapperFor(new LoggingEvent()) | false
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveLoggingEvent(#input#inputClass) is#not present.'() {
+		expect:
+		FormatterTools.resolveLoggingEvent(input).present == present
+
+
+		where:
+		input                          | present
+		null                           | false
+		1                              | false
+		wrapperFor(new AccessEvent())  | false
+		wrapperFor(new LoggingEvent()) | true
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveFormattedMessage(#input#inputClass) is#not present.'() {
+		when:
+		Optional<String> optionalResult = FormatterTools.resolveFormattedMessage(input)
+
+		then:
+		optionalResult.present == present
+		optionalResult.orElse(null) == expectedResult
+
+		where:
+		input                                                                         | present | expectedResult
+		null                                                                          | false   | null
+		1                                                                             | false   | null
+		wrapperFor(new AccessEvent())                                                 | false   | null
+		wrapperFor(new LoggingEvent())                                                | false   | null
+		wrapperFor(new LoggingEvent(message: new Message('')))                        | false   | null
+		wrapperFor(new LoggingEvent(message: new Message('foo')))                     | true    | 'foo'
+		wrapperFor(new LoggingEvent(message: new Message('{}', ['foo'] as String[]))) | true    | 'foo'
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveMessagePattern(#input#inputClass) is#not present.'() {
+		when:
+		Optional<String> optionalResult = FormatterTools.resolveMessagePattern(input)
+
+		then:
+		optionalResult.present == present
+		optionalResult.orElse(null) == expectedResult
+
+		where:
+		input                                                                         | present | expectedResult
+		null                                                                          | false   | null
+		1                                                                             | false   | null
+		wrapperFor(new AccessEvent())                                                 | false   | null
+		wrapperFor(new LoggingEvent())                                                | false   | null
+		wrapperFor(new LoggingEvent(message: new Message('')))                        | false   | null
+		wrapperFor(new LoggingEvent(message: new Message('foo')))                     | true    | 'foo'
+		wrapperFor(new LoggingEvent(message: new Message('{}', ['foo'] as String[]))) | true    | '{}'
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveCallStack(#input#inputClass) is#not present.'() {
+		when:
+		Optional<StackTraceElement[]> optionalResult = FormatterTools.resolveCallStack(input)
+
+		then:
+		optionalResult.present == present
+		optionalResult.orElse(null) == expectedResult
+
+		where:
+		input                                                                      | present | expectedResult
+		null                                                                       | false   | null
+		1                                                                          | false   | null
+		wrapperFor(new AccessEvent())                                              | false   | null
+		wrapperFor(new LoggingEvent())                                             | false   | null
+		wrapperFor(new LoggingEvent(callStack: [] as ExtendedStackTraceElement[])) | false   | null
+		wrapperFor(new LoggingEvent(callStack: callStack()))                       | true    | callStack()
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveThrowableInfo(#input#inputClass) is#not present.'() {
+		when:
+		Optional<ThrowableInfo> optionalResult = FormatterTools.resolveThrowableInfo(input)
+
+		then:
+		optionalResult.present == present
+		optionalResult.orElse(null) == expectedResult
+
+		where:
+		input                                                         | present | expectedResult
+		null                                                          | false   | null
+		1                                                             | false   | null
+		wrapperFor(new AccessEvent())                                 | false   | null
+		wrapperFor(new LoggingEvent())                                | false   | null
+		wrapperFor(new LoggingEvent(throwable: throwableInfo(null)))  | true    | throwableInfo(null)
+		wrapperFor(new LoggingEvent(throwable: throwableInfo('')))    | true    | throwableInfo('')
+		wrapperFor(new LoggingEvent(throwable: throwableInfo('foo'))) | true    | throwableInfo('foo')
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveThrowableInfoName(#input#inputClass) is#not present.'() {
+		when:
+		Optional<String> optionalResult = FormatterTools.resolveThrowableInfoName(input)
+
+		then:
+		optionalResult.present == present
+		optionalResult.orElse(null) == expectedResult
+
+		where:
+		input                                                         | present | expectedResult
+		null                                                          | false   | null
+		1                                                             | false   | null
+		wrapperFor(new AccessEvent())                                 | false   | null
+		wrapperFor(new LoggingEvent())                                | false   | null
+		wrapperFor(new LoggingEvent(throwable: throwableInfo(null)))  | false   | null
+		wrapperFor(new LoggingEvent(throwable: throwableInfo('')))    | false   | null
+		wrapperFor(new LoggingEvent(throwable: throwableInfo('foo'))) | true    | 'foo'
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveThreadName(#input#inputClass) is#not present.'() {
+		when:
+		Optional<String> optionalResult = FormatterTools.resolveThreadName(input)
+
+		then:
+		optionalResult.present == present
+		optionalResult.orElse(null) == expectedResult
+
+		where:
+		input                                                              | present | expectedResult
+		null                                                               | false   | null
+		1                                                                  | false   | null
+		wrapperFor(new AccessEvent())                                      | false   | null
+		wrapperFor(new LoggingEvent())                                     | false   | null
+		wrapperFor(new LoggingEvent(threadInfo: threadInfo(null, null)))   | false   | null
+		wrapperFor(new LoggingEvent(threadInfo: threadInfo('', '')))       | false   | null
+		wrapperFor(new LoggingEvent(threadInfo: threadInfo('foo', 'bar'))) | true    | 'foo'
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	@Unroll
+	def 'resolveThreadGroupName(#input#inputClass) is#not present.'() {
+		when:
+		Optional<String> optionalResult = FormatterTools.resolveThreadGroupName(input)
+
+		then:
+		optionalResult.present == present
+		optionalResult.orElse(null) == expectedResult
+
+		where:
+		input                                                              | present | expectedResult
+		null                                                               | false   | null
+		1                                                                  | false   | null
+		wrapperFor(new AccessEvent())                                      | false   | null
+		wrapperFor(new LoggingEvent())                                     | false   | null
+		wrapperFor(new LoggingEvent(threadInfo: threadInfo(null, null)))   | false   | null
+		wrapperFor(new LoggingEvent(threadInfo: threadInfo('', '')))       | false   | null
+		wrapperFor(new LoggingEvent(threadInfo: threadInfo('foo', 'bar'))) | true    | 'bar'
+
+		inputClass = input == null ? '' : ' (' + input.getClass() + ')'
+		not = present ? '' : ' not'
+	}
+
+	private static EventWrapper<AccessEvent> wrapperFor(AccessEvent event) {
+		new EventWrapper<>(null, event)
+	}
+
+	private static EventWrapper<LoggingEvent> wrapperFor(LoggingEvent event) {
+		new EventWrapper<>(null, event)
+	}
+
+	private static ExtendedStackTraceElement[] callStack() {
+		[
+		        new ExtendedStackTraceElement()
+		] as ExtendedStackTraceElement[]
+	}
+
+	private static ThrowableInfo throwableInfo(String name) {
+		new ThrowableInfo(name: name)
+	}
+
+	private static threadInfo(String name, String groupName) {
+		return new ThreadInfo(name: name, groupName: groupName)
+	}
+
 	private static final Map<Foo, String> FOO_MAP = new HashMap<>()
 
 	static
@@ -120,7 +343,7 @@ class FormatterToolsSpec extends Specification {
 
 
 		@Override
-		public String toString() {
+		String toString() {
 			return "Foo{" +
 					"value='" + value + '\'' +
 					'}';

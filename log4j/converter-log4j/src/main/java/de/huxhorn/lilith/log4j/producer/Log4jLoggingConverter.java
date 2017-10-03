@@ -50,8 +50,8 @@ import org.apache.log4j.spi.ThrowableInformation;
 public class Log4jLoggingConverter
 	implements Converter<LoggingEvent>
 {
-	public static final String LOG4J_LEVEL_KEY="log4j.level";
-	public static final String LOG4J_LEVEL_VALUE_FATAL = "FATAL";
+	private static final String LOG4J_LEVEL_KEY = "log4j.level";
+	private static final String LOG4J_LEVEL_VALUE_FATAL = "FATAL";
 	private static final String APPLICATION_MDC_KEY = "application";
 
 	public LoggingEvent convert(Object o)
@@ -151,7 +151,7 @@ public class Log4jLoggingConverter
 				}
 			}
 		}
-		if(mdc.size()>0)
+		if(!mdc.isEmpty())
 		{
 			result.setMdc(mdc);
 		}

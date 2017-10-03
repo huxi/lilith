@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.services.clipboard;
 
 import java.util.Objects;
 
 public final class ClipboardFormatterData
 {
-	private String name;
-	private String description;
-	private String accelerator;
+	private final String name;
+	private final String description;
+	private final String accelerator;
 
 	public ClipboardFormatterData(ClipboardFormatter clipboardFormatter)
 	{
@@ -52,16 +53,14 @@ public final class ClipboardFormatterData
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		ClipboardFormatterData that = (ClipboardFormatterData) o;
 
-		if(accelerator != null ? !accelerator.equals(that.accelerator) : that.accelerator != null) return false;
-		if(description != null ? !description.equals(that.description) : that.description != null) return false;
-		if(name != null ? !name.equals(that.name) : that.name != null) return false;
-
-		return true;
+		return (accelerator != null ? accelerator.equals(that.accelerator) : that.accelerator == null)
+				&& (description != null ? description.equals(that.description) : that.description == null)
+				&& (name != null ? name.equals(that.name) : that.name == null);
 	}
 
 	@Override

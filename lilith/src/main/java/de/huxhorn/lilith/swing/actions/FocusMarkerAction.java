@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.actions;
 
 import de.huxhorn.lilith.conditions.MarkerContainsCondition;
@@ -26,7 +27,7 @@ public class FocusMarkerAction
 {
 	private static final long serialVersionUID = -4897396873005451863L;
 
-	private String markerName;
+	private final String markerName;
 
 	public FocusMarkerAction(String markerName)
 	{

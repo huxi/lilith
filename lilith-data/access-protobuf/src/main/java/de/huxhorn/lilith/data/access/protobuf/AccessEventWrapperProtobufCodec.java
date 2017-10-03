@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,8 @@ import de.huxhorn.sulky.codec.DelegatingCodecBase;
 public class AccessEventWrapperProtobufCodec
 	extends DelegatingCodecBase<EventWrapper<AccessEvent>>
 {
-	public AccessEventWrapperProtobufCodec()
+	public AccessEventWrapperProtobufCodec(boolean compressing)
 	{
-		super(new AccessEventWrapperProtobufEncoder(false), new AccessEventWrapperProtobufDecoder(false));
+		super(new AccessEventWrapperProtobufEncoder(compressing), new AccessEventWrapperProtobufDecoder(compressing));
 	}
 }

@@ -33,13 +33,13 @@ import java.awt.event.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SystemTrayImpl
+public final class SystemTrayImpl
 	extends TraySupport
 {
 	private final Logger logger = LoggerFactory.getLogger(SystemTrayImpl.class);
 
-	private TrayIcon trayIcon;
-	private SystemTray tray;
+	private final TrayIcon trayIcon;
+	private final SystemTray tray;
 	private boolean active=false;
 
 	public SystemTrayImpl()
@@ -123,8 +123,10 @@ public class SystemTrayImpl
 			case INFO:
 				type = TrayIcon.MessageType.INFO;
 				break;
+
 			default:
 				type = TrayIcon.MessageType.NONE;
+				break;
 		}
 		trayIcon.displayMessage(null, message, type);
 	}

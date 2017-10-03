@@ -50,12 +50,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-public class LoggingEventProtobufDecoder
+class LoggingEventProtobufDecoder
 	implements Decoder<LoggingEvent>
 {
-	private boolean compressing;
+	private final boolean compressing;
 
-	public LoggingEventProtobufDecoder(boolean compressing)
+	LoggingEventProtobufDecoder(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -63,11 +63,6 @@ public class LoggingEventProtobufDecoder
 	public boolean isCompressing()
 	{
 		return compressing;
-	}
-
-	public void setCompressing(boolean compressing)
-	{
-		this.compressing = compressing;
 	}
 
 	public LoggingEvent decode(byte[] bytes)
@@ -412,7 +407,7 @@ public class LoggingEventProtobufDecoder
 				case WARN:
 					result.setLevel(LoggingEvent.Level.WARN);
 					break;
-				case ERROR:
+				default: // ERROR
 					result.setLevel(LoggingEvent.Level.ERROR);
 					break;
 			}

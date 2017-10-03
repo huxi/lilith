@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.appender;
 
 import ch.qos.logback.core.AppenderBase;
@@ -50,6 +51,9 @@ public class InternalLilithAppender
 	private static final FileBuffer<EventWrapper<LoggingEvent>> FILE_BUFFER;
 	private static final SourceIdentifier SOURCE_IDENTIFIER;
 
+	private final Converter<LoggingEvent> converter = new SameThreadLogbackLoggingConverter();
+	private long localId;
+
 	static
 	{
 		SOURCE_IDENTIFIER = new SourceIdentifier(IDENTIFIER_NAME);
@@ -84,10 +88,6 @@ public class InternalLilithAppender
 			return null;
 		}
 	}
-
-	private Converter<LoggingEvent> converter = new SameThreadLogbackLoggingConverter();
-	private long localId;
-
 
 	public InternalLilithAppender()
 	{

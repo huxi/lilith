@@ -53,24 +53,21 @@ public class LoggingLevelPanel
 
 	private final Logger logger = LoggerFactory.getLogger(LoggingLevelPanel.class);
 
-	private PreferencesDialog preferencesDialog;
-	private ApplicationPreferences applicationPreferences;
-	private EditLoggingLevelDialog editDialog;
-	private JTable table;
-	private LoggingLevelTableModel tableModel;
-	private EditConditionAction editAction;
+	private final PreferencesDialog preferencesDialog;
+	private final ApplicationPreferences applicationPreferences;
+	private final EditLoggingLevelDialog editDialog;
+	private final JTable table;
+	private final LoggingLevelTableModel tableModel;
+	private final EditConditionAction editAction;
+	private final LoggingLevelColumnModel tableColumnModel;
+
 	private Map<LoggingEvent.Level, ColorScheme> colors;
-	private LoggingLevelColumnModel tableColumnModel;
 
 	LoggingLevelPanel(PreferencesDialog preferencesDialog)
 	{
 		this.preferencesDialog = preferencesDialog;
 		applicationPreferences = preferencesDialog.getApplicationPreferences();
-		createUI();
-	}
 
-	private void createUI()
-	{
 		setLayout(new BorderLayout());
 		editDialog = new EditLoggingLevelDialog(preferencesDialog);
 

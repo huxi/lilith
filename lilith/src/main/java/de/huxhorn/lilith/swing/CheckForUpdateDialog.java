@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
@@ -55,15 +56,17 @@ public class CheckForUpdateDialog
 	extends JDialog
 {
 	private static final long serialVersionUID = 7361745831253216248L;
-	private XHTMLPanel helpPane;
-	private JLabel messageLabel;
-	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
+
+	private final XHTMLPanel helpPane;
+	private final JLabel messageLabel;
+	private final XhtmlNamespaceHandler xhtmlNamespaceHandler;
+	private final ApplicationPreferences applicationPreferences;
+	private final JCheckBox checkForUpdateCheckbox;
+
 	private String docRoot;
-	private ApplicationPreferences applicationPreferences;
-	private JCheckBox checkForUpdateCheckbox;
 	private static final int INSET = 10;
 
-	public CheckForUpdateDialog(MainFrame mainFrame)
+	CheckForUpdateDialog(MainFrame mainFrame)
 	{
 		super(mainFrame);
 		this.applicationPreferences = mainFrame.getApplicationPreferences();
@@ -173,7 +176,7 @@ public class CheckForUpdateDialog
 		{
 			docRoot = docRootUrl.toString() + "/";
 		}
-		if(logger.isDebugEnabled()) logger.debug("Changes docroot: {}", docRoot);
+		if(logger.isDebugEnabled()) logger.debug("docRoot: {}", docRoot);
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 	}
 
@@ -191,7 +194,7 @@ public class CheckForUpdateDialog
 		}
 	}
 
-	public void setChanges(String changes)
+	void setChanges(String changes)
 	{
 		if(changes == null)
 		{
@@ -212,7 +215,7 @@ public class CheckForUpdateDialog
 		helpPane.setDocumentFromString(changes, docRoot, xhtmlNamespaceHandler);
 	}
 
-	public void setCheckingForUpdate(boolean checkingForUpdate)
+	void setCheckingForUpdate(boolean checkingForUpdate)
 	{
 		checkForUpdateCheckbox.setSelected(checkingForUpdate);
 	}
@@ -270,7 +273,7 @@ public class CheckForUpdateDialog
 		{
 			Object source = e.getItemSelectable();
 
-			if(source == checkForUpdateCheckbox)
+			if(source == checkForUpdateCheckbox) // NOPMD
 			{
 				applicationPreferences.setCheckingForUpdate(checkForUpdateCheckbox.isSelected());
 			}

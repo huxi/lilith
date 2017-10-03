@@ -24,8 +24,8 @@ import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.List;
 import javax.swing.JFrame;
@@ -44,33 +44,26 @@ import org.xhtmlrenderer.simple.extend.XhtmlNamespaceHandler;
 import org.xhtmlrenderer.swing.LinkListener;
 import org.xhtmlrenderer.swing.SelectionHighlighter;
 
-public class HelpFrame
+class HelpFrame
 	extends JFrame
 {
 	private static final long serialVersionUID = 8050028149955107404L;
 
-	private final Logger logger = LoggerFactory.getLogger(HelpFrame.class);
-
-	private XHTMLPanel helpPane;
-	private XhtmlNamespaceHandler xhtmlNamespaceHandler;
-	private MainFrame mainFrame;
-	private SelectionHighlighter.CopyAction copyAction;
-	private JPopupMenu popup;
 	private static final URL HELP_BASE_URL = HelpFrame.class.getResource("/help");
 
+	private final Logger logger = LoggerFactory.getLogger(HelpFrame.class);
 
+	private final XHTMLPanel helpPane;
+	private final XhtmlNamespaceHandler xhtmlNamespaceHandler;
+	private final SelectionHighlighter.CopyAction copyAction;
+	private final JPopupMenu popup;
 
-	public HelpFrame(MainFrame mainFrame)
+	HelpFrame(MainFrame mainFrame)
 		throws HeadlessException
 	{
 		super();
-		this.mainFrame = mainFrame;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		initUI();
-	}
 
-	private void initUI()
-	{
 		helpPane = new XHTMLPanel();
 		xhtmlNamespaceHandler = new XhtmlNamespaceHandler();
 
@@ -146,7 +139,7 @@ public class HelpFrame
 	}
 
 	private class PopupMouseListener
-		implements MouseListener
+		extends MouseAdapter
 	{
 		public void mouseClicked(MouseEvent evt)
 		{
@@ -171,22 +164,14 @@ public class HelpFrame
 				showPopup(evt);
 			}
 		}
-
-		public void mouseEntered(MouseEvent e)
-		{
-		}
-
-		public void mouseExited(MouseEvent e)
-		{
-		}
 	}
 
-	public void copySelection()
+	private void copySelection()
 	{
 		copyAction.actionPerformed(null);
 	}
 
-	public void setHelpUrl(String helpUrl)
+	void setHelpUrl(String helpUrl)
 	{
 		int hashIndex=helpUrl.indexOf('#');
 		if(hashIndex > -1)

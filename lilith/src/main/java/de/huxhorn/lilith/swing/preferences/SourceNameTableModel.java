@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2015 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.preferences;
 
 import de.huxhorn.sulky.io.IOUtilities;
@@ -30,18 +31,18 @@ import javax.swing.table.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SourceNameTableModel
+public final class SourceNameTableModel
 	implements TableModel
 {
 	private final Logger logger = LoggerFactory.getLogger(SourceNameTableModel.class);
 
-	public static final int SOURCE_IDENTIFIER_COLUMN = 0;
-	public static final int NAME_COLUMN = 1;
+	static final int SOURCE_IDENTIFIER_COLUMN = 0;
+	private static final int NAME_COLUMN = 1;
 	private Map<String, String> data;
 	private List<String> keys;
 	private final EventListenerList eventListenerList;
 
-	public SourceNameTableModel(Map<String, String> data)
+	SourceNameTableModel(Map<String, String> data)
 	{
 		eventListenerList = new EventListenerList();
 		setData(data);
@@ -89,8 +90,9 @@ public class SourceNameTableModel
 				return "Source Identifier";
 			case NAME_COLUMN:
 				return "Name";
+			default:
+				return null;
 		}
-		return null;
 	}
 
 	public Class<?> getColumnClass(int columnIndex)
@@ -123,8 +125,9 @@ public class SourceNameTableModel
 				return key;
 			case NAME_COLUMN:
 				return data.get(key);
+			default:
+				return null;
 		}
-		return null;
 	}
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
@@ -168,6 +171,9 @@ public class SourceNameTableModel
 				}
 				fireTableChange();
 			}
+			break;
+			default: // nothing
+			break;
 		}
 	}
 
@@ -193,7 +199,7 @@ public class SourceNameTableModel
 	private class FireTableChangeRunnable
 		implements Runnable
 	{
-		private TableModelEvent event;
+		private final TableModelEvent event;
 
 		FireTableChangeRunnable(TableModelEvent event)
 		{

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,13 +38,15 @@ import ch.qos.logback.core.Context;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-public class ContextHelper
+public final class ContextHelper
 {
 	private static final Constructor<?> UTIL_CTOR;
 	private static final Method TIME_OF_LAST_RESET_METHOD;
 	private static final Method GET_HIGHEST_LEVEL_METHOD;
 
 	public static final int FAIL = -17;
+
+	private ContextHelper() {}
 
 	static
 	{
@@ -90,6 +92,8 @@ public class ContextHelper
 		{
 			t.printStackTrace();
 		}
+
+		new ContextHelper(); // stfu
 	}
 
 	/**

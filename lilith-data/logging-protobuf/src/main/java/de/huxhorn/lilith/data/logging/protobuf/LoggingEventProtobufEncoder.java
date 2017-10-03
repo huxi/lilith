@@ -50,12 +50,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 
-public class LoggingEventProtobufEncoder
+class LoggingEventProtobufEncoder
 	implements Encoder<LoggingEvent>
 {
-	private boolean compressing;
+	private final boolean compressing;
 
-	public LoggingEventProtobufEncoder(boolean compressing)
+	LoggingEventProtobufEncoder(boolean compressing)
 	{
 		this.compressing = compressing;
 	}
@@ -65,11 +65,7 @@ public class LoggingEventProtobufEncoder
 		return compressing;
 	}
 
-	public void setCompressing(boolean compressing)
-	{
-		this.compressing = compressing;
-	}
-
+	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] encode(LoggingEvent event)
 	{
 		LoggingProto.LoggingEvent converted = convert(event);
@@ -385,7 +381,7 @@ public class LoggingEventProtobufEncoder
 		}
 		{
 			Map<String, String> map = context.getProperties();
-			if(map != null && map.size() > 0)
+			if(map != null && !map.isEmpty())
 			{
 				builder.setProperties(convert(map));
 			}
@@ -469,7 +465,7 @@ public class LoggingEventProtobufEncoder
 					case WARN:
 						eventBuilder.setLevel(LoggingProto.Level.WARN);
 						break;
-					case ERROR:
+					default: // ERROR
 						eventBuilder.setLevel(LoggingProto.Level.ERROR);
 						break;
 				}
@@ -538,7 +534,7 @@ public class LoggingEventProtobufEncoder
 
 		// handling MappedDiagnosticContext
 		Map<String, String> mdc = event.getMdc();
-		if(mdc != null && mdc.size() > 0)
+		if(mdc != null && !mdc.isEmpty())
 		{
 			eventBuilder.setMappedDiagnosticContext(convert(mdc));
 		}

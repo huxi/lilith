@@ -116,7 +116,7 @@ public class MessageBasedEventProducer<T extends Serializable>
 	private class ReceiverRunnable
 		implements Runnable
 	{
-		private SourceIdentifier sourceIdentifier;
+		private final SourceIdentifier sourceIdentifier;
 		private static final String SOURCE_IDENTIFIER_MDC_KEY = "sourceIdentifier";
 
 		ReceiverRunnable(SourceIdentifier sourceIdentifier)

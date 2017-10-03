@@ -22,7 +22,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 
-public class ThreadGroupNameCondition
+public final class ThreadGroupNameCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = 7387711195995084613L;

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2017 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,17 +32,16 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.access.protobuf;
+package de.huxhorn.lilith.data.logging.json;
 
-import de.huxhorn.lilith.data.access.AccessEvent;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.sulky.codec.DelegatingCodecBase;
 
-public class CompressingAccessEventWrapperProtobufCodec
-	extends DelegatingCodecBase<EventWrapper<AccessEvent>>
+public class LoggingJsonCodec
+		extends DelegatingCodecBase<LoggingEvent>
 {
-	public CompressingAccessEventWrapperProtobufCodec()
+	public LoggingJsonCodec(boolean compressing)
 	{
-		super(new AccessEventWrapperProtobufEncoder(true), new AccessEventWrapperProtobufDecoder(true));
+		super(new LoggingJsonEncoder(compressing), new LoggingJsonDecoder(compressing));
 	}
 }

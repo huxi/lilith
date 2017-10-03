@@ -33,7 +33,7 @@ import javax.swing.table.TableCellRenderer;
 public class ApplicationRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public ApplicationRenderer()
 	{

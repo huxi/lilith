@@ -28,6 +28,13 @@ import org.slf4j.LoggerFactory;
 
 public class IndexCommand
 {
+	static
+	{
+		new IndexCommand(); // stfu
+	}
+
+	private IndexCommand() {}
+
 	public static boolean indexLogFile(File inputFile)
 	{
 		final Logger logger = LoggerFactory.getLogger(IndexCommand.class);

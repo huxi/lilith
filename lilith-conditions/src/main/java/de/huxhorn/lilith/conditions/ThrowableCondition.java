@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Set;
 
-public class ThrowableCondition
+public final class ThrowableCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -6937557692850490570L;

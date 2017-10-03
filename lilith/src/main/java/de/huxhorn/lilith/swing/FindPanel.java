@@ -70,36 +70,32 @@ public class FindPanel<T extends Serializable>
 
 	static final String CONDITION_PROPERTY = "condition";
 
-	private MainFrame mainFrame;
-	private EventWrapperViewPanel<T> eventWrapperViewPanel;
+	private final MainFrame mainFrame;
+	private final EventWrapperViewPanel<T> eventWrapperViewPanel;
 
-	private JButton closeFindButton;
-	private JToggleButton findNotButton;
+	private final JButton closeFindButton;
+	private final JToggleButton findNotButton;
+
+	private final ApplicationPreferences applicationPreferences;
+
+	private final JComboBox findTypeCombo;
+	private final BasicEventList<String> findTypeEventList;
+
+	private final JComboBox findTextCombo;
+	private final BasicEventList<String> findTextEventList;
 
 	private Condition condition;
-	private ApplicationPreferences applicationPreferences;
 	private List<String> previousSearchStrings;
 	private List<String> conditionNames;
-
-	private JComboBox findTypeCombo;
-	private BasicEventList<String> findTypeEventList;
-
-	private JComboBox findTextCombo;
-	private BasicEventList<String> findTextEventList;
-
 
 	FindPanel(EventWrapperViewPanel<T> eventWrapperViewPanel)
 	{
 		this.eventWrapperViewPanel = eventWrapperViewPanel;
-		this.mainFrame=this.eventWrapperViewPanel.getMainFrame();
-		this.applicationPreferences=mainFrame.getApplicationPreferences();
-		this.previousSearchStrings=applicationPreferences.getPreviousSearchStrings();
-		this.conditionNames=applicationPreferences.getConditionNames();
-		initUi();
-	}
+		this.mainFrame = this.eventWrapperViewPanel.getMainFrame();
+		this.applicationPreferences = mainFrame.getApplicationPreferences();
+		this.previousSearchStrings = applicationPreferences.getPreviousSearchStrings();
+		this.conditionNames = applicationPreferences.getConditionNames();
 
-	private void initUi()
-	{
 		CloseFindAction closeFindAction = new CloseFindAction();
 		closeFindButton = new JButton(closeFindAction);
 		closeFindButton.setMargin(new Insets(0, 0, 0, 0));
@@ -445,11 +441,11 @@ public class FindPanel<T extends Serializable>
 			//noinspection Duplicates
 			while(container != null)
 			{
-				if(container == findTypeCombo)
+				if(container == findTypeCombo) // NOPMD
 				{
 					return findTypeCombo;
 				}
-				if(container == findTextCombo)
+				if(container == findTextCombo) // NOPMD
 				{
 					return findTextCombo;
 				}
@@ -488,7 +484,7 @@ public class FindPanel<T extends Serializable>
 				return closeFindButton;
 			}
 
-			if(aContainer == aComponent)
+			if(aContainer == aComponent) // NOPMD
 			{
 				// prevent useless warning
 				return null;
@@ -529,7 +525,7 @@ public class FindPanel<T extends Serializable>
 				return findTypeCombo;
 			}
 
-			if(aContainer == aComponent)
+			if(aContainer == aComponent) // NOPMD
 			{
 				// prevent useless warning
 				return null;

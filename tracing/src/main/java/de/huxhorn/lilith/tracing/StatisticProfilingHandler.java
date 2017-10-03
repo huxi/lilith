@@ -48,8 +48,8 @@ import org.slf4j.MarkerFactory;
 public class StatisticProfilingHandler
 	extends BasicProfilingHandler
 {
-	public static final int DEFAULT_STEP_SIZE = 1000;
-	public static final String STATISTICS_MARKER_NAME = "STATISTICS";
+	private static final int DEFAULT_STEP_SIZE = 1000;
+	private static final String STATISTICS_MARKER_NAME = "STATISTICS";
 
 	private static final Marker STATISTICS_MARKER = MarkerFactory.getDetachedMarker(STATISTICS_MARKER_NAME);
 
@@ -63,11 +63,6 @@ public class StatisticProfilingHandler
 	private final ConcurrentMap<String, Entry> entries = new ConcurrentHashMap<>();
 	private final AtomicInteger counter = new AtomicInteger();
 	private int stepSize = DEFAULT_STEP_SIZE;
-
-	public int getStepSize()
-	{
-		return stepSize;
-	}
 
 	public void setStepSize(int stepSize)
 	{
@@ -163,7 +158,7 @@ public class StatisticProfilingHandler
 		implements Cloneable, Comparable<Entry>
 	{
 		private final Lock lock = new ReentrantLock(true);
-		private String methodBaseName;
+		private final String methodBaseName;
 		private long counter;
 		private long totalNanoSeconds;
 		private long minimumNanoSeconds=Long.MAX_VALUE;
@@ -174,7 +169,7 @@ public class StatisticProfilingHandler
 			this.methodBaseName = methodBaseName;
 		}
 
-		public String getMethodBaseName()
+		String getMethodBaseName()
 		{
 			return methodBaseName;
 		}
@@ -193,7 +188,7 @@ public class StatisticProfilingHandler
 			}
 		}
 
-		public void addNanoSeconds(long nanoSeconds)
+		void addNanoSeconds(long nanoSeconds)
 		{
 			lock.lock();
 			try
@@ -216,13 +211,13 @@ public class StatisticProfilingHandler
 		}
 
 		// only call on cloned instance
-		public long getCounter()
+		long getCounter()
 		{
 			return counter;
 		}
 
 		// only call on cloned instance
-		public long getTotalNanoSeconds()
+		long getTotalNanoSeconds()
 		{
 			return totalNanoSeconds;
 		}
@@ -247,17 +242,13 @@ public class StatisticProfilingHandler
 				throw new NullPointerException("other must not be null!");
 			}
 			long difference = totalNanoSeconds - other.totalNanoSeconds;
-			if(difference == 0)
+			if(difference > 0)
 			{
-				return 0;
+				return 1;
 			}
 			if(difference < 0)
 			{
 				return -1;
-			}
-			if(difference > 0)
-			{
-				return 1;
 			}
 			return methodBaseName.compareTo(other.methodBaseName);
 		}

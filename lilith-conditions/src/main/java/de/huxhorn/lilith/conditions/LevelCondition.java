@@ -22,7 +22,7 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import java.io.ObjectStreamException;
 
-public class LevelCondition
+public final class LevelCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -5498023202272568557L;

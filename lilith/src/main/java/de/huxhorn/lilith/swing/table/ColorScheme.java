@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2017 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.table;
 
 import java.awt.Color;
@@ -117,19 +118,14 @@ public final class ColorScheme
 	@Override
 	public boolean equals(Object o)
 	{
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		ColorScheme that = (ColorScheme) o;
 
-		if(backgroundColor != null ? !backgroundColor.equals(that.backgroundColor) : that.backgroundColor != null)
-		{
-			return false;
-		}
-		if(borderColor != null ? !borderColor.equals(that.borderColor) : that.borderColor != null) return false;
-		if(textColor != null ? !textColor.equals(that.textColor) : that.textColor != null) return false;
-
-		return true;
+		return (backgroundColor != null ? backgroundColor.equals(that.backgroundColor) : that.backgroundColor == null)
+				&& (borderColor != null ? borderColor.equals(that.borderColor) : that.borderColor == null)
+				&& (textColor != null ? textColor.equals(that.textColor) : that.textColor == null);
 	}
 
 	@Override

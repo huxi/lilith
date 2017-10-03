@@ -29,7 +29,7 @@ import javax.swing.table.TableCellRenderer;
 public class RequestUriRenderer
 	implements TableCellRenderer
 {
-	private LabelCellRenderer renderer;
+	private final LabelCellRenderer renderer;
 
 	public RequestUriRenderer()
 	{

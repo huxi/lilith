@@ -40,7 +40,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ThrowableInfoParser
+public final class ThrowableInfoParser
 {
 	private static final String NEWLINE = "\n";
 	private static final String CARRIAGE_RETURN = "\r";
@@ -50,6 +50,13 @@ public class ThrowableInfoParser
 	private static final Pattern OMITTED_PATTERN = Pattern.compile("^(\t+)\\.\\.\\. (\\d+) more");
 	private static final Pattern AT_PATTERN = Pattern.compile("^(\t+)at (.+)");
 	private static final Pattern MESSAGE_MATCHER = Pattern.compile("^(\t*)?("+ThrowableInfo.CAUSED_BY_PREFIX+"|"+ThrowableInfo.SUPPRESSED_PREFIX+")?(.*)");
+
+	static
+	{
+		new ThrowableInfoParser(); // stfu
+	}
+
+	private ThrowableInfoParser() {}
 
 	public static ThrowableInfo parse(String throwableInfoString)
 	{
@@ -80,7 +87,7 @@ public class ThrowableInfoParser
 		ThrowableInfo throwableInfo;
 		int endIndex;
 
-		private ThrowableInfoParseResult(ThrowableInfo throwableInfo, int endIndex)
+		ThrowableInfoParseResult(ThrowableInfo throwableInfo, int endIndex)
 		{
 			this.throwableInfo = throwableInfo;
 			this.endIndex = endIndex;

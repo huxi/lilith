@@ -34,7 +34,7 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class EventContainsCondition
+public final class EventContainsCondition
 	implements LilithCondition, SearchStringCondition, Cloneable
 {
 	private static final long serialVersionUID = -8094852331877521764L;
@@ -355,6 +355,7 @@ public class EventContainsCondition
 			if(marker.hasReferences())
 			{
 				Map<String, Marker> children = marker.getReferences();
+				//noinspection ConstantConditions
 				for(Map.Entry<String, Marker> current : children.entrySet())
 				{
 					if(checkMarker(current.getValue(), processedMarkers))
