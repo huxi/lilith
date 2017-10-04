@@ -36,7 +36,7 @@ All notable changes to this project will be documented in this file.
 - Menu entries related to global logs are now disabled if "Enable global logs." is unchecked in Preferences.
 - Added more dependencies and entries to the deserialization whitelist. This is essentially necessary because `logback-access` does not have an `AccessEventVO`. See also [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Not all event producers expect a heartbeat.
-- Groovy 2.4.12, Logback 1.2.3, flying-saucer 9.1.6, spring 4.3.11, jackson 2.9.1, log4j2 2.9.1, junique 1.0.4, jcommander 1.72, protobuf 3.4.0, commons-lang 3.6, commons-text 1.1, glazedlists 1.10.0
+- Groovy 2.4.12, Logback 1.2.3, flying-saucer 9.1.6, spring 4.3.11, jackson 2.9.1, log4j2 2.9.1, junique 1.0.4, jcommander 1.72, protobuf 3.4.0, commons-lang 3.6, commons-text 1.1, glazedlists 1.10.0, aspectj 1.8.11
 
 ### Security
 - Nothing.
