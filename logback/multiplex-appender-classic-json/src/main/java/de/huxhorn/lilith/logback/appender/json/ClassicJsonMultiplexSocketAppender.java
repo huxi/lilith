@@ -32,40 +32,45 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.appender;
+package de.huxhorn.lilith.logback.appender.json;
 
-import ch.qos.logback.access.spi.AccessEvent;
-import de.huxhorn.lilith.data.access.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.access.protobuf.AccessEventProtobufEncoder;
+import ch.qos.logback.classic.spi.LoggingEvent;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonCodec;
+import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
+import de.huxhorn.lilith.logback.appender.core.MultiplexSocketAppenderBase;
 
-public class AccessMultiplexSocketAppender
-	extends MultiplexSocketAppenderBase<AccessEvent>
+public class ClassicJsonMultiplexSocketAppender
+	extends MultiplexSocketAppenderBase<LoggingEvent>
 {
 	/**
-	 * The default port number of compressed new-style remote logging server (10010).
+	 * The default port number of compressed new-style remote logging server (10030).
 	 */
-	public static final int COMPRESSED_DEFAULT_PORT = 10010;
+	public static final int COMPRESSED_DEFAULT_PORT = 10030;
 
 	/**
-	 * The default port number of uncompressed new-style remote logging server (10011).
+	 * The default port number of uncompressed new-style remote logging server (10031).
 	 */
-	public static final int UNCOMPRESSED_DEFAULT_PORT = 10011;
+	public static final int UNCOMPRESSED_DEFAULT_PORT = 10031;
 
+	private boolean includeCallerData;
 	private boolean usingDefaultPort;
 	private TransformingEncoder transformingEncoder;
 
-	public AccessMultiplexSocketAppender()
+	@SuppressWarnings("unused")
+	public ClassicJsonMultiplexSocketAppender()
 	{
 		this(true);
 	}
 
-	public AccessMultiplexSocketAppender(boolean compressing)
+	@SuppressWarnings("WeakerAccess")
+	public ClassicJsonMultiplexSocketAppender(boolean compressing)
 	{
 		super();
 		usingDefaultPort = true;
 		transformingEncoder = new TransformingEncoder();
 		setEncoder(transformingEncoder);
 		setCompressing(compressing);
+		includeCallerData = false;
 	}
 
 	protected void applicationIdentifierChanged()
@@ -92,7 +97,6 @@ public class AccessMultiplexSocketAppender
 	 *
 	 * @param compressing if events will be gzipped or not.
 	 */
-	@SuppressWarnings("WeakerAccess")
 	public void setCompressing(boolean compressing)
 	{
 		if(usingDefaultPort)
@@ -107,14 +111,19 @@ public class AccessMultiplexSocketAppender
 			}
 			usingDefaultPort = true;
 		}
-		transformingEncoder.setLilithEncoder(new AccessEventProtobufEncoder(compressing));
+		transformingEncoder.setLilithEncoder(new LoggingJsonCodec(compressing));
 	}
 
-	protected void preProcess(AccessEvent e)
+	public void setIncludeCallerData(boolean includeCallerData)
 	{
-		if(e != null)
+		this.includeCallerData = includeCallerData;
+	}
+
+	protected void preProcess(LoggingEvent event)
+	{
+		if(event != null && includeCallerData)
 		{
-			e.prepareForDeferredProcessing();
+			event.getCallerData();
 		}
 	}
 }

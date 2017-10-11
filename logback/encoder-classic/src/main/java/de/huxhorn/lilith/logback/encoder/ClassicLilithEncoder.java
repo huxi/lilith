@@ -36,6 +36,7 @@ package de.huxhorn.lilith.logback.encoder;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import de.huxhorn.lilith.api.FileConstants;
+import de.huxhorn.lilith.logback.encoder.core.LilithEncoderBase;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

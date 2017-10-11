@@ -37,6 +37,14 @@ All notable changes to this project will be documented in this file.
 - Added more dependencies and entries to the deserialization whitelist. This is essentially necessary because `logback-access` does not have an `AccessEventVO`. See also [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Not all event producers expect a heartbeat.
 - Logback 1.2.3, log4j2 2.9.1, Groovy 2.4.12, jackson 2.9.1, spring 5.0.0, protobuf 3.4.0, junique 1.0.4, jcommander 1.72, commons-lang 3.6, commons-text 1.1, flying-saucer 9.1.7, glazedlists 1.10.0, aspectj 1.8.11, httpcore 4.4.8
+- Fixed several split package issues. Because of this, some classes have changed package names:
+  - the two most commonly used classes `de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender` and `de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder` have not been moved. 
+  - `de.huxhorn.lilith.logback.encoder.AccessLilithEncoder` changed to `de.huxhorn.lilith.logback.encoder.access.AccessLilithEncoder`.
+  - `de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender` changed to `de.huxhorn.lilith.logback.appender.access.AccessMultiplexSocketAppender`.
+  - `de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender` changed to `de.huxhorn.lilith.logback.appender.json.ClassicJsonMultiplexSocketAppender`.
+  - `de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender` changed to `de.huxhorn.lilith.logback.appender.json.ZeroDelimitedClassicJsonMultiplexSocketAppender`.
+  - `de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender` changed to `de.huxhorn.lilith.logback.appender.xml.ClassicXmlMultiplexSocketAppender`.
+  - `de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender` changed to `de.huxhorn.lilith.logback.appender.xml.ZeroDelimitedClassicXmlMultiplexSocketAppender`.
 
 ### Security
 - Nothing.

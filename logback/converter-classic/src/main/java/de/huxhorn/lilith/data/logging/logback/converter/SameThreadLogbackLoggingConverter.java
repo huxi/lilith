@@ -32,35 +32,63 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.encoder;
+package de.huxhorn.lilith.data.logging.logback.converter;
 
-import ch.qos.logback.access.spi.AccessEvent;
-import de.huxhorn.lilith.data.access.logback.LogbackAccessConverter;
-import de.huxhorn.lilith.data.access.protobuf.AccessEventWrapperProtobufCodec;
-import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.sulky.codec.Codec;
-import java.util.concurrent.atomic.AtomicLong;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.ThreadInfo;
+import de.huxhorn.lilith.logback.classic.NDC;
 
-public class WrappingAccessEncoder
-	implements ResettableEncoder<AccessEvent>
+public class SameThreadLogbackLoggingConverter
+	extends LogbackLoggingConverter
 {
-	private final LogbackAccessConverter converter = new LogbackAccessConverter();
-	private final Codec<EventWrapper<de.huxhorn.lilith.data.access.AccessEvent>> codec = new AccessEventWrapperProtobufCodec(true);
-	private final AtomicLong localId = new AtomicLong(0);
-
-	public void reset()
+	public LoggingEvent convert(Object o)
 	{
-		localId.set(0);
+		LoggingEvent result = super.convert(o);
+
+		if(result == null)
+		{
+			return null;
+		}
+
+		// evaluate additional Thread info.
+		ThreadInfo threadInfo = result.getThreadInfo();
+		if(threadInfo == null)
+		{
+			threadInfo = new ThreadInfo();
+		}
+
+		// assuming this code is executed synchronously
+		Thread t = Thread.currentThread();
+
+		if(threadInfo.getName() == null)
+		{
+			threadInfo.setName(t.getName());
+		}
+
+		threadInfo.setId(t.getId());
+		threadInfo.setPriority(t.getPriority());
+
+		ThreadGroup tg = t.getThreadGroup();
+		if(tg != null)
+		{
+			threadInfo.setGroupId((long) System.identityHashCode(tg));
+			threadInfo.setGroupName(tg.getName());
+		}
+
+		result.setThreadInfo(threadInfo);
+
+		// evaluate NDC
+		if(!NDC.isEmpty())
+		{
+			// TODO: configurable NDC evaluation
+			result.setNdc(NDC.getContextStack());
+		}
+
+		return result;
 	}
 
-	public byte[] encode(AccessEvent event)
+	public Class getSourceClass()
 	{
-		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = converter.convert(event);
-		EventWrapper<de.huxhorn.lilith.data.access.AccessEvent> wrapped=new EventWrapper<>();
-		wrapped.setEvent(lilithEvent);
-		long id = localId.incrementAndGet();
-		wrapped.setLocalId(id);
-
-		return codec.encode(wrapped);
+		return ch.qos.logback.classic.spi.ILoggingEvent.class;
 	}
 }

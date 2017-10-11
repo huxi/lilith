@@ -32,36 +32,36 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.encoder;
+package de.huxhorn.lilith.logback.encoder.access;
 
 import ch.qos.logback.access.spi.AccessEvent;
-import de.huxhorn.lilith.api.FileConstants;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import de.huxhorn.lilith.data.access.logback.converter.LogbackAccessConverter;
+import de.huxhorn.lilith.data.access.protobuf.AccessEventWrapperProtobufCodec;
+import de.huxhorn.lilith.data.eventsource.EventWrapper;
+import de.huxhorn.lilith.logback.encoder.core.ResettableEncoder;
+import de.huxhorn.sulky.codec.Codec;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class AccessLilithEncoder
-	extends LilithEncoderBase<AccessEvent>
+public class WrappingAccessEncoder
+	implements ResettableEncoder<AccessEvent>
 {
-	private static final Map<String, String> META_DATA_MAP;
-	static
-	{
-		Map<String, String> metaDataMap = new HashMap<>();
-		metaDataMap.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
-		metaDataMap.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
-		metaDataMap.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
+	private final LogbackAccessConverter converter = new LogbackAccessConverter();
+	private final Codec<EventWrapper<de.huxhorn.lilith.data.access.AccessEvent>> codec = new AccessEventWrapperProtobufCodec(true);
+	private final AtomicLong localId = new AtomicLong(0);
 
-		META_DATA_MAP = Collections.unmodifiableMap(metaDataMap);
+	public void reset()
+	{
+		localId.set(0);
 	}
 
-	public AccessLilithEncoder()
+	public byte[] encode(AccessEvent event)
 	{
-		super(META_DATA_MAP, new WrappingAccessEncoder());
-	}
+		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = converter.convert(event);
+		EventWrapper<de.huxhorn.lilith.data.access.AccessEvent> wrapped=new EventWrapper<>();
+		wrapped.setEvent(lilithEvent);
+		long id = localId.incrementAndGet();
+		wrapped.setLocalId(id);
 
-	@Override
-	protected void preProcess(AccessEvent event)
-	{
-		// nothing
+		return codec.encode(wrapped);
 	}
 }

@@ -37,6 +37,7 @@ package de.huxhorn.lilith.logback.appender;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.logging.protobuf.LoggingEventProtobufCodec;
+import de.huxhorn.lilith.logback.appender.core.MultiplexSocketAppenderBase;
 
 public class ClassicMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>

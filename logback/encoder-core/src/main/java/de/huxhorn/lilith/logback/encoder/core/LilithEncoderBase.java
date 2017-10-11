@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.encoder;
+package de.huxhorn.lilith.logback.encoder.core;
 
 import ch.qos.logback.core.FileAppender;
 import ch.qos.logback.core.OutputStreamAppender;

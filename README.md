@@ -220,7 +220,7 @@ This has several benefits:
 Add the following to your applications `logback-access.xml`:
 
 ```xml
-<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender">
+<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.access.AccessMultiplexSocketAppender">
   <Compressing>true</Compressing> <!-- will automatically use correct default port -->
   <!-- Default port for compressed is 10010 and uncompressed 10011 -->
   <ReconnectionDelay>30000</ReconnectionDelay>
@@ -274,7 +274,7 @@ Add the following to your applications `logback-access.xml`:
 ```xml
 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
   <file>classic.lilith</file>
-  <encoder class="de.huxhorn.lilith.logback.encoder.AccessLilithEncoder">
+  <encoder class="de.huxhorn.lilith.logback.encoder.access.AccessLilithEncoder">
     <IncludeCallerData>true</IncludeCallerData>
   </encoder>
 </appender>
@@ -456,8 +456,8 @@ All parts of Lilith that can be embedded into an application are [LGPL][]/[ASL][
 
 All Your Base Are Belong To Us.
 
-[ale]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/encoder/AccessLilithEncoder.html "de.huxhorn.lilith.logback.encoder.AccessLilithEncoder"
-[amsa]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/appender/AccessMultiplexSocketAppender.html "de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender"
+[ale]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/encoder/access/AccessLilithEncoder.html "de.huxhorn.lilith.logback.encoder.access.AccessLilithEncoder"
+[amsa]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/appender/access/AccessMultiplexSocketAppender.html "de.huxhorn.lilith.logback.appender.access.AccessMultiplexSocketAppender"
 [asl]: http://www.apache.org/licenses/LICENSE-2.0.html "Apache License, Version 2.0"
 [chainsaw]: http://logging.apache.org/chainsaw/ "Chainsaw"
 [cle]: http://lilithapp.com/javadoc/de/huxhorn/lilith/logback/encoder/ClassicLilithEncoder.html "de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder"

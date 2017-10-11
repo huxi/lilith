@@ -32,44 +32,11 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.log4j2.decoder;
+package de.huxhorn.lilith.logback.encoder.core;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.log4j2.converter.Log4j2LoggingConverter;
-import de.huxhorn.sulky.codec.Decoder;
-import org.apache.logging.log4j.core.parser.LogEventParser;
-import org.apache.logging.log4j.core.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.huxhorn.sulky.codec.Encoder;
 
-public class Log4j2DecoderBase
-		implements Decoder<LoggingEvent>
+public interface ResettableEncoder<E> extends Encoder<E>
 {
-	private final Logger logger = LoggerFactory.getLogger(Log4j2DecoderBase.class);
-
-	private final LogEventParser parser;
-	private final Log4j2LoggingConverter converter = new Log4j2LoggingConverter();
-
-	Log4j2DecoderBase(LogEventParser parser)
-	{
-		this.parser = parser;
-	}
-
-	@Override
-	public LoggingEvent decode(byte[] bytes)
-	{
-		if(bytes == null)
-		{
-			return null;
-		}
-		try
-		{
-			return converter.convert(parser.parseFrom(bytes));
-		}
-		catch (ParseException ex)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while parsing event!", ex);
-		}
-		return null;
-	}
+	void reset();
 }

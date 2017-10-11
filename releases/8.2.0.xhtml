@@ -12,7 +12,7 @@
 			<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/8.2.0">Download Now!
 		<br />(Released: 2017-xx-xx)</a>
 		</div>
-		<p>This version of Lilith demands Java 8 update 144 or higher and will says so if you try to start it with an older version. It has also been tested with Java 9-ea+180.</p>
+		<p>This version of Lilith demands Java 8 update 144 or higher and will says so if you try to start it with an older version. It has also been built and tested with Java 9 GA.</p>
 		<p>You can still receive event from previous versions so if your application is still running Java 7 or lower just keep using the 0.9.44 artifacts.<br />
 		Keep in mind that <a href="http://www.oracle.com/technetwork/java/eol-135779.html">Java SE 7 End of Public Updates</a> has already been reached.</p>
 		<h2>Changelog</h2>
@@ -24,6 +24,7 @@
 			<li>Added lots of missing mnemonics.</li>
 			<li>If the connection is lost then Message/RequestURI in table will now show "Connection closed." instead of nothing.</li>
 			<li>Added smooth horizontal table scrolling option that is enabled by default.</li>
+			<li>Added support for Log4j 2 <code>JsonLayout</code>, <code>YamlLayout</code> and <code>XmlLayout</code>. <code>SerializedLayout</code> has been deprecated in log4j2 2.9.0 so you should use one of the other options instead.</li>
 		</ul>
 
 		<h3>Changed</h3>
@@ -54,6 +55,7 @@
 		<h3>Fixed</h3>
 
 		<ul>
+			<li>All L&amp;F support mac screen menu bar with Java 9 or higher.</li>
 			<li>Zero-delimited event receivers did not add a <code>null</code> event when end of stream was reached.</li>
 			<li>Fixed initial enabled state of "Go to source".</li>
 			<li>Fixed enabled state of "Edit" menu. Mustn't be disabled anymore because "Paste StackTraceElement" is always available.</li>
@@ -61,7 +63,23 @@
 			<li>Menu entries related to global logs are now disabled if "Enable global logs." is unchecked in Preferences.</li>
 			<li>Added more dependencies and entries to the deserialization whitelist. This is essentially necessary because <code>logback-access</code> does not have an <code>AccessEventVO</code>. See also <a href="http://jira.qos.ch/browse/LOGBACK-1182">LOGBACK-1182 - Problem deserializing AccessEvent.</a>.</li>
 			<li>Not all event producers expect a heartbeat.</li>
-			<li>Groovy 2.4.12, Logback 1.2.3, flying-saucer 9.1.6, spring 4.3.10, jackson 2.9.0, log4j2 2.8.2, junique 1.0.4, jcommander 1.72, protobuf 3.3.1, commons-lang 3.6, commons-text 1.1, glazedlists 1.10.0</li>
+			<li>Logback 1.2.3, log4j2 2.9.1, Groovy 2.4.12, jackson 2.9.1, spring 5.0.0, protobuf 3.4.0, junique 1.0.4, jcommander 1.72, commons-lang 3.6, commons-text 1.1, flying-saucer 9.1.7, glazedlists 1.10.0, aspectj 1.8.11, httpcore 4.4.8</li>
+			<li>Fixed several split package issues. Because of this, some classes have changed package names:
+<ul><li>the two most commonly used classes <code>de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender</code> and <code>de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder</code> have not been moved. </li>
+					<li>
+						<code>de.huxhorn.lilith.logback.encoder.AccessLilithEncoder</code> changed to <code>de.huxhorn.lilith.logback.encoder.access.AccessLilithEncoder</code>.</li>
+					<li>
+						<code>de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender</code> changed to <code>de.huxhorn.lilith.logback.appender.access.AccessMultiplexSocketAppender</code>.</li>
+					<li>
+						<code>de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender</code> changed to <code>de.huxhorn.lilith.logback.appender.json.ClassicJsonMultiplexSocketAppender</code>.</li>
+					<li>
+						<code>de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender</code> changed to <code>de.huxhorn.lilith.logback.appender.json.ZeroDelimitedClassicJsonMultiplexSocketAppender</code>.</li>
+					<li>
+						<code>de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender</code> changed to <code>de.huxhorn.lilith.logback.appender.xml.ClassicXmlMultiplexSocketAppender</code>.</li>
+					<li>
+						<code>de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender</code> changed to <code>de.huxhorn.lilith.logback.appender.xml.ZeroDelimitedClassicXmlMultiplexSocketAppender</code>.</li>
+				</ul>
+			</li>
 		</ul>
 
 		<h3>Security</h3>

@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.logback;
+package de.huxhorn.lilith.data.logging.logback.converter;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ThrowableProxy;

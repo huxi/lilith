@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.xml;
+package de.huxhorn.lilith.data.logging.xml.codec;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.test.LoggingEventIOTestBase;
@@ -81,14 +81,14 @@ public class LoggingXmlEventIOTest
 	public byte[] write(LoggingEvent event, boolean compressing)
 		throws XMLStreamException
 	{
-		LoggingXmlEncoder ser = new LoggingXmlEncoder(compressing);
+		LoggingXmlCodec ser = new LoggingXmlCodec(compressing);
 		return ser.encode(event);
 	}
 
 	public LoggingEvent read(byte[] bytes, boolean compressing)
 		throws XMLStreamException
 	{
-		LoggingXmlDecoder des = new LoggingXmlDecoder(compressing);
+		LoggingXmlCodec des = new LoggingXmlCodec(compressing);
 		return des.decode(bytes);
 	}
 }

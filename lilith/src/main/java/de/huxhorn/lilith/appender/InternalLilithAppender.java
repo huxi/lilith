@@ -24,7 +24,7 @@ import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.logback.SameThreadLogbackLoggingConverter;
+import de.huxhorn.lilith.data.logging.logback.converter.SameThreadLogbackLoggingConverter;
 import de.huxhorn.lilith.engine.FileBufferFactory;
 import de.huxhorn.lilith.engine.LoggingFileBufferFactory;
 import de.huxhorn.lilith.engine.impl.LogFileFactoryImpl;

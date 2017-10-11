@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.appender;
+package de.huxhorn.lilith.logback.appender.core;
 
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import de.huxhorn.lilith.sender.HeartbeatRunnable;
@@ -64,12 +64,12 @@ public abstract class MultiplexSocketAppenderBase<E>
 	private boolean creatingUUID=true;
 	private String uuid;
 
-	MultiplexSocketAppenderBase()
+	public MultiplexSocketAppenderBase()
 	{
 		this(new MessageWriteByteStrategy());
 	}
 
-	MultiplexSocketAppenderBase(WriteByteStrategy writeByteStrategy)
+	public MultiplexSocketAppenderBase(WriteByteStrategy writeByteStrategy)
 	{
 		this(writeByteStrategy, DEFAULT_QUEUE_SIZE);
 	}
@@ -86,7 +86,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 		this.creatingUUID = creatingUUID;
 	}
 
-	String getUUID()
+	protected String getUUID()
 	{
 		return uuid;
 	}
@@ -109,7 +109,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 		this.debug = debug;
 	}
 
-	String getApplicationIdentifier()
+	protected String getApplicationIdentifier()
 	{
 		return applicationIdentifier;
 	}

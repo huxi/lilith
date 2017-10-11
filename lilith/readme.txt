@@ -151,7 +151,7 @@ In src/main/jetty/logback-access.xml:
 			<Pattern>combined</Pattern>
 		</layout>
 	</appender>
-	<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender">
+	<appender name="multiplex" class="de.huxhorn.lilith.logback.appender.access.AccessMultiplexSocketAppender">
 		<!-- <Port>4563</Port> -->
 		<Compressing>true</Compressing> <!-- will automatically use correct default port -->
 		<ReconnectionDelay>30000</ReconnectionDelay>

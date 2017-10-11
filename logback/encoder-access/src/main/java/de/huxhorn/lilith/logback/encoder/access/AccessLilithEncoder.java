@@ -32,44 +32,37 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.log4j2.decoder;
+package de.huxhorn.lilith.logback.encoder.access;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.log4j2.converter.Log4j2LoggingConverter;
-import de.huxhorn.sulky.codec.Decoder;
-import org.apache.logging.log4j.core.parser.LogEventParser;
-import org.apache.logging.log4j.core.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ch.qos.logback.access.spi.AccessEvent;
+import de.huxhorn.lilith.api.FileConstants;
+import de.huxhorn.lilith.logback.encoder.core.LilithEncoderBase;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Log4j2DecoderBase
-		implements Decoder<LoggingEvent>
+public class AccessLilithEncoder
+	extends LilithEncoderBase<AccessEvent>
 {
-	private final Logger logger = LoggerFactory.getLogger(Log4j2DecoderBase.class);
-
-	private final LogEventParser parser;
-	private final Log4j2LoggingConverter converter = new Log4j2LoggingConverter();
-
-	Log4j2DecoderBase(LogEventParser parser)
+	private static final Map<String, String> META_DATA_MAP;
+	static
 	{
-		this.parser = parser;
+		Map<String, String> metaDataMap = new HashMap<>();
+		metaDataMap.put(FileConstants.CONTENT_TYPE_KEY, FileConstants.CONTENT_TYPE_VALUE_ACCESS);
+		metaDataMap.put(FileConstants.CONTENT_FORMAT_KEY, FileConstants.CONTENT_FORMAT_VALUE_PROTOBUF);
+		metaDataMap.put(FileConstants.COMPRESSION_KEY, FileConstants.COMPRESSION_VALUE_GZIP);
+
+		META_DATA_MAP = Collections.unmodifiableMap(metaDataMap);
+	}
+
+	public AccessLilithEncoder()
+	{
+		super(META_DATA_MAP, new WrappingAccessEncoder());
 	}
 
 	@Override
-	public LoggingEvent decode(byte[] bytes)
+	protected void preProcess(AccessEvent event)
 	{
-		if(bytes == null)
-		{
-			return null;
-		}
-		try
-		{
-			return converter.convert(parser.parseFrom(bytes));
-		}
-		catch (ParseException ex)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while parsing event!", ex);
-		}
-		return null;
+		// nothing
 	}
 }

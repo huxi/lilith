@@ -32,11 +32,12 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.appender;
+package de.huxhorn.lilith.logback.appender.json;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
+import de.huxhorn.lilith.data.logging.json.LoggingJsonCodec;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import de.huxhorn.lilith.logback.appender.core.MultiplexSocketAppenderBase;
 import de.huxhorn.lilith.sender.ZeroDelimitedWriteByteStrategy;
 
 /**
@@ -45,22 +46,22 @@ import de.huxhorn.lilith.sender.ZeroDelimitedWriteByteStrategy;
  *
  * The producer is only used for programming languages that are unable to count bytes, i.e. ActionScript... ;)
  */
-public class ZeroDelimitedClassicXmlMultiplexSocketAppender
+public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>
 {
 	/**
-	 * The default port number of remote logging server (11000).
+	 * The default port number of remote logging server (11010).
 	 */
-	public static final int DEFAULT_PORT = 11000;
+	public static final int DEFAULT_PORT = 11010;
 
 	private boolean includeCallerData;
 	private final TransformingEncoder transformingEncoder;
 
-	public ZeroDelimitedClassicXmlMultiplexSocketAppender()
+	public ZeroDelimitedClassicJsonMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
 		transformingEncoder =new TransformingEncoder();
-		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(false));
+		transformingEncoder.setLilithEncoder(new LoggingJsonCodec(false));
 		setEncoder(transformingEncoder);
 		includeCallerData = true;
 		setPort(DEFAULT_PORT);

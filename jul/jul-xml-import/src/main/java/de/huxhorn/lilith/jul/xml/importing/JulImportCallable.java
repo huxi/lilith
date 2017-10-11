@@ -32,12 +32,13 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.jul.xml;
+package de.huxhorn.lilith.jul.xml.importing;
 
 import de.huxhorn.lilith.data.eventsource.EventIdentifier;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.jul.xml.LoggingEventReader;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.formatting.ReplaceInvalidXmlCharacterReader;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;

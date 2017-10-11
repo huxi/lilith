@@ -4,11 +4,11 @@ import ch.qos.logback.classic.net.SocketAppender
 import ch.qos.logback.core.ConsoleAppender
 import ch.qos.logback.core.util.Duration
 import de.huxhorn.lilith.appender.InternalLilithAppender
-import de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender
+import de.huxhorn.lilith.logback.appender.json.ClassicJsonMultiplexSocketAppender
 import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender
-import de.huxhorn.lilith.logback.appender.ClassicXmlMultiplexSocketAppender
-import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicJsonMultiplexSocketAppender
-import de.huxhorn.lilith.logback.appender.ZeroDelimitedClassicXmlMultiplexSocketAppender
+import de.huxhorn.lilith.logback.appender.xml.ClassicXmlMultiplexSocketAppender
+import de.huxhorn.lilith.logback.appender.json.ZeroDelimitedClassicJsonMultiplexSocketAppender
+import de.huxhorn.lilith.logback.appender.xml.ZeroDelimitedClassicXmlMultiplexSocketAppender
 
 import static ch.qos.logback.classic.Level.ALL
 import static ch.qos.logback.classic.Level.DEBUG

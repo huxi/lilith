@@ -35,6 +35,7 @@
 package de.huxhorn.lilith.data.access.logback;
 
 import ch.qos.logback.access.spi.AccessEvent;
+import de.huxhorn.lilith.data.access.logback.converter.LogbackAccessConverter;
 import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import de.huxhorn.sulky.codec.Encoder;

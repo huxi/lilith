@@ -32,9 +32,10 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.xml;
+package de.huxhorn.lilith.data.logging.xml.codec;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.xml.LoggingEventReader;
 import de.huxhorn.sulky.codec.Decoder;
 import de.huxhorn.sulky.io.IOUtilities;
 import java.io.ByteArrayInputStream;

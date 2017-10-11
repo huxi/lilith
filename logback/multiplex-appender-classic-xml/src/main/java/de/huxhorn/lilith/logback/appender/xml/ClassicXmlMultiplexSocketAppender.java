@@ -32,11 +32,12 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.appender;
+package de.huxhorn.lilith.logback.appender.xml;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import de.huxhorn.lilith.data.logging.xml.codec.LoggingXmlEncoder;
+import de.huxhorn.lilith.logback.appender.core.MultiplexSocketAppenderBase;
 
 public class ClassicXmlMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>

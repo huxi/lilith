@@ -18,7 +18,7 @@
 
 package de.huxhorn.lilith.services.clipboard;
 
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlEncoder;
+import de.huxhorn.lilith.data.logging.xml.codec.LoggingXmlEncoder;
 import de.huxhorn.lilith.swing.LilithActionId;
 
 public class LoggingEventXmlFormatter

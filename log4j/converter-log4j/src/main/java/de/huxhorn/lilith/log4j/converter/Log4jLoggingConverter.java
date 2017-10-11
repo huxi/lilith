@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.log4j.producer;
+package de.huxhorn.lilith.log4j.converter;
 
 import de.huxhorn.lilith.data.converter.Converter;
 import de.huxhorn.lilith.data.eventsource.LoggerContext;

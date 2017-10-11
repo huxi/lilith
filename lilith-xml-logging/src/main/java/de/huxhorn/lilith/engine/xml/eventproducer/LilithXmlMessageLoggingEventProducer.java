@@ -21,9 +21,9 @@ package de.huxhorn.lilith.engine.xml.eventproducer;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
-import de.huxhorn.lilith.data.logging.xml.LoggingXmlDecoder;
-import de.huxhorn.lilith.engine.impl.eventproducer.MessageBasedEventProducer;
+import de.huxhorn.lilith.data.logging.xml.codec.LoggingXmlCodec;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
+import de.huxhorn.lilith.engine.impl.eventproducer.MessageBasedEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import java.io.InputStream;
 
@@ -32,6 +32,6 @@ public class LilithXmlMessageLoggingEventProducer
 {
 	public LilithXmlMessageLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
-		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingXmlDecoder(compressing), inputStream, false);
+		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingXmlCodec(compressing), inputStream, false);
 	}
 }

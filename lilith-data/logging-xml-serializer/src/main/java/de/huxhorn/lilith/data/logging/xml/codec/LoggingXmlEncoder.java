@@ -32,9 +32,10 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.data.logging.xml;
+package de.huxhorn.lilith.data.logging.xml.codec;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.lilith.data.logging.xml.LoggingEventWriter;
 import de.huxhorn.sulky.codec.Encoder;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,9 +52,8 @@ public class LoggingXmlEncoder
 	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html
 	static final XMLOutputFactory XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
 
-	private LoggingEventWriter loggingEventWriter;
-	private boolean compressing;
-	private boolean sortingMaps;
+	private final LoggingEventWriter loggingEventWriter;
+	private final boolean compressing;
 
 	public LoggingXmlEncoder(boolean compressing)
 	{
@@ -65,29 +65,12 @@ public class LoggingXmlEncoder
 		this.compressing = compressing;
 		loggingEventWriter = new LoggingEventWriter();
 		loggingEventWriter.setWritingSchemaLocation(false);
-		setCompressing(compressing);
-		setSortingMaps(sortingMaps);
+		loggingEventWriter.setSortingMaps(sortingMaps);
 	}
 
 	public boolean isCompressing()
 	{
 		return compressing;
-	}
-
-	public void setCompressing(boolean compressing)
-	{
-		this.compressing = compressing;
-	}
-
-	public boolean isSortingMaps()
-	{
-		return sortingMaps;
-	}
-
-	public void setSortingMaps(boolean sortingMaps)
-	{
-		this.sortingMaps = sortingMaps;
-		loggingEventWriter.setSortingMaps(sortingMaps);
 	}
 
 	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")

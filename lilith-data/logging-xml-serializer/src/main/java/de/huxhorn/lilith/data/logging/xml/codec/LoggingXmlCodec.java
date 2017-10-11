@@ -32,11 +32,16 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.encoder;
+package de.huxhorn.lilith.data.logging.xml.codec;
 
-import de.huxhorn.sulky.codec.Encoder;
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.sulky.codec.DelegatingCodecBase;
 
-public interface ResettableEncoder<E> extends Encoder<E>
+public class LoggingXmlCodec
+	extends DelegatingCodecBase<LoggingEvent>
 {
-	void reset();
+	public LoggingXmlCodec(boolean compressing)
+	{
+		super(new LoggingXmlEncoder(compressing), new LoggingXmlDecoder(compressing));
+	}
 }
