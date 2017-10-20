@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
 - Don't add null events to global logs.
 - Unchecking "Enable global logs." in Preferences is now deleting existing global log files automatically.
 - Keyboard help will now always be up-to-date.
-- Demand Java 8 `1.8.0_144`.
+- Demand Java 8 `1.8.0_151`.
 
 ### Deprecated
 - Nothing.
