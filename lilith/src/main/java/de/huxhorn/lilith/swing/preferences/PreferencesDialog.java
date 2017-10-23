@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -78,50 +79,45 @@ public class PreferencesDialog
 	public enum Panes
 	{
 		General("General"),
-		StartupShutdown("Startup & Shutdown"),
+		StartupShutdown("Startup & Shutdown", "Configure behavior at startup and shutdown."),
 		Windows("Windows"),
-		Sounds("Sounds"),
-		Sources("Sources"),
-		SourceLists("Source Lists"),
-		SourceFiltering("Source Filtering"),
-		Conditions("Conditions"),
-		LoggingLevels("Logging levels"),
-		AccessStatus("Access status types"),
-		Troubleshooting("Troubleshooting");
+		Sounds("Sounds", "Configure sounds or mute them entirely."),
+		Sources("Sources", "Configure human-readable names for source IP addresses."),
+		SourceLists("Source Lists", "Manage lists of sources. Those are used for Source filtering."),
+		SourceFiltering("Source Filtering", "Configure which hosts are allowed to connect."),
+		Conditions("Conditions", "Manage saved conditions and configure their styling."),
+		LoggingLevels("Logging levels", "Configure the styling of the different logging levels."),
+		AccessStatus("Access status types", "Configure the styling of the different access status types."),
+		Troubleshooting("Troubleshooting", "Got a problem? Broke something? Take a look here.");
 
 		private final String title;
+		private final String tooltip;
 
 		Panes(String title)
 		{
-			this.title = title;
+			this(title, title);
+		}
+
+		Panes(String title, String tooltip)
+		{
+			this.title = Objects.requireNonNull(title, "title must not be null!");
+			this.tooltip = Objects.requireNonNull(tooltip, "tooltip must not be null!");
 		}
 
 		public String getTitle()
 		{
 			return title;
 		}
+
+		public String getTooltip()
+		{
+			return tooltip;
+		}
 	}
 
 	public enum Actions
 	{
 		reinitializeDetailsViewFiles
-	}
-
-	private static final Map<Panes, String> PANE_TOOLTIPS=new HashMap<>();
-
-	static
-	{
-		PANE_TOOLTIPS.put(Panes.General, null);
-		PANE_TOOLTIPS.put(Panes.StartupShutdown, "Configure behavior at startup and shutdown.");
-		PANE_TOOLTIPS.put(Panes.Windows, null);
-		PANE_TOOLTIPS.put(Panes.Sounds, "Configure sounds or mute them entirely.");
-		PANE_TOOLTIPS.put(Panes.Sources, "Configure human-readable names for source IP addresses.");
-		PANE_TOOLTIPS.put(Panes.SourceLists, "Manage lists of sources. Those are used for Source filtering.");
-		PANE_TOOLTIPS.put(Panes.SourceFiltering, "Configure which hosts are allowed to connect.");
-		PANE_TOOLTIPS.put(Panes.Conditions, "Manage saved conditions and configure their styling.");
-		PANE_TOOLTIPS.put(Panes.LoggingLevels, "Configure the styling of the different logging levels.");
-		PANE_TOOLTIPS.put(Panes.AccessStatus, "Configure the styling of the different access status types.");
-		PANE_TOOLTIPS.put(Panes.Troubleshooting, "Got a problem? Broke something? Take a look here.");
 	}
 
 	private final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
@@ -699,11 +695,7 @@ public class PreferencesDialog
 			if(value != null)
 			{
 				title = value.getTitle();
-				toolTipText = PANE_TOOLTIPS.get(value);
-				if(toolTipText == null)
-				{
-					toolTipText = title;
-				}
+				toolTipText = value.getTooltip();
 			}
 			label.setText(title);
 			label.setToolTipText(toolTipText);
