@@ -2455,7 +2455,7 @@ public class MainFrame
 	{
 		if(logger.isInfoEnabled()) logger.info("showApplicationPathChangedDialog()");
 		final Object[] options = {"Exit", "Cancel"};
-		int result = JOptionPane.showOptionDialog(this,
+		int result = JOptionPane.showOptionDialog(preferencesDialog,
 			"You have changed the application path.\n" +
 				"You need to restart for this change to take effect.\n\n" +
 				"Exit now?",
@@ -2475,7 +2475,7 @@ public class MainFrame
 	{
 		if(logger.isInfoEnabled()) logger.info("showLookAndFeelChangedDialog()");
 		final Object[] options = {"Exit", "Cancel"};
-		int result = JOptionPane.showOptionDialog(this,
+		int result = JOptionPane.showOptionDialog(preferencesDialog,
 			"You have changed the look & feel.\n" +
 				"You need to restart for this change to take effect.\n\n" +
 				"Exit now?",
