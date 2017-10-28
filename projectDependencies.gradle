@@ -604,7 +604,6 @@ project(':lilith') {
 		runtime project(':lilith-sounds')
 		testCompile project(':lilith-data-corpus')
 		testCompile libraries.'sulky-junit'
-		testRuntime libraries.'cglib-nodep'
 		testRuntime libraries.'objenesis'
 	}
 }
@@ -630,7 +629,6 @@ project(':tracing') {
 		testCompile libraries.'spring-context'
 		testCompile libraries.'spring-core'
 		testRuntime libraries.'aspectjweaver'
-		testRuntime libraries.'cglib-nodep'
 		testRuntime libraries.'jcl-over-slf4j'
 		testRuntime libraries.'spring-aop'
 		testRuntime project(':logback-multiplex-appender-classic')
