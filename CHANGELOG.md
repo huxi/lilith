@@ -37,7 +37,7 @@ All notable changes to this project will be documented in this file.
 - Added more dependencies and entries to the deserialization whitelist. This is essentially necessary because `logback-access` does not have an `AccessEventVO`. See also [LOGBACK-1182 - Problem deserializing AccessEvent.](http://jira.qos.ch/browse/LOGBACK-1182).
 - Not all event producers expect a heartbeat.
 - Made sure that "You have changed the look & feel." and "You have changed the application path." dialogs aren't hidden by the preferences dialog. 
-- Logback 1.2.3, log4j2 2.10.0, Groovy 2.4.13, jackson 2.9.1, spring 5.0.1, protobuf 3.5.0, junique 1.0.4, jcommander 1.72, commons-lang 3.7, commons-text 1.1, commons-io 2.6, flying-saucer 9.1.7, glazedlists 1.10.0, aspectj 1.8.12, httpcore 4.4.8
+- Logback 1.2.3, log4j2 2.10.0, Groovy 2.4.13, jackson 2.9.2, spring 5.0.1, protobuf 3.5.0, junique 1.0.4, jcommander 1.72, commons-lang 3.7, commons-text 1.1, commons-io 2.6, flying-saucer 9.1.7, glazedlists 1.10.0, aspectj 1.8.12, httpcore 4.4.8
 - Fixed several split package issues. Because of this, some classes have changed package names:
   - the two most commonly used classes `de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender` and `de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder` have not been moved. 
   - `de.huxhorn.lilith.logback.encoder.AccessLilithEncoder` changed to `de.huxhorn.lilith.logback.encoder.access.AccessLilithEncoder`.
