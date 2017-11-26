@@ -186,6 +186,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -911,7 +914,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new EventWrapper(input, extensionRegistry);
+        return new EventWrapper(input, extensionRegistry);
       }
     };
 
@@ -982,6 +985,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1588,7 +1594,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new EventIdentifier(input, extensionRegistry);
+        return new EventIdentifier(input, extensionRegistry);
       }
     };
 
@@ -1666,6 +1672,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2308,7 +2317,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new SourceIdentifier(input, extensionRegistry);
+        return new SourceIdentifier(input, extensionRegistry);
       }
     };
 
@@ -2517,6 +2526,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -4929,7 +4941,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new LoggingEvent(input, extensionRegistry);
+        return new LoggingEvent(input, extensionRegistry);
       }
     };
 
@@ -5015,6 +5027,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5782,7 +5797,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new LoggerContext(input, extensionRegistry);
+        return new LoggerContext(input, extensionRegistry);
       }
     };
 
@@ -5890,6 +5905,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -6765,7 +6783,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ThreadInfo(input, extensionRegistry);
+        return new ThreadInfo(input, extensionRegistry);
       }
     };
 
@@ -6853,6 +6871,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -7687,7 +7708,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Message(input, extensionRegistry);
+        return new Message(input, extensionRegistry);
       }
     };
 
@@ -7754,6 +7775,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -8250,7 +8274,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new MessageArgument(input, extensionRegistry);
+        return new MessageArgument(input, extensionRegistry);
       }
     };
 
@@ -8438,6 +8462,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -10135,7 +10162,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StackTraceElement(input, extensionRegistry);
+        return new StackTraceElement(input, extensionRegistry);
       }
     };
 
@@ -10286,6 +10313,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -11875,7 +11905,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Throwable(input, extensionRegistry);
+        return new Throwable(input, extensionRegistry);
       }
     };
 
@@ -11948,6 +11978,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -12629,7 +12662,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NestedDiagnosticContext(input, extensionRegistry);
+        return new NestedDiagnosticContext(input, extensionRegistry);
       }
     };
 
@@ -12702,6 +12735,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -13394,7 +13430,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringMap(input, extensionRegistry);
+        return new StringMap(input, extensionRegistry);
       }
     };
 
@@ -13472,6 +13508,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -14121,7 +14160,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringMapEntry(input, extensionRegistry);
+        return new StringMapEntry(input, extensionRegistry);
       }
     };
 
@@ -14209,6 +14248,9 @@ public final class LoggingProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -15061,7 +15103,7 @@ public final class LoggingProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Marker(input, extensionRegistry);
+        return new Marker(input, extensionRegistry);
       }
     };
 
@@ -15168,7 +15210,7 @@ public final class LoggingProto {
       "\001 \001(\003\022F\n\021source_identifier\030\002 \001(\0132+.de.hu" +
       "xhorn.lilith.logging.SourceIdentifier\"D\n" +
       "\020SourceIdentifier\022\022\n\nidentifier\030\001 \001(\t\022\034\n" +
-      "\024secondary_identifier\030\002 \001(\t\"\212\005\n\014LoggingE",
+      "\024secondary_identifier\030\002 \001(\t\"\212\005\n\014LoggingE" +
       "vent\022\022\n\ntime_stamp\030\001 \001(\003\022\023\n\013logger_name\030" +
       "\002 \001(\t\022/\n\005level\030\003 \001(\0162 .de.huxhorn.lilith" +
       ".logging.Level\0223\n\007message\030\004 \001(\0132\".de.hux" +
@@ -15178,7 +15220,7 @@ public final class LoggingProto {
       ".huxhorn.lilith.logging.StackTraceElemen" +
       "t\0227\n\tthrowable\030\007 \001(\0132$.de.huxhorn.lilith" +
       ".logging.Throwable\022@\n\016logger_context\030\010 \001" +
-      "(\0132(.de.huxhorn.lilith.logging.LoggerCon",
+      "(\0132(.de.huxhorn.lilith.logging.LoggerCon" +
       "text\022G\n\031mapped_diagnostic_context\030\t \001(\0132" +
       "$.de.huxhorn.lilith.logging.StringMap\022U\n" +
       "\031nested_diagnostic_context\030\n \001(\01322.de.hu" +
@@ -15188,7 +15230,7 @@ public final class LoggingProto {
       "\"k\n\rLoggerContext\022\022\n\nbirth_time\030\001 \001(\003\022\014\n" +
       "\004name\030\002 \001(\t\0228\n\nproperties\030\003 \001(\0132$.de.hux" +
       "horn.lilith.logging.StringMap\"^\n\nThreadI" +
-      "nfo\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022\020\n\010group_i",
+      "nfo\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022\020\n\010group_i" +
       "d\030\003 \001(\003\022\022\n\ngroup_name\030\004 \001(\t\022\020\n\010priority\030" +
       "\005 \001(\005\"`\n\007Message\022\027\n\017message_pattern\030\001 \001(" +
       "\t\022<\n\010argument\030\002 \003(\0132*.de.huxhorn.lilith." +
@@ -15198,7 +15240,7 @@ public final class LoggingProto {
       "\022\021\n\tfile_name\030\003 \001(\t\022\023\n\013line_number\030\004 \001(\005" +
       "\022\025\n\rcode_location\030\005 \001(\t\022\017\n\007version\030\006 \001(\t" +
       "\022\r\n\005exact\030\007 \001(\010\022\031\n\021class_loader_name\030\010 \001" +
-      "(\t\022\023\n\013module_name\030\t \001(\t\022\026\n\016module_versio",
+      "(\t\022\023\n\013module_name\030\t \001(\t\022\026\n\016module_versio" +
       "n\030\n \001(\t\"\211\002\n\tThrowable\022\027\n\017throwable_class" +
       "\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022I\n\023stack_trace_e" +
       "lement\030\003 \003(\0132,.de.huxhorn.lilith.logging" +
@@ -15208,7 +15250,7 @@ public final class LoggingProto {
       "de.huxhorn.lilith.logging.Throwable\"L\n\027N" +
       "estedDiagnosticContext\0221\n\005entry\030\001 \003(\0132\"." +
       "de.huxhorn.lilith.logging.Message\"E\n\tStr" +
-      "ingMap\0228\n\005entry\030\001 \003(\0132).de.huxhorn.lilit",
+      "ingMap\0228\n\005entry\030\001 \003(\0132).de.huxhorn.lilit" +
       "h.logging.StringMapEntry\",\n\016StringMapEnt" +
       "ry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"L\n\006Marker" +
       "\022\014\n\004name\030\001 \002(\t\0224\n\treference\030\002 \003(\0132!.de.h" +

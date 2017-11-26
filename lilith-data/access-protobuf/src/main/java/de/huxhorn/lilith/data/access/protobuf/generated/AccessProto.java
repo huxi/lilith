@@ -69,6 +69,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -794,7 +797,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new EventWrapper(input, extensionRegistry);
+        return new EventWrapper(input, extensionRegistry);
       }
     };
 
@@ -865,6 +868,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1471,7 +1477,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new EventIdentifier(input, extensionRegistry);
+        return new EventIdentifier(input, extensionRegistry);
       }
     };
 
@@ -1549,6 +1555,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2191,7 +2200,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new SourceIdentifier(input, extensionRegistry);
+        return new SourceIdentifier(input, extensionRegistry);
       }
     };
 
@@ -2451,6 +2460,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5091,7 +5103,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AccessEvent(input, extensionRegistry);
+        return new AccessEvent(input, extensionRegistry);
       }
     };
 
@@ -5177,6 +5189,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5944,7 +5959,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new LoggerContext(input, extensionRegistry);
+        return new LoggerContext(input, extensionRegistry);
       }
     };
 
@@ -6017,6 +6032,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -6709,7 +6727,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringMap(input, extensionRegistry);
+        return new StringMap(input, extensionRegistry);
       }
     };
 
@@ -6787,6 +6805,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -7436,7 +7457,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringMapEntry(input, extensionRegistry);
+        return new StringMapEntry(input, extensionRegistry);
       }
     };
 
@@ -7509,6 +7530,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -8201,7 +8225,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringArrayMap(input, extensionRegistry);
+        return new StringArrayMap(input, extensionRegistry);
       }
     };
 
@@ -8289,6 +8313,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -9130,7 +9157,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringArrayMapEntry(input, extensionRegistry);
+        return new StringArrayMapEntry(input, extensionRegistry);
       }
     };
 
@@ -9197,6 +9224,9 @@ public final class AccessProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -9693,7 +9723,7 @@ public final class AccessProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringArrayValue(input, extensionRegistry);
+        return new StringArrayValue(input, extensionRegistry);
       }
     };
 
@@ -9780,7 +9810,7 @@ public final class AccessProto {
       "\022E\n\021source_identifier\030\002 \001(\0132*.de.huxhorn" +
       ".lilith.access.SourceIdentifier\"D\n\020Sourc" +
       "eIdentifier\022\022\n\nidentifier\030\001 \001(\t\022\034\n\024secon" +
-      "dary_identifier\030\002 \001(\t\"\207\004\n\013AccessEvent\022\016\n",
+      "dary_identifier\030\002 \001(\t\"\207\004\n\013AccessEvent\022\016\n" +
       "\006method\030\001 \001(\t\022\020\n\010protocol\030\002 \001(\t\022\026\n\016remot" +
       "e_address\030\003 \001(\t\022\023\n\013remote_host\030\004 \001(\t\022\023\n\013" +
       "remote_user\030\005 \001(\t\022\022\n\ntime_stamp\030\006 \001(\003\022\023\n" +
@@ -9790,7 +9820,7 @@ public final class AccessProto {
       "\030\014 \001(\0132#.de.huxhorn.lilith.access.String" +
       "Map\022D\n\022request_parameters\030\r \001(\0132(.de.hux" +
       "horn.lilith.access.StringArrayMap\022=\n\020res" +
-      "ponse_headers\030\016 \001(\0132#.de.huxhorn.lilith.",
+      "ponse_headers\030\016 \001(\0132#.de.huxhorn.lilith." +
       "access.StringMap\022?\n\016logger_context\030\017 \001(\013" +
       "2\'.de.huxhorn.lilith.access.LoggerContex" +
       "t\022\024\n\014elapsed_time\030\020 \001(\003\"j\n\rLoggerContext" +
@@ -9800,7 +9830,7 @@ public final class AccessProto {
       "(.de.huxhorn.lilith.access.StringMapEntr" +
       "y\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005valu" +
       "e\030\002 \001(\t\"N\n\016StringArrayMap\022<\n\005entry\030\001 \003(\013" +
-      "2-.de.huxhorn.lilith.access.StringArrayM",
+      "2-.de.huxhorn.lilith.access.StringArrayM" +
       "apEntry\"]\n\023StringArrayMapEntry\022\013\n\003key\030\001 " +
       "\002(\t\0229\n\005value\030\002 \003(\0132*.de.huxhorn.lilith.a" +
       "ccess.StringArrayValue\"!\n\020StringArrayVal" +

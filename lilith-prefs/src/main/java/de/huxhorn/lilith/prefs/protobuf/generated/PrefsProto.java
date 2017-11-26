@@ -524,6 +524,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       int mutable_bitField1_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -4375,7 +4378,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new LilithPreferences(input, extensionRegistry);
+        return new LilithPreferences(input, extensionRegistry);
       }
     };
 
@@ -4508,6 +4511,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5798,7 +5804,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new DirectoryContent(input, extensionRegistry);
+        return new DirectoryContent(input, extensionRegistry);
       }
     };
 
@@ -5871,6 +5877,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -6450,7 +6459,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ByteArrayMapEntry(input, extensionRegistry);
+        return new ByteArrayMapEntry(input, extensionRegistry);
       }
     };
 
@@ -6523,6 +6532,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -7215,7 +7227,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringMap(input, extensionRegistry);
+        return new StringMap(input, extensionRegistry);
       }
     };
 
@@ -7293,6 +7305,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -7942,7 +7957,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringMapEntry(input, extensionRegistry);
+        return new StringMapEntry(input, extensionRegistry);
       }
     };
 
@@ -8015,6 +8030,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -8707,7 +8725,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringArrayMap(input, extensionRegistry);
+        return new StringArrayMap(input, extensionRegistry);
       }
     };
 
@@ -8795,6 +8813,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -9636,7 +9657,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringArrayMapEntry(input, extensionRegistry);
+        return new StringArrayMapEntry(input, extensionRegistry);
       }
     };
 
@@ -9703,6 +9724,9 @@ public final class PrefsProto {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -10199,7 +10223,7 @@ public final class PrefsProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new StringArrayValue(input, extensionRegistry);
+        return new StringArrayValue(input, extensionRegistry);
       }
     };
 
@@ -10276,7 +10300,7 @@ public final class PrefsProto {
       ".de.huxhorn.lilith.prefs.DirectoryConten" +
       "t\022\026\n\016blacklist_name\030\004 \001(\t\022\026\n\016whitelist_n" +
       "ame\030\005 \001(\t\022\025\n\rlook_and_feel\030\006 \001(\t\022\032\n\022aski" +
-      "ng_before_quit\030\007 \001(\010\022\024\n\014auto_closing\030\010 \001",
+      "ng_before_quit\030\007 \001(\010\022\024\n\014auto_closing\030\010 \001" +
       "(\010\022\034\n\024auto_focusing_window\030\t \001(\010\022\024\n\014auto" +
       "_opening\030\n \001(\010\022\033\n\023checking_for_update\030\013 " +
       "\001(\010\022\035\n\025cleaning_logs_on_exit\030\014 \001(\010\022\032\n\022co" +
@@ -10286,7 +10310,7 @@ public final class PrefsProto {
       "_bottom\030\023 \001(\010\022\037\n\027showing_full_call_stack" +
       "\030\024 \001(\010\022\032\n\022showing_status_bar\030\026 \001(\010\022\032\n\022sh" +
       "owing_stacktrace\030\027 \001(\010\022\036\n\026showing_tip_of" +
-      "_the_day\030\030 \001(\010\022\027\n\017showing_toolbar\030\031 \001(\010\022",
+      "_the_day\030\030 \001(\010\022\027\n\017showing_toolbar\030\031 \001(\010\022" +
       "\036\n\026splash_screen_disabled\030\032 \001(\010\022\035\n\025using" +
       "_internal_frames\030\033 \001(\010\022B\n\020source_filteri" +
       "ng\030\034 \001(\0162(.de.huxhorn.lilith.prefs.Sourc" +
@@ -10296,7 +10320,7 @@ public final class PrefsProto {
       "orn.lilith.prefs.DirectoryContent\022\023\n\013tra" +
       "y_active\030  \001(\010\022 \n\030showing_full_recent_pa" +
       "th\030! \001(\010\022\027\n\017hiding_on_close\030\" \001(\010\022%\n\035usi" +
-      "ng_wrapped_exception_style\030# \001(\010\022\"\n\032show",
+      "ng_wrapped_exception_style\030# \001(\010\022\"\n\032show" +
       "ing_primary_identifier\030$ \001(\010\022$\n\034showing_" +
       "secondary_identifier\030% \001(\010\022\032\n\022scrolling_" +
       "smoothly\030& \001(\010J\004\010\017\020\020J\004\010\020\020\021J\004\010\025\020\026R\010licens" +
@@ -10306,7 +10330,7 @@ public final class PrefsProto {
       "prefs.ByteArrayMapEntry\022<\n\tdirectory\030\003 \003" +
       "(\0132).de.huxhorn.lilith.prefs.DirectoryCo" +
       "ntent\"/\n\021ByteArrayMapEntry\022\013\n\003key\030\001 \002(\t\022" +
-      "\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry\030\001 \003",
+      "\r\n\005value\030\002 \001(\014\"C\n\tStringMap\0226\n\005entry\030\001 \003" +
       "(\0132\'.de.huxhorn.lilith.prefs.StringMapEn" +
       "try\",\n\016StringMapEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005va" +
       "lue\030\002 \001(\t\"M\n\016StringArrayMap\022;\n\005entry\030\001 \003" +
@@ -10316,7 +10340,7 @@ public final class PrefsProto {
       "prefs.StringArrayValue\"!\n\020StringArrayVal" +
       "ue\022\r\n\005value\030\001 \001(\t*9\n\017SourceFiltering\022\010\n\004" +
       "NONE\020\000\022\r\n\tBLACKLIST\020\001\022\r\n\tWHITELIST\020\002B.\n*" +
-      "de.huxhorn.lilith.prefs.protobuf.generat",
+      "de.huxhorn.lilith.prefs.protobuf.generat" +
       "edH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
