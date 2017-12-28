@@ -2491,6 +2491,7 @@ public class MainFrame
 		}
 	}
 
+	@SuppressWarnings("PMD.DoNotCallSystemExit")
 	public void exit()
 	{
 		if(applicationPreferences.isAskingBeforeQuit())
@@ -3323,6 +3324,7 @@ public class MainFrame
 				super(input);
 			}
 
+			@SuppressWarnings("PMD.SystemPrintln")
 			public void processLine(String line)
 			{
 				System.err.println(file.getAbsolutePath() + ": " + line);
@@ -3422,6 +3424,7 @@ public class MainFrame
 				super(input);
 			}
 
+			@SuppressWarnings("PMD.SystemPrintln")
 			public void processLine(String line)
 			{
 				System.err.println("Process: " + line);

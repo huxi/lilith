@@ -90,7 +90,7 @@ public final class ContextHelper
 
 		if(t != null)
 		{
-			t.printStackTrace();
+			t.printStackTrace(); // NOPMD
 		}
 
 		new ContextHelper(); // stfu
@@ -128,7 +128,7 @@ public final class ContextHelper
 		}
 		catch (Throwable e)
 		{
-			e.printStackTrace();
+			e.printStackTrace(); // NOPMD
 		}
 		return result;
 	}
@@ -152,7 +152,7 @@ public final class ContextHelper
 		}
 		catch (Throwable e)
 		{
-			e.printStackTrace();
+			e.printStackTrace(); // NOPMD
 		}
 		return result;
 	}

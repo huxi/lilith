@@ -205,7 +205,7 @@ public class SimpleSendBytesService
 					}
 					if(debug)
 					{
-						System.err.println("Closed dataOutputStream.");
+						System.err.println("Closed dataOutputStream."); // NOPMD
 					}
 				}
 				lock.notifyAll();

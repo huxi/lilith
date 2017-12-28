@@ -62,7 +62,7 @@ public class SplashScreen
 			}
 			catch(IOException ex)
 			{
-				ex.printStackTrace();
+				ex.printStackTrace(); // NOPMD
 			}
 		}
 		statusLabel = new JLabel();

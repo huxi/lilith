@@ -216,7 +216,7 @@ public final class ThrowableInfoParser
 			}
 			else
 			{
-				System.out.println("What? "+currentLine);
+				System.err.println("What? "+currentLine); // NOPMD
 			}
 		}
 

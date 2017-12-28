@@ -51,6 +51,7 @@ import java.util.Map;
  * the events are originating from. This is extremely useful if more than one application is running on the same
  * host.</p>
  */
+@SuppressWarnings({"PMD.MethodReturnsInternalArray", "PMD.ArrayIsStoredDirectly"})
 public class LoggingEvent
 	implements Serializable
 {

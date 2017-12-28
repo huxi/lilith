@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.IdentityHashMap;
 import java.util.Objects;
 
+@SuppressWarnings({"PMD.MethodReturnsInternalArray", "PMD.ArrayIsStoredDirectly"})
 public class ThrowableInfo
 	implements Serializable, Cloneable
 {

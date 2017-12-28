@@ -89,11 +89,11 @@ public class LogbackShutdownServletContextListener
 		{
 			LoggerContext context = (LoggerContext) loggerFactory;
 			context.stop();
-			System.err.println("Logback has been shut down.");
+			System.err.println("Logback has been shut down."); // NOPMD
 			String message = retrieveLogbackStatus(context);
 			if(message != null)
 			{
-				System.err.println(message);
+				System.err.println(message); // NOPMD
 			}
 		}
 	}
@@ -112,7 +112,6 @@ public class LogbackShutdownServletContextListener
 			List<Status> statusList = StatusUtil.filterStatusListByTimeThreshold(statusManager.getCopyOfStatusList(), threshold);
 			if(statusList != null)
 			{
-				System.err.println("Logback-Status:");
 				StringBuilder statusBuilder=new StringBuilder();
 				for(Status current : statusList)
 				{

@@ -64,7 +64,7 @@ class HtmlTransferable
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
+			e.printStackTrace(); // NOPMD
 		}
 		data = bos.toByteArray();
 	}

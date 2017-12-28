@@ -185,6 +185,7 @@ public final class TailCommand
 		return false;
 	}
 
+	@SuppressWarnings("PMD.SystemPrintln")
 	private static <T extends Serializable> void pollFile(Buffer<EventWrapper<T>> buffer, Formatter<EventWrapper<T>> formatter, File dataFile, File indexFile, long index)
 	{
 		final Logger logger = LoggerFactory.getLogger(TailCommand.class);
@@ -233,6 +234,7 @@ public final class TailCommand
 		}
 	}
 
+	@SuppressWarnings("PMD.SystemPrintln")
 	private static <T extends Serializable> long printContent(Buffer<EventWrapper<T>> buffer, Formatter<EventWrapper<T>> formatter, long amount)
 	{
 		long bufferSize=buffer.getSize();

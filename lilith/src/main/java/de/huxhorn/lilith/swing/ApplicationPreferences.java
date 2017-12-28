@@ -429,6 +429,7 @@ public class ApplicationPreferences
 		return Arrays.asList(LEVEL_VALUES);
 	}
 
+	@SuppressWarnings("PMD.MethodReturnsInternalArray") // TODO
 	public List<String> retrieveAllConditions()
 	{
 		List<String> itemsVector = new ArrayList<>();
@@ -826,10 +827,11 @@ public class ApplicationPreferences
 		return true;
 	}
 
+	@SuppressWarnings("PMD.MethodReturnsInternalArray") // TODO
 	public String[] getAllGroovyConditionScriptFiles()
 	{
-		if(conditionScriptFiles == null || ((System
-			.currentTimeMillis() - lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
+		if(conditionScriptFiles == null
+				|| ((System.currentTimeMillis() - lastConditionsCheck) > CONDITIONS_CHECK_INTERVAL))
 		{
 
 			File[] groovyFiles = groovyConditionsPath.listFiles(new GroovyConditionFileFilter());
@@ -876,6 +878,7 @@ public class ApplicationPreferences
 		return null;
 	}
 
+	@SuppressWarnings("PMD.MethodReturnsInternalArray") // TODO
 	public String[] getClipboardFormatterScriptFiles()
 	{
 		if(clipboardFormatterScriptFiles == null || ((System.currentTimeMillis() - lastClipboardFormatterCheck) > CONDITIONS_CHECK_INTERVAL))

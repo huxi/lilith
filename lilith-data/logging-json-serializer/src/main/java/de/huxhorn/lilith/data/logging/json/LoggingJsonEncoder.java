@@ -104,7 +104,7 @@ public class LoggingJsonEncoder
 		}
 		catch(IOException ex)
 		{
-			ex.printStackTrace();
+			ex.printStackTrace(); // NOPMD
 		}
 		return null;
 	}

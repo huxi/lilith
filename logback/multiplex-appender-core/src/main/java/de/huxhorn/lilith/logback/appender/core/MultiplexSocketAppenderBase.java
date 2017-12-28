@@ -171,7 +171,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 	{
 		if(debug)
 		{
-			System.err.println("RemoteHosts: " + remoteHostsList);
+			System.err.println("RemoteHosts: " + remoteHostsList); // NOPMD
 		}
 		this.remoteHostsList.clear();
 		this.remoteHostsList.addAll(remoteHostsList);

@@ -263,6 +263,7 @@ public final class FilterCommand
 		return false;
 	}
 
+	@SuppressWarnings("PMD.SystemPrintln")
 	private static <T extends Serializable> long filterContent(Buffer<EventWrapper<T>> inputBuffer, AppendOperation<EventWrapper<T>> outputBuffer, GroovyCondition groovyCondition, Formatter<EventWrapper<T>>  formatter)
 	{
 		long bufferSize=inputBuffer.getSize();
@@ -287,6 +288,7 @@ public final class FilterCommand
 		return i;
 	}
 
+	@SuppressWarnings("PMD.SystemPrintln")
 	private static <T extends Serializable> void pollFile(Buffer<EventWrapper<T>> inputBuffer, AppendOperation<EventWrapper<T>> outputBuffer, GroovyCondition groovyCondition, Formatter<EventWrapper<T>>  formatter, File inputDataFile, File inputIndexFile, long index)
 	{
 		final Logger logger = LoggerFactory.getLogger(FilterCommand.class);

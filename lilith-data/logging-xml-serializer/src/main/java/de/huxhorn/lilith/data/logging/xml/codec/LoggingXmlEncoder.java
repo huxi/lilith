@@ -76,6 +76,11 @@ public class LoggingXmlEncoder
 	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] encode(LoggingEvent event)
 	{
+		if(event == null)
+		{
+			return null;
+		}
+
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		OutputStreamWriter osw;
 		try
@@ -100,7 +105,7 @@ public class LoggingXmlEncoder
 			osw.close(); // absolutely necessary!!
 			return out.toByteArray();
 		}
-		catch(XMLStreamException | IOException | NullPointerException ignore)
+		catch(XMLStreamException | IOException | NullPointerException ignore) // NOPMD
 		{
 			//e.printStackTrace();
 		}

@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
+@SuppressWarnings({"PMD.MethodReturnsInternalArray", "PMD.ArrayIsStoredDirectly"})
 public class LoggingFormatter
 	implements Formatter<EventWrapper<LoggingEvent>>
 {

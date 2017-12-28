@@ -171,6 +171,7 @@ public final class CatCommand
 		return false;
 	}
 
+	@SuppressWarnings("PMD.SystemPrintln")
 	private static <T extends Serializable> void printContent(FileBuffer<EventWrapper<T>> buffer, Formatter<EventWrapper<T>> formatter, long amount)
 	{
 		long bufferSize=buffer.getSize();

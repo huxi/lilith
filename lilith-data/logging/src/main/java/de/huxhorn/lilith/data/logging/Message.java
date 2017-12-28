@@ -42,6 +42,7 @@ import java.util.Arrays;
  *
  * The message is formatted lazily the first time it is actually retrieved using getMessage().
  */
+@SuppressWarnings({"PMD.MethodReturnsInternalArray", "PMD.ArrayIsStoredDirectly"})
 public final class Message
 	implements Serializable, Cloneable
 {

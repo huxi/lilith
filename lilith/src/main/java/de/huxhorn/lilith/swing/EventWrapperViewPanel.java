@@ -1539,6 +1539,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		private final MouseWheelListener[] wrapped;
 
+		@SuppressWarnings("PMD.ArrayIsStoredDirectly")
 		WrappingMouseWheelListener(MouseWheelListener[] wrapped)
 		{
 			this.wrapped = wrapped;

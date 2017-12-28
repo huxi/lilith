@@ -138,7 +138,7 @@ public enum HttpStatus
 			HttpStatus previous = CODE_MAP.put(code.getCode(), code);
 			if(previous != null)
 			{
-				throw new RuntimeException("Duplicate entry for HttpStatus "+code.getCode()+"!");
+				throw new IllegalStateException("Duplicate entry for HttpStatus "+code.getCode()+"!");
 			}
 		}
 	}

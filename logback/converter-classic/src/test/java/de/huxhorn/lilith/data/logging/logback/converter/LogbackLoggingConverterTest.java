@@ -86,16 +86,16 @@ public class LogbackLoggingConverterTest
 			{
 				try
 				{
-					throw new RuntimeException("foo");
+					throw new RuntimeException("foo"); // NOPMD
 				}
 				catch(Throwable x)
 				{
-					throw new RuntimeException(x);
+					throw new RuntimeException(x); // NOPMD
 				}
 			}
 			catch(Throwable x)
 			{
-				throw new RuntimeException("yyy", x);
+				throw new RuntimeException("yyy", x); // NOPMD
 			}
 		}
 		catch(Throwable x)

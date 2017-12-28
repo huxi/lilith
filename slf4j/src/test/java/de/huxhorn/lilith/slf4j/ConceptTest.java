@@ -18,6 +18,7 @@ public class ConceptTest
 	}
 
 	@Test
+	@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 	public void log()
 	{
 		logger.log(Logger.Level.DEBUG, "Foobar");

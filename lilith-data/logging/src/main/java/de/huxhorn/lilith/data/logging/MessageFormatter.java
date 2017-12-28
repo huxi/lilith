@@ -259,6 +259,7 @@ public final class MessageFormatter
 	 * to leave the current VM since it may result in ClassNotFoundExceptions if the given Throwable is not
 	 * available/different in the deserializing VM.</p>
 	 */
+	@SuppressWarnings({"PMD.MethodReturnsInternalArray", "PMD.ArrayIsStoredDirectly"})
 	public static class ArgumentResult
 	{
 		private final String[] arguments;

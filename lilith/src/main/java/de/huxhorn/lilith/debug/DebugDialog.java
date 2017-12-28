@@ -508,7 +508,7 @@ public class DebugDialog
 
 		public void actionPerformed(ActionEvent e)
 		{
-			throw new RuntimeException("Uncaught Exception!");
+			throw new RuntimeException("Uncaught Exception!"); // NOPMD
 		}
 	}
 

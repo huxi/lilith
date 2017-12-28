@@ -68,7 +68,7 @@ public class LoggingJsonDecoder
 		}
 		catch(IOException ex)
 		{
-			ex.printStackTrace();
+			ex.printStackTrace(); // NOPMD
 		}
 		return null;
 	}

@@ -90,7 +90,7 @@ public class LoggingXmlDecoder
 		}
 		catch(XMLStreamException | IOException e)
 		{
-			e.printStackTrace();
+			e.printStackTrace(); // NOPMD
 		}
 		finally
 		{

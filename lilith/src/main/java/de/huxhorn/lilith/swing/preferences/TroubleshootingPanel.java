@@ -46,6 +46,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings({"PMD.MethodReturnsInternalArray", "PMD.ArrayIsStoredDirectly"})
 public class TroubleshootingPanel
 	extends JPanel
 {
@@ -506,6 +507,7 @@ public class TroubleshootingPanel
 			putValue(SHORT_DESCRIPTION, "Execute garbage collection.");
 		}
 
+		@SuppressWarnings("PMD.DoNotCallGarbageCollectionExplicitly")
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			System.gc();

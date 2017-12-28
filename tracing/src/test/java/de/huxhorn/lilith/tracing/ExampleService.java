@@ -38,6 +38,7 @@ import de.huxhorn.sulky.io.IOUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 public class ExampleService implements ExampleServiceIfc, Cloneable
 {
 	private final Logger logger = LoggerFactory.getLogger(ExampleService.class);

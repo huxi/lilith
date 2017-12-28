@@ -763,7 +763,7 @@ public final class AboutPanel
 
 			BufferedImage copy = GraphicsUtilities.createCompatibleCopy(scrollImage);
 			BufferedImageOp filter;
-			final int blurSize = 10;
+			final int blurSize = 10; // NOPMD
 			filter = getGaussianBlurFilter(blurSize, false);
 			scrollImage = filter.filter(scrollImage, null);
 
