@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,13 +57,14 @@ public class MessageBasedEventProducer<T extends Serializable>
 	public void start()
 	{
 		updateHeartbeatTimestamp();
-		Thread t = new Thread(new ReceiverRunnable(getSourceIdentifier()), "" + getSourceIdentifier() + "-Receiver");
+		String sourceIdentifierString=String.valueOf(getSourceIdentifier());
+		Thread t = new Thread(new ReceiverRunnable(getSourceIdentifier()), sourceIdentifierString + "-Receiver");
 		t.setDaemon(false);
 		t.start();
 
 		if(requiresHeartbeat)
 		{
-			t = new Thread(new HeartbeatObserverRunnable(), "" + getSourceIdentifier() + "-HeartbeatObserver");
+			t = new Thread(new HeartbeatObserverRunnable(), sourceIdentifierString + "-HeartbeatObserver");
 			t.setDaemon(false);
 			t.start();
 		}
@@ -139,7 +140,7 @@ public class MessageBasedEventProducer<T extends Serializable>
 						updateHeartbeatTimestamp();
 						if(size > 0)
 						{
-							byte[] bytes = new byte[size];
+							byte[] bytes = new byte[size]; // NOPMD - AvoidInstantiatingObjectsInLoops
 							allocating = false;
 							dataInput.readFully(bytes);
 

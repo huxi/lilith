@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,12 +48,12 @@ class TaskIdRenderer
 		String text = "";
 		if(value instanceof Long)
 		{
-			text = "" + value;
+			text = value.toString();
 		}
 		else if(value instanceof Task)
 		{
 			Task task = (Task) value;
-			text = "" + task.getId();
+			text = Long.toString(task.getId());
 		}
 		if(logger.isInfoEnabled()) logger.info("Text: {}", text);
 

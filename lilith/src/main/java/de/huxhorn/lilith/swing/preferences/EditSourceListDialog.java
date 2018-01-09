@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -204,7 +204,7 @@ public class EditSourceListDialog
 		List<Source> sourcesList = new ArrayList<>();
 		for(Map.Entry<String, String> current : sourceNames.entrySet())
 		{
-			Source source = new Source();
+			Source source = new Source(); // NOPMD - AvoidInstantiatingObjectsInLoops
 			source.setIdentifier(current.getKey());
 			source.setName(current.getValue());
 			sourcesList.add(source);

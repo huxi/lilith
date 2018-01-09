@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -534,19 +534,16 @@ public class MainFrame
 				Arrays.sort(autoFiles, Comparator.comparing(File::getAbsolutePath));
 				for(File current : autoFiles)
 				{
-					AutostartRunnable r = new AutostartRunnable(current);
+					AutostartRunnable r = new AutostartRunnable(current); // NOPMD - AvoidInstantiatingObjectsInLoops
 					autostartProcesses.add(r);
-					Thread t = new Thread(r, current.getAbsolutePath());
+					Thread t = new Thread(r, current.getAbsolutePath()); // NOPMD - AvoidInstantiatingObjectsInLoops
 					t.setDaemon(true);
 					t.start();
 				}
 			}
 			else
 			{
-				if(logger.isInfoEnabled())
-				{
-					logger.info("No autostart files defined in '{}'.", autostartDir.getAbsolutePath());
-				}
+				if(logger.isInfoEnabled()) logger.info("No autostart files defined in '{}'.", autostartDir.getAbsolutePath());
 			}
 		}
 
@@ -898,7 +895,7 @@ public class MainFrame
 			}
 			else if(numberOfTasks > 1)
 			{
-				text = "" + numberOfTasks + " active tasks.";
+				text = Integer.toString(numberOfTasks) + " active tasks.";
 				icon = Icons.PROGRESS_ICON;
 			}
 			taskStatusLabel.setText(text);
@@ -1762,7 +1759,7 @@ public class MainFrame
 		Map<HttpStatus.Type, Colors> colors = new HashMap<>();
 		for(Map.Entry<HttpStatus.Type, ColorScheme> current : prefValue.entrySet())
 		{
-			colors.put(current.getKey(), new Colors(current.getValue(), false));
+			colors.put(current.getKey(), new Colors(current.getValue(), false)); // NOPMD - AvoidInstantiatingObjectsInLoops
 		}
 		statusColors = colors;
 	}
@@ -1774,7 +1771,7 @@ public class MainFrame
 		Map<LoggingEvent.Level, Colors> colors = new HashMap<>();
 		for(Map.Entry<LoggingEvent.Level, ColorScheme> current : prefValue.entrySet())
 		{
-			colors.put(current.getKey(), new Colors(current.getValue(), false));
+			colors.put(current.getKey(), new Colors(current.getValue(), false)); // NOPMD - AvoidInstantiatingObjectsInLoops
 		}
 		levelColors = colors;
 	}
@@ -3110,12 +3107,12 @@ public class MainFrame
 		{
 			String abs = f.getAbsolutePath();
 			abs = abs.substring(0, abs.length() - extension.length());
-			File active = new File(abs + FileConstants.ACTIVE_FILE_EXTENSION);
+			File active = new File(abs + FileConstants.ACTIVE_FILE_EXTENSION); // NOPMD - AvoidInstantiatingObjectsInLoops
 			if(!active.isFile())
 			{
 				String secondary = f.getName();
 				secondary = secondary.substring(0, secondary.length() - extension.length());
-				inactiveLogs.add(new SourceIdentifier(primary, secondary));
+				inactiveLogs.add(new SourceIdentifier(primary, secondary)); // NOPMD - AvoidInstantiatingObjectsInLoops
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,8 @@ public class GeneralPanel
 	extends JPanel
 {
 	private static final long serialVersionUID = -3070943109124678227L;
+
+	private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
 	private final PreferencesDialog preferencesDialog;
 	private final ApplicationPreferences applicationPreferences;
@@ -210,7 +212,7 @@ public class GeneralPanel
 					selectedIndex = idx;
 				}
 			}
-			lookAndFeelCombo.setModel(new DefaultComboBoxModel<>(lookAndFeels.toArray(new String[lookAndFeels.size()])));
+			lookAndFeelCombo.setModel(new DefaultComboBoxModel<>(lookAndFeels.toArray(EMPTY_STRING_ARRAY)));
 			lookAndFeelCombo.setSelectedIndex(selectedIndex);
 		}
 
@@ -224,7 +226,7 @@ public class GeneralPanel
 				idx=0;
 			}
 
-			defaultConditionCombo.setModel(new DefaultComboBoxModel<>(conditionNames.toArray(new String[conditionNames.size()])));
+			defaultConditionCombo.setModel(new DefaultComboBoxModel<>(conditionNames.toArray(EMPTY_STRING_ARRAY)));
 			defaultConditionCombo.setSelectedIndex(idx);
 		}
 		String appPath = applicationPreferences.getApplicationPath().getAbsolutePath();

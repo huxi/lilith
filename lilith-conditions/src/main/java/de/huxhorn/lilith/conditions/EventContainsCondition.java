@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ public final class EventContainsCondition
 				}
 
 				{
-					String level = "" + event.getLevel();
+					String level = String.valueOf(event.getLevel());
 					if(checkString(level))
 					{
 						return true;
@@ -229,7 +229,7 @@ public final class EventContainsCondition
 				}
 
 				{
-					String message = "" + event.getStatusCode();
+					String message = String.valueOf(event.getStatusCode());
 					if(checkString(message))
 					{
 						return true;

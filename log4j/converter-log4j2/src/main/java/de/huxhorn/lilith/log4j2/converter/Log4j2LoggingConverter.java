@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ public class Log4j2LoggingConverter
 		}
 		if (!(o instanceof org.apache.logging.log4j.core.LogEvent))
 		{
-			throw new IllegalArgumentException("" + o + " is not a " + getSourceClass() + "!");
+			throw new IllegalArgumentException(o.toString() + " is not a " + getSourceClass() + "!");
 		}
 		org.apache.logging.log4j.core.LogEvent log4jEvent = (org.apache.logging.log4j.core.LogEvent) o;
 		LoggingEvent result = new LoggingEvent();
@@ -164,7 +164,7 @@ public class Log4j2LoggingConverter
 						String current = list.get(i);
 						if (current != null)
 						{
-							ndcResult[i] = new Message(current);
+							ndcResult[i] = new Message(current); // NOPMD - AvoidInstantiatingObjectsInLoops
 						}
 					}
 					result.setNdc(ndcResult);

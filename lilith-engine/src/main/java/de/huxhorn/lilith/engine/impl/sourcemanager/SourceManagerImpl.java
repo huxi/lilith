@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -254,7 +254,7 @@ public class SourceManagerImpl<T extends Serializable>
 		{
 			if(handler instanceof Runnable)
 			{
-				Thread t = new Thread((Runnable) handler, "Consumer-Thread");
+				Thread t = new Thread((Runnable) handler, "Consumer-Thread"); // NOPMD - AvoidInstantiatingObjectsInLoops
 				t.setDaemon(true);
 				t.start();
 				if(logger.isInfoEnabled()) logger.info("Started {}.", t);
@@ -266,7 +266,7 @@ public class SourceManagerImpl<T extends Serializable>
 		{
 			if(current instanceof Runnable)
 			{
-				Thread t = new Thread((Runnable) current, "Producer-Thread-" + current);
+				Thread t = new Thread((Runnable) current, "Producer-Thread-" + current); // NOPMD - AvoidInstantiatingObjectsInLoops
 				t.setDaemon(true);
 				t.start();
 				if(logger.isInfoEnabled()) logger.info("Started {}.", t);

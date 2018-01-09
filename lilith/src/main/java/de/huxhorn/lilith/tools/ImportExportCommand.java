@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,6 +98,7 @@ public final class ImportExportCommand
 		return exportFiles(preferences.getStartupApplicationPath(), files);
 	}
 
+	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	private static Map<String, byte[]> exportFiles(File basePath, String[] files)
 	{
 		final Logger logger = LoggerFactory.getLogger(ImportExportCommand.class);
@@ -167,6 +168,7 @@ public final class ImportExportCommand
 		return result;
 	}
 
+	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	private static void importFiles(File basePath, Map<String, byte[]> files)
 	{
 		final Logger logger = LoggerFactory.getLogger(ImportExportCommand.class);

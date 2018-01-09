@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -244,7 +244,7 @@ public class TroubleshootingPanel
 			{
 				Thread key = current.getKey();
 				StackTraceElement[] value = current.getValue();
-				ThreadHolder holder = new ThreadHolder(key, value);
+				ThreadHolder holder = new ThreadHolder(key, value); // NOPMD - AvoidInstantiatingObjectsInLoops
 				ThreadGroup group = key.getThreadGroup();
 				if(group == null)
 				{
@@ -255,7 +255,7 @@ public class TroubleshootingPanel
 					List<ThreadHolder> list = threadGroupMapping.get(group);
 					if(list == null)
 					{
-						list = new ArrayList<>();
+						list = new ArrayList<>(); // NOPMD - AvoidInstantiatingObjectsInLoops
 						threadGroupMapping.put(group, list);
 					}
 					list.add(holder);

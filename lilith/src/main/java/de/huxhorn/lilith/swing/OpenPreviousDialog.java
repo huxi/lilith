@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ public class OpenPreviousDialog
 		}
 	}
 
-	private static final String[] EMPTY_STRING_ARRAY = new String[]{};
+	private static final String[] EMPTY_STRING_ARRAY = new String[0];
 	private static final SourceIdentifierWrapper[] EMPTY_SECONDARY_ARRAY = new SourceIdentifierWrapper[]{};
 
 	private final MainFrame mainFrame;
@@ -293,7 +293,7 @@ public class OpenPreviousDialog
 				List<SourceIdentifierWrapper> sourceList = inactiveMap.get(primary);
 				if(sourceList == null)
 				{
-					sourceList = new ArrayList<>();
+					sourceList = new ArrayList<>(); // NOPMD - AvoidInstantiatingObjectsInLoops
 					inactiveMap.put(primary, sourceList);
 				}
 				long numberOfEvents = logFileFactory.getNumberOfEvents(current);
@@ -303,8 +303,8 @@ public class OpenPreviousDialog
 
 				Buffer<?> buffer=fileBufferFactory.createBuffer(current);
 				String applicationName=ViewActions.resolveApplicationName(buffer);
-				SourceIdentifierWrapper wrapper = new SourceIdentifierWrapper(current, sizeOnDisk, lastModified, numberOfEvents, applicationName);
-				sourceList.add(wrapper);
+
+				sourceList.add(new SourceIdentifierWrapper(current, sizeOnDisk, lastModified, numberOfEvents, applicationName)); // NOPMD - AvoidInstantiatingObjectsInLoops
 			}
 
 			int primaryCount = inactiveMap.size();
@@ -320,14 +320,14 @@ public class OpenPreviousDialog
 					secondaries.add(value);
 				}
 
-				primaryList.setListData(primaries.toArray(new String[primaries.size()]));
+				primaryList.setListData(primaries.toArray(EMPTY_STRING_ARRAY));
 				SourceIdentifierWrapper[] currentSecondary = EMPTY_SECONDARY_ARRAY;
 				if(!secondaries.isEmpty())
 				{
 					List<SourceIdentifierWrapper> zero = secondaries.get(0);
 					if(!zero.isEmpty())
 					{
-						currentSecondary = zero.toArray(new SourceIdentifierWrapper[zero.size()]);
+						currentSecondary = zero.toArray(EMPTY_SECONDARY_ARRAY);
 					}
 				}
 				secondaryList.setListData(currentSecondary);
@@ -415,7 +415,7 @@ public class OpenPreviousDialog
 				if(selectedIndex >= 0 && selectedIndex < secondaries.size())
 				{
 					List<SourceIdentifierWrapper> sources = secondaries.get(selectedIndex);
-					secondaryList.setListData(sources.toArray(new SourceIdentifierWrapper[sources.size()]));
+					secondaryList.setListData(sources.toArray(EMPTY_SECONDARY_ARRAY));
 					secondaryList.setSelectedIndex(0);
 				}
 				else

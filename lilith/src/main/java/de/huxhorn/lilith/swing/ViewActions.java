@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -713,7 +713,7 @@ public final class ViewActions
 					for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
 					{
 						boolean visible = current.isVisible();
-						JCheckBoxMenuItem checkBoxMenuItem = new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible));
+						JCheckBoxMenuItem checkBoxMenuItem = new JCheckBoxMenuItem(new ShowHideAction(tableColumnModel, current.getColumnName(), visible)); // NOPMD - AvoidInstantiatingObjectsInLoops
 						checkBoxMenuItem.setSelected(visible);
 						columnsMenu.add(checkBoxMenuItem);
 					}
@@ -1047,9 +1047,9 @@ public final class ViewActions
 			{
 				if(!groovyClipboardActions.containsKey(current))
 				{
-					GroovyFormatter newFormatter = new GroovyFormatter();
+					GroovyFormatter newFormatter = new GroovyFormatter(); // NOPMD - AvoidInstantiatingObjectsInLoops
 					newFormatter.setGroovyFileName(applicationPreferences.resolveClipboardFormatterScriptFile(current).getAbsolutePath());
-					CopyToClipboardAction newAction = new CopyToClipboardAction(newFormatter);
+					CopyToClipboardAction newAction = new CopyToClipboardAction(newFormatter); // NOPMD - AvoidInstantiatingObjectsInLoops
 					groovyClipboardActions.put(current, newAction);
 					changed = true;
 				}
@@ -1078,7 +1078,7 @@ public final class ViewActions
 			{
 				continue;
 			}
-			ClipboardFormatterData data = new ClipboardFormatterData(formatter);
+			ClipboardFormatterData data = new ClipboardFormatterData(formatter); // NOPMD - AvoidInstantiatingObjectsInLoops
 			if(!data.equals(groovyClipboardData.get(key)))
 			{
 				changed = true;
@@ -1234,7 +1234,7 @@ public final class ViewActions
 
 			for(String current:recentFilesStrings)
 			{
-				recentFilesMenu.add(new OpenFileAction(current, fullPath));
+				recentFilesMenu.add(new OpenFileAction(current, fullPath)); // NOPMD - AvoidInstantiatingObjectsInLoops
 			}
 			recentFilesMenu.addSeparator();
 			recentFilesMenu.add(clearRecentFilesAction);

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.swing.actions.BasicFilterAction;
@@ -78,7 +79,7 @@ class FocusHttpRequestUriMenu
 		List<String> result=new ArrayList<>(tokens.size());
 		for(int i=tokens.size();i>0;i--)
 		{
-			StringBuilder builder=new StringBuilder();
+			StringBuilder builder=new StringBuilder(); // NOPMD - AvoidInstantiatingObjectsInLoops
 			for(int j=0;j<i;j++)
 			{
 				builder.append('/');

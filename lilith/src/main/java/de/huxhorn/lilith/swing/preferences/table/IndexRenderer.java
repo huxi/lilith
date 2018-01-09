@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ public class IndexRenderer
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
 	{
-		String text = "" + (rowIndex + 1);
+		String text = Integer.toString(rowIndex + 1);
 
 		return renderer.getTableCellRendererComponent(table, text, isSelected, false, rowIndex, vColIndex);
 	}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ class FocusLoggerMenu
 		List<String> result=new ArrayList<>(tokens.size());
 		for(int i=tokens.size();i>0;i--)
 		{
-			StringBuilder builder=new StringBuilder();
+			StringBuilder builder=new StringBuilder(); // NOPMD - AvoidInstantiatingObjectsInLoops
 			boolean first=true;
 			for(int j=0;j<i;j++)
 			{

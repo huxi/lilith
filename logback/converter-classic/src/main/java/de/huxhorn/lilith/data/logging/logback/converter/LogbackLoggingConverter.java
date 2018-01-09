@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,6 +95,7 @@ public class LogbackLoggingConverter
 		return null;
 	}
 
+	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	private ExtendedStackTraceElement[] convert(StackTraceElement[] stackTrace)
 	{
 		if(stackTrace == null)
@@ -142,7 +143,8 @@ public class LogbackLoggingConverter
 		return result;
 	}
 
-	private ExtendedStackTraceElement[] initFromStackTraceElementProxyArray(StackTraceElementProxy[] stackTraceElementProxies)
+	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+	private static ExtendedStackTraceElement[] initFromStackTraceElementProxyArray(StackTraceElementProxy[] stackTraceElementProxies)
 	{
 		if(stackTraceElementProxies == null)
 		{
@@ -213,7 +215,7 @@ public class LogbackLoggingConverter
 		}
 		if(!(o instanceof ch.qos.logback.classic.spi.ILoggingEvent))
 		{
-			throw new IllegalArgumentException(""+o+" is not a "+getSourceClass()+"!");
+			throw new IllegalArgumentException(o.toString() + " is not a "+getSourceClass()+"!");
 		}
 		ch.qos.logback.classic.spi.ILoggingEvent event = (ch.qos.logback.classic.spi.ILoggingEvent) o;
 

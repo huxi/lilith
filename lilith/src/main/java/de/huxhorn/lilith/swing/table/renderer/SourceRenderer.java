@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 package de.huxhorn.lilith.swing.table.renderer;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
-import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;
@@ -59,8 +58,7 @@ public class SourceRenderer
 		if(value instanceof EventWrapper)
 		{
 			EventWrapper wrapper = (EventWrapper) value;
-			SourceIdentifier id = wrapper.getSourceIdentifier();
-			text = "" + id;
+			text = String.valueOf(wrapper.getSourceIdentifier());
 		}
 		renderer.setText(text);
 		boolean colorsInitialized = renderer.updateColors(isSelected, hasFocus, rowIndex, vColIndex, table, value);

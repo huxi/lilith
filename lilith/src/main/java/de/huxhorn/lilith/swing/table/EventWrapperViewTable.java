@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		for(PersistentTableColumnModel.TableColumnLayoutInfo current : cli)
 		{
 			boolean visible = current.isVisible();
-			JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), visible));
+			JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(new ShowHideAction(current.getColumnName(), visible)); // NOPMD - AvoidInstantiatingObjectsInLoops
 			cbmi.setSelected(visible);
 			columnsMenu.add(cbmi);
 		}
@@ -210,7 +210,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		Object key = inputMap.get(ks);
 		if(key != null)
 		{
-			String keyStr = "" + key;
+			String keyStr = key.toString();
 			if(keyStr.startsWith("select"))
 			{
 				if(isScrollingToBottom())

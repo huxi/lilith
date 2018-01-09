@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -243,7 +243,7 @@ public class Lilith
 		}
 		if(APP_TIMESTAMP > -1)
 		{
-			System.setProperty("lilith.timestamp.milliseconds", ""+APP_TIMESTAMP);
+			System.setProperty("lilith.timestamp.milliseconds", Long.toString(APP_TIMESTAMP));
 		}
 		if(APP_TIMESTAMP_DATE != null)
 		{
@@ -387,7 +387,7 @@ public class Lilith
 			boolean error=false;
 			for(String current:files)
 			{
-				if(!CreateMd5Command.createMd5(new File(current)))
+				if(!CreateMd5Command.createMd5(current))
 				{
 					error=true;
 				}
@@ -414,7 +414,7 @@ public class Lilith
 			boolean error=false;
 			for(String current:files)
 			{
-				if(!IndexCommand.indexLogFile(new File(current)))
+				if(!IndexCommand.indexLogFile(current))
 				{
 					error=true;
 				}

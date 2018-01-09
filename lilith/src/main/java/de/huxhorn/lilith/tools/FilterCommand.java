@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -300,7 +300,7 @@ public final class FilterCommand
 			if (indexModified < dataModified)
 			{
 				// Index file is outdated.
-				IndexingCallable callable=new IndexingCallable(inputDataFile, inputIndexFile, true);
+				IndexingCallable callable=new IndexingCallable(inputDataFile, inputIndexFile, true); // NOPMD - AvoidInstantiatingObjectsInLoops
 				try
 				{
 					callable.call();

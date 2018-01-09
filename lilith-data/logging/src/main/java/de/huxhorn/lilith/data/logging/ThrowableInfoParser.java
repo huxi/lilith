@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -125,7 +125,7 @@ public final class ThrowableInfoParser
 				{
 					if(stackTraceElements == null)
 					{
-						stackTraceElements = new ArrayList<>();
+						stackTraceElements = new ArrayList<>(); // NOPMD - AvoidInstantiatingObjectsInLoops
 					}
 					stackTraceElements.add(este);
 				}
@@ -182,7 +182,7 @@ public final class ThrowableInfoParser
 					{
 						if(suppressedInfos == null)
 						{
-							suppressedInfos = new ArrayList<>();
+							suppressedInfos = new ArrayList<>(); // NOPMD - AvoidInstantiatingObjectsInLoops
 						}
 						suppressedInfos.add(parsed.throwableInfo);
 					}
@@ -195,7 +195,7 @@ public final class ThrowableInfoParser
 					if(colonIndex > -1)
 					{
 						name = remainder.substring(0, colonIndex);
-						message = new StringBuilder();
+						message = new StringBuilder(); // NOPMD - AvoidInstantiatingObjectsInLoops
 						message.append(remainder.substring(colonIndex + CLASS_MESSAGE_SEPARATOR.length()));
 					}
 					else
@@ -241,13 +241,13 @@ public final class ThrowableInfoParser
 			}
 			if(stackTraceElements != null)
 			{
-				throwableInfo.setStackTrace(stackTraceElements.toArray(new ExtendedStackTraceElement[stackTraceElements.size()]));
+				throwableInfo.setStackTrace(stackTraceElements.toArray(ExtendedStackTraceElement.ARRAY_PROTOTYPE));
 			}
 			throwableInfo.setOmittedElements(omittedElements);
 			throwableInfo.setCause(cause);
 			if(suppressedInfos != null)
 			{
-				throwableInfo.setSuppressed(suppressedInfos.toArray(new ThrowableInfo[suppressedInfos.size()]));
+				throwableInfo.setSuppressed(suppressedInfos.toArray(ThrowableInfo.ARRAY_PROTOTYPE));
 			}
 		}
 

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,15 +87,7 @@ public class MultiplexSendBytesService
 		{
 			for(String hostName : remoteHostsList)
 			{
-				DataOutputStreamFactory dataOutputStreamFactory = new SocketDataOutputStreamFactory(hostName, port);
-				//SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, int reconnectionDelay, int pollIntervall)
-				SimpleSendBytesService service = new SimpleSendBytesService(
-					dataOutputStreamFactory,
-					writeByteStrategy,
-					queueSize,
-					reconnectionDelay,
-					SimpleSendBytesService.DEFAULT_POLL_INTERVAL);
-				service.setDebug(debug);
+				SimpleSendBytesService service = createService(hostName);
 				senderServices.add(service);
 				service.startUp();
 			}
@@ -104,6 +96,20 @@ public class MultiplexSendBytesService
 			dispatcherThread.setDaemon(true);
 			dispatcherThread.start();
 		}
+	}
+
+	private SimpleSendBytesService createService(String hostName)
+	{
+		DataOutputStreamFactory dataOutputStreamFactory = new SocketDataOutputStreamFactory(hostName, port);
+		//SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, int reconnectionDelay, int pollIntervall)
+		SimpleSendBytesService service = new SimpleSendBytesService(
+			dataOutputStreamFactory,
+			writeByteStrategy,
+			queueSize,
+			reconnectionDelay,
+			SimpleSendBytesService.DEFAULT_POLL_INTERVAL);
+		service.setDebug(debug);
+		return service;
 	}
 
 	public void shutDown()

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ public class ThreadRenderer
 					else if(threadId != null)
 					{
 						// otherwise, use thread id if available
-						text = "" + threadId;
+						text = threadId.toString();
 					}
 				}
 

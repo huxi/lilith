@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,11 @@ public final class CreateMd5Command
 
 	private CreateMd5Command() {}
 
-	public static boolean createMd5(File input)
+	public static boolean createMd5(String inputFileString)
 	{
 		final Logger logger = LoggerFactory.getLogger(CreateMd5Command.class);
+
+		File input = new File(inputFileString);
 
 		if(!input.isFile())
 		{

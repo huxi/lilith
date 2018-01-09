@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 
 	public void start()
 	{
-		Thread t = new Thread(new ReceiverRunnable(), "" + getSourceIdentifier() + "-Receiver");
+		Thread t = new Thread(new ReceiverRunnable(), getSourceIdentifier() + "-Receiver");
 		t.setDaemon(true);
 		t.start();
 	}
@@ -88,7 +88,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 
 					if (!bytes.isEmpty())
 					{
-						byte[] ba = new byte[bytes.size()];
+						byte[] ba = new byte[bytes.size()]; // NOPMD - AvoidInstantiatingObjectsInLoops
 						for (int i = 0; i < bytes.size(); i++)
 						{
 							ba[i] = bytes.get(i);

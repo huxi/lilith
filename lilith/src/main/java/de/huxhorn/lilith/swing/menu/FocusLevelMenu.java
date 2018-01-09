@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing.menu;
 
 import de.huxhorn.lilith.data.logging.LoggingEvent;
@@ -35,7 +36,7 @@ class FocusLevelMenu
 		levelActions = new BasicFilterAction[values.length-1];
 		for(int i=0;i<values.length-1;i++)
 		{
-			levelActions[i]=new FocusLevelAction(values[i+1]);
+			levelActions[i]=new FocusLevelAction(values[i+1]); // NOPMD - AvoidInstantiatingObjectsInLoops
 			add(levelActions[i]);
 		}
 

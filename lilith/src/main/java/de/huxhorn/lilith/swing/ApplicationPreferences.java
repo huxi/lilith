@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -514,7 +514,7 @@ public class ApplicationPreferences
 		setRecentFiles(recentFiles);
 	}
 
-
+	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	private void setRecentFiles(List<String> recentFiles)
 	{
 		List<String> copy;
@@ -916,6 +916,7 @@ public class ApplicationPreferences
 		installFromList(logger, path, EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE, groovyClipboardFormattersPath);
 	}
 
+	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	private static void installFromList(Logger logger, String listPath, String basePath, File targetPath)
 	{
 		URL url = ApplicationPreferences.class.getResource(listPath);
@@ -1361,6 +1362,7 @@ public class ApplicationPreferences
 				URL historyUrl = getClass().getResource(historyBasePath + "history.txt");
 				if(historyUrl != null)
 				{
+					byte[] checksum = new byte[16];
 					List<String> historyList = readLines(historyUrl);
 
 					for(String currentLine : historyList)
@@ -1368,8 +1370,7 @@ public class ApplicationPreferences
 						InputStream is = getClass().getResourceAsStream(historyBasePath + currentLine + ".md5");
 						if(is != null)
 						{
-							DataInputStream dis = new DataInputStream(is);
-							byte[] checksum = new byte[16];
+							DataInputStream dis = new DataInputStream(is); // NOPMD - AvoidInstantiatingObjectsInLoops
 							try
 							{
 								dis.readFully(checksum);

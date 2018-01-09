@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,6 +56,7 @@ import javax.xml.stream.XMLStreamReader;
 public class LoggingEventReader
 	implements GenericStreamReader<LoggingEvent>, LoggingEventSchemaConstants
 {
+	private static final String[] EMPTY_STRING_ARRAY = new String[0];
 	private final DateTimeFormatter dateTimeFormatter;
 	private final StackTraceElementReader steReader;
 
@@ -162,7 +163,7 @@ public class LoggingEventReader
 				{
 					if(args != null)
 					{
-						message = new Message(messagePattern, args.toArray(new String[args.size()]));
+						message = new Message(messagePattern, args.toArray(EMPTY_STRING_ARRAY));
 					}
 					else
 					{
@@ -291,7 +292,7 @@ public class LoggingEventReader
 			}
 			reader.require(XMLStreamConstants.END_ELEMENT, null, nodeName);
 			reader.nextTag();
-			return ste.toArray(new ExtendedStackTraceElement[ste.size()]);
+			return ste.toArray(ExtendedStackTraceElement.ARRAY_PROTOTYPE);
 		}
 		return null;
 	}
@@ -390,7 +391,7 @@ public class LoggingEventReader
 			}
 			reader.require(XMLStreamConstants.END_ELEMENT, null, NDC_NODE);
 			reader.nextTag();
-			return ndc.toArray(new Message[ndc.size()]);
+			return ndc.toArray(Message.ARRAY_PROTOTYPE);
 		}
 		return null;
 	}
@@ -425,7 +426,7 @@ public class LoggingEventReader
 			List<String> args = readArguments(reader);
 			if(args != null)
 			{
-				entry.setArguments(args.toArray(new String[args.size()]));
+				entry.setArguments(args.toArray(EMPTY_STRING_ARRAY));
 			}
 
 			reader.require(XMLStreamConstants.END_ELEMENT, null, NDC_ENTRY_NODE);

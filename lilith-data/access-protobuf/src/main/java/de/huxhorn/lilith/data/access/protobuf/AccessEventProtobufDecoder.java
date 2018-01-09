@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +50,7 @@ import java.util.zip.GZIPInputStream;
 public class AccessEventProtobufDecoder
 	implements Decoder<AccessEvent>
 {
+	private static final String[] EMPTY_STRING_ARRAY = new String[0];
 	private final boolean compressing;
 
 	public AccessEventProtobufDecoder(boolean compressing)
@@ -273,7 +274,7 @@ public class AccessEventProtobufDecoder
 			int count = current.getValueCount();
 			if(count > 0)
 			{
-				List<String> valueList = new ArrayList<>(count);
+				List<String> valueList = new ArrayList<>(count); // NOPMD - AvoidInstantiatingObjectsInLoops
 				for(AccessProto.StringArrayValue curVal : current.getValueList())
 				{
 					if(curVal.hasValue())
@@ -286,7 +287,7 @@ public class AccessEventProtobufDecoder
 					}
 				}
 
-				values = valueList.toArray(new String[count]);
+				values = valueList.toArray(EMPTY_STRING_ARRAY);
 			}
 			if(key != null)
 			{

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,7 +149,7 @@ public class LoggingEventWriter
 				NAMESPACE_URI + " " + NAMESPACE_LOCATION);
 		}
 		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_ATTRIBUTE, event.getLogger());
-		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LEVEL_ATTRIBUTE, "" + event.getLevel());
+		StaxUtilities.writeAttribute(writer, false, prefix, NAMESPACE_URI, LEVEL_ATTRIBUTE, String.valueOf(event.getLevel()));
 		Long sequence = event.getSequenceNumber();
 		if(sequence != null)
 		{
@@ -171,7 +171,7 @@ public class LoggingEventWriter
 			if(id != null)
 			{
 				StaxUtilities
-					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_ID_ATTRIBUTE, "" + id);
+					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_ID_ATTRIBUTE, Long.toString(id));
 			}
 			if(groupName != null)
 			{
@@ -181,12 +181,12 @@ public class LoggingEventWriter
 			if(groupId != null)
 			{
 				StaxUtilities
-					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE, "" + groupId);
+					.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_GROUP_ID_ATTRIBUTE, Long.toString(groupId));
 			}
 			if(priority != null)
 			{
 				StaxUtilities
-						.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_PRIORITY_ATTRIBUTE, "" + priority);
+						.writeAttributeIfNotNull(writer, false, prefix, NAMESPACE_URI, THREAD_PRIORITY_ATTRIBUTE, Integer.toString(priority));
 			}
 		}
 
@@ -201,7 +201,7 @@ public class LoggingEventWriter
 			if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
 			{
 				StaxUtilities
-					.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, "" + timeStamp);
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, TIMESTAMP_MILLIS_ATTRIBUTE, Long.toString(timeStamp));
 			}
 		}
 		Message message = event.getMessage();
@@ -252,7 +252,7 @@ public class LoggingEventWriter
 			if(timeStampType == TimeStampType.ONLY_MILLIS || timeStampType == TimeStampType.BOTH)
 			{
 				StaxUtilities
-					.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, "" + timeStamp);
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, LOGGER_CONTEXT_BIRTH_TIME_MILLIS_ATTRIBUTE, Long.toString(timeStamp));
 			}
 		}
 		writeStringMap(writer, prefix, context.getProperties(), LOGGER_CONTEXT_PROPERTIES_NODE);
@@ -395,8 +395,7 @@ public class LoggingEventWriter
 			if(omitted != 0)
 			{
 				StaxUtilities
-					.writeAttribute(writer, false, prefix, NAMESPACE_URI, OMITTED_ELEMENTS_ATTRIBUTE, "" + throwable
-						.getOmittedElements());
+					.writeAttribute(writer, false, prefix, NAMESPACE_URI, OMITTED_ELEMENTS_ATTRIBUTE, Integer.toString(throwable.getOmittedElements()));
 			}
 			// TODO: can message be null?
 			StaxUtilities
