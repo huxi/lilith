@@ -34,6 +34,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -468,10 +469,7 @@ public class TroubleshootingPanel
 		@SuppressWarnings("NullableProblems")
 		public int compareTo(ThreadHolder other)
 		{
-			if(other == null)
-			{
-				throw new NullPointerException("other must not be null!");
-			}
+			Objects.requireNonNull(other, "other must not be null!");
 			if(thread == other.thread)
 			{
 				return 0;

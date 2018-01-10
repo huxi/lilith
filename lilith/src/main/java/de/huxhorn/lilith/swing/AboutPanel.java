@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import javax.swing.JComponent;
 import javax.swing.Timer;
@@ -224,14 +225,8 @@ public final class AboutPanel
 		throws IOException
 	{
 		this();
-		if(backgroundImageUrl == null)
-		{
-			throw new NullPointerException("backgroundImageUrl must not be null!");
-		}
-		if(scrollText == null)
-		{
-			throw new NullPointerException("scrollText must not be null!");
-		}
+		Objects.requireNonNull(backgroundImageUrl, "backgroundImageUrl must not be null!");
+		Objects.requireNonNull(scrollText, "scrollText must not be null!");
 		init(backgroundImageUrl, scrollArea, scrollText, imageUrl, versionText, versionHeight);
 	}
 
@@ -313,16 +308,7 @@ public final class AboutPanel
 
 	protected void setScrollLines(String[] scrollLines)
 	{
-		if(scrollLines == null)
-		{
-			NullPointerException ex = new NullPointerException("scrollLines must not be null!");
-			if(logger.isDebugEnabled())
-			{
-				logger.debug("Parameter 'scrollLines' of method 'setScrollLines' must not be null!", ex);
-			}
-			throw ex;
-		}
-
+		Objects.requireNonNull(scrollLines, "scrollLines must not be null!");
 		this.scrollLines = scrollLines.clone();
 		flushScrollImage();
 	}

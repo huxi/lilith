@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.swing.AbstractAction;
@@ -513,10 +514,7 @@ public class OpenPreviousDialog
 		@Override
 		public int compareTo(SourceIdentifierWrapper other)
 		{
-			if(other == null)
-			{
-				throw new NullPointerException("other must not be null!");
-			}
+			Objects.requireNonNull(other, "other must not be null!");
 			return Long.compare(other.lastModified, lastModified);
 		}
 

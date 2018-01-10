@@ -34,6 +34,7 @@
 
 package de.huxhorn.lilith.tracing;
 
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -237,10 +238,7 @@ public class StatisticProfilingHandler
 		@Override
 		public int compareTo(Entry other)
 		{
-			if(other == null)
-			{
-				throw new NullPointerException("other must not be null!");
-			}
+			Objects.requireNonNull(other, "other must not be null!");
 			long difference = totalNanoSeconds - other.totalNanoSeconds;
 			if(difference > 0)
 			{
