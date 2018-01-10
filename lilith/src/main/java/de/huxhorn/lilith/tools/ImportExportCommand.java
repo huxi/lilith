@@ -22,7 +22,6 @@ import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.prefs.protobuf.LilithPreferencesStreamingDecoder;
 import de.huxhorn.lilith.prefs.protobuf.LilithPreferencesStreamingEncoder;
 import de.huxhorn.lilith.swing.ApplicationPreferences;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -127,27 +126,22 @@ public final class ImportExportCommand
 			}
 			else
 			{
-				DataInputStream is=null;
-				try
+				long length=currentFile.length();
+				if(length > MAX_FILE_SIZE)
 				{
-					long length=currentFile.length();
-					if(length > MAX_FILE_SIZE)
-					{
-						if(logger.isInfoEnabled()) logger.info("Ignoring '{}' because it's too big ({} bytes).", currentFile.getAbsolutePath(), length);
-						continue;
-					}
+					if(logger.isInfoEnabled()) logger.info("Ignoring '{}' because it's too big ({} bytes).", currentFile.getAbsolutePath(), length);
+					continue;
+				}
+
+				try(DataInputStream is=new DataInputStream(Files.newInputStream(currentFile.toPath())))
+				{
 					byte[] bytes=new byte[(int) length];
-					is=new DataInputStream(Files.newInputStream(currentFile.toPath()));
 					is.readFully(bytes);
 					result.put(current, bytes);
 				}
 				catch(IOException e)
 				{
 					if(logger.isWarnEnabled()) logger.warn("Exception while reading '"+currentFile.getAbsolutePath()+"'! Ignoring file...", e);
-				}
-				finally
-				{
-					IOUtilities.closeQuietly(is);
 				}
 			}
 		}
@@ -187,20 +181,14 @@ public final class ImportExportCommand
 
 			if(!currentFile.isFile() || currentFile.canWrite())
 			{
-				DataOutputStream os=null;
-				try
+				try(DataOutputStream os=new DataOutputStream(Files.newOutputStream(currentFile.toPath())))
 				{
-					os=new DataOutputStream(Files.newOutputStream(currentFile.toPath()));
 					os.write(value);
 					if(logger.isInfoEnabled()) logger.info("Wrote {} bytes into '{}'.", value.length, currentFile.getAbsolutePath());
 				}
 				catch(IOException e)
 				{
 					if(logger.isWarnEnabled()) logger.warn("Exception while writing '"+currentFile.getAbsolutePath()+"'! Ignoring file...", e);
-				}
-				finally
-				{
-					IOUtilities.closeQuietly(os);
 				}
 			}
 			else

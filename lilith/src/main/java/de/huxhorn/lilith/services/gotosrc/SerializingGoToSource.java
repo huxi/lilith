@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 package de.huxhorn.lilith.services.gotosrc;
 
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -80,7 +79,6 @@ public class SerializingGoToSource
 		}
 		catch(InterruptedException e)
 		{
-			IOUtilities.interruptIfNecessary(e);
 			stop();
 		}
 	}
@@ -132,7 +130,14 @@ public class SerializingGoToSource
 		{
 			if(oos != null)
 			{
-				IOUtilities.closeQuietly(oos);
+				try
+				{
+					oos.close();
+				}
+				catch (IOException e)
+				{
+					// ignore
+				}
 				oos = null;
 			}
 			if(socket != null)
@@ -160,7 +165,6 @@ public class SerializingGoToSource
 				}
 				catch(InterruptedException e)
 				{
-					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 				if(logger.isInfoEnabled()) logger.info("Go to source of {}.", ste);

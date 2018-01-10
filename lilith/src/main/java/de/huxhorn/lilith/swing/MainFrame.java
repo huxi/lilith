@@ -68,11 +68,11 @@ import de.huxhorn.lilith.log4j2.producer.Log4j2JsonServerSocketEventSourceProduc
 import de.huxhorn.lilith.log4j2.producer.Log4j2Ports;
 import de.huxhorn.lilith.log4j2.producer.Log4j2XmlServerSocketEventSourceProducer;
 import de.huxhorn.lilith.log4j2.producer.Log4j2YamlServerSocketEventSourceProducer;
+import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.access.AccessMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.json.ClassicJsonMultiplexSocketAppender;
-import de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender;
-import de.huxhorn.lilith.logback.appender.xml.ClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.json.ZeroDelimitedClassicJsonMultiplexSocketAppender;
+import de.huxhorn.lilith.logback.appender.xml.ClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.logback.appender.xml.ZeroDelimitedClassicXmlMultiplexSocketAppender;
 import de.huxhorn.lilith.prefs.LilithPreferences;
 import de.huxhorn.lilith.services.details.AbstractHtmlFormatter;
@@ -120,7 +120,6 @@ import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.conditions.Condition;
 import de.huxhorn.sulky.conditions.Or;
 import de.huxhorn.sulky.formatting.SimpleXml;
-import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.sounds.Sounds;
 import de.huxhorn.sulky.swing.MemoryStatus;
 import de.huxhorn.sulky.swing.Windows;
@@ -2612,19 +2611,14 @@ public class MainFrame
 				if(oldPath != null)
 				{
 					File previousApplicationPathFile = new File(newPath, ApplicationPreferences.PREVIOUS_APPLICATION_PATH_FILENAME);
-					OutputStreamWriter writer = null;
-					try
+
+					try(OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(previousApplicationPathFile.toPath()), StandardCharsets.UTF_8))
 					{
-						writer = new OutputStreamWriter(Files.newOutputStream(previousApplicationPathFile.toPath()), StandardCharsets.UTF_8);
 						writer.append(oldPath.getAbsolutePath());
 					}
 					catch(IOException ex)
 					{
 						if(logger.isWarnEnabled()) logger.warn("Exception while writing previous application path to file '{}'!", previousApplicationPathFile.getAbsolutePath(), ex);
-					}
-					finally
-					{
-						IOUtilities.closeQuietly(writer);
 					}
 				}
 				showApplicationPathChangedDialog();
@@ -3257,7 +3251,6 @@ public class MainFrame
 			catch(InterruptedException e)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Execution of '" + file.getAbsolutePath() + "' was interrupted.", e);
-				IOUtilities.interruptIfNecessary(e);
 			}
 		}
 
@@ -3360,7 +3353,6 @@ public class MainFrame
 			catch(InterruptedException e)
 			{
 				if(logger.isDebugEnabled()) logger.debug("Execution of openUrl process was interrupted.", e);
-				IOUtilities.interruptIfNecessary(e);
 			}
 		}
 

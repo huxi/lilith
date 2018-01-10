@@ -39,7 +39,6 @@ import de.huxhorn.lilith.data.converter.ConverterRegistry;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -119,21 +118,18 @@ public class SerializableEventProducer<T extends Serializable>
 				{
 					if(logger.isWarnEnabled()) logger.warn("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 					addEvent(null);
-					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 				catch(IOException e)
 				{
 					if(logger.isDebugEnabled()) logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 					addEvent(null);
-					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 				catch(Throwable e)
 				{
 					if(logger.isWarnEnabled()) logger.warn("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 					addEvent(null);
-					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 			}
@@ -142,6 +138,16 @@ public class SerializableEventProducer<T extends Serializable>
 
 	public void close()
 	{
-		IOUtilities.closeQuietly(dataInput);
+		if(dataInput != null)
+		{
+			try
+			{
+				dataInput.close();
+			}
+			catch (IOException e)
+			{
+				// ignore
+			}
+		}
 	}
 }

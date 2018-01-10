@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,21 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.sulky.io.IOUtilities;
 import java.awt.Font;
 import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RendererConstants
+class RendererConstants
 {
-	public static final float SMOOTHING_THRESHOLD = 6.0f;
-	public static final String MONOSPACED_FAMILY = "Monospaced";
+	static final float SMOOTHING_THRESHOLD = 6.0f;
+	static final String MONOSPACED_FAMILY = "Monospaced";
 	private static final String MENSCH_FONT_RESOURCE = "/mensch.ttf";
 
-	public static final Font MENSCH_FONT;
+	static final Font MENSCH_FONT;
 
 	static
 	{
@@ -39,12 +39,10 @@ public class RendererConstants
 		Font font=null;
 		if(fontStream != null)
 		{
-			try
+			try(InputStream is = fontStream)
 			{
-				font=Font.createFont(Font.TRUETYPE_FONT, fontStream);
+				font=Font.createFont(Font.TRUETYPE_FONT, is);
 				if(logger.isInfoEnabled()) logger.info("Created {} font.", MENSCH_FONT_RESOURCE);
-				IOUtilities.closeQuietly(fontStream);
-
 			}
 			catch(Exception ex)
 			{

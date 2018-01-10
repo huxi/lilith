@@ -48,7 +48,6 @@ import de.huxhorn.lilith.tools.ImportExportCommand;
 import de.huxhorn.lilith.tools.IndexCommand;
 import de.huxhorn.lilith.tools.TailCommand;
 import de.huxhorn.sulky.formatting.SafeString;
-import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
 import it.sauronsoftware.junique.AlreadyLockedException;
@@ -184,9 +183,9 @@ public class Lilith
 
 		final Logger logger = LoggerFactory.getLogger(Lilith.class);
 
-		InputStream is = Lilith.class.getResourceAsStream("/app.properties");
+
 		Properties p = new Properties();
-		try
+		try(InputStream is = Lilith.class.getResourceAsStream("/app.properties"))
 		{
 			p.load(is);
 		}
@@ -194,10 +193,6 @@ public class Lilith
 		{
 			if(logger.isErrorEnabled()) logger.error("Couldn't find app info resource!", ex);
 			//ex.printStackTrace();
-		}
-		finally
-		{
-			IOUtilities.closeQuietly(is);
 		}
 		APP_NAME = p.getProperty("application.name");
 		APP_VERSION = p.getProperty("application.version");
@@ -928,13 +923,11 @@ public class Lilith
 		catch(InterruptedException ex)
 		{
 			if(logger.isInfoEnabled()) logger.info("Interrupted...", ex);
-			IOUtilities.interruptIfNecessary(ex);
 		}
 		catch(InvocationTargetException ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("InvocationTargetException...", ex);
 			if(logger.isWarnEnabled()) logger.warn("Target-Exception: ", ex.getTargetException());
-
 		}
 	}
 

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 package de.huxhorn.lilith.swing.preferences.table;
 
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.awt.EventQueue;
 import java.util.List;
 import javax.swing.event.EventListenerList;
@@ -231,7 +230,6 @@ public final class ConditionTableModel
 					catch(Throwable ex)
 					{
 						if(logger.isWarnEnabled()) logger.warn("Exception while firing change!", ex);
-						IOUtilities.interruptIfNecessary(ex);
 					}
 				}
 			}

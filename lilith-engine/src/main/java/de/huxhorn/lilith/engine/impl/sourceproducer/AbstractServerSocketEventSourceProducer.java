@@ -24,7 +24,6 @@ import de.huxhorn.lilith.engine.EventProducer;
 import de.huxhorn.lilith.engine.EventSourceProducer;
 import de.huxhorn.lilith.engine.SourceManager;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -131,7 +130,6 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 			catch(Throwable e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Exception while creating EventProducer.", e);
-				IOUtilities.interruptIfNecessary(e);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
-import de.huxhorn.sulky.io.IOUtilities;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -78,18 +78,13 @@ public class LicenseAgreementDialog
 		InputStream licenseStream = LicenseAgreementDialog.class.getResourceAsStream("/licenses/license.html");
 		if(licenseStream != null)
 		{
-			try
+			try(InputStream input=licenseStream)
 			{
-				licenseText = IOUtils.toString(licenseStream, StandardCharsets.UTF_8);
+				licenseText = IOUtils.toString(input, StandardCharsets.UTF_8);
 			}
 			catch(IOException ex)
 			{
 				if(logger.isErrorEnabled()) logger.error("Exception while loading license!", ex);
-				IOUtilities.interruptIfNecessary(ex);
-			}
-			finally
-			{
-				IOUtilities.closeQuietly(licenseStream);
 			}
 		}
 		if(licenseText == null)

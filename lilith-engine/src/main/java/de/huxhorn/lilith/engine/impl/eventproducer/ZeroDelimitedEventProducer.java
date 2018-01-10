@@ -22,8 +22,8 @@ import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.SocketException;
@@ -56,7 +56,17 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 
 	public void close()
 	{
-		IOUtilities.closeQuietly(inputStream);
+		if(inputStream != null)
+		{
+			try
+			{
+				inputStream.close();
+			}
+			catch (IOException e)
+			{
+				// ignore
+			}
+		}
 	}
 
 	private class ReceiverRunnable
@@ -108,14 +118,12 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 				// this is thrown when inputStream is closed in close()
 				if(logger.isDebugEnabled()) logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 				addEvent(null);
-				IOUtilities.interruptIfNecessary(e);
 			}
 			catch (Throwable e)
 			{
 				// this indicates that something has actually gone wrong
 				if(logger.isWarnEnabled()) logger.warn("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 				addEvent(null);
-				IOUtilities.interruptIfNecessary(e);
 			}
 			finally
 			{

@@ -81,7 +81,6 @@ project(':lilith-data-logging-xml-serializer') {
 	dependencies {
 		compile project(':lilith-data-logging-xml')
 		compile libraries.'sulky-codec'
-		compile libraries.'sulky-io'
 		compile libraries.'sulky-stax'
 		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-logging')
@@ -118,7 +117,6 @@ project(':lilith-data-logging-json-serializer') {
 	dependencies {
 		compile project(':lilith-data-logging')
 		compile libraries.'sulky-codec'
-		compile libraries.'sulky-io'
 		compile libraries.'jackson-databind'
 		compile libraries.'jackson-afterburner'
 		testCompile project(':lilith-data-logging-io-test')
@@ -191,7 +189,6 @@ project(':lilith-engine') {
 		compile libraries.'sulky-codec-filebuffer'
 		compile libraries.'sulky-buffers'
 		compile libraries.'sulky-conditions'
-		compile libraries.'sulky-io'
 		compile libraries.'sulky-codec'
 		compile libraries.'slf4j-api'
 		testCompile libraries.'logback-classic'
@@ -203,7 +200,6 @@ project(':lilith-xml-logging') {
 	description = 'This file is part of Lilith. It contains XML logging classes.'
 	dependencies {
 		compile libraries.'slf4j-api'
-		compile libraries.'sulky-io'
 		compile libraries.'sulky-buffers'
 		compile libraries.'sulky-codec'
 		compile project(':lilith-engine')
@@ -216,7 +212,6 @@ project(':lilith-json-logging') {
 	description = 'This file is part of Lilith. It contains JSON logging classes.'
 	dependencies {
 		compile libraries.'slf4j-api'
-		compile libraries.'sulky-io'
 		compile libraries.'sulky-buffers'
 		compile libraries.'sulky-codec'
 		compile project(':lilith-engine')
@@ -385,7 +380,6 @@ project(':log4j-xml') {
 		compile libraries.'sulky-buffers'
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
-		compile libraries.'sulky-io'
 		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-eventsource')
 	}
@@ -452,7 +446,6 @@ project(':jul-xml') {
 		compile libraries.'sulky-stax'
 		compile libraries.'slf4j-api'
 		compile libraries.'commons-io'
-		compile libraries.'sulky-io'
 		runtime libraries.'woodstox'
 		testCompile project(':lilith-data-eventsource')
 	}
@@ -466,7 +459,6 @@ project(':jul-xml-import') {
 		compile libraries.'slf4j-api'
 		compile libraries.'sulky-buffers'
 		compile libraries.'sulky-formatting'
-		compile libraries.'sulky-io'
 		compile libraries.'sulky-stax'
 		compile libraries.'sulky-tasks'
 		compile project(':jul-xml')
@@ -484,7 +476,6 @@ project(':jul-xml-receiver') {
 		compile libraries.'slf4j-api'
 		compile libraries.'sulky-buffers'
 		compile libraries.'sulky-formatting'
-		compile libraries.'sulky-io'
 		compile libraries.'sulky-stax'
 		compile project(':jul-xml')
 		compile project(':lilith-data-logging')
@@ -566,7 +557,6 @@ project(':lilith') {
 		compile libraries.'sulky-conditions'
 		compile libraries.'sulky-formatting'
 		compile libraries.'sulky-groovy'
-		compile libraries.'sulky-io'
 		compile libraries.'sulky-logging'
 		compile libraries.'sulky-sounds-api'
 		compile libraries.'sulky-sounds-impl-jlayer'
@@ -624,7 +614,6 @@ project(':tracing') {
 		compile libraries.'aspectjrt'
 		compile libraries.'slf4j-api'
 		compile libraries.'sulky-formatting'
-		testCompile libraries.'sulky-io'
 		testCompile libraries.'spring-beans'
 		testCompile libraries.'spring-context'
 		testCompile libraries.'spring-core'

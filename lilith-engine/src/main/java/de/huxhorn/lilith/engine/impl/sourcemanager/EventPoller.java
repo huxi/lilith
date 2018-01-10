@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ package de.huxhorn.lilith.engine.impl.sourcemanager;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import de.huxhorn.lilith.engine.EventHandler;
 import de.huxhorn.sulky.buffers.RemoveOperation;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -85,7 +84,6 @@ public class EventPoller<T extends Serializable>
 							catch(Throwable t)
 							{
 								if(logger.isWarnEnabled()) logger.warn("Exception while executing event handler!", t);
-								IOUtilities.interruptIfNecessary(t);
 							}
 						}
 					}
@@ -115,7 +113,6 @@ public class EventPoller<T extends Serializable>
 				catch(InterruptedException e)
 				{
 					if(logger.isDebugEnabled()) logger.debug("Interrupted...");
-					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 			}

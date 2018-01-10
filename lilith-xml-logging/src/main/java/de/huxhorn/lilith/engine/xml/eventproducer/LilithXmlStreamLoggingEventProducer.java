@@ -26,8 +26,8 @@ import de.huxhorn.lilith.data.logging.xml.LoggingEventSchemaConstants;
 import de.huxhorn.lilith.engine.impl.eventproducer.AbstractEventProducer;
 import de.huxhorn.lilith.engine.impl.eventproducer.LoggingEventSourceIdentifierUpdater;
 import de.huxhorn.sulky.buffers.AppendOperation;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
@@ -76,7 +76,17 @@ public class LilithXmlStreamLoggingEventProducer
 
 	public void close()
 	{
-		IOUtilities.closeQuietly(inputStream);
+		if(inputStream != null)
+		{
+			try
+			{
+				inputStream.close();
+			}
+			catch (IOException e)
+			{
+				// ignore
+			}
+		}
 	}
 
 	private class ReceiverRunnable
@@ -131,7 +141,6 @@ public class LilithXmlStreamLoggingEventProducer
 			{
 				if(logger.isDebugEnabled()) logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 				addEvent(null);
-				IOUtilities.interruptIfNecessary(e);
 			}
 			finally
 			{

@@ -42,7 +42,6 @@ import de.huxhorn.lilith.swing.filefilters.GroovyConditionFileFilter;
 import de.huxhorn.lilith.swing.preferences.SavedCondition;
 import de.huxhorn.lilith.swing.table.ColorScheme;
 import de.huxhorn.sulky.conditions.Condition;
-import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.swing.PersistentTableColumnModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -677,24 +676,13 @@ public class ApplicationPreferences
 
 		if(file.isFile() && this.recentFiles == null)
 		{
-			XMLDecoder d = null;
-			try
+			try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath()))))
 			{
-				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())));
-
 				this.recentFiles = transformToList(logger, String.class, d.readObject());
 			}
 			catch(Throwable ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading recentFiles from file '" + file.getAbsolutePath() + "'!", ex);
-				IOUtilities.interruptIfNecessary(ex);
-			}
-			finally
-			{
-				if(d != null)
-				{
-					d.close();
-				}
 			}
 		}
 
@@ -786,24 +774,13 @@ public class ApplicationPreferences
 
 		if(file.isFile() && this.previousSearchStrings == null)
 		{
-			XMLDecoder d = null;
-			try
+			try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath()))))
 			{
-				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())));
-
 				this.previousSearchStrings = transformToList(logger, String.class, d.readObject());
 			}
 			catch(Throwable ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading previous search strings from file '" + file.getAbsolutePath() + "'!", ex);
-				IOUtilities.interruptIfNecessary(ex);
-			}
-			finally
-			{
-				if(d != null)
-				{
-					d.close();
-				}
 			}
 		}
 
@@ -952,25 +929,14 @@ public class ApplicationPreferences
 
 			if(levelColorsFile.isFile())
 			{
-				XMLDecoder d = null;
-				try
+				try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(levelColorsFile.toPath()))))
 				{
-					d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(levelColorsFile.toPath())));
-
 					levelColors = transformToMap(LoggingEvent.Level.class, ColorScheme.class, d.readObject());
 				}
 				catch(Throwable ex)
 				{
 					if(logger.isWarnEnabled()) logger.warn("Exception while loading Level-ColorSchemes from file '"	+ levelColorsFile.getAbsolutePath() + "'!", ex);
 					levelColors = null;
-					IOUtilities.interruptIfNecessary(ex);
-				}
-				finally
-				{
-					if(d != null)
-					{
-						d.close();
-					}
 				}
 			}
 		}
@@ -1031,17 +997,13 @@ public class ApplicationPreferences
 	{
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, LEVEL_COLORS_XML_FILENAME);
-		try
+		try(BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));XMLEncoder e = new XMLEncoder(bos))
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
-			XMLEncoder e = new XMLEncoder(bos);
 			e.writeObject(colors);
-			e.close();
 		}
 		catch(Throwable ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", ex);
-			IOUtilities.interruptIfNecessary(ex);
 		}
 	}
 
@@ -1063,25 +1025,14 @@ public class ApplicationPreferences
 
 			if(statusColorsFile.isFile())
 			{
-				XMLDecoder d = null;
-				try
+				try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(statusColorsFile.toPath()))))
 				{
-					d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(statusColorsFile.toPath())));
-
 					statusColors = transformToMap(HttpStatus.Type.class, ColorScheme.class, d.readObject());
 				}
 				catch(Throwable ex)
 				{
 					if(logger.isWarnEnabled()) logger.warn("Exception while loading status Status-ColorSchemes from file '" + statusColorsFile.getAbsolutePath() + "'!", ex);
 					statusColors = null;
-					IOUtilities.interruptIfNecessary(ex);
-				}
-				finally
-				{
-					if(d != null)
-					{
-						d.close();
-					}
 				}
 			}
 		}
@@ -1142,17 +1093,14 @@ public class ApplicationPreferences
 	{
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, STATUS_COLORS_XML_FILENAME);
-		try
+		try(BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
+		    XMLEncoder e = new XMLEncoder(bos))
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
-			XMLEncoder e = new XMLEncoder(bos);
 			e.writeObject(colors);
-			e.close();
 		}
 		catch(Throwable ex)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while writing colors!", ex);
-			IOUtilities.interruptIfNecessary(ex);
 		}
 	}
 
@@ -1178,11 +1126,9 @@ public class ApplicationPreferences
 				if(logger.isDebugEnabled()) logger.debug("Won't reload source lists.");
 				return;
 			}
-			XMLDecoder d = null;
-			try
-			{
-				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(sourceListsFile.toPath())));
 
+			try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(sourceListsFile.toPath()))))
+			{
 				Map<String, Set> interimMap = transformToMap(String.class, Set.class, d.readObject());
 
 				Map<String, Set<String>> resultMap = null;
@@ -1206,14 +1152,6 @@ public class ApplicationPreferences
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading source lists from sourceListsFile '" + sourceListsFile.getAbsolutePath() + "'!", ex);
 				sourceLists = new HashMap<>();
-				IOUtilities.interruptIfNecessary(ex);
-			}
-			finally
-			{
-				if(d != null)
-				{
-					d.close();
-				}
 			}
 		}
 		else if(sourceLists == null)
@@ -1370,8 +1308,7 @@ public class ApplicationPreferences
 						InputStream is = getClass().getResourceAsStream(historyBasePath + currentLine + ".md5");
 						if(is != null)
 						{
-							DataInputStream dis = new DataInputStream(is); // NOPMD - AvoidInstantiatingObjectsInLoops
-							try
+							try(DataInputStream dis = new DataInputStream(is)) // NOPMD - AvoidInstantiatingObjectsInLoops
 							{
 								dis.readFully(checksum);
 								if(Arrays.equals(available, checksum))
@@ -1384,17 +1321,6 @@ public class ApplicationPreferences
 							catch(IOException e)
 							{
 								if(logger.isWarnEnabled()) logger.warn("Exception while reading checksum of {}!", currentLine, e);
-							}
-							finally
-							{
-								try
-								{
-									dis.close();
-								}
-								catch(IOException e)
-								{
-									// ignore
-								}
 							}
 						}
 					}
@@ -1432,20 +1358,14 @@ public class ApplicationPreferences
 
 		if(!target.isFile())
 		{
-			InputStream is = null;
-			try(OutputStream os = Files.newOutputStream(target.toPath()))
+			try(InputStream is = source.openStream();OutputStream os = Files.newOutputStream(target.toPath()))
 			{
-				is = source.openStream();
 				IOUtils.copy(is, os);
 				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
 			}
 			catch(IOException e)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while initializing '{}' with data from '{}'.!", target.getAbsolutePath(), source, e);
-			}
-			finally
-			{
-				IOUtilities.closeQuietly(is);
 			}
 		}
 		else
@@ -1694,11 +1614,9 @@ public class ApplicationPreferences
 				if(logger.isDebugEnabled()) logger.debug("Won't reload conditions.");
 				return;
 			}
-			XMLDecoder d = null;
-			try
-			{
-				d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(conditionsFile.toPath())));
 
+			try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(conditionsFile.toPath()))))
+			{
 				conditions = transformToList(logger, SavedCondition.class, d.readObject());
 				lastConditionsModified = lastModified;
 				if(logger.isDebugEnabled()) logger.debug("Loaded conditions {}.", conditions);
@@ -1706,14 +1624,6 @@ public class ApplicationPreferences
 			catch(Throwable ex)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Exception while loading conditions from file '" + conditionsFile.getAbsolutePath() + "'!", ex);
-				IOUtilities.interruptIfNecessary(ex);
-			}
-			finally
-			{
-				if(d != null)
-				{
-					d.close();
-				}
 			}
 		}
 
@@ -2519,10 +2429,8 @@ public class ApplicationPreferences
 	 */
 	private Map<String, String> loadPropertiesXml(File file)
 	{
-		InputStream is = null;
-		try
+		try(InputStream is = new BufferedInputStream(Files.newInputStream(file.toPath())))
 		{
-			is = new BufferedInputStream(Files.newInputStream(file.toPath()));
 			Properties props = new Properties();
 			props.loadFromXML(is);
 			return convert(props);
@@ -2530,10 +2438,6 @@ public class ApplicationPreferences
 		catch(IOException e)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '{}'!", file.getAbsolutePath(), e);
-		}
-		finally
-		{
-			IOUtilities.closeQuietly(is);
 		}
 		return null;
 	}
@@ -2576,36 +2480,24 @@ public class ApplicationPreferences
 				output.put(key, value);
 			}
 		}
-		OutputStream os = null;
-		Throwable error = null;
-		try
+
+		try(OutputStream os = new BufferedOutputStream(Files.newOutputStream(file.toPath())))
 		{
-			os = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 			output.storeToXML(os, comment, StandardCharsets.UTF_8.toString());
+			return true;
 		}
 		catch(IOException e)
 		{
-			error = e;
-		}
-		finally
-		{
-			IOUtilities.closeQuietly(os);
-		}
-		if(error != null)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while writing source names!", error);
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing source names!", e);
 			return false;
 		}
-		return true;
 	}
 
 
 	private Map<String, String> loadProperties(File file)
 	{
-		InputStream is = null;
-		try
+		try(InputStream is = new BufferedInputStream(Files.newInputStream(file.toPath())))
 		{
-			is = new BufferedInputStream(Files.newInputStream(file.toPath()));
 			Properties props = new Properties();
 			props.load(is);
 			return convert(props);
@@ -2613,10 +2505,6 @@ public class ApplicationPreferences
 		catch(IOException e)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Couldn't load properties from '" + file.getAbsolutePath() + "'!", e);
-		}
-		finally
-		{
-			IOUtilities.closeQuietly(is);
 		}
 		return null;
 	}
@@ -2713,28 +2601,16 @@ public class ApplicationPreferences
 
 	private List<PersistentTableColumnModel.TableColumnLayoutInfo> readColumnLayout(File file)
 	{
-		XMLDecoder d = null;
-		List<PersistentTableColumnModel.TableColumnLayoutInfo> result;
-		try
+		try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath()))))
 		{
-			d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())));
-
-			result = transformToList(logger, PersistentTableColumnModel.TableColumnLayoutInfo.class, d.readObject());
+			return transformToList(logger, PersistentTableColumnModel.TableColumnLayoutInfo.class, d.readObject());
 		}
 		catch(Throwable ex)
 		{
 			if(logger.isInfoEnabled()) logger.info("Exception while loading layouts from file '{}'':", file.getAbsolutePath(), ex.getMessage());
-			result = null;
-			IOUtilities.interruptIfNecessary(ex);
 		}
-		finally
-		{
-			if(d != null)
-			{
-				d.close();
-			}
-		}
-		return result;
+
+		return null;
 	}
 
 	/**
@@ -2771,7 +2647,6 @@ public class ApplicationPreferences
 		{
 			final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
 			if(logger.isWarnEnabled()) logger.warn("Exception while calculating checksum!", ex);
-			IOUtilities.interruptIfNecessary(ex);
 		}
 		finally
 		{

@@ -39,7 +39,6 @@ import de.huxhorn.sulky.codec.filebuffer.FileHeader;
 import de.huxhorn.sulky.codec.filebuffer.FileHeaderStrategy;
 import de.huxhorn.sulky.codec.filebuffer.MetaData;
 import de.huxhorn.sulky.codec.filebuffer.ReadOnlyExclusiveCodecFileBuffer;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -335,7 +334,6 @@ public final class FilterCommand
 			catch(InterruptedException e)
 			{
 				if(logger.isInfoEnabled()) logger.info("Interrupted...");
-				IOUtilities.interruptIfNecessary(e);
 				break;
 			}
 		}

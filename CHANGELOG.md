@@ -80,7 +80,7 @@ All notable changes to this project will be documented in this file.
 - Nothing.
 
 ### Removed
-- Nothing.
+- Usage of sulky-io IOUtilities.
 
 ### Fixed
 - cglib 3.2.5, slf4j 1.7.25, logback 1.2.2

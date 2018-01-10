@@ -23,7 +23,6 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.lilith.sender.HeartbeatRunnable;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import de.huxhorn.sulky.codec.Decoder;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -83,7 +82,17 @@ public class MessageBasedEventProducer<T extends Serializable>
 	public void close()
 	{
 		if(logger.isInfoEnabled()) logger.info("Closing {} for source {}.", this.getClass().getName(), getSourceIdentifier());
-		IOUtilities.closeQuietly(dataInput);
+		if(dataInput != null)
+		{
+			try
+			{
+				dataInput.close();
+			}
+			catch (IOException e)
+			{
+				// ignore
+			}
+		}
 	}
 
 	private class HeartbeatObserverRunnable
@@ -106,7 +115,6 @@ public class MessageBasedEventProducer<T extends Serializable>
 				catch(InterruptedException e)
 				{
 					if(logger.isInfoEnabled()) logger.info("Interrupted...", e);
-					IOUtilities.interruptIfNecessary(e);
 					close();
 					return;
 				}
@@ -176,7 +184,6 @@ public class MessageBasedEventProducer<T extends Serializable>
 				{
 					if(logger.isDebugEnabled()) logger.debug("Exception ({}: '{}') while reading events. Adding eventWrapper with empty event and stopping...", e.getClass().getName(), e.getMessage(), e);
 					addEvent(null);
-					IOUtilities.interruptIfNecessary(e);
 					break;
 				}
 			}

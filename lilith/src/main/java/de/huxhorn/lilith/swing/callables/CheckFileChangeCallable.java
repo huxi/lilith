@@ -19,7 +19,6 @@
 package de.huxhorn.lilith.swing.callables;
 
 import de.huxhorn.lilith.swing.ViewContainer;
-import de.huxhorn.sulky.io.IOUtilities;
 import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 import java.awt.EventQueue;
 import java.io.File;
@@ -79,7 +78,6 @@ public class CheckFileChangeCallable
 			}
 			catch(InterruptedException ex)
 			{
-				IOUtilities.interruptIfNecessary(ex);
 				break;
 			}
 		}

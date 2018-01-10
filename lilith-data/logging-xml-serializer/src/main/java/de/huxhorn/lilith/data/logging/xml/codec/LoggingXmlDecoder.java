@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ package de.huxhorn.lilith.data.logging.xml.codec;
 import de.huxhorn.lilith.data.logging.LoggingEvent;
 import de.huxhorn.lilith.data.logging.xml.LoggingEventReader;
 import de.huxhorn.sulky.codec.Decoder;
-import de.huxhorn.sulky.io.IOUtilities;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -72,30 +71,26 @@ public class LoggingXmlDecoder
 
 	public LoggingEvent decode(byte[] bytes)
 	{
-
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader;
 		try
 		{
-			if(compressing)
-			{
-				GZIPInputStream gis = new GZIPInputStream(in);
-				reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(gis, StandardCharsets.UTF_8));
-			}
-			else
-			{
-				reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-			}
-			return loggingEventReader.read(reader);
+			return loggingEventReader.read(createXmlStreamReader(in));
 		}
 		catch(XMLStreamException | IOException e)
 		{
 			e.printStackTrace(); // NOPMD
 		}
-		finally
-		{
-			IOUtilities.closeQuietly(in);
-		}
 		return null;
+	}
+
+	private XMLStreamReader createXmlStreamReader(ByteArrayInputStream in)
+			throws IOException, XMLStreamException
+	{
+		if(compressing)
+		{
+			GZIPInputStream gis = new GZIPInputStream(in);
+			return XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(gis, StandardCharsets.UTF_8));
+		}
+		return XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 	}
 }
