@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,22 +114,21 @@ public class ViewContainerInternalFrame
 			// don't adjust if maximized
 			return;
 		}
-		Rectangle componentBounds = component.getBounds();
 
 		Container parent = component.getParent();
 		if(parent == null)
 		{
 			return;
 		}
-		Rectangle parentBounds = parent.getBounds();
 
+		Rectangle componentBounds = component.getBounds();
 		int componentX = (int) componentBounds.getX();
 		int componentY = (int) componentBounds.getY();
 		int componentWidth = (int) componentBounds.getWidth();
 		int componentHeight = (int) componentBounds.getHeight();
 		boolean adjusted = false;
 
-
+		Rectangle parentBounds = parent.getBounds();
 		int usableWidth = (int)(parentBounds.getWidth());
 		if(componentWidth > usableWidth)
 		{

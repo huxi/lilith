@@ -238,7 +238,6 @@ public class TroubleshootingPanel
 		{
 			Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
 
-			StringBuilder builder = new StringBuilder();
 			Map<ThreadGroup, List<ThreadHolder>> threadGroupMapping = new Hashtable<>();
 			List<ThreadHolder> nullList = new ArrayList<>();
 			for(Map.Entry<Thread, StackTraceElement[]> current : allStackTraces.entrySet())
@@ -289,6 +288,7 @@ public class TroubleshootingPanel
 				return;
 			}
 
+			StringBuilder builder = new StringBuilder();
 			appendGroup(0, builder, rootGroup, threadGroups, threadGroupMapping);
 
 			if(!nullList.isEmpty())

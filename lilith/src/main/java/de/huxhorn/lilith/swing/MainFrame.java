@@ -1235,7 +1235,6 @@ public class MainFrame
 		}
 		indexFileName = indexFileName + FileConstants.INDEX_FILE_EXTENSION;
 
-		long dataModified=dataFile.lastModified();
 
 		File indexFile = new File(indexFileName);
 		if(!indexFile.isFile())
@@ -1259,6 +1258,7 @@ public class MainFrame
 		}
 
 		// Previous index file was found
+		long dataModified=dataFile.lastModified();
 		long indexModified=indexFile.lastModified();
 		if(indexModified < dataModified)
 		{
@@ -1303,8 +1303,6 @@ public class MainFrame
 	{
 		if(logger.isInfoEnabled()) logger.info("Import file: {}", importFile.getAbsolutePath());
 
-		File parentFile = importFile.getParentFile();
-		String inputName = importFile.getName();
 		if(!importFile.isFile())
 		{
 			String message = "'" + importFile.getAbsolutePath() + "' is not a file!";
@@ -1318,9 +1316,10 @@ public class MainFrame
 			return;
 		}
 
-		File dataFile = new File(parentFile, inputName + FileConstants.FILE_EXTENSION);
-		File indexFile = new File(parentFile, inputName + FileConstants.INDEX_FILE_EXTENSION);
+		final String inputName = importFile.getName();
+		final File parentFile = importFile.getParentFile();
 
+		final File dataFile = new File(parentFile, inputName + FileConstants.FILE_EXTENSION);
 		// check if file exists and warn in that case
 		if(dataFile.isFile())
 		{
@@ -1343,6 +1342,8 @@ public class MainFrame
 				if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", dataFile.getAbsolutePath()); // NOPMD
 			}
 		}
+
+		File indexFile = new File(parentFile, inputName + FileConstants.INDEX_FILE_EXTENSION);
 		if(indexFile.isFile() && indexFile.delete())
 		{
 			if(logger.isInfoEnabled()) logger.info("Deleted file '{}'.", indexFile.getAbsolutePath()); // NOPMD
@@ -2258,7 +2259,6 @@ public class MainFrame
 
 	private static void executeCommand(String[] cmdArray)
 	{
-		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 		if(cmdArray == null)
 		{
 			return;
@@ -2275,6 +2275,7 @@ public class MainFrame
 		}
 		catch(IOException e)
 		{
+			final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 			if(logger.isWarnEnabled()) logger.warn("Exception while trying to execute command {}!", commandString, e);
 		}
 	}
@@ -3087,16 +3088,16 @@ public class MainFrame
 		return result;
 	}
 
-	private void collectInactiveLogs(LogFileFactory fileFactory, File sourceDir, List<SourceIdentifier> inactiveLogs)
+	private void collectInactiveLogs(LogFileFactory fileFactory, final File sourceDir, List<SourceIdentifier> inactiveLogs)
 	{
-		String primary = sourceDir.getName();
-
 		File[] logs = sourceDir.listFiles(new LogFileFilter(fileFactory));
 		if(logs == null)
 		{
 			return;
 		}
+
 		String extension = fileFactory.getDataFileExtension();
+		String primary = sourceDir.getName();
 		for(File f : logs)
 		{
 			String abs = f.getAbsolutePath();
@@ -3106,6 +3107,7 @@ public class MainFrame
 			{
 				String secondary = f.getName();
 				secondary = secondary.substring(0, secondary.length() - extension.length());
+
 				inactiveLogs.add(new SourceIdentifier(primary, secondary)); // NOPMD - AvoidInstantiatingObjectsInLoops
 			}
 		}

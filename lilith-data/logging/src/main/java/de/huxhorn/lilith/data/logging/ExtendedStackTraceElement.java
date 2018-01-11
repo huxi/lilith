@@ -484,24 +484,26 @@ public class ExtendedStackTraceElement
 		{
 			return null; // invalid
 		}
-		int endIdx = ste.lastIndexOf(')');
-		if(endIdx < 0)
+		final int sourceEndIndex = ste.lastIndexOf(')');
+		if(sourceEndIndex < 0)
 		{
 			return null; // invalid
 		}
 
-		String classAndMethod = ste.substring(0, idx);
-		String source = ste.substring(idx + 1, endIdx);
-		idx = classAndMethod.lastIndexOf('.');
-		if(idx < 0)
+		final String classAndMethod = ste.substring(0, idx);
+
+		final int classAndMethodDotIndex = classAndMethod.lastIndexOf('.');
+		if(classAndMethodDotIndex < 0)
 		{
 			return null; // invalid
 		}
-		String clazz = classAndMethod.substring(0, idx);
-		String method = classAndMethod.substring(idx + 1, classAndMethod.length());
+
 		String classLoaderName = null;
 		String moduleName = null;
 		String moduleVersion = null;
+
+		String clazz = classAndMethod.substring(0, classAndMethodDotIndex);
+		final int sourceStartIndex = idx + 1;
 		idx = clazz.lastIndexOf(MODULE_SEPARATOR_CHAR);
 		if(idx > -1)
 		{
@@ -536,6 +538,8 @@ public class ExtendedStackTraceElement
 		{
 			moduleVersion = null;
 		}
+
+		String source = ste.substring(sourceStartIndex, sourceEndIndex);
 		idx = source.lastIndexOf(SEPARATOR_CHAR);
 		String file = null;
 		int lineNumber = UNKNOWN_SOURCE_LINE_NUMBER;
@@ -564,10 +568,12 @@ public class ExtendedStackTraceElement
 			}
 		}
 
+		String method = classAndMethod.substring(classAndMethodDotIndex + 1, classAndMethod.length());
+
 		ExtendedStackTraceElement result = null;
-		if(endIdx + 2 < ste.length())
+		if(sourceEndIndex + 2 < ste.length())
 		{
-			String remainder = ste.substring(endIdx + 2);
+			String remainder = ste.substring(sourceEndIndex + 2);
 			int vEndIdx = remainder.lastIndexOf(']');
 			if(vEndIdx >= 0)
 			{

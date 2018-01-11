@@ -128,11 +128,12 @@ public final class SoundLocationTableModel
 
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
-		String newValue = (String) aValue;
 		if(keys == null || rowIndex < 0 || rowIndex >= keys.size())
 		{
 			return;
 		}
+
+		String newValue = (String) aValue;
 		switch(columnIndex)
 		{
 			case SoundLocationTableModel.EVENT_NAME_COLUMN:

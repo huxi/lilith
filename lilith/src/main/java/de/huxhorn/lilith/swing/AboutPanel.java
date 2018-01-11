@@ -783,8 +783,6 @@ public final class AboutPanel
 
 	public static ConvolveOp getGaussianBlurFilter(int radius, boolean horizontal)
 	{
-		final Logger logger = LoggerFactory.getLogger(AboutPanel.class);
-
 		if(radius < 1)
 		{
 			throw new IllegalArgumentException("Radius must be >= 1");
@@ -809,10 +807,9 @@ public final class AboutPanel
 		for(int i = 0; i < data.length; i++)
 		{
 			data[i] /= total;
-			if(logger.isDebugEnabled()) logger.debug("data[{}]={}", i, data[i]);
 		}
 
-		Kernel kernel = null;
+		Kernel kernel;
 		if(horizontal)
 		{
 			kernel = new Kernel(size, 1, data);
