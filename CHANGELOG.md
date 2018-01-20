@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - If the connection is lost then Message/RequestURI in table will now show "Connection closed." instead of nothing.
 - Added smooth horizontal table scrolling option that is enabled by default.
 - Added support for Log4j 2 `JsonLayout`, `YamlLayout` and `XmlLayout`. `SerializedLayout` has been deprecated in log4j2 2.9.0 so you should use one of the other options instead.
+- Added Automatic-Module-Names for artifacts.
 
 ### Changed
 - "Clean all inactive logs" is now less noisy in the Lilith log.

@@ -329,10 +329,6 @@ subprojects {
 		testRuntime libraries.'logback-classic'
 	}
 
-	jar {
-		manifest.attributes provider: 'gradle'
-	}
-
 	def deployer = null
 
 	uploadPublished {
@@ -613,3 +609,4 @@ task (group: 'Repository', description: 'Sync local SNAPSHOT-repository to oss.s
 	}
 }
 
+apply plugin: 'detect-split-packages'
