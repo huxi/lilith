@@ -40,7 +40,7 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.plugins.signing.Sign
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '4.6-rc-2'
+	gradleVersion = '4.6'
 }
 
 def copyright = "Copyright \u00a9 2007-2017 J\u00f6rn Huxhorn"
