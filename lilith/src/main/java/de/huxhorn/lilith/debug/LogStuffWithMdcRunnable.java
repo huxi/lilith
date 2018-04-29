@@ -28,6 +28,7 @@ public class LogStuffWithMdcRunnable
 		super(delay, marker);
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

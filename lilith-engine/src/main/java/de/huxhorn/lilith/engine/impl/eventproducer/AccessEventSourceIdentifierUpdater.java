@@ -25,6 +25,7 @@ import java.util.Map;
 public class AccessEventSourceIdentifierUpdater
 		implements SourceIdentifierUpdater<AccessEvent>
 {
+	@Override
 	public void updateIdentifier(SourceIdentifier baseIdentifier, AccessEvent event)
 	{
 		if(baseIdentifier == null)

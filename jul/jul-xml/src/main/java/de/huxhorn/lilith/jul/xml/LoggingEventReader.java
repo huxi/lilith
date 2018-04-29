@@ -57,6 +57,7 @@ public class LoggingEventReader
 
 	private static final String MESSAGE_SEPARATOR = ": ";
 
+	@Override
 	public LoggingEvent read(XMLStreamReader reader)
 		throws XMLStreamException
 	{

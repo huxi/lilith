@@ -31,11 +31,13 @@ public class ComboAccessViewContainer
 		super(mainFrame, eventSource);
 	}
 
+	@Override
 	protected EventWrapperViewPanel<AccessEvent> createViewPanel(EventSource<AccessEvent> eventSource)
 	{
 		return new AccessEventViewPanel(getMainFrame(), eventSource);
 	}
 
+	@Override
 	public Class getWrappedClass()
 	{
 		return AccessEvent.class;

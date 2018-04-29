@@ -61,6 +61,7 @@ public class SerializingGoToSource
 		goToSourceRunnable.setPort(port);
 	}
 
+	@Override
 	public void goToSource(StackTraceElement ste)
 	{
 		if(goToSourceThread == null)
@@ -83,6 +84,7 @@ public class SerializingGoToSource
 		}
 	}
 
+	@Override
 	public void stop()
 	{
 		if(goToSourceThread != null)
@@ -154,6 +156,7 @@ public class SerializingGoToSource
 			}
 		}
 
+		@Override
 		public void run()
 		{
 			for(;;)

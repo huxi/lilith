@@ -85,11 +85,13 @@ public final class HttpStatusTypeCondition
 		statusType = null;
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;
@@ -100,6 +102,7 @@ public final class HttpStatusTypeCondition
 		return statusType;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(statusType == null)
@@ -121,6 +124,7 @@ public final class HttpStatusTypeCondition
 		return false;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -131,11 +135,13 @@ public final class HttpStatusTypeCondition
 		return statusType == that.statusType;
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return (statusType != null ? statusType.hashCode() : 0);
 	}
 
+	@Override
 	public HttpStatusTypeCondition clone()
 		throws CloneNotSupportedException
 	{

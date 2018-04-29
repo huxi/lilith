@@ -65,6 +65,7 @@ class LoggingEventProtobufDecoder
 		return compressing;
 	}
 
+	@Override
 	public LoggingEvent decode(byte[] bytes)
 	{
 		if(bytes == null)

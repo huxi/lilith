@@ -175,6 +175,7 @@ public class StatisticProfilingHandler
 			return methodBaseName;
 		}
 
+		@Override
 		public Entry clone()
 				throws CloneNotSupportedException
 		{

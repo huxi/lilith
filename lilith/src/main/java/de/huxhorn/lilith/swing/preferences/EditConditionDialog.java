@@ -133,6 +133,7 @@ public class EditConditionDialog
 		}
 	}
 
+	@Override
 	public void setVisible(boolean b)
 	{
 		if(b)
@@ -214,6 +215,7 @@ public class EditConditionDialog
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			String name = conditionName.getText();
@@ -240,6 +242,7 @@ public class EditConditionDialog
 			super("Reset");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			initUI();
@@ -258,6 +261,7 @@ public class EditConditionDialog
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled = true;
@@ -268,6 +272,7 @@ public class EditConditionDialog
 	private class ConditionNameActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			String name = conditionName.getText();
@@ -281,16 +286,19 @@ public class EditConditionDialog
 	private class TextKeyListener
 		implements KeyListener
 	{
+		@Override
 		public void keyTyped(KeyEvent e)
 		{
 			updateActions();
 		}
 
+		@Override
 		public void keyPressed(KeyEvent e)
 		{
 			// no-op
 		}
 
+		@Override
 		public void keyReleased(KeyEvent e)
 		{
 			// no-op

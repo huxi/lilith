@@ -35,6 +35,7 @@ public class LogStuffRunnable
 		this.marker = marker;
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

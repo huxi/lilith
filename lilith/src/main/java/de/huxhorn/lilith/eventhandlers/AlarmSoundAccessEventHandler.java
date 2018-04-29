@@ -36,6 +36,7 @@ public class AlarmSoundAccessEventHandler
 		this.sounds = sounds;
 	}
 
+	@Override
 	public void handle(List<EventWrapper<AccessEvent>> events)
 	{
 		if(sounds == null)

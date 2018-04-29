@@ -73,6 +73,7 @@ public class LoggingXmlEncoder
 		return compressing;
 	}
 
+	@Override
 	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] encode(LoggingEvent event)
 	{

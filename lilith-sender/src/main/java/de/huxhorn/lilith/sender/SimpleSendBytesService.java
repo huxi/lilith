@@ -118,6 +118,7 @@ public class SimpleSendBytesService
 		return connectionState.get();
 	}
 
+	@Override
 	public void sendBytes(byte[] bytes)
 	{
 		if(connectionState.get() == ConnectionState.Connected && sendBytesThread != null && bytes != null)
@@ -133,6 +134,7 @@ public class SimpleSendBytesService
 		}
 	}
 
+	@Override
 	public void startUp()
 	{
 		synchronized(lock)
@@ -146,6 +148,7 @@ public class SimpleSendBytesService
 		}
 	}
 
+	@Override
 	public void shutDown()
 	{
 		shutdownIndicator.set(true);
@@ -211,6 +214,7 @@ public class SimpleSendBytesService
 			}
 		}
 
+		@Override
 		public void run()
 		{
 			Thread reconnectionThread = new ReconnectionThread();
@@ -278,6 +282,7 @@ public class SimpleSendBytesService
 				setDaemon(true);
 			}
 
+			@Override
 			public void run()
 			{
 				for(;;)

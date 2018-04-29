@@ -40,6 +40,7 @@ import de.huxhorn.lilith.data.converter.Converter;
 public class LogbackAccessConverter
 	implements Converter<AccessEvent>
 {
+	@Override
 	public AccessEvent convert(Object o)
 	{
 		if(o == null)
@@ -90,6 +91,7 @@ public class LogbackAccessConverter
 		return result;
 	}
 
+	@Override
 	public Class getSourceClass()
 	{
 		return ch.qos.logback.access.spi.AccessEvent.class;

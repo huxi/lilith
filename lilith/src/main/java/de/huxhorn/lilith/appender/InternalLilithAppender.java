@@ -94,6 +94,7 @@ public class InternalLilithAppender
 		localId = 0;
 	}
 
+	@Override
 	protected void append(ch.qos.logback.classic.spi.LoggingEvent event)
 	{
 		if(event != null && FILE_BUFFER != null) // just to make sure...

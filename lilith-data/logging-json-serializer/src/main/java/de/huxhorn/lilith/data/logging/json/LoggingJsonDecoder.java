@@ -56,6 +56,7 @@ public class LoggingJsonDecoder
 		mapper.registerModule(new AfterburnerModule());
 	}
 
+	@Override
 	public LoggingEvent decode(byte[] bytes)
 	{
 		try

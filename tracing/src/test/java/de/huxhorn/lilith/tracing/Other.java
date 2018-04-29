@@ -42,6 +42,7 @@ public class Other
 {
 	private final Logger logger = LoggerFactory.getLogger(Other.class);
 
+	@Override
 	public String someMethod()
 	{
 		if(logger.isInfoEnabled()) logger.info("Executing someMethod");

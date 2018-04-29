@@ -32,6 +32,7 @@ public class LoggingEventThreadNameProcessor
 {
 	private final Set<String> threadNames = new HashSet<>();
 
+	@Override
 	public void processElement(EventWrapper<LoggingEvent> element)
 	{
 		if(element == null)
@@ -60,6 +61,7 @@ public class LoggingEventThreadNameProcessor
 		}
 	}
 
+	@Override
 	public void processElements(List<EventWrapper<LoggingEvent>> elements)
 	{
 		if(elements == null || elements.isEmpty())
@@ -102,6 +104,7 @@ public class LoggingEventThreadNameProcessor
 		}
 	}
 
+	@Override
 	public void reset()
 	{
 		threadNames.clear();

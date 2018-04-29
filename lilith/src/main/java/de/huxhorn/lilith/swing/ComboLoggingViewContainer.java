@@ -31,11 +31,13 @@ public class ComboLoggingViewContainer
 		super(mainFrame, eventSource);
 	}
 
+	@Override
 	protected EventWrapperViewPanel<LoggingEvent> createViewPanel(EventSource<LoggingEvent> eventSource)
 	{
 		return new LoggingEventViewPanel(getMainFrame(), eventSource);
 	}
 
+	@Override
 	public Class getWrappedClass()
 	{
 		return LoggingEvent.class;

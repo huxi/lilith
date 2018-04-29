@@ -25,6 +25,7 @@ import javax.swing.JTable;
 public class ConditionPreviewRenderer
 	extends ColorSchemePreviewRenderer
 {
+	@Override
 	public ColorScheme resolveColorScheme(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
 		ColorScheme result = null;
@@ -36,6 +37,7 @@ public class ConditionPreviewRenderer
 		return result;
 	}
 
+	@Override
 	public void updateText(JTable table, Object value, boolean selected, boolean hasFocus, int row, int column)
 	{
 		renderer.setText("Message");

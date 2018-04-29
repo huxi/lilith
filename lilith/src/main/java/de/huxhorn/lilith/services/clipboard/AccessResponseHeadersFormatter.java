@@ -34,11 +34,13 @@ public class AccessResponseHeadersFormatter
 		super(LilithActionId.COPY_RESPONSE_HEADERS);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveAccessEvent(object).map(it -> !isNullOrEmpty(it.getResponseHeaders())).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveAccessEvent(object).map(it -> toStringOrNull(it.getResponseHeaders())).orElse(null);

@@ -159,6 +159,7 @@ public class ColorSchemeEditorPanel
 			dummyCondition.setColorScheme(new ColorScheme().initDefaults());
 		}
 
+		@Override
 		public void stateChanged(ChangeEvent e)
 		{
 			// update preview component...

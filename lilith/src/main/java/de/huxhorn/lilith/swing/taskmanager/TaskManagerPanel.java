@@ -98,6 +98,7 @@ public class TaskManagerPanel<T>
 		implements ListSelectionListener
 	{
 
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			if(e.getValueIsAdjusting()) return;
@@ -160,6 +161,7 @@ public class TaskManagerPanel<T>
 			setEnabled(this.task != null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(task != null)
@@ -174,6 +176,7 @@ public class TaskManagerPanel<T>
 		implements MouseListener
 	{
 
+		@Override
 		public void mouseClicked(MouseEvent e)
 		{
 			if(e.isPopupTrigger())
@@ -186,6 +189,7 @@ public class TaskManagerPanel<T>
 			}
 		}
 
+		@Override
 		public void mousePressed(MouseEvent e)
 		{
 			Point p = e.getPoint();
@@ -196,6 +200,7 @@ public class TaskManagerPanel<T>
 			}
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent e)
 		{
 			if(e.isPopupTrigger())
@@ -204,6 +209,7 @@ public class TaskManagerPanel<T>
 			}
 		}
 
+		@Override
 		public void mouseEntered(MouseEvent e)
 		{
 			if(e.isPopupTrigger())
@@ -212,6 +218,7 @@ public class TaskManagerPanel<T>
 			}
 		}
 
+		@Override
 		public void mouseExited(MouseEvent e)
 		{
 			if(e.isPopupTrigger())

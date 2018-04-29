@@ -63,6 +63,7 @@ public class JulXmlStreamLoggingEventProducer
 		this.inputStream = new BufferedInputStream(inputStream);
 	}
 
+	@Override
 	public void start()
 	{
 		Thread t = new Thread(new ReceiverRunnable(), getSourceIdentifier().toString() + "-Receiver");
@@ -70,6 +71,7 @@ public class JulXmlStreamLoggingEventProducer
 		t.start();
 	}
 
+	@Override
 	public void close()
 	{
 		if(inputStream != null)
@@ -88,6 +90,7 @@ public class JulXmlStreamLoggingEventProducer
 	private class ReceiverRunnable
 		implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try

@@ -34,6 +34,7 @@ public class AccessFileBufferFactory
 		super(logFileFactory, metaData);
 	}
 
+	@Override
 	public Codec<EventWrapper<AccessEvent>> resolveCodec(MetaData metaData)
 	{
 		boolean compressed = false;

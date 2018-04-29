@@ -44,6 +44,7 @@ import javax.xml.stream.XMLStreamReader;
 public class StackTraceElementReader
 	implements GenericStreamReader<ExtendedStackTraceElement>, LoggingEventSchemaConstants
 {
+	@Override
 	public ExtendedStackTraceElement read(XMLStreamReader reader)
 		throws XMLStreamException
 	{

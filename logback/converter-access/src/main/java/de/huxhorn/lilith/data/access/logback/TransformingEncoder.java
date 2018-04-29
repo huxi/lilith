@@ -80,6 +80,7 @@ public class TransformingEncoder
 		this.uuid = uuid;
 	}
 
+	@Override
 	public byte[] encode(AccessEvent logbackEvent)
 	{
 		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = converter.convert(logbackEvent);

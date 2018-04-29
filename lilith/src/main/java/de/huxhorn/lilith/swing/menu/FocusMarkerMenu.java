@@ -36,6 +36,7 @@ class FocusMarkerMenu
 		setViewContainer(null);
 	}
 
+	@Override
 	protected void updateState()
 	{
 		removeAll();

@@ -69,6 +69,7 @@ public class LoggingXmlDecoder
 		loggingEventReader = new LoggingEventReader();
 	}
 
+	@Override
 	public LoggingEvent decode(byte[] bytes)
 	{
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);

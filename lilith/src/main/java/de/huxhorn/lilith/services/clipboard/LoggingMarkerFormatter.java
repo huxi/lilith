@@ -37,11 +37,13 @@ public class LoggingMarkerFormatter
 		super(LilithActionId.COPY_MARKER);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveLoggingEvent(object).map(it -> it.getMarker() != null).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveLoggingEvent(object).map(LoggingMarkerFormatter::toStringOrNull).orElse(null);

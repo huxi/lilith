@@ -65,6 +65,7 @@ public class AccessEventViewTable
 		super(mainFrame, model, global);
 	}
 
+	@Override
 	protected void initTooltipGenerators()
 	{
 		tooltipGenerators = new HashMap<>();
@@ -82,6 +83,7 @@ public class AccessEventViewTable
 			new SourceTooltipGenerator());
 	}
 
+	@Override
 	protected void initTableColumns()
 	{
 		tableColumns = new HashMap<>();
@@ -148,6 +150,7 @@ public class AccessEventViewTable
 		}
 	}
 
+	@Override
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout()
 	{
 		ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo> result =
@@ -167,12 +170,14 @@ public class AccessEventViewTable
 		return result;
 	}
 
+	@Override
 	public void saveLayout()
 	{
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfoList = tableColumnModel.getColumnLayoutInfos();
 		mainFrame.getApplicationPreferences().writeAccessColumnLayout(isGlobal(), layoutInfoList);
 	}
 
+	@Override
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout()
 	{
 		return mainFrame.getApplicationPreferences().readAccessColumnLayout(isGlobal());

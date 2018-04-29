@@ -61,16 +61,19 @@ public class ViewContainerFrame
 		addWindowListener(new CleanupWindowChangeListener());
 	}
 
+	@Override
 	public ViewActions getViewActions()
 	{
 		return viewActions;
 	}
 
+	@Override
 	public ViewContainer getViewContainer()
 	{
 		return viewContainer;
 	}
 
+	@Override
 	public void focusWindow()
 	{
 		if(!isVisible())
@@ -151,11 +154,13 @@ public class ViewContainerFrame
 		}
 	}
 
+	@Override
 	public void minimizeWindow()
 	{
 		setExtendedState(Frame.ICONIFIED);
 	}
 
+	@Override
 	public void closeWindow()
 	{
 		setVisible(false);
@@ -171,6 +176,7 @@ public class ViewContainerFrame
 		if(logger.isDebugEnabled()) logger.debug("Glasspane\nprev: {}\n new: {}", prev, glassPane);
 	}
 
+	@Override
 	public void setShowingStatusBar(boolean showingStatusBar)
 	{
 		if(viewContainer != null)
@@ -187,16 +193,19 @@ public class ViewContainerFrame
 	class CleanupWindowChangeListener
 		implements WindowListener
 	{
+		@Override
 		public void windowOpened(WindowEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("windowOpened: {}", e.getWindow());
 		}
 
+		@Override
 		public void windowClosing(WindowEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("windowClosing: {}", e.getWindow());
 		}
 
+		@Override
 		public void windowClosed(WindowEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("windowClosed: {}", e.getWindow());
@@ -206,22 +215,26 @@ public class ViewContainerFrame
 			mainFrame.updateWindowMenus();
 		}
 
+		@Override
 		public void windowIconified(WindowEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("windowIconified: {}", e.getWindow());
 
 		}
 
+		@Override
 		public void windowDeiconified(WindowEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("windowDeiconified: {}", e.getWindow());
 		}
 
+		@Override
 		public void windowActivated(WindowEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("windowActivated: {}", e.getWindow());
 		}
 
+		@Override
 		public void windowDeactivated(WindowEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("windowDeactivated: {}", e.getWindow());

@@ -39,6 +39,7 @@ public class AccessEventProtobufServerSocketEventSourceProducer
 		this.compressing = compressing;
 	}
 
+	@Override
 	protected EventProducer<AccessEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<AccessEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{

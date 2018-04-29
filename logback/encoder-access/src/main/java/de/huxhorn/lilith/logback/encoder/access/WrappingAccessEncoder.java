@@ -49,11 +49,13 @@ public class WrappingAccessEncoder
 	private final Codec<EventWrapper<de.huxhorn.lilith.data.access.AccessEvent>> codec = new AccessEventWrapperProtobufCodec(true);
 	private final AtomicLong localId = new AtomicLong(0);
 
+	@Override
 	public void reset()
 	{
 		localId.set(0);
 	}
 
+	@Override
 	public byte[] encode(AccessEvent event)
 	{
 		de.huxhorn.lilith.data.access.AccessEvent lilithEvent = converter.convert(event);

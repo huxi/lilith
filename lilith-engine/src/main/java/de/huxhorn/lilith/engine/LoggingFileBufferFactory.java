@@ -34,6 +34,7 @@ public class LoggingFileBufferFactory
 		super(logFileFactory, metaData);
 	}
 
+	@Override
 	public Codec<EventWrapper<LoggingEvent>> resolveCodec(MetaData metaData)
 	{
 		boolean compressed = false;

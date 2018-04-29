@@ -28,6 +28,7 @@ public class TimestampTooltipGenerator
 	implements TooltipGenerator
 {
 
+	@Override
 	public String createTooltipText(JTable table, int row)
 	{
 		String tooltip = null;

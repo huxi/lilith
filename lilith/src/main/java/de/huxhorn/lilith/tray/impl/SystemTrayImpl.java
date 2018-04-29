@@ -65,6 +65,7 @@ public final class SystemTrayImpl
 	}
 
 
+	@Override
 	public void setActive(boolean active)
 	{
 		if(active)
@@ -97,16 +98,19 @@ public final class SystemTrayImpl
 		active = false;
 	}
 
+	@Override
 	public boolean isActive()
 	{
 		return active;
 	}
 
+	@Override
 	public void setIconImage(Image image)
 	{
 		trayIcon.setImage(image);
 	}
 
+	@Override
 	public void displayMessage(String message, MessageType messageType)
 	{
 		TrayIcon.MessageType type;
@@ -131,11 +135,13 @@ public final class SystemTrayImpl
 		trayIcon.displayMessage(null, message, type);
 	}
 
+	@Override
 	public void setToolTip(String toolTip)
 	{
 		trayIcon.setToolTip(toolTip);
 	}
 
+	@Override
 	public Image getDefaultIcon()
 	{
 		return Icons.LILITH_SYSTEM_TRAY_ICON.getImage();
@@ -144,6 +150,7 @@ public final class SystemTrayImpl
 	private class QuitActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(mainFrame != null)
@@ -156,6 +163,7 @@ public final class SystemTrayImpl
 	private class ShowHideActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Show/Hide Action");
@@ -169,6 +177,7 @@ public final class SystemTrayImpl
 	private class TrayIconActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("TrayIconAction");

@@ -53,6 +53,7 @@ public class FileSplitterEventHandler<T extends Serializable>
 		fileBuffers = new ConcurrentHashMap<>();
 	}
 
+	@Override
 	public void handle(List<EventWrapper<T>> events)
 	{
 		if(events == null || events.isEmpty())

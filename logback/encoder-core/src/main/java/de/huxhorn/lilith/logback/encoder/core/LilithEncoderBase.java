@@ -67,6 +67,7 @@ public abstract class LilithEncoderBase<E>
 		this.encoder = encoder;
 	}
 
+	@Override
 	public byte[] headerBytes()
 	{
 		// suggested LOGBACK-1257 workaround below
@@ -106,6 +107,7 @@ public abstract class LilithEncoderBase<E>
 		return byteArrayOutputStream.toByteArray();
 	}
 
+	@Override
 	public byte[] encode(E event)
 	{
 		preProcess(event);
@@ -131,6 +133,7 @@ public abstract class LilithEncoderBase<E>
 		return byteArrayOutputStream.toByteArray();
 	}
 
+	@Override
 	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] footerBytes()
 	{

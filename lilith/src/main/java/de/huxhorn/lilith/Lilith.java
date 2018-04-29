@@ -943,6 +943,7 @@ public class Lilith
 			this.appTitle = appTitle;
 		}
 
+		@Override
 		public void run()
 		{
 			splashScreen = new SplashScreen(appTitle);
@@ -971,6 +972,7 @@ public class Lilith
 			this.appTitle = appTitle;
 		}
 
+		@Override
 		public void run()
 		{
 			mainFrame = new MainFrame(applicationPreferences, splashScreen, appTitle);

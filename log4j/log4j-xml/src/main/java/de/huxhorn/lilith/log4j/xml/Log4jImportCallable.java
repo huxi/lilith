@@ -56,6 +56,7 @@ import org.apache.commons.io.input.CountingInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Log4jImportCallable
 	extends AbstractProgressingCallable<Long>
 {
@@ -99,6 +100,7 @@ public class Log4jImportCallable
 		return inputFile;
 	}
 
+	@Override
 	public Long call()
 		throws Exception
 	{

@@ -85,6 +85,7 @@ public class LoggingJsonEncoder
 		return sortingProperties;
 	}
 
+	@Override
 	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] encode(LoggingEvent event)
 	{

@@ -48,6 +48,7 @@ import java.util.Map;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.util.ReadOnlyStringMap;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Log4j2LoggingConverter
 		implements Converter<LoggingEvent>
 {
@@ -55,6 +56,7 @@ public class Log4j2LoggingConverter
 	public static final String LOG4J_LEVEL_VALUE_FATAL = "FATAL";
 	private static final String APPLICATION_MDC_KEY = "application";
 
+	@Override
 	public LoggingEvent convert(Object o)
 	{
 		if (o == null)
@@ -295,6 +297,7 @@ public class Log4j2LoggingConverter
 		return result;
 	}
 
+	@Override
 	public Class getSourceClass()
 	{
 		return org.apache.logging.log4j.core.LogEvent.class;

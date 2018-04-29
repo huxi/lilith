@@ -35,11 +35,13 @@ public class LoggingNdcFormatter
 		super(LilithActionId.COPY_NDC);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveLoggingEvent(object).map(it -> !isNullOrEmpty(it.getNdc())).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveLoggingEvent(object).map(LoggingNdcFormatter::toStringOrNull).orElse(null);

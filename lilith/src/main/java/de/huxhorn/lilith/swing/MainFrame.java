@@ -2059,11 +2059,13 @@ public class MainFrame
 	class LoggingEventSourceListener
 		implements EventSourceListener<LoggingEvent>
 	{
+		@Override
 		public void eventSourceAdded(EventSource<LoggingEvent> eventSource)
 		{
 			EventQueue.invokeLater(new LoggingSourceAddedRunnable(eventSource));
 		}
 
+		@Override
 		public void eventSourceRemoved(EventSource<LoggingEvent> eventSource)
 		{
 			EventQueue.invokeLater(new LoggingSourceRemovedRunnable(eventSource));
@@ -2079,6 +2081,7 @@ public class MainFrame
 				this.eventSource = eventSource;
 			}
 
+			@Override
 			public void run()
 			{
 				ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
@@ -2119,6 +2122,7 @@ public class MainFrame
 				this.eventSource = eventSource;
 			}
 
+			@Override
 			public void run()
 			{
 				ViewContainer<LoggingEvent> container = retrieveLoggingViewContainer(eventSource);
@@ -2141,11 +2145,13 @@ public class MainFrame
 	class AccessEventSourceListener
 		implements EventSourceListener<AccessEvent>
 	{
+		@Override
 		public void eventSourceAdded(EventSource<AccessEvent> eventSource)
 		{
 			EventQueue.invokeLater(new AccessSourceAddedRunnable(eventSource));
 		}
 
+		@Override
 		public void eventSourceRemoved(EventSource<AccessEvent> eventSource)
 		{
 			EventQueue.invokeLater(new AccessSourceRemovedRunnable(eventSource));
@@ -2161,6 +2167,7 @@ public class MainFrame
 				this.eventSource = eventSource;
 			}
 
+			@Override
 			public void run()
 			{
 				ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
@@ -2202,6 +2209,7 @@ public class MainFrame
 				this.eventSource = eventSource;
 			}
 
+			@Override
 			public void run()
 			{
 				ViewContainer<AccessEvent> container = retrieveAccessViewContainer(eventSource);
@@ -2417,6 +2425,7 @@ public class MainFrame
 			this.window = window;
 		}
 
+		@Override
 		public void run()
 		{
 			ViewContainer viewContainer = window.getViewContainer();
@@ -2526,6 +2535,7 @@ public class MainFrame
 			this.container = container;
 		}
 
+		@Override
 		public void run()
 		{
 			boolean isNew = false;
@@ -2556,6 +2566,7 @@ public class MainFrame
 	private class PreferencesChangeListener
 		implements PropertyChangeListener
 	{
+		@Override
 		@SuppressWarnings({"unchecked"})
 		public void propertyChange(PropertyChangeEvent evt)
 		{
@@ -3132,6 +3143,7 @@ public class MainFrame
 			this.showingPrimaryIdentifier = showingPrimaryIdentifier;
 		}
 
+		@Override
 		public int compare(EventSource<T> o1, EventSource<T> o2)
 		{
 			if(o1 == o2) // NOPMD
@@ -3187,6 +3199,7 @@ public class MainFrame
 	private class ShutdownRunnable
 		implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			if(logger.isInfoEnabled()) logger.info("Executing shutdown hook...");
@@ -3225,6 +3238,7 @@ public class MainFrame
 			}
 		}
 
+		@Override
 		public void run()
 		{
 			try
@@ -3266,6 +3280,7 @@ public class MainFrame
 				inputReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
 			}
 
+			@Override
 			public void run()
 			{
 				try
@@ -3302,6 +3317,7 @@ public class MainFrame
 				super(input);
 			}
 
+			@Override
 			public void processLine(String line)
 			{
 				if(logger.isInfoEnabled()) logger.info("{}: {}", file.getAbsolutePath(), line);
@@ -3316,6 +3332,7 @@ public class MainFrame
 				super(input);
 			}
 
+			@Override
 			@SuppressWarnings("PMD.SystemPrintln")
 			public void processLine(String line)
 			{
@@ -3337,6 +3354,7 @@ public class MainFrame
 			this.process = process;
 		}
 
+		@Override
 		public void run()
 		{
 			try
@@ -3368,6 +3386,7 @@ public class MainFrame
 				inputReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
 			}
 
+			@Override
 			public void run()
 			{
 				try
@@ -3401,6 +3420,7 @@ public class MainFrame
 				super(input);
 			}
 
+			@Override
 			public void processLine(String line)
 			{
 				if(logger.isDebugEnabled()) logger.debug("{}", line);
@@ -3415,6 +3435,7 @@ public class MainFrame
 				super(input);
 			}
 
+			@Override
 			@SuppressWarnings("PMD.SystemPrintln")
 			public void processLine(String line)
 			{
@@ -3497,6 +3518,7 @@ public class MainFrame
 			this.checkSnapshot = checkSnapshot;
 		}
 
+		@Override
 		public void run()
 		{
 			VersionBundle releaseVersionBundle = retrieveVersion(RELEASE_VERSION_URL);
@@ -3579,6 +3601,7 @@ public class MainFrame
 			this.changes = changes;
 		}
 
+		@Override
 		public void run()
 		{
 			MainFrame.this.showUpdateDialog(message, changes);
@@ -3598,12 +3621,14 @@ public class MainFrame
 	{
 		private final Logger logger = LoggerFactory.getLogger(MainTaskListener.class);
 
+		@Override
 		public void taskCreated(Task<Long> longTask)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Task {} created.", longTask.getName());
 			updateTaskStatus();
 		}
 
+		@Override
 		public void executionFailed(Task<Long> longTask, ExecutionException exception)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Execution of task {} failed!", longTask.getName(), exception);
@@ -3624,6 +3649,7 @@ public class MainFrame
 			updateTaskStatus();
 		}
 
+		@Override
 		public void executionFinished(Task<Long> longTask, Long result)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Execution of task {} finished!", longTask.getName());
@@ -3663,6 +3689,7 @@ public class MainFrame
 			}
 		}
 
+		@Override
 		public void executionCanceled(Task<Long> longTask)
 		{
 			if(logger.isInfoEnabled()) logger.info("Execution of task {} canceled!", longTask.getName());
@@ -3701,6 +3728,7 @@ public class MainFrame
 			updateTaskStatus();
 		}
 
+		@Override
 		public void progressUpdated(Task<Long> longTask, int progress)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Progress of task {} updated to {}.", longTask.getName(), progress);

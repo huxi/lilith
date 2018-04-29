@@ -37,6 +37,7 @@ public class EventHtmlFormatter
 		this.mainFrame = mainFrame;
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		if(object instanceof EventWrapper)
@@ -48,6 +49,7 @@ public class EventHtmlFormatter
 		return false;
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		if(object instanceof EventWrapper)

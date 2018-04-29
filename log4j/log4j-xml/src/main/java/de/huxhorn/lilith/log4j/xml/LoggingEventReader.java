@@ -56,6 +56,7 @@ public class LoggingEventReader
 {
 	private static final String NEWLINE = "\n";
 
+	@Override
 	public LoggingEvent read(XMLStreamReader reader)
 		throws XMLStreamException
 	{

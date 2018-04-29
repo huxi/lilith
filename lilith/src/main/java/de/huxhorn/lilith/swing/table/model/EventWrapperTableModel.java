@@ -30,16 +30,19 @@ public class EventWrapperTableModel<T extends Serializable>
 		super(buffer);
 	}
 
+	@Override
 	public Class<?> getColumnClass(int columnIndex)
 	{
 		return EventWrapper.class;
 	}
 
+	@Override
 	public int getColumnCount()
 	{
 		return 1;
 	}
 
+	@Override
 	public String getColumnName(int columnIndex)
 	{
 		if(columnIndex == 0)

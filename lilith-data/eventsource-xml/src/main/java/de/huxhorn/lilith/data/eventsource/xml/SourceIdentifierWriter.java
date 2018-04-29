@@ -67,6 +67,7 @@ public class SourceIdentifierWriter
 		this.writingSchemaLocation = writingSchemaLocation;
 	}
 
+	@Override
 	public void write(XMLStreamWriter writer, SourceIdentifier sourceIdentifier, boolean isRoot)
 		throws XMLStreamException
 	{

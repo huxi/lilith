@@ -123,6 +123,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 			putValue(Action.SHORT_DESCRIPTION, "Close filtered view.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			closeCurrentFilter();
@@ -132,6 +133,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	private class ComboItemListener
 		implements ItemListener
 	{
+		@Override
 		public void itemStateChanged(ItemEvent e)
 		{
 			ViewHolder holder = getSelectedItem();
@@ -193,6 +195,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 			return view;
 		}
 
+		@Override
 		public String getId()
 		{
 			return id;
@@ -215,12 +218,14 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 			return id.hashCode();
 		}
 
+		@Override
 		public String toString()
 		{
 			return "ViewHolder[id=" + id + ", view=" + view + "]";
 		}
 	}
 
+	@Override
 	public final void addView(EventWrapperViewPanel<T> view)
 	{
 		EventSource source = view.getEventSource();
@@ -243,6 +248,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		selectedViewChanged();
 	}
 
+	@Override
 	public void updateViews()
 	{
 		if(comboBoxPane.isVisible())
@@ -268,6 +274,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		contentPane.repaint();
 	}
 
+	@Override
 	public void updateViewScale(double scale)
 	{
 		for(int i = 0; i < comboBoxModel.getSize(); i++)
@@ -287,6 +294,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void removeView(EventWrapperViewPanel<T> view, boolean dispose)
 	{
 		ViewHolder found = null;
@@ -323,6 +331,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void showDefaultView()
 	{
 		if(comboBoxModel.getSize() > 0)
@@ -337,12 +346,14 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void addNotify()
 	{
 		super.addNotify();
 		if(logger.isDebugEnabled()) logger.debug("addNotify - parent: {}", getParent());
 	}
 
+	@Override
 	public void scrollToEvent()
 	{
 		EventWrapperViewPanel<T> selectedView = getSelectedView();
@@ -353,6 +364,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void removeNotify()
 	{
 		super.removeNotify();
@@ -388,6 +400,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		fireChange();
 	}
 
+	@Override
 	public void dispose()
 	{
 		super.dispose();
@@ -405,6 +418,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		fireChange();
 	}
 
+	@Override
 	public boolean isDisposed()
 	{
 		return disposed;
@@ -418,11 +432,13 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		firePropertyChange(SELECTED_EVENT_PROPERTY_NAME, oldValue, newValue);
 	}
 
+	@Override
 	public EventWrapper<T> getSelectedEvent()
 	{
 		return selectedEvent;
 	}
 
+	@Override
 	public EventWrapperViewPanel<T> getViewAt(int index)
 	{
 		if(index >= 0 && index < comboBoxModel.getSize())
@@ -436,6 +452,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		return null;
 	}
 
+	@Override
 	public EventWrapperViewPanel<T> getSelectedView()
 	{
 		ViewHolder holder = getSelectedItem();
@@ -446,6 +463,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		return null;
 	}
 
+	@Override
 	public void setViewIndex(int index)
 	{
 		ViewHolder holder = comboBoxModel.getElementAt(index);
@@ -453,11 +471,13 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		selectedViewChanged();
 	}
 
+	@Override
 	public int getViewIndex()
 	{
 		return comboBoxModel.getIndexOf(comboBoxModel.getSelectedItem());
 	}
 
+	@Override
 	public int getViewCount()
 	{
 		return comboBoxModel.getSize();
@@ -482,6 +502,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		return comboBoxModel.getElementAt(index);
 	}
 
+	@Override
 	public void closeCurrentFilter()
 	{
 		ViewHolder holder = getSelectedItem();
@@ -498,6 +519,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void closeOtherFilters()
 	{
 		ViewHolder holder = getSelectedItem();
@@ -529,6 +551,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		selectedViewChanged();
 	}
 
+	@Override
 	public void closeAllFilters()
 	{
 		List<ViewHolder> removedPanes = new ArrayList<>();
@@ -549,6 +572,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		selectedViewChanged();
 	}
 
+	@Override
 	public void setShowingStatusBar(boolean showingStatusBar)
 	{
 		int tabCount = comboBoxModel.getSize();
@@ -572,6 +596,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 		implements PropertyChangeListener
 	{
 
+		@Override
 		@SuppressWarnings({"unchecked"})
 		public void propertyChange(PropertyChangeEvent evt)
 		{

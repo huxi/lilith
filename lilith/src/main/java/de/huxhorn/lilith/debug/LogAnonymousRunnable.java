@@ -34,11 +34,13 @@ public class LogAnonymousRunnable
 		void logStuff();
 	}
 
+	@Override
 	public void runIt()
 	{
 		class MethodInternal
 			implements StuffLogger
 		{
+			@Override
 			public void logStuff()
 			{
 				final Logger logger = LoggerFactory.getLogger(MethodInternal.class);

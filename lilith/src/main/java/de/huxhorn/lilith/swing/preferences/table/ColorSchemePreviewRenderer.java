@@ -53,6 +53,7 @@ public abstract class ColorSchemePreviewRenderer
 
 	public abstract void updateText(JTable table, Object value, boolean selected, boolean hasFocus, int row, int column);
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
 		ColorScheme scheme = resolveColorScheme(table, value, isSelected, hasFocus, row, column);

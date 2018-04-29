@@ -37,6 +37,7 @@ class FocusMDCMenu
 		setToolTipText("Mapped Diagnostic Context");
 	}
 
+	@Override
 	protected BasicFilterAction createAction(String key, String value)
 	{
 		return new FocusMDCAction(key, value);

@@ -50,11 +50,13 @@ public class WrappingClassicEncoder
 	private final Codec<EventWrapper<de.huxhorn.lilith.data.logging.LoggingEvent>> codec = new LoggingEventWrapperProtobufCodec(true);
 	private final AtomicLong localId = new AtomicLong(0);
 
+	@Override
 	public void reset()
 	{
 		localId.set(0);
 	}
 
+	@Override
 	public byte[] encode(ILoggingEvent event)
 	{
 		de.huxhorn.lilith.data.logging.LoggingEvent lilithEvent = converter.convert(event);

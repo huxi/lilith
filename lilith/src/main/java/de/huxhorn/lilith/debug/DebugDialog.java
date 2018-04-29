@@ -205,6 +205,7 @@ public class DebugDialog
 			super("Done");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			setVisible(false);
@@ -222,6 +223,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events, some containing MDC, some containing Markers and some containing both.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logStuff();
@@ -242,6 +244,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events via java.util.logging.Logger.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logJul();
@@ -259,6 +262,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events with arrays, Collections and Maps as parameters.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logContainers();
@@ -276,6 +280,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Logs some ASCII-Art. This can be used to see if details view is handling preformatted text correctly. May be NSFW depending on the closed-mindedness of your working environment...");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logASCII();
@@ -293,6 +298,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing exceptions.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logException();
@@ -312,6 +318,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing exceptions. Exceptions are given as a parameter which is not supported by Logback. The exceptions will only show up in the MultiplexAppenders.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logParamException();
@@ -330,6 +337,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing Discordian Truth.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logTruth();
@@ -347,6 +355,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events inside anonymous inner classes. Used to check if STE is handled correctly.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logAnonymous();
@@ -364,6 +373,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing NDC. This is not supported by Logback. The NDC will only show up in the MultiplexAppenders.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logNDC();
@@ -381,6 +391,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates logging events containing a Date as an parameter. This will use Date.toString in case of Logback and ISO8601-format in case of MultiplexAppenders.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logDate();
@@ -398,6 +409,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Executes all of the above logging examples. May be NSFW depending on the closed-mindedness of your working environment…");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			loggerEventEmitter.logStuff();
@@ -431,6 +443,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Detects all non-local network addresses and logs them to the internal Lilith log.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			Set<InetAddress> inetAddresses = new HashSet<>();
@@ -471,6 +484,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Creates a callable that's simply counting up and adds it to the task-manager.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.getLongWorkManager()
@@ -489,6 +503,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Edit the details view Groovy file.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.getPreferencesDialog().editDetailsFormatter();
@@ -506,6 +521,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Throws an uncaught exception.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			throw new RuntimeException("Uncaught Exception!"); // NOPMD
@@ -523,6 +539,7 @@ public class DebugDialog
 			putValue(Action.SHORT_DESCRIPTION, "Using Thymeleaf instead of Groovy for DetailsView.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.setUsingThymeleaf(!mainFrame.isUsingThymeleaf());

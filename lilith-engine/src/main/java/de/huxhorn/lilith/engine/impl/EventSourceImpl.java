@@ -46,21 +46,25 @@ public class EventSourceImpl<T extends Serializable>
 		this.global = global;
 	}
 
+	@Override
 	public boolean isGlobal()
 	{
 		return global;
 	}
 
+	@Override
 	public SourceIdentifier getSourceIdentifier()
 	{
 		return sourceIdentifier;
 	}
 
+	@Override
 	public Buffer<EventWrapper<T>> getBuffer()
 	{
 		return buffer;
 	}
 
+	@Override
 	public Condition getFilter()
 	{
 		return filter;
@@ -88,6 +92,7 @@ public class EventSourceImpl<T extends Serializable>
 		return result;
 	}
 
+	@Override
 	public int compareTo(EventSource<T> o)
 	{
 		if(global)
@@ -130,6 +135,7 @@ public class EventSourceImpl<T extends Serializable>
 		}
 	}
 
+	@Override
 	public String toString()
 	{
 		return "EventSource[" +

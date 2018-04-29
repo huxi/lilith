@@ -29,6 +29,7 @@ public class LogJulRunnable
 		super(delay);
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

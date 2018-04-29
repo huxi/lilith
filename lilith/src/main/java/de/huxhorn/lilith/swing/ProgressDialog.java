@@ -61,6 +61,7 @@ public class ProgressDialog
 			super("Cancel");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			future.cancel(true);

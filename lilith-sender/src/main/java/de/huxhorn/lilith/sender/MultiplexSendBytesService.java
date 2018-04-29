@@ -80,6 +80,7 @@ public class MultiplexSendBytesService
 		this.debug = debug;
 	}
 
+	@Override
 	public void startUp()
 	{
 		if(dispatcherThread == null)
@@ -111,6 +112,7 @@ public class MultiplexSendBytesService
 		return service;
 	}
 
+	@Override
 	public void shutDown()
 	{
 		if(dispatcherThread != null)
@@ -134,6 +136,7 @@ public class MultiplexSendBytesService
 		}
 	}
 
+	@Override
 	public void sendBytes(byte[] serialized)
 	{
 		try
@@ -149,6 +152,7 @@ public class MultiplexSendBytesService
 	private class DispatcherRunnable
 		implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			for(;;)

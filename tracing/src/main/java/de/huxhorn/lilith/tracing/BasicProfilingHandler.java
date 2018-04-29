@@ -75,6 +75,7 @@ public class BasicProfilingHandler
 		this.errorThresholdInSeconds = errorThresholdInSeconds;
 	}
 
+	@Override
 	public void profile(Logger logger, String methodBaseName, String fullMethodSignature, long nanoSeconds)
 	{
 		if(nanoSeconds < 1000000)

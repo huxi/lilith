@@ -62,6 +62,7 @@ public class MDCContainsCondition
 		return (MDCContainsCondition) super.clone();
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;

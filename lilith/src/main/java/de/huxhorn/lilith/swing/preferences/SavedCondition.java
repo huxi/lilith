@@ -121,6 +121,7 @@ public class SavedCondition
 		return "SavedCondition[name=" + name + ", condition=" + condition + ", colorScheme=" + colorScheme + ", active=" + active + "]";
 	}
 
+	@Override
 	public SavedCondition clone()
 		throws CloneNotSupportedException
 	{

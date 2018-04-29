@@ -339,6 +339,7 @@ public class ExtendedStackTraceElement
 				className, methodName, fileName, lineNumber);
 	}
 
+	@Override
 	public ExtendedStackTraceElement clone()
 		throws CloneNotSupportedException
 	{
@@ -397,6 +398,7 @@ public class ExtendedStackTraceElement
 	 *
 	 * @return String representation of this instance, but without extended info.
 	 */
+	@Override
 	public String toString()
 	{
 		return toString(false);

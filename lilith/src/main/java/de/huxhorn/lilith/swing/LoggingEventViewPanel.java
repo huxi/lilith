@@ -34,16 +34,19 @@ public class LoggingEventViewPanel
 		super(mainFrame, eventSource);
 	}
 
+	@Override
 	protected EventWrapperTableModel<LoggingEvent> createTableModel(Buffer<EventWrapper<LoggingEvent>> buffer)
 	{
 		return new EventWrapperTableModel<>(buffer);
 	}
 
+	@Override
 	protected EventWrapperViewTable<LoggingEvent> createTable(EventWrapperTableModel<LoggingEvent> tableModel)
 	{
 		return new LoggingEventViewTable(getMainFrame(), tableModel, getEventSource().isGlobal());
 	}
 
+	@Override
 	protected void closeConnection(SourceIdentifier sourceIdentifier)
 	{
 		getMainFrame().closeLoggingConnection(sourceIdentifier);

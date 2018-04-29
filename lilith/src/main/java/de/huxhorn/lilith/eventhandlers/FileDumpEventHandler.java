@@ -43,6 +43,7 @@ public class FileDumpEventHandler<T extends Serializable>
 		enabled = true;
 	}
 
+	@Override
 	public void handle(List<EventWrapper<T>> events)
 	{
 		if(!enabled)

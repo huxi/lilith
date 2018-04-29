@@ -207,6 +207,7 @@ public class LogbackLoggingConverter
 		return newMarker;
 	}
 
+	@Override
 	public LoggingEvent convert(Object o)
 	{
 		if(o == null)
@@ -285,6 +286,7 @@ public class LogbackLoggingConverter
 		return result;
 	}
 
+	@Override
 	public Class getSourceClass()
 	{
 		return ch.qos.logback.classic.spi.ILoggingEvent.class;

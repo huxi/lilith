@@ -60,6 +60,7 @@ class LoggingEventWrapperProtobufDecoder
 		return compressing;
 	}
 
+	@Override
 	public EventWrapper<LoggingEvent> decode(byte[] bytes)
 	{
 		if(bytes == null)

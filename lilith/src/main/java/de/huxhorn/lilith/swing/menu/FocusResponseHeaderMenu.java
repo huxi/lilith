@@ -35,6 +35,7 @@ class FocusResponseHeaderMenu
 		super("Response Header");
 	}
 
+	@Override
 	protected BasicFilterAction createAction(String key, String value)
 	{
 		return new FocusHttpResponseHeaderAction(key, value);

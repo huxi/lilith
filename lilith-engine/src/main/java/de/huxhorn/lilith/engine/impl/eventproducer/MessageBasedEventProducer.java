@@ -53,6 +53,7 @@ public class MessageBasedEventProducer<T extends Serializable>
 		this.requiresHeartbeat = requiresHeartbeat;
 	}
 
+	@Override
 	public void start()
 	{
 		updateHeartbeatTimestamp();
@@ -79,6 +80,7 @@ public class MessageBasedEventProducer<T extends Serializable>
 		return System.currentTimeMillis() - heartbeatTimestamp.get();
 	}
 
+	@Override
 	public void close()
 	{
 		if(logger.isInfoEnabled()) logger.info("Closing {} for source {}.", this.getClass().getName(), getSourceIdentifier());
@@ -98,6 +100,7 @@ public class MessageBasedEventProducer<T extends Serializable>
 	private class HeartbeatObserverRunnable
 		implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			for(;;)
@@ -133,6 +136,7 @@ public class MessageBasedEventProducer<T extends Serializable>
 			this.sourceIdentifier = sourceIdentifier;
 		}
 
+		@Override
 		public void run()
 		{
 			MDC.put(SOURCE_IDENTIFIER_MDC_KEY, sourceIdentifier.toString());

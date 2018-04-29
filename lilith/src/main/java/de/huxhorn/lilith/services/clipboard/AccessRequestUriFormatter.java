@@ -34,11 +34,13 @@ public class AccessRequestUriFormatter
 		super(LilithActionId.COPY_REQUEST_URI);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveAccessEvent(object).map(it -> !isNullOrEmpty(it.getRequestURI())).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveAccessEvent(object).map(it -> toStringOrNull(it.getRequestURI())).orElse(null);

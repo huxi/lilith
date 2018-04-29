@@ -36,6 +36,7 @@ public abstract class AbstractStringStringArrayMapContainsCondition
 		super(key, value);
 	}
 
+	@Override
 	protected abstract Map<String, String[]> resolveMap(Object element);
 
 	/**
@@ -44,6 +45,7 @@ public abstract class AbstractStringStringArrayMapContainsCondition
 	 * @param mapValue the value to compare against value.
 	 * @return true, if this condition matches.
 	 */
+	@Override
 	protected boolean isTrueForValue(String[] mapValue)
 	{
 		if(mapValue == null)
@@ -66,5 +68,6 @@ public abstract class AbstractStringStringArrayMapContainsCondition
 		return (AbstractStringStringArrayMapContainsCondition) super.clone();
 	}
 
+	@Override
 	public abstract String getDescription();
 }

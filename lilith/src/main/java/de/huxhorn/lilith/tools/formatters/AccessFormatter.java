@@ -60,6 +60,7 @@ public class AccessFormatter
 		this.pattern = pattern;
 	}
 
+	@Override
 	public String format(EventWrapper<AccessEvent> wrapper)
 	{
 		initLayout();
@@ -163,16 +164,19 @@ public class AccessFormatter
 		private static final String[] NA_STRING_ARRAY = new String[0];
 		private static final String EMPTY = "";
 
+		@Override
 		public HttpServletRequest getRequest()
 		{
 			return null;
 		}
 
+		@Override
 		public HttpServletResponse getResponse()
 		{
 			return null;
 		}
 
+		@Override
 		public long getTimeStamp()
 		{
 			return timeStamp;
@@ -183,6 +187,7 @@ public class AccessFormatter
 			this.elapsedTime = elapsedTime;
 		}
 
+		@Override
 		public long getElapsedTime()
 		{
 			return elapsedTime;
@@ -204,6 +209,7 @@ public class AccessFormatter
 			this.requestURI = requestURI;
 		}
 
+		@Override
 		public String getRequestURI()
 		{
 			if(requestURI == null)
@@ -218,6 +224,7 @@ public class AccessFormatter
 			this.requestURL = requestURL;
 		}
 
+		@Override
 		public String getRequestURL()
 		{
 			if(requestURL == null)
@@ -232,6 +239,7 @@ public class AccessFormatter
 			this.remoteHost = remoteHost;
 		}
 
+		@Override
 		public String getRemoteHost()
 		{
 			if(remoteHost == null)
@@ -246,6 +254,7 @@ public class AccessFormatter
 			this.remoteUser = remoteUser;
 		}
 
+		@Override
 		public String getRemoteUser()
 		{
 			if(remoteUser == null)
@@ -260,6 +269,7 @@ public class AccessFormatter
 			this.protocol = protocol;
 		}
 
+		@Override
 		public String getProtocol()
 		{
 			if(protocol == null)
@@ -274,6 +284,7 @@ public class AccessFormatter
 			this.method = method;
 		}
 
+		@Override
 		public String getMethod()
 		{
 			if(method == null)
@@ -288,6 +299,7 @@ public class AccessFormatter
 			this.serverName = serverName;
 		}
 
+		@Override
 		public String getServerName()
 		{
 			if(serverName == null)
@@ -322,6 +334,7 @@ public class AccessFormatter
 			this.remoteAddr = remoteAddr;
 		}
 
+		@Override
 		public String getRemoteAddr()
 		{
 			if(remoteAddr == null)
@@ -336,6 +349,7 @@ public class AccessFormatter
 			this.requestHeaderMap = requestHeaderMap;
 		}
 
+		@Override
 		public String getRequestHeader(String key)
 		{
 			String result = null;
@@ -352,6 +366,7 @@ public class AccessFormatter
 			return NA;
 		}
 
+		@Override
 		public Enumeration<String> getRequestHeaderNames()
 		{
 			if(requestHeaderMap == null)
@@ -362,6 +377,7 @@ public class AccessFormatter
 			return list.elements();
 		}
 
+		@Override
 		public Map<String, String> getRequestHeaderMap()
 		{
 			if(requestHeaderMap == null)
@@ -376,6 +392,7 @@ public class AccessFormatter
 			this.requestParameterMap = requestParameterMap;
 		}
 
+		@Override
 		public Map<String, String[]> getRequestParameterMap()
 		{
 			if(requestParameterMap == null)
@@ -385,11 +402,13 @@ public class AccessFormatter
 			return requestParameterMap;
 		}
 
+		@Override
 		public String getAttribute(String key)
 		{
 			return NA;
 		}
 
+		@Override
 		public String[] getRequestParameter(String key)
 		{
 			if(requestParameterMap == null)
@@ -407,11 +426,13 @@ public class AccessFormatter
 			}
 		}
 
+		@Override
 		public String getCookie(String key)
 		{
 			return NA;
 		}
 
+		@Override
 		public long getContentLength()
 		{
 			return SENTINEL;
@@ -422,16 +443,19 @@ public class AccessFormatter
 			this.statusCode = statusCode;
 		}
 
+		@Override
 		public int getStatusCode()
 		{
 			return statusCode;
 		}
 
+		@Override
 		public String getRequestContent()
 		{
 			return EMPTY;
 		}
 
+		@Override
 		public String getResponseContent()
 		{
 			return EMPTY;
@@ -442,11 +466,13 @@ public class AccessFormatter
 			this.localPort = localPort;
 		}
 
+		@Override
 		public int getLocalPort()
 		{
 			return localPort;
 		}
 
+		@Override
 		public ServerAdapter getServerAdapter()
 		{
 			return null;
@@ -457,6 +483,7 @@ public class AccessFormatter
 			this.responseHeaderMap = responseHeaderMap;
 		}
 
+		@Override
 		public String getResponseHeader(String key)
 		{
 			if(responseHeaderMap == null)
@@ -466,6 +493,7 @@ public class AccessFormatter
 			return responseHeaderMap.get(key);
 		}
 
+		@Override
 		public Map<String, String> getResponseHeaderMap()
 		{
 			if(responseHeaderMap == null)
@@ -475,6 +503,7 @@ public class AccessFormatter
 			return responseHeaderMap;
 		}
 
+		@Override
 		public List<String> getResponseHeaderNameList()
 		{
 			if(responseHeaderMap == null)
@@ -484,6 +513,7 @@ public class AccessFormatter
 			return new ArrayList<>(responseHeaderMap.keySet());
 		}
 
+		@Override
 		public void prepareForDeferredProcessing()
 		{
 			// no-op

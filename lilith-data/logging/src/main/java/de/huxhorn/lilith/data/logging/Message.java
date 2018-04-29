@@ -122,6 +122,7 @@ public final class Message
 		return result;
 	}
 
+	@Override
 	public Message clone()
 		throws CloneNotSupportedException
 	{

@@ -35,6 +35,7 @@ public class AlarmSoundLoggingEventHandler
 		this.sounds = sounds;
 	}
 
+	@Override
 	public void handle(List<EventWrapper<LoggingEvent>> events)
 	{
 		if(sounds == null)

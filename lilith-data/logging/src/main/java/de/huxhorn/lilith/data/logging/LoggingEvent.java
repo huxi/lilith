@@ -199,6 +199,7 @@ public class LoggingEvent
 		this.callStack = callStack;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if (this == o) return true;
@@ -220,6 +221,7 @@ public class LoggingEvent
 				&& (throwable != null ? throwable.equals(event.throwable) : event.throwable == null);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		int result;

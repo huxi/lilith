@@ -5,6 +5,7 @@ import de.huxhorn.sulky.tasks.AbstractProgressingCallable;
 public class DebugProgressingCallable
 	extends AbstractProgressingCallable<Long>
 {
+	@Override
 	public Long call()
 		throws Exception
 	{

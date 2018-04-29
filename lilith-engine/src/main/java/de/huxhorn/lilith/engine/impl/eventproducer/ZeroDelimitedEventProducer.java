@@ -47,6 +47,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 		this.inputStream = new BufferedInputStream(inputStream);
 	}
 
+	@Override
 	public void start()
 	{
 		Thread t = new Thread(new ReceiverRunnable(), getSourceIdentifier() + "-Receiver");
@@ -54,6 +55,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 		t.start();
 	}
 
+	@Override
 	public void close()
 	{
 		if(inputStream != null)
@@ -72,6 +74,7 @@ public class ZeroDelimitedEventProducer<T extends Serializable>
 	private class ReceiverRunnable
 			implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try

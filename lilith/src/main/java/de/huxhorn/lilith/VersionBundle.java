@@ -116,6 +116,7 @@ public final class VersionBundle
 	 * @return  a negative integer, zero, or a positive integer as this object
 	 *		is less than, equal to, or greater than the specified object.
 	 */
+	@Override
 	public int compareTo(VersionBundle o)
 	{
 		if(o == null)

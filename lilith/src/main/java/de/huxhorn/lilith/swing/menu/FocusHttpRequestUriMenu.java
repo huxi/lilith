@@ -36,6 +36,7 @@ class FocusHttpRequestUriMenu
 		setViewContainer(null);
 	}
 
+	@Override
 	protected void updateState()
 	{
 		removeAll();

@@ -24,6 +24,7 @@ import java.io.FileFilter;
 public class GroovyConditionFileFilter
 	implements FileFilter
 {
+	@Override
 	public boolean accept(File file)
 	{
 		return file != null

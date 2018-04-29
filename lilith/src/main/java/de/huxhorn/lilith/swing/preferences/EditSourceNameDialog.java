@@ -116,6 +116,7 @@ public class EditSourceNameDialog
 		}
 	}
 
+	@Override
 	public void setVisible(boolean b)
 	{
 		if(b)
@@ -193,6 +194,7 @@ public class EditSourceNameDialog
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			String source = sourceIdentifier.getText();
@@ -217,6 +219,7 @@ public class EditSourceNameDialog
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled = true;
@@ -227,6 +230,7 @@ public class EditSourceNameDialog
 	private class SourceNameActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			String name = sourceName.getText();
@@ -240,6 +244,7 @@ public class EditSourceNameDialog
 	private class SourceIdentifierActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			String source = sourceIdentifier.getText();
@@ -254,16 +259,19 @@ public class EditSourceNameDialog
 	private class TextKeyListener
 		implements KeyListener
 	{
+		@Override
 		public void keyTyped(KeyEvent e)
 		{
 			updateActions();
 		}
 
+		@Override
 		public void keyPressed(KeyEvent e)
 		{
 			// no-op
 		}
 
+		@Override
 		public void keyReleased(KeyEvent e)
 		{
 			// no-op

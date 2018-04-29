@@ -66,6 +66,7 @@ public class LoggingEventReader
 		steReader = new StackTraceElementReader();
 	}
 
+	@Override
 	public LoggingEvent read(XMLStreamReader reader)
 		throws XMLStreamException
 	{

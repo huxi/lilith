@@ -122,21 +122,25 @@ public class JulImportCallableTest
 			return list;
 		}
 
+		@Override
 		public void add(EventWrapper<LoggingEvent> element)
 		{
 			list.add(element);
 		}
 
+		@Override
 		public void addAll(List<EventWrapper<LoggingEvent>> elements)
 		{
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
 		public void addAll(EventWrapper<LoggingEvent>[] elements)
 		{
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
 		public boolean isFull()
 		{
 			throw new UnsupportedOperationException();

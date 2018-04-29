@@ -44,6 +44,7 @@ import javax.xml.stream.XMLStreamReader;
 public class SourceIdentifierReader
 	implements GenericStreamReader<SourceIdentifier>, EventSourceSchemaConstants
 {
+	@Override
 	public SourceIdentifier read(XMLStreamReader reader)
 		throws XMLStreamException
 	{

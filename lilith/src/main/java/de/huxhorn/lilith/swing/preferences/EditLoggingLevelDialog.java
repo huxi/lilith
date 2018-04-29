@@ -80,6 +80,7 @@ public class EditLoggingLevelDialog
 		KeyStrokes.registerCommand(buttonPanel, cancelAction, "CANCEL_ACTION");
 	}
 
+	@Override
 	public void setVisible(boolean b)
 	{
 		if(b)
@@ -129,6 +130,7 @@ public class EditLoggingLevelDialog
 			super("Ok");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled = false;
@@ -148,6 +150,7 @@ public class EditLoggingLevelDialog
 			super("Reset");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			initUI();
@@ -166,6 +169,7 @@ public class EditLoggingLevelDialog
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled = true;

@@ -266,6 +266,7 @@ public class ConditionsPanel
 	private class ConditionTableRowSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			updateConditions();
@@ -284,6 +285,7 @@ public class ConditionsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Edit a Condition.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Edit");
@@ -309,6 +311,7 @@ public class ConditionsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Remove the selected Condition.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Remove");
@@ -350,6 +353,7 @@ public class ConditionsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition up.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("MoveUp");
@@ -380,6 +384,7 @@ public class ConditionsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Move the selected Condition down.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("MoveDown");
@@ -399,6 +404,7 @@ public class ConditionsPanel
 	private class ConditionTableMouseListener
 		extends MouseAdapter
 	{
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			if(evt.getButton() == MouseEvent.BUTTON1)

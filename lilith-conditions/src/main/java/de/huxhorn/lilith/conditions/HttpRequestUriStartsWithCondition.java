@@ -45,16 +45,19 @@ public class HttpRequestUriStartsWithCondition
 		this.searchString = searchString;
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(searchString == null)
@@ -97,12 +100,14 @@ public class HttpRequestUriStartsWithCondition
 		return searchString != null ? searchString.hashCode() : 0;
 	}
 
+	@Override
 	public HttpRequestUriStartsWithCondition clone()
 		throws CloneNotSupportedException
 	{
 		return (HttpRequestUriStartsWithCondition) super.clone();
 	}
 
+	@Override
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();

@@ -42,6 +42,7 @@ public abstract class AbstractDebugRunnable
 		}
 	}
 
+	@Override
 	public final void run()
 	{
 		try

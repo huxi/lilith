@@ -113,6 +113,7 @@ public class SourceListsPanel
 	private class SourceListSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			updateActions();
@@ -191,6 +192,7 @@ public class SourceListsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Add a new Source List.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Add");
@@ -211,6 +213,7 @@ public class SourceListsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Edit a Source List.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Edit");
@@ -235,6 +238,7 @@ public class SourceListsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Remove the selected Source List.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Remove");
@@ -253,6 +257,7 @@ public class SourceListsPanel
 	{
 		private final Logger logger = LoggerFactory.getLogger(SourceListMouseListener.class);
 
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			if(evt.getClickCount() >= 2 && evt.getButton() == MouseEvent.BUTTON1)
@@ -278,6 +283,7 @@ public class SourceListsPanel
 	private class SourceListListSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			updateListContents();

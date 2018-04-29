@@ -46,6 +46,7 @@ public abstract class AbstractEventProducer<T extends Serializable>
 		localIdCounter = 0;
 	}
 
+	@Override
 	public SourceIdentifier getSourceIdentifier()
 	{
 		try
@@ -59,6 +60,7 @@ public abstract class AbstractEventProducer<T extends Serializable>
 		}
 	}
 
+	@Override
 	public AppendOperation<EventWrapper<T>> getEventQueue()
 	{
 		return eventQueue;

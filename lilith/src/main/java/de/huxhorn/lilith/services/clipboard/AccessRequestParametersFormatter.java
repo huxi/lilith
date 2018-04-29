@@ -34,11 +34,13 @@ public class AccessRequestParametersFormatter
 		super(LilithActionId.COPY_REQUEST_PARAMETERS);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveAccessEvent(object).map(it -> !isNullOrEmpty(it.getRequestParameters())).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveAccessEvent(object).map(it -> toStringOrNull(it.getRequestParameters())).orElse(null);

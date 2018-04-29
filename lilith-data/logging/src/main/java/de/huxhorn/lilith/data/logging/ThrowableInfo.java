@@ -117,6 +117,7 @@ public class ThrowableInfo
 		this.omittedElements = omittedElements;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -198,6 +199,7 @@ public class ThrowableInfo
 		return true;
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return recursiveHashCode(this, new IdentityHashMap<>());

@@ -78,6 +78,7 @@ public final class TaskTableModel<T>
 		this.taskManager.addTaskListener(taskListener);
 	}
 
+	@Override
 	public Class<?> getColumnClass(int columnIndex)
 	{
 		if(columnIndex >= 0 && columnIndex < COLUMN_CLASSES.length)
@@ -87,11 +88,13 @@ public final class TaskTableModel<T>
 		return null;
 	}
 
+	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
 		return false;
 	}
 
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex)
 	{
 		Task<T> task = getValueAt(rowIndex);
@@ -112,11 +115,13 @@ public final class TaskTableModel<T>
 		}
 	}
 
+	@Override
 	public void setValueAt(Object o, int rowIndex, int columnIndex)
 	{
 		// read-only
 	}
 
+	@Override
 	public void addTableModelListener(TableModelListener l)
 	{
 		synchronized(eventListenerList)
@@ -125,6 +130,7 @@ public final class TaskTableModel<T>
 		}
 	}
 
+	@Override
 	public void removeTableModelListener(TableModelListener l)
 	{
 		synchronized(eventListenerList)
@@ -133,16 +139,19 @@ public final class TaskTableModel<T>
 		}
 	}
 
+	@Override
 	public int getRowCount()
 	{
 		return tasks.size();
 	}
 
+	@Override
 	public int getColumnCount()
 	{
 		return COLUMN_CLASSES.length;
 	}
 
+	@Override
 	public String getColumnName(int columnIndex)
 	{
 		if(columnIndex >= 0 && columnIndex < COLUMN_NAMES.length)
@@ -152,6 +161,7 @@ public final class TaskTableModel<T>
 		return null;
 	}
 
+	@Override
 	public Task<T> getValueAt(int row)
 	{
 		logger.debug("getValueAt {}", row);
@@ -263,6 +273,7 @@ public final class TaskTableModel<T>
 	private class UpdateViewTaskListener
 		implements TaskListener<T>
 	{
+		@Override
 		public void taskCreated(Task<T> task)
 		{
 			if(!paused)
@@ -271,6 +282,7 @@ public final class TaskTableModel<T>
 			}
 		}
 
+		@Override
 		public void executionFailed(Task<T> task, ExecutionException exception)
 		{
 			if(!paused)
@@ -279,6 +291,7 @@ public final class TaskTableModel<T>
 			}
 		}
 
+		@Override
 		public void executionFinished(Task<T> task, T result)
 		{
 			if(!paused)
@@ -287,6 +300,7 @@ public final class TaskTableModel<T>
 			}
 		}
 
+		@Override
 		public void executionCanceled(Task<T> task)
 		{
 			if(!paused)
@@ -295,6 +309,7 @@ public final class TaskTableModel<T>
 			}
 		}
 
+		@Override
 		public void progressUpdated(Task<T> task, int progress)
 		{
 			if(!paused)

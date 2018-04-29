@@ -54,6 +54,7 @@ public final class ConditionalBorder
 	 * @param width  the width of the painted border
 	 * @param height the height of the painted border
 	 */
+	@Override
 	public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
 	{
 		if(borderColor != null && thickness > 0)
@@ -76,6 +77,7 @@ public final class ConditionalBorder
 	 *
 	 * @param c the component for which this border insets value applies
 	 */
+	@Override
 	public Insets getBorderInsets(Component c)
 	{
 		int actualThickness = thickness + innerThickness;
@@ -88,6 +90,7 @@ public final class ConditionalBorder
 	 * @param c      the component for which this border insets value applies
 	 * @param insets the object to be reinitialized
 	 */
+	@Override
 	public Insets getBorderInsets(Component c, Insets insets)
 	{
 		int actualThickness = thickness + innerThickness;
@@ -172,6 +175,7 @@ public final class ConditionalBorder
 	/**
 	 * Returns whether or not the border is opaque.
 	 */
+	@Override
 	public boolean isBorderOpaque()
 	{
 		return innerThickness == 0 && thickness > 0 && borderColor != null;

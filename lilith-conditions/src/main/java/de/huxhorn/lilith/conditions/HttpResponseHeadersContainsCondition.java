@@ -62,6 +62,7 @@ public class HttpResponseHeadersContainsCondition
 		return (HttpResponseHeadersContainsCondition) super.clone();
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;

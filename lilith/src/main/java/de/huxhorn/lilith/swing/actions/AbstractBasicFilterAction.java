@@ -57,6 +57,7 @@ public abstract class AbstractBasicFilterAction
 		setEnabled(viewContainer != null);
 	}
 
+	@Override
 	public abstract Condition resolveCondition(ActionEvent e);
 
 	@Override

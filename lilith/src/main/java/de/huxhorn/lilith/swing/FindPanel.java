@@ -370,6 +370,7 @@ public class FindPanel<T extends Serializable>
 		findTypeCombo.setSelectedItem(applicationPreferences.getDefaultConditionName());
 	}
 
+	@Override
 	public void setVisible(boolean visible)
 	{
 		super.setVisible(visible);
@@ -454,6 +455,7 @@ public class FindPanel<T extends Serializable>
 			return null;
 		}
 
+		@Override
 		public Component getComponentAfter(Container aContainer, Component aComponent)
 		{
 			if(aComponent.equals(closeFindButton))
@@ -495,6 +497,7 @@ public class FindPanel<T extends Serializable>
 			return null;
 		}
 
+		@Override
 		public Component getComponentBefore(Container aContainer, Component aComponent)
 		{
 			if(aComponent.equals(closeFindButton))
@@ -536,16 +539,19 @@ public class FindPanel<T extends Serializable>
 			return null;
 		}
 
+		@Override
 		public Component getFirstComponent(Container aContainer)
 		{
 			return closeFindButton;
 		}
 
+		@Override
 		public Component getLastComponent(Container aContainer)
 		{
 			return findTextCombo;
 		}
 
+		@Override
 		public Component getDefaultComponent(Container aContainer)
 		{
 			return findTextCombo;
@@ -556,6 +562,7 @@ public class FindPanel<T extends Serializable>
 		implements ActionListener, DocumentListener
 	{
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			updateCondition();
@@ -577,16 +584,19 @@ public class FindPanel<T extends Serializable>
 			eventWrapperViewPanel.createFilteredView();
 		}
 
+		@Override
 		public void insertUpdate(DocumentEvent e)
 		{
 			updateCondition();
 		}
 
+		@Override
 		public void removeUpdate(DocumentEvent e)
 		{
 			updateCondition();
 		}
 
+		@Override
 		public void changedUpdate(DocumentEvent e)
 		{
 			updateCondition();
@@ -607,6 +617,7 @@ public class FindPanel<T extends Serializable>
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			ViewContainer container = eventWrapperViewPanel.resolveContainer();
@@ -629,6 +640,7 @@ public class FindPanel<T extends Serializable>
 			super(LilithActionId.REPLACE_FILTER);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Replace filter.");
@@ -650,6 +662,7 @@ public class FindPanel<T extends Serializable>
 	private class FindTypeSelectionActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			updateFindCombo();

@@ -337,6 +337,7 @@ public class PreferencesDialog
 		initUI();
 	}
 
+	@Override
 	public void setVisible(boolean visible)
 	{
 		if(visible != isVisible())
@@ -434,6 +435,7 @@ public class PreferencesDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			saveSettings();
@@ -452,6 +454,7 @@ public class PreferencesDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_A);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			saveSettings();
@@ -469,6 +472,7 @@ public class PreferencesDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			resetSettings();
@@ -488,6 +492,7 @@ public class PreferencesDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			setVisible(false);

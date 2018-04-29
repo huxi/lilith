@@ -40,6 +40,7 @@ public class LogASCIIRunnable
 		super(delay);
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

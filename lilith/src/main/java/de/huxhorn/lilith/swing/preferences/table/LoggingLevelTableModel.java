@@ -46,6 +46,7 @@ public class LoggingLevelTableModel
 		return data;
 	}
 
+	@Override
 	public int getRowCount()
 	{
 		if(data == null)
@@ -55,11 +56,13 @@ public class LoggingLevelTableModel
 		return data.size();
 	}
 
+	@Override
 	public int getColumnCount()
 	{
 		return 1;
 	}
 
+	@Override
 	public String getColumnName(int columnIndex)
 	{
 		if(LEVEL_COLUMN == columnIndex)
@@ -69,6 +72,7 @@ public class LoggingLevelTableModel
 		return null;
 	}
 
+	@Override
 	public Class<?> getColumnClass(int columnIndex)
 	{
 		if(LEVEL_COLUMN == columnIndex)
@@ -78,11 +82,13 @@ public class LoggingLevelTableModel
 		return null;
 	}
 
+	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex)
 	{
 		return false;
 	}
 
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex)
 	{
 		if(data == null || columnIndex > 0 || rowIndex < 0 || rowIndex >= data.size())
@@ -97,11 +103,13 @@ public class LoggingLevelTableModel
 		return null;
 	}
 
+	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 	{
 		// read-only
 	}
 
+	@Override
 	public void addTableModelListener(TableModelListener l)
 	{
 		synchronized(eventListenerList)
@@ -110,6 +118,7 @@ public class LoggingLevelTableModel
 		}
 	}
 
+	@Override
 	public void removeTableModelListener(TableModelListener l)
 	{
 		synchronized(eventListenerList)

@@ -64,6 +64,7 @@ public class ViewContainerInternalFrame
 		if(logger.isDebugEnabled()) logger.debug("Glasspane\nprev: {}\n new: {}", prev, glassPane);
 	}
 
+	@Override
 	public void setShowingStatusBar(boolean showingStatusBar)
 	{
 		if(viewContainer != null)
@@ -72,16 +73,19 @@ public class ViewContainerInternalFrame
 		}
 	}
 
+	@Override
 	public ViewActions getViewActions()
 	{
 		return mainFrame.getViewActions();
 	}
 
+	@Override
 	public ViewContainer getViewContainer()
 	{
 		return viewContainer;
 	}
 
+	@Override
 	public void focusWindow()
 	{
 		// move mainframe to front.
@@ -177,6 +181,7 @@ public class ViewContainerInternalFrame
 	}
 
 
+	@Override
 	public void minimizeWindow()
 	{
 		try
@@ -189,6 +194,7 @@ public class ViewContainerInternalFrame
 		}
 	}
 
+	@Override
 	public void closeWindow()
 	{
 		if(logger.isDebugEnabled()) logger.debug("Closing InternalFrame...");
@@ -238,11 +244,13 @@ public class ViewContainerInternalFrame
 	private class CleanupWindowChangeListener
 		implements InternalFrameListener
 	{
+		@Override
 		public void internalFrameClosing(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameClosing: {}", e.getInternalFrame());
 		}
 
+		@Override
 		public void internalFrameClosed(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameClosed: {}", e.getInternalFrame());
@@ -252,21 +260,25 @@ public class ViewContainerInternalFrame
 			mainFrame.updateWindowMenus();
 		}
 
+		@Override
 		public void internalFrameOpened(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameOpened: {}", e.getInternalFrame());
 		}
 
+		@Override
 		public void internalFrameIconified(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameIconified: {}", e.getInternalFrame());
 		}
 
+		@Override
 		public void internalFrameDeiconified(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameDeiconified: {}", e.getInternalFrame());
 		}
 
+		@Override
 		public void internalFrameActivated(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameActivated: {}", e.getInternalFrame());
@@ -274,6 +286,7 @@ public class ViewContainerInternalFrame
 			mainFrame.getViewActions().setViewContainer(viewContainer);
 		}
 
+		@Override
 		public void internalFrameDeactivated(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameDeactivated: {}", e.getInternalFrame());

@@ -98,21 +98,25 @@ public class LabelCellRenderer
 	}
 
 	// The following methods override the defaults for performance reasons
+	@Override
 	public void validate()
 	{
 		// performance
 	}
 
+	@Override
 	public void revalidate()
 	{
 		// performance
 	}
 
+	@Override
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue)
 	{
 		// performance
 	}
 
+	@Override
 	public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue)
 	{
 		// performance

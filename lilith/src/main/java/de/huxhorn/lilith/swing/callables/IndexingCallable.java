@@ -72,6 +72,7 @@ public class IndexingCallable
 	 * @return computed result
 	 * @throws Exception if unable to compute a result
 	 */
+	@Override
 	public Long call()
 		throws Exception
 	{

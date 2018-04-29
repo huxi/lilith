@@ -67,6 +67,7 @@ public class SerializableEventProducer<T extends Serializable>
 		this.dataInput = new WhitelistObjectInputStream(new BufferedInputStream(Objects.requireNonNull(inputStream, "inputStream must not be null!")), SerializableWhitelist.WHITELIST, false /*, true*/);
 	}
 
+	@Override
 	public void start()
 	{
 		Thread t = new Thread(new ReceiverRunnable(), getSourceIdentifier() + "-Receiver");
@@ -95,6 +96,7 @@ public class SerializableEventProducer<T extends Serializable>
 	private class ReceiverRunnable
 		implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			for(;;)
@@ -136,6 +138,7 @@ public class SerializableEventProducer<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void close()
 	{
 		if(dataInput != null)

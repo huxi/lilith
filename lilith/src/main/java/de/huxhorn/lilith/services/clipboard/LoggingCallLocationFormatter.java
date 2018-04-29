@@ -33,11 +33,13 @@ public class LoggingCallLocationFormatter
 		super(LilithActionId.COPY_CALL_LOCATION);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveCallStack(object).map(it -> it[0] != null).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveCallStack(object).map(LoggingCallLocationFormatter::toStringOrNull).orElse(null);

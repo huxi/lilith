@@ -45,6 +45,7 @@ import java.util.Map;
 public class LilithPreferencesStreamingEncoder
 	implements StreamingEncoder<LilithPreferences>
 {
+	@Override
 	public void encode(LilithPreferences obj, OutputStream into) throws IOException
 	{
 		PrefsProto.LilithPreferences converted = convert(obj);

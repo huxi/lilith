@@ -152,6 +152,7 @@ public class SourcesPanel
 	private class SourceNameTableRowSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			updateSourceNames();
@@ -170,6 +171,7 @@ public class SourcesPanel
 			putValue(Action.SHORT_DESCRIPTION, "Add a new Source Name.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Add");
@@ -189,6 +191,7 @@ public class SourcesPanel
 			putValue(Action.SHORT_DESCRIPTION, "Edit a Source Name.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Edit");
@@ -215,6 +218,7 @@ public class SourcesPanel
 			putValue(Action.SHORT_DESCRIPTION, "Remove the selected Source Name.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Remove");
@@ -233,6 +237,7 @@ public class SourcesPanel
 	{
 		private final Logger logger = LoggerFactory.getLogger(SourceNameTableMouseListener.class);
 
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			if(evt.getClickCount() >= 2 && evt.getButton() == MouseEvent.BUTTON1)

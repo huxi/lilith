@@ -37,6 +37,7 @@ class FocusNDCMenu
 		viewContainerUpdated();
 	}
 
+	@Override
 	protected void updateState()
 	{
 		removeAll();

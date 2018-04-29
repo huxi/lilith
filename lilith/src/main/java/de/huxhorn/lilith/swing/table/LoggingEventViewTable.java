@@ -72,6 +72,7 @@ public class LoggingEventViewTable
 		super(mainFrame, model, global);
 	}
 
+	@Override
 	protected void initTooltipGenerators()
 	{
 		tooltipGenerators = new HashMap<>();
@@ -97,6 +98,7 @@ public class LoggingEventViewTable
 			new SourceTooltipGenerator());
 	}
 
+	@Override
 	protected void initTableColumns()
 	{
 		tableColumns = new HashMap<>();
@@ -174,6 +176,7 @@ public class LoggingEventViewTable
 		}
 	}
 
+	@Override
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> getDefaultLayout()
 	{
 		ArrayList<PersistentTableColumnModel.TableColumnLayoutInfo> result =
@@ -195,12 +198,14 @@ public class LoggingEventViewTable
 		return result;
 	}
 
+	@Override
 	public void saveLayout()
 	{
 		List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfoList = tableColumnModel.getColumnLayoutInfos();
 		mainFrame.getApplicationPreferences().writeLoggingColumnLayout(isGlobal(), layoutInfoList);
 	}
 
+	@Override
 	protected List<PersistentTableColumnModel.TableColumnLayoutInfo> loadLayout()
 	{
 		return mainFrame.getApplicationPreferences().readLoggingColumnLayout(isGlobal());

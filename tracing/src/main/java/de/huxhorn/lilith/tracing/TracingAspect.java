@@ -141,6 +141,7 @@ public class TracingAspect
 		}
 	}
 
+	@Override
 	public String toString()
 	{
 		return "TracingAspect{loggerName="+loggerName+", showingParameterValues="+ showingParameterValues +", usingShortClassName="+ usingShortClassName +", showingModifiers="+showingModifiers+", profilingHandler="+profilingHandler+"}";

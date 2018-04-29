@@ -51,12 +51,14 @@ public class LoggingEventIOTest
 		// do nothing
 	}
 
+	@Override
 	public byte[] write(LoggingEvent event, boolean compressing)
 	{
 		LoggingEventProtobufCodec ser = new LoggingEventProtobufCodec(compressing);
 		return ser.encode(event);
 	}
 
+	@Override
 	public LoggingEvent read(byte[] bytes, boolean compressing)
 	{
 		LoggingEventProtobufCodec des = new LoggingEventProtobufCodec(compressing);

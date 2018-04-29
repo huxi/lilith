@@ -108,6 +108,7 @@ public class GenericSortedListModel<T extends Comparable<? super T>>
 	 *
 	 * @return the length of the list
 	 */
+	@Override
 	public int getSize()
 	{
 		return data.size();
@@ -119,6 +120,7 @@ public class GenericSortedListModel<T extends Comparable<? super T>>
 	 * @param index the requested index
 	 * @return the value at <code>index</code>
 	 */
+	@Override
 	public T getElementAt(int index)
 	{
 		return data.get(index);

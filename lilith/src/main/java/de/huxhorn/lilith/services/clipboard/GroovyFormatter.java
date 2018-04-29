@@ -48,6 +48,7 @@ public final class GroovyFormatter
 		return groovyInstance.getInstanceAs(ClipboardFormatter.class);
 	}
 
+	@Override
 	public String getName()
 	{
 		ClipboardFormatter formatter = getFormatter();
@@ -64,6 +65,7 @@ public final class GroovyFormatter
 		return "Missing file!";
 	}
 
+	@Override
 	public String getDescription()
 	{
 		ClipboardFormatter formatter = getFormatter();
@@ -88,18 +90,21 @@ public final class GroovyFormatter
 		return shortName + " - " + groovyInstance.getErrorMessage();
 	}
 
+	@Override
 	public String getAccelerator()
 	{
 		ClipboardFormatter formatter = getFormatter();
 		return formatter == null ? null : formatter.getAccelerator();
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		ClipboardFormatter formatter = getFormatter();
 		return formatter != null && formatter.isCompatible(object);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		ClipboardFormatter formatter = getFormatter();

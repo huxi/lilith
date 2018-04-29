@@ -342,6 +342,7 @@ public final class MessageFormatterUseCases
 			return section;
 		}
 
+		@Override
 		public boolean equals(Object o)
 		{
 			if (this == o) return true;
@@ -356,6 +357,7 @@ public final class MessageFormatterUseCases
 					&& (throwable != null ? throwable.equals(useCase.throwable) : useCase.throwable == null);
 		}
 
+		@Override
 		public int hashCode()
 		{
 			int result;

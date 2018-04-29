@@ -203,6 +203,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 	}
 
+	@Override
 	protected boolean processKeyBinding(KeyStroke ks, KeyEvent e, int condition, boolean pressed)
 	{
 		if(logger.isDebugEnabled()) logger.debug("Processing KeyBinding:\n\tKeyStroke: {}\n\nEvent    : {}\n\tcondition: {}\n\tpressed  : {}", ks, e, condition, pressed);
@@ -224,6 +225,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		return super.processKeyBinding(ks, e, condition, pressed);
 	}
 
+	@Override
 	public String getToolTipText(MouseEvent event)
 	{
 		if(tooltipGenerators == null)
@@ -336,6 +338,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		fireViewContainerChange();
 	}
 
+	@Override
 	public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
 	{
 		if(logger.isDebugEnabled())
@@ -351,6 +354,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		super.changeSelection(rowIndex, columnIndex, toggle, extend);
 	}
 
+	@Override
 	public Colors resolveColors(Object object, int row, int column)
 	{
 		if(object instanceof EventWrapper)
@@ -428,6 +432,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private class ScrollToEventListener
 		implements TableModelListener
 	{
+		@Override
 		public void tableChanged(TableModelEvent e)
 		{
 			if(scrollingToBottom)
@@ -445,11 +450,13 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		implements FocusListener
 	{
 
+		@Override
 		public void focusGained(FocusEvent e)
 		{
 			repaint();
 		}
 
+		@Override
 		public void focusLost(FocusEvent e)
 		{
 			repaint();
@@ -459,6 +466,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 	private class PopupListener
 		extends MouseAdapter
 	{
+		@Override
 		public void mouseClicked(MouseEvent e)
 		{
 			if(e.isPopupTrigger())
@@ -467,6 +475,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void mousePressed(MouseEvent e)
 		{
 			if(e.isPopupTrigger())
@@ -475,6 +484,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent e)
 		{
 			if(e.isPopupTrigger())
@@ -503,6 +513,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			super("Save layout");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Save layout");
@@ -521,6 +532,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			super("Reset layout");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Reset layout");
@@ -567,6 +579,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 			//putValue(EventWrapperViewTable.SELECTED_KEY, visible);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			visible = !visible;
@@ -589,6 +602,7 @@ public abstract class EventWrapperViewTable<T extends Serializable>
 		}
 	}
 
+	@Override
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
 	{
 		if(orientation != SwingConstants.HORIZONTAL || !scrollingSmoothly)

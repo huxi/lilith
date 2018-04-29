@@ -67,6 +67,7 @@ public class StackTraceElementWriter
 		this.preferredPrefix = prefix;
 	}
 
+	@Override
 	public void write(XMLStreamWriter writer, ExtendedStackTraceElement elem, boolean isRoot)
 		throws XMLStreamException
 	{

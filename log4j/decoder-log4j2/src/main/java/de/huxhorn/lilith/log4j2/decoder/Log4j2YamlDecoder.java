@@ -36,6 +36,7 @@ package de.huxhorn.lilith.log4j2.decoder;
 
 import org.apache.logging.log4j.core.parser.YamlLogEventParser;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Log4j2YamlDecoder
 	extends Log4j2DecoderBase
 {

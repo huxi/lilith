@@ -25,6 +25,7 @@ import javax.swing.JTable;
 public class ElapsedTimeTooltipGenerator
 	implements TooltipGenerator
 {
+	@Override
 	public String createTooltipText(JTable table, int row)
 	{
 		Object value = table.getValueAt(row, 0);

@@ -67,11 +67,13 @@ public final class HttpStatusCodeCondition
 		}
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;
@@ -82,6 +84,7 @@ public final class HttpStatusCodeCondition
 		return statusCode;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(statusCode == INVALID_CODE)
@@ -102,6 +105,7 @@ public final class HttpStatusCodeCondition
 		return false;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -112,11 +116,13 @@ public final class HttpStatusCodeCondition
 		return statusCode == that.statusCode;
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return statusCode;
 	}
 
+	@Override
 	public HttpStatusCodeCondition clone()
 		throws CloneNotSupportedException
 	{

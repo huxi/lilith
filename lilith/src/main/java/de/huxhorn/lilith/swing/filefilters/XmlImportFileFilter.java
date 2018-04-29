@@ -25,6 +25,7 @@ public class XmlImportFileFilter
 	extends FileFilter
 {
 
+	@Override
 	public boolean accept(File file)
 	{
 		if(file.isDirectory())
@@ -43,6 +44,7 @@ public class XmlImportFileFilter
 		return false;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return "XML files";

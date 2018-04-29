@@ -182,6 +182,7 @@ public class FocusMenu
 			super(LilithActionId.FOCUS);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// no-op

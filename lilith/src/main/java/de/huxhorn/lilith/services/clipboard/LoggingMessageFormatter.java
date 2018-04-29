@@ -32,11 +32,13 @@ public class LoggingMessageFormatter
 		super(LilithActionId.COPY_MESSAGE);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveFormattedMessage(object).isPresent();
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveFormattedMessage(object).map(it -> it).orElse(null);

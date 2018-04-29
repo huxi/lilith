@@ -34,6 +34,7 @@
 
 package de.huxhorn.lilith.log4j2.producer;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public interface Log4j2Ports
 {
 	int JSON = 12000;

@@ -144,6 +144,7 @@ public class SoundsPanel
 	private class MuteActionListener
 		implements ActionListener
 	{
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			boolean mute = muteCheckbox.isSelected();
@@ -154,6 +155,7 @@ public class SoundsPanel
 	private class SoundLocationTableRowSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			boolean mute = muteCheckbox.isSelected();
@@ -173,6 +175,7 @@ public class SoundsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Play the selected sound.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Play");
@@ -200,6 +203,7 @@ public class SoundsPanel
 			putValue(Action.SHORT_DESCRIPTION, "Browse for a sound file.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			soundFileChooser.setCurrentDirectory(applicationPreferences.getSoundPath());

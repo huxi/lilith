@@ -42,6 +42,7 @@ public class FocusThreadNameAction
 		setEnabled(name != null);
 	}
 
+	@Override
 	protected void updateState()
 	{
 		String resolvedName = null;

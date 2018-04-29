@@ -54,6 +54,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Log4jImportCallableTest
 {
 	private final Logger logger = LoggerFactory.getLogger(Log4jImportCallableTest.class);
@@ -136,21 +137,25 @@ public class Log4jImportCallableTest
 			return list;
 		}
 
+		@Override
 		public void add(EventWrapper<LoggingEvent> element)
 		{
 			list.add(element);
 		}
 
+		@Override
 		public void addAll(List<EventWrapper<LoggingEvent>> elements)
 		{
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
 		public void addAll(EventWrapper<LoggingEvent>[] elements)
 		{
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
 		public boolean isFull()
 		{
 			throw new UnsupportedOperationException();

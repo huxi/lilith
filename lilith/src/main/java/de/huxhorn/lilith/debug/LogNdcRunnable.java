@@ -14,6 +14,7 @@ public class LogNdcRunnable
 		super(delay);
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

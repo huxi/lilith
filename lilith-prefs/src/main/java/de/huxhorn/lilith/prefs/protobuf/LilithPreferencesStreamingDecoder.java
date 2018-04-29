@@ -46,6 +46,7 @@ import java.util.Map;
 public class LilithPreferencesStreamingDecoder
 	implements StreamingDecoder<LilithPreferences>
 {
+	@Override
 	public LilithPreferences decode(InputStream from) throws IOException
 	{
 		PrefsProto.LilithPreferences preferences=PrefsProto.LilithPreferences.parseFrom(from);

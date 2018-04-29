@@ -42,6 +42,7 @@ import org.apache.logging.log4j.core.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Log4j2DecoderBase
 		implements Decoder<LoggingEvent>
 {

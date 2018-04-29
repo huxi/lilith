@@ -88,6 +88,7 @@ class AbstractFilterMainMenu
 		accessComponents.add(component);
 	}
 
+	@Override
 	protected void viewContainerUpdated()
 	{
 		for (ViewContainerRelated current : viewContainerRelatedList)

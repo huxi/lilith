@@ -31,6 +31,7 @@ public class LoggingEventLoggerNameProcessor
 {
 	private final Set<String> loggerNames = new HashSet<>();
 
+	@Override
 	public void processElement(EventWrapper<LoggingEvent> element)
 	{
 		if(element == null)
@@ -54,6 +55,7 @@ public class LoggingEventLoggerNameProcessor
 		}
 	}
 
+	@Override
 	public void processElements(List<EventWrapper<LoggingEvent>> elements)
 	{
 		if(elements == null || elements.isEmpty())
@@ -91,6 +93,7 @@ public class LoggingEventLoggerNameProcessor
 		}
 	}
 
+	@Override
 	public void reset()
 	{
 		loggerNames.clear();

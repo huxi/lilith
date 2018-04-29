@@ -56,6 +56,7 @@ public final class GroovyCondition
 		setSearchString(searchString);
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
@@ -86,6 +87,7 @@ public final class GroovyCondition
 		return scriptFileName;
 	}
 
+	@Override
 	public boolean isTrue(Object o)
 	{
 		Object instance = groovyInstance.getInstance();
@@ -167,6 +169,7 @@ public final class GroovyCondition
 		return result.toString();
 	}
 
+	@Override
 	public GroovyCondition clone()
 		throws CloneNotSupportedException
 	{
@@ -175,6 +178,7 @@ public final class GroovyCondition
 		return result;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return scriptName;

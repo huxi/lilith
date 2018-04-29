@@ -141,12 +141,14 @@ public abstract class ViewContainer<T extends Serializable>
 		return null;
 	}
 
+	@Override
 	public void dispose()
 	{
 		taskManager.removeTaskListener(filterTaskListener);
 		cancelUpdateTask();
 	}
 
+	@Override
 	public void flush()
 	{
 		for(int i=0;i<getViewCount();i++)
@@ -295,6 +297,7 @@ public abstract class ViewContainer<T extends Serializable>
 		internalFrame.repaint(); // Apple L&F Bug workaround
 	}
 
+	@Override
 	public void addNotify()
 	{
 		super.addNotify();
@@ -401,11 +404,13 @@ public abstract class ViewContainer<T extends Serializable>
 	{
 		private final Logger logger = LoggerFactory.getLogger(FilterTaskListener.class);
 
+		@Override
 		public void taskCreated(Task<Long> longTask)
 		{
 			// no-op
 		}
 
+		@Override
 		public void executionFailed(Task<Long> task, ExecutionException exception)
 		{
 			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
@@ -420,6 +425,7 @@ public abstract class ViewContainer<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void executionFinished(Task<Long> task, Long result)
 		{
 			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
@@ -434,6 +440,7 @@ public abstract class ViewContainer<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void executionCanceled(Task<Long> task)
 		{
 			EventWrapperViewPanel<T> view = filterMapping.get(task.getCallable());
@@ -448,6 +455,7 @@ public abstract class ViewContainer<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void progressUpdated(Task<Long> task, int progress)
 		{
 			// no-op

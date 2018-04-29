@@ -36,6 +36,7 @@ package de.huxhorn.lilith.log4j2.decoder;
 
 import org.apache.logging.log4j.core.parser.JsonLogEventParser;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Log4j2JsonDecoder
 	extends Log4j2DecoderBase
 {

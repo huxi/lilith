@@ -34,11 +34,13 @@ public class LoggingMdcFormatter
 		super(LilithActionId.COPY_MDC);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveLoggingEvent(object).map(it -> !isNullOrEmpty(it.getMdc())).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveLoggingEvent(object).map(it -> toStringOrNull(it.getMdc())).orElse(null);

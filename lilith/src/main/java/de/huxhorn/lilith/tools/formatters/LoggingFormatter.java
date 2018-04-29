@@ -63,6 +63,7 @@ public class LoggingFormatter
 		this.pattern = pattern;
 	}
 
+	@Override
 	public String format(EventWrapper<LoggingEvent> wrapper)
 	{
 		initLayout();
@@ -120,6 +121,7 @@ public class LoggingFormatter
 			this.event=event;
 		}
 
+		@Override
 		public String getThreadName()
 		{
 			if(event != null)
@@ -133,6 +135,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public ch.qos.logback.classic.Level getLevel()
 		{
 			if(event != null)
@@ -158,6 +161,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public String getMessage()
 		{
 			if(event != null)
@@ -171,6 +175,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public Object[] getArgumentArray()
 		{
 			Message message = event.getMessage();
@@ -181,6 +186,7 @@ public class LoggingFormatter
 			return new Object[0];
 		}
 
+		@Override
 		public String getFormattedMessage()
 		{
 			if(event != null)
@@ -194,6 +200,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public String getLoggerName()
 		{
 			if(event != null)
@@ -203,6 +210,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public LoggerContextVO getLoggerContextVO()
 		{
 			LoggerContextVO result=null;
@@ -217,6 +225,7 @@ public class LoggingFormatter
 			return result;
 		}
 
+		@Override
 		public IThrowableProxy getThrowableProxy()
 		{
 			if(event != null)
@@ -226,6 +235,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public StackTraceElement[] getCallerData()
 		{
 			if(event != null)
@@ -251,6 +261,7 @@ public class LoggingFormatter
 			return new StackTraceElement[0];
 		}
 
+		@Override
 		public boolean hasCallerData()
 		{
 			if(event != null)
@@ -262,6 +273,7 @@ public class LoggingFormatter
 			return false;
 		}
 
+		@Override
 		public Marker getMarker()
 		{
 			if(event != null)
@@ -272,6 +284,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public Map<String, String> getMDCPropertyMap()
 		{
 			if(event != null)
@@ -281,6 +294,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public Map<String, String> getMdc()
 		{
 			if(event != null)
@@ -290,6 +304,7 @@ public class LoggingFormatter
 			return null;
 		}
 
+		@Override
 		public long getTimeStamp()
 		{
 			if(event != null)
@@ -303,6 +318,7 @@ public class LoggingFormatter
 			return 0;
 		}
 
+		@Override
 		public void prepareForDeferredProcessing()
 		{
 			// no-op
@@ -354,6 +370,7 @@ public class LoggingFormatter
 		private int commonFrames;
 		private IThrowableProxy[] suppressed;
 
+		@Override
 		public String getMessage()
 		{
 			return message;
@@ -364,6 +381,7 @@ public class LoggingFormatter
 			this.message = message;
 		}
 
+		@Override
 		public String getClassName()
 		{
 			return className;
@@ -374,6 +392,7 @@ public class LoggingFormatter
 			this.className = className;
 		}
 
+		@Override
 		public StackTraceElementProxy[] getStackTraceElementProxyArray()
 		{
 			return stackTraceElementProxyArray;
@@ -384,6 +403,7 @@ public class LoggingFormatter
 			this.stackTraceElementProxyArray = stackTraceElementProxyArray;
 		}
 
+		@Override
 		public IThrowableProxy[] getSuppressed()
 		{
 			return suppressed;
@@ -394,6 +414,7 @@ public class LoggingFormatter
 			this.suppressed = suppressed;
 		}
 
+		@Override
 		public IThrowableProxy getCause()
 		{
 			return cause;
@@ -404,6 +425,7 @@ public class LoggingFormatter
 			this.cause = cause;
 		}
 
+		@Override
 		public int getCommonFrames()
 		{
 			return commonFrames;

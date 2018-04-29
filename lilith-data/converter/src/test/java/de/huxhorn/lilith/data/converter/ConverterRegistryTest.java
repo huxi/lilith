@@ -105,11 +105,13 @@ public class ConverterRegistryTest
 	private static class BrokenConverter
 		implements Converter<String>
 	{
+		@Override
 		public String convert(Object o)
 		{
 			return "foo";
 		}
 
+		@Override
 		public Class getSourceClass()
 		{
 			return null;
@@ -119,6 +121,7 @@ public class ConverterRegistryTest
 	private static class UpperCaseConverter
 		implements Converter<String>
 	{
+		@Override
 		public String convert(Object o)
 		{
 			if(o instanceof String)
@@ -129,6 +132,7 @@ public class ConverterRegistryTest
 			throw new IllegalArgumentException("object is not a String!");
 		}
 
+		@Override
 		public Class getSourceClass()
 		{
 			return String.class;
@@ -138,6 +142,7 @@ public class ConverterRegistryTest
 	private static class LowerCaseConverter
 		implements Converter<String>
 	{
+		@Override
 		public String convert(Object o)
 		{
 			if(o instanceof String)
@@ -148,13 +153,14 @@ public class ConverterRegistryTest
 			throw new IllegalArgumentException("object is not a String!");
 		}
 
+		@Override
 		public Class getSourceClass()
 		{
 			return String.class;
 		}
 	}
 
-	@SuppressWarnings("PMD.ShortClassName")
+	@SuppressWarnings({"PMD.ShortClassName", "PMD.ClassNamingConventions"})
 	private static class A
 	{
 		@Override
@@ -164,7 +170,7 @@ public class ConverterRegistryTest
 		}
 	}
 
-	@SuppressWarnings("PMD.ShortClassName")
+	@SuppressWarnings({"PMD.ShortClassName", "PMD.ClassNamingConventions"})
 	private static class B
 		extends A
 	{
@@ -179,11 +185,13 @@ public class ConverterRegistryTest
 		implements Converter<String>
 	{
 
+		@Override
 		public String convert(Object o)
 		{
 			return String.valueOf(o);
 		}
 
+		@Override
 		public Class getSourceClass()
 		{
 			return A.class;

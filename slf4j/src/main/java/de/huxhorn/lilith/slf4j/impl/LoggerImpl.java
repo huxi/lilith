@@ -62,16 +62,19 @@ public class LoggerImpl
 		logger = org.slf4j.LoggerFactory.getLogger(loggerName);
 	}
 
+	@Override
 	public String getName()
 	{
 		return loggerName;
 	}
 
+	@Override
 	public Threshold getThreshold()
 	{
 		throw new UnsupportedOperationException("This isn't supported by slf4j, yet.");
 	}
 
+	@Override
 	public boolean isLoggingEnabled(Level level)
 	{
 		switch(level)
@@ -89,6 +92,7 @@ public class LoggerImpl
 		}
 	}
 
+	@Override
 	public boolean isLoggingEnabled(Level level, Marker marker)
 	{
 		switch(level)
@@ -106,6 +110,7 @@ public class LoggerImpl
 		}
 	}
 
+	@Override
 	public void log(Level level, String messagePattern, Object... args)
 	{
 		switch(level)
@@ -128,6 +133,7 @@ public class LoggerImpl
 		}
 	}
 
+	@Override
 	public void log(Level level, Marker marker, String messagePattern, Object... args)
 	{
 		switch(level)
@@ -150,101 +156,121 @@ public class LoggerImpl
 		}
 	}
 
+	@Override
 	public boolean isTraceEnabled()
 	{
 		return logger.isTraceEnabled();
 	}
 
+	@Override
 	public boolean isTraceEnabled(Marker marker)
 	{
 		return logger.isTraceEnabled(marker);
 	}
 
+	@Override
 	public void trace(String messagePattern, Object... args)
 	{
 		logger.trace(messagePattern, args);
 	}
 
+	@Override
 	public void trace(Marker marker, String messagePattern, Object... args)
 	{
 		logger.trace(marker, messagePattern, args);
 	}
 
+	@Override
 	public boolean isDebugEnabled()
 	{
 		return logger.isDebugEnabled();
 	}
 
+	@Override
 	public boolean isDebugEnabled(Marker marker)
 	{
 		return logger.isDebugEnabled(marker);
 	}
 
+	@Override
 	public void debug(String messagePattern, Object... args)
 	{
 		logger.debug(messagePattern, args);
 	}
 
+	@Override
 	public void debug(Marker marker, String messagePattern, Object... args)
 	{
 		logger.debug(marker, messagePattern, args);
 	}
 
+	@Override
 	public boolean isInfoEnabled()
 	{
 		return logger.isInfoEnabled();
 	}
 
+	@Override
 	public boolean isInfoEnabled(Marker marker)
 	{
 		return logger.isInfoEnabled(marker);
 	}
 
+	@Override
 	public void info(String messagePattern, Object... args)
 	{
 		logger.info(messagePattern, args);
 	}
 
+	@Override
 	public void info(Marker marker, String messagePattern, Object... args)
 	{
 		logger.info(marker, messagePattern, args);
 	}
 
+	@Override
 	public boolean isWarnEnabled()
 	{
 		return logger.isWarnEnabled();
 	}
 
+	@Override
 	public boolean isWarnEnabled(Marker marker)
 	{
 		return logger.isWarnEnabled(marker);
 	}
 
+	@Override
 	public void warn(String messagePattern, Object... args)
 	{
 		logger.warn(messagePattern, args);
 	}
 
+	@Override
 	public void warn(Marker marker, String messagePattern, Object... args)
 	{
 		logger.warn(marker, messagePattern, args);
 	}
 
+	@Override
 	public boolean isErrorEnabled()
 	{
 		return logger.isErrorEnabled();
 	}
 
+	@Override
 	public boolean isErrorEnabled(Marker marker)
 	{
 		return logger.isErrorEnabled(marker);
 	}
 
+	@Override
 	public void error(String messagePattern, Object... args)
 	{
 		logger.error(messagePattern, args);
 	}
 
+	@Override
 	public void error(Marker marker, String messagePattern, Object... args)
 	{
 		logger.error(marker, messagePattern, args);

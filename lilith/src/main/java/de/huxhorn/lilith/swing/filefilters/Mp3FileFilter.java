@@ -21,14 +21,17 @@ import java.io.File;
 import java.util.Locale;
 import javax.swing.filechooser.FileFilter;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Mp3FileFilter
 	extends FileFilter
 {
+	@Override
 	public boolean accept(File pathname)
 	{
 		return pathname.isDirectory() || pathname.isFile() && pathname.getName().toLowerCase(Locale.US).endsWith(".mp3");
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return "MP3 files";

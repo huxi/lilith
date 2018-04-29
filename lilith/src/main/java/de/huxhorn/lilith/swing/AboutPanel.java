@@ -470,6 +470,7 @@ public final class AboutPanel
 	 * @param evt a <code>MouseEvent</code>.
 	 * @return The toolTipText value for the <code>ToolTipManager</code>.
 	 */
+	@Override
 	public String getToolTipText(MouseEvent evt)
 	{
 		if(handleMouseEvent(evt))
@@ -832,6 +833,7 @@ public final class AboutPanel
 	 *
 	 * @param newFont The new font value.
 	 */
+	@Override
 	public void setFont(Font newFont)
 	{
 		if(newFont == null)
@@ -852,6 +854,7 @@ public final class AboutPanel
 	 *
 	 * @param graphics <code>Graphics</code>-object
 	 */
+	@Override
 	public void paintComponent(Graphics graphics)
 	{
 		super.paintComponent(graphics);
@@ -951,6 +954,7 @@ public final class AboutPanel
 	 * @see #setScrollPosition
 	 * @see #getMinimumScrollPosition
 	 */
+	@Override
 	public void addNotify()
 	{
 		super.addNotify();
@@ -967,6 +971,7 @@ public final class AboutPanel
 	 *
 	 * @see #setScrolling
 	 */
+	@Override
 	public void removeNotify()
 	{
 		super.removeNotify();
@@ -1031,6 +1036,7 @@ public final class AboutPanel
 		 *
 		 * @param e Description of the Parameter
 		 */
+		@Override
 		public void componentResized(ComponentEvent e)
 		{
 			AboutPanel.this.calculateAttributes();
@@ -1051,6 +1057,7 @@ public final class AboutPanel
 		 *
 		 * @param evt Description of the Parameter
 		 */
+		@Override
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			String propertyName = evt.getPropertyName();
@@ -1090,6 +1097,7 @@ public final class AboutPanel
 		 *
 		 * @param evt Description of the Parameter
 		 */
+		@Override
 		public void mousePressed(MouseEvent evt)
 		{
 			if(handleMouseEvent(evt))
@@ -1113,6 +1121,7 @@ public final class AboutPanel
 		 *
 		 * @param evt Description of the Parameter
 		 */
+		@Override
 		public void mouseReleased(MouseEvent evt)
 		{
 			if(dragged)
@@ -1129,6 +1138,7 @@ public final class AboutPanel
 		 *
 		 * @param evt Description of the Parameter
 		 */
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			// this is only called after mouseReleased if no drag occurred.
@@ -1146,6 +1156,7 @@ public final class AboutPanel
 		 *
 		 * @param evt Description of the Parameter
 		 */
+		@Override
 		public void mouseDragged(MouseEvent evt)
 		{
 			// only drag if original press was inside scroll-rectangle
@@ -1171,6 +1182,7 @@ public final class AboutPanel
 
 		private long lastRepaintStart;
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			long currentTime = System.nanoTime() / 1000000;

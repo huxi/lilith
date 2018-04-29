@@ -46,11 +46,13 @@ public class MessagePatternContainsCondition
 		this.searchString = searchString;
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(searchString == null)
@@ -82,6 +84,7 @@ public class MessagePatternContainsCondition
 		return false;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -92,6 +95,7 @@ public class MessagePatternContainsCondition
 		return !(searchString != null ? !searchString.equals(that.searchString) : that.searchString != null);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		int result;
@@ -99,12 +103,14 @@ public class MessagePatternContainsCondition
 		return result;
 	}
 
+	@Override
 	public MessagePatternContainsCondition clone()
 		throws CloneNotSupportedException
 	{
 		return (MessagePatternContainsCondition) super.clone();
 	}
 
+	@Override
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();
@@ -121,6 +127,7 @@ public class MessagePatternContainsCondition
 		return result.toString();
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;

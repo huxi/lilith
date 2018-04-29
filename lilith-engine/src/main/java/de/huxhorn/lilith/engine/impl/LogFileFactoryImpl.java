@@ -64,34 +64,40 @@ public class LogFileFactoryImpl
 		return name;
 	}
 
+	@Override
 	public File getBaseDir()
 	{
 		return baseDir;
 	}
 
+	@Override
 	public File getIndexFile(SourceIdentifier sourceIdentifier)
 	{
 		String baseName = getBaseFileName(sourceIdentifier);
 		return new File(baseName + FileConstants.INDEX_FILE_EXTENSION);
 	}
 
+	@Override
 	public File getDataFile(SourceIdentifier sourceIdentifier)
 	{
 		String baseName = getBaseFileName(sourceIdentifier);
 		return new File(baseName + FileConstants.FILE_EXTENSION);
 	}
 
+	@Override
 	public File getActiveFile(SourceIdentifier sourceIdentifier)
 	{
 		String baseName = getBaseFileName(sourceIdentifier);
 		return new File(baseName + FileConstants.ACTIVE_FILE_EXTENSION);
 	}
 
+	@Override
 	public String getDataFileExtension()
 	{
 		return FileConstants.FILE_EXTENSION;
 	}
 
+	@Override
 	public long getSizeOnDisk(SourceIdentifier sourceIdentifier)
 	{
 		File indexFile = getIndexFile(sourceIdentifier);
@@ -101,6 +107,7 @@ public class LogFileFactoryImpl
 		return indexSize + dataSize;
 	}
 
+	@Override
 	public long getNumberOfEvents(SourceIdentifier sourceIdentifier)
 	{
 		File indexFile = getIndexFile(sourceIdentifier);

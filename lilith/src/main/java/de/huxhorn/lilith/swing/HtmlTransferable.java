@@ -74,11 +74,13 @@ class HtmlTransferable
 		return html;
 	}
 
+	@Override
 	public DataFlavor[] getTransferDataFlavors()
 	{
 		return FLAVORS.clone();
 	}
 
+	@Override
 	public boolean isDataFlavorSupported(DataFlavor flavor)
 	{
 		for(DataFlavor aFlavor : FLAVORS)
@@ -91,6 +93,7 @@ class HtmlTransferable
 		return false;
 	}
 
+	@Override
 	public Object getTransferData(DataFlavor flavor)
 		throws UnsupportedFlavorException, IOException
 	{

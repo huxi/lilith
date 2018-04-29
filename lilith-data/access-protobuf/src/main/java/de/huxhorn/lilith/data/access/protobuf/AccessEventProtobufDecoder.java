@@ -63,6 +63,7 @@ public class AccessEventProtobufDecoder
 		return compressing;
 	}
 
+	@Override
 	public AccessEvent decode(byte[] bytes)
 	{
 		if(bytes == null)

@@ -47,6 +47,7 @@ public class MessageWriteByteStrategy
 	 * @param bytes            the bytes that are written
 	 * @throws java.io.IOException if an exception is thrown while writing the bytes.
 	 */
+	@Override
 	public void writeBytes(DataOutputStream dataOutputStream, byte[] bytes)
 		throws IOException
 	{

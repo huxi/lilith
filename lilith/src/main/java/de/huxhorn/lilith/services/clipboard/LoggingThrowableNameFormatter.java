@@ -32,11 +32,13 @@ public class LoggingThrowableNameFormatter
 		super(LilithActionId.COPY_THROWABLE_NAME);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveThrowableInfoName(object).isPresent();
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveThrowableInfoName(object).map(it -> it).orElse(null);

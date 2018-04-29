@@ -141,6 +141,7 @@ class HelpFrame
 	private class PopupMouseListener
 		extends MouseAdapter
 	{
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -149,6 +150,7 @@ class HelpFrame
 			}
 		}
 
+		@Override
 		public void mousePressed(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -157,6 +159,7 @@ class HelpFrame
 			}
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -195,6 +198,7 @@ class HelpFrame
 			super(LilithActionId.COPY_SELECTION);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			copySelection();

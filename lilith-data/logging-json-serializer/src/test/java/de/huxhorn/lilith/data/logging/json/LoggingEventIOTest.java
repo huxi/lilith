@@ -61,6 +61,7 @@ public class LoggingEventIOTest
 		}
 	}
 
+	@Override
 	public byte[] write(LoggingEvent event, boolean compressing)
 		throws XMLStreamException
 	{
@@ -68,6 +69,7 @@ public class LoggingEventIOTest
 		return ser.encode(event);
 	}
 
+	@Override
 	public LoggingEvent read(byte[] bytes, boolean compressing)
 		throws XMLStreamException
 	{

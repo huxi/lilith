@@ -1273,6 +1273,7 @@ public final class ViewActions
 			putValue(Action.SHORT_DESCRIPTION, absoluteName);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.open(new File(absoluteName));
@@ -1289,6 +1290,7 @@ public final class ViewActions
 			super(LilithActionId.CLEAR_RECENT_FILES);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			applicationPreferences.clearRecentFiles();
@@ -1305,6 +1307,7 @@ public final class ViewActions
 			super(LilithActionId.REMOVE_INACTIVE);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.removeInactiveViews(false);
@@ -1322,6 +1325,7 @@ public final class ViewActions
 			super(LilithActionId.TASK_MANAGER);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showTaskManager();
@@ -1338,6 +1342,7 @@ public final class ViewActions
 			super(LilithActionId.CLOSE_ALL);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.closeAllViews(null);
@@ -1355,6 +1360,7 @@ public final class ViewActions
 			super(LilithActionId.CLOSE_ALL_OTHER);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.closeAllViews(viewContainer);
@@ -1372,6 +1378,7 @@ public final class ViewActions
 			super(LilithActionId.MINIMIZE_ALL);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.minimizeAllViews(null);
@@ -1389,6 +1396,7 @@ public final class ViewActions
 			super(LilithActionId.MINIMIZE_OTHER);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.minimizeAllViews(viewContainer);
@@ -1406,6 +1414,7 @@ public final class ViewActions
 			super(LilithActionId.CLEAR, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			clear();
@@ -1422,6 +1431,7 @@ public final class ViewActions
 			super(LilithActionId.ZOOM_IN);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.zoomIn();
@@ -1452,6 +1462,7 @@ public final class ViewActions
 			super(LilithActionId.ZOOM_OUT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.zoomOut();
@@ -1482,6 +1493,7 @@ public final class ViewActions
 			super(LilithActionId.RESET_ZOOM);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.resetZoom();
@@ -1515,6 +1527,7 @@ public final class ViewActions
 			this.htmlTooltip = htmlTooltip;
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			editCondition();
@@ -1553,6 +1566,7 @@ public final class ViewActions
 			super(LilithActionId.EDIT_SOURCE_NAME);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(viewContainer == null)
@@ -1614,6 +1628,7 @@ public final class ViewActions
 			updateAction();
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			attachDetach();
@@ -1663,6 +1678,7 @@ public final class ViewActions
 			super(LilithActionId.FIND, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(viewContainer != null)
@@ -1686,6 +1702,7 @@ public final class ViewActions
 			super(LilithActionId.DISCONNECT, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			disconnect();
@@ -1703,6 +1720,7 @@ public final class ViewActions
 			super(LilithActionId.FOCUS_MESSAGE);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			focusMessage();
@@ -1719,6 +1737,7 @@ public final class ViewActions
 			super(LilithActionId.FOCUS_EVENTS);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			focusEvents();
@@ -1735,6 +1754,7 @@ public final class ViewActions
 			super(LilithActionId.FIND_NEXT, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			findNext();
@@ -1752,6 +1772,7 @@ public final class ViewActions
 			super(LilithActionId.FIND_PREVIOUS, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			findPrevious();
@@ -1768,6 +1789,7 @@ public final class ViewActions
 			super(LilithActionId.FIND_NEXT_ACTIVE, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			findNextActive();
@@ -1785,6 +1807,7 @@ public final class ViewActions
 			super(LilithActionId.FIND_PREVIOUS_ACTIVE, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			findPreviousActive();
@@ -1801,6 +1824,7 @@ public final class ViewActions
 			super(LilithActionId.RESET_FIND);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			resetFind();
@@ -1818,6 +1842,7 @@ public final class ViewActions
 			putValue(Action.SMALL_ICON, null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1835,6 +1860,7 @@ public final class ViewActions
 			putValue(Action.SMALL_ICON, null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1852,6 +1878,7 @@ public final class ViewActions
 			putValue(Action.SMALL_ICON, null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1869,6 +1896,7 @@ public final class ViewActions
 			putValue(Action.SMALL_ICON, null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1886,6 +1914,7 @@ public final class ViewActions
 			putValue(Action.SMALL_ICON, null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1903,6 +1932,7 @@ public final class ViewActions
 			putValue(Action.SMALL_ICON, null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1919,6 +1949,7 @@ public final class ViewActions
 			super(LilithActionId.LAYOUT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1935,6 +1966,7 @@ public final class ViewActions
 			super(LilithActionId.COLUMNS);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1951,6 +1983,7 @@ public final class ViewActions
 			super(LilithActionId.RECENT_FILES);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1967,6 +2000,7 @@ public final class ViewActions
 			super(LilithActionId.CUSTOM_COPY);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// nothing
@@ -1983,6 +2017,7 @@ public final class ViewActions
 			super(LilithActionId.TAIL, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			boolean tail = !isScrollingToBottom();
@@ -2038,6 +2073,7 @@ public final class ViewActions
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			closeCurrentFilter();
@@ -2076,6 +2112,7 @@ public final class ViewActions
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			closeOtherFilters();
@@ -2110,6 +2147,7 @@ public final class ViewActions
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			closeAllFilters();
@@ -2154,6 +2192,7 @@ public final class ViewActions
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent evt)
 		{
 			mainFrame.showLoggingView(eventSource);
@@ -2189,6 +2228,7 @@ public final class ViewActions
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent evt)
 		{
 			mainFrame.showAccessView(eventSource);
@@ -2334,6 +2374,7 @@ public final class ViewActions
 			this.windowMenu = windowMenu;
 		}
 
+		@Override
 		public void run()
 		{
 			// remove loggingViews that were closed in the meantime...
@@ -2597,6 +2638,7 @@ public final class ViewActions
 			super(LilithActionId.ABOUT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showAboutDialog();
@@ -2613,6 +2655,7 @@ public final class ViewActions
 			super(LilithActionId.SAVE_LAYOUT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(viewContainer != null)
@@ -2640,6 +2683,7 @@ public final class ViewActions
 			super(LilithActionId.RESET_LAYOUT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(viewContainer != null)
@@ -2667,6 +2711,7 @@ public final class ViewActions
 			super(LilithActionId.CHECK_FOR_UPDATE);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.checkForUpdate(true);
@@ -2683,6 +2728,7 @@ public final class ViewActions
 			super(LilithActionId.TROUBLESHOOTING);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.troubleshooting();
@@ -2699,6 +2745,7 @@ public final class ViewActions
 			super(LilithActionId.HELP_TOPICS);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showHelp();
@@ -2715,6 +2762,7 @@ public final class ViewActions
 			super(LilithActionId.TIP_OF_THE_DAY);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showTipOfTheDayDialog();
@@ -2731,6 +2779,7 @@ public final class ViewActions
 			super(LilithActionId.PREFERENCES, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showPreferencesDialog();
@@ -2747,6 +2796,7 @@ public final class ViewActions
 			super(LilithActionId.LOVE, toolbar);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.openHelp("love.xhtml");
@@ -2763,6 +2813,7 @@ public final class ViewActions
 			super(LilithActionId.DEBUG);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.showDebugDialog();
@@ -2779,6 +2830,7 @@ public final class ViewActions
 			super(LilithActionId.EXIT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.exit();
@@ -2795,6 +2847,7 @@ public final class ViewActions
 			super(LilithActionId.OPEN_INACTIVE);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.openInactiveLogs();
@@ -2811,6 +2864,7 @@ public final class ViewActions
 			super(LilithActionId.OPEN);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.open();
@@ -2827,6 +2881,7 @@ public final class ViewActions
 			super(LilithActionId.IMPORT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.importFile();
@@ -2845,6 +2900,7 @@ public final class ViewActions
 			super(LilithActionId.EXPORT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.exportFile(view);
@@ -2867,6 +2923,7 @@ public final class ViewActions
 			super(LilithActionId.CLEAN_ALL_INACTIVE_LOGS);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.cleanAllInactiveLogs();
@@ -2893,6 +2950,7 @@ public final class ViewActions
 			setEnabled(hasMultipleViews());
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			previousTab();
@@ -2914,6 +2972,7 @@ public final class ViewActions
 			setEnabled(hasMultipleViews());
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			nextTab();
@@ -2933,6 +2992,7 @@ public final class ViewActions
 			setView(null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(view != null)
@@ -3072,6 +3132,7 @@ public final class ViewActions
 			this.wrapper = wrapper;
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(clipboardFormatter == null)
@@ -3096,6 +3157,7 @@ public final class ViewActions
 			super(LilithActionId.SHOW_UNFILTERED_EVENT);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			showUnfilteredEvent();
@@ -3150,6 +3212,7 @@ public final class ViewActions
 			setEnabled(this.stackTraceElement != null);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			mainFrame.goToSource(stackTraceElement);
@@ -3174,6 +3237,7 @@ public final class ViewActions
 			// selection must be set manually
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			visible = !visible;
@@ -3200,6 +3264,7 @@ public final class ViewActions
 	{
 		static final CopyToClipboardByNameComparator INSTANCE = new CopyToClipboardByNameComparator();
 
+		@Override
 		public int compare(CopyToClipboardAction o1, CopyToClipboardAction o2)
 		{
 			if(o1 == o2) // NOPMD
@@ -3255,6 +3320,7 @@ public final class ViewActions
 
 		private int step = 0;
 
+		@Override
 		public boolean dispatchKeyEvent(KeyEvent e)
 		{
 			if (e.getID() == KeyEvent.KEY_RELEASED)

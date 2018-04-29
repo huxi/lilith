@@ -39,36 +39,43 @@ import de.huxhorn.lilith.data.logging.Message;
 public class NoOpNDCAdapter
 	implements NDCAdapter
 {
+	@Override
 	public void push(String messagePattern, Object... arguments)
 	{
 		// no-op
 	}
 
+	@Override
 	public void pop()
 	{
 		// no-op
 	}
 
+	@Override
 	public int getDepth()
 	{
 		return 0;
 	}
 
+	@Override
 	public void setMaximumDepth(int maximumDepth)
 	{
 		// no-op
 	}
 
+	@Override
 	public boolean isEmpty()
 	{
 		return true;
 	}
 
+	@Override
 	public void clear()
 	{
 		// no-op
 	}
 
+	@Override
 	public Message[] getContextStack()
 	{
 		return NO_MESSAGES;

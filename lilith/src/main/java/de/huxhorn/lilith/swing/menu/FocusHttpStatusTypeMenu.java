@@ -50,6 +50,7 @@ class FocusHttpStatusTypeMenu
 		return new FocusHttpStatusTypeAction(type);
 	}
 
+	@Override
 	protected void updateState()
 	{
 		if(accessEvent == null)

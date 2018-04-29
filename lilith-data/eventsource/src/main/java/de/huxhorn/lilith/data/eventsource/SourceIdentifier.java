@@ -80,6 +80,7 @@ public class SourceIdentifier
 		this.secondaryIdentifier = secondaryIdentifier;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if (this == o) return true;
@@ -91,6 +92,7 @@ public class SourceIdentifier
 				&& !(secondaryIdentifier != null ? !secondaryIdentifier.equals(that.secondaryIdentifier) : that.secondaryIdentifier != null);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		int result;
@@ -111,6 +113,7 @@ public class SourceIdentifier
 		return result.toString();
 	}
 
+	@Override
 	public int compareTo(SourceIdentifier o)
 	{
 		if(this.identifier == null)
@@ -156,6 +159,7 @@ public class SourceIdentifier
 		return 0;
 	}
 
+	@Override
 	public SourceIdentifier clone()
 		throws CloneNotSupportedException
 	{

@@ -271,6 +271,7 @@ public class GeneralPanel
 			putValue(Action.SHORT_DESCRIPTION, "Browse for the application path.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			applicationPathFileChooser.setCurrentDirectory(applicationPreferences.getApplicationPath());

@@ -35,6 +35,7 @@ public class LogThrowableRunnable
 		this.throwable = throwable;
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

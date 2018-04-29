@@ -67,6 +67,7 @@ public class SocketDataOutputStreamFactory
 		this.writeTimeout = writeTimeout;
 	}
 
+	@Override
 	public DataOutputStream createDataOutputStream()
 		throws IOException
 	{

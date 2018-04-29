@@ -233,6 +233,7 @@ public class CheckForUpdateDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_O);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			setVisible(false);
@@ -259,6 +260,7 @@ public class CheckForUpdateDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			setVisible(false);
@@ -269,6 +271,7 @@ public class CheckForUpdateDialog
 		implements ItemListener
 	{
 
+		@Override
 		public void itemStateChanged(ItemEvent e)
 		{
 			Object source = e.getItemSelectable();

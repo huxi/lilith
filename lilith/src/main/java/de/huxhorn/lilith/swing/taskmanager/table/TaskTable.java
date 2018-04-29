@@ -148,6 +148,7 @@ public class TaskTable<T>
 		implements TableModelListener
 	{
 
+		@Override
 		public void tableChanged(TableModelEvent tableModelEvent)
 		{
 			selectFirstTask();

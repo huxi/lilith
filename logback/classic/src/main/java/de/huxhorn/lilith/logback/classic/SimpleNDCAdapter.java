@@ -45,6 +45,7 @@ public class SimpleNDCAdapter
 	private final ThreadLocal<List<String>> threadLocalMessagePatterns =new ThreadLocal<>();
 	private final ThreadLocal<List<String[]>> threadLocalMessageArguments =new ThreadLocal<>();
 
+	@Override
 	public void push(String messagePattern, Object... arguments)
 	{
 		String[] processedArgs=null;
@@ -70,6 +71,7 @@ public class SimpleNDCAdapter
 		args.add(processedArgs);
 	}
 
+	@Override
 	public void pop()
 	{
 		List<String> messages = threadLocalMessagePatterns.get();
@@ -88,6 +90,7 @@ public class SimpleNDCAdapter
 		args.remove(count -1);
 	}
 
+	@Override
 	public int getDepth()
 	{
 		List<String> messages = threadLocalMessagePatterns.get();
@@ -104,6 +107,7 @@ public class SimpleNDCAdapter
 		return count;
 	}
 
+	@Override
 	public void setMaximumDepth(int maximumDepth)
 	{
 		int overflow = getDepth() - maximumDepth;
@@ -113,17 +117,20 @@ public class SimpleNDCAdapter
 		}
 	}
 
+	@Override
 	public boolean isEmpty()
 	{
 		return getDepth()==0;
 	}
 
+	@Override
 	public void clear()
 	{
 		threadLocalMessagePatterns.remove();
 		threadLocalMessageArguments.remove();
 	}
 
+	@Override
 	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	public Message[] getContextStack()
 	{

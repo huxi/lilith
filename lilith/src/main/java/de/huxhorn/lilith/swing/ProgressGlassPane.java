@@ -157,6 +157,7 @@ public class ProgressGlassPane
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			cancelSearch();
@@ -166,36 +167,43 @@ public class ProgressGlassPane
 	private static class MouseEventEater
 		implements MouseListener, MouseMotionListener
 	{
+		@Override
 		public void mouseClicked(MouseEvent e)
 		{
 			// just eat it
 		}
 
+		@Override
 		public void mousePressed(MouseEvent e)
 		{
 			// just eat it
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent e)
 		{
 			// just eat it
 		}
 
+		@Override
 		public void mouseEntered(MouseEvent e)
 		{
 			// just eat it
 		}
 
+		@Override
 		public void mouseExited(MouseEvent e)
 		{
 			// just eat it
 		}
 
+		@Override
 		public void mouseDragged(MouseEvent e)
 		{
 			// just eat it
 		}
 
+		@Override
 		public void mouseMoved(MouseEvent e)
 		{
 			// just eat it

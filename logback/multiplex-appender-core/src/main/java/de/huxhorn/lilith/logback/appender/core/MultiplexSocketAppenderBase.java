@@ -190,6 +190,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 	/**
 	 * Start this appender.
 	 */
+	@Override
 	public void start()
 	{
 		if(!started)
@@ -313,6 +314,7 @@ public abstract class MultiplexSocketAppenderBase<E>
 		}
 	}
 
+	@Override
 	protected void append(E e)
 	{
 		if(encoder != null)

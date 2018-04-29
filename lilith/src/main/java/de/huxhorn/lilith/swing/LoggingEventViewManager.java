@@ -28,6 +28,7 @@ public class LoggingEventViewManager
 		super(mainFrame);
 	}
 
+	@Override
 	protected ViewContainer<LoggingEvent> createViewContainer(EventSource<LoggingEvent> eventSource)
 	{
 		//return new TabbedLoggingViewContainer(getMainFrame(), eventSource);

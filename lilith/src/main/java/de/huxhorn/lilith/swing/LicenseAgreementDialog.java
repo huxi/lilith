@@ -150,6 +150,7 @@ public class LicenseAgreementDialog
 			super("Accept");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			acceptLicense();
@@ -166,6 +167,7 @@ public class LicenseAgreementDialog
 			super("Decline");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			declineLicense();

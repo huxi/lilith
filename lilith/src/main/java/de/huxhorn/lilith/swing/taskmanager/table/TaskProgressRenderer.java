@@ -39,6 +39,7 @@ class TaskProgressRenderer
 		progressBar.setStringPainted(true);
 	}
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
 	{
 		int progress = -1;

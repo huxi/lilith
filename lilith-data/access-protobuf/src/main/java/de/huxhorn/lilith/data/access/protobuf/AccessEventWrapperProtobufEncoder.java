@@ -59,6 +59,7 @@ public class AccessEventWrapperProtobufEncoder
 		return compressing;
 	}
 
+	@Override
 	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] encode(EventWrapper<AccessEvent> wrapper)
 	{

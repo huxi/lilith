@@ -26,6 +26,7 @@ public class LilithFileFilter
 	extends FileFilter
 {
 
+	@Override
 	public boolean accept(File file)
 	{
 		if(file.isDirectory())
@@ -44,6 +45,7 @@ public class LilithFileFilter
 		return false;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return "Lilith files";

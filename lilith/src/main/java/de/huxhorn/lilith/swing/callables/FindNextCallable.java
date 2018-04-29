@@ -51,6 +51,7 @@ public class FindNextCallable<T extends Serializable>
 		return viewPanel;
 	}
 
+	@Override
 	public Long call()
 		throws Exception
 	{

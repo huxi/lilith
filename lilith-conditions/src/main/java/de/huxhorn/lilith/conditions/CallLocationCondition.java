@@ -56,6 +56,7 @@ public final class CallLocationCondition
 		stackTraceElement = parseStackTraceElement(searchString);
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
@@ -66,6 +67,7 @@ public final class CallLocationCondition
 		return stackTraceElement;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(stackTraceElement == null)
@@ -92,6 +94,7 @@ public final class CallLocationCondition
 		return false;
 	}
 
+	@Override
 	public CallLocationCondition clone()
 		throws CloneNotSupportedException
 	{
@@ -124,6 +127,7 @@ public final class CallLocationCondition
 		return this;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;

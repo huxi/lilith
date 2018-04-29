@@ -45,16 +45,19 @@ public class HttpRequestUriCondition
 		this.searchString = searchString;
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(searchString == null)
@@ -96,6 +99,7 @@ public class HttpRequestUriCondition
 		return searchString != null ? searchString.hashCode() : 0;
 	}
 
+	@Override
 	public HttpRequestUriCondition clone()
 		throws CloneNotSupportedException
 	{

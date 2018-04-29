@@ -48,6 +48,7 @@ public class Source
 		this.identifier = identifier;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -59,6 +60,7 @@ public class Source
 		return !(name != null ? !name.equals(source.name) : source.name != null);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		int result;
@@ -67,6 +69,7 @@ public class Source
 		return result;
 	}
 
+	@Override
 	public int compareTo(Source other)
 	{
 		//noinspection StringEquality

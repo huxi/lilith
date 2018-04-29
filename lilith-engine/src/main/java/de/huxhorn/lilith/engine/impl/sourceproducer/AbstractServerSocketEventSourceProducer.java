@@ -69,21 +69,25 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 		}
 	}
 
+	@Override
 	public AppendOperation<EventWrapper<T>> getQueue()
 	{
 		return queue;
 	}
 
+	@Override
 	public void setQueue(AppendOperation<EventWrapper<T>> queue)
 	{
 		this.queue = queue;
 	}
 
+	@Override
 	public SourceManager<T> getSourceManager()
 	{
 		return sourceManager;
 	}
 
+	@Override
 	public void setSourceManager(SourceManager<T> sourceManager)
 	{
 		this.sourceManager = sourceManager;
@@ -94,6 +98,7 @@ public abstract class AbstractServerSocketEventSourceProducer<T extends Serializ
 		return port;
 	}
 
+	@Override
 	public void run()
 	{
 		for(;;)

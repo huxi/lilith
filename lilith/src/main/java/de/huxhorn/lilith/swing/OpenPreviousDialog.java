@@ -131,6 +131,7 @@ public class OpenPreviousDialog
 		tabbedPane.addChangeListener(new TabChangeListener());
 	}
 
+	@Override
 	public void setVisible(boolean b)
 	{
 		if(b)
@@ -184,6 +185,7 @@ public class OpenPreviousDialog
 	private class TabChangeListener
 		implements ChangeListener
 	{
+		@Override
 		public void stateChanged(ChangeEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("stateChanged");
@@ -203,6 +205,7 @@ public class OpenPreviousDialog
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			openSelection();
@@ -222,6 +225,7 @@ public class OpenPreviousDialog
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			OpenPreviousDialog.this.setVisible(false);
@@ -409,6 +413,7 @@ public class OpenPreviousDialog
 			implements ListSelectionListener
 		{
 
+			@Override
 			public void valueChanged(ListSelectionEvent e)
 			{
 				JList source = (JList) e.getSource();
@@ -429,6 +434,7 @@ public class OpenPreviousDialog
 		private class SecondaryListSelectionListener
 			implements ListSelectionListener
 		{
+			@Override
 			public void valueChanged(ListSelectionEvent e)
 			{
 				SourceIdentifierWrapper selected = secondaryList.getSelectedValue();
@@ -451,6 +457,7 @@ public class OpenPreviousDialog
 			extends MouseAdapter
 		{
 
+			@Override
 			public void mouseClicked(MouseEvent e)
 			{
 				if(e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() > 1)

@@ -80,6 +80,7 @@ public class EditAccessStatusTypeDialog
 		KeyStrokes.registerCommand(buttonPanel, cancelAction, "CANCEL_ACTION");
 	}
 
+	@Override
 	public void setVisible(boolean b)
 	{
 		if(b)
@@ -129,6 +130,7 @@ public class EditAccessStatusTypeDialog
 			super("Ok");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled = false;
@@ -148,6 +150,7 @@ public class EditAccessStatusTypeDialog
 			super("Reset");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			initUI();
@@ -166,6 +169,7 @@ public class EditAccessStatusTypeDialog
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled = true;

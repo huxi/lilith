@@ -41,6 +41,7 @@ import de.huxhorn.lilith.logback.classic.NDC;
 public class SameThreadLogbackLoggingConverter
 	extends LogbackLoggingConverter
 {
+	@Override
 	public LoggingEvent convert(Object o)
 	{
 		LoggingEvent result = super.convert(o);
@@ -87,6 +88,7 @@ public class SameThreadLogbackLoggingConverter
 		return result;
 	}
 
+	@Override
 	public Class getSourceClass()
 	{
 		return ch.qos.logback.classic.spi.ILoggingEvent.class;

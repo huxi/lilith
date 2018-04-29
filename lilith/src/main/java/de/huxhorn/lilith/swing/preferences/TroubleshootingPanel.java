@@ -129,6 +129,7 @@ public class TroubleshootingPanel
 			super("Reinitialize details view files.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			preferencesDialog.reinitializeDetailsViewFiles();
@@ -145,6 +146,7 @@ public class TroubleshootingPanel
 			super("Reinitialize example groovy conditions.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			preferencesDialog.reinitializeGroovyConditions();
@@ -161,6 +163,7 @@ public class TroubleshootingPanel
 			super("Reinitialize example groovy clipboard formatters.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			preferencesDialog.reinitializeGroovyClipboardFormatters();
@@ -177,6 +180,7 @@ public class TroubleshootingPanel
 			super("Delete *all* logs.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			preferencesDialog.deleteAllLogs();
@@ -194,6 +198,7 @@ public class TroubleshootingPanel
 			putValue(SHORT_DESCRIPTION, "Copy system properties to the clipboard.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			Properties props = System.getProperties();
@@ -234,6 +239,7 @@ public class TroubleshootingPanel
 			putValue(SHORT_DESCRIPTION, "Copy the stacktraces of all threads to the clipboard.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
@@ -395,6 +401,7 @@ public class TroubleshootingPanel
 	{
 		static final Comparator<ThreadGroup> INSTANCE = new ThreadGroupComparator();
 
+		@Override
 		public int compare(ThreadGroup o1, ThreadGroup o2)
 		{
 			if(o1 == o2) // NOPMD
@@ -450,6 +457,7 @@ public class TroubleshootingPanel
 			return stackTraceElements;
 		}
 
+		@Override
 		public boolean equals(Object o)
 		{
 			if(this == o) return true;
@@ -461,11 +469,13 @@ public class TroubleshootingPanel
 
 		}
 
+		@Override
 		public int hashCode()
 		{
 			return (thread != null ? thread.hashCode() : 0);
 		}
 
+		@Override
 		@SuppressWarnings("NullableProblems")
 		public int compareTo(ThreadHolder other)
 		{
@@ -505,6 +515,7 @@ public class TroubleshootingPanel
 			putValue(SHORT_DESCRIPTION, "Execute garbage collection.");
 		}
 
+		@Override
 		@SuppressWarnings("PMD.DoNotCallGarbageCollectionExplicitly")
 		public void actionPerformed(ActionEvent actionEvent)
 		{

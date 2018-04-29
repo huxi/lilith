@@ -49,7 +49,9 @@ public abstract class AbstractFilterAction
 	 */
 	protected abstract void updateState();
 
+	@Override
 	public abstract void setEventWrapper(EventWrapper eventWrapper);
 
+	@Override
 	public abstract Condition resolveCondition(ActionEvent e);
 }

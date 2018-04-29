@@ -95,6 +95,7 @@ public abstract class AbstractMapCondition<V>
 		return (AbstractMapCondition) super.clone();
 	}
 
+	@Override
 	public final String toString()
 	{
 		StringBuilder result = new StringBuilder();
@@ -135,5 +136,6 @@ public abstract class AbstractMapCondition<V>
 		return result;
 	}
 
+	@Override
 	public abstract String getDescription();
 }

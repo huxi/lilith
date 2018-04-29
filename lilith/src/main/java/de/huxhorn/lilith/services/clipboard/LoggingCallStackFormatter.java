@@ -33,11 +33,13 @@ public class LoggingCallStackFormatter
 		super(LilithActionId.COPY_CALL_STACK);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveCallStack(object).isPresent();
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveCallStack(object).map(callStack -> toString(callStack)).orElse(null);

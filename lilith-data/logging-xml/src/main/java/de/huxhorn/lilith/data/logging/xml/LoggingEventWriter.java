@@ -116,6 +116,7 @@ public class LoggingEventWriter
 		this.preferredPrefix = prefix;
 	}
 
+	@Override
 	public void write(XMLStreamWriter writer, LoggingEvent event, boolean isRoot)
 		throws XMLStreamException
 	{

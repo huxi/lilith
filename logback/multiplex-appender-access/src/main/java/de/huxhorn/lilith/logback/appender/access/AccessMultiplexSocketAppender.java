@@ -69,11 +69,13 @@ public class AccessMultiplexSocketAppender
 		setCompressing(compressing);
 	}
 
+	@Override
 	protected void applicationIdentifierChanged()
 	{
 		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
+	@Override
 	protected void uuidChanged()
 	{
 		transformingEncoder.setUUID(getUUID());
@@ -111,6 +113,7 @@ public class AccessMultiplexSocketAppender
 		transformingEncoder.setLilithEncoder(new AccessEventProtobufEncoder(compressing));
 	}
 
+	@Override
 	protected void preProcess(AccessEvent e)
 	{
 		if(e != null)

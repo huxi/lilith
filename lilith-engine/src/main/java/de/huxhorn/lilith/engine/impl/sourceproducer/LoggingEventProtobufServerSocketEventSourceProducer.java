@@ -39,6 +39,7 @@ public class LoggingEventProtobufServerSocketEventSourceProducer
 		this.compressing = compressing;
 	}
 
+	@Override
 	protected EventProducer<LoggingEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 		throws IOException
 	{

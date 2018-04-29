@@ -46,11 +46,13 @@ public final class ThreadGroupNameCondition
 		this.searchString = searchString;
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(value instanceof EventWrapper)
@@ -82,6 +84,7 @@ public final class ThreadGroupNameCondition
 	}
 
 
+	@Override
 	public ThreadGroupNameCondition clone()
 		throws CloneNotSupportedException
 	{
@@ -108,6 +111,7 @@ public final class ThreadGroupNameCondition
 		return searchString != null ? searchString.hashCode() : 0;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;

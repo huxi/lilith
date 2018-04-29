@@ -413,6 +413,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class ScrollToBottomRunnable
 		implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			// recheck because this is executed with invokeLater.
@@ -426,12 +427,14 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class SelectFirstEventRunnable
 		implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			table.scrollToFirst();
 		}
 	}
 
+	@Override
 	public void validate()
 	{
 		super.validate();
@@ -490,6 +493,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		return (ViewContainer<T>) parent;
 	}
 
+	@Override
 	public void addNotify()
 	{
 		super.addNotify();
@@ -497,6 +501,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		findPanel.setVisible(isShowingFilters());
 	}
 
+	@Override
 	public void removeNotify()
 	{
 		super.removeNotify();
@@ -508,18 +513,21 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 
 	protected abstract EventWrapperViewTable<T> createTable(EventWrapperTableModel<T> tableModel);
 
+	@Override
 	public void dispose()
 	{
 		tableModel.dispose();
 		taskManager.removeTaskListener(findResultListener);
 	}
 
+	@Override
 	public void flush()
 	{
 		Flush.flush(cachedBuffer);
 		resetFind();
 	}
 
+	@Override
 	public boolean isDisposed()
 	{
 		return tableModel.isDisposed();
@@ -588,6 +596,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			return null;
 		}
 
+		@Override
 		public Component getComponentAfter(Container aContainer, Component aComponent)
 		{
 			if(aComponent.equals(table))
@@ -661,6 +670,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			return null;
 		}
 
+		@Override
 		public Component getComponentBefore(Container aContainer, Component aComponent)
 		{
 			if(aComponent.equals(messagePane))
@@ -734,16 +744,19 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			return null;
 		}
 
+		@Override
 		public Component getFirstComponent(Container aContainer)
 		{
 			return table;
 		}
 
+		@Override
 		public Component getLastComponent(Container aContainer)
 		{
 			return messagePane;
 		}
 
+		@Override
 		public Component getDefaultComponent(Container aContainer)
 		{
 			return table;
@@ -1125,6 +1138,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class TableMouseListener
 		extends MouseAdapter
 	{
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1173,6 +1187,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			EventWrapperViewPanel.this.showPopup(table, p);
 		}
 
+		@Override
 		public void mousePressed(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1181,6 +1196,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1199,6 +1215,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			EventWrapperViewPanel.this.showPopup(messagePane, p);
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			messagePane.requestFocusInWindow();
@@ -1208,6 +1225,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void mousePressed(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1216,6 +1234,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1234,6 +1253,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			EventWrapperViewPanel.this.showPopup(tableScrollPane, p);
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			tableScrollPane.requestFocusInWindow();
@@ -1243,6 +1263,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void mousePressed(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1251,6 +1272,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent evt)
 		{
 			if(evt.isPopupTrigger())
@@ -1265,6 +1287,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		private final Logger logger = LoggerFactory.getLogger(TableRowSelectionListener.class);
 
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			int row = getSelectedRow();
@@ -1292,6 +1315,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		private final Logger logger = LoggerFactory.getLogger(ScrollBarChangeListener.class);
 
+		@Override
 		public void stateChanged(ChangeEvent evt)
 		{
 			if(logger.isDebugEnabled()) logger.debug("changeEvent: {}", evt);
@@ -1319,6 +1343,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		final Logger logger = LoggerFactory.getLogger(EventWrapperViewChangeListener.class);
 
+		@Override
 		public void propertyChange(PropertyChangeEvent event)
 		{
 			String propertyName = event.getPropertyName();
@@ -1336,6 +1361,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		final Logger logger = LoggerFactory.getLogger(FindPanelChangeListener.class);
 
+		@Override
 		public void propertyChange(PropertyChangeEvent event)
 		{
 			String propertyName = event.getPropertyName();
@@ -1374,11 +1400,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	{
 		private Callable<Long> callable;
 
+		@Override
 		public void taskCreated(Task<Long> longTask)
 		{
 			// no-op
 		}
 
+		@Override
 		public void executionFailed(Task<Long> task, ExecutionException exception)
 		{
 			if(logger.isDebugEnabled())
@@ -1392,6 +1420,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void executionFinished(Task<Long> task, Long result)
 		{
 			if(logger.isDebugEnabled())
@@ -1410,6 +1439,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void executionCanceled(Task<Long> task)
 		{
 			if(logger.isDebugEnabled())
@@ -1423,6 +1453,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			}
 		}
 
+		@Override
 		public void progressUpdated(Task<Long> task, int progress)
 		{
 			if(logger.isDebugEnabled())
@@ -1498,6 +1529,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		implements TableModelListener
 	{
 
+		@Override
 		public void tableChanged(TableModelEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("TableModelEvent: {}", e);
@@ -1508,6 +1540,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 	private class SplitPaneListener
 		implements PropertyChangeListener
 	{
+		@Override
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			if(logger.isDebugEnabled()) logger.debug("SplitPane change!");
@@ -1523,11 +1556,13 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		implements FocusListener
 	{
 
+		@Override
 		public void focusGained(FocusEvent e)
 		{
 			messagePane.setBorder(focusedBorder);
 		}
 
+		@Override
 		public void focusLost(FocusEvent e)
 		{
 			messagePane.setBorder(unfocusedBorder);
@@ -1545,6 +1580,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 			this.wrapped = wrapped;
 		}
 
+		@Override
 		public void mouseWheelMoved(MouseWheelEvent e)
 		{
 			//noinspection MagicConstant

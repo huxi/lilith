@@ -67,11 +67,13 @@ public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 		setPort(DEFAULT_PORT);
 	}
 
+	@Override
 	protected void applicationIdentifierChanged()
 	{
 		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
+	@Override
 	protected void uuidChanged()
 	{
 		transformingEncoder.setUUID(getUUID());
@@ -82,6 +84,7 @@ public class ZeroDelimitedClassicJsonMultiplexSocketAppender
 		this.includeCallerData = includeCallerData;
 	}
 
+	@Override
 	protected void preProcess(LoggingEvent event)
 	{
 		if(event != null && includeCallerData)

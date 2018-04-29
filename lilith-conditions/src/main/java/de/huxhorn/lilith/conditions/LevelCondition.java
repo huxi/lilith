@@ -55,11 +55,13 @@ public final class LevelCondition
 		}
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;
@@ -70,6 +72,7 @@ public final class LevelCondition
 		return level;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(level == null)
@@ -91,6 +94,7 @@ public final class LevelCondition
 		return false;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -101,11 +105,13 @@ public final class LevelCondition
 		return level == that.level;
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return (level != null ? level.hashCode() : 0);
 	}
 
+	@Override
 	public LevelCondition clone()
 		throws CloneNotSupportedException
 	{

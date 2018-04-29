@@ -73,11 +73,13 @@ public class ClassicJsonMultiplexSocketAppender
 		includeCallerData = false;
 	}
 
+	@Override
 	protected void applicationIdentifierChanged()
 	{
 		transformingEncoder.setApplicationIdentifier(getApplicationIdentifier());
 	}
 
+	@Override
 	protected void uuidChanged()
 	{
 		transformingEncoder.setUUID(getUUID());
@@ -119,6 +121,7 @@ public class ClassicJsonMultiplexSocketAppender
 		this.includeCallerData = includeCallerData;
 	}
 
+	@Override
 	protected void preProcess(LoggingEvent event)
 	{
 		if(event != null && includeCallerData)

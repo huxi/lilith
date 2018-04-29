@@ -40,6 +40,7 @@ public class CleanAllInactiveCallable
 		this.mainFrame = mainFrame;
 	}
 
+	@Override
 	public Long call()
 		throws Exception
 	{

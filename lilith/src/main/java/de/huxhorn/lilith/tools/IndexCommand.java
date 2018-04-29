@@ -87,6 +87,7 @@ public class IndexCommand
 		 *            and the property that has changed.
 		 */
 
+		@Override
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			if(ProgressingCallable.PROGRESS_PROPERTY_NAME.equals(evt.getPropertyName()))

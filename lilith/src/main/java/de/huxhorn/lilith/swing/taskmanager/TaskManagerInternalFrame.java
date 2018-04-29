@@ -49,11 +49,13 @@ public class TaskManagerInternalFrame
 	class CleanupWindowChangeListener
 		implements InternalFrameListener
 	{
+		@Override
 		public void internalFrameClosing(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameClosing {}", e.getInternalFrame());
 		}
 
+		@Override
 		public void internalFrameClosed(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameClosed {}", e.getInternalFrame());
@@ -61,22 +63,26 @@ public class TaskManagerInternalFrame
 			mainFrame.updateWindowMenus();
 		}
 
+		@Override
 		public void internalFrameOpened(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameOpened {}", e.getInternalFrame());
 		}
 
 
+		@Override
 		public void internalFrameIconified(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameIconified {}", e.getInternalFrame());
 		}
 
+		@Override
 		public void internalFrameDeiconified(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameDeiconified {}", e.getInternalFrame());
 		}
 
+		@Override
 		public void internalFrameActivated(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameActivated {}", e.getInternalFrame());
@@ -84,6 +90,7 @@ public class TaskManagerInternalFrame
 			mainFrame.getViewActions().setViewContainer(null);
 		}
 
+		@Override
 		public void internalFrameDeactivated(InternalFrameEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("internalFrameDeactivated {}", e.getInternalFrame());

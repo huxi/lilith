@@ -50,11 +50,13 @@ public final class HttpRemoteUserCondition
 		userName = processRemoteUserNameString(searchString);
 	}
 
+	@Override
 	public String getSearchString()
 	{
 		return searchString;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;
@@ -65,6 +67,7 @@ public final class HttpRemoteUserCondition
 		return userName;
 	}
 
+	@Override
 	public boolean isTrue(Object value)
 	{
 		if(value instanceof EventWrapper)
@@ -102,6 +105,7 @@ public final class HttpRemoteUserCondition
 		return searchString != null ? searchString.hashCode() : 0;
 	}
 
+	@Override
 	public HttpRemoteUserCondition clone()
 		throws CloneNotSupportedException
 	{

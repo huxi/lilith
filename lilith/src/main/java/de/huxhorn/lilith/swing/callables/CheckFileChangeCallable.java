@@ -47,6 +47,7 @@ public class CheckFileChangeCallable
 	}
 
 
+	@Override
 	public Long call() throws Exception
 	{
 		setNumberOfSteps(-1);
@@ -94,6 +95,7 @@ public class CheckFileChangeCallable
 		implements Runnable
 	{
 
+		@Override
 		public void run()
 		{
 			viewContainer.flush();

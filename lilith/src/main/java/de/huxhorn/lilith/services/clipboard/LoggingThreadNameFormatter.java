@@ -32,11 +32,13 @@ public class LoggingThreadNameFormatter
 		super(LilithActionId.COPY_THREAD_NAME);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveThreadName(object).isPresent();
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveThreadName(object).map(it -> it).orElse(null);

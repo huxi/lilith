@@ -181,6 +181,7 @@ public final class Marker
 		return collectedMarkerNames;
 	}
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if(this == o) return true;
@@ -191,6 +192,7 @@ public final class Marker
 		return !(name != null ? !name.equals(marker.name) : marker.name != null);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return (name != null ? name.hashCode() : 0);

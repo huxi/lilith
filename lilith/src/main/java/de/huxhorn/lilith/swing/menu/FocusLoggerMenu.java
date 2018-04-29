@@ -36,6 +36,7 @@ class FocusLoggerMenu
 		setViewContainer(null);
 	}
 
+	@Override
 	protected void updateState()
 	{
 		removeAll();

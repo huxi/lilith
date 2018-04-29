@@ -43,6 +43,7 @@ class FocusLevelMenu
 		setViewContainer(null);
 	}
 
+	@Override
 	protected void updateState()
 	{
 		if(loggingEvent == null)

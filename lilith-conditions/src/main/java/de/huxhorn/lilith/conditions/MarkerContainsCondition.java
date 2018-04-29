@@ -84,6 +84,7 @@ public class MarkerContainsCondition
 		return (MarkerContainsCondition) super.clone();
 	}
 
+	@Override
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();
@@ -115,6 +116,7 @@ public class MarkerContainsCondition
 		return searchString != null ? searchString.hashCode() : 0;
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;

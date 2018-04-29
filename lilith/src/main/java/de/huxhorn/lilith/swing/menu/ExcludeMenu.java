@@ -180,6 +180,7 @@ public class ExcludeMenu
 			super(LilithActionId.EXCLUDE);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// no-op

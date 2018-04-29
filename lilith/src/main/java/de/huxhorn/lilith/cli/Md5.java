@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Parameters(commandDescription = "Creates MD5 checksum files for the given files.")
-@SuppressWarnings("PMD.ShortClassName")
+@SuppressWarnings({"PMD.ShortClassName", "PMD.ClassNamingConventions"})
 public class Md5
 {
 	public static final String NAME = "md5";

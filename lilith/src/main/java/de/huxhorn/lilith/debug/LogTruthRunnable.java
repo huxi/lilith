@@ -191,6 +191,7 @@ public class LogTruthRunnable
 		return result.toString();
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

@@ -58,6 +58,7 @@ public class HeartbeatRunnable
 		this.heartbeatRate = heartbeatRate;
 	}
 
+	@Override
 	public void run()
 	{
 		for(;;)

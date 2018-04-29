@@ -62,6 +62,7 @@ public class HttpRequestParametersContainsCondition
 		return (HttpRequestParametersContainsCondition) super.clone();
 	}
 
+	@Override
 	public String getDescription()
 	{
 		return DESCRIPTION;

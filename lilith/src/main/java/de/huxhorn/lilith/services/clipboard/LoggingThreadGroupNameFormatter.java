@@ -32,11 +32,13 @@ public class LoggingThreadGroupNameFormatter
 		super(LilithActionId.COPY_THREAD_GROUP_NAME);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveThreadGroupName(object).isPresent();
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveThreadGroupName(object).map(it -> it).orElse(null);

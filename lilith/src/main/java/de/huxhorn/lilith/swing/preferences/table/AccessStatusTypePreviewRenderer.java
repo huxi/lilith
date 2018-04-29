@@ -37,6 +37,7 @@ public class AccessStatusTypePreviewRenderer
 		this.schemes = schemes;
 	}
 
+	@Override
 	public ColorScheme resolveColorScheme(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
 		ColorScheme result = null;
@@ -55,6 +56,7 @@ public class AccessStatusTypePreviewRenderer
 		return result;
 	}
 
+	@Override
 	public void updateText(JTable table, Object value, boolean selected, boolean hasFocus, int row, int column)
 	{
 		String text="";

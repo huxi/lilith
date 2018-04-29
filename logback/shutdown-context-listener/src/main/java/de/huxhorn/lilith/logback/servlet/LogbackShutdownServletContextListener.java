@@ -64,11 +64,13 @@ public class LogbackShutdownServletContextListener
 
 	private boolean debug=false;
 
+	@Override
 	public void contextDestroyed(ServletContextEvent sce)
 	{
 		shutdownLogback();
 	}
 
+	@Override
 	public void contextInitialized(ServletContextEvent sce)
 	{
 		ServletContext c = sce.getServletContext();

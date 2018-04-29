@@ -153,6 +153,7 @@ public class AccessStatusTypePanel
 	private class ConditionTableRowSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			updateConditions();
@@ -172,6 +173,7 @@ public class AccessStatusTypePanel
 			putValue(Action.SHORT_DESCRIPTION, "Edit colors.");
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Edit");
@@ -193,6 +195,7 @@ public class AccessStatusTypePanel
 	private class ConditionTableMouseListener
 		extends MouseAdapter
 	{
+		@Override
 		public void mouseClicked(MouseEvent evt)
 		{
 			if(evt.getButton() == MouseEvent.BUTTON1)

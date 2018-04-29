@@ -34,16 +34,19 @@ public class AccessEventViewPanel
 		super(mainFrame, eventSource);
 	}
 
+	@Override
 	protected EventWrapperTableModel<AccessEvent> createTableModel(Buffer<EventWrapper<AccessEvent>> buffer)
 	{
 		return new EventWrapperTableModel<>(buffer);
 	}
 
+	@Override
 	protected EventWrapperViewTable<AccessEvent> createTable(EventWrapperTableModel<AccessEvent> tableModel)
 	{
 		return new AccessEventViewTable(getMainFrame(), tableModel, getEventSource().isGlobal());
 	}
 
+	@Override
 	protected void closeConnection(SourceIdentifier sourceIdentifier)
 	{
 		getMainFrame().closeAccessConnection(sourceIdentifier);

@@ -152,6 +152,7 @@ public class ColorChooserPanel
 		implements ActionListener
 	{
 
+		@Override
 		public void actionPerformed(ActionEvent actionEvent)
 		{
 			updateComponents();

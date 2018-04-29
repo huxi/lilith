@@ -37,6 +37,7 @@ public class CleanObsoleteCallable
 		this.parentDirectory = parentDirectory;
 	}
 
+	@Override
 	public Long call()
 		throws Exception
 	{

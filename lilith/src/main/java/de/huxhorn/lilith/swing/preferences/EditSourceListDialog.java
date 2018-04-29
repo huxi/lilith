@@ -188,6 +188,7 @@ public class EditSourceListDialog
 		}
 	}
 
+	@Override
 	public void setVisible(boolean b)
 	{
 		if(b)
@@ -268,6 +269,7 @@ public class EditSourceListDialog
 			}
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			String name = sourceListName.getText();
@@ -292,6 +294,7 @@ public class EditSourceListDialog
 			putValue(Action.ACCELERATOR_KEY, accelerator);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			canceled = true;
@@ -358,6 +361,7 @@ public class EditSourceListDialog
 			setEnabled(!sourceList.isSelectionEmpty());
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Add");
@@ -390,6 +394,7 @@ public class EditSourceListDialog
 			setEnabled(!listList.isSelectionEmpty());
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isDebugEnabled()) logger.debug("Remove");
@@ -408,6 +413,7 @@ public class EditSourceListDialog
 	private class SourceListSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			updateActions();
@@ -417,6 +423,7 @@ public class EditSourceListDialog
 	private class ListListSelectionListener
 		implements ListSelectionListener
 	{
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			updateActions();
@@ -426,16 +433,19 @@ public class EditSourceListDialog
 	private class NameKeyListener
 		implements KeyListener
 	{
+		@Override
 		public void keyTyped(KeyEvent e)
 		{
 			updateActions();
 		}
 
+		@Override
 		public void keyPressed(KeyEvent e)
 		{
 			// no-op
 		}
 
+		@Override
 		public void keyReleased(KeyEvent e)
 		{
 			// no-op

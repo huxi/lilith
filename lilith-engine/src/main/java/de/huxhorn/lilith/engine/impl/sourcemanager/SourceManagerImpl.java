@@ -68,6 +68,7 @@ public class SourceManagerImpl<T extends Serializable>
 		sources = new ArrayList<>();
 	}
 
+	@Override
 	public void addSource(EventSource<T> source)
 	{
 		//SourceIdentifier si=source.getSourceIdentifier();
@@ -83,6 +84,7 @@ public class SourceManagerImpl<T extends Serializable>
 	}
 
 
+	@Override
 	public void removeSource(SourceIdentifier source)
 	{
 		int oldSize = sources.size();
@@ -121,17 +123,20 @@ public class SourceManagerImpl<T extends Serializable>
 		}
 	}
 
+	@Override
 	public List<EventSource<T>> getSources()
 	{
 		return new ArrayList<>(sources);
 	}
 
 
+	@Override
 	public int getNumberOfSources()
 	{
 		return sources.size();
 	}
 
+	@Override
 	public void addEventSourceProducer(EventSourceProducer<T> producer)
 	{
 		producer.setQueue(queue);
@@ -166,6 +171,7 @@ public class SourceManagerImpl<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void addEventProducer(EventProducer<T> producer)
 	{
 		SourceIdentifier id = producer.getSourceIdentifier();
@@ -184,6 +190,7 @@ public class SourceManagerImpl<T extends Serializable>
 		if(logger.isDebugEnabled()) logger.debug("Started {}.", producer);
 	}
 
+	@Override
 	public void removeEventProducer(SourceIdentifier id)
 	{
 		EventProducer previous = findProducer(id);
@@ -202,17 +209,20 @@ public class SourceManagerImpl<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void setEventHandlers(List<EventHandler<T>> handlers)
 	{
 		eventPoller.setEventHandlers(handlers);
 	}
 
+	@Override
 	public List<EventHandler<T>> getEventHandlers()
 	{
 		return eventPoller.getEventHandlers();
 	}
 
 
+	@Override
 	public void addEventSourceListener(EventSourceListener<T> listener)
 	{
 		if(!listeners.contains(listener))
@@ -221,6 +231,7 @@ public class SourceManagerImpl<T extends Serializable>
 		}
 	}
 
+	@Override
 	public void removeEventSourceListener(EventSourceListener<T> listener)
 	{
 		if(listeners.contains(listener))
@@ -240,6 +251,7 @@ public class SourceManagerImpl<T extends Serializable>
 		changeSupport.removePropertyChangeListener(listener);
 	}
 
+	@Override
 	public void start()
 	{
 		// start poller...

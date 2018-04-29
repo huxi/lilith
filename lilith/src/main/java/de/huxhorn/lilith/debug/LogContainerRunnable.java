@@ -34,6 +34,7 @@ public class LogContainerRunnable
 		super(delay);
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

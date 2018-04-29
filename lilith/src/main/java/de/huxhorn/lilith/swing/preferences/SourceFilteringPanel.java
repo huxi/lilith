@@ -218,6 +218,7 @@ public class SourceFilteringPanel
 		/**
 		 * Invoked when an action occurs.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Disabled");
@@ -240,6 +241,7 @@ public class SourceFilteringPanel
 		/**
 		 * Invoked when an action occurs.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Blacklist");
@@ -262,6 +264,7 @@ public class SourceFilteringPanel
 		/**
 		 * Invoked when an action occurs.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			if(logger.isInfoEnabled()) logger.info("Whitelist");
@@ -284,6 +287,7 @@ public class SourceFilteringPanel
 		 * The code written for this method performs the operations
 		 * that need to occur when an item is selected (or deselected).
 		 */
+		@Override
 		public void itemStateChanged(ItemEvent e)
 		{
 			if(!initializing && e.getStateChange() == ItemEvent.SELECTED)

@@ -25,6 +25,7 @@ import java.util.Map;
 public class LoggingEventSourceIdentifierUpdater
 		implements SourceIdentifierUpdater<LoggingEvent>
 {
+	@Override
 	public void updateIdentifier(SourceIdentifier baseIdentifier, LoggingEvent event)
 	{
 		if(baseIdentifier == null)

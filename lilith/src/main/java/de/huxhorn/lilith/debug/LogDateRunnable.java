@@ -31,6 +31,7 @@ public class LogDateRunnable
 		super(delay);
 	}
 
+	@Override
 	public void runIt()
 		throws InterruptedException
 	{

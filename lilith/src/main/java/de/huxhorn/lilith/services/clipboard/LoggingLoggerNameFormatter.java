@@ -34,11 +34,13 @@ public class LoggingLoggerNameFormatter
 		super(LilithActionId.COPY_LOGGER_NAME);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveLoggingEvent(object).map(it -> !isNullOrEmpty(it.getLogger())).orElse(false);
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveLoggingEvent(object).map(it -> toStringOrNull(it.getLogger())).orElse(null);

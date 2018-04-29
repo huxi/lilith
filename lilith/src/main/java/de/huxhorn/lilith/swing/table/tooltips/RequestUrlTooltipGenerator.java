@@ -27,6 +27,7 @@ import javax.swing.JTable;
 public class RequestUrlTooltipGenerator
 	implements TooltipGenerator
 {
+	@Override
 	public String createTooltipText(JTable table, int row)
 	{
 		String tooltip = null;

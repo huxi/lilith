@@ -59,6 +59,7 @@ class LoggingEventWrapperProtobufEncoder
 		return compressing;
 	}
 
+	@Override
 	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
 	public byte[] encode(EventWrapper<LoggingEvent> wrapper)
 	{

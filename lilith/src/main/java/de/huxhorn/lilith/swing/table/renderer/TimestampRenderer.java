@@ -43,6 +43,7 @@ public class TimestampRenderer
 		renderer.setIcon(null);
 	}
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex)
 	{
 		if(!isSelected)

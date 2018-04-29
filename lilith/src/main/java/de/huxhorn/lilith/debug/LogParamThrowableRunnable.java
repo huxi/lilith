@@ -35,6 +35,7 @@ public class LogParamThrowableRunnable
 		this.throwable = throwable;
 	}
 
+	@Override
 	@SuppressWarnings("PMD.InvalidSlf4jMessageFormat")
 	public void runIt()
 		throws InterruptedException

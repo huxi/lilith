@@ -25,6 +25,7 @@ import javax.swing.JTable;
 public class LoggerNameTooltipGenerator
 	implements TooltipGenerator
 {
+	@Override
 	public String createTooltipText(JTable table, int row)
 	{
 		String tooltip = null;

@@ -46,6 +46,7 @@ import de.huxhorn.sulky.buffers.AppendOperation;
 import java.io.IOException;
 import java.io.InputStream;
 
+@SuppressWarnings("PMD.ClassNamingConventions")
 public class Log4j2XmlServerSocketEventSourceProducer
 		extends AbstractServerSocketEventSourceProducer<LoggingEvent>
 {
@@ -55,6 +56,7 @@ public class Log4j2XmlServerSocketEventSourceProducer
 		super(port);
 	}
 
+	@Override
 	protected EventProducer<LoggingEvent> createProducer(SourceIdentifier id, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 			throws IOException
 	{

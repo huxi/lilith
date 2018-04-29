@@ -108,21 +108,25 @@ public class SplashScreen
 			this.setPreferredSize(new Dimension(this.image.getWidth(), this.image.getHeight()));
 		}
 
+		@Override
 		public void paint(Graphics g)
 		{
 			g.drawImage(image, 0, 0, this);
 		}
 
+		@Override
 		public void update(Graphics g)
 		{
 			paint(g);
 		}
 
+		@Override
 		protected void paintComponent(Graphics g)
 		{
 			paint(g);
 		}
 
+		@Override
 		public boolean imageUpdate(Image img, int infoFlags, int x, int y, int w, int h)
 		{
 			repaint();

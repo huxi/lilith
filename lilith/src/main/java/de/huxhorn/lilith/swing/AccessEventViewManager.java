@@ -28,6 +28,7 @@ public class AccessEventViewManager
 		super(mainFrame);
 	}
 
+	@Override
 	protected ViewContainer<AccessEvent> createViewContainer(EventSource<AccessEvent> eventSource)
 	{
 		//return new TabbedAccessViewContainer(getMainFrame(), eventSource);

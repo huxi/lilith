@@ -33,11 +33,13 @@ public class LoggingThrowableFormatter
 		super(LilithActionId.COPY_THROWABLE);
 	}
 
+	@Override
 	public boolean isCompatible(Object object)
 	{
 		return resolveThrowableInfo(object).isPresent();
 	}
 
+	@Override
 	public String toString(Object object)
 	{
 		return resolveThrowableInfo(object).map(ThrowableInfo::toString).orElse(null);

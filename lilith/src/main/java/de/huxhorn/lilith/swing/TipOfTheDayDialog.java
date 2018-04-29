@@ -269,6 +269,7 @@ class TipOfTheDayDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_P);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			previousTipOfTheDay();
@@ -286,6 +287,7 @@ class TipOfTheDayDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			nextTipOfTheDay();
@@ -305,6 +307,7 @@ class TipOfTheDayDialog
 			putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e)
 		{
 			setVisible(false);
@@ -321,6 +324,7 @@ class TipOfTheDayDialog
 	private class CheckboxListener
 		implements ItemListener
 	{
+		@Override
 		public void itemStateChanged(ItemEvent e)
 		{
 			Object source = e.getItemSelectable();
