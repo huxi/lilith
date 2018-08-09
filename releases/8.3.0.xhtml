@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Lilith 8.3.0 Release Notes</title>
+		<link href="help.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<h1>Lilith 8.3.0</h1>
+		<div>
+			<a class="download" href="http://sourceforge.net/projects/lilith/files/lilith/8.3.0">Download Now!
+		<br />(Released: 2018-xx-xx)</a>
+		</div>
+		
+		<p>This version of Lilith demands Java 8 update 181 or higher and will
+		says so if you try to start it with an older version. It has also
+		been built and tested with Java 10.0.2.</p>
+		<p>You can still receive event from previous versions so if your
+		application is still running Java 7 or lower just keep using the
+		0.9.44 artifacts.<br />
+		Keep in mind that
+		<a href="http://www.oracle.com/technetwork/java/eol-135779.html">Java
+		SE 7 End of Public Updates</a> has already been reached.</p>
+		
+		<h2>Changelog</h2>
+
+		<h3>Known issues</h3>
+
+		<ul>
+			<li>logback-access <code>AccessEvent</code> sent by <code>SocketAppender</code> isn't guaranteed to be deserializable at the moment. You can use the Lilith Multiplex Socket Appender in the meantime.
+See <a href="http://jira.qos.ch/browse/LOGBACK-1182">LOGBACK-1182 - Problem deserializing AccessEvent.</a>.</li>
+			<li>Logback 1.1.0 introduced some message formatting regressions.
+See <a href="http://jira.qos.ch/browse/LOGBACK-1183">LOGBACK-1183 - Message formatting regression</a>.</li>
+			<li>
+				<del>Binary Lilith log files will only work in case of <code>append=false</code>.</del> Implemented a workaround.
+See <a href="https://jira.qos.ch/browse/LOGBACK-1257">LOGBACK-1257 - Invalid files in case of append=true and Encoder with non-null headerBytes() / footerBytes()</a>
+			</li>
+			<li>log4j 1 won't be able to send Java 9 <code>ClassLoaderName</code>, <code>ModuleName</code> and <code>ModuleVersion</code> for the call location of the event. Search <code>LOG4J_MODULE</code> in the source to take a look at the problem. Since <a href="https://blogs.apache.org/foundation/entry/apache_logging_services_project_announces">Log4j 1 End-Of-Life</a> has been announced 2015-08-06, chances are pretty slim that this will be fixed. Upgrade to <a href="http://logging.apache.org/log4j/2.x/">log4j 2</a> or <a href="https://logback.qos.ch/">Logback</a>.</li>
+			<li>Flying Saucer related issues:
+<ul><li>Selection in the HTML view is currently somewhat buggy, especially in case of scaled view.
+See <a href="https://code.google.com/archive/p/flying-saucer/issues/79">Issue 79: SelectionHighlighter not compatible with ScalableXHTMLPanel</a>.</li>
+					<li>Jumping to anchors is currently not supported so the navigation in help and details view isn't as good as it could be.
+See <a href="https://code.google.com/archive/p/flying-saucer/issues/105">Issue 105: URLs with anchors</a>.</li>
+				</ul>
+			</li>
+			<li>
+				<a href="https://github.com/glazedlists/glazedlists/issues/485">glazedlists #485 - AutoCompleteSupport: Arrowing down on the popup and pressing enter fails to update combobox</a> is happening in the find panel on macOS. Select the correct entry with the mouse as a workaround.</li>
+		</ul>
+		
+		<h2>Previous Versions</h2>
+		<ul>
+			<li>
+				<a href="http://lilithapp.com/releases/8.2.0.xhtml">8.2.0</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/8.1.1.xhtml">8.1.1</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/8.1.0.xhtml">8.1.0</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/8.0.0.xhtml">8.0.0</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.44.xhtml">0.9.44</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.43.xhtml">0.9.43</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.42.1.xhtml">0.9.42.1</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.42.xhtml">0.9.42</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.41.xhtml">0.9.41</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.40.xhtml">0.9.40</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.39.xhtml">0.9.39</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.38.xhtml">0.9.38</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.37.xhtml">0.9.37</a>
+			</li>
+			<li>
+				<a href="http://lilithapp.com/releases/0.9.36.xhtml">0.9.36</a>
+			</li>
+		</ul>
+		<hr />
+		<p>
+		Donate in <a href="bitcoin:3MwD28iwF3faSvKUBYNe2XuCzStBi1NzAH">Bitcoin</a>. - 3MwD28iwF3faSvKUBYNe2XuCzStBi1NzAH<br />
+		Donate in <a href="bitcoincash:18srjoaCdvV3i9XWKjDcnQA6UyNMxky5GA">Bitcoin Cash</a>. - 18srjoaCdvV3i9XWKjDcnQA6UyNMxky5GA<br />
+		Donate in <a href="zcash:t1TLsUKLsNczQbG4PVx7iNEyP5LtKauL3gr">Zcash</a>. - t1TLsUKLsNczQbG4PVx7iNEyP5LtKauL3gr<br />
+		Donate in <a href="litecoin:MPYHQnhjtv9nVFCoHF3UyPJAvhwqqZ2snx">Litecoin</a>. - MPYHQnhjtv9nVFCoHF3UyPJAvhwqqZ2snx
+		</p>
+	</body>
+</html>

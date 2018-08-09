@@ -70,13 +70,14 @@ Use SFTP, Luke. m(
 #####
 
 Upload /releases/x.x.x.xhtml
-Update current-version.txt
+Update current-version.txt (legacy)
+Update release-version.txt
 
 #####
 
 Update allprojects.version in sulky/build.gradle to next sulky-version 
 Update allprojects.version in lilith/build.gradle to next lilith-version 
-Update sulkyBaseVersion in lilith/dependencyDefinitions.gradle to next sulky-version
+Update sulkyVersion in lilith/dependencyDefinitions.gradle to next sulky-version
 Update project.ext.lilithVersion in lilith/sandbox/sandboxDefaults.gradle to next lilith-version
 
 #####
