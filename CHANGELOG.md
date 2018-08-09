@@ -39,7 +39,7 @@ All notable changes to this project will be documented in this file.
 - Not all event producers expect a heartbeat.
 - Made sure that "You have changed the look & feel." and "You have changed the application path." dialogs aren't hidden by the preferences dialog.
 - Fixed java executable detection in Windows bat file. Thanks, [tha2015](https://github.com/tha2015)!
-- Logback 1.2.3, log4j2 2.11.0, Groovy 2.5.1, jackson 2.9.6, spring 5.0.8, protobuf 3.5.1, junique 1.0.4, jcommander 1.72, commons-lang 3.7, commons-text 1.1, commons-io 2.6, flying-saucer 9.1.12, glazedlists 1.10.0, aspectj 1.9.1, httpcore 4.4.10, httpclient 4.5.6, woodstox 5.1.0
+- Logback 1.2.3, log4j2 2.11.1, Groovy 2.5.1, jackson 2.9.6, spring 5.0.8, protobuf 3.5.1, junique 1.0.4, jcommander 1.72, commons-lang 3.7, commons-text 1.1, commons-io 2.6, flying-saucer 9.1.12, glazedlists 1.10.0, aspectj 1.9.1, httpcore 4.4.10, httpclient 4.5.6, woodstox 5.1.0
 - Fixed several split package issues. Because of this, some classes have changed package names:
   - the two most commonly used classes `de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender` and `de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder` have not been moved. 
   - `de.huxhorn.lilith.logback.encoder.AccessLilithEncoder` changed to `de.huxhorn.lilith.logback.encoder.access.AccessLilithEncoder`.
