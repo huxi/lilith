@@ -1,7 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [8.2.0][unreleased] - TBD
+## [8.3.0][unreleased] - TBD
+
+## [8.2.0] - 2018-08-09
 
 ### Added
 - Added "Find previous active" and "Find next active" buttons to toolbar. 
@@ -1373,7 +1375,8 @@ All notable changes to this project will be documented in this file.
 - Use default scrollToBottom for filtered views.
 - Prevented icon-change in case of filtered view.
 
-[unreleased]: https://github.com/huxi/lilith/compare/v8.1.1...HEAD
+[unreleased]: https://github.com/huxi/lilith/compare/v8.2.0...HEAD
+[8.2.0]: https://github.com/huxi/lilith/compare/v8.1.1...v8.2.0
 [8.1.1]: https://github.com/huxi/lilith/compare/v8.1.0...v8.1.1
 [8.1.0]: https://github.com/huxi/lilith/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/huxi/lilith/compare/v0.9.44...v8.0.0
