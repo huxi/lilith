@@ -31,7 +31,7 @@ buildscript {
 		// https://github.com/johnrengelman/shadow/issues/347
 		// classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
 		classpath 'de.thetaphi:forbiddenapis:2.5'
-		classpath 'org.kordamp.gradle:jdeps-gradle-plugin:0.2.0'
+		classpath 'org.kordamp.gradle:jdeps-gradle-plugin:0.3.0'
 	}
 }
 
@@ -174,7 +174,7 @@ subprojects {
 	apply plugin: 'de.thetaphi.forbiddenapis'
 	apply plugin: 'checkstyle'
 	apply plugin: 'pmd'
-	apply plugin: 'org.kordamp.jdeps'
+	//apply plugin: 'org.kordamp.jdeps'
 	
 	checkstyle {
 		configFile = rootProject.file('config/checkstyle/checkstyle.xml')
