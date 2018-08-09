@@ -200,13 +200,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -233,6 +226,13 @@ public final class LoggingProto {
               bitField0_ |= 0x00000002;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -250,6 +250,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable
@@ -301,6 +302,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -316,6 +318,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -327,6 +330,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -460,6 +464,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -467,6 +472,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -490,6 +496,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_fieldAccessorTable
@@ -514,6 +521,7 @@ public final class LoggingProto {
           getEventFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (eventIdentifierBuilder_ == null) {
@@ -531,15 +539,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventWrapper_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result = buildPartial();
         if (!result.isInitialized()) {
@@ -548,6 +559,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper(this);
         int from_bitField0_ = bitField0_;
@@ -573,32 +585,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper)other);
@@ -621,6 +640,7 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         if (hasEvent()) {
           if (!getEvent().isInitialized()) {
@@ -630,6 +650,7 @@ public final class LoggingProto {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -884,11 +905,13 @@ public final class LoggingProto {
         }
         return eventBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -910,6 +933,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<EventWrapper>
         PARSER = new com.google.protobuf.AbstractParser<EventWrapper>() {
+      @java.lang.Override
       public EventWrapper parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -927,6 +951,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventWrapper getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -999,13 +1024,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 8: {
               bitField0_ |= 0x00000001;
               localId_ = input.readInt64();
@@ -1022,6 +1040,13 @@ public final class LoggingProto {
                 sourceIdentifier_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000002;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -1041,6 +1066,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable
@@ -1086,6 +1112,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1095,6 +1122,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1106,6 +1134,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1240,6 +1269,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -1247,6 +1277,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1270,6 +1301,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_fieldAccessorTable
@@ -1293,6 +1325,7 @@ public final class LoggingProto {
           getSourceIdentifierFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         localId_ = 0L;
@@ -1306,15 +1339,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_EventIdentifier_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result = buildPartial();
         if (!result.isInitialized()) {
@@ -1323,6 +1359,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier(this);
         int from_bitField0_ = bitField0_;
@@ -1344,32 +1381,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier)other);
@@ -1392,10 +1436,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1564,11 +1610,13 @@ public final class LoggingProto {
         }
         return sourceIdentifierBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1590,6 +1638,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<EventIdentifier>
         PARSER = new com.google.protobuf.AbstractParser<EventIdentifier>() {
+      @java.lang.Override
       public EventIdentifier parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1607,6 +1656,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -1686,13 +1736,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -1703,6 +1746,13 @@ public final class LoggingProto {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
               secondaryIdentifier_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -1722,6 +1772,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable
@@ -1815,6 +1866,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1824,6 +1876,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1835,6 +1888,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1966,6 +2020,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -1973,6 +2028,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1996,6 +2052,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_fieldAccessorTable
@@ -2018,6 +2075,7 @@ public final class LoggingProto {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         identifier_ = "";
@@ -2027,15 +2085,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_SourceIdentifier_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result = buildPartial();
         if (!result.isInitialized()) {
@@ -2044,6 +2105,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier(this);
         int from_bitField0_ = bitField0_;
@@ -2061,32 +2123,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier)other);
@@ -2113,10 +2182,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2287,11 +2358,13 @@ public final class LoggingProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -2313,6 +2386,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<SourceIdentifier>
         PARSER = new com.google.protobuf.AbstractParser<SourceIdentifier>() {
+      @java.lang.Override
       public SourceIdentifier parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2330,6 +2404,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -2540,13 +2615,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 8: {
               bitField0_ |= 0x00000001;
               timeStamp_ = input.readInt64();
@@ -2560,6 +2628,7 @@ public final class LoggingProto {
             }
             case 24: {
               int rawValue = input.readEnum();
+                @SuppressWarnings("deprecation")
               de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level value = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
@@ -2674,6 +2743,13 @@ public final class LoggingProto {
               sequenceNumber_ = input.readInt64();
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -2694,6 +2770,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable
@@ -2771,6 +2848,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
+      @SuppressWarnings("deprecation")
       de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level result = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.valueOf(level_);
       return result == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE : result;
     }
@@ -2973,6 +3051,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3000,6 +3079,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3041,6 +3121,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3301,6 +3382,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3308,6 +3390,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3331,6 +3414,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_fieldAccessorTable
@@ -3361,6 +3445,7 @@ public final class LoggingProto {
           getMarkerFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         timeStamp_ = 0L;
@@ -3422,15 +3507,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggingEvent_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result = buildPartial();
         if (!result.isInitialized()) {
@@ -3439,6 +3527,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent(this);
         int from_bitField0_ = bitField0_;
@@ -3529,32 +3618,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent)other);
@@ -3632,6 +3728,7 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         if (hasLoggerContext()) {
           if (!getLoggerContext().isInitialized()) {
@@ -3651,6 +3748,7 @@ public final class LoggingProto {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3789,6 +3887,7 @@ public final class LoggingProto {
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
+        @SuppressWarnings("deprecation")
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level result = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.valueOf(level_);
         return result == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE : result;
       }
@@ -4911,11 +5010,13 @@ public final class LoggingProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -4937,6 +5038,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<LoggingEvent>
         PARSER = new com.google.protobuf.AbstractParser<LoggingEvent>() {
+      @java.lang.Override
       public LoggingEvent parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4954,6 +5056,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -5041,13 +5144,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 8: {
               bitField0_ |= 0x00000001;
               birthTime_ = input.readInt64();
@@ -5072,6 +5168,13 @@ public final class LoggingProto {
               bitField0_ |= 0x00000004;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -5089,6 +5192,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_fieldAccessorTable
@@ -5176,6 +5280,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -5191,6 +5296,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -5205,6 +5311,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -5351,6 +5458,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -5358,6 +5466,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -5381,6 +5490,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_fieldAccessorTable
@@ -5404,6 +5514,7 @@ public final class LoggingProto {
           getPropertiesFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         birthTime_ = 0L;
@@ -5419,15 +5530,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_LoggerContext_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext result = buildPartial();
         if (!result.isInitialized()) {
@@ -5436,6 +5550,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext(this);
         int from_bitField0_ = bitField0_;
@@ -5461,32 +5576,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext)other);
@@ -5514,6 +5636,7 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         if (hasProperties()) {
           if (!getProperties().isInitialized()) {
@@ -5523,6 +5646,7 @@ public final class LoggingProto {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5767,11 +5891,13 @@ public final class LoggingProto {
         }
         return propertiesBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -5793,6 +5919,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<LoggerContext>
         PARSER = new com.google.protobuf.AbstractParser<LoggerContext>() {
+      @java.lang.Override
       public LoggerContext parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5810,6 +5937,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -5919,13 +6047,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 8: {
               bitField0_ |= 0x00000001;
               id_ = input.readInt64();
@@ -5953,6 +6074,13 @@ public final class LoggingProto {
               priority_ = input.readInt32();
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -5970,6 +6098,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable
@@ -6108,6 +6237,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -6117,6 +6247,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -6137,6 +6268,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -6309,6 +6441,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -6316,6 +6449,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -6339,6 +6473,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_fieldAccessorTable
@@ -6361,6 +6496,7 @@ public final class LoggingProto {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -6376,15 +6512,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_ThreadInfo_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -6393,6 +6532,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo(this);
         int from_bitField0_ = bitField0_;
@@ -6422,32 +6562,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo)other);
@@ -6483,10 +6630,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6753,11 +6902,13 @@ public final class LoggingProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -6779,6 +6930,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<ThreadInfo>
         PARSER = new com.google.protobuf.AbstractParser<ThreadInfo>() {
+      @java.lang.Override
       public ThreadInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6796,6 +6948,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -6885,13 +7038,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -6905,6 +7051,13 @@ public final class LoggingProto {
               }
               argument_.add(
                   input.readMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.PARSER, extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -6927,6 +7080,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable
@@ -7013,6 +7167,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -7022,6 +7177,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -7033,6 +7189,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -7162,6 +7319,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -7169,6 +7327,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -7192,6 +7351,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_fieldAccessorTable
@@ -7215,6 +7375,7 @@ public final class LoggingProto {
           getArgumentFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         messagePattern_ = "";
@@ -7228,15 +7389,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Message_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result = buildPartial();
         if (!result.isInitialized()) {
@@ -7245,6 +7409,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message(this);
         int from_bitField0_ = bitField0_;
@@ -7267,32 +7432,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message)other);
@@ -7340,10 +7512,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -7678,11 +7852,13 @@ public final class LoggingProto {
         }
         return argumentBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -7704,6 +7880,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Message>
         PARSER = new com.google.protobuf.AbstractParser<Message>() {
+      @java.lang.Override
       public Message parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -7721,6 +7898,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -7789,17 +7967,17 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              value_ = bs;
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
-              break;
-            }
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000001;
-              value_ = bs;
               break;
             }
           }
@@ -7819,6 +7997,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable
@@ -7870,6 +8049,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -7879,6 +8059,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -7887,6 +8068,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -8006,6 +8188,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -8013,6 +8196,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -8040,6 +8224,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_fieldAccessorTable
@@ -8062,6 +8247,7 @@ public final class LoggingProto {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         value_ = "";
@@ -8069,15 +8255,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_MessageArgument_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result = buildPartial();
         if (!result.isInitialized()) {
@@ -8086,6 +8275,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument(this);
         int from_bitField0_ = bitField0_;
@@ -8099,32 +8289,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument)other);
@@ -8146,10 +8343,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -8244,11 +8443,13 @@ public final class LoggingProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -8270,6 +8471,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<MessageArgument>
         PARSER = new com.google.protobuf.AbstractParser<MessageArgument>() {
+      @java.lang.Override
       public MessageArgument parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -8287,6 +8489,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -8476,13 +8679,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -8541,6 +8737,13 @@ public final class LoggingProto {
               moduleVersion_ = bs;
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -8558,6 +8761,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable
@@ -8933,6 +9137,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -8942,6 +9147,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -8977,6 +9183,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -9207,6 +9414,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -9214,6 +9422,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -9237,6 +9446,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_fieldAccessorTable
@@ -9259,6 +9469,7 @@ public final class LoggingProto {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         methodName_ = "";
@@ -9284,15 +9495,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StackTraceElement_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result = buildPartial();
         if (!result.isInitialized()) {
@@ -9301,6 +9515,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement(this);
         int from_bitField0_ = bitField0_;
@@ -9350,32 +9565,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement)other);
@@ -9438,10 +9660,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -10132,11 +10356,13 @@ public final class LoggingProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -10158,6 +10384,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<StackTraceElement>
         PARSER = new com.google.protobuf.AbstractParser<StackTraceElement>() {
+      @java.lang.Override
       public StackTraceElement parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -10175,6 +10402,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -10327,13 +10555,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -10382,6 +10603,13 @@ public final class LoggingProto {
                   input.readMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.PARSER, extensionRegistry));
               break;
             }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -10405,6 +10633,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable
@@ -10604,6 +10833,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -10613,6 +10843,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -10636,6 +10867,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -10813,6 +11045,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -10820,6 +11053,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -10843,6 +11077,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_fieldAccessorTable
@@ -10868,6 +11103,7 @@ public final class LoggingProto {
           getSuppressedFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         throwableClass_ = "";
@@ -10897,15 +11133,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Throwable_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result = buildPartial();
         if (!result.isInitialized()) {
@@ -10914,6 +11153,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable(this);
         int from_bitField0_ = bitField0_;
@@ -10961,32 +11201,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable)other);
@@ -11071,10 +11318,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -11875,11 +12124,13 @@ public final class LoggingProto {
         }
         return suppressedBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -11901,6 +12152,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Throwable>
         PARSER = new com.google.protobuf.AbstractParser<Throwable>() {
+      @java.lang.Override
       public Throwable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -11918,6 +12170,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -11992,13 +12245,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message>();
@@ -12006,6 +12252,13 @@ public final class LoggingProto {
               }
               entry_.add(
                   input.readMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.PARSER, extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -12028,6 +12281,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable
@@ -12071,6 +12325,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -12080,6 +12335,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < entry_.size(); i++) {
@@ -12088,6 +12344,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -12205,6 +12462,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -12212,6 +12470,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -12235,6 +12494,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_fieldAccessorTable
@@ -12258,6 +12518,7 @@ public final class LoggingProto {
           getEntryFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (entryBuilder_ == null) {
@@ -12269,15 +12530,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_NestedDiagnosticContext_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result = buildPartial();
         if (!result.isInitialized()) {
@@ -12286,6 +12550,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext(this);
         int from_bitField0_ = bitField0_;
@@ -12302,32 +12567,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext)other);
@@ -12370,10 +12642,12 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -12632,11 +12906,13 @@ public final class LoggingProto {
         }
         return entryBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -12658,6 +12934,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<NestedDiagnosticContext>
         PARSER = new com.google.protobuf.AbstractParser<NestedDiagnosticContext>() {
+      @java.lang.Override
       public NestedDiagnosticContext parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -12675,6 +12952,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -12749,13 +13027,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry>();
@@ -12763,6 +13034,13 @@ public final class LoggingProto {
               }
               entry_.add(
                   input.readMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.PARSER, extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -12785,6 +13063,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_fieldAccessorTable
@@ -12828,6 +13107,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -12843,6 +13123,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < entry_.size(); i++) {
@@ -12851,6 +13132,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -12968,6 +13250,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -12975,6 +13258,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -12998,6 +13282,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_fieldAccessorTable
@@ -13021,6 +13306,7 @@ public final class LoggingProto {
           getEntryFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (entryBuilder_ == null) {
@@ -13032,15 +13318,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMap_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap result = buildPartial();
         if (!result.isInitialized()) {
@@ -13049,6 +13338,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap(this);
         int from_bitField0_ = bitField0_;
@@ -13065,32 +13355,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap)other);
@@ -13133,6 +13430,7 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         for (int i = 0; i < getEntryCount(); i++) {
           if (!getEntry(i).isInitialized()) {
@@ -13142,6 +13440,7 @@ public final class LoggingProto {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -13400,11 +13699,13 @@ public final class LoggingProto {
         }
         return entryBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -13426,6 +13727,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<StringMap>
         PARSER = new com.google.protobuf.AbstractParser<StringMap>() {
+      @java.lang.Override
       public StringMap parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -13443,6 +13745,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -13522,13 +13825,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -13539,6 +13835,13 @@ public final class LoggingProto {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
               value_ = bs;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -13558,6 +13861,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_fieldAccessorTable
@@ -13651,6 +13955,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -13664,6 +13969,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -13675,6 +13981,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -13806,6 +14113,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -13813,6 +14121,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -13836,6 +14145,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_fieldAccessorTable
@@ -13858,6 +14168,7 @@ public final class LoggingProto {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         key_ = "";
@@ -13867,15 +14178,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_StringMapEntry_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry result = buildPartial();
         if (!result.isInitialized()) {
@@ -13884,6 +14198,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry(this);
         int from_bitField0_ = bitField0_;
@@ -13901,32 +14216,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry)other);
@@ -13953,6 +14275,7 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasKey()) {
           return false;
@@ -13960,6 +14283,7 @@ public final class LoggingProto {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -14130,11 +14454,13 @@ public final class LoggingProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -14156,6 +14482,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<StringMapEntry>
         PARSER = new com.google.protobuf.AbstractParser<StringMapEntry>() {
+      @java.lang.Override
       public StringMapEntry parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -14173,6 +14500,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -14262,13 +14590,6 @@ public final class LoggingProto {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -14282,6 +14603,13 @@ public final class LoggingProto {
               }
               reference_.add(
                   input.readMessage(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.PARSER, extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -14304,6 +14632,7 @@ public final class LoggingProto {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable
@@ -14390,6 +14719,7 @@ public final class LoggingProto {
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -14409,6 +14739,7 @@ public final class LoggingProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -14420,6 +14751,7 @@ public final class LoggingProto {
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -14549,6 +14881,7 @@ public final class LoggingProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -14556,6 +14889,7 @@ public final class LoggingProto {
     public static Builder newBuilder(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -14579,6 +14913,7 @@ public final class LoggingProto {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_fieldAccessorTable
@@ -14602,6 +14937,7 @@ public final class LoggingProto {
           getReferenceFieldBuilder();
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         name_ = "";
@@ -14615,15 +14951,18 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.internal_static_de_huxhorn_lilith_logging_Marker_descriptor;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getDefaultInstanceForType() {
         return de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance();
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker build() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result = buildPartial();
         if (!result.isInitialized()) {
@@ -14632,6 +14971,7 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker buildPartial() {
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker result = new de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker(this);
         int from_bitField0_ = bitField0_;
@@ -14654,32 +14994,39 @@ public final class LoggingProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker) {
           return mergeFrom((de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker)other);
@@ -14727,6 +15074,7 @@ public final class LoggingProto {
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasName()) {
           return false;
@@ -14739,6 +15087,7 @@ public final class LoggingProto {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -15073,11 +15422,13 @@ public final class LoggingProto {
         }
         return referenceBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -15099,6 +15450,7 @@ public final class LoggingProto {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Marker>
         PARSER = new com.google.protobuf.AbstractParser<Marker>() {
+      @java.lang.Override
       public Marker parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -15116,6 +15468,7 @@ public final class LoggingProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
