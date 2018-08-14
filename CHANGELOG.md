@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [8.3.0][unreleased] - TBD
 
+### Fixed
+- Groovy 2.5.2
+
 ## [8.2.0] - 2018-08-09
 
 ### Added
