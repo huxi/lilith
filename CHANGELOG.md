@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [8.3.0][unreleased] - TBD
 
 ### Fixed
-- Groovy 2.5.2, Spring 5.0.9, commons-lang 3.8.1
+- Groovy 2.5.2, Spring 5.0.9, commons-lang 3.8.1, jackson 2.9.7
 
 ## [8.2.0] - 2018-08-09
 
