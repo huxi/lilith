@@ -96,6 +96,7 @@ public class SerializableEventProducer<T extends Serializable>
 	private class ReceiverRunnable
 		implements Runnable
 	{
+		@SuppressWarnings("PMD.IdenticalCatchBranches")
 		@Override
 		public void run()
 		{

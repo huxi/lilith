@@ -76,6 +76,7 @@ public class PreferencesDialog
 {
 	private static final long serialVersionUID = 8313102215860746241L;
 
+	@SuppressWarnings("PMD.FieldNamingConventions")
 	public enum Panes
 	{
 		General("General"),
@@ -115,6 +116,7 @@ public class PreferencesDialog
 		}
 	}
 
+	@SuppressWarnings("PMD.FieldNamingConventions")
 	public enum Actions
 	{
 		reinitializeDetailsViewFiles

@@ -58,13 +58,13 @@ public class ConverterRegistryTest
 		assertNull(instance.resolveConverter("foo"));
 	}
 
-	@Test(expected = java.lang.IllegalStateException.class)
+	@Test(expected = IllegalStateException.class)
 	public void brokenConverter()
 	{
 		instance.addConverter(new BrokenConverter());
 	}
 
-	@Test(expected = java.lang.IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void nullConverter()
 	{
 		instance.addConverter(null);

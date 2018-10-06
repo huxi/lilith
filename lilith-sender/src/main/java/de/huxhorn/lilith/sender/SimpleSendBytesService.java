@@ -66,7 +66,7 @@ public class SimpleSendBytesService
 
 	private final BlockingQueue<byte[]> localEventBytes;
 
-	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<>(ConnectionState.Offline);
+	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<>(ConnectionState.OFFLINE);
 	private final AtomicBoolean shutdownIndicator = new AtomicBoolean(false);
 
 	private SendBytesThread sendBytesThread;
@@ -121,7 +121,7 @@ public class SimpleSendBytesService
 	@Override
 	public void sendBytes(byte[] bytes)
 	{
-		if(connectionState.get() == ConnectionState.Connected && sendBytesThread != null && bytes != null)
+		if(connectionState.get() == ConnectionState.CONNECTED && sendBytesThread != null && bytes != null)
 		{
 			try
 			{
@@ -154,7 +154,7 @@ public class SimpleSendBytesService
 		shutdownIndicator.set(true);
 		synchronized(lock)
 		{
-			connectionState.set(ConnectionState.Canceled);
+			connectionState.set(ConnectionState.CANCELED);
 		}
 		if(sendBytesThread != null)
 		{
@@ -201,9 +201,9 @@ public class SimpleSendBytesService
 						// ignore
 					}
 					dataOutputStream = null;
-					if(connectionState.get() != ConnectionState.Canceled)
+					if(connectionState.get() != ConnectionState.CANCELED)
 					{
-						connectionState.set(ConnectionState.Offline);
+						connectionState.set(ConnectionState.OFFLINE);
 					}
 					if(debug)
 					{
@@ -290,10 +290,10 @@ public class SimpleSendBytesService
 					boolean connect = false;
 					synchronized(lock)
 					{
-						if(dataOutputStream == null && connectionState.get() != ConnectionState.Canceled)
+						if(dataOutputStream == null && connectionState.get() != ConnectionState.CANCELED)
 						{
 							connect = true;
-							connectionState.set(ConnectionState.Connecting);
+							connectionState.set(ConnectionState.CONNECTING);
 						}
 					}
 					DataOutputStream newStream = null;
@@ -315,7 +315,7 @@ public class SimpleSendBytesService
 						{
 							if(newStream != null)
 							{
-								if(connectionState.get() == ConnectionState.Canceled)
+								if(connectionState.get() == ConnectionState.CANCELED)
 								{
 									// cleanup
 									try
@@ -330,12 +330,12 @@ public class SimpleSendBytesService
 								else
 								{
 									dataOutputStream = newStream;
-									connectionState.set(ConnectionState.Connected);
+									connectionState.set(ConnectionState.CONNECTED);
 								}
 							}
-							else if(connectionState.get() != ConnectionState.Canceled)
+							else if(connectionState.get() != ConnectionState.CANCELED)
 							{
-								connectionState.set(ConnectionState.Offline);
+								connectionState.set(ConnectionState.OFFLINE);
 							}
 						}
 						try

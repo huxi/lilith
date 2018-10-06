@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import java.awt.BorderLayout;
@@ -30,6 +31,8 @@ import javax.swing.JProgressBar;
 public class ProgressDialog
 	extends JDialog
 {
+	private static final long serialVersionUID = -3492713114936141433L;
+
 	private Future<Integer> future;
 
 	public ProgressDialog(Frame owner)

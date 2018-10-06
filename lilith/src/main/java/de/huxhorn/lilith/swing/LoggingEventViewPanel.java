@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
@@ -29,6 +30,8 @@ import de.huxhorn.sulky.buffers.Buffer;
 public class LoggingEventViewPanel
 	extends EventWrapperViewPanel<LoggingEvent>
 {
+	private static final long serialVersionUID = -4953548772213895981L;
+
 	public LoggingEventViewPanel(MainFrame mainFrame, EventSource<LoggingEvent> eventSource)
 	{
 		super(mainFrame, eventSource);
