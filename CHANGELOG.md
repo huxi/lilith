@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [8.3.0][unreleased] - TBD
 
+### Changed
+- Demand Java 8 `1.8.0_191`.
+
 ### Fixed
 - Groovy 2.5.4, Spring 5.1.2, commons-lang 3.8.1, jackson 2.9.7, commons-text 1.5, flying-saucer 9.1.16, aspectj 1.9.2, woodstox 5.2.0
 
