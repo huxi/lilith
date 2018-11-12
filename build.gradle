@@ -25,7 +25,6 @@ buildscript {
 		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.2'
 		classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
 		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
-		// https://github.com/crotwell/gradle-macappbundle/issues/46
 		classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.2.3'
 		classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.1'
 		classpath 'de.thetaphi:forbiddenapis:2.6'
@@ -396,6 +395,8 @@ project(':lilith') {
 		javaExtras = [
 			'-Xdock:name': appName // About name
 		]
+		bundleJRE = false
+		jreHome = 'N/A'
 	}
 
 	createDmg {
