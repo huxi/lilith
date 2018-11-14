@@ -22,7 +22,7 @@ buildscript {
 	dependencies {
 		// needed for syncSnapshot and syncStaging
 		classpath 'org.apache.maven.wagon:wagon-webdav-jackrabbit:2.9'
-		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.2'
+		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.git-state-plugin:0.0.4'
 		classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
 		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
 		classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.2.3'
