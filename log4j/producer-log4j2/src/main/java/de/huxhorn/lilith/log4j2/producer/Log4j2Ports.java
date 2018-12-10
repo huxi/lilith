@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ package de.huxhorn.lilith.log4j2.producer;
 @SuppressWarnings("PMD.ClassNamingConventions")
 public interface Log4j2Ports
 {
-	int JSON = 12000;
-	int YAML = 12010;
-	int XML  = 12020;
+	int JSON = 12_000;
+	int YAML = 12_010;
+	int XML  = 12_020;
 }

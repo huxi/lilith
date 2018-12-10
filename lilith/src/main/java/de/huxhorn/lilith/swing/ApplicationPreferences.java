@@ -174,7 +174,7 @@ public class ApplicationPreferences
 
 	public static final String STARTUP_LOOK_AND_FEEL;
 
-	private static final long CONDITIONS_CHECK_INTERVAL = 30000;
+	private static final long CONDITIONS_CHECK_INTERVAL = 30_000L;
 	private static final String GROOVY_SUFFIX = ".groovy";
 	private static final String EXAMPLE_GROOVY_CONDITIONS_BASE = "/conditions/";
 	private static final String EXAMPLE_GROOVY_CLIPBOARD_FORMATTERS_BASE = "/clipboardFormatters/";

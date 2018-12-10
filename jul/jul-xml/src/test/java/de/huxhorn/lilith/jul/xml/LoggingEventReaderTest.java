@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -131,7 +131,7 @@ public class LoggingEventReaderTest
 		assertEquals("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", readEvent.getLogger());
 
 		// TimeStamp
-		assertEquals((Long) 1234567890000L, readEvent.getTimeStamp());
+		assertEquals((Long) 1_234_567_890_000L, readEvent.getTimeStamp());
 
 		// Level
 		assertEquals(LoggingEvent.Level.WARN, readEvent.getLevel());
@@ -219,7 +219,7 @@ public class LoggingEventReaderTest
 		assertEquals("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", readEvent.getLogger());
 
 		// TimeStamp
-		assertEquals((Long) 1234567890000L, readEvent.getTimeStamp());
+		assertEquals((Long) 1_234_567_890_000L, readEvent.getTimeStamp());
 
 		// Level
 		assertEquals(LoggingEvent.Level.ERROR, readEvent.getLevel());
@@ -307,7 +307,7 @@ public class LoggingEventReaderTest
 		assertEquals("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", readEvent.getLogger());
 
 		// TimeStamp
-		assertEquals((Long) 1234567890000L, readEvent.getTimeStamp());
+		assertEquals((Long) 1_234_567_890_000L, readEvent.getTimeStamp());
 
 		// Level
 		assertEquals(LoggingEvent.Level.WARN, readEvent.getLevel());
@@ -398,7 +398,7 @@ public class LoggingEventReaderTest
 		assertEquals("de.huxhorn.lilith.sandbox.JulSandbox$InnerClass", readEvent.getLogger());
 
 		// TimeStamp
-		assertEquals((Long) 1234567890000L, readEvent.getTimeStamp());
+		assertEquals((Long) 1_234_567_890_000L, readEvent.getTimeStamp());
 
 		// Level
 		assertEquals(LoggingEvent.Level.WARN, readEvent.getLevel());

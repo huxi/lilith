@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2018 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2013 Joern Huxhorn
+ * Copyright 2007-2018 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,12 +78,12 @@ public class BasicProfilingHandler
 	@Override
 	public void profile(Logger logger, String methodBaseName, String fullMethodSignature, long nanoSeconds)
 	{
-		if(nanoSeconds < 1000000)
+		if(nanoSeconds < 1_000_000L)
 		{
 			if(logger.isTraceEnabled(PROFILE_MARKER)) logger.trace(PROFILE_MARKER, "{}ns - {}", nanoSeconds, fullMethodSignature);
 			return;
 		}
-		long milliSeconds = nanoSeconds / 1000000;
+		long milliSeconds = nanoSeconds / 1_000_000L;
 		if(milliSeconds < 1000)
 		{
 			if(logger.isDebugEnabled(PROFILE_MARKER)) logger.debug(PROFILE_MARKER, "{}ms - {}", milliSeconds, fullMethodSignature);

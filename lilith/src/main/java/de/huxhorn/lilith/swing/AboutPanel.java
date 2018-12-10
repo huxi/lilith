@@ -1185,7 +1185,7 @@ public final class AboutPanel
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			long currentTime = System.nanoTime() / 1000000;
+			long currentTime = System.nanoTime() / 1_000_000;
 			long meanTime = currentTime - lastRepaintStart;
 			if(meanTime > FREQUENCY)
 			{

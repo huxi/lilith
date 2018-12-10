@@ -127,7 +127,7 @@ public class LoggingEventIOTest
 		LoggingEvent event = createMinimalEvent();
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(1234567890000L);
+		value.setBirthTime(1_234_567_890_000L);
 		Map<String, String> propperties = new HashMap<>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
@@ -141,7 +141,7 @@ public class LoggingEventIOTest
 	{
 		LoggingEvent event = createMinimalEvent();
 		LoggerContext value = new LoggerContext();
-		value.setBirthTime(1234567890000L);
+		value.setBirthTime(1_234_567_890_000L);
 		Map<String, String> properties = new HashMap<>();
 		properties.put("foo", "bar");
 		value.setProperties(properties);
@@ -171,7 +171,7 @@ public class LoggingEventIOTest
 		LoggingEvent event = createMinimalEvent();
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(1234567890000L);
+		value.setBirthTime(1_234_567_890_000L);
 		event.setLoggerContext(value);
 		check(event, true);
 	}
@@ -418,7 +418,7 @@ public class LoggingEventIOTest
 		LoggingEvent event = new LoggingEvent();
 		event.setLogger("Logger");
 		event.setLevel(LoggingEvent.Level.INFO);
-		event.setTimeStamp(1234567890000L);
+		event.setTimeStamp(1_234_567_890_000L);
 		return event;
 	}
 

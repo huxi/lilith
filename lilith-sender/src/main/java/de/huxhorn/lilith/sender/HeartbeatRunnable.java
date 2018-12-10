@@ -40,7 +40,7 @@ public class HeartbeatRunnable
 	/**
 	 * The heartbeat rate. One heartbeat every 45 seconds.
 	 */
-	public static final int HEARTBEAT_RATE = 45000;
+	public static final int HEARTBEAT_RATE = 45_000;
 
 	private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 

@@ -212,7 +212,7 @@ public class MainFrame
 	private static final ViewActionsProcessor UPDATE_WINDOW_MENU_ACTIONS_PROCESSOR = new UpdateWindowMenuProcessor();
 	private static final ViewContainerProcessor RESET_CONTAINER_PROCESSOR = new ResetContainerProcessor();
 	private static final double SCALE_FACTOR = 0.05d;
-	private static final int EXPORT_WARNING_SIZE = 20000;
+	private static final int EXPORT_WARNING_SIZE = 20_000;
 	private static final boolean IS_MAC;
 	private static final boolean IS_WINDOWS;
 
@@ -724,7 +724,7 @@ public class MainFrame
 		try
 		{
 			EventSourceProducer<LoggingEvent> producer
-				= new JulXmlStreamLoggingServerSocketEventSourceProducer(11020);
+				= new JulXmlStreamLoggingServerSocketEventSourceProducer(11_020);
 
 			loggingEventSourceManager.addEventSourceProducer(producer);
 		}

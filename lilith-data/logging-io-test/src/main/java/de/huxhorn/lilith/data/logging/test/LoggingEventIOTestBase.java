@@ -76,7 +76,7 @@ public abstract class LoggingEventIOTestBase
 		LoggingEvent event = createMinimalEvent();
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(1234567890000L);
+		value.setBirthTime(1_234_567_890_000L);
 		Map<String, String> properties = new HashMap<>();
 		properties.put("foo", "bar");
 		value.setProperties(properties);
@@ -239,7 +239,7 @@ public abstract class LoggingEventIOTestBase
 
 		LoggerContext value = new LoggerContext();
 		value.setName("ContextName");
-		value.setBirthTime(1234567890000L);
+		value.setBirthTime(1_234_567_890_000L);
 		Map<String, String> propperties = new HashMap<>();
 		propperties.put("foo", "bar");
 		value.setProperties(propperties);
@@ -292,16 +292,16 @@ public abstract class LoggingEventIOTestBase
 		check(event);
 	}
 
-	public LoggingEvent createMinimalEvent()
+	private static LoggingEvent createMinimalEvent()
 	{
 		LoggingEvent event = new LoggingEvent();
 		event.setLogger("Logger");
 		event.setLevel(LoggingEvent.Level.INFO);
-		event.setTimeStamp(1234567890000L);
+		event.setTimeStamp(1_234_567_890_000L);
 		return event;
 	}
 
-	public ThrowableInfo createThrowableInfo(String className, String message)
+	private static ThrowableInfo createThrowableInfo(String className, String message)
 	{
 		ThrowableInfo ti = new ThrowableInfo();
 		ti.setName(className);
@@ -310,7 +310,7 @@ public abstract class LoggingEventIOTestBase
 		return ti;
 	}
 
-	public ExtendedStackTraceElement[] createStackTraceElements()
+	private static ExtendedStackTraceElement[] createStackTraceElements()
 	{
 		//noinspection ThrowableInstanceNeverThrown
 		Throwable t = new Throwable();
@@ -347,7 +347,7 @@ public abstract class LoggingEventIOTestBase
 		return result;
 	}
 
-	public void check(LoggingEvent event)
+	private void check(LoggingEvent event)
 		throws Throwable
 	{
 		if(logger.isDebugEnabled()) logger.debug("Processing LoggingEvent:\n{}", event);
@@ -371,7 +371,7 @@ public abstract class LoggingEventIOTestBase
 
 	protected abstract void logUncompressedData(byte[] bytes);
 
-	protected String toString(Marker marker)
+	private static String toString(Marker marker)
 	{
 		if(marker == null)
 		{
@@ -383,7 +383,7 @@ public abstract class LoggingEventIOTestBase
 		return result.toString();
 	}
 
-	protected void recursiveToString(StringBuilder result, Map<String, Marker> processedMarkers, Marker marker)
+	private static void recursiveToString(StringBuilder result, Map<String, Marker> processedMarkers, Marker marker)
 	{
 		if(processedMarkers.containsKey(marker.getName()))
 		{
@@ -397,18 +397,21 @@ public abstract class LoggingEventIOTestBase
 			{
 				result.append(", children={");
 				Map<String, Marker> children = marker.getReferences();
-				boolean first = true;
-				for(Map.Entry<String, Marker> current : children.entrySet())
+				if(children != null)
 				{
-					if(first)
+					boolean first = true;
+					for (Map.Entry<String, Marker> current : children.entrySet())
 					{
-						first = false;
+						if (first)
+						{
+							first = false;
+						}
+						else
+						{
+							result.append(", ");
+						}
+						recursiveToString(result, processedMarkers, current.getValue());
 					}
-					else
-					{
-						result.append(", ");
-					}
-					recursiveToString(result, processedMarkers, current.getValue());
 				}
 				result.append('}');
 			}

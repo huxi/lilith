@@ -50,7 +50,7 @@ public class SimpleSendBytesService
 	/**
 	 * The default reconnection delay (30000 milliseconds or 30 seconds).
 	 */
-	public static final int DEFAULT_RECONNECTION_DELAY = 30000;
+	public static final int DEFAULT_RECONNECTION_DELAY = 30_000;
 
 	public static final int DEFAULT_QUEUE_SIZE = 1000;
 

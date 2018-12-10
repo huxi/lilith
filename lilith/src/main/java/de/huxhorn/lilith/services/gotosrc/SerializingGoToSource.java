@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class SerializingGoToSource
 	implements GoToSource
 {
-	public static final int DEFAULT_PORT = 11111;
+	public static final int DEFAULT_PORT = 11_111;
 
 	private final BlockingQueue<StackTraceElement> queue=new LinkedBlockingQueue<>();
 	private final GoToSourceRunnable goToSourceRunnable;
