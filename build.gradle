@@ -39,7 +39,7 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.plugins.signing.Sign
 
 wrapper {
-	gradleVersion = '5.0'
+	gradleVersion = '5.1-rc-3'
 }
 
 def copyright = "Copyright \u00a9 2007-2017 J\u00f6rn Huxhorn"
