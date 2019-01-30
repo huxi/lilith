@@ -74,6 +74,7 @@ public final class MessageFormatter
 	 * @param arguments      the arguments to be used to replace placeholders.
 	 * @return the formatted message.
 	 */
+	@SuppressWarnings("PMD.AvoidReassigningLoopVariables")
 	public static String format(String messagePattern, String[] arguments)
 	{
 		if(messagePattern == null || arguments == null || arguments.length == 0)
@@ -152,6 +153,7 @@ public final class MessageFormatter
 	 * @param messagePattern the message pattern to be analyzed.
 	 * @return the number of unescaped placeholders.
 	 */
+	@SuppressWarnings("PMD.AvoidReassigningLoopVariables")
 	public static int countArgumentPlaceholders(String messagePattern)
 	{
 		if(messagePattern == null)
