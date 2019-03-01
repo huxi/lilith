@@ -95,15 +95,11 @@ public class IndexingCallable
 			boolean sparse = fileHeader.getMetaData().isSparse();
 			long offset = fileHeader.getDataOffset();
 
-			RandomAccessFile dataRAFile = null;
-			RandomAccessFile indexRAFile = null;
-			Exception ex = null;
 			long counter = 0;
 			IndexStrategy indexStrategy = new DefaultIndexStrategy();
-			try
+			try(RandomAccessFile dataRAFile = new RandomAccessFile(dataFile, "r");
+				RandomAccessFile indexRAFile = new RandomAccessFile(indexFile, "rw"))
 			{
-				dataRAFile = new RandomAccessFile(dataFile, "r");
-				indexRAFile = new RandomAccessFile(indexFile, "rw");
 				boolean deleteIndex = !reindexing;
 				if(reindexing && indexFile.isFile())
 				{
@@ -156,16 +152,7 @@ public class IndexingCallable
 					setCurrentStep(offset);
 				}
 			}
-			catch(IOException | InterruptedException e)
-			{
-				ex = e;
-			}
-			finally
-			{
-				closeQuietly(dataRAFile);
-				closeQuietly(indexRAFile);
-			}
-			if(ex != null)
+			catch(IOException | InterruptedException ex)
 			{
 				if(!indexFile.delete())
 				{
@@ -191,20 +178,4 @@ public class IndexingCallable
 	{
 		return indexFile;
 	}
-
-	private static void closeQuietly(RandomAccessFile file)
-	{
-		if(file != null)
-		{
-			try
-			{
-				file.close();
-			}
-			catch(IOException e)
-			{
-				// ignore
-			}
-		}
-	}
-
 }
