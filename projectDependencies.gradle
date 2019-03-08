@@ -145,12 +145,9 @@ project(':lilith-data-logging-protobuf') {
 	archivesBaseName = 'de.huxhorn.lilith.data.logging.protobuf'
 	description = 'This file is part of Lilith. It contains the Logging Protobuf classes.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	javadoc {
 		// disable doclint for protobuf
@@ -206,12 +203,9 @@ project(':lilith-data-access-protobuf') {
 	archivesBaseName = 'de.huxhorn.lilith.data.access.protobuf'
 	description = 'This file is part of Lilith. It contains the Access Protobuf classes.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	javadoc {
 		// disable doclint for protobuf
@@ -260,12 +254,9 @@ project(':lilith-engine') {
 	archivesBaseName = 'de.huxhorn.lilith.engine'
 	description = 'This file is part of Lilith. It contains the engine part of Lilith.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	dependencies {
 		compile project(':lilith-constants')
@@ -290,7 +281,6 @@ project(':lilith-xml-logging') {
 	description = 'This file is part of Lilith. It contains XML logging classes.'
 
 	/*
-	protobuf-java-3.5.1 jdeps failure
 	woodstox-core-5.0.3 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': 'de.huxhorn.lilith.engine.xml'
@@ -310,12 +300,9 @@ project(':lilith-json-logging') {
 	archivesBaseName = 'de.huxhorn.lilith.json-logging'
 	description = 'This file is part of Lilith. It contains JSON logging classes.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': 'de.huxhorn.lilith.engine.json'
 	}
-	*/
 
 	dependencies {
 		compile libraries.'slf4j-api'
@@ -398,7 +385,6 @@ project(':logback-multiplex-appender-classic') {
 
 	/*
 	logback-classic-1.2.3 jdeps failure
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': 'de.huxhorn.lilith.logback.appender'
 	}
@@ -417,12 +403,9 @@ project(':logback-multiplex-appender-access') {
 	archivesBaseName = 'de.huxhorn.lilith.logback.appender.multiplex-access'
 	description = 'This file is part of Lilith. It contains the multiplexing access appender.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': 'de.huxhorn.lilith.logback.appender.access'
 	}
-	*/
 
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -512,12 +495,9 @@ project(':logback-encoder-core') {
 	archivesBaseName = 'de.huxhorn.lilith.logback.encoder.core'
 	description = 'This file is part of Lilith. It contains the encoder base class.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	dependencies {
 		compile project(':lilith-constants')
@@ -533,7 +513,6 @@ project(':logback-encoder-classic') {
 
 	/*
 	logback-classic-1.2.3 jdeps failure
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': 'de.huxhorn.lilith.logback.encoder'
 	}
@@ -555,12 +534,9 @@ project(':logback-encoder-access') {
 	archivesBaseName = 'de.huxhorn.lilith.logback.encoder.access'
 	description = 'This file is part of Lilith. It contains the access encoder.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	dependencies {
 		compile libraries.'sulky-codec'
@@ -599,12 +575,9 @@ project(':converter-log4j') {
 	archivesBaseName = 'de.huxhorn.lilith.log4j.converter'
 	description = 'This file is part of Lilith. It contains the LOG4J Converter.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	dependencies {
 		compile project(':lilith-data-converter')
@@ -620,12 +593,9 @@ project(':converter-log4j2') {
 	archivesBaseName = 'de.huxhorn.lilith.log4j2.converter'
 	description = 'This file is part of Lilith. It contains the LOG4J 2 Converter.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	dependencies {
 		compile project(':lilith-data-converter')
@@ -663,7 +633,6 @@ project(':producer-log4j2') {
 	description = 'This file is part of Lilith. It contains the LOG4J 2 Producers.'
 
 	/*
-	protobuf-java-3.5.1 jdeps failure
 	woodstox-core-5.0.3 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
@@ -733,7 +702,6 @@ project(':jul-xml-receiver') {
 
 	/*
 	woodstox-core-5.0.3 jdeps failure
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': 'de.huxhorn.lilith.engine.jul'
 	}
@@ -766,12 +734,9 @@ project(':lilith-prefs') {
 	archivesBaseName = 'de.huxhorn.lilith.prefs'
 	description = 'This file is part of Lilith. It contains the Preferences Protobuf classes.'
 
-	/*
-	protobuf-java-3.5.1 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName
 	}
-	*/
 
 	javadoc {
 		// disable doclint for protobuf
@@ -815,7 +780,6 @@ project(':lilith') {
 
 	/*
 	logback-classic-1.2.3 jdeps failure
-	protobuf-java-3.5.1 jdeps failure
 	woodstox-core-5.0.3 jdeps failure
 	jar {
 		manifest.attributes 'Automatic-Module-Name': archivesBaseName

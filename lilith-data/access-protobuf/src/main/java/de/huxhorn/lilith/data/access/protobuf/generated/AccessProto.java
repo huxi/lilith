@@ -85,7 +85,7 @@ public final class AccessProto {
               break;
             case 10: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+              if (((bitField0_ & 0x00000001) != 0)) {
                 subBuilder = eventIdentifier_.toBuilder();
               }
               eventIdentifier_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.PARSER, extensionRegistry);
@@ -98,7 +98,7 @@ public final class AccessProto {
             }
             case 18: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+              if (((bitField0_ & 0x00000002) != 0)) {
                 subBuilder = event_.toBuilder();
               }
               event_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.PARSER, extensionRegistry);
@@ -148,7 +148,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
      */
     public boolean hasEventIdentifier() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
@@ -169,7 +169,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
      */
     public boolean hasEvent() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
@@ -204,10 +204,10 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         output.writeMessage(1, getEventIdentifier());
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         output.writeMessage(2, getEvent());
       }
       unknownFields.writeTo(output);
@@ -219,11 +219,11 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getEventIdentifier());
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getEvent());
       }
@@ -242,19 +242,18 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper) obj;
 
-      boolean result = true;
-      result = result && (hasEventIdentifier() == other.hasEventIdentifier());
+      if (hasEventIdentifier() != other.hasEventIdentifier()) return false;
       if (hasEventIdentifier()) {
-        result = result && getEventIdentifier()
-            .equals(other.getEventIdentifier());
+        if (!getEventIdentifier()
+            .equals(other.getEventIdentifier())) return false;
       }
-      result = result && (hasEvent() == other.hasEvent());
+      if (hasEvent() != other.hasEvent()) return false;
       if (hasEvent()) {
-        result = result && getEvent()
-            .equals(other.getEvent());
+        if (!getEvent()
+            .equals(other.getEvent())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -447,21 +446,21 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventWrapper(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          if (eventIdentifierBuilder_ == null) {
+            result.eventIdentifier_ = eventIdentifier_;
+          } else {
+            result.eventIdentifier_ = eventIdentifierBuilder_.build();
+          }
           to_bitField0_ |= 0x00000001;
         }
-        if (eventIdentifierBuilder_ == null) {
-          result.eventIdentifier_ = eventIdentifier_;
-        } else {
-          result.eventIdentifier_ = eventIdentifierBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          if (eventBuilder_ == null) {
+            result.event_ = event_;
+          } else {
+            result.event_ = eventBuilder_.build();
+          }
           to_bitField0_ |= 0x00000002;
-        }
-        if (eventBuilder_ == null) {
-          result.event_ = event_;
-        } else {
-          result.event_ = eventBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -470,35 +469,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -553,14 +552,14 @@ public final class AccessProto {
       }
       private int bitField0_;
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier eventIdentifier_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier eventIdentifier_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder> eventIdentifierBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
        */
       public boolean hasEventIdentifier() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
@@ -607,7 +606,7 @@ public final class AccessProto {
        */
       public Builder mergeEventIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier value) {
         if (eventIdentifierBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+          if (((bitField0_ & 0x00000001) != 0) &&
               eventIdentifier_ != null &&
               eventIdentifier_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance()) {
             eventIdentifier_ =
@@ -671,14 +670,14 @@ public final class AccessProto {
         return eventIdentifierBuilder_;
       }
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent event_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent event_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder> eventBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
        */
       public boolean hasEvent() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
@@ -725,7 +724,7 @@ public final class AccessProto {
        */
       public Builder mergeEvent(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent value) {
         if (eventBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+          if (((bitField0_ & 0x00000002) != 0) &&
               event_ != null &&
               event_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance()) {
             event_ =
@@ -880,7 +879,6 @@ public final class AccessProto {
       super(builder);
     }
     private EventIdentifier() {
-      localId_ = 0L;
     }
 
     @java.lang.Override
@@ -914,7 +912,7 @@ public final class AccessProto {
             }
             case 18: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+              if (((bitField0_ & 0x00000002) != 0)) {
                 subBuilder = sourceIdentifier_.toBuilder();
               }
               sourceIdentifier_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.PARSER, extensionRegistry);
@@ -964,7 +962,7 @@ public final class AccessProto {
      * <code>optional int64 local_id = 1;</code>
      */
     public boolean hasLocalId() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 local_id = 1;</code>
@@ -979,7 +977,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
      */
     public boolean hasSourceIdentifier() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
@@ -1008,10 +1006,10 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         output.writeInt64(1, localId_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         output.writeMessage(2, getSourceIdentifier());
       }
       unknownFields.writeTo(output);
@@ -1023,11 +1021,11 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, localId_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getSourceIdentifier());
       }
@@ -1046,19 +1044,18 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier) obj;
 
-      boolean result = true;
-      result = result && (hasLocalId() == other.hasLocalId());
+      if (hasLocalId() != other.hasLocalId()) return false;
       if (hasLocalId()) {
-        result = result && (getLocalId()
-            == other.getLocalId());
+        if (getLocalId()
+            != other.getLocalId()) return false;
       }
-      result = result && (hasSourceIdentifier() == other.hasSourceIdentifier());
+      if (hasSourceIdentifier() != other.hasSourceIdentifier()) return false;
       if (hasSourceIdentifier()) {
-        result = result && getSourceIdentifier()
-            .equals(other.getSourceIdentifier());
+        if (!getSourceIdentifier()
+            .equals(other.getSourceIdentifier())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -1247,17 +1244,17 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.localId_ = localId_;
           to_bitField0_ |= 0x00000001;
         }
-        result.localId_ = localId_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          if (sourceIdentifierBuilder_ == null) {
+            result.sourceIdentifier_ = sourceIdentifier_;
+          } else {
+            result.sourceIdentifier_ = sourceIdentifierBuilder_.build();
+          }
           to_bitField0_ |= 0x00000002;
-        }
-        if (sourceIdentifierBuilder_ == null) {
-          result.sourceIdentifier_ = sourceIdentifier_;
-        } else {
-          result.sourceIdentifier_ = sourceIdentifierBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -1266,35 +1263,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1349,7 +1346,7 @@ public final class AccessProto {
        * <code>optional int64 local_id = 1;</code>
        */
       public boolean hasLocalId() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 local_id = 1;</code>
@@ -1376,14 +1373,14 @@ public final class AccessProto {
         return this;
       }
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier sourceIdentifier_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier sourceIdentifier_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder> sourceIdentifierBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
        */
       public boolean hasSourceIdentifier() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
@@ -1430,7 +1427,7 @@ public final class AccessProto {
        */
       public Builder mergeSourceIdentifier(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier value) {
         if (sourceIdentifierBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+          if (((bitField0_ & 0x00000002) != 0) &&
               sourceIdentifier_ != null &&
               sourceIdentifier_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance()) {
             sourceIdentifier_ =
@@ -1670,7 +1667,7 @@ public final class AccessProto {
      * <code>optional string identifier = 1;</code>
      */
     public boolean hasIdentifier() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string identifier = 1;</code>
@@ -1712,7 +1709,7 @@ public final class AccessProto {
      * <code>optional string secondary_identifier = 2;</code>
      */
     public boolean hasSecondaryIdentifier() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string secondary_identifier = 2;</code>
@@ -1762,10 +1759,10 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, identifier_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, secondaryIdentifier_);
       }
       unknownFields.writeTo(output);
@@ -1777,10 +1774,10 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, identifier_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, secondaryIdentifier_);
       }
       size += unknownFields.getSerializedSize();
@@ -1798,19 +1795,18 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier) obj;
 
-      boolean result = true;
-      result = result && (hasIdentifier() == other.hasIdentifier());
+      if (hasIdentifier() != other.hasIdentifier()) return false;
       if (hasIdentifier()) {
-        result = result && getIdentifier()
-            .equals(other.getIdentifier());
+        if (!getIdentifier()
+            .equals(other.getIdentifier())) return false;
       }
-      result = result && (hasSecondaryIdentifier() == other.hasSecondaryIdentifier());
+      if (hasSecondaryIdentifier() != other.hasSecondaryIdentifier()) return false;
       if (hasSecondaryIdentifier()) {
-        result = result && getSecondaryIdentifier()
-            .equals(other.getSecondaryIdentifier());
+        if (!getSecondaryIdentifier()
+            .equals(other.getSecondaryIdentifier())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -1993,11 +1989,11 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
           to_bitField0_ |= 0x00000001;
         }
         result.identifier_ = identifier_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((from_bitField0_ & 0x00000002) != 0)) {
           to_bitField0_ |= 0x00000002;
         }
         result.secondaryIdentifier_ = secondaryIdentifier_;
@@ -2008,35 +2004,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2095,7 +2091,7 @@ public final class AccessProto {
        * <code>optional string identifier = 1;</code>
        */
       public boolean hasIdentifier() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string identifier = 1;</code>
@@ -2171,7 +2167,7 @@ public final class AccessProto {
        * <code>optional string secondary_identifier = 2;</code>
        */
       public boolean hasSecondaryIdentifier() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
@@ -2516,13 +2512,9 @@ public final class AccessProto {
       remoteAddress_ = "";
       remoteHost_ = "";
       remoteUser_ = "";
-      timeStamp_ = 0L;
       requestUri_ = "";
       requestUrl_ = "";
-      statusCode_ = 0;
-      localPort_ = 0;
       serverName_ = "";
-      elapsedTime_ = 0L;
     }
 
     @java.lang.Override
@@ -2614,7 +2606,7 @@ public final class AccessProto {
             }
             case 98: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000800) == 0x00000800)) {
+              if (((bitField0_ & 0x00000800) != 0)) {
                 subBuilder = requestHeaders_.toBuilder();
               }
               requestHeaders_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.PARSER, extensionRegistry);
@@ -2627,7 +2619,7 @@ public final class AccessProto {
             }
             case 106: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder subBuilder = null;
-              if (((bitField0_ & 0x00001000) == 0x00001000)) {
+              if (((bitField0_ & 0x00001000) != 0)) {
                 subBuilder = requestParameters_.toBuilder();
               }
               requestParameters_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.PARSER, extensionRegistry);
@@ -2640,7 +2632,7 @@ public final class AccessProto {
             }
             case 114: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder subBuilder = null;
-              if (((bitField0_ & 0x00002000) == 0x00002000)) {
+              if (((bitField0_ & 0x00002000) != 0)) {
                 subBuilder = responseHeaders_.toBuilder();
               }
               responseHeaders_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.PARSER, extensionRegistry);
@@ -2653,7 +2645,7 @@ public final class AccessProto {
             }
             case 122: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder subBuilder = null;
-              if (((bitField0_ & 0x00004000) == 0x00004000)) {
+              if (((bitField0_ & 0x00004000) != 0)) {
                 subBuilder = loggerContext_.toBuilder();
               }
               loggerContext_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.PARSER, extensionRegistry);
@@ -2708,7 +2700,7 @@ public final class AccessProto {
      * <code>optional string method = 1;</code>
      */
     public boolean hasMethod() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string method = 1;</code>
@@ -2750,7 +2742,7 @@ public final class AccessProto {
      * <code>optional string protocol = 2;</code>
      */
     public boolean hasProtocol() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string protocol = 2;</code>
@@ -2792,7 +2784,7 @@ public final class AccessProto {
      * <code>optional string remote_address = 3;</code>
      */
     public boolean hasRemoteAddress() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional string remote_address = 3;</code>
@@ -2834,7 +2826,7 @@ public final class AccessProto {
      * <code>optional string remote_host = 4;</code>
      */
     public boolean hasRemoteHost() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>optional string remote_host = 4;</code>
@@ -2876,7 +2868,7 @@ public final class AccessProto {
      * <code>optional string remote_user = 5;</code>
      */
     public boolean hasRemoteUser() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>optional string remote_user = 5;</code>
@@ -2918,7 +2910,7 @@ public final class AccessProto {
      * <code>optional int64 time_stamp = 6;</code>
      */
     public boolean hasTimeStamp() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000020) != 0);
     }
     /**
      * <code>optional int64 time_stamp = 6;</code>
@@ -2933,7 +2925,7 @@ public final class AccessProto {
      * <code>optional string request_uri = 7;</code>
      */
     public boolean hasRequestUri() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
+      return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      * <code>optional string request_uri = 7;</code>
@@ -2975,7 +2967,7 @@ public final class AccessProto {
      * <code>optional string request_url = 8;</code>
      */
     public boolean hasRequestUrl() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
+      return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>optional string request_url = 8;</code>
@@ -3017,7 +3009,7 @@ public final class AccessProto {
      * <code>optional int32 status_code = 9;</code>
      */
     public boolean hasStatusCode() {
-      return ((bitField0_ & 0x00000100) == 0x00000100);
+      return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      * <code>optional int32 status_code = 9;</code>
@@ -3032,7 +3024,7 @@ public final class AccessProto {
      * <code>optional int32 local_port = 10;</code>
      */
     public boolean hasLocalPort() {
-      return ((bitField0_ & 0x00000200) == 0x00000200);
+      return ((bitField0_ & 0x00000200) != 0);
     }
     /**
      * <code>optional int32 local_port = 10;</code>
@@ -3047,7 +3039,7 @@ public final class AccessProto {
      * <code>optional string server_name = 11;</code>
      */
     public boolean hasServerName() {
-      return ((bitField0_ & 0x00000400) == 0x00000400);
+      return ((bitField0_ & 0x00000400) != 0);
     }
     /**
      * <code>optional string server_name = 11;</code>
@@ -3089,7 +3081,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
      */
     public boolean hasRequestHeaders() {
-      return ((bitField0_ & 0x00000800) == 0x00000800);
+      return ((bitField0_ & 0x00000800) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
@@ -3110,7 +3102,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
      */
     public boolean hasRequestParameters() {
-      return ((bitField0_ & 0x00001000) == 0x00001000);
+      return ((bitField0_ & 0x00001000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
@@ -3131,7 +3123,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
      */
     public boolean hasResponseHeaders() {
-      return ((bitField0_ & 0x00002000) == 0x00002000);
+      return ((bitField0_ & 0x00002000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
@@ -3152,7 +3144,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
      */
     public boolean hasLoggerContext() {
-      return ((bitField0_ & 0x00004000) == 0x00004000);
+      return ((bitField0_ & 0x00004000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
@@ -3173,7 +3165,7 @@ public final class AccessProto {
      * <code>optional int64 elapsed_time = 16;</code>
      */
     public boolean hasElapsedTime() {
-      return ((bitField0_ & 0x00008000) == 0x00008000);
+      return ((bitField0_ & 0x00008000) != 0);
     }
     /**
      * <code>optional int64 elapsed_time = 16;</code>
@@ -3220,52 +3212,52 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, method_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, protocol_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, remoteAddress_);
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, remoteHost_);
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000010) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, remoteUser_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000020) != 0)) {
         output.writeInt64(6, timeStamp_);
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000040) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 7, requestUri_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      if (((bitField0_ & 0x00000080) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 8, requestUrl_);
       }
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((bitField0_ & 0x00000100) != 0)) {
         output.writeInt32(9, statusCode_);
       }
-      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+      if (((bitField0_ & 0x00000200) != 0)) {
         output.writeInt32(10, localPort_);
       }
-      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+      if (((bitField0_ & 0x00000400) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 11, serverName_);
       }
-      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+      if (((bitField0_ & 0x00000800) != 0)) {
         output.writeMessage(12, getRequestHeaders());
       }
-      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+      if (((bitField0_ & 0x00001000) != 0)) {
         output.writeMessage(13, getRequestParameters());
       }
-      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+      if (((bitField0_ & 0x00002000) != 0)) {
         output.writeMessage(14, getResponseHeaders());
       }
-      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+      if (((bitField0_ & 0x00004000) != 0)) {
         output.writeMessage(15, getLoggerContext());
       }
-      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+      if (((bitField0_ & 0x00008000) != 0)) {
         output.writeInt64(16, elapsedTime_);
       }
       unknownFields.writeTo(output);
@@ -3277,59 +3269,59 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, method_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, protocol_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, remoteAddress_);
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, remoteHost_);
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000010) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, remoteUser_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000020) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(6, timeStamp_);
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000040) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, requestUri_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      if (((bitField0_ & 0x00000080) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, requestUrl_);
       }
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((bitField0_ & 0x00000100) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(9, statusCode_);
       }
-      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+      if (((bitField0_ & 0x00000200) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(10, localPort_);
       }
-      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+      if (((bitField0_ & 0x00000400) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, serverName_);
       }
-      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+      if (((bitField0_ & 0x00000800) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(12, getRequestHeaders());
       }
-      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+      if (((bitField0_ & 0x00001000) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(13, getRequestParameters());
       }
-      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+      if (((bitField0_ & 0x00002000) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(14, getResponseHeaders());
       }
-      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+      if (((bitField0_ & 0x00004000) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(15, getLoggerContext());
       }
-      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+      if (((bitField0_ & 0x00008000) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(16, elapsedTime_);
       }
@@ -3348,89 +3340,88 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent) obj;
 
-      boolean result = true;
-      result = result && (hasMethod() == other.hasMethod());
+      if (hasMethod() != other.hasMethod()) return false;
       if (hasMethod()) {
-        result = result && getMethod()
-            .equals(other.getMethod());
+        if (!getMethod()
+            .equals(other.getMethod())) return false;
       }
-      result = result && (hasProtocol() == other.hasProtocol());
+      if (hasProtocol() != other.hasProtocol()) return false;
       if (hasProtocol()) {
-        result = result && getProtocol()
-            .equals(other.getProtocol());
+        if (!getProtocol()
+            .equals(other.getProtocol())) return false;
       }
-      result = result && (hasRemoteAddress() == other.hasRemoteAddress());
+      if (hasRemoteAddress() != other.hasRemoteAddress()) return false;
       if (hasRemoteAddress()) {
-        result = result && getRemoteAddress()
-            .equals(other.getRemoteAddress());
+        if (!getRemoteAddress()
+            .equals(other.getRemoteAddress())) return false;
       }
-      result = result && (hasRemoteHost() == other.hasRemoteHost());
+      if (hasRemoteHost() != other.hasRemoteHost()) return false;
       if (hasRemoteHost()) {
-        result = result && getRemoteHost()
-            .equals(other.getRemoteHost());
+        if (!getRemoteHost()
+            .equals(other.getRemoteHost())) return false;
       }
-      result = result && (hasRemoteUser() == other.hasRemoteUser());
+      if (hasRemoteUser() != other.hasRemoteUser()) return false;
       if (hasRemoteUser()) {
-        result = result && getRemoteUser()
-            .equals(other.getRemoteUser());
+        if (!getRemoteUser()
+            .equals(other.getRemoteUser())) return false;
       }
-      result = result && (hasTimeStamp() == other.hasTimeStamp());
+      if (hasTimeStamp() != other.hasTimeStamp()) return false;
       if (hasTimeStamp()) {
-        result = result && (getTimeStamp()
-            == other.getTimeStamp());
+        if (getTimeStamp()
+            != other.getTimeStamp()) return false;
       }
-      result = result && (hasRequestUri() == other.hasRequestUri());
+      if (hasRequestUri() != other.hasRequestUri()) return false;
       if (hasRequestUri()) {
-        result = result && getRequestUri()
-            .equals(other.getRequestUri());
+        if (!getRequestUri()
+            .equals(other.getRequestUri())) return false;
       }
-      result = result && (hasRequestUrl() == other.hasRequestUrl());
+      if (hasRequestUrl() != other.hasRequestUrl()) return false;
       if (hasRequestUrl()) {
-        result = result && getRequestUrl()
-            .equals(other.getRequestUrl());
+        if (!getRequestUrl()
+            .equals(other.getRequestUrl())) return false;
       }
-      result = result && (hasStatusCode() == other.hasStatusCode());
+      if (hasStatusCode() != other.hasStatusCode()) return false;
       if (hasStatusCode()) {
-        result = result && (getStatusCode()
-            == other.getStatusCode());
+        if (getStatusCode()
+            != other.getStatusCode()) return false;
       }
-      result = result && (hasLocalPort() == other.hasLocalPort());
+      if (hasLocalPort() != other.hasLocalPort()) return false;
       if (hasLocalPort()) {
-        result = result && (getLocalPort()
-            == other.getLocalPort());
+        if (getLocalPort()
+            != other.getLocalPort()) return false;
       }
-      result = result && (hasServerName() == other.hasServerName());
+      if (hasServerName() != other.hasServerName()) return false;
       if (hasServerName()) {
-        result = result && getServerName()
-            .equals(other.getServerName());
+        if (!getServerName()
+            .equals(other.getServerName())) return false;
       }
-      result = result && (hasRequestHeaders() == other.hasRequestHeaders());
+      if (hasRequestHeaders() != other.hasRequestHeaders()) return false;
       if (hasRequestHeaders()) {
-        result = result && getRequestHeaders()
-            .equals(other.getRequestHeaders());
+        if (!getRequestHeaders()
+            .equals(other.getRequestHeaders())) return false;
       }
-      result = result && (hasRequestParameters() == other.hasRequestParameters());
+      if (hasRequestParameters() != other.hasRequestParameters()) return false;
       if (hasRequestParameters()) {
-        result = result && getRequestParameters()
-            .equals(other.getRequestParameters());
+        if (!getRequestParameters()
+            .equals(other.getRequestParameters())) return false;
       }
-      result = result && (hasResponseHeaders() == other.hasResponseHeaders());
+      if (hasResponseHeaders() != other.hasResponseHeaders()) return false;
       if (hasResponseHeaders()) {
-        result = result && getResponseHeaders()
-            .equals(other.getResponseHeaders());
+        if (!getResponseHeaders()
+            .equals(other.getResponseHeaders())) return false;
       }
-      result = result && (hasLoggerContext() == other.hasLoggerContext());
+      if (hasLoggerContext() != other.hasLoggerContext()) return false;
       if (hasLoggerContext()) {
-        result = result && getLoggerContext()
-            .equals(other.getLoggerContext());
+        if (!getLoggerContext()
+            .equals(other.getLoggerContext())) return false;
       }
-      result = result && (hasElapsedTime() == other.hasElapsedTime());
+      if (hasElapsedTime() != other.hasElapsedTime()) return false;
       if (hasElapsedTime()) {
-        result = result && (getElapsedTime()
-            == other.getElapsedTime());
+        if (getElapsedTime()
+            != other.getElapsedTime()) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3719,86 +3710,86 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
           to_bitField0_ |= 0x00000001;
         }
         result.method_ = method_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((from_bitField0_ & 0x00000002) != 0)) {
           to_bitField0_ |= 0x00000002;
         }
         result.protocol_ = protocol_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((from_bitField0_ & 0x00000004) != 0)) {
           to_bitField0_ |= 0x00000004;
         }
         result.remoteAddress_ = remoteAddress_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((from_bitField0_ & 0x00000008) != 0)) {
           to_bitField0_ |= 0x00000008;
         }
         result.remoteHost_ = remoteHost_;
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+        if (((from_bitField0_ & 0x00000010) != 0)) {
           to_bitField0_ |= 0x00000010;
         }
         result.remoteUser_ = remoteUser_;
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+        if (((from_bitField0_ & 0x00000020) != 0)) {
+          result.timeStamp_ = timeStamp_;
           to_bitField0_ |= 0x00000020;
         }
-        result.timeStamp_ = timeStamp_;
-        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+        if (((from_bitField0_ & 0x00000040) != 0)) {
           to_bitField0_ |= 0x00000040;
         }
         result.requestUri_ = requestUri_;
-        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+        if (((from_bitField0_ & 0x00000080) != 0)) {
           to_bitField0_ |= 0x00000080;
         }
         result.requestUrl_ = requestUrl_;
-        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+        if (((from_bitField0_ & 0x00000100) != 0)) {
+          result.statusCode_ = statusCode_;
           to_bitField0_ |= 0x00000100;
         }
-        result.statusCode_ = statusCode_;
-        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+        if (((from_bitField0_ & 0x00000200) != 0)) {
+          result.localPort_ = localPort_;
           to_bitField0_ |= 0x00000200;
         }
-        result.localPort_ = localPort_;
-        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+        if (((from_bitField0_ & 0x00000400) != 0)) {
           to_bitField0_ |= 0x00000400;
         }
         result.serverName_ = serverName_;
-        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+        if (((from_bitField0_ & 0x00000800) != 0)) {
+          if (requestHeadersBuilder_ == null) {
+            result.requestHeaders_ = requestHeaders_;
+          } else {
+            result.requestHeaders_ = requestHeadersBuilder_.build();
+          }
           to_bitField0_ |= 0x00000800;
         }
-        if (requestHeadersBuilder_ == null) {
-          result.requestHeaders_ = requestHeaders_;
-        } else {
-          result.requestHeaders_ = requestHeadersBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+        if (((from_bitField0_ & 0x00001000) != 0)) {
+          if (requestParametersBuilder_ == null) {
+            result.requestParameters_ = requestParameters_;
+          } else {
+            result.requestParameters_ = requestParametersBuilder_.build();
+          }
           to_bitField0_ |= 0x00001000;
         }
-        if (requestParametersBuilder_ == null) {
-          result.requestParameters_ = requestParameters_;
-        } else {
-          result.requestParameters_ = requestParametersBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+        if (((from_bitField0_ & 0x00002000) != 0)) {
+          if (responseHeadersBuilder_ == null) {
+            result.responseHeaders_ = responseHeaders_;
+          } else {
+            result.responseHeaders_ = responseHeadersBuilder_.build();
+          }
           to_bitField0_ |= 0x00002000;
         }
-        if (responseHeadersBuilder_ == null) {
-          result.responseHeaders_ = responseHeaders_;
-        } else {
-          result.responseHeaders_ = responseHeadersBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+        if (((from_bitField0_ & 0x00004000) != 0)) {
+          if (loggerContextBuilder_ == null) {
+            result.loggerContext_ = loggerContext_;
+          } else {
+            result.loggerContext_ = loggerContextBuilder_.build();
+          }
           to_bitField0_ |= 0x00004000;
         }
-        if (loggerContextBuilder_ == null) {
-          result.loggerContext_ = loggerContext_;
-        } else {
-          result.loggerContext_ = loggerContextBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+        if (((from_bitField0_ & 0x00008000) != 0)) {
+          result.elapsedTime_ = elapsedTime_;
           to_bitField0_ |= 0x00008000;
         }
-        result.elapsedTime_ = elapsedTime_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3806,35 +3797,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3967,7 +3958,7 @@ public final class AccessProto {
        * <code>optional string method = 1;</code>
        */
       public boolean hasMethod() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string method = 1;</code>
@@ -4043,7 +4034,7 @@ public final class AccessProto {
        * <code>optional string protocol = 2;</code>
        */
       public boolean hasProtocol() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string protocol = 2;</code>
@@ -4119,7 +4110,7 @@ public final class AccessProto {
        * <code>optional string remote_address = 3;</code>
        */
       public boolean hasRemoteAddress() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional string remote_address = 3;</code>
@@ -4195,7 +4186,7 @@ public final class AccessProto {
        * <code>optional string remote_host = 4;</code>
        */
       public boolean hasRemoteHost() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional string remote_host = 4;</code>
@@ -4271,7 +4262,7 @@ public final class AccessProto {
        * <code>optional string remote_user = 5;</code>
        */
       public boolean hasRemoteUser() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <code>optional string remote_user = 5;</code>
@@ -4347,7 +4338,7 @@ public final class AccessProto {
        * <code>optional int64 time_stamp = 6;</code>
        */
       public boolean hasTimeStamp() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000020) != 0);
       }
       /**
        * <code>optional int64 time_stamp = 6;</code>
@@ -4379,7 +4370,7 @@ public final class AccessProto {
        * <code>optional string request_uri = 7;</code>
        */
       public boolean hasRequestUri() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
+        return ((bitField0_ & 0x00000040) != 0);
       }
       /**
        * <code>optional string request_uri = 7;</code>
@@ -4455,7 +4446,7 @@ public final class AccessProto {
        * <code>optional string request_url = 8;</code>
        */
       public boolean hasRequestUrl() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+        return ((bitField0_ & 0x00000080) != 0);
       }
       /**
        * <code>optional string request_url = 8;</code>
@@ -4531,7 +4522,7 @@ public final class AccessProto {
        * <code>optional int32 status_code = 9;</code>
        */
       public boolean hasStatusCode() {
-        return ((bitField0_ & 0x00000100) == 0x00000100);
+        return ((bitField0_ & 0x00000100) != 0);
       }
       /**
        * <code>optional int32 status_code = 9;</code>
@@ -4563,7 +4554,7 @@ public final class AccessProto {
        * <code>optional int32 local_port = 10;</code>
        */
       public boolean hasLocalPort() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
+        return ((bitField0_ & 0x00000200) != 0);
       }
       /**
        * <code>optional int32 local_port = 10;</code>
@@ -4595,7 +4586,7 @@ public final class AccessProto {
        * <code>optional string server_name = 11;</code>
        */
       public boolean hasServerName() {
-        return ((bitField0_ & 0x00000400) == 0x00000400);
+        return ((bitField0_ & 0x00000400) != 0);
       }
       /**
        * <code>optional string server_name = 11;</code>
@@ -4666,14 +4657,14 @@ public final class AccessProto {
         return this;
       }
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap requestHeaders_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap requestHeaders_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> requestHeadersBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
        */
       public boolean hasRequestHeaders() {
-        return ((bitField0_ & 0x00000800) == 0x00000800);
+        return ((bitField0_ & 0x00000800) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
@@ -4720,7 +4711,7 @@ public final class AccessProto {
        */
       public Builder mergeRequestHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
         if (requestHeadersBuilder_ == null) {
-          if (((bitField0_ & 0x00000800) == 0x00000800) &&
+          if (((bitField0_ & 0x00000800) != 0) &&
               requestHeaders_ != null &&
               requestHeaders_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
             requestHeaders_ =
@@ -4784,14 +4775,14 @@ public final class AccessProto {
         return requestHeadersBuilder_;
       }
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap requestParameters_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap requestParameters_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder> requestParametersBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
        */
       public boolean hasRequestParameters() {
-        return ((bitField0_ & 0x00001000) == 0x00001000);
+        return ((bitField0_ & 0x00001000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
@@ -4838,7 +4829,7 @@ public final class AccessProto {
        */
       public Builder mergeRequestParameters(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap value) {
         if (requestParametersBuilder_ == null) {
-          if (((bitField0_ & 0x00001000) == 0x00001000) &&
+          if (((bitField0_ & 0x00001000) != 0) &&
               requestParameters_ != null &&
               requestParameters_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance()) {
             requestParameters_ =
@@ -4902,14 +4893,14 @@ public final class AccessProto {
         return requestParametersBuilder_;
       }
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap responseHeaders_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap responseHeaders_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> responseHeadersBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
        */
       public boolean hasResponseHeaders() {
-        return ((bitField0_ & 0x00002000) == 0x00002000);
+        return ((bitField0_ & 0x00002000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
@@ -4956,7 +4947,7 @@ public final class AccessProto {
        */
       public Builder mergeResponseHeaders(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
         if (responseHeadersBuilder_ == null) {
-          if (((bitField0_ & 0x00002000) == 0x00002000) &&
+          if (((bitField0_ & 0x00002000) != 0) &&
               responseHeaders_ != null &&
               responseHeaders_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
             responseHeaders_ =
@@ -5020,14 +5011,14 @@ public final class AccessProto {
         return responseHeadersBuilder_;
       }
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext loggerContext_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext loggerContext_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder> loggerContextBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
        */
       public boolean hasLoggerContext() {
-        return ((bitField0_ & 0x00004000) == 0x00004000);
+        return ((bitField0_ & 0x00004000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
@@ -5074,7 +5065,7 @@ public final class AccessProto {
        */
       public Builder mergeLoggerContext(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext value) {
         if (loggerContextBuilder_ == null) {
-          if (((bitField0_ & 0x00004000) == 0x00004000) &&
+          if (((bitField0_ & 0x00004000) != 0) &&
               loggerContext_ != null &&
               loggerContext_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance()) {
             loggerContext_ =
@@ -5143,7 +5134,7 @@ public final class AccessProto {
        * <code>optional int64 elapsed_time = 16;</code>
        */
       public boolean hasElapsedTime() {
-        return ((bitField0_ & 0x00008000) == 0x00008000);
+        return ((bitField0_ & 0x00008000) != 0);
       }
       /**
        * <code>optional int64 elapsed_time = 16;</code>
@@ -5275,7 +5266,6 @@ public final class AccessProto {
       super(builder);
     }
     private LoggerContext() {
-      birthTime_ = 0L;
       name_ = "";
     }
 
@@ -5316,7 +5306,7 @@ public final class AccessProto {
             }
             case 26: {
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+              if (((bitField0_ & 0x00000004) != 0)) {
                 subBuilder = properties_.toBuilder();
               }
               properties_ = input.readMessage(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.PARSER, extensionRegistry);
@@ -5366,7 +5356,7 @@ public final class AccessProto {
      * <code>optional int64 birth_time = 1;</code>
      */
     public boolean hasBirthTime() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 birth_time = 1;</code>
@@ -5381,7 +5371,7 @@ public final class AccessProto {
      * <code>optional string name = 2;</code>
      */
     public boolean hasName() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string name = 2;</code>
@@ -5423,7 +5413,7 @@ public final class AccessProto {
      * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
      */
     public boolean hasProperties() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
@@ -5458,13 +5448,13 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         output.writeInt64(1, birthTime_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         output.writeMessage(3, getProperties());
       }
       unknownFields.writeTo(output);
@@ -5476,14 +5466,14 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, birthTime_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getProperties());
       }
@@ -5502,24 +5492,23 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext) obj;
 
-      boolean result = true;
-      result = result && (hasBirthTime() == other.hasBirthTime());
+      if (hasBirthTime() != other.hasBirthTime()) return false;
       if (hasBirthTime()) {
-        result = result && (getBirthTime()
-            == other.getBirthTime());
+        if (getBirthTime()
+            != other.getBirthTime()) return false;
       }
-      result = result && (hasName() == other.hasName());
+      if (hasName() != other.hasName()) return false;
       if (hasName()) {
-        result = result && getName()
-            .equals(other.getName());
+        if (!getName()
+            .equals(other.getName())) return false;
       }
-      result = result && (hasProperties() == other.hasProperties());
+      if (hasProperties() != other.hasProperties()) return false;
       if (hasProperties()) {
-        result = result && getProperties()
-            .equals(other.getProperties());
+        if (!getProperties()
+            .equals(other.getProperties())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -5714,21 +5703,21 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.birthTime_ = birthTime_;
           to_bitField0_ |= 0x00000001;
         }
-        result.birthTime_ = birthTime_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((from_bitField0_ & 0x00000002) != 0)) {
           to_bitField0_ |= 0x00000002;
         }
         result.name_ = name_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          if (propertiesBuilder_ == null) {
+            result.properties_ = properties_;
+          } else {
+            result.properties_ = propertiesBuilder_.build();
+          }
           to_bitField0_ |= 0x00000004;
-        }
-        if (propertiesBuilder_ == null) {
-          result.properties_ = properties_;
-        } else {
-          result.properties_ = propertiesBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -5737,35 +5726,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5830,7 +5819,7 @@ public final class AccessProto {
        * <code>optional int64 birth_time = 1;</code>
        */
       public boolean hasBirthTime() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 birth_time = 1;</code>
@@ -5862,7 +5851,7 @@ public final class AccessProto {
        * <code>optional string name = 2;</code>
        */
       public boolean hasName() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string name = 2;</code>
@@ -5933,14 +5922,14 @@ public final class AccessProto {
         return this;
       }
 
-      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap properties_ = null;
+      private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap properties_;
       private com.google.protobuf.SingleFieldBuilderV3<
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> propertiesBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
        */
       public boolean hasProperties() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
@@ -5987,7 +5976,7 @@ public final class AccessProto {
        */
       public Builder mergeProperties(de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap value) {
         if (propertiesBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+          if (((bitField0_ & 0x00000004) != 0) &&
               properties_ != null &&
               properties_ != de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance()) {
             properties_ =
@@ -6172,7 +6161,7 @@ public final class AccessProto {
               done = true;
               break;
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>();
                 mutable_bitField0_ |= 0x00000001;
               }
@@ -6195,7 +6184,7 @@ public final class AccessProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           entry_ = java.util.Collections.unmodifiableList(entry_);
         }
         this.unknownFields = unknownFields.build();
@@ -6301,11 +6290,10 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap) obj;
 
-      boolean result = true;
-      result = result && getEntryList()
-          .equals(other.getEntryList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getEntryList()
+          .equals(other.getEntryList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -6487,7 +6475,7 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap(this);
         int from_bitField0_ = bitField0_;
         if (entryBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             entry_ = java.util.Collections.unmodifiableList(entry_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -6501,35 +6489,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -6607,7 +6595,7 @@ public final class AccessProto {
       private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry> entry_ =
         java.util.Collections.emptyList();
       private void ensureEntryIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry>(entry_);
           bitField0_ |= 0x00000001;
          }
@@ -6836,7 +6824,7 @@ public final class AccessProto {
           entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntryOrBuilder>(
                   entry_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           entry_ = null;
@@ -7020,7 +7008,7 @@ public final class AccessProto {
      * <code>required string key = 1;</code>
      */
     public boolean hasKey() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
@@ -7062,7 +7050,7 @@ public final class AccessProto {
      * <code>optional string value = 2;</code>
      */
     public boolean hasValue() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string value = 2;</code>
@@ -7116,10 +7104,10 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, key_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
       }
       unknownFields.writeTo(output);
@@ -7131,10 +7119,10 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, key_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
       }
       size += unknownFields.getSerializedSize();
@@ -7152,19 +7140,18 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry) obj;
 
-      boolean result = true;
-      result = result && (hasKey() == other.hasKey());
+      if (hasKey() != other.hasKey()) return false;
       if (hasKey()) {
-        result = result && getKey()
-            .equals(other.getKey());
+        if (!getKey()
+            .equals(other.getKey())) return false;
       }
-      result = result && (hasValue() == other.hasValue());
+      if (hasValue() != other.hasValue()) return false;
       if (hasValue()) {
-        result = result && getValue()
-            .equals(other.getValue());
+        if (!getValue()
+            .equals(other.getValue())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -7347,11 +7334,11 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapEntry(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
           to_bitField0_ |= 0x00000001;
         }
         result.key_ = key_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((from_bitField0_ & 0x00000002) != 0)) {
           to_bitField0_ |= 0x00000002;
         }
         result.value_ = value_;
@@ -7362,35 +7349,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -7452,7 +7439,7 @@ public final class AccessProto {
        * <code>required string key = 1;</code>
        */
       public boolean hasKey() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
@@ -7528,7 +7515,7 @@ public final class AccessProto {
        * <code>optional string value = 2;</code>
        */
       public boolean hasValue() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string value = 2;</code>
@@ -7720,7 +7707,7 @@ public final class AccessProto {
               done = true;
               break;
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>();
                 mutable_bitField0_ |= 0x00000001;
               }
@@ -7743,7 +7730,7 @@ public final class AccessProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           entry_ = java.util.Collections.unmodifiableList(entry_);
         }
         this.unknownFields = unknownFields.build();
@@ -7849,11 +7836,10 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap) obj;
 
-      boolean result = true;
-      result = result && getEntryList()
-          .equals(other.getEntryList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getEntryList()
+          .equals(other.getEntryList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -8035,7 +8021,7 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap(this);
         int from_bitField0_ = bitField0_;
         if (entryBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             entry_ = java.util.Collections.unmodifiableList(entry_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -8049,35 +8035,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -8155,7 +8141,7 @@ public final class AccessProto {
       private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry> entry_ =
         java.util.Collections.emptyList();
       private void ensureEntryIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           entry_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry>(entry_);
           bitField0_ |= 0x00000001;
          }
@@ -8384,7 +8370,7 @@ public final class AccessProto {
           entryBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntryOrBuilder>(
                   entry_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           entry_ = null;
@@ -8534,7 +8520,7 @@ public final class AccessProto {
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
                 value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>();
                 mutable_bitField0_ |= 0x00000002;
               }
@@ -8557,7 +8543,7 @@ public final class AccessProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
           value_ = java.util.Collections.unmodifiableList(value_);
         }
         this.unknownFields = unknownFields.build();
@@ -8584,7 +8570,7 @@ public final class AccessProto {
      * <code>required string key = 1;</code>
      */
     public boolean hasKey() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
@@ -8673,7 +8659,7 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, key_);
       }
       for (int i = 0; i < value_.size(); i++) {
@@ -8688,7 +8674,7 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, key_);
       }
       for (int i = 0; i < value_.size(); i++) {
@@ -8710,16 +8696,15 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry) obj;
 
-      boolean result = true;
-      result = result && (hasKey() == other.hasKey());
+      if (hasKey() != other.hasKey()) return false;
       if (hasKey()) {
-        result = result && getKey()
-            .equals(other.getKey());
+        if (!getKey()
+            .equals(other.getKey())) return false;
       }
-      result = result && getValueList()
-          .equals(other.getValueList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getValueList()
+          .equals(other.getValueList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -8907,12 +8892,12 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapEntry(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
           to_bitField0_ |= 0x00000001;
         }
         result.key_ = key_;
         if (valueBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          if (((bitField0_ & 0x00000002) != 0)) {
             value_ = java.util.Collections.unmodifiableList(value_);
             bitField0_ = (bitField0_ & ~0x00000002);
           }
@@ -8927,35 +8912,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -9038,7 +9023,7 @@ public final class AccessProto {
        * <code>required string key = 1;</code>
        */
       public boolean hasKey() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
@@ -9112,7 +9097,7 @@ public final class AccessProto {
       private java.util.List<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue> value_ =
         java.util.Collections.emptyList();
       private void ensureValueIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           value_ = new java.util.ArrayList<de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue>(value_);
           bitField0_ |= 0x00000002;
          }
@@ -9341,7 +9326,7 @@ public final class AccessProto {
           valueBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValueOrBuilder>(
                   value_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  ((bitField0_ & 0x00000002) != 0),
                   getParentForChildren(),
                   isClean());
           value_ = null;
@@ -9508,7 +9493,7 @@ public final class AccessProto {
      * <code>optional string value = 1;</code>
      */
     public boolean hasValue() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string value = 1;</code>
@@ -9558,7 +9543,7 @@ public final class AccessProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, value_);
       }
       unknownFields.writeTo(output);
@@ -9570,7 +9555,7 @@ public final class AccessProto {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, value_);
       }
       size += unknownFields.getSerializedSize();
@@ -9588,14 +9573,13 @@ public final class AccessProto {
       }
       de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue other = (de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue) obj;
 
-      boolean result = true;
-      result = result && (hasValue() == other.hasValue());
+      if (hasValue() != other.hasValue()) return false;
       if (hasValue()) {
-        result = result && getValue()
-            .equals(other.getValue());
+        if (!getValue()
+            .equals(other.getValue())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -9776,7 +9760,7 @@ public final class AccessProto {
         de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue result = new de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayValue(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
           to_bitField0_ |= 0x00000001;
         }
         result.value_ = value_;
@@ -9787,35 +9771,35 @@ public final class AccessProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -9869,7 +9853,7 @@ public final class AccessProto {
        * <code>optional string value = 1;</code>
        */
       public boolean hasValue() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string value = 1;</code>
