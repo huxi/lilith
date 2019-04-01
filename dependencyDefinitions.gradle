@@ -9,7 +9,7 @@ if(prereleaseIdentifier) {
 
 project.ext.versions = [
 'aspectj':        '1.9.2',
-'bytebuddy':      '1.9.11',
+'bytebuddy':      '1.9.12',
 'groovy':         '2.5.6',
 'httpClient':     '4.5.8',
 'httpCore':       '4.4.11',
