@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
-import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -46,8 +45,7 @@ public class ViewContainerFrame
 	private final ViewContainer viewContainer;
 	private final JToolBar toolbar;
 
-	public ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer)
-		throws HeadlessException
+	ViewContainerFrame(MainFrame mainFrame, ViewContainer viewContainer)
 	{
 		this.mainFrame = mainFrame;
 		this.viewContainer = viewContainer;
@@ -185,7 +183,7 @@ public class ViewContainerFrame
 		}
 	}
 
-	public void setShowingToolbar(boolean showingToolbar)
+	void setShowingToolbar(boolean showingToolbar)
 	{
 		toolbar.setVisible(showingToolbar);
 	}

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ package de.huxhorn.lilith.swing;
 
 import de.huxhorn.lilith.swing.linklistener.OpenUrlLinkListener;
 import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -59,7 +58,6 @@ class HelpFrame
 	private final JPopupMenu popup;
 
 	HelpFrame(MainFrame mainFrame)
-		throws HeadlessException
 	{
 		super();
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
