@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -182,7 +182,7 @@ public class ApplicationPreferences
 
 	static final String SAVED_CONDITION = "Saved";
 
-	private static final String[] DEFAULT_CONDITIONS = new String[]{
+	private static final String[] DEFAULT_CONDITIONS = {
 		EventContainsCondition.DESCRIPTION,
 		LevelCondition.DESCRIPTION,
 		FormattedMessageContainsCondition.DESCRIPTION,

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,8 +41,7 @@ class HtmlTransferable
 	//public static final DataFlavor HTML_FLAVOR=new DataFlavor("text/html; charset=\"UTF-8\"", "HTML");
 	public static final DataFlavor PLAIN_TEXT_FLAVOR = new DataFlavor("text/plain; charset=\"UTF-8\"", "UTF-8 Text");
 
-	private static final DataFlavor[] FLAVORS = new DataFlavor[]
-		{
+	private static final DataFlavor[] FLAVORS = {
 			XHTML_FLAVOR,
 			//HTML_FLAVOR,
 			PLAIN_TEXT_FLAVOR,

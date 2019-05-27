@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,8 +71,7 @@ public final class ImportExportCommand
 
 	private static Map<String, byte[]> exportDetailsView(ApplicationPreferences preferences)
 	{
-		String[] files = new String[]
-			{
+		String[] files = {
 				ApplicationPreferences.DETAILS_VIEW_CSS_FILENAME,
 				ApplicationPreferences.DETAILS_VIEW_GROOVY_FILENAME,
 			};
@@ -81,8 +80,7 @@ public final class ImportExportCommand
 
 	private static Map<String, byte[]> exportRootFiles(ApplicationPreferences preferences)
 	{
-		String[] files = new String[]
-			{
+		String[] files = {
 				ApplicationPreferences.ACCESS_LAYOUT_GLOBAL_XML_FILENAME,
 				ApplicationPreferences.ACCESS_LAYOUT_XML_FILENAME,
 				ApplicationPreferences.LOGGING_LAYOUT_GLOBAL_XML_FILENAME,

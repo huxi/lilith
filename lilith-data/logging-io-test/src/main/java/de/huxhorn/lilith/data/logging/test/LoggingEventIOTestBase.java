@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2018 Joern Huxhorn
+ * Copyright 2007-2019 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,7 +110,7 @@ public abstract class LoggingEventIOTestBase
 		throws Throwable
 	{
 		LoggingEvent event = createMinimalEvent();
-		String[] arguments = new String[]{"arg1", "arg2"};
+		String[] arguments = {"arg1", "arg2"};
 		event.setMessage(new Message("message", arguments));
 		check(event);
 	}
@@ -120,7 +120,7 @@ public abstract class LoggingEventIOTestBase
 		throws Throwable
 	{
 		LoggingEvent event = createMinimalEvent();
-		String[] arguments = new String[]{"arg1", null, "arg3"};
+		String[] arguments = {"arg1", null, "arg3"};
 		event.setMessage(new Message("message", arguments));
 		check(event);
 	}
@@ -167,7 +167,7 @@ public abstract class LoggingEventIOTestBase
 		throws Throwable
 	{
 		LoggingEvent event = createMinimalEvent();
-		Message[] ndc = new Message[]{
+		Message[] ndc = {
 			new Message("message"),
 			new Message("messagePattern {}", new String[]{"foo"}),
 		};
@@ -245,7 +245,7 @@ public abstract class LoggingEventIOTestBase
 		value.setProperties(propperties);
 		event.setLoggerContext(value);
 
-		String[] arguments = new String[]{"arg1", null, "arg3"};
+		String[] arguments = {"arg1", null, "arg3"};
 		event.setMessage(new Message("message", arguments));
 
 		ThrowableInfo ti = createThrowableInfo("the.exception.class.Name", "Huhu! Exception Message");
@@ -272,7 +272,7 @@ public abstract class LoggingEventIOTestBase
 		mdc.put("key3", "value3");
 		event.setMdc(mdc);
 
-		Message[] ndc = new Message[]{
+		Message[] ndc = {
 			new Message("message"),
 			new Message("messagePattern {}", new String[]{"foo"}),
 		};

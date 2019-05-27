@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,8 +93,8 @@ public class OpenPreviousDialog
 		}
 	}
 
-	private static final String[] EMPTY_STRING_ARRAY = new String[0];
-	private static final SourceIdentifierWrapper[] EMPTY_SECONDARY_ARRAY = new SourceIdentifierWrapper[]{};
+	private static final String[] EMPTY_STRING_ARRAY = {};
+	private static final SourceIdentifierWrapper[] EMPTY_SECONDARY_ARRAY = {};
 
 	private final MainFrame mainFrame;
 	private final OpenAction openAction;

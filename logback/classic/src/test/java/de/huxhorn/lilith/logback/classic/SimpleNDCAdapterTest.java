@@ -103,8 +103,7 @@ public class SimpleNDCAdapterTest
 	@Test
 	public void getContextStackUsingPush()
 	{
-		Message[] messages = new Message[]
-			{
+		Message[] messages = {
 				new Message("message1", new String[]{"foo", "bar"}),
 				new Message("message2", new String[]{"foo", "null"}),
 				new Message("message3"),

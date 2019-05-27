@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2018 Joern Huxhorn
+ * Copyright 2007-2019 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,20 +49,20 @@ public final class MessageFormatterUseCases
 		Integer i3 = 3;
 		//noinspection ThrowableInstanceNeverThrown
 		Throwable t = new FooThrowable("FooThrowable");
-		Integer[] p1 = new Integer[]{i2, i3};
+		Integer[] p1 = {i2, i3};
 
-		Object[] multiArray = new Object[]{null, p1};
-		Object[] multiArrayRecursive = new Object[]{null, p1};
+		Object[] multiArray = {null, p1};
+		Object[] multiArrayRecursive = {null, p1};
 		multiArrayRecursive[0] = multiArrayRecursive;
 		multiArray[0] = multiArrayRecursive;
 		String multiArrayRecId = SafeString.identityToString(multiArrayRecursive);
 		String multiArrayRec = SafeString.RECURSION_PREFIX + multiArrayRecId + SafeString.RECURSION_SUFFIX;
 
-		Integer[] ia0 = new Integer[]{i1, i2, i3};
-		Integer[] ia1 = new Integer[]{10, 20, 30};
+		Integer[] ia0 = {i1, i2, i3};
+		Integer[] ia1 = {10, 20, 30};
 
-		Object[][] multiOA = new Object[][]{ia0, ia1};
-		Object[][][] multiOATwice = new Object[][][]{multiOA, multiOA};
+		Object[][] multiOA = {ia0, ia1};
+		Object[][][] multiOATwice = {multiOA, multiOA};
 
 		Object[] cyclicA = new Object[1];
 		cyclicA[0] = cyclicA;
@@ -73,8 +73,8 @@ public final class MessageFormatterUseCases
 		Object[] cyclicB = new Object[2];
 		{
 			cyclicB[0] = i1;
-			Object[] c = new Object[]{i3, cyclicB};
-			Object[] b = new Object[]{i2, c};
+			Object[] c = {i3, cyclicB};
+			Object[] b = {i2, c};
 			recArray = b;
 			cyclicB[1] = b;
 		}
@@ -83,8 +83,8 @@ public final class MessageFormatterUseCases
 		Object[] cyclicC = new Object[3];
 		{
 			cyclicC[0] = i1;
-			Object[] c = new Object[]{i3, cyclicC};
-			Object[] b = new Object[]{i2, c};
+			Object[] c = {i3, cyclicC};
+			Object[] b = {i2, c};
 			recArray = b;
 			cyclicC[1] = b;
 			cyclicC[2] = t;

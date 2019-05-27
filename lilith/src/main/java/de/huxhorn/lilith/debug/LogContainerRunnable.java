@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.huxhorn.lilith.debug;
 
 import java.util.HashMap;
@@ -71,13 +72,13 @@ public class LogContainerRunnable
 		Object[] emptyObjectArray = new Object[0];
 		if(logger.isInfoEnabled()) logger.info("Empty Object[]: {}", emptyObjectArray);
 		if(logger.isInfoEnabled()) logger.info("Param {} and Empty Object[]: {}", "foo", emptyObjectArray);
-		Object[] emptyStringObjectArray = new Object[]{""};
+		Object[] emptyStringObjectArray = {""};
 		if(logger.isInfoEnabled()) logger.info("Object[] containing empty String: {}", emptyStringObjectArray);
 		if(logger.isInfoEnabled()) logger.info("Param {} and Object[] containing empty String: {}", "foo", emptyStringObjectArray);
-		Object[] nullObjectArray = new Object[]{null};
+		Object[] nullObjectArray = {null};
 		if(logger.isInfoEnabled()) logger.info("Object[] containing null: {}", nullObjectArray);
 		if(logger.isInfoEnabled()) logger.info("Param {} and Object[] containing null: {}", "Foo", nullObjectArray);
-		Object[] nullStringObjectArray = new Object[]{"null"};
+		Object[] nullStringObjectArray = {"null"};
 		if(logger.isInfoEnabled()) logger.info("Object[] containing null: {}", nullStringObjectArray);
 		if(logger.isInfoEnabled()) logger.info("Param {} and Object[] containing null: {}", "Foo", nullStringObjectArray);
 
@@ -92,9 +93,9 @@ public class LogContainerRunnable
 		stringObjectMap.put("emptyStringObjectArray", emptyStringObjectArray);
 		stringObjectMap.put("nullObjectArray", nullObjectArray);
 		stringObjectMap.put("nullStringObjectArray", nullStringObjectArray);
-		byte[] byteArray = new byte[] {(byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE};
+		byte[] byteArray = {(byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE};
 		stringObjectMap.put("byte[]", byteArray);
-		Byte[] byteObjectArray = new Byte[] {(byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE};
+		Byte[] byteObjectArray = {(byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE};
 		stringObjectMap.put("Byte[]", byteObjectArray);
 
 

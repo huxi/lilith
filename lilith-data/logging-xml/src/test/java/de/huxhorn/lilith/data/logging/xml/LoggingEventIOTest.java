@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2018 Joern Huxhorn
+ * Copyright 2007-2019 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -191,7 +191,7 @@ public class LoggingEventIOTest
 		throws XMLStreamException
 	{
 		LoggingEvent event = createMinimalEvent();
-		String[] arguments = new String[]{"arg1", "arg2", "arg3"};
+		String[] arguments = {"arg1", "arg2", "arg3"};
 		event.setMessage(new Message("message", arguments));
 		check(event, true);
 	}
@@ -201,7 +201,7 @@ public class LoggingEventIOTest
 		throws XMLStreamException
 	{
 		LoggingEvent event = createMinimalEvent();
-		String[] arguments = new String[]{"arg1", null, "arg3"};
+		String[] arguments = {"arg1", null, "arg3"};
 		event.setMessage(new Message("message", arguments));
 		check(event, true);
 	}
@@ -249,7 +249,7 @@ public class LoggingEventIOTest
 		throws XMLStreamException
 	{
 		LoggingEvent event = createMinimalEvent();
-		Message[] ndc = new Message[]{
+		Message[] ndc = {
 			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
 			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}),
 		};
@@ -346,7 +346,7 @@ public class LoggingEventIOTest
 		mdc.put("key3", "value3");
 		event.setMdc(mdc);
 
-		Message[] ndc = new Message[]{
+		Message[] ndc = {
 			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
 			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}),
 		};
@@ -393,7 +393,7 @@ public class LoggingEventIOTest
 		mdc.put("key3", "value3");
 		event.setMdc(mdc);
 
-		Message[] ndc = new Message[]{
+		Message[] ndc = {
 			new Message("Pattern 1 {} {}", new String[]{"foo", "bar"}),
 			new Message("Pattern 2 {} {}", new String[]{"foo", "bar"}),
 		};

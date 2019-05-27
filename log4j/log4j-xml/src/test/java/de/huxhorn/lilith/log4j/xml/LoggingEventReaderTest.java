@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2018 Joern Huxhorn
+ * Copyright 2007-2019 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,8 +133,7 @@ public class LoggingEventReaderTest
 
 		// NDC
 		{
-			Message[] expectedNdc = new Message[]
-				{
+			Message[] expectedNdc = {
 					new Message("NDC1"),
 					new Message("NDC2"),
 				};
@@ -143,8 +142,7 @@ public class LoggingEventReaderTest
 
 		// call stack
 		{
-			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
-				{
+			ExtendedStackTraceElement[] expectedCallStack = {
 					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 18),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
@@ -226,8 +224,7 @@ public class LoggingEventReaderTest
 
 		// NDC
 		{
-			Message[] expectedNdc = new Message[]
-				{
+			Message[] expectedNdc = {
 					new Message("NDC1"),
 					new Message("NDC2"),
 					new Message("NDC"),
@@ -239,8 +236,7 @@ public class LoggingEventReaderTest
 
 		// call stack
 		{
-			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
-				{
+			ExtendedStackTraceElement[] expectedCallStack = {
 					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox", "main", "Log4jSandbox.java", 37),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
@@ -318,8 +314,7 @@ public class LoggingEventReaderTest
 
 		// NDC
 		{
-			Message[] expectedNdc = new Message[]
-				{
+			Message[] expectedNdc = {
 					new Message("NDC1"),
 					new Message("NDC2"),
 					new Message("NDC"),
@@ -331,8 +326,7 @@ public class LoggingEventReaderTest
 
 		// call stack
 		{
-			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
-				{
+			ExtendedStackTraceElement[] expectedCallStack = {
 					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 29),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
@@ -423,8 +417,7 @@ public class LoggingEventReaderTest
 
 		// NDC
 		{
-			Message[] expectedNdc = new Message[]
-				{
+			Message[] expectedNdc = {
 					new Message("NDC1"),
 					new Message("NDC2"),
 					new Message("NDC"),
@@ -436,8 +429,7 @@ public class LoggingEventReaderTest
 
 		// call stack
 		{
-			ExtendedStackTraceElement[] expectedCallStack = new ExtendedStackTraceElement[]
-				{
+			ExtendedStackTraceElement[] expectedCallStack = {
 					new ExtendedStackTraceElement("de.huxhorn.lilith.sandbox.Log4jSandbox$InnerClass", "execute", "Log4jSandbox.java", 29),
 				};
 			assertArrayEquals(expectedCallStack, readEvent.getCallStack());
