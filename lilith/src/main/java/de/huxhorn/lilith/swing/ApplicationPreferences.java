@@ -995,7 +995,7 @@ public class ApplicationPreferences
 	{
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, LEVEL_COLORS_XML_FILENAME);
-		try(BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));XMLEncoder e = new XMLEncoder(bos))
+		try(XMLEncoder e = new XMLEncoder(new BufferedOutputStream(Files.newOutputStream(file.toPath()))))
 		{
 			e.writeObject(colors);
 		}
@@ -1356,7 +1356,8 @@ public class ApplicationPreferences
 
 		if(!target.isFile())
 		{
-			try(InputStream is = source.openStream();OutputStream os = Files.newOutputStream(target.toPath()))
+			try(InputStream is = source.openStream();
+				OutputStream os = Files.newOutputStream(target.toPath()))
 			{
 				IOUtils.copy(is, os);
 				if(logger.isInfoEnabled()) logger.info("Initialized file at '{}' with data from '{}'.", target.getAbsolutePath(), source);
