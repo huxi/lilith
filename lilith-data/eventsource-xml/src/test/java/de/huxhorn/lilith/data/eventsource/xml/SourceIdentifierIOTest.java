@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2016 Joern Huxhorn
+ * Copyright 2007-2019 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +38,10 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import de.huxhorn.sulky.stax.IndentingXMLStreamWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -96,7 +98,7 @@ public class SourceIdentifierIOTest
 
 	@Test
 	public void minimal()
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		SourceIdentifier identifier = createMinimalEventSource();
 		check(identifier, true);
@@ -104,7 +106,7 @@ public class SourceIdentifierIOTest
 
 	@Test
 	public void full()
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		SourceIdentifier identifier = createMinimalEventSource();
 		identifier.setSecondaryIdentifier("secondary");
@@ -113,7 +115,7 @@ public class SourceIdentifierIOTest
 
 	@Test
 	public void fullPrefix()
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		sourceIdentifierWriter.setPreferredPrefix("foo");
 		SourceIdentifier identifier = createMinimalEventSource();
@@ -129,7 +131,7 @@ public class SourceIdentifierIOTest
 	}
 
 	public void check(SourceIdentifier original, boolean indent)
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		if(logger.isDebugEnabled()) logger.debug("Processing:\n{}", original);
 		byte[] bytes = write(original, indent);
@@ -162,11 +164,14 @@ public class SourceIdentifierIOTest
 	}
 
 	public SourceIdentifier read(byte[] bytes)
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
-		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-		return sourceIdentifierReader.read(reader);
+		try(ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+			Reader isr = new InputStreamReader(in, StandardCharsets.UTF_8))
+		{
+			XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(isr);
+			return sourceIdentifierReader.read(reader);
+		}
 	}
 }
 

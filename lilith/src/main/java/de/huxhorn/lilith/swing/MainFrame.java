@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1380,6 +1380,7 @@ public class MainFrame
 		JOptionPane.showMessageDialog(this, message, "Unknown file type…", JOptionPane.WARNING_MESSAGE);
 	}
 
+	@SuppressWarnings("PMD.CloseResource")
 	private ImportType resolveType(File inputFile)
 	{
 		BufferedReader br = null;

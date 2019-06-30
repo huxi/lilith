@@ -53,19 +53,21 @@ class HtmlTransferable
 	HtmlTransferable(String html)
 	{
 		this.html = html;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		try
+
+		byte[] data;
+		try(ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			OutputStreamWriter osw = new OutputStreamWriter(bos, StandardCharsets.UTF_8))
 		{
-			OutputStreamWriter osw = new OutputStreamWriter(bos, StandardCharsets.UTF_8);
 			osw.append(html);
 			osw.flush();
-			osw.close();
+			data = bos.toByteArray();
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace(); // NOPMD
+			data = new byte[0];
 		}
-		data = bos.toByteArray();
+		this.data = data;
 	}
 
 	public String getHtml()

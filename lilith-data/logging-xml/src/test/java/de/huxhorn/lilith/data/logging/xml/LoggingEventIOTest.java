@@ -495,6 +495,7 @@ public class LoggingEventIOTest
 		return out.toByteArray();
 	}
 
+	@SuppressWarnings("PMD.CloseResource")
 	private LoggingEvent read(byte[] bytes)
 		throws XMLStreamException
 	{

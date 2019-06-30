@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,23 +51,22 @@ public final class CreateMd5Command
 		}
 		File output = new File(input.getParentFile(), input.getName() + ".md5");
 
-		try
+		try(InputStream fis = Files.newInputStream(input.toPath()))
 		{
-
-			InputStream fis = Files.newInputStream(input.toPath());
 			byte[] md5 = ApplicationPreferences.getMD5(fis);
 			if(md5 == null)
 			{
 				if(logger.isWarnEnabled()) logger.warn("Couldn't calculate checksum for {}!", input.getAbsolutePath());
 				return false;
 			}
-			OutputStream fos = Files.newOutputStream(output.toPath());
-			fos.write(md5);
-			fos.close();
-			if(logger.isInfoEnabled())
+			try(OutputStream fos = Files.newOutputStream(output.toPath()))
 			{
-				logger.info("Wrote checksum of {} to {}.", input.getAbsolutePath(), output.getAbsolutePath());
-				logger.info("MD5: {}", Hex.encodeHexString(md5));
+				fos.write(md5);
+				if(logger.isInfoEnabled())
+				{
+					logger.info("Wrote checksum of {} to {}.", input.getAbsolutePath(), output.getAbsolutePath());
+					logger.info("MD5: {}", Hex.encodeHexString(md5));
+				}
 			}
 		}
 		catch(IOException e)

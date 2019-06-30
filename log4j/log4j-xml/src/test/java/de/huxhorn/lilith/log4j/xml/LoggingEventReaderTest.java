@@ -58,6 +58,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("PMD.CloseResource")
 public class LoggingEventReaderTest
 {
 	// thread-safe, see http://www.cowtowncoder.com/blog/archives/2006/06/entry_2.html

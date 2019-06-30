@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,9 +97,8 @@ public class TroubleshootingPanel
 	{
 		final Logger logger = LoggerFactory.getLogger(TroubleshootingPanel.class);
 
-		try
+		try(InputStream messageStream = TroubleshootingPanel.class.getResourceAsStream("/dependencies.message"))
 		{
-			InputStream messageStream = TroubleshootingPanel.class.getResourceAsStream("/dependencies.message");
 			if(messageStream == null)
 			{
 				if(logger.isErrorEnabled()) logger.error("Failed to get resource dependencies.message!");

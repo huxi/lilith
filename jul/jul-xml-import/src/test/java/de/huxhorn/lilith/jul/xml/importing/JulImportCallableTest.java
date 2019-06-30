@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2018 Joern Huxhorn
+ * Copyright 2007-2019 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,16 +94,18 @@ public class JulImportCallableTest
 	private void createTempFile(String resourceName)
 		throws IOException
 	{
-		InputStream input = JulImportCallableTest.class.getResourceAsStream(resourceName);
-		if(input == null)
+		try(InputStream input = JulImportCallableTest.class.getResourceAsStream(resourceName))
 		{
-			fail("Couldn't resolve resource '" + resourceName + "'!");
-		}
-		inputFile = File.createTempFile("Import", "test");
-		inputFile.delete();
-		try(OutputStream output = Files.newOutputStream(inputFile.toPath()))
-		{
-			IOUtils.copyLarge(input, output);
+			if(input == null)
+			{
+				fail("Couldn't resolve resource '" + resourceName + "'!");
+			}
+			inputFile = File.createTempFile("Import", "test");
+			inputFile.delete();
+			try(OutputStream output = Files.newOutputStream(inputFile.toPath()))
+			{
+				IOUtils.copyLarge(input, output);
+			}
 		}
 	}
 

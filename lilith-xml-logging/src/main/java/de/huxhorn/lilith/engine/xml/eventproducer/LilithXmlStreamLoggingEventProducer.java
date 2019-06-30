@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,10 +129,12 @@ public class LilithXmlStreamLoggingEventProducer
 						bytes.clear();
 						String str = new String(ba, StandardCharsets.UTF_8);
 						if(logger.isDebugEnabled()) logger.debug("Read: {}", str);
-						StringReader strr = new StringReader(str);
-						XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(strr);
-						LoggingEvent event = loggingEventReader.read(reader);
-						addEvent(event);
+						try(StringReader strr = new StringReader(str))
+						{
+							XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(strr);
+							LoggingEvent event = loggingEventReader.read(reader);
+							addEvent(event);
+						}
 					}
 					else
 					{

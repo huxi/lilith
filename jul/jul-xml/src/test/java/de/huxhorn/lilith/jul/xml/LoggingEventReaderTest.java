@@ -40,7 +40,9 @@ import de.huxhorn.lilith.data.logging.Message;
 import de.huxhorn.lilith.data.logging.ThreadInfo;
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
@@ -88,7 +90,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void full()
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -175,7 +177,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void fullWith3rdPartyLevel()
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -262,7 +264,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void fullWithoutExceptionMessage()
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -348,7 +350,7 @@ public class LoggingEventReaderTest
 
 	@Test
 	public void fullWithIgnoredKeyCatalogParams()
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		String eventString = "<record>\n" +
 			"  <date>2009-03-20T14:06:45</date>\n" +
@@ -438,7 +440,7 @@ public class LoggingEventReaderTest
 	}
 
 	private LoggingEvent read(String eventStr)
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
 		return read((eventStr).getBytes(StandardCharsets.UTF_8));
 	}
@@ -499,10 +501,11 @@ public class LoggingEventReaderTest
 	}
 
 	private LoggingEvent read(byte[] bytes)
-		throws XMLStreamException
+		throws XMLStreamException, IOException
 	{
-		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		XMLStreamReader reader = XML_INPUT_FACTORY.createXMLStreamReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-		return instance.read(reader);
+		try(Reader reader = new InputStreamReader(new ByteArrayInputStream(bytes), StandardCharsets.UTF_8)) {
+			XMLStreamReader xmlStreamReader = XML_INPUT_FACTORY.createXMLStreamReader(reader);
+			return instance.read(xmlStreamReader);
+		}
 	}
 }

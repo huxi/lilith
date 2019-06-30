@@ -704,28 +704,19 @@ public class ApplicationPreferences
 		return true;
 	}
 
+	@SuppressWarnings("PMD.UnnecessaryLocalBeforeReturn") // false positive
 	private static Throwable writeXml(File file, Object object)
 	{
-		XMLEncoder e = null;
-		Throwable error = null;
-		try
+		try(BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
+			XMLEncoder e = new XMLEncoder(bos))
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
-			e = new XMLEncoder(bos);
 			e.writeObject(object);
 		}
 		catch(IOException ex)
 		{
-			error = ex;
+			return ex;
 		}
-		finally
-		{
-			if(e != null)
-			{
-				e.close();
-			}
-		}
-		return error;
+		return null;
 	}
 
 	void addPreviousSearchString(String searchString)
@@ -1274,9 +1265,8 @@ public class ApplicationPreferences
 		{
 			byte[] available = null;
 
-			try
+			try(InputStream availableFile = Files.newInputStream(file.toPath()))
 			{
-				InputStream availableFile = Files.newInputStream(file.toPath());
 				available = getMD5(availableFile);
 			}
 			catch(IOException e)
@@ -2393,29 +2383,16 @@ public class ApplicationPreferences
 	{
 		File appPath = getStartupApplicationPath();
 		File file = new File(appPath, CONDITIONS_XML_FILENAME);
-		XMLEncoder e = null;
-		Throwable error = null;
-		try
+
+		try(BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
+			XMLEncoder e = new XMLEncoder(bos))
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
-			e = new XMLEncoder(bos);
 			e.writeObject(conditions);
 			if(logger.isInfoEnabled()) logger.info("Wrote conditions {}.", conditions);
 		}
 		catch(IOException ex)
 		{
-			error = ex;
-		}
-		finally
-		{
-			if(e != null)
-			{
-				e.close();
-			}
-		}
-		if(error != null)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while writing source lists!", error);
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing source lists!", ex);
 			return false;
 		}
 		return true;
@@ -2570,29 +2547,15 @@ public class ApplicationPreferences
 
 	private boolean writeColumnLayout(File file, List<PersistentTableColumnModel.TableColumnLayoutInfo> layoutInfo)
 	{
-		XMLEncoder e = null;
-		Throwable error = null;
-		try
+		try(BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
+			XMLEncoder e = new XMLEncoder(bos))
 		{
-			BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
-			e = new XMLEncoder(bos);
 			e.writeObject(layoutInfo);
 			if(logger.isInfoEnabled()) logger.info("Wrote layouts {} to file '{}'.", layoutInfo, file.getAbsolutePath());
 		}
 		catch(IOException ex)
 		{
-			error = ex;
-		}
-		finally
-		{
-			if(e != null)
-			{
-				e.close();
-			}
-		}
-		if(error != null)
-		{
-			if(logger.isWarnEnabled()) logger.warn("Exception while writing layouts to file '" + file.getAbsolutePath() + "'!", error);
+			if(logger.isWarnEnabled()) logger.warn("Exception while writing layouts to file '" + file.getAbsolutePath() + "'!", ex);
 			return false;
 		}
 		return true;

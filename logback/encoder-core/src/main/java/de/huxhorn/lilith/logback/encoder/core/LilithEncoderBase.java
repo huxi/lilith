@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2017 Joern Huxhorn
+ * Copyright 2007-2019 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,9 +78,8 @@ public abstract class LilithEncoderBase<E>
 		// suggested LOGBACK-1257 workaround above
 		MetaData metaData = new MetaData(metaDataMap, false);
 
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
-		try
+		try(ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream))
 		{
 			dataOutputStream.writeInt(DefaultFileHeaderStrategy.CODEC_FILE_HEADER_MAGIC_VALUE);
 			dataOutputStream.writeInt(FileConstants.MAGIC_VALUE);
@@ -97,14 +96,14 @@ public abstract class LilithEncoderBase<E>
 				dataOutputStream.writeInt(0);
 			}
 			dataOutputStream.flush();
+
+			return byteArrayOutputStream.toByteArray();
 		}
 		catch (IOException e)
 		{
 			addError("Failed to create header!", e);
 			return null;
 		}
-
-		return byteArrayOutputStream.toByteArray();
 	}
 
 	@Override
@@ -117,20 +116,19 @@ public abstract class LilithEncoderBase<E>
 			addError("Couldn't encode event " + event + "!");
 			return EMPTY;
 		}
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
-		try
+		try(ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream))
 		{
 			dataOutputStream.writeInt(buffer.length);
 			dataOutputStream.write(buffer);
 			dataOutputStream.flush();
+			return byteArrayOutputStream.toByteArray();
 		}
 		catch (IOException e)
 		{
 			addError("Failed to encode event!", e);
 			return EMPTY;
 		}
-		return byteArrayOutputStream.toByteArray();
 	}
 
 	@Override
@@ -154,6 +152,7 @@ public abstract class LilithEncoderBase<E>
 		this.parent = parent;
 	}
 
+	@SuppressWarnings("PMD.CloseResource")
 	private boolean isSupposedToGenerateHeader()
 	{
 		if(parent instanceof FileAppender)

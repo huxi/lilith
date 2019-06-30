@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -812,9 +812,9 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		String filename = DateTimeFormatters.COMPACT_DATETIME_IN_SYSTEM_ZONE_T.format(Instant.now());
 		File errorFile = new File(errorPath, filename);
 
-		try(OutputStream fos = Files.newOutputStream(errorFile.toPath()))
+		try(OutputStream fos = Files.newOutputStream(errorFile.toPath());
+			OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8))
 		{
-			OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
 			osw.append(message);
 			osw.flush();
 			if(logger.isInfoEnabled()) logger.info("Faulty message written to '{}'.", errorFile.getAbsolutePath());

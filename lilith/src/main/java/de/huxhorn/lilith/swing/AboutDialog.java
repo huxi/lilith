@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2019 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,19 +44,18 @@ public class AboutDialog
 		super(owner, title, false);
 		wasScrolling = true;
 		setLayout(new BorderLayout());
-		InputStream is = MainFrame.class.getResourceAsStream("/about/aboutText.txt");
 		String aboutText = null;
 		final Logger logger = LoggerFactory.getLogger(AboutDialog.class);
-		if(is != null)
+		try(InputStream is = MainFrame.class.getResourceAsStream("/about/aboutText.txt"))
 		{
-			try
+			if(is != null)
 			{
 				aboutText = IOUtils.toString(is, StandardCharsets.UTF_8);
 			}
-			catch(IOException e)
-			{
-				if(logger.isErrorEnabled()) logger.error("Exception while loading aboutText!! *grrr*");
-			}
+		}
+		catch(IOException e)
+		{
+			if(logger.isErrorEnabled()) logger.error("Exception while loading aboutText!! *grrr*");
 		}
 		try
 		{
