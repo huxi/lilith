@@ -12,7 +12,7 @@ project.ext.versions = [
 'bytebuddy':      '1.10.1',
 'groovy':         '2.5.8',
 'httpClient':     '4.5.9',
-'httpCore':       '4.4.11',
+'httpCore':       '4.4.12',
 'jackson':        '2.9.9',
 'jacksonModule':  '2.9.9',
 'log4j':          '1.2.17',
