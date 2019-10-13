@@ -27,7 +27,7 @@ buildscript {
 		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
 		classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.2.3'
 		classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
-		classpath 'de.thetaphi:forbiddenapis:2.6'
+		classpath 'de.thetaphi:forbiddenapis:2.7'
 		classpath 'org.kordamp.gradle:jdeps-gradle-plugin:0.4.1'
 	}
 }
