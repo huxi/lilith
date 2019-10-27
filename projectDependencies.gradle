@@ -14,8 +14,8 @@ project(':lilith-sender') {
 	}
 
 	dependencies {
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-io'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-io'
 	}
 }
 
@@ -28,7 +28,7 @@ project(':lilith-data-converter') {
 	}
 
 	dependencies {
-		testCompile libraries.'sulky-junit'
+		testImplementation libraries.'sulky-junit'
 	}
 }
 
@@ -41,7 +41,7 @@ project(':lilith-data-eventsource') {
 	}
 
 	dependencies {
-		testCompile libraries.'sulky-junit'
+		testImplementation libraries.'sulky-junit'
 	}
 }
 
@@ -57,9 +57,9 @@ project(':lilith-data-eventsource-xml') {
 	*/
 
 	dependencies {
-		compile project(':lilith-data-eventsource')
-		compile libraries.'sulky-stax'
-		runtime libraries.'woodstox'
+		implementation libraries.'sulky-stax'
+		implementation project(':lilith-data-eventsource')
+		runtimeOnly libraries.'woodstox'
 	}
 }
 
@@ -72,9 +72,9 @@ project(':lilith-data-logging') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-eventsource')
-		compile libraries.'sulky-formatting'
-		testCompile libraries.'sulky-junit'
+		implementation libraries.'sulky-formatting'
+		implementation project(':lilith-data-eventsource')
+		testImplementation libraries.'sulky-junit'
 	}
 }
 
@@ -90,12 +90,12 @@ project(':lilith-data-logging-io-test') {
 	*/
 
 	dependencies {
-		compile project(':lilith-data-eventsource')
-		compile project(':lilith-data-logging')
-		compile libraries.'sulky-formatting'
-		compile libraries.'sulky-junit'
-		compile libraries.junit
-		compile libraries.'slf4j-api'
+		implementation libraries.'junit'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-formatting'
+		implementation libraries.'sulky-junit'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
 	}
 }
 
@@ -111,11 +111,11 @@ project(':lilith-data-logging-xml') {
 	*/
 
 	dependencies {
-		compile project(':lilith-data-logging')
-		compile project(':lilith-data-eventsource-xml')
-		compile libraries.'sulky-stax'
-		runtime libraries.'woodstox'
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'sulky-stax'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-eventsource-xml')
+		implementation project(':lilith-data-logging')
+		runtimeOnly libraries.'woodstox'
 	}
 }
 
@@ -131,13 +131,14 @@ project(':lilith-data-logging-xml-serializer') {
 	*/
 
 	dependencies {
-		compile project(':lilith-data-logging-xml')
-		compile libraries.'sulky-codec'
-		compile libraries.'sulky-stax'
-		runtime libraries.'woodstox'
-		testCompile project(':lilith-data-logging')
-		testCompile project(':lilith-data-logging-io-test')
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'sulky-codec'
+		implementation libraries.'sulky-stax'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-data-logging-xml')
+		runtimeOnly libraries.'woodstox'
+		testImplementation libraries.'sulky-junit'
+		testImplementation project(':lilith-data-logging-io-test')
 	}
 }
 
@@ -159,11 +160,12 @@ project(':lilith-data-logging-protobuf') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-logging')
-		compile libraries.'protobuf'
-		compile libraries.'sulky-codec'
-		testCompile project(':lilith-data-logging-io-test')
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'protobuf'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		testImplementation libraries.'sulky-junit'
+		testImplementation project(':lilith-data-logging-io-test')
 	}
 }
 
@@ -176,12 +178,13 @@ project(':lilith-data-logging-json-serializer') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-logging')
-		compile libraries.'sulky-codec'
-		compile libraries.'jackson-databind'
-		compile libraries.'jackson-afterburner'
-		testCompile project(':lilith-data-logging-io-test')
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'jackson-afterburner'
+		implementation libraries.'jackson-databind'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		testImplementation libraries.'sulky-junit'
+		testImplementation project(':lilith-data-logging-io-test')
 	}
 }
 
@@ -194,8 +197,8 @@ project(':lilith-data-access') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-eventsource')
-		testCompile libraries.'sulky-junit'
+		implementation project(':lilith-data-eventsource')
+		testImplementation libraries.'sulky-junit'
 	}
 }
 
@@ -217,10 +220,10 @@ project(':lilith-data-access-protobuf') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-access')
-		compile libraries.'protobuf'
-		compile libraries.'sulky-codec'
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'protobuf'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-eventsource')
 	}
 }
 
@@ -234,10 +237,11 @@ project(':lilith-data-corpus') {
 	}
 
 	dependencies {
-		compile libraries.'groovy'
-		compile project(':lilith-data-eventsource')
-		compile project(':lilith-data-logging')
-		compile project(':lilith-data-access')
+		implementation libraries.'groovy'
+		implementation libraries.'slf4j-api'
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
 	}
 }
 
@@ -259,20 +263,20 @@ project(':lilith-engine') {
 	}
 
 	dependencies {
-		compile project(':lilith-constants')
-		compile project(':lilith-sender')
-		compile project(':lilith-data-converter')
-		compile project(':lilith-data-eventsource')
-		compile project(':lilith-data-logging')
-		compile project(':lilith-data-logging-protobuf')
-		compile project(':lilith-data-access')
-		compile project(':lilith-data-access-protobuf')
-		compile libraries.'sulky-codec-filebuffer'
-		compile libraries.'sulky-buffers'
-		compile libraries.'sulky-conditions'
-		compile libraries.'sulky-codec'
-		compile libraries.'slf4j-api'
-		testCompile libraries.'logback-classic'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-codec'
+		implementation libraries.'sulky-codec-filebuffer'
+		implementation libraries.'sulky-conditions'
+		implementation project(':lilith-constants')
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-access-protobuf')
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-data-logging-protobuf')
+		implementation project(':lilith-sender')
+		testImplementation libraries.'logback-classic'
 	}
 }
 
@@ -288,11 +292,15 @@ project(':lilith-xml-logging') {
 	*/
 
 	dependencies {
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-buffers'
-		compile libraries.'sulky-codec'
-		compile project(':lilith-engine')
-		compile project(':lilith-data-logging-xml-serializer')
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-codec'
+		implementation libraries.'sulky-stax'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-data-logging-xml')
+		implementation project(':lilith-data-logging-xml-serializer')
+		implementation project(':lilith-engine')
 	}
 }
 
@@ -305,11 +313,13 @@ project(':lilith-json-logging') {
 	}
 
 	dependencies {
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-buffers'
-		compile libraries.'sulky-codec'
-		compile project(':lilith-engine')
-		compile project(':lilith-data-logging-json-serializer')
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-data-logging-json-serializer')
+		implementation project(':lilith-engine')
 	}
 }
 
@@ -322,7 +332,7 @@ project(':logback-classic') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-logging')
+		implementation project(':lilith-data-logging')
 	}
 }
 
@@ -338,12 +348,13 @@ project(':logback-converter-classic') {
 	*/
 
 	dependencies {
-		compile project(':lilith-data-converter')
-		compile project(':lilith-data-logging')
-		compile project(':logback-classic')
-		compile libraries.'sulky-codec'
-		compile libraries.'slf4j-api'
-		compile libraries.'logback-classic'
+		implementation libraries.'logback-classic'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':logback-classic')
 	}
 }
 
@@ -356,10 +367,11 @@ project(':logback-converter-access') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-converter')
-		compile project(':lilith-data-access')
-		compile libraries.'sulky-codec'
-		compile libraries.'logback-access'
+		implementation libraries.'logback-access'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
 	}
 }
 
@@ -372,10 +384,10 @@ project(':logback-multiplex-appender-core') {
 	}
 
 	dependencies {
-		compile project(':lilith-sender')
-		compile libraries.'sulky-codec'
-		compile libraries.'sulky-ulid'
-		compile libraries.'logback-core'
+		implementation libraries.'logback-core'
+		implementation libraries.'sulky-codec'
+		implementation libraries.'sulky-ulid'
+		implementation project(':lilith-sender')
 	}
 }
 
@@ -391,11 +403,12 @@ project(':logback-multiplex-appender-classic') {
 	*/
 
 	dependencies {
-		compile libraries.'sulky-codec'
-		compile project(':lilith-data-logging-protobuf')
-		compile project(':logback-multiplex-appender-core')
-		compile project(':logback-converter-classic')
-		compile libraries.'logback-classic'
+		implementation libraries.'logback-classic'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-logging-protobuf')
+		implementation project(':lilith-sender')
+		implementation project(':logback-converter-classic')
+		implementation project(':logback-multiplex-appender-core')
 	}
 }
 
@@ -408,12 +421,13 @@ project(':logback-multiplex-appender-access') {
 	}
 
 	dependencies {
-		compile libraries.'sulky-codec'
-		compile project(':logback-multiplex-appender-core')
-		compile project(':lilith-data-access')
-		compile project(':lilith-data-access-protobuf')
-		compile project(':logback-converter-access')
-		compile libraries.'logback-access'
+		implementation libraries.'logback-access'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-access-protobuf')
+		implementation project(':lilith-sender')
+		implementation project(':logback-converter-access')
+		implementation project(':logback-multiplex-appender-core')
 	}
 }
 
@@ -430,11 +444,12 @@ project(':logback-multiplex-appender-classic-xml') {
 	*/
 
 	dependencies {
-		compile libraries.'sulky-codec'
-		compile project(':lilith-data-logging-xml-serializer')
-		compile project(':logback-multiplex-appender-core')
-		compile project(':logback-converter-classic')
-		compile libraries.'logback-classic'
+		implementation libraries.'logback-classic'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-logging-xml-serializer')
+		implementation project(':lilith-sender')
+		implementation project(':logback-converter-classic')
+		implementation project(':logback-multiplex-appender-core')
 	}
 }
 
@@ -450,11 +465,12 @@ project(':logback-multiplex-appender-classic-json') {
 	*/
 
 	dependencies {
-		compile libraries.'sulky-codec'
-		compile project(':lilith-data-logging-json-serializer')
-		compile project(':logback-multiplex-appender-core')
-		compile project(':logback-converter-classic')
-		compile libraries.'logback-classic'
+		implementation libraries.'logback-classic'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-data-logging-json-serializer')
+		implementation project(':lilith-sender')
+		implementation project(':logback-converter-classic')
+		implementation project(':logback-multiplex-appender-core')
 	}
 }
 
@@ -470,10 +486,10 @@ project(':logback-shutdown-context-listener') {
 	*/
 
 	dependencies {
-		compile libraries.'slf4j-api'
 		compileOnly libraries.'servlet-api'
-		compile libraries.'logback-classic'
-		compile project(':logback-tools')
+		implementation libraries.'logback-classic'
+		implementation libraries.'slf4j-api'
+		implementation project(':logback-tools')
 	}
 }
 
@@ -486,8 +502,8 @@ project(':logback-tools') {
 	}
 
 	dependencies {
-		compile libraries.'slf4j-api'
-		compile libraries.'logback-core'
+		implementation libraries.'logback-core'
+		implementation libraries.'slf4j-api'
 	}
 }
 
@@ -500,10 +516,10 @@ project(':logback-encoder-core') {
 	}
 
 	dependencies {
-		compile project(':lilith-constants')
-		compile libraries.'logback-core'
-		compile libraries.'sulky-codec'
-		compile libraries.'sulky-codec-filebuffer'
+		implementation libraries.'logback-core'
+		implementation libraries.'sulky-codec'
+		implementation libraries.'sulky-codec-filebuffer'
+		implementation project(':lilith-constants')
 	}
 }
 
@@ -519,14 +535,17 @@ project(':logback-encoder-classic') {
 	*/
 
 	dependencies {
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-codec'
-		compile project(':logback-encoder-core')
-		compile project(':logback-converter-classic')
-		compile project(':lilith-data-logging-protobuf')
-		compile libraries.'logback-core'
-		compile libraries.'logback-classic'
-		testCompile project(':lilith-constants')
+		implementation libraries.'logback-classic'
+		implementation libraries.'logback-core'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-constants')
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-data-logging-protobuf')
+		implementation project(':logback-converter-classic')
+		implementation project(':logback-encoder-core')
 	}
 }
 
@@ -539,12 +558,16 @@ project(':logback-encoder-access') {
 	}
 
 	dependencies {
-		compile libraries.'sulky-codec'
-		compile project(':logback-encoder-core')
-		compile project(':lilith-data-access-protobuf')
-		compile project(':logback-converter-access')
-		compile libraries.'logback-core'
-		compile libraries.'logback-access'
+		implementation libraries.'logback-access'
+		implementation libraries.'logback-core'
+		implementation libraries.'sulky-codec'
+		implementation project(':lilith-constants')
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-access-protobuf')
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':logback-converter-access')
+		implementation project(':logback-encoder-core')
 	}
 }
 
@@ -560,14 +583,15 @@ project(':log4j-xml') {
 	*/
 
 	dependencies {
-		compile project(':lilith-data-logging')
-		compile libraries.'sulky-stax'
-		compile libraries.'sulky-tasks'
-		compile libraries.'sulky-buffers'
-		compile libraries.'slf4j-api'
-		compile libraries.'commons-io'
-		runtime libraries.'woodstox'
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'commons-io'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-stax'
+		implementation libraries.'sulky-tasks'
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		runtimeOnly libraries.'woodstox'
+		testImplementation project(':lilith-data-eventsource')
 	}
 }
 
@@ -580,12 +604,13 @@ project(':converter-log4j') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-converter')
-		compile project(':lilith-data-logging')
-		compile libraries.'sulky-buffers'
-		compile project(':lilith-engine')
-		compile libraries.'slf4j-api'
-		compile libraries.'log4j'
+		implementation libraries.'log4j'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-engine')
 	}
 }
 
@@ -598,12 +623,13 @@ project(':converter-log4j2') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-converter')
-		compile project(':lilith-data-logging')
-		compile libraries.'sulky-buffers'
-		compile project(':lilith-engine')
-		compile libraries.'slf4j-api'
-		compile libraries.'log4j2-core'
+		implementation libraries.'log4j2-core'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-engine')
 	}
 }
 
@@ -619,12 +645,16 @@ project(':decoder-log4j2') {
 	*/
 
 	dependencies {
-		compile project(':converter-log4j2')
-		compile libraries.'slf4j-api'
-		compile libraries.'log4j2-core'
-		runtime libraries.'jackson-databind'
-		runtime libraries.'jackson-dataformat-xml'
-		runtime libraries.'jackson-dataformat-yaml'
+		implementation libraries.'log4j2-core'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-codec'
+		implementation project(':converter-log4j2')
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		runtimeOnly libraries.'jackson-databind'
+		runtimeOnly libraries.'jackson-dataformat-xml'
+		runtimeOnly libraries.'jackson-dataformat-yaml'
 	}
 }
 
@@ -640,13 +670,17 @@ project(':producer-log4j2') {
 	*/
 
 	dependencies {
-		compile project(':decoder-log4j2')
-		compile project(':lilith-engine')
-		compile libraries.'slf4j-api'
-		compile libraries.'log4j2-core'
-		runtime libraries.'jackson-databind'
-		runtime libraries.'jackson-dataformat-xml'
-		runtime libraries.'jackson-dataformat-yaml'
+		implementation libraries.'log4j2-core'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-codec'
+		implementation project(':decoder-log4j2')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-engine')
+		runtimeOnly libraries.'jackson-databind'
+		runtimeOnly libraries.'jackson-dataformat-xml'
+		runtimeOnly libraries.'jackson-dataformat-yaml'
 	}
 }
 
@@ -662,12 +696,12 @@ project(':jul-xml') {
 	*/
 
 	dependencies {
-		compile project(':lilith-data-logging')
-		compile libraries.'sulky-stax'
-		compile libraries.'slf4j-api'
-		compile libraries.'commons-io'
-		runtime libraries.'woodstox'
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'commons-io'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-stax'
+		implementation project(':lilith-data-logging')
+		runtimeOnly libraries.'woodstox'
+		testImplementation project(':lilith-data-eventsource')
 	}
 }
 
@@ -683,16 +717,17 @@ project(':jul-xml-import') {
 	*/
 
 	dependencies {
-		compile libraries.'commons-io'
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-buffers'
-		compile libraries.'sulky-formatting'
-		compile libraries.'sulky-stax'
-		compile libraries.'sulky-tasks'
-		compile project(':jul-xml')
-		compile project(':lilith-data-logging')
-		runtime libraries.'woodstox'
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'commons-io'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-formatting'
+		implementation libraries.'sulky-stax'
+		implementation libraries.'sulky-tasks'
+		implementation project(':jul-xml')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		runtimeOnly libraries.'woodstox'
+		testImplementation project(':lilith-data-eventsource')
 	}
 }
 
@@ -708,16 +743,17 @@ project(':jul-xml-receiver') {
 	*/
 
 	dependencies {
-		compile libraries.'commons-io'
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-buffers'
-		compile libraries.'sulky-formatting'
-		compile libraries.'sulky-stax'
-		compile project(':jul-xml')
-		compile project(':lilith-data-logging')
-		compile project(':lilith-engine')
-		runtime libraries.'woodstox'
-		testCompile project(':lilith-data-eventsource')
+		implementation libraries.'commons-io'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-formatting'
+		implementation libraries.'sulky-stax'
+		implementation project(':jul-xml')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-engine')
+		runtimeOnly libraries.'woodstox'
+		testImplementation project(':lilith-data-eventsource')
 	}
 }
 
@@ -748,8 +784,8 @@ project(':lilith-prefs') {
 	}
 
 	dependencies {
-		compile libraries.'sulky-codec'
-		compile libraries.'protobuf'
+		implementation libraries.'protobuf'
+		implementation libraries.'sulky-codec'
 	}
 }
 
@@ -762,15 +798,15 @@ project(':lilith-conditions') {
 	}
 
 	dependencies {
-		compile project(':lilith-data-eventsource')
-		compile project(':lilith-data-logging')
-		compile project(':lilith-data-access')
-		compile libraries.'sulky-conditions'
-		compile libraries.'sulky-groovy'
-		compile libraries.'slf4j-api'
-		compile libraries.'groovy'
-		testCompile libraries.'sulky-junit'
-		testCompile project(':lilith-data-corpus')
+		implementation libraries.'groovy'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-conditions'
+		implementation libraries.'sulky-groovy'
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		testImplementation libraries.'sulky-junit'
+		testImplementation project(':lilith-data-corpus')
 	}
 }
 
@@ -787,70 +823,78 @@ project(':lilith') {
 	*/
 
 	dependencies {
-		compile libraries.'commons-io'
-		compile libraries.'commons-lang'
-		compile libraries.'commons-text'
-		compile libraries.'flyingsaucer'
-		compile libraries.'glazedlists'
-		compile libraries.'groovy'
-		compile libraries.'groovy-console'
-		compile libraries.'groovy-xml'
-		compile libraries.'httpclient'
-		compile libraries.'httpcore'
-		compile libraries.'jcommander'
-		compile libraries.'jul-to-slf4j'
-		compile libraries.'junique'
-		compile libraries.'logback-access'
-		compile libraries.'logback-classic'
-		compile libraries.'logback-core'
-		compile libraries.'servlet-api'
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-buffers'
-		compile libraries.'sulky-buffers-filtering'
-		compile libraries.'sulky-buffers-table'
-		compile libraries.'sulky-codec'
-		compile libraries.'sulky-codec-filebuffer'
-		compile libraries.'sulky-conditions'
-		compile libraries.'sulky-formatting'
-		compile libraries.'sulky-groovy'
-		compile libraries.'sulky-logging'
-		compile libraries.'sulky-sounds-api'
-		compile libraries.'sulky-sounds-impl-jlayer'
-		compile libraries.'sulky-swing'
-		compile libraries.'sulky-tasks'
-		compile libraries.'sulky-version'
-		compile libraries.'thymeleaf'
-		compile project(':jul-xml')
-		compile project(':jul-xml-import')
-		compile project(':jul-xml-receiver')
-		compile project(':lilith-conditions')
-		compile project(':lilith-data-access')
-		compile project(':lilith-data-logging')
-		compile project(':lilith-data-logging-protobuf')
-		compile project(':lilith-engine')
-		compile project(':lilith-json-logging')
-		compile project(':lilith-prefs')
-		compile project(':lilith-xml-logging')
-		compile project(':converter-log4j')
-		compile project(':converter-log4j2')
-		compile project(':log4j-xml')
-		compile project(':logback-tools')
-		compile project(':logback-converter-classic')
-		compile project(':logback-multiplex-appender-access')
-		compile project(':logback-multiplex-appender-classic')
-		compile project(':logback-multiplex-appender-classic-json')
-		compile project(':logback-multiplex-appender-classic-xml')
-		compile project(':producer-log4j2')
-		runtime libraries.'jcl-over-slf4j'
-		runtime libraries.'log4j2-core'
+		implementation libraries.'commons-io'
+		implementation libraries.'commons-lang'
+		implementation libraries.'commons-text'
+		implementation libraries.'flyingsaucer'
+		implementation libraries.'glazedlists'
+		implementation libraries.'groovy'
+		implementation libraries.'groovy-console'
+		implementation libraries.'groovy-xml'
+		implementation libraries.'httpclient'
+		implementation libraries.'httpcore'
+		implementation libraries.'jcommander'
+		implementation libraries.'jul-to-slf4j'
+		implementation libraries.'junique'
+		implementation libraries.'logback-access'
+		implementation libraries.'logback-classic'
+		implementation libraries.'logback-core'
+		implementation libraries.'servlet-api'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-buffers'
+		implementation libraries.'sulky-buffers-filtering'
+		implementation libraries.'sulky-buffers-table'
+		implementation libraries.'sulky-codec'
+		implementation libraries.'sulky-codec-filebuffer'
+		implementation libraries.'sulky-conditions'
+		implementation libraries.'sulky-formatting'
+		implementation libraries.'sulky-groovy'
+		implementation libraries.'sulky-logging'
+		implementation libraries.'sulky-sounds-api'
+		implementation libraries.'sulky-sounds-impl-jlayer'
+		implementation libraries.'sulky-swing'
+		implementation libraries.'sulky-tasks'
+		implementation libraries.'sulky-version'
+		implementation libraries.'thymeleaf'
+		implementation project(':converter-log4j')
+		implementation project(':converter-log4j2')
+		implementation project(':jul-xml')
+		implementation project(':jul-xml-import')
+		implementation project(':jul-xml-receiver')
+		implementation project(':lilith-conditions')
+		implementation project(':lilith-constants')
+		implementation project(':lilith-data-access')
+		implementation project(':lilith-data-converter')
+		implementation project(':lilith-data-eventsource')
+		implementation project(':lilith-data-logging')
+		implementation project(':lilith-data-logging-json-serializer')
+		implementation project(':lilith-data-logging-protobuf')
+		implementation project(':lilith-data-logging-xml-serializer')
+		implementation project(':lilith-engine')
+		implementation project(':lilith-json-logging')
+		implementation project(':lilith-prefs')
+		implementation project(':lilith-xml-logging')
+		implementation project(':log4j-xml')
+		implementation project(':logback-classic')
+		implementation project(':logback-converter-access')
+		implementation project(':logback-converter-classic')
+		implementation project(':logback-converter-classic')
+		implementation project(':logback-multiplex-appender-access')
+		implementation project(':logback-multiplex-appender-classic')
+		implementation project(':logback-multiplex-appender-classic-json')
+		implementation project(':logback-multiplex-appender-classic-xml')
+		implementation project(':logback-tools')
+		implementation project(':producer-log4j2')
+		runtimeOnly libraries.'jcl-over-slf4j'
+		runtimeOnly libraries.'log4j2-core'
 		// 'spring-boot-ext-logback-access' and 'spring-webmvc' should not be necessary
 		// see LOGBACK-1182
-		runtime libraries.'spring-boot-ext-logback-access'
-		runtime libraries.'spring-webmvc'
-		runtime project(':lilith-sounds')
-		testCompile project(':lilith-data-corpus')
-		testCompile libraries.'sulky-junit'
-		testRuntime libraries.'objenesis'
+		runtimeOnly libraries.'spring-boot-ext-logback-access'
+		runtimeOnly libraries.'spring-webmvc'
+		runtimeOnly project(':lilith-sounds')
+		testImplementation libraries.'sulky-junit'
+		testImplementation project(':lilith-data-corpus')
+		testRuntimeOnly libraries.'objenesis'
 	}
 }
 
@@ -863,8 +907,8 @@ project(':slf4j') {
 	}
 
 	dependencies {
-		compile libraries.'slf4j-api'
-		testRuntime project(':logback-multiplex-appender-classic')
+		implementation libraries.'slf4j-api'
+		testRuntimeOnly project(':logback-multiplex-appender-classic')
 	}
 }
 
@@ -877,16 +921,16 @@ project(':tracing') {
 	}
 
 	dependencies {
-		compile libraries.'aspectjrt'
-		compile libraries.'slf4j-api'
-		compile libraries.'sulky-formatting'
-		testCompile libraries.'spring-beans'
-		testCompile libraries.'spring-context'
-		testCompile libraries.'spring-core'
-		testRuntime libraries.'aspectjweaver'
-		testRuntime libraries.'jcl-over-slf4j'
-		testRuntime libraries.'spring-aop'
-		testRuntime project(':logback-multiplex-appender-classic')
+		implementation libraries.'aspectjrt'
+		implementation libraries.'slf4j-api'
+		implementation libraries.'sulky-formatting'
+		testImplementation libraries.'spring-beans'
+		testImplementation libraries.'spring-context'
+		testImplementation libraries.'spring-core'
+		testRuntimeOnly libraries.'aspectjweaver'
+		testRuntimeOnly libraries.'jcl-over-slf4j'
+		testRuntimeOnly libraries.'spring-aop'
+		testRuntimeOnly project(':logback-multiplex-appender-classic')
 	}
 }
 

@@ -39,7 +39,11 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.plugins.signing.Sign
 
 wrapper {
-	gradleVersion = '5.6.2'
+	gradleVersion = '6.0-rc-1'
+	// TODO:
+	// maven -> maven-publish
+	// MacAppBundle
+	// https://github.com/policeman-tools/forbidden-apis/issues/153
 }
 
 def copyright = "Copyright \u00a9 2007-2017 J\u00f6rn Huxhorn"
@@ -318,14 +322,14 @@ subprojects {
 	}
 
 	dependencies {
-		testCompile libraries.'byte-buddy'
-		testCompile libraries.'groovy'
-		testCompile libraries.'spock-core', {
+		testImplementation libraries.'byte-buddy'
+		testImplementation libraries.'groovy'
+		testImplementation libraries.'junit'
+		testImplementation libraries.'slf4j-api'
+		testImplementation libraries.'spock-core', {
 			exclude group: 'org.codehaus.groovy', module: 'groovy-all' 
 		}
-		testCompile libraries.'junit'
-		testCompile libraries.'slf4j-api'
-		testRuntime libraries.'logback-classic'
+		testRuntimeOnly libraries.'logback-classic'
 	}
 
 	def deployer = null
@@ -407,7 +411,7 @@ project(':lilith') {
 			'Main-Class': "${mainClassName}",
 			// Class-Path must be evaluated at runtime not configuration time.
 			// see http://gradle.1045684.n5.nabble.com/Manifest-classpath-incomplete-and-distribution-ZIP-empty-td2635807.html
-			'Class-Path': "${ -> configurations.runtime.collect { File file -> file.name }.sort().join(' ')}"
+			'Class-Path': "${ -> configurations.runtimeClasspath.collect { File file -> file.name }.sort().join(' ')}"
 		)
 
 	}
