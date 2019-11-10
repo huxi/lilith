@@ -39,7 +39,7 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.plugins.signing.Sign
 
 wrapper {
-	gradleVersion = '6.0-rc-2'
+	gradleVersion = '6.0'
 	// TODO:
 	// maven -> maven-publish
 	// MacAppBundle
